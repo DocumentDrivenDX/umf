@@ -17,6 +17,7 @@
       "python/tests/test_action_runtime_resources.py",
       "python/tests/test_core.py",
       "python/tests/test_extension_kinds.py",
+      "python/tests/test_python_artifact_version.py",
       "python/tests/test_rust_core.py",
       "python/umf_access/src/umf_access/build/catalog.py",
       "python/umf_access/src/umf_access/lifecycle/cli.py",
@@ -196,16 +197,16 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "ad1e306d33a31288617cb50dffa0005a3be0597ae41afeca34c52f115d021f54",
+    "sourceCohortSha256": "16a55b5946a9868775b2b3afc5b0078f9fcfae132aed3fde5310ef891710c6ca",
     "typescriptApi": "5.9.3"
   },
   "counts": {
-    "activeScriptFiles": 341,
-    "algorithmSymbols": 10319,
+    "activeScriptFiles": 342,
+    "algorithmSymbols": 10325,
     "pythonModules": 105,
     "rustBuildInputs": 76,
     "rustModules": 127,
-    "scriptFiles": 2950,
+    "scriptFiles": 2951,
     "sourceModules": 578,
     "typescriptModules": 473
   },
@@ -9217,6 +9218,26 @@
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "python/tests/test_python_artifact_custody.py",
       "sha256": "9af1b29e43e0637a9868475402c8adfe97051b60d561ae27d4b385042a4577c3"
+    },
+    {
+      "activationEvidence": [
+        ".github/workflows/python-action-runtime.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "ExpectedVersionTests",
+        "make_repo",
+        "make_wheel",
+        "test_cli_source_mode_forwards_selected_version",
+        "test_installed_mode_enforces_explicit_version_before_payload_check",
+        "test_verify_defaults_to_historical_profile_and_explicit_version_is_propagated"
+      ],
+      "bytes": 3695,
+      "disposition": "test-oracle-fixture-algorithm",
+      "language": "py",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
+      "path": "python/tests/test_python_artifact_version.py",
+      "sha256": "629b6303a22c08a1ca4af68aadc3448d0f30e0ed9b6dbbb9134e39004e7e8d57"
     },
     {
       "activationEvidence": [],
@@ -53625,12 +53646,12 @@
         "main",
         "verify"
       ],
-      "bytes": 35998,
+      "bytes": 36449,
       "disposition": "active-host-tooling-algorithm",
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "tools/verify_python_artifacts.py",
-      "sha256": "7892ab07d78abc0fc368046aa3435728a4d107300798d14ad6287c95e4f836a5"
+      "sha256": "628bc0ea00eabca17e976b537ba2534c00a6fe53b09acb46399f74f3c0c85fb3"
     }
   ],
   "sourceModules": [

@@ -1,0 +1,60 @@
+{
+  "assertions": "All recorded SHA256/bytecounts/text match exact source Git blobs; complete per-section traversal path sets match; aggregate counts and full source-cohort digest reconstructed; dependency declarations/lock hash and exact generator pins match; semantic delta is limited to expected new active artifact-version test and verifier bytes/hash, plus activation/count/cohort updates. Other inventory sections are byte-equivalent JSON values to committed predecessor.",
+  "changedExistingScriptFields": {
+    "tools/verify_python_artifacts.py": [
+      "bytes",
+      "sha256"
+    ]
+  },
+  "changedInventorySections": [
+    "activation",
+    "capture",
+    "counts",
+    "scripts"
+  ],
+  "changedSourcePaths": [
+    ".github/workflows/python-action-runtime.yml",
+    "python/tests/test_python_artifact_version.py",
+    "tools/verify_python_artifacts.py"
+  ],
+  "counts": {
+    "activeScriptFiles": 342,
+    "algorithmSymbols": 10325,
+    "pythonModules": 105,
+    "rustBuildInputs": 76,
+    "rustModules": 127,
+    "scriptFiles": 2951,
+    "sourceModules": 578,
+    "typescriptModules": 473
+  },
+  "gitBlobBytesRead": 40453507,
+  "gitPathsReadIncludingExtraPinsAndBaseline": 3630,
+  "inventoryBytes": 2606023,
+  "inventorySha256": "a2609b45cd6131aae1211a764405912472f4ccdd998d021807d65948b53f939b",
+  "newAlgorithmSymbols": [
+    "ExpectedVersionTests",
+    "make_repo",
+    "make_wheel",
+    "test_cli_source_mode_forwards_selected_version",
+    "test_installed_mode_enforces_explicit_version_before_payload_check",
+    "test_verify_defaults_to_historical_profile_and_explicit_version_is_propagated"
+  ],
+  "newScript": "python/tests/test_python_artifact_version.py",
+  "parentCommit": "937dcd04b365dafe8ebec4565aff392fa67126d8",
+  "recordBytesIncludingDuplicates": 39966928,
+  "recordRowsIncludingDependencies": 3738,
+  "reviewedUtc": "2026-10-24T06:10:17.567918+00:00",
+  "role": "sol",
+  "scope": "Read-only Git tree/blob audit and independent JSON/AST calculations only. No product source executed, no worktree created, no full --check, native, build, service, or publication qualification. TypeScript compiler export/import correctness and resolver lock suitability not independently executed here.",
+  "sectionCounts": {
+    "rustBuildInputs": 76,
+    "rustModules": 127,
+    "scripts": 2951,
+    "sourceModules": 578
+  },
+  "sourceCohortSha256": "16a55b5946a9868775b2b3afc5b0078f9fcfae132aed3fde5310ef891710c6ca",
+  "sourceCommit": "091aea5d111045fe70b229bc72fb47ef95febb9d",
+  "status": "pass",
+  "uniqueRecordedGitBytes": 37730376,
+  "uniqueRecordedGitPaths": 3624
+}
