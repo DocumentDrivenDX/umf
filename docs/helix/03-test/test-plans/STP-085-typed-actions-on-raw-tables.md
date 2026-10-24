@@ -779,3 +779,28 @@ refusal; no namespace/prefix waiver. No TOAST chunk/row values enter receipts.
 Confirm unknown creation COMMIT through complete original receipt+native closure
 and external custody. Native source mocks are not execution evidence.
 Integration003 source SHA256: d319c315a1b50c44eb1777017e1016dd2a18eb65627adf4b6ff687190e2f9786.
+
+
+### G11 original logical trust root qualification
+
+Prove exact old .1 physical compatibility and logical refusal; original .2 root
+installation before future OIDs; complete actual native configuration export;
+valid real root signature; and positive confirmation/restart using the SAME
+production verification/provider path for isolated acceptance. Wrong root key,
+principal, purpose, policy, logical ID/profile, complete source/cohort/subject/
+store binding, copied request, subclass, mutable request and caller resolver
+refuse. Source-only acceptance issuers cannot become production roots.
+
+Exercise two real writer processes, every birth/replace/fsync/return interruption,
+actual original positive prepared/confirmed recovery, duplicate approval/effect
+refusal, rewind/cap exhaustion and new-process missing-file refusal without
+O_CREAT repair. Exact root signature and confirmation survive restart. A crash
+after durable replacement must return the same context/enrollment; no second
+consumption or native effect follows. No configuration parser that always
+refuses valid production input can pass this gate.
+
+Then qualify actual target/source/head/subject/store/gate/epoch operations,
+installed concrete crypto and platform CI, final release and public bytes.
+Source tests/signature examples and data-only native receipts cannot substitute
+for those gates. Old active .1 root upgrade and absent subject/schema bootstrap
+remain explicitly tracked until separately implemented and qualified.

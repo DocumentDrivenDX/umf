@@ -6240,3 +6240,287 @@ or per-value hashes are listed in receipt/catalog objects. Max1024 objects and
 1MiB receipt remain conjunctive; overflow refuses, never truncates internals.
 This is an explicit correction of the unpublished original kind/name shape,
 not permission for another metadata table or general extra-object exemption.
+
+
+#### G11 original operator root for logical authority trust enrollment
+
+The following acyclic integration supplies the concrete original trust issuer
+missing from the separate existing-head logical authority. It adds no physical
+effect scope and grants no native qualification. Old physical bootstrap0.1
+retains its exact shape and cannot silently acquire logical roots.
+
+##### Chosen acyclic setup and compatibility
+
+Select NEW `umf.local-owner-bootstrap-enrollment/0.2` ONLY for original newly
+initialized host setup. It has exactly the existing0.1 members
+`{profile,enrollmentId,purpose,context,ownerConfiguration,nativeProfile}` PLUS
+`generationAuthorityRoots`. All old members retain their original meanings and
+bounds; ownerConfiguration remains its exact six-scope profile. Roots are
+installed by the trusted embedding's ORIGINAL operator-managed deployment
+configuration boundary BEFORE owner context/physical target creation. They are
+public verification keys/policy, never caller plan/native-request supplied keys.
+File mode/UID/hash protects custody but is not authenticated policy by itself.
+Production setup reads its already operator-enrolled configuration; it cannot
+self-enroll a fresh signer because a request or native attestor proposes one.
+
+Roots require NO future database/schema/store/subject/epoch OIDs. After physical
+creation, source installation/subject bootstrap and original ingress store
+exist, the separately authorized operator signing service approves the COMPLETE
+actual logical configuration and native binding through the exact new trust
+operation below. This is deliberate sign-AFTER-observation, not inferred trust
+from future names/digests. No bootstrap root or native attestor autoapproves its
+own observed configuration. An authenticated automation service may sign under
+its original policy; no mandatory TTY or fresh human question is imposed.
+
+Bootstrap0.1 remains byte/shape compatible for its existing physical operations.
+It has NO logical enrollment roots, so logical trust bootstrap refuses. No .1
+file/context rewrite, unsigned companion-key adoption or silent config upgrade.
+Enrolling a root into an ALREADY ACTIVE0.1 host requires a separately qualified
+original operator trust-upgrade protocol and remains an explicit gap. This first
+.2 path works for fresh isolated acceptance and newly enrolled deployments; it
+does not purport to solve that older-host upgrade.
+
+##### Exact root seed and signed trust approval
+
+GenerationAuthorityRoots is exactly
+`{profile:"umf.generation-authority-root-policy/0.1",authorityId,policyRevision,keys}`.
+AuthorityId UUID, policyRevision nonempty NUL-free UTF8<=128bytes, keys1..32
+unique exact `{keyId,publicKey,principalId,logicalAuthorityIds,
+configurationProfiles}`. Key/principal <=128UTF8 bytes, publicKey strict32byte
+canonical unpadded base64url Ed25519. LogicalAuthorityIds is1..256 explicit UUIDs,
+no wildcard; allocate these logical IDs before original setup. Profiles is a
+unique ordered nonempty subset of the exact literals
+`umf.configured-generation-enrollment-authority/0.1` and
+`umf.configured-generation-enrollment-authority/0.2`, ONLY when each exact branch
+is adopted/implemented by that runtime.
+Existing-head0.1 is selected now; G10 fresh0.2 is not enabled merely by allowing
+its name. Root policy <=1MiB canonical UTF8. Full bootstrap record <=2MiB.
+RootPolicyDigest hashes complete canonical root policy, not its own digest.
+Purpose/target bounds are EXACT enclosing original purpose/context/nativeProfile;
+no source-test context or acceptance root can confer production trust.
+
+Root scope is ONLY `enroll-generation-authority`, in a NEW distinct domain,
+not added to physical owner scopes or the two logical effect scopes. Signed
+payload is exactly
+`{profile:"umf.generation-authority-trust-approval/0.1",scope,
+rootAuthorityId,rootPolicyRevision,keyId,principalId,approvalId,purpose,
+bootstrapEnrollmentId,rootPolicyDigest,supervisorId,custodianId,providerId,
+installationId,intentDigest}`. Scope literal above. UUID/digest/native-string
+bounds follow original contracts, canonical payload <=16384UTF8 bytes. Envelope
+exactly `{payload,signature}`; keyId is signed and selects ONLY original root
+keys. Signature strict64byte base64url Ed25519. Signing bytes are ASCII
+`umf.generation-authority-trust-approval/0.1` then NUL then RFC8785 payload.
+Use actual selected standard crypto/version; no new crypto implementation.
+
+Trust intent is exactly
+`{profile:"umf.generation-authority-trust-intent/0.1",contextId,trust,
+configuration,configurationDigest,nativeEvidenceDigest}`. Configuration is the
+FULL adopted closed logical authority configuration, including actual target/
+store/subject OIDs/policy/cohort/key restrictions. Digest matches those full
+canonical bytes; the source author cannot grant authority through that data.
+ContextId is original allocated UUID. Trust is EXACT existing adopted
+`umf.generation-authority-trust-enrollment/0.1` statement, retaining ALL its
+original members: enrollmentId,ownerBootstrapContextDigest,configurationDigest,
+supervisorId,custodianId,providerId,installationId,targetCustodyDigest,
+storeCreationReceiptDigest,custodySequence plus profile. No future epoch or
+root signature digest occurs in this intent. Intent <=2MiB UTF8, unknown/duplicate
+keys, invalid UTF8, floats/boolean IDs and noncanonical encodings refuse.
+
+NativeEvidenceDigest hashes original complete actual native/supervisor/
+custodian/store/source/subject observations held privately by the ORIGINAL
+fixed native resolver, not supplied JSON data labelled observed. Root signer
+receives owned copies of complete configuration/trust/typed evidence for its
+authenticated decision. Export exposes no key, native connection or capability.
+Signature binds exact intent; root approval cannot authorize another logical
+ID/profile/policy/target/context or be used as a physical creation signature.
+
+##### Original registry birth without a context hash cycle
+
+Bootstrap0.2's private context uses NEW profile
+`umf.local-owner-bootstrap-context/0.2`. Exact members are
+`{profile,enrollmentId,enrollmentRecordDigest,authorityConfigurationDigest,
+purpose,context,generationRootPolicyDigest,generationRegistryBirthDigest}`.
+The physical owner config is unchanged. EnrollmentRecordDigest hashes the WHOLE
+original .2 operator record including roots, not a mutable extra sidecar.
+GenerationRegistryBirthDigest hashes the original confirmed birth receipt below.
+No context/authority may become usable before its original required journal/
+ledger births are durably confirmed. Missing confirmed files after restart
+refuse, including lock files; no O_CREAT reconstruction of used history.
+
+Use fixed original control-home paths `generation-authority-registry.json` and
+`generation-authority-registry.lock`; no request selects paths. Before creation
+reserve birth in the original bootstrap setup journal under its exclusive writer
+lease. AnchorDigest is SHA256 of exact
+`{enrollmentRecordDigest,authorityConfigurationDigest,generationRootPolicyDigest,
+purpose,context}`. It excludes final context/birth digests. Initial registry
+header binds this original anchor and original allocated registryId; it does NOT
+hash final bootstrap context, so there is no initialization cycle.
+
+Birth receipt exactly
+`{profile:"umf.generation-authority-registry-birth/0.1",registryId,anchorDigest,
+registryPath,lockPath,initialRegistryDigest,state:"confirmed"}`. Paths are those
+fixed canonical original absolute paths; initialRegistryDigest hashes actual
+empty registry bytes. Create with original absence/exclusive ownership/private
+permissions, atomic writes/fsync and original intent/confirm protocol. Interrupted
+FIRST creation may settle ONLY its original pending birth before any request/
+export/signature/effect. Once confirmed, missing/rewound registry/lock/context
+refuses without fresh identities, empty journal or new approval ID. This is
+original bootstrap custody anchored to .2 operator record and actual controlled
+realm, not trust-on-first-use from a newly discovered file.
+
+The original bootstrap setup journal records birth intent exactly
+`{profile:"umf.generation-authority-registry-birth-intent/0.1",registryId,
+anchorDigest,registryPath,lockPath,state:"pending"}` before either file is
+created. Its confirmed form adds `initialRegistryDigest` and changes state to
+`"confirmed"`; it matches the birth receipt above field for field after excluding
+the respective profile fields. The original journal itself retains its already required
+operator-root custody and birth protection. A self-hashed newly supplied journal
+or matching filesystem owner is never a replacement. No initial registry entry
+hashes the final context or the registry's own digest.
+
+Registry format exactly
+`{profile:"umf.generation-authority-registry/0.1",registryId,anchorDigest,
+sequence,requests,enrollments}`; sequence safe integer0..9007199254740991,
+requests<=4096, enrollments<=256, entire canonical file<=8MiB. Every write under
+original process+thread writer lock, validated monotonic original append state,
+atomic replace/fsync; no truncation/automatic repair. Each request is exactly
+`{requestId,enrollmentId,contextId,effectKey,intent,payload,state,
+reservedSequence,confirmedSequence,approvalEnvelope}`. State is exactly
+`"prepared"|"confirmed"`; prepared requires both confirmedSequence and
+approvalEnvelope null; confirmed requires its actual positive sequence and full
+verified original envelope. ReservedSequence is the positive sequence of
+preparation; confirmedSequence is greater and at most the current registry
+sequence. IDs are allocated UUIDs, effectKey is the exact six-element tuple below,
+intent and payload are exact closed forms above. No floats, booleans-as-integers,
+unknown keys, duplicate request/effect/enrollment/approval IDs or dangling records.
+Registry requests retain original immutable intent/payload bytes and reservations;
+enrollments retain the exact confirmed form below. Per-request canonical intent <=2MiB, the full entry bounded by the same 8MiB file cap, and total
+cap are conjunctive. No promise all count maxima fit. Actual nonrewind custody
+and original birth/recovery require native host qualification, not self-hash proof.
+
+##### Concrete setup, confirmation and resolver API
+
+A fixed trusted bootstrap coordinator, ABOVE the concrete native supervisor and
+logical verifier, exposes:
+
+```text
+prepare_generation_authority_enrollment(original_owner_session,
+ original_target_custody,original_ingress_store,configuration,*,rootKeyId)
+    -> GenerationAuthorityTrustRequest
+export_generation_authority_enrollment(original_request) -> owned signing data
+confirm_generation_authority_enrollment(original_request,root_signed_envelope)
+    -> OriginalTrustEnrollment
+recover_generation_authority_enrollment(original_enrollment_id)
+    -> original pending/confirmed outcome
+create_generation_authority_session(original_trust_enrollment,
+ original_supervisor,original_custodian,original_ingress_store)
+    -> configured logical authority with original context
+```
+
+RootKeyId selects an eligible key from the ORIGINAL enrolled root policy; it
+does not install a key or grant authority. The exact key/principal/root revision
+are fixed in the request payload before export. Changing the selector after
+preparation requires a distinct properly authorized enrollment, never mutable
+request data.
+
+Preparing is not approval. Require exact original physical facade/core/native/
+bootstrap association and .2 root context, real opaque target and confirmed
+original ingress store/creation receipt. Reobserve actual native target/roles/
+source/cohort/settings/privilege closure and original operator policy; reject
+unknown shared/external actor paths. The complete .1 logical config must match
+those facts. Missing genuine prior logical head refuses existing-head context.
+Missing subject/schema/source bootstrap remains an actual prerequisite, not
+something this config operation creates. No arbitrary resolver, callback,
+Protocol or caller constructed success record is accepted.
+
+Under original registry writer lock allocate request/approvalId, trust enrollmentId
+and contextId BEFORE export, one stable effect key
+`[enroll-generation-authority,bootstrapEnrollmentId,providerId,installationId,
+logicalAuthorityId,logicalPolicyRevision]`. Trust.custodySequence is this original
+trust-registry RESERVED sequence, not future native epoch/COMMIT or current DB
+head sequence. Repeated same effect reuses original IDs/handles; changed intent
+on occupied key refuses. A submitted nonce or new path cannot bypass pending.
+
+Confirmation resolves that exact original request, verifies FULL configured
+root signature/purpose/key/principal/logical-ID/profile/root-policy/intent and
+same original native objects/live observations again. Consume original approval and append the confirmed request plus its exact
+enrollment record in ONE atomic registry replacement under the original writer
+lease. This operation has no database mutation: no fictitious cross-store
+transaction or native effect is needed. A process-local concrete context is
+issued ONLY after durable confirmation. A crash after replacement but before
+return reopens that same confirmed entry/context, with no second signature
+consumption or new IDs. A crash before replacement leaves the same prepared
+request; original observation and valid signature can settle it. An uncertain
+write is resolved by reading the original complete registry, never by inferring
+success from a staged file or treating missing files as empty. Enrollment
+creates NO database schema/role/epoch/head effects; it authorizes the logical
+configuration only. Confirmation record exactly
+`{profile:"umf.original-generation-authority-enrollment/0.1",enrollmentId,
+requestId,contextId,bootstrapEnrollmentId,rootPolicyDigest,rootApprovalDigest,
+trust,configuration,configurationDigest,nativeEvidenceDigest,state:"confirmed",
+registrySequence}`. RootApprovalDigest hashes the actual signed envelope. Actual
+registrySequence is the confirmed original append; trust's earlier reserved
+sequence remains unchanged. No self-reference in either digest. Store full
+original root/enrollment signature and observation custody privately.
+
+A prepared request is an exact concrete bootstrap-owned object in a private
+original registry. Every operation resolves its identity and original stored
+immutable request; caller mutations, copies, subclasses, projections, borrowed
+constructor seals and approval-shaped data cannot change or substitute it.
+Only a fixed coordinator's validated native evidence enters preparation;
+bootstrap leaves cannot accept arbitrary native resolver callbacks.
+
+Only THEN issue OriginalTrustEnrollment and original context through bootstrap-
+owned exact concrete type/registry. Preserve existing public logical context
+projection: trustEnrollmentDigest hashes exact existing trust statement, while
+original registry privately retains the validating ROOT envelope/confirmation.
+ContextDigest hashes the original adopted projection; it contains no future
+native approval/signature. ConfiguredGenerationEnrollmentAuthority must resolve
+that original concrete entry/registry/root/confirmed context, never accept an
+entry because a supplied hash or projected context matches.
+
+Implement actual `_resolve_generation_authority_enrollment(handle)` and
+`_verify_generation_authority_trust(handle)` as FIXED original bootstrap registry
+operations. They require same exact concrete issuer/handle registry, original
+root record/context/birth/confirmation and signature/configuration/native object
+bindings, reobserve actual target/store continuity, and refuse source-test-only
+issuers for production. They are not virtual projection hooks or caller callbacks.
+Source-test issuer remains permanently acceptance/source-only under separate
+exact type/registry; borrowed constructor seal or subclass cannot enroll a root.
+
+The coordinator's native-class validation/orchestration remains above the core/
+bootstrap leaves per accepted acyclic boundary split. Bootstrap owns confirmed
+context/type/registry; native owns actual observation/target/effect registries;
+core owns real crypto/signature/ledger primitives. Private naming alone is not
+authority: all public admission paths resolve original fixed registries and
+actual signed root plus actual native objects before yielding usable handles.
+No hidden function-local import cycle or generic class registration is permitted.
+
+##### Rotation, recovery and qualification
+
+No automatic .1 upgrade, root key replacement, unsigned root sidecar or purpose
+conversion. Later logical policy/key revision requires a NEW actual root-signed
+exact enrollment, original monotonic registry and ALL earlier effects settled;
+retain old public-key/signature/config/context history for readonly settlement.
+Root rotation or extension to unadopted config profiles is a distinct original
+operator setup policy, not an envelope-injected key or native autoapproval.
+
+Unknown host write/response observes original request/entry/context/BORN state;
+never makes a new logical identity after uncertain confirmation. Recovery creates
+no missing locks/registry/context, and no native provider effect can start from
+source-test fixtures. Actual native-acceptance setup installs its own isolated
+.2 root under explicit fixture authority, signs with its fixture operator key,
+then executes SAME verification/native provider code; production accepts only
+its originally configured production root. No credentials or real signing keys
+are requested in chat or portable plans.
+
+Independently exercise .1 unchanged physical compatibility + logical refusal,
+.2 early root/no-future-OID setup, actual observed config export/root approval,
+wrong key/purpose/root/logical ID/profile/target/source/subject/store receipt,
+config mutation/subclass/shared-seal spoof, no always-refusing valid path, writer
+races, interrupted birth and NEW-process missing-file refusal, original positive
+confirmation/recovery and no duplicate IDs. Then actual native target/store/
+head/subject/gate/epoch operations, installed crypto/platform CI and release/
+public bytes. Old-host trust upgrade and missing role/schema bootstrap stay
+explicit residuals until separately implemented/qualified; source crypto tests
+alone cannot close this seam or G11.

@@ -922,3 +922,29 @@ function. Capture actual OIDs/definition/parent closure in original same-TX
 creation receipt and external original confirmation. Reject missing/extra/foreign
 internals and retain strict user-trigger/default/ACL/privacy restrictions.
 Integration003 source SHA256: d319c315a1b50c44eb1777017e1016dd2a18eb65627adf4b6ff687190e2f9786.
+
+
+### G11 acyclic operator-root logical trust bootstrap
+
+Implement the exact original .2 bootstrap/root policy, fixed registry birth,
+request/confirmation records and root-signed trust enrollment specified in the
+G11 original operator root contract. Original operator roots precede physical
+setup and contain no future native IDs. The actual logical configuration is
+signed after real target/source/head/subject/store observations. No caller key,
+self-hashed sidecar, native observer or filesystem UID confers trust.
+
+Keep native-class orchestration above bootstrap/core leaves. Bootstrap owns
+original immutable request/enrollment/context registries and actual birth
+custody; concrete crypto verifies configured root signature; native owns actual
+observation/target/store registries. No callback registrar, import back-edge or
+source-test issuer may replace this concrete production/acceptance path.
+
+Prepare persists exact selected root key and request before export. Confirmation
+revalidates actual original native continuity and signature, then atomically
+consumes the root approval and records confirmed trust in the ONE original
+registry file. Issue the process-local context only after durable confirmation.
+This trust operation creates no native database effect. Original recovery
+settles the same request/birth/confirmation with stable IDs and no reconstructed
+confirmed-missing files. Old-host .1 trust upgrade, missing stable subject/schema
+bootstrap, headless G10 authority and full native qualification remain explicit
+separate gates.
