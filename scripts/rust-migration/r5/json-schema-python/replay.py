@@ -128,9 +128,11 @@ def number_check(c,a):
     target=v
     if cid=="get.exact-negative-zero":
         node=v.get("value") if type(v) is dict and v.get("kind")=="number" else None
-        exact=(node.lexeme if type(node) is api.ExactJsonNumber else None)
+        # A tagged native number node carries its lexical token as a string.
+        # ExactJsonNumber is used when exported schema JSON is decoded.
+        exact=node if type(node) is str else None
         dump=api.dump_native_json(v)
-        return {"expectedLexeme":n,"nodeKind":v.get("kind") if type(v) is dict else None,"exactCarrierLexeme":exact,"nativeDump":dump,"passed":exact==n and n in dump}
+        return {"expectedLexeme":n,"nodeKind":v.get("kind") if type(v) is dict else None,"taggedNodeLexeme":exact,"nativeDump":dump,"passed":exact==n and n in dump}
     if cid=="inspect-unknown-keyword-and-exact-unsafe-number":
         target=api.export_json_schema(c["input"]["document"])
     dump=api.dump_native_json(target) if type(target) is not str else target
@@ -158,7 +160,7 @@ if SELFTEST:
     assert decoded["caseCount"]==30 and len(decoded["results"])==30
     assert decoded["results"][0]["actual"]["lexeme"]=="-0.000"
     node_case={"id":"get.exact-negative-zero"}
-    node_outcome={"status":"returned","value":{"kind":"number","value":api.ExactJsonNumber("-0.000")}}
+    node_outcome={"status":"returned","value":{"kind":"number","value":"-0.000"}}
     assert number_check(node_case,node_outcome)["passed"]
     bundle_source={"id":"source"};diagnostics=[]
     js_copy={"preMutationSnapshot":{"getNode":{"kind":"null"},"bundle":{"schema":"{\"x\":1}","resources":{"u":"true"},"source":bundle_source,"diagnostics":diagnostics},"walk":[]}}

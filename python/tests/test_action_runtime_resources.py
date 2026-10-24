@@ -273,6 +273,8 @@ def test_full_wheel_hook_initialization_keeps_resource_targets_disjoint(
 
     def fake_cargo(command, *, cwd, env, check):
         assert command[0] == "fake-cargo"
+        assert command.count("-p") == 2
+        assert "umf-core-python" in command and "umf-cli" in command
         extension_root = target
         cpu_type = 0x0100000C
         if "--target" in command:
@@ -290,6 +292,7 @@ def test_full_wheel_hook_initialization_keeps_resource_targets_disjoint(
             "<IiiIIIII", 0xFEEDFACF, cpu_type, 0, 2, 1, len(version_command), 0, 0
         )
         extension.write_bytes(header + version_command)
+        (extension.parent / "umf").write_bytes(header + version_command)
 
     monkeypatch.setattr(build_hook.subprocess, "run", fake_cargo)
     hook = build_hook.CustomBuildHook(
@@ -310,6 +313,8 @@ def test_full_wheel_hook_initialization_keeps_resource_targets_disjoint(
     }
     assert runtime_targets == expected_targets
     assert len(runtime_targets) == len(build_hook.ACTION_RUNTIME_RESOURCES)
+    assert "umf/_rust_core.abi3.so" in targets.values()
+    assert "umf/_bin/umf" in targets.values()
     for filename, source_name in build_hook.ACTION_RUNTIME_RESOURCES:
         target_path = f"umf/action_runtime_resources/{filename}"
         source = Path(

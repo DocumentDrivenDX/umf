@@ -11,7 +11,7 @@ import pytest
 
 _HELPER_PATH = Path(__file__).resolve().parents[2] / "tools/_python_sdist.py"
 assert hashlib.sha256(_HELPER_PATH.read_bytes()).hexdigest() == (
-    "3416d6ac12a58ffece96efe35fd2cb47e89a5e909652e69fc09fcbb72675612a"
+    "c5ebe2d0347e580160169d492aae3ffd3f42592bfefa3ae8456b35c7b3a2263a"
 )
 _HELPER_SPEC = importlib.util.spec_from_file_location(
     "umf_test_python_sdist", _HELPER_PATH
@@ -30,9 +30,6 @@ ROOT_FILES = (
     "Cargo.lock",
     "rust-toolchain.toml",
     ".cargo/config.toml",
-    "LICENSE.md",
-    "LICENSE-MIT",
-    "LICENSE-APACHE",
     "spec/extensions/avro/package.json",
     "spec/extensions/json-schema/package.json",
     "spec/core/cardinality-operation-v6.schema.json",
@@ -127,6 +124,8 @@ def _make_checkout(root: Path) -> dict[str, bytes]:
     files["python/pyproject.toml"] = project.encode()
     files["python/hatch_build.py"] = _hook()
     files["python/README.md"] = b"python project\n"
+    for name in ("LICENSE.md", "LICENSE-MIT", "LICENSE-APACHE"):
+        files[f"python/{name}"] = f"license:{name}\n".encode()
     files["python/src/umf/__init__.py"] = b""
     files["python/src/umf/_rust.py"] = b"native helper\n"
     files["python/src/umf/action_runtime.py"] = b"runtime\n"

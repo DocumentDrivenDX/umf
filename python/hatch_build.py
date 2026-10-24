@@ -48,9 +48,6 @@ SDIST_SOURCE_FILES = (
     "Cargo.lock",
     "rust-toolchain.toml",
     ".cargo/config.toml",
-    "LICENSE.md",
-    "LICENSE-MIT",
-    "LICENSE-APACHE",
     # Keep native include_str! authority files available for offline builds
     # from an extracted source archive.
     "spec/extensions/avro/package.json",

@@ -596,7 +596,7 @@ def _write_finalizer_inputs(
             "file_count": 521,
             "sha256": ("z" if malformed_source_map else "f") * 64,
         },
-        "sdist_helper_sha256": "3416d6ac12a58ffece96efe35fd2cb47e89a5e909652e69fc09fcbb72675612a",
+        "sdist_helper_sha256": "c5ebe2d0347e580160169d492aae3ffd3f42592bfefa3ae8456b35c7b3a2263a",
         "native_platform_helper_sha256": "5856eb375d176af7671ad22981d983a14cec24663e3a8bc466446b433c2cd7b1",
     }
     (root / "umf-artifact-payload.json").write_text(
@@ -741,7 +741,11 @@ def test_sdist_licenses_have_one_declared_inclusion_route():
     licenses = set(project["project"]["license-files"])
 
     assert licenses == {"LICENSE.md", "LICENSE-MIT", "LICENSE-APACHE"}
-    assert licenses.issubset(set(source_files))
+    # Hatch includes project license-files itself. Force-including the root
+    # copies at the same names produces duplicate tar members.
+    assert licenses.isdisjoint(set(source_files))
+    for name in licenses:
+        assert (repository / name).read_bytes() == (repository / "python" / name).read_bytes()
     force_include = project["tool"]["hatch"]["build"]["targets"]["sdist"][
         "force-include"
     ]
