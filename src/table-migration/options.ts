@@ -7,9 +7,10 @@ import type {RowExpressionOperation,TableOperation,TableRef} from '../extensions
 import {rowExpressionInputRefs} from '../extensions/tables/row-expressions';
 import {validateReviewedChangeMarkers,type ReviewedChangeMarker} from './reviewed';
 import {validateG03DefaultChange} from './g03-defaults';
+import {validateG11SourceCorrespondence} from './g11-source';
 export type {ReviewedChangeMarker,ReviewedChangeKind,ReviewedChangeCandidate} from './reviewed';
 export interface TableMigrationOptions {
- version:'umf.table-migration-options/0.1'|'umf.table-migration-options/0.2'|'umf.table-migration-options/0.3'|'umf.table-migration-options/0.4'|'umf.table-migration-options/0.5';
+ version:'umf.table-migration-options/0.1'|'umf.table-migration-options/0.2'|'umf.table-migration-options/0.3'|'umf.table-migration-options/0.4'|'umf.table-migration-options/0.5'|'umf.table-migration-options/0.6';
  backfills:{table:string;column:TableRef;operation:string;scopedRows:true}[];
  concurrentIndexes:{table:string;index:string}[];
  reviewedChanges?:ReviewedChangeMarker[];
@@ -40,14 +41,19 @@ export function migrationOptions(value:TableMigrationOptions|undefined,next:Tabl
  const v3=value.version==='umf.table-migration-options/0.3';
  const v4=value.version==='umf.table-migration-options/0.4';
  const v5=value.version==='umf.table-migration-options/0.5';
- if((v1&&!exact(value,['version','backfills','concurrentIndexes']))||((v2||v3||v4||v5)&&!exact(value,['version','backfills','concurrentIndexes','reviewedChanges','validations']))||(!v1&&!v2&&!v3&&!v4&&!v5)||!Array.isArray(value.backfills)||!Array.isArray(value.concurrentIndexes)||value.backfills.length>256||value.concurrentIndexes.length>256||((v2||v3||v4||v5)&&(!Array.isArray(value.reviewedChanges)||!Array.isArray(value.validations)||value.validations.length>256)))fail('Unknown options profile, members or resource bounds');
- if(!previous)return fail(v2?'Version 0.2 phased plans require a previous installed source; initial publication is not supported':v5?'Version 0.5 default changes require a previous installed source; initial publication is not supported':'Options require a previous installed source');
+ const v6=value.version==='umf.table-migration-options/0.6';
+ if((v1&&!exact(value,['version','backfills','concurrentIndexes']))||((v2||v3||v4||v5||v6)&&!exact(value,['version','backfills','concurrentIndexes','reviewedChanges','validations']))||(!v1&&!v2&&!v3&&!v4&&!v5&&!v6)||!Array.isArray(value.backfills)||!Array.isArray(value.concurrentIndexes)||value.backfills.length>256||value.concurrentIndexes.length>256||((v2||v3||v4||v5||v6)&&(!Array.isArray(value.reviewedChanges)||!Array.isArray(value.validations)||value.validations.length>256)))fail('Unknown options profile, members or resource bounds');
+ if(!previous)return fail(v2?'Version 0.2 phased plans require a previous installed source; initial publication is not supported':v5?'Version 0.5 default changes require a previous installed source; initial publication is not supported':v6?'Version 0.6 field replacement requires a previous installed source; initial publication is not supported':'Options require a previous installed source');
  if(v4&&previous.source.format!=='json')fail('Version 0.4 derived backfills require JSON source bytes','/previous/source/format');
  if(v4&&next.source.format!=='json')fail('Version 0.4 derived backfills require JSON source bytes','/next/source/format');
  if(v5&&previous.source.format!=='json')fail('Version 0.5 default changes require JSON source bytes','/previous/source/format');
  if(v5&&next.source.format!=='json')fail('Version 0.5 default changes require JSON source bytes','/next/source/format');
- if(v2||v3||v4||v5){
-  try{value.reviewedChanges=validateReviewedChangeMarkers(value.reviewedChanges,previous,next,v5?{version:'umf.table-migration-discovery/0.2'}:undefined);}catch(error){fail(error instanceof Error?error.message:'Invalid reviewed change marker');}
+ if(v6&&previous.source.format!=='json')fail('Version 0.6 field replacement requires exact JSON source bytes','/previous/source/format');
+ if(v6&&next.source.format!=='json')fail('Version 0.6 field replacement requires exact JSON source bytes','/next/source/format');
+ if(v2||v3||v4||v5||v6){
+  try{value.reviewedChanges=validateReviewedChangeMarkers(value.reviewedChanges,previous,next,v6?{version:'umf.table-migration-discovery/0.3'}:v5?{version:'umf.table-migration-discovery/0.2'}:undefined);}catch(error){fail(error instanceof Error?error.message:'Invalid reviewed change marker');}
+  if(v6&&value.reviewedChanges!.some((marker,index)=>Object.hasOwn(marker,'conversion')))fail('G11 reviewed markers do not admit conversion qualifiers','/options/reviewedChanges/'+value.reviewedChanges!.findIndex(marker=>Object.hasOwn(marker,'conversion')));
+  if(v6)try{validateG11SourceCorrespondence(previous,next,value.reviewedChanges!);}catch(error){fail(error instanceof Error?error.message:'G11 source correspondence refused');}
   const seenValidations=new Set<string>();
   for(const [i,selection] of value.validations!.entries()){
    const path='/options/validations/'+i;
@@ -69,11 +75,12 @@ export function migrationOptions(value:TableMigrationOptions|undefined,next:Tabl
   if(!table||!old||!column)fail('Backfill must select a column on an existing table',path);
   const existing=old!.columns.some(c=>refKey(c.field)===refKey(backfill.column));
   if(existing){
+   if(v6)fail('Version 0.6 backfills may target only newly added Fields; old-only Field copies are outside G11',path);
    if(!v3&&!v4)fail('Historical backfill on an existing column requires options version 0.3 or later',path);
    if(v4){
     const operation=commands.find(c=>c.id===backfill.operation) as any,body=operation?.body as any;
     if(!operation||operation.version!=='umf.table-operation/0.2'||operation.parameters.length||operation.batch||body?.kind!=='update'||body.table!==table!.id||body.returning.length||body.values.length!==1||refKey(body.values[0]!.field)!==refKey(backfill.column)||body.values[0]!.value.kind!=='rowExpression'||body.where.op!=='isNull'||refKey(body.where.field)!==refKey(backfill.column)||!Number.isInteger(body.maxRows)||body.maxRows<1||body.maxRows>10000)fail('Derived backfill requires one bounded parameter-free operation 0.2 UPDATE of only its selected NULL column',path);
-    validateExpressionInputs(body.values[0]!.value.expression,previous,next,backfill.table,backfill.column,path);
+    validateExpressionInputs(body.values[0]!.value.expression,previous,next,backfill.table,backfill.column,path,false);
     const markerPath=next.expectedCatalog.columns.find(c=>c.table===backfill.table&&refKey(c.field)===refKey(backfill.column))!.sourcePath;
     if(!value.reviewedChanges!.some(marker=>marker.kind==='tighten-not-null'&&marker.path===markerPath))fail('Existing-field derived fill requires its exact reviewed NOT NULL marker',path);
    }
@@ -85,11 +92,17 @@ export function migrationOptions(value:TableMigrationOptions|undefined,next:Tabl
   const identity=JSON.stringify([backfill.table,refKey(backfill.column)]);
   if(seen.has(identity))fail('Duplicate backfill',path);seen.add(identity);
   const command=commands.find(c=>c.id===backfill.operation) as any,body=command?.body as any;
-  if(!v4&&(!command||command.parameters.length||command.batch||body?.kind!=='update'||body.table!==table!.id||body.returning.length||body.values.length!==1||refKey(body.values[0]!.field)!==refKey(backfill.column)||!['literal','currentTimestamp'].includes(body.values[0]!.value.kind)||body.where.op!=='isNull'||refKey(body.where.field)!==refKey(backfill.column)||(v3&&(!Number.isInteger(body.maxRows)||body.maxRows<1||body.maxRows>10000||(body.values[0]!.value.kind==='literal'&&body.values[0]!.value.value===null)||(body.values[0]!.value.kind==='currentTimestamp'&&column!.nativeType.kind!=='timestamptz')))))fail('Backfill requires an original parameter-free bounded UPDATE of only its selected NULL column with a compatible value domain',path);
-  if(v4&&!existing){
+  if(!v4&&!v6&&(!command||command.parameters.length||command.batch||body?.kind!=='update'||body.table!==table!.id||body.returning.length||body.values.length!==1||refKey(body.values[0]!.field)!==refKey(backfill.column)||!['literal','currentTimestamp'].includes(body.values[0]!.value.kind)||body.where.op!=='isNull'||refKey(body.where.field)!==refKey(backfill.column)||(v3&&(!Number.isInteger(body.maxRows)||body.maxRows<1||body.maxRows>10000||(body.values[0]!.value.kind==='literal'&&body.values[0]!.value.value===null)||(body.values[0]!.value.kind==='currentTimestamp'&&column!.nativeType.kind!=='timestamptz')))))fail('Backfill requires an original parameter-free bounded UPDATE of only its selected NULL column with a compatible value domain',path);
+  if((v4||v6)&&!existing){
    const operation=commands.find(c=>c.id===backfill.operation) as any,body=operation?.body as any;
    if(!operation||operation.version!=='umf.table-operation/0.2'||operation.parameters.length||operation.batch||body?.kind!=='update'||body.table!==table!.id||body.returning.length||body.values.length!==1||refKey(body.values[0]!.field)!==refKey(backfill.column)||body.values[0]!.value.kind!=='rowExpression'||body.where.op!=='isNull'||refKey(body.where.field)!==refKey(backfill.column)||!Number.isInteger(body.maxRows)||body.maxRows<1||body.maxRows>10000)fail('Appended derived backfill requires one bounded parameter-free operation 0.2 UPDATE of only its selected NULL column',path);
-   validateExpressionInputs(body.values[0]!.value.expression,previous,next,backfill.table,backfill.column,path);
+   validateExpressionInputs(body.values[0]!.value.expression,previous,next,backfill.table,backfill.column,path,v6);
+   validateAppendTarget(previous,next,backfill.table,backfill.column,path);
+  }
+  if(v6&&!existing){
+   const operation=commands.find(c=>c.id===backfill.operation) as any,body=operation?.body as any;
+   if(!operation||operation.version!=='umf.table-operation/0.2'||operation.parameters.length||operation.batch||body?.kind!=='update'||body.table!==table!.id||body.returning.length||body.values.length!==1||refKey(body.values[0]!.field)!==refKey(backfill.column)||body.values[0]!.value.kind!=='rowExpression'||body.where.op!=='isNull'||refKey(body.where.field)!==refKey(backfill.column)||!Number.isInteger(body.maxRows)||body.maxRows<1||body.maxRows>10000)fail('G11 added-field fill requires one bounded parameter-free operation 0.2 UPDATE of only the selected NULL target',path);
+   validateExpressionInputs(body.values[0]!.value.expression,previous,next,backfill.table,backfill.column,path,true);
    validateAppendTarget(previous,next,backfill.table,backfill.column,path);
   }
  }
@@ -103,6 +116,15 @@ export function migrationOptions(value:TableMigrationOptions|undefined,next:Tabl
   }else if(value.reviewedChanges!.length!==0)fail('An appended target cannot carry a fabricated review marker','/options/reviewedChanges');
   validateG02SourceDelta(previous,next,selected.table,selected.column,selected.operation,existing);
   if(!operation||operation.version!=='umf.table-operation/0.2')fail('G02 must select its exact next-source operation 0.2','/options/backfills/0/operation');
+ }
+ if(v6){
+  if(value.concurrentIndexes.length||value.validations!.length)fail('G11 does not admit concurrent indexes or deferred validations','/options');
+  const selected=new Set<string>();
+  for(const [i,b] of value.backfills.entries()){
+   const key=JSON.stringify([b.table,refKey(b.column)]);
+   if(selected.has(key))fail('G11 permits at most one backfill per added target','/options/backfills/'+i);
+   selected.add(key);
+  }
  }
  if(v5){
   if(value.backfills.length||value.concurrentIndexes.length||value.validations!.length||value.reviewedChanges!.length!==1)fail('G03 selects one existing-column default change only, with no backfills, indexes or validations');
@@ -120,19 +142,21 @@ export function migrationOptions(value:TableMigrationOptions|undefined,next:Tabl
  return value;
 }
 
-function validateExpressionInputs(expression:unknown,previous:TableDeploymentBundle,next:TableDeploymentBundle,table:string,target:TableRef,path:string):void{
+function validateExpressionInputs(expression:unknown,previous:TableDeploymentBundle,next:TableDeploymentBundle,table:string,target:TableRef,path:string,allowSourcePathShift:boolean):void{
  let refs:TableRef[];
  try{refs=rowExpressionInputRefs(expression as any);}catch{fail('Derived expression contains invalid or unbounded references',path);}
  for(const ref of refs!){
-  if(ref.module!==target.module||refKey(ref)===refKey(target))fail('Derived expression inputs must be unchanged existing fields on the selected table',path);
+  if((ref.module!==target.module&&!allowSourcePathShift)||refKey(ref)===refKey(target))fail('Derived expression inputs must be unchanged existing fields on the selected table',path);
   const before=previous.expectedCatalog.columns.find(c=>c.table===table&&refKey(c.field)===refKey(ref));
   const after=next.expectedCatalog.columns.find(c=>c.table===table&&refKey(c.field)===refKey(ref));
-  if(!before||!after||!same(before,after)||!same(previous.expectedCatalog.tables.find(t=>t.id===table)?.columns.find(c=>refKey(c.field)===refKey(ref)),next.expectedCatalog.tables.find(t=>t.id===table)?.columns.find(c=>refKey(c.field)===refKey(ref))))fail('Derived expression inputs must be unchanged existing fields on the selected table',path);
+  const sameExpected=before&&after&&(allowSourcePathShift?same(withoutSourcePath(before),withoutSourcePath(after)):same(before,after));
+  if(!sameExpected||!same(previous.expectedCatalog.tables.find(t=>t.id===table)?.columns.find(c=>refKey(c.field)===refKey(ref)),next.expectedCatalog.tables.find(t=>t.id===table)?.columns.find(c=>refKey(c.field)===refKey(ref))))fail('Derived expression inputs must be unchanged existing fields on the selected table',path);
   const oldField=readDocument(previous.source.utf8,previous.source.format).modules.find(m=>m.id===ref.module)?.elements.find(e=>e.id===ref.element);
   const newField=readDocument(next.source.utf8,next.source.format).modules.find(m=>m.id===ref.module)?.elements.find(e=>e.id===ref.element);
   if(!oldField||!newField||!same(oldField,newField))fail('Derived expression inputs must retain exact logical and extension meaning across both sources',path);
  }
 }
+function withoutSourcePath<T extends {sourcePath?:string}>(value:T):Omit<T,'sourcePath'>{const {sourcePath:_sourcePath,...meaning}=value;return meaning;}
 
 function validateG02SourceDelta(previous:TableDeploymentBundle,next:TableDeploymentBundle,tableId:string,target:TableRef,operationId:string,existing:boolean):void{
  const oldDocument=readDocument(previous.source.utf8,previous.source.format),newDocument=readDocument(next.source.utf8,next.source.format);

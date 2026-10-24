@@ -22,7 +22,7 @@ function source({append=false,operation=true,existingOptional=false,futureDefaul
  if(operation)payload.commands.push({version:'umf.table-operation/0.2',id:'derive_summary',parameters:[],consistency:'transaction',replay:'caller-key-required',body:{kind:'update',table:'notes',where:{op:'isNull',field:ref('summary')},values:[{field:ref('summary'),value:{kind:'rowExpression',expression}}],returning:[],maxRows:100}});
  return doc;
 }
-function bundle(doc:any){const result=compileTableDeployment({text:JSON.stringify(doc),configuration});if(result.status!=='compiled')throw Error(JSON.stringify(result.diagnostics));return result.bundle;}
+function bundle(doc:any,config=configuration){const result=compileTableDeployment({text:JSON.stringify(doc),configuration:config});if(result.status!=='compiled')throw Error(JSON.stringify(result.diagnostics));return result.bundle;}
 function yamlBundle(doc:any){const result=compileTableDeployment({text:writeDocument(doc,'yaml'),format:'yaml',configuration});if(result.status!=='compiled')throw Error(JSON.stringify(result.diagnostics));return result.bundle;}
 
 test('G02 appends, derives, and tightens one required target in the exact ordered native phase',()=>{
@@ -40,6 +40,16 @@ test('G02 appends, derives, and tightens one required target in the exact ordere
  expect(result.plan.steps[2]).toMatchObject({kind:'backfill',sql:'',operation:'derive_summary',phaseOperation:'backfill'});
  expect(result.plan.steps[3]!.sql).toBe('ALTER TABLE "g02_demo"."notes" ALTER COLUMN "summary" SET NOT NULL');
  const validator=createValidator();validator.addSchema(tablesSchema);validator.addSchema(deploymentSchema);expect(validator.compile(migrationSchema)(result.plan)).toBe(true);
+ expect(verifyTableMigration(result.plan)).toEqual(result.plan);
+});
+
+test('G02 frozen 0.4 future-default plan bytes and digest remain verifiable',()=>{
+ const frozenConfiguration={module:'demo',schema:'plugin_demo',ownerRole:'plugin_owner',personRole:'plugin_person',batchRole:'plugin_batch',groupRoles:{readers:'plugin_readers'}};
+ const previous=bundle(source({operation:false}),frozenConfiguration),next=bundle(source({append:true,futureDefault:true}),frozenConfiguration);
+ const result=compileTableMigration({id:'g02-append-002',predecessor:{id:'g02-initial-001',digest:'a'.repeat(64)},previous,next,options:{version:'umf.table-migration-options/0.4',backfills:[{table:'notes',column:ref('summary'),operation:'derive_summary',scopedRows:true}],concurrentIndexes:[],reviewedChanges:[],validations:[]}});
+ expect(result.status).toBe('compiled');if(result.status!=='compiled')throw Error(JSON.stringify(result.diagnostics));
+ expect(result.plan.digest).toBe('dfdf88b70b80a228c381fe4ddf8db9233e2c099dc4de6a7bebcdbf4307ef65ae');
+ expect(result.plan.steps.map(step=>step.operation??null)).toEqual([null,null,'derive_summary',null,null,null,null]);
  expect(verifyTableMigration(result.plan)).toEqual(result.plan);
 });
 

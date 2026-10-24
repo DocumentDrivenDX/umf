@@ -102,7 +102,7 @@ test('G03 discovery selector is exact and legacy discovery stays unchanged',()=>
  expect(discoverTableMigrationChanges(previous,next).some(item=>item.kind==='change-default')).toBe(false);
  expect(discoverTableMigrationChanges(previous,next,{version:'umf.table-migration-discovery/0.2'}).some(item=>item.kind==='change-default')).toBe(true);
  expect(()=>discoverTableMigrationChanges(previous,next,{version:'umf.table-migration-discovery/0.2',extra:true} as any)).toThrow();
- expect(()=>discoverTableMigrationChanges(previous,next,{version:'umf.table-migration-discovery/0.3'} as any)).toThrow();
+ expect(()=>discoverTableMigrationChanges(previous,next,{version:'umf.table-migration-discovery/0.999'} as any)).toThrow('Unknown table-migration discovery selector');
 });
 
 test('G03 opt-in discovery refuses non-JSON sources while unselected legacy YAML behavior remains unchanged',()=>{
@@ -111,7 +111,7 @@ test('G03 opt-in discovery refuses non-JSON sources while unselected legacy YAML
  const yamlNext={...next,source:{...next.source,format:'yaml' as const}};
  expect(()=>discoverTableMigrationChanges(yamlPrevious,next)).not.toThrow();
  expect(discoverTableMigrationChanges(yamlPrevious,next)).toEqual([]);
- expect(()=>discoverTableMigrationChanges(yamlPrevious,next,{version:'umf.table-migration-discovery/0.3'} as any)).toThrow('Unknown table-migration discovery selector');
+ expect(()=>discoverTableMigrationChanges(yamlPrevious,next,{version:'umf.table-migration-discovery/0.999'} as any)).toThrow('Unknown table-migration discovery selector');
  for(const [before,after,path] of [[yamlPrevious,next,'/previous/source/format'],[previous,yamlNext,'/next/source/format']] as const){
   try{discoverTableMigrationChanges(before,after,{version:'umf.table-migration-discovery/0.2'});throw Error('G03 selector admitted a non-JSON retained source');}
   catch(error){expect(error).toMatchObject({code:'TABLE_MIGRATION_OPTIONS',path});}

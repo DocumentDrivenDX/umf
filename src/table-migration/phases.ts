@@ -18,8 +18,9 @@ export interface PhasedMigrationStep {
  sql?:string;
  constraintKind?:'check'|'foreignKey';
  seedSets?:string[];
- phaseOperation?:'backfill'|'tighten-not-null'|'add-column'|'target-check'|'install-default'|'change-default';
+ phaseOperation?:'backfill'|'tighten-not-null'|'add-column'|'target-check'|'install-default'|'change-default'|'drop-column'|'dependency-drop'|'dependency-add';
  phaseTarget?:{table:string;field:{module:string;element:string}};
+ phaseDependency?:{table:string;kind:'check'|'foreignKey'|'index'|'key'|'policy'|'grant';id:string;sourcePath:string;meaningDigest:string};
 }
 
 export interface SeedMigrationStep extends PhasedMigrationStep {
@@ -61,6 +62,12 @@ const EXECUTION_PROFILE_04:TableMigrationExecutionProfile={
  progressRelation:'umf_lifecycle_progress',
  ownerOnly:true,
 };
+const EXECUTION_PROFILE_05:TableMigrationExecutionProfile={
+ version:'umf.table-migration-execution/0.5',
+ progressRelation:'umf_lifecycle_progress',
+ ownerOnly:true,
+ ingressProfile:'umf.table-generation-ingress/0.1',
+};
 
 function phaseKind(step:PhasedMigrationStep):MigrationPhaseKind{
  if(step.kind==='backfill')return 'backfill';
@@ -100,6 +107,26 @@ export function phaseTableMigrationSteps<TStep extends PhasedMigrationStep>(
  const isG01=!!_options&&typeof _options==='object'&&(_options as {version?:unknown}).version==='umf.table-migration-options/0.3';
  const isG02=!!_options&&typeof _options==='object'&&(_options as {version?:unknown}).version==='umf.table-migration-options/0.4';
  const isG03=!!_options&&typeof _options==='object'&&(_options as {version?:unknown}).version==='umf.table-migration-options/0.5';
+ const isG11=!!_options&&typeof _options==='object'&&(_options as {version?:unknown}).version==='umf.table-migration-options/0.6';
+ if(isG11){
+  if(seedExecution!=='none'||plannedSteps.some(step=>step.transaction!=='required'||Boolean(step.phaseTarget)===Boolean(step.phaseDependency)))throw new Error('g11-field-replacement-step-subject-invalid');
+  const validOperation=new Set(['drop-column','add-column','target-check','backfill','install-default','tighten-not-null','dependency-drop','dependency-add']);
+  if(plannedSteps.length<2||plannedSteps.some(step=>{
+   if(!step.phaseOperation||!validOperation.has(step.phaseOperation))return true;
+   const dependency=step.phaseOperation==='dependency-drop'||step.phaseOperation==='dependency-add';
+   if(dependency!==Boolean(step.phaseDependency)||dependency===Boolean(step.phaseTarget))return true;
+   if(dependency){const subject=step.phaseDependency!,expectedKind=subject.kind==='index'?'index':subject.kind==='foreignKey'?'foreignKey':subject.kind==='policy'?'policy':subject.kind==='grant'?'grant':'table';return !['check','foreignKey','index','key','policy','grant'].includes(subject.kind)||!subject.id||!subject.sourcePath||!/^[a-f0-9]{64}$/.test(subject.meaningDigest)||step.kind!==expectedKind||step.operation!==(step.phaseOperation==='dependency-drop'?'dependency-drop':'dependency-add');}
+   if(!step.phaseTarget!.table||!step.phaseTarget!.field.module||!step.phaseTarget!.field.element)return true;
+   if(step.phaseOperation==='backfill')return step.kind!=='backfill'||step.sql!==''||!step.operation;
+   if(step.kind!=='table')return true;
+   return step.phaseOperation==='add-column'?step.operation!=='add-column'
+    :step.phaseOperation==='drop-column'?step.operation!=='drop-column'
+    :step.phaseOperation==='install-default'?step.operation!=='install-default'
+    :step.phaseOperation==='tighten-not-null'?step.operation!=='tighten-not-null'
+    :step.phaseOperation==='target-check'?step.operation!=='target-check':true;
+  }))throw new Error('g11-field-replacement-step-role-invalid');
+  return {steps:plannedSteps,phases:[{id:'phase-00001',kind:'field-replacement',transaction:'required',steps:plannedSteps.map(step=>step.id)}],executionProfile:EXECUTION_PROFILE_05};
+ }
  if(isG03){
   const step=plannedSteps[0];
   if(plannedSteps.length!==1||step?.kind!=='table'||step.transaction!=='required'||step.phaseOperation!=='change-default'||!step.phaseTarget||!step.sql||!['set-default','drop-default'].includes(step.operation??''))throw new Error('g03-default-change-step-invalid');

@@ -1,0 +1,1259 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:table-migration:0.6",
+  "title": "Source-bound atomic stored-Field replacement migration",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "umf.table-migration/0.6"
+    },
+    "canonicalization": {
+      "const": "RFC8785"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "predecessor": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        }
+      },
+      "required": [
+        "id",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "previous": {
+      "$ref": "urn:umf:table-deployment:0.1"
+    },
+    "next": {
+      "$ref": "urn:umf:table-deployment:0.1"
+    },
+    "fromBundleDigest": {
+      "$ref": "#/$defs/digest"
+    },
+    "toBundleDigest": {
+      "$ref": "#/$defs/digest"
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 8192,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^step-[0-9]{5}$"
+          },
+          "kind": {
+            "enum": [
+              "table",
+              "foreignKey",
+              "index",
+              "policy",
+              "grant",
+              "comment",
+              "backfill",
+              "seed"
+            ]
+          },
+          "sourcePath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "transaction": {
+            "enum": [
+              "required",
+              "forbidden"
+            ]
+          },
+          "sql": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 1049600
+          },
+          "preconditions": {
+            "type": "object",
+            "properties": {
+              "phase": {
+                "const": "before-plan"
+              },
+              "kind": {
+                "enum": [
+                  "empty-private-schema",
+                  "installed-source-cohort"
+                ]
+              },
+              "bundleDigest": {
+                "anyOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "#/$defs/digest"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "phase",
+              "kind",
+              "bundleDigest"
+            ],
+            "additionalProperties": false
+          },
+          "expectedOutcome": {
+            "type": "object",
+            "properties": {
+              "phase": {
+                "const": "before-commit"
+              },
+              "kind": {
+                "const": "complete-next-source-catalog"
+              },
+              "bundleDigest": {
+                "$ref": "#/$defs/digest"
+              }
+            },
+            "required": [
+              "phase",
+              "kind",
+              "bundleDigest"
+            ],
+            "additionalProperties": false
+          },
+          "verification": {
+            "const": "native-catalog-privileges-and-role-scope"
+          },
+          "recovery": {
+            "enum": [
+              "rollback-transaction",
+              "inspect-index"
+            ]
+          },
+          "operation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "seedSets": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 128,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "constraintKind": {
+            "enum": [
+              "check",
+              "foreignKey"
+            ]
+          },
+          "phaseOperation": {
+            "enum": [
+              "backfill",
+              "tighten-not-null",
+              "add-column",
+              "target-check",
+              "install-default",
+              "change-default",
+              "drop-column",
+              "dependency-drop",
+              "dependency-add"
+            ]
+          },
+          "phaseTarget": {
+            "type": "object",
+            "properties": {
+              "table": {
+                "type": "string",
+                "minLength": 1
+              },
+              "field": {
+                "$ref": "urn:umf:tables:0.1.0#/$defs/ref"
+              }
+            },
+            "required": [
+              "table",
+              "field"
+            ],
+            "additionalProperties": false
+          },
+          "phaseDependency": {
+            "type": "object",
+            "properties": {
+              "table": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "enum": [
+                  "check",
+                  "foreignKey",
+                  "index",
+                  "key",
+                  "policy",
+                  "grant"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "sourcePath": {
+                "type": "string",
+                "minLength": 1
+              },
+              "meaningDigest": {
+                "$ref": "#/$defs/digest"
+              }
+            },
+            "required": [
+              "table",
+              "kind",
+              "id",
+              "sourcePath",
+              "meaningDigest"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "sourcePath",
+          "transaction",
+          "sql",
+          "preconditions",
+          "expectedOutcome",
+          "verification",
+          "recovery"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "seed"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "required": [
+                "seedSets"
+              ],
+              "properties": {
+                "transaction": {
+                  "const": "required"
+                },
+                "operation": {
+                  "const": "apply-seeds"
+                },
+                "seedSets": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 128,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "phaseOperation": {
+                  "const": "backfill"
+                }
+              },
+              "required": [
+                "phaseOperation"
+              ]
+            },
+            "then": {
+              "properties": {
+                "kind": {
+                  "const": "backfill"
+                },
+                "transaction": {
+                  "const": "required"
+                },
+                "sql": {
+                  "const": ""
+                },
+                "phaseTarget": {
+                  "$ref": "#/properties/steps/items/properties/phaseTarget"
+                }
+              },
+              "required": [
+                "operation",
+                "phaseTarget"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "phaseOperation": {
+                  "const": "tighten-not-null"
+                }
+              },
+              "required": [
+                "phaseOperation"
+              ]
+            },
+            "then": {
+              "properties": {
+                "kind": {
+                  "const": "table"
+                },
+                "transaction": {
+                  "const": "required"
+                },
+                "phaseTarget": {
+                  "$ref": "#/properties/steps/items/properties/phaseTarget"
+                }
+              },
+              "required": [
+                "phaseTarget"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "phaseOperation": {
+                  "const": "add-column"
+                }
+              },
+              "required": [
+                "phaseOperation"
+              ]
+            },
+            "then": {
+              "properties": {
+                "kind": {
+                  "const": "table"
+                },
+                "transaction": {
+                  "const": "required"
+                }
+              },
+              "required": [
+                "phaseTarget"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "phaseOperation": {
+                  "const": "target-check"
+                }
+              },
+              "required": [
+                "phaseOperation"
+              ]
+            },
+            "then": {
+              "properties": {
+                "kind": {
+                  "const": "table"
+                },
+                "transaction": {
+                  "const": "required"
+                }
+              },
+              "required": [
+                "phaseTarget"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "phaseOperation": {
+                  "const": "install-default"
+                }
+              },
+              "required": [
+                "phaseOperation"
+              ]
+            },
+            "then": {
+              "properties": {
+                "kind": {
+                  "const": "table"
+                },
+                "transaction": {
+                  "const": "required"
+                }
+              },
+              "required": [
+                "phaseTarget"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "phaseOperation": {
+                  "const": "change-default"
+                }
+              },
+              "required": [
+                "phaseOperation"
+              ]
+            },
+            "then": {
+              "properties": {
+                "kind": {
+                  "const": "table"
+                },
+                "transaction": {
+                  "const": "required"
+                },
+                "operation": {
+                  "enum": [
+                    "set-default",
+                    "drop-default"
+                  ]
+                }
+              },
+              "required": [
+                "operation",
+                "phaseTarget"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "seedExecution": {
+      "oneOf": [
+        {
+          "const": "none"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "version": {
+              "const": "umf.table-seed-execution/0.1"
+            },
+            "sets": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 128,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          },
+          "required": [
+            "version",
+            "sets"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "requiresApproval": {
+      "const": true
+    },
+    "nativeQualified": {
+      "const": false
+    },
+    "digest": {
+      "$ref": "#/$defs/digest"
+    },
+    "options": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": "umf.table-migration-options/0.6"
+        },
+        "backfills": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "type": "object",
+            "properties": {
+              "table": {
+                "type": "string"
+              },
+              "column": {
+                "$ref": "urn:umf:tables:0.1.0#/$defs/ref"
+              },
+              "operation": {
+                "type": "string"
+              },
+              "scopedRows": {
+                "const": true
+              }
+            },
+            "required": [
+              "table",
+              "column",
+              "operation",
+              "scopedRows"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "concurrentIndexes": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "type": "object",
+            "properties": {
+              "table": {
+                "type": "string"
+              },
+              "index": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "table",
+              "index"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "reviewedChanges": {
+          "type": "array",
+          "maxItems": 512,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "kind": {
+                "enum": [
+                  "drop-column",
+                  "rename-column",
+                  "change-column-type",
+                  "tighten-not-null",
+                  "relax-not-null",
+                  "replace-check",
+                  "replace-foreign-key",
+                  "replace-index",
+                  "replace-primary-key",
+                  "change-policy",
+                  "change-default",
+                  "change-operation",
+                  "change-operation-context"
+                ]
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "oldDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "newDigest": {
+                "$ref": "#/$defs/digest"
+              },
+              "conversion": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "path",
+              "oldDigest",
+              "newDigest"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "validations": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "type": "object",
+            "properties": {
+              "table": {
+                "type": "string",
+                "minLength": 1
+              },
+              "constraint": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "enum": [
+                  "check",
+                  "foreignKey"
+                ]
+              }
+            },
+            "required": [
+              "table",
+              "constraint",
+              "kind"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "version",
+        "backfills",
+        "concurrentIndexes",
+        "reviewedChanges",
+        "validations"
+      ],
+      "additionalProperties": false
+    },
+    "review": {
+      "type": "array",
+      "maxItems": 2816,
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "enum": [
+              "SCOPED_BACKFILL",
+              "POLICY_CHANGE_REVIEW",
+              "IRREVERSIBLE_COLUMN_PURGE"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "message"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "executionProfile": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": "umf.table-migration-execution/0.5"
+        },
+        "progressRelation": {
+          "const": "umf_lifecycle_progress"
+        },
+        "ownerOnly": {
+          "const": true
+        },
+        "ingressProfile": {
+          "const": "umf.table-generation-ingress/0.1"
+        }
+      },
+      "required": [
+        "version",
+        "progressRelation",
+        "ownerOnly",
+        "ingressProfile"
+      ],
+      "additionalProperties": false
+    },
+    "phases": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 8192,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^phase-[0-9]{5}$"
+          },
+          "kind": {
+            "enum": [
+              "transaction",
+              "backfill",
+              "concurrent-index",
+              "constraint-add",
+              "constraint-validation",
+              "seed",
+              "backfill-tighten",
+              "backfill-add",
+              "default-change",
+              "field-replacement"
+            ]
+          },
+          "transaction": {
+            "enum": [
+              "required",
+              "forbidden"
+            ]
+          },
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8192,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^step-[0-9]{5}$"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "transaction",
+          "steps"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "backfill-tighten"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "transaction": {
+                  "const": "required"
+                },
+                "steps": {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 2
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "backfill-add"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "transaction": {
+                  "const": "required"
+                },
+                "steps": {
+                  "type": "array",
+                  "minItems": 3
+                }
+              },
+              "required": [
+                "steps"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "approvalProfile": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": "umf.table-migration-approval/0.1"
+        },
+        "relation": {
+          "const": "umf_lifecycle_approvals"
+        },
+        "ownerOnly": {
+          "const": true
+        }
+      },
+      "required": [
+        "version",
+        "relation",
+        "ownerOnly"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "version",
+    "canonicalization",
+    "id",
+    "predecessor",
+    "previous",
+    "next",
+    "fromBundleDigest",
+    "toBundleDigest",
+    "steps",
+    "seedExecution",
+    "requiresApproval",
+    "nativeQualified",
+    "digest",
+    "phases",
+    "executionProfile",
+    "options",
+    "approvalProfile"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "version": {
+            "const": "umf.table-migration/0.5"
+          }
+        },
+        "required": [
+          "version"
+        ]
+      },
+      "then": {
+        "properties": {
+          "previous": {
+            "type": "object"
+          },
+          "options": {
+            "properties": {
+              "backfills": {
+                "maxItems": 0,
+                "type": "array"
+              },
+              "concurrentIndexes": {
+                "maxItems": 0,
+                "type": "array"
+              },
+              "validations": {
+                "maxItems": 0,
+                "type": "array"
+              },
+              "reviewedChanges": {
+                "minItems": 1,
+                "maxItems": 1,
+                "items": {
+                  "properties": {
+                    "kind": {
+                      "const": "change-default"
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
+          "steps": {
+            "minItems": 1,
+            "maxItems": 1,
+            "items": {
+              "properties": {
+                "kind": {
+                  "const": "table"
+                },
+                "phaseOperation": {
+                  "const": "change-default"
+                },
+                "transaction": {
+                  "const": "required"
+                },
+                "phaseTarget": {
+                  "$ref": "#/properties/steps/items/properties/phaseTarget"
+                }
+              },
+              "required": [
+                "phaseOperation",
+                "phaseTarget"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "phases": {
+            "minItems": 1,
+            "maxItems": 1,
+            "items": {
+              "properties": {
+                "kind": {
+                  "const": "default-change"
+                },
+                "transaction": {
+                  "const": "required"
+                },
+                "steps": {
+                  "minItems": 1,
+                  "maxItems": 1,
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "executionProfile": {
+            "properties": {
+              "version": {
+                "const": "umf.table-migration-execution/0.4"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "required": [
+          "previous",
+          "options",
+          "steps",
+          "phases",
+          "executionProfile"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "version": {
+            "const": "umf.table-migration/0.6"
+          }
+        },
+        "required": [
+          "version"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "required": [
+          "previous",
+          "options",
+          "steps",
+          "phases",
+          "executionProfile",
+          "approvalProfile"
+        ],
+        "properties": {
+          "previous": {
+            "type": "object"
+          },
+          "seedExecution": {
+            "const": "none"
+          },
+          "options": {
+            "type": "object",
+            "properties": {
+              "version": {
+                "const": "umf.table-migration-options/0.6"
+              },
+              "concurrentIndexes": {
+                "type": "array",
+                "maxItems": 0
+              },
+              "validations": {
+                "type": "array",
+                "maxItems": 0
+              },
+              "reviewedChanges": {
+                "type": "array",
+                "items": {
+                  "not": {
+                    "required": [
+                      "conversion"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "steps": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "object",
+              "required": [
+                "phaseOperation",
+                "transaction"
+              ],
+              "properties": {
+                "transaction": {
+                  "const": "required"
+                },
+                "phaseOperation": {
+                  "enum": [
+                    "drop-column",
+                    "add-column",
+                    "target-check",
+                    "backfill",
+                    "install-default",
+                    "tighten-not-null",
+                    "dependency-drop",
+                    "dependency-add"
+                  ]
+                },
+                "phaseTarget": {
+                  "$ref": "#/properties/steps/items/properties/phaseTarget"
+                },
+                "phaseDependency": {
+                  "$ref": "#/properties/steps/items/properties/phaseDependency"
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "phaseOperation": {
+                        "enum": [
+                          "dependency-drop",
+                          "dependency-add"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "phaseOperation"
+                    ]
+                  },
+                  "then": {
+                    "required": [
+                      "phaseDependency"
+                    ],
+                    "not": {
+                      "required": [
+                        "phaseTarget"
+                      ]
+                    }
+                  },
+                  "else": {
+                    "required": [
+                      "phaseTarget"
+                    ],
+                    "not": {
+                      "required": [
+                        "phaseDependency"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {"phaseOperation": {"const": "backfill"}},
+                    "required": ["phaseOperation"]
+                  },
+                  "then": {
+                    "properties": {
+                      "kind": {"const": "backfill"},
+                      "sql": {"const": ""}
+                    },
+                    "required": ["operation", "phaseTarget"]
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {"phaseOperation": {"const": "drop-column"}},
+                    "required": ["phaseOperation"]
+                  },
+                  "then": {
+                    "properties": {
+                      "kind": {"const": "table"},
+                      "operation": {"const": "drop-column"}
+                    },
+                    "required": ["operation", "phaseTarget"]
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {"phaseOperation": {"const": "add-column"}},
+                    "required": ["phaseOperation"]
+                  },
+                  "then": {
+                    "properties": {"kind": {"const": "table"}, "operation": {"const": "add-column"}},
+                    "required": ["operation", "phaseTarget"]
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {"phaseOperation": {"const": "target-check"}},
+                    "required": ["phaseOperation"]
+                  },
+                  "then": {
+                    "properties": {"kind": {"const": "table"}, "operation": {"const": "target-check"}},
+                    "required": ["operation", "phaseTarget"]
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {"phaseOperation": {"const": "install-default"}},
+                    "required": ["phaseOperation"]
+                  },
+                  "then": {
+                    "properties": {"kind": {"const": "table"}, "operation": {"const": "install-default"}},
+                    "required": ["operation", "phaseTarget"]
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {"phaseOperation": {"const": "tighten-not-null"}},
+                    "required": ["phaseOperation"]
+                  },
+                  "then": {
+                    "properties": {"kind": {"const": "table"}, "operation": {"const": "tighten-not-null"}},
+                    "required": ["operation", "phaseTarget"]
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {"phaseOperation": {"const": "dependency-drop"}},
+                    "required": ["phaseOperation"]
+                  },
+                  "then": {
+                    "properties": {"operation": {"const": "dependency-drop"}},
+                    "required": ["operation", "phaseDependency"]
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {"phaseOperation": {"const": "dependency-add"}},
+                    "required": ["phaseOperation"]
+                  },
+                  "then": {
+                    "properties": {"operation": {"const": "dependency-add"}},
+                    "required": ["operation", "phaseDependency"]
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {"phaseDependency": {"properties": {"kind": {"const": "index"}}, "required": ["kind"]}},
+                    "required": ["phaseDependency"]
+                  },
+                  "then": {"properties": {"kind": {"const": "index"}}}
+                },
+                {
+                  "if": {
+                    "properties": {"phaseDependency": {"properties": {"kind": {"const": "foreignKey"}}, "required": ["kind"]}},
+                    "required": ["phaseDependency"]
+                  },
+                  "then": {"properties": {"kind": {"const": "foreignKey"}}}
+                },
+                {
+                  "if": {
+                    "properties": {"phaseDependency": {"properties": {"kind": {"enum": ["check", "key"]}}, "required": ["kind"]}},
+                    "required": ["phaseDependency"]
+                  },
+                  "then": {"properties": {"kind": {"const": "table"}}}
+                },
+                {
+                  "if": {
+                    "properties": {"phaseDependency": {"properties": {"kind": {"const": "policy"}}, "required": ["kind"]}},
+                    "required": ["phaseDependency"]
+                  },
+                  "then": {"properties": {"kind": {"const": "policy"}}}
+                },
+                {
+                  "if": {
+                    "properties": {"phaseDependency": {"properties": {"kind": {"const": "grant"}}, "required": ["kind"]}},
+                    "required": ["phaseDependency"]
+                  },
+                  "then": {"properties": {"kind": {"const": "grant"}}}
+                }
+              ]
+            }
+          },
+          "phases": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "field-replacement"
+                },
+                "transaction": {
+                  "const": "required"
+                },
+                "steps": {
+                  "type": "array",
+                  "minItems": 2
+                }
+              },
+              "required": [
+                "kind",
+                "transaction",
+                "steps"
+              ]
+            }
+          },
+          "executionProfile": {
+            "type": "object",
+            "properties": {
+              "version": {
+                "const": "umf.table-migration-execution/0.5"
+              },
+              "progressRelation": {
+                "const": "umf_lifecycle_progress"
+              },
+              "ownerOnly": {
+                "const": true
+              },
+              "ingressProfile": {
+                "const": "umf.table-generation-ingress/0.1"
+              }
+            },
+            "required": [
+              "version",
+              "progressRelation",
+              "ownerOnly",
+              "ingressProfile"
+            ],
+            "additionalProperties": false
+          },
+          "approvalProfile": {
+            "$ref": "#/properties/approvalProfile"
+          }
+        }
+      }
+    }
+  ]
+}
