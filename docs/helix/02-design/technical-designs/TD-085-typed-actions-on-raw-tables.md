@@ -1214,3 +1214,76 @@ Successor005 ordinary-decision-custody.md is normative proposed shared text for 
 ## Successor006 exact one-grant/cumulative mapping
 
 campaign-grant-accounting.md is normative proposed closure. Native budgetReceipt.campaignCharge.elapsedBudgetMs equals ONE dispatched original grant.reservedMs. Common priorCampaignCharge is the original cumulative outer preparation checkpoint including every aborted/resolved-unknown preparation grant, never the successful phase1 receipt alone. Current original outer cumulative time sums UNIQUE grants across every attempt/phase; native receipt/settlement replay addsZERO. Common+outer refer to ONE same-provider durable allocation under original atomic CAS, not independent budgets. Existing decisionBinding resolves phase2 to that SAME original grant. Unknown stays charged/fenced; positively proved abort permits exactly one new fully charged numbered grant if original remaining cap fits. Full native/provider/CAS/custody/Weft/old-store/carrier/table/mixed/installation gates remain OPEN; no signature scope/receipt/old-context widening.
+
+
+### G11 concrete original native ROOT session and durable checkpoints014
+
+This amendment adopts the following concrete native session/exclusion and ROOT
+checkpoint design as requirements. It is not native execution evidence or a
+claim that the original ingress-store and application-origin interfaces exist.
+Existing010–013 ROOT/config/trust/context/ledger wires remain exact. New typed
+native checkpoint events select only original supervisor-journal0.2; legacy0.1
+history is never reinterpreted, upgraded or recreated. Source008339d's reviewed
+pure validation/physical-context association does not supply actual native facts.
+
+Precedence correction to native-session-interface001: the actual current ingress
+store verifier's `_verify_relation` CREATES/DROPS reference tables. That method
+MUST NOT run inside the effect-free ROOT observer. Implement a complete read-only
+catalog/ACL/role/dependency census against original committed born descriptors
+and identities. Creation-time descriptor DDL belongs only inside separately
+approved physical store creation. Actual prepared head/correspondence read-only
+steps are distinct from administrative verifier paths containing probe DDL;
+freeze their exact dependency/source map and verify the executed SQL path.
+ROLLBACK does not authorize DDL. No metadata observer runs arbitrary callbacks.
+
+Full original SourceCohort/native evidence closed encoding, actual SQL/census/
+deadline projections, concrete original committed INGRESS-store creator and
+subject/schema ownership provider remain separate pre-code/enablement gates.
+Ingress coordinator002 is a proposed next interface, not adopted here. It must
+separately freeze its full born-object witness, dispatch/attempt/custody/COMMIT
+receipt and execution-policy source definitions. No pre-DDL authority/schema OID/
+marker, source-test issuer or hash of current flags substitutes for those origins.
+New application bootstrap authority/profile/scope requires separate exact review;
+existing physical scope2 and logical ROOT signatures do not authorize it.
+
+All014 positive paths below require actual original native proofs. Missing
+prerequisites refuse and keep full implementation/native acceptance OPEN; named
+methods, unavailable stubs or pure helper tests do not qualify this design as
+implemented. Active0.1 deployment upgrade, unknown restore/all-history rollback,
+managed original continuity, full effect/barrier/epoch/installed/browser/platform/
+CI/release qualification remain explicit backlog obligations.
+
+#### Implementation sequence and concrete ownership
+
+The original OwnerAuthoritySession is created/reattached before target exclusion.
+Native LocalPostgresSupervisor owns fixed original target lease, actual owned
+connection/driver deadlines/read-only observation, persisted original snapshot,
+actual original enrollment resolution/trust association and immutable native
+binding registry. Pure bootstrap/root transition leaves own canonical validation,
+configured signatures and data-only transition plans. Upper generation authority
+session orchestrates prepare/export/confirm/recover and joins actual logical core
+with concrete native binding. Preserve exact alias/type/registry ownership and
+no reverse native imports, generic registrars, caller SQL or callbacks.
+
+Implement durable reserve and confirm mutation intent→exact ROOT replacement→
+native confirmation→binding sequence. Replay retained deltas from original zero
+state, require exact current state, and fence ALL target/control/ROOT/context
+writers while any mutation intent is unresolved. Follow013 subordinate birth and
+release-before-other-lock rules under SAME retained outer target exclusion.
+Native history does not hash a future ROOT binding or itself. Original signing
+wait is outside lease/transaction. Original signed snapshot stays immutable;
+fresh confirmation observations prove legitimate actual current continuity.
+
+Source-map every existing original physical/custody/store/epoch/root/context
+writer to the same exclusion/pending fence, including second processes and
+pre-registration original private control exclusion. No recursive fresh flock
+or factory settlement under an already-held outer lease. Track/check original
+process/thread/supervisor/target/inode/connection identity and release every FD,
+transaction and connection on EVERY exception path. Use bounded actual remaining
+native/driver/lock deadlines and persist original capacity before dispatch.
+
+Freeze actual native snapshot private closed rows/SQL/source tuples, committed
+ingress creation and application subject/schema origin interfaces before their
+positive code paths are adopted. Code admission must include actual positive
+native resolution/binding, not merely correctly refusing missing provider hooks.
+Pure data-only plans may precede that integration but cannot issue capabilities.

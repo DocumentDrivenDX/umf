@@ -1,0 +1,37 @@
+{
+  "profile": "umf.g11.governing-proposal/14",
+  "status": "concrete-native-root-lease-and-durable-mutation-checkpoint-design-for-review-native-unqualified",
+  "baseCommit": "339d8b5029bb2c03e442eb76e07c0acb209118b5",
+  "files": [
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-081-table-lifecycle.md",
+      "baseSha256": "bb5203eb8c624dc643bb6e45775a66f7d5bcabf6e0d2b87c83d98a803bedd039",
+      "candidateFile": "CONTRACT-081-table-lifecycle.md",
+      "candidateSha256": "f721adf78bd18f4b080335ede7703e18e3d6105d840c6eca3c66a0ba24078fcb"
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-085-typed-actions-on-raw-tables.md",
+      "baseSha256": "845b2eda7d04a7e1dca53c7db277262b3450e54a1ab6503fa252db192350d29e",
+      "candidateFile": "TD-085-typed-actions-on-raw-tables.md",
+      "candidateSha256": "fc4c543cc9db74b9163b152e71be4cb83b119f09bd3ad4d93c4e974d47b4c217"
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-085-typed-actions-on-raw-tables.md",
+      "baseSha256": "f8005619d3f2e22460fb384cbfe5209eb3e4da7f3132e8a21ccc5e54ccfba060",
+      "candidateFile": "STP-085-typed-actions-on-raw-tables.md",
+      "candidateSha256": "6eea8fa3d4ee18e9d2894cf55aa69af02923afdb9ffdba184d4f087e70de331b"
+    }
+  ],
+  "sourceElaborations": [
+    {
+      "file": "g11-concrete-native-root-session-001.md",
+      "sha256": "4b436a80b9b73ecf708be3b1280b9b514a7e80624aaf10db149c710172c36be4"
+    },
+    {
+      "file": "g11-native-root-checkpoints-001.md",
+      "sha256": "655dd227bd0ffe936041bf26c99111a8655c6342d6f52c1c0e7ad6c717c8d7c3"
+    }
+  ],
+  "patchSha256": "a863162ca0153a33d0e32d3f66f6235898a49a578cab7dde480b5daca6fd42c3",
+  "scope": "Exact native session/checkpoints and no-observer-DDL correction; actual closed private native snapshot/SQL, committed ingress and application origin pre-code gates preserved. No old-wire/profile upgrade or native completion."
+}

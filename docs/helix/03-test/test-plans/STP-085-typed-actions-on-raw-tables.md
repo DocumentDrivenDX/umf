@@ -1093,3 +1093,73 @@ All80 predecessor rows are retained verbatim. These eight rows require future ac
 | N47 | Positive abort vs already charged unknown | Positive original noncommit proof permits SAME request's next numbered fully charged grant iff remaining original cumulative cap fits; old grant never refunded. Unknown already charges full grant and blocks another attempt/phase; row absence, clock reset or alternative bootstrap never grants retry |
 | N48 | Later business uses current original cumulative total | After preparation+multiple phase2 attempts, real next business admission uses campaignBudgetMs minus ALL original grants. Historical phase2 receipt/common settlement replay never replaces/decrements newer outer checkpoint; boundary/overflow fixtures refuse before BEGIN without splitting atomic groups |
 | N49 | Provider/bounds/identity gate refusal | Missing exact new typed same-store campaign/CAS branch, wrong original campaign/custody/policy, unsupported old store/context,4096-entry or tighter record/history exhaustion and uncertain clock/COMMIT refuse before new allocation/effects. Full mixed/table/carrier/native acceptance remains OPEN |
+
+
+### G11 concrete original native ROOT session and durable checkpoints014
+
+This amendment adopts the following concrete native session/exclusion and ROOT
+checkpoint design as requirements. It is not native execution evidence or a
+claim that the original ingress-store and application-origin interfaces exist.
+Existing010–013 ROOT/config/trust/context/ledger wires remain exact. New typed
+native checkpoint events select only original supervisor-journal0.2; legacy0.1
+history is never reinterpreted, upgraded or recreated. Source008339d's reviewed
+pure validation/physical-context association does not supply actual native facts.
+
+Precedence correction to native-session-interface001: the actual current ingress
+store verifier's `_verify_relation` CREATES/DROPS reference tables. That method
+MUST NOT run inside the effect-free ROOT observer. Implement a complete read-only
+catalog/ACL/role/dependency census against original committed born descriptors
+and identities. Creation-time descriptor DDL belongs only inside separately
+approved physical store creation. Actual prepared head/correspondence read-only
+steps are distinct from administrative verifier paths containing probe DDL;
+freeze their exact dependency/source map and verify the executed SQL path.
+ROLLBACK does not authorize DDL. No metadata observer runs arbitrary callbacks.
+
+Full original SourceCohort/native evidence closed encoding, actual SQL/census/
+deadline projections, concrete original committed INGRESS-store creator and
+subject/schema ownership provider remain separate pre-code/enablement gates.
+Ingress coordinator002 is a proposed next interface, not adopted here. It must
+separately freeze its full born-object witness, dispatch/attempt/custody/COMMIT
+receipt and execution-policy source definitions. No pre-DDL authority/schema OID/
+marker, source-test issuer or hash of current flags substitutes for those origins.
+New application bootstrap authority/profile/scope requires separate exact review;
+existing physical scope2 and logical ROOT signatures do not authorize it.
+
+All014 positive paths below require actual original native proofs. Missing
+prerequisites refuse and keep full implementation/native acceptance OPEN; named
+methods, unavailable stubs or pure helper tests do not qualify this design as
+implemented. Active0.1 deployment upgrade, unknown restore/all-history rollback,
+managed original continuity, full effect/barrier/epoch/installed/browser/platform/
+CI/release qualification remain explicit backlog obligations.
+
+#### Required source and independent actual native verification
+
+All cases here are planned and UNTESTED until their exact frozen source/command/
+actual result receipts are retained. Existing123 source tests do not exercise
+these future native paths or satisfy this matrix.
+
+| Obligation | Required assertion and actual proof |
+| --- | --- |
+| Original lease identity | Genuine original target/supervisor/custodian acquires existing original lock; foreign/copied/expired/thread/process/inode/target handles refuse without effect |
+| Full writer exclusion | Actual second supervisor/process and every source-mapped physical/store/custody/epoch/ROOT/context writer contend or refuse pending; individual journal locks alone cannot pass |
+| Resource/deadline cleanup | Inject EVERY acquisition/read/SQL/append/rename/response failure; no leaked lock/FD/backend or unbounded driver wait; timeout settings installed before BEGIN and actual remaining bounds checked before each dispatch |
+| No observer DDL | Actual native SQL capture proves fixed ROOT observer uses only selected metadata queries/locks; no reference-table CREATE/DROP, DML, caller SQL or callback; actual transaction always rolls back/closes |
+| Full genuine native observation | Same owned native connection/transaction holds actual lifecycle lock and observes original target/store/source/head/full correspondence/subject/privilege facts, not a short probe or expected data echo |
+| Genuine origin prerequisites | Actual committed original ingress creation receipt/full born OIDs and real application subject/schema ownership resolve; pre-DDL authority/marker/name/flag hash/source-test issuer refuses |
+| Snapshot and signing wait | Complete exact canonical snapshot persisted before request export; wait outside lease/transaction; restart retains original signed digest and separately proves fresh actual original continuity |
+| ROOT reserve/confirm ordering | Both mutation kinds record exact native prior/next/full delta before ROOT replacement; export/context issue occurs only after original native confirmation/binding, with013 subordinate birth under same outer lease |
+| Crash matrix | Inject before/after each durable intent/replacement/confirmation/binding/issue; exact prior resumes same request only, exact next completes only missing confirmation, other state refuses; no new IDs/DDL or subordinate rebirth |
+| Missing/rewound ROOT | Restore older correctly signed prepared/confirmed prefixes or remove a reserved request while retaining native history; full original replay refuses before any control/effect writer |
+| Pending confirm subordinate loss | With native confirm intent but ROOT still prepared, remove each pinned subordinate birth file; refuse without recreation, even before ROOT confirmed |
+| Legitimate future ROOT appends | A historical binding remains resolvable after other legal enrollments; validate historical checkpoint inclusion plus exact latest replay, not whole-current-file equality to old birth/binding digest |
+| Actual native binding | Positive actual confirmed ROOT entry/original .3 context/logical core/native target/store/subject/source association succeeds; each foreign object/ID/projection/copy independently refuses |
+| All-history restore limit | Do not claim hashes detect restoration of every history together; require actual independent original custody/continuity acceptance or refuse profile |
+| Exact backward compatibility | Original0.1 journal/old context/enrollment/physical six scopes and logical wire remain exact; missing original new journals/locks/history never auto-create or upgrade |
+| Qualified final composition | Real production/native-acceptance purposes remain separate; installed/restarted/native barrier/epoch/provider/platform/browser/CI/release/published-byte evidence independently required |
+
+Record exact source cohort, qualified PG/driver/platform versions, immutable
+packet/adoption hashes, actual kernel/native effects and original event/request/
+receipt identities. Preserve failures and unknown outcomes; no source model,
+negative-only refusal suite or author-attributed log replaces independent native
+positive acceptance. The full G02–G11 goal and all existing G10/G04/G05 obligations
+stay open until independently verified and accurately released.
