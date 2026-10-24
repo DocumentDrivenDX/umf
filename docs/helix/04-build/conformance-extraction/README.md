@@ -30,7 +30,8 @@ working domain-pack schemas/loaders and small test samples. Adapter tests and
 their data belong to the external conformance suite; bundled bulk pack data
 becomes explicitly acquired, hash-verified assets. The owner now authorizes additive downloader/resolver implementation and the
 subsequent extraction after migration approves the concrete cut. Existing files
-stay in place until that approval. No history rewrite, publishing or release
+stay in place until that approval. The owner also explicitly authorizes committing the additive work and publishing
+remaining redistributable assets. No history rewrite or SDK/native release
 coordinate changes are authorized by this work.
 
 Governing inputs: [PRD](../../01-frame/prd.md), especially FR-45; [CONTRACT-052](../../02-design/contracts/CONTRACT-052-domain-packs.md)
@@ -301,14 +302,16 @@ CONTRACT-057's declared companion runtime/media profile.
 
 - `scripts/assets/store.ts`: versioned lock validation; mandatory trusted lock
   digest; explicit selectors/source revision; size/SHA-256/media checks; bounded,
-  allowlisted HTTPS without redirects; verified cache hits; atomic publication;
+  allowlisted HTTPS with general redirects disabled and one explicit pinned
+  GitHub-release-to-asset-CDN hop; verified cache hits; atomic publication;
   symlink/path rejection; non-overwriting materialization. No archive extraction
   or test/loader execution. No browser/library import or ambient fetching.
 - `scripts/domain-pack-assets.ts`: additive pack command using a pinned generated
   lock for all 789 baseline files; composed medical families include hash/version
   checked child packs. Retained source data can explicitly seed a cache before
-  removal. The 68 exact-byte upstream URLs are not a reachability claim; derived
-  projections and other unpublished assets intentionally have no remote URL.
+  removal. The 68 exact-byte upstream URLs are not a reachability claim. A separate
+  source-qualified asset release supplies exact-byte URLs for 21 cleared large
+  files; unknown-rights legal derived data remains local.
 - `scripts/conformance-resolve.ts`: requires an explicit lock SHA-256, suite source
   commit and job selectors. Complete selected inputs resolve before a usable
   path map/cohort is returned; missing/tampered inputs refuse. The selected lock
@@ -384,3 +387,25 @@ Tab-Separated Values with one file per row. To inventory a later agreed revision
 pass `--revision <sha>` and refresh `--declared-inputs <json>` from that revision's
 input reader. Manually reconcile classifications and consumer coverage; the script
 is a deterministic planning classifier, not an automatic move/deletion tool.
+
+### Commit and publication continuation
+
+The owner authorized additive commits and asset publication. Commit `adff33512`
+contains only the 16 additive resolver/planning files; unrelated Rust planning
+remains uncommitted and excluded. A dedicated asset release/tag
+`domain-pack-assets-2026-10-23` was cleared for coordinate separation by migration.
+Publication staging contains 21 explicitly redistributable exact-byte assets /
+6,132,614 bytes, plus provenance, attribution and SHA-256 indexes. The DICOM
+original retains its TCIA CC BY attribution and de-identification limits. One
+747,274-byte legal derived file has unknown redistribution rights and remains
+core; it is not publicly mirrored to force the size goal.
+
+The GitHub release transport is a narrow explicit configuration addition, not
+an ambient redirect exception. Publication and cold-download verification must
+complete before these release URLs are described as available. The release
+must not become the latest SDK release, replace existing assets, or touch SDK
+0.5.7/Core 0.10.1 coordinates. No extraction approval has been received; actual
+post-0.5.7 handoff revision still does not exist. A current checkout measurement
+is about 453 MB, not the conditional under-100 MB projection. The final fresh
+checkout measurement and core/offline/conformance validation follow the approved
+consumer cut; preview byte arithmetic cannot establish that gate.

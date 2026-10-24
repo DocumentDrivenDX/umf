@@ -8,7 +8,7 @@ import {isIP} from 'node:net';
 
 export type Asset={id:string;path:string;bytes:number;sha256:string;mediaType:string;
  sourceId:string;rights:'allowed'|'restricted'|'unknown';url?:string;mode?:'100644'|'100755';
- provenance?:unknown;license?:unknown};
+ provenance?:unknown;license?:unknown;transport?:'github-release';downloadMediaType?:string};
 export type Selection={assets:string[];entrypoint?:string;caseIds?:string[]};
 export type AssetLock={version:1;kind:'domain-packs'|'conformance';id:string;revision:string;
  allowedHosts:string[];assets:Asset[];selections:Record<string,Selection>};
@@ -30,6 +30,12 @@ export function assetUrl(value:string,hosts:string[]):URL {
   /(^|\.)(localhost|local|internal|test|invalid)$/.test(host))fail('URL/host policy');
  return u;
 }
+function releaseUrl(asset:Asset,hosts:string[]){
+ if(!asset.url)fail('GitHub release URL required');
+ const u=assetUrl(asset.url,hosts);
+ if(u.hostname!=='github.com'||u.search||!/^\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+\/releases\/download\/[A-Za-z0-9._-]+\/[a-f0-9]{64}\.[a-z0-9]+$/.test(u.pathname)||
+  !u.pathname.split('/').at(-1)!.startsWith(asset.sha256+'.')||!hosts.includes('release-assets.githubusercontent.com'))fail('GitHub release URL policy');
+}
 export function parseLock(input:unknown):AssetLock {
  const d=input as AssetLock;
  if(!d||d.version!==1||!['domain-packs','conformance'].includes(d.kind)||
@@ -46,6 +52,9 @@ export function parseLock(input:unknown):AssetLock {
    !/^[\w.+-]+\/[\w.+-]+$/.test(a.mediaType)||a.mode!==undefined&&!['100644','100755'].includes(a.mode))fail('asset structure/duplicate');
   if(hashSizes.has(a.sha256)&&hashSizes.get(a.sha256)!==a.bytes)fail('conflicting hash size');
   ids.add(a.id);paths.add(a.path);hashSizes.set(a.sha256,a.bytes);
+  if(a.transport!==undefined&&a.transport!=='github-release')fail('unsupported transport');
+  if(a.downloadMediaType!==undefined&&!/^[\w.+-]+\/[\w.+-]+$/.test(a.downloadMediaType))fail('download media type');
+  if(a.transport==='github-release')releaseUrl(a,d.allowedHosts);
   if(a.url!==undefined){if(typeof a.url!=='string')fail('URL structure');assetUrl(a.url,d.allowedHosts);}
  }
  // A file cannot also be an ancestor directory, including across selections.
@@ -138,11 +147,23 @@ export async function resolveAsset(lock:AssetLock,asset:Asset,options:Options):P
  if(!asset.url)fail('no exact-byte download published '+asset.id);
  const url=assetUrl(asset.url,lock.allowedHosts);
  const timeout=options.timeoutMs??30_000;if(!Number.isFinite(timeout)||timeout<=0||timeout>300_000)fail('invalid timeout');
- const response=await (options.fetcher??fetch)(url,{redirect:'manual',signal:AbortSignal.timeout(timeout),headers:{'Accept':asset.mediaType}});
+ const request={redirect:'manual' as const,signal:AbortSignal.timeout(timeout),headers:{'Accept':asset.downloadMediaType??asset.mediaType}};
+ let response=await (options.fetcher??fetch)(url,request);
+ // The sole redirect exception is an explicitly pinned GitHub release object to its CDN.
+ if(asset.transport==='github-release'){
+  releaseUrl(asset,lock.allowedHosts);
+  if(response.status===302){
+   const location=response.headers.get('location');await response.body?.cancel().catch(()=>{});
+   if(!location)fail('missing release redirect');
+   let next:URL;try{next=assetUrl(location,lock.allowedHosts);}catch{fail('invalid release redirect');}
+   if(next.hostname!=='release-assets.githubusercontent.com'||!next.pathname.startsWith('/github-production-release-asset/'))fail('untrusted release redirect');
+   response=await (options.fetcher??fetch)(next,request);
+  }
+ }
  try{
   if(response.status!==200||response.redirected)fail('HTTP status/redirect '+response.status);
   if(response.headers.has('content-length')&&response.headers.get('content-length')!==String(asset.bytes))fail('HTTP size mismatch');
-  if(response.headers.get('content-type')?.split(';')[0]?.trim().toLowerCase()!==asset.mediaType)fail('HTTP media type mismatch');
+  if(response.headers.get('content-type')?.split(';')[0]?.trim().toLowerCase()!==(asset.downloadMediaType??asset.mediaType))fail('HTTP media type mismatch');
   if(!response.body)fail('empty HTTP body');
   await storeStream(target,asset,response.body as unknown as AsyncIterable<Uint8Array>);
  }finally{await response.body?.cancel().catch(()=>{});}

@@ -113,13 +113,14 @@ test('source lock builder rejects absent files and refuses to replace reviewed l
  const parsed=await loadLock(output,sha(original));expect(parsed.revision).toBe(rev);expect(parsed.selections.one!.caseIds).toEqual(['resource-integrity']);
 }),30_000);
 
-test('checked pack lock protects complete composed families and does not download transformed projections',async()=>{
+test('checked pack lock protects complete composed families and pins transformed projections to exact published bytes',async()=>{
  const {packLockSha256}=await import('../scripts/assets/pack-lock-pin');
  const packs=await loadLock(join(import.meta.dir,'../scripts/assets/domain-packs.lock.json'),packLockSha256);
  expect(packs.assets.length).toBe(789);
  const medical=select(packs,['medical'],packs.revision);
  for(const id of ['medical-carrier','medical-epidemiology','medical-imaging','medical-terminology'])expect(medical.some(a=>a.path===`spec/domain-packs/${id}/pack.json`)).toBe(true);
- expect(packs.assets.find(a=>a.id==='public-company-intelligence/data/financial_observations.csv')?.url).toBeUndefined();
+ const derived=packs.assets.find(a=>a.id==='public-company-intelligence/data/financial_observations.csv');
+ expect(derived?.transport).toBe('github-release');expect(derived?.provenance).toBeDefined();
  expect(packs.assets.some(a=>a.id.startsWith('legal-appellate/sources/')&&a.url)).toBe(true);
 });
 
@@ -130,4 +131,16 @@ test('offline materialization preserves executable source mode and refuses a cha
  const first=await materialize(cohort,['native'],revision,{cache},join(root,'out'));
  const path=first.paths[original.path]!;expect((await import('node:fs/promises').then(m=>m.stat(path))).mode&0o111).toBe(0o111);
  await chmod(path,0o644);await expect(materialize(cohort,['native'],revision,{cache},join(root,'out'))).rejects.toThrow('mode mismatch');
+}));
+
+test('GitHub release transport permits only one explicit release-asset CDN hop',()=>fixture(async root=>{
+ const a=asset({transport:'github-release',url:`https://github.com/DocumentDrivenDX/umf/releases/download/domain-pack-assets-test/${sha(body)}.txt`,downloadMediaType:'application/octet-stream'});
+ const l=lock([asset()]);l.allowedHosts=['github.com','release-assets.githubusercontent.com'];l.assets=[a];parseLock(l);
+ let calls=0;
+ const fetcher=(async(url:URL)=>{calls++;if(calls===1)return new Response('',{status:302,headers:{location:'https://release-assets.githubusercontent.com/github-production-release-asset/123/object?signed=opaque'}});expect(url.hostname).toBe('release-assets.githubusercontent.com');return response(body,{'content-type':'application/octet-stream'});}) as unknown as typeof fetch;
+ const path=await resolveAsset(l,a,{cache:join(root,'cache'),download:true,rights:'local-use',fetcher});expect(await readFile(path,'utf8')).toBe(body);expect(calls).toBe(2);
+ for(const location of ['https://example.org/other','https://release-assets.githubusercontent.com/other','http://release-assets.githubusercontent.com/github-production-release-asset/x']){
+  const bad=transport(()=>new Response('',{status:302,headers:{location}}));await expect(resolveAsset(l,a,{cache:join(root,sha(location)),download:true,rights:'local-use',fetcher:bad.fetcher})).rejects.toThrow('redirect');expect(bad.calls).toBe(1);
+ }
+ const changed={...a,url:a.url!.replace(sha(body),'0'.repeat(64))};expect(()=>parseLock({...l,assets:[changed]})).toThrow('release URL policy');
 }));

@@ -48,16 +48,22 @@ bun scripts/domain-pack-assets.ts --selector legal-appellate \
 rehashed; corruption refuses rather than silently fetching replacement bytes.
 
 68 baseline resources have an exact, checksum-matching upstream URL with no
-recorded transformation. This does not imply every URL is reachable. Other
-resources intentionally have **no download URL**, including derived financial
-projections and generated CSVs. Their upstream originals are different bytes.
-They must be seeded locally or published at a reviewed exact-byte endpoint before
-removing their retained copies. No public mirror or redistribution is authorized
-by `rights: unknown` or `rights: restricted`.
+recorded transformation. In addition, the dedicated `domain-pack-assets-2026-10-23`
+release is the selected destination for 21 redistributable large files (6,132,614
+bytes), including derived CSV/JSON and a TCIA DICOM original. The publication
+index is `scripts/assets/published-assets.json`; source rights, original hashes,
+media types and attribution remain in each lock entry and the release's provenance
+index/notices. These exact-byte URLs do not substitute upstream originals for
+transformed projections. The unknown-rights legal `evidence_pages.csv` (747,274
+bytes) remains local; no public mirror is selected for it.
 
 Downloads require HTTPS, explicit trusted host allowlists, no URL credentials,
-fragments, nonstandard ports, literal IPs or redirects, and exact media type,
-size and SHA-256. Requests and body consumption have a bounded timeout. Host
+fragments, nonstandard ports, literal IPs, and exact media type,
+size and SHA-256. General redirects refuse. The explicit `github-release`
+transport alone permits one 302 from a SHA-named GitHub release asset to the exact
+`release-assets.githubusercontent.com/github-production-release-asset/` CDN host/path;
+all other hops and redirects refuse. The trusted lock separately pins the download
+media type while preserving the source media identity. Requests and body consumption have a bounded timeout. Host
 allowlisting is operator trust; this helper, like the existing document runner,
 does not claim DNS-rebinding protection. Archives are opaque files: this tool
 never extracts them. Only validated relative manifest paths are materialized;
@@ -124,7 +130,8 @@ resolved file set alone does not make a native job independently reproducible.
 The source-lock builder intentionally emits no network URLs and conservative
 `rights: unknown`. Approved distribution tooling can add reviewed exact-byte
 URLs, media/rights metadata and allowed hosts, producing a **new trusted lock
-hash**. The same explicit download/cache checks then apply. Do not edit a reviewed
+hash**. The GitHub release exception is opt-in per asset and never applies to
+ordinary upstream acquisition. The same explicit download/cache checks then apply. Do not edit a reviewed
 qualification lock in place or treat successful downloading as semantic parity.
 
 ## Implementation boundary and checks
