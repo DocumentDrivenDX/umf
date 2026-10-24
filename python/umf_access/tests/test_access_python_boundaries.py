@@ -242,3 +242,55 @@ class LifecycleCryptoScopeCheckerTests(unittest.TestCase):
                 result = _CHECKER.check(root)
             self.assertEqual(result, 1)
             self.assertIn('DEPENDENCY', output.getvalue())
+
+
+class GenerationRootRegistryBoundaryTests(unittest.TestCase):
+    def _check_module(self, source_text: str) -> tuple[int, str]:
+        with tempfile.TemporaryDirectory(prefix='umf-root-registry-boundary-') as temporary:
+            root = Path(temporary)
+            source = root / 'python/umf_access/src/umf_access/lifecycle'
+            source.mkdir(parents=True)
+            (source / 'generation_root_registry.py').write_text(source_text, encoding='utf-8')
+            (source / 'generation_authority_bootstrap.py').write_text('', encoding='utf-8')
+            (source / 'ingress_local_postgres.py').write_text('', encoding='utf-8')
+            (source / 'generation_authority_session.py').write_text('', encoding='utf-8')
+            output = io.StringIO()
+            with contextlib.redirect_stderr(output), contextlib.redirect_stdout(output):
+                result = _CHECKER.check(root)
+            return result, output.getvalue()
+
+    def test_only_typing_and_root_verifier_imports_are_allowed(self):
+        allowed = (
+            'from __future__ import annotations\n'
+            'from typing import Any\n'
+            'from umf_access.lifecycle import generation_authority_bootstrap as root\n')
+        result, output = self._check_module(allowed)
+        self.assertEqual(result, 0, output)
+
+        forbidden = (
+            'import os\n',
+            'from pathlib import Path\n',
+            'import subprocess\n',
+            'import psycopg\n',
+            'import umf_access.lifecycle.ingress_local_postgres\n',
+            'import umf_access.lifecycle.generation_authority_session\n',
+        )
+        for import_text in forbidden:
+            with self.subTest(import_text=import_text):
+                result, output = self._check_module(allowed + import_text)
+                self.assertEqual(result, 1, output)
+                self.assertIn('PURE', output)
+
+    def test_nested_io_builtins_are_refused_without_executing_the_fixture(self):
+        for builtin in ('open', 'input'):
+            with self.subTest(builtin=builtin):
+                source = (
+                    'from __future__ import annotations\n'
+                    'from typing import Any\n'
+                    'from umf_access.lifecycle import generation_authority_bootstrap as root\n'
+                    'def reserve_prepared():\n'
+                    '    def nested():\n'
+                    f'        {builtin}("controlled-fixture")\n')
+                result, output = self._check_module(source)
+                self.assertEqual(result, 1, output)
+                self.assertIn('HOST', output)

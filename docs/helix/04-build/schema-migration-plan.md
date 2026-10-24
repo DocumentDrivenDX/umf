@@ -609,3 +609,21 @@ remains required before another build/browser attempt.
 The full G02-G11 testing, independent review, merge, immutable release and
 fresh public-byte qualification goal remains open. UMF/Weft ownership and
 the exclusion of Praxis changes remain unchanged.
+
+
+G11 pure ROOT registry source005 is adopted after independent review. The
+helper computes canonical reserve/confirm byte transitions with strict original
+policy/signature/cross-link/sequence/cap and replay checks. Its module is internal
+and gains no IO, UUID allocation, native context, capability, persistence or CAS.
+Final focused tests pass24; the unchanged helper body also passed the integrated
+133-test source suite. Independent19 transition controls and13 checker probes
+pass. Both runtime scan roots are retained:107 modules, zero boundary violations;
+the earlier102-module packet omitted five package-root conformance modules and
+is superseded. Exact import and nested open/input controls enforce the selected
+static source boundary, not a general Python sandbox.
+
+Governing014 is adopted at5edefb5f9039f037486f4bba1c8919d37b68c745. Actual
+bounded original target/control exclusion and writer integration are the next
+implementation cuts. Full native observation, durable checkpoint/recovery,
+committed ingress and application origin providers, all other migration gaps
+and testing/review/merge/immutable-release/public-byte gates remain open.

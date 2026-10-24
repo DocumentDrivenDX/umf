@@ -112,6 +112,10 @@ def check(root: Path) -> int:
     def edge(name: str, target: str, member: str = "", *, verifier_scope: bool = False) -> None:
         path = modules[name]
         source_owner = owner(name)
+        if (name == "umf_access.lifecycle.generation_root_registry"
+                and target not in {"__future__", "typing",
+                                   "umf_access.lifecycle.generation_authority_bootstrap"}):
+            fail(path, "PURE", "root registry byte transitions may import only typing and the root verifier")
         if name == 'umf_access.lifecycle.sql_containment' and not (
                 target in {'collections.abc', 'dataclasses', 'hashlib', 'json', 'typing', '__future__'}):
             fail(path, 'HOST', 'containment admission is pure; parser and I/O belong to explicit adapters')
@@ -273,7 +277,10 @@ def check(root: Path) -> int:
                         fail(path, "PRIVATE", "star imports hide public ownership")
             elif isinstance(node, ast.Name) and node.id in {"__import__", "eval", "exec", "compile"}:
                 fail(path, "DYNAMIC", f"dynamic execution {node.id}")
-            elif isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in {"open", "input"} and owner(name) in {"foundation", "dsl", "runtime", "conformance"}:
+            elif (isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
+                  and node.func.id in {"open", "input"}
+                  and (owner(name) in {"foundation", "dsl", "runtime", "conformance"}
+                       or name == "umf_access.lifecycle.generation_root_registry")):
                 fail(path, "HOST", f"host I/O builtin {node.func.id}")
 
     active: set[str] = set()
