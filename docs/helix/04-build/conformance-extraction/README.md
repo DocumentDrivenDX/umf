@@ -437,3 +437,16 @@ remain intact. Resume EX-02 against the supplied actual tree, review the concret
 old-path-to-resolver and selector/producer closure, then apply the already
 user-authorized cut once migration approves; finally build a fresh core checkout
 and prove its real under-100 MB size plus offline/core/full-conformance gates.
+
+### Independent closure preparation (2026-10-24)
+
+[Consumer snapshot](consumer-snapshot.json) pins 24 existing source/configuration
+files and 319 discovery anchors to `e8575ac61`; all observed working copies
+matched that commit. [Post-handoff procedure](post-handoff-verification.md) defines
+required final source/producer/suite pins, dynamic closure expansion, isolated
+candidate review, offline/core/full-pack/conformance/site acceptance, explicit
+cut approval and an independent strict-under-100 MB fresh-checkout measurement.
+The newly present untracked `crates/` root is left untouched and excluded from
+this old-commit coverage; its owner must supply the actual successor closure.
+No passed runtime checks were repeated, no new size result is claimed, and the
+cut remains held for the real final migration handoff and concrete approval.
