@@ -70,6 +70,7 @@ def check(root: Path) -> int:
                     "ingress_local_postgres": "lifecycle", "ingress_store": "lifecycle",
                     "generation_enrollment_authority": "lifecycle",
                     "generation_authority_bootstrap": "lifecycle",
+                    "supervisor_journal_codec": "lifecycle",
                     "generation_enrollment_ledger": "lifecycle",
                     "generation_authority_session": "lifecycle",
                     "sql_containment": "lifecycle", "sql_containment_parser": "lifecycle",
@@ -116,6 +117,13 @@ def check(root: Path) -> int:
                 and target not in {"__future__", "typing",
                                    "umf_access.lifecycle.generation_authority_bootstrap"}):
             fail(path, "PURE", "root registry byte transitions may import only typing and the root verifier")
+        codec_imports = {"__future__", "base64", "hashlib", "json", "re", "typing",
+                         "umf_access.lifecycle.generation_authority_bootstrap",
+                         "umf_access.lifecycle.generation_root_registry"}
+        if (name == "umf_access.lifecycle.supervisor_journal_codec"
+                and not any(target == allowed or target.startswith(allowed + ".")
+                            for allowed in codec_imports)):
+            fail(path, "PURE", "supervisor journal codec is a native-free byte codec")
         if name == 'umf_access.lifecycle.sql_containment' and not (
                 target in {'collections.abc', 'dataclasses', 'hashlib', 'json', 'typing', '__future__'}):
             fail(path, 'HOST', 'containment admission is pure; parser and I/O belong to explicit adapters')
@@ -280,7 +288,8 @@ def check(root: Path) -> int:
             elif (isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
                   and node.func.id in {"open", "input"}
                   and (owner(name) in {"foundation", "dsl", "runtime", "conformance"}
-                       or name == "umf_access.lifecycle.generation_root_registry")):
+                       or name in {"umf_access.lifecycle.generation_root_registry",
+                                   "umf_access.lifecycle.supervisor_journal_codec"})):
                 fail(path, "HOST", f"host I/O builtin {node.func.id}")
 
     active: set[str] = set()

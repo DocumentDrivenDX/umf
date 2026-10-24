@@ -19,6 +19,7 @@ from unittest.mock import patch
 
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
+from owner_bootstrap_setup_fixture import install_pending_owner_setup
 from umf_access.canonical import canonical_json as public_canonical_json
 from umf_access.lifecycle.owner_approval_core import OwnerApprovalCore
 from umf_access.lifecycle.owner_authority import (
@@ -41,6 +42,48 @@ def _hex(value: str) -> str:
 
 
 class OwnerAuthorityTests(unittest.TestCase):
+    def test_target_creation_request_version_is_selected_by_original_metadata(self):
+        from umf_access.lifecycle.owner_approval_core import _validate_scope_intent
+        from umf_access.lifecycle.owner_bootstrap import _owner_context_journal_metadata
+
+        legacy_metadata = _owner_context_journal_metadata(self.authority.authority_context)
+        legacy = copy.deepcopy(self._scope_intents()['local-target-creation'])
+        args = {
+            'authority_id': self.authority.authority_id,
+            'policy_revision': self.authority.policy_revision,
+            'context': self.authority.authority_context,
+        }
+        _validate_scope_intent('local-target-creation', legacy, **args,
+                               journal_metadata=legacy_metadata)
+        birth_digest = 'a' * 64
+        context_digest = 'b' * 64
+        version_two_metadata = copy.deepcopy(legacy_metadata)
+        version_two_metadata['supervisorJournal'] = {
+            'birthDigest': birth_digest,
+            'journalProfile': 'umf.local-postgresql-owner-journal/0.2',
+            'journalId': '56565656-5656-4565-8565-565656565656',
+            'definitionDigest': 'c' * 64,
+        }
+        version_two_metadata['ownerBootstrapContextDigest'] = context_digest
+        version_two = copy.deepcopy(legacy)
+        version_two.update({
+            'profile': 'umf.local-postgresql-create-request/0.2',
+            'supervisorJournalBirthDigest': birth_digest,
+            'ownerBootstrapContextDigest': context_digest,
+        })
+        _validate_scope_intent('local-target-creation', version_two, **args,
+                               journal_metadata=version_two_metadata)
+        with self.assertRaisesRegex(OwnerAuthorityError, 'owner-intent-invalid'):
+            _validate_scope_intent('local-target-creation', version_two, **args,
+                                   journal_metadata=legacy_metadata)
+        with self.assertRaisesRegex(OwnerAuthorityError, 'owner-intent-invalid'):
+            _validate_scope_intent('local-target-creation', legacy, **args,
+                                   journal_metadata=version_two_metadata)
+        changed = {**version_two, 'supervisorJournalBirthDigest': 'd' * 64}
+        with self.assertRaisesRegex(OwnerAuthorityError, 'owner-intent-context-mismatch'):
+            _validate_scope_intent('local-target-creation', changed, **args,
+                                   journal_metadata=version_two_metadata)
+
     def test_canonical_json_is_reexported_without_changing_utf16_ordering(self):
         self.assertIs(canonical_json, public_canonical_json)
         value = {'\U00010000': 1, '\ue000': 2, 'plain': 3}
@@ -105,22 +148,57 @@ class OwnerAuthorityTests(unittest.TestCase):
 
     def _authority(self, config, path):
         from umf_access.lifecycle import ingress_local_postgres as native
-
-        issuer = object.__new__(native._LocalOwnerBootstrapIssuer)
-        native._BOOTSTRAP_ISSUERS[id(issuer)] = issuer
-        self.test_issuers.append(issuer)
         digest = _digest_bytes(_canonical_bytes(config))
-        material = (config['purpose'], '44444444-4444-4444-8444-444444444444',
-                    '22222222-2222-4222-8222-222222222222',
-                    '33333333-3333-4333-8333-333333333333', 'installation-a', digest)
-        with patch.object(native._LocalOwnerBootstrapIssuer,
-                          '_owner_authority_context_material', lambda _self: material):
+        fixture_id = hashlib.sha256((str(path) + digest).encode()).hexdigest()[:16]
+        control = self.root / f'bootstrap-{fixture_id}'
+        data = self.root / f'data-{fixture_id}'
+        control.mkdir(mode=0o700, exist_ok=True)
+        data.mkdir(mode=0o700, exist_ok=True)
+        profile = native.LocalPostgresProfile(
+            control_home=control, data_home=data,
+            postgres_binary=self.root / f'postgres-{fixture_id}',
+            initdb_binary=self.root / f'initdb-{fixture_id}',
+            process_observer=self.root / f'observer-{fixture_id}',
+            process_observer_sha256='a' * 64, port=55439,
+            database_name='umf_authority_test', business_owner='umf_owner',
+            custodian_id='44444444-4444-4444-8444-444444444444',
+            supervisor_id='22222222-2222-4222-8222-222222222222',
+            provider_id='33333333-3333-4333-8333-333333333333',
+            installation_id='installation-a', purpose=config['purpose'])
+        enrollment = {
+            'profile': 'umf.local-owner-bootstrap-enrollment/0.1',
+            'enrollmentId': str(uuid.uuid5(uuid.NAMESPACE_URL, 'authority-test:' + fixture_id)),
+            'purpose': config['purpose'],
+            'context': {
+                'custodianId': profile.custodian_id, 'supervisorId': profile.supervisor_id,
+                'providerId': profile.provider_id, 'installationId': profile.installation_id,
+            },
+            'ownerConfiguration': config,
+            'nativeProfile': native._profile_to_enrollment(profile),
+        }
+        from umf_access.lifecycle import owner_bootstrap as bootstrap
+
+        enrollment_path = control / 'owner-bootstrap-enrollment.json'
+        enrollment_bytes = bootstrap._canonical(enrollment)
+        if enrollment_path.exists():
+            if bootstrap._read_private(enrollment_path) != enrollment_bytes:
+                raise AssertionError('test original enrollment changed')
+        else:
+            bootstrap._write_private(enrollment_path, enrollment_bytes)
+            install_pending_owner_setup(
+                control, enrollment, enrollment_bytes,
+                control / 'original-owner-approvals.jsonl')
+        with patch.object(native, 'sys_platform_darwin', return_value=True):
+            bootstrap._settle_original_owner_setup(
+                profile, control / 'original-owner-approvals.jsonl')
+            issuer = native._issue_local_owner_bootstrap_issuer(profile)
             from umf_access.lifecycle.owner_bootstrap import (
                 _issue_owner_authority_context,
             )
+
             context = _issue_owner_authority_context(issuer, digest)
-            return ConfiguredEd25519OwnerAuthority(
-                config, ledger_path=path, context=context)
+        self.test_issuers.append(issuer)
+        return ConfiguredEd25519OwnerAuthority(config, ledger_path=path, context=context)
 
     def _intent(self):
         flags = {'canLogin': True, 'superuser': False, 'createDatabase': False,

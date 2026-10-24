@@ -1,0 +1,62 @@
+[
+  {
+    "path": "python/umf_access/src/umf_access/lifecycle/ingress_local_postgres.py",
+    "liveSha256": "12c9cfd7e2a8831372bab155c51407a4d3c6ac92ee8a116408387e58f48ce95d",
+    "testedSha256": "12c9cfd7e2a8831372bab155c51407a4d3c6ac92ee8a116408387e58f48ce95d",
+    "matches": true
+  },
+  {
+    "path": "python/umf_access/src/umf_access/lifecycle/owner_approval_core.py",
+    "liveSha256": "7b172353fe61bb777c53d345d9aaece84fa5c384a627f13b59024d2ab8686aeb",
+    "testedSha256": "7b172353fe61bb777c53d345d9aaece84fa5c384a627f13b59024d2ab8686aeb",
+    "matches": true
+  },
+  {
+    "path": "python/umf_access/src/umf_access/lifecycle/owner_bootstrap.py",
+    "liveSha256": "a4bba7d1736db6bf76e811145b640db90b69d2238c70e86e3100171e6877d4e4",
+    "testedSha256": "a4bba7d1736db6bf76e811145b640db90b69d2238c70e86e3100171e6877d4e4",
+    "matches": true
+  },
+  {
+    "path": "python/umf_access/src/umf_access/lifecycle/supervisor_journal_codec.py",
+    "liveSha256": "69ce75b702bcbcf19e911ca6364a6e23c2e1d6d50a245638410ff704ea7a02be",
+    "testedSha256": "77a07135b25e35bb2d5d4afc549e5604ad71ee2bf75ea7e1b94eca7c478f7a33",
+    "matches": false
+  },
+  {
+    "path": "python/umf_access/tests/test_ingress_local_postgres.py",
+    "liveSha256": "5fc29833f5baf5214df429b601204f5a0f944f003004c594e7293c65b40679a9",
+    "testedSha256": "5fc29833f5baf5214df429b601204f5a0f944f003004c594e7293c65b40679a9",
+    "matches": true
+  },
+  {
+    "path": "python/umf_access/tests/test_owner_authority.py",
+    "liveSha256": "6f9e034af1a614b4bdcf4f0e0ab769b9f80559d89569a817ec5017ad2bbd6d95",
+    "testedSha256": "6f9e034af1a614b4bdcf4f0e0ab769b9f80559d89569a817ec5017ad2bbd6d95",
+    "matches": true
+  },
+  {
+    "path": "python/umf_access/tests/test_supervisor_journal_codec.py",
+    "liveSha256": "590b3a4ea4f0243e390432dcda93b86987675c416f7ec4a72ab14fbf242b7534",
+    "testedSha256": "4d9d41d4e362a274ae1160f03336dc0acf07d688b89a16399d4899397ea6e8b6",
+    "matches": false
+  },
+  {
+    "path": "python/umf_access/tests/test_original_supervisor_birth_integration.py",
+    "liveSha256": "6f0f1b1857f358b8a9ac3ecab8bf740b3aab71eda0bcd7cc44cc3b17bcea6e32",
+    "testedSha256": "6f0f1b1857f358b8a9ac3ecab8bf740b3aab71eda0bcd7cc44cc3b17bcea6e32",
+    "matches": true
+  },
+  {
+    "path": "python/umf_access/tests/test_access_python_boundaries.py",
+    "liveSha256": "dfb999e1d91da7b0075dee07a4a31bc4e932fbd24ac8e544d077be443fc0b1da",
+    "testedSha256": "dfb999e1d91da7b0075dee07a4a31bc4e932fbd24ac8e544d077be443fc0b1da",
+    "matches": true
+  },
+  {
+    "path": "scripts/check-access-python-boundaries.py",
+    "liveSha256": "7e96919f23d665270eae9c17412f7381248e09c633cc8093d87d8a6b7766390a",
+    "testedSha256": "7e96919f23d665270eae9c17412f7381248e09c633cc8093d87d8a6b7766390a",
+    "matches": true
+  }
+]

@@ -565,6 +565,14 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             with (patch.object(LocalPostgresSupervisor, '_validate_installation_binaries',
                                return_value=(postgres, initdb)),
                   patch.object(native, '_sha_file', return_value='a' * 64),
+                  patch('umf_access.lifecycle.owner_bootstrap._owner_context_journal_metadata',
+                        return_value={
+                            'profile': 'umf.owner-context-journal-metadata/0.1',
+                            'enrollmentProfile': 'umf.local-owner-bootstrap-enrollment/0.1',
+                            'ownerContextProfile': 'umf.local-owner-bootstrap-context/0.3',
+                            'ownerBootstrapContextDigest': '0' * 64,
+                            'supervisorJournal': None,
+                        }),
                   _synthetic_control_lease(supervisor, 'target-prepare')):
                 pending, _request = supervisor.prepare_target_creation()
 
@@ -577,6 +585,24 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             self.assertEqual(list(data_home.iterdir()), [])
             self.assertEqual(authority.context, authority.authority_context)
             self.assertTrue(authority.intent)
+
+    def test_creation_recovery_request_keeps_v02_birth_and_context_digests(self) -> None:
+        from umf_access.lifecycle.ingress_local_postgres import _creation_request_fields
+
+        legacy = {key: key for key in (
+            'profile', 'supervisorId', 'clusterId', 'incarnationId', 'installationId',
+            'ownerUid', 'databaseName', 'businessOwner', 'maintenanceName',
+            'controllerName', 'controlDirectory', 'dataDirectory', 'postgresPath',
+            'postgresSha256', 'initdbPath', 'initdbSha256', 'port', 'configDigest',
+            'hbaDigest')}
+        legacy.update({'profile': 'umf.local-postgresql-create-request/0.1',
+                       'supervisorJournalBirthDigest': 'a' * 64,
+                       'ownerBootstrapContextDigest': 'b' * 64})
+        self.assertNotIn('supervisorJournalBirthDigest', _creation_request_fields(legacy))
+        version_two = {**legacy, 'profile': 'umf.local-postgresql-create-request/0.2'}
+        selected = _creation_request_fields(version_two)
+        self.assertEqual(selected['supervisorJournalBirthDigest'], 'a' * 64)
+        self.assertEqual(selected['ownerBootstrapContextDigest'], 'b' * 64)
 
     def test_original_enrollment_is_read_only_and_missing_primary_context_refuses(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

@@ -190,26 +190,116 @@ def _postmaster_pidfile_matches(raw: bytes, *, pid: int, data_directory: Path,
             and lines[4] == '' and lines[5] == '127.0.0.1')
 
 
+def _creation_request_fields(creation: dict[str, Any]) -> dict[str, Any]:
+    fields = ('profile', 'supervisorId', 'clusterId', 'incarnationId',
+              'installationId', 'ownerUid', 'databaseName', 'businessOwner',
+              'maintenanceName', 'controllerName', 'controlDirectory',
+              'dataDirectory', 'postgresPath', 'postgresSha256', 'initdbPath',
+              'initdbSha256', 'port', 'configDigest', 'hbaDigest')
+    if creation.get('profile') == 'umf.local-postgresql-create-request/0.2':
+        fields += ('supervisorJournalBirthDigest', 'ownerBootstrapContextDigest')
+    return {key: creation[key] for key in fields}
+
+
 class _SupervisorJournal:
     """Private owner journal with lock, append order and atomic durability."""
 
-    __slots__ = ('lock_path', 'path', 'supervisor_id')
+    __slots__ = ('birth', 'context', 'context_digest', 'issuer', 'lock_path',
+                 'path', 'profile', 'root_context', 'root_policy_digest',
+                 'supervisor', 'supervisor_id')
 
     def __init__(self, path: Path, supervisor_id: str):
         self.path = path
         self.lock_path = path.with_name(path.name + '.lock')
         self.supervisor_id = _uuid(supervisor_id)
+        self.profile = _JOURNAL_PROFILE
+        self.birth = None
+        self.context = None
+        self.context_digest = None
+        self.issuer = None
+        self.root_context = None
+        self.root_policy_digest = None
+        self.supervisor = None
         _private_directory(path.parent)
 
-    def _locked(self):
-        flags = os.O_CREAT | os.O_RDWR | getattr(os, 'O_NOFOLLOW', 0)
+    @classmethod
+    def open_original(cls, birth_handle: object, *, issuer: object, context: object,
+                      supervisor: object, control_lease: object) -> _SupervisorJournal:
+        """Open only the journal selected by the verified original .3 birth."""
+        from .owner_bootstrap import (
+            _parse_owner_setup,
+            _resolve_original_supervisor_journal_birth,
+        )
+        from .supervisor_journal_codec import (
+            SupervisorJournalCodecError,
+            validate_birth,
+            validate_record,
+        )
+        descriptor = _resolve_original_supervisor_journal_birth(
+            birth_handle, issuer=issuer, context=context, supervisor=supervisor,
+            control_lease=control_lease)
+        enrollment, enrollment_raw = _read_bootstrap_enrollment(issuer._enrollment_path)
+        setup_raw = _read_private(issuer._profile.control_home / 'owner-bootstrap-context.json')
+        setup = _parse_owner_setup(setup_raw, enrollment, enrollment_raw,
+                                   issuer._configuration_digest, issuer._profile.control_home)
         try:
-            fd = os.open(self.lock_path, flags, 0o600)
-            os.fchmod(fd, 0o600)
+            descriptor = validate_birth(
+                descriptor, enrollment=enrollment,
+                configuration_digest=issuer._configuration_digest,
+                generation_root_policy_digest=setup['generationAuthority']['rootPolicyDigest'])
+            root_birth = setup['generationAuthority']['registryBirth']
+            root_context = {
+                'registryId': root_birth['registryId'],
+                'anchorDigest': root_birth['anchorDigest'],
+                'rootPolicy': enrollment['generationAuthorityRoots'],
+                'purpose': enrollment['purpose'],
+                'bootstrapEnrollmentId': enrollment['enrollmentId'],
+                'initialRegistryDigest': root_birth['initialRegistryDigest'],
+            }
+            value = cls(Path(descriptor['path']), descriptor['supervisorId'])
+            value.profile = descriptor['journalProfile']
+            value.birth = descriptor
+            value.context = context
+            value.context_digest = hashlib.sha256(_canonical(setup)).hexdigest()
+            value.issuer = issuer
+            value.root_context = root_context
+            value.root_policy_digest = setup['generationAuthority']['rootPolicyDigest']
+            value.supervisor = supervisor
+            raw = _read_private(value.path)
+            if _read_private(value.lock_path) != b'':
+                raise SupervisorJournalCodecError('supervisor-journal-lock-invalid')
+            _document, replayed_root, pending_root = validate_record(
+                raw, birth=descriptor,
+                owner_bootstrap_context_digest=value.context_digest,
+                generation_root_policy_digest=value.root_policy_digest,
+                root_replay_context=root_context, include_root_state=True)
+            current_root = _read_private(Path(root_birth['registryPath']))
+            if current_root not in (replayed_root, pending_root):
+                raise SupervisorJournalCodecError('supervisor-journal-root-origin-mismatch')
+            return value
+        except (KeyError, TypeError, SupervisorJournalCodecError):
+            raise LocalPostgresError('supervisor-journal-birth-incomplete') from None
+
+    def _locked(self):
+        flags = os.O_RDWR | getattr(os, 'O_NOFOLLOW', 0)
+        try:
+            try:
+                fd = os.open(self.lock_path, flags)
+            except FileNotFoundError:
+                if self.birth is not None:
+                    raise LocalPostgresError('supervisor-journal-lock-unavailable')
+                fd = os.open(self.lock_path, flags | os.O_CREAT, 0o600)
+            if self.birth is None:
+                os.fchmod(fd, 0o600)
             st = os.fstat(fd)
             if (not stat.S_ISREG(st.st_mode) or st.st_nlink != 1
                     or st.st_uid != os.geteuid()):
                 raise LocalPostgresError('supervisor-lock-unsafe')
+            if self.birth is not None:
+                path_stat = self.lock_path.stat(follow_symlinks=False)
+                if ((path_stat.st_dev, path_stat.st_ino) != (st.st_dev, st.st_ino)
+                        or stat.S_IMODE(path_stat.st_mode) & 0o077):
+                    raise LocalPostgresError('supervisor-journal-lock-unavailable')
             fcntl.flock(fd, fcntl.LOCK_EX)
             return fd
         except BaseException:
@@ -218,6 +308,49 @@ class _SupervisorJournal:
             raise
 
     def read(self) -> dict[str, Any]:
+        if self.birth is not None:
+            from .owner_bootstrap import (
+                _parse_owner_setup,
+                _resolve_original_supervisor_journal_birth,
+                _supervisor_journal_birth_for_issuer,
+                _verify_primary_owner_resources,
+            )
+            from .supervisor_journal_codec import validate_record
+            try:
+                lease = self.supervisor._require_original_control_lease()
+                current_birth = _resolve_original_supervisor_journal_birth(
+                    _supervisor_journal_birth_for_issuer(self.issuer),
+                    issuer=self.issuer, context=self.context,
+                    supervisor=self.supervisor, control_lease=lease)
+                if _canonical(current_birth) != _canonical(self.birth):
+                    raise LocalPostgresError('supervisor-journal-birth-unverified')
+                setup_path = self.path.parent / 'owner-bootstrap-context.json'
+                enrollment, enrollment_raw = _read_bootstrap_enrollment(
+                    self.path.parent / 'owner-bootstrap-enrollment.json')
+                setup_raw = _read_private(setup_path)
+                configuration_digest = hashlib.sha256(
+                    _canonical(enrollment['ownerConfiguration'])).hexdigest()
+                setup = _parse_owner_setup(setup_raw, enrollment, enrollment_raw,
+                                           configuration_digest, self.path.parent)
+                if hashlib.sha256(_canonical(setup)).hexdigest() != self.context_digest:
+                    raise LocalPostgresError('supervisor-journal-context-metadata-invalid')
+                _verify_primary_owner_resources(setup, enrollment, configuration_digest)
+                raw = _read_private(self.path)
+                _document, replayed_root, pending_root = validate_record(
+                    raw, birth=self.birth,
+                    owner_bootstrap_context_digest=self.context_digest,
+                    generation_root_policy_digest=self.root_policy_digest,
+                    root_replay_context=self.root_context, include_root_state=True)
+                root_birth = setup['generationAuthority']['registryBirth']
+                current_root = _read_private(Path(root_birth['registryPath']))
+                if current_root not in (replayed_root, pending_root):
+                    raise LocalPostgresError('supervisor-journal-root-origin-mismatch')
+                self.supervisor._require_original_control_lease(lease)
+                return json.loads(raw, object_pairs_hook=_no_duplicates)
+            except LocalPostgresError:
+                raise
+            except (KeyError, TypeError, ValueError, OSError):
+                raise LocalPostgresError('supervisor-journal-corrupt') from None
         try:
             raw = _read_private(self.path)
         except LocalPostgresError as exc:
@@ -556,6 +689,33 @@ class _SupervisorJournal:
         fd = self._locked()
         try:
             doc = self.read()
+            if self.birth is not None:
+                from .supervisor_journal_codec import validate_record
+                event = {'sequence': doc['sequence'] + 1, 'kind': kind,
+                         'payload': dict(payload), 'previousDigest': doc['headDigest']}
+                event['recordDigest'] = _digest(event)
+                events = [*doc['events'], event]
+                if len(events) > _MAX_EVENTS:
+                    raise LocalPostgresError('supervisor-journal-capacity')
+                encoded = _canonical({
+                    'profile': self.profile, 'supervisorId': self.supervisor_id,
+                    'journalId': self.birth['journalId'],
+                    'definitionDigest': self.birth['definitionDigest'],
+                    'anchorDigest': self.birth['anchorDigest'],
+                    'sequence': event['sequence'], 'headDigest': event['recordDigest'],
+                    'events': events,
+                })
+                _document, replayed_root, pending_root = validate_record(
+                    encoded, birth=self.birth,
+                    owner_bootstrap_context_digest=self.context_digest,
+                    generation_root_policy_digest=self.root_policy_digest,
+                    root_replay_context=self.root_context, include_root_state=True)
+                current_root = _read_private(
+                    self.path.parent / 'generation-authority-registry.json')
+                if current_root not in (replayed_root, pending_root):
+                    raise LocalPostgresError('supervisor-journal-root-origin-mismatch')
+                self._atomic_replace(encoded)
+                return dict(event)
             event = {'sequence': doc['sequence'] + 1, 'kind': kind,
                      'payload': dict(payload), 'previousDigest': doc['headDigest']}
             event['recordDigest'] = _digest(event)
@@ -622,11 +782,15 @@ def _issue_local_owner_bootstrap_issuer(
                 context['providerId'], context['installationId'], configuration_digest)
     context_bytes = _validate_bootstrap_context_journal(
         profile.control_home, record, raw, configuration_digest)
-    return _LocalOwnerBootstrapIssuer(
+    issuer = _LocalOwnerBootstrapIssuer(
         _BOOTSTRAP_ISSUER_SEAL, profile, configuration_digest,
         enrollment_id=record['enrollmentId'], enrollment_path=record_path,
         enrollment_digest=_digest_bytes(raw), configuration_bytes=config_bytes,
         context_material=material, context_bytes=context_bytes)
+    if record['profile'] == 'umf.local-owner-bootstrap-enrollment/0.3':
+        from .owner_bootstrap import _issue_original_supervisor_journal_birth
+        _issue_original_supervisor_journal_birth(issuer)
+    return issuer
 
 
 class _NativeEffectReservation:
@@ -1368,6 +1532,34 @@ class LocalPostgresSupervisor:
         self._require_original_control_lease(lease)
         return result
 
+    def _select_supervisor_journal(self, *, retain: bool = True) -> _SupervisorJournal:
+        """Select the journal fixed by original bootstrap metadata; never downgrade."""
+        lease = self._require_original_control_lease()
+        if self._journal is not None:
+            return self._journal
+        from .owner_bootstrap import (
+            _owner_context_journal_metadata,
+            _supervisor_journal_birth_for_issuer,
+        )
+        metadata = _owner_context_journal_metadata(self._authority_context)
+        descriptor = metadata['supervisorJournal']
+        if descriptor is None:
+            suffix = self._supervisor_id.replace('-', '')
+            journal = _SupervisorJournal(
+                self._profile.control_home / f'owner-journal-{suffix}.json',
+                self._supervisor_id)
+        else:
+            birth = _supervisor_journal_birth_for_issuer(self._bootstrap_issuer)
+            if birth is None:
+                raise LocalPostgresError('supervisor-journal-birth-unavailable')
+            journal = _SupervisorJournal.open_original(
+                birth, issuer=self._bootstrap_issuer, context=self._authority_context,
+                supervisor=self, control_lease=lease)
+        self._require_original_control_lease(lease)
+        if retain:
+            self._journal = journal
+        return journal
+
     def _require_effect_control_operation(self, scope: str, *, recovery: bool = False) -> object:
         kinds = {
             'local-target-creation': ('target-apply', 'target-recover'),
@@ -1589,13 +1781,7 @@ class LocalPostgresSupervisor:
         if scope not in ('local-target-creation', 'native-principal-preparation',
                          'local-target-registration'):
             raise LocalPostgresError('local-postgresql-original-request-scope-invalid')
-        if self._journal is None:
-            suffix = self._supervisor_id.replace('-', '')
-            journal = _SupervisorJournal(
-                self._profile.control_home / f'owner-journal-{suffix}.json',
-                self._supervisor_id)
-        else:
-            journal = self._journal
+        journal = self._select_supervisor_journal(retain=False)
         chain = journal.read()
         events = chain['events']
         creation_event = next((event for event in events
@@ -1614,14 +1800,7 @@ class LocalPostgresSupervisor:
             raise LocalPostgresError('local-postgresql-original-target-mismatch')
 
         if scope == 'local-target-creation':
-            request_fields = {
-                'profile', 'supervisorId', 'clusterId', 'incarnationId',
-                'installationId', 'ownerUid', 'databaseName', 'businessOwner',
-                'maintenanceName', 'controllerName', 'controlDirectory',
-                'dataDirectory', 'postgresPath', 'postgresSha256', 'initdbPath',
-                'initdbSha256', 'port', 'configDigest', 'hbaDigest',
-            }
-            intent = {key: creation[key] for key in request_fields}
+            intent = _creation_request_fields(creation)
             approval_id = creation['approvalId']
         elif scope == 'native-principal-preparation':
             prepared_event = next((event for event in events
@@ -1682,9 +1861,7 @@ class LocalPostgresSupervisor:
         suffix = self._supervisor_id.replace('-', '')
         control = _private_directory(self._profile.control_home / suffix)
         data = _private_directory(self._profile.data_home / suffix)
-        journal = _SupervisorJournal(
-            self._profile.control_home / f'owner-journal-{suffix}.json',
-            self._supervisor_id)
+        journal = self._select_supervisor_journal()
         events = journal.read()['events']
         creation_event = next((event for event in events
                                if event['kind'] == 'creation-intent'), None)
@@ -1825,25 +2002,14 @@ class LocalPostgresSupervisor:
             raise LocalPostgresError('local-postgresql-original-creation-outcome-mismatch')
         self._creation_recovery_receipts[id(reservation)] = receipt
         creation_request = _PendingTargetCreation(
-            _BOOTSTRAP_ISSUER_SEAL, self, request, _canonical({
-                key: creation[key] for key in (
-                    'profile', 'supervisorId', 'clusterId', 'incarnationId',
-                    'installationId', 'ownerUid', 'databaseName', 'businessOwner',
-                    'maintenanceName', 'controllerName', 'controlDirectory',
-                    'dataDirectory', 'postgresPath', 'postgresSha256', 'initdbPath',
-                    'initdbSha256', 'port', 'configDigest', 'hbaDigest')
-            }))
+            _BOOTSTRAP_ISSUER_SEAL, self, request, _canonical(
+                _creation_request_fields(creation)))
         target = _OriginalNativeTarget(
             _BOOTSTRAP_ISSUER_SEAL, self, creation_request, reservation,
             creation['clusterId'])
         self._native_targets[id(target)] = target
-        self._owner_payloads['creationRequest'] = json.loads(_canonical(
-            {key: creation[key] for key in (
-                'profile', 'supervisorId', 'clusterId', 'incarnationId',
-                'installationId', 'ownerUid', 'databaseName', 'businessOwner',
-                'maintenanceName', 'controllerName', 'controlDirectory',
-                'dataDirectory', 'postgresPath', 'postgresSha256', 'initdbPath',
-                'initdbSha256', 'port', 'configDigest', 'hbaDigest')}))
+        self._owner_payloads['creationRequest'] = json.loads(
+            _canonical(_creation_request_fields(creation)))
         return target
 
     def confirm_reattached_target_creation(
@@ -1893,11 +2059,7 @@ class LocalPostgresSupervisor:
         if operation_kind is None:
             raise LocalPostgresError('local-postgresql-original-effect-scope-invalid')
         self._require_control_operation(operation_kind)
-        if self._journal is None:
-            suffix = self._supervisor_id.replace('-', '')
-            self._journal = _SupervisorJournal(
-                self._profile.control_home / f'owner-journal-{suffix}.json',
-                self._supervisor_id)
+        self._select_supervisor_journal()
         events = self._journal.read()['events']
         matches = [event for event in events
                    if event['kind'] == 'native-effect-intent'
@@ -1915,14 +2077,7 @@ class LocalPostgresSupervisor:
             if creation_event is None:
                 raise LocalPostgresError('local-postgresql-original-request-unavailable')
             creation = creation_event['payload']
-            request_fields = {
-                'profile', 'supervisorId', 'clusterId', 'incarnationId',
-                'installationId', 'ownerUid', 'databaseName', 'businessOwner',
-                'maintenanceName', 'controllerName', 'controlDirectory',
-                'dataDirectory', 'postgresPath', 'postgresSha256', 'initdbPath',
-                'initdbSha256', 'port', 'configDigest', 'hbaDigest',
-            }
-            intent_bytes = _canonical({key: creation[key] for key in request_fields})
+            intent_bytes = _canonical(_creation_request_fields(creation))
             approval_id = creation['approvalId']
             effect_key = ('local-target-creation', self._supervisor_id,
                           creation['clusterId'])
@@ -2210,9 +2365,7 @@ class LocalPostgresSupervisor:
         self._target_paths = {'control': control_dir, 'data': data_dir}
         # The monotonic operation journal is outside the not-yet-created target
         # directories, under the originally enrolled private control root.
-        self._journal = _SupervisorJournal(
-            self._profile.control_home / f'owner-journal-{suffix}.json',
-            self._supervisor_id)
+        self._journal = self._select_supervisor_journal()
         if self._journal.read()['events']:
             self._journal = None
             self._maintenance_password = None
@@ -2228,8 +2381,13 @@ class LocalPostgresSupervisor:
         config = _render_config(self._profile.port, hba_path, ident_path)
         config_digest = hashlib.sha256(config).hexdigest()
         hba_digest = hashlib.sha256(hba).hexdigest()
+        from .owner_bootstrap import _owner_context_journal_metadata
+        journal_metadata = _owner_context_journal_metadata(self._authority_context)
+        journal_descriptor = journal_metadata['supervisorJournal']
         request_value = {
-            'profile': 'umf.local-postgresql-create-request/0.1',
+            'profile': ('umf.local-postgresql-create-request/0.1'
+                        if journal_descriptor is None
+                        else 'umf.local-postgresql-create-request/0.2'),
             'supervisorId': self._supervisor_id, 'clusterId': cluster_id,
             'incarnationId': incarnation_id, 'installationId': self._bound_installation_id,
             'ownerUid': os.geteuid(), 'databaseName': self._profile.database_name,
@@ -2240,6 +2398,10 @@ class LocalPostgresSupervisor:
             'initdbSha256': _sha_file(initdb), 'port': self._profile.port,
             'configDigest': config_digest, 'hbaDigest': hba_digest,
         }
+        if journal_descriptor is not None:
+            request_value['supervisorJournalBirthDigest'] = journal_descriptor['birthDigest']
+            request_value['ownerBootstrapContextDigest'] = (
+                journal_metadata['ownerBootstrapContextDigest'])
         request_bytes = _canonical(request_value)
         try:
             self._require_original_control_lease(operation_kind='target-prepare')

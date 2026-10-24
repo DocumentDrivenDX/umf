@@ -29,6 +29,9 @@ _BOOTSTRAP_ISSUER_SEAL = object()
 _BOOTSTRAP_ISSUERS: dict[int, object] = {}
 _CONTEXT_SEAL = object()
 _CONTEXTS: dict[int, object] = {}
+_CONTEXT_JOURNAL_METADATA: dict[int, tuple[object, object, bytes]] = {}
+_SUPERVISOR_JOURNAL_BIRTH_SEAL = object()
+_SUPERVISOR_JOURNAL_BIRTHS: dict[int, tuple[object, object, object, bytes]] = {}
 _CONTROL_LEASE_SEAL = object()
 _CONTROL_LEASES: dict[int, tuple[object, object, object, object, str]] = {}
 _CONTROL_LEASES_GUARD = threading.Lock()
@@ -346,6 +349,29 @@ class _LocalOwnerBootstrapIssuer:
         raise TypeError('local bootstrap issuer cannot be serialized')
 
 
+class _OriginalSupervisorJournalBirth:
+    """Opaque original 0.2 journal selector issued only after setup confirms."""
+
+    __slots__ = ('_descriptor_bytes', '_issuer', '_kind')
+
+    def __init__(self, seal: object, issuer: _LocalOwnerBootstrapIssuer,
+                 descriptor_bytes: bytes):
+        if seal is not _SUPERVISOR_JOURNAL_BIRTH_SEAL:
+            raise TypeError('supervisor journal birth is bootstrap-issued')
+        object.__setattr__(self, '_issuer', issuer)
+        object.__setattr__(self, '_descriptor_bytes', bytes(descriptor_bytes))
+        object.__setattr__(self, '_kind', 'umf.original-supervisor-journal-birth/0.1')
+
+    def __setattr__(self, _name: str, _value: object) -> None:
+        raise AttributeError('supervisor journal birth is immutable')
+
+    def __reduce_ex__(self, _protocol: int):
+        raise TypeError('supervisor journal birth cannot be serialized')
+
+    def __repr__(self) -> str:
+        return '<OriginalSupervisorJournalBirth opaque>'
+
+
 _NATIVE_PROFILE_KEYS = {
     'controlHome', 'dataHome', 'postgresBinary', 'initdbBinary',
     'processObserver', 'processObserverSha256', 'port', 'databaseName',
@@ -383,11 +409,15 @@ def _read_bootstrap_enrollment(path: Path) -> tuple[dict[str, Any], bytes]:
     profile = record.get('profile') if type(record) is dict else None
     expected_keys = {'profile', 'enrollmentId', 'purpose', 'context',
                      'ownerConfiguration', 'nativeProfile'}
-    if profile == 'umf.local-owner-bootstrap-enrollment/0.2':
+    if profile in ('umf.local-owner-bootstrap-enrollment/0.2',
+                   'umf.local-owner-bootstrap-enrollment/0.3'):
         expected_keys.add('generationAuthorityRoots')
+    if profile == 'umf.local-owner-bootstrap-enrollment/0.3':
+        expected_keys.add('supervisorJournalBirth')
     if (type(record) is not dict or set(record) != expected_keys
             or profile not in ('umf.local-owner-bootstrap-enrollment/0.1',
-                               'umf.local-owner-bootstrap-enrollment/0.2')
+                               'umf.local-owner-bootstrap-enrollment/0.2',
+                               'umf.local-owner-bootstrap-enrollment/0.3')
             or record['purpose'] not in ('production', 'native-acceptance')
             or type(record['ownerConfiguration']) is not dict
             or type(record['nativeProfile']) is not dict
@@ -402,8 +432,23 @@ def _read_bootstrap_enrollment(path: Path) -> tuple[dict[str, Any], bytes]:
         _uuid(context[name])
     if type(context['installationId']) is not str or not context['installationId']:
         raise LocalPostgresError('local-postgresql-bootstrap-enrollment-invalid')
-    if profile == 'umf.local-owner-bootstrap-enrollment/0.2':
+    if profile in ('umf.local-owner-bootstrap-enrollment/0.2',
+                   'umf.local-owner-bootstrap-enrollment/0.3'):
         _validate_generation_roots(record['generationAuthorityRoots'])
+    if profile == 'umf.local-owner-bootstrap-enrollment/0.3':
+        config, _keys = validate_owner_configuration(record['ownerConfiguration'])
+        config_digest = hashlib.sha256(canonical_json(config).encode('utf-8')).hexdigest()
+        root_digest = hashlib.sha256(_canonical(record['generationAuthorityRoots'])).hexdigest()
+        from .supervisor_journal_codec import (
+            SupervisorJournalCodecError,
+            validate_birth,
+        )
+        try:
+            validate_birth(record['supervisorJournalBirth'], enrollment=record,
+                           configuration_digest=config_digest,
+                           generation_root_policy_digest=root_digest)
+        except SupervisorJournalCodecError:
+            raise LocalPostgresError('local-postgresql-bootstrap-enrollment-invalid') from None
     return record, raw
 
 
@@ -969,6 +1014,77 @@ def _ensure_pending_owner_resources(setup: dict[str, Any], enrollment: dict[str,
                     or _read_private(registry) != _initial_generation_registry(
                         birth['registryId'], birth['anchorDigest'])):
                 raise LocalPostgresError('generation-authority-registry-birth-incomplete')
+    if enrollment['profile'] == 'umf.local-owner-bootstrap-enrollment/0.3':
+        _ensure_pending_supervisor_journal(enrollment)
+
+
+def _ensure_pending_supervisor_journal(enrollment: dict[str, Any]) -> None:
+    """Complete only the original fixed zero-journal birth while setup is pending."""
+    from .supervisor_journal_codec import (
+        SupervisorJournalCodecError,
+        initial_record,
+        validate_birth,
+    )
+
+    configuration, _keys = validate_owner_configuration(enrollment['ownerConfiguration'])
+    configuration_digest = hashlib.sha256(
+        canonical_json(configuration).encode('utf-8')).hexdigest()
+    roots = enrollment['generationAuthorityRoots']
+    root_digest = hashlib.sha256(_canonical(roots)).hexdigest()
+    try:
+        birth = validate_birth(
+            enrollment['supervisorJournalBirth'], enrollment=enrollment,
+            configuration_digest=configuration_digest,
+            generation_root_policy_digest=root_digest)
+        record = initial_record(
+            supervisor_id=birth['supervisorId'], journal_id=birth['journalId'],
+            definition_digest=birth['definitionDigest'], anchor_digest=birth['anchorDigest'])
+    except SupervisorJournalCodecError:
+        raise LocalPostgresError('supervisor-journal-birth-invalid') from None
+    if hashlib.sha256(record).hexdigest() != birth['initialHeaderDigest']:
+        raise LocalPostgresError('supervisor-journal-birth-invalid')
+    path = Path(birth['path'])
+    lock = Path(birth['lockPath'])
+    if lock != path.with_name(path.name + '.lock'):
+        raise LocalPostgresError('supervisor-journal-path-invalid')
+    _check_private_parent(path)
+    _create_empty_private(lock)
+    with _owner_resource_lease(lock, 'supervisor-journal-lock-invalid'):
+        try:
+            if _read_private(lock) != b'':
+                raise LocalPostgresError('supervisor-journal-lock-invalid')
+        except LocalPostgresError:
+            raise LocalPostgresError('supervisor-journal-lock-invalid') from None
+        try:
+            current = _read_private(path)
+        except LocalPostgresError as exc:
+            if exc.code != 'supervisor-private-file-unavailable':
+                raise
+            _write_private(path, record)
+            current = record
+        if not record.startswith(current):
+            raise LocalPostgresError('supervisor-journal-birth-incomplete')
+        if current != record:
+            fd = -1
+            try:
+                fd = os.open(path, os.O_WRONLY | os.O_APPEND | getattr(os, 'O_NOFOLLOW', 0))
+                st = os.fstat(fd)
+                if (not stat.S_ISREG(st.st_mode) or st.st_uid != os.geteuid()
+                        or st.st_nlink != 1 or stat.S_IMODE(st.st_mode) != 0o600):
+                    raise OSError('unsafe pending supervisor journal')
+                remaining = memoryview(record[len(current):])
+                while remaining:
+                    written = os.write(fd, remaining)
+                    if written <= 0:
+                        raise OSError('short pending supervisor journal')
+                    remaining = remaining[written:]
+                os.fsync(fd)
+            except OSError:
+                raise LocalPostgresError('supervisor-journal-birth-incomplete') from None
+            finally:
+                if fd >= 0:
+                    os.close(fd)
+            _fsync_directory(path.parent)
 
 
 def _settle_original_owner_setup(profile: LocalPostgresProfile,
@@ -1065,6 +1181,45 @@ def _verify_primary_owner_resources(setup: dict[str, Any], enrollment: dict[str,
                 Path(birth['registryPath']).parent / 'owner-bootstrap-context.json')
         except GenerationAuthorityBootstrapError:
             raise LocalPostgresError('generation-authority-registry-birth-incomplete') from None
+    if enrollment['profile'] == 'umf.local-owner-bootstrap-enrollment/0.3':
+        _verify_supervisor_journal_resource(setup, enrollment, configuration_digest)
+
+
+def _verify_supervisor_journal_resource(setup: dict[str, Any], enrollment: dict[str, Any],
+                                        configuration_digest: str) -> None:
+    from .supervisor_journal_codec import (
+        SupervisorJournalCodecError,
+        validate_birth,
+        validate_record,
+    )
+
+    try:
+        birth = validate_birth(
+            enrollment['supervisorJournalBirth'], enrollment=enrollment,
+            configuration_digest=configuration_digest,
+            generation_root_policy_digest=setup['generationAuthority']['rootPolicyDigest'])
+        path = Path(birth['path']); lock = Path(birth['lockPath'])
+        raw = _read_private(path); lock_raw = _read_private(lock)
+        root_birth = setup['generationAuthority']['registryBirth']
+        root_context = {
+            'registryId': root_birth['registryId'],
+            'anchorDigest': root_birth['anchorDigest'],
+            'rootPolicy': enrollment['generationAuthorityRoots'],
+            'purpose': enrollment['purpose'],
+            'bootstrapEnrollmentId': enrollment['enrollmentId'],
+            'initialRegistryDigest': root_birth['initialRegistryDigest'],
+        }
+        validate_record(
+            raw, birth=birth,
+            owner_bootstrap_context_digest=hashlib.sha256(_canonical(setup)).hexdigest(),
+            generation_root_policy_digest=setup['generationAuthority']['rootPolicyDigest'],
+            root_replay_context=root_context)
+        if lock_raw != b'':
+            raise SupervisorJournalCodecError('supervisor-journal-context-metadata-invalid')
+    except (KeyError, TypeError, SupervisorJournalCodecError):
+        raise LocalPostgresError('supervisor-journal-birth-incomplete') from None
+    except LocalPostgresError:
+        raise LocalPostgresError('supervisor-journal-birth-incomplete') from None
 
 
 def _verify_generation_registry_physical_binding(
@@ -1191,8 +1346,143 @@ def _issue_owner_authority_context(issuer: object, configuration_digest: str) ->
         _CONTEXT_SEAL, issuer, purpose=purpose, custodian_id=custodian_id,
         supervisor_id=supervisor_id, provider_id=provider_id,
         installation_id=installation_id, configuration_digest=issuer_digest)
+    metadata = _original_owner_context_journal_metadata(issuer)
+    _CONTEXT_JOURNAL_METADATA[id(context)] = (
+        context, issuer, _canonical(metadata))
     _CONTEXTS[id(context)] = context
     return context
+
+
+def _original_owner_context_journal_metadata(
+        issuer: object) -> dict[str, Any]:
+    """Capture fixed metadata from the verified original enrollment/context."""
+    if (type(issuer) is not _LocalOwnerBootstrapIssuer
+            or _BOOTSTRAP_ISSUERS.get(id(issuer)) is not issuer):
+        _context_reject('owner-authority-context-issuer-required')
+    issuer._owner_authority_context_material()
+    enrollment, enrollment_raw = _read_bootstrap_enrollment(issuer._enrollment_path)
+    context_raw = _read_private(
+        issuer._profile.control_home / 'owner-bootstrap-context.json')
+    if (hashlib.sha256(enrollment_raw).hexdigest() != issuer._enrollment_digest
+            or context_raw != issuer._context_bytes):
+        _context_reject('owner-authority-context-binding-mismatch')
+    setup = _parse_owner_setup(
+        context_raw, enrollment, enrollment_raw, issuer._configuration_digest,
+        issuer._profile.control_home)
+    if setup['state'] != 'confirmed':
+        _context_reject('owner-authority-context-unverified')
+    if enrollment['profile'] == 'umf.local-owner-bootstrap-enrollment/0.3':
+        _verify_primary_owner_resources(setup, enrollment, issuer._configuration_digest)
+        birth = enrollment['supervisorJournalBirth']
+        supervisor_journal: dict[str, str] | None = {
+            'birthDigest': hashlib.sha256(_canonical(birth)).hexdigest(),
+            'journalProfile': birth['journalProfile'],
+            'journalId': birth['journalId'],
+            'definitionDigest': birth['definitionDigest'],
+        }
+    else:
+        supervisor_journal = None
+    value = {
+        'profile': 'umf.owner-context-journal-metadata/0.1',
+        'enrollmentProfile': enrollment['profile'],
+        'ownerContextProfile': _OWNER_CONTEXT_PROFILE,
+        'ownerBootstrapContextDigest': hashlib.sha256(context_raw).hexdigest(),
+        'supervisorJournal': supervisor_journal,
+    }
+    from .supervisor_journal_codec import validate_metadata
+    try:
+        return validate_metadata(value)
+    except Exception as exc:
+        from .supervisor_journal_codec import SupervisorJournalCodecError
+        if isinstance(exc, SupervisorJournalCodecError):
+            _context_reject('owner-authority-context-journal-metadata-invalid')
+        raise
+
+
+def _owner_context_journal_metadata(context: object) -> dict[str, Any]:
+    """Return only the immutable bootstrap-populated metadata for this context."""
+    if type(context) is not OwnerAuthorityContext or _CONTEXTS.get(id(context)) is not context:
+        _context_reject('owner-authority-context-unverified')
+    entry = _CONTEXT_JOURNAL_METADATA.get(id(context))
+    if (entry is None or entry[0] is not context or entry[1] is not context._issuer):
+        _context_reject('owner-authority-context-journal-metadata-invalid')
+    from .supervisor_journal_codec import SupervisorJournalCodecError, validate_metadata
+    try:
+        raw = entry[2]
+        value = json.loads(raw, object_pairs_hook=_no_duplicates)
+        if _canonical(value) != raw:
+            raise SupervisorJournalCodecError('supervisor-journal-context-metadata-invalid')
+        return validate_metadata(value)
+    except (LocalPostgresError, SupervisorJournalCodecError, TypeError, ValueError):
+        _context_reject('owner-authority-context-journal-metadata-invalid')
+
+
+def _supervisor_journal_birth_for_issuer(issuer: object) -> _OriginalSupervisorJournalBirth | None:
+    if (type(issuer) is not _LocalOwnerBootstrapIssuer
+            or _BOOTSTRAP_ISSUERS.get(id(issuer)) is not issuer):
+        raise LocalPostgresError('local-postgresql-bootstrap-issuer-unverified')
+    entry = _SUPERVISOR_JOURNAL_BIRTHS.get(id(issuer))
+    if entry is None:
+        return None
+    if (entry[0] is not issuer or type(entry[1]) is not _OriginalSupervisorJournalBirth
+            or entry[1]._issuer is not issuer or entry[3] != entry[1]._descriptor_bytes):
+        raise LocalPostgresError('supervisor-journal-birth-unverified')
+    return entry[1]
+
+
+def _issue_original_supervisor_journal_birth(
+        issuer: object) -> _OriginalSupervisorJournalBirth:
+    if (type(issuer) is not _LocalOwnerBootstrapIssuer
+            or _BOOTSTRAP_ISSUERS.get(id(issuer)) is not issuer):
+        raise LocalPostgresError('local-postgresql-bootstrap-issuer-unverified')
+    existing = _supervisor_journal_birth_for_issuer(issuer)
+    if existing is not None:
+        return existing
+    issuer._owner_authority_context_material()
+    enrollment, enrollment_raw = _read_bootstrap_enrollment(issuer._enrollment_path)
+    if enrollment['profile'] != 'umf.local-owner-bootstrap-enrollment/0.3':
+        raise LocalPostgresError('supervisor-journal-birth-unavailable')
+    context_raw = _read_private(issuer._profile.control_home / 'owner-bootstrap-context.json')
+    setup = _parse_owner_setup(
+        context_raw, enrollment, enrollment_raw, issuer._configuration_digest,
+        issuer._profile.control_home)
+    if setup['state'] != 'confirmed':
+        raise LocalPostgresError('supervisor-journal-birth-unconfirmed')
+    _verify_primary_owner_resources(setup, enrollment, issuer._configuration_digest)
+    descriptor = _canonical(enrollment['supervisorJournalBirth'])
+    handle = _OriginalSupervisorJournalBirth(
+        _SUPERVISOR_JOURNAL_BIRTH_SEAL, issuer, descriptor)
+    _SUPERVISOR_JOURNAL_BIRTHS[id(issuer)] = (issuer, handle, setup, descriptor)
+    return handle
+
+
+def _resolve_original_supervisor_journal_birth(
+        birth: object, *, issuer: object, context: object, supervisor: object,
+        control_lease: object) -> dict[str, Any]:
+    if (type(birth) is not _OriginalSupervisorJournalBirth
+            or type(issuer) is not _LocalOwnerBootstrapIssuer
+            or _BOOTSTRAP_ISSUERS.get(id(issuer)) is not issuer
+            or birth._issuer is not issuer):
+        raise LocalPostgresError('supervisor-journal-birth-unverified')
+    entry = _SUPERVISOR_JOURNAL_BIRTHS.get(id(issuer))
+    if entry is None or entry[0] is not issuer or entry[1] is not birth:
+        raise LocalPostgresError('supervisor-journal-birth-unverified')
+    _resolve_original_control_lease(
+        control_lease, context=context, supervisor=supervisor)
+    if issuer._supervisor is not supervisor:
+        raise LocalPostgresError('supervisor-journal-birth-unverified')
+    issuer._owner_authority_context_material()
+    enrollment, enrollment_raw = _read_bootstrap_enrollment(issuer._enrollment_path)
+    setup_raw = _read_private(issuer._profile.control_home / 'owner-bootstrap-context.json')
+    setup = _parse_owner_setup(
+        setup_raw, enrollment, enrollment_raw, issuer._configuration_digest,
+        issuer._profile.control_home)
+    _verify_primary_owner_resources(setup, enrollment, issuer._configuration_digest)
+    if (setup['state'] != 'confirmed'
+            or _canonical(enrollment.get('supervisorJournalBirth'))
+                != birth._descriptor_bytes):
+        raise LocalPostgresError('supervisor-journal-birth-unverified')
+    return json.loads(birth._descriptor_bytes)
 
 
 def _require_owner_context(context: object, *, issuer: object | None = None,

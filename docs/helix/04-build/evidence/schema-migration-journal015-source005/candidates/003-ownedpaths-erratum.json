@@ -1,0 +1,22 @@
+{
+  "profile": "umf.supervisor-journal-candidate-manifest-owned-paths-erratum/0.1",
+  "candidateManifest": "/private/tmp/g11-supervisor-journal-015-source-003/manifest.json",
+  "candidateManifestSha256": "927ef7c778c83271a4bc98b7d036dc1a2b18476159062b100bf9e1abb9d5c9e1",
+  "authority": "The candidate manifest's sourceSnapshot.files hashes and exact two-path delta remain authoritative for the frozen source bytes. The ownedPaths entries below inherited stale candidate-002 hashes; this erratum supplies only their corrected four fields and does not alter candidate 003 or its validation evidence.",
+  "corrections": [
+    {
+      "path": "python/umf_access/src/umf_access/lifecycle/supervisor_journal_codec.py",
+      "baseBlobSha256": null,
+      "candidateSha256": "26c940e53bc7afcc95669e151cf99a1d51f59665d4ce00f6cc2aa2d1f1f100f4",
+      "snapshotSha256": "26c940e53bc7afcc95669e151cf99a1d51f59665d4ce00f6cc2aa2d1f1f100f4",
+      "status": "added"
+    },
+    {
+      "path": "python/umf_access/tests/test_supervisor_journal_codec.py",
+      "baseBlobSha256": null,
+      "candidateSha256": "d0faa98dfb3953ab27088a46eb4cf4326bf11fba90db18d75cd2f4cef44ca45c",
+      "snapshotSha256": "d0faa98dfb3953ab27088a46eb4cf4326bf11fba90db18d75cd2f4cef44ca45c",
+      "status": "added"
+    }
+  ]
+}

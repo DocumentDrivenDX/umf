@@ -386,17 +386,29 @@ def _validate_registration_without_approval(registration: object) -> dict[str, s
 
 def _validate_scope_intent(scope: str, intent: dict[str, Any], *, authority_id: str,
                            policy_revision: str,
-                           context: OwnerAuthorityContext) -> tuple[dict[str, str], tuple[object, ...]]:
+                           context: OwnerAuthorityContext,
+                           journal_metadata: dict[str, Any]) -> tuple[dict[str, str], tuple[object, ...]]:
     """Validate one frozen owner intent and derive its stable idempotency key."""
     if scope == 'local-target-creation':
-        _closed(intent, {'profile', 'supervisorId', 'clusterId', 'incarnationId',
+        journal = journal_metadata['supervisorJournal']
+        legacy = journal is None
+        keys = {'profile', 'supervisorId', 'clusterId', 'incarnationId',
                          'installationId', 'ownerUid', 'databaseName', 'businessOwner',
                          'maintenanceName', 'controllerName', 'controlDirectory',
                          'dataDirectory', 'postgresPath', 'postgresSha256', 'initdbPath',
-                         'initdbSha256', 'port', 'configDigest', 'hbaDigest'},
-                'owner-intent-invalid')
-        if intent['profile'] != 'umf.local-postgresql-create-request/0.1':
+                         'initdbSha256', 'port', 'configDigest', 'hbaDigest'}
+        if not legacy:
+            keys |= {'supervisorJournalBirthDigest', 'ownerBootstrapContextDigest'}
+        _closed(intent, keys, 'owner-intent-invalid')
+        expected_profile = ('umf.local-postgresql-create-request/0.1' if legacy
+                            else 'umf.local-postgresql-create-request/0.2')
+        if intent['profile'] != expected_profile:
             _reject('owner-intent-invalid')
+        if (not legacy and (
+                intent['supervisorJournalBirthDigest'] != journal['birthDigest']
+                or intent['ownerBootstrapContextDigest']
+                != journal_metadata['ownerBootstrapContextDigest'])):
+            _reject('owner-intent-context-mismatch')
         supervisor = _uuid(intent['supervisorId'])
         cluster = _uuid(intent['clusterId'])
         _uuid(intent['incarnationId'])
@@ -642,7 +654,7 @@ def _ledger_intent_bytes(value: object) -> bytes:
     return decoded
 
 
-def _ledger_parse(data: bytes) -> list[dict[str, Any]]:
+def _ledger_parse(data: bytes, journal_metadata: dict[str, Any]) -> list[dict[str, Any]]:
     if len(data) > _MAX_LEDGER or (data and not data.endswith(b'\n')):
         _reject('owner-approval-ledger-corrupt')
     if not data:
@@ -680,11 +692,12 @@ def _ledger_parse(data: bytes) -> list[dict[str, Any]]:
                 _reject('owner-approval-ledger-corrupt')
         previous = record['digest']
         records.append(record)
-    _validate_ledger_events(records)
+    _validate_ledger_events(records, journal_metadata)
     return records
 
 
-def _validate_ledger_events(records: list[dict[str, Any]]) -> None:
+def _validate_ledger_events(records: list[dict[str, Any]],
+                            journal_metadata: dict[str, Any]) -> None:
     requests: dict[str, dict[str, Any]] = {}
     approvals: dict[str, dict[str, Any]] = {}
     dispatched: set[str] = set()
@@ -752,11 +765,13 @@ def _validate_ledger_events(records: list[dict[str, Any]]) -> None:
             replay_context = _LedgerReplayContext(
                 _purpose=payload['purpose'], _custodian_id=target['custodianId'],
                 _supervisor_id=target['supervisorId'], _provider_id=target['providerId'],
-                _installation_id=target['installationId'])
+                _installation_id=target['installationId'],
+                _journal_metadata=journal_metadata)
             try:
                 derived_target, derived_effect_key = _validate_scope_intent(
                     payload['scope'], intent, authority_id=authority_id,
-                    policy_revision=signed['policyRevision'], context=replay_context)
+                    policy_revision=signed['policyRevision'], context=replay_context,
+                    journal_metadata=journal_metadata)
             except (OwnerAuthorityError, KeyError, TypeError):
                 _reject('owner-approval-ledger-corrupt')
             expected_stable = [payload['purpose'], target['custodianId'],
@@ -838,6 +853,7 @@ class _LedgerReplayContext:
     _supervisor_id: str
     _provider_id: str
     _installation_id: str
+    _journal_metadata: dict[str, Any]
 
 
 def _no_duplicates(items: list[tuple[str, Any]]) -> dict[str, Any]:
@@ -852,10 +868,11 @@ def _no_duplicates(items: list[tuple[str, Any]]) -> dict[str, Any]:
 class _ApprovalLedger:
     """Small append-only fsynced ledger, separate from the PostgreSQL data dir."""
 
-    __slots__ = ('authority_id', 'configuration_digest', 'lock_path', 'path')
+    __slots__ = ('authority_id', 'configuration_digest', 'journal_metadata',
+                 'lock_path', 'path')
 
     def __init__(self, path: str | os.PathLike[str], authority_id: str,
-                 configuration_digest: str):
+                 configuration_digest: str, journal_metadata: dict[str, Any]):
         if type(path) is not str and not isinstance(path, Path):
             _reject('owner-approval-ledger-path-invalid')
         target = Path(path)
@@ -874,6 +891,7 @@ class _ApprovalLedger:
         self.lock_path = target.with_name(target.name + '.lock')
         self.authority_id = authority_id
         self.configuration_digest = configuration_digest
+        self.journal_metadata = journal_metadata
 
     def _open_locked(self) -> tuple[int, int, bool]:
         lock_fd = -1
@@ -929,7 +947,7 @@ class _ApprovalLedger:
             if total > _MAX_LEDGER:
                 _reject('owner-approval-ledger-capacity')
             chunks.append(chunk)
-        records = _ledger_parse(b''.join(chunks))
+        records = _ledger_parse(b''.join(chunks), self.journal_metadata)
         if not records and is_new:
             body = {'profile': OWNER_LEDGER_PROFILE, 'authorityId': self.authority_id,
                     'configurationDigest': self.configuration_digest}
@@ -1406,6 +1424,7 @@ class OwnerApprovalCore:
         '_config',
         '_config_digest',
         '_context',
+        '_journal_metadata',
         '_keys',
         '_ledger',
         '_pending_effects',
@@ -1428,7 +1447,10 @@ class OwnerApprovalCore:
         self._config_digest = _digest_bytes(config_bytes)
         self._context = _require_owner_context(
             context, configuration_digest=self._config_digest)
-        self._ledger = _ApprovalLedger(ledger_path, self._authority_id, self._config_digest)
+        from .owner_bootstrap import _owner_context_journal_metadata
+        self._journal_metadata = _owner_context_journal_metadata(self._context)
+        self._ledger = _ApprovalLedger(ledger_path, self._authority_id, self._config_digest,
+                                       self._journal_metadata)
         self._requests: dict[int, OwnerApprovalRequest] = {}
         self._requests_by_approval: dict[str, OwnerApprovalRequest] = {}
         self._verified: dict[int, VerifiedOwnerApproval] = {}
@@ -1470,7 +1492,8 @@ class OwnerApprovalCore:
         intent = _parse_canonical_intent(exact_intent_bytes)
         target, effect_key = _validate_scope_intent(
             scope, intent, authority_id=self._authority_id,
-            policy_revision=self._policy_revision, context=context)
+            policy_revision=self._policy_revision, context=context,
+            journal_metadata=self._journal_metadata)
         key = next((entry for entry in self._keys if scope in entry['scopes']
                     and target['supervisorId'] in entry['supervisorIds']
                     and target['providerId'] in entry['providerIds']
@@ -1533,7 +1556,8 @@ class OwnerApprovalCore:
         intent = _parse_canonical_intent(exact_intent_bytes)
         target, effect_key = _validate_scope_intent(
             scope, intent, authority_id=self._authority_id,
-            policy_revision=self._policy_revision, context=context)
+            policy_revision=self._policy_revision, context=context,
+            journal_metadata=self._journal_metadata)
         key = next((entry for entry in self._keys if scope in entry['scopes']
                     and target['supervisorId'] in entry['supervisorIds']
                     and target['providerId'] in entry['providerIds']

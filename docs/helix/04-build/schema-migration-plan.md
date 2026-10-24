@@ -696,3 +696,29 @@ are required. Source009 wire/step-reference/seed-order defects and history
 recompilation remain under source repair in010. No source tests or runtime
 checks were executed for this adoption under the shared resource hold. Native,
 browser, installed, managed, merge/release/public-byte gates remain open.
+
+
+### G11 journal015/016 source005 adoption — 2026-10-24
+
+The ten-path original supervisor journal source slice is adopted with exact
+source/command/custody evidence in
+`evidence/schema-migration-journal015-source005/`. Original pending journal/lock
+birth, fixed private metadata, closed native-free replay and signed target
+request selection preserve old profiles and the original six-scope boundary.
+The final codec binds typed ORIGINALS custody to its original prepared
+registration digest. Rejected precursors and the003 manifest erratum remain
+retained; no frozen manifest or old native profile was rewritten.
+
+Independent verification of the frozen265-file closure passed207 tests, retained
+signed ROOT/restart/typed-parent/custody/legacy controls,108-module boundary
+checks and Ruff. The exact one-shot source ticket completed in12.471691 seconds
+with exit0, no timeout/reap failure and owned process-group absence. Resources
+were returned. All265 source hashes match the adopted live closure; only the
+two final005 overlays changed during adoption. No native/PostgreSQL/build/browser
+or further runtime was launched under that ticket.
+
+This closes the reviewed source cut only. Real native snapshots and origin
+providers, durable ROOT/all-writer checkpoints, complete crash recovery,
+historical active-target upgrade, remaining G02–G11 work, independent native/
+managed/browser/installed acceptance, merge/release and fresh public-byte
+verification remain required. Null ingress/application families are unavailable.

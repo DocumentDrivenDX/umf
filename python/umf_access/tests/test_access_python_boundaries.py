@@ -294,3 +294,42 @@ class GenerationRootRegistryBoundaryTests(unittest.TestCase):
                 result, output = self._check_module(source)
                 self.assertEqual(result, 1, output)
                 self.assertIn('HOST', output)
+
+
+class SupervisorJournalCodecBoundaryTests(unittest.TestCase):
+    def _check_module(self, source_text: str) -> tuple[int, str]:
+        with tempfile.TemporaryDirectory(prefix='umf-supervisor-codec-boundary-') as temporary:
+            root = Path(temporary)
+            source = root / 'python/umf_access/src/umf_access/lifecycle'
+            source.mkdir(parents=True)
+            (source / 'supervisor_journal_codec.py').write_text(source_text, encoding='utf-8')
+            output = io.StringIO()
+            with contextlib.redirect_stderr(output), contextlib.redirect_stdout(output):
+                result = _CHECKER.check(root)
+            return result, output.getvalue()
+
+    def test_codec_allows_only_its_native_free_standard_library(self):
+        allowed = ('from __future__ import annotations\n'
+                   'import base64, hashlib, json, re\n'
+                   'from typing import Any\n')
+        result, output = self._check_module(allowed)
+        self.assertEqual(result, 0, output)
+        for source in ('import os\n', 'import pathlib\n', 'import subprocess\n',
+                       'import psycopg\n',
+                       'import umf_access.lifecycle.ingress_local_postgres\n'):
+            with self.subTest(source=source):
+                result, output = self._check_module(allowed + source)
+                self.assertEqual(result, 1, output)
+                self.assertIn('PURE', output)
+
+    def test_codec_refuses_nested_host_io_without_executing_source(self):
+        for builtin in ('open', 'input'):
+            with self.subTest(builtin=builtin):
+                result, output = self._check_module(
+                    'from __future__ import annotations\n'
+                    'import hashlib, json\n'
+                    'def decode():\n'
+                    '    def nested():\n'
+                    f'        {builtin}("controlled-fixture")\n')
+                self.assertEqual(result, 1, output)
+                self.assertIn('HOST', output)
