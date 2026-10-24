@@ -15,104 +15,124 @@ ddx:
       kind: informed_by
     - id: US-093
       kind: informed_by
+    - id: CONTRACT-906
+      kind: informed_by
 ---
 
 # CONTRACT-082: Lakeview dashboard interchange
 
-**Profile:** `umf.lakeview` 0.1.0. **Native representation:** Databricks AI/BI
-(Lakeview) `.lvdash.json` as observed in exported dashboards; no published Databricks
-schema or workspace oracle is claimed. **Neutral projection:** `umf.dashboard` 0.1.0.
+**Version:** `umf.lakeview` 0.2.0, core 0.10.0, kind catalog profile 1.0.0.
+**Type:** native adapter/library and portable extension package.
 
-## Retention
+## Purpose
 
-Native JSON is held as the lossless tagged tree used by `umf.delta` (CONTRACT-018):
-number tokens and member order are kept and nothing is parsed into host numbers. The
-dashboard is split by identity rather than stored once:
+Expose a native dashboard composition and explicitly declared data shapes to
+UMF consumers while reconstructing an untouched original UTF-8 file exactly.
+A dashboard is an extension-defined composition, never a core shape kind.
 
-| Scope | Kind | Native content |
-|---|---|---|
-| document | `dashboard` | top-level members except `datasets` and `pages`, plus `order`, the full top-level member order |
-| module | `data` | none; holds dataset elements in source order |
-| module | `page` | the page object except `layout`, plus `order` |
-| element | `dataset` | one `datasets` item |
-| element | `layout-item` | one page `layout` item (`widget` and `position`) |
+## Scope and Boundaries
 
-Module ids are page `name`s; the data module is `data`, suffixed if a page already uses
-that name. Element ids are dataset and widget `name`s, suffixed on a duplicate; missing
-names fall back to their position. Module and element order are the native order.
+The qualified input subset is observed JSON `.lvdash.json` objects with optional
+datasets and pages arrays, page layout arrays and explicit query/column names.
+The committed corpus defines evidence, not a published Databricks schema.
+Rendering, query execution, cross-BI equivalence, native acceptance and edited
+native rewrites remain unverified. The adapter performs no network or code loading.
 
-`LAKEVIEW_SCOPE` and `LAKEVIEW_PLACEMENT` reject wrong attachment scope or container;
-`LAKEVIEW_ROOT` rejects element payloads without a document-level dashboard;
-`LAKEVIEW_NATIVE` rejects a non-object native root; `LAKEVIEW_ORDER` rejects an `order`
-that is not exactly the retained members plus, where reassembled, `datasets`, `pages`
-or `layout`. Unknown wrapper fields are `LAKEVIEW_REPRESENTATION` and block export.
-Every document carries `LAKEVIEW_CONTEXT_UNVERIFIED`: widget specs are not checked
-against Databricks, so interpretation is never complete.
+## Normative Surface
 
-## Export
+The complete payload schema is `spec/extensions/lakeview/schema.json`, identical
+to the manifest's embedded schema. `kindCatalog` declares these identities:
 
-`exportLakeviewDashboard` reassembles members in recorded order, datasets from the data
-module and pages from page modules in module order, and renders compact JSON. The
-result equals the source after the same compact rendering; whitespace and line endings
-are not retained.
+| Scope | Kind | Meaning and core reuse |
+| --- | --- | --- |
+| document | dashboard | Original text, retained root fragment/order and UMF title |
+| module | data | Native dataset identity container |
+| module | page | Retained page fragment/order and layout composition |
+| element | dataset | Core Record of explicitly named native columns, including calculations; partial native declarations only |
+| element | layout-item | Retained native widget/layout item with references to query-result Records |
+| element | query-result | Core Record of explicitly named widget-query outputs; an exact dataset reference only if unambiguous |
+| element | field | Core Field with source pointer and declared-column/query-output role |
 
-## Projection
+`Element.members` holds ordered qualified Field identities. `Element.references`
+holds the corresponding core graph edges with role `lakeview-declaration`.
+Dataset/query Records MUST NOT imply a physical table, row grain, complete SQL
+schema or evaluation context. Scalar type, nullability and cardinality remain
+unspecified; native declarations/expressions remain attached in retained source.
+There is no second field dictionary. Duplicate names do not collapse identities.
+Module and element IDs use native names where available, suffix collisions and
+allocate generated Record/Field identities independently of display names.
 
-Pages map `displayName` to title and `PAGE_TYPE_GLOBAL_FILTERS` to role
-`global-filters`, otherwise `canvas`. Datasets become query sources in language
-`databricks-sql` (`queryLines` joined, or `query`); `columns` entries with an expression
-become `measure` fields keyed by `displayName`; plain columns are declared from the
-projected widgets that use them. Field types are not inferred.
+Import returns `{document, issues}`. Issues have source JSON Pointers, code,
+classification `unsupported`, detail and `retainedInSource: true`. They identify
+partial schema declarations, opaque query semantics, unresolved/ambiguous dataset
+names, unnamed outputs and unverified native semantics. These are interpretation
+limits, not a claim of complete cross-system projection coverage.
 
-A widget query field expression resolves as: `` `c` `` → column `c`, aggregation
-`none`; ``MEASURE(`m`)`` → measure `m`; `SUM`/`AVG`/`MIN`/`MAX`/`COUNT` of one column
-→ that aggregation; `COUNT(DISTINCT `c`)` → `count-distinct`; any other aggregate over
-one column → `custom` with the expression retained; a non-aggregate function of one
-column → that column with `representation-change`. Qualified references, queries
-without a `datasetName` (both read relationship-graph sources), multi-column
-expressions and ``COUNT(`*`)``, which names no field the profile can declare, are
-`unsupported` and the widget is not projected.
+The root `originalText` MUST retain the complete original source. Native fragments
+use the bounded lossless tagged JSON tree; number tokens never pass through host
+numbers. The parser rejects duplicate decoded keys and invalid JSON. Byte APIs
+accept strict UTF-8, preserving an optional BOM. Other encodings are outside scope.
 
-Widget types `counter`, `bar`, `line`, `area`, `scatter`, `pie`, `heatmap` and
-`table` become visuals; `extra` becomes `tooltip`, table `columns` become `column`
-encodings, and `y.fields` become repeated `y` encodings. `scale.sort.by` on one axis by
-the other axis maps to value order, `natural-order` and `alphabetical` to label order,
-`-reversed` descending, and `custom-order` with `orderedValues` to a custom sort.
-Formats `number` and `number-plain`, `number-currency` and `number-percent` map to
-number, currency and percent. `disaggregated: true` is `rows: detail`. A dataset no
-projected item draws a field from is not projected, because the profile requires at
-least one field. Text boxes (`multilineTextboxSpec`,
-`textbox_spec`) become markdown text. `filter-single-select`, `filter-multi-select`,
-`filter-date-range-picker`, `filter-text-entry` and `filter-range-slider` become
-filters whose targets resolve each `queryName` to a dataset and plain column; a
-single-value or multi-value default maps to `default.values`. Frame titles and
-descriptions map directly; a shown frame is the neutral default.
+The payload schema checks native fragment root structure. The explicitly
+registered Rust validator checks complete nested fragment/source consistency;
+ordinary structural admission alone does not certify those native semantics.
+Without that capability, generic tooling must retain incomplete validation.
 
-Pages with `layoutVersion: GRID_V1` use twelve columns and pages without one use six.
-The document grid is twelve if any page is `GRID_V1`; legacy pages are then doubled
-horizontally (`LAKEVIEW_GRID`). Theme colors, font and visualization colors map to the
-neutral theme; `fontSettings.base` supplies the font and font color only when the
-top-level spelling is absent.
+Export MUST rebuild the expected representation from the original source and
+compare it against current Records, Fields, references, native fragments, member
+orders and wrapper content. It MUST refuse divergence with
+`LAKEVIEW_EDIT_UNSUPPORTED`; returning an old archive after a Field/native edit is
+forbidden. UMF document ID, title and a uniform namespace are authoring options,
+not native rewrites. Object storage order is compared by exact UTF-16 keys because
+JavaScript reorders integer-like keys; arrays and explicit member-order arrays
+remain ordered. Original text preserves all lexical native order.
 
-## Loss Report
+## API and Explicit Capabilities
 
-`importLakeviewDashboard` returns `{document, issues}`. Each issue is
-`{path, code, classification, detail, retainedInSource: true}` where `path` is a JSON
-Pointer into the source file. Codes are `LAKEVIEW_WIDGET_TYPE`, `LAKEVIEW_EXPRESSION`,
-`LAKEVIEW_QUERY_FILTER` (the neutral visual is broader than the native one),
-`LAKEVIEW_ORDER_BY`, `LAKEVIEW_PARAMETER`, `LAKEVIEW_RELATIONSHIP`,
-`LAKEVIEW_DATASET_CONTEXT`, `LAKEVIEW_FILTER_DEFAULT`, `LAKEVIEW_FILTER_ASSOCIATIVITY`,
-`LAKEVIEW_FORMAT`, `LAKEVIEW_GRID`, `LAKEVIEW_STYLE`, `LAKEVIEW_FIELD_COLLISION`,
-`LAKEVIEW_PROJECTION` (the item could not be built, or the profile rejected it, and it
-is omitted) and
-`LAKEVIEW_UNMAPPED` (native content no rule consumed). Every native member is either
-consumed by a mapping rule or reported, so the report is complete with respect to the
-source. The issues map to HELIX `[NEEDS CLARIFICATION]` markers in dashboard workflows.
+Initialize a shared native/WASM runtime, then use:
 
-## API
+- `importLakeviewDashboard(text, {id, title?, namespace?}, runtime)`;
+- `importLakeviewDashboardBytes(bytes, options, runtime)`;
+- `exportLakeviewDashboard(document, runtime)` and byte-output equivalent;
+- `lakeviewRegistry(runtime)` and `inspectLakeview(document, runtime)`.
 
-`lakeviewRegistry()` registers `umf.dashboard` and `umf.lakeview`;
-`inspectLakeview(document)` validates both. `importLakeviewDashboard(text, {id, title?,
-namespace?})`, `exportLakeviewDashboard(document)` and
-`getLakeviewNative(document, module?, element?)`, which returns a copy of the rendered
-native JSON for the document, a page or an element.
+The registry explicitly selects `{kinds:true, nativeValidator:'lakeview/0.2.0'}`.
+This built-in validator is a trusted caller capability, not a manifest field.
+Unknown validators, wrong package identities and simultaneous host callbacks
+MUST refuse. Native consistency runs once at the root; other attachments receive
+ordinary payload and generic kind checks. No host callback serializes the full
+source per Field. Generic discovery still reports source validation and coverage.
+
+Private shared wire operations are `lakeview-import`, `lakeview-export` and
+`lakeview-diagnostics`; native CLI and language/WASM bindings use the same Rust
+implementation. No TypeScript retention or core-shape derivation fallback exists.
+
+## Precedence and Compatibility
+
+This revision supersedes PR42's 0.1 compact-token export and default
+`umf.dashboard` field model. Existing core 0.10.0 packages and dashboard profile
+0.1.0 are unchanged. `projectLakeviewToLegacyDashboard` explicitly exposes the
+PR42 projection helper as a compatibility view; its field dictionary and narrower
+projection semantics are not part of the 0.2 native document. Shared concepts may
+be promoted to a future generic dashboard extension after independent systems
+provide evidence. This contract adds no dashboard semantics to core.
+
+## Error Semantics
+
+Generic kind errors come from CONTRACT-906. `LAKEVIEW_NATIVE` rejects malformed
+native container shapes; `LAKEVIEW_OPTIONS` rejects import options;
+`SOURCE_ENCODING` rejects malformed source text, and strict byte decoding rejects
+invalid UTF-8. `LAKEVIEW_SOURCE` requires original text and
+`LAKEVIEW_EDIT_UNSUPPORTED` rejects unqualified native/core divergence.
+`LAKEVIEW_CONTEXT_UNVERIFIED` remains a completeness warning even for an exact
+byte recovery. Resource/cancellation failures abort without partial success.
+Malformed archived source is `LAKEVIEW_SOURCE_INVALID` at `originalText` during
+semantic inspection; direct import/export retains the underlying source error.
+
+## Examples and Verification
+
+`fixtures/lakeview/marketing-campaign.lvdash.json` is the PR42 input. The lexical
+and empty-section fixtures exercise preservation edges. Tests MUST compare output
+bytes directly to these original files, including both UMF serialization paths.
+Rust, Node/Bun and real Chromium checks establish only their recorded subset;
+Databricks acceptance and edited-source operations need separate qualification.

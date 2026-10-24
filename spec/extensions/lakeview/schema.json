@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:umf:lakeview:0.1.0",
+  "$id": "urn:umf:lakeview:0.2.0",
   "oneOf": [
     {
       "$ref": "#/$defs/dashboard"
@@ -16,6 +16,12 @@
     },
     {
       "$ref": "#/$defs/layout-item"
+    },
+    {
+      "$ref": "#/$defs/query-result"
+    },
+    {
+      "$ref": "#/$defs/field"
     }
   ],
   "$defs": {
@@ -24,7 +30,9 @@
       "required": [
         "kind",
         "native",
-        "order"
+        "order",
+        "originalText",
+        "title"
       ],
       "properties": {
         "kind": {
@@ -39,9 +47,15 @@
             "type": "string"
           },
           "uniqueItems": true
+        },
+        "originalText": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
         }
       },
-      "additionalProperties": true
+      "additionalProperties": false
     },
     "page": {
       "type": "object",
@@ -65,7 +79,7 @@
           "uniqueItems": true
         }
       },
-      "additionalProperties": true
+      "additionalProperties": false
     },
     "data": {
       "type": "object",
@@ -77,13 +91,14 @@
           "const": "data"
         }
       },
-      "additionalProperties": true
+      "additionalProperties": false
     },
     "dataset": {
       "type": "object",
       "required": [
         "kind",
-        "native"
+        "native",
+        "schemaCoverage"
       ],
       "properties": {
         "kind": {
@@ -91,9 +106,12 @@
         },
         "native": {
           "$ref": "#/$defs/node"
+        },
+        "schemaCoverage": {
+          "const": "partial-native-declarations"
         }
       },
-      "additionalProperties": true
+      "additionalProperties": false
     },
     "layout-item": {
       "type": "object",
@@ -109,104 +127,88 @@
           "$ref": "#/$defs/node"
         }
       },
-      "additionalProperties": true
+      "additionalProperties": false
     },
     "node": {
-      "oneOf": [
-        {
-          "type": "object",
-          "required": [
-            "kind"
-          ],
-          "properties": {
-            "kind": {
-              "const": "null"
-            }
-          }
+      "type": "object",
+      "required": [
+        "kind",
+        "members"
+      ],
+      "properties": {
+        "kind": {
+          "const": "object"
         },
-        {
+        "members": {
           "type": "object",
-          "required": [
-            "kind",
-            "value"
-          ],
-          "properties": {
-            "kind": {
-              "const": "boolean"
-            },
-            "value": {
-              "type": "boolean"
-            }
-          }
-        },
-        {
-          "type": "object",
-          "required": [
-            "kind",
-            "value"
-          ],
-          "properties": {
-            "kind": {
-              "const": "string"
-            },
-            "value": {
-              "type": "string"
-            }
-          }
-        },
-        {
-          "type": "object",
-          "required": [
-            "kind",
-            "value"
-          ],
-          "properties": {
-            "kind": {
-              "const": "number"
-            },
-            "value": {
-              "type": "string",
-              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
-            }
-          }
-        },
-        {
-          "type": "object",
-          "required": [
-            "kind",
-            "items"
-          ],
-          "properties": {
-            "kind": {
-              "const": "array"
-            },
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "#/$defs/node"
-              }
-            }
-          }
-        },
-        {
-          "type": "object",
-          "required": [
-            "kind",
-            "members"
-          ],
-          "properties": {
-            "kind": {
-              "const": "object"
-            },
-            "members": {
-              "type": "object",
-              "additionalProperties": {
-                "$ref": "#/$defs/node"
-              }
-            }
-          }
+          "additionalProperties": true
         }
-      ]
+      },
+      "additionalProperties": false
+    },
+    "reference": {
+      "type": "object",
+      "required": [
+        "module",
+        "element"
+      ],
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "query-result": {
+      "type": "object",
+      "required": [
+        "kind",
+        "sourcePath",
+        "schemaCoverage"
+      ],
+      "properties": {
+        "kind": {
+          "const": "query-result"
+        },
+        "sourcePath": {
+          "type": "string"
+        },
+        "schemaCoverage": {
+          "const": "declared-query-output"
+        },
+        "dataset": {
+          "$ref": "#/$defs/reference"
+        }
+      },
+      "additionalProperties": false
+    },
+    "field": {
+      "type": "object",
+      "required": [
+        "kind",
+        "sourcePath",
+        "role"
+      ],
+      "properties": {
+        "kind": {
+          "const": "field"
+        },
+        "sourcePath": {
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "declared-column",
+            "query-output"
+          ]
+        }
+      },
+      "additionalProperties": false
     }
   }
 }

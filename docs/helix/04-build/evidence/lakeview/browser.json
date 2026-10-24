@@ -1,0 +1,104 @@
+{
+  "profile": "umf.lakeview.original-bytes/1",
+  "core": "0.10.0",
+  "extension": "0.2.0",
+  "chromium": "153.0.8010.12",
+  "bun": "1.4.3",
+  "results": [
+    {
+      "name": "marketing-campaign",
+      "bytes": 54077,
+      "original": "ee1f95917a936051063a08c617099d34b33df5a5604ab2f4d1d8aafdf56643d5",
+      "recoveries": [
+        {
+          "format": "direct",
+          "sha256": "ee1f95917a936051063a08c617099d34b33df5a5604ab2f4d1d8aafdf56643d5"
+        },
+        {
+          "format": "json",
+          "sha256": "ee1f95917a936051063a08c617099d34b33df5a5604ab2f4d1d8aafdf56643d5"
+        },
+        {
+          "format": "yaml",
+          "sha256": "ee1f95917a936051063a08c617099d34b33df5a5604ab2f4d1d8aafdf56643d5"
+        }
+      ]
+    },
+    {
+      "name": "lexical-quirks",
+      "bytes": 772,
+      "original": "f8cc6ab19e159673180196c029afc6ddd9d06d79dba82443e9dd2c93b407c8f5",
+      "recoveries": [
+        {
+          "format": "direct",
+          "sha256": "f8cc6ab19e159673180196c029afc6ddd9d06d79dba82443e9dd2c93b407c8f5"
+        },
+        {
+          "format": "json",
+          "sha256": "f8cc6ab19e159673180196c029afc6ddd9d06d79dba82443e9dd2c93b407c8f5"
+        },
+        {
+          "format": "yaml",
+          "sha256": "f8cc6ab19e159673180196c029afc6ddd9d06d79dba82443e9dd2c93b407c8f5"
+        }
+      ]
+    },
+    {
+      "name": "empty-sections",
+      "bytes": 79,
+      "original": "3c195f344050a969755145132a31fd65e652b6f0396a9f5ed7937fc1466c7671",
+      "recoveries": [
+        {
+          "format": "direct",
+          "sha256": "3c195f344050a969755145132a31fd65e652b6f0396a9f5ed7937fc1466c7671"
+        },
+        {
+          "format": "json",
+          "sha256": "3c195f344050a969755145132a31fd65e652b6f0396a9f5ed7937fc1466c7671"
+        },
+        {
+          "format": "yaml",
+          "sha256": "3c195f344050a969755145132a31fd65e652b6f0396a9f5ed7937fc1466c7671"
+        }
+      ]
+    }
+  ],
+  "generic": {
+    "kind": {
+      "extension": "umf.lakeview",
+      "version": "0.2.0",
+      "kind": "dashboard"
+    },
+    "entries": 163,
+    "coreFields": [
+      "Metric Value"
+    ]
+  },
+  "errors": [],
+  "externalRequests": [],
+  "sources": {
+    "crates/umf-core/src/lakeview.rs": "650e6cba44ba4932a2d9c8bbead22a312eb4fc2c25f3ec868f556950f9f41a6f",
+    "crates/umf-core/src/serialization.rs": "3685eb35b7c506916a582de54c3d05970cb4e1d43f35b1b34a5769bf90fecd10",
+    "crates/umf-core-wire/src/lib.rs": "3fe2101e8f67322e3696b415b7f9f13ca92a71669629e8f97cdd3fa05caeaf2f",
+    "src/adapters/lakeview/index.ts": "ef67d0b28e6cda86ed0a1faee9a7c31e62ded2f620d2d9105f47fdb52c636577",
+    "src/adapters/lakeview/project.ts": "6f013c44b239f66a63b19874ef441b0cfdfcfd39d64fff0515489b6cc76975fe",
+    "src/registry/registry.ts": "5c20e8cdbcd0f11bf8e32e1b72045f7b08ce845db2bd58020ad829cbdf9b0ddf",
+    "src/registry/kind-runtime.ts": "23c8a019d799d6214c534c4338cd916295ae55e2146aba6da3de1a1fc3a78b76",
+    "spec/extensions/lakeview/package.json": "0043b4ca077e4f80d18c2729a3823a43c90914f6d91ba338f0f04a2fca6a6f16",
+    "spec/extensions/lakeview/schema.json": "99f8a98b1635887468a564d127d4cf2383806babf95ba08e9200521c044a4012",
+    "spec/metamodel/generated/manifest.json": "e7b61114fce39e4229a024891c7fda1b76471ed42e9c126d561740e615c7399c",
+    "bindings/core/wasm/index.js": "6bbc66d4d272ef2f870bbeafde57af837e93aa394277f3cc80ed5f46635d5945",
+    "bindings/core/wasm/index.d.ts": "8f85e6e5d7a1616d573db5d1bbdf7565ac089348ebe13f989468db1ce0960cbe",
+    "tests/lakeview/browser-entry.ts": "b867021f09ed1742d62e86bc5644280af617e922d75397170198e31a72715550",
+    "tests/lakeview/interchange.test.ts": "4a3939fe65ee4cd4a56787266cff8805e1340c33e8b9a7a93be46d6bba702d82",
+    "scripts/lakeview-browser.ts": "f6f8be498923b46eef09a7303a3dd8f120b0d5981a880fa5a18c824f54b7ac01",
+    "fixtures/lakeview/marketing-campaign.lvdash.json": "ee1f95917a936051063a08c617099d34b33df5a5604ab2f4d1d8aafdf56643d5",
+    "fixtures/lakeview/lexical-quirks.lvdash.json": "f8cc6ab19e159673180196c029afc6ddd9d06d79dba82443e9dd2c93b407c8f5",
+    "fixtures/lakeview/empty-sections.lvdash.json": "3c195f344050a969755145132a31fd65e652b6f0396a9f5ed7937fc1466c7671"
+  },
+  "artifacts": {
+    "wasm": "058a0a169dcff43c096b274d4f162040f6a79e53ced07d7c627cb505d15a1555",
+    "bundle": "dd9af65dd9241780934ae80ce6cb5925d3b361c04aad1610a7511da1912892d9"
+  },
+  "limits": "Three committed files; direct and UMF JSON/YAML untouched UTF-8 reconstruction and generic composition only. No live Databricks acceptance or edited-source rewrite."
+}

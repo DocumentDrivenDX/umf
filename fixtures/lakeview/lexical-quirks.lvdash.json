@@ -1,0 +1,7 @@
+﻿
+{ "10" : "ten", "2": "two",
+ "datasets": [{"name":"data","query":"select opaque","columns":[{"displayName":"Amount","dataType":"DECIMAL(12,2)","expression":"SUM(`amount`)"}]}],
+ "pages":[{"name":"data","layout":[{"widget":{"name":"__proto__","queries":[{"name":"q","query":{"datasetName":"data","fields":[{"name":"value","expression":"SUM(`amount`)"},{"name":"value","expression":"opaque()"}]}}],"spec":{"widgetType":"future","encodings":{"value":{"fieldName":"value"}}}},"position":{"x":0,"y":0,"width":12,"height":2}}]}],
+ "future":{"integer":9007199254740993123456789,"fraction":0.10000000000000001,"overflow":1e400,"negativeZero":-0,"spelling":1.2300e+004,"escape":"\u0061\/\ud800","unicode":"café 🌊","2":{},"1":[],"__proto__":{"constructor":true}}
+}	
+

@@ -124,6 +124,18 @@ pub fn read_json_value(
     crate::copy_json(&value, ctx)
 }
 
+/// Lossless native JSON tree: numeric lexemes stay strings, never binary64.
+/// Shares the bounded grammar, duplicate-key checks and UTF-16 string scanner.
+pub fn read_native_json(source: &[u16], ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    if source.len() > ctx.limits().max_text_units {
+        return Err(fail("LIMIT", "Source text limit exceeded"));
+    }
+    ctx.charge_text(source.len(), Utf16::default())?;
+    let source = source.strip_prefix(&[0xfeff]).unwrap_or(source);
+    let tree = JsonParser::<_, NativeJsonBuilder>::new(source, ctx).parse()?;
+    crate::copy_json(&tree, ctx)
+}
+
 /// Read JSON or YAML into Python's source-preserving value profile. Unlike
 /// [`read_json_value`], this path retains Python code-point identity and the
 /// distinction between integers and floats. It shares this module's JSON/YAML
@@ -262,6 +274,46 @@ trait JsonBuilder {
 }
 #[derive(Default)]
 struct CoreJsonBuilder;
+#[derive(Default)]
+struct NativeJsonBuilder;
+impl JsonBuilder for NativeJsonBuilder {
+    type Text = Utf16;
+    type Value = Value;
+    fn null(&self) -> Value {
+        crate::kinds::object(vec![("kind", Value::string_utf8("null"))])
+    }
+    fn boolean(&self, v: bool) -> Value {
+        native_node("boolean", "value", Value::Bool(v))
+    }
+    fn string(&self, points: Vec<(u32, bool)>) -> Result<Utf16, EngineError> {
+        CoreJsonBuilder.string(points)
+    }
+    fn string_value(&self, v: Utf16) -> Value {
+        native_node("string", "value", Value::String(v))
+    }
+    fn number(
+        &self,
+        token: &str,
+        _: bool,
+        _: &Utf16,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        ctx.charge_work(token.len(), Utf16::default())?;
+        Ok(native_node("number", "value", Value::string_utf8(token)))
+    }
+    fn array(&self, items: Vec<Value>) -> Value {
+        native_node("array", "items", Value::Array(items))
+    }
+    fn object(&self, members: Vec<(Utf16, Value)>) -> Value {
+        native_node("object", "members", Value::Object(members))
+    }
+    fn path_text(&self, text: &Utf16, _: &mut Context<'_>) -> Result<Utf16, EngineError> {
+        Ok(text.clone())
+    }
+}
+fn native_node(kind: &str, key: &str, value: Value) -> Value {
+    crate::kinds::object(vec![("kind", Value::string_utf8(kind)), (key, value)])
+}
 #[derive(Default)]
 struct PythonJsonBuilder;
 impl JsonBuilder for CoreJsonBuilder {

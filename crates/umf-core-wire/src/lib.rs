@@ -667,6 +667,68 @@ pub fn execute_request_with_control(
     result_envelope(result)
 }
 
+// Validator capabilities come only from trusted caller registration, never
+// package metadata. Unknown identities refuse; no dynamic loading or I/O.
+struct NativeCapabilities<'a> {
+    inner: &'a mut dyn Capabilities,
+    tokens: BTreeSet<u64>,
+    core: Value,
+}
+impl Capabilities for NativeCapabilities<'_> {
+    fn validate_extension(
+        &mut self,
+        token: u64,
+        payload: &Value,
+        context: &umf_core::SemanticContext,
+    ) -> Result<Vec<Diagnostic>, Utf16> {
+        self.validate_extension_with_context(token, payload, context, &mut Context::ordinary())
+            .map_err(|e| match e {
+                umf_core::CapabilityError::Host(s) => s,
+                umf_core::CapabilityError::HostPython { message, .. } => message,
+                umf_core::CapabilityError::Engine(e) => e.message,
+            })
+    }
+    fn validate_extension_with_context(
+        &mut self,
+        token: u64,
+        payload: &Value,
+        context: &umf_core::SemanticContext,
+        ctx: &mut Context<'_>,
+    ) -> Result<Vec<Diagnostic>, umf_core::CapabilityError> {
+        if !self.tokens.contains(&token) {
+            return self
+                .inner
+                .validate_extension_with_context(token, payload, context, ctx);
+        }
+        if context.scope != "document" {
+            return Ok(vec![]);
+        }
+        let value = umf_core::lakeview::diagnostics(&context.document, &self.core, ctx)
+            .map_err(umf_core::CapabilityError::Engine)?;
+        let Value::Array(values) = value else {
+            unreachable!()
+        };
+        Ok(values
+            .iter()
+            .map(|v| Diagnostic {
+                code: field(v, "code").and_then(as_utf16).unwrap().clone(),
+                path: field(v, "path").and_then(as_utf16).unwrap().clone(),
+                message: field(v, "message").and_then(as_utf16).unwrap().clone(),
+                severity: if field(v, "severity") == Some(&Value::string_utf8("warning")) {
+                    Severity::Warning
+                } else {
+                    Severity::Error
+                },
+                python_text_origin: None,
+                python_source_path: false,
+            })
+            .collect())
+    }
+    fn python_source_document(&self) -> Option<&umf_core::PythonConsumerValue> {
+        self.inner.python_source_document()
+    }
+}
+
 fn execute_request_inner(
     wire_json: &str,
     capabilities: &mut dyn Capabilities,
@@ -689,6 +751,7 @@ fn execute_request_inner(
     let mut resources = take_field(&mut request, "resources")
         .ok_or_else(|| fail("REQUEST", "Explicit resources are required"))?;
     let registry_value = take_field(&mut request, "registry");
+    let mut native_tokens = BTreeSet::new();
     let (engine, registry) = {
         let mut catalog = Context::catalog().with_host_control(control);
         let resource = |resources: &mut Value, name: &str| {
@@ -719,6 +782,7 @@ fn execute_request_inner(
                         if fields.iter().any(|(key, _)| {
                             key != &Utf16::from("semantic")
                                 && key != &Utf16::from("kinds")
+                                && key != &Utf16::from("nativeValidator")
                         }) {
                             return Err(fail(
                                 "REQUEST",
@@ -736,10 +800,30 @@ fn execute_request_inner(
                         Some(Value::Bool(true)) => true,
                         _ => return Err(fail("REQUEST", "kinds must be a boolean")),
                     };
+                    let native = match take_field(&mut extension, "nativeValidator") {
+                        None => false,
+                        Some(Value::String(name))
+                            if name == Utf16::from("lakeview/0.2.0")
+                                && field(&manifest, "id")
+                                    == Some(&Value::string_utf8("umf.lakeview"))
+                                && field(&manifest, "version")
+                                    == Some(&Value::string_utf8("0.2.0"))
+                                && !semantic =>
+                        {
+                            native_tokens.insert(index as u64 + 1);
+                            true
+                        }
+                        _ => {
+                            return Err(fail(
+                                "NATIVE_VALIDATOR",
+                                "Unknown, mismatched or conflicting explicit native validator",
+                            ))
+                        }
+                    };
                     if kinds {
                         registry.register_kind_package(
                             &manifest,
-                            semantic.then_some(index as u64 + 1),
+                            (semantic || native).then_some(index as u64 + 1),
                             engine.package_schema(),
                             &schema_resources,
                             &mut catalog,
@@ -747,7 +831,7 @@ fn execute_request_inner(
                     } else {
                         registry.register(
                             &manifest,
-                            semantic.then_some(index as u64 + 1),
+                            (semantic || native).then_some(index as u64 + 1),
                             engine.package_schema(),
                             &schema_resources,
                             &mut catalog,
@@ -802,9 +886,42 @@ fn execute_request_inner(
         }
         (engine, registry)
     };
+    let mut native_capabilities = NativeCapabilities {
+        inner: capabilities,
+        tokens: native_tokens,
+        core: engine.core_version().cloned().unwrap_or(Value::Null),
+    };
+    let capabilities: &mut dyn Capabilities = &mut native_capabilities;
     let value = {
         let mut operation = Context::ordinary().with_host_control(control);
         match op.as_str() {
+            "lakeview-import" => umf_core::lakeview::import(
+                field(&request, "source")
+                    .and_then(as_utf16)
+                    .ok_or_else(|| fail("REQUEST", "Source must be a string"))?,
+                field(&request, "options")
+                    .ok_or_else(|| fail("REQUEST", "Lakeview options are required"))?,
+                engine
+                    .core_version()
+                    .ok_or_else(|| fail("REQUEST", "Missing current core version"))?,
+                &mut operation,
+            )?,
+            "lakeview-export" => Value::String(umf_core::lakeview::export(
+                field(&request, "document")
+                    .ok_or_else(|| fail("REQUEST", "Document is required"))?,
+                engine
+                    .core_version()
+                    .ok_or_else(|| fail("REQUEST", "Missing current core version"))?,
+                &mut operation,
+            )?),
+            "lakeview-diagnostics" => umf_core::lakeview::diagnostics(
+                field(&request, "document")
+                    .ok_or_else(|| fail("REQUEST", "Document is required"))?,
+                engine
+                    .core_version()
+                    .ok_or_else(|| fail("REQUEST", "Missing current core version"))?,
+                &mut operation,
+            )?,
             "list-kinds" => registry.list_kinds(&mut operation)?,
             "get-kind" => registry
                 .get_kind(

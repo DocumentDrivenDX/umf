@@ -1,7 +1,7 @@
 {
   "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
-  "schemas": 381,
-  "passed": 381,
+  "schemas": 382,
+  "passed": 382,
   "results": [
     {
       "path": "spec/compilation/access-manifest.schema.json",
@@ -1539,6 +1539,13 @@
     {
       "path": "spec/extensions/jsonld/to-rdf-schema.json",
       "id": "urn:umf:jsonld:to-rdf:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/lakeview/schema.json",
+      "id": "urn:umf:lakeview:0.2.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []

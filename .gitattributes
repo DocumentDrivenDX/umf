@@ -6,6 +6,9 @@ native/rdfxml/sources/** -text
 native/shacl/sources/** -text
 fixtures/shacl/corpus/** -text
 native/tablespec/sources/** -text
+# Lakeview reconstruction fixtures are original bytes, including BOM/CRLF and
+# intentional trailing whitespace; Git must not normalize them on checkout.
+fixtures/lakeview/*.lvdash.json -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
 # Medical source/row checksums cover original bytes, including native CRLF.
 spec/domain-packs/medical*/sources/** -text
 spec/domain-packs/medical*/data/** -text

@@ -15,56 +15,56 @@ ddx:
       kind: informed_by
     - id: TD-077
       kind: informed_by
+    - id: ADR-006
+      kind: informed_by
 ---
 
 # TD-092: Lakeview dashboard interchange
 
 ## Approach
 
-Reuse the `umf.delta` tagged tree for exact retention, but split the native dashboard
-by identity so each neutral `umf.dashboard` declaration and its native widget JSON sit
-on the same element (TD-077's next step). Reassembly needs only module order, element
-order and two recorded member orders, so no placeholders are written into native
-content.
+The owner requested applying CONTRACT-906 to PR42, reusing core Records/Fields
+and comparing reconstruction directly against original input bytes. CONTRACT-082
+0.2 replaces compact rendering as the recovery criterion. Raw UTF-8 source and
+split native fragments coexist deliberately: raw text preserves lexical facts;
+fragments and core declarations provide inspectable identities and semantic
+consistency checks. They must agree before untouched export succeeds.
 
-## Components
+## Module Boundaries
 
-`src/adapters/lakeview/index.ts` registers the package, inspects payloads, imports,
-exports and returns copies. `src/adapters/lakeview/project.ts` builds the neutral
-declaration from plain JSON views of the native fragments and records every pointer it
-consumes. After projection, a walk over the source reports each maximal unconsumed
-subtree as `LAKEVIEW_UNMAPPED`; specific rules mark their content consumed and report
-under their own code. The projected document is then validated with the dashboard
-registry; an element with error diagnostics loses its neutral payload, is reported as
-`LAKEVIEW_PROJECTION`, and validation repeats until the projection is valid.
+- `crates/umf-core/src/serialization.rs`: lossless native builder over the existing
+  bounded JSON scanner; duplicate keys, UTF-16 and numeric lexemes share one grammar.
+- `crates/umf-core/src/lakeview.rs`: native admission, partition, explicit core
+  declaration derivation, preservation issues and unchanged-source consistency.
+- `umf-core-wire`: explicitly registered built-in validator capability and operation
+  dispatch. Package content never selects code. The Lakeview root validator stays
+  in Rust; ordinary generic catalog checks remain in their existing owner.
+- `src/adapters/lakeview/index.ts`: typed API and strict UTF-8 boundary only.
+- `src/adapters/lakeview/project.ts`: PR42's unchanged legacy dashboard 0.1 helper,
+  explicitly named and independent from the 0.2 native representation.
 
-Expression handling is pattern matching on the expression shapes Lakeview emits
-(backtick-quoted names, `MEASURE`, aggregate calls) rather than SQL parsing; anything
-else is reported, so the neutral profile's opacity rule is kept.
+No new dependency or physical-table/core-dashboard semantic is introduced.
+Dataset records describe only explicit native column declarations, including
+calculations; query-result records describe explicitly named query outputs.
+They retain distinct contexts rather than equating aggregation outputs with
+base-table columns. Source types and SQL are not inferred.
 
-## Corpus
+The existing shared interpreter uses immutable runtime snapshots for lexical
+scopes. This Lakeview change reuses that implementation without modifying
+generic constraint evaluation.
 
-The committed fixture is the marketing-campaign dashboard (synthetic data, unqualified
-view names). During development, four further private dashboards (240 widgets across
-the five files) were imported locally to find unmapped shapes; they are not committed.
-They contained histogram, sankey and choropleth widgets, table v1 columns, parameter
-bindings, `relationshipGraphs`, widget query filters and legacy six-column pages. All
-five export token-exactly and project to a valid declaration; 256 of 305 datasets and
-layout items carry a neutral payload. Most of the rest read relationship-graph
-sources, count rows with ``COUNT(`*`)``, bind parameters or are unsupported widget
-types; `LAKEVIEW_UNMAPPED` is left with counter `rowNumber`, `applyModeEnabled`, the
-`percent-stack` mark and axis `domain`.
+## Verification Plan
 
-## Limits and Open Questions
+Native Rust tests cover original-file byte recovery, malformed/duplicate input,
+escaped surrogates, cooperative limits and refusal of changed representations.
+Bun tests compare original bytes directly, then repeat through UMF JSON and YAML;
+generic discovery and selection prove Record/Field reuse. Negative controls
+change core members, names, types, references, native fragments, kinds and wrapper
+content. A real Chromium WASM harness verifies all three committed files against
+original bytes and SHA-256 digests, plus generic discovery and selection.
 
-- The vertical row unit of legacy pages is assumed to equal `GRID_V1`'s; only
-  horizontal doubling is applied. [NEEDS CLARIFICATION]
-- Default selection values are kept as strings; native `dataType` is not converted.
-- Trace ids are not inferred from widget names.
-- `umf.dashboard` 0.1.0 has no field-less row count, so ``COUNT(`*`)`` widgets are
-  not projected; a later profile version could add one. Widget-level query filters
-  are only reported, so a projected visual can be broader than its native widget.
-- Import and inspection copy the document per payload in core validation, so a
-  100-widget dashboard takes seconds; acceptable for interchange, not for editors.
-- Neutral-to-Lakeview export of an edited declaration is the next step; it must reuse
-  retained native widget JSON where the neutral item is unchanged.
+Schema audits, generated authority, type checking, kind regression and boundary
+controls remain gates. Execution receipts and limits belong under
+`docs/helix/04-build/evidence/lakeview/`; the usage guide states runtime loading
+and the explicit legacy projection boundary. No private fixture, native workspace
+or edited-export evidence is inferred from the committed corpus.

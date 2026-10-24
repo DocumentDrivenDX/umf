@@ -189,18 +189,18 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "2e64d70ed1b381aadfe3f15815309c0a8a5c91e504a83cf72bc37f52efae486d",
+    "sourceCohortSha256": "482bc76146b8c289759979c5bd5a7bbd260b3b4cbd6cc028487d023a82cd984d",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 330,
-    "algorithmSymbols": 10165,
+    "algorithmSymbols": 10177,
     "pythonModules": 104,
     "rustBuildInputs": 76,
-    "rustModules": 116,
-    "scriptFiles": 2939,
-    "sourceModules": 577,
-    "typescriptModules": 473
+    "rustModules": 118,
+    "scriptFiles": 2944,
+    "sourceModules": 579,
+    "typescriptModules": 475
   },
   "dependencies": {
     "javascript": {
@@ -5650,14 +5650,14 @@
       "sha256": "e7121458e326e4d1a3a9d9112ed83fcf9a4ffc221c45fff6cd192288b1a9814d"
     },
     {
-      "bytes": 4017,
+      "bytes": 4316,
       "path": "bindings/core/node/index.d.ts",
-      "sha256": "9cc70fe4eb135d48f6df5243e59c5c24247c145cd6f94c4e459e850a48961a02"
+      "sha256": "8824776512647a8ba88cad7b719709117db64d3e9050ada4e2ddc975dedd9100"
     },
     {
-      "bytes": 15207,
+      "bytes": 15820,
       "path": "bindings/core/node/index.js",
-      "sha256": "81844d4a6c31179e44d77653043f8d781e2e1f7144babcf08cc1a0184c98b284"
+      "sha256": "b9fa8f1765a5bc8b98039d107b0ba251fcd6202757658e1af5f470173b3237a7"
     },
     {
       "bytes": 210,
@@ -5685,14 +5685,14 @@
       "sha256": "5633ccb692f4cc80b9fe55a1ab9ca2ceb99642c9132d986b8f850cc4a67633c3"
     },
     {
-      "bytes": 5544,
+      "bytes": 5843,
       "path": "bindings/core/wasm/index.d.ts",
-      "sha256": "9e829f0eba17dfe73a752b0401ae5b6e12e89acc7964d443c4bc1b9814587494"
+      "sha256": "8f85e6e5d7a1616d573db5d1bbdf7565ac089348ebe13f989468db1ce0960cbe"
     },
     {
-      "bytes": 16264,
+      "bytes": 16869,
       "path": "bindings/core/wasm/index.js",
-      "sha256": "22c4656c3002dd17d10ed47ece6c8c7449217377a450cf278878f318c24e08ff"
+      "sha256": "6bbc66d4d272ef2f870bbeafde57af837e93aa394277f3cc80ed5f46635d5945"
     },
     {
       "bytes": 209,
@@ -6848,7 +6848,7 @@
       "sha256": "5d1eed144e203d1e4f08ca73ba69db59b8276256d39ba0cc622d23f4dee757ba"
     },
     {
-      "bytes": 22938,
+      "bytes": 23134,
       "disposition": "production-host-free-rust-engine",
       "imports": [
         "crate::{\n    constraints::{execute_constraints_admitted, prepare_program, PreparedProgram},\n    context::Context,\n    error::{Diagnostic, EngineError, Severity, Validation},\n    literal_policy::{prepare_policy, PreparedPolicy},\n    registry::Registry,\n    schema::{CompiledSchema, SchemaResources},\n    value::{copy_json, Utf16, Value},\n}",
@@ -6864,6 +6864,7 @@
         "ResourceSet",
         "SemanticContext",
         "core_structure_diagnostics",
+        "core_version",
         "new",
         "package_schema",
         "policy",
@@ -6874,7 +6875,7 @@
         "validate_document",
         "validate_python_document"
       ],
-      "sha256": "87137c80cb21717f34418e09da0ff4e7987946a6a80e7d2192bee910a4146bf7"
+      "sha256": "b97f15e203ac60e311036d40c3655f2187688283d7f55beac48a1a17d48467d9"
     },
     {
       "bytes": 3694,
@@ -6917,14 +6918,32 @@
       "sha256": "7e3aed5c9f37b67e9348291703dabc6c217178f73295e4fd9c801d1cefc6f349"
     },
     {
-      "bytes": 1211,
+      "bytes": 20256,
+      "disposition": "production-host-free-rust-engine",
+      "imports": [
+        "crate::kinds::{get, object}",
+        "crate::{copy_json, Context, EngineError, Utf16, Value}",
+        "std::collections::BTreeSet"
+      ],
+      "language": "rust",
+      "migrationObligation": "R2 full independent compiler/core conformance and metered resource qualification required",
+      "path": "crates/umf-core/src/lakeview.rs",
+      "publicExports": [
+        "diagnostics",
+        "export",
+        "import"
+      ],
+      "sha256": "650e6cba44ba4932a2d9c8bbead22a312eb4fc2c25f3ec868f556950f9f41a6f"
+    },
+    {
+      "bytes": 1229,
       "disposition": "production-host-free-rust-engine",
       "imports": [],
       "language": "rust",
       "migrationObligation": "R2 full independent compiler/core conformance and metered resource qualification required",
       "path": "crates/umf-core/src/lib.rs",
       "publicExports": [],
-      "sha256": "d71b7915c423ff6962d8c609ddc2129291f15e53ef94e5ea9265df052169b577"
+      "sha256": "6882e9febad73a2da9fb4fd60675703a73e387baed244600f0e94c41fd296ce8"
     },
     {
       "bytes": 46648,
@@ -7134,7 +7153,7 @@
       "sha256": "43c68947653ccb61e10c861fdd93f0be6d7ee46cfe8b0004fefecf850029d525"
     },
     {
-      "bytes": 116212,
+      "bytes": 118210,
       "disposition": "production-host-free-rust-engine",
       "imports": [
         "crate::{\n    context::Context,\n    error::EngineError,\n    python_value::{PyText, PythonConsumerValue},\n    value::{Utf16, Value},\n}",
@@ -7150,13 +7169,14 @@
       "publicExports": [
         "Format",
         "read_json_value",
+        "read_native_json",
         "read_python_value",
         "stringify_compact",
         "stringify_compact_metered",
         "write_json_value",
         "write_python_value"
       ],
-      "sha256": "bd5e4705295cb02c8235e53ec3a6b8ebd572e039d603b339c451716cfd59020d"
+      "sha256": "3685eb35b7c506916a582de54c3d05970cb4e1d43f35b1b34a5769bf90fecd10"
     },
     {
       "bytes": 7409,
@@ -7250,6 +7270,18 @@
       "path": "crates/umf-core/tests/extension_kinds.rs",
       "publicExports": [],
       "sha256": "1445ac8af313872c7949a215648f97c9ea3c40c88225e7d7a93879ab19641883"
+    },
+    {
+      "bytes": 4141,
+      "disposition": "production-host-free-rust-engine",
+      "imports": [
+        "umf_core::{\n    lakeview,\n    serialization::{read_json_value, Format},\n    Context, EngineError, Utf16, Value,\n}"
+      ],
+      "language": "rust",
+      "migrationObligation": "R2 full independent compiler/core conformance and metered resource qualification required",
+      "path": "crates/umf-core/tests/lakeview.rs",
+      "publicExports": [],
+      "sha256": "117f84607ac5571cad42f6f032fd7d9b94df01a05b1b4337b84095084990a97c"
     },
     {
       "bytes": 19706,
@@ -7927,7 +7959,7 @@
       "sha256": "93722ce1d1580f0ce6a7f359cc0b5ebb309fab7a5bfabcae1b3f9f34d1c03cfb"
     },
     {
-      "bytes": 59682,
+      "bytes": 64803,
       "disposition": "production-private-value-transport",
       "imports": [
         "std::collections::BTreeSet",
@@ -7955,7 +7987,7 @@
         "write_value_wire",
         "write_value_wire_with_control"
       ],
-      "sha256": "57c1fb73db793546952aa3b57a8695cbcd9f20d30ed0887700d4b6fc621f24e6"
+      "sha256": "3fe2101e8f67322e3696b415b7f9f13ca92a71669629e8f97cdd3fa05caeaf2f"
     },
     {
       "bytes": 80611,
@@ -8006,12 +8038,12 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [],
-      "bytes": 4017,
+      "bytes": 4316,
       "disposition": "production-rust-host-glue",
       "language": "ts",
       "migrationObligation": "R2 host descriptor admission/loading/callback transport only; Rust owns shared semantics; installed target evidence required",
       "path": "bindings/core/node/index.d.ts",
-      "sha256": "9cc70fe4eb135d48f6df5243e59c5c24247c145cd6f94c4e459e850a48961a02"
+      "sha256": "8824776512647a8ba88cad7b719709117db64d3e9050ada4e2ddc975dedd9100"
     },
     {
       "activationEvidence": [],
@@ -8035,12 +8067,12 @@
         "runRawValue",
         "runRequest"
       ],
-      "bytes": 15207,
+      "bytes": 15820,
       "disposition": "production-rust-host-glue",
       "language": "js",
       "migrationObligation": "R2 host descriptor admission/loading/callback transport only; Rust owns shared semantics; installed target evidence required",
       "path": "bindings/core/node/index.js",
-      "sha256": "81844d4a6c31179e44d77653043f8d781e2e1f7144babcf08cc1a0184c98b284"
+      "sha256": "b9fa8f1765a5bc8b98039d107b0ba251fcd6202757658e1af5f470173b3237a7"
     },
     {
       "activationEvidence": [
@@ -8085,12 +8117,12 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [],
-      "bytes": 5544,
+      "bytes": 5843,
       "disposition": "production-rust-host-glue",
       "language": "ts",
       "migrationObligation": "R2 host descriptor admission/loading/callback transport only; Rust owns shared semantics; installed target evidence required",
       "path": "bindings/core/wasm/index.d.ts",
-      "sha256": "9e829f0eba17dfe73a752b0401ae5b6e12e89acc7964d443c4bc1b9814587494"
+      "sha256": "8f85e6e5d7a1616d573db5d1bbdf7565ac089348ebe13f989468db1ce0960cbe"
     },
     {
       "activationEvidence": [],
@@ -8115,12 +8147,12 @@
         "result",
         "runRawValue"
       ],
-      "bytes": 16264,
+      "bytes": 16869,
       "disposition": "production-rust-host-glue",
       "language": "js",
       "migrationObligation": "R2 host descriptor admission/loading/callback transport only; Rust owns shared semantics; installed target evidence required",
       "path": "bindings/core/wasm/index.js",
-      "sha256": "22c4656c3002dd17d10ed47ece6c8c7449217377a450cf278878f318c24e08ff"
+      "sha256": "6bbc66d4d272ef2f870bbeafde57af837e93aa394277f3cc80ed5f46635d5945"
     },
     {
       "activationEvidence": [],
@@ -12161,7 +12193,7 @@
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "python/umf_access/src/umf_access/generated_core.py",
-      "sha256": "4cbae98795bbd212ea5c0485426e51bb9bd75745a0aefb5710703a33d8a4c254"
+      "sha256": "aae64474eb35ae95afa7921b1479a74c1a1f3df7618ec909d5489755f4fa5f64"
     },
     {
       "activationEvidence": [],
@@ -28076,6 +28108,50 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
+        "sha",
+        "snapshot"
+      ],
+      "bytes": 3973,
+      "disposition": "unreferenced-script-source",
+      "language": "ts",
+      "migrationObligation": "No current package/workflow/import activation edge discovered",
+      "path": "scripts/lakeview-browser.ts",
+      "sha256": "f6f8be498923b46eef09a7303a3dd8f120b0d5981a880fa5a18c824f54b7ac01"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
+        "hash",
+        "read"
+      ],
+      "bytes": 2034,
+      "disposition": "unreferenced-script-source",
+      "language": "mjs",
+      "migrationObligation": "No current package/workflow/import activation edge discovered",
+      "path": "scripts/lakeview-installed.mjs",
+      "sha256": "ce4d466c98ed621e07914b191ac17b85dedfa7d7dfbaccae3a392dac7a897716"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
+        "command",
+        "hash",
+        "request",
+        "snapshot"
+      ],
+      "bytes": 4774,
+      "disposition": "unreferenced-script-source",
+      "language": "ts",
+      "migrationObligation": "No current package/workflow/import activation edge discovered",
+      "path": "scripts/lakeview-native-conformance.ts",
+      "sha256": "a226be1ca1108f9474351b0871ad3da84542d4a632ab9a56ced33dcf202caa9f"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
         "check"
       ],
       "bytes": 2212,
@@ -42504,6 +42580,34 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
+        "hash",
+        "verify"
+      ],
+      "bytes": 2956,
+      "disposition": "unreferenced-test-source",
+      "language": "ts",
+      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "path": "tests/lakeview/browser-entry.ts",
+      "sha256": "b867021f09ed1742d62e86bc5644280af617e922d75397170198e31a72715550"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
+        "load",
+        "native"
+      ],
+      "bytes": 8481,
+      "disposition": "unreferenced-test-source",
+      "language": "ts",
+      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "path": "tests/lakeview/interchange.test.ts",
+      "sha256": "4a3939fe65ee4cd4a56787266cff8805e1340c33e8b9a7a93be46d6bba702d82"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
         "bundle",
         "source",
         "transition"
@@ -54189,7 +54293,7 @@
       "path": "python/umf_access/src/umf_access/generated_core.py",
       "publicExports": [],
       "resolvedInternalImports": [],
-      "sha256": "4cbae98795bbd212ea5c0485426e51bb9bd75745a0aefb5710703a33d8a4c254"
+      "sha256": "aae64474eb35ae95afa7921b1479a74c1a1f3df7618ec909d5489755f4fa5f64"
     },
     {
       "bytes": 1486,
@@ -57520,6 +57624,70 @@
       ],
       "resolvedImports": [],
       "sha256": "71fa9671c22d85da1de2b583b75fd87fff5b80c65ecedbdc9d81f91be8b9deb8"
+    },
+    {
+      "bytes": 2841,
+      "disposition": "shared-adapter-or-extension",
+      "imports": [
+        "../../../spec/extensions/lakeview/package.json",
+        "../../model/types",
+        "../../registry/kind-runtime",
+        "../../registry/registry",
+        "../../validation/document",
+        "./project"
+      ],
+      "language": "typescript",
+      "migrationObligation": "R5 individual family qualification required",
+      "path": "src/adapters/lakeview/index.ts",
+      "publicExports": [
+        "LAKEVIEW_EXTENSION",
+        "LakeviewIds",
+        "LakeviewImport",
+        "LakeviewIssue",
+        "LakeviewOptions",
+        "LakeviewProjection",
+        "LakeviewRuntime",
+        "exportLakeviewDashboard",
+        "exportLakeviewDashboardBytes",
+        "importLakeviewDashboard",
+        "importLakeviewDashboardBytes",
+        "inspectLakeview",
+        "lakeviewPackage",
+        "lakeviewRegistry",
+        "projectLakeviewToLegacyDashboard"
+      ],
+      "resolvedImports": [
+        "spec/extensions/lakeview/package.json",
+        "src/adapters/lakeview/project.ts",
+        "src/model/types.ts",
+        "src/registry/kind-runtime.ts",
+        "src/registry/registry.ts",
+        "src/validation/document.ts"
+      ],
+      "sha256": "ef67d0b28e6cda86ed0a1faee9a7c31e62ded2f620d2d9105f47fdb52c636577"
+    },
+    {
+      "bytes": 22408,
+      "disposition": "shared-adapter-or-extension",
+      "imports": [
+        "../../model/types",
+        "../../projections/json-schema-protobuf"
+      ],
+      "language": "typescript",
+      "migrationObligation": "R5 individual family qualification required",
+      "path": "src/adapters/lakeview/project.ts",
+      "publicExports": [
+        "LakeviewIds",
+        "LakeviewIssue",
+        "LakeviewProjection",
+        "elementKey",
+        "projectLakeview"
+      ],
+      "resolvedImports": [
+        "src/model/types.ts",
+        "src/projections/json-schema-protobuf.ts"
+      ],
+      "sha256": "6f013c44b239f66a63b19874ef441b0cfdfcfd39d64fff0515489b6cc76975fe"
     },
     {
       "bytes": 4789,
@@ -67363,7 +67531,7 @@
         "spec/metamodel/generated/core-constraints.json",
         "spec/metamodel/generated/domain-policy.json"
       ],
-      "sha256": "5e3a15bcad4278133b83f2a18c173322e1e67ed87aa7b7d3800c52b5e46aa22b"
+      "sha256": "8cf994ea829eee90cc87d4604e40bbae11ece0d708eac641c2d4d068533e3fc7"
     },
     {
       "bytes": 305070,
@@ -67384,10 +67552,10 @@
       "resolvedImports": [
         "../../../../Projects/umf/node_modules/ajv/dist/ajv.d.ts"
       ],
-      "sha256": "ce9319b6261d1d681a5950cb068294717345916552b185102e88b7a31356e78b"
+      "sha256": "e3df1b029062b675c04f1fa38d29af2a252643e901ff9f4324cec9aefa8378be"
     },
     {
-      "bytes": 31809,
+      "bytes": 31846,
       "disposition": "typescript-public-api-facade",
       "imports": [
         "../spec/core/bit128-selection.schema.json",
@@ -67515,6 +67683,7 @@
         "./adapters/javascript-numeric",
         "./adapters/json-schema",
         "./adapters/jsonld",
+        "./adapters/lakeview",
         "./adapters/linkml",
         "./adapters/linkml/class-slots",
         "./adapters/linkml/imports",
@@ -68169,10 +68338,17 @@
         "KeySqlServerRequest",
         "KeyTableSpecProjection",
         "KeyTableSpecRequest",
+        "LAKEVIEW_EXTENSION",
         "LIMITS",
         "LINKML_EXTENSION",
         "LINKML_MERGE_COLLECTIONS",
         "LINKML_SCALAR_SLOT_FIELDS",
+        "LakeviewIds",
+        "LakeviewImport",
+        "LakeviewIssue",
+        "LakeviewOptions",
+        "LakeviewProjection",
+        "LakeviewRuntime",
         "LinkmlClassSlotsReport",
         "LinkmlImportContext",
         "LinkmlImportMergeReport",
@@ -68903,6 +69079,8 @@
         "exportJsonSchema",
         "exportJsonSchemaBundle",
         "exportJsonSchemaResources",
+        "exportLakeviewDashboard",
+        "exportLakeviewDashboardBytes",
         "exportLinkmlDocument",
         "exportOdcsDocument",
         "exportOpenapiBundle",
@@ -69027,6 +69205,8 @@
         "importIcebergTable",
         "importJsonLdDocument",
         "importJsonSchema",
+        "importLakeviewDashboard",
+        "importLakeviewDashboardBytes",
         "importLinkmlDocument",
         "importOdcsDocument",
         "importOpenapiDocument",
@@ -69096,6 +69276,7 @@
         "inspectIcebergTransformType",
         "inspectJsonLdDocument",
         "inspectJsonSchema",
+        "inspectLakeview",
         "inspectLinkmlClassSlots",
         "inspectLinkmlDocument",
         "inspectLinkmlImportContext",
@@ -69146,6 +69327,8 @@
         "keyPostgresqlProjectionSchema",
         "keySqlServerProjectionSchema",
         "keyTableSpecProjectionSchema",
+        "lakeviewPackage",
+        "lakeviewRegistry",
         "linkmlPackage",
         "linkmlRegistry",
         "lookupCoreKey",
@@ -69291,6 +69474,7 @@
         "projectKeysToPostgresql",
         "projectKeysToSqlServer",
         "projectKeysToTableSpec",
+        "projectLakeviewToLegacyDashboard",
         "projectMedicalFhir",
         "projectNullabilityToAvro",
         "projectNullabilityToParquet",
@@ -69795,6 +69979,7 @@
         "src/adapters/javascript-numeric.ts",
         "src/adapters/json-schema/index.ts",
         "src/adapters/jsonld/index.ts",
+        "src/adapters/lakeview/index.ts",
         "src/adapters/linkml/class-slots.ts",
         "src/adapters/linkml/imports.ts",
         "src/adapters/linkml/index.ts",
@@ -70062,7 +70247,7 @@
         "src/validation/relationships.ts",
         "src/validation/schema-properties.ts"
       ],
-      "sha256": "b6d36d3db4ce65322399c9de1b2a040552b8b49f5c9286c846b517771ea4db69"
+      "sha256": "c64311ae1fb5f47da1594a40a38f14f890ff951fffea17e2bf0766af2cbf2963"
     },
     {
       "bytes": 1995,
@@ -72791,7 +72976,7 @@
       "sha256": "76cd94692bf1949f7d6f89630ec3b68ea8761b8c7c8b6a631644e6ed2b03bf2f"
     },
     {
-      "bytes": 708,
+      "bytes": 735,
       "disposition": "shared-semantic-engine",
       "imports": [
         "../model/types"
@@ -72806,10 +72991,10 @@
       "resolvedImports": [
         "src/model/types.ts"
       ],
-      "sha256": "9cfb57d1cf2331107e8cf756538d3bd698d2c03cad77aa8d2d43d046b2b89745"
+      "sha256": "23c8a019d799d6214c534c4338cd916295ae55e2146aba6da3de1a1fc3a78b76"
     },
     {
-      "bytes": 4053,
+      "bytes": 4574,
       "disposition": "shared-semantic-engine",
       "imports": [
         "../generated/core-model",
@@ -72835,7 +73020,7 @@
         "src/registry/kind-runtime.ts",
         "src/validation/schema.ts"
       ],
-      "sha256": "3fa010311edc23c5dc74826eb7a74a8a19a9a4c41da3031bc66e6f741d1164c1"
+      "sha256": "5c20e8cdbcd0f11bf8e32e1b72045f7b08ce845db2bd58020ad829cbdf9b0ddf"
     },
     {
       "bytes": 9773,

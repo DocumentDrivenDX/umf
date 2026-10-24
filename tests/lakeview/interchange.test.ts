@@ -1,109 +1,110 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importLakeviewDashboard,exportLakeviewDashboard,inspectLakeview,inspectDashboard,getLakeviewNative,readDocument,writeDocument,copyJson,type Document} from '../../src';
-import {parseNativeJson,renderTree} from '../../src/model/native-json';
-const source=await Bun.file('fixtures/lakeview/marketing-campaign.lvdash.json').text();
-const authored=await Bun.file('fixtures/dashboard/marketing-campaign.json').json() as Document;
-const native=()=>JSON.parse(source);
-const compact=(text:string)=>renderTree(parseNativeJson(text));
-const load=(text=source)=>importLakeviewDashboard(text,{id:'dashboard:marketing-campaign',title:'Marketing Campaign Performance',namespace:'marketing'});
-const element=(doc:Document,module:string,id:string)=>doc.modules.find(m=>m.id===module)?.elements.find(e=>e.id===id);
-const neutral=(doc:Document,module:string,id:string)=>element(doc,module,id)?.extensions['umf.dashboard'] as any;
-const widget=(view:any,name:string)=>view.pages.flatMap((p:any)=>p.layout).find((l:any)=>l.widget.name===name).widget;
-const codes=(doc:Document)=>inspectLakeview(doc).diagnostics.filter(d=>d.severity==='error').map(d=>d.code);
-test('@covers US-093-AC1: the marketing-campaign dashboard is retained by identity and exports token-exactly through UMF JSON/YAML',()=>{
- const {document}=load();
- expect(exportLakeviewDashboard(document)).toBe(compact(source));
- for(const format of ['json','yaml'] as const)expect(exportLakeviewDashboard(readDocument(writeDocument(document,format),format))).toBe(compact(source));
- expect(document.modules.map(m=>m.id)).toEqual(['data','overview','campaign_details','filters']);
- expect(document.modules.map(m=>(m.extensions!['umf.lakeview'] as any).kind)).toEqual(['data','page','page','page']);
- expect(document.modules[0]!.elements.map(e=>e.id)).toEqual(['ds_metric','ds_campaign','ds_rank','ds_weekday']);
- expect(document.modules.slice(1).flatMap(m=>m.elements).every(e=>(e.extensions['umf.lakeview'] as any).kind==='layout-item')).toBe(true);
- expect((document.extensions!['umf.lakeview'] as any).order).toEqual(['datasets','pages','uiSettings']);
- const checked=inspectLakeview(document);expect(checked.valid).toBe(true);expect(checked.complete).toBe(false);
- expect(checked.diagnostics.filter(d=>d.code.startsWith('LAKEVIEW_')).map(d=>d.code)).toEqual(['LAKEVIEW_CONTEXT_UNVERIFIED']);
- const view=native(),pi=view.pages.findIndex((p:any)=>p.name==='overview');
- expect(JSON.parse(getLakeviewNative(document,'overview','w-101-impressions'))).toEqual(view.pages[pi].layout[1]);
- expect(JSON.parse(getLakeviewNative(document,'overview'))).toEqual(view.pages[pi]);
- expect(JSON.parse(getLakeviewNative(document,'data','ds_rank'))).toEqual(view.datasets[2]);
- const copy=JSON.parse(getLakeviewNative(document));copy.pages.pop();expect(exportLakeviewDashboard(document)).toBe(compact(source));
-});
-test('@covers US-093-AC2: the neutral projection validates and agrees with the authored US-077 declaration',()=>{
- const {document}=load(),root=document.extensions!['umf.dashboard'] as any,fixtureRoot=authored.extensions!['umf.dashboard'] as any;
- expect(inspectDashboard(document).valid).toBe(true);
- expect(root.pages).toEqual(fixtureRoot.pages);expect(root.layout).toEqual(fixtureRoot.layout);
- expect(root.theme).toMatchObject(fixtureRoot.theme);
- const shape=(e:any)=>({channel:e.channel,field:e.field,aggregation:e.aggregation,scale:e.scale,sort:e.sort});
- for(const module of authored.modules){
-  const fixture=module.extensions!['umf.dashboard'] as any,mine=document.modules.find(m=>m.id===module.id)!.extensions!['umf.dashboard'] as any;
-  expect(mine.kind).toBe(fixture.kind);if(fixture.kind==='page')expect([mine.title,mine.role]).toEqual([fixture.title,fixture.role]);
-  for(const item of module.elements){
-   const expected=item.extensions['umf.dashboard'] as any,actual=neutral(document,module.id,item.id);
-   expect(actual.kind).toBe(expected.kind);
-   if(expected.kind==='dataset')for(const [name,field] of Object.entries<any>(expected.fields))if(field.role==='measure')expect(actual.fields[name].expression).toEqual(field.expression);else expect(actual.fields[name].role).toBe('column');
-   if(expected.kind==='visual'){expect([actual.chart,actual.dataset,actual.rows]).toEqual([expected.chart,expected.dataset,expected.rows]);for(const encoding of expected.encodings)expect(actual.encodings.map(shape)).toContainEqual(shape(encoding));}
-   if(expected.kind==='filter'){expect([actual.control,actual.default]).toEqual([expected.control,expected.default]);expect(actual.targets).toEqual(expect.arrayContaining(expected.targets));}
-   if(expected.kind==='text')expect(actual.content.text.startsWith(expected.content.text.split('\n')[0])).toBe(true);
+import {createEngine} from '../../bindings/core/node/index.js';
+import {coreSchema,semanticTypeReferenceSchema,extensionPackageSchema,coreConstraints,domainPolicy} from '../../src/generated/core-model';
+import {importLakeviewDashboardBytes,exportLakeviewDashboardBytes,importLakeviewDashboard,exportLakeviewDashboard,lakeviewRegistry,inspectLakeview,projectLakeviewToLegacyDashboard,lakeviewPackage} from '../../src/adapters/lakeview';
+import {Registry} from '../../src/registry/registry';
+import {readDocument,writeDocument} from '../../src/model/document';
+import {inspectExtensionKinds} from '../../src/model/extension-kinds';
+import {selectCoreElements} from '../../src/model/selection';
+import {copyJson} from '../../src/model/json';
+import type {Document} from '../../src/model/types';
+const runtime=createEngine({coreSchema,referenceSchema:semanticTypeReferenceSchema,packageSchema:extensionPackageSchema,constraints:coreConstraints,domainPolicy});
+const options={id:'dashboard:marketing-campaign',title:'Marketing Campaign Performance',namespace:'marketing'};
+const paths=['marketing-campaign','lexical-quirks','empty-sections'];
+const originals=await Promise.all(paths.map(async name=>({name,bytes:await Bun.file('fixtures/lakeview/'+name+'.lvdash.json').bytes()})));
+const load=(bytes=originals[0]!.bytes)=>importLakeviewDashboardBytes(bytes,options,runtime);
+const native=(owner:any)=>owner.extensions?.['umf.lakeview'];
+
+for(const original of originals)test('@covers US-093-AC1: original file bytes survive import/export and UMF JSON/YAML: '+original.name,()=>{
+  const {document}=load(original.bytes);
+  // Compare the actual original bytes directly. Never normalize either side.
+  expect(exportLakeviewDashboardBytes(document,runtime)).toEqual(original.bytes);
+  for(const format of ['json','yaml'] as const){
+    const restored=readDocument(writeDocument(document,format),format);
+    expect(exportLakeviewDashboardBytes(restored,runtime)).toEqual(original.bytes);
   }
- }
- expect(neutral(document,'overview','w-111-by-channel').encodings[1].sort).toEqual({by:'value-descending'});
- expect(neutral(document,'overview','w-101-impressions').encodings[0].format).toEqual({kind:'number',abbreviation:'compact',decimals:1});
- expect(neutral(document,'campaign_details','w-206-campaign-detail').rows).toBe('detail');
-});
-test('@covers US-093-AC3: constructs the neutral profile cannot express are reported with source pointers',()=>{
- const view=native(),w=(name:string)=>widget(view,name);
- w('w-101-impressions').queries[0].query.filters=[{expression:"`channel` <> 'Email'"}];
- view.datasets[0].parameters=[{displayName:'Week',keyword:'week',dataType:'DATE',defaultSelection:{values:{dataType:'DATE',values:[{value:'2027-07-31'}]}}}];
- w('filter-week-end').spec.selection={defaultSelection:{range:{dataType:'DATE',min:{value:'now-3M/M'},max:{value:'now-1M/M'}}}};
- w('w-115-by-visibility').spec.widgetType='sankey';
- w('w-102-clicks').spec.futureFlag=true;
- const text=JSON.stringify(view),{document,issues}=load(text);
- expect(exportLakeviewDashboard(document)).toBe(compact(text));
- const find=(code:string)=>issues.filter(i=>i.code===code).map(i=>[i.path,i.classification]);
- expect(find('LAKEVIEW_QUERY_FILTER')).toEqual([['/pages/0/layout/1/widget/queries/0/query/filters/0','unsupported']]);
- expect(find('LAKEVIEW_PARAMETER')).toEqual([['/datasets/0/parameters/0','unsupported']]);
- expect(find('LAKEVIEW_FILTER_DEFAULT')).toEqual([['/pages/2/layout/1/widget/spec/selection/defaultSelection/range','unsupported']]);
- expect(find('LAKEVIEW_WIDGET_TYPE')).toEqual([['/pages/0/layout/12/widget','unsupported']]);
- expect(find('LAKEVIEW_ORDER_BY')).toContainEqual(['/pages/1/layout/6/widget/queries/0/query/orders/0','unsupported']);
- expect(find('LAKEVIEW_STYLE')).toContainEqual(['/pages/0/layout/8/widget/spec/encodings/color','annotation-only']);
- expect(find('LAKEVIEW_STYLE')).toContainEqual(['/uiSettings/theme/widgetCornerRadius','annotation-only']);
- expect(find('LAKEVIEW_FORMAT')).toContainEqual(['/pages/0/layout/1/widget/spec/encodings/value/format/decimalPlaces/type','representation-change']);
- expect(find('LAKEVIEW_UNMAPPED')).toContainEqual(['/pages/0/layout/2/widget/spec/futureFlag','unsupported']);
- expect(find('LAKEVIEW_UNMAPPED')).toContainEqual(['/uiSettings/applyModeEnabled','unsupported']);
- const sankey=element(document,'overview','w-115-by-visibility')!;
- expect(Object.keys(sankey.extensions)).toEqual(['umf.lakeview']);
- expect(neutral(document,'overview','w-101-impressions').kind).toBe('visual');
- for(const issue of issues){let node:any=view;for(const key of issue.path.split('/').slice(1).map(k=>k.replace(/~1/g,'/').replace(/~0/g,'~')))node=node[key];expect(node).toBeDefined();expect(issue.retainedInSource).toBe(true);}
-});
-test('@covers US-093-AC4: misplaced, inconsistent or unknown representation fails, legacy grids are doubled and rejected neutral items are omitted',()=>{
- const base=load().document;
- const mutate=(change:(doc:Document)=>void)=>{const doc=copyJson(base) as unknown as Document;change(doc);return doc;};
- const lv=(owner:any)=>owner.extensions['umf.lakeview'];
- const cases:[string,(doc:Document)=>void][]=[
-  ['LAKEVIEW_PLACEMENT',d=>d.modules[1]!.elements.push(d.modules[0]!.elements.pop()!)],
-  ['LAKEVIEW_PLACEMENT',d=>d.modules[0]!.elements.push(d.modules[1]!.elements.pop()!)],
-  ['LAKEVIEW_SCOPE',d=>d.modules[1]!.elements[0]!.extensions['umf.lakeview']=lv(d.modules[1])],
-  ['LAKEVIEW_ROOT',d=>delete d.extensions!['umf.lakeview']],
-  ['LAKEVIEW_ORDER',d=>lv(d).order=['pages','uiSettings']],
-  ['LAKEVIEW_ORDER',d=>lv(d).order=['datasets','pages','uiSettings','missing']],
-  ['LAKEVIEW_ORDER',d=>lv(d.modules[1]).order=lv(d.modules[1]).order.filter((k:string)=>k!=='layout')],
-  ['LAKEVIEW_ORDER',d=>lv(d.modules[1]).order=[...lv(d.modules[1]).order].reverse()],
-  ['LAKEVIEW_ORDER',d=>lv(d.modules[1]).native.members.layout={kind:'array',items:[]}],
-  ['LAKEVIEW_NATIVE',d=>lv(d.modules[0]!.elements[0]).native={kind:'array',items:[]}]
- ];
- for(const [code,change] of cases){const doc=mutate(change);expect(codes(doc)).toContain(code);expect(()=>exportLakeviewDashboard(doc)).toThrow();}
- const wrapped=mutate(d=>lv(d.modules[0]!.elements[0]).note='kept');
- expect(inspectLakeview(wrapped).valid).toBe(true);expect(()=>exportLakeviewDashboard(wrapped)).toThrow('Unknown representation fields');
- const legacy=native();delete legacy.pages[1].layoutVersion;
- const grid=load(JSON.stringify(legacy));
- expect(grid.issues.filter(i=>i.code==='LAKEVIEW_GRID').map(i=>i.path)).toEqual(['/pages/1']);
- // A six-wide item doubles to the full twelve-column row; a full-row item no longer fits and is omitted.
- expect(neutral(grid.document,'campaign_details','w-201-campaigns-run').position).toEqual({x:0,y:3,width:12,height:4});
- expect(neutral(grid.document,'campaign_details','w-206-campaign-detail')).toBeUndefined();
- expect(grid.issues).toContainEqual(expect.objectContaining({path:'/pages/1/layout/6/widget',code:'LAKEVIEW_PROJECTION',detail:expect.stringContaining('DASHBOARD_LAYOUT')}));
- const rejected=native();delete widget(rejected,'w-112-by-traffic-source').spec.encodings.y;
- const omitted=load(JSON.stringify(rejected));
- expect(neutral(omitted.document,'overview','w-112-by-traffic-source')).toBeUndefined();
- expect(omitted.issues).toContainEqual(expect.objectContaining({path:'/pages/0/layout/9/widget',code:'LAKEVIEW_PROJECTION',detail:expect.stringContaining('DASHBOARD_ENCODING')}));
- expect(exportLakeviewDashboard(omitted.document)).toBe(compact(JSON.stringify(rejected)));
 },60_000);
+
+test('@covers US-093-AC2: generic discovery and core selection see Records/Fields without a parallel field dictionary',()=>{
+  const {document}=load(),registry=lakeviewRegistry(runtime);
+  const inspection=inspectExtensionKinds(document,registry);
+  expect(inspection.entries[0]!.reference).toEqual({extension:'umf.lakeview',version:'0.2.0',kind:'dashboard'});
+  expect(registry.listKinds().definitions.map(d=>d.reference.kind)).toEqual(['dashboard','data','dataset','field','layout-item','page','query-result']);
+  expect(inspection.sourceValidation.valid).toBe(true);expect(inspection.complete).toBe(false);
+  const data=document.modules.find(m=>native(m)?.kind==='data')!;
+  const dataset=data.elements.find(e=>e.id==='ds_metric')!;
+  expect(dataset.kind).toBe('record');expect(dataset.members!.length).toBeGreaterThan(0);
+  const selected=selectCoreElements(document,{references:'transitive',identities:[{module:data.id,element:dataset.id}]},registry);
+  expect(selected.selection.some(e=>e.element.kind==='field'&&e.element.name==='Metric Value')).toBe(true);
+  const fields=document.modules.flatMap(m=>m.elements).filter(e=>e.kind==='field');
+  expect(fields.length).toBeGreaterThan(20);
+  expect(fields.every(e=>e.scalarType===undefined&&e.nullability===undefined&&e.cardinality===undefined)).toBe(true);
+  expect(document.modules.flatMap(m=>m.elements).every(e=>native(e)?.fields===undefined&&e.extensions['umf.dashboard']===undefined)).toBe(true);
+  const page=document.modules.find(m=>m.id==='overview')!;
+  const item=page.elements.find(e=>e.id==='w-101-impressions')!;
+  const outputs=selectCoreElements(document,{references:'transitive',identities:[{module:page.id,element:item.id}]},registry);
+  expect(outputs.selection.some(e=>native(e.element)?.kind==='query-result'&&e.element.kind==='record')).toBe(true);
+  expect(outputs.selection.some(e=>native(e.element)?.role==='query-output'&&e.element.kind==='field')).toBe(true);
+},60_000);
+
+test('@covers US-093-AC3: unknown native content and opaque numeric/expression lexemes are retained with explicit limits',()=>{
+  const original=originals[1]!,{document,issues}=load(original.bytes);
+  expect(document.modules.map(m=>m.id)).toEqual(['data_2','data']);
+  expect(issues.map(i=>i.code)).toContain('LAKEVIEW_QUERY_OPAQUE');
+  expect(issues.map(i=>i.code)).toContain('LAKEVIEW_SCHEMA_PARTIAL');
+  expect(issues.map(i=>i.code)).toContain('LAKEVIEW_NATIVE_SEMANTICS_UNVERIFIED');
+  expect(issues.every(i=>i.retainedInSource)).toBe(true);
+  const stored=native(document).originalText as string;
+  expect(stored.startsWith('\ufeff\r\n')).toBe(true);
+  expect(stored).toContain('9007199254740993123456789');expect(stored).toContain('0.10000000000000001');expect(stored).toContain('1e400');
+  expect(stored).toContain('\\u0061\\/\\ud800');expect(stored.endsWith('\t\r\n\r\n')).toBe(true);
+  expect(exportLakeviewDashboardBytes(document,runtime)).toEqual(original.bytes);
+});
+
+test('@covers US-093-AC4: core/native edits, unknown representation and broken references cannot silently export old bytes',()=>{
+  const {document}=load(originals[1]!.bytes);
+  for(const mutate of [
+    (d:Document)=>{d.modules[0]!.elements.find(e=>e.kind==='field')!.name='changed'},
+    (d:Document)=>{d.modules[0]!.elements.find(e=>e.kind==='record')!.members=[]},
+    (d:Document)=>{d.modules[0]!.elements.find(e=>e.kind==='field')!.scalarType='string'},
+    (d:Document)=>{native(d.modules[0]!.elements.find(e=>native(e)?.kind==='dataset')).native.members.name.value='changed'},
+    (d:Document)=>{native(d).order.reverse()},
+    (d:Document)=>{native(d).futureRepresentation={keep:true}},
+    (d:Document)=>{d.modules[1]!.elements[0]!.references=[{module:'missing',element:'missing',role:'lakeview-declaration'}]},
+    (d:Document)=>{native(d).kind='page'},
+  ]){
+    const changed=copyJson(document) as unknown as Document;mutate(changed);
+    expect(()=>exportLakeviewDashboard(changed,runtime)).toThrow('changed');
+  }
+  const wrong=copyJson(document) as unknown as Document;native(wrong).kind='page';
+  expect(inspectLakeview(wrong,runtime).diagnostics.map(d=>d.code)).toContain('EXTENSION_KIND_SCOPE');
+  const missing=copyJson(document) as unknown as Document;delete native(missing).kind;
+  expect(inspectLakeview(missing,runtime).valid).toBe(false);
+  const broken=copyJson(document) as unknown as Document;native(broken).originalText='invalid JSON';
+  expect(inspectLakeview(broken,runtime).diagnostics.map(d=>d.code)).toContain('LAKEVIEW_SOURCE_INVALID');
+  expect(()=>importLakeviewDashboard('{"datasets":[],"datasets":[]}',options,runtime)).toThrow();
+  expect(()=>importLakeviewDashboardBytes(new Uint8Array([0xff,0xfe]),options,runtime)).toThrow();
+},60_000);
+
+test('PR42 neutral projection remains an explicit legacy compatibility view, independent of native round-trip representation',()=>{
+  const view=JSON.parse(new TextDecoder().decode(originals[0]!.bytes));
+  const ids={data:'data',datasets:view.datasets.map((d:any)=>d.name),pages:view.pages.map((p:any)=>({id:p.name,items:p.layout.map((l:any)=>l.widget.name)}))};
+  const legacy=projectLakeviewToLegacyDashboard(view,ids,{title:options.title});
+  expect((legacy.root as any).kind).toBe('dashboard');expect(legacy.elements.size).toBeGreaterThan(20);
+  const {document}=load();expect(document.vocabularies['umf.dashboard']).toBeUndefined();
+  expect(exportLakeviewDashboardBytes(document,runtime)).toEqual(originals[0]!.bytes);
+});
+
+test('native validator selection is an explicit caller capability; metadata cannot activate it',()=>{
+  const p=copyJson(lakeviewPackage) as any;p.nativeValidator='lakeview/0.2.0';
+  const registry=new Registry(runtime).register(p,undefined,{kinds:true});
+  expect(registry.registrations()[0]!.nativeValidator).toBeUndefined();
+  expect(()=>new Registry(runtime).register(p,undefined,{kinds:true,nativeValidator:'future/9'})).toThrow();
+  const wrong=copyJson(lakeviewPackage) as any;wrong.id='another.extension';
+  expect(()=>new Registry(runtime).register(wrong,undefined,{kinds:true,nativeValidator:'lakeview/0.2.0'})).toThrow();
+  expect(()=>new Registry(runtime).register(lakeviewPackage,()=>[],{kinds:true,nativeValidator:'lakeview/0.2.0'})).toThrow();
+  const atomic=new Registry(runtime);
+  expect(()=>atomic.register(p,undefined,{kinds:true,nativeValidator:'future/9'})).toThrow();
+  expect(atomic.get('umf.lakeview','0.2.0')).toBeUndefined();
+});

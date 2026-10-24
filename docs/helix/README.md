@@ -15,6 +15,11 @@ The registration capability preserves core 0.10.0; scoped implementation and
 runtime qualification are recorded in [execution evidence](04-build/evidence/extension-kinds/README.md).
 See the [usage guide](05-deploy/extension-defined-kinds.md) for explicit activation.
 
+[Lakeview extension](05-deploy/lakeview.md) applies the extension-defined kinds
+from PR #46 using core Records/Fields and original-byte reconstruction through
+UMF JSON/YAML. [Execution evidence](04-build/evidence/lakeview/README.md)
+qualifies the committed corpus and records native acceptance limits.
+
 [Shared Rust migration and Python V8 removal plan](04-build/rust-migration-plan.md)
 sequences a native Rust CLI and Python/Node/Bun/browser bindings over one engine.
 [ADR-006](02-design/adr/ADR-006-shared-rust-implementation.md) records the target

@@ -19,77 +19,49 @@ ddx:
 
 # FEAT-034: Lakeview dashboard interchange
 
-**Feature ID:** FEAT-034. **Status:** Draft. **Priority:** Proposed; not yet scheduled against the product roadmap. **Owner:** Proposed by the Genie dashboard design project (FocusedDiversity); UMF maintainer review pending.
-**Covered PRD Subsystem(s):** Native Schema Interchange; Extensions and Unknown Semantics; Programmatic Consumers.
-**Covered PRD Requirements:** FR-4, FR-5, FR-7, FR-8, FR-22, FR-41.
-**Cross-Subsystem Rationale:** A native, exact-preserving extension (FR-7/8, the FEAT-002 pattern) for a dashboard format rather than a data-shape format, paired with a reported projection into the FEAT-026 neutral profile so loss is explicit (FR-5/22) for programmatic consumers (FR-41).
-
 ## Overview
 
-Import a Databricks AI/BI (Lakeview) `.lvdash.json` dashboard into UMF. The native
-dashboard is retained exactly, split across the same document, modules and elements
-that carry its `umf.dashboard` declaration: one data module of datasets, one module per
-page and one element per layout item. The importer returns a loss report that names
-every native construct the neutral declaration does not express, by JSON Pointer into
-the source file.
+Represent observed Lakeview dashboard exports using package-owned kinds and core
+Records/Fields, while preserving untouched original input bytes through UMF
+JSON/YAML. The owner requested this successor to PR42's compact-token recovery
+and parallel field projection. Core remains 0.10.0; `umf.lakeview` advances to
+0.2.0 because its representation and compatibility surface change.
 
-## Ideal Future State
+## Semantic Rationale
 
-A designer imports an existing Lakeview dashboard, reviews the neutral declaration and
-its loss report, and either exports the untouched native dashboard or uses the neutral
-form to generate a Tableau workbook or a restyled Lakeview dashboard. Every widget-level
-filter, parameter binding, relative date default or unsupported widget type that did not
-cross is a reviewable line item, not a surprise in production.
-
-## Problem Statement
-
-Lakeview widgets bind versioned spec JSON to named dataset queries through query field
-names and opaque expression strings. A neutral reader must decode that indirection,
-and a native writer must not lose what the neutral reader ignored. Today both happen by
-hand, and the losses are recorded nowhere.
+A dashboard is a composition of named datasets, named query outputs and native
+presentation objects. UMF identity, containment, Records, Fields and references
+apply to those declared data shapes. A dashboard itself is not a row shape or
+physical table. Its kind, page layout, query context, calculations and unknown
+native content remain extension-owned. Catalog descriptions state these limits
+so generic tools discover the composition without assuming BI equivalence.
 
 ## Requirements
 
-- LV-01: Retain the native dashboard as exact-token, order-preserving JSON distributed
-  over document, page module, dataset element and layout-item element payloads.
-- LV-02: Export the retained native dashboard back to JSON whose tokens and member
-  order equal the source; refuse export when representation is incomplete or inconsistent.
-- LV-03: Project datasets, pages, counters, bar/line/area/scatter/pie/heatmap/table
-  visuals, text boxes and select, date-range, text-entry and range filters into
-  `umf.dashboard`, resolving query field names to dataset fields and aggregations.
-- LV-04: Report every native construct the projection does not express, classified as
-  `representation-change`, `unsupported` or `annotation-only`, with a JSON Pointer
-  into the source. Unconsumed native content is reported generically, so new Lakeview
-  properties cannot be dropped silently.
-- LV-05: Omit, and report, any neutral item that the dashboard profile would reject,
-  rather than emitting an invalid neutral declaration.
+- LV-01: Keep the original well-formed UTF-8 source, including an optional BOM,
+  whitespace, line endings, member order, string escape spelling and numeric tokens.
+- LV-02: Untouched native export MUST equal the original input bytes directly,
+  including after UMF JSON and YAML serialization. No compacting or equivalent
+  JSON comparison may substitute for this requirement.
+- LV-03: Use core Records and Fields for explicitly named dataset columns and
+  widget-query outputs, connected by stable core references. Do not persist a
+  parallel field dictionary, infer SQL types or claim complete dataset schemas.
+- LV-04: Declare discoverable kinds and permitted scopes under CONTRACT-906;
+  ordinary validation must reject kind/scope mistakes and inconsistent native/core
+  representations when the explicit built-in validator is registered.
+- LV-05: Keep opaque expressions and unknown native content, report interpretation
+  limits and refuse edited native export until a separately qualified rewrite exists.
 
-### Non-Functional Requirements
+## Compatibility and Limits
 
-Browser-compatible TypeScript under ADR-002. No query, expression or widget spec is
-executed or validated against a Databricks workspace; acceptance of an exported file by
-Databricks is unverified.
+The PR42 `umf.dashboard` 0.1 projection remains the explicitly named
+`projectLakeviewToLegacyDashboard` compatibility view. Its historical field model
+is not stored by the 0.2 importer. Cross-system projection and edited-source
+rewrites are follow-on work; live Databricks acceptance remains unverified.
+Rust owns the new operation family under ADR-006, with Node/Bun and browser WASM
+presentation bindings. No source content loads code or queries a workspace.
 
-## User Stories
+## Verification
 
-- [US-093: Import a Lakeview dashboard with an explicit loss report](../user-stories/US-093-lakeview-dashboard-interchange.md).
-
-## Edge Cases and Error Handling
-
-Pages without `layoutVersion` use a six-column grid; when a document mixes them with
-twelve-column `GRID_V1` pages, legacy positions are doubled horizontally and reported.
-A widget-level query filter narrows the native visual only; the neutral visual is then
-broader than the native one, and that is reported as `unsupported`. Widget types with no
-neutral chart family (histogram, sankey, choropleth and others) keep only their native
-payload.
-
-## Success Metrics
-
-The marketing-campaign Lakeview dashboard round-trips token-exactly through UMF
-JSON/YAML; its neutral projection validates and matches the authored FEAT-026 fixture on
-every construct both declare; every unprojected construct appears in the loss report.
-
-## Out of Scope
-
-Neutral-to-Lakeview export of edited declarations, Tableau interchange, parsing SQL,
-inferring field types without a catalog, and verifying exports against Databricks.
+US-093 maps committed original files and negative controls to these requirements.
+No private dashboard or historical native acceptance claim qualifies this successor.

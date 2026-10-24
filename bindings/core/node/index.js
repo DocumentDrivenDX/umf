@@ -176,11 +176,13 @@ export function createEngine(resources, options = {}) {
         const semantics = dataProperty(extension, 'semantics', false);
         if (semantics !== undefined && typeof semantics !== 'function') throw new TypeError('Extension semantics must be a host callback function');
         if (semantics) callbackMap.set(index + 1, semantics);
-        if (Reflect.ownKeys(extension).some(key => !['manifest','semantics','kinds'].includes(key))) throw new TypeError('Full manifest and legacy registration fields cannot be mixed');
+        if (Reflect.ownKeys(extension).some(key => !['manifest','semantics','kinds','nativeValidator'].includes(key))) throw new TypeError('Full manifest and legacy registration fields cannot be mixed');
         const kindOption = dataProperty(extension, 'kinds', false);
         const kinds = kindOption === undefined ? false : kindOption;
         if (typeof kinds !== 'boolean') throw new TypeError('kinds must be a boolean');
-        return {manifest, kinds, semantic: Boolean(semantics)};
+        const nativeValidator = dataProperty(extension, 'nativeValidator', false);
+        if (nativeValidator !== undefined && (typeof nativeValidator !== 'string' || !nativeValidator)) throw new TypeError('nativeValidator must be a nonempty string');
+        return {manifest, kinds, ...(nativeValidator === undefined ? {} : {nativeValidator}), semantic: Boolean(semantics)};
       }
       const id = dataProperty(extension, 'id');
       const version = dataProperty(extension, 'version');
@@ -196,6 +198,9 @@ export function createEngine(resources, options = {}) {
   }
   return Object.freeze({
     engineVersion,
+    importLakeviewDashboard(source, options) { return invoke('lakeview-import', {source,options}); },
+    exportLakeviewDashboard(document) { return invoke('lakeview-export', {document}); },
+    lakeviewDiagnostics(document) { return invoke('lakeview-diagnostics', {document}); },
     listKinds(registry = []) { return invoke('list-kinds', {}, registry); },
     getKind(reference, registry = []) { return invoke('get-kind', {reference}, registry) ?? undefined; },
     inspectExtensionKinds(document, registry = []) { return invoke('inspect-kinds', {document}, registry); },
