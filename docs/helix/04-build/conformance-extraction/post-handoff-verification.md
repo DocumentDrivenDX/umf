@@ -30,6 +30,48 @@ not modified or traversed for this snapshot. Current and future Rust/G02/G03
 producer closures absent from the pinned commit must be supplied by their owners;
 this old snapshot cannot approve their extraction.
 
+## Preliminary Core producer delta (not a handoff)
+
+Readonly comparison on 2026-10-24 used Core producer
+`937dcd04b365dafe8ebec4565aff392fa67126d8` (#49). It is **not** the final G02
+published cohort and does not approve extraction. Git objects were read directly;
+no producer checkout, native build, source modification or new CI run occurred.
+
+- `python/pyproject.toml` now force-includes both
+  `fixtures/metamodel/current-conformance.json` and `fixtures/actions-binding`.
+  `tools/_python_sdist.py` independently pins that exact force-include mapping
+  and required Cargo/binding/source roots. The old generic fixture-extraction
+  classification cannot remove the new action-binding fixture closure without
+  an intentional packaging/contract change and offline archive proof. Retain the
+  required small closure or have the owner approve its explicit replacement.
+- `python/hatch_build.py` declares nine exact action-runtime schema/package
+  resources, core schemas and Rust/binding sdist source trees. These are build/
+  runtime resources, not optional downloaded conformance corpora. Its platform
+  helper and generated resource manifests also belong in the packaging review.
+- Rust production includes require `spec/extensions/tables/operation.schema.json`
+  (`crates/umf-codegen/src/resources.rs:86`), generated Python runtime source
+  (`crates/umf-codegen/src/generation/python.rs:6–7`), Unicode name data
+  (`crates/umf-core/src/python_regex.rs:13`) and schema metadata
+  (`crates/umf-core/src/schema.rs:5872`). Keep the exact production compile-time
+  closure in core/offline distributions; suffixes such as `.dat` do not make a
+  resource disposable test data.
+- Other Rust `include_str!` references occur in test modules/integration tests,
+  including `fixtures/actions-binding`, CPython regex oracle vectors and original
+  Rust-migration evidence records. Moving that test source to the external suite
+  must move/rebind its complete compile-time input closure too. Literal matches
+  alone do not classify Rust feature/cfg dependencies. For example the nine
+  schema includes in `resources.rs:544+` are under `#[cfg(test)]`, whereas the
+  operation schema include at line 86 is in production construction.
+- This producer tree does not contain the asset-lane resolver files or the
+  asset-lane size/input guards and repository-size workflow. That is a branch
+  integration difference, not evidence of an intentional upstream deletion.
+  Reconcile the additive asset commits and revised split guard/workflow with the
+  actual final merge; do not silently lose either runtime resolution or size gates.
+
+Actionable preparation is the owner review of these new packaging/compile-time
+edges and final-merge integration. Their actual final source pins and all other
+successor files must replace this preliminary comparison during handoff.
+
 ## 1. Accept an exact handoff packet
 
 Obtain the migration owner's actual merged/published source commit and tree,

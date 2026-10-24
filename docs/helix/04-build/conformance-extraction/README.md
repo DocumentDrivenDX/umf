@@ -450,3 +450,10 @@ The newly present untracked `crates/` root is left untouched and excluded from
 this old-commit coverage; its owner must supply the actual successor closure.
 No passed runtime checks were repeated, no new size result is claimed, and the
 cut remains held for the real final migration handoff and concrete approval.
+
+Readonly follow-up compared preliminary Core producer
+`937dcd04b365dafe8ebec4565aff392fa67126d8` without qualifying it as final G02.
+The post-handoff procedure now records newly forced action-binding sdist fixtures,
+production versus test-only Rust compile-time resources, and the required
+asset-lane/guard integration reconciliation. No runtime checks were repeated,
+new CI queued, producer source changed, or cut approval inferred.
