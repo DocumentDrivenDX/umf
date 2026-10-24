@@ -21,6 +21,24 @@ class BoundaryRuleTests(unittest.TestCase):
             findings = MODULE.scan_text(path, "from py_mini_racer import MiniRacer")
             self.assertEqual("forbidden-python-javascript-engine", findings[0]["rule"])
 
+    def test_generic_kinds_keep_ecosystem_semantics_out_of_core(self):
+        self.assertEqual([], MODULE.scan_text("crates/umf-core/src/kinds.rs", 'let tag = get(payload, "kind");'))
+        self.assertEqual("ecosystem-kind-in-generic-core", MODULE.scan_text("crates/umf-core/src/kinds.rs", 'if tag == "dashboard" {}')[0]["rule"])
+        self.assertEqual("kind-core-adapter-import", MODULE.scan_text("src/model/extension-kinds.ts", "import {x} from '../extensions/vendor';")[0]["rule"])
+
+    def test_kind_wrapper_transport_and_semantic_fork_controls(self):
+        path = "bindings/core/node/index.js"
+        good = "const manifest = dataProperty(extension, 'manifest', false); return {manifest, kinds, semantic: false};"
+        self.assertEqual([], MODULE.scan_text(path, good))
+        self.assertEqual("kind-manifest-transport-loss", MODULE.scan_text(path, good.replace("{manifest, kinds,", "{id, version,"))[0]["rule"])
+        self.assertEqual("kind-semantic-fork-in-wrapper", MODULE.scan_text(path, "if (payload.kind === 'vendor-kind') return true;")[0]["rule"])
+
+    def test_no_current_v8_debt_or_former_bridge_exception_remains(self):
+        self.assertEqual({}, MODULE.V8_DEBT)
+        for path in ["python/umf_codegen/src/umf_codegen/_embedded.py", "python/umf_access/src/umf_access/values.py"]:
+            findings = MODULE.scan_text(path, "from py_mini_racer import MiniRacer", allowed_debt=MODULE.V8_DEBT)
+            self.assertEqual("forbidden-python-javascript-engine", findings[0]["rule"])
+
     def test_production_core_cannot_restore_retired_runtime_or_reference_fallback(self):
         for source in ["from jsonschema import Draft7Validator", "from ruamel.yaml import YAML"]:
             findings = MODULE.scan_text("python/src/umf/schema.py", source)

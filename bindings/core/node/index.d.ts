@@ -72,9 +72,12 @@ export interface UmfCoreExtension {
 }
 export interface UmfCoreEngine {
   readonly engineVersion: string;
-  validateDocument(document: unknown, registry?: UmfCoreExtension[]): {valid: boolean; complete: boolean; diagnostics: {code: string; path: string; message: string; severity: 'error' | 'warning'}[]};
-  readDocument(source: string, format?: 'json' | 'yaml', registry?: UmfCoreExtension[]): unknown;
-  writeDocument(document: unknown, format?: 'json' | 'yaml', registry?: UmfCoreExtension[]): string;
+  listKinds(registry?: UmfCoreRegistration[]): unknown;
+  getKind(reference: unknown, registry?: UmfCoreRegistration[]): unknown;
+  inspectExtensionKinds(document: unknown, registry?: UmfCoreRegistration[]): unknown;
+  validateDocument(document: unknown, registry?: UmfCoreRegistration[]): {valid: boolean; complete: boolean; diagnostics: {code: string; path: string; message: string; severity: 'error' | 'warning'}[]};
+  readDocument(source: string, format?: 'json' | 'yaml', registry?: UmfCoreRegistration[]): unknown;
+  writeDocument(document: unknown, format?: 'json' | 'yaml', registry?: UmfCoreRegistration[]): string;
   readValue(source: string, format?: 'json' | 'yaml'): unknown;
   writeValue(value: unknown, format?: 'json' | 'yaml'): string;
   readJsonValue(source: string): unknown;
@@ -177,3 +180,6 @@ export interface UmfCodegenEngine {
   diffAccessPackages(before: unknown, after: unknown): unknown;
 }
 export declare function createCodegenEngine(resources: UmfCodegenResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): UmfCodegenEngine;
+
+export interface UmfCorePackage { manifest: unknown; kinds?: boolean; semantics?: (payload: unknown, context: {document: unknown; path: string; scope: string}) => {code:string;path:string;message:string;severity:"error"|"warning"}[]; }
+export type UmfCoreRegistration = UmfCoreExtension | UmfCorePackage;

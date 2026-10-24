@@ -1451,9 +1451,457 @@
               }
             }
           ]
+        },
+        "kindCatalog": {}
+      }
+    },
+    "extensionKindDefinition": {
+      "description": "UMF extension kind extensionKindDefinition",
+      "type": "object",
+      "required": [
+        "title",
+        "description",
+        "scopes"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "document",
+              "module",
+              "element"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
         }
       }
+    },
+    "extensionKindCatalog": {
+      "description": "UMF extension kind extensionKindCatalog",
+      "type": "object",
+      "required": [
+        "profile"
+      ],
+      "properties": {
+        "profile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "definitions": {}
+      },
+      "allOf": [
+        {
+          "if": {
+            "type": "object",
+            "required": [
+              "profile"
+            ],
+            "properties": {
+              "profile": {
+                "const": "1.0.0"
+              }
+            }
+          },
+          "then": {
+            "type": "object",
+            "required": [
+              "definitions"
+            ],
+            "properties": {
+              "definitions": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/extensionKindDefinition"
+                },
+                "propertyNames": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "allOf": [
+                  {
+                    "not": {
+                      "const": {}
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "extensionKindReference": {
+      "description": "UMF extension kind extensionKindReference",
+      "type": "object",
+      "required": [
+        "extension",
+        "version",
+        "kind"
+      ],
+      "properties": {
+        "extension": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "extensionKindDiagnostic": {
+      "description": "UMF extension kind extensionKindDiagnostic",
+      "type": "object",
+      "required": [
+        "code",
+        "path",
+        "message",
+        "severity"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "error",
+            "warning"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "extensionKindValidation": {
+      "description": "UMF extension kind extensionKindValidation",
+      "type": "object",
+      "required": [
+        "valid",
+        "complete",
+        "diagnostics"
+      ],
+      "properties": {
+        "valid": {
+          "type": "boolean"
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/extensionKindDiagnostic"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "extensionKindEntry": {
+      "description": "UMF extension kind extensionKindEntry",
+      "type": "object",
+      "required": [
+        "reference",
+        "owner",
+        "payloadPath",
+        "definition"
+      ],
+      "properties": {
+        "reference": {
+          "$ref": "#/$defs/extensionKindReference"
+        },
+        "owner": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "scope"
+              ],
+              "properties": {
+                "scope": {
+                  "const": "document"
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "scope",
+                "module"
+              ],
+              "properties": {
+                "scope": {
+                  "const": "module"
+                },
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "scope",
+                "module",
+                "element"
+              ],
+              "properties": {
+                "scope": {
+                  "const": "element"
+                },
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "element": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "payloadPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "definition": {
+          "$ref": "#/$defs/extensionKindDefinition"
+        }
+      },
+      "additionalProperties": false
+    },
+    "extensionKindCoverage": {
+      "description": "UMF extension kind extensionKindCoverage",
+      "type": "object",
+      "required": [
+        "owner",
+        "extension",
+        "version",
+        "payloadPath",
+        "status",
+        "diagnostics"
+      ],
+      "properties": {
+        "owner": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "scope"
+              ],
+              "properties": {
+                "scope": {
+                  "const": "document"
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "scope",
+                "module"
+              ],
+              "properties": {
+                "scope": {
+                  "const": "module"
+                },
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "scope",
+                "module",
+                "element"
+              ],
+              "properties": {
+                "scope": {
+                  "const": "element"
+                },
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "element": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "extension": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "payloadPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "resolved",
+            "absent-catalog",
+            "unavailable",
+            "unsupported-catalog",
+            "invalid"
+          ]
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/extensionKindDiagnostic"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "extensionKindListResult": {
+      "description": "UMF extension kind extensionKindListResult",
+      "type": "object",
+      "required": [
+        "definitions",
+        "packages",
+        "complete"
+      ],
+      "properties": {
+        "definitions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "reference",
+              "definition"
+            ],
+            "properties": {
+              "reference": {
+                "$ref": "#/$defs/extensionKindReference"
+              },
+              "definition": {
+                "$ref": "#/$defs/extensionKindDefinition"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "packages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "extension",
+              "version",
+              "catalog",
+              "diagnostics"
+            ],
+            "properties": {
+              "extension": {
+                "type": "string",
+                "minLength": 1
+              },
+              "version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "catalog": {
+                "enum": [
+                  "available",
+                  "absent",
+                  "unsupported"
+                ]
+              },
+              "diagnostics": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/extensionKindDiagnostic"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "complete": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "extensionKindInspection": {
+      "description": "UMF extension kind extensionKindInspection",
+      "type": "object",
+      "required": [
+        "source",
+        "sourceValidation",
+        "entries",
+        "coverage",
+        "complete"
+      ],
+      "properties": {
+        "source": {},
+        "sourceValidation": {
+          "$ref": "#/$defs/extensionKindValidation"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/extensionKindEntry"
+          }
+        },
+        "coverage": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/extensionKindCoverage"
+          }
+        },
+        "complete": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
     }
   },
-  "$comment": "Generated from spec/metamodel/umf.yaml; model 1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce; compiler 80e72a0402f25795bb0cf65b885ff8e1d1291b15e7ff221d1a9abd493ed9aa8e"
+  "$comment": "Generated from spec/metamodel/umf.yaml; model 42144576e3b15da4945ca744623a31967e3b29efa54da8ba3961e446b1c0e34b; compiler ca3526d688032428de4395bf178ada9d1d2a1ed2ae779a05a15bbd257bf9b81f"
 }

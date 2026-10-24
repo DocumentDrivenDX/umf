@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** @covers US-089-AC19 @covers US-089-AC20 @covers US-089-AC24 */
-import {describe,test,expect} from 'bun:test';
+import {afterAll,beforeAll,describe,test,expect} from 'bun:test';
+import {nativeMetamodelExecutable} from '../../scripts/metamodel/rust';
 import {readFile,mkdtemp,mkdir,writeFile,copyFile,symlink,readdir,stat,rm} from 'node:fs/promises';
 import {join,dirname,resolve} from 'node:path';
 import {tmpdir} from 'node:os';
@@ -23,6 +24,16 @@ const expr=(op:string,...args:any[])=>({op,args}),v=(name:string)=>({var:name});
 const program=(steps:any[])=>({profile:'umf.constraints/1',steps});
 const diagnostic={code:'PROBE',path:'',message:'probe',severity:'warning' as const};
 describe('closed authored compiler vocabulary',()=>{
+ // Qualify one immutable native compiler from this source cohort, then use it
+ // for value-level assertions. Repeated source discovery is build work, not a
+ // semantic assertion. The separate clean-room test explicitly removes this
+ // override and still builds/attests its own compiler from the copied sources.
+ const previousCompiler=process.env.UMF_METAMODEL_CLI;
+ beforeAll(()=>{process.env.UMF_METAMODEL_CLI=nativeMetamodelExecutable();},120_000);
+ afterAll(()=>{
+  if(previousCompiler===undefined)delete process.env.UMF_METAMODEL_CLI;
+  else process.env.UMF_METAMODEL_CLI=previousCompiler;
+ });
  test('preserves exact numeric admission independently of generated files',()=>{for(const source of ['x: 0.10000000000000001','x: 9007199254740992','x: -0','x: &a [1]\ny: *a','x: 1\nx: 2','x: !!str 1'])expect(()=>parseModel(source)).toThrow();expect(parseModel('x: 0.1').x).toBe(.1);});
  test('rejects malformed shapes and unknown/dangling declarations',()=>{for(const shape of [{tag:'unknown'},{tag:'link'},{tag:'choice'},{tag:'conditional',condition:true},{tag:'text',rawSchema:{type:'string'}}])expect(()=>checkShape(shape)).toThrow();expect(()=>emitShape({tag:'link',target:'urn:unregistered'},new Set())).toThrow();});
  test('rejects malformed or unknown instructions in untaken and empty branches',()=>{for(const op of ['callValidator','constructor','toString','__proto__']){expect(()=>checkConstraintProgram(program([{op:'if',test:false,then:[{op:'let',name:'x',value:{op,args:[]}}]}]))).toThrow();expect(()=>checkConstraintProgram(program([{op:'for',each:[],as:'x',body:[{op}]}]))).toThrow();}for(const value of [{op:'get',args:[]},{op:'eq',args:[1],surprise:true},{op:'map',args:[[]],as:'x'}])expect(()=>checkConstraintProgram(program([{op:'let',name:'x',value}]))).toThrow();const cycle:any={};cycle.self=cycle;for(const value of [()=>1,Symbol(),undefined,cycle])expect(()=>checkConstraintProgram(program([{op:'let',name:'x',value}]))).toThrow();});
@@ -70,18 +81,40 @@ describe('closed authored compiler vocabulary',()=>{
  test('public metadata mutation cannot change default active validation',()=>{const before=validateDocument(doc),exposed=domainPolicy as any,saved=exposed.literal.refinements;try{exposed.literal.refinements=[];exposed.structuralDiagnostic.code='TAMPERED';expect(validateDocument(doc)).toEqual(before);expect(validateDocument({...doc,umf:'retired'}).diagnostics[0]!.code).toBe('SEMANTIC_TYPE_STRUCTURE');}finally{exposed.literal.refinements=saved;exposed.structuralDiagnostic.code='SEMANTIC_TYPE_STRUCTURE';}});
  test('current self-model validates with declared vocabulary and old markers reject',async()=>{const registry=new Registry().register(await Bun.file(join(root,'spec/metamodel/package.json')).json());expect(validateDocument(model(),registry).valid).toBe(true);for(const version of ['0.1.0','0.8.0','0.9.0'])expect(validateDocument({...doc,umf:version}).valid).toBe(false);expect(validateDocument(doc).complete).toBe(true);});
 });
-test('clean generation has no derived dependency; fixed point and no-write check enforce inventory',async()=>{
- const dir=await mkdtemp(join(tmpdir(),'umf-metamodel-clean-')),manifest=await Bun.file(join(root,'spec/metamodel/generated/manifest.json')).json();
- try{
- const sourcePaths=[...new Set([...Object.keys(manifest.sources),...rustCompileResources,'scripts/metamodel/source-closure.ts'])],outputPaths=[...Object.keys(manifest.outputs),'spec/metamodel/generated/manifest.json'];
- expect(sourcePaths.filter((path:string)=>outputPaths.includes(path))).toEqual([]);
- for(const path of outputPaths)expect(await Bun.file(join(dir,path)).exists()).toBe(false);
- for(const path of sourcePaths){await mkdir(dirname(join(dir,path)),{recursive:true});await copyFile(join(root,path),join(dir,path));}
- await symlink(join(root,'node_modules'),join(dir,'node_modules'),'dir');
- const cleanEnv:Record<string,string|undefined>={...process.env,UMF_METAMODEL_CACHE_DIR:join(dir,'.compiler-cache')};delete cleanEnv.UMF_METAMODEL_CLI;
- const run=async(check=false)=>{const child=Bun.spawn([process.execPath,join(dir,'scripts/metamodel/build.ts'),...(check?['--check']:[]),'--output-root',dir],{cwd:dir,env:cleanEnv,stdout:'pipe',stderr:'pipe'});return {status:await child.exited,stderr:await new Response(child.stderr).text()};};
- const initial=await run();if(initial.status!==0)throw Error(initial.stderr);expect(initial.status).toBe(0);const generatedManifest=await Bun.file(join(dir,'spec/metamodel/generated/manifest.json')).json();for(const path of rustCompileResources){const bytes=await readFile(join(root,path));expect(generatedManifest.sources[path]).toBe(createHash('sha256').update(bytes).digest('hex'));}const files=[...Object.keys(manifest.outputs),'spec/metamodel/generated/manifest.json'];const snapshots=await Promise.all(files.map(async path=>({path,text:await readFile(join(dir,path),'utf8'),mtime:(await stat(join(dir,path))).mtimeMs})));
- expect((await run(true)).status).toBe(0);for(const file of snapshots){expect(await readFile(join(dir,file.path),'utf8')).toBe(file.text);expect((await stat(join(dir,file.path))).mtimeMs).toBe(file.mtime);}
- await writeFile(join(dir,'src/generated/unexpected.ts'),'export const surprise=true;');expect((await run(true)).status).toBe(1);
- }finally{await rm(dir,{recursive:true,force:true});}
-},120_000);
+describe('clean source generation',()=>{
+ let dir:string,manifest:any,initialStatus:number|null;
+ const run=async(check=false)=>{
+  const cleanEnv:Record<string,string|undefined>={...process.env,UMF_METAMODEL_CACHE_DIR:join(dir,'.compiler-cache')};delete cleanEnv.UMF_METAMODEL_CLI;
+  const child=Bun.spawn([process.execPath,join(dir,'scripts/metamodel/build.ts'),...(check?['--check']:[]),'--output-root',dir],{cwd:dir,env:cleanEnv,stdout:'pipe',stderr:'pipe'});
+  const [status,,stderr]=await Promise.all([child.exited,new Response(child.stdout).text(),new Response(child.stderr).text()]);
+  return {status,stderr};
+ };
+ // A cold Rust build is preparation. Its separate bound does not consume the
+ // fixed-point/no-write assertions' existing 120-second execution budget.
+ beforeAll(async()=>{
+  dir=await mkdtemp(join(tmpdir(),'umf-metamodel-clean-'));
+  manifest=await Bun.file(join(root,'spec/metamodel/generated/manifest.json')).json();
+  const sourcePaths=[...new Set([...Object.keys(manifest.sources),...rustCompileResources,'scripts/metamodel/source-closure.ts'])];
+  const outputPaths=[...Object.keys(manifest.outputs),'spec/metamodel/generated/manifest.json'];
+  expect(sourcePaths.filter((path:string)=>outputPaths.includes(path))).toEqual([]);
+  for(const path of outputPaths)expect(await Bun.file(join(dir,path)).exists()).toBe(false);
+  await Promise.all([...new Set(sourcePaths.map(path=>dirname(join(dir,path))))].map(path=>mkdir(path,{recursive:true})));
+  let next=0;
+  await Promise.all(Array.from({length:Math.min(16,sourcePaths.length)},async()=>{
+   while(next<sourcePaths.length){const path=sourcePaths[next++]!;await copyFile(join(root,path),join(dir,path));}
+  }));
+  await symlink(join(root,'node_modules'),join(dir,'node_modules'),'dir');
+  const initial=await run();if(initial.status!==0)throw Error(initial.stderr);initialStatus=initial.status;
+ },180_000);
+ afterAll(async()=>{if(dir)await rm(dir,{recursive:true,force:true});},120_000);
+ test('clean generation has no derived dependency; fixed point and no-write check enforce inventory',async()=>{
+  expect(initialStatus).toBe(0);
+  const generatedManifest=await Bun.file(join(dir,'spec/metamodel/generated/manifest.json')).json();
+  for(const path of rustCompileResources){const bytes=await readFile(join(root,path));expect(generatedManifest.sources[path]).toBe(createHash('sha256').update(bytes).digest('hex'));}
+  const files=[...Object.keys(manifest.outputs),'spec/metamodel/generated/manifest.json'];
+  const snapshots=await Promise.all(files.map(async path=>({path,text:await readFile(join(dir,path),'utf8'),mtime:(await stat(join(dir,path))).mtimeMs})));
+  expect((await run(true)).status).toBe(0);
+  for(const file of snapshots){expect(await readFile(join(dir,file.path),'utf8')).toBe(file.text);expect((await stat(join(dir,file.path))).mtimeMs).toBe(file.mtime);}
+  await writeFile(join(dir,'src/generated/unexpected.ts'),'export const surprise=true;');expect((await run(true)).status).toBe(1);
+ },120_000);
+});

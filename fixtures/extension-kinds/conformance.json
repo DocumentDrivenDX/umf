@@ -1,0 +1,1004 @@
+[
+  {
+    "name": "resolved",
+    "document": {
+      "umf": "0.10.0",
+      "id": "conformance",
+      "vocabularies": {
+        "example.kinds": {
+          "version": "1.0.0"
+        }
+      },
+      "extensions": {
+        "example.kinds": {
+          "kind": "dashboard"
+        }
+      },
+      "modules": []
+    },
+    "registrations": [
+      {
+        "manifest": {
+          "id": "example.kinds",
+          "version": "1.0.0",
+          "coreVersion": "0.10.0",
+          "description": "Synthetic generic kind conformance",
+          "semantics": "No native system claim",
+          "schema": true,
+          "scopes": [
+            "document",
+            "element"
+          ],
+          "capabilities": {
+            "validation": "structural",
+            "directions": [],
+            "evidence": []
+          },
+          "kindCatalog": {
+            "profile": "1.0.0",
+            "definitions": {
+              "dashboard": {
+                "title": "Dashboard",
+                "description": "Synthetic document composition",
+                "scopes": [
+                  "document"
+                ]
+              },
+              "dataset": {
+                "title": "Dataset",
+                "description": "Synthetic dataset",
+                "scopes": [
+                  "element"
+                ]
+              }
+            }
+          }
+        },
+        "kinds": true
+      }
+    ],
+    "expected": {
+      "valid": true,
+      "entries": 1,
+      "status": "resolved"
+    }
+  },
+  {
+    "name": "missing-tag",
+    "document": {
+      "umf": "0.10.0",
+      "id": "conformance",
+      "vocabularies": {
+        "example.kinds": {
+          "version": "1.0.0"
+        }
+      },
+      "extensions": {
+        "example.kinds": {}
+      },
+      "modules": []
+    },
+    "registrations": [
+      {
+        "manifest": {
+          "id": "example.kinds",
+          "version": "1.0.0",
+          "coreVersion": "0.10.0",
+          "description": "Synthetic generic kind conformance",
+          "semantics": "No native system claim",
+          "schema": true,
+          "scopes": [
+            "document",
+            "element"
+          ],
+          "capabilities": {
+            "validation": "structural",
+            "directions": [],
+            "evidence": []
+          },
+          "kindCatalog": {
+            "profile": "1.0.0",
+            "definitions": {
+              "dashboard": {
+                "title": "Dashboard",
+                "description": "Synthetic document composition",
+                "scopes": [
+                  "document"
+                ]
+              },
+              "dataset": {
+                "title": "Dataset",
+                "description": "Synthetic dataset",
+                "scopes": [
+                  "element"
+                ]
+              }
+            }
+          }
+        },
+        "kinds": true
+      }
+    ],
+    "expected": {
+      "valid": false,
+      "entries": 0,
+      "status": "invalid"
+    }
+  },
+  {
+    "name": "unknown-tag",
+    "document": {
+      "umf": "0.10.0",
+      "id": "conformance",
+      "vocabularies": {
+        "example.kinds": {
+          "version": "1.0.0"
+        }
+      },
+      "extensions": {
+        "example.kinds": {
+          "kind": "future"
+        }
+      },
+      "modules": []
+    },
+    "registrations": [
+      {
+        "manifest": {
+          "id": "example.kinds",
+          "version": "1.0.0",
+          "coreVersion": "0.10.0",
+          "description": "Synthetic generic kind conformance",
+          "semantics": "No native system claim",
+          "schema": true,
+          "scopes": [
+            "document",
+            "element"
+          ],
+          "capabilities": {
+            "validation": "structural",
+            "directions": [],
+            "evidence": []
+          },
+          "kindCatalog": {
+            "profile": "1.0.0",
+            "definitions": {
+              "dashboard": {
+                "title": "Dashboard",
+                "description": "Synthetic document composition",
+                "scopes": [
+                  "document"
+                ]
+              },
+              "dataset": {
+                "title": "Dataset",
+                "description": "Synthetic dataset",
+                "scopes": [
+                  "element"
+                ]
+              }
+            }
+          }
+        },
+        "kinds": true
+      }
+    ],
+    "expected": {
+      "valid": false,
+      "entries": 0,
+      "status": "invalid"
+    }
+  },
+  {
+    "name": "wrong-scope",
+    "document": {
+      "umf": "0.10.0",
+      "id": "conformance",
+      "vocabularies": {
+        "example.kinds": {
+          "version": "1.0.0"
+        }
+      },
+      "extensions": {
+        "example.kinds": {
+          "kind": "dataset"
+        }
+      },
+      "modules": []
+    },
+    "registrations": [
+      {
+        "manifest": {
+          "id": "example.kinds",
+          "version": "1.0.0",
+          "coreVersion": "0.10.0",
+          "description": "Synthetic generic kind conformance",
+          "semantics": "No native system claim",
+          "schema": true,
+          "scopes": [
+            "document",
+            "element"
+          ],
+          "capabilities": {
+            "validation": "structural",
+            "directions": [],
+            "evidence": []
+          },
+          "kindCatalog": {
+            "profile": "1.0.0",
+            "definitions": {
+              "dashboard": {
+                "title": "Dashboard",
+                "description": "Synthetic document composition",
+                "scopes": [
+                  "document"
+                ]
+              },
+              "dataset": {
+                "title": "Dataset",
+                "description": "Synthetic dataset",
+                "scopes": [
+                  "element"
+                ]
+              }
+            }
+          }
+        },
+        "kinds": true
+      }
+    ],
+    "expected": {
+      "valid": false,
+      "entries": 0,
+      "status": "invalid"
+    }
+  },
+  {
+    "name": "unavailable-package",
+    "document": {
+      "umf": "0.10.0",
+      "id": "conformance",
+      "vocabularies": {
+        "example.kinds": {
+          "version": "1.0.0"
+        }
+      },
+      "extensions": {
+        "example.kinds": {
+          "kind": "dashboard"
+        }
+      },
+      "modules": []
+    },
+    "registrations": [],
+    "expected": {
+      "valid": true,
+      "entries": 0,
+      "status": "unavailable"
+    }
+  },
+  {
+    "name": "exact-version-only",
+    "document": {
+      "umf": "0.10.0",
+      "id": "conformance",
+      "vocabularies": {
+        "example.kinds": {
+          "version": "1.0.0"
+        }
+      },
+      "extensions": {
+        "example.kinds": {
+          "kind": "dashboard"
+        }
+      },
+      "modules": []
+    },
+    "registrations": [
+      {
+        "manifest": {
+          "id": "example.kinds",
+          "version": "2.0.0",
+          "coreVersion": "0.10.0",
+          "description": "Synthetic generic kind conformance",
+          "semantics": "No native system claim",
+          "schema": true,
+          "scopes": [
+            "document",
+            "element"
+          ],
+          "capabilities": {
+            "validation": "structural",
+            "directions": [],
+            "evidence": []
+          },
+          "kindCatalog": {
+            "profile": "1.0.0",
+            "definitions": {
+              "dashboard": {
+                "title": "Dashboard",
+                "description": "Synthetic document composition",
+                "scopes": [
+                  "document"
+                ]
+              },
+              "dataset": {
+                "title": "Dataset",
+                "description": "Synthetic dataset",
+                "scopes": [
+                  "element"
+                ]
+              }
+            }
+          }
+        },
+        "kinds": true
+      }
+    ],
+    "expected": {
+      "valid": true,
+      "entries": 0,
+      "status": "unavailable"
+    }
+  },
+  {
+    "name": "legacy-lookalike",
+    "document": {
+      "umf": "0.10.0",
+      "id": "conformance",
+      "vocabularies": {
+        "example.kinds": {
+          "version": "1.0.0"
+        }
+      },
+      "extensions": {
+        "example.kinds": {
+          "kind": "dashboard"
+        }
+      },
+      "modules": []
+    },
+    "registrations": [
+      {
+        "manifest": {
+          "id": "example.kinds",
+          "version": "1.0.0",
+          "coreVersion": "0.10.0",
+          "description": "Synthetic generic kind conformance",
+          "semantics": "No native system claim",
+          "schema": true,
+          "scopes": [
+            "document",
+            "element"
+          ],
+          "capabilities": {
+            "validation": "structural",
+            "directions": [],
+            "evidence": []
+          },
+          "kindCatalog": {
+            "profile": "1.0.0",
+            "definitions": {
+              "dashboard": {
+                "title": "Dashboard",
+                "description": "Synthetic document composition",
+                "scopes": [
+                  "document"
+                ]
+              },
+              "dataset": {
+                "title": "Dataset",
+                "description": "Synthetic dataset",
+                "scopes": [
+                  "element"
+                ]
+              }
+            }
+          }
+        },
+        "kinds": false
+      }
+    ],
+    "expected": {
+      "valid": true,
+      "entries": 0,
+      "status": "absent-catalog"
+    }
+  },
+  {
+    "name": "future-profile",
+    "document": {
+      "umf": "0.10.0",
+      "id": "conformance",
+      "vocabularies": {
+        "example.kinds": {
+          "version": "1.0.0"
+        }
+      },
+      "extensions": {
+        "example.kinds": {
+          "kind": "dashboard"
+        }
+      },
+      "modules": []
+    },
+    "registrations": [
+      {
+        "manifest": {
+          "id": "example.kinds",
+          "version": "1.0.0",
+          "coreVersion": "0.10.0",
+          "description": "Synthetic generic kind conformance",
+          "semantics": "No native system claim",
+          "schema": true,
+          "scopes": [
+            "document",
+            "element"
+          ],
+          "capabilities": {
+            "validation": "structural",
+            "directions": [],
+            "evidence": []
+          },
+          "kindCatalog": {
+            "profile": "9.0.0",
+            "definitions": {
+              "dashboard": {
+                "title": "Dashboard",
+                "description": "Synthetic document composition",
+                "scopes": [
+                  "document"
+                ]
+              },
+              "dataset": {
+                "title": "Dataset",
+                "description": "Synthetic dataset",
+                "scopes": [
+                  "element"
+                ]
+              }
+            }
+          }
+        },
+        "kinds": true
+      }
+    ],
+    "expected": {
+      "valid": true,
+      "entries": 0,
+      "status": "unsupported-catalog"
+    }
+  },
+  {
+    "name": "unknown-catalog-qualifier",
+    "document": {
+      "umf": "0.10.0",
+      "id": "conformance",
+      "vocabularies": {
+        "example.kinds": {
+          "version": "1.0.0"
+        }
+      },
+      "extensions": {
+        "example.kinds": {
+          "kind": "dashboard"
+        }
+      },
+      "modules": []
+    },
+    "registrations": [
+      {
+        "manifest": {
+          "id": "example.kinds",
+          "version": "1.0.0",
+          "coreVersion": "0.10.0",
+          "description": "Synthetic generic kind conformance",
+          "semantics": "No native system claim",
+          "schema": true,
+          "scopes": [
+            "document",
+            "element"
+          ],
+          "capabilities": {
+            "validation": "structural",
+            "directions": [],
+            "evidence": []
+          },
+          "kindCatalog": {
+            "profile": "1.0.0",
+            "definitions": {
+              "dashboard": {
+                "title": "Dashboard",
+                "description": "Synthetic document composition",
+                "scopes": [
+                  "document"
+                ]
+              },
+              "dataset": {
+                "title": "Dataset",
+                "description": "Synthetic dataset",
+                "scopes": [
+                  "element"
+                ]
+              }
+            },
+            "future": {}
+          }
+        },
+        "kinds": true
+      }
+    ],
+    "expected": {
+      "valid": true,
+      "entries": 0,
+      "status": "unsupported-catalog"
+    }
+  },
+  {
+    "name": "known-kind-invalid-payload",
+    "document": {
+      "umf": "0.10.0",
+      "id": "conformance",
+      "vocabularies": {
+        "example.kinds": {
+          "version": "1.0.0"
+        }
+      },
+      "extensions": {
+        "example.kinds": {
+          "kind": "dashboard"
+        }
+      },
+      "modules": []
+    },
+    "registrations": [
+      {
+        "manifest": {
+          "id": "example.kinds",
+          "version": "1.0.0",
+          "coreVersion": "0.10.0",
+          "description": "Synthetic generic kind conformance",
+          "semantics": "No native system claim",
+          "schema": {
+            "type": "object",
+            "required": [
+              "requiredNativeProperty"
+            ]
+          },
+          "scopes": [
+            "document",
+            "element"
+          ],
+          "capabilities": {
+            "validation": "structural",
+            "directions": [],
+            "evidence": []
+          },
+          "kindCatalog": {
+            "profile": "1.0.0",
+            "definitions": {
+              "dashboard": {
+                "title": "Dashboard",
+                "description": "Synthetic document composition",
+                "scopes": [
+                  "document"
+                ]
+              },
+              "dataset": {
+                "title": "Dataset",
+                "description": "Synthetic dataset",
+                "scopes": [
+                  "element"
+                ]
+              }
+            }
+          }
+        },
+        "kinds": true
+      }
+    ],
+    "expected": {
+      "valid": false,
+      "entries": 1,
+      "status": "invalid"
+    }
+  },
+  {
+    "name": "competing-kinds",
+    "document": {
+      "umf": "0.10.0",
+      "id": "conformance",
+      "vocabularies": {
+        "example.kinds": {
+          "version": "1.0.0"
+        },
+        "another.kinds": {
+          "version": "1.0.0"
+        }
+      },
+      "extensions": {
+        "example.kinds": {
+          "kind": "dashboard"
+        },
+        "another.kinds": {
+          "kind": "dashboard"
+        }
+      },
+      "modules": []
+    },
+    "registrations": [
+      {
+        "manifest": {
+          "id": "example.kinds",
+          "version": "1.0.0",
+          "coreVersion": "0.10.0",
+          "description": "Synthetic generic kind conformance",
+          "semantics": "No native system claim",
+          "schema": true,
+          "scopes": [
+            "document",
+            "element"
+          ],
+          "capabilities": {
+            "validation": "structural",
+            "directions": [],
+            "evidence": []
+          },
+          "kindCatalog": {
+            "profile": "1.0.0",
+            "definitions": {
+              "dashboard": {
+                "title": "Dashboard",
+                "description": "Synthetic document composition",
+                "scopes": [
+                  "document"
+                ]
+              },
+              "dataset": {
+                "title": "Dataset",
+                "description": "Synthetic dataset",
+                "scopes": [
+                  "element"
+                ]
+              }
+            }
+          }
+        },
+        "kinds": true
+      },
+      {
+        "manifest": {
+          "id": "another.kinds",
+          "version": "1.0.0",
+          "coreVersion": "0.10.0",
+          "description": "Synthetic generic kind conformance",
+          "semantics": "No native system claim",
+          "schema": true,
+          "scopes": [
+            "document",
+            "element"
+          ],
+          "capabilities": {
+            "validation": "structural",
+            "directions": [],
+            "evidence": []
+          },
+          "kindCatalog": {
+            "profile": "1.0.0",
+            "definitions": {
+              "dashboard": {
+                "title": "Dashboard",
+                "description": "Synthetic document composition",
+                "scopes": [
+                  "document"
+                ]
+              },
+              "dataset": {
+                "title": "Dataset",
+                "description": "Synthetic dataset",
+                "scopes": [
+                  "element"
+                ]
+              }
+            }
+          }
+        },
+        "kinds": true
+      }
+    ],
+    "expected": {
+      "valid": true,
+      "entries": 2,
+      "status": "resolved"
+    }
+  },
+  {
+    "name": "prototype-like-kind",
+    "document": {
+      "umf": "0.10.0",
+      "id": "conformance",
+      "vocabularies": {
+        "example.kinds": {
+          "version": "1.0.0"
+        }
+      },
+      "extensions": {
+        "example.kinds": {
+          "kind": "constructor"
+        }
+      },
+      "modules": []
+    },
+    "registrations": [
+      {
+        "manifest": {
+          "id": "example.kinds",
+          "version": "1.0.0",
+          "coreVersion": "0.10.0",
+          "description": "Synthetic generic kind conformance",
+          "semantics": "No native system claim",
+          "schema": true,
+          "scopes": [
+            "document",
+            "element"
+          ],
+          "capabilities": {
+            "validation": "structural",
+            "directions": [],
+            "evidence": []
+          },
+          "kindCatalog": {
+            "profile": "1.0.0",
+            "definitions": {
+              "dashboard": {
+                "title": "Dashboard",
+                "description": "Synthetic document composition",
+                "scopes": [
+                  "document"
+                ]
+              },
+              "dataset": {
+                "title": "Dataset",
+                "description": "Synthetic dataset",
+                "scopes": [
+                  "element"
+                ]
+              },
+              "constructor": {
+                "title": "Ordinary key",
+                "description": "No inheritance",
+                "scopes": [
+                  "document"
+                ]
+              }
+            }
+          }
+        },
+        "kinds": true
+      }
+    ],
+    "expected": {
+      "valid": true,
+      "entries": 1,
+      "status": "resolved"
+    }
+  },
+  {
+    "name": "escaped-extension-path",
+    "document": {
+      "umf": "0.10.0",
+      "id": "conformance",
+      "vocabularies": {
+        "example/~": {
+          "version": "1.0.0"
+        }
+      },
+      "extensions": {
+        "example/~": {
+          "kind": "dashboard"
+        }
+      },
+      "modules": []
+    },
+    "registrations": [
+      {
+        "manifest": {
+          "id": "example/~",
+          "version": "1.0.0",
+          "coreVersion": "0.10.0",
+          "description": "Synthetic generic kind conformance",
+          "semantics": "No native system claim",
+          "schema": true,
+          "scopes": [
+            "document",
+            "element"
+          ],
+          "capabilities": {
+            "validation": "structural",
+            "directions": [],
+            "evidence": []
+          },
+          "kindCatalog": {
+            "profile": "1.0.0",
+            "definitions": {
+              "dashboard": {
+                "title": "Dashboard",
+                "description": "Synthetic document composition",
+                "scopes": [
+                  "document"
+                ]
+              },
+              "dataset": {
+                "title": "Dataset",
+                "description": "Synthetic dataset",
+                "scopes": [
+                  "element"
+                ]
+              }
+            }
+          }
+        },
+        "kinds": true
+      }
+    ],
+    "expected": {
+      "valid": true,
+      "entries": 1,
+      "status": "resolved"
+    }
+  },
+  {
+    "name": "invalid-core",
+    "document": {
+      "umf": "0.9.0",
+      "id": "conformance",
+      "vocabularies": {
+        "example.kinds": {
+          "version": "1.0.0"
+        }
+      },
+      "extensions": {
+        "example.kinds": {
+          "kind": "dashboard"
+        }
+      },
+      "modules": []
+    },
+    "registrations": [
+      {
+        "manifest": {
+          "id": "example.kinds",
+          "version": "1.0.0",
+          "coreVersion": "0.10.0",
+          "description": "Synthetic generic kind conformance",
+          "semantics": "No native system claim",
+          "schema": true,
+          "scopes": [
+            "document",
+            "element"
+          ],
+          "capabilities": {
+            "validation": "structural",
+            "directions": [],
+            "evidence": []
+          },
+          "kindCatalog": {
+            "profile": "1.0.0",
+            "definitions": {
+              "dashboard": {
+                "title": "Dashboard",
+                "description": "Synthetic document composition",
+                "scopes": [
+                  "document"
+                ]
+              },
+              "dataset": {
+                "title": "Dataset",
+                "description": "Synthetic dataset",
+                "scopes": [
+                  "element"
+                ]
+              }
+            }
+          }
+        },
+        "kinds": true
+      }
+    ],
+    "expected": {
+      "valid": false,
+      "entries": 0
+    }
+  },
+  {
+    "name": "extension-field-has-no-core-privileges",
+    "document": {
+      "umf": "0.10.0",
+      "id": "conformance",
+      "vocabularies": {
+        "example.kinds": {
+          "version": "1.0.0"
+        }
+      },
+      "extensions": {
+        "example.kinds": {
+          "kind": "dashboard"
+        }
+      },
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "f",
+              "default": {
+                "on": "missing",
+                "value": {
+                  "string": "x"
+                }
+              },
+              "extensions": {
+                "example.kinds": {
+                  "kind": "field"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "registrations": [
+      {
+        "manifest": {
+          "id": "example.kinds",
+          "version": "1.0.0",
+          "coreVersion": "0.10.0",
+          "description": "Synthetic generic kind conformance",
+          "semantics": "No native system claim",
+          "schema": true,
+          "scopes": [
+            "document",
+            "element"
+          ],
+          "capabilities": {
+            "validation": "structural",
+            "directions": [],
+            "evidence": []
+          },
+          "kindCatalog": {
+            "profile": "1.0.0",
+            "definitions": {
+              "dashboard": {
+                "title": "Dashboard",
+                "description": "Synthetic document composition",
+                "scopes": [
+                  "document"
+                ]
+              },
+              "dataset": {
+                "title": "Dataset",
+                "description": "Synthetic dataset",
+                "scopes": [
+                  "element"
+                ]
+              },
+              "field": {
+                "title": "Extension field",
+                "description": "Not core Field",
+                "scopes": [
+                  "element"
+                ]
+              }
+            }
+          }
+        },
+        "kinds": true
+      }
+    ],
+    "expected": {
+      "valid": false,
+      "entries": 0
+    }
+  }
+]

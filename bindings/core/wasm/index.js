@@ -400,6 +400,19 @@ function createEngineInternal(module, resources, options, withModel) {
     for (let index = 0; index < extensionValues.length; index++) {
       hostWork?.(1);
       const extension = extensionValues[index];
+      const manifest = descriptor(extension, 'manifest', false, hostWork);
+      if (manifest !== undefined) {
+        const semantics = descriptor(extension, 'semantics', false, hostWork);
+        if (semantics !== undefined && typeof semantics !== 'function') throw new TypeError('Extension semantics must be a host callback function');
+        if (semantics) { hostWork?.(1); callbacks.set(index + 1, semantics); }
+        if (Reflect.ownKeys(extension).some(key => !['manifest','semantics','kinds'].includes(key))) throw new TypeError('Full manifest and legacy registration fields cannot be mixed');
+        const kindOption = descriptor(extension, 'kinds', false, hostWork);
+        const kinds = kindOption === undefined ? false : kindOption;
+        if (typeof kinds !== 'boolean') throw new TypeError('kinds must be a boolean');
+        hostWork?.(3);
+        registry.push({manifest, kinds, semantic: Boolean(semantics)});
+        continue;
+      }
       const id = descriptor(extension, 'id', true, hostWork);
       const version = descriptor(extension, 'version', true, hostWork);
       const scopes = descriptor(extension, 'scopes', true, hostWork);
@@ -414,6 +427,9 @@ function createEngineInternal(module, resources, options, withModel) {
     return invoke(module, {op, resources: fixedResources, registry, ...args}, callbacks, profile, controls, withModel, controlBridge, hostWork);
   }
   const api = {...base,
+    listKinds(registry = []) { return call('list-kinds', {}, registry); },
+    getKind(reference, registry = []) { return call('get-kind', {reference}, registry) ?? undefined; },
+    inspectExtensionKinds(document, registry = []) { return call('inspect-kinds', {document}, registry); },
     validateDocument(document, registry = []) { return call('validate', {document}, registry); },
     readDocument(source, format = 'json', registry = []) { return call('read', {source, format}, registry).document; },
     writeDocument(document, format = 'json', registry = []) { return call('write', {document, format}, registry).source; },

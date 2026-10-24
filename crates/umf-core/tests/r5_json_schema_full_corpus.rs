@@ -78,6 +78,7 @@ fn schema_json_id(schema: &serde_json::Value) -> Option<String> {
 }
 
 #[test]
+#[ignore = "run through scripts/rust-migration/r5/json-schema/upstream-oracle.ts with a fresh report path"]
 fn capture_pinned_upstream_rust_and_native_adapter_results() {
     let out = std::env::var("UMF_R5_JSON_SCHEMA_REPORT").expect("wrapper must set report path");
     let root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../fixtures/json-schema/upstream");

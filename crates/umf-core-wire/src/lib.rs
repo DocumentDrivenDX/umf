@@ -1263,10 +1263,51 @@ fn execute_request_inner(
             ),
             catalog,
         )?;
-        let mut registry = Registry::new();
+        let mut registry = engine.registry(catalog)?;
         if let Some(Value::Array(extensions)) = registry_value {
             let schema_resources = engine.schema_resources_with_context(catalog)?;
             for (index, mut extension) in extensions.into_iter().enumerate() {
+                if let Some(manifest) = take_field(&mut extension, "manifest") {
+                    if let Value::Object(fields) = &extension {
+                        if fields.iter().any(|(key, _)| {
+                            key != &Utf16::from("semantic")
+                                && key != &Utf16::from("kinds")
+                        }) {
+                            return Err(fail(
+                                "REQUEST",
+                                "Full manifest and legacy registration fields cannot be mixed",
+                            ));
+                        }
+                    }
+                    let semantic = match take_field(&mut extension, "semantic") {
+                        None | Some(Value::Bool(false)) => false,
+                        Some(Value::Bool(true)) => true,
+                        _ => return Err(fail("REQUEST", "semantic must be a boolean")),
+                    };
+                    let kinds = match take_field(&mut extension, "kinds") {
+                        None | Some(Value::Bool(false)) => false,
+                        Some(Value::Bool(true)) => true,
+                        _ => return Err(fail("REQUEST", "kinds must be a boolean")),
+                    };
+                    if kinds {
+                        registry.register_kind_package(
+                            &manifest,
+                            semantic.then_some(index as u64 + 1),
+                            engine.package_schema(),
+                            &schema_resources,
+                            catalog,
+                        )?;
+                    } else {
+                        registry.register(
+                            &manifest,
+                            semantic.then_some(index as u64 + 1),
+                            engine.package_schema(),
+                            &schema_resources,
+                            catalog,
+                        )?;
+                    }
+                    continue;
+                }
                 let id = take_field(&mut extension, "id")
                     .and_then(|v| match v {
                         Value::String(text) => Some(text),
@@ -1322,6 +1363,20 @@ fn execute_request_inner(
             | "model/selectCoreElements" | "model/validateCoreFieldValue" | "model/resolveCoreDefault" => {
                 model_operation(&op, &request, &engine, &registry, capabilities, &mut operation)?
             }
+            "list-kinds" => registry.list_kinds(&mut operation)?,
+            "get-kind" => registry
+                .get_kind(
+                    field(&request, "reference").unwrap_or(&Value::Null),
+                    &mut operation,
+                )?
+                .unwrap_or(Value::Null),
+            "inspect-kinds" => engine.inspect_extension_kinds(
+                field(&request, "document")
+                    .ok_or_else(|| fail("REQUEST", "Document is required"))?,
+                &registry,
+                capabilities,
+                &mut operation,
+            )?,
             "validate" => {
                 let document = field(&request, "document")
                     .ok_or_else(|| fail("REQUEST", "Document is required"))?;

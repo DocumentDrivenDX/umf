@@ -1986,12 +1986,30 @@ impl NativeEngine {
         Ok(NativeRegistry {
             package_schema,
             schema_resources,
-            registry: Registry::new(),
+            registry: self.engine.registry(&mut ctx).map_err(py_error)?,
             callbacks: HashMap::new(),
             next_token: 1,
         })
     }
 
+    fn inspect_extension_kinds(
+        &self,
+        py: Python<'_>,
+        document_wire: &str,
+        registry: PyRef<'_, NativeRegistry>,
+    ) -> PyResult<String> {
+        let mut ctx = Context::ordinary();
+        let document = umf_core_wire::decode(document_wire, &mut ctx).map_err(py_error)?;
+        let mut capabilities = PythonCapabilities {
+            py,
+            callbacks: &registry.callbacks,
+        };
+        let result = self
+            .engine
+            .inspect_extension_kinds(&document, &registry.registry, &mut capabilities, &mut ctx)
+            .map_err(py_error)?;
+        umf_core_wire::encode(&result, &mut umf_core_wire::transport_context()).map_err(py_error)
+    }
     #[pyo3(signature = (document, registry, *, max_work=None, meter=None, is_cancelled=None, now=None, deadline_ms=None))]
     fn validate_document(
         &self,
@@ -2345,6 +2363,58 @@ impl PythonWorkControl<'_> {
 
 #[pymethods]
 impl NativeRegistry {
+    #[pyo3(signature = (manifest_wire, callback=None, kinds=false))]
+    fn register_manifest(
+        &mut self,
+        manifest_wire: &str,
+        callback: Option<PyObject>,
+        kinds: bool,
+    ) -> PyResult<()> {
+        let mut ctx = Context::catalog();
+        let manifest = umf_core_wire::decode(manifest_wire, &mut ctx).map_err(py_error)?;
+        let token = callback.as_ref().map(|_| self.next_token);
+        if kinds {
+            self.registry
+                .register_kind_package(
+                    &manifest,
+                    token,
+                    &self.package_schema,
+                    &self.schema_resources,
+                    &mut ctx,
+                )
+                .map_err(py_error)?;
+        } else {
+            self.registry
+                .register(
+                    &manifest,
+                    token,
+                    &self.package_schema,
+                    &self.schema_resources,
+                    &mut ctx,
+                )
+                .map_err(py_error)?;
+        }
+        if let (Some(token), Some(callback)) = (token, callback) {
+            self.callbacks.insert(token, callback);
+            self.next_token += 1;
+        }
+        Ok(())
+    }
+    fn list_kinds(&self) -> PyResult<String> {
+        let mut ctx = Context::ordinary();
+        let result = self.registry.list_kinds(&mut ctx).map_err(py_error)?;
+        umf_core_wire::encode(&result, &mut umf_core_wire::transport_context()).map_err(py_error)
+    }
+    fn get_kind(&self, reference_wire: &str) -> PyResult<String> {
+        let mut ctx = Context::ordinary();
+        let reference = umf_core_wire::decode(reference_wire, &mut ctx).map_err(py_error)?;
+        let result = self
+            .registry
+            .get_kind(&reference, &mut ctx)
+            .map_err(py_error)?
+            .unwrap_or(Value::Null);
+        umf_core_wire::encode(&result, &mut umf_core_wire::transport_context()).map_err(py_error)
+    }
     #[pyo3(signature = (id, version, scopes, schema, python_minor, callback=None))]
     fn register(
         &mut self,

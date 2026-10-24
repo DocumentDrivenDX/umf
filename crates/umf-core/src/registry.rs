@@ -9,6 +9,7 @@ use crate::{
 };
 #[derive(Clone, Debug)]
 pub struct Registration {
+    catalog: crate::kinds::Catalog,
     manifest: Value,
     schema: CompiledSchema,
     token: Option<u64>,
@@ -18,6 +19,9 @@ pub struct Registration {
     version: Utf16,
 }
 impl Registration {
+    pub(crate) fn catalog(&self) -> &crate::kinds::Catalog {
+        &self.catalog
+    }
     pub fn manifest(&self) -> &Value {
         &self.manifest
     }
@@ -43,6 +47,7 @@ impl Registration {
 #[derive(Clone, Debug, Default)]
 pub struct Registry {
     entries: Vec<Registration>,
+    kind_policy: Option<Value>,
 }
 fn k(s: &str) -> Utf16 {
     Utf16::from(s)
@@ -62,7 +67,16 @@ fn text(v: &Value) -> Option<Utf16> {
 fn err(code: &str, message: &str) -> EngineError {
     EngineError::new(code, Utf16::default(), message)
 }
-fn core_version(package_schema: &CompiledSchema) -> Result<Value, EngineError> {
+fn core_version(
+    package_schema: &CompiledSchema,
+    kind_policy: Option<&Value>,
+) -> Result<Value, EngineError> {
+    if let Some(value) = kind_policy
+        .and_then(|p| get(p, "kindCatalogPolicy"))
+        .and_then(|p| get(p, "activeCoreVersion"))
+    {
+        return Ok(value.clone());
+    }
     let property = get(package_schema.schema_value(), "properties")
         .and_then(|properties| get(properties, "coreVersion"))
         .and_then(|property| get(property, "const"))
@@ -75,6 +89,29 @@ fn core_version(package_schema: &CompiledSchema) -> Result<Value, EngineError> {
     Ok(property.clone())
 }
 impl Registry {
+    pub(crate) fn with_kind_policy(policy: &Value, ctx: &mut Context<'_>) -> Result<Self, EngineError> {
+        Ok(Self {
+            entries: Vec::new(),
+            kind_policy: Some(copy_json(policy, ctx)?),
+        })
+    }
+    pub(crate) fn kind_policy(&self) -> &Value {
+        self.kind_policy.as_ref().unwrap_or(&Value::Null)
+    }
+    pub(crate) fn require_kind_runtime(&self) -> Result<(), EngineError> {
+        if self
+            .kind_policy
+            .as_ref()
+            .and_then(|policy| get(policy, "kindCatalogPolicy"))
+            .is_none()
+        {
+            return Err(err(
+                "EXTENSION_KIND_RUNTIME_REQUIRED",
+                "Initialize the registry through the shared engine",
+            ));
+        }
+        Ok(())
+    }
     pub fn new() -> Self {
         Self::default()
     }
@@ -238,7 +275,10 @@ impl Registry {
         let manifest = Value::Object(vec![
             (k("id"), Value::String(id)),
             (k("version"), Value::String(version)),
-            (k("coreVersion"), core_version(package_schema)?),
+            (
+                k("coreVersion"),
+                core_version(package_schema, self.kind_policy.as_ref())?,
+            ),
             (
                 k("description"),
                 Value::string_utf8("Registered through Extension compatibility API"),
@@ -265,6 +305,7 @@ impl Registry {
             package_schema,
             schema_resources,
             Some((&schema, python_schema_resources)),
+            false,
             ctx,
         )
     }
@@ -286,7 +327,10 @@ impl Registry {
         let manifest = Value::Object(vec![
             (k("id"), Value::String(id)),
             (k("version"), Value::String(version)),
-            (k("coreVersion"), core_version(package_schema)?),
+            (
+                k("coreVersion"),
+                core_version(package_schema, self.kind_policy.as_ref())?,
+            ),
             (
                 k("description"),
                 Value::string_utf8("Registered through Extension compatibility API"),
@@ -327,6 +371,56 @@ impl Registry {
         self.register_inner(manifest, token, None, package_schema, schema_resources, ctx)
     }
 
+    pub fn register_kind_package(
+        &mut self,
+        manifest: &Value,
+        token: Option<u64>,
+        package_schema: &CompiledSchema,
+        schema_resources: &SchemaResources,
+        ctx: &mut Context<'_>,
+    ) -> Result<(), EngineError> {
+        let admitted = copy_json(manifest, ctx)?;
+        let manifest = &admitted;
+        let policy = self
+            .kind_policy
+            .as_ref()
+            .and_then(|p| get(p, "kindCatalogPolicy"))
+            .ok_or_else(|| {
+                err(
+                    "EXTENSION_KIND_RUNTIME_REQUIRED",
+                    "Initialize the registry through the shared engine",
+                )
+            })?;
+        if let Some(catalog) = get(manifest, "kindCatalog") {
+            let target = get(policy, "schemaReference")
+                .ok_or_else(|| err("PACKAGE_KIND_CATALOG", "Missing catalog schema policy"))?;
+            let definitions = get(package_schema.schema_value(), "$defs")
+                .ok_or_else(|| err("PACKAGE_KIND_CATALOG", "Missing catalog schema definitions"))?;
+            let schema = Value::Object(vec![
+                (k("$ref"), copy_json(target, ctx)?),
+                (k("$defs"), copy_json(definitions, ctx)?),
+            ]);
+            let errors =
+                CompiledSchema::compile(&schema, schema_resources, ctx)?.validate(catalog, ctx)?;
+            if !errors.is_empty() {
+                return Err(err(
+                    "PACKAGE_KIND_CATALOG",
+                    "Catalog does not match its authored schema",
+                ));
+            }
+        }
+        self.register_inner_with_source(
+            manifest,
+            token,
+            None,
+            package_schema,
+            schema_resources,
+            None,
+            true,
+            ctx,
+        )
+    }
+
     fn register_inner(
         &mut self,
         manifest: &Value,
@@ -343,6 +437,7 @@ impl Registry {
             package_schema,
             schema_resources,
             None,
+            false,
             ctx,
         )
     }
@@ -355,9 +450,22 @@ impl Registry {
         package_schema: &CompiledSchema,
         schema_resources: &SchemaResources,
         python_source: Option<(&PythonConsumerValue, &PythonSchemaResources)>,
+        activate_kinds: bool,
         ctx: &mut Context<'_>,
     ) -> Result<(), EngineError> {
         let owned = copy_json(manifest, ctx)?;
+        let catalog = if activate_kinds {
+            crate::kinds::Catalog::admit(
+                &owned,
+                self.kind_policy
+                    .as_ref()
+                    .and_then(|p| get(p, "kindCatalogPolicy"))
+                    .unwrap_or(&Value::Null),
+                ctx,
+            )?
+        } else {
+            crate::kinds::Catalog::default()
+        };
         let errors = package_schema.validate(&owned, ctx)?;
         if !errors.is_empty() {
             return Err(EngineError::new(
@@ -414,6 +522,7 @@ impl Registry {
             CompiledSchema::compile(schema, schema_resources, ctx)?
         };
         self.entries.push(Registration {
+            catalog,
             manifest: owned,
             schema: compiled,
             token,

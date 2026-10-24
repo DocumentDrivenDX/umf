@@ -61,7 +61,10 @@ test('US-089-AC17: the reference consumes authored Record members and Field shap
 });
 
 test('US-089-AC18: graph uses one node per authored Record and Field and refuses unresolved members',()=>{
- const graph=selfModelGraph(catalog);expect(graph.records.length).toBe(15);expect(graph.fields.length).toBe(86);
+ const graph=selfModelGraph(catalog);
+ const authored=model.modules.flatMap(module=>module.elements.map(element=>({id:JSON.stringify([module.id,element.id]),kind:element.kind})));
+ expect(graph.records.map(node=>node.id).sort()).toEqual(authored.filter(element=>element.kind==='record').map(element=>element.id).sort());
+ expect(graph.fields.map(node=>node.id).sort()).toEqual(authored.filter(element=>element.kind==='field').map(element=>element.id).sort());
  expect(new Set(graph.fields.map(f=>f.id)).size).toBe(graph.fields.length);
  expect(graph.edges.some(e=>e.source===JSON.stringify(['umf','document'])&&e.target===JSON.stringify(['umf','module'])&&e.label==='modules')).toBe(true);
  expect(graph.edges.some(e=>e.source===JSON.stringify(['umf','module'])&&e.target===JSON.stringify(['umf','element'])&&e.label==='elements')).toBe(true);

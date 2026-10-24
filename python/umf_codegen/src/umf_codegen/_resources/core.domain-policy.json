@@ -136,6 +136,31 @@
       "code": "VALIDATOR_FAILURE",
       "message": "Validator failure",
       "severity": "error"
+    },
+    "kindCatalogPolicy": {
+      "activeCoreVersion": "0.10.0",
+      "profile": "1.0.0",
+      "schemaReference": "#/$defs/extensionKindCatalog"
+    },
+    "kindRequired": {
+      "code": "EXTENSION_KIND_REQUIRED",
+      "message": "Expected an own nonempty string kind tag",
+      "severity": "error"
+    },
+    "kindUnknown": {
+      "code": "EXTENSION_KIND_UNKNOWN",
+      "message": "Kind is not declared by this exact extension version",
+      "severity": "error"
+    },
+    "kindScope": {
+      "code": "EXTENSION_KIND_SCOPE",
+      "message": "Kind is not permitted at this attachment scope",
+      "severity": "error"
+    },
+    "kindUnsupported": {
+      "code": "EXTENSION_KIND_CATALOG_UNSUPPORTED",
+      "message": "Kind catalog retained without interpretation",
+      "severity": "warning"
     }
   },
   "literal": {
@@ -579,7 +604,7 @@
     "default"
   ],
   "provenance": {
-    "modelSha256": "1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce",
-    "compilerSha256": "80e72a0402f25795bb0cf65b885ff8e1d1291b15e7ff221d1a9abd493ed9aa8e"
+    "modelSha256": "42144576e3b15da4945ca744623a31967e3b29efa54da8ba3961e446b1c0e34b",
+    "compilerSha256": "ca3526d688032428de4395bf178ada9d1d2a1ed2ae779a05a15bbd257bf9b81f"
   }
 }

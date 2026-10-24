@@ -6,6 +6,15 @@ requiredness, domain/conversion fixtures and a consumer-owner handoff, followed
 by another release. Actual Praxis changes and managed consumer acceptance stay
 outside this task; the released U1–U3 evidence below keeps its original scope.
 
+[Extension-defined kinds design](02-design/plan-2026-10-22-extension-defined-kinds.md)
+defines package-owned kind catalogs so generic tooling can discover and validate
+a dashboard without adding its meaning to core. [CONTRACT-907](02-design/contracts/CONTRACT-907-extension-defined-kinds.md)
+defines exact identities and validation/discovery boundaries;
+[US-904](01-frame/user-stories/US-904-extension-defined-kinds.md) defines acceptance.
+The registration capability preserves core 0.10.0; scoped implementation and
+runtime qualification are recorded in [execution evidence](04-build/evidence/extension-kinds/README.md).
+See the [usage guide](05-deploy/extension-defined-kinds.md) for explicit activation.
+
 [Shared Rust migration and Python V8 removal plan](04-build/rust-migration-plan.md)
 sequences a native Rust CLI and Python/Node/Bun/browser bindings over one engine.
 [ADR-006](02-design/adr/ADR-006-shared-rust-implementation.md) records the target

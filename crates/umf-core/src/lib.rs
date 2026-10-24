@@ -34,6 +34,7 @@ pub mod cardinality;
 pub mod core_kind;
 pub mod gregorian_date;
 pub mod javascript_numeric;
+pub mod kinds;
 pub mod literal;
 pub mod literal_policy;
 pub mod nullability;

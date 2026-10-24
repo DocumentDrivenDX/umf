@@ -1,0 +1,57 @@
+{
+  "profile": "umf.extension-kinds.clean-validation/1",
+  "date": "2026-10-23",
+  "typecheck": "pass",
+  "metamodel": {
+    "passed": 59,
+    "failed": 0,
+    "assertions": 405,
+    "coldSuiteSeconds": 247.54,
+    "cleanAssertionSeconds": 74.29
+  },
+  "ledger": {
+    "passed": 5,
+    "failed": 0,
+    "assertions": 1260,
+    "suiteSeconds": 29.6,
+    "criteria": 837
+  },
+  "core": {
+    "passed": 185,
+    "assertions": 4161
+  },
+  "python": {
+    "passed": 212
+  },
+  "transport": {
+    "passed": 9
+  },
+  "referenceAndResolution": {
+    "passed": 5,
+    "assertions": 37
+  },
+  "logSha256": {
+    "typecheck": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "metamodel": "113e9f53846fd4273ec32669f1fe06fb6afbbb3dc56913e260e8cf5207dddbc7",
+    "ledger": "dc342515f52eaffc29bbf66df7a0118e1a26301ffbe771aabcee64d918fe1fa5",
+    "reference-and-resolution": "dd2cbf07845115c45eed78c24c0565a314dbefd5601bd5d932518dec7461704d",
+    "codegen": "0a13bbbb4685dc4244a225997e1f325de48efd180ad56029bec1c88e86891d35",
+    "ruff": "dfb07b12748aa872177e357c267d123773c61020a9a3de883985df0de5913666",
+    "core": "b6c3766af8b74ebe4c6fc851a4bb2543df37a91575082d0bc9bed49382f9f0f9",
+    "python": "3ec5765f3d3c4e1c0892497601458cf241a51dc6327d32e14e969b361024414a",
+    "transport": "f6e5d8ad321cf6cc03608327a0f17dfa4a0dfc690b22e4146e74954e4552d85a"
+  },
+  "sources": {
+    "scripts/acceptance-traceability.ts": "a08330ed56c66e03c3111c5f17517de482e252523c4d64a3b0523973cee25511",
+    "scripts/rust-core/full-conformance.ts": "56b9c9292b93105ed62b71c8bfcbc982b821b4aa7d9224166b4ebf99f940f1f7",
+    "scripts/rust-inventory-typescript.ts": "e9cd4ec974b629d262bc73ca73b39cd479732fd14674e72b0810c571d56acccd",
+    "tests/metamodel/compiler-kernel.test.ts": "5c0b47a111db9351efead0adaf28eda15ff81a43071f2acc48dcf45ca65e9d6b",
+    "tests/reference/self-model.test.ts": "a5ab1411acf4876d411995755032d31a7ad22822a62bbdb590faece19605abb5",
+    "tests/rust-inventory/typescript-resolution.test.ts": "ee570b07fb5067e94b865a27324e7a9b04409d44b50cfb751ecebdd8c65de4e5",
+    "python/src/umf/__init__.py": "21f23a653cd24df58d0fe34892d8be361b9dc4da9c6f8b16d5c858b0033e0d03",
+    "python/src/umf/registry.py": "c4c69b2af2245a816f7af4fef7199933dc27bb4baa6e092dcbc23c3a828d0c88",
+    "python/src/umf/validation.py": "4860946222fa5d25f2076766e52cb71dd18b82449451f26adab1b371e2896142",
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json": "1e73ffb6bd7e86f83898e68e4177dffa27260e01da589020b259f0fc632e762f"
+  },
+  "limits": "Local validation on the existing PR46 base; no release, current-main integration or hosted-CI success inferred."
+}
