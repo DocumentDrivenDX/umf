@@ -1,13 +1,13 @@
 import contextlib
-import io
 import importlib.util
+import io
 import json
-from pathlib import Path
 import sys
 import tempfile
 import unittest
-from unittest.mock import patch
 import zipfile
+from pathlib import Path
+from unittest.mock import patch
 
 SCRIPT = Path(__file__).parents[2] / 'tools' / 'verify_python_artifacts.py'
 spec = importlib.util.spec_from_file_location('verify_python_artifacts', SCRIPT)
@@ -49,16 +49,20 @@ class ExpectedVersionTests(unittest.TestCase):
     def test_installed_mode_enforces_explicit_version_before_payload_check(self):
         with tempfile.TemporaryDirectory() as directory:
             wheel=Path(directory)/'fixture.whl';self.make_wheel(wheel,'0.10.2')
-            with patch.object(verifier,'_validate_installed_wheel',return_value={'status':'passed'}) as installed, \
-                 patch.object(sys,'argv',['verify_python_artifacts.py','--wheel',str(wheel),'--verify-installed-wheel','--expected-version','0.10.2']), \
-                 contextlib.redirect_stdout(io.StringIO()):
+            with (
+                patch.object(verifier,'_validate_installed_wheel',return_value={'status':'passed'}) as installed,
+                patch.object(sys,'argv',['verify_python_artifacts.py','--wheel',str(wheel),'--verify-installed-wheel','--expected-version','0.10.2']),
+                contextlib.redirect_stdout(io.StringIO()),
+            ):
                 self.assertEqual(verifier.main(),0)
             self.assertEqual(installed.call_args.args[2],'0.10.2')
-            with patch.object(verifier,'_validate_installed_wheel') as installed, \
-                 patch.object(sys,'argv',['verify_python_artifacts.py','--wheel',str(wheel),'--verify-installed-wheel','--expected-version','0.10.1']), \
-                 contextlib.redirect_stdout(io.StringIO()):
-                with self.assertRaisesRegex(ValueError,'does not match the expected version'):
-                    verifier.main()
+            with (
+                patch.object(verifier,'_validate_installed_wheel') as installed,
+                patch.object(sys,'argv',['verify_python_artifacts.py','--wheel',str(wheel),'--verify-installed-wheel','--expected-version','0.10.1']),
+                contextlib.redirect_stdout(io.StringIO()),
+                self.assertRaisesRegex(ValueError,'does not match the expected version'),
+            ):
+                verifier.main()
             installed.assert_not_called()
 
 if __name__=='__main__':unittest.main()
