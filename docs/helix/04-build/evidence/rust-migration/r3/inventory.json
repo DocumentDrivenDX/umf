@@ -175,6 +175,7 @@
       "tests/reference/reader.test.ts",
       "tests/reference/reference.test.ts",
       "tests/reference/self-model.test.ts",
+      "tests/reference/stage.test.ts",
       "tests/rust-inventory/test_boundaries.py",
       "tests/rust-inventory/test_inventory.py",
       "tests/table-authoring/row-scope.test.ts",
@@ -197,16 +198,16 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "e8c99668761d72bb8a1be840d93d883b83c5ec5b2f72b5e81d7c1d98e61e31f2",
+    "sourceCohortSha256": "bd93c3bc8e49ff23851628f36e525c8cbfb9e934f74cb5ba79308d70ab9b36d6",
     "typescriptApi": "5.9.3"
   },
   "counts": {
-    "activeScriptFiles": 342,
-    "algorithmSymbols": 10325,
+    "activeScriptFiles": 344,
+    "algorithmSymbols": 10326,
     "pythonModules": 105,
     "rustBuildInputs": 76,
     "rustModules": 127,
-    "scriptFiles": 2951,
+    "scriptFiles": 2953,
     "sourceModules": 578,
     "typescriptModules": 473
   },
@@ -32207,12 +32208,12 @@
         "files",
         "validate"
       ],
-      "bytes": 15400,
+      "bytes": 15398,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/reference/build.ts",
-      "sha256": "40b0f0b925c988b835b6e8b7e564832a5ccad0a10e69d85f7dd2f32e7b3eb8e3"
+      "sha256": "aaeedc6730998ace98912668a70840dfb256087567e5871c3c30356e3d9069a5"
     },
     {
       "activationEvidence": [
@@ -32446,6 +32447,23 @@
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/reference/self-model.ts",
       "sha256": "05bbf39bbc75b3bd52a98dfa01fbba104155c4e1e6ef8849c2dffb684e07e087"
+    },
+    {
+      "activationEvidence": [
+        "scripts/reference/build.ts",
+        "tests/reference/stage.test.ts",
+        "transitive-import-closure"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "referenceBuildStage"
+      ],
+      "bytes": 538,
+      "disposition": "active-host-tooling-algorithm",
+      "language": "ts",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
+      "path": "scripts/reference/stage.ts",
+      "sha256": "643444163933985948888623ce7e0a271daf8464c6613e86824bfbbd18127130"
     },
     {
       "activationEvidence": [],
@@ -44454,6 +44472,19 @@
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/reference/self-model.test.ts",
       "sha256": "a5ab1411acf4876d411995755032d31a7ad22822a62bbdb590faece19605abb5"
+    },
+    {
+      "activationEvidence": [
+        "transitive-import-closure"
+      ],
+      "active": true,
+      "algorithmSymbols": [],
+      "bytes": 1561,
+      "disposition": "test-oracle-fixture-algorithm",
+      "language": "ts",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
+      "path": "tests/reference/stage.test.ts",
+      "sha256": "afded496e6e769f7444da1fd759b7b4b1ecfaebe6a3ecc6640e31893d714deb2"
     },
     {
       "activationEvidence": [],
