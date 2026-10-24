@@ -6839,3 +6839,127 @@ OSError. Keep both original004 owner-only invariants and exact exception/registr
 alias identity. Then actual qualified original deployment/native target/store/
 head/subject/gate/epoch/provider/restart, installed/platform/browser/CI and final
 public bytes are separate required gates. Full source tests do not close G11.
+
+
+#### G11 ROOT confirmation establishes original logical birth before usability
+
+This correction clarifies010/012 ordering without adding record members or
+changing the six physical/two existing-head logical effect scopes. Production
+ROOT confirmation independently commits prior original logical context/ledger
+birth; missing subordinate history is never interpreted as fresh first use.
+
+##### Capability and method separation
+
+The map's acyclic move/alias ownership is accepted with the following required
+implementation semantics. Bootstrap owns original signed ROOT records and
+logical context/history, not actual native origin. The logical authority's
+constructor may use a fixed readonly durable-context resolver; it grants no
+native session/effect capability. The upper generation_authority_session must
+verify exact actual supervisor/custodian/store/target/config association and
+fresh observations before each production operation. Final native dispatch
+independently enforces that same original association and actual reservation/
+outcome. Copied observations or a pure crypto/context object cannot bypass it.
+
+Production `_issue_original_trust_entry` may remain a fail-closed legacy helper,
+but a REAL root-confirmation path must issue/register its exact original entry;
+retaining only that stub is incomplete. Bootstrap accepts only an original
+registered root request/verified root approval and durably confirmed record,
+never an entry constructed from a supplied dictionary or generic registrar.
+
+For actual root-backed production context, contextId is the exact signed
+ROOT intent/confirmed enrollment contextId. Trust.enrollmentId remains its own
+exact signed identity; do not silently equate those distinct fields as the
+older source-test allocation did. Source-test-only contexts retain their exact
+acceptance-only origin/identity rules and cannot enter production session paths.
+
+##### Independent birth state and ordering
+
+ROOT `confirmed` must imply that the original logical context journal/ledger
+birth is ALREADY complete. If root confirmation preceded logical birth, loss of
+all subordinate birth files could be misread as first use despite prior effects.
+Therefore use this exact ordering under the SAME original native/custodian
+exclusive lease, obeyed by every production context-birth writer:
+
+1. Verify original native association/current facts, actual root signature and
+   registered prepared ROOT request. Briefly lock ROOT, validate exact current
+   request/slot/policy/history, then release ROOT lock. No usable context exists.
+2. Initialize/settle ONLY that original logical context journal/approval-ledger
+   birth under their existing locks. ROOT still says prepared. Return only a
+   private original birth result, never a usable context/native capability.
+3. Close context/ledger locks. Reacquire ROOT lock under the still-held original
+   native/custodian lease, revalidate SAME request/signature/policy/native
+   continuity and original birth result, atomically confirm ROOT, fsync and
+   positively observe its original outcome. No ROOT-to-context lock nesting.
+4. Release ROOT lock. Readonly resolve existing original logical birth and issue
+   the process-local context/entry through fixed original registries. No second
+   birth or changed IDs/path after confirmation or a lost return.
+
+The positive birth result is an exact private registry-owned object tied to the
+same original prepared ROOT request, context/config/trust, derived path/IDs and
+verified durable context/ledger records. It is not a caller observation mapping,
+callback or a digest-only certificate. The coordinator's retained lease excludes
+all other production birth writers during this check/confirm gap. Actual host/
+filesystem/native continuity must be qualified; hashes alone do not establish it.
+
+##### Fixed paths, IDs and recovery
+
+For newly implemented ROOT-backed production contexts ONLY, derive the logical
+approval path as original control_home plus `generation-approvals-` + exact
+contextId + `.jsonl`; its lock is that path plus `.lock`. Keep the existing
+logical context-registry0.2 filename and per-context birth-marker derivation.
+No caller selects another ledger path or adopts existing unrelated files.
+
+Allocate stable logical enrollment and initial-epoch UUIDs with UUIDv5 under
+UUID.NAMESPACE_URL. Names are respectively literal
+`umf.generation-enrollment-identity/0.1` and
+`umf.generation-enrollment-initial-epoch/0.1`, followed by one NUL and canonical
+JSON `{registryId,contextId}` from the original ROOT request/registry. These are
+public identities, not credentials. Actual initial preparation signatures bind
+them later. Existing source-test or historical journal IDs are not rewritten.
+The new unpublished ROOT-backed profile requires this explicit derivation; no
+previously qualified root-context upgrade is claimed.
+
+ROOT prepared may settle only its exact original pre-capability initialization.
+No logical request/effect is allowed before ROOT confirmed. Root-confirmed entry
+with a missing context journal, its lock, birth marker, ledger or ledger lock
+REFUSES without O_CREAT, reserve_context fallback, new identity or path. Recovery
+of a confirmed root entry is readonly and returns the SAME existing IDs/context.
+If any ROOT enrollment was confirmed, the shared logical context journal/lock
+must already exist; a new prepared request cannot recreate that shared history.
+Every confirmed entry must have matching complete original subordinate birth.
+Pending subordinate records may belong only to an original prepared ROOT
+request. Any effect history under an unconfirmed ROOT request is inconsistent
+and refuses, not a permission to erase or adopt it. Missing/uncertain original
+ROOT state remains unknown/fenced; no prepared-state label grants backup restore
+or general torn-history repair.
+
+A crash after subordinate birth but before ROOT confirmation resumes the SAME
+request and derived IDs, verifying the exact original files before confirmation.
+A crash after ROOT confirmation but before return performs readonly recovery.
+No cross-file atomic transaction is claimed: prepared root state reserves and
+fences the partial filesystem work; the one ROOT confirmation makes completed
+birth usable. It creates no database schema/roles/epoch/head effects.
+
+##### Physical boundary, aliases and tests
+
+Physical owner_bootstrap may import ONLY the fixed ROOT initial-record codec
+and complete current-record validation functions from the native-free generation
+bootstrap leaf when composing context0.3 resources. Those functions return bytes
+or validation success, never physical/native authority. The generation leaf has
+NO reverse import into physical owner/core/facade/native. Any ROOT lock is
+released before subordinate context/ledger validation locks. All physical
+classes/errors/registries remain distinct and identity-preserving; no generation
+leaf creates physical OwnerAuthorityContext.
+
+Preserve the map's one concrete issuer and exact object aliases across old/new
+module paths. Move actual supervisor lookup/observation calls above the leaves;
+new actual native hooks must be implemented and exercised, not merely named.
+The source-test factory remains bootstrap-local and permanently nonproduction.
+
+Independent controls must cover distinct root contextId/trust enrollmentId,
+confirmed root plus loss of ALL subordinate birth/history files, positive
+prepared-root interruption at every birth/ROOT replace/return boundary, same
+IDs/path and no effects/reinstall, shared-journal loss with other confirmed root
+entries, two writers, purpose/registry/alias identity and final-native freshness
+refusal. Retain actual003–005 failures and source-only qualification; original
+deployment, installed/native/platform/browser/release gates remain mandatory.

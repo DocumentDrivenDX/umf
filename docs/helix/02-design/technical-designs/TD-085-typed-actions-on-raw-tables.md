@@ -999,3 +999,27 @@ lease/root registry/context journal lock ordering from the contract.
 Repair original lease descriptor cleanup on every validation exception and exact
 full lexical verifier class/method enforcement. Preserve all003/004/005 actual
 failures; owner-only positive controls do not qualify rooted composition.
+
+
+### G11 root prepared birth, atomic confirmation and readonly context issue
+
+Implement the root-context birth ordering exactly: under original native custody
+lease validate prepared root request/signature, release ROOT lock for original
+subordinate context/ledger birth, close their locks, revalidate same original
+request/native continuity under ROOT lock, atomically confirm ROOT, release it
+and ONLY then readonly issue context. No usable context before confirmation;
+confirmed root missing subordinate history refuses without initialization.
+
+Production contextId is signed RootIntent.contextId, distinct from trust's
+enrollment identity. Derive only new ROOT-backed production ledger paths and
+logical IDs using the exact fixed path/UUIDv5 rules in the contract; do not
+rewrite source-test or historical identities. Shared context journal cannot
+be recreated if any ROOT entry was confirmed. File effects before confirmation
+are fenced original initialization, not distributed atomic commit or authority.
+
+Preserve exact original root request/config/context/type/registry aliases and
+actual native association checks above pure logical core. Physical owner may
+use only the fixed native-free ROOT codec/current-validation edge, with no
+reverse dependency, physical context laundering, native callback or generic
+issuer registrar. Implement actual missing native hooks and positive original
+root entry issuance; naming a fail-closed future hook is insufficient.

@@ -847,3 +847,21 @@ full module-map/strict lazy verifier dependency negatives remain mandatory.
 Original deployment/native target/store/head/subjects/barrier/epoch/effects and
 installed platform/browser/CI/release/public bytes remain separate qualification.
 No source-only root signature or receipt dictionary closes these gates.
+
+
+### G11 logical birth reset refusal and original root-confirmation recovery
+
+Independently exercise distinct signed context/trust enrollment IDs, actual
+ROOT confirmation with loss of ALL subordinate logical journal/birth/ledger
+files, shared journal loss while another root entry remains confirmed, and
+constructor/reserve-context bypass. All refuse without O_CREAT or new IDs.
+
+Before root confirmation inject failure at each context/ledger/root fsync/
+replace/return boundary and positively settle SAME prepared request/derived
+IDs/path, without effect history or native role/epoch DDL. After confirmation
+recover only readonly existing exact context. Two writers obey original native
+lease→ROOT release→context locks release→ROOT confirm ordering. Preserve
+original aliases/source-test purpose and actual final-native freshness guards.
+
+These source/file controls do not qualify original deployment/native provider/
+process/barrier/epoch/installed/browser/platform/CI/release/public-byte gates.
