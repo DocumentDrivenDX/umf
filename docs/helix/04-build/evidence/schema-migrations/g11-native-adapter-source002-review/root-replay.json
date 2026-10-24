@@ -1,0 +1,20 @@
+{
+  "profile": "umf.root.native-adapter002-independent-replay/1",
+  "time": "2026-10-24T09:17:15.897685+00:00",
+  "reviewReceipt": "/private/tmp/g11-native-adapter-sol-review-002/receipt.json",
+  "reviewReceiptSha256": "db568b12c055108f3c99c50d9c03045c9c97af5ff2cff4196536661f318dcceb",
+  "sourceSha256": "e9f59d20f9d0008626a4381db4fd9c311e173cfedd6adb51adc0f91ad153ff0e",
+  "actualReplay": "Root reran exact repro.txt command using frozen snapshot and real crypto interpreter; process exit0 denotes successful defect demonstration, not acceptance.",
+  "observedFailures": [
+    "flat native registration KeyError(database)",
+    "complete native settings mismatch despite valid minimal six settings control",
+    "launch-confirmed KeyError(hbaDigest)",
+    "recovery custody scope refused while initial wire accepted",
+    "registration reservation/request profiles and hashes differ",
+    "real Ed25519 terminal record confirmed with equal owner/native receipt digest, then fresh adapter recovery original-outcome-mismatch"
+  ],
+  "seventhFinding": "Already-unwrapped payload static path finding; not separately executed by supplied probes. Remains repair/review requirement.",
+  "authority007": "No authority defect; adapter rehashes raw valid receipt digest.",
+  "nativeEffects": false,
+  "disposition": "reject source002; Luna repairs all seven findings in successor003; original packet preserved"
+}

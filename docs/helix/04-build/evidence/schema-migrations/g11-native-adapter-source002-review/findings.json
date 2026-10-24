@@ -1,0 +1,51 @@
+[
+  {
+    "id": "N002-01",
+    "priority": 1,
+    "title": "Read the flat native database observation",
+    "detail": "observe_original_registration indexes native[database][systemIdentifier/oid], but _observe_native returns flat systemIdentifier/databaseOid. Genuine matching native observation raises KeyError(database).",
+    "line": 3178
+  },
+  {
+    "id": "N002-02",
+    "priority": 1,
+    "title": "Resolve config/HBA pins from the matching launch intent",
+    "detail": "_native_origin_matches reads hbaDigest/configDigest from launch-confirmed, whose exact closed payload has only launchId/process/nativeObservationDigest/endpointReceiptDigest. A matching original launch reaches KeyError(hbaDigest), blocking registration and store continuity.",
+    "line": 3659
+  },
+  {
+    "id": "N002-03",
+    "priority": 1,
+    "title": "Project store settings from the complete native observation",
+    "detail": "_native_store_preparation_payload passes complete _observe_native output to _store_required_settings, which requires exactly six keys. Every real complete observation is refused; keep exact six-field output and validate full session separately.",
+    "line": 3976
+  },
+  {
+    "id": "N002-04",
+    "priority": 1,
+    "title": "Bind registration reservation to exact signed intent bytes",
+    "detail": "apply_target_registration uses outer profile umf.local-owner-target-registration/0.1 in reservation payload, while actual signed request is umf.owner-target-registration-intent/0.1. Recovery requires payloadDigest == request intent digest and necessarily refuses this original reservation.",
+    "line": 2950
+  },
+  {
+    "id": "N002-05",
+    "priority": 1,
+    "title": "Preserve the fixed custody approval scope during recovery",
+    "detail": "reattach_original_registration reconstructs ownerApproval.scope=local-target-registration, whereas initial registration and actual ingress_custody wire validator require enroll-owned-local-postgresql-target. Exact original payload correspondence and custody registration reject recovery.",
+    "line": 2080
+  },
+  {
+    "id": "N002-06",
+    "priority": 1,
+    "title": "Compare the stored receipt digest without hashing it again",
+    "detail": "Native adapter _digest hashes canonical JSON; owner_authority _digest validates an existing hex digest. Owner ledger stores outcome.receipt_digest unchanged. Recovery compares to a second hash at lines2027/2159/2690, refusing confirmed original effects. Real Ed25519 enrollment/signing/native resolver/terminal ledger probe confirms terminal success then fresh-supervisor recovery refusal; authority007 itself is not defective.",
+    "line": 2026
+  },
+  {
+    "id": "N002-07",
+    "priority": 1,
+    "title": "Read the already-unwrapped registration event payload once",
+    "detail": "_resolve_original_store_preparation assigns registration_event from event[payload], then indexes registration_event[payload][payloadDigest]. Even after earlier continuity/settings fixes, valid retained evidence reaches KeyError(payload). Static source path finding; not exercised because preceding independent probes establish earlier blockers.",
+    "line": 4048
+  }
+]

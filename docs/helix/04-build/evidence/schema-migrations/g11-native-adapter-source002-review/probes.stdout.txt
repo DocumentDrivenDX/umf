@@ -1,0 +1,63 @@
+[
+  {
+    "probe": "flat-native-registration-observation",
+    "exception": "KeyError",
+    "message": "'database'"
+  },
+  {
+    "probe": "minimal-settings-validator-control",
+    "result": "{'searchPath': 'pg_catalog', 'timeZone': 'UTC', 'rowSecurity': 'on', 'sessionReplicationRole': 'origin', 'transactionReadOnly': 'off', 'transactionIsolation': 'read committed'}"
+  },
+  {
+    "probe": "actual-native-shape-settings",
+    "exception": "LocalPostgresError",
+    "message": "local-postgresql-store-settings-mismatch"
+  },
+  {
+    "probe": "actual-launch-confirmed-shape-origin",
+    "exception": "KeyError",
+    "message": "'hbaDigest'"
+  },
+  {
+    "probe": "initial-registration-custody-wire",
+    "result": "None"
+  },
+  {
+    "probe": "recovery-registration-custody-wire",
+    "exception": "CustodyJournalError",
+    "message": "journal-invalid"
+  },
+  {
+    "probe": "registration-reservation-request-correspondence",
+    "initialPayloadProfile": "umf.local-owner-target-registration/0.1",
+    "signedRequestProfile": "umf.owner-target-registration-intent/0.1",
+    "equal": false,
+    "initialSha256": "af43491f99dd0079c5bb8d399c5f76ec301e045b6adb322d9dd957cec06cd8bd",
+    "requestSha256": "fe33e06d2937f737ff53f9d705d9b22e7528f91515f2f02171b451041ca78e2f"
+  },
+  {
+    "probe": "real-authority-terminal-recovery",
+    "exception": "LocalPostgresError",
+    "message": "local-postgresql-original-outcome-mismatch"
+  },
+  {
+    "probe": "supplied-bridge-after-added-terminal-stage",
+    "expectedAssertion": "'confirmed' != 'effect-pending'\n- confirmed\n+ effect-pending\n"
+  },
+  {
+    "probe": "real-crypto-terminal-owner-ledger",
+    "details": [
+      {
+        "terminalStatus": "confirmed",
+        "actualReceiptDigest": "f7b4e91b25eb7e4dae444832f857381d50a27fd3b5d58e92651399de1e4eb7c3",
+        "nativeReceiptDigest": "f7b4e91b25eb7e4dae444832f857381d50a27fd3b5d58e92651399de1e4eb7c3",
+        "adapterRecoveryExpectedDigest": "b2e3fc72717d28f23ec3c361549836c078a2e29336268eb26a76d7c9c066a2c3"
+      },
+      {
+        "probe": "real-authority-terminal-recovery",
+        "exception": "LocalPostgresError",
+        "message": "local-postgresql-original-outcome-mismatch"
+      }
+    ]
+  }
+]

@@ -409,3 +409,25 @@ installed-native gates; source-bound approval/outcome verification; generated
 client cutover; public documentation and independent review. Each later backend
 receives a separate operation/mode/version qualification. No completion statement
 may imply atomicity, online operation or reversibility outside that evidence.
+
+
+## G11 source002 independent review checkpoint — 2026-10-24
+
+[The source002 review evidence](evidence/schema-migrations/g11-native-adapter-source002-review/README.md)
+rejects the candidate despite its 29 passing supplied source controls. Seven
+integration findings block native qualification: flat native/session observation
+shape, launch-intent digest provenance, exact settings projection, signed
+registration/reservation correspondence, fixed legacy custody approval scope,
+raw terminal receipt comparison and already-unwrapped registration payload.
+Independent real Ed25519 terminal recording succeeds; original adapter recovery
+then refuses the matching confirmed outcome. Authority007's separate acceptance
+is unchanged. Luna repairs the adapter against the frozen failure probes while
+implementing the separate initial-generation authority under governing009.
+
+The governing009 adoption at `e37cd7e45eb351d0c2f95ca720cf2ba4b6c7f126`
+defines two logical enrollment scopes, separate from all six physical owner
+scopes. Existing-head enrollment requires original non-null source/head and
+actual private native capability/barrier/activation recovery. True headless
+installation remains a G10 requirement. Source-only controls and document
+adoption do not close these capabilities, G04 retained originals, G05 lifecycle,
+the broader G02–G11 backlog, or testing/merge/release/public-byte gates.
