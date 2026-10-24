@@ -1,0 +1,44 @@
+{
+  "allOtherInventoryValuesUnchanged": true,
+  "allRecordedGitHashesBytesAndProjectTextMatch": true,
+  "baselineInventorySha256": "a2609b45cd6131aae1211a764405912472f4ccdd998d021807d65948b53f939b",
+  "candidateSourceBlob": "152aa9553ec3c1ff2b8d163246ea9ec2d7421b88",
+  "candidateTestSha256": "719fd41eeb78829609e167e08e56622c964e48dd99e6cbd952f23a4d40634aa8",
+  "canonicalSerializedCandidateMatchesGeneratorStyle": true,
+  "changedJsonPaths": [
+    "$.capture.sourceCohortSha256",
+    "$.scripts[51].bytes",
+    "$.scripts[51].sha256"
+  ],
+  "changedSourcePaths": [
+    "python/tests/test_python_artifact_version.py"
+  ],
+  "commit": "14cc001d8944cb3ed61da720c7795b8b521d496e",
+  "completeSectionPathSetsMatchGeneratorRules": true,
+  "counts": {
+    "activeScriptFiles": 342,
+    "algorithmSymbols": 10325,
+    "pythonModules": 105,
+    "rustBuildInputs": 76,
+    "rustModules": 127,
+    "scriptFiles": 2951,
+    "sourceModules": 578,
+    "typescriptModules": 473
+  },
+  "derivedInventoryBytes": 2606023,
+  "derivedInventorySha256": "66166e441062358f3f8ba73943079e7bfcca964157f6076fcc754c4c21cdffea",
+  "derivedSourceCohortSha256": "e8c99668761d72bb8a1be840d93d883b83c5ec5b2f72b5e81d7c1d98e61e31f2",
+  "gitBytesReadIncludingPinsAndCommittedInventory": 40433955,
+  "gitPathsReadIncludingPinsAndCommittedInventory": 3629,
+  "normalizedPythonAstEqualExceptImportOrderAndWithFlattening": true,
+  "parent": "b4f2eafbcb3f0a5e72c1ba88ffcc85e49451ec35",
+  "recordRowsIncludingDependencyResources": 3738,
+  "reviewedUtc": "2026-10-24T06:59:37.455398+00:00",
+  "role": "sol",
+  "scope": "Independent read-only Git blob/tree and JSON/AST/formula audit. No product generator/check/test/build/native/worktree launch. Derived inventory is a candidate and is not represented as generated/current; only an authorized subsequent unmodified full --check can establish currentness.",
+  "sourcePinsMatchExactGit": true,
+  "status": "pass-derived-candidate-audit",
+  "tree": "d0bd6a0b7674e8881a9ae05632bb36318e799c7c",
+  "uniqueRecordedGitBytes": 37730421,
+  "uniqueRecordedGitPaths": 3624
+}

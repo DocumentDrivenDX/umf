@@ -197,7 +197,7 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "16a55b5946a9868775b2b3afc5b0078f9fcfae132aed3fde5310ef891710c6ca",
+    "sourceCohortSha256": "e8c99668761d72bb8a1be840d93d883b83c5ec5b2f72b5e81d7c1d98e61e31f2",
     "typescriptApi": "5.9.3"
   },
   "counts": {
@@ -9232,12 +9232,12 @@
         "test_installed_mode_enforces_explicit_version_before_payload_check",
         "test_verify_defaults_to_historical_profile_and_explicit_version_is_propagated"
       ],
-      "bytes": 3695,
+      "bytes": 3740,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "py",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "python/tests/test_python_artifact_version.py",
-      "sha256": "629b6303a22c08a1ca4af68aadc3448d0f30e0ed9b6dbbb9134e39004e7e8d57"
+      "sha256": "719fd41eeb78829609e167e08e56622c964e48dd99e6cbd952f23a4d40634aa8"
     },
     {
       "activationEvidence": [],

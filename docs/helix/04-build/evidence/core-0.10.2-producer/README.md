@@ -1,6 +1,33 @@
 # Core 0.10.2 producer evidence
 
-The current source producer is `091aea5d111045fe70b229bc72fb47ef95febb9d`.
+The current product-source producer is `14cc001d8944cb3ed61da720c7795b8b521d496e`.
+Its sole change over b4f is test import ordering and equivalent combined context
+managers. Repository-config Ruff 0.17.1 reproduces I001/SIM117 on the baseline;
+the corrected test passes Ruff and all three focused tests. Independent review
+confirms the same assertions and context-manager ordering.
+
+The exact inventory candidate was derived from the qualified 091 capture by
+changing only that script's bytes/SHA and the aggregate source-cohort digest.
+It was not claimed current until a separate unmodified full `--check` at 14cc
+freshly captured the complete inventory and returned zero. The controller
+completed in 96.149 seconds, including cleanup. The checked inventory is
+SHA256 `66166e441062358f3f8ba73943079e7bfcca964157f6076fcc754c4c21cdffea`,
+with 578 source modules and 342 active scripts. Independent source audit matches
+3,624 unique recorded Git paths and 37,730,421 bytes. The actual check and source
+audits, derived provenance, controller source and cleanup are the `*-010.json`
+records. All 19,517 dependency entries stayed unchanged; all twelve recorded
+owned PIDs/groups and the worktree path/Git registration are absent.
+
+Previous b4 hosted Linux/macOS native artifact and inventory runs passed, while
+its Python workflow failed Ruff. Those results keep their b4 scope. Fresh
+successor CI, direct/sdist-rebuilt native artifacts, independent artifact review,
+merge, immutable release and public-byte verification remain required. The
+broader 51-body local source run remains incomplete; it is not relabeled a pass.
+No release or managed consumer acceptance is claimed.
+
+## Historical 091 source evidence
+
+The source producer at that checkpoint is `091aea5d111045fe70b229bc72fb47ef95febb9d`.
 It fixes explicit distribution-version verification for 0.10.2 while preserving
 the historical verifier default and semantic document version 0.10.0. The new
 three-test version control suite passed independently; its source and exact
