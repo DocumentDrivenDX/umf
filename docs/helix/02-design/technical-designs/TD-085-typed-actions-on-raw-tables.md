@@ -908,3 +908,17 @@ signed fields. Repeat bounded1000-row/8MiB PRIVATE batches over the complete
 locked population within aggregate original approved policy, maintaining full
 ID/set witnesses. Enforce explicit single-value8MiB refusal before adaptation,
 not a hidden whole-archive cap or row omission. Integration002 SHA256: b2ff1a1b90f1ff279e65d06442adad5a4dfe45f284dc7d5e45df2c7d4db26f9c.
+
+
+### G04 exact TOAST and RI creation custody
+
+Implement the amended closed objects with required actual parent addresses.
+Follow actual reltoastrelid and automatic storage/index/type dependency closure;
+pg_toast is allowed only for those original parent-bound objects. Match the
+COMPLETE native-generated RI trigger set to actual declared FK constraints and
+all function/event/enable/argument/index/relation/dependency facts against pinned
+PG18.6. No prefix/internal-flag/schema-name waiver or invented created builtin
+function. Capture actual OIDs/definition/parent closure in original same-TX
+creation receipt and external original confirmation. Reject missing/extra/foreign
+internals and retain strict user-trigger/default/ACL/privacy restrictions.
+Integration003 source SHA256: d319c315a1b50c44eb1777017e1016dd2a18eb65627adf4b6ff687190e2f9786.

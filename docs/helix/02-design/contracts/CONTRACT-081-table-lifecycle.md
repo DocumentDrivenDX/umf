@@ -6171,3 +6171,72 @@ row/value-byte policy bounds; a single value above8MiB is an explicit first-buff
 resource refusal, never omission/NULL/truncation. This clarifies the adopted
 integration without changing its original store/capture/native custody protocol.
 Source elaboration integration002 SHA256: b2ff1a1b90f1ff279e65d06442adad5a4dfe45f284dc7d5e45df2c7d4db26f9c.
+
+
+#### G04 finite native internal-object inventory correction
+
+The earlier complete-custody obligation included implicit objects, but its
+closed kind/name shape omitted native TOAST/FK RI objects. Correct the FIRST
+UNPUBLISHED creation receipt objects to EXACT
+`{classId,objectId,subId,kind,qualifiedName,definitionDigest,parent}`. Add ONLY
+toast-table|toast-index|internal-ri-trigger to the prior kind enum. Parent is
+required exact object-address or null as specified below. QualifiedName remains
+exact schema/name/member; permit pg_toast ONLY for actual parent-bound TOAST
+objects, and internal RI member names ONLY on their actual registered relation.
+Private-table user/unmanaged triggers remain forbidden; declared native FK RI
+triggers are required, not a general extra-trigger exception. No new app table,
+source meaning, author callback, arbitrary system-object adoption or native
+acceptance is implied. Original006/008 integration is preserved except this
+explicit finite created-object correction. Integration003 source SHA256: d319c315a1b50c44eb1777017e1016dd2a18eb65627adf4b6ff687190e2f9786.
+
+##### Finite PostgreSQL-created internal object closure
+
+JSONB/text metadata can create native TOAST objects, and declared FKs create
+internal RI triggers. Excluding them would contradict complete native custody.
+[PostgreSQL18 TOAST](https://www.postgresql.org/docs/18/storage-toast.html) binds
+the actual associated table through pg_class.reltoastrelid; its fixed native
+chunk columns and unique chunk index are internal storage, not extra app tables.
+[pg_trigger](https://www.postgresql.org/docs/18/catalog-pg-trigger.html) identifies
+actual internal constraint triggers through tgisinternal/tgconstraint and native
+function/referenced relation/index links. These are source facts, not native
+acceptance or permission to admit arbitrary system-named objects.
+
+Every creation-receipt object now has required parent, either null or EXACT
+`{classId,objectId,subId}`. Null is allowed only for the store schema. Ordinary
+created relations parent the store schema; user columns/constraints/indexes/
+row types parent their actual created relation; array type parents its actual
+created row type. TOAST table parent is its EXACT owning store relation through
+that relation's nonzero reltoastrelid; TOAST index/columns parent their actual
+TOAST relation. Internal-ri-trigger parent is its EXACT created FK constraint.
+All parent addresses occur in the same finite created-object closure; graph is
+acyclic rooted at this store schema, no external parent/adoption. Definition
+projections retain all original parent/native dependency facts, not just names.
+
+Only native TOAST relations/indexes/columns proven by that exact closure may
+use schema pg_toast. Verify their actual schema/catalog relation kind/owner,
+fixed storage/index/column/dependency facts against the pinned PG18.6 constructors;
+do not admit pg_toast by prefix or permit arbitrary tables there. Native
+reltoastrelid=0 produces NO invented TOAST relation. Auto row/array types are
+included only where the actual fixed constructor creates them; relation system
+attributes are validated as fixed relation-definition facts, not fabricated
+negative-subId user-column entries.
+
+For each declared FK require the COMPLETE exact native-generated RI trigger set
+on its referencing/referenced registered relations, tied through actual
+pg_constraint and trigger/index/relation OIDs. Verify tgisinternal, tgparentid,
+event/enable/deferrability flags, function identity and every argument/condition/
+relation/index link against that exact pinned native FK definition; unknown
+internal triggers or missing members refuse. Ordinary private-table user triggers
+remain forbidden. Builtin pg_catalog RI functions/dependencies are verified
+PREEXISTING native dependencies, not falsely reported as new owned functions.
+No unqualified function/trigger/class is allowed because a checksum matches.
+
+QualifiedName for an internal RI trigger names its actual parent RELATION schema/
+name and member=actual trigger name; parent ADDRESS refers to the FK constraint.
+For its creation under the fixed store all participating relations are original
+created store relations. Schema/default ACL/full object inventory/privacy and
+original external confirmation still apply. No application data, TOAST chunks
+or per-value hashes are listed in receipt/catalog objects. Max1024 objects and
+1MiB receipt remain conjunctive; overflow refuses, never truncates internals.
+This is an explicit correction of the unpublished original kind/name shape,
+not permission for another metadata table or general extra-object exemption.

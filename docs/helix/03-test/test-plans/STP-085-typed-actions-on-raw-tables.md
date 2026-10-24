@@ -766,3 +766,16 @@ capacity refusal. Execute more than1000rows and8MiB total across repeated privat
 batches while within aggregate signed limits, proving complete per-instance
 capture. Separately refuse a single value above8MiB before adaptation and verify
 rollback/no omitted rows. Integration002 SHA256: b2ff1a1b90f1ff279e65d06442adad5a4dfe45f284dc7d5e45df2c7d4db26f9c.
+
+
+### G04 actual implicit storage and FK trigger acceptance
+
+Execute exact fixed originals DDL on real PostgreSQL18.6 and independently
+observe its actual TOAST tables/indexes/columns/types and FK RI trigger set.
+Prove every recorded internal object has the exact native parent/dependency,
+owner/flags/definition and receipt origin. Force extra/missing/disabled/foreign
+internal trigger, unrelated pg_toast object, wrong parent and copied receipt
+refusal; no namespace/prefix waiver. No TOAST chunk/row values enter receipts.
+Confirm unknown creation COMMIT through complete original receipt+native closure
+and external custody. Native source mocks are not execution evidence.
+Integration003 source SHA256: d319c315a1b50c44eb1777017e1016dd2a18eb65627adf4b6ff687190e2f9786.
