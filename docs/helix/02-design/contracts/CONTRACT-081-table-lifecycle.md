@@ -6706,3 +6706,136 @@ bypass refusal. Use real crypto and original files, attributing synthetic native
 observations accurately. Then independently qualify actual deployment-origin,
 process/provider/native effects, installed/platform/browser and release/public
 bytes. Passing source fixtures alone cannot close G11 or original root setup.
+
+
+#### G11 concrete original root registry and continued context custody
+
+This correction makes010/011 root registry birth/current validation concrete
+after actual005 rejection. It preserves exact old owner-ledger and logical
+context-journal protocols, full original root/native authority and existing
+physical/logical scopes. No source/native qualification follows.
+
+##### Exact registry bytes and continuity
+
+The original fixed generation-authority-registry.json contains canonical UTF8
+JSON with NO terminal LF, BOM, whitespace or duplicate/unknown members. Initial
+bytes are EXACT canonical
+`{profile:"umf.generation-authority-registry/0.1",registryId,anchorDigest,
+sequence:0,requests:[],enrollments:[]}` using010/011's original UUID/anchor.
+Primary context0.3 initialRegistryDigest hashes that complete zero-state object.
+The initializer must create those exact bytes, not an empty file or JSONL. Its
+existing fixed original lock contains empty bytes and retains original custody.
+
+Later current registry bytes naturally differ. Verify profile/registryId/anchor
+against original confirmed context0.3, recompute the SAME expected zero-state
+object/digest, then validate the COMPLETE current closed record, original
+requests/entries/signatures/sequence/history/custody. Never compare the full
+current registry hash to its birth digest or accept arbitrary later bytes. The
+primary context remains immutable. A matching header/hash is not deployment
+origin, nonrewind proof or native observation. Actual original host/custodian
+continuity remains independently qualified; backup/restore/lookalike adoption
+is never inferred from these hashes.
+
+Use EXACT010 request and confirmed enrollment shapes, signatures, intents,
+key selection, IDs, scope/effect keys and caps. Sequence is a safe integer and
+equals the total number of retained reservations plus confirmations. The set of
+all request reservedSequence and non-null confirmedSequence values is exactly
+1..sequence, with no gaps/duplicates; each confirmation is later than its own
+reservation. Requests remain ordered by reservation sequence, enrollments by
+confirmation sequence. Confirmed entries bijectively match confirmed requests
+and their actual registrySequence, exact IDs/context/trust/config/evidence/root
+approval digest; prepared requests have no enrollment entry/envelope/confirmation
+sequence. Unique request, approval, enrollment and effect identities are checked
+across ALL retained entries, not just the selected request.
+
+Only these changes are legal: append one new immutable prepared request at the
+next sequence; or atomically change its state/confirmedSequence/approvalEnvelope
+from prepared to confirmed and append its exact enrollment at the next sequence.
+All prior ID/intent/payload/config/effect/key/purpose/root/binding bytes remain
+exact; no deleting, reordering, remapping or reinterpreting old entries. Same
+occupied effect+same exact intent reuses original IDs/outcome; different intent
+refuses. Confirmation verifies the configured original root signature and all
+cross-links; readonly recovery re-verifies it, never merely its digest. No
+confirmation of an unreserved request or envelope injected after denial.
+
+Every read/append/confirm/recover verifies full shape and bounds. Existing
+4096 requests/256 enrollments/8MiB file/2MiB intent limits remain conjunctive;
+all capacities are preflighted BEFORE modifying the original registry. Atomic
+replacement/fsync/parent fsync and positive original observation precede usable
+handles. An uncertain replacement settles only its original prepared/confirmed
+record. Missing confirmed registry/lock/context refuses without O_CREAT, repair,
+new IDs or an alternate path. Source fixtures cannot establish production origin.
+
+##### Concrete acyclic ownership and cryptography
+
+Use dedicated native-free `lifecycle/generation_authority_bootstrap.py` for the
+ROOT registry/parser, original root trust requests/confirmations and fixed
+bootstrap trust/context issuer registry. The concrete root verifier is EXACT
+`ConfiguredGenerationAuthorityRootVerifier.verify_approval` in that module.
+It verifies ONLY010's original root trust approval/domain/config policy through
+an original registered request, independently configured root key/purpose and
+retained original0.3 context; no generic sign/verify callback or caller keys.
+
+Authorize an additional narrowly scoped lazy ImportFrom exception ONLY at that
+module-top-level class and its exact method, for cryptography.__version__,
+cryptography.exceptions.InvalidSignature and Ed25519PublicKey from its exact
+asymmetric.ed25519 module. Keep the actual50.0.2 version guard. The existing two
+logical/physical verifier exceptions remain exact. Reject extra class/function
+ancestors, eager/wrong-function/wrong-module/wrong-symbol imports and borrowed
+same-name nested classes. No package/layer blanket exception or new dependency.
+
+Place original context/trust types in the bootstrap leaf with identity-preserving
+aliases from existing generation_enrollment_authority; original registries and
+source-test issuer purpose rules remain actual SAME objects. Their existing
+context journal and logical approval ledger must remain DISTINCT protocols from
+ROOT registry0.1. A native-free generation_enrollment_ledger leaf may hold the
+EXISTING logical ledger/replay/pure wire helpers needed by both bootstrap context
+and ConfiguredGenerationEnrollmentAuthority; it must not import bootstrap/core/
+facade/native. No importing the logical authority back into bootstrap to reach
+its ledger. Freeze and independently review exact moves/aliases/dependency map
+before adoption. If the code map differs, resolve it explicitly against these
+acyclic/origin/identity requirements, not with a hidden lazy import or registrar.
+
+Use fixed `lifecycle/generation_authority_session.py` above the initial authority,
+bootstrap and actual native supervisor/custodian/store for public orchestration.
+It implements010 prepare/export/confirm/recover/create-session using actual
+original owner session, target/store/custody, source/head/subjects/cohort and
+original native observations. Leaf root crypto/records prove a signed policy,
+not native origin. No copied observation dictionary, resolver callback, caller
+class/seal or signed receipt alone can replace original native capability checks.
+Final native dispatch independently checks actual original association/target/
+store/config and its existing logical approval/native reservation/outcome rules.
+
+Acquire original native custodian/exclusion lease BEFORE root-registry writer
+lock when preparation/confirmation needs native continuity. Hold that native
+lease through actual observation and registry confirmation. Do not call out to
+arbitrary/native callbacks under registry lock. Release root registry lock before
+issuing/settling separate logical context/approval journal births. No reverse
+registry-to-native-lease acquisition or registry-to-context-journal lock nesting.
+Original setup initialization retains011's setup→owner→root lock order. Ordinary
+readonly trust validation never mutates primary bootstrap state or restores locks.
+
+All six physical and two existing-head logical effect scopes remain unchanged.
+Future fresh logical0.2 still requires its separate G10 adoption. Root setup adds
+only the already adopted enroll-generation-authority operation. Root key/policy
+rotation, old active-host setup upgrade and absent subject/schema bootstrap stay
+explicit separate gaps; do not weaken original history/native correspondence.
+
+##### Independent qualification
+
+Retain005's actual structured-initial-record refusal, full-current-equals-birth
+blocker, descriptor-leak and nested-class checker failures. Close those exact
+cases. Use exact registered real root key/signature and actual original request
+for prepare/export/confirm/restart/session; exercise full closed prepared and
+confirmed states, root key/purpose/scope/config/native-binding mismatch,
+immutable request mutation, duplicate ID/effect/signature, capacities, two writers,
+crash/fsync/return boundaries and positive same-request recovery. Show that a
+confirmed root enrollment legitimately changes the registry and that subsequent
+owner/logical sessions still validate full original state. Preserve the separate
+logical context journal and its missing-file/birth/history controls.
+
+Repair setup/resource lease descriptor cleanup for every refusal path, not only
+OSError. Keep both original004 owner-only invariants and exact exception/registry
+alias identity. Then actual qualified original deployment/native target/store/
+head/subject/gate/epoch/provider/restart, installed/platform/browser/CI and final
+public bytes are separate required gates. Full source tests do not close G11.

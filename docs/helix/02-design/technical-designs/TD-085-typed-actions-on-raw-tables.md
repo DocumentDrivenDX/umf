@@ -974,3 +974,28 @@ acyclic registry birth. Old context0.1/0.2 upgrade and configured deployment
 restoration are separate unqualified operations. The old optional birth/anchor
 files cannot authorize native sessions or change path after loss. Preserve
 actual003/004 failures and scope every source/native claim.
+
+
+### G11 root registry implementation and exact third verifier boundary
+
+Implement the exact original root-registry0.1 canonical JSON, zero-state birth
+and full current continuity from the concrete root-registry contract. It is
+never an empty file or the existing logical context-registry0.2 JSONL. Primary
+context0.3 binds original birth, not equality with every future file version.
+Verify every current request/enrollment/sequence/signature/custody cross-link.
+Complete actual original root prepare/export/confirm/recover/session, retaining
+exact scope/config/purpose/native association and no automatic trust installer.
+
+Use dedicated native-free generation_authority_bootstrap and exact concrete
+ConfiguredGenerationAuthorityRootVerifier.verify_approval for the root domain,
+with only the separately enumerated lazy crypto/version exception. Preserve
+existing type/error/registry aliases and separate logical ledger/context records.
+Freeze acyclic source moves, using native-free generation_enrollment_ledger
+where shared context/approval ledger code requires it; no back-import into the
+logical authority and no generic callback/registrar. Actual native orchestration
+lives above those leaves in generation_authority_session. Preserve exact native
+lease/root registry/context journal lock ordering from the contract.
+
+Repair original lease descriptor cleanup on every validation exception and exact
+full lexical verifier class/method enforcement. Preserve all003/004/005 actual
+failures; owner-only positive controls do not qualify rooted composition.

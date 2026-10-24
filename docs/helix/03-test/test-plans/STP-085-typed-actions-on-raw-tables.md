@@ -826,3 +826,24 @@ context0.3 and root enrollment0.2 with generation registry birth under SAME
 primary commit. Old context upgrade remains a located refusal. Source crypto/
 file controls alone cannot establish actual deployment-origin/native provider/
 process/epoch behavior, installed platform/browser or release/public-byte gates.
+
+
+### G11 complete root-registry and original continuation qualification
+
+Independently replay005 structured-birth refusal, owner-only positive original
+recovery and both missing-sidecar invariants, descriptor leaks and nested-class
+crypto import negatives. Verify canonical no-LF zero-state bytes, full current
+closed registry and actual root signature after one real original enrollment;
+subsequent owner/logical session must retain valid original continuity. A mere
+removed digest comparison or shared JSONL parser cannot pass this gate.
+
+Exercise actual root key/purpose/scope/config/native mismatch, exact original
+prepare/confirm/restart/session, duplicate effect/ID/approval, immutable request,
+capacity conjunction, two writers and every fsync/replace/return crash boundary.
+Unknown confirmation observes SAME actual entry/context; missing confirmed files
+refuse without O_CREAT. Original type/error/registry/canonical identities and
+full module-map/strict lazy verifier dependency negatives remain mandatory.
+
+Original deployment/native target/store/head/subjects/barrier/epoch/effects and
+installed platform/browser/CI/release/public bytes remain separate qualification.
+No source-only root signature or receipt dictionary closes these gates.
