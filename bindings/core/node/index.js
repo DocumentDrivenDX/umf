@@ -3,6 +3,7 @@ import {encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './sr
 import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
 import {createCoreModelOperations} from './src/core-model.js';
 import {createBit128Engine as createBit128EngineWithWire, BIT128_PROFILE} from './src/bit128.js';
+import {createJsonSchemaOperations, JSON_SCHEMA_PROFILE, UmfError as JsonSchemaUmfError, jsonSchemaFailureError} from './src/json-schema.js';
 
 const require = createRequire(import.meta.url);
 const addon = require('./umf_core_node.node');
@@ -54,6 +55,8 @@ export const RFC3339_EXACT_INSTANT_MAXIMUM_BYTES = 1_048_576;
 export const ICEBERG_SCHEMA_PROFILE = 'umf-r5-iceberg-schema/0.1.0';
 export const PROTOBUF_INSPECT_PROFILE = 'umf-r5-protobuf-inspect/0.1.0';
 export const AVRO_FIELDS_PROFILE = 'umf-r5-avro-fields/0.1.0';
+export {JSON_SCHEMA_PROFILE};
+export {JsonSchemaUmfError as UmfError};
 function temporalResult(wire) {
   if (wire === 'TypeError') throw new TypeError('Temporal token requires text');
   if (wire === 'RangeError') throw new RangeError('Temporal token is outside the selected profile');
@@ -256,6 +259,28 @@ export function createProtobufInspector(options = {}) {
       return fromWire(JSON.parse(envelope.wire), hostWork);
     },
   });
+}
+
+/** Create the seven-operation opt-in CONTRACT-002 Rust adapter. */
+export function createJsonSchemaEngine(options = {}) {
+  if (typeof addon.executeJsonSchemaWire !== 'function' || typeof addon.jsonSchemaProfileVersion !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  if (addon.jsonSchemaProfileVersion() !== JSON_SCHEMA_PROFILE) throw new Error('RUST_NODE_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  const preflight = () => {
+    const bridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+    const work = admissionWork(bridge);
+    work?.(1);
+    return {bridge, work};
+  };
+  const call = (op, fields, {bridge, work}) => {
+    const request = {profile: JSON_SCHEMA_PROFILE, op, ...fields};
+    const response = JSON.parse(addon.executeJsonSchemaWire(encodeRequestWire(request, work), bridge));
+    work?.(response.wire?.length ?? 1);
+    const failure = resultError(response);
+    if (failure) throw jsonSchemaFailureError(failure, UmfCoreError);
+    return fromWire(JSON.parse(response.wire), work);
+  };
+  return createJsonSchemaOperations(call, preflight);
 }
 
 /** Create the opt-in bounded Avro field-metadata projection. */

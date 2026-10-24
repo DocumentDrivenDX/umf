@@ -1,4 +1,6 @@
 export declare class UmfCoreError extends Error { readonly code: string; readonly path: string }
+/** Semantic refusals from the opt-in JSON Schema adapter retain the TypeScript UmfError name. */
+export declare class UmfError extends Error { readonly code: string; readonly path: string }
 export declare function copyJson(value: unknown, limits?: {maxDepth?: number; maxValues?: number}): unknown;
 export declare const engineVersion: string;
 export declare const JAVASCRIPT_NUMERIC_PROFILE: 'umf.javascript-numeric/1.0.0';
@@ -109,6 +111,7 @@ export declare function createCoreModelEngine(resources: UmfCoreResources, optio
 export declare const ICEBERG_SCHEMA_PROFILE: 'umf-r5-iceberg-schema/0.1.0';
 export declare const PROTOBUF_INSPECT_PROFILE: 'umf-r5-protobuf-inspect/0.1.0';
 export declare const AVRO_FIELDS_PROFILE: 'umf-r5-avro-fields/0.1.0';
+export declare const JSON_SCHEMA_PROFILE: 'umf-r5-json-schema/0.1.0';
 export interface ProtobufInspectDiagnostic {code: string; path: string; message: string; severity: 'error' | 'warning'}
 export interface ProtobufInspectResult {valid: boolean; complete: boolean; diagnostics: ProtobufInspectDiagnostic[]}
 export interface ProtobufInspector {/** Inspect a UMF document containing a tagged Protobuf descriptor extension. */ inspect(document: unknown): ProtobufInspectResult}
@@ -137,6 +140,20 @@ export interface IcebergSchemaEngine {
 }
 /** Create the opt-in standalone Iceberg schema JSON engine using embedded pinned resources. */
 export declare function createIcebergSchemaEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): IcebergSchemaEngine;
+
+export interface JsonSchemaResource {uri: string; source: string}
+export interface JsonSchemaValidation {valid: boolean; complete: boolean; diagnostics: {code: string; path: string; message: string; severity: 'error' | 'warning'}[]}
+export interface JsonSchemaEngine {
+  importJsonSchema(source: string, options: {id: string; baseUri: string; resources?: Record<string, string>}): unknown;
+  inspectJsonSchema(document: unknown): JsonSchemaValidation;
+  exportJsonSchema(document: unknown): string;
+  exportJsonSchemaResources(document: unknown): Record<string, string>;
+  exportJsonSchemaBundle(document: unknown): {schema: string; resources: Record<string, string>; source: unknown; diagnostics: JsonSchemaValidation['diagnostics']};
+  getJsonSchemaNode(document: unknown, pointer: string): unknown;
+  walkJsonSchema(document: unknown): {pointer: string; node: unknown}[];
+}
+/** Create the opt-in seven-operation CONTRACT-002 Rust binding. */
+export declare function createJsonSchemaEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): JsonSchemaEngine;
 
 export interface UmfCodegenResources extends UmfCoreResources {tablesPackage: unknown; actionsPackage: unknown; bindingPackage: unknown; stableBindingPackage: unknown}
 export type UmfCodegenOperation = 'generatePythonClient' | 'compileTableDeployment' | 'verifyTableDeployment' | 'compileTableMigration' | 'verifyTableMigration' | 'discoverTableMigrationChanges' | 'normalizeRowScope' | 'generateAccessPackage' | 'diffAccessPackages';

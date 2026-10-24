@@ -2,6 +2,7 @@ import {encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './sr
 import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
 import {createCoreModelOperations} from './src/core-model.js';
 import {createBit128Engine as createBit128EngineWithWire, BIT128_PROFILE} from './src/bit128.js';
+import {createJsonSchemaOperations, JSON_SCHEMA_PROFILE, UmfError as JsonSchemaUmfError, jsonSchemaFailureError} from './src/json-schema.js';
 export {JAVASCRIPT_NUMERIC_PROFILE};
 export {BIT128_PROFILE};
 export const GREGORIAN_DATE_PROFILE = 'umf-gregorian-date/1.0.0';
@@ -10,6 +11,8 @@ export const RFC3339_EXACT_INSTANT_MAXIMUM_BYTES = 1_048_576;
 export const ICEBERG_SCHEMA_PROFILE = 'umf-r5-iceberg-schema/0.1.0';
 export const PROTOBUF_INSPECT_PROFILE = 'umf-r5-protobuf-inspect/0.1.0';
 export const AVRO_FIELDS_PROFILE = 'umf-r5-avro-fields/0.1.0';
+export {JSON_SCHEMA_PROFILE};
+export {JsonSchemaUmfError as UmfError};
 
 function hasBrowserRuntime(host) {
   return !!host && typeof host.WebAssembly === 'object' && typeof host.WebAssembly.instantiate === 'function';
@@ -87,6 +90,15 @@ export async function initializeIcebergSchemaWasm(loader = () => import('./pkg/u
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
   return createIcebergSchemaEngine(module, options);
+}
+
+/** Initialize the opt-in CONTRACT-002 adapter in a browser-compatible WASM host. */
+export async function initializeJsonSchemaWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+  codegenOptions(options);
+  if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
+  const module = await loader();
+  if (typeof module.default === 'function') await module.default();
+  return createJsonSchemaEngine(module, options);
 }
 
 /** Initialize the opt-in Protobuf descriptor inspector in a browser. */
@@ -281,6 +293,27 @@ export function createProtobufInspector(module, options = {}) {
       return fromWire(JSON.parse(envelope.wire), hostWork);
     },
   });
+}
+
+/** Create the seven-operation opt-in CONTRACT-002 Rust adapter over WASM. */
+export function createJsonSchemaEngine(module, options = {}) {
+  if (typeof module?.executeJsonSchemaWire !== 'function' || typeof module?.jsonSchemaProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  if (module.jsonSchemaProfileVersion() !== JSON_SCHEMA_PROFILE) throw new Error('RUST_WASM_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  const preflight = () => {
+    const bridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+    const work = admissionWork(bridge);
+    work?.(1);
+    return {bridge, work};
+  };
+  const call = (op, fields, {bridge, work}) => {
+    const response = JSON.parse(module.executeJsonSchemaWire(encodeRequestWire({profile: JSON_SCHEMA_PROFILE, op, ...fields}, work), bridge));
+    work?.(response.wire?.length ?? 1);
+    const failure = resultError(response);
+    if (failure) throw jsonSchemaFailureError(failure, UmfCoreError);
+    return fromWire(JSON.parse(response.wire), work);
+  };
+  return createJsonSchemaOperations(call, preflight);
 }
 
 /** Create the opt-in bounded Avro field-metadata projection over WASM. */

@@ -674,6 +674,77 @@ pub fn error_envelope(error: EngineError) -> String {
     result_envelope(Err(error))
 }
 
+/// Versioned opt-in dispatcher for the seven preservation and inspection
+/// operations in CONTRACT-002. `resources` is an ordered array of `{uri,
+/// source}` entries; it performs no I/O and is charged by the same invocation
+/// Context as request decoding, the operation, and result encoding.
+pub const JSON_SCHEMA_PROFILE: &str = "umf-r5-json-schema/0.1.0";
+
+pub fn execute_json_schema_wire(wire_json: &str) -> String {
+    let mut no_control = |_amount: usize| Ok(());
+    execute_json_schema_wire_with_control(wire_json, &mut no_control)
+}
+
+pub fn execute_json_schema_wire_with_control(
+    wire_json: &str,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+) -> String {
+    use umf_core::json_schema_adapter as schema;
+    let result = (|| {
+        let mut ctx = Context::ordinary().with_host_control(control);
+        let request = decode(wire_json, &mut ctx)?;
+        if text_field(&request, "profile").as_deref() != Some(JSON_SCHEMA_PROFILE) {
+            return Err(fail("REQUEST", "umf-r5-json-schema/0.1.0 profile is required"));
+        }
+        let op = text_field(&request, "op").ok_or_else(|| fail("REQUEST", "JSON Schema operation is required"))?;
+        let document = || field(&request, "document").ok_or_else(|| fail("REQUEST", "JSON Schema document is required"));
+        let value = match op.as_str() {
+            "importJsonSchema" => {
+                let items = match field(&request, "resources") {
+                    Some(Value::Array(items)) => items,
+                    _ => return Err(fail("REQUEST", "JSON Schema resources must be an explicit ordered array")),
+                };
+                ctx.charge_work(items.len(), Utf16::default())?;
+                let mut resources = Vec::with_capacity(items.len());
+                for item in items {
+                    let uri = field(item, "uri").and_then(as_utf16)
+                        .ok_or_else(|| fail("REQUEST", "JSON Schema resource URI is required"))?;
+                    let resource_source = field(item, "source").and_then(as_utf16)
+                        .ok_or_else(|| fail("REQUEST", "JSON Schema resource source is required"))?;
+                    ctx.charge_work(uri.len().saturating_add(resource_source.len()).saturating_add(1), Utf16::default())?;
+                    resources.push((uri.clone(), resource_source.units().to_vec()));
+                }
+                let source = field(&request, "source").and_then(as_utf16).ok_or_else(|| fail("REQUEST", "JSON Schema source is required"))?;
+                let id = field(&request, "id").and_then(as_utf16).ok_or_else(|| fail("REQUEST", "JSON Schema id is required"))?;
+                let base = field(&request, "baseUri").and_then(as_utf16).ok_or_else(|| fail("REQUEST", "JSON Schema base URI is required"))?;
+                schema::import_json_schema(source.units(), id, base, &resources, &mut ctx)?
+            }
+            "inspectJsonSchema" => validation_value(schema::inspect_json_schema(document()?, &mut ctx)?),
+            "exportJsonSchema" => Value::String(schema::export_json_schema(document()?, &mut ctx)?),
+            "exportJsonSchemaResources" => Value::Array(schema::export_json_schema_resources(document()?, &mut ctx)?.into_iter().map(|(uri, source)| object(vec![("uri", Value::String(uri)), ("source", Value::String(source))])).collect()),
+            "exportJsonSchemaBundle" => {
+                let bundle = schema::export_json_schema_bundle(document()?, &mut ctx)?;
+                object(vec![("root", Value::String(bundle.root_json)), ("resources", Value::Array(bundle.resources_json.into_iter().map(|(uri, source)| object(vec![("uri", Value::String(uri)), ("source", Value::String(source))])).collect())), ("source", bundle.source), ("diagnostics", Value::Array(bundle.diagnostics.into_iter().map(diagnostic_value).collect()))])
+            }
+            "getJsonSchemaNode" => {
+                let pointer = field(&request, "pointer").and_then(as_utf16).ok_or_else(|| fail("REQUEST", "JSON Schema pointer is required"))?;
+                schema::get_json_schema_node(document()?, pointer, &mut ctx)?.tagged_value_preserving_extras(&mut ctx)?
+            }
+            "walkJsonSchema" => {
+                let positions = schema::walk_json_schema(document()?, &mut ctx)?;
+                let mut output = Vec::with_capacity(positions.len());
+                for position in positions {
+                    output.push(object(vec![("pointer", Value::String(position.pointer)), ("node", position.node.tagged_value_preserving_extras(&mut ctx)?)]));
+                }
+                Value::Array(output)
+            }
+            _ => return Err(fail("REQUEST", "Unknown JSON Schema operation")),
+        };
+        encode(&value, &mut ctx)
+    })();
+    result_envelope(result)
+}
+
 /// Exact opt-in capability identity shared by CLI, Node/Bun, WASM and Python.
 pub const ICEBERG_SCHEMA_PROFILE: &str = "umf-r5-iceberg-schema/0.1.0";
 

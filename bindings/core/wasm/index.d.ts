@@ -91,6 +91,9 @@ export declare function initializeCoreModelWasm(resources: UmfCoreResources, loa
 export declare const ICEBERG_SCHEMA_PROFILE: 'umf-r5-iceberg-schema/0.1.0';
 export declare const PROTOBUF_INSPECT_PROFILE: 'umf-r5-protobuf-inspect/0.1.0';
 export declare const AVRO_FIELDS_PROFILE: 'umf-r5-avro-fields/0.1.0';
+export declare const JSON_SCHEMA_PROFILE: 'umf-r5-json-schema/0.1.0';
+/** Semantic refusals from the opt-in JSON Schema adapter retain the TypeScript UmfError name. */
+export declare class UmfError extends Error { readonly code: string; readonly path: string }
 export interface ProtobufInspectDiagnostic {code: string; path: string; message: string; severity: 'error' | 'warning'}
 export interface ProtobufInspectResult {valid: boolean; complete: boolean; diagnostics: ProtobufInspectDiagnostic[]}
 export interface ProtobufInspector {/** Inspect a UMF document containing a tagged Protobuf descriptor extension. */ inspect(document: unknown): ProtobufInspectResult}
@@ -120,8 +123,21 @@ export interface IcebergSchemaEngine {
   /** Return a validated candidate document; this does not commit or mutate input. */
   proposeNodeEdit(document: unknown, pointer: string, replacementJson: string): {document: unknown; validation: IcebergSchemaValidation};
 }
+export interface JsonSchemaResource {uri: string; source: string}
+export interface JsonSchemaValidation {valid: boolean; complete: boolean; diagnostics: {code: string; path: string; message: string; severity: 'error' | 'warning'}[]}
+export interface JsonSchemaEngine {
+  importJsonSchema(source: string, options: {id: string; baseUri: string; resources?: Record<string, string>}): unknown;
+  inspectJsonSchema(document: unknown): JsonSchemaValidation;
+  exportJsonSchema(document: unknown): string;
+  exportJsonSchemaResources(document: unknown): Record<string, string>;
+  exportJsonSchemaBundle(document: unknown): {schema: string; resources: Record<string, string>; source: unknown; diagnostics: JsonSchemaValidation['diagnostics']};
+  getJsonSchemaNode(document: unknown, pointer: string): unknown;
+  walkJsonSchema(document: unknown): {pointer: string; node: unknown}[];
+}
 /** Create the opt-in standalone Iceberg schema JSON engine using embedded pinned resources. */
 export declare function createIcebergSchemaEngine(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): IcebergSchemaEngine;
+export declare function createJsonSchemaEngine(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): JsonSchemaEngine;
+export declare function initializeJsonSchemaWasm(loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<JsonSchemaEngine>;
 /** Initialize the opt-in standalone Iceberg schema JSON engine in a browser. */
 export declare function initializeIcebergSchemaWasm(loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<IcebergSchemaEngine>;
 

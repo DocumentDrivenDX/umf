@@ -9,6 +9,7 @@ const pairs = [
   ['bindings/core/node/src/wire.js', 'bindings/core/wasm/src/wire.js'],
   ['bindings/core/node/src/javascript-numeric.js', 'bindings/core/wasm/src/javascript-numeric.js'],
   ['bindings/core/node/src/bit128.js', 'bindings/core/wasm/src/bit128.js'],
+  ['bindings/core/node/src/json-schema.js', 'bindings/core/wasm/src/json-schema.js'],
 ] as const;
 const manifestPath = 'bindings/core/wasm/src/shared-sources.json';
 const check = process.argv.includes('--check');

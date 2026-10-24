@@ -228,6 +228,18 @@ pub fn protobuf_inspect_profile_version() -> String {
     umf_core_wire::PROTOBUF_INSPECT_PROFILE.to_owned()
 }
 
+#[wasm_bindgen(js_name = executeJsonSchemaWire)]
+pub fn execute_json_schema_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::execute_json_schema_wire_with_control(wire_json, &mut hook)
+    } else { umf_core_wire::execute_json_schema_wire(wire_json) }
+}
+
+#[wasm_bindgen(js_name = jsonSchemaProfileVersion)]
+pub fn json_schema_profile_version() -> String { umf_core_wire::JSON_SCHEMA_PROFILE.to_owned() }
+
 #[wasm_bindgen(js_name = executeAvroFieldsWire)]
 pub fn execute_avro_fields_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
     if let Some(dispatcher) = control_dispatcher {
