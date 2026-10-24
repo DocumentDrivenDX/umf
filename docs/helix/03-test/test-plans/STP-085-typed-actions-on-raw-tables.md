@@ -701,3 +701,31 @@ archive-complement port and session policy explicitly; its absence is a refusal,
 not a fill pass. Keep every remaining family/backend/composition and external
 backup/log erasure limitation explicit in the release, rather than closing G05
 from an irreversible/null-only/source-only subset.
+
+
+### G11 initial enrollment independent authority and native acceptance
+
+Test actual valid/invalid Ed25519 signatures for both separate initial scopes,
+original configuration/policy/context/key binding, full cohort tuple rather
+than independent allowed-list cross-product, EVERY subject flags/ownership/
+groups/audience and purpose isolation. Original owner/store signatures, copied
+context/config/receipt, raw epoch dictionaries, caller resolver/seal, future
+OID injection, first-subject-only checks and fake/null heads must refuse.
+
+Exercise original context bootstrap/registry, positive request/signature recovery
+and missing original lock/history refusal. Prove actual role effects and one
+prepared epoch commit together under original initial reservation, exact receipt
+shape, complete pre/post source/native witnesses and original gate. Delayed
+SCRAM/NULL/starting/unrelated/cross-database session tests must run through the
+SAME native barrier implementation with distinct initial binding, preserving
+original candidate set and resolution evidence after process restart.
+
+Activate actual prepared roles/epoch atomically, retain stable subject OIDs/
+current_user/groups, require final source/head/policy/custody checks, and release
+only exact fresh admissions after original external/native confirmation. Inject
+known abort/cancellation/lost acknowledgements at preparation, fence, activation
+and publication. Prove positive original recovery without repeated role/epoch
+DDL, credential leak or legacy re-enable. Existing epoch/concurrent enrollment
+and source drift during signing refuse. True headless install stays a distinct
+G10 test/profile. Actual frozen installed artifacts/native platform/CI/browser
+and fresh public bytes are separate required gates; no source-only closure.

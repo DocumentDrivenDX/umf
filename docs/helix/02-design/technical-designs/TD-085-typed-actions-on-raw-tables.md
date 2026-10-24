@@ -826,3 +826,37 @@ receipt with actual business/catalog/outcome COMMIT. No logical-byte/row bound
 claims physical disk/WAL or external copy erasure. External/online custody,
 combined type-change restore, table retirement and abandoned cleanup remain
 separate unqualified compositions with explicit release tracking.
+
+
+### G11 original logical enrollment authority and native first-epoch path
+
+Implement the exact ConfiguredGenerationEnrollmentAuthority, immutable source/
+subject/key/purpose configuration and original operator trust bootstrap registry
+context/resolver. Bind policyRevision, complete configuration/context digest and
+key selection in original signed requests and durable ledger. Complete cohort
+tuples match as tuples, and EVERY admitted legacy subject is LOGIN/nonprivileged
+with preserved original inherit/groups. Physical creation/store approvals do not
+authorize logical enrollment; the six owner scopes remain closed and unchanged.
+
+Separate original pre-OID preparation from actual-OID activation under the new
+signing domain. Actual native role preparation and one prepared epoch share
+one transaction before final authentication barrier completion; preserve exact
+existing native provision/enrollment receipt keys with original domain/capability
+resolution. Native store entrypoints accept only original private prepared/
+activation capabilities, not raw epoch/success dictionaries or generic object
+seals. No fake old=new transition or null-head existing-enrollment branch.
+
+Use SAME actual qualified G11 native gate/candidate/resolution barrier through
+the exact original initial-enrollment binding/fence record and fixed private
+evidence resolver. Preserve NULL/starting observations, full original candidates
+and terminal proofs across restarts. Reobserve protected source/head/cohort/
+policy/roles/target before activation; enable approved wrappers and mark initial
+epoch active with actual receipt in ONE native transaction. Gate/credentials
+stay unavailable until positive original native/external confirmation.
+
+Provide positive original request/context/prepared/active recovery against
+EXISTING original bootstrap/ledger/native history. Missing original custody
+refuses without recreating keys, locks, contexts or role history. Do not rerun
+confirmed roles/epoch or re-enable legacy subjects after unknown COMMIT. Actual
+native production/acceptance trust, private issuer, backend barrier and process
+restart evidence remain mandatory, not implied by source signature tests.

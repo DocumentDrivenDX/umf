@@ -5502,3 +5502,418 @@ custody, online restore/capture, source-table retirement, combined type-change
 restore, abandoned cleanup and generalized hold/override workflows remain
 separately tracked compositions. No source-only or irreversible-only subset
 closes all G05 obligations.
+
+
+#### G11 separate configured initial generation enrollment
+
+The concrete existing-head enrollment below closes a missing protocol-only
+authority seam. It introduces a SEPARATE original two-scope logical enrollment
+authority/config/domain/context and exact native capability/receipt/barrier
+resolution, preserving the six physical owner scopes unchanged. Existing-head
+enrollment requires an actual non-null installed source/head; genuine headless
+G10 installation remains a separately tracked authority/profile. Native source
+controls or a receipt dictionary cannot establish any of these capabilities.
+This unpublished elaboration retains all prior source/identity/fidelity and
+actual native/recovery/installed/release gates.
+
+##### First scope and original host authority
+
+First native profile `postgresql18-existing-head-enrollment/0.1` enrolls an
+EXISTING fully validated source installation with a genuine original non-null
+64hex head, complete original source bytes/bundle/catalog/client witnesses and
+original target/store custody. Its ingress store has no prior epoch/enrollment/
+transition for this installation. No guessed hash creates a historical head;
+no initial migration/default/seed/data DDL occurs in this operation.
+
+Implement ConfiguredGenerationEnrollmentAuthority using originally enrolled
+operator key/principal/target/source-policy context and original durable
+request/effect ledger, distinct from physical owner authority. It may share the
+qualified Ed25519 verification implementation and durable file primitives, but
+has separate domain, closed scopes, request registry, configuration digest and
+native capability type. NativeAcceptanceGenerationEnrollmentAuthority has a
+separate immutable acceptance purpose and uses the SAME enrollment effects;
+production rejects that context. No UID/TTY, submitted key or arbitrary JSON
+capability can issue enrollment. Prepare/export/verify/observe and positive
+original recovery retain the adopted signed-authority race/consumption semantics.
+
+The actual provider requires original TargetCustody, original ingress-store
+capability, actual local supervisor/native issuer and this original authority.
+An exported matching dictionary/receipt is not any of those capabilities. All
+native state/record helpers remain private and cannot be exposed as an alternative
+public enrollment API accepting a success record. Physical target registration
+and store creation establish origin, not logical generation authorization.
+
+##### Exact signed requests and finite native inventory
+
+Signing prefix ASCII `umf.initial-generation-enrollment-approval/0.1`, then NUL,
+then RFC8785 UTF8 payload. Envelope exactly `{payload,keyId,signature}`, payload
+exactly `{profile:"umf.initial-generation-enrollment-approval/0.1",authorityId,
+principalId,keyId,requestId,purpose,scope,policyRevision,configurationDigest,
+contextDigest,targetCustody,intent}`. Purpose is the original
+production|native-acceptance context. Standard Ed25519 strict32byte keys/64byte
+base64url signatures and originally configured key lookup; no embedded key.
+Envelope keyId must exactly equal signed payload keyId; selection is signed and
+validated against the same original configured key before signature success.
+All UUIDs canonical lowercase, digests64lowerhex, native OIDs actual integers
+1..4294967295 excluding booleans, native role names existing63UTF8-byte bound,
+IDs<=256UTF8 bytes, complete payload<=1MiB. Registry4096requests/8MiB; no history
+truncation or lock recreation during readonly recovery. Two closed scopes:
+
+`prepare-initial-enrollment` intent is exactly
+`{profile:"umf.initial-generation-enrollment-prepare/0.1",providerId,enrollmentId,
+installationId,targetCustody,storeId,source,bundleDigest,expectedHead,
+sourceCohortDigest,executionPolicyDigest,issuerProfile,initialEpoch,
+subjects,maximumRoles}`.
+
+ProviderId/storeId identify the original store/provider and must agree;
+enrollmentId and initialEpoch are original UUIDs allocated BEFORE signing by
+the original issuer/registry, not arbitrary caller selectors. Source is exact
+original `{format:"json",sha256}`; the complete retained bytes and native source
+census must actually match. BundleDigest and expectedHead are real installed
+source/head observations, non-null. SourceCohortDigest binds the original
+compiled bundle, private dependency/native privilege census and actual clients.
+ExecutionPolicyDigest is the original selected bounded maintenance policy.
+IssuerProfile identifies the actual qualified original credential issuer.
+MaximumRoles is integer1..256 equal to subjects count. No plan/file/previous/
+next-source fields or fake original plan approval are invented for enrollment.
+
+Subjects is ordered1..256 unique actual stable-role entries exactly
+`{subject,audience,observedFlags,memberships,ownershipReceiptDigest,newLoginName}`.
+Subject exactly `{oid,name}`, audience person|batch, memberships the adopted
+closed ordered `{roleOid,roleName,inherit,set,admin}` inventory, with real boolean
+flags, unique roles and aggregate<=1024 edges. ObservedFlags has exactly the
+seven adopted role booleans canLogin,superuser,createDatabase,createRole,
+replication,bypassRls,inherit. EVERY legacy subject is actually LOGIN with all
+privileged flags false; inherit retains original source/native meaning. The
+permanent post-enrollment subject is identical except canLogin=false. Preserve
+subject OID/name/groups/current_user semantics and original ownership receipt;
+no changing audience/groups/privileges to get admission. Every newLoginName is
+new absent native identity, distinct from every stable subject/other new login.
+There are no claimed future login OIDs, credentials or activation signature.
+
+Prove exclusive original installation control of enrolled legacy principals,
+all native auth/SET/inherit/group/grant/definer access paths and original owned
+realm/HBA. Shared roles, an additional unknown LOGIN route to a subject,
+cross-installation use, preexisting wrapper login or unaccounted backend outside
+the owned target refuses this first profile. Unknown privilege is not waived
+because an operator signed names. Source fixtures must arrange actual owned
+legacy subjects under authenticated bootstrap, not mint native ownership from a
+Python object. Managed/shared-identity adoption needs separate qualification.
+
+`activate-initial-enrollment` intent is exactly
+`{profile:"umf.initial-generation-enrollment-activate/0.1",providerId,enrollmentId,
+installationId,targetCustody,storeId,prepareRequestDigest,prepareApprovalDigest,
+preparationReceiptDigest,source,bundleDigest,expectedHead,sourceCohortDigest,
+executionPolicyDigest,initialEpoch,principals,principalsDigest,
+fenceReceiptDigest,externalReservationDigest}`.
+
+Every common binding equals the original preparation. Principals are the actual
+adopted native ingress inventory (login/subject OIDs and names, audience,
+issuerProfile,issuerReceiptDigest,ownershipReceiptDigest,memberships); all actual
+new login OIDs already exist and remain NOLOGIN until activation. The complete
+original protected preparation/fence observations are retained privately; hashes
+and echoed JSON alone cannot issue approval/capability. No null expectedHead,
+oldEpoch, oldPrincipalsDigest or table-generation-ingress request is involved.
+Effect keys are `[scope,providerId,enrollmentId]`; repeated prepares/recovery
+reuse original request IDs and handles. Unknown request outcomes are not new
+preparations with a different initialEpoch.
+
+##### Actual preparation, fencing and source protection
+
+Before effects verify source/head/custody/store absence, native identities and
+original configured enrollment authorization, then consume and durably bind the
+original preparation approval/reservation. Close the actually owned endpoint
+admission gate under original supervisor custody, retain private authenticated
+maintenance/controller connections, and execute the adopted native pending-auth/
+backend barrier against ALL old authentication paths. The enrollment fence
+receipt is separately domain-tagged `umf.initial-enrollment-fence/0.1` and binds
+original preparation/target/legacy inventory, gate and actual candidate backend
+identities/resolutions; it is NOT a fake transition fence with invented epochs.
+Its backend observation/starting/NULL identity and positive retirement rules are
+the SAME adopted qualified native barrier rules and original evidence resolver.
+No ps/PID/name list, sleep, HBA reload or quiescence boolean substitutes for it.
+
+Legacy subjects become NOLOGIN preserving OIDs, memberships and all other
+admitted meaning. Fresh wrapper logins are created disabled with exact ordinary
+nonprivileged/noinherit flags and one SET-only non-inheriting non-admin edge to
+their stable subject. Use the fixed qualified native renderer/issuer, no author
+SQL callback or silent role adoption. Credentials are private original issuer
+state, never public values/plan data. Execute the role creation/alterations and
+fixed membership effects transactionally with original native preparation
+receipt. Retire actual old sessions and resolve all original pending-auth
+candidates under the owned gate; no wrapper admission is released.
+
+Recheck COMPLETE actual installed source/head/catalog/client/ACL evidence under
+protected maintenance. Any source/head/role drift refuses activation; no migration
+or automatic recapture under a new approval. The first profile admits actual
+legacy LOGIN subjects with the exact owned realm/native barrier above. More
+general prior wrappers/shared subjects require their own closed adoption profile.
+
+The role preparation transaction atomically records exactly one prepared epoch
+with its role effects, BEFORE final barrier completion. Native head_digest NULL because
+not active, but its SOURCE/EXPECTED HEAD binding remains non-null in the original
+preparation request. Use the adopted prepared-epoch/provision-origin native
+receipt shape with requestDigest/reservationDigest bound to this distinct
+original preparation, actual principals and ownership/target observations.
+Headless prepared-row storage is not permission for headless public enrollment.
+Only the concrete original enrollment capability can write this special prepared
+record. No generic insert_epoch(active) shortcut establishes authority.
+
+##### Activation, original receipt and recovery
+
+After actual preparation/fence/source proof, export the full activation request
+for authenticated signature, verify against original registry/context, consume
+and reserve before effects. In ONE actual native transaction on the original
+private connection, recheck custody/policy/source/head and complete principals/
+fence/store inventory, enable only actual approved new wrapper logins, and move
+that one original epoch prepared->active with real head/source/bundle and
+original positive enrollment receipt. The existing closed
+`umf.native-ingress-enrollment/0.1` receipt keeps exactly its adopted members:
+providerId,enrollmentId,installationId,targetCustody,epoch,sourceDigest,
+bundleDigest,headDigest,principalsDigest,ownershipObservationDigest,
+externalReservationDigest plus profile. OwnershipObservationDigest now binds
+complete actual preparation and activation request/signature/fence/source/native
+observations in original custody; it is not self-authenticating evidence.
+Native phase/head is not reset or rewritten; only initial ingress enrollment
+changes. No transition row with old=new epochs and no migration effect is faked.
+
+Keep the gate closed and credentials unavailable until original native COMMIT
+is positively observed and original external custodian confirms that real
+initial head/active epoch and enrollment reservation. Release only original
+subject-bound admission/factories for that exact epoch. Before confirmation,
+native active state alone cannot expose credentials/gate. Late activation
+failure/unknown outcome never re-enables the legacy LOGIN roles or silently
+unfences old callers. Fail closed and observe original pending stage.
+
+Preparation or activation unknown COMMIT resolves its ORIGINAL native epoch/role/
+receipt and external stage reservation under original target custody, not a new
+request/new OID or repeated role DDL. Known stage abort may retry only its same
+original reserved intent after actual no-effect proof; already confirmed stages
+are not redispatched. Durable initial intent/history and native prepared/active
+record must support actual positive process-restart recovery. A missing original
+ledger/gate/issuer/role origin refuses and is tracked for explicit forward repair,
+not reconstructed from self-consistent native data. Source tests that only
+refuse redispatch do not qualify positive recovery.
+
+##### Acceptance and remaining G10 seam
+
+Run real valid/invalid signatures for both scopes and purposes, malformed/unknown
+fields, boolean/OID bounds, changed source/head/policy/subject/audience/groups,
+future OID injection, preexisting login and cross-purpose substitution. Prove
+original request/scope separation from all six physical owner scopes and normal
+ingress transitions; no null-head or acceptance-purpose exception.
+
+Actual native acceptance must execute a real installed legacy head and exclusive
+subjects, prepared readers/cursors/writers and starting authentication, preserved
+subject OID/current_user/group meaning, disabled fresh logins, complete native
+source witnesses and atomic activation. Exercise changed source during signing,
+concurrent enrollment and existing epoch refusal; cancellation/unknown COMMIT at
+role prep/prepared epoch/activation/external confirmation/gate publication; actual
+positive original restart recovery and no duplicate roles/epochs or credential
+leak. Frozen installed/native/browser/release/public bytes remain separate gates.
+
+TRUE fresh installation with no source/head/previous epoch is NOT admitted here.
+G10 requires an explicit headless initial-install authority/profile binding
+original namespace absence, approved first source/plan, exact bootstrap effects
+and first publication. Until separately specified and qualified, absence of an
+existing head refuses this enrollment. No fixture-only synthetic head, null
+predecessor transition or physical registration approval closes that gap.
+
+
+##### Exact immutable configuration and original bootstrap registry
+
+Configuration is exactly
+`{profile:"umf.configured-generation-enrollment-authority/0.1",authorityId,
+policyRevision,purpose,supervisorId,custodianId,providerId,installationId,
+targetCustody,storeId,sourcePolicy,keys}`. PolicyRevision is nonempty NUL-free
+UTF8<=128bytes, purpose production|native-acceptance; IDs/target are the exact
+original registered values and storeId=providerId. Configuration <=1MiB canonical
+UTF8; digest SHA256 of its complete RFC8785 bytes, never including itself.
+
+SourcePolicy is exactly
+`{profile:"umf.existing-head-enrollment-policy/0.1",approvedCohorts,
+approvedSubjects,issuerProfile,maximumSubjects,allowLegacyLoginConversion}`.
+AllowLegacyLoginConversion is literal true, maximumSubjects integer1..256.
+ApprovedCohorts is1..256 unique exact tuples
+`{sourceDigest,bundleDigest,sourceCohortDigest,executionPolicyDigest}`; admission
+must match ONE COMPLETE tuple, not the cross-product of four allowed lists.
+ApprovedSubjects is1..256 ordered unique exact
+`{subject,audience,ownershipReceiptDigest,membershipsDigest,flagsDigest}` with
+subject {oid,name} and audience person|batch. The preparation subject list must
+match the complete configured list/order, its original actual ownership, current
+memberships and seven observed flags, not any subset or caller-selected actor.
+All digests recompute from complete actual closed native observations. Every
+legacy subject is LOGIN/nonprivileged as specified above, preserving ONLY its
+original admitted inherit/groups. No first-subject-only check.
+
+Keys is1..32 unique exact `{keyId,publicKey,principalId,scopes}`. KeyId/principalId
+NUL-free UTF8<=128bytes; publicKey strict unpadded base64url32bytes. Scopes is a
+unique ordered nonempty subset of prepare-initial-enrollment then
+activate-initial-enrollment. Configuration binds one explicit original target;
+no wildcard, submitted key or arbitrary source policy. Signed payload's
+policyRevision/configurationDigest/contextDigest must match the ORIGINAL registry
+entry before signature success; the public canonical configuration is not itself
+a capability or authenticated trust enrollment.
+
+Extend the actual original bootstrap issuer with the concrete private operation:
+
+`enroll_generation_authority(originalTrustEnrollment,originalSupervisor,
+ originalCustodian,originalIngressStore) -> GenerationEnrollmentAuthorityContext`.
+
+OriginalTrustEnrollment is an opaque entry of the trusted embedding's ORIGINAL
+operator-managed deployment configuration registry, not an approval/request field,
+UID assertion, arbitrary callback or public context constructor. Its exact
+retained statement is
+`{profile:"umf.generation-authority-trust-enrollment/0.1",enrollmentId,
+ownerBootstrapContextDigest,configurationDigest,supervisorId,custodianId,
+providerId,installationId,targetCustodyDigest,storeCreationReceiptDigest,
+custodySequence}`. It is anchored to that already enrolled trusted deployment
+root and original operator policy revision BEFORE this authority is constructed.
+Config/private key material is never accepted from the logical/native request.
+The source profile does not prescribe reading secrets from chat or minting a
+production signer. Actual production integration must supply its already
+trusted configuration root; missing root refuses. Native fixture enrollment
+uses its explicit acceptance root and original isolated target, never production.
+
+The bootstrap issuer verifies its ORIGINAL trust-registry object identity and
+statement, all original supervisor/custodian/store opaque objects/creation
+receipts, policy/purpose/configuration digest and current target continuity, then
+records the immutable context in its own durable bootstrap registry before
+returning a context handle. It cannot enroll a new trust root merely because
+another caller supplies a fresh key/config/receipt. The original host embedding
+may perform this during authorized setup; a portable source author cannot.
+Context's public projection is exactly
+`{profile:"umf.generation-authority-context/0.1",contextId,
+trustEnrollmentDigest,configurationDigest,supervisorId,custodianId,providerId,
+installationId,targetCustodyDigest,storeCreationReceiptDigest,purpose}`.
+ContextDigest hashes this full projection. The issuer retains original native
+objects and statement; copying this projection cannot mint the opaque handle.
+
+ConfiguredGenerationEnrollmentAuthority is constructed ONLY with that original
+context and bootstrap-enrolled fixed resolver. The resolver is the issuer's
+private `resolve_generation_authority_context(handle)`, verifies same exact
+registry object, original context/configuration/root/native objects and current
+custody. No resolver callback from an enrollment request. Positive restart
+recovery uses `recover_generation_authority_context(contextId)` against EXISTING
+bootstrap history and reobserved actual original realm; no lock/context/keys
+are recreated from missing history. Its prepare/export/verify/consume/bind/
+observe protocol pins full configurationDigest/contextDigest in request, signature
+and durable ledger header/entries. Rotation follows authenticated original
+settled-only context enrollment, preserving old readonly outcome/key history.
+These are concrete configured verifier/issuer operations, not an always-refusing
+interface; actual native issuer/root/crypto implementation still needs evidence.
+
+##### Exact original prepared-epoch capability and receipt
+
+Implement private `InitialGenerationPreparationRequest`,
+`InitialGenerationReservation`, `PreparedInitialGenerationEpoch` and
+`VerifiedInitialGenerationFenceEvidence` registry handles. Only the concrete
+original provider/issuer may issue them; no shared construction seal or public
+JSON factory. Provider logical operations are:
+
+```text
+prepare_initial_enrollment_request(context,closed_request) -> InitialGenerationPreparationRequest
+export_initial_enrollment_signing_request(request) -> owned signing data
+reserve_initial_enrollment(request,verified_approval) -> InitialGenerationReservation
+prepare_initial_epoch(reservation) -> PreparedInitialGenerationEpoch
+observe_initial_preparation(reservation) -> original outcome
+prepare_initial_activation(prepared_epoch) -> owned activation signing data
+activate_initial_enrollment(prepared_epoch,verified_activation_approval) -> GenerationEnrollment
+recover_initial_enrollment(original_enrollment_id) -> original pending/confirmed outcome
+```
+
+All methods resolve original private registry/context/store/custodian/issuer;
+exported records do not stand in for handles. Internal store entry point
+`insert_initial_prepared_epoch(original_preparation_capability)` derives native
+row/receipt itself and accepts NO caller epoch dictionary. Capability resolution
+verifies original request/signature/reservation, complete actual native roles,
+source/head and original empty ingress store (zero epochs/transitions), then
+performs role effects AND prepared epoch insertion in one actual transaction.
+Another provider/installation/issuer capability refuses before SQL dispatch.
+The capability is scoped to this one enrollment/epoch, not generic store writes.
+
+Keep EXACT existing `umf.native-ingress-provision-receipt/0.1` members:
+`{profile,providerId,enrollmentId,epoch,requestDigest,reservationDigest,
+principalsDigest,nativeOwnershipDigest,targetObservationDigest}`.
+Here requestDigest is the original INITIAL preparation request, reservationDigest
+is its distinct original initial-enrollment reservation, nativeOwnershipDigest
+is the actual role-effect/creation observation (not the eventual final preparation
+receipt), and targetObservationDigest its original live target observation.
+No future fence or activation approval is hashed inside this receipt. Epoch row
+uses existing exact native-ingress-epoch0.1 keys, state prepared, headDigest null,
+origin provision, actual complete principals, real source/bundle and this receipt.
+Only the private initial-preparation entry point admits that original domain;
+ordinary disabled-epoch provisioning still requires its own six-scope request.
+The generic receipt validator proves shape only, never authority.
+
+The final private completed preparation receipt is exactly
+`{profile:"umf.initial-generation-preparation/0.1",providerId,enrollmentId,
+installationId,targetCustody,storeId,requestDigest,approvalDigest,
+reservationDigest,epoch,sourceDigest,bundleDigest,expectedHead,
+sourceCohortDigest,executionPolicyDigest,principalsDigest,nativeOwnershipDigest,
+targetObservationDigest,legacySubjectsDigest,preparedEpochReceiptDigest,
+fenceReceiptDigest}`. ApprovalDigest hashes original signed preparation envelope.
+PreparedEpochReceiptDigest hashes the actual existing provision-origin receipt
+positively observed after the role/prepared-row transaction COMMIT; actual
+principals/roles/complete native source observations remain original private
+registry data. Final fence completes AFTER that transaction. FenceReceiptDigest
+binds the original evidence below. This ordering is acyclic; request/role receipt
+cannot contain its own eventual completed-receipt/fence/activation digest.
+
+Store activation is private `activate_initial_epoch(original_activation_capability)`;
+it accepts no raw active epoch/success record. Resolve original actual prepared
+handle, verified activation signature, reservation and qualified barrier evidence,
+then reobserve before enabling logins and updating exactly that original epoch/
+origin enrollment receipt in the SAME native transaction. Positive outcome
+recovery resolves exact original prepared/active row, roles and receipts without
+reissuing role DDL or making a new epoch. Missing original registry/receipt/gate
+keeps effects closed. Successful activation issues GenerationEnrollment only
+after actual external original confirmation, not on source validation alone.
+
+##### Exact initial fence and original native evidence resolution
+
+Initial fence record is exactly
+`{profile:"umf.initial-enrollment-fence/0.1",providerId,enrollmentId,
+targetCustody,prepareRequestDigest,reservationDigest,legacySubjectsDigest,
+gateReceiptDigest,preparedEpochReceiptDigest,candidates,retiredSessions,
+resolutionDigest,sourceObservationDigest}`. Record <=1MiB canonical UTF8.
+Candidates and retiredSessions use EXACT adopted PostgreSQL18.6 backend-barrier
+normal forms/ordering/uniqueness, at most4096 each, with no replacement of NULLs,
+PID-only signaling, starting-state inference or unqualified backend_start.
+The conjunction of record-byte and entry caps may refuse a worst-size snapshot;
+no truncation to fit. LegacySubjectsDigest hashes the original complete subject
+inventory; sourceObservationDigest binds full actually protected source/head/
+cohort/policy/native recheck. No old/new epoch or transition ID is fabricated.
+
+Original resolver retains actual supervisor gate receipt/private objects and
+native kernel/process/source observations; a matching gateReceiptDigest alone
+is insufficient. Capture candidates from the ACTUAL full post-role-NOLOGIN /
+prepared-epoch COMMIT native observation under closed original gate, unfiltered
+by user/database/state. This uses the same actual native barrier implementation
+as subsequent G11 transitions, through a distinct INITIAL binding context.
+No wrapper reimplements a weaker empty-scan barrier.
+
+Reuse EXACT `umf.pg18.backend-barrier-resolution/0.1` keys
+`{profile,requestDigest,reservationDigest,fenceCommitReceiptDigest,
+candidatesDigest,resolutions}`. Request/reservation refer to ORIGINAL INITIAL
+preparation; fenceCommitReceiptDigest equals preparedEpochReceiptDigest of that
+role-NOLOGIN transaction, candidatesDigest hashes the immutable original array.
+Resolutions are original one-for-one pending/exited/resolved-other/retired-old
+records under the adopted rules, with actual absence/termination/privilege proof.
+Any pending candidate, missing start token, unknown role path or unresolved
+native observation forbids completion. Original identity snapshots/resolutions
+must survive process restart; never capture a replacement candidate set to
+forget pending authentication. Cross-database known owned old roles retire
+cluster-wide; unrelated candidates must positively exit/resolve without being
+killed as a shortcut. Exclusive installation role ownership remains mandatory.
+
+The original concrete local issuer alone issues
+VerifiedInitialGenerationFenceEvidence after those ACTUAL observations and
+stores immutable full context, original request/reservation/role receipt/gate/
+source/native candidate/resolution records. Its private fixed operation
+`resolve_initial_enrollment_fence(handle)` checks same original issuer registry,
+bootstrap enrollment context, supervisor/custodian/store, exact original barrier
+objects and native receipts; no public supplied resolver/seal/data proof.
+Activation must invoke it and reobserve live gate/roles/target/source. A source
+test's synthetic handle is only a control, never native qualification. Complete
+fence receipt/resolution digest alone cannot issue GenerationEnrollment.
