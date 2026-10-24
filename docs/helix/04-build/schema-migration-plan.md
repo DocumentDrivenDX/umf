@@ -477,3 +477,51 @@ component policies with native phase timeouts and receipt digest correspondence.
 An explicit first-subset refusal does not complete the full carrier-composition
 requirement. G02–G11 implementation, portable/browser/installed/native testing,
 review, merge and immutable release remain the active full delivery objective.
+
+
+## Migration source and qualification checkpoint — 2026-10-24, successor
+
+The preceding Core check preparation has now executed. The actual full-source
+inventory check against `2a76a8e8213ec64334408ec49edadc3b6e765cce` passed,
+with terminal owned child processes, independent cleanup/custody verification,
+unchanged inventory and retained dependency snapshot. Evidence-only successor
+`909a6969b38893e0bb0e5ece81bff42b125811ff` is posted to draft PR49. Its Python
+support and inventory CI passed; the current website browser and command native
+checks failed. The latter returned LIMIT where a handler commit was expected;
+the responsible deadline stage is unproven. No timeout increase, automatic
+retry success, or prior-platform artifact establishes current qualification.
+
+The local Core source successor `37290c7c6261c13106ce42378fe26626220e34ae`
+replaces stale ontology counts with independently pinned 24 record identities
+and 27 projected relationship identities. Pure-source correspondence and
+missing-member controls pass under exact Bun1.4.2. Existing geometry, mobile,
+focus and navigation requirements remain unchanged. Actual rebuilt-browser
+qualification, fresh inventory generation/check and current hosted/platform
+evidence remain required. Isolated checksum-verified Bun1.4.2/Go1.27.1 resolve
+observed default-toolchain drift without changing source version requirements.
+
+G11 governing010 and011 are adopted at
+`fede119d3c11ffe3c4d8c32b8c9434add44cd05f` and
+`3339a9732e96d2afd5e1b84ee51e50a79c827bb4`. Original context0.3 binds ledger
+birth in one primary setup state, composes original enrollment0.1/0.2 and
+requires original deployment setup before ordinary runtime initialization.
+Boundary source005 has 111 focused passing controls and a clean 103-module
+boundary scan, but remains uncommitted and under independent review. Its
+logical-root registry initialization and evolving-history verification have a
+material candidate defect: empty-file birth and full-file initial-digest equality
+cannot implement the adopted closed root registry. Correct original registry
+birth, authenticated evolution and recovery remain implementation gates.
+
+G04 source `b0f09643a35a3f98d6d7d074bce99eaa0a9e672c` records finite store
+creation/catalog guards and source tests. Bounded corrections passed 25 focused
+tests, nine successor controls and 90 distinct independent trigger cases,
+including real PostgreSQL18 constructor shapes represented as source tuples.
+These are not native database observations or exhaustive provider acceptance.
+The original external custodian store reservation/confirmation, supervisor
+capability, positive COMMIT, restart/reopen, enrollment/capture/baseline/restore
+and installed/native evidence remain open; current creation fails closed.
+
+G10 proposal004 is being reconciled to add an exact denied native approval
+outcome and recovery without replacing the original approval identity. No
+moving draft is adopted. G02–G11's full implementation, qualification, review,
+merge, immutable release and fresh public-byte verification remain unfinished.
