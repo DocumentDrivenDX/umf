@@ -218,7 +218,7 @@ export function deriveG10ProvenanceMutations(previous:CatalogProjection|null,nex
  const rowJson=(row:EffectSubject):Json=>({identity:effectClone(row.identity) as unknown as Json,meaning:effectClone(row.meaning),state:row.state,...(row.validation===undefined?{}:{validation:row.validation}),...(row.validity===undefined?{}:{validity:row.validity})});
  for(const collection of ['columns','keys','checks','foreignKeys','indexes','policies','grants','comments'] as const){
   const oldRows=previous.catalog[collection],newRows=next.catalog[collection];
-  for(const oldRow of oldRows){if(oldRow.identity.table===null||touched.has(hashCanonical(inventoryCatalogIdentityFromCatalog(oldRow.identity))))continue;const candidates=newRows.filter(row=>canonical(row.identity)===canonical(oldRow.identity));if(candidates.length!==1)continue;const fresh=candidates[0]!,oldSlot=pathSlot(collection,oldRow),newSlot=pathSlot(collection,fresh);if(!oldSlot||!newSlot)continue;const beforePath=oldSlot.container[oldSlot.key],afterPath=newSlot.container[newSlot.key];if(typeof beforePath!=='string'||typeof afterPath!=='string'||beforePath===afterPath)continue;
+  for(const oldRow of oldRows){if(oldRow.identity.table===null||touched.has(hashCanonical(oldRow.identity)))continue;const candidates=newRows.filter(row=>canonical(row.identity)===canonical(oldRow.identity));if(candidates.length!==1)continue;const fresh=candidates[0]!,oldSlot=pathSlot(collection,oldRow),newSlot=pathSlot(collection,fresh);if(!oldSlot||!newSlot)continue;const beforePath=oldSlot.container[oldSlot.key],afterPath=newSlot.container[newSlot.key];if(typeof beforePath!=='string'||typeof afterPath!=='string'||beforePath===afterPath)continue;
    const before=rowJson(oldRow),after=rowJson(fresh),beforeMeaning=(before as any).meaning,newMeaning=(after as any).meaning;
    if(['columns','keys','checks','foreignKeys','indexes','comments'].includes(collection)){delete beforeMeaning.expectation.sourcePath;delete newMeaning.expectation.sourcePath;}else{delete beforeMeaning.sourcePath;delete newMeaning.sourcePath;}
    if(canonical(before)!==canonical(after))throw new Error('G10_PROVENANCE_NONPATH_CHANGE:'+collection);
@@ -317,8 +317,8 @@ export function deriveG02FieldEffects(previous:TableDeploymentBundle,next:TableD
   // grant (or the selected Field is absent from one side's grant columns).
   edges.push({dependent:fieldIdentity,prerequisite:revokeIdentity,sourcePath:revoke.sourcePath,reason:'g02-grant-revoke-before-field',state:'present'});
   edges.push({dependent:addIdentity,prerequisite:fieldIdentity,sourcePath:add.sourcePath,reason:'g02-grant-add-after-field-group',state:'present'});
-  for(const columnIdentity of grantColumnIdentities(oldGrant[0]!,priorDeclaration.columns))edges.push({dependent:columnIdentity,prerequisite:revokeIdentity,sourcePath:revoke.sourcePath,reason:'g02-grant-revoke-before-field',state:'present'});
-  for(const columnIdentity of grantColumnIdentities(newGrant[0]!,declaration.columns))edges.push({dependent:addIdentity,prerequisite:columnIdentity,sourcePath:add.sourcePath,reason:'g02-grant-add-after-field-group',state:'present'});
+  for(const columnIdentity of grantColumnIdentities(oldGrant[0]!,priorDeclaration))edges.push({dependent:columnIdentity,prerequisite:revokeIdentity,sourcePath:revoke.sourcePath,reason:'g02-grant-revoke-before-field',state:'present'});
+  for(const columnIdentity of grantColumnIdentities(newGrant[0]!,declaration))edges.push({dependent:addIdentity,prerequisite:columnIdentity,sourcePath:add.sourcePath,reason:'g02-grant-add-after-field-group',state:'present'});
  }
  return {effects,edges};
 }

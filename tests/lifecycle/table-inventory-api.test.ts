@@ -134,24 +134,42 @@ test('G10 historical recompile cache reuses only exact G10 plans and exact prior
  expect(()=>verify(second.plan,1,changedExecution)).toThrow();
 });
 
-test('G10 installed create review uses a complete absent-before projection with no old source path',()=>{
+function installedCreateReviewFixture(){
  const previous=deploy(legalSource()),nextDocument=legalSource() as any;
  const created=appendArchiveTable(nextDocument);
  const next=deploy(nextDocument),intent={kind:'create' as const,table:created.table,record:created.record};
  const history=initialG10History(previous),candidates=discoverTableInventoryMigrationChanges(previous,next,selector([intent]),history);
+ const request={id:'inventory-api-installed-create',predecessor:{id:history.plans[0]!.id,digest:history.plans[0]!.digest},previous,next,options:options([intent],candidates.map(({oldValue:_old,newValue:_new,oldPath:_oldPath,newPath:_newPath,...marker})=>marker)),history};
+ return {previous,next,intent,history,candidates,request};
+}
+function compiledInstalledCreateReviewFixture(){
+ const fixture=installedCreateReviewFixture(),result=compileTableInventoryMigration(fixture.request);
+ if(result.status!=='compiled')throw new Error(JSON.stringify(result.diagnostics));
+ return {...fixture,plan:result.plan};
+}
+
+test('G10 installed create review exposes the complete absent-before projection with no old source path',()=>{
+ const {intent,candidates,request}=installedCreateReviewFixture();
  const createCandidate=candidates.find(candidate=>candidate.kind==='create-table');
  expect(createCandidate).toBeDefined();expect(createCandidate?.oldPath).toBeNull();
  expect(createCandidate?.oldValue).toMatchObject({profile:'umf.table-inventory-review/0.1',side:'previous',table:'api_archive',record:intent.record,meaning:null});
  expect(createCandidate?.newPath).toMatch(/^\/modules\/0\/extensions\/umf\.tables\/tables\//);
- const request={id:'inventory-api-installed-create',predecessor:{id:history.plans[0]!.id,digest:history.plans[0]!.digest},previous,next,options:options([intent],candidates.map(({oldValue:_old,newValue:_new,oldPath:_oldPath,newPath:_newPath,...marker})=>marker)),history};
- const result=compileTableInventoryMigration(request);expect(result.status).toBe('compiled');if(result.status!=='compiled')throw new Error(JSON.stringify(result.diagnostics));
- expect(verifyTableInventoryMigration(result.plan,history)).toEqual(result.plan);
- expect(()=>verifyTableInventoryMigration(result.plan,emptyHistory)).toThrow();
+ const result=compileTableInventoryMigration(request);if(result.status!=='compiled')throw new Error(JSON.stringify(result.diagnostics));expect(result.status).toBe('compiled');
+});
+
+test('G10 installed create plan verifies against complete original history and rejects changed history',()=>{
+ const {history,plan}=compiledInstalledCreateReviewFixture();
+ expect(verifyTableInventoryMigration(plan,history)).toEqual(plan);
+ expect(()=>verifyTableInventoryMigration(plan,emptyHistory)).toThrow();
  const alteredHistory=structuredClone(history);alteredHistory.executions[0]!.entryDigest='d'.repeat(64);
- expect(()=>verifyTableInventoryMigration(result.plan,alteredHistory)).toThrow();
- const exactVerifier=createHistoricalG10Verifier();exactVerifier(history.plans[0],0,emptyHistory);exactVerifier(result.plan,1,history);expect(()=>exactVerifier(result.plan,1,history)).not.toThrow();
+ expect(()=>verifyTableInventoryMigration(plan,alteredHistory)).toThrow();
+});
+
+test('G10 historical verifier retains exact installed-create prefix and cache checks',()=>{
+ const {history,plan}=compiledInstalledCreateReviewFixture();
+ const exactVerifier=createHistoricalG10Verifier();exactVerifier(history.plans[0],0,emptyHistory);exactVerifier(plan,1,history);expect(()=>exactVerifier(plan,1,history)).not.toThrow();
  const alteredPrefix=structuredClone(history);alteredPrefix.executions[0]!.entryDigest='e'.repeat(64);
- expect(()=>exactVerifier(result.plan,1,alteredPrefix)).toThrow();
+ expect(()=>exactVerifier(plan,1,alteredPrefix)).toThrow();
 });
 
 test('G10 legacy component review values and optional source paths remain unchanged',()=>{
@@ -339,7 +357,11 @@ test('G10 prepared public calls own source/history inputs and never invoke reque
  expect(compileTableInventoryMigration({...request,predecessor:accessorPredecessor as any}).status).toBe('blocked');expect(predecessorGetterCalls).toBe(0);
 
  const originalSource=request.next.source.utf8,result=compileTableInventoryMigration(request);
- expect(result.status).toBe('compiled');if(result.status!=='compiled')throw new Error(JSON.stringify(result.diagnostics));
+ if(result.status!=='compiled'){
+  compileG10InventoryPlan(request);
+  throw new Error(JSON.stringify(result.diagnostics));
+ }
+ expect(result.status).toBe('compiled');
  request.next.source.utf8='{}';request.history.plans.length=0;request.options.reviewedChanges.pop();
  expect(result.plan.next.source.utf8).toBe(originalSource);
  expect(result.plan.historyBinding.count).toBe(1);
