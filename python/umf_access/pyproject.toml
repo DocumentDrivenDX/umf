@@ -12,6 +12,7 @@ requires-python = ">=3.11,<3.15"
 dependencies = ["pydantic>=2.13,<3", "typing-extensions>=4.16,<5"]
 
 [project.optional-dependencies]
+owner-authority = ["cryptography==50.0.2"]
 sql-containment = ["pglast==7.20"]
 
 [project.scripts]
