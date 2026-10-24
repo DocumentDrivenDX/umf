@@ -1,15 +1,52 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {loadSelfModel,expectedSelfModel} from '../../scripts/reference/self-model';
+import {loadSelfModel} from '../../scripts/reference/self-model';
 import {selfModelGraph,canonical,type SelfModelCatalog} from '../../docs/helix/05-deploy/reference/model';
 import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {parse,stringify} from 'yaml';
+import {sourceText,read} from '../../scripts/reference/io';
+import {buildSelfModel,modelPath} from '../../scripts/reference/self-model';
+import {rustReferenceSelfModel} from '../../scripts/metamodel/rust';
+import {mkdtemp,readFile,rm} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
 const catalog=await loadSelfModel(),model=catalog.document;
 
+test('R7 CLI preserves exact admission errors and does not misclassify source-derived identifiers',async()=>{
+ const source=await sourceText(modelPath),baseManifest=await read('spec/metamodel/generated/manifest.json');
+ const errorMessage=async(sourceText:string,manifest:unknown)=>{
+  try{await rustReferenceSelfModel(sourceText,manifest)}catch(error){return (error as Error).message}
+  throw Error('Expected self-model CLI admission to fail');
+ };
+ expect(await errorMessage(source.replace('umf: 0.10.0','umf: 0.10.1'),baseManifest)).toBe('SELF_MODEL_SOURCE unexpected authored metamodel identity');
+ expect(await errorMessage(source+'\n# stale provenance fixture\n',baseManifest)).toBe('SELF_MODEL_PROVENANCE authored model/compiler manifest mismatch');
+
+ const unresolvedDocument:any=parse(source);
+ unresolvedDocument.modules[0].elements.find((element:any)=>element.id==='document').members[0].element='SELF_MODEL_SOURCE';
+ const unresolvedSource=stringify(unresolvedDocument),manifest=structuredClone(baseManifest);
+ const digest=new Bun.CryptoHasher('sha256').update(unresolvedSource).digest('hex');
+ manifest.sources[modelPath]=digest;manifest.provenance.modelSha256=digest;
+ const unresolvedError=await errorMessage(unresolvedSource,manifest);
+ expect(unresolvedError).toContain('SELF_MODEL_UNRESOLVED');
+ expect(unresolvedError).toContain('SELF_MODEL_SOURCE');
+ expect(unresolvedError).not.toBe('SELF_MODEL_SOURCE unexpected authored metamodel identity');
+});
+
 test('US-089-AC17: reference reads authored current model and verifies compiler provenance',async()=>{
- expect(canonical(model)).toBe(canonical(await expectedSelfModel()));
+ expect(canonical(model)).toBe(canonical(parse(await sourceText('spec/metamodel/umf.yaml'))));
  expect(model.umf).toBe('0.10.0');expect(catalog.provenance.modelSha256).toBe(catalog.sources[0]!.sha256);
  const copy:any=structuredClone(model);copy.extensions!['future.annotation']={unknown:['kept',{'1':false}]};copy.vocabularies['future.annotation']={version:'7.0.0'};
  for(const format of ['yaml','json'] as const)expect(canonical(readJsonValue(writeJsonValue(copy,format),format))).toBe(canonical(copy));
+});
+
+test('R7 source-bound self-model build stages admitted catalog and exact authored source',async()=>{
+ const stage=await mkdtemp(join(tmpdir(),'umf-r7-self-model-'));
+ try{
+  await buildSelfModel(stage);
+  expect(JSON.parse(await readFile(join(stage,'metamodel.json'),'utf8'))).toEqual(catalog);
+  expect(await readFile(join(stage,'umf.yaml'),'utf8')).toBe(await sourceText('spec/metamodel/umf.yaml'));
+  expect(JSON.parse(await readFile(join(stage,'umf.json'),'utf8'))).toEqual(model);
+ }finally{await rm(stage,{recursive:true,force:true})}
 });
 
 test('US-089-AC17: the reference consumes authored Record members and Field shapes, never reverse-extracts schema fragments',()=>{

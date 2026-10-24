@@ -63,3 +63,22 @@ export function rustMetamodel(args:string[],input?:string,options:{sourceBound?:
  return result;
 }
 export function rustMetamodelValue(operation:string,value:unknown):any {return fromWire(rustMetamodel([operation,'--stdin-wire'],encodeWire(value,{maxValues:1_000_000,maxDepth:256})));}
+
+/** Admit the authored reference self-model through the source-bound Rust CLI. */
+export function referenceAdmissionMessage(detail:string):string {
+ if(detail.startsWith('SELF_MODEL_SOURCE: '))return 'SELF_MODEL_SOURCE unexpected authored metamodel identity';
+ if(detail.startsWith('SELF_MODEL_PROVENANCE: '))return 'SELF_MODEL_PROVENANCE authored model/compiler manifest mismatch';
+ return detail;
+}
+export function rustReferenceSelfModel(source:string,manifest:unknown):any {
+ const executable=sourceArtifact().executable;
+ const request=encodeWire({source,manifest},{maxValues:1_000_000,maxDepth:256});
+ const child=Bun.spawnSync([executable,'reference','self-model-check','--stdin-wire'],{cwd:repositoryRoot,env:{...process.env,PATH:''},stdin:Buffer.from(request),stdout:'pipe',stderr:'pipe'});
+ if(child.exitCode!==0){
+  const detail=new TextDecoder().decode(child.stderr).trim();
+  // Keep the predecessor's public admission diagnostics stable at this boundary.
+  throw Error(detail?referenceAdmissionMessage(detail):`Rust self-model admission exited ${child.exitCode}`);
+ }
+ try{return fromWire(JSON.parse(new TextDecoder().decode(child.stdout).trim()));}
+ catch{throw Error('SELF_MODEL_INVALID_RUST_RESPONSE');}
+}
