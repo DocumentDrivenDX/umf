@@ -24,6 +24,225 @@ fn payload(source: &str) -> umf_core::json_schema_adapter::JsonSchemaPayload {
     }
 }
 
+fn field_mut<'a>(value: &'a mut Value, name: &str) -> &'a mut Value {
+    let Value::Object(fields) = value else { panic!("expected object") };
+    fields.iter_mut().find(|(key, _)| key == &Utf16::from(name)).map(|(_, value)| value).expect("field")
+}
+
+fn tagged_null() -> Value {
+    Value::Object(vec![(Utf16::from("kind"), Value::string_utf8("null"))])
+}
+
+#[test]
+fn document_inspection_matches_typescript_occurrence_and_uri_diagnostics() {
+    fn imported() -> Value {
+        umf_core::json_schema_adapter::import_json_schema(
+            &"{}".encode_utf16().collect::<Vec<_>>(),
+            &Utf16::from("r5-inspector"),
+            &Utf16::from("https://example.test/root"),
+            &[],
+            &mut Context::ordinary(),
+        ).unwrap()
+    }
+
+    // Frozen TypeScript inspectJsonSchema expectation: semantic diagnostics
+    // follow the actual extension occurrence, regardless of element identity.
+    let mut document = imported();
+    let modules = field_mut(&mut document, "modules");
+    let Value::Array(modules) = modules else { panic!("modules") };
+    let elements = field_mut(&mut modules[0], "elements");
+    let Value::Array(elements) = elements else { panic!("elements") };
+    field_mut(&mut elements[0], "id").clone_from(&Value::string_utf8("other"));
+    let extensions = field_mut(&mut elements[0], "extensions");
+    let payload = field_mut(extensions, "umf.json-schema");
+    field_mut(payload, "root").clone_from(&tagged_null());
+    let validation = umf_core::json_schema_adapter::inspect_json_schema(&document, &mut Context::ordinary()).unwrap();
+    assert!(!validation.valid);
+    assert_eq!(validation.diagnostics.iter().map(|d| (d.code.to_utf8().unwrap(), d.path.to_utf8().unwrap(), d.message.to_utf8().unwrap())).collect::<Vec<_>>(), [(
+        "JSON_SCHEMA_ROOT".to_owned(),
+        "/modules/0/elements/0/extensions/umf.json-schema".to_owned(),
+        "Resource https://example.test/root must be object or boolean".to_owned(),
+    )]);
+
+    // Frozen TypeScript expectation: invalid retrieval URI is a validation
+    // diagnostic (with Error's name in String(error)), not an operation error.
+    let mut document = imported();
+    let modules = field_mut(&mut document, "modules");
+    let Value::Array(modules) = modules else { panic!("modules") };
+    let elements = field_mut(&mut modules[0], "elements");
+    let Value::Array(elements) = elements else { panic!("elements") };
+    let extensions = field_mut(&mut elements[0], "extensions");
+    let payload = field_mut(extensions, "umf.json-schema");
+    field_mut(payload, "baseUri").clone_from(&Value::string_utf8("relative"));
+    let validation = umf_core::json_schema_adapter::inspect_json_schema(&document, &mut Context::ordinary()).unwrap();
+    assert!(!validation.valid);
+    assert_eq!(validation.diagnostics.iter().map(|d| (d.code.to_utf8().unwrap(), d.path.to_utf8().unwrap(), d.message.to_utf8().unwrap())).collect::<Vec<_>>(), [(
+        "JSON_SCHEMA_URI".to_owned(),
+        "/modules/0/elements/0/extensions/umf.json-schema".to_owned(),
+        "UmfError: Retrieval URI must be absolute and fragment-free".to_owned(),
+    )]);
+
+    let mut document = imported();
+    let modules = field_mut(&mut document, "modules");
+    let Value::Array(modules) = modules else { panic!("modules") };
+    let elements = field_mut(&mut modules[0], "elements");
+    let Value::Array(elements) = elements else { panic!("elements") };
+    let extensions = field_mut(&mut elements[0], "extensions");
+    let payload = field_mut(extensions, "umf.json-schema");
+    field_mut(payload, "resources").clone_from(&Value::Object(vec![(
+        Utf16::from("relative"),
+        Value::Object(vec![(Utf16::from("kind"), Value::string_utf8("object")), (Utf16::from("members"), Value::Object(Vec::new()))]),
+    )]));
+    let validation = umf_core::json_schema_adapter::inspect_json_schema(&document, &mut Context::ordinary()).unwrap();
+    assert!(!validation.valid);
+    assert_eq!(validation.diagnostics.iter().map(|d| (d.code.to_utf8().unwrap(), d.path.to_utf8().unwrap(), d.message.to_utf8().unwrap())).collect::<Vec<_>>(), [(
+        "JSON_SCHEMA_URI".to_owned(),
+        "/modules/0/elements/0/extensions/umf.json-schema".to_owned(),
+        "UmfError: Retrieval URI must be absolute and fragment-free".to_owned(),
+    )]);
+
+    let mut document = imported();
+    let modules = field_mut(&mut document, "modules");
+    let Value::Array(modules) = modules else { panic!("modules") };
+    let elements = field_mut(&mut modules[0], "elements");
+    let Value::Array(elements) = elements else { panic!("elements") };
+    let extensions = field_mut(&mut elements[0], "extensions");
+    let payload = field_mut(extensions, "umf.json-schema");
+    let Value::Object(payload_fields) = payload else { panic!("payload") };
+    payload_fields.push((Utf16::from("future"), Value::Bool(true)));
+    field_mut(payload, "resources").clone_from(&Value::Object(vec![(
+        Utf16::from("https://example.test/root"),
+        Value::Object(vec![(Utf16::from("kind"), Value::string_utf8("object")), (Utf16::from("members"), Value::Object(Vec::new()))]),
+    )]));
+    let validation = umf_core::json_schema_adapter::inspect_json_schema(&document, &mut Context::ordinary()).unwrap();
+    assert!(!validation.valid);
+    assert_eq!(validation.diagnostics.iter().map(|d| (d.code.to_utf8().unwrap(), d.path.to_utf8().unwrap(), d.message.to_utf8().unwrap())).collect::<Vec<_>>(), [(
+        "JSON_SCHEMA_REPRESENTATION".to_owned(),
+        "/modules/0/elements/0/extensions/umf.json-schema/future".to_owned(),
+        "Unknown payload field cannot be emitted natively".to_owned(),
+    ), (
+        "JSON_SCHEMA_RESOURCE_COLLISION".to_owned(),
+        "/modules/0/elements/0/extensions/umf.json-schema".to_owned(),
+        "Root retrieval URI also appears in resources".to_owned(),
+    )]);
+
+    // payloadOf-like operations use bare document validation and continue to
+    // select schema/schema; another element's bad extension is inspection
+    // evidence and must not change the seven operation results.
+    let mut document = imported();
+    let modules = field_mut(&mut document, "modules");
+    let Value::Array(modules) = modules else { panic!("modules") };
+    let elements = field_mut(&mut modules[0], "elements");
+    let Value::Array(elements) = elements else { panic!("elements") };
+    let extensions = field_mut(&mut elements[0], "extensions");
+    let mut extra_payload = field_mut(extensions, "umf.json-schema").clone();
+    field_mut(&mut extra_payload, "baseUri").clone_from(&Value::string_utf8("relative"));
+    elements.push(Value::Object(vec![
+        (Utf16::from("id"), Value::string_utf8("other")),
+        (Utf16::from("extensions"), Value::Object(vec![(Utf16::from("umf.json-schema"), extra_payload)])),
+    ]));
+    let validation = umf_core::json_schema_adapter::inspect_json_schema(&document, &mut Context::ordinary()).unwrap();
+    assert!(validation.diagnostics.iter().any(|d| d.code == Utf16::from("JSON_SCHEMA_URI") && d.path == Utf16::from("/modules/0/elements/1/extensions/umf.json-schema")));
+    assert_eq!(umf_core::json_schema_adapter::export_json_schema(&document, &mut Context::ordinary()).unwrap(), Utf16::from("{}\n"));
+    assert!(umf_core::json_schema_adapter::export_json_schema_resources(&document, &mut Context::ordinary()).unwrap().is_empty());
+    assert_eq!(umf_core::json_schema_adapter::get_json_schema_node(&document, &Utf16::default(), &mut Context::ordinary()).unwrap().render_compact(&mut Context::ordinary()).unwrap(), Utf16::from("{}"));
+    assert_eq!(umf_core::json_schema_adapter::walk_json_schema(&document, &mut Context::ordinary()).unwrap().len(), 1);
+    let bundle = umf_core::json_schema_adapter::export_json_schema_bundle(&document, &mut Context::ordinary()).unwrap();
+    assert_eq!(bundle.root_json, Utf16::from("{}\n"));
+    assert!(bundle.diagnostics.iter().any(|d| d.code == Utf16::from("JSON_SCHEMA_URI")));
+
+    let document = imported();
+    let target_charge = "https://example.test/root".encode_utf16().count() * 12;
+    let mut matching_charges = 0usize;
+    let mut count_meter = |amount| {
+        if amount == target_charge { matching_charges += 1; }
+        Ok(())
+    };
+    umf_core::json_schema_adapter::inspect_json_schema(
+        &document,
+        &mut Context::ordinary().with_host_control(&mut count_meter),
+    ).unwrap();
+    assert!(matching_charges > 0);
+    let mut remaining_matches = matching_charges;
+    let mut spoofed_failure = |amount| {
+        if amount == target_charge {
+            remaining_matches -= 1;
+            if remaining_matches == 0 {
+                return Err(umf_core::EngineError::new("JSON_SCHEMA_URI", Utf16::default(), "host stop"));
+            }
+        }
+        Ok(())
+    };
+    let error = umf_core::json_schema_adapter::inspect_json_schema(
+        &document,
+        &mut Context::ordinary().with_host_control(&mut spoofed_failure),
+    ).unwrap_err();
+    assert_eq!(error.code, "JSON_SCHEMA_URI");
+    assert_eq!(error.message, Utf16::from("host stop"));
+    assert!(error.is_control_failure());
+}
+
+#[test]
+fn root_resource_collision_follows_unknown_dialect_and_numeric_warnings() {
+    fn imported() -> Value {
+        umf_core::json_schema_adapter::import_json_schema(
+            &"{}".encode_utf16().collect::<Vec<_>>(),
+            &Utf16::from("r5-collision-order"),
+            &Utf16::from("https://example.test/root"),
+            &[],
+            &mut Context::ordinary(),
+        ).unwrap()
+    }
+
+    let base = "https://example.test/root";
+    for (root_source, expected_warning) in [
+        (r#"{"$schema":"https://example.test/other"}"#, "JSON_SCHEMA_DIALECT"),
+        (r#"{"minimum":9007199254740993}"#, "JSON_SCHEMA_NUMERIC"),
+    ] {
+        let mut document = imported();
+        let modules = field_mut(&mut document, "modules");
+        let Value::Array(modules) = modules else { panic!("modules") };
+        let elements = field_mut(&mut modules[0], "elements");
+        let Value::Array(elements) = elements else { panic!("elements") };
+        let extensions = field_mut(&mut elements[0], "extensions");
+        let payload = field_mut(extensions, "umf.json-schema");
+        *field_mut(payload, "root") = tree(root_source).tagged_value_preserving_extras(&mut Context::ordinary()).unwrap();
+        *field_mut(payload, "resources") = Value::Object(vec![(
+            Utf16::from(base),
+            tree(r#"{"type":"string"}"#).tagged_value_preserving_extras(&mut Context::ordinary()).unwrap(),
+        )]);
+
+        let validation = umf_core::json_schema_adapter::inspect_json_schema(&document, &mut Context::ordinary()).unwrap();
+        assert!(!validation.valid);
+        assert_eq!(validation.diagnostics.iter().map(|d| (d.code.to_utf8().unwrap(), d.path.to_utf8().unwrap(), d.message.to_utf8().unwrap())).collect::<Vec<_>>(), [(
+            expected_warning.to_owned(),
+            "/modules/0/elements/0/extensions/umf.json-schema".to_owned(),
+            if expected_warning == "JSON_SCHEMA_DIALECT" {
+                "Uninterpreted dialect https://example.test/other".to_owned()
+            } else {
+                format!("Resource {base}: native values retained but JavaScript validation unavailable for one or more numeric tokens")
+            },
+        ), (
+            "JSON_SCHEMA_RESOURCE_COLLISION".to_owned(),
+            "/modules/0/elements/0/extensions/umf.json-schema".to_owned(),
+            "Root retrieval URI also appears in resources".to_owned(),
+        )]);
+        assert_eq!(
+            umf_core::json_schema_adapter::export_json_schema(&document, &mut Context::ordinary()).unwrap_err().code,
+            "JSON_SCHEMA_EXPORT",
+        );
+
+        let imported_result = umf_core::json_schema_adapter::import_json_schema(
+            &root_source.encode_utf16().collect::<Vec<_>>(),
+            &Utf16::from("r5-collision-order-import"),
+            &Utf16::from(base),
+            &[(Utf16::from(base), r#"{"type":"string"}"#.encode_utf16().collect())],
+            &mut Context::ordinary(),
+        );
+        assert_eq!(imported_result.unwrap_err().code, "JSON_SCHEMA_INVALID");
+    }
+}
+
 #[test]
 fn inspection_preserves_unknown_dialect_keyword_and_numeric_diagnostics() {
     let mut ctx = Context::ordinary();

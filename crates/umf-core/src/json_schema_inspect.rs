@@ -89,64 +89,7 @@ pub fn inspect_document(
     document: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<crate::error::Validation, EngineError> {
-    let payload = json_schema_adapter::payload_from_document(document, ctx)?;
-    let path = document_payload_path(document, ctx)?;
-    let diagnostics = inspect_payload(&payload, &path, ctx)?;
-    let valid = diagnostics
-        .iter()
-        .all(|item| item.severity != Severity::Error);
-    let complete = valid && diagnostics.is_empty();
-    Ok(crate::error::Validation {
-        valid,
-        complete,
-        diagnostics,
-    })
-}
-
-fn document_payload_path(document: &Value, ctx: &mut Context<'_>) -> Result<Utf16, EngineError> {
-    let Some(Value::Array(modules)) = field(document, "modules") else {
-        return Err(EngineError::new(
-            "JSON_SCHEMA_PAYLOAD",
-            Utf16::default(),
-            "Document modules are unavailable",
-        ));
-    };
-    for (module_index, module) in modules.iter().enumerate() {
-        ctx.charge_work(1, Utf16::default())?;
-        if !is_named(module, "id", "schema") {
-            continue;
-        }
-        let Some(Value::Array(elements)) = field(module, "elements") else {
-            continue;
-        };
-        for (element_index, element) in elements.iter().enumerate() {
-            ctx.charge_work(1, Utf16::default())?;
-            if is_named(element, "id", "schema") {
-                return Ok(Utf16::from(format!(
-                    "/modules/{module_index}/elements/{element_index}/extensions/umf.json-schema"
-                )));
-            }
-        }
-    }
-    Err(EngineError::new(
-        "JSON_SCHEMA_PAYLOAD",
-        Utf16::default(),
-        "Schema extension identity is unavailable",
-    ))
-}
-
-fn field<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
-    let Value::Object(fields) = value else {
-        return None;
-    };
-    fields
-        .iter()
-        .find(|(key, _)| key == &Utf16::from(name))
-        .map(|(_, value)| value)
-}
-
-fn is_named(value: &Value, field_name: &str, expected: &str) -> bool {
-    matches!(field(value, field_name), Some(Value::String(value)) if value == &Utf16::from(expected))
+    json_schema_adapter::validate_complete_document_for_inspection(document, ctx)
 }
 
 /// Inspect a retained payload without changing it. Diagnostics are emitted in
@@ -210,14 +153,33 @@ fn inspect_payload_profile(
     {
         ctx.charge_work(1, extension_path.clone())?;
         ctx.charge_work(uri.len(), extension_path.clone())?;
-        if tree.has_representation_extras() {
+        if !matches!(tree.root(), NativeJsonNode::Object(_) | NativeJsonNode::Boolean(_)) {
             push(
                 &mut diagnostics,
-                "JSON_SCHEMA_REPRESENTATION",
-                extension_path,
-                "Unknown native tree representation field cannot be emitted natively",
-                Severity::Warning,
+                "JSON_SCHEMA_ROOT",
+                &extension_path,
+                &format!("Resource {} must be object or boolean", display(uri)),
+                Severity::Error,
             );
+            continue;
+        }
+        if tree.has_representation_extras() {
+            let prefix = if resource_index == 0 {
+                child(&Utf16::default(), &Utf16::from("root"), ctx)?
+            } else {
+                let resources_path = child(&Utf16::default(), &Utf16::from("resources"), ctx)?;
+                child(&resources_path, uri, ctx)?
+            };
+            for relative in tree.representation_extra_paths(&prefix, ctx)? {
+                let path = join(extension_path, &relative, ctx)?;
+                push(
+                    &mut diagnostics,
+                    "JSON_SCHEMA_REPRESENTATION",
+                    &path,
+                    "Unknown representation field cannot be emitted natively",
+                    Severity::Warning,
+                );
+            }
         }
         // walk() covers the root. It must only be called once: rescanning it
         // for every packaged resource made inspection work quadratic in the
@@ -358,12 +320,22 @@ fn inspect_payload_profile(
         );
     }
 
-    if diagnostics
-        .iter()
-        .any(|item| item.severity == Severity::Error)
-        || unknown_dialect
-        || has_numeric_limit
-    {
+    if diagnostics.iter().any(|item| item.severity == Severity::Error) {
+        return Ok(diagnostics);
+    }
+
+    if payload.resources.iter().any(|(uri, _)| uri == &payload.base_uri) {
+        push(
+            &mut diagnostics,
+            "JSON_SCHEMA_RESOURCE_COLLISION",
+            extension_path,
+            "Root retrieval URI also appears in resources",
+            Severity::Error,
+        );
+        return Ok(diagnostics);
+    }
+
+    if unknown_dialect || has_numeric_limit {
         return Ok(diagnostics);
     }
 

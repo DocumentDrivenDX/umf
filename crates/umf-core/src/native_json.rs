@@ -46,6 +46,48 @@ impl NativeJsonTree {
         !self.representation_extras.is_empty()
     }
 
+    /// Return JSON Pointers to unknown tagged-representation fields. `prefix`
+    /// identifies the enclosing payload slot (for example `/root`); nested
+    /// native containers are expanded through their tagged `members`/`items`
+    /// fields so diagnostics identify the retained representation content.
+    pub fn representation_extra_paths(
+        &self,
+        prefix: &Utf16,
+        ctx: &mut Context<'_>,
+    ) -> Result<Vec<Utf16>, EngineError> {
+        let mut paths = Vec::new();
+        for extra in &self.representation_extras {
+            ctx.charge_work(1, prefix.clone())?;
+            let mut path = prefix.clone();
+            let mut node = &self.root;
+            for segment in &extra.parent {
+                match node {
+                    NativeJsonNode::Object(members) => {
+                        ctx.charge_work(members.len(), path.clone())?;
+                        path = tagged_pointer_child(&path, &Utf16::from("members"), ctx)?;
+                        path = tagged_pointer_child(&path, segment, ctx)?;
+                        node = members.iter().find(|(key, _)| key == segment).map(|(_, value)| value)
+                            .ok_or_else(|| fail("NATIVE_JSON_REPRESENTATION", "Unknown representation path is unavailable"))?;
+                    }
+                    NativeJsonNode::Array(items) => {
+                        path = tagged_pointer_child(&path, &Utf16::from("items"), ctx)?;
+                        ctx.charge_work(segment.len(), path.clone())?;
+                        path = tagged_pointer_child(&path, segment, ctx)?;
+                        let index = segment.to_utf8().ok().and_then(|value| value.parse::<usize>().ok())
+                            .ok_or_else(|| fail("NATIVE_JSON_REPRESENTATION", "Unknown representation array path is unavailable"))?;
+                        node = items.get(index).ok_or_else(|| fail("NATIVE_JSON_REPRESENTATION", "Unknown representation array path is unavailable"))?;
+                    }
+                    _ => return Err(fail("NATIVE_JSON_REPRESENTATION", "Unknown representation path is unavailable")),
+                }
+            }
+            for (key, _) in &extra.fields {
+                ctx.charge_work(1, path.clone())?;
+                paths.push(tagged_pointer_child(&path, key, ctx)?);
+            }
+        }
+        Ok(paths)
+    }
+
     /// Admit the tagged tree shape carried by a UMF `Value`. Unknown fields on
     /// representation nodes remain attached to their source node for copies;
     /// any native export/render refuses while such fields are present.
@@ -1166,6 +1208,30 @@ fn add(a: usize, b: usize) -> Result<usize, EngineError> {
     a.checked_add(b)
         .ok_or_else(|| fail("LIMIT", "Serialized length overflow"))
 }
+fn tagged_pointer_child(
+    parent: &Utf16,
+    segment: &Utf16,
+    ctx: &mut Context<'_>,
+) -> Result<Utf16, EngineError> {
+    ctx.charge_work(segment.len(), parent.clone())?;
+    let escaped_len = segment.units().iter().fold(0usize, |length, unit| {
+        length.saturating_add(if matches!(*unit, 0x7e | 0x2f) { 2 } else { 1 })
+    });
+    let size = parent.len().saturating_add(1).saturating_add(escaped_len);
+    ctx.charge_text(size, parent.clone())?;
+    let mut path = Vec::with_capacity(size);
+    path.extend_from_slice(parent.units());
+    path.push(b'/' as u16);
+    for unit in segment.units() {
+        match *unit {
+            0x7e => path.extend([b'~' as u16, b'0' as u16]),
+            0x2f => path.extend([b'~' as u16, b'1' as u16]),
+            other => path.push(other),
+        }
+    }
+    Ok(Utf16::new(path))
+}
+
 fn fail(code: &'static str, message: &'static str) -> EngineError {
     EngineError::new(code, Utf16::default(), message)
 }

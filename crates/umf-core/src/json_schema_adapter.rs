@@ -9,7 +9,7 @@ use std::collections::BTreeSet;
 use crate::{
     context::Context,
     engine::{Capabilities, CapabilityError, Engine, ResourceSet, SemanticContext},
-    error::{Diagnostic, EngineError, Severity},
+    error::{Diagnostic, EngineError, Severity, Validation},
     native_json::{NativeJsonNode, NativeJsonTree},
     registry::Registry,
     serialization::{self, Format},
@@ -41,6 +41,145 @@ pub struct ExportBundle {
     pub root_json: Utf16,
     pub resources_json: Vec<(Utf16, Utf16)>,
     pub source: Value,
+    pub diagnostics: Vec<Diagnostic>,
+}
+
+const CORE_VERSION: &str = "0.10.0";
+const EXTENSION_VERSION: &str = "0.1.0";
+
+/// Import explicit JSON Schema source and resources into one UMF document.
+/// Resource inputs are ordered and caller-owned; this operation performs no I/O.
+/// Admission order follows the TypeScript predecessor: base URI, each resource
+/// URI and source in order, root source, complete document, then interpretation.
+pub fn import_json_schema(
+    source: &[u16],
+    id: &Utf16,
+    base_uri: &Utf16,
+    resource_sources: &[(Utf16, Vec<u16>)],
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    parse_uri(base_uri, ctx)?;
+    ctx.charge_work(resource_sources.len(), Utf16::default())?;
+    let mut resources = Vec::with_capacity(resource_sources.len());
+    let mut seen = BTreeSet::new();
+    for (uri, source) in resource_sources {
+        parse_uri(uri, ctx)?;
+        ctx.charge_work(uri.len().saturating_add(1), Utf16::default())?;
+        if !seen.insert(uri.clone()) {
+            return Err(err(
+                "JSON_SCHEMA_RESOURCE_COLLISION",
+                "Duplicate retrieval URI",
+            ));
+        }
+        resources.push((uri.clone(), NativeJsonTree::parse_json(source, ctx)?));
+    }
+    let root = NativeJsonTree::parse_json(source, ctx)?;
+    let payload = JsonSchemaPayload {
+        dialect: Utf16::from(DIALECT_2020_12),
+        base_uri: base_uri.clone(),
+        root,
+        resources,
+        representation_extras: Vec::new(),
+    };
+    let document = make_document(id, base_uri, &payload, ctx)?;
+    let validation = match crate::json_schema_inspect::inspect_document(&document, ctx) {
+        Ok(validation) => validation,
+        Err(error)
+            if !error.is_control_failure()
+                && error.code != "LIMIT"
+                && error.code != "CANCELLED"
+                && matches!(error.code.as_str(), "JSON_SCHEMA_ROOT" | "JSON_SCHEMA_RESOURCE" | "JSON_SCHEMA_RESOURCE_COLLISION") =>
+        {
+            let (code, message) = semantic_admission_diagnostic(&error, &payload, ctx)?;
+            Validation {
+                valid: false,
+                complete: false,
+                diagnostics: vec![Diagnostic {
+                    code: Utf16::from(code),
+                    path: Utf16::from("/modules/0/elements/0/extensions/umf.json-schema"),
+                    message: Utf16::from(message),
+                    severity: Severity::Error,
+                    python_source_path: false,
+                    python_text_origin: None,
+                }],
+            }
+        }
+        Err(error) => return Err(error),
+    };
+    if !validation.valid {
+        return Err(validation_error("JSON_SCHEMA_INVALID", &validation, ctx)?);
+    }
+    Ok(document)
+}
+
+/// Inspect a complete UMF document carrying the pinned JSON Schema extension.
+pub fn inspect_json_schema(
+    document: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Validation, EngineError> {
+    crate::json_schema_inspect::inspect_document(document, ctx)
+}
+
+/// Export the native root schema, preserving exact number lexemes.
+pub fn export_json_schema(document: &Value, ctx: &mut Context<'_>) -> Result<Utf16, EngineError> {
+    let payload = exportable_payload(document, ctx)?;
+    export_root(&payload, ctx)
+}
+
+/// Export packaged resources in their authored order.
+pub fn export_json_schema_resources(
+    document: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<(Utf16, Utf16)>, EngineError> {
+    let payload = exportable_payload(document, ctx)?;
+    export_resources(&payload, ctx)
+}
+
+/// Return a copied native node at a strict RFC 6901 pointer.
+pub fn get_json_schema_node(
+    document: &Value,
+    pointer: &Utf16,
+    ctx: &mut Context<'_>,
+) -> Result<NativeJsonTree, EngineError> {
+    let payload = payload_from_document(document, ctx)?;
+    get_node(&payload, pointer, ctx)
+}
+
+/// Return copied Draft 2020-12 schema positions from the root resource.
+pub fn walk_json_schema(
+    document: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<SchemaPosition>, EngineError> {
+    let payload = payload_from_document(document, ctx)?;
+    walk(&payload, ctx)
+}
+
+/// Export the complete native bundle and retain the UMF source document.
+pub fn export_json_schema_bundle(
+    document: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<ExportBundle, EngineError> {
+    let payload = exportable_payload(document, ctx)?;
+    let resources_json = export_resources(&payload, ctx)?;
+    let root_json = export_root(&payload, ctx)?;
+    let source = copy_json(document, ctx)?;
+    let validation = inspect_json_schema(document, ctx)?;
+    let mut diagnostics = validation.diagnostics;
+    ctx.charge_work(diagnostics.len().saturating_add(1), Utf16::default())?;
+    diagnostics.push(Diagnostic {
+        code: Utf16::from("SOURCE_ARTIFACT_REQUIRED"),
+        path: Utf16::default(),
+        message: Utf16::from("Standalone native root does not carry UMF metadata or supplied resource files; retain this bundle for full source recovery."),
+        severity: Severity::Warning,
+        python_source_path: false,
+        python_text_origin: None,
+    });
+    Ok(ExportBundle {
+        root_json,
+        resources_json,
+        source,
+        diagnostics,
+    })
 }
 
 /// Validate the adapter envelope and admit each native tree under the caller's
@@ -49,6 +188,21 @@ pub struct ExportBundle {
 pub fn admit_payload(
     value: &Value,
     ctx: &mut Context<'_>,
+) -> Result<JsonSchemaPayload, EngineError> {
+    admit_payload_inner(value, ctx, false)
+}
+
+pub(crate) fn admit_payload_for_inspection(
+    value: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<JsonSchemaPayload, EngineError> {
+    admit_payload_inner(value, ctx, true)
+}
+
+fn admit_payload_inner(
+    value: &Value,
+    ctx: &mut Context<'_>,
+    retain_invalid_schema_roots: bool,
 ) -> Result<JsonSchemaPayload, EngineError> {
     let fields = object(value, "JSON_SCHEMA_PAYLOAD", "Payload must be an object")?;
     let mut representation_extras = Vec::new();
@@ -82,10 +236,9 @@ pub fn admit_payload(
     )?;
     parse_uri(&base_uri, ctx)?;
     let root = NativeJsonTree::from_tagged_value(field(fields, "root")?, ctx)?;
-    if !matches!(
-        root.root(),
-        NativeJsonNode::Object(_) | NativeJsonNode::Boolean(_)
-    ) {
+    if !retain_invalid_schema_roots
+        && !matches!(root.root(), NativeJsonNode::Object(_) | NativeJsonNode::Boolean(_))
+    {
         return Err(err(
             "JSON_SCHEMA_ROOT",
             "Root schema must be an object or boolean",
@@ -104,17 +257,18 @@ pub fn admit_payload(
         ctx.charge_work(uri.len(), Utf16::default())?;
         ctx.charge_work(1, Utf16::default())?;
         parse_uri(uri, ctx)?;
-        if !retrieval_uris.insert(uri.clone()) || uri == &base_uri {
+        if (!retrieval_uris.insert(uri.clone()) || uri == &base_uri)
+            && !retain_invalid_schema_roots
+        {
             return Err(err(
                 "JSON_SCHEMA_RESOURCE_COLLISION",
                 "Duplicate retrieval URI",
             ));
         }
         let native = NativeJsonTree::from_tagged_value(tree, ctx)?;
-        if !matches!(
-            native.root(),
-            NativeJsonNode::Object(_) | NativeJsonNode::Boolean(_)
-        ) {
+        if !retain_invalid_schema_roots
+            && !matches!(native.root(), NativeJsonNode::Object(_) | NativeJsonNode::Boolean(_))
+        {
             return Err(err(
                 "JSON_SCHEMA_RESOURCE",
                 "Packaged resource must be an object or boolean schema",
@@ -137,7 +291,17 @@ pub fn payload_from_document(
     document: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<JsonSchemaPayload, EngineError> {
-    validate_complete_document(document, ctx)?;
+    let validation = validate_complete_document(document, ctx)?;
+    if !validation.valid {
+        return Err(validation_error("INVALID_DOCUMENT", &validation, ctx)?);
+    }
+    payload_from_valid_document(document, ctx)
+}
+
+pub(crate) fn payload_from_valid_document(
+    document: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<JsonSchemaPayload, EngineError> {
     let document_fields = object(document, "INVALID_DOCUMENT", "Document must be an object")?;
     ctx.charge_work(document_fields.len(), Utf16::default())?;
     let core_version = string_metered(
@@ -222,7 +386,7 @@ pub fn payload_from_document(
             }
         }
     }
-    admit_payload(
+    admit_payload_for_inspection(
         found.ok_or_else(|| {
             err(
                 "JSON_SCHEMA_PAYLOAD",
@@ -231,6 +395,44 @@ pub fn payload_from_document(
         })?,
         ctx,
     )
+}
+
+struct JsonSchemaInspectionCapabilities;
+impl Capabilities for JsonSchemaInspectionCapabilities {
+    fn validate_extension(
+        &mut self,
+        _token: u64,
+        _payload: &Value,
+        _context: &SemanticContext,
+    ) -> Result<Vec<Diagnostic>, Utf16> {
+        Ok(Vec::new())
+    }
+
+    fn validate_extension_with_context(
+        &mut self,
+        _token: u64,
+        payload: &Value,
+        context: &SemanticContext,
+        ctx: &mut Context<'_>,
+    ) -> Result<Vec<Diagnostic>, crate::engine::CapabilityError> {
+        if !context.path.units().ends_with(Utf16::from("/extensions/umf.json-schema").units()) {
+            return Ok(Vec::new());
+        }
+        let admitted = match admit_payload_for_inspection(payload, ctx) {
+            Ok(payload) => payload,
+            Err(error) if error.is_control_failure() || error.code == "LIMIT" || error.code == "CANCELLED" => {
+                return Err(crate::engine::CapabilityError::Engine(error));
+            }
+            Err(error) => return Ok(vec![inspection_error_diagnostic(error, &context.path)]),
+        };
+        match crate::json_schema_inspect::inspect_payload(&admitted, &context.path, ctx) {
+            Ok(diagnostics) => Ok(diagnostics),
+            Err(error) if error.is_control_failure() || error.code == "LIMIT" || error.code == "CANCELLED" => {
+                Err(crate::engine::CapabilityError::Engine(error))
+            }
+            Err(error) => Ok(vec![inspection_error_diagnostic(error, &context.path)]),
+        }
+    }
 }
 
 struct NoExtensionCapabilities;
@@ -245,7 +447,49 @@ impl Capabilities for NoExtensionCapabilities {
     }
 }
 
-fn validate_complete_document(document: &Value, ctx: &mut Context<'_>) -> Result<(), EngineError> {
+fn inspection_error_diagnostic(error: EngineError, path: &Utf16) -> Diagnostic {
+    let code = match error.code.as_str() {
+        "JSON_SCHEMA_URI" => "JSON_SCHEMA_URI",
+        "JSON_SCHEMA_ROOT" => "JSON_SCHEMA_ROOT",
+        "JSON_SCHEMA_RESOURCE_COLLISION" => "JSON_SCHEMA_RESOURCE_COLLISION",
+        _ => "EXTENSION_STRUCTURE",
+    };
+    let message = if code == "JSON_SCHEMA_URI" {
+        // `String(new UmfError(...))` in the TypeScript inspector includes the
+        // error name; preserve that frozen diagnostic rendering here.
+        Utf16::from("UmfError: Retrieval URI must be absolute and fragment-free")
+    } else {
+        error.message
+    };
+    Diagnostic {
+        code: Utf16::from(code),
+        path: path.clone(),
+        message,
+        severity: Severity::Error,
+        python_source_path: false,
+        python_text_origin: None,
+    }
+}
+
+pub(crate) fn validate_complete_document(
+    document: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Validation, EngineError> {
+    validate_complete_document_inner(document, ctx, false)
+}
+
+pub(crate) fn validate_complete_document_for_inspection(
+    document: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Validation, EngineError> {
+    validate_complete_document_inner(document, ctx, true)
+}
+
+fn validate_complete_document_inner(
+    document: &Value,
+    ctx: &mut Context<'_>,
+    inspect_extensions: bool,
+) -> Result<Validation, EngineError> {
     fn resource(text: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
         let utf16_units = text.encode_utf16().count();
         ctx.charge_text(utf16_units, Utf16::default())?;
@@ -274,23 +518,27 @@ fn validate_complete_document(document: &Value, ctx: &mut Context<'_>) -> Result
         ),
         ctx,
     )?;
-    let validation = engine.validate_document(
-        document,
-        &Registry::new(),
-        &mut NoExtensionCapabilities,
-        ctx,
-    )?;
-    if validation.valid {
-        return Ok(());
+    let mut registry = Registry::new();
+    if inspect_extensions {
+        let manifest = resource(
+            include_str!("../../../spec/extensions/json-schema/package.json"),
+            ctx,
+        )?;
+        let schema_resources = engine.schema_resources_with_context(ctx)?;
+        registry.register(
+            &manifest,
+            Some(1),
+            engine.package_schema(),
+            &schema_resources,
+            ctx,
+        )?;
     }
-    let first = validation.diagnostics.first();
-    Err(EngineError::new(
-        "INVALID_DOCUMENT",
-        first.map(|d| d.path.clone()).unwrap_or_default(),
-        first
-            .map(|d| d.message.clone())
-            .unwrap_or_else(|| Utf16::from("Invalid UMF document")),
-    ))
+    let capabilities: &mut dyn Capabilities = if inspect_extensions {
+        &mut JsonSchemaInspectionCapabilities
+    } else {
+        &mut NoExtensionCapabilities
+    };
+    engine.validate_document(document, &registry, capabilities, ctx)
 }
 
 pub fn get_node(
@@ -422,12 +670,239 @@ pub fn export_bundle(
     payload: &JsonSchemaPayload,
     ctx: &mut Context<'_>,
 ) -> Result<ExportBundle, EngineError> {
-    ensure_exportable(payload, ctx)?;
+    let diagnostics = crate::json_schema_inspect::inspect_payload(payload, &Utf16::default(), ctx)?;
+    if diagnostics.iter().any(|item| {
+        item.severity == Severity::Error || item.code == Utf16::from("JSON_SCHEMA_REPRESENTATION")
+    }) {
+        return Err(diagnostics_error("JSON_SCHEMA_EXPORT", &diagnostics, ctx)?);
+    }
+    let mut bundle_diagnostics = diagnostics;
+    bundle_diagnostics.push(Diagnostic {
+        code: Utf16::from("SOURCE_ARTIFACT_REQUIRED"),
+        path: Utf16::default(),
+        message: Utf16::from("Standalone native root does not carry UMF metadata or supplied resource files; retain this bundle for full source recovery."),
+        severity: Severity::Warning,
+        python_source_path: false,
+        python_text_origin: None,
+    });
+    let resources_json = export_resources(payload, ctx)?;
+    let root_json = export_root(payload, ctx)?;
     Ok(ExportBundle {
-        root_json: export_root(payload, ctx)?,
-        resources_json: export_resources(payload, ctx)?,
+        root_json,
+        resources_json,
         source: copy_json(document, ctx)?,
+        diagnostics: bundle_diagnostics,
     })
+}
+
+fn exportable_payload(document: &Value, ctx: &mut Context<'_>) -> Result<JsonSchemaPayload, EngineError> {
+    let payload = payload_from_document(document, ctx)?;
+    let diagnostics = crate::json_schema_inspect::inspect_payload(&payload, &Utf16::default(), ctx)?;
+    if diagnostics.iter().any(|item| {
+        item.severity == Severity::Error || item.code == Utf16::from("JSON_SCHEMA_REPRESENTATION")
+    }) {
+        return Err(diagnostics_error("JSON_SCHEMA_EXPORT", &diagnostics, ctx)?);
+    }
+    Ok(payload)
+}
+
+fn make_document(
+    id: &Utf16,
+    base_uri: &Utf16,
+    payload: &JsonSchemaPayload,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    ctx.charge_work(payload.resources.len().saturating_add(3), Utf16::default())?;
+    ctx.charge_work(id.len().saturating_add(base_uri.len()), Utf16::default())?;
+    let mut resource_members = Vec::with_capacity(payload.resources.len());
+    for (uri, tree) in &payload.resources {
+        ctx.charge_work(uri.len().saturating_add(1), Utf16::default())?;
+        resource_members.push((uri.clone(), tree.tagged_value_preserving_extras(ctx)?));
+    }
+    let payload_value = Value::Object(vec![
+        (Utf16::from("dialect"), Value::String(payload.dialect.clone())),
+        (Utf16::from("baseUri"), Value::String(payload.base_uri.clone())),
+        (Utf16::from("root"), payload.root.tagged_value_preserving_extras(ctx)?),
+        (Utf16::from("resources"), Value::Object(resource_members)),
+    ]);
+    let extension = Value::Object(vec![(Utf16::from(EXTENSION), payload_value)]);
+    let element = Value::Object(vec![
+        (Utf16::from("id"), Value::string_utf8("schema")),
+        (Utf16::from("extensions"), extension),
+    ]);
+    let module = Value::Object(vec![
+        (Utf16::from("id"), Value::string_utf8("schema")),
+        (Utf16::from("namespace"), Value::String(base_uri.clone())),
+        (Utf16::from("elements"), Value::Array(vec![element])),
+    ]);
+    let vocabularies = Value::Object(vec![(
+        Utf16::from(EXTENSION),
+        Value::Object(vec![(Utf16::from("version"), Value::string_utf8(EXTENSION_VERSION))]),
+    )]);
+    copy_json(
+        &Value::Object(vec![
+            (Utf16::from("umf"), Value::string_utf8(CORE_VERSION)),
+            (Utf16::from("id"), Value::String(id.clone())),
+            (Utf16::from("vocabularies"), vocabularies),
+            (Utf16::from("modules"), Value::Array(vec![module])),
+        ]),
+        ctx,
+    )
+}
+
+fn validation_error(
+    code: &str,
+    validation: &Validation,
+    ctx: &mut Context<'_>,
+) -> Result<EngineError, EngineError> {
+    Ok(diagnostics_error(code, &validation.diagnostics, ctx)?)
+}
+
+fn diagnostics_error(
+    code: &str,
+    diagnostics: &[Diagnostic],
+    ctx: &mut Context<'_>,
+) -> Result<EngineError, EngineError> {
+    fn string_len(value: &Utf16) -> usize {
+        let mut length = 2usize;
+        let units = value.units();
+        let mut index = 0;
+        while index < units.len() {
+            let unit = units[index];
+            if (0xd800..=0xdbff).contains(&unit)
+                && units.get(index + 1).is_some_and(|next| (0xdc00..=0xdfff).contains(next))
+            {
+                length = length.saturating_add(2);
+                index += 2;
+                continue;
+            }
+            length = length.saturating_add(match unit {
+                0x22 | 0x5c | 0x08 | 0x0c | 0x0a | 0x0d | 0x09 => 2,
+                0x00..=0x1f | 0xd800..=0xdfff => 6,
+                _ => 1,
+            });
+            index += 1;
+        }
+        length
+    }
+    fn write_string(value: &Utf16, output: &mut Vec<u16>) {
+        output.push(b'"' as u16);
+        let units = value.units();
+        let mut index = 0;
+        while index < units.len() {
+            let unit = units[index];
+            if (0xd800..=0xdbff).contains(&unit)
+                && units.get(index + 1).is_some_and(|next| (0xdc00..=0xdfff).contains(next))
+            {
+                output.extend([unit, units[index + 1]]);
+                index += 2;
+                continue;
+            }
+            match unit {
+                0x22 => output.extend([b'\\' as u16, b'"' as u16]),
+                0x5c => output.extend([b'\\' as u16, b'\\' as u16]),
+                0x08 => output.extend([b'\\' as u16, b'b' as u16]),
+                0x0c => output.extend([b'\\' as u16, b'f' as u16]),
+                0x0a => output.extend([b'\\' as u16, b'n' as u16]),
+                0x0d => output.extend([b'\\' as u16, b'r' as u16]),
+                0x09 => output.extend([b'\\' as u16, b't' as u16]),
+                0x00..=0x1f => {
+                    const HEX: &[u8; 16] = b"0123456789abcdef";
+                    output.extend([b'\\' as u16, b'u' as u16, b'0' as u16, b'0' as u16, HEX[((unit >> 4) & 0xf) as usize] as u16, HEX[(unit & 0xf) as usize] as u16]);
+                }
+                0xd800..=0xdfff => {
+                    const HEX: &[u8; 16] = b"0123456789abcdef";
+                    output.extend([
+                        b'\\' as u16,
+                        b'u' as u16,
+                        HEX[((unit >> 12) & 0xf) as usize] as u16,
+                        HEX[((unit >> 8) & 0xf) as usize] as u16,
+                        HEX[((unit >> 4) & 0xf) as usize] as u16,
+                        HEX[(unit & 0xf) as usize] as u16,
+                    ]);
+                }
+                other => output.push(other),
+            }
+            index += 1;
+        }
+        output.push(b'"' as u16);
+    }
+
+    ctx.charge_work(diagnostics.len().saturating_add(1), Utf16::default())?;
+    let keys = [Utf16::from("code"), Utf16::from("path"), Utf16::from("message"), Utf16::from("severity")];
+    let mut length = 2usize;
+    for (index, item) in diagnostics.iter().enumerate() {
+        let severity = Utf16::from(match item.severity { Severity::Error => "error", Severity::Warning => "warning" });
+        let fields = [
+            (&keys[0], &item.code),
+            (&keys[1], &item.path),
+            (&keys[2], &item.message),
+            (&keys[3], &severity),
+        ];
+        length = length.saturating_add(if index == 0 { 0 } else { 1 }).saturating_add(2);
+        for (field_index, (key, value)) in fields.iter().enumerate() {
+            ctx.charge_work(key.len().saturating_add(value.len()).saturating_add(1), item.path.clone())?;
+            length = length.saturating_add(if field_index == 0 { 0 } else { 1 })
+                .saturating_add(string_len(key)).saturating_add(1).saturating_add(string_len(value));
+        }
+    }
+    if length > ctx.limits().max_text_units {
+        return Err(err("LIMIT", "Serialized text limit exceeded"));
+    }
+    ctx.charge_text(length, Utf16::default())?;
+    let mut output = Vec::with_capacity(length);
+    output.push(b'[' as u16);
+    for (index, item) in diagnostics.iter().enumerate() {
+        if index != 0 { output.push(b',' as u16); }
+        output.push(b'{' as u16);
+        let severity = Utf16::from(match item.severity { Severity::Error => "error", Severity::Warning => "warning" });
+        let values = [
+            (&keys[0], &item.code),
+            (&keys[1], &item.path),
+            (&keys[2], &item.message),
+            (&keys[3], &severity),
+        ];
+        for (field_index, (key, value)) in values.iter().enumerate() {
+            if field_index != 0 { output.push(b',' as u16); }
+            write_string(key, &mut output);
+            output.push(b':' as u16);
+            write_string(value, &mut output);
+        }
+        output.push(b'}' as u16);
+    }
+    output.push(b']' as u16);
+    Ok(EngineError::new(code, Utf16::default(), Utf16::new(output)))
+}
+
+fn semantic_admission_diagnostic(
+    error: &EngineError,
+    payload: &JsonSchemaPayload,
+    ctx: &mut Context<'_>,
+) -> Result<(&'static str, String), EngineError> {
+    match error.code.as_str() {
+        "JSON_SCHEMA_ROOT" => Ok((
+            "JSON_SCHEMA_ROOT",
+            format!("Resource {} must be object or boolean", display_uri(&payload.base_uri, ctx)?),
+        )),
+        "JSON_SCHEMA_RESOURCE" => {
+            let uri = payload.resources.iter().find(|(_, tree)| {
+                !matches!(tree.root(), NativeJsonNode::Object(_) | NativeJsonNode::Boolean(_))
+            }).map(|(uri, _)| uri).unwrap_or(&payload.base_uri);
+            Ok((
+                "JSON_SCHEMA_ROOT",
+                format!("Resource {} must be object or boolean", display_uri(uri, ctx)?),
+            ))
+        }
+        _ => Ok((
+            "JSON_SCHEMA_RESOURCE_COLLISION",
+            "Root retrieval URI also appears in resources".to_owned(),
+        )),
+    }
+}
+
+fn display_uri(uri: &Utf16, ctx: &mut Context<'_>) -> Result<String, EngineError> {
+    ctx.charge_work(uri.len(), Utf16::default())?;
+    Ok(uri.to_utf8().unwrap_or_else(|_| format!("{:?}", uri.units())))
 }
 
 /// Replace one native JSON Schema node inside the existing `edit_extension`
