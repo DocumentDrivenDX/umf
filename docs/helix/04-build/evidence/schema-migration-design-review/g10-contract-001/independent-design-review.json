@@ -1,0 +1,72 @@
+{
+  "profile": "umf.g10.proposal006-independent-design-review/1",
+  "status": "design-accepted-with-explicit-implementation-and-enablements-open",
+  "manifestSha256": "86ef804046e88edc90021a52d879f0e6bd13a8257322365bc9c9ba0611f9ffc8",
+  "membersIndependentlyVerified": 132,
+  "exactGitSnapshotsIndependentlyVerified": 45,
+  "readScope": [
+    "complete campaign-grant-accounting.md",
+    "complete ordinary-decision-custody.md",
+    "004-to006 denied recovery source-verifier correction and shared branch deltas",
+    "005-to006 component-policy/native-metadata/contract/technical/initial-ordering accounting deltas",
+    "review findings005 and review decisions",
+    "unchanged prior scope and acceptance prefix verified by exact source/hash/doc controls"
+  ],
+  "reviewDispositions": [
+    {
+      "finding": "004 approved-only receipt.verify cannot verify denied row",
+      "result": "Addressed: retains original approved verifier unchanged, genuine protected denied row plus complete actual native/provenance/census/outcome verification required."
+    },
+    {
+      "finding": "004 positive/negative ordinary decision slot lacks shared exact grammar",
+      "result": "Addressed: one exact common request/reservation/decisionId/grant/accounting/journal/settlement for both branches; unchanged negative native record remains denied-only, phaseIndex1 fenced."
+    },
+    {
+      "finding": "005 per-attempt native charge versus cumulative checkpoint ambiguity and duplicate allocators",
+      "result": "Addressed: native receipt equals one original grant; prior common charge includes cumulative all preparation attempts; current campaign sums unique full grants; same original provider atomic CAS writes both views and settles once; positive abort charges only new grant; unknown stays charged/fenced; later historical replay cannot replace current checkpoint."
+    }
+  ],
+  "independentExecution": {
+    "documentChecks": 36,
+    "authorSyntheticAccountingTestsRerun": 25,
+    "finiteCombinations": 288,
+    "abstractAtomicCuts": 5,
+    "scope": "Actual rerun of frozen design controls; these are text/AST/finite synthetic projections, not product/provider/native/CAS/clock tests."
+  },
+  "acceptedDesignChoices": [
+    "Closed original campaign/nondecision grant/checkpoint records and4096 total original attempts bound, conjunctive with all signed byte/history/resource bounds.",
+    "One same-store original provider allocation/settlement; refuse enablement if actual enrolled branch cannot provide durable uniqueness/atomic CAS.",
+    "Existing decisionBinding resolves original common grant; no new ApprovalReceipt or signature scope.",
+    "Full F1/F2/F3 and88 future acceptance obligations retained; all80 predecessor rows verbatim."
+  ],
+  "remainingRequired": [
+    "Governing artifact adoption against exact reviewed candidate; no adoption claimed here.",
+    "Concrete original fixed provider record admission, same-store atomic allocation/settlement, original durable continuity, finite timers and unknown-COMMIT native outcomes.",
+    "Real authenticated review adapter and protected native approved/denied row/census/time/UUID/phase progress/restarted recovery; data receipts cannot confer authority.",
+    "Original application schema/stable-subject bootstrap, initial/existing/mixed/empty inventory native/provider/Weft/compiler/session composition.",
+    "Old-context/store migration, enrolled-carrier actual lifecycle, whole-table archive/restore/purge, installed/browser/platform/CI/release/published artifact qualification."
+  ],
+  "qualification": "Design review accepts these exact proposed resolutions. It does not close MIG-G10 or any native migration gap, authorize treating stubs as implemented, or qualify published support. G11 later contexts/interfaces are separate explicit adoption work.",
+  "files": [
+    {
+      "path": "doc.stdout",
+      "size": 3149,
+      "sha256": "b752e2532ef8856423ead9849bfc675afe1c10183977d7169d741a4e310e214f"
+    },
+    {
+      "path": "doc.stderr",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "accounting.stdout",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "accounting.stderr",
+      "size": 4070,
+      "sha256": "752e05a9d8f0fc0f91ff9a4e7ce4e09c5cf78b094d70fda944ee559e80faef38"
+    }
+  ]
+}

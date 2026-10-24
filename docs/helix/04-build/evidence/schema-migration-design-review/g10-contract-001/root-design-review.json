@@ -1,0 +1,35 @@
+{
+  "checks": {
+    "acceptanceRowsAdded": 8,
+    "acceptanceRowsPreserved": 80,
+    "accountingDesignControls": 25,
+    "atomicDesignCuts": 5,
+    "crossRecordCombinations": 288,
+    "documentChecks": 36
+  },
+  "conclusions": [
+    "Native receipt time is exactly one original dispatched grant; common prior charge retains cumulative preparation including aborts.",
+    "Current outer checkpoint accumulates every unique original grant; replay never replaces or decrements current charge.",
+    "Common and outer grant allocation/settlement require one original provider durable atomic transaction; unsupported provider remains an enablement gate.",
+    "No original native decisionBinding or signature scope enlargement."
+  ],
+  "evidence": {
+    "accounting-controls.stderr": "bd2cb3812e662f8f584d613bc257606e9332afe619e320f685a3905ffb56e68e",
+    "accounting-controls.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "document-checks.json": "b752e2532ef8856423ead9849bfc675afe1c10183977d7169d741a4e310e214f"
+  },
+  "limitations": [
+    "Design review only; no implementation/provider/CAS/native verification.",
+    "No adoption until external reviewer disposition.",
+    "Full carrier/old-store/retained-table/mixed/installed/browser/merge/release goal remains open."
+  ],
+  "read": [
+    "campaign-grant-accounting.md",
+    "full005-to006diff for common/component/native/denial/initial/contract/technical documents",
+    "verify-documents.py",
+    "check-accounting-design.py"
+  ],
+  "safeMembersVerified": 132,
+  "sourceManifestSha256": "86ef804046e88edc90021a52d879f0e6bd13a8257322365bc9c9ba0611f9ffc8",
+  "status": "root-design-review-clear-awaiting-external-review"
+}

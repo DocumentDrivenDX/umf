@@ -7166,3 +7166,185 @@ refusal. Qualify actual PG18.6 original actor/COMMENT/DDL/TOAST/RI/ACL/transacti
 COMMIT/restart and installed driver/provider/platform/browser/release separately.
 Old target journal upgrade, provider/store migration, unknown managed/external
 custody and broader data-loss/recovery compositions remain explicitly tracked.
+
+
+## MIG-G10 full phase-aware inventory design adoption 001
+
+This amendment adopts the exact reviewed successor006 inventory definition set
+as REQUIRED design for CONTRACT-081/TD-085/STP-085. It does not claim implemented
+support, issue authority or relax any original native/installed/release gate.
+The reviewed source manifest is
+`86ef804046e88edc90021a52d879f0e6bd13a8257322365bc9c9ba0611f9ffc8`;
+independent design review is
+`c04707129131fee777f736c68202a954c419427a7dd7af12b9dfd0bb903adcec`.
+The existing artifact frontmatter, IDs and complete prior bytes are retained.
+
+The complete exact definition set is retained under
+`docs/helix/04-build/evidence/schema-migration-design-review/g10-contract-001/definitions/`
+and each complete file is hash-pinned in that folder's parent manifest. These
+are project design elaborations, not a copied methodology catalog. Within the
+scope of this amendment their exact records/DDL/compatibility/ordering/recovery
+rules are normative requirements; reviewed proposal status prose remains
+historical provenance, not an implementation claim. No omission from the
+excerpt below removes a definition-set requirement.
+
+Precedence: successor006 campaign-grant-accounting closes ambiguous005 charge
+prose; ordinary-decision-custody replaces004 denial-only private reservation
+profiles for BOTH decisions. The004 negative native observation/outcome/return
+shapes remain exact. Original approved-only ApprovalReceipt.verify remains
+unchanged; genuine denied protected-row/native verification is separate.
+Old protocol variants remain exact and refuse unadmitted new profiles. No later
+G11 context/native interface is implicitly adopted by these006 source pins.
+
+Full scope includes create/remove/unequal/mixed/empty inventories in initial
+and installed modes; complete typed dependency/atomic phase semantics, actual
+execution-aware seed lineage, exact metadata/publication/reference and signed
+full component/session/provider policies, initial prospective approval ordering,
+one original approved/denied decision journal and same-provider campaign grant
+allocation, exact carrier retirement branch, and all88 planned acceptance rows.
+Do not replace this scope with create-only implementation or safe refusals.
+Immediate irreversible table removal is the explicitly disclosed first subset;
+retained whole-table archive/restore/separate purge and old enrolled-store
+migration remain REQUIRED backlog work, not silently completed by G05 Field
+archives or by this adoption.
+
+Concrete enablement remains gated on original schema/stable-subject bootstrap,
+genuine authenticated review adapter, actually admitted durable fixed provider
+records and same-store atomic CAS, native timers/original continuity/COMMIT and
+positive restarted recovery, complete Weft/compiler/session/identity/retention
+composition and initial/existing/mixed/empty native acceptance. Old-context/store
+upgrade, retained-table recovery, installed/browser/platform/CI/release and
+published-byte verification remain explicitly OPEN. Full G02–G11 goal remains
+open; design controls do not replace actual implementation/native evidence.
+
+The normative definition closure is EXACT:
+
+- `contract-proposal.md`: SHA256 `cee0d04ee72da46062c6814efa1c0235e5c087da82593128f9d766f65c05324a`.
+- `technical-design.md`: SHA256 `ebf07de7179646ab37be3c6e3f9d17525ba958263f2886e1b5804f48f0ad6879`.
+- `acceptance-matrix.md`: SHA256 `cb95e725cb8b0b70309c9449c1fbc0c0e4200b15d8d59bff710fa0e9348a306c`.
+- `seed-lineage.md`: SHA256 `ab3c044cf055b1ced97a388809be440ae1afab4710514edd27e4d05ecfa0c584`.
+- `fresh-authority.md`: SHA256 `b69024641bf4bdf94a8e92dcc3743570aa1c9dd9ab21d09c95c4120194a88763`.
+- `native-metadata.md`: SHA256 `ed069da88e3aa319b28f8b5bfb070234b6c9a35c607556a0949e772a4c86df51`.
+- `native-metadata.sql`: SHA256 `5e8131eda95636d476d0d0c0d3540caff22ff117f133d91a9dd39fe111337109`.
+- `metadata-definition.json`: SHA256 `e263e852cf57a160a49a66c4bcff713babbbe4af95aea3e3523f22b8a4d40e05`.
+- `metadata-definition-digest.txt`: SHA256 `484dd467482c2123502a0524c67cda573b0e0cd31c980ef934ea22d8d8c041c0`.
+- `step-branches.md`: SHA256 `63dabcde5a10ff3b18148211c8a24fcd80add264580542cb389fa5b52705c11e`.
+- `component-policies.md`: SHA256 `a1c12960c43921644cf9ff055b7af306f25a55116c1d4ce26d5aabcbaae778f4`.
+- `native-inventory-branches.md`: SHA256 `2e1b2de6f378ad8af4b101500e93576bb9ba89209c93947bccc89732cea40782`.
+- `initial-approval-ordering.md`: SHA256 `166585d47845f07fe646163d300134b91bfc6cb380635e96fe27f2c652b878cd`.
+- `denied-approval-recovery.md`: SHA256 `a8811dce246636fd88b65214e19d291ae4ed8a02cb1fa46106ab0396af3e9128`.
+- `ordinary-decision-custody.md`: SHA256 `4efd6fe87b2b41bf0a6410c76e4ba78c9f4edbb240892d9aa90ba0505674cd4a`.
+- `campaign-grant-accounting.md`: SHA256 `a4b3759604c4fb77fe3ebcf70e7fcb5a82a887af1ff4bcd9060d49fd919cee9c`.
+- `carrier-retirement.md`: SHA256 `2ab552d1bd5a6881ae25fb8f50e27854eb5537a29325b5c0a713d329dfc362c4`.
+- `carrier-retirement-ddl.sql`: SHA256 `63e7b41506c74ac38c3c73d1dc116f23c8b5a60d1064982b260522e01c99dc20`.
+- `carrier-provider-definition.json`: SHA256 `a76c88f59106de11d5df37818f8ba3f4f439eabd7e8bbfbd00708235a1c8e56b`.
+- `carrier-provider-definition-digest.txt`: SHA256 `0dae51fd040e774b2e64a527c50b9cbd2f9f9a355e801aff023d912e0d6fda0d`.
+- `resolved-open-matrix.md`: SHA256 `febfb8f6d6c8cf6439e748c58e42b082f87279835e48afbcfef225926e8c1c03`.
+
+### Exact reviewed contract-proposal.md
+
+# Proposed CONTRACT-081 successor005: G10 inventory/prefix migration
+
+## Status and namespace
+
+Every MUST below is proposed contract text, pending root + external governing agreement. External design review001 selected the distinct inventory0.1 families and reserved inventory installation0.1; this proposal does not adopt them. Names are separate from the allocated `umf.table-migration/*` numeric sequence:
+
+| Candidate family | Candidate literal | Meaning |
+| --- | --- | --- |
+| options | `umf.table-inventory-migration-options/0.1` | Explicit inventory and composition intent |
+| plan | `umf.table-inventory-migration/0.1` | Complete original-source plan and prefix schedule |
+| discovery | `umf.table-inventory-discovery/0.1` | Cycle-free closed review discovery |
+| execution | `umf.table-inventory-execution/0.1` | Explicit prefix-aware host capability |
+| prefix frame | `umf.table-inventory-prefix/0.1` | Compiler-owned semantic catalog projection |
+| installation | `umf.table-inventory-installation/0.1` | New exact final-reference family selected by external review |
+
+External review selected these separate families; no current accepted dispatcher is inferred. G05 plan/options0.8, execution0.7 and discovery0.5 are already reserved externally and remain untouched. No generic unknown-version fallback is permitted.
+
+Legacy plan/options/bundle/reference versions regenerate their original bytes and behavior. Preserve G02's frozen plan digest `dfdf88b70b80a228c381fe4ddf8db9233e2c099dc4de6a7bebcdbf4307ef65ae`. Existing0.1 bootstrap/add-table code stays unchanged. A historical replay returns the verified CURRENT installation reference; it never makes fresh legacy effects legal on persistent-approval installations.
+
+## Closed author request and options
+
+Historical requests remain exactly their existing shapes. The NEW G10 request is exactly `{id,predecessor,previous,next,options,history}`. Previous is an exact verified original deployment bundle or null; next is an independently valid exact verified original deployment bundle. `predecessor` is exactly `{id,digest}` or null. Both null together means first installation; an installed empty application inventory still has non-null previous/predecessor and original head. No fabricated empty-source bundle substitutes for null. Initial next inventory may be empty. An installed G10 transition requires at least one table create/remove; an existing-only transition keeps its established selected profile rather than using G10 as an implicit metadata upgrade.
+
+History is exactly `{profile:"umf.table-inventory-source-history/0.1",plans,executions}` as fully specified in seed-lineage.md. Plans are the ordered ORIGINAL source-verified applied plans from initial through exact predecessor, at most128 and proposed24MiB combined canonical bytes. Initial uses empty plans AND executions arrays. Source definition existence alone never means execution. Verify original IDs/digests/source-chain links, no repeats, terminal exact predecessor/previous bundle, all historical seed definitions and earlier G10 history bindings. This is source data, not proof of actual native application: host must match its original immutable applied history before effects. In particular previous.bundle alone cannot prove that an older retired seed ID was already used. No source omitted from history is reconstructed from a digest.
+
+The new context-requiring verifier is proposed as `verifyTableInventoryMigration(plan, originalHistory)`; it recompiles the exact new request and whole plan. Old `verifyTableMigration(plan)` and old version dispatch remain unchanged. No hidden filesystem or native lookup in browser verification. Host/CLI/browser callers must explicitly supply the same original history context. If required history exceeds the chosen bound, refuse visibly; R1 must agree the bound or a concrete source-preserving proof/streaming successor rather than silently forgetting history.
+
+Candidate options are EXACTLY:
+
+```text
+{version:"umf.table-inventory-migration-options/0.1",
+ tableIntents,backfills,defaultChanges,conversions,concurrentIndexes,
+ validations,reviewedChanges,seedSets,retiredSeedSets,
+ retirements,restorations,archiveSources}
+```
+
+All arrays are explicit. No missing-array historical normalization. Each table intent is exactly one of:
+
+```text
+{kind:"create",table,record}
+{kind:"remove",table,record,
+ disposition:{mode:"irreversible-purge",reviewMarker}}
+```
+
+`table` is the authored binding ID; record is exact `{module,element}`. A create matches one next-only table mapping and a remove one previous-only mapping. Every and only inventory delta has one intent; duplicates, stale/unused entries and unmatched definitions refuse. Discovery remove intent has exactly `disposition:{mode:"irreversible-purge"}`; the compiler options reference its eventual exact effects marker, preventing a hash cycle. Create must be physically absent at its dispatch point, not necessarily before a same-plan explicitly reviewed old binding removal.
+
+This proposed removal form selects immediate irreversible physical table purge. Before planning native dispatch the actual provider census must identify all private row-table enrollment, issued-instance, archive and lifecycle links. Original store0.1/0.2 enrolled carriers REFUSE this first subset; DROP may not leave active old-OID/trigger witnesses or erase ledgers/archives/holds. carrier-retirement.md gives the distinct proposed successor provider, exact native receipt, guard disposition, retired witness and original recovery; its full enablement remains OPEN until adopted and qualified. It requires its exact `table-removal-effects` marker and located `IRREVERSIBLE_TABLE_PURGE` disclosure naming full stored-row/column loss. Metadata history is not backup. Unknown or retained-table recovery mode is not accepted as if implemented. Full retained-table retirement/restore/purge must be supplied by an agreed G05 composition; this outstanding requirement remains G10/R2 and G05, not a completed removal capability. External reviewer must agree the immediate-purge first subset or replace it with a concrete retained-table contract before removal implementation.
+
+Retirements/restorations/archiveSources use the exact adopted G05 closed shapes/bounds and distinct required effect groups listed in step-branches.md; their whole-table retention meaning is NOT inferred. Every original supplied archive source is retained and consumed; missing native/Weft/instance-custody capability refuses.
+
+G01 existing-fill, G02 new-Field fill, G11 replacement and G04 checked conversion select ONLY their original existing-before retained carrier/domain. A create-table target has no original before population and cannot acquire an inferred backfill/conversion/replacement from an equal-looking Record. New-table data is only independently selected original creation/default/seed meaning. G05 restoration requires its original surviving carrier; Field archives never restore a removed table. Backfills reuse closed source operation selections `{table,column,operation,scopedRows:true}` and the admitted G01/G02 original-source semantics. DefaultChanges are exact `{table,field}` selectors for every and only existing-field future-default delta, with G03's exact markers/default validation. Conversions reuse G04's exact entries, recipes, null/invalid/recovery rules and cycle-free effects binding. None is arbitrary SQL, an inverse callback or a newly granted host capability. Existing operation/context/dependency markers remain closed `{id,kind,path,oldDigest,newDigest}`. No legacy `conversion` qualifier is admitted.
+
+ConcurrentIndexes reuse exact `{table,index}` source selections and existing supported btree/validity rules, now allowing created tables only after their real creation receipt. Validations reuse exact `{table,constraint,kind}` with kind check|foreignKey; they select explicit ADD NOT VALID / later VALIDATE nodes. No inferred NOT VALID, CASCADE or deferred enforcement. SeedSets and retiredSeedSets are ordered unique original IDs under the seed rules below. Every selection must be consumed exactly once; unsupported composition refuses before emitting a plan.
+
+Both sources retain complete JSON bytes, source digests, all modules and native/logical/extension meaning. Retained table binding IDs resolve to the SAME Record ref and physical schema/name; changing a name/Record under the same binding is not creation. Retained Record/Field stable identity cannot be inferred from equal names/counts/types. Record definition may evolve only through separately admitted typed field/dependency/default/conversion changes. A full field may be shared by mappings; deleting one carrier does not authorize deleting its shared definition. Existing tables preserve relative authored order; new tables preserve their relative authored order. Reordering otherwise is an explicit future semantic decision, not native identity authority.
+
+Trusted configuration is identical across an installed transition: module, schema, owner/person/batch roles and group-role mapping. G10 does not provision or rotate those stable authority roles or create a database/schema from source text. Initial install requires their separately authorized original bootstrap and a dedicated existing owner-controlled empty application schema. Data-table policy/grant changes are exact reviewed source meaning and compiler-derived grants, not role authority.
+
+## Discovery and review meanings
+
+Discovery selector is exactly `{version:"umf.table-inventory-discovery/0.1",tableIntents,conversions,retiredSeedSets,retirements,restorations,archiveSources}`; discovery also requires the explicit original history context. it uses the cycle-free forms above. It validates all shapes/bounds, exact targets, uniqueness and consumption before returning candidates. It emits original field/dependency/operation/context markers plus `create-table`, `remove-table`, `table-removal-effects`, and `retire-seed-history` where selected. Unknown/stale/extra/missing intents refuse. Compiler normalization strips ONLY the eventual irreversible marker references before entering public discovery.
+
+New candidate values are exactly `{profile:"umf.table-inventory-review/0.1",side,source,configuration,table,record,meaning,intent,effects}`. Side is previous|next; source is `{format:"json",sha256}` over full original bytes; meaning is the complete original physical table/catalog closure, Record/Field declarations, mapping, dependencies/policies/grants and referenced seed definitions, or null for absence. No lossy name-only projection. Effects is a compiler-derived ordered array: creation `new-physical-binding`; removal `ordinary-access-retired,stored-rows-irreversibly-purged,physical-binding-removed`; seed retirement `original-definition-and-execution-retained-in-history,no-data-replay`. Exact marker ID/hash construction follows current RFC8785 review semantics; a marker never suppresses native/semantic refusal.
+
+## Execution-aware seed lineage (R1)
+
+The complete closed contract in seed-lineage.md is normative proposed shared text. Entry is EXACT `{id,definitionDigest,originalSourceDigest,disposition,execution}`, with disposition retain-definition|apply-once|retire-definition and execution not-run|confirmed. Original native applied history/receipts determine execution independently of definition presence. Apply-once requires not-run plus current explicit selection; actual phase confirmation alone changes it to confirmed. Whole-set retirement of never-run definitions remains not-run; retired IDs can never be selected or reused. Unknown original selected outcome blocks new application/retirement until original settlement. Retaining confirmed/retired sets never replays them. Original whole definitions/IDs/source bytes/order and mixed-table surviving rows remain unchanged.
+
+## Compiler-owned plan, subjects and prefix frames
+
+Plan top-level members are EXACTLY the current plan0.7 member set, with its `version` replaced by the candidate plan literal, PLUS `inventory`, `prefixes` and `historyBinding`. The names remain `canonicalization,id,predecessor,previous,next,fromBundleDigest,toBundleDigest,steps,seedExecution,phases,executionProfile,approvalProfile,options,review,requiresApproval,nativeQualified,digest`; `requiresApproval:true`, `nativeQualified:false`. HistoryBinding is exactly `{profile:"umf.table-inventory-source-history/0.1",count,digest}` with digest over the exact canonical supplied history. The plan does not recursively embed earlier plans; recompile verification supplies history separately. Digest hashes the complete body with only digest omitted. No author-supplied SQL schedule or native OIDs. Prefix frames never contain this eventual plan digest or their own digest in the hashed projection, avoiding a new hash cycle.
+
+Inventory is exactly `{profile:"umf.table-inventory-delta/0.1",previousTables,nextTables,changes,seedLineage}`. Each table side is ordered `{table,record,schema,name,meaningDigest}`. Each change is exactly `{kind,table,record,beforePath,afterPath,beforeMeaningDigest,afterMeaningDigest}`; absent paths are null and absent meaning hashes canonical null. Meaning closes over complete original declaration/catalog meaning, not ordinal inference.
+
+ExecutionProfile is exactly `{version:"umf.table-inventory-execution/0.1",progressRelation:"umf_lifecycle_inventory_progress",ownerOnly:true,ingressProfile:"umf.table-inventory-generation-ingress/0.1",inventoryProfile:"umf.table-inventory-prefix/0.1",initial:BOOLEAN,conversionProfile,originalsProfile,retirementProfile,retiredStoreProfile}`. The distinct fixed progress relation avoids silently changing the historical relation schema. ConversionProfile is G04's exact profile if any conversion, otherwise null; originalsProfile is its exact selected provider profile if any retained recovery, otherwise null. RetirementProfile is umf.field-retirement-step/0.1 iff G05 selected, else null; retiredStoreProfile is umf.native-row-originals-store/0.2 iff G05 selected, else null. Mixed retained G04/G05 uses the exact adopted fresh-store0.2 composition preserving G04 semantics when no carrier removal is selected; no .1 store upgrade/adoption. A selected enrolled-carrier removal instead requires the NEW separately proposed umf.native-row-originals-inventory-store/0.1 with the exact carrier-retirement.md profile/record/DDL/custody branch. Then originalsProfile/retiredStoreProfile both name that actual successor; no old provider alias or upgrade is inferred. Unenrolled removal has null carrier-provider obligation. Missing original provider census or unqualified successor refuses before effect. These are compiler-derived obligations, not runtime capability attestations. Initial=true does NOT assert G11's existing transition request admits null predecessors.
+
+Every step has EXACT common members `{id,kind,sourcePath,transaction,sql,operation,inventorySubject,preconditions,expectedOutcome,verification,recovery}`. Kind is table|foreignKey|index|policy|grant|comment|backfill|seed|conversion|retirement|metadata. Preconditions are exactly `{kind:"inventory-prefix",prefixDigest}` and expectedOutcome exactly `{kind:"inventory-prefix",prefixDigest}`, binding the frames before/after its indivisible phase. Verification is `native-catalog-privileges-and-role-scope`; recovery is rollback-transaction for required phases or inspect-index for forbidden index phases. These are explicit NEW variants, not accepted old-plan shapes.
+
+InventorySubject is exactly one of `{kind:"table",table,record}`, `{kind:"field",table,field}`, `{kind:"dependency",table,dependencyKind,id,sourcePath,meaningDigest}`, `{kind:"seed",sets}`, or `{kind:"metadata",profile:"umf.table-inventory-metadata/0.1"}`. DependencyKind is check|foreignKey|index|key|policy|grant|comment. Fixed metadata effects are compiler-selected and host-owned, never author SQL or author-selectable object names.
+
+Operation is create-table|remove-table|enable-rls|force-rls|add-column|drop-column|target-check|install-default|change-default|tighten-not-null|relax-not-null|rename-column|dependency-drop|dependency-add|apply-backfill|apply-seeds|capture-originals|convert-field|validate-conversion|capture-retired-values|retire-field|restore-field|validate-restoration|create-concurrent-index|add-not-valid|validate|set-comment|prepare-inventory-metadata|record-inventory-approval|publish-inventory. Exact admitted kind/operation/subject/SQL combinations are exhaustively listed in step-branches.md; contradictory combinations refuse. Backfill adds ONLY `dataBinding:{profile:"umf.table-inventory-backfill/0.1",selectionIndex,operationId,previousSourceDigest,nextSourceDigest}`. Seed adds ONLY `seedSets:[IDs]`. Conversion adds ONLY the exact G04 `conversionBinding` record; its target is inventorySubject and no redundant old phaseTarget/phaseOperation alias is introduced. Retirement adds ONLY the exact G05 retirementBinding in step-branches.md. All other branches have no additional members. Existing field scalar semantics are inherited, not the old plan step schema.
+
+G02/seed/conversion/retirement/metadata SQL is exactly empty; original data descriptors are prepared by Weft and fixed metadata is executed by the host. Source paths for selections remain exact options pointers; conversion validation points to its exact next mapping. DDL comes from UMF's source-derived fixed renderers. Creation's indivisible required phase includes RLS enable/force and every available declared policy before leaving the phase; a deferred cross-table policy dependency keeps ordinary ingress fenced until its final complete validation. No generic empty-SQL fallback.
+
+Existing required effect groups remain indivisible: G01 fill/tighten; G02 add/check/fill/default/requiredness in its admitted order; G11 replacement group; G04 capture/conversion/reinstalled-dependency/complete validation; G05 capture/retire/lifecycle/outcome and restore/population/current-dependency/complete validation. Share overlapping groups into one required transaction; do not split an original atomic obligation to fit a phase budget. A forbidden concurrent-index node cannot enter such a group. Cycles/unschedulable boundaries produce located full-plan refusal. Re-evaluate complete-target constraints after grouping.
+
+Phases are exactly `{id,kind,transaction,steps}`; kind prepare|approval|transaction|backfill-add|backfill-tighten|field-replacement|field-conversion|field-retirement|field-restoration|concurrent-index|constraint-add|constraint-validation|seed|publication. First prepare, second approval and last publication phases are required fixed metadata phases; at least THREE phases exist, even for an empty inventory. The approval phase records/observes the actual native protected decision as initial-approval-ordering.md requires; denied-approval-recovery.md supplies its exact negative original intent/reservation/observation/outcome/progress/recovery branch, leaving phaseIndex1 without successful phase2 steps and with no business capability; setup is authorized by original logical preparation and a prospective binding, never a nonexistent future receipt. A heterogeneous merged atomic group has kind transaction with its complete component obligations retained, not broken into separate labels. A forbidden phase contains exactly its selected concurrent index. Prefixes has exactly phases.length+1 frames, including index0 before preparation and a final published frame. Each frame is exactly `{profile:"umf.table-inventory-prefix/0.1",index,completedSteps,tableStates,catalog,metadata,seedStates,digest}`. Digest omits only itself. Catalog is a compiler-owned exact expected-catalog projection using original declarations and admitted typed operations; it has no native OIDs. It is NOT a fabricated deployment source or final next bundle used early. TableState is exactly `{table,record,state,definitionDigest,creationStep,removalStep}`; state absent|present; digest is canonical-null hash when absent; step refs nullable. Intermediate column/constraint/policy/grant states are represented in catalog, including NOT VALID and index validity obligations. SeedStates entries are the exact five-key lineage entries in seed-lineage.md; projected execution becomes confirmed only for the selected phase, and actual host receipt must establish it. Metadata is exactly `{profile:"umf.table-inventory-metadata/0.1",state}` where state pristine|pending|published; compiler derives exact fixed history/head/outcome/approval/progress inventory for each state, never an unknown-object allowance. Index0 is pristine only for initial; installed index0 is the original published predecessor. Intermediate frames are pending, and final published means the successor. Index/previous/history bindings disambiguate the two published states; a state label never substitutes for actual original head/source proof.
+
+The exact closed pending progress record/native columns/constraints/indexes/ACL/birth/witness/publication/reference contracts are in native-metadata.md and normative proposed native-metadata.sql, bound by metadata-definition.json. Progress has no row at pristine index0; setup is prepare phase1 and commits an index1 complete row. Publication has no pending progress left. History and ordinary metadata keep their exact pinned definitions; only the explicit new inventory variant admits its two additional fixed relations. FileDigest is mandatory in this first native subset. No metadata family label or hash stands in for original custody or source reparse.
+
+The host's actual prefix witness records native schema/table/role/constraint/policy/ACL identities and original creation/removal receipt bindings. For a create, it records real post-DDL relation OID and original effect receipt; name/OID observation alone is not original creation authority. Existing bindings must remain their original native objects; a recreated same-name table is not an unchanged table. Absent state verifies the FULL relevant native namespace/object closure, not just no row in pg_tables. A drop followed by create reusing a name has two distinct stable bindings and original physical generations, never adoption by equal name/OID. No future OID is signed in portable intent.
+
+## Bounds and refusal
+
+Retain original bundle16MiB/plan24MiB, tables256, stored columns1600 per table, seed10000 rows/128 selected IDs/8MiB native expansion, conversion256 and source-specific tighter limits. New backfill/default/concurrent/validation selector arrays are each at most256; retiredSeedSets at most256 eligible whole definitions from the complete original chronological history. G05 retirements/restorations each<=256, original archiveSources<=64/4MiB aggregate and full selected option wire<=6MiB remain conjunctive. Proposed inventory intent limit512 (256 removes+256 creates), review markers2048, source-derived steps99999, phases1024, source history128 plans/24MiB, seed lineage32768 unique historical IDs (bounded history generations times authored seed-set bound), and ALL prefix material combined within the plan24MiB cap. These maxima are conjunctive, not a promise every maximum-size combination fits. Prefix graph expansion must use bounded indexed subjects, not duplicate an unbounded full source per step; charge each frame incrementally before growing/cloning the next projection so a final serialization check is not the only memory limit. Every count is an exact integer excluding booleans; all original ID/UTF8/SQL/default/profile bounds remain. Reviewer must agree the concrete bounds/policy and denial-of-service tests before adoption. Native records/reference/policies have additional exact caps in native-metadata.md and step-branches.md. Host time/row/byte/resource policy is the COMPLETE trusted signed component-policies.md envelope, including exact original G11/G04/G05 policies, explicit G04 .2 issued capacity, phase transaction_timeout, immutable actual session/compiler/provider selections and campaign policy; author arrays cannot enlarge it. Native timer is established BEFORE BEGIN, original receipt policyDigest hashes its complete ORIGINAL component policy, and the outer receipt separately binds the full envelope. Incompatible immutable policy/atomic groups refuse, never split or silently clamp signed policies.
+
+Refuse unrecognized versions/modes/fields, unsupported native capability, configuration/role identity changes, external/unowned inbound dependencies, unknown affected extension meaning, unexplained source edits, incomplete final operation typing, changed command required-create obligations (`TABLES_OPERATION_REQUIRED`), stale approval/file/head/source, noncontiguous progress, metadata/ACL/object drift, unsafe namespace races, destructive effects without exact disclosure, forged creation/absence evidence and incomplete seed lineage. Return located schema/source diagnostics, never row values, credentials or low-entropy hashes of rejected values.
+
+The NEW exact installed request, native transition/cutover, fresh native enrollment and inventory row-table enrollment branches are exhaustively specified in native-inventory-branches.md. Old profiles/resolvers remain exact. Complete embedded native records retain the original tighter ingress-store cap; exceeding it refuses visibly, never drops evidence.
+
+Successor005 ordinary-decision-custody.md is normative proposed shared text for ONE original initial phase2 request/reservation/attempt accounting/journal/settlement and recovery across approved|denied. Native decisionBinding binds original common custody in progress/witness and original initial permanent publication. Positive native outcome maps to the actual approved row plus existing successful phase2 receipt; denied native outcome/return is exact004. Native positive COMMIT before original common confirmation cannot issue business capability. Approved-only receipt.verify is unchanged; denied uses genuine protected reader/native full correspondence. Installed pre-transition approval does not enter this fresh-only slot, and no old context/signature scope is widened.
+
+## Successor006 exact one-grant/cumulative mapping
+
+campaign-grant-accounting.md is normative proposed closure. Native budgetReceipt.campaignCharge.elapsedBudgetMs equals ONE dispatched original grant.reservedMs. Common priorCampaignCharge is the original cumulative outer preparation checkpoint including every aborted/resolved-unknown preparation grant, never the successful phase1 receipt alone. Current original outer cumulative time sums UNIQUE grants across every attempt/phase; native receipt/settlement replay addsZERO. Common+outer refer to ONE same-provider durable allocation under original atomic CAS, not independent budgets. Existing decisionBinding resolves phase2 to that SAME original grant. Unknown stays charged/fenced; positively proved abort permits exactly one new fully charged numbered grant if original remaining cap fits. Full native/provider/CAS/custody/Weft/old-store/carrier/table/mixed/installation gates remain OPEN; no signature scope/receipt/old-context widening.
