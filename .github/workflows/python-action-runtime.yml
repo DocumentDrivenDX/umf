@@ -169,7 +169,8 @@ jobs:
             "$GITHUB_WORKSPACE/python/tests/test_action_runtime_resources.py" \
             "$GITHUB_WORKSPACE/python/tests/test_action_fixture_vectors.py" \
             "$GITHUB_WORKSPACE/python/tests/test_core.py" \
-            "$GITHUB_WORKSPACE/python/tests/test_rust_core.py"
+            "$GITHUB_WORKSPACE/python/tests/test_rust_core.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_extension_kinds.py"
       - name: Recheck direct wheel payload after tests
         if: always()
         run: |
@@ -192,7 +193,8 @@ jobs:
             "$GITHUB_WORKSPACE/python/tests/test_action_runtime_resources.py" \
             "$GITHUB_WORKSPACE/python/tests/test_action_fixture_vectors.py" \
             "$GITHUB_WORKSPACE/python/tests/test_core.py" \
-            "$GITHUB_WORKSPACE/python/tests/test_rust_core.py"
+            "$GITHUB_WORKSPACE/python/tests/test_rust_core.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_extension_kinds.py"
       - name: Recheck sdist-rebuilt wheel payload after tests
         if: always()
         run: |
