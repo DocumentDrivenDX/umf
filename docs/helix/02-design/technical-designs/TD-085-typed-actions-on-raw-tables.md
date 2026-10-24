@@ -1287,3 +1287,57 @@ ingress creation and application subject/schema origin interfaces before their
 positive code paths are adopted. Code admission must include actual positive
 native resolution/binding, not merely correctly refusing missing provider hooks.
 Pure data-only plans may precede that integration but cannot issue capabilities.
+
+
+### G11 original supervisor-journal birth/selection015
+
+This amendment adopts the exact new ORIGINAL enrollment0.3/journal0.2 birth,
+acyclic header/definition, private context metadata and explicit target request0.2
+requirements below. Existing primary context0.3 member set, original six-scope
+owner configuration/signing payload/domain, old enrollment0.1/0.2 and old actual
+`umf.local-postgresql-supervisor-journal/0.1` bytes/behavior remain exact. NEW
+`umf.local-postgresql-owner-journal/0.2` is a distinct literal, not an alias.
+No active setup/header/old request is silently upgraded. No missing-file virtual
+zero, O_CREAT lock fallback, caller flag/definition or arbitrary registry can
+select or create this new original history after confirmation.
+
+The fixed initial definition's ingressEvents/applicationEvents are null. This
+means those capabilities are UNAVAILABLE, not accepted or qualified by null.
+Full positive ROOT observation/store/application/managed/installed/release support
+remains OPEN until actual approved complete interfaces/native evidence exist;
+a future supported complete tuple requires its own fresh original enrollment.
+The separate unadopted application bootstrap allocation now targets enrollment0.4
+with separately reviewed ownerconfig/ledger/context variants. No seventh scope
+is introduced here.
+
+#### Concrete ownership and implementation
+
+Bootstrap validates new exact original enrollment and required supervisor journal/
+lock birth while SAME primary setup is pending, then confirms ONE original primary
+only after owner ledger/ROOT/supervisor resources all verify. The confirmed path
+only opens/checks existing original resources. Its opaque birth/context metadata
+registries remain physical-bootstrap-owned and identity checked. Pure core consumes
+fixed original private metadata bytes through the non-I/O accessor, never a native
+callback/caller dictionary or missing-metadata default. Source fixtures explicitly
+install genuine original file setup before issuing context; do not weaken asserts
+or add a production sourceTest bypass to preserve their old monkeypatch helper.
+
+A native-free exact supervisor journal codec below bootstrap/native owns closed
+header/event/state/definition/anchor/canonical replay, with fixed pure ROOT leaf
+consumption. Native file constructor/append/recover keeps actual IO/native
+ownership; no reverse import or callback registrar. Preserve LocalPostgresError
+class/aliases and old0.1 behavior; map codec-private failures explicitly. New
+physicalEvents0.2 handles original target request0.2 creation-intent duplicates and
+rejects old untyped store-intents on this new journal, requiring its admitted
+original typed parent association. Complete current file history is validated;
+its immutable birth projection is recomputed separately from mutable events.
+
+Native target preparation obtains bootstrap's real confirmed birth under original
+control lease, opens existing actual journal, builds exact request0.2 with actual
+birth/context digests and signs through unchanged original scope1 intent binding.
+Reserve/execute/recover keep actual same original IDs/signature/header/definition/
+context. Pure current-state transition helpers alone do not provide any durable
+write, original context, existing lock, actual process/custody or native authority.
+Actual controlled target/stores/binding/checkpoints follow014 and independently
+qualified original native lifecycle. Historical active-target upgrade is separate
+required backlog work, not an automatic fallback or closure of the full goal.

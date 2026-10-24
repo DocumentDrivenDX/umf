@@ -1163,3 +1163,50 @@ receipt identities. Preserve failures and unknown outcomes; no source model,
 negative-only refusal suite or author-attributed log replaces independent native
 positive acceptance. The full G02–G11 goal and all existing G10/G04/G05 obligations
 stay open until independently verified and accurately released.
+
+
+### G11 original supervisor-journal birth/selection015
+
+This amendment adopts the exact new ORIGINAL enrollment0.3/journal0.2 birth,
+acyclic header/definition, private context metadata and explicit target request0.2
+requirements below. Existing primary context0.3 member set, original six-scope
+owner configuration/signing payload/domain, old enrollment0.1/0.2 and old actual
+`umf.local-postgresql-supervisor-journal/0.1` bytes/behavior remain exact. NEW
+`umf.local-postgresql-owner-journal/0.2` is a distinct literal, not an alias.
+No active setup/header/old request is silently upgraded. No missing-file virtual
+zero, O_CREAT lock fallback, caller flag/definition or arbitrary registry can
+select or create this new original history after confirmation.
+
+The fixed initial definition's ingressEvents/applicationEvents are null. This
+means those capabilities are UNAVAILABLE, not accepted or qualified by null.
+Full positive ROOT observation/store/application/managed/installed/release support
+remains OPEN until actual approved complete interfaces/native evidence exist;
+a future supported complete tuple requires its own fresh original enrollment.
+The separate unadopted application bootstrap allocation now targets enrollment0.4
+with separately reviewed ownerconfig/ledger/context variants. No seventh scope
+is introduced here.
+
+#### Required original birth/current-state and native tests
+
+All following tests are planned and UNTESTED until exact frozen sources/commands/
+actual result receipts exist. Prior pure107-module/source tests do not satisfy
+new original resource or native authority acceptance.
+
+| Obligation | Required assertion |
+| --- | --- |
+| Exact original selection | Enrollment0.3 descriptor/known definition +unchanged actual context0.3 selects ONLY new owner-journal0.2; old enrollment/request/journal behavior remains byte exact |
+| Hash-cycle exclusion | Recompute anchor→actual zero bytes→descriptor→enrollment→final context without self/future digest; changing any original policy/profile/path/ID changes binding and refuses foreign resource |
+| Pending resource crash matrix | Inject each file/lock/fsync/rename cut before ONE primary confirmation; exact known initial subset finishes SAME paths/IDs, conflicting/nonzero subset refuses, no usable context before all resources |
+| Confirmed file loss | Remove journal or lock after primary confirmed, including sequence0; every read/open/recover refuses with no O_CREAT/virtualzero/rebirth/alternate path |
+| Legitimate nonzero journal | Validate exact immutable birth projection plus complete current events/head/sequence; actual later event append never requires whole current hash==initialHeaderDigest |
+| Closed pure codec | Wrong profile/tuple/definition/digest/scalar/unknown key/kind/state/order/crosslink/size refuses; old untyped store-intents refuse in0.2 while actual old0.1 fixture bytes remain exact |
+| Real opaque birth | Only registered original bootstrap context/issuer/resource proof produces birth; copied JSON/hash/seal/foreign context cannot select/open/append new journal |
+| Pure metadata | Old enrollment has explicit journal:null, new enrollment requires full exact record; missing registry is not legacy, mutation cannot change version, getter performs no file/native/caller lookup |
+| Exact signed request dispatch | New enrollment requires target request0.2 with actual birth/context digests and genuine original owner signature; old requests cannot downgrade/upgrade/reissue at occupied keys; no future native OID signed |
+| Same original native recovery | Real target/custodian/signature/lease/current history reattachment resolves SAME original operations; missing/rewound/lookalike/native-unknown state stays fenced |
+| Independent native/installed gates | Real PG18/platform/driver/controller authority/checkpoint positive+crash recovery and release artifacts independently qualify; no null ingress/application capability, source fixture or parser proof replaces them |
+
+Source/kernel actual file-lock/identity/crash controls, real native process/SQL/
+custody controls, and installed/release proof remain separate named qualifications.
+Retain every failed precursor and unknown result. No passing count or future stub
+closes this adoption's implementation or the remaining G02–G11 release backlog.

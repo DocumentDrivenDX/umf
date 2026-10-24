@@ -1,0 +1,37 @@
+{
+  "profile": "umf.g11.governing-proposal/15",
+  "status": "explicit-original-supervisor-journal-birth-and-context-metadata-design-for-review-native-unqualified",
+  "baseCommit": "0f3a0b4970a9374abd3178269c907763398de262",
+  "files": [
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-081-table-lifecycle.md",
+      "baseSha256": "f721adf78bd18f4b080335ede7703e18e3d6105d840c6eca3c66a0ba24078fcb",
+      "candidateFile": "CONTRACT-081-table-lifecycle.md",
+      "candidateSha256": "5a645176a98984a1b67c15a692429bc84a35560429ac3326b6729f2b44693892"
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-085-typed-actions-on-raw-tables.md",
+      "baseSha256": "fc4c543cc9db74b9163b152e71be4cb83b119f09bd3ad4d93c4e974d47b4c217",
+      "candidateFile": "TD-085-typed-actions-on-raw-tables.md",
+      "candidateSha256": "c0795718e8c4d07526687a025f60a6212e33a48664a9a503dc31fcbbf3cfd95f"
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-085-typed-actions-on-raw-tables.md",
+      "baseSha256": "6eea8fa3d4ee18e9d2894cf55aa69af02923afdb9ffdba184d4f087e70de331b",
+      "candidateFile": "STP-085-typed-actions-on-raw-tables.md",
+      "candidateSha256": "00581d19d24f00f660777aee1c75e5977d751067653f944755b9a86de3035d94"
+    }
+  ],
+  "sourceElaborations": [
+    {
+      "file": "g11-original-supervisor-journal-birth-002.md",
+      "sha256": "635336cdc920f355f341b3e8997193a6640974037602a32dbeb86186a9df2cc7"
+    },
+    {
+      "file": "g11-supervisor-journal-definition-001.json",
+      "sha256": "522d18dab151d15b646ec42b7429faac1ba9ea8b0295bf612b94e80ae9d150a3"
+    }
+  ],
+  "patchSha256": "00778dd2b0544f23fd461f734551087e57ae82f888dff92323c53877861226ee",
+  "scope": "Explicit new original enrollment/header/request/private metadata; unchanged context.3/sixscope/old.1; actual existing-only resources and full current codec. Null ingress/application capabilities unavailable, full native/release/old-active-upgrade open."
+}

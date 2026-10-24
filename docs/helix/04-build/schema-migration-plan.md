@@ -627,3 +627,14 @@ bounded original target/control exclusion and writer integration are the next
 implementation cuts. Full native observation, durable checkpoint/recovery,
 committed ingress and application origin providers, all other migration gaps
 and testing/review/merge/immutable-release/public-byte gates remain open.
+
+
+Governing015 adopts explicit original supervisor journal birth and fixed private
+context metadata, with a native-free journal codec and signed target request
+version dispatch. Exact prior contract/design/test-plan prefixes are preserved;
+the complete proposal and root source review are retained in
+`evidence/schema-migration-design-review/g11-contract-015/` and
+`g11-contract-015-root-review001.json`. Implementation and all eleven new test
+obligations remain open. Null ingress/application event families are unavailable;
+the full native, managed, installed, merge, release and public-byte gates remain
+required. No current setup, journal or request is automatically upgraded.
