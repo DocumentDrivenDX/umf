@@ -1368,3 +1368,16 @@ per-store reservations only; bare scope4 effects and ingress aliases refuse.
 Actual native ROOT authority still requires genuine committed ingress origin,
 complete closed snapshots and the separately adopted creator/provider grammar.
 No known tuple, active enrollment, signature scope or native capability expands.
+
+
+### G10 implementation checkpoint004: one local definition domain
+
+Adopt CONTRACT-081 checkpoint004 and the complete retained definition
+`../../04-build/evidence/schema-migration-design-review/g10-table-state-definition-digest-001.md`.
+Derive the closed current table-definition preimage identically at initial and
+installed index0 and after every indivisible phase, after catalog ordering.
+It binds complete local catalog rows; full review/source meaning remains in
+InventoryTable.meaningDigest and original plan/source bindings. Refuse absent
+table leftovers. Remap creation/removal refs to the actual same-operation,
+same-binding serialized step before prefix digesting. These are design rules,
+not passing implementation/native/browser/installed/release evidence.

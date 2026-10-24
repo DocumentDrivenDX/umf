@@ -685,3 +685,14 @@ scope4 parent/per-store state. Candidate002 is not adopted; Luna is implementing
 null-ingress cannot create its genuine native prerequisite. Actual original
 creator/snapshot/ROOT writer/provider and all native/installed/managed/merge/
 release/public-byte gates remain open.
+
+
+G10 checkpoint004 adopts one current local table-definition digest, retained in
+`evidence/schema-migration-design-review/g10-table-state-definition-digest-001.md`
+with its root adoption receipt. Complete current catalog rows participate after
+every phase; the full source/review digest remains a separate domain. Semantic
+predecessor continuity and actual operation-bound creation/removal references
+are required. Source009 wire/step-reference/seed-order defects and history
+recompilation remain under source repair in010. No source tests or runtime
+checks were executed for this adoption under the shared resource hold. Native,
+browser, installed, managed, merge/release/public-byte gates remain open.

@@ -1237,3 +1237,15 @@ and unavailable ingress/application families. Source fixtures never satisfy the
 genuine native origin/snapshot/provider gates. Keep original signed versus fresh
 observation digests distinct; original semantics permit changing native facts.
 All native/installed/managed/release acceptance remains open.
+
+
+### G10 verification checkpoint004: local definition and step references
+
+Require the exact preimage and continuity tests in CONTRACT-081 checkpoint004
+and `../../04-build/evidence/schema-migration-design-review/g10-table-state-definition-digest-001.md`.
+Cover every catalog collection, unchanged local schema across source changes,
+initial/installed/created phase equality, absent H(null) with no local leftovers,
+schema-global exclusions, complete admitted row content, and correct operation
+and stable identity for every serialized creation/removal reference. Existing
+unrelated metadata step IDs must not satisfy the provenance check. All new
+checks remain required; no execution occurred under the shared resource hold.

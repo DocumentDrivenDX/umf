@@ -1,0 +1,30 @@
+{
+  "profile": "umf.g10.table-definition-adoption/0.1",
+  "status": "PASS-design-only",
+  "baseCommit": "1ceb11f0eec825b856553ff742ab7faa508ffd0e",
+  "normativeSha256": "a8d3c590f98f12ba64632a868caa05f044b41ac0f2c7f1ad3e89bb46bb4baed9",
+  "files": [
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-081-table-lifecycle.md",
+      "priorBytes": 560088,
+      "priorSha256": "23db27eef6666c911531a59f07f0511907ce026cadbf3d08c06cce29f63de2c0",
+      "appendSha256": "88f987fe304b40988659b9b3d98732f72669286179806f9be0d8610543c9a181",
+      "candidateSha256": "db23f053e84ae4cc5f5421e3cfc82ba724cee72a133be0a1c251453c155a6580"
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-085-typed-actions-on-raw-tables.md",
+      "priorBytes": 107830,
+      "priorSha256": "969b693de32374aaddea302d8f4acd0c7ed442b5ce96b86bdca715aaef3dc072",
+      "appendSha256": "84856a39446939993467e171679bb85964630edb8958e58b349441f7be6f0689",
+      "candidateSha256": "72953d8c43450aec9106acd29324928f477ebdcc1bda947536fc6bcd71a530d8"
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-085-typed-actions-on-raw-tables.md",
+      "priorBytes": 120646,
+      "priorSha256": "462c9cd8bec06605d109951d93a55b07f9da37d7194b2d0533eec977c9d3c784",
+      "appendSha256": "85252af83698948f1b5a1d71da71702bf00421f8e7940d7844bf97bde57a98f4",
+      "candidateSha256": "d4fff52d49eacdf94e1f185694cd4dd3893a82cbb83f1c10e43b8cc92cab3064"
+    }
+  ],
+  "review": "Root read complete external definition against governing001 prefix/closed catalog and002/003 schema-grant/metadata definitions. One complete phase-local catalog preimage, distinct full review/source domain, absent consistency, semantic continuity and same-operation step references. No source/native capability or prior published wire reinterpretation. All prior bytes/frontmatter remain exact. Source-only authoring under execution hold; tests/native acceptance remain required."
+}
