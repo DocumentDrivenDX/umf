@@ -12,7 +12,6 @@ from __future__ import annotations
 from contextlib import AbstractContextManager
 from typing import Any, Protocol, runtime_checkable
 
-
 _CAPABILITY_SEAL = object()
 
 

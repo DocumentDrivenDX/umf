@@ -12,8 +12,9 @@ from __future__ import annotations
 import hashlib
 import json
 import time
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Any, Callable
+from typing import Any
 
 from .catalog import CatalogError
 
@@ -66,7 +67,7 @@ class FieldReplacementExecutionPolicy:
             raise CatalogError('phase-policy-invalid')
 
     @classmethod
-    def from_trusted_mapping(cls, value: dict[str, Any]) -> 'FieldReplacementExecutionPolicy':
+    def from_trusted_mapping(cls, value: dict[str, Any]) -> FieldReplacementExecutionPolicy:
         """Build from a trusted host config, with closed keys and exact ints."""
         if type(value) is not dict or set(value) - _POLICY_FIELDS:
             raise CatalogError('phase-policy-invalid')
@@ -117,7 +118,7 @@ class PhaseDeadline:
     behavior must be proven by the PostgreSQL adapter integration tests.
     """
 
-    __slots__ = ('_policy', '_started_ns', '_deadline_ns', '_clock_ns')
+    __slots__ = ('_clock_ns', '_deadline_ns', '_policy', '_started_ns')
 
     def __init__(self, policy: FieldReplacementExecutionPolicy, *,
                  clock_ns: Callable[[], int] = time.monotonic_ns):
@@ -201,8 +202,15 @@ class PhaseBudgetCounter:
     must bind each entry to the exact reviewed step order before recording it.
     """
 
-    __slots__ = ('_policy', '_policy_digest', '_affected_rows', '_effects',
-                 '_effect_step_ids', '_deadline', '_poisoned')
+    __slots__ = (
+        '_affected_rows',
+        '_deadline',
+        '_effect_step_ids',
+        '_effects',
+        '_poisoned',
+        '_policy',
+        '_policy_digest',
+    )
 
     def __init__(self, policy: FieldReplacementExecutionPolicy, *,
                  clock_ns: Callable[[], int] = time.monotonic_ns):
@@ -375,9 +383,15 @@ def require_retry_after_confirmed_abort(policy: FieldReplacementExecutionPolicy,
 
 
 class _ConfirmedAbortProof:
-    __slots__ = ('_seal', 'phase_binding_digest', 'target_identity_digest',
-                 'attempt_id', 'policy_digest', 'rollback_confirmed',
-                 'phase_completion_absent')
+    __slots__ = (
+        '_seal',
+        'attempt_id',
+        'phase_binding_digest',
+        'phase_completion_absent',
+        'policy_digest',
+        'rollback_confirmed',
+        'target_identity_digest',
+    )
 
     def __init__(self, seal: object, *, phase_binding_digest: str,
                  target_identity_digest: str, attempt_id: str,

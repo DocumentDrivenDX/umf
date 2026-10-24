@@ -6,9 +6,13 @@ import unittest
 
 from umf_access.lifecycle.catalog import CatalogError
 from umf_access.lifecycle.generation_ingress import (
-    GenerationAdmission, GenerationIngressProvider, TargetCustodian,
-    TargetCustody, OwnerEnrollmentRequest, EpochProvisionRequest,
+    EpochProvisionRequest,
     EpochProvisionReservation,
+    GenerationAdmission,
+    GenerationIngressProvider,
+    OwnerEnrollmentRequest,
+    TargetCustodian,
+    TargetCustody,
 )
 from umf_access.lifecycle.phase_policy import (
     DERIVED_ADMIN_MODULE_PROFILE,
@@ -53,9 +57,9 @@ class G11ExecutionPolicyTests(unittest.TestCase):
             {'statement_timeout_ms': 10, 'lock_timeout_ms': 11},
         ]
         for values in bad_values:
-            with self.subTest(values=values):
-                with self.assertRaisesRegex(CatalogError, 'phase-policy-invalid'):
-                    FieldReplacementExecutionPolicy.from_trusted_mapping(values)
+            with (self.subTest(values=values),
+                  self.assertRaisesRegex(CatalogError, 'phase-policy-invalid')):
+                FieldReplacementExecutionPolicy.from_trusted_mapping(values)
 
     def test_original_policy_digest_is_mandatory_across_resume(self):
         initial = FieldReplacementExecutionPolicy()
@@ -136,9 +140,9 @@ class G11ExecutionPolicyTests(unittest.TestCase):
             counter.charge(step_id='step-00002', operation='second', validated_rows=one)
         self.assertEqual(counter.affected_rows, before['affectedRows'])
         for action in (counter.receipt, counter.before_dispatch, counter.before_commit):
-            with self.subTest(action=action.__name__):
-                with self.assertRaisesRegex(CatalogError, 'phase-budget-poisoned'):
-                    action()
+            with (self.subTest(action=action.__name__),
+                  self.assertRaisesRegex(CatalogError, 'phase-budget-poisoned')):
+                action()
 
     def test_invalid_late_marker_poison_refuses_receipt_and_commit(self):
         counter = PhaseBudgetCounter(FieldReplacementExecutionPolicy())
@@ -199,9 +203,9 @@ class G11ExecutionPolicyTests(unittest.TestCase):
             (['umf_affected'], 'umf_affected', [], True),
         ]
         for args in invalid:
-            with self.subTest(args=args):
-                with self.assertRaisesRegex(CatalogError, 'phase-budget-marker-invalid'):
-                    _validated_marker_rows(*args)
+            with (self.subTest(args=args),
+                  self.assertRaisesRegex(CatalogError, 'phase-budget-marker-invalid')):
+                _validated_marker_rows(*args)
 
     def test_receipt_rejects_extra_fields_boolean_counts_and_wrong_sum(self):
         policy = FieldReplacementExecutionPolicy()
@@ -215,9 +219,9 @@ class G11ExecutionPolicyTests(unittest.TestCase):
         for mutate in mutations:
             value = copy.deepcopy(base)
             mutate(value)
-            with self.subTest(value=value):
-                with self.assertRaisesRegex(CatalogError, 'phase-budget-receipt-invalid'):
-                    validate_phase_budget_receipt(value, policy)
+            with (self.subTest(value=value),
+                  self.assertRaisesRegex(CatalogError, 'phase-budget-receipt-invalid')):
+                validate_phase_budget_receipt(value, policy)
 
     def test_fresh_retry_requires_nonserializable_native_abort_proof(self):
         policy = FieldReplacementExecutionPolicy()
@@ -226,17 +230,17 @@ class G11ExecutionPolicyTests(unittest.TestCase):
         self.assertIn('phase_completion_absent', abort_parameters)
         self.assertNotIn('progress_absent', abort_parameters)
         for forged in (True, {}, {'rollbackConfirmed': True}):
-            with self.subTest(forged=forged):
-                with self.assertRaisesRegex(CatalogError, 'phase-retry-native-proof-required'):
-                    require_retry_after_confirmed_abort(policy, policy.digest, forged)
+            with (self.subTest(forged=forged),
+                  self.assertRaisesRegex(CatalogError, 'phase-retry-native-proof-required')):
+                require_retry_after_confirmed_abort(policy, policy.digest, forged)
 
     def test_ingress_protocol_types_do_not_mint_native_capabilities(self):
         for capability in (TargetCustody, GenerationAdmission,
                            OwnerEnrollmentRequest, EpochProvisionRequest,
                            EpochProvisionReservation):
-            with self.subTest(capability=capability.__name__):
-                with self.assertRaisesRegex(TypeError, 'issued by a trusted provider'):
-                    capability(None, None, None)
+            with (self.subTest(capability=capability.__name__),
+                  self.assertRaisesRegex(TypeError, 'issued by a trusted provider')):
+                capability(None, None, None)
         self.assertTrue(hasattr(GenerationIngressProvider, '__protocol_attrs__')
                         or getattr(GenerationIngressProvider, '_is_protocol', False))
         self.assertTrue(hasattr(TargetCustodian, '__protocol_attrs__')
