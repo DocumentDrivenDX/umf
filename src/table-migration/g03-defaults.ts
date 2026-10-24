@@ -6,6 +6,7 @@ import {UmfError,type Document,type Element} from '../model/types';
 import type {TableDefault,TableRef} from '../extensions/tables';
 import type {TableDeploymentBundle} from '../table-deployment';
 import {typedDefaultExpressionSql} from '../table-deployment/sql';
+import {nativeDate,nativeInstant} from '../extensions/tables/temporal';
 import {canonical,hashCanonical} from '../compilation/bundle/hash';
 import type {ReviewedChangeMarker} from './reviewed';
 
@@ -105,7 +106,7 @@ function validateDefaultPair(field:Element,column:any,value:unknown,doc:Document
   const d=value as any;
   if(d.kind==='literal'){
    if(Object.keys(d).some(key=>!['kind','value'].includes(key))||!owns(d,'value'))fail('TABLE_MIGRATION_UNSUPPORTED','Unknown native literal-default qualifiers are retained and block G03',path);
-   checkSchemaLiteral(doc,field,d.value,true);
+   validateLiteralDomain(doc,field,column,d.value,path+'/value');
    validateNativeCapacity(field,column,d.value,path+'/value');
   }else if(d.kind==='currentTimestamp'){
    if(Object.keys(d).length!==1||column.nativeType.kind!=='timestamptz')fail('TABLE_MIGRATION_UNSUPPORTED','Current timestamp default requires timestamptz and no qualifiers',path);
@@ -122,6 +123,24 @@ function validateDefaultPair(field:Element,column:any,value:unknown,doc:Document
   if(!logical||typeof logical!=='object'||Array.isArray(logical)||Object.keys(logical).some(key=>!['value','on'].includes(key))||!owns(logical,'value')||logical.on!=='missing')fail('TABLE_MIGRATION_UNSUPPORTED','Logical default must be a closed missing-only literal',logicalPath);
   if((value as any)?.kind!=='literal'||literalIdentity(field,logical.value)!==literalIdentity(field,(value as any).value))fail('TABLE_MIGRATION_UNSUPPORTED','Logical and native literal defaults must retain the matching missing-only rule',logicalPath);
  }
+}
+
+/** G03 admits exact unrefined date/instant literals; other domains retain full refinement checks. */
+function validateLiteralDomain(doc:Document,field:Element,column:any,value:unknown,path:string):void{
+ if(field.scalarType==='date'||field.scalarType==='timestamp'){
+  if(Object.keys((field as any).facets??{}).length||((field as any).allowedValues?.length??0)>0)
+   fail('TABLE_MIGRATION_UNSUPPORTED','Temporal refinements require a separately qualified native interpretation',path);
+  const expectedNative=field.scalarType==='date'?'date':'timestamptz';
+  if(column.nativeType?.kind!==expectedNative)
+   fail('TABLE_MIGRATION_UNSUPPORTED','Temporal literal requires its exact qualified native type',path);
+  checkSchemaLiteral(doc,field,value,false);
+  if(value!==null){
+   if(field.scalarType==='date')nativeDate((value as any).date);
+   else nativeInstant((value as any).timestamp);
+  }
+  return;
+ }
+ checkSchemaLiteral(doc,field,value,true);
 }
 
 function rejectVolatileRefinement(field:Element,path:string):void{

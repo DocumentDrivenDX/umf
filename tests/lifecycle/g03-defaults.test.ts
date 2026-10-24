@@ -151,6 +151,57 @@ test('G03 typed clock and UUID defaults are accepted only on matching native dom
  expect(uuidPlan.plan.steps[0]?.sql).toContain('pg_catalog.gen_random_uuid()');
 });
 
+function typedMigration(beforeDoc:any,afterDoc:any,id:string){
+ const previous=bundle(beforeDoc),next=bundle(afterDoc);
+ const candidate=discoverTableMigrationChanges(previous,next,{version:'umf.table-migration-discovery/0.2'}).find(item=>item.kind==='change-default');
+ if(!candidate)throw Error('No typed default-change candidate');
+ const {oldValue:_old,newValue:_new,...marker}=candidate;
+ return compileTableMigration({id,predecessor:{id:id+'-previous',digest:'d'.repeat(64)},previous,next,options:{version:'umf.table-migration-options/0.5',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[marker]}});
+}
+function deploymentRefusalText(doc:any):string{
+ const result=compileTableDeployment({text:JSON.stringify(doc),configuration});
+ return result.status==='blocked'?JSON.stringify(result.diagnostics):'';
+}
+
+test('G03 admits exact unrefined Gregorian date literals and preserves typed qualifiers',()=>{
+ const valid=typedMigration(typedSource('date',{kind:'date'},undefined),typedSource('date',{kind:'date'},{kind:'literal',value:{date:'2000-02-29'}}),'g03-date-literal');
+ expect(valid.status).toBe('compiled');if(valid.status!=='compiled')throw Error(JSON.stringify(valid.diagnostics));
+ expect(valid.plan.steps[0]?.sql).toContain("E'2000-02-29'::pg_catalog.date");
+
+ const invalidDate=typedSource('date',{kind:'date'},{kind:'literal',value:{date:'1900-02-29'}});
+ expect(deploymentRefusalText(invalidDate)).toContain('Gregorian date outside native profile');
+ const wrongCarrier=typedSource('date',{kind:'date'},{kind:'literal',value:{timestamp:'2000-02-29T00:00:00Z'}});
+ expect(deploymentRefusalText(wrongCarrier)).toContain('Literal does not match scalar family');
+ expect(deploymentRefusalText(typedSource('date',{kind:'timestamptz'},{kind:'literal',value:{date:'2000-02-29'}}))).toContain('Native type and logical scalar family differ');
+
+ const qualified=typedSource('date',{kind:'date'},{kind:'literal',value:{date:'2000-01-01'}}) as any;
+ qualified.modules[0]!.elements.find((item:any)=>item.id==='typed')!.allowedValues=[{date:'2000-01-01'}];
+ const qualifiedBefore=typedSource('date',{kind:'date'},undefined) as any;
+ qualifiedBefore.modules[0]!.elements.find((item:any)=>item.id==='typed')!.allowedValues=[{date:'2000-01-01'}];
+ expect(deploymentRefusalText(qualified)).toContain('Value/default semantics for float/temporal domain are not defined');
+ expect(deploymentRefusalText(qualifiedBefore)).toContain('Value/default semantics for float/temporal domain are not defined');
+
+ const instant=typedMigration(typedSource('timestamp',{kind:'timestamptz'},undefined),typedSource('timestamp',{kind:'timestamptz'},{kind:'literal',value:{timestamp:'2000-02-29T12:30:00Z'}}),'g03-instant-literal');
+ expect(instant.status).toBe('compiled');if(instant.status!=='compiled')throw Error(JSON.stringify(instant.diagnostics));
+ expect(instant.plan.steps[0]?.sql).toContain('2000-02-29T12:30:00.000000Z');
+ expect(deploymentRefusalText(typedSource('timestamp',{kind:'timestamptz'},{kind:'literal',value:{timestamp:'2000-01-01T00:00:00.1234567Z'}}))).toContain('Instant would round or exceed native clock profile');
+ expect(deploymentRefusalText(typedSource('timestamp',{kind:'timestamptz'},{kind:'literal',value:{timestamp:'2000-01-01T00:00:00-00:00'}}))).toContain('Unknown or invalid instant offset');
+});
+
+test('G03 temporal literal support does not relax non-temporal refinements or logical defaults',()=>{
+ const ranged=typedSource('decimal',{kind:'numeric',precision:8,scale:2},{kind:'literal',value:{decimalToken:'123.45'}}) as any;
+ ranged.modules[0]!.elements.find((item:any)=>item.id==='typed')!.facets={precision:8,scale:2,range:{min:{decimalToken:'0.00'},max:{decimalToken:'10.00'}}};
+ expect(deploymentRefusalText(ranged)).toContain('Literal outside numeric range');
+
+ const refined=typedSource('string',{kind:'text'},{kind:'literal',value:{string:'x'}}) as any;
+ refined.modules[0]!.elements.find((item:any)=>item.id==='typed')!.facets={length:{min:3,max:20,unit:'unicode-scalar'}};
+ expect(deploymentRefusalText(refined)).toContain('Literal length outside bounds');
+
+ const logical=typedSource('date',{kind:'date'},{kind:'literal',value:{date:'2000-02-29'}}) as any;
+ logical.modules[0]!.elements.find((item:any)=>item.id==='typed')!.default={on:'missing',value:{date:'2000-02-29'}};
+ expect(deploymentRefusalText(logical)).toContain('Value/default semantics for float/temporal domain are not defined');
+});
+
 test('G03 refuses retained unknown native and logical qualifiers before source verification',()=>{
  const nextSource=source({kind:'literal',value:{string:'new'},futureQualifier:true}) as any;
  const fake=(doc:any)=>({source:{format:'json',utf8:JSON.stringify(doc)},configuration} as any);
