@@ -767,7 +767,12 @@ WASM on Bun and Chromium. Each path matched 25/30 exact outcomes and passed
 five public-engine work/cancellation/deadline/meter controls. Two mismatches
 are diagnostic wording; three contain the same conservative `complete: false`
 validator warning. The receipt binds the pre-repair inspector and artifact
-hashes, so later source changes need fresh host replay. Frozen predecessor
+hashes. The [reviewed successor replay](evidence/rust-migration/r5-json-schema-bindings/successor-real-hosts-35bf199d.md)
+rebuilds the diagnostic-repaired source and matches 27/30 frozen cases with
+5/5 controls on each of the same four host paths. Its three remaining
+differences all carry the intentionally conservative `complete: false`
+validator warning. Each receipt binds its own source and artifact cohort;
+future source changes need fresh host replay. Frozen predecessor
 error paths were not captured and remain unqualified. The reviewed
 [native-complete proposal](evidence/rust-migration/r5-json-schema/native-complete-subset-proposal-2026-10-23.md)
 narrows a future `complete: true` profile and its independent-oracle gates; it
