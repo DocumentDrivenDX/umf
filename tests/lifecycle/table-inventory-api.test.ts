@@ -5,6 +5,9 @@ import {UmfError} from '../../src/model/errors';
 import {compileTableDeployment} from '../../src/table-deployment';
 import {compileTableMigration,compileTableInventoryMigration,discoverTableInventoryMigrationChanges,irreversiblePurgeDisclosure,serializeTableInventoryMigration,verifyTableInventoryMigration} from '../../src/table-migration';
 import {compileG10InventoryPlan,createHistoricalG10Verifier} from '../../src/table-migration/inventory';
+import {partitionRendererDependencies,verifySourcePublicationCoverage} from '../../src/table-migration/inventory-effects';
+import {deriveInventorySeedLineage} from '../../src/table-migration/inventory-history';
+import {projectG10Bundle} from '../../src/table-migration/inventory-source';
 import {partitionInventoryMarkersForG02} from '../../src/table-migration/inventory-g02-source';
 import {consumeTableMigrationChangesBounded} from '../../src/table-migration/reviewed';
 import {legalSource} from './legal-fixture';
@@ -29,7 +32,12 @@ const selector=(tableIntents:TableInventoryMigrationOptions['tableIntents'],reti
 function originalHistory(bundle:ReturnType<typeof deploy>):TableInventorySourceHistory{
  const result=compileTableMigration({id:'inventory-history-initial',predecessor:null,previous:null,next:bundle});
  if(result.status!=='compiled')throw new Error('Original initial migration refused: '+JSON.stringify(result.diagnostics));
- return {profile:'umf.table-inventory-source-history/0.1',plans:[result.plan],executions:[{planDigest:result.plan.digest,entryDigest:'c'.repeat(64),seedOutcomes:[]}]};
+ const entryDigest='c'.repeat(64),selected=result.plan.seedExecution==='none'?[]:result.plan.seedExecution.sets;
+ if(selected.length&&(result.plan.version!=='umf.table-migration/0.1'||(result.plan.phases?.length??0)!==0))throw new Error('Synthetic legacy seed history supports only an unphased 0.1 atomic initial plan.');
+ // This is source-history test metadata only. It satisfies the legacy lineage
+ // shape without claiming that a native seed execution or receipt occurred.
+ const seedOutcomes=selected.map(id=>{const definition=bundle.seedSets.find(seed=>seed.id===id);if(!definition)throw new Error('Legacy initial plan selected an unknown seed set.');return {id,definitionDigest:hashCanonical(definition),originalSourceDigest:bundle.sourceDigest,execution:'confirmed' as const,proof:{kind:'atomic-publication' as const,entryDigest}};});
+ return {profile:'umf.table-inventory-source-history/0.1',plans:[result.plan],executions:[{planDigest:result.plan.digest,entryDigest,seedOutcomes}]};
 }
 function initialG10History(bundle:ReturnType<typeof deploy>,id='inventory-g10-history-initial'):TableInventorySourceHistory{
  const tableIntents=bundle.expectedCatalog.tables.map(table=>({kind:'create' as const,table:table.id,record:{...table.record}}));
@@ -64,6 +72,8 @@ test('G10 public initial compile, full verification and serialization retain the
  }
  expect(result.plan.review).toEqual(candidates);
  expect(verifyTableInventoryMigration(result.plan,emptyHistory)).toEqual(result.plan);
+ expect(result.plan.steps.some(step=>step.operation==='apply-seeds')).toBe(false);
+ expect((result.plan.prefixes.at(-1) as any).seedStates.every((seed:any)=>seed.execution==='not-run')).toBe(true);
  const serialized=serializeTableInventoryMigration(result.plan,emptyHistory);
  expect(JSON.parse(serialized)).toEqual(result.plan);
  expect(serialized.endsWith('\n')).toBe(false);
@@ -72,6 +82,39 @@ test('G10 public initial compile, full verification and serialization retain the
  const rehashedMutation=structuredClone(result.plan) as any;rehashedMutation.review[0]!.newValue.table='forged';delete rehashedMutation.digest;rehashedMutation.digest=hashCanonical(rehashedMutation);
  expect(()=>verifyTableInventoryMigration(rehashedMutation,emptyHistory)).toThrow();
  expect(()=>serializeTableInventoryMigration(rehashedMutation,emptyHistory)).toThrow();
+});
+
+test('G10 dependency projection claims every raw edge as physical work or a complete-source publication obligation',()=>{
+ const bundle=deploy(legalSource()),projection=projectG10Bundle(bundle,'next').projection,partition=partitionRendererDependencies(bundle,projection);
+ expect(partition.physicalEdges.length+partition.publicationObligations.length).toBe(projection.dependencies.length);
+ expect(partition.publicationObligations.some(item=>item.ownerKind==='operation'&&item.ownerId==='read_matters')).toBe(true);
+ expect(partition.publicationObligations.some(item=>item.ownerKind==='seed-set'&&item.ownerId==='synthetic-bootstrap')).toBe(true);
+ expect(projection.operations.some(item=>item.identity.kind==='operation'&&(item.meaning as any).operation.body.kind==='read')).toBe(true);
+ expect(()=>verifySourcePublicationCoverage(bundle,partition.publicationObligations)).not.toThrow();
+ expect(()=>verifySourcePublicationCoverage(bundle,[])).toThrow();
+ expect(()=>verifySourcePublicationCoverage(bundle,[...partition.publicationObligations,structuredClone(partition.publicationObligations[0]!)] )).toThrow();
+ const wrongTarget=structuredClone(partition.publicationObligations),originalTargetDigest=hashCanonical(wrongTarget[0]!.targetIdentity),otherTable=projection.catalog.tables.find(row=>hashCanonical(row.identity)!==originalTargetDigest);
+ expect(otherTable).toBeDefined();expect(hashCanonical(otherTable!.identity)).not.toBe(originalTargetDigest);wrongTarget[0]!.targetIdentity=structuredClone(otherTable!.identity);expect(()=>verifySourcePublicationCoverage(bundle,wrongTarget)).toThrow();
+ for(const mutate of [
+  (copy:any)=>{copy.dependencies[0]!.reason='unrecognized-reason';},
+  (copy:any)=>{copy.dependencies[0]!.sourcePath='/forged/source';},
+  (copy:any)=>{copy.dependencies[0]!.to='0'.repeat(64);},
+  (copy:any)=>{copy.operations[0]!.identity.kind='unrecognized-owner';},
+  (copy:any)=>{copy.dependencies.pop();},
+  (copy:any)=>{copy.dependencies.push(structuredClone(copy.dependencies[0]!));},
+  (copy:any)=>{const edge=copy.dependencies.find((item:any)=>item.reason==='operation-requires-table');if(!edge)throw new Error('Test fixture lacks an operation-to-table edge.');const alternate=copy.catalog.tables.find((row:any)=>hashCanonical(row.identity)!==edge.to);if(!alternate||hashCanonical(alternate.identity)===edge.to)throw new Error('Test fixture lacks an alternate source table.');edge.to=hashCanonical(alternate.identity);},
+  (copy:any)=>{copy.dependencies.push({from:'f'.repeat(64),to:copy.dependencies[0]!.to,reason:'owned-by-table',sourcePath:copy.dependencies[0]!.sourcePath,state:'present'});},
+ ]){const changed=structuredClone(projection);mutate(changed);expect(()=>partitionRendererDependencies(bundle,changed)).toThrow();}
+});
+
+test('legacy seed history requires exact source-derived reported outcomes and remains explicitly non-native',()=>{
+ const bundle=deploy(legalSource()),history=originalHistory(bundle),request={previous:bundle,next:bundle,options:{seedSets:[],retiredSeedSets:[]}};
+ expect(deriveInventorySeedLineage(history,request).every(item=>item.execution==='confirmed')).toBe(true);
+ const missing=structuredClone(history);missing.executions[0]!.seedOutcomes=[];expect(()=>deriveInventorySeedLineage(missing,request)).toThrow();
+ const duplicate=structuredClone(history);duplicate.executions[0]!.seedOutcomes.push(structuredClone(duplicate.executions[0]!.seedOutcomes[0]!));expect(()=>deriveInventorySeedLineage(duplicate,request)).toThrow();
+ const wrongDefinition=structuredClone(history);wrongDefinition.executions[0]!.seedOutcomes[0]!.definitionDigest='d'.repeat(64);expect(()=>deriveInventorySeedLineage(wrongDefinition,request)).toThrow();
+ const wrongOrigin=structuredClone(history);wrongOrigin.executions[0]!.seedOutcomes[0]!.originalSourceDigest='e'.repeat(64);expect(()=>deriveInventorySeedLineage(wrongOrigin,request)).toThrow();
+ const wrongEntry=structuredClone(history);wrongEntry.executions[0]!.seedOutcomes[0]!.proof.entryDigest='f'.repeat(64);expect(()=>deriveInventorySeedLineage(wrongEntry,request)).toThrow();
 });
 
 test('G10 historical recompile cache reuses only exact G10 plans and exact prior-history members',()=>{
@@ -125,7 +168,7 @@ test('G10 legacy component review values and optional source paths remain unchan
 test('G10 seed retirement review retains the original definition and never claims data replay',()=>{
  const previous=deploy(legalSource()),document=legalSource() as any;
  document.modules[0]!.extensions['umf.tables'].seedSets=[];
- const next=deploy(document),history=originalHistory(previous);
+ const next=deploy(document),history=initialG10History(previous);
  const candidates=discoverTableInventoryMigrationChanges(previous,next,selector([],['synthetic-bootstrap']),history);
  expect(candidates).toHaveLength(1);
  const [candidate]=candidates!;
@@ -211,6 +254,9 @@ test('G10 mixed CREATE plus appended G02 uses global source ownership without wi
  expect(backfillOperation.body.values[0]!.value).toEqual({kind:'rowExpression',expression:{op:'field',field:{module:'legal_lifecycle',element:'matters__open_date'}}});
  const groupPhase=result.plan.phases.find(phase=>grantSteps.every(step=>phase.steps.includes(step.id))&&fieldSteps.every(step=>phase.steps.includes(step.id)));
  expect(groupPhase).toBeDefined();expect(result.plan.steps.indexOf(grantSteps[0]!)<result.plan.steps.indexOf(fieldSteps[0]!)).toBe(true);expect(result.plan.steps.indexOf(fieldSteps.at(-1)!)<result.plan.steps.indexOf(grantSteps[1]!)).toBe(true);
+ const seedSteps=result.plan.steps.filter(step=>step.operation==='apply-seeds');expect(seedSteps).toHaveLength(1);expect(seedSteps[0]!.seedSets).toEqual(['selected-review-group-seed','selected-review-team-seed']);
+ const groupStep=result.plan.steps.findIndex(step=>step.operation==='create-table'&&(step.inventorySubject as any).table==='matter_review_groups'),teamStep=result.plan.steps.findIndex(step=>step.operation==='create-table'&&(step.inventorySubject as any).table==='matter_review_teams'),seedStep=result.plan.steps.indexOf(seedSteps[0]!);
+ expect(groupStep).toBeGreaterThanOrEqual(0);expect(teamStep).toBeGreaterThanOrEqual(0);expect(groupStep).toBeLessThan(seedStep);expect(teamStep).toBeLessThan(seedStep);
  const finalPrefix=result.plan.prefixes.at(-1)! as any;
  expect(finalPrefix.seedStates.find((seed:any)=>seed.id==='unselected-review-team-seed')?.execution).toBe('not-run');
  const omittedCreate={...request,options:{...request.options,reviewedChanges:request.options.reviewedChanges.filter((marker:any)=>marker.kind!=='create-table')}};

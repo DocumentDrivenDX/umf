@@ -10,6 +10,7 @@ import type {TableMigrationOptions} from './options';
 import type {CatalogProjection,PrefixCatalog} from './inventory-source';
 import type {CatalogMutation} from './inventory-graph';
 import {inventoryCatalogIdentity,type EffectNode,type InventorySubject,type TypedDependency} from './inventory-graph';
+import {projectG10Bundle} from './inventory-source';
 
 type Json=null|boolean|number|string|Json[]|{[key:string]:Json};
 type Identity={kind:string;table:string|null;subject:Json};
@@ -56,7 +57,7 @@ function node(operation:InternalTableDeploymentOperationRecord,sourceOrder:numbe
  return {id:operation.stepId,kind,operation:operation.operation==='create-table'?'create-table':operation.operation==='enable-rls'?'enable-rls':operation.operation==='force-rls'?'force-rls':operation.operation==='set-comment'?'set-comment':'dependency-add',subject,sourcePath:operation.sourcePath,sql:operation.sql,transaction:operation.transaction,recovery:'rollback-transaction',sourceOrder,atomicGroup,transition};
 }
 /** Translate exact typed renderer tags into prefix effects. It never inspects SQL text. */
-export function deriveInitialRendererEffects(bundle:TableDeploymentBundle,projection:CatalogProjection,previous:CatalogProjection|null=null):{effects:EffectNode[];edges:TypedDependency[]}{
+export function deriveInitialRendererEffects(bundle:TableDeploymentBundle,projection:CatalogProjection,previous:CatalogProjection|null=null):{effects:EffectNode[];edges:TypedDependency[];publicationObligations:SourcePublicationObligation[]}{
  const effects:EffectNode[]=[],creationGroup='initial-table-install',existingTables=new Set(previous?.catalog.tables.map(row=>row.identity.table).filter((x):x is string=>x!==null)??[]),createdTables=new Set(projection.catalog.tables.map(row=>row.identity.table).filter((x):x is string=>x!==null).filter(table=>!existingTables.has(table))),grantOperation=previous===null?projection.rendererOperations.find(item=>item.operation==='grant-schema-usage'):undefined;
  for(const [sourceOrder,operation] of projection.rendererOperations.entries()){
   if(operation.operation==='grant-schema-usage')continue;
@@ -90,11 +91,53 @@ export function deriveInitialRendererEffects(bundle:TableDeploymentBundle,projec
   if(schemaGrants.length!==2||new Set(schemaGrants.map(row=>(row.meaning as any).role)).size!==2)throw new Error('G10_RENDERED_SCHEMA_GRANT_ROWS');
   effects.push(node(grantOperation,projection.rendererOperations.length,null,'grant',{kind:'schema-grant',schema:grantOperation.subject.schema,audiences:['person','batch'],privilege:'USAGE'},{action:'add',collection:'grants',meaning:{grants:schemaGrants.map(row=>({identity:clone(row.identity),meaning:clone(row.meaning)}))} as unknown as Json}));
  }
- const edges:TypedDependency[]=projection.dependencies.filter(edge=>edge.state==='present').filter(edge=>{const touchesCreated=(identityDigest:string)=>{for(const table of createdTables){const tableHash=hashCanonical({kind:'table',table,subject:projection.catalog.tables.find(row=>row.identity.table===table)?.identity.subject});if(identityDigest===tableHash)return true;for(const collection of Object.values(projection.catalog))for(const row of collection)if(row.identity.table===table&&hashCanonical(row.identity)===identityDigest)return true;}return false;};return touchesCreated(edge.from)||touchesCreated(edge.to);}).map(edge=>({dependent:edge.from,prerequisite:edge.to,sourcePath:edge.sourcePath,reason:edge.reason,state:edge.state}));
+ const partition=partitionRendererDependencies(bundle,projection),edges:TypedDependency[]=partition.physicalEdges.filter(edge=>{const touchesCreated=(identityDigest:string)=>{for(const table of createdTables){const tableHash=hashCanonical({kind:'table',table,subject:projection.catalog.tables.find(row=>row.identity.table===table)?.identity.subject});if(identityDigest===tableHash)return true;for(const collection of Object.values(projection.catalog))for(const row of collection)if(row.identity.table===table&&hashCanonical(row.identity)===identityDigest)return true;}return false;};return touchesCreated(edge.from)||touchesCreated(edge.to);}).map(edge=>({dependent:edge.from,prerequisite:edge.to,sourcePath:edge.sourcePath,reason:edge.reason,state:edge.state}));
  if(grantOperation){
   const grant=effects.at(-1)!;for(const prior of effects.slice(0,-1))edges.push({dependent:hashSubject(inventoryCatalogIdentity(grant.subject)),prerequisite:hashSubject(inventoryCatalogIdentity(prior.subject)),sourcePath:grant.sourcePath,reason:'schema-grant-after-required-effects',state:'present'});
  }
- return {effects,edges};
+ return {effects,edges,publicationObligations:partition.publicationObligations};
+}
+
+export interface SourcePublicationObligation {
+ ownerKind:'operation'|'seed-set';ownerId:string;ownerSourcePath:string;
+ targetCollection:keyof PrefixCatalog;targetIdentity:Identity;sourcePath:string;reason:string;
+}
+export interface ProjectionDependencyPartition {physicalEdges:CatalogProjection['dependencies'];publicationObligations:SourcePublicationObligation[]}
+const catalogCollectionByKind:Record<string,keyof PrefixCatalog>={table:'tables',column:'columns',key:'keys',check:'checks',foreignKey:'foreignKeys',index:'indexes',policy:'policies',grant:'grants',comment:'comments'};
+const sourceOwnerReason=(kind:string,reason:string,targetKind:string):boolean=>kind==='operation'&&((reason==='operation-requires-table'&&targetKind==='table')||(reason==='operation-requires-field'&&targetKind==='column')||(['operation-requires-cursor-key','operation-requires-conflict-key'].includes(reason)&&targetKind==='key'))||kind==='seed-set'&&reason==='seed-set-requires-table'&&targetKind==='table';
+const physicalReason=(from:string,to:string,reason:string):boolean=>reason==='foreign-key-requires-target-key'&&from==='foreignKey'&&to==='key'||reason==='policy-requires-related-table'&&from==='policy'&&to==='table'||reason==='policy-requires-relationship-foreign-key'&&from==='policy'&&to==='foreignKey'||reason==='typed-field-reference'&&['check','foreignKey','index','policy','grant','comment'].includes(from)&&to==='column'||reason==='owned-by-table'&&['column','key','check','foreignKey','index','policy','grant','comment'].includes(from)&&to==='table'||reason==='grant-requires-column'&&from==='grant'&&to==='column'||reason==='key-requires-column'&&from==='key'&&to==='column'||reason==='comment-requires-column'&&from==='comment'&&to==='column';
+/** Partition the exact complete source graph into renderer dependencies and source-only publication obligations. */
+function sameProjection(left:CatalogProjection,right:CatalogProjection):boolean{
+ const paths=(value:CatalogProjection)=>[...value.sourcePaths.entries()].sort(([a],[b])=>a.localeCompare(b));
+ return canonical({catalog:left.catalog,dependencies:left.dependencies,operations:left.operations,rendererOperations:left.rendererOperations,seedStates:left.seedStates,sourcePaths:paths(left)})===canonical({catalog:right.catalog,dependencies:right.dependencies,operations:right.operations,rendererOperations:right.rendererOperations,seedStates:right.seedStates,sourcePaths:paths(right)});
+}
+export function partitionRendererDependencies(bundle:TableDeploymentBundle,projection:CatalogProjection):ProjectionDependencyPartition{
+ const verified=projectG10Bundle(bundle,'next').projection;
+ if(!sameProjection(projection,verified))throw new Error('G10_DEPENDENCY_PROJECTION_NOT_SOURCE_DERIVED');
+ const catalog=new Map<string,{collection:keyof PrefixCatalog;row:Subject}>(),owners=new Map<string,{row:Subject;path:string}>(),tablePaths=new Map<string,string>();
+ for(const collection of Object.keys(catalogCollectionByKind) as (keyof typeof catalogCollectionByKind)[]){
+  const target=catalogCollectionByKind[collection];for(const row of projection.catalog[target]){const digest=hashCanonical(row.identity);if(catalog.has(digest))throw new Error('G10_DEPENDENCY_DUPLICATE_CATALOG_IDENTITY');catalog.set(digest,{collection:target,row});if(target==='tables'&&row.identity.table){const path=projection.sourcePaths.get(digest);if(!path)throw new Error('G10_DEPENDENCY_TABLE_PATH');tablePaths.set(row.identity.table,path);}}
+ }
+ for(const row of projection.operations){const kind=row.identity.kind;if(kind!=='operation'&&kind!=='seed-set')throw new Error('G10_DEPENDENCY_UNKNOWN_SOURCE_OWNER');if(row.identity.table!==null||typeof row.identity.subject!=='string'||!row.identity.subject)throw new Error('G10_DEPENDENCY_SOURCE_OWNER_ID');const digest=hashCanonical(row.identity),path=projection.sourcePaths.get(digest);if(!path||!path.startsWith('/'))throw new Error('G10_DEPENDENCY_SOURCE_OWNER_PATH');if(owners.has(digest))throw new Error('G10_DEPENDENCY_DUPLICATE_SOURCE_OWNER');owners.set(digest,{row,path});}
+ const physicalEdges:CatalogProjection['dependencies']=[],publicationObligations:SourcePublicationObligation[]=[];let claimed=0;
+ for(const edge of projection.dependencies){
+  if(!edge||typeof edge.from!=='string'||typeof edge.to!=='string'||typeof edge.reason!=='string'||typeof edge.sourcePath!=='string'||!edge.sourcePath.startsWith('/')||edge.state!=='present')throw new Error('G10_DEPENDENCY_EDGE_SHAPE');
+  const owner=owners.get(edge.from),target=catalog.get(edge.to);if(!target)throw new Error('G10_DEPENDENCY_TARGET_UNBOUND');
+  if(owner){const kind=owner.row.identity.kind;if(edge.sourcePath!==owner.path||!sourceOwnerReason(kind,edge.reason,target.row.identity.kind))throw new Error('G10_DEPENDENCY_SOURCE_OWNER_MISMATCH');
+   if(kind==='seed-set'){const meaning=owner.row.meaning as any,seedState=projection.seedStates.find(seed=>seed.id===owner.row.identity.subject);if(!meaning||meaning.id!==owner.row.identity.subject||!seedState||seedState.definitionDigest!==hashCanonical(meaning)||seedState.sourcePath!==owner.path||seedState.state!=='not-run')throw new Error('G10_DEPENDENCY_SEED_OWNER_MISMATCH');}
+   else {const meaning=owner.row.meaning as any;if(!meaning||!meaning.operation||meaning.operation.id!==owner.row.identity.subject||!obj(meaning.operation.body))throw new Error('G10_DEPENDENCY_OPERATION_OWNER_MISMATCH');}
+   publicationObligations.push({ownerKind:kind,ownerId:owner.row.identity.subject as string,ownerSourcePath:owner.path,targetCollection:target.collection,targetIdentity:target.row.identity,sourcePath:edge.sourcePath,reason:edge.reason});claimed++;continue;
+  }
+  const from=catalog.get(edge.from),ownerPath=projection.sourcePaths.get(edge.from),expectedKeyRecordPath=from?.row.identity.kind==='key'&&from.row.identity.table?tablePaths.get(from.row.identity.table)+'/record':undefined;const sourcePathMatches=ownerPath===edge.sourcePath||edge.reason==='key-requires-column'&&expectedKeyRecordPath===edge.sourcePath;if(!from||!physicalReason(from.row.identity.kind,target.row.identity.kind,edge.reason)||!sourcePathMatches)throw new Error('G10_DEPENDENCY_PHYSICAL_OWNER_MISMATCH');
+  physicalEdges.push(edge);claimed++;
+ }
+ if(claimed!==projection.dependencies.length)throw new Error('G10_DEPENDENCY_UNCLAIMED_EDGE');
+ return {physicalEdges,publicationObligations};
+}
+/** Recompute the complete obligation multiset from verified source before a plan accepts caller-carried obligations. */
+export function verifySourcePublicationCoverage(bundle:TableDeploymentBundle,obligations:readonly SourcePublicationObligation[]):void{
+ const projection=projectG10Bundle(bundle,'next').projection,expected=partitionRendererDependencies(bundle,projection).publicationObligations;
+ if(canonical(obligations)!==canonical(expected))throw new Error('G10_SOURCE_PUBLICATION_SOURCE_COVERAGE');
 }
 
 /** Rebind only compiler-owned diagnostic coordinates on otherwise identical retained rows. */

@@ -7,7 +7,7 @@ import type {PrefixFrame} from './inventory-graph';
 import {compileG10InventoryDelta,deriveInventoryReviewCandidates,projectG10Bundle} from './inventory-source';
 import {ShapeError,validateG10RequestShape,type G10ValidatedRequest,type HistoricalG10PlanVerifier} from './inventory-options';
 import {deriveInventorySeedLineage} from './inventory-history';
-import {deriveInitialRendererEffects,deriveG02FieldEffects,deriveG10ProvenanceMutations} from './inventory-effects';
+import {deriveInitialRendererEffects,deriveG02FieldEffects,deriveG10ProvenanceMutations,verifySourcePublicationCoverage,type SourcePublicationObligation} from './inventory-effects';
 import {partitionInventoryMarkersForG02} from './inventory-g02-source';
 import {discoverInventoryReviewCandidates,discoverInventoryReviewCandidatesWithVerifier,inventoryMarker,type TableInventoryReviewedChangeCandidate} from './inventory-review';
 import type {Diagnostic,Json as ModelJson} from '../model/types';
@@ -50,11 +50,21 @@ function serialize(schedule:ScheduledInventoryEffects,rawEffects:EffectNode[],me
  const phases=schedule.phases.map(phase=>({id:phase.id,kind:phase.kind,transaction:phase.transaction,steps:phase.steps.map(id=>idByOld.get(id)??fail('UNBOUND_PHASE_ID'))}));
  return {steps,phases,prefixes};
 }
-export interface InventoryPlanInput {id:string;predecessor:{id:string;digest:string}|null;previous:TableDeploymentBundle|null;next:TableDeploymentBundle;options:Json;history:Json;historyBinding:{profile:'umf.table-inventory-source-history/0.1';count:number;digest:string};inventory:InventoryDelta;initialPrefix:Omit<import('./inventory-graph').PrefixFrame,'digest'>;nextCatalog:Record<string,Json[]>;effects:EffectNode[];dependencies:TypedDependency[];provenanceMutations:CatalogMutation[];seedExecution:'none'|{version:'umf.table-seed-execution/0.1';sets:string[]};review:Json[];}
+export interface InventoryPlanInput {id:string;predecessor:{id:string;digest:string}|null;previous:TableDeploymentBundle|null;next:TableDeploymentBundle;options:Json;history:Json;historyBinding:{profile:'umf.table-inventory-source-history/0.1';count:number;digest:string};inventory:InventoryDelta;initialPrefix:Omit<import('./inventory-graph').PrefixFrame,'digest'>;nextCatalog:Record<string,Json[]>;effects:EffectNode[];dependencies:TypedDependency[];publicationObligations:SourcePublicationObligation[];provenanceMutations:CatalogMutation[];seedExecution:'none'|{version:'umf.table-seed-execution/0.1';sets:string[]};review:Json[];}
+function verifySourcePublicationObligations(obligations:readonly SourcePublicationObligation[],schedule:ScheduledInventoryEffects):void{
+ const published=schedule.prefixes.at(-1);if(!published||published.metadata.state!=='published')fail('SOURCE_PUBLICATION_PREFIX');
+ for(const obligation of obligations){
+  if(!obligation||!['operation','seed-set'].includes(obligation.ownerKind)||!obligation.ownerId||!obligation.ownerSourcePath.startsWith('/')||obligation.sourcePath!==obligation.ownerSourcePath||!['operation-requires-table','operation-requires-field','operation-requires-cursor-key','operation-requires-conflict-key','seed-set-requires-table'].includes(obligation.reason))fail('SOURCE_PUBLICATION_OBLIGATION_SHAPE');
+  if(obligation.ownerKind==='operation'&&!obligation.reason.startsWith('operation-requires-')||obligation.ownerKind==='seed-set'&&obligation.reason!=='seed-set-requires-table')fail('SOURCE_PUBLICATION_OWNER_REASON');
+  const targetKind=obligation.targetIdentity?.kind,targetCollection=targetKind==='table'?'tables':targetKind==='column'?'columns':targetKind==='key'?'keys':undefined;if(!targetCollection||obligation.targetCollection!==targetCollection||obligation.ownerKind==='operation'&&((obligation.reason==='operation-requires-table'&&targetKind!=='table')||(obligation.reason==='operation-requires-field'&&targetKind!=='column')||(['operation-requires-cursor-key','operation-requires-conflict-key'].includes(obligation.reason)&&targetKind!=='key'))||obligation.ownerKind==='seed-set'&&targetKind!=='table')fail('SOURCE_PUBLICATION_TARGET_KIND');
+  const rows=published.catalog[obligation.targetCollection];if(!Array.isArray(rows)||rows.filter(row=>row&&typeof row==='object'&&!Array.isArray(row)&&hashCanonical((row as Record<string,Json>).identity)===hashCanonical(obligation.targetIdentity)&&(row as Record<string,Json>).state==='present').length!==1)fail('SOURCE_PUBLICATION_TARGET_MISSING:'+obligation.ownerKind+':'+obligation.ownerId);
+ }
+}
 /** Construct the closed unpublished G10 plan from already verified source projections and typed renderer effects. */
 export function compileInventoryPlan(input:InventoryPlanInput):Record<string,Json>{
  const next=verifyTableDeployment(input.next),previous=input.previous===null?null:verifyTableDeployment(input.previous);if(next.bundleDigest!==input.next.bundleDigest||previous?.bundleDigest!==input.previous?.bundleDigest)fail('BUNDLE_VERIFICATION');
- const sources=input.effects.map(effect=>({...effect})),metadataIds={prepare:'g10-inventory-prepare',approval:'g10-inventory-approval',publication:'g10-inventory-publication'},schedule=scheduleTypedInventoryEffects(input.initialPrefix,sources,input.dependencies,input.nextCatalog,metadataIds,input.provenanceMutations);
+ try{verifySourcePublicationCoverage(next,input.publicationObligations);}catch{fail('SOURCE_PUBLICATION_SOURCE_COVERAGE');}
+ const sources=input.effects.map(effect=>({...effect})),metadataIds={prepare:'g10-inventory-prepare',approval:'g10-inventory-approval',publication:'g10-inventory-publication'},schedule=scheduleTypedInventoryEffects(input.initialPrefix,sources,input.dependencies,input.nextCatalog,metadataIds,input.provenanceMutations);verifySourcePublicationObligations(input.publicationObligations,schedule);
  if(schedule.prefixes.length!==schedule.phases.length+1||schedule.phases.length<3||schedule.phases[0]?.kind!=='prepare'||schedule.phases[1]?.kind!=='approval'||schedule.phases.at(-1)?.kind!=='publication')fail('PHASE_ENVELOPE');
  const {steps,phases,prefixes}=serialize(schedule,sources,metadataIds),executionProfile={version:'umf.table-inventory-execution/0.1',progressRelation:'umf_lifecycle_inventory_progress',ownerOnly:true,ingressProfile:'umf.table-inventory-generation-ingress/0.1',inventoryProfile:'umf.table-inventory-prefix/0.1',initial:previous===null,conversionProfile:null,originalsProfile:null,retirementProfile:null,retiredStoreProfile:null},approvalProfile={version:'umf.table-migration-approval/0.1',relation:'umf_lifecycle_approvals',ownerOnly:true};
  const serializedInventory={...input.inventory} as Record<string,unknown>;delete serializedInventory.fieldChanges;
@@ -129,7 +139,7 @@ function compileG10InventoryPlanInternal(input:unknown,verifyHistoricalG10:Histo
  }
  if(request.options.seedSets.length){const seedStates=new Map(next.projection.seedStates.map(seed=>[seed.id,seed]));for(const selected of request.options.seedSets){if(!seedStates.has(selected))fail('SEED_SOURCE_BINDING');}
   const subject:InventorySubject={kind:'seed',sets:[...request.options.seedSets]},seedEffect:EffectNode={id:'g10-apply-selected-seeds',kind:'seed',operation:'apply-seeds',subject,sourcePath:'/options/seedSets',sql:'',transaction:'required',recovery:'rollback-transaction',sourceOrder:effects.length+1,atomicGroup:null,transition:{action:'update',collection:'tables',meaning:{}}};
-  effects.push(seedEffect);const dependent=hashCanonical(inventoryCatalogIdentity(subject));for(const selected of request.options.seedSets){const raw=hashCanonical({kind:'seed-set',table:null,subject:selected});for(const edge of next.projection.dependencies.filter(candidate=>candidate.from===raw&&candidate.reason==='seed-set-requires-table'))dependencies.push({dependent,prerequisite:edge.to,sourcePath:edge.sourcePath,reason:'selected-seed-requires-source-table',state:'present'});}
+  effects.push(seedEffect);for(const selected of request.options.seedSets){for(const obligation of derived.publicationObligations.filter(candidate=>candidate.ownerKind==='seed-set'&&candidate.ownerId===selected)){dependencies.push({dependent:hashCanonical({kind:'seed-set',table:null,subject:selected}),prerequisite:hashCanonical(obligation.targetIdentity),sourcePath:obligation.sourcePath,reason:'selected-seed-requires-source-table',state:'present'});}}
  }
  // The renderer discovers the combined schema grant before compiler-selected
  // seeds are appended. Bind that final grant only after every selected business
@@ -147,7 +157,7 @@ function compileG10InventoryPlanInternal(input:unknown,verifyHistoricalG10:Histo
  const review=deriveInventoryReviewCandidates(input,verifyHistoricalG10);
  const seedExecution=request.options.seedSets.length?{version:'umf.table-seed-execution/0.1' as const,sets:[...request.options.seedSets]}:'none';
  const provenanceMutations=deriveG10ProvenanceMutations(previous?.projection??null,next.projection,effects);
- return compileInventoryPlan({id:request.id,predecessor:request.predecessor,previous:request.previous,next:request.next,options:(input as Record<string,unknown>).options as Json,history,historyBinding,inventory,initialPrefix,nextCatalog:next.projection.catalog as unknown as Record<string,Json[]>,effects,dependencies,provenanceMutations,seedExecution,review:review as unknown as Json[]});
+ return compileInventoryPlan({id:request.id,predecessor:request.predecessor,previous:request.previous,next:request.next,options:(input as Record<string,unknown>).options as Json,history,historyBinding,inventory,initialPrefix,nextCatalog:next.projection.catalog as unknown as Record<string,Json[]>,effects,dependencies,publicationObligations:derived.publicationObligations,provenanceMutations,seedExecution,review:review as unknown as Json[]});
 }
 
 /** Verify only by reconstructing the exact plan from independently verified source and the supplied original history. */
