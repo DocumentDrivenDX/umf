@@ -431,3 +431,49 @@ actual private native capability/barrier/activation recovery. True headless
 installation remains a G10 requirement. Source-only controls and document
 adoption do not close these capabilities, G04 retained originals, G05 lifecycle,
 the broader G02–G11 backlog, or testing/merge/release/public-byte gates.
+
+
+## G11 source correction and release checkpoint — 2026-10-24
+
+The native adapter source004 and authority007 correction is committed at
+`3cdb0b1a36b377596ecd2c2fd759d3704e1cec78`. Its bounded source review passed;
+actual PostgreSQL/helper execution remains unqualified. The full committed
+boundary checker still reports seven violations. The accepted refactor moves
+canonical serialization and bootstrap identity into leaves, keeps ledger logic
+in a pure core, and puts concrete native validation and lifecycle/recovery
+orchestration in the session facade. Original bootstrap must durably bind the
+ledger path and birth intent; confirmed missing history/lock refuses across
+restart. This implementation is in progress, not a passing boundary gate.
+
+[Initial-enrollment review evidence](evidence/schema-migrations/g11-initial-authority-review/source006-root-review.json)
+records root replay of source006: 19 tests, eight independent original-context
+birth/history/immutability controls, the original issuer-subclass refusal probe,
+a two-process append-lock control, and configured lint pass. Earlier source002
+accepted a caller-defined issuer resolver and production-marked test context;
+source003 then incorrectly excluded original native-acceptance purpose. Both
+rejections are retained alongside source006. A later frozen run exposed a shared
+append-lock race; source006 holds an exclusive lock across read/replay/append.
+The frozen packet preserves that failed run. These are bounded prior-dependency
+source controls: external independent review, actual branch integration, original
+production trust bootstrap, native prepared epoch/activation and recovery are
+still required. No source-test issuer establishes native authority.
+
+G04's finite native TOAST/RI creation-inventory correction is adopted at
+`235a149bd17472f0e03527aa930c7aec61ca1b59`. Exact parent/native dependency
+closure is mandatory; no namespace or internal-flag waiver is admitted. The
+adoption receipt retains the sole blank-EOF normalization. Actual fixed DDL,
+full catalog observation and unknown-COMMIT custody remain native gates.
+
+Core candidate `2a76a8e8213ec64334408ec49edadc3b6e765cce` contains the actual
+fresh inventory after the website staging fix. Root and independent Sol approved
+its separate check-only preparation with fixed 300-second total, 180-second
+checker ceiling and 95-second cleanup reserve. The actual check has not run;
+a new coordinator resource handoff is required. CI, platform artifacts, final
+review, merge, publication and fresh public-byte verification remain separate.
+
+G10 proposal003 is under design revision for enrolled-carrier retirement,
+acyclic first native plan approval after metadata creation, and exact signed
+component policies with native phase timeouts and receipt digest correspondence.
+An explicit first-subset refusal does not complete the full carrier-composition
+requirement. G02–G11 implementation, portable/browser/installed/native testing,
+review, merge and immutable release remain the active full delivery objective.

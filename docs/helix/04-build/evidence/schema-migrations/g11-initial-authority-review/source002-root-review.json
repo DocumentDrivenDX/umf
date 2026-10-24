@@ -1,0 +1,28 @@
+{
+  "status": "changes-required",
+  "reviewedAtUtc": "2026-10-24T10:13:38.444979+00:00",
+  "candidateManifestSha256": "390c5625e77df8445d47def9ef8e1e4327ad1b9bfb14136409def759227dccad",
+  "positiveEvidence": "17 frozen tests, configured Ruff and eight independent context birth/history/immutability controls passed in root review",
+  "finding": {
+    "priority": "P1",
+    "location": "generation_enrollment_authority.py ConfiguredGenerationEnrollmentAuthority.__init__ lines1875-1880",
+    "actual": {
+      "callerSubclassAccepted": true,
+      "purpose": "production",
+      "projectionSourceTestOnly": null,
+      "allocatedEnrollmentId": "95597a28-ee9b-45cc-9956-d5423fc70bcf",
+      "nativeEffects": false,
+      "usesPrivateTestIssuerSeal": true,
+      "proofScope": "constructor dispatch/origin only; no native authorization proven"
+    },
+    "mechanism": "isinstance issuer check dispatches caller-overridable resolver; subclass of source-test issuer can remove marker and resolve caller context under production config using shared private test seal",
+    "scope": "origin/constructor admission defect. Private test-seal access is explicit. No native effect or completed production authorization shown."
+  },
+  "probe": {
+    "path": "/private/tmp/root-initial-authority002-review/subclass-origin-probe.py",
+    "sha256": "8c6f9087d7f726ed72f29d799152d7fad7f32d2cb115d28406b2244a24fed1b5",
+    "returncode": 0,
+    "stdoutSha256": "d1623ca4b0f7ac09216121a4b7bf492a03823c1e70d10776a1065425149426e8"
+  },
+  "disposition": "Luna notified for exact original issuer registry checks and irrevocable test-purpose enforcement; old rev7 preserved; no source adoption"
+}

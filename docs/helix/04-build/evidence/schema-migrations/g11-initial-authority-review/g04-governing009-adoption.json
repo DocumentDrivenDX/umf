@@ -1,0 +1,22 @@
+{
+  "profile": "umf.g04.governing009-adoption/1",
+  "base": "3cdb0b1a36b377596ecd2c2fd759d3704e1cec78",
+  "commit": "235a149bd17472f0e03527aa930c7aec61ca1b59",
+  "tree": "df20e753ad71b5484f8b56cca0090dfcb7a9fb8c",
+  "manifestSha256": "1e961e6a18a1b66edba7413cf7cf3bca39c60774d5b5a8676b8849fbdbcb4390",
+  "paths": [
+    "docs/helix/02-design/contracts/CONTRACT-081-table-lifecycle.md",
+    "docs/helix/02-design/technical-designs/TD-085-typed-actions-on-raw-tables.md",
+    "docs/helix/03-test/test-plans/STP-085-typed-actions-on-raw-tables.md"
+  ],
+  "ownerNormalizations": [
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-081-table-lifecycle.md",
+      "kind": "remove-extra-blank-EOF-lines-only",
+      "candidateSha256": "4b1b6cd9fa6af0b5b6a83b98662b05c4e9fe9305ec7fb4ff8c3ded873cafe106",
+      "adoptedSha256": "3ffe7d23bb34320a97efacc4f246a279d3f3577b8e16e283c2bce4352a8317fd"
+    }
+  ],
+  "review": "Root Sol read exact three append-only deltas and full integration003; verified primary PostgreSQL18 TOAST and pg_trigger catalog docs. Finite parent-bound TOAST/RI closure corrects omitted native objects, preserves strict user-trigger/default/ACL/privacy checks and original006/008 custody; data-free receipt remains bounded. No namespace or generic internal-object waiver.",
+  "qualification": "governing document adoption only; implementation/native/installed/release incomplete"
+}
