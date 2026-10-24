@@ -6158,3 +6158,16 @@ unknown enrollment COMMIT and no re-ALTER. These are native gates; eight source
 controls or self-consistent receipt JSON cannot establish them. Governing three-
 document amendment and exact source review precede enablement; .2 G05 upgrades,
 online capture and generalized external custody remain separately tracked.
+
+
+#### G04 signed-capacity and complete capture precision
+
+The maxIssuedInstances default applies ONLY to trusted host construction of an
+unsigned G04 policy0.2 BEFORE approval. Its closed wire/signature/receipt ALWAYS
+contains the explicit member; missing capacity refuses without normalization.
+The1000-row/8MiB limits are PER private batch, not whole-archive/population caps.
+Repeat complete protected ID/set witnesses across the aggregate original signed
+row/value-byte policy bounds; a single value above8MiB is an explicit first-buffer
+resource refusal, never omission/NULL/truncation. This clarifies the adopted
+integration without changing its original store/capture/native custody protocol.
+Source elaboration integration002 SHA256: b2ff1a1b90f1ff279e65d06442adad5a4dfe45f284dc7d5e45df2c7d4db26f9c.

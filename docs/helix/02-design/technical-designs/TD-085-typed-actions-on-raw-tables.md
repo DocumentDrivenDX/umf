@@ -898,3 +898,13 @@ remains mandatory. On any hook/error/restore uncertainty invalidate capability,
 abort whole phase and close/quarantine actual physical connection; no business-
 only commit or elevated pooled reuse. Real driver/native resource evidence is
 required; logical bytes do not claim Python RSS/physical disk limits.
+
+
+### G04 explicit signed capacity and repeated capture batches
+
+Construct defaults only in trusted unsigned policy preparation. Require explicit
+maxIssuedInstances on policy0.2 signed wire/receipts; never normalize missing
+signed fields. Repeat bounded1000-row/8MiB PRIVATE batches over the complete
+locked population within aggregate original approved policy, maintaining full
+ID/set witnesses. Enforce explicit single-value8MiB refusal before adaptation,
+not a hidden whole-archive cap or row omission. Integration002 SHA256: b2ff1a1b90f1ff279e65d06442adad5a4dfe45f284dc7d5e45df2c7d4db26f9c.

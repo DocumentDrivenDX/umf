@@ -757,3 +757,12 @@ complete instance sets and no public values. Repeat actual original phase/native
 COMMIT recovery and no capture replay. Source controls are separate from real
 PostgreSQL18.6/driver/installed qualification; G05 .2 upgrade, online and external
 custody remain distinct compositions.
+
+
+### G04 capacity wire and batch-versus-population controls
+
+Test trusted unsigned default construction separately from signed-wire missing
+capacity refusal. Execute more than1000rows and8MiB total across repeated private
+batches while within aggregate signed limits, proving complete per-instance
+capture. Separately refuse a single value above8MiB before adaptation and verify
+rollback/no omitted rows. Integration002 SHA256: b2ff1a1b90f1ff279e65d06442adad5a4dfe45f284dc7d5e45df2c7d4db26f9c.
