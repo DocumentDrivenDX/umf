@@ -1358,6 +1358,79 @@ Consumer parity and default activation remain open, so the source slice is not
 yet a full R7 qualification. Later core edits require a new fixed-point check
 and inventory refresh.
 
+The 2026-10-23 integration checkpoint has not closed R5–R8. The
+[bounded Avro inspection wire](evidence/rust-migration/r5-avro-semantic-inspection-wire/README.md)
+now has opt-in Rust wire, CLI, Python and Node/Bun entry
+points; every result remains `complete: false`, and default Avro import/export,
+datum behavior, logical types and edit semantics remain active predecessor
+work. A frozen `6cd866f6ecb2ebdc879140d2192a393f3092fa79` source snapshot
+built a macOS arm64 Python wheel and source archive, plus a native Node addon.
+The packed Node addon loaded under both Node and Bun, and its focused Avro
+inspector test passed 3/3 after correcting the test to use the supported
+`controls.meter` callback. A clean pip install passed exact wheel/RECORD
+verification for all 56 installed files, including the native extension and
+CLI, and the installed Avro inspector passed 5/5 focused tests. An uninterrupted
+offline extracted-sdist rebuild then passed the pinned source guard over 650
+inputs and produced a macOS arm64 wheel. Its 0.11.0 metadata, tag and 47
+non-native package payloads matched the direct wheel; native extension and CLI
+binary hashes differed, so this is not a reproducible-native-binary claim. The
+direct and rebuilt wheel SHA-256 values are
+`f1c5bb225b6aa107e74557f3c1914a862283eed5c68c168e5998c28100adfe9a` and
+`f766a30943ef762dd300dca0d8d4e796850a06ef146f6e71d0faa390512a0b6d`.
+The earlier interrupted verifier compared against a source snapshot whose
+Node test was corrected after archive creation; restoration and the successful
+rerun resolved that test-harness mutation. An earlier installed Python run
+completed 412 tests and failed three; one obsolete fake-Cargo expectation was
+corrected and its focused rerun passed. Commit `7eadbfa06` routes no-controls
+Iceberg and JSON Schema wrapper calls directly to the native wire entry point,
+with explicit host controls retaining their callback path. Focused mixed-cohort
+replay/control runs passed 4/4 and 2/2; Sol found no P1/P2 in that wrapper
+slice. A full Python run using the verified `6cd866f6e` wheel plus only those
+two wrapper overlays completed 416 passed and four failed in 699 seconds.
+All four failures compared installed resource/source digests or compiler
+fingerprints against a newer worktree cohort; no adapter `METER_FAILURE`
+appeared in that run. The original intermittent meter failure remains
+unclassified, and a fresh single-cohort installed run is required. The frozen R5 JSON
+Schema installed replay matched 27/30 cases; the remaining three are
+conservative `JSON_SCHEMA_VALIDATOR_LIMIT`/incomplete outcomes, not parity.
+
+R6 outcome-crypto ownership moved to the existing Rust HMAC/SHA/constant-time
+comparison seam, with Python retaining receipt canonicalization, validation
+order and buffer admission. The related-Key default now selects Rust for exact
+string payloads on CPython 3.11 and 3.14 after metadata and profile admission;
+CPython 3.12/3.13 retain `json.loads`. The older `6cd866f6e` native wheel
+changed 12/20 CPython 3.11 direct recursion thresholds, so it is not evidence
+for this default. An exact-current-source native overlay with binding source
+SHA-256 `d5f99acccc49c8d2f4bf89b94c4673ad3af3585cfbd223b9e490f03738a56114`
+and extension SHA-256 `9908b33f12b89ea2e58bfc209322799cea3e7590eac12f7ce3064ad8a9a23787`
+matched 56/56 frozen observations and 20/20 unprofiled direct controls on
+each of CPython 3.11.17 and 3.14.8. Independent Sol review found no P1/P2
+in this bounded source/default slice. Installed access-wheel controls,
+generated consumer reads and native PostgreSQL/Weft read/page/stream behavior
+remain open; R6 is not qualified as a whole.
+
+R7 metamodel regeneration after the Avro source edit exposed a stale output
+manifest. Independent review then found that the source-bound compiler cache's
+external resource list omitted production adapter `include_str!` inputs,
+including generated resources. Commit `60ceca8c9` isolates those adapters
+behind default features and builds the compiler-only CLI with no default
+features. A cold copied-source check deleted generated outputs and adapter
+resources, then built the compiler-only CLI, ran metamodel output admission
+and retained the scoped Avro inspector CLI test; it exited successfully.
+This closes that compiler resource cycle for the pre-main-merge cohort, but
+does not yet establish a new generated-output fixed point. Commit `b39054b5a`
+switches only the authored reference self-model build consumer to the
+source-bound Rust CLI for parsing, provenance and graph admission while Bun
+retains source custody and output staging. Its exact string-ID authored subset
+passed 10 focused Bun tests with 46 assertions and five no-default CLI tests,
+including actual CLI diagnostic mapping, a rehashed fixture and staged output
+bytes. Sol found no remaining P1/P2 in that bounded activation. General
+dynamic/non-string reference behavior, the reference/browser journeys and
+other default consumers remain separate R7 gates. The public TypeScript barrel
+still exports active predecessor semantics, so R7 default cutover and the R8
+zero-owner, installed-host, browser, CI and release gates remain open. Recheck
+feature isolation and fixed point after the extension-kind main merge.
+
 Each family retains immutable predecessor outcomes, contract controls, independent
 version-pinned native oracles, required recovery directions, unknown-content/edit
 refusals, explicit losses, copy isolation and ordered failures. Qualify the declared
