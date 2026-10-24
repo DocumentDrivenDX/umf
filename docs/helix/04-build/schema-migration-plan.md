@@ -525,3 +525,53 @@ G10 proposal004 is being reconciled to add an exact denied native approval
 outcome and recovery without replacing the original approval identity. No
 moving draft is adopted. G02–G11's full implementation, qualification, review,
 merge, immutable release and fresh public-byte verification remain unfinished.
+
+
+## Migration integration checkpoint — 2026-10-24, journal recovery
+
+G11 governing012 and013 are adopted at
+`867a770b1684f7b422277a6b25f4adc001dd6c05` and
+`8105df3284d7f58793b59996eaaf80235a4677a8`. They fix canonical root-registry
+birth/evolution, preserve native-free component ownership, and require subordinate
+logical context/ledger birth before root enrollment confirmation under the same
+original native exclusion lease. Confirmed missing history refuses recreation.
+The current extraction passes 25 focused authority/birth tests, but production
+root enrollment and session issuance remain incomplete: the concrete native
+lease/resolver and upper session coordinator do not yet exist. The read-only
+source map identifies these actual missing methods; no method-name check,
+source-test issuer or fabricated observation establishes the positive path.
+
+G04 journal governing010 is adopted at
+`e4621c25e1a9a071bd06d6ca1308eea253083ad3`. Fresh original external custody and
+supervisor journal0.2 streams retain the original store reservation and six
+physical owner scopes. External reservation precedes typed supervisor intent
+and the existing generic native reservation bound to owner core. Positive
+native COMMIT precedes external, typed supervisor, generic native and owner
+confirmations. Every gap recovers the same original IDs without committed DDL
+replay; known abort is an attempt observation and unknown remains occupied.
+Legacy0.1 bytes/replay remain exact without implicit upgrade. Concrete source
+types, registries and coordinator binding must be reviewed before implementation.
+Current G04 provider code reserves then executes DDL in its caller transaction;
+it has no owner-session binding seam or actual supervisor store capability yet.
+
+Core37290 browser controller005 was rejected by independent review for parsing
+approval bytes separately from the bytes it hashed. Immutable controller006
+uses one bounded byte snapshot for parsing/hashing and compares fresh bytes
+before effects. Root verified 113 manifest members and reran 14 bounded controls
+successfully. Independent Sol approval and a fresh resource window are still
+required; no actual build/browser qualification or new inventory is implied.
+The handler timing candidate has nine passing mocked-runtime tests covering
+actual handler control flow. It is still under review and does not establish
+the cause or resolution of the hosted native LIMIT failure.
+
+G10 proposal005 adds one common approved/denied decision slot, exact private
+request/reservation/attempt accounting/settlement and retained native binding.
+Its 101 manifest files and 32 document/source/design controls verify, preserving
+all 72 preceding acceptance rows and adding eight. These checks do not execute
+product methods or native transactions. Root semantic and external design review
+remain open; no proposal005 implementation or governing adoption is claimed.
+
+The full G02–G11 implementation, portable/browser/installed/native verification,
+independent review, merge, immutable release and fresh public-byte qualification
+remain the delivery goal. UMF/Weft ownership and the exclusion of Praxis changes
+are unchanged. Shared heavy validation remains serialized by the coordinator.
