@@ -843,6 +843,10 @@ pub const PROTOBUF_INSPECT_PROFILE: &str = "umf-r5-protobuf-inspect/0.1.0";
 /// parse Avro source text or activate the default Avro adapter.
 pub const AVRO_FIELDS_PROFILE: &str = "umf-r5-avro-fields/0.1.0";
 
+/// Versioned opt-in structural Avro schema inspection. This profile reports
+/// only its explicit structural subset and never certifies Avro validity.
+pub const AVRO_INSPECT_PROFILE: &str = "umf-r5-avro-inspect/0.1.0";
+
 pub fn execute_avro_fields_wire(wire_json: &str) -> String {
     let mut no_control = |_amount: usize| Ok(());
     execute_avro_fields_wire_with_control(wire_json, &mut no_control)
@@ -900,6 +904,57 @@ pub fn execute_avro_fields_wire_with_control(
             output.push(Value::Object(item.into_iter().map(|(key, value)| (Utf16::from(key), value)).collect()));
         }
         encode(&Value::Array(output), &mut ctx)
+    })();
+    result_envelope(result)
+}
+
+/// Inspect tagged Avro schema trees through the bounded structural profile.
+/// Dependencies are caller-supplied and ordered; no I/O or parser is invoked.
+pub fn execute_avro_inspect_wire(wire_json: &str) -> String {
+    let mut no_control = |_amount: usize| Ok(());
+    execute_avro_inspect_wire_with_control(wire_json, &mut no_control)
+}
+
+pub fn execute_avro_inspect_wire_with_control(
+    wire_json: &str,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+) -> String {
+    let result = (|| {
+        use umf_core::{avro_semantics::{inspect_schema, Dependency}, native_json::NativeJsonTree};
+        let mut ctx = Context::ordinary().with_host_control(control);
+        let request = decode(wire_json, &mut ctx)?;
+        if text_field(&request, "op").as_deref() != Some("avro.schema.inspect") {
+            return Err(fail("REQUEST", "Unknown Avro inspection operation"));
+        }
+        let root = NativeJsonTree::from_tagged_value(
+            field(&request, "root").ok_or_else(|| fail("REQUEST", "Avro root is required"))?,
+            &mut ctx,
+        )?;
+        let items = match field(&request, "dependencies") {
+            None => &[][..],
+            Some(Value::Array(items)) => items.as_slice(),
+            _ => return Err(fail("REQUEST", "Avro dependencies must be an array")),
+        };
+        ctx.charge_work(items.len().saturating_add(1), Utf16::default())?;
+        let mut owned = Vec::with_capacity(items.len());
+        let mut seen_ids = std::collections::HashSet::<Vec<u16>>::new();
+        for item in items {
+            let id_ref = field(item, "id").and_then(as_utf16)
+                .ok_or_else(|| fail("REQUEST", "Dependency id is required"))?;
+            ctx.charge_work(id_ref.len().saturating_mul(2).saturating_add(1), Utf16::default())?;
+            if !seen_ids.insert(id_ref.units().to_vec()) {
+                return Err(fail("AVRO_DEPENDENCY_ID", "Dependency IDs must be unique"));
+            }
+            let id = id_ref.clone();
+            let tree = NativeJsonTree::from_tagged_value(
+                field(item, "root").ok_or_else(|| fail("REQUEST", "Dependency root is required"))?,
+                &mut ctx,
+            )?;
+            owned.push((id, tree));
+        }
+        let dependencies = owned.iter().map(|(id, tree)| Dependency { id, tree }).collect::<Vec<_>>();
+        let validation = inspect_schema(&root, &dependencies, &mut ctx)?;
+        encode(&validation_value(validation), &mut ctx)
     })();
     result_envelope(result)
 }

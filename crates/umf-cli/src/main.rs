@@ -592,11 +592,14 @@ fn run(args: Vec<String>) -> Result<(), String> {
     if args.first().map(String::as_str) == Some("protobuf") {
         return protobuf_run(&args[1..]);
     }
+    if args.first().map(String::as_str) == Some("avro") {
+        return avro_run(&args[1..]);
+    }
     if args.first().map(String::as_str) == Some("json-schema") {
         return json_schema_run(&args[1..]);
     }
     if args.first().map(String::as_str) != Some("metamodel") {
-        return Err("usage: umf <metamodel|reference|iceberg|protobuf|json-schema> ...".into());
+        return Err("usage: umf <metamodel|reference|iceberg|protobuf|avro|json-schema> ...".into());
     }
     let operation = args
         .get(1)
@@ -871,6 +874,47 @@ fn protobuf_run(args: &[String]) -> Result<(), String> {
         Ok(())
     };
     println!("{}", umf_core_wire::execute_protobuf_inspect_wire_with_control(&wire, &mut control));
+    Ok(())
+}
+
+fn avro_run(args: &[String]) -> Result<(), String> {
+    if args == ["inspect", "--version"] {
+        println!("{{\"profile\":\"{}\",\"version\":\"{}\"}}", umf_core_wire::AVRO_INSPECT_PROFILE, env!("CARGO_PKG_VERSION"));
+        return Ok(());
+    }
+    if args == ["inspect", "--capabilities"] {
+        println!("{{\"profile\":\"{}\",\"operations\":[\"avro.schema.inspect\"],\"semanticCompleteness\":false,\"resourceProfile\":\"cooperative\"}}", umf_core_wire::AVRO_INSPECT_PROFILE);
+        return Ok(());
+    }
+    if args.first().map(String::as_str) != Some("inspect") {
+        return Err("usage: umf avro inspect <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>".into());
+    }
+    let mut stdin_wire = false;
+    let mut max_work = None;
+    let mut timeout_ms = None;
+    let mut index = 1;
+    while index < args.len() {
+        match args[index].as_str() {
+            "--stdin-wire" if !stdin_wire => stdin_wire = true,
+            "--max-work" if max_work.is_none() => { index += 1; max_work = Some(args.get(index).ok_or("--max-work requires a value")?.parse::<u64>().map_err(|_| "--max-work requires a nonnegative integer")?); }
+            "--timeout-ms" if timeout_ms.is_none() => { index += 1; timeout_ms = Some(args.get(index).ok_or("--timeout-ms requires a value")?.parse::<u64>().map_err(|_| "--timeout-ms requires a nonnegative integer")?); }
+            _ => return Err("invalid Avro inspect option".into()),
+        }
+        index += 1;
+    }
+    if !stdin_wire { return Err("--stdin-wire is required".into()); }
+    let started = std::time::Instant::now();
+    let wire = String::from_utf8(read_limited(io::stdin(), MAX_PROTOBUF_INSPECT_REQUEST_BYTES)?)
+        .map_err(|_| "Avro inspect wire request is not valid UTF-8".to_owned())?;
+    let mut remaining = max_work.unwrap_or(u64::MAX);
+    let mut control = |amount: usize| {
+        let amount = amount as u64;
+        if amount > remaining { return Err(umf_core::EngineError::new("RESOURCE_LIMIT", Utf16::default(), "Avro inspect work budget exhausted")); }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) { return Err(umf_core::EngineError::new("DEADLINE", Utf16::default(), "Avro inspect deadline elapsed")); }
+        Ok(())
+    };
+    println!("{}", umf_core_wire::execute_avro_inspect_wire_with_control(&wire, &mut control));
     Ok(())
 }
 

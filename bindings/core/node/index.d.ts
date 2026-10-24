@@ -111,6 +111,7 @@ export declare function createCoreModelEngine(resources: UmfCoreResources, optio
 export declare const ICEBERG_SCHEMA_PROFILE: 'umf-r5-iceberg-schema/0.1.0';
 export declare const PROTOBUF_INSPECT_PROFILE: 'umf-r5-protobuf-inspect/0.1.0';
 export declare const AVRO_FIELDS_PROFILE: 'umf-r5-avro-fields/0.1.0';
+export declare const AVRO_INSPECT_PROFILE: 'umf-r5-avro-inspect/0.1.0';
 export declare const JSON_SCHEMA_PROFILE: 'umf-r5-json-schema/0.1.0';
 export interface ProtobufInspectDiagnostic {code: string; path: string; message: string; severity: 'error' | 'warning'}
 export interface ProtobufInspectResult {valid: boolean; complete: boolean; diagnostics: ProtobufInspectDiagnostic[]}
@@ -120,6 +121,11 @@ export declare function createProtobufInspector(options?: {profile?: 'cooperativ
 export interface AvroFieldMetadata {dependencyId?: string; path: string; record: string; nativeField: unknown; element: {id: string; name: string; description?: string; scalarType?: 'boolean' | 'integer' | 'float' | 'binary' | 'string' | 'date' | 'time' | 'timestamp' | 'decimal'; extensions: Record<string, never>}}
 export interface AvroFieldsEngine {deriveAvroFields(root: unknown, dependencies?: {id: string; root: unknown}[]): AvroFieldMetadata[]}
 /** Create the opt-in bounded Avro field-metadata projection. */
+export interface AvroInspectDiagnostic {code: string; path: string; message: string; severity: 'error' | 'warning'}
+export interface AvroInspectResult {valid: boolean; complete: false; diagnostics: AvroInspectDiagnostic[]}
+export interface AvroInspector {inspect(root: unknown, dependencies?: {id: string; root: unknown}[]): AvroInspectResult}
+/** Create the opt-in incomplete Avro structural inspector. */
+export declare function createAvroInspector(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): AvroInspector;
 export declare function createAvroFieldsEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): AvroFieldsEngine;
 export interface IcebergSchemaValidation {
   valid: boolean;

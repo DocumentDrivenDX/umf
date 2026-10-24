@@ -55,6 +55,7 @@ export const RFC3339_EXACT_INSTANT_MAXIMUM_BYTES = 1_048_576;
 export const ICEBERG_SCHEMA_PROFILE = 'umf-r5-iceberg-schema/0.1.0';
 export const PROTOBUF_INSPECT_PROFILE = 'umf-r5-protobuf-inspect/0.1.0';
 export const AVRO_FIELDS_PROFILE = 'umf-r5-avro-fields/0.1.0';
+export const AVRO_INSPECT_PROFILE = 'umf-r5-avro-inspect/0.1.0';
 export {JSON_SCHEMA_PROFILE};
 export {JsonSchemaUmfError as UmfError};
 function temporalResult(wire) {
@@ -251,6 +252,31 @@ export function createProtobufInspector(options = {}) {
       hostWork?.(1);
       const request = {op: 'protobuf.descriptor.inspect', document};
       const responseText = addon.executeProtobufInspectWire(encodeRequestWire(request, hostWork), controlBridge);
+      hostWork?.(responseText.length);
+      const envelope = JSON.parse(responseText);
+      const failure = resultError(envelope);
+      if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+      hostWork?.(envelope.wire.length);
+      return fromWire(JSON.parse(envelope.wire), hostWork);
+    },
+  });
+}
+
+/** Create the opt-in Avro structural inspector; complete is always false. */
+export function createAvroInspector(options = {}) {
+  if (typeof addon.executeAvroInspectWire !== 'function' || typeof addon.avroInspectProfileVersion !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  if (addon.avroInspectProfileVersion() !== AVRO_INSPECT_PROFILE) throw new Error('RUST_NODE_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  return Object.freeze({
+    inspect(root, dependencies = []) {
+      const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+      const hostWork = admissionWork(controlBridge);
+      hostWork?.(1);
+      if (!Array.isArray(dependencies)) throw new TypeError('Avro dependencies must be an array');
+      if (dependencies.length > 100_000) throw new RangeError('Too many Avro dependencies');
+      hostWork?.(dependencies.length + 1);
+      const request = {op: 'avro.schema.inspect', root, dependencies};
+      const responseText = addon.executeAvroInspectWire(encodeRequestWire(request, hostWork), controlBridge);
       hostWork?.(responseText.length);
       const envelope = JSON.parse(responseText);
       const failure = resultError(envelope);

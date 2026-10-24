@@ -212,6 +212,24 @@ pub fn protobuf_inspect_profile_version() -> &'static str {
     umf_core_wire::PROTOBUF_INSPECT_PROFILE
 }
 
+#[napi(js_name = "executeAvroInspectWire")]
+pub fn execute_avro_inspect_wire(
+    env: Env,
+    wire_json: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::execute_avro_inspect_wire_with_control(&wire_json, &mut hook))
+    } else {
+        Ok(umf_core_wire::execute_avro_inspect_wire(&wire_json))
+    }
+}
+
+#[napi(js_name = "avroInspectProfileVersion")]
+pub fn avro_inspect_profile_version() -> &'static str { umf_core_wire::AVRO_INSPECT_PROFILE }
+
 #[napi(js_name = "executeJsonSchemaWire")]
 pub fn execute_json_schema_wire(env: Env, wire_json: String, control_dispatcher: Option<JsFunction>) -> NapiResult<String> {
     if let Some(dispatcher) = control_dispatcher {
