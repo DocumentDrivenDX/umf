@@ -11,7 +11,7 @@ MEDIA = {'.pdf':'application/pdf', '.csv':'text/csv', '.json':'application/json'
  '.jsonl':'application/x-ndjson', '.ts':'text/plain', '.py':'text/plain',
  '.txt':'text/plain', '.md':'text/markdown', '.yaml':'application/yaml',
  '.yml':'application/yaml', '.html':'text/html', '.xml':'application/xml',
- '.zip':'application/zip', '.parquet':'application/vnd.apache.parquet'}
+ '.zip':'application/zip', '.dcm':'application/dicom', '.parquet':'application/vnd.apache.parquet'}
 def git(*args):return subprocess.check_output(['git','-C',str(ROOT),*args])
 def build(revision):
  revision=git('rev-parse',revision+'^{commit}').decode().strip()
@@ -67,6 +67,16 @@ def build(revision):
    result.update(closure(child,stack|{pack}))
   return sorted(result)
  for pack in selections:selections[pack]['assets']=closure(pack,set())
+ published=OUT/'published-assets.json'
+ if published.exists():
+  publication=json.loads(published.read_text())
+  if publication['baseline']!=revision:raise ValueError('Publication baseline mismatch')
+  bypath={a['path']:a for a in assets}
+  for item in publication['assets']:
+   asset=bypath[item['path']]
+   if asset['rights']!='allowed' or asset['sha256']!=item['sha256'] or asset['bytes']!=item['bytes']:raise ValueError('Publication identity/rights mismatch')
+   asset.update(url=item['url'],transport='github-release',downloadMediaType=item['downloadMediaType'])
+  hosts.update(['github.com','release-assets.githubusercontent.com'])
  return {'version':1,'kind':'domain-packs','id':'umf-domain-pack-assets','revision':revision,
          'allowedHosts':sorted(hosts),'packVersions':versions,'assets':assets,'selections':selections}
 def main():
