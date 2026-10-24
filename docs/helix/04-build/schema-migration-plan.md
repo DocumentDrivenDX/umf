@@ -666,3 +666,10 @@ retained in `evidence/schema-migration-design-review/g10-contract-002/`.
 This is design adoption only. Source implementation/legacy parity, original
 bootstrap and native ACL/COMMIT recovery, fenced clients and all mixed, browser,
 installed, managed, merge/release/public-byte gates remain open.
+
+
+G10 checkpoint003 adopts the exact compiler-owned metadata diagnostic paths
+retained in `evidence/schema-migration-design-review/g10-fixed-metadata-paths-001.md`.
+All three fixed steps remain present for empty, initial and installed plans;
+paths confer no authority. Original prefix, approval denial, recovery and
+source/native/browser/installed/merge/release/public-byte gates remain open.

@@ -1346,3 +1346,13 @@ required backlog work, not an automatic fallback or closure of the full goal.
 ### G10 implementation checkpoint 002: exact grant lowering
 
 Adopt the complete schema-grant-subject001 definition in CONTRACT-081 governing G10 checkpoint002. The actual renderer emits closed private operation/subject tags; stripping them reproduces every historical public deployment step and bundle digest exactly. G10 consumes the typed tags and checks the full public projection. One combined schema-USAGE step maps to two source-derived catalog rows; original bootstrap and native privileges remain separately proved. Grant occurs in a required transaction before metadata-only publication; no ordinary client capability is activated early. No SQL parsing, ordinal guessing, generic grant executor or historical public-wire extension. This is a required design; source/native/browser/installed/release verification is outstanding.
+
+
+### G10 implementation checkpoint003: fixed metadata paths
+
+Adopt CONTRACT-081 governing checkpoint003 and the complete retained definition
+`../../04-build/evidence/schema-migration-design-review/g10-fixed-metadata-paths-001.md`.
+The compiler derives the three reserved diagnostic paths from their exact fixed
+metadata operations. They are not authored source/options pointers or effect
+authority. All original step/phase/prefix, denied approval and recovery semantics
+remain required. Implementation and native acceptance remain open.
