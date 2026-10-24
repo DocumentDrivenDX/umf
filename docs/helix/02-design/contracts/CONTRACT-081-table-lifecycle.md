@@ -4189,3 +4189,516 @@ settlement; preserve required private custody/evidence under its retention polic
 Do not stop or alter shared services. Managed/native privilege variants, general
 restored-target recovery and other OS profiles remain explicit residuals until
 their own implementation/acceptance passes.
+
+
+#### G11 selected concrete signed owner authority and exact signing scopes
+
+This unpublished amendment selects the real programmatic signed approval path,
+all six closed scope intents, original durable consumption and immutable
+production/acceptance purpose separation. It supersedes evidence-only store
+signing and physical-custody-before-principal-preparation ordering in earlier
+private elaborations exactly where the later scope section specifies. Portable
+migration wire remains unchanged. Actual rejected UID-based autoapproval is
+retained as rejected/unapplied evidence; it is never an alternative permission
+path. No mandatory TTY or new human prompt is required by this contract.
+Implementation and actual native/crypto/authority qualification remain mandatory.
+
+##### Actual programmatic authority implementation
+
+Implement `ConfiguredEd25519OwnerAuthority` as a concrete host-only verifier,
+not an always-refusing Protocol and not an arbitrary callback. Trusted embedding
+bootstrap supplies an immutable owner-authority configuration from its ORIGINAL
+operator-managed deployment trust boundary, separate from plans/native attestors.
+Pin its authorityId, policyRevision, canonical configuration digest, allowed
+signer public keys/principals/scopes and target bounds in original supervisor/
+custodian bootstrap custody. The native adapter cannot create/replace this
+configuration or enroll a key from a submitted approval. File ownership checks
+protect configured material but do not establish approval by themselves.
+
+A configured signer can be an authenticated application/automation service acting
+under the host's owner policy. The operator/service signs after its actual
+authorization decision. No mandatory TTY, interactive terminal or per-operation
+human prompt is part of the library contract. A caller-supplied affirmative hash
+does not replace the signature or original trust enrollment.
+
+The concrete verifier loads only its bootstrap-enrolled Ed25519 public keys,
+checks the closed signed payload below, and performs actual Ed25519 verification
+with a qualified standard implementation (for example cryptography's
+Ed25519PublicKey.from_public_bytes(...).verify(...)). Do not implement custom
+cryptography or treat a structural signer object as proof. Pin the actual crypto
+implementation/wheel and wrapper artifacts in host qualification before production
+admission. The external application signing service/private key stays outside
+UMF's portable model and native attestor; no secret or credential is requested
+in chat or accepted in a plan. Public keys are pinned original configuration,
+never a trust-on-first-use field copied from the submitted envelope.
+
+The configured authority exposes these exact logical operations:
+
+```text
+prepare_request(scope, exact_intent_bytes) -> OwnerApprovalRequest
+export_signing_request(original_request) -> {payload,intent}
+verify_approval(original_request, signed_envelope) -> VerifiedOwnerApproval
+observe_approval(original_request) -> OriginalApprovalOutcome
+```
+
+OwnerApprovalRequest and VerifiedOwnerApproval are immutable opaque private
+issuer-registry objects, not public dictionaries or serializable seals. Preparing
+a request records no approval and confers no native effect authority. It fixes
+one original approvalId/intent/scope/target/policy under the custodian writer
+lease. Verify requires the actual original request registry entry, not an
+equivalent-looking request constructed by the caller. The durable signed
+envelope may be transported as data; successful verification yields the private
+capability. Reissuing a volatile verified capability after restart requires
+original durable signature/request/consumption lookup and current qualified
+bootstrap. Do not invent a new approval ID after an uncertain outcome.
+
+Export returns owned copies of the exact canonical payload and complete typed
+intent for the separately authenticated signing service to inspect and sign.
+It exports NO authority or private signing key. The original immutable bytes stay
+in the issuer registry; mutating exported copies cannot change the bound request.
+This is the concrete out-of-process programmatic signing route, not a missing
+opaque-handle accessor. The verifier recomputes intentDigest and signed bytes
+from its ORIGINAL request, never from substituted exported copies.
+
+##### Closed signed envelope and trust configuration
+
+Envelope is exactly `{payload,signature}`. Signature is canonical unpadded
+base64url of exactly64 Ed25519 signature bytes. Payload is exactly:
+
+```text
+{profile:"umf.authenticated-host-owner-approval/0.1",
+ authorityId,policyRevision,keyId,principalId,approvalId,scope,
+ custodianId,supervisorId,providerId,installationId,intentDigest}
+```
+
+authorityId/approvalId/custodianId/supervisorId/providerId are canonical UUIDs.
+policyRevision/keyId/principalId/installationId are nonempty NUL-free valid UTF8,
+at most128 bytes each. IntentDigest is lowercase64hex SHA256 over the EXACT
+original cycle-free typed intent, not repr/reserialized unknown values.
+Canonical payload is RFC8785 UTF8 at most16384 bytes; reject duplicate keys,
+unknown members, floats/booleans for IDs and noncanonical encodings. The signed
+message is the ASCII domain prefix `umf.host-owner-approval/0.1` followed by a
+single zero byte and canonical payload bytes. Signature/key decoding is strict.
+
+Scope is exactly one of `local-target-creation`, `local-target-registration`,
+`native-principal-preparation`, `native-store-creation`, `disabled-epoch-provision`
+or `generation-ingress-transition`. The authority checks the selected original
+intent schema for that scope and actual target; scope is not a free-form action.
+Existing UMF migration plan approval remains separate and is still required;
+an owner/store approval does not authorize arbitrary data/DDL or another plan.
+
+The immutable trusted configuration is exactly
+`{profile:"umf.configured-owner-authority/0.1",authorityId,policyRevision,keys}`.
+Keys is1..32 unique records, each exactly
+`{keyId,publicKey,principalId,scopes,supervisorIds,providerIds,installationIds}`.
+PublicKey is canonical unpadded base64url of exactly32 Ed25519 public-key bytes;
+scopes is a unique selected-scope array in the above order; each target bound is
+a nonempty unique explicit array of at most256 exact IDs, without wildcards.
+Pin actual future supervisor/provider/installation UUIDs in the original host
+creation intent before native creation. PrincipalId must match the selected
+enrolled key, not a caller-invented claimed approver. Empty/unknown key sets or
+unconfigured production authority refuse BEFORE native effects. Signer/config
+rotation is a separately authenticated original host policy revision; no silent
+key replacement or accepting an embedded envelope key.
+
+The actual configured verifier checks authority/policy/key/principal/scope and
+all target bounds before signature success can issue a capability. It reserves
+the original approval consumption durably BEFORE the approved native effect.
+Repeated identical original approval resolves its original outcome, not a second
+effect; the same approvalId on another intent/scope/target refuses. Unknown
+COMMIT/journal writes reconcile original custody. Read-only original-outcome
+settlement must remain possible even if new approvals are disabled by policy
+rotation; rotation never authorizes reexecution of old effects.
+
+No approvalDigest hashes itself. The native original-store intent is the exact
+verified evidence payload below without its eventual approval/envelope digest.
+After verification, the original authority receipt binds that intent digest,
+canonical signed-envelope digest and independently authenticated issuer/policy.
+Previous scope-specific creation approval digests refer to these actual original
+envelopes/receipts, not fabricated caller hashes.
+
+##### Actual native original-store evidence and registry
+
+Implement private `NativeOriginalStoreAuthorityEvidence`, issued ONLY by the
+bootstrap-enrolled concrete native supervisor/attestor after actual native
+observations. It is keyed by handle OBJECT identity in that attestor's private
+registry; no public JSON constructor, borrowed shared construction seal, repr,
+digest lookup or caller-passed resolver. The immutable registry entry contains
+the actual supervisor object, actual custodian object and opaque TargetCustody
+issued/verified by THAT custodian, original birth/registration/role-preparation
+receipts and the full verified native session-authority observation.
+
+The implementation's existing name `VerifiedNativeStorePreparation` may denote
+this SAME private evidence type; do not duplicate authority lanes to satisfy a
+class name. Its profile, original issuer/registry/binding and actual observations,
+not its spelling, govern issuance. A concrete method named
+`prepare_original_store_authority(final_approval)` must resolve this already
+prepared original evidence, verify the final signed approval through the enrolled
+configured authority, reobserve native identity and issue the resulting capability;
+it cannot skip any of those steps because final_approval is a truthy object.
+
+Its closed private intent payload is exactly:
+
+```text
+{profile:"umf.pg18.original-store-authority-evidence/0.1",
+ supervisorId,custodianId,providerId,installationId,ownerAuthorityId,
+ ownerPolicyRevision,registrationDigest,targetCustodyDigest,
+ authorityPreparationReceiptDigest,maintenance,controller,businessOwner,
+ requiredMemberships,requiredSettings,nativeAuthorityObservationDigest}
+```
+
+Principal/settings/membership forms are the adopted actor-authority contract;
+native roles/OIDs/flags must ALREADY exist and match the selected concrete local
+profile. Registry custody retains the complete native observation, not only its
+digest. Bootstrap/native preparation approval and original role creation receipt
+remain separate from the eventual final store-creation approval. Actual
+authenticated SESSION_USER is original maintenance; CURRENT_USER/role setting
+must be original controller when observing/preparing store creation, and the
+business owner in outer phase context. Reobserve actual target, kernel/process/
+native source identity, settings and full original approved privilege closure.
+The attestor is not allowed to label an arbitrary supplied observation verified.
+
+The actual supervisor/attestor exposes private
+`prepare_original_store_evidence(target_custody) -> NativeOriginalStoreAuthorityEvidence`.
+The custodian/store factory is constructed with its separately bootstrap-enrolled
+attestor resolver and the concrete ConfiguredEd25519OwnerAuthority. Fixed private
+resolution verifies exact issuer/registry object, actual supervisor/custodian
+identity, original receipts, live native observation and enrolled owner policy.
+It prepares the `native-store-creation` request over those exact intent bytes.
+Only after verifying the separately signed final approval may it call
+`issue_original_store_authority(evidence, verified_approval)`.
+
+That issuance rechecks original native evidence binding and target/context, and
+returns opaque OriginalStoreCreationAuthority from the independently enrolled
+issuer registry, with actual evidence digest and signed-approval digest. Caller
+records, shared seals, self-generated non-root/UID approval or a fake attestor
+cannot issue it. Store factory accepts only that original private capability,
+resolves it through its original enrolled resolver, and then performs the fixed
+external intent→native creation→receipt→confirmation protocol. It must not accept
+a payload and a new matching purported issuer/resolver supplied together.
+
+No single native bootstrap observation automatically approves store creation.
+The signing authority's original configuration and authenticated signed decision
+are independent inputs; the native attestor does not possess the production
+approval private key by default. Trusted embedding service may intentionally
+automate scoped approvals under its configured owner policy, but that explicit
+authority is not inferred from the supervisor's UID or ability to run initdb.
+
+##### Native-acceptance fixtures and required evidence
+
+Provide a separate explicit `NativeAcceptanceOwnerAuthority` fixture for actual
+isolated native campaigns. It uses a fresh test-only signer/key and the SAME
+closed request/signature/consumption verification semantics, scoped to the
+test harness's original newly created supervisor/provider/installation IDs.
+The test harness and approval signer are distinct from the native attestor.
+Fixture approval is labelled native-acceptance-only in private qualification
+records. It cannot enroll/adopt an existing shared/production target or issue a
+ConfiguredEd25519OwnerAuthority/production capability, and production factories
+never fall back to it when configuration is absent. The harness's explicit test
+authorization permits its isolated actual fixture; it is not evidence of an
+external production customer's authenticated approval. No UID shortcut or
+interactive TTY requirement is introduced for that harness.
+
+Source tests verify real valid/invalid signatures under configured test keys,
+wrong key/principal/scope/target/policy, embedded-key substitution, tampering,
+unknown fields/bounds/noncanonical encoding, original replay versus duplicate
+effects and uncertain consumption. Production-unconfigured path must refuse;
+separately configured real verifier must actually succeed for a correct signed
+request, not always refuse.
+
+Native tests combine actual supervised SCRAM origin/OIDs/flags/SET-role/settings
+observations with separately signed final approval, original durable consumption
+and actual private store creation/hook. Swap evidence/issuer/custodian/target or
+mutate native authority between observation and issuance; prove refusal before
+effects. Test unknown native/journal COMMIT and exact original outcome lookup.
+Retain the actual earlier auto-review rejection and prove that rejected UID-based
+change was not applied. Native fixture success qualifies the declared native
+mechanism subset; production deployment/key enrollment remains the host's real
+configured authentication responsibility, not a fabricated passed test.
+
+
+##### Common validation and immutable purpose
+
+Every scope validates its EXACT shape below before preparing a request. No
+arbitrary intent JSON, unknown members, caller resolver, self-signed enrollment
+or dropping of an inconvenient field. Canonical RFC8785 UTF8 intent is at
+most65536 bytes. Existing UUID/hex/native OID/path/identifier/role/settings forms
+and bounds apply recursively. Names in this first local profile match
+`[a-z][a-z0-9_]{0,62}`. ownerUid is an observed uint32, NEVER approval authority.
+Paths are canonical absolute1..4096 UTF8 bytes; digests lowercase64hex; port
+integer1..65535, no booleans/coercion. No secrets or business row values.
+
+Add mandatory `purpose` to the unpublished signed owner payload AND immutable
+owner authority configuration. It is exactly `production|native-acceptance`.
+The native supervisor/custodian/bootstrap/evidence/approval issuer registries
+also bind that immutable purpose privately. Public portable migration wire and
+the public TargetCustody reference keep their existing shapes; a caller cannot
+select purpose through a plan, request dictionary or an allow_fixture flag.
+
+Configured production factory accepts only originally enrolled production
+configuration and production-issued opaque approvals/evidence/target context.
+The explicit acceptance harness creates a fresh isolated target and separately
+scoped test signing policy; its original signed creation intent, journal and
+all private capabilities remain native-acceptance. It cannot adopt an existing
+target or convert that context to production. Both factories call the SAME fixed
+native store/provider/supervisor implementation with an enrolled immutable
+AuthorityContext; the common resolver requires exact issuer, target AND purpose.
+No duplicate native effect implementation and no production fallback to fixtures.
+Real signatures/actual native observations are required in either context.
+
+The payload's authority/custodian/supervisor/provider/installation/purpose must
+match the ORIGINAL configured authority context and all intent fields where
+present. IDs absent from an early native intent are bound by that immutable
+context and signed payload, never inferred from OS UID. ApprovalId is allocated
+by durable prepare_request, not inserted into an intent to be hashed recursively.
+
+##### 1. local-target-creation
+
+Intent is EXACTLY the selected actual native draft form:
+
+```text
+{profile:"umf.local-postgresql-create-request/0.1",
+ supervisorId,clusterId,incarnationId,installationId,ownerUid,databaseName,
+ businessOwner,maintenanceName,controllerName,controlDirectory,dataDirectory,
+ postgresPath,postgresSha256,initdbPath,initdbSha256,port,configDigest,hbaDigest}
+```
+
+All names/paths/UUIDs/hashes are reserved original host values. Control and data
+directories must be distinct, with control outside data backup/restore scope.
+Native source/binary/profile/config/HBA constraints are governing007. Approval is
+verified and durably consumed BEFORE initdb/postmaster/native creation. Private
+reversible request/secret-file preparation grants no native authority. The signer
+does not receive a password. Effect key is `[scope,supervisorId,clusterId]`.
+
+##### 2. native-principal-preparation
+
+Intent is exactly:
+
+```text
+{profile:"umf.local-postgresql-principal-preparation/0.1",
+ preparationId,supervisorId,custodianId,providerId,installationId,
+ creationRequestDigest,creationApprovalDigest,bootstrapOriginDigest,
+ bootstrapDatabase,maintenanceBefore,maintenanceAfter,controller,businessOwner,
+ applicationDatabase,memberships,maximumRoles}
+```
+
+PreparationId is a UUID reserved once in original external bootstrap intent.
+BootstrapDatabase is actual `{oid,name,systemIdentifier}`, name exactly postgres,
+from the supervised newly initialized native cluster. maintenanceBefore is the
+actual observed `{oid,name,flags}`; flags are the seven adopted native role flags.
+MaintenanceAfter is `{name,operation:"alter-bootstrap",flags}`; controller and
+businessOwner are each `{name,operation:"create-absent",flags}`. Desired flags are
+EXACT governing007 profile flags, not a caller-selected privilege variant.
+ApplicationDatabase is exactly
+`{name,ownerName,encoding:"UTF8",locale:"C",operation:"create-absent"}`.
+Memberships is exactly two ordered name-bound entries
+`{memberName,roleName,inherit:false,set:true,admin:false}`, maintenance→controller
+then maintenance→businessOwner. MaximumRoles is exactly3 (one existing principal
+alteration and two new roles), plus exactly one new application database.
+Controller/businessOwner/application database must be absent before this original
+operation. No future OIDs or TargetCustody are claimed in this signing intent.
+
+BootstrapOriginDigest binds the actual original supervised launch/private SCRAM
+observation, native system ID and existing maintenance principal, held by the
+actual issuer BEFORE preparation. It is not the final creationReceiptDigest,
+which does not exist until this preparation completes. Final owner registration
+cannot precede this step: it requires the actual application database identity.
+
+Consume the signed original preparation approval BEFORE any role/database DDL.
+Role alterations/creates and memberships execute in one native transaction with
+original creation evidence. For unambiguous documented membership syntax, use
+three fixed GRANT statements per exact edge, one WITH ADMIN FALSE, one WITH
+INHERIT FALSE and one WITH SET TRUE; verify the resulting exact edge. Database
+creation is a separate bounded bootstrap stage, not that same transaction:
+[PostgreSQL CREATE DATABASE](https://www.postgresql.org/docs/18/sql-createdatabase.html).
+Keep original stage intents/known outcomes; unknown COMMIT observes that original
+controlled fresh realm/pre-absence/role creation receipt before any retry. Never
+adopt a shared preexisting role/database or reexecute confirmed roles when only
+database confirmation remains. These are explicit bootstrap staged effects.
+Effect key is `[scope,supervisorId,preparationId]`.
+
+##### 3. local-target-registration
+
+Allocate registrationId BEFORE preparing this signing request. Intent is exactly
+`{profile:"umf.owner-target-registration-intent/0.1",registration}`.
+Registration is the adopted owner payload with EXACTLY ownerApproval omitted:
+
+```text
+{profile:"umf.local-owner-target-registration/0.1",
+ registrationId,custodianId,providerId,installationId,origin,endpointControl}
+```
+
+All origin/endpoint fields retain their full adopted forms and original actual
+observations, not a hand-picked digest-only projection. No other omission or
+placeholder approval is permitted. Origin.creationReceiptDigest binds the final
+private original supervisor creation receipt, exactly
+`{profile:"umf.local-supervisor-creation-receipt/0.1",supervisorId,clusterId,
+incarnationId,creationRequestDigest,creationApprovalDigest,initdbReceiptDigest,
+initialLaunchReceiptDigest,principalPreparationRequestDigest,
+principalPreparationApprovalDigest,principalPreparationReceiptDigest,
+applicationDatabase}`. ApplicationDatabase is actual oid/name/systemIdentifier.
+The receipt retains verified role/DB preparation observations privately and
+links them to original native birth/authority; hashes alone are not origin proof.
+
+After signature verification construct ownerApproval EXACTLY as
+`{authorityId:payload.authorityId,approvalId:payload.approvalId,
+approvalDigest:SHA256(JCS(signedEnvelope)),
+scope:"enroll-owned-local-postgresql-target"}`. This is the single fixed mapping
+from signed scope local-target-registration to the existing legacy owner payload
+scope. Verify every projected value and original intent against the final owner
+payload; no silent alias/coercion, no signature on its own approvalDigest, no
+newly generated approvalId after signing. The original signed purpose remains
+in the private issuer/custodian context. Effect key is
+`[scope,custodianId,registrationId]`.
+
+##### 4. native-store-creation
+
+Intent is exactly `{profile:"umf.owner-store-create-intent/0.1",store,evidence}`.
+Store is exactly `{profile,storeId,schemaName}`. StoreId equals providerId in this
+first provider. Known store profiles and derived names are exactly:
+
+- `umf.pg-generation-ingress-store/0.1`: `umf_ingress_<providerUUID32hex>`.
+- `umf.native-row-originals-store/0.1`: `umf_originals_<providerUUID32hex>`.
+
+This is not an arbitrary schema/type/profile selector. Evidence is the complete
+adopted `umf.pg18.original-store-authority-evidence/0.1` payload, with actual
+prepared native role OIDs/flags/settings/full closure and original setup receipts.
+It contains NO final creationApprovalDigest or final envelope projection.
+The actual enrolled NativeOriginalStoreAuthorityEvidence (or existing identical
+VerifiedNativeStorePreparation) issuer/registry supplies it; signer data cannot
+mint that native evidence. Final verified approval binds this exact store AND
+evidence, then the actual private issuer reobserves and issues original store
+authority. No future schema/table OID is signed before actual creation.
+Effect key is `[scope,providerId,store.profile,storeId]`.
+
+##### 5. disabled-epoch-provision
+
+Intent is exactly `{profile:"umf.owner-epoch-provision-intent/0.1",request}`.
+Request is exactly the adopted closed request:
+
+```text
+{profile:"umf.ingress-epoch-provision/0.1",providerId,enrollmentId,
+ installationId,targetCustody,planDigest,fileDigest,expectedHead,
+ previousSourceDigest,nextSourceDigest,nextBundleDigest,newEpoch,issuerProfile,
+ principals,maximumRoles}
+```
+
+TargetCustody is its adopted exact public reference, privately verified against
+the actual opaque capability. Principals are ordered exact
+`{loginName,subject:{oid,name},audience}`; audience person|batch. MaximumRoles is
+integer1..256 equal to actual declared count; subject OIDs/names are original
+existing stable subjects, login names newly reserved absent identities. All
+source/head/bundle/plan/issuer bindings and disabled-creation restrictions remain
+governing005. No approval is embedded/excluded from this request. ExpectedHead
+may be null only under an explicitly qualified native bootstrap profile; G11
+existing-installation transitions require the original64hex head. IssuerProfile
+is matched to the original enrolled native credential issuer, not arbitrary text.
+The provider can export this cycle-free DATA before preparing its approved opaque
+EpochProvisionRequest; separate signed approval then authorizes that issuance.
+No future login OID or final transition approval. Effect key
+`[scope,providerId,newEpoch]`.
+
+##### 6. generation-ingress-transition
+
+Intent is exactly `{profile:"umf.owner-ingress-transition-intent/0.1",request}`.
+Request has exactly:
+
+```text
+{profile:"umf.table-generation-ingress/0.1",providerId,enrollmentId,
+ installationId,targetIdentityDigest,planDigest,fileDigest,expectedHead,
+ previousSourceDigest,nextSourceDigest,previousBundleDigest,nextBundleDigest,
+ oldEpoch,newEpoch,oldPrincipalsDigest,newPrincipalsDigest,approvalDigest,
+ targetCustody,executionPolicyDigest}
+```
+
+ApprovalDigest here is the ORIGINAL UMF PLAN approval, not this future owner/
+ingress signature. KEEP it. No member is stripped. Native ingressApprovalDigest
+lives in the separate transition/reservation record and is filled only after
+signature verification; it cannot appear inside this request. Actual new login
+OIDs already exist under confirmed disabled provisioning. Old/new epochs differ,
+head/source/plan/file/opaque enrollment/target/policy and actual inventories must
+match original native/custodian observations. Fields/digest/ID bounds are the
+adopted request schema; unknown members refuse, not selectively ignored.
+Effect key is `[scope,providerId,newEpoch]` (scope separates it from provisioning).
+
+##### Durable ledger API and concurrency
+
+The concrete signed-authority implementation uses an original host-owned ledger
+before TargetCustody necessarily exists. Its logical custodian/supervisor IDs
+are pre-reserved by trusted bootstrap; the later actual custodian binds that SAME
+original authority/ledger history, not a new caller-supplied registry. Private
+path/modes, exclusive actual flock, closed records, atomic replace/fsync/directory
+durability and original uncertain-write observation are mandatory. No shared
+untrusted seal or optional persistence.
+
+The enrolled ledger exposes these private operations to the actual authority/
+custodian instances, not an author API:
+
+```text
+reserve_request(context,scope,canonicalIntent) -> OriginalOwnerRequestRecord
+consume_signature(originalRequest,canonicalEnvelope) -> OriginalApprovalReservation
+bind_native_effect(reservation,verifiedNativeReservation) -> OriginalEffectBinding
+record_native_outcome(binding,verifiedNativeOutcome) -> OriginalApprovalOutcome
+observe_original_request(context,effectKey) -> OriginalApprovalOutcome
+```
+
+Reserve validates the scope intent, computes its effect key, then under one
+exclusive writer lock looks up `[purpose,authorityId,custodianId,supervisorId,
+providerId,installationId,effectKey]`. Identical intent/policy returns the original
+approvalId/payload, INCLUDING after process restart. Same effect key with changed
+intent/policy refuses; do not mint another ID. It durably records exact canonical
+intent/payload/configuration enrollment digest before exporting signing data.
+Both process and same-issuer concurrent prepares resolve the same original
+request AND private resolvable handle; object registries cannot race issuance.
+
+Consume verifies the actual Ed25519 signature against the original request and
+enrolled key/principal/scope/target/purpose, then durably reserves that ORIGINAL
+approval once before yielding VerifiedOwnerApproval. Identical replay resolves
+the same original reservation/outcome; changed envelope/intent or duplicate
+cross-target consumption refuses. The native consumer must bind its original
+custodian native-effect reservation before dispatch; a cryptographic verify
+alone is not a second effect permit. Actual issuer-verified native reservation/
+outcome objects supply the last two operations, not caller dictionaries.
+
+Every request record retains exact intent, payload, signed envelope when consumed,
+their digests, original policy/key enrollment snapshot, original effect binding
+and outcome. State is prepared|consumed|effect-pending|confirmed|aborted.
+Prepared has no signature/effect; consumed has the verified signature/reservation;
+effect-pending adds original native binding; confirmed/aborted add positively
+observed native outcome. Aborted requires actual known no-committed-effect proof,
+not an exception; partial bootstrap stages remain pending until original stage
+reconciliation. Native retry after known abort remains bound to that original
+operation and requires the actual phase/target proof, never another committed
+effect or silently reset budget. Unknown native/journal COMMIT remains pending.
+Observe is read-only and never retries effects.
+
+Bound canonical complete ledger to8MiB,4096 original request records; configuration
+to1MiB and its existing32-key/target-array bounds. Detect overflow before creating
+or consuming another request; no truncation/deleting original replay evidence.
+The custodian retains original sequence/state-digest/receipt custody outside
+database restore scope. Restored/copied ledger/native metadata is not authority
+to rewind history. Record framing/checkpoint implementation may use the existing
+qualified custody journal, but every logical operation/state rule above must hold.
+
+##### Policy rotation and originally rejected shortcuts
+
+This first profile has no automatic in-process trust/key rotation. Changed
+configuration/revision disables NEW approvals under the old context. A controlled
+host deployment rotation requires its original independently authenticated
+operator/bootstrap configuration enrollment and durable custodian revision
+receipt; not a key embedded in an approval, same UID or a fresh self-generated
+key. Hold the writer lease, settle existing pending/consumed effects (or explicitly
+invalidate only unconsumed effect-free requests), then enroll the new revision.
+Refuse rotation while an original effect is unsettled. Keep original public key/
+configuration/signed-request history for read-only outcome verification; do not
+delete historical approvals or reinterpret them under new keys. Pending-state
+online key rotation requires a separate explicit qualified successor.
+
+The separately scoped acceptance fixture uses the same signature, ledger and
+native effect logic but immutable acceptance context/key enrollment. It cannot
+issue production-purpose capability or satisfy a production factory. Native
+acceptance credentials are not claimed to authenticate a real external customer.
+Production-unconfigured must refuse; correctly configured signed production
+verification must succeed in the actual concrete code. Preserve the rejected
+UID-based attempt and verify that it never became an alternative authorization
+path. No mandatory TTY or extra human prompt is introduced by this clarification.

@@ -722,3 +722,35 @@ and other OS/managed privilege profiles stay explicit residuals, not automatic
 new-target adoption. Bound every process/stage and remove only verified owned
 resources after durable outcome/evidence settlement. Old trust-auth native runner
 helpers may be reused as code, never as SCRAM/issuer/supervisor evidence.
+
+
+### G11 concrete signed authority and original effect integration
+
+Implement the actual ConfiguredEd25519OwnerAuthority prepare/export/verify/observe
+path and its private durable reserve/consume/bind/outcome protocol. Use qualified
+standard crypto, original operator-enrolled immutable key/principal/scope/target
+configuration and exact six scope forms; no generic arbitrary JSON signing, key
+from submitted envelope, shared object seal, UID shortcut or mandatory TTY.
+NativeAcceptanceOwnerAuthority uses a separate immutable acceptance context but
+the SAME native store/provider effect code; production rejects that purpose and
+never falls back. Source tests with real signatures precede actual native tests.
+
+Create-request approval is before initdb. Pre-DDL principal approval binds actual
+bootstrap/postgres origin and known names/flags/SET edges, not future application
+DB/controller OIDs or final TargetCustody. Roles and CREATE DATABASE are explicit
+staged native effects with original intent/observe/confirm; three fixed GRANTs
+per edge use one membership option each. Final target registration follows
+actual app database/role receipt. Allocate registrationId before signing, omit
+ONLY ownerApproval and apply its exact one-to-one legacy scope projection after
+verification. Final store signature binds the exact store and full real prepared
+native evidence. Provision/transition wrappers keep all original request meaning,
+including ORIGINAL UMF plan approvalDigest; never remove it as a self-reference.
+
+Wire every issued owner/store capability through the original enrolled issuer
+registry, custodian/supervisor/opaque target/native context and signed purpose.
+Durably consume and bind original native reservation before effects; process and
+thread races reuse one original ID/resolvable handle. Unknown native/journal
+outcome observes the original, not a new approval/effect. Rotation is explicit
+authenticated settled-only host configuration enrollment, no automatic live trust
+change or loss of original read-only outcome/signature history. No source-only
+primitive or self-consistent record qualifies actual native authorization.

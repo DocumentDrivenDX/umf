@@ -614,3 +614,32 @@ full restored-generation forward recovery is separate and cannot be claimed
 from this rejection test. Record bounded actual owned shutdown/cleanup and no
 changes to shared services. Source simulations, old trust-auth runs and a provider
 that always refuses do not pass these acceptance gates.
+
+
+### G11 all-six-scope authenticated authority acceptance
+
+Test actual valid/invalid Ed25519 verification under original configured keys for
+ALL six exact scopes, full target/principal/policy/purpose binding, unknown or
+dropped fields, embedded-key substitution, noncanonical/bounded forms and actual
+original request/consumption races across processes and same-issuer threads.
+Configured production verification must actually succeed for a correct signed
+request; missing configuration refuses. Acceptance fixture cannot issue a
+production-context capability or adopt an existing/shared target, while native
+store/provider effect logic remains the same implementation.
+
+Verify acyclic pre-creation/principal/final-registration/store ordering and
+original native receipt binding. RegistrationId precedes signing; ownerApproval
+is the exact fixed projection with the existing enrollment scope. Native role/DB
+creation is not a fictional single transaction. Lose each native/bootstrap
+stage acknowledgement and prove original-outcome recovery, no role/name adoption
+and no repeated confirmed stage. Actual OIDs/flags/native context must exist
+before final store approval and be reobserved before issuance.
+
+Exercise known abort versus pending/unknown effect, actual replay no duplicate
+effects, ledger overflow/tamper/rewind, policy change/revocation for new actions,
+read-only historical settlement and settled-only authenticated rotation. Verify
+no production fallback to fixture/UID/TTY path. Retain the actual rejected UID
+autoapproval evidence and show it was not applied. Native SCRAM, kernel/process
+origin, owned endpoint gate, same-connection role restoration, phase/receipt and
+publication tests still require actual artifacts and real execution; source
+signature tests alone do not complete G11.
