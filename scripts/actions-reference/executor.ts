@@ -5,6 +5,7 @@ import {ReferenceCommitUncertain,referenceKnownAbort} from './transaction-failur
 import {verifyReferenceEntityOutputs} from './handler-outputs';
 import {ReferenceHandlerRegistry} from './handlers';
 import {executeReferenceHandler} from './handler-execution';
+import type {ReferenceHandlerTimingObserver} from './timing';
 import type {ActionInputs} from '../../src/extensions/actions/selector';
 import {verifyReferenceGraph} from './graph';
 import {randomUUID} from 'node:crypto';
@@ -39,7 +40,7 @@ export class ReferenceActionExecutor {
  readonly outcomes:ReferenceActionOutcomes;
  constructor(readonly policy:ReferenceActionPolicy,handlers=new ReferenceHandlerRegistry(),readonly attempts:ReferenceAttemptSink=new ReferenceAttemptJournal(policy.store.url)){this.admission=new ReferenceActionAdmission(policy,handlers);this.outcomes=new ReferenceActionOutcomes(policy);}
  async preview(storeName:string,credential:unknown,requestInput:unknown):Promise<ReferencePreviewDecision>{return new ReferenceActionPreview(this.policy,this.admission.handlers).preview(storeName,credential,requestInput);}
- async invoke(storeName:string,credential:unknown,requestInput:unknown):Promise<ReferenceLookupDecision|{status:'failed';code:string}|{status:'indeterminate'}>{
+ async invoke(storeName:string,credential:unknown,requestInput:unknown,timingObserve?:ReferenceHandlerTimingObserver):Promise<ReferenceLookupDecision|{status:'failed';code:string}|{status:'indeterminate'}>{
   let attemptId=randomUUID();
   const observe=async(phase:'started'|'observed',decision:string,code:string|undefined,metadata:any)=>{try{await this.attempts.append({attemptId,phase,decision,...(code?{code}:{}),metadata:copyJson(metadata)});}catch{/* Instrumentation cannot classify business outcomes or trigger retries. */}};
   const context:any={actor:null,requestedTarget:null,revision:null,deployment:null,policy:null,profile:{id:'umf.actions.tx',version:'1'},correlation:null};
@@ -64,7 +65,7 @@ export class ReferenceActionExecutor {
   try{result=await this.policy.store.transaction(storeName,async(tx,control)=>{
    if(session!.tenant===control.tenant)context.policy={store:control.store,epoch:control.epoch,version:control.policy_version.toString()};
    if(request.key){const replay=await this.outcomes.lookupInTransaction(tx,control,session!,request,attribution);if(replay.status!=='not-found'){context.route='retained-lookup';if(replay.status==='committed'){context.revision=replay.revision;context.deployment=replay.verification.kind==='handler'?replay.verification.deployment:null;}return replay;}}
-   const prepared=await this.admission.prepareInTransaction(tx,control,session!,request,attribution);context.revision=prepared.target;context.deployment=prepared.deployment??null;const state=await freezeReferenceState(tx,control,prepared,this.admission.handlers);stage='execution';const candidate=prepared.action.binding.kind==='recipe'?executeCandidateRecipeEffects(prepared,state):await executeReferenceHandler(prepared,state,this.admission.handlers);
+   const prepared=await this.admission.prepareInTransaction(tx,control,session!,request,attribution);context.revision=prepared.target;context.deployment=prepared.deployment??null;const state=await freezeReferenceState(tx,control,prepared,this.admission.handlers);stage='execution';const candidate=prepared.action.binding.kind==='recipe'?executeCandidateRecipeEffects(prepared,state):await executeReferenceHandler(prepared,state,this.admission.handlers,timingObserve);
    const revision=await this.admission.revisions.readInTransaction(tx,control,prepared.target);
    let result:ReferenceCommittedResult|{status:'rejected'|'conflict';code:string};
    if(candidate.kind!=='candidate')result={status:candidate.kind,code:candidate.code};
