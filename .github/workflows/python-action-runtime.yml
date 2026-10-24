@@ -136,8 +136,8 @@ jobs:
               raise SystemExit("UMF imported outside the isolated installation")
           if platform.machine().lower() != os.environ["EXPECTED_MACHINE"]:
               raise SystemExit("Installed test interpreter architecture changed")
-          if importlib.metadata.version("umf-core") != "0.10.1" or umf.__version__ != "0.10.1":
-              raise SystemExit("Installed distribution version is not 0.10.1")
+          if importlib.metadata.version("umf-core") != "0.10.2" or umf.__version__ != "0.10.2":
+              raise SystemExit("Installed distribution version is not 0.10.2")
           if current_core_version() != "0.10.0":
               raise SystemExit("Installed semantic core is not 0.10.0")
           extension = Path(_rust_core.__file__).resolve()
@@ -274,7 +274,7 @@ jobs:
                   and counts["skipped"] == 0
                   and test_outcome == "success"
                   and installation.get("installed_inside_environment") is True
-                  and installation.get("distribution_version") == "0.10.1"
+                  and installation.get("distribution_version") == "0.10.2"
                   and installation.get("semantic_core_version") == "0.10.0"
                   and installed_payload.get("status") == "passed"
                   and installed_payload.get("wheel_sha256") == artifact.get("sha256")
@@ -329,10 +329,10 @@ jobs:
                   and rebuilt_artifact.get("native_platform") == direct_artifact.get("native_platform")
               ))
               and receipt.get("action_runtime_resource_count") == 9
-              and receipt.get("distribution_version") == "0.10.1"
+              and receipt.get("distribution_version") == "0.10.2"
               and receipt.get("semantic_core_version") == "0.10.0"
-              and direct_artifact.get("version") == "0.10.1"
-              and rebuilt_artifact.get("version") == "0.10.1"
+              and direct_artifact.get("version") == "0.10.2"
+              and rebuilt_artifact.get("version") == "0.10.2"
               and direct_artifact.get("tag") == rebuilt_artifact.get("tag")
               and direct_artifact.get("native_sha256")
               and rebuilt_artifact.get("native_sha256")

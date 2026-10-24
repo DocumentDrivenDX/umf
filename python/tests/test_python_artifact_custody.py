@@ -25,7 +25,7 @@ def _set_up_rebuild(monkeypatch, tmp_path, *, manifests=None, expected_pkg_info=
     source_root = tmp_path / "synthetic-source"
     source_root.mkdir()
     (source_root / "pyproject.toml").write_text(
-        '[project]\nname = "umf-core"\nversion = "0.10.1"\n', encoding="utf-8"
+        '[project]\nname = "umf-core"\nversion = "0.10.2"\n', encoding="utf-8"
     )
     repository = tmp_path / "checkout"
     repository.mkdir()
@@ -40,7 +40,7 @@ def _set_up_rebuild(monkeypatch, tmp_path, *, manifests=None, expected_pkg_info=
 
     def verify_inputs(extracted, checkout, *, expected_version, expected_pkg_info):
         calls.append((extracted, checkout, expected_version, expected_pkg_info))
-        if expected_pkg_info != b"Name: umf-core\nVersion: 0.10.1\n\n":
+        if expected_pkg_info != b"Name: umf-core\nVersion: 0.10.2\n\n":
             raise ValueError("fixture rejected wheel metadata mismatch")
         return manifest_values[min(len(calls) - 1, len(manifest_values) - 1)]
 
@@ -72,9 +72,9 @@ def test_wrong_wheel_metadata_stops_before_build_and_retains_no_wheel(
         verifier._rebuild_sdist_wheel(
             tmp_path / "input.tar.gz",
             output,
-            "0.10.1",
+            "0.10.2",
             repository,
-            b"Name: umf-core\nVersion: 0.10.1\nSummary: altered\n\n",
+            b"Name: umf-core\nVersion: 0.10.2\nSummary: altered\n\n",
         )
 
     assert len(calls) == 1
@@ -95,7 +95,7 @@ def test_source_map_is_rechecked_after_build_before_retaining_wheel(
     def fake_build(command, *, check, timeout, env):
         build_calls.append((command, check, timeout, env))
         wheel_dir = Path(command[command.index("--outdir") + 1])
-        (wheel_dir / "umf_core-0.10.1-py3-none-any.whl").write_bytes(b"wheel")
+        (wheel_dir / "umf_core-0.10.2-py3-none-any.whl").write_bytes(b"wheel")
 
     monkeypatch.setattr(verifier.subprocess, "run", fake_build)
     output = tmp_path / "retained"
@@ -104,9 +104,9 @@ def test_source_map_is_rechecked_after_build_before_retaining_wheel(
         verifier._rebuild_sdist_wheel(
             tmp_path / "input.tar.gz",
             output,
-            "0.10.1",
+            "0.10.2",
             repository,
-            b"Name: umf-core\nVersion: 0.10.1\n\n",
+            b"Name: umf-core\nVersion: 0.10.2\n\n",
         )
 
     assert len(calls) == 2
@@ -123,7 +123,7 @@ def test_stable_source_map_is_returned_only_after_both_checks(monkeypatch, tmp_p
 
     def fake_build(command, *, check, timeout, env):
         wheel_dir = Path(command[command.index("--outdir") + 1])
-        (wheel_dir / "umf_core-0.10.1-py3-none-any.whl").write_bytes(b"wheel")
+        (wheel_dir / "umf_core-0.10.2-py3-none-any.whl").write_bytes(b"wheel")
 
     monkeypatch.setattr(verifier.subprocess, "run", fake_build)
     output = tmp_path / "retained"
@@ -131,9 +131,9 @@ def test_stable_source_map_is_returned_only_after_both_checks(monkeypatch, tmp_p
     wheel, manifest = verifier._rebuild_sdist_wheel(
         tmp_path / "input.tar.gz",
         output,
-        "0.10.1",
+        "0.10.2",
         repository,
-        b"Name: umf-core\nVersion: 0.10.1\n\n",
+        b"Name: umf-core\nVersion: 0.10.2\n\n",
     )
 
     assert wheel.read_bytes() == b"wheel"

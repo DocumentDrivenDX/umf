@@ -30,14 +30,14 @@ The GitHub release and its checksums identify the distributed wheel.
 PyPI publication is not configured. The separately distributed experimental `umf_access` host adapter is
 not required to read or validate UMF documents.
 
-Distribution version `0.10.1` is distinct from the UMF document/core version
+Development candidate distribution version `0.10.2` is distinct from the UMF document/core version
 `0.10.0`. The existing `0.10.0` pure-Python wheel linked above is metadata-only
 for native execution and does not provide the single-SET action runtime. The
 source package now exposes `create_action_engine`, `prepare_single_set_action`,
 `admit_generated_action_invocation`, and `admit_generated_record_values`; their
 bounded admission profile is specified by
 [CONTRACT-906](../docs/helix/02-design/contracts/CONTRACT-906-single-set-admission.md).
-No installation URL for the `0.10.1` native wheel is listed until its
+No installation URL for the `0.10.2` candidate native wheel is listed until its
 platform-specific release assets are published and qualified.
 
 ```python
