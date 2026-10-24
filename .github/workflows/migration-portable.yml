@@ -1,0 +1,189 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
+name: Portable table-migration qualification
+
+on:
+  push:
+    branches:
+      - codex/migration-portable-qualification
+
+permissions:
+  contents: read
+
+jobs:
+  portable-migration:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out the exact pushed candidate
+        id: checkout
+        timeout-minutes: 2
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          submodules: false
+
+      - name: Assert event and source identity
+        timeout-minutes: 1
+        env:
+          EXPECTED_SHA: ${{ github.sha }}
+          EVENT_NAME: ${{ github.event_name }}
+          REF_NAME: ${{ github.ref }}
+          WORKFLOW_REF: ${{ github.workflow_ref }}
+          WORKFLOW_SHA: ${{ github.workflow_sha }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+        run: |
+          set -euo pipefail
+          test "$EVENT_NAME" = push
+          test "$REF_NAME" = refs/heads/codex/migration-portable-qualification
+          actual_sha="$(git rev-parse HEAD)"
+          test "$actual_sha" = "$EXPECTED_SHA"
+          checkout_tree="$(git rev-parse 'HEAD^{tree}')"
+          package_json_sha="$(sha256sum package.json | cut -d ' ' -f 1)"
+          bun_lock_sha="$(sha256sum bun.lock | cut -d ' ' -f 1)"
+          bunfig_sha="$(sha256sum bunfig.toml | cut -d ' ' -f 1)"
+          workflow_sha="$(sha256sum .github/workflows/migration-portable.yml | cut -d ' ' -f 1)"
+          tracked_source_sha="$(git ls-files -z src spec tests/lifecycle tests/unified/table-operation-fixture.ts tests/binding/fixtures/table-lifecycle-note.json | xargs -0 sha256sum | sha256sum | cut -d ' ' -f 1)"
+          test_hash_rows="$(sha256sum \
+            tests/lifecycle/table-inventory-api.test.ts \
+            tests/lifecycle/g02-derived-fill.test.ts \
+            tests/lifecycle/g02-renderer-operation-sidecar.test.ts \
+            tests/lifecycle/g03-defaults.test.ts \
+            tests/lifecycle/g03-discovery-bridge.test.ts \
+            tests/lifecycle/g03-renderer-compatibility.test.ts \
+            tests/lifecycle/g11-field-replacement.test.ts \
+            tests/lifecycle/table-deployment-operations.test.ts \
+            tests/lifecycle/migration.test.ts \
+            tests/lifecycle/reviewed.test.ts)"
+          test_manifest_sha="$(printf '%s\n' "$test_hash_rows" | sha256sum | cut -d ' ' -f 1)"
+          mkdir -p portable-qualification-evidence
+          {
+            printf 'profile=umf.hosted-portable-migration/1\n'
+            printf 'event_name=%s\nref=%s\n' "$EVENT_NAME" "$REF_NAME"
+            printf 'github_sha=%s\ncheckout_sha=%s\n' "$EXPECTED_SHA" "$actual_sha"
+            printf 'checkout_tree=%s\n' "$checkout_tree"
+            printf 'workflow_ref=%s\nworkflow_sha=%s\n' "$WORKFLOW_REF" "$WORKFLOW_SHA"
+            printf 'run_id=%s\nrun_attempt=%s\n' "$RUN_ID" "$RUN_ATTEMPT"
+            printf 'runner_os=%s\nrunner_arch=%s\nimage_os=%s\nimage_version=%s\n' \
+              "$RUNNER_OS" "$RUNNER_ARCH" "$ImageOS" "$ImageVersion"
+            printf 'package_json_sha256=%s\nbun_lock_sha256=%s\nbunfig_sha256=%s\n' "$package_json_sha" "$bun_lock_sha" "$bunfig_sha"
+            printf 'workflow_sha256=%s\n' "$workflow_sha"
+            printf 'tracked_source_closure_scope=git-tracked src spec tests/lifecycle tests/unified/table-operation-fixture.ts tests/binding/fixtures/table-lifecycle-note.json\n'
+            printf 'tracked_source_closure_sha256=%s\n' "$tracked_source_sha"
+            printf 'selected_test_manifest_sha256=%s\n' "$test_manifest_sha"
+            printf '%s\n' "$test_hash_rows" | sed 's/^/selected_test_sha256=/'
+          } > portable-qualification-evidence/identity.txt
+
+      - name: Set up pinned Bun
+        id: bun
+        timeout-minutes: 2
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version: 1.4.3
+
+      - name: Record Bun runtime identity
+        timeout-minutes: 1
+        run: |
+          set -euo pipefail
+          bun_path="$(command -v bun)"
+          bun_version="$(bun --version)"
+          bun_sha="$(sha256sum "$bun_path" | cut -d ' ' -f 1)"
+          bun_setup_version='${{ steps.bun.outputs.bun-version }}'
+          {
+            printf 'bun_version=%s\n' "$bun_version"
+            printf 'bun_path=%s\n' "$bun_path"
+            printf 'bun_sha256=%s\n' "$bun_sha"
+            printf 'bun_setup_version=%s\n' "$bun_setup_version"
+          } >> portable-qualification-evidence/identity.txt
+
+      - name: Install locked JavaScript dependencies without lifecycle scripts
+        id: install
+        timeout-minutes: 3
+        run: |
+          set +e
+          timeout --signal=TERM --kill-after=20s 160s bun install --frozen-lockfile --ignore-scripts \
+            > portable-qualification-evidence/install.log 2>&1
+          result=$?
+          printf 'install_exit=%s\nargv=timeout --signal=TERM --kill-after=20s 160s bun install --frozen-lockfile --ignore-scripts\n' "$result" \
+            >> portable-qualification-evidence/identity.txt
+          receipt_result=$?
+          cat portable-qualification-evidence/install.log
+          if [ "$result" -ne 0 ]; then exit "$result"; fi
+          if [ "$receipt_result" -ne 0 ]; then exit "$receipt_result"; fi
+          exit "$result"
+
+      - name: Run API and G02 portable tests
+        id: api-g02
+        timeout-minutes: 4
+        continue-on-error: true
+        run: |
+          set +e
+          timeout --signal=TERM --kill-after=20s 180s bun test --timeout 15000 \
+            tests/lifecycle/table-inventory-api.test.ts \
+            tests/lifecycle/g02-derived-fill.test.ts \
+            tests/lifecycle/g02-renderer-operation-sidecar.test.ts \
+            > portable-qualification-evidence/api-g02.log 2>&1
+          result=$?
+          printf 'api_g02_exit=%s\nargv=timeout --signal=TERM --kill-after=20s 180s bun test --timeout 15000 tests/lifecycle/table-inventory-api.test.ts tests/lifecycle/g02-derived-fill.test.ts tests/lifecycle/g02-renderer-operation-sidecar.test.ts\n' "$result" \
+            >> portable-qualification-evidence/identity.txt
+          receipt_result=$?
+          cat portable-qualification-evidence/api-g02.log
+          if [ "$result" -ne 0 ]; then exit "$result"; fi
+          if [ "$receipt_result" -ne 0 ]; then exit "$receipt_result"; fi
+          exit "$result"
+
+      - name: Run cumulative G03, G11 and reviewed regressions
+        id: cumulative
+        timeout-minutes: 4
+        continue-on-error: true
+        run: |
+          set +e
+          timeout --signal=TERM --kill-after=20s 180s bun test --timeout 15000 \
+            tests/lifecycle/g03-defaults.test.ts \
+            tests/lifecycle/g03-discovery-bridge.test.ts \
+            tests/lifecycle/g03-renderer-compatibility.test.ts \
+            tests/lifecycle/g11-field-replacement.test.ts \
+            tests/lifecycle/table-deployment-operations.test.ts \
+            tests/lifecycle/migration.test.ts \
+            tests/lifecycle/reviewed.test.ts \
+            > portable-qualification-evidence/cumulative.log 2>&1
+          result=$?
+          printf 'cumulative_exit=%s\nargv=timeout --signal=TERM --kill-after=20s 180s bun test --timeout 15000 tests/lifecycle/g03-defaults.test.ts tests/lifecycle/g03-discovery-bridge.test.ts tests/lifecycle/g03-renderer-compatibility.test.ts tests/lifecycle/g11-field-replacement.test.ts tests/lifecycle/table-deployment-operations.test.ts tests/lifecycle/migration.test.ts tests/lifecycle/reviewed.test.ts\n' "$result" \
+            >> portable-qualification-evidence/identity.txt
+          receipt_result=$?
+          cat portable-qualification-evidence/cumulative.log
+          if [ "$result" -ne 0 ]; then exit "$result"; fi
+          if [ "$receipt_result" -ne 0 ]; then exit "$receipt_result"; fi
+          exit "$result"
+
+      - name: Preserve test outcomes as the job result
+        if: always()
+        env:
+          INSTALL_OUTCOME: ${{ steps.install.outcome }}
+          API_G02_OUTCOME: ${{ steps.api-g02.outcome }}
+          CUMULATIVE_OUTCOME: ${{ steps.cumulative.outcome }}
+          CHECKOUT_OUTCOME: ${{ steps.checkout.outcome }}
+          BUN_SETUP_OUTCOME: ${{ steps.bun.outcome }}
+        run: |
+          set -eu
+          if [ -f portable-qualification-evidence/identity.txt ]; then
+            {
+              printf 'install_step_outcome=%s\n' "$INSTALL_OUTCOME"
+              printf 'checkout_step_outcome=%s\nbun_setup_step_outcome=%s\n' "$CHECKOUT_OUTCOME" "$BUN_SETUP_OUTCOME"
+              printf 'api_g02_step_outcome=%s\n' "$API_G02_OUTCOME"
+              printf 'cumulative_step_outcome=%s\n' "$CUMULATIVE_OUTCOME"
+            } >> portable-qualification-evidence/identity.txt
+          fi
+          test "$INSTALL_OUTCOME" = success
+          test "$API_G02_OUTCOME" = success
+          test "$CUMULATIVE_OUTCOME" = success
+
+      - name: Upload bounded portable qualification evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: portable-migration-${{ github.run_id }}-${{ github.run_attempt }}
+          path: portable-qualification-evidence/
+          if-no-files-found: error
+          retention-days: 30

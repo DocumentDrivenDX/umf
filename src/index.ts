@@ -506,7 +506,8 @@ export {generatePythonClient,type PythonClientRequest,type PythonClientResult} f
 // Explicit native table declaration inspection; no native deployment authority.
 export * from './extensions/tables';
 // Inert initial deployment compilation; hosts retain native admission authority.
-export * from './table-deployment';
+export {compileTableDeployment,verifyTableDeployment} from './table-deployment';
+export type {TableDeploymentConfiguration,TableDeploymentBundle,TableDeploymentResult,TableDeploymentStep} from './table-deployment';
 // Inert source-bound forward plans; no ledger or execution authority.
 export * from './table-migration';
 

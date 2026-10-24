@@ -3,6 +3,10 @@ name: Optional PostgreSQL SQL containment
 
 on:
   push:
+    branches-ignore:
+      - codex/migration-portable-qualification
+    tags:
+      - '**'
   pull_request:
 
 permissions:

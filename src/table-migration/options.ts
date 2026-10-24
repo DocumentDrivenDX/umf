@@ -36,6 +36,17 @@ function validateExistingFill(previous:TableDeploymentBundle,next:TableDeploymen
 }
 export const refKey=(ref:TableRef):string=>JSON.stringify([ref.module,ref.element]);
 export function migrationOptions(value:TableMigrationOptions|undefined,next:TableDeploymentBundle,previous:TableDeploymentBundle|null):TableMigrationOptions|undefined{
+ return migrationOptionsInternal(value,next,previous,false);
+}
+/** G10 has already verified the complete source pair and selected create bindings.
+ * This validates only the G02 option semantics against those untouched bundles. */
+export function migrationOptionsForInventoryComposition(value:TableMigrationOptions|undefined,next:TableDeploymentBundle,previous:TableDeploymentBundle,createdTables:readonly string[]):TableMigrationOptions|undefined{
+ if(!Array.isArray(createdTables)||createdTables.some(id=>typeof id!=='string'||!id)||new Set(createdTables).size!==createdTables.length)fail('Invalid selected G10 table identity set');
+ const oldIds=previous.expectedCatalog.tables.map(table=>table.id),nextIds=next.expectedCatalog.tables.map(table=>table.id),additions=nextIds.filter(id=>!oldIds.includes(id));
+ if(!same([...additions].sort(),[...createdTables].sort())||oldIds.some(id=>!nextIds.includes(id)))fail('G10 create identities must exactly bind the complete before/after source pair');
+ return migrationOptionsInternal(value,next,previous,true);
+}
+function migrationOptionsInternal(value:TableMigrationOptions|undefined,next:TableDeploymentBundle,previous:TableDeploymentBundle|null,inventoryComposition:boolean):TableMigrationOptions|undefined{
  if(value===undefined)return;
  const v1=value.version==='umf.table-migration-options/0.1',v2=value.version==='umf.table-migration-options/0.2';
  const v3=value.version==='umf.table-migration-options/0.3';
@@ -80,7 +91,7 @@ export function migrationOptions(value:TableMigrationOptions|undefined,next:Tabl
    if(v4){
     const operation=commands.find(c=>c.id===backfill.operation) as any,body=operation?.body as any;
     if(!operation||operation.version!=='umf.table-operation/0.2'||operation.parameters.length||operation.batch||body?.kind!=='update'||body.table!==table!.id||body.returning.length||body.values.length!==1||refKey(body.values[0]!.field)!==refKey(backfill.column)||body.values[0]!.value.kind!=='rowExpression'||body.where.op!=='isNull'||refKey(body.where.field)!==refKey(backfill.column)||!Number.isInteger(body.maxRows)||body.maxRows<1||body.maxRows>10000)fail('Derived backfill requires one bounded parameter-free operation 0.2 UPDATE of only its selected NULL column',path);
-    validateExpressionInputs(body.values[0]!.value.expression,previous,next,backfill.table,backfill.column,path,false);
+    validateExpressionInputs(body.values[0]!.value.expression,previous,next,backfill.table,backfill.column,path,inventoryComposition);
     const markerPath=next.expectedCatalog.columns.find(c=>c.table===backfill.table&&refKey(c.field)===refKey(backfill.column))!.sourcePath;
     if(!value.reviewedChanges!.some(marker=>marker.kind==='tighten-not-null'&&marker.path===markerPath))fail('Existing-field derived fill requires its exact reviewed NOT NULL marker',path);
    }
@@ -96,7 +107,7 @@ export function migrationOptions(value:TableMigrationOptions|undefined,next:Tabl
   if((v4||v6)&&!existing){
    const operation=commands.find(c=>c.id===backfill.operation) as any,body=operation?.body as any;
    if(!operation||operation.version!=='umf.table-operation/0.2'||operation.parameters.length||operation.batch||body?.kind!=='update'||body.table!==table!.id||body.returning.length||body.values.length!==1||refKey(body.values[0]!.field)!==refKey(backfill.column)||body.values[0]!.value.kind!=='rowExpression'||body.where.op!=='isNull'||refKey(body.where.field)!==refKey(backfill.column)||!Number.isInteger(body.maxRows)||body.maxRows<1||body.maxRows>10000)fail('Appended derived backfill requires one bounded parameter-free operation 0.2 UPDATE of only its selected NULL column',path);
-   validateExpressionInputs(body.values[0]!.value.expression,previous,next,backfill.table,backfill.column,path,v6);
+   validateExpressionInputs(body.values[0]!.value.expression,previous,next,backfill.table,backfill.column,path,v6||inventoryComposition);
    validateAppendTarget(previous,next,backfill.table,backfill.column,path);
   }
   if(v6&&!existing){
@@ -114,7 +125,7 @@ export function migrationOptions(value:TableMigrationOptions|undefined,next:Tabl
    const markerPath=validateExistingFill(previous,next,selected.table,selected.column,'/options/backfills/0');
    if(value.reviewedChanges!.length!==1||value.reviewedChanges![0]!.kind!=='tighten-not-null'||value.reviewedChanges![0]!.path!==markerPath)fail('Existing G02 fill requires only its exact reviewed NOT NULL marker','/options/reviewedChanges');
   }else if(value.reviewedChanges!.length!==0)fail('An appended target cannot carry a fabricated review marker','/options/reviewedChanges');
-  validateG02SourceDelta(previous,next,selected.table,selected.column,selected.operation,existing);
+  if(!inventoryComposition)validateG02SourceDelta(previous,next,selected.table,selected.column,selected.operation,existing);
   if(!operation||operation.version!=='umf.table-operation/0.2')fail('G02 must select its exact next-source operation 0.2','/options/backfills/0/operation');
  }
  if(v6){
@@ -177,8 +188,7 @@ function validateG02SourceDelta(previous:TableDeploymentBundle,next:TableDeploym
   if(oldModule!.elements.some(e=>e.id===target.element))fail('Appended G02 target must be new to the prior source',failPath);
   const fieldIndex=newModule!.elements.findIndex(e=>e.kind==='field'&&e.id===target.element);
   if(fieldIndex<oldModule!.elements.length||fieldIndex<0)fail('Appended G02 target Field must follow the retained module elements',failPath);
-  const tableIndex=oldPayload?.tables?.findIndex?.((item:any)=>item.id===tableId)??-1;
-  const oldTable=(oldPayload as any)?.tables?.[tableIndex],newTable=(newPayload as any)?.tables?.[tableIndex];
+  const oldTable=(oldPayload?.tables??[]).find((item:any)=>item.id===tableId),newTable=(newPayload?.tables??[]).find((item:any)=>item.id===tableId);
   const oldRecord=oldModule!.elements.find(e=>e.kind==='record'&&e.id===oldTable?.record?.element);
   const newRecord=newModule!.elements.find(e=>e.kind==='record'&&e.id===newTable?.record?.element) as any;
   if(!oldTable||!newTable||oldTable.id!==newTable.id||!oldRecord||!newRecord||!Array.isArray(newRecord.members))fail('Appended G02 target must belong to one retained table Record',failPath);

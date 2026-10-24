@@ -1381,3 +1381,44 @@ InventoryTable.meaningDigest and original plan/source bindings. Refuse absent
 table leftovers. Remap creation/removal refs to the actual same-operation,
 same-binding serialized step before prefix digesting. These are design rules,
 not passing implementation/native/browser/installed/release evidence.
+
+### G10 portable public API and review-value amendment002
+
+Adopt the accepted marker addendum
+`../../04-build/evidence/schema-migration-design-review/g10-review-marker-adoption-addendum-002.md`
+(`d7b08f67c4945cbe285e0555ca92fff9acfaec859030b17707d7dc58f09eb278`) with
+CONTRACT-081. The public browser module is `src/table-migration/inventory.ts`,
+with explicit re-exports from `src/table-migration/index.ts`. The four calls are:
+
+```ts
+compileTableInventoryMigration(request: TableInventoryMigrationRequest): TableInventoryMigrationResult
+discoverTableInventoryMigrationChanges(previous, next, selector, originalHistory): TableInventoryReviewedChangeCandidate[]
+verifyTableInventoryMigration(plan, originalHistory): TableInventoryMigrationPlan
+serializeTableInventoryMigration(plan, originalHistory): string
+```
+
+All calls receive the original history explicitly. Compilation returns exactly
+`{status:'compiled',plan,diagnostics:[]}` or `{status:'blocked',diagnostics}`;
+discovery and verification use the existing public error convention. Verification
+recompiles the complete original before/after bundles, selector/options, and
+history and compares the complete plan. Serialization returns the verified
+RFC8785 JSON string without a final LF. It does not write files or grant native
+authority.
+
+`plan.review` keeps the Candidate wrapper. The accepted closed value union is:
+TableReview P for create/remove/table-removal-effects, SeedReview for
+retire-seed-history, and each original component candidate's complete original
+value shape for existing markers. Initial create uses null oldValue and null
+oldPath; an installed create uses the full absent-before TableReview P with null
+oldPath. The marker remains exactly `{id,kind,path,oldDigest,newDigest}`. Seed
+retirement retains its exact original definition and execution state on both
+sides; it never asserts row replay.
+
+The presentation adapter `irreversiblePurgeDisclosure(candidate)` maps each
+table-removal-effects candidate, in candidate order, to the exact disclosure
+code `IRREVERSIBLE_TABLE_PURGE`, its path/marker ID and the full stored-row and
+column loss message specified by CONTRACT-081. Applications display this in the
+approval view before collecting approval. No wire key, plan field or compiled
+diagnostic is added for the presentation. All implementation, schema, browser,
+native, installed and release checks remain separate evidence gates; no runtime
+result is asserted by this design amendment.

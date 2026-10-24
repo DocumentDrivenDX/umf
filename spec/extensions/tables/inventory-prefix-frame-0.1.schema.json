@@ -1,0 +1,522 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:table-inventory-prefix-frame:0.1",
+  "title": "G10 complete catalog prefix frame",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile",
+    "index",
+    "completedSteps",
+    "tableStates",
+    "catalog",
+    "metadata",
+    "seedStates",
+    "digest"
+  ],
+  "properties": {
+    "profile": {
+      "const": "umf.table-inventory-prefix/0.1"
+    },
+    "index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "completedSteps": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "tableStates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "table",
+          "record",
+          "state",
+          "definitionDigest",
+          "creationStep",
+          "removalStep"
+        ],
+        "properties": {
+          "table": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "module",
+              "element"
+            ],
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "element": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "state": {
+            "enum": [
+              "present",
+              "absent"
+            ]
+          },
+          "definitionDigest": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "creationStep": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "removalStep": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "catalog": {
+      "$ref": "#/$defs/catalog"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "state"
+      ],
+      "properties": {
+        "profile": {
+          "const": "umf.table-inventory-metadata/0.1"
+        },
+        "state": {
+          "enum": [
+            "pristine",
+            "pending",
+            "published"
+          ]
+        }
+      }
+    },
+    "seedStates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "definitionDigest",
+          "originalSourceDigest",
+          "disposition",
+          "execution"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "definitionDigest": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "originalSourceDigest": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "disposition": {
+            "enum": [
+              "retain-definition",
+              "apply-once",
+              "retire-definition"
+            ]
+          },
+          "execution": {
+            "enum": [
+              "not-run",
+              "confirmed"
+            ]
+          }
+        }
+      }
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "$defs": {
+    "json": {},
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "meaning",
+        "state"
+      ],
+      "properties": {
+        "identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "table",
+            "subject"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "minLength": 1
+            },
+            "table": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "subject": {
+              "$ref": "#/$defs/json"
+            }
+          }
+        },
+        "meaning": {
+          "$ref": "#/$defs/json"
+        },
+        "state": {
+          "enum": [
+            "present",
+            "absent"
+          ]
+        },
+        "validation": {
+          "enum": [
+            "not-applicable",
+            "not-validated",
+            "validated"
+          ]
+        },
+        "validity": {
+          "enum": [
+            "not-applicable",
+            "pending",
+            "valid",
+            "invalid"
+          ]
+        }
+      }
+    },
+    "tableSubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "table"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "columnSubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "column"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "keySubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "key"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "checkSubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "check"
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "validation"
+          ],
+          "properties": {
+            "validation": {
+              "enum": [
+                "not-validated",
+                "validated"
+              ]
+            },
+            "validity": false
+          }
+        }
+      ]
+    },
+    "foreignKeySubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "foreignKey"
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "validation"
+          ],
+          "properties": {
+            "validation": {
+              "enum": [
+                "not-validated",
+                "validated"
+              ]
+            },
+            "validity": false
+          }
+        }
+      ]
+    },
+    "indexSubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "index"
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "validity"
+          ],
+          "properties": {
+            "validity": {
+              "enum": [
+                "pending",
+                "valid",
+                "invalid"
+              ]
+            },
+            "validation": false
+          }
+        }
+      ]
+    },
+    "policySubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "policy"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "grantSubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "grant"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "commentSubject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/subject"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "comment"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "catalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tables",
+        "columns",
+        "keys",
+        "checks",
+        "foreignKeys",
+        "indexes",
+        "policies",
+        "grants",
+        "comments"
+      ],
+      "properties": {
+        "tables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tableSubject"
+          }
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/columnSubject"
+          }
+        },
+        "keys": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/keySubject"
+          }
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/checkSubject"
+          }
+        },
+        "foreignKeys": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/foreignKeySubject"
+          }
+        },
+        "indexes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/indexSubject"
+          }
+        },
+        "policies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/policySubject"
+          }
+        },
+        "grants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/grantSubject"
+          }
+        },
+        "comments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/commentSubject"
+          }
+        }
+      }
+    }
+  }
+}

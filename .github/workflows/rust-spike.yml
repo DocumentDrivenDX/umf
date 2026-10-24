@@ -3,6 +3,10 @@ name: Rust migration inventory and boundaries
 
 on:
   push:
+    branches-ignore:
+      - codex/migration-portable-qualification
+    tags:
+      - '**'
   pull_request:
 
 permissions:

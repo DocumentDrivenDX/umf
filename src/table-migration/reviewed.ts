@@ -3,7 +3,7 @@ import {canonical,hashCanonical,sha256Text} from '../compilation/bundle/hash';
 import {readDocument} from '../model/document';
 import {UmfError} from '../model/types';
 import type {TableDeploymentBundle} from '../table-deployment';
-import {discoverG03DefaultChanges} from './g03-defaults';
+import {discoverG03DefaultChanges,consumeG03DefaultChangesBounded} from './g03-defaults';
 
 export type ReviewedChangeKind='drop-column'|'rename-column'|'change-column-type'|'tighten-not-null'|'relax-not-null'|'replace-check'|'replace-foreign-key'|'replace-index'|'replace-primary-key'|'change-policy'|'change-default'|'change-operation'|'change-operation-context';
 export interface ReviewedChangeMarker {
@@ -16,19 +16,37 @@ const safeId=(value:string):boolean=>!!value&&value.length<=128&&!value.includes
 
 /** Source-bound marker candidates. Candidates only identify changes; compiler support is checked independently. */
 export function discoverTableMigrationChanges(previous:TableDeploymentBundle,next:TableDeploymentBundle,selector?:TableMigrationDiscoverySelector):ReviewedChangeCandidate[]{
+ return discoverTableMigrationChangesInternal(previous,next,selector,null);
+}
+/** Internal G10 sink; candidates are delivered only after their final paths attach. */
+export function consumeTableMigrationChangesBounded(previous:TableDeploymentBundle,next:TableDeploymentBundle,selector:TableMigrationDiscoverySelector,maxCandidates:number,maxBytes:number,accept:(candidate:ReviewedChangeCandidate)=>void):void{
+ if(!Number.isSafeInteger(maxCandidates)||maxCandidates<0||!Number.isSafeInteger(maxBytes)||maxBytes<0)throw new RangeError('Invalid internal discovery bounds');
+ discoverTableMigrationChangesInternal(previous,next,selector,{maxCandidates,maxBytes,accept});
+}
+function discoverTableMigrationChangesInternal(previous:TableDeploymentBundle,next:TableDeploymentBundle,selector:TableMigrationDiscoverySelector|undefined,bounds:{maxCandidates:number;maxBytes:number;accept?:(candidate:ReviewedChangeCandidate)=>void}|null):ReviewedChangeCandidate[]{
  if(selector!==undefined&&(!selector||typeof selector!=='object'||Object.keys(selector).length!==1||!['umf.table-migration-discovery/0.2','umf.table-migration-discovery/0.3'].includes(selector.version)))throw new Error('Unknown table-migration discovery selector');
  if(selector!==undefined){
   if(previous.source.format!=='json')throw new UmfError('TABLE_MIGRATION_OPTIONS',selector.version==='umf.table-migration-discovery/0.3'?'Version 0.3 discovery requires exact JSON retained sources':'Version 0.2 discovery requires exact JSON retained sources','/previous/source/format');
   if(next.source.format!=='json')throw new UmfError('TABLE_MIGRATION_OPTIONS',selector.version==='umf.table-migration-discovery/0.3'?'Version 0.3 discovery requires exact JSON retained sources':'Version 0.2 discovery requires exact JSON retained sources','/next/source/format');
  }
- const result:ReviewedChangeCandidate[]=[];
+ const result:ReviewedChangeCandidate[]=[];let retainedBytes=0,candidateCount=0;
  const oldDocument=readDocument(previous.source.utf8,previous.source.format),newDocument=readDocument(next.source.utf8,next.source.format);
- const add=(kind:ReviewedChangeKind,path:string,a:unknown,b:unknown):void=>{
+ const add=(kind:ReviewedChangeKind,path:string,a:unknown,b:unknown,sourcePaths?:{oldPath:string|null;newPath:string|null}):void=>{
   if(canonical(a??null)===canonical(b??null))return;
+  // Once a real change is known, refuse an exhausted bounded collection before
+  // hashing or allocating the candidate. The legacy array path remains unbounded.
+  if(bounds&&candidateCount>=bounds.maxCandidates)throw new UmfError('TABLE_MIGRATION_OPTIONS','Bounded discovery exceeds its candidate limit',path);
   const oldDigest=reviewedValueDigest(a),newDigest=reviewedValueDigest(b),id='review-'+hashCanonical([kind,path,oldDigest,newDigest]).slice(0,24);
-  result.push({id,kind,path,oldDigest,newDigest,oldValue:a??null,newValue:b??null});
+  const candidate={id,kind,path,oldDigest,newDigest,oldValue:a??null,newValue:b??null,...(sourcePaths??{})};
+  if(bounds){let size:number;try{size=new TextEncoder().encode(canonical(candidate)).byteLength;}catch{throw new UmfError('TABLE_MIGRATION_OPTIONS','Bounded discovery candidate is not canonical',path);}if(size>bounds.maxBytes||retainedBytes+size>bounds.maxBytes)throw new UmfError('TABLE_MIGRATION_OPTIONS','Bounded discovery exceeds its byte limit',path);retainedBytes+=size;}
+  candidateCount++;if(bounds?.accept)bounds.accept(candidate);else result.push(candidate);
  };
  const by=(items:readonly {id:string;table:string}[],id:string)=>items.find(item=>item.id===id);
+ const appendDefault=(item:ReviewedChangeCandidate):void=>{
+  if(bounds&&candidateCount>=bounds.maxCandidates)throw new UmfError('TABLE_MIGRATION_OPTIONS','Bounded discovery exceeds its candidate limit',item.path);
+  if(bounds){const size=new TextEncoder().encode(canonical(item)).byteLength;if(size>bounds.maxBytes||retainedBytes+size>bounds.maxBytes)throw new UmfError('TABLE_MIGRATION_OPTIONS','Bounded discovery exceeds its byte limit',item.path);retainedBytes+=size;}
+  candidateCount++;if(bounds?.accept)bounds.accept(item);else result.push(item);
+ };
  for(const oldTable of previous.expectedCatalog.tables){
   const freshTable=next.expectedCatalog.tables.find(t=>t.id===oldTable.id);if(!freshTable)continue;
   const oldCols=previous.expectedCatalog.columns.filter(c=>c.table===oldTable.id),newCols=next.expectedCatalog.columns.filter(c=>c.table===oldTable.id);
@@ -66,9 +84,7 @@ export function discoverTableMigrationChanges(previous:TableDeploymentBundle,nex
     };
     const oldPath=oldDomain?oldDomain.sourcePath+'/domain':kind==='keys'?'/modules/'+readModuleIndex(previous)+'/elements/'+(oldDocument.modules.find(m=>m.id===module)?.elements.findIndex(e=>e.id===decl.record.element)??0)+'/keys/'+(logicalOld?.keys??[]).indexOf(oldLogical):'/modules/'+readModuleIndex(previous)+'/extensions/umf.tables/tables/'+previous.expectedCatalog.tables.findIndex(t=>t.id===oldTable.id)+'/'+kind+'/'+oldList.findIndex((x:any)=>x.id===old.id);
     const newPath=fresh?(newDomain?newDomain.sourcePath+'/domain':kind==='keys'?'/modules/'+moduleIndex+'/elements/'+recordIndex+'/keys/'+(logicalNew?.keys??[]).indexOf(newLogical):'/modules/'+moduleIndex+'/extensions/umf.tables/tables/'+tableIndex+'/'+kind+'/'+list.findIndex((x:any)=>x.id===old.id)):null;
-    const prior=result.length;
-    add(rk,path,kind==='keys'?{physical:old,logical:oldLogical??null}:oldDomain?domainMeaning(previous,old,oldDomain):{physical:old,logical:(oldList??[]).find((x:any)=>x.id===old.id)??null},kind==='keys'?{physical:fresh??null,logical:newLogical??null}:newDomain?domainMeaning(next,fresh!,newDomain):{physical:fresh??null,logical:(list??[]).find((x:any)=>x.id===old.id)??null});
-    if(selector?.version==='umf.table-migration-discovery/0.3'&&result.length>prior){const candidate=result[result.length-1]!;candidate.oldPath=oldPath;candidate.newPath=newPath;}
+    add(rk,path,kind==='keys'?{physical:old,logical:oldLogical??null}:oldDomain?domainMeaning(previous,old,oldDomain):{physical:old,logical:(oldList??[]).find((x:any)=>x.id===old.id)??null},kind==='keys'?{physical:fresh??null,logical:newLogical??null}:newDomain?domainMeaning(next,fresh!,newDomain):{physical:fresh??null,logical:(list??[]).find((x:any)=>x.id===old.id)??null},selector?.version==='umf.table-migration-discovery/0.3'?{oldPath,newPath}:undefined);
    }
    if(selector?.version==='umf.table-migration-discovery/0.3')for(const fresh of newItems){if(oldItems.some(old=>old.id===fresh.id))continue;
     const tableIndex=next.expectedCatalog.tables.findIndex(t=>t.id===oldTable.id),decl=next.expectedCatalog.tables[tableIndex] as any,module=decl.record.module;
@@ -79,11 +95,9 @@ export function discoverTableMigrationChanges(previous:TableDeploymentBundle,nex
     const domainColumn=kind==='checks'&&selector?.version==='umf.table-migration-discovery/0.3'&&fresh.id.startsWith('domain:')?next.expectedCatalog.columns.find(column=>column.table===fresh.table&&'domain:'+column.field.module+'.'+column.field.element===fresh.id):undefined;
     const path=kind==='keys'?'/modules/'+readModuleIndex(next)+'/elements/'+recordIndex+'/keys/'+itemIndex:domainColumn?domainColumn.sourcePath+'/domain':'/modules/'+readModuleIndex(next)+'/extensions/umf.tables/tables/'+tableIndex+'/'+kind+'/'+itemIndex;
     const rk:ReviewedChangeKind=kind==='checks'?'replace-check':kind==='foreignKeys'?'replace-foreign-key':kind==='indexes'?'replace-index':'replace-primary-key';
-    const prior=result.length;
     let meaning:unknown={physical:fresh,logical:logical??null};
     if(domainColumn){const field=newDocument.modules.find((m:any)=>m.id===domainColumn.field.module)?.elements.find((e:any)=>e.id===domainColumn.field.element),mapping=decl.columns.find((column:any)=>fieldId(column)===fieldId(domainColumn));meaning={physical:fresh,logical:{column:mapping??null,field:field??null}};}
-    add(rk,path,null,meaning);
-    if(result.length>prior){const candidate=result[result.length-1]!;candidate.oldPath=null;candidate.newPath=path;}
+    add(rk,path,null,meaning,{oldPath:null,newPath:path});
    }
   }
   for(const audience of ['person','batch'] as const)for(const command of ['select','insert','update','delete'] as const){
@@ -91,10 +105,12 @@ export function discoverTableMigrationChanges(previous:TableDeploymentBundle,nex
   }
  }
  if(selector?.version==='umf.table-migration-discovery/0.2'){
-  result.push(...discoverG03DefaultChanges(previous,next));
+  if(bounds)consumeG03DefaultChangesBounded(previous,next,bounds.maxCandidates-candidateCount,bounds.maxBytes-retainedBytes,appendDefault);
+  else for(const item of discoverG03DefaultChanges(previous,next))appendDefault(item);
  }
  if(selector?.version==='umf.table-migration-discovery/0.3'){
-  result.push(...discoverG03DefaultChanges(previous,next));
+  if(bounds)consumeG03DefaultChangesBounded(previous,next,bounds.maxCandidates-candidateCount,bounds.maxBytes-retainedBytes,appendDefault);
+  else for(const item of discoverG03DefaultChanges(previous,next))appendDefault(item);
   const oldSourceSha256=sha256Text(previous.source.utf8),newSourceSha256=sha256Text(next.source.utf8);
   const context=(bundle:TableDeploymentBundle,sha256:string,module:string,operation:unknown)=>({version:'umf.table-operation-source-context/0.1',source:{format:bundle.source.format,sha256},configuration:bundle.configuration,module,operation});
   const oldCommandSets=oldDocument.modules.flatMap((module:any,moduleIndex:number)=>{
@@ -117,9 +133,7 @@ export function discoverTableMigrationChanges(previous:TableDeploymentBundle,nex
    const oldEntry=oldByIdentity.get(identity),newEntry=newByIdentity.get(identity),oldPresent=oldEntry!==undefined,newPresent=newEntry!==undefined,before=oldEntry?.operation,after=newEntry?.operation;
    if(oldPresent&&newPresent&&canonical(before)===canonical(after))continue;
    const entry=newEntry??oldEntry!,path='/modules/'+entry.moduleIndex+'/extensions/umf.tables/commands/'+entry.index;
-   const prior= result.length;
-   add('change-operation',path,before??null,after??null);
-   if(result.length>prior){const candidate=result[result.length-1]!;candidate.oldPath=oldEntry?'/modules/'+oldEntry.moduleIndex+'/extensions/umf.tables/commands/'+oldEntry.index:null;candidate.newPath=newEntry?'/modules/'+newEntry.moduleIndex+'/extensions/umf.tables/commands/'+newEntry.index:null;}
+   add('change-operation',path,before??null,after??null,{oldPath:oldEntry?'/modules/'+oldEntry.moduleIndex+'/extensions/umf.tables/commands/'+oldEntry.index:null,newPath:newEntry?'/modules/'+newEntry.moduleIndex+'/extensions/umf.tables/commands/'+newEntry.index:null});
   }
   const changed=new Set(identities.filter(id=>!oldByIdentity.has(id)||!newByIdentity.has(id)||canonical(oldByIdentity.get(id)?.operation)!==canonical(newByIdentity.get(id)?.operation)));
   for(const identity of identities){
@@ -129,8 +143,7 @@ export function discoverTableMigrationChanges(previous:TableDeploymentBundle,nex
    const oldContext=context(previous,oldSourceSha256,before.module,operation),newContext=context(next,newSourceSha256,after.module,after.operation);
    if(canonical(oldContext)===canonical(newContext))continue;
    const path='/modules/'+after.moduleIndex+'/extensions/umf.tables/commands/'+after.index;
-   const prior=result.length;add('change-operation-context',path,oldContext,newContext);
-   if(result.length>prior){const candidate=result[result.length-1]!;candidate.oldPath='/modules/'+before.moduleIndex+'/extensions/umf.tables/commands/'+before.index;candidate.newPath='/modules/'+after.moduleIndex+'/extensions/umf.tables/commands/'+after.index;}
+   add('change-operation-context',path,oldContext,newContext,{oldPath:'/modules/'+before.moduleIndex+'/extensions/umf.tables/commands/'+before.index,newPath:'/modules/'+after.moduleIndex+'/extensions/umf.tables/commands/'+after.index});
   }
  }
  return result;

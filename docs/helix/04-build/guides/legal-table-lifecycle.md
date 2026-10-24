@@ -194,3 +194,58 @@ authorization. MIG-R01–R06 are closed for this recorded PostgreSQL 18 maintena
 profile. These results do not establish managed production acceptance.
 Run native tests only on an explicitly selected development database with
 authority to create isolated roles and schemas.
+
+## G10 irreversible removal disclosure
+
+The G10 inventory API returns `table-removal-effects` review candidates for an
+explicit immediate-purge removal. Before collecting approval, render the public
+disclosure derived from each candidate in its original order:
+
+```ts
+import { irreversiblePurgeDisclosure } from '@umf/core';
+
+const disclosures = plan.review
+  .filter((candidate) => candidate.kind === 'table-removal-effects')
+  .map(irreversiblePurgeDisclosure);
+```
+
+Each item says that all stored rows and columns for the named table will be
+irreversibly purged, and that metadata history is not a data backup. Present the
+items in the approval view before the user makes the approval decision; the
+application owns the actual presentation and explicit confirmation flow. The
+plan continues to require host approval and has `nativeQualified: false`.
+This first subset does not qualify removal from enrolled row-originals stores,
+nor does this guide establish browser, native, installed-artifact, or release
+acceptance. See CONTRACT-081 G10 marker adoption addendum002 and TD-085 for the
+closed review-value union and public API.
+
+## G10 portable source API
+
+The portable table-inventory API is exported from the table-migration surface:
+`compileTableInventoryMigration`,
+`discoverTableInventoryMigrationChanges`,
+`verifyTableInventoryMigration`, and
+`serializeTableInventoryMigration`. Discovery accepts the previous and next
+deployment bundles, a marker-free discovery selector, and the complete original
+history. The caller copies the returned five-key marker values into migration
+options; it does not author candidate values or review projections.
+
+Compilation returns a closed compiled-or-blocked result. Verification receives
+the complete original history and independently rebuilds the plan from its
+bundles and options. Serialization returns the verified canonical plan bytes
+without a terminal newline; it does not write a file, collect approval, or
+authorize native effects. Seed retirement review retains the exact original
+definition, source digests, and execution state and states that data is not
+replayed. Original component candidates keep their original value shapes and
+only the source paths supplied by their constructors.
+
+The current source slice includes the public types, schemas, review candidates,
+and purge-disclosure mapping. Conversion, retirement/restoration execution,
+archive handling, and complete mixed-operation lowering still require their
+separate accepted implementation and evidence. The API test matrix in STP-085
+is **UNRUN** under the current source-only hold; this documentation does not
+claim schema validation, browser, installed-artifact, native, or release
+acceptance.
+The synthetic legal fixture builder clones exported seed and command definitions
+when attaching them to each returned source. Those exported definition objects
+remain mutable; the fixture does not promise immutable exports.

@@ -9,6 +9,23 @@ export interface TableDeploymentStep {
  id:string;kind:'table'|'foreignKey'|'index'|'policy'|'grant'|'comment';sourcePath:string;
  transaction:'required';sql:string;
 }
+/** Source-site operation tags for the internal inventory planner. Never serialized in TableDeploymentBundle. */
+export interface InternalTableDeploymentOperation {
+ operation:'create-table'|'enable-rls'|'force-rls'|'add-foreign-key'|'add-index'|'revoke-public'|'create-policy'|'grant-table'|'set-comment'|'grant-schema-usage';
+ subject:
+  |{kind:'table';table:string;record:TableRef;declaration:TableDeclaration;catalog:{columns:TableColumnExpectation[];keys:TableDeploymentBundle['expectedCatalog']['keys'];checks:TableDeploymentBundle['expectedCatalog']['checks']}}
+  |{kind:'tableState';table:string;record:TableRef}
+  |{kind:'foreignKey';table:string;id:string}
+  |{kind:'index';table:string;id:string}
+  |{kind:'publicGrant';table:string;privilege:'all'}
+  |{kind:'policy';table:string;audience:'person'|'batch';command:'select'|'insert'|'update'|'delete'}
+  |{kind:'tableGrant';table:string;role:string;privilege:'select'|'insert'|'update'|'delete';columns:string[]|null}
+  |{kind:'comment';table:string;column:string|null;text:string}
+  |{kind:'schema-grant';schema:string;audiences:['person','batch'];privilege:'USAGE'};
+}
+export interface InternalTableDeploymentOperationRecord extends InternalTableDeploymentOperation {
+ stepId:string;sourcePath:string;kind:TableDeploymentStep['kind'];transaction:'required';sql:string;
+}
 export interface TableColumnExpectation {
  table:string;name:string;field:TableRef;sourcePath:string;
  typeSchema:'pg_catalog';typeName:string;typeMod:number;
@@ -35,5 +52,5 @@ export interface DeploymentContext {
  column(table:TableDeclaration,ref:TableRef):string;
  table(ref:TableRef):TableDeclaration;
  relation(table:TableDeclaration):string;
- add(kind:TableDeploymentStep['kind'],path:string,sql:string):void;
+ add(kind:TableDeploymentStep['kind'],path:string,sql:string,operation:InternalTableDeploymentOperation):void;
 }

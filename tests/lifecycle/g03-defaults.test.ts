@@ -2,6 +2,7 @@
 import {expect,test} from 'bun:test';
 import {compileTableDeployment,type TableDeploymentBundle} from '../../src/table-deployment';
 import {compileTableMigration,discoverTableMigrationChanges,verifyTableMigration} from '../../src/table-migration';
+import {compileTableMigrationWithOperations} from '../../src/table-migration/internal';
 import {preflightG03DefaultLiteral} from '../../src/table-migration/g03-defaults';
 import {createValidator} from '../../src/validation/schema';
 import deploymentSchema from '../../spec/extensions/tables/deployment.schema.json';
@@ -47,7 +48,12 @@ const typedSource=(scalarType:string,nativeType:unknown,value:unknown)=>{
 test('G03 changes one existing target default and preserves immutable target identity',()=>{
  const {previous,next,options}=transition(undefined,literal('new'),true);
  const result=compileTableMigration({id:'g03-default-002',predecessor:{id:'g03-default-001',digest:'a'.repeat(64)},previous,next,options});
+ const internal=compileTableMigrationWithOperations({id:'g03-default-002',predecessor:{id:'g03-default-001',digest:'a'.repeat(64)},previous,next,options});
  expect(result.status).toBe('compiled');if(result.status!=='compiled')throw Error(JSON.stringify(result.diagnostics));
+ expect(internal.result.status).toBe('compiled');if(internal.result.status!=='compiled')throw Error(JSON.stringify(internal.result.diagnostics));
+ expect(JSON.stringify(internal.result.plan)).toBe(JSON.stringify(result.plan));
+ expect(internal.operations).toHaveLength(1);
+ expect(internal.operations[0]).toMatchObject({role:'change-default',sourcePath:result.plan.steps[0]!.sourcePath,subject:{type:'field',table:'notes',field:{module:'demo',element:'owner'}}});
  expect(result.plan.version).toBe('umf.table-migration/0.5');
  expect(result.plan.steps).toHaveLength(1);
  expect(result.plan.steps[0]?.operation).toBe('set-default');

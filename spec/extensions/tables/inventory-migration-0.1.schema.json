@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:table-inventory-migration:0.1",
+  "title": "G10 source-derived portable table inventory migration plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "canonicalization", "id", "predecessor", "previous", "next", "fromBundleDigest", "toBundleDigest", "steps", "seedExecution", "phases", "executionProfile", "approvalProfile", "options", "review", "requiresApproval", "nativeQualified", "inventory", "prefixes", "historyBinding", "digest"],
+  "properties": {
+    "version": {"const": "umf.table-inventory-migration/0.1"},
+    "canonicalization": {"const": "RFC8785"},
+    "id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "predecessor": {"oneOf": [{"type": "null"}, {"type": "object", "additionalProperties": false, "required": ["id", "digest"], "properties": {"id": {"type": "string", "minLength": 1}, "digest": {"$ref": "#/$defs/digest"}}}]},
+    "previous": {"oneOf": [{"type": "null"}, {"$ref": "inventory-request-0.1.schema.json#/$defs/deploymentBundle"}]},
+    "next": {"$ref": "inventory-request-0.1.schema.json#/$defs/deploymentBundle"},
+    "fromBundleDigest": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "toBundleDigest": {"$ref": "#/$defs/digest"},
+    "steps": {"type": "array", "maxItems": 99999, "items": {"$ref": "inventory-plan-step-0.1.schema.json"}},
+    "seedExecution": {"oneOf": [{"const": "none"}, {"type": "object", "additionalProperties": false, "required": ["version", "sets"], "properties": {"version": {"const": "umf.table-seed-execution/0.1"}, "sets": {"type": "array", "maxItems": 128, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}}}]},
+    "phases": {"type": "array", "minItems": 3, "maxItems": 1024, "items": {"$ref": "#/$defs/phase"}},
+    "executionProfile": {"type": "object", "additionalProperties": false, "required": ["version", "progressRelation", "ownerOnly", "ingressProfile", "inventoryProfile", "initial", "conversionProfile", "originalsProfile", "retirementProfile", "retiredStoreProfile"], "properties": {"version": {"const": "umf.table-inventory-execution/0.1"}, "progressRelation": {"const": "umf_lifecycle_inventory_progress"}, "ownerOnly": {"const": true}, "ingressProfile": {"const": "umf.table-inventory-generation-ingress/0.1"}, "inventoryProfile": {"const": "umf.table-inventory-prefix/0.1"}, "initial": {"type": "boolean"}, "conversionProfile": {"type": ["string", "null"]}, "originalsProfile": {"type": ["string", "null"]}, "retirementProfile": {"type": ["string", "null"]}, "retiredStoreProfile": {"type": ["string", "null"]}}},
+    "approvalProfile": {"type": "object", "additionalProperties": false, "required": ["version", "relation", "ownerOnly"], "properties": {"version": {"const": "umf.table-migration-approval/0.1"}, "relation": {"const": "umf_lifecycle_approvals"}, "ownerOnly": {"const": true}}},
+    "options": {"$ref": "inventory-request-0.1.schema.json#/$defs/options"},
+    "review": {"type": "array", "maxItems": 2048, "items": {"$ref": "inventory-review-candidate-0.1.schema.json"}},
+    "requiresApproval": {"const": true},
+    "nativeQualified": {"const": false},
+    "inventory": {"$ref": "inventory-0.1.schema.json"},
+    "prefixes": {"type": "array", "maxItems": 1025, "items": {"$ref": "inventory-prefix-frame-0.1.schema.json"}},
+    "historyBinding": {"type": "object", "additionalProperties": false, "required": ["profile", "count", "digest"], "properties": {"profile": {"const": "umf.table-inventory-source-history/0.1"}, "count": {"type": "integer", "minimum": 0, "maximum": 128}, "digest": {"$ref": "#/$defs/digest"}}},
+    "digest": {"$ref": "#/$defs/digest"}
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "phase": {"type": "object", "additionalProperties": false, "required": ["id", "kind", "transaction", "steps"], "properties": {"id": {"type": "string", "minLength": 1}, "kind": {"enum": ["prepare", "approval", "transaction", "backfill-add", "backfill-tighten", "field-replacement", "field-conversion", "field-retirement", "field-restoration", "concurrent-index", "constraint-add", "constraint-validation", "seed", "publication"]}, "transaction": {"enum": ["required", "forbidden"]}, "steps": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}}}
+  }
+}

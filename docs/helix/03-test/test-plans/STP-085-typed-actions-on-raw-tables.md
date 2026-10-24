@@ -1249,3 +1249,24 @@ schema-global exclusions, complete admitted row content, and correct operation
 and stable identity for every serialized creation/removal reference. Existing
 unrelated metadata step IDs must not satisfy the provenance check. All new
 checks remain required; no execution occurred under the shared resource hold.
+
+### G10 portable API and review-value amendment002
+
+The following are required tests from the accepted
+`../../04-build/evidence/schema-migration-design-review/g10-review-marker-adoption-addendum-002.md`
+and CONTRACT-081 amendment002. **All rows are UNRUN in this source-integration
+candidate.** No compile, schema, test, browser, native, or installed result is
+implied.
+
+| ID | Fixture / route | Required result |
+| --- | --- | --- |
+| API01 | Public table-migration exports | The four new entrypoints and closed request/options/plan/result/discovery/history/candidate types are explicitly exported; no private scheduler/effect builder is public; old `.1–.6` exports and bytes remain exact. |
+| API02 | Initial null predecessor with selected creates | Use no synthesized before bundle. Create candidates carry `oldValue:null`, `oldPath:null`, full next P and actual source path. The complete marker list is consumed once in authored intent order. |
+| API03 | Installed create for a previously absent table | Candidate oldValue is full previous-side absent P, with null oldPath; never a fabricated table declaration path. |
+| API04 | Existing component review candidates | Preserve original complete value shapes and only supplied optional oldPath/newPath; never cast values into P or SeedReview and never discard path collisions. |
+| API05 | Seed retirement with verified original source history | Previous and next values are exact SeedReview, bind the original complete seed definition/source digests and execution state, and show `no-data-replay`; stale/retired/reused/unknown outcomes refuse. |
+| API06 | Remove selector and approval options | Discovery remove disposition is exactly `{mode:'irreversible-purge'}`. Compiler options carry the exact effects marker ID; wrong/extra/missing marker or reordered/duplicate candidate refuses. |
+| API07 | Purge approval presentation | Every table-removal-effects Candidate maps to the exact `IRREVERSIBLE_TABLE_PURGE` disclosure path, marker ID, and stored-row/column loss text before approval UI; no extra candidate/plan/diagnostic fields. |
+| API08 | Complete plan verification/serialization | Verify with required original history replays every source/history check and compares the full canonical plan. Serialize returns those bytes without terminal LF; mutations to review/steps/phases/prefixes/history binding/digest refuse. |
+| API09 | New schema family and legacy schemas | Validate request, marker-free discovery selector, TableReview, SeedReview, Candidate wrapper, plan/step/prefix definitions together; old schemas reject new profiles and remain byte-identical. |
+| API10 | Browser approval example | The application visibly renders all purge disclosures in candidate order before requesting approval; omitted/changed disclosure or native-qualified claim refuses. |

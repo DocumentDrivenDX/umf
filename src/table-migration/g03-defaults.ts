@@ -38,8 +38,16 @@ function mappings(bundle:TableDeploymentBundle):LocatedMapping[]{
 
 /** Add only opt-in G03 candidates; the unselected legacy result stays byte-identical. */
 export function discoverG03DefaultChanges(previous:TableDeploymentBundle,next:TableDeploymentBundle):G03DefaultChange[]{
+ return discoverG03DefaultChangesInternal(previous,next,null);
+}
+/** Internal G10 sink for bounded collection without an intermediate result array. */
+export function consumeG03DefaultChangesBounded(previous:TableDeploymentBundle,next:TableDeploymentBundle,maxCandidates:number,maxBytes:number,accept:(candidate:G03DefaultChange)=>void):void{
+ if(!Number.isSafeInteger(maxCandidates)||maxCandidates<0||!Number.isSafeInteger(maxBytes)||maxBytes<0)throw new RangeError('Invalid internal discovery bounds');
+ discoverG03DefaultChangesInternal(previous,next,{maxCandidates,maxBytes,accept});
+}
+function discoverG03DefaultChangesInternal(previous:TableDeploymentBundle,next:TableDeploymentBundle,bounds:{maxCandidates:number;maxBytes:number;accept?:(candidate:G03DefaultChange)=>void}|null):G03DefaultChange[]{
  if(previous.source.format!=='json'||next.source.format!=='json')return [];
- const oldRows=mappings(previous),newRows=mappings(next),result:G03DefaultChange[]=[];
+ const oldRows=mappings(previous),newRows=mappings(next),result:G03DefaultChange[]=[];let count=0;
  for(const fresh of newRows){
   const old=oldRows.find(item=>item.table.id===fresh.table.id&&item.ref.module===fresh.ref.module&&item.ref.element===fresh.ref.element);
   if(!old)continue;
@@ -49,12 +57,16 @@ export function discoverG03DefaultChanges(previous:TableDeploymentBundle,next:Ta
   // A logical-only default change is never a candidate: native storage is the
   // authority for omission behavior and must itself change in this profile.
   if(same(oldNative,newNative))continue;
+  // Refuse an exhausted bounded sink before constructing values or hashes.
+  if(bounds&&count>=bounds.maxCandidates)fail('TABLE_MIGRATION_OPTIONS','Bounded discovery exceeds its candidate limit',fresh.path);
   const oldPhysical=previous.expectedCatalog.columns.find(column=>column.table===old.table.id&&column.field.module===old.ref.module&&column.field.element===old.ref.element);
   const newPhysical=next.expectedCatalog.columns.find(column=>column.table===fresh.table.id&&column.field.module===fresh.ref.module&&column.field.element===fresh.ref.element);
   const oldValue={target:{table:old.table.id,field:old.ref},physicalExpectation:oldPhysical??null,logicalField:old.field,nativeMapping:old.column,nativeDefault:oldNative,logicalDefault:oldLogical};
   const newValue={target:{table:fresh.table.id,field:fresh.ref},physicalExpectation:newPhysical??null,logicalField:fresh.field,nativeMapping:fresh.column,nativeDefault:newNative,logicalDefault:newLogical};
   const oldDigest=hashCanonical(oldValue),newDigest=hashCanonical(newValue),kind='change-default' as const;
-  result.push({id:'review-'+hashCanonical([kind,fresh.path,oldDigest,newDigest]).slice(0,24),kind,path:fresh.path,oldDigest,newDigest,oldValue,newValue});
+  const candidate={id:'review-'+hashCanonical([kind,fresh.path,oldDigest,newDigest]).slice(0,24),kind,path:fresh.path,oldDigest,newDigest,oldValue,newValue};
+  if(bounds){const size=new TextEncoder().encode(canonical(candidate)).byteLength;if(size>bounds.maxBytes)fail('TABLE_MIGRATION_OPTIONS','Bounded discovery exceeds its byte limit',fresh.path);bounds.maxBytes-=size;}
+  count++;if(bounds?.accept)bounds.accept(candidate);else result.push(candidate);
  }
  return result;
 }

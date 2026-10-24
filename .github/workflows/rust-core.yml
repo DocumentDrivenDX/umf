@@ -2,6 +2,10 @@
 name: Rust production core
 on:
   push:
+    branches-ignore:
+      - codex/migration-portable-qualification
+    tags:
+      - '**'
   pull_request:
 permissions:
   contents: read

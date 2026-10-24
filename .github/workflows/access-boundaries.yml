@@ -3,6 +3,10 @@ name: Typed access boundaries
 
 on:
   push:
+    branches-ignore:
+      - codex/migration-portable-qualification
+    tags:
+      - '**'
   pull_request:
 
 permissions:

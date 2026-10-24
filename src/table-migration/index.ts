@@ -14,6 +14,9 @@ import {policySql} from '../table-deployment/policies';
 import type {DeploymentContext} from '../table-deployment/types';
 import type {TableMigrationExecutionProfile} from './phases-options';
 import type {TableDeclaration,TableRef} from '../extensions/tables';
+import {hasTableMigrationOperationCapture,TABLE_MIGRATION_OPERATION,tableMigrationFieldOperationTag,withTableMigrationOperation,type TableMigrationGrantRow,type TableMigrationOperationRole,type TableMigrationOperationTag} from './internal-operations';
+import {renderG02FieldEffect} from './g02-field-effects';
+import {deriveTableGrantEffectRow,renderTableGrantSql} from '../table-deployment/grants';
 export {discoverTableMigrationChanges,reviewedValueDigest} from './reviewed';
 export type {ReviewedChangeCandidate,ReviewedChangeKind,ReviewedChangeMarker} from './reviewed';
 
@@ -40,6 +43,40 @@ export interface TableMigrationPlan extends TableMigrationRequest {
 export type TableMigrationResult={status:'compiled';plan:TableMigrationPlan;diagnostics:[]}|{status:'blocked';diagnostics:Diagnostic[]};
 const fail=(message:string,path=''):never=>{throw new UmfError('TABLE_MIGRATION_UNSUPPORTED',message,path);};
 const same=(a:unknown,b:unknown):boolean=>canonical(a)===canonical(b);
+function internalFieldEffect(step:TableMigrationStep,role:TableMigrationOperationRole,target:NonNullable<TableMigrationStep['phaseTarget']>,rowOperationId?:string):TableMigrationStep{
+ return withTableMigrationOperation({...step},tableMigrationFieldOperationTag(role,step.sourcePath,target.table,target.field,rowOperationId));
+}
+function internalDependencyEffect(step:TableMigrationStep,role:TableMigrationOperationRole,subject:NonNullable<TableMigrationStep['phaseDependency']>):TableMigrationStep{
+ return withTableMigrationOperation({...step},{profile:'umf.table-migration-renderer-operation/0.1',role,sourcePath:step.sourcePath,subject:{type:'dependency',...subject}});
+}
+function g11GrantRows(bundle:TableDeploymentBundle,tableId:string,sourcePath:string):TableMigrationGrantRow[]{
+ const match=/\/policy\/(person|batch)\/(select|insert|update|delete)$/.exec(sourcePath);if(!match)fail('G11 grant group requires an exact policy declaration path',sourcePath);
+ const audience=match[1] as PolicyAudience,command=match[2] as PolicyCommand,table=bundle.expectedCatalog.tables.find(item=>item.id===tableId)??fail('G11 grant table is absent from the deployment bundle',sourcePath);
+ const document=readDocument(bundle.source.utf8,bundle.source.format),moduleIndex=document.modules.findIndex(module=>module.id===bundle.module),module=document.modules[moduleIndex],payload=module?.extensions?.['umf.tables'] as {tables?:TableDeclaration[]}|undefined;
+ const tableIndexes=payload?.tables?.map((candidate,index)=>candidate.id===tableId?index:-1).filter(index=>index>=0)??[];
+ if(moduleIndex<0||tableIndexes.length!==1||!same(payload!.tables![tableIndexes[0]!]!,table))fail('G11 grant table is not bound to the complete original source declaration',sourcePath);
+ const expectedPath=`/modules/${moduleIndex}/extensions/umf.tables/tables/${tableIndexes[0]}/policy/${audience}/${command}`;
+ if(sourcePath!==expectedPath)fail('G11 grant source path is not the exact original policy declaration',sourcePath);
+ const recordModule=document.modules.find(candidate=>candidate.id===table.record.module),record=recordModule?.elements.find(element=>element.kind==='record'&&element.id===table.record.element);
+ if(!record||record.kind!=='record')fail('G11 grant cannot be derived without the exact source Record Keys',sourcePath);
+ if(table.policy[audience][command].kind==='deny')return [];
+ let row:TableMigrationGrantRow;
+ try{row=deriveTableGrantEffectRow({table,recordModule:table.record.module,record,schema:bundle.configuration.schema,role:audience==='person'?bundle.configuration.personRole:bundle.configuration.batchRole,audience,command});}
+ catch(error){if(error instanceof Error&&error.message==='TABLE_GRANT_EMPTY_UPDATE')fail('G11 cannot bind an empty UPDATE grant',sourcePath);throw error;}
+ const rendered=bundle.steps.filter(step=>step.kind==='grant'&&step.sourcePath===sourcePath);
+ if(rendered.length!==1||rendered[0]!.sql!==renderTableGrantSql(row,'grant'))fail('G11 grant source must match exactly one original typed renderer operation',sourcePath);
+ return [row];
+}
+function internalGrantEffect(step:TableMigrationStep,role:'grant-add'|'grant-revoke',bundle:TableDeploymentBundle,table:string,sourcePath:string):TableMigrationStep{
+ const rows=g11GrantRows(bundle,table,sourcePath);if(rows.length!==1)fail('G11 grant renderer source does not correspond to exactly one typed grant row',sourcePath);
+ const meaningDigest=hashCanonical({version:'umf.table-migration-grant-group/0.1',rows});
+ const rendererStep=bundle.steps.find(candidate=>candidate.kind==='grant'&&candidate.sourcePath===sourcePath)!;
+ return withTableMigrationOperation({...step},{profile:'umf.table-migration-renderer-operation/0.1',role,sourcePath,subject:{type:'grant-group',table,sourcePath,rendererStepId:rendererStep.id,rows,meaningDigest,...(step.phaseDependency?{dependencyMeaningDigest:step.phaseDependency.meaningDigest}:{})}});
+}
+function internalPolicyEffect(step:TableMigrationStep,previous:TableDeploymentBundle,next:TableDeploymentBundle,table:string,sourcePath:string):TableMigrationStep{
+ const before=g11DependencySubject(previous,table,'policy','',sourcePath),after=g11DependencySubject(next,table,'policy','',sourcePath);
+ return withTableMigrationOperation({...step},{profile:'umf.table-migration-renderer-operation/0.1',role:'policy-alter',sourcePath,subject:{type:'policy-transition',table,sourcePath,beforeMeaningDigest:before.meaningDigest,afterMeaningDigest:after.meaningDigest}});
+}
 function without(value:object,keys:string[]):Record<string,unknown>{
  return Object.fromEntries(Object.entries(value).filter(([key])=>!keys.includes(key)));
 }
@@ -213,13 +250,8 @@ function revokeGrantSql(step:TableDeploymentBundle['steps'][number],table:TableD
  return 'REVOKE '+privilege+' ON TABLE '+relation+' FROM '+quoteIdentifier(role);
 }
 function g11RevokeGrantSql(bundle:TableDeploymentBundle,tableId:string,sourcePath:string):string{
- const found=/\/policy\/(person|batch)\/(select|insert|update|delete)$/.exec(sourcePath),match=found??fail('G11 grant revocation needs its exact typed policy path',sourcePath);
- const audience=match[1] as PolicyAudience,command=match[2] as PolicyCommand,doc=readDocument(bundle.source.utf8,bundle.source.format),payload=doc.modules.find(module=>module.id===bundle.module)?.extensions?.['umf.tables'] as any,table=payload?.tables?.find((item:any)=>item.id===tableId);
- if(!table||table.policy[audience][command].kind==='deny')fail('G11 cannot revoke a grant absent from the typed policy',sourcePath);
- const record=doc.modules.find(module=>module.id===table.record.module)?.elements.find(element=>element.kind==='record'&&element.id===table.record.element) as any,mutable=table.columns.filter((column:any)=>column.immutable!==true&&!column.generated&&!record.keys.some((key:any)=>key.fields.some((field:any)=>refKey(field)===refKey(column.field))));
- if(command==='update'&&!mutable.length)fail('G11 cannot derive an empty typed UPDATE grant',sourcePath);
- const privilege=command==='update'?'UPDATE ('+mutable.map((column:any)=>quoteIdentifier(column.name)).join(', ')+')':command.toUpperCase(),role=audience==='person'?bundle.configuration.personRole:bundle.configuration.batchRole;
- return 'REVOKE '+privilege+' ON TABLE '+quoteIdentifier(bundle.configuration.schema)+'.'+quoteIdentifier(table.name)+' FROM '+quoteIdentifier(role);
+ const row=g11GrantRows(bundle,tableId,sourcePath)[0];if(!row)fail('G11 cannot revoke a grant absent from the typed policy',sourcePath);
+ return renderTableGrantSql(row,'revoke');
 }
 function g11ForeignKeyTarget(bundle:TableDeploymentBundle,tableId:string,foreignKeyId:string):{table:string;key:string}|undefined{
  const doc=readDocument(bundle.source.utf8,bundle.source.format),payload=doc.modules.find(module=>module.id===bundle.module)?.extensions?.['umf.tables'] as any,table=payload?.tables?.find((item:any)=>item.id===tableId),foreignKey=table?.foreignKeys?.find((item:any)=>item.id===foreignKeyId);if(!foreignKey)return;
@@ -498,7 +530,7 @@ function assertNoColumnDependents(column:TableDeploymentBundle['expectedCatalog'
 }
 
 /** Inert forward plans: initial deployment, bounded additive DDL or command revisions. */
-function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUnreviewedPolicy=false):TableMigrationResult{
+function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUnreviewedPolicy=false,captureInternalOperations=false):TableMigrationResult{
  try{
   preflightG03DefaultLiteral(input);
   const request=copyJson(input) as unknown as TableMigrationRequest;
@@ -513,7 +545,7 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
   const previous=request.previous===null?null:verifyTableDeployment(request.previous),next=verifyTableDeployment(request.next);
  if((previous===null)!==(request.predecessor===null))fail('Only initial deployment has a null predecessor','/predecessor');
   const options=migrationOptions(request.options,next,previous);
-  if(options?.version==='umf.table-migration-options/0.5')return compileG03DefaultChangePlan(request,previous!,next,options);
+  if(options?.version==='umf.table-migration-options/0.5')return compileG03DefaultChangePlan(request,previous!,next,options,captureInternalOperations);
   if((options?.version==='umf.table-migration-options/0.2'||options?.version==='umf.table-migration-options/0.3'||options?.version==='umf.table-migration-options/0.4')&&!previous)fail('Phased plans require an installed predecessor; initial publication is not supported','/previous');
   if(previous&&(options?.version==='umf.table-migration-options/0.2'||options?.version==='umf.table-migration-options/0.3'||options?.version==='umf.table-migration-options/0.4')&&!same(previous.expectedCatalog.tables.map(t=>t.id).sort(),next.expectedCatalog.tables.map(t=>t.id).sort()))fail('Phased plans cannot add or remove tables until the runtime models absent and newly created table identities explicitly','/next/expectedCatalog/tables');
   if(previous&&options?.version==='umf.table-migration-options/0.6'&&!same(previous.expectedCatalog.tables.map(t=>t.id),next.expectedCatalog.tables.map(t=>t.id)))fail('Phased plans cannot add or remove or reorder tables','/next/expectedCatalog/tables');
@@ -522,7 +554,6 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
    changes=appendOnly(previous,next,options,allowLegacyUnreviewedPolicy);
    if(previous.bundleDigest===next.bundleDigest)fail('An unchanged bundle does not create a new migration','/next');
   }
-  const firstNew=previous?.expectedCatalog.tables.length??0;
   const moduleIndex=readDocument(next.source.utf8,next.source.format).modules.findIndex(m=>m.id===next.module);
   const steps:Omit<TableMigrationStep,'preconditions'|'expectedOutcome'|'verification'|'recovery'>[]=previous?[]:next.steps;
   if(previous){
@@ -534,8 +565,14 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
     const parts=path.split('/'),audience=parts[8] as PolicyAudience,table=next.expectedCatalog.tables[tableIndex]!;
     if(!['person','batch'].includes(audience))fail('Unexpected compiler grant source path',path);
     for(const grant of change.previous){
-     if(options?.version==='umf.table-migration-options/0.6')steps.push({id:'',kind:'grant',sourcePath:path,transaction:'required',sql:g11RevokeGrantSql(previous!,table.id,path),phaseOperation:'dependency-drop',phaseDependency:g11DependencySubject(previous!,table.id,'grant','',path),operation:'dependency-drop'});
-     else steps.push({id:'',kind:'grant',sourcePath:path,transaction:'required',sql:revokeGrantSql(grant,table,next.configuration,audience)});
+     if(options?.version==='umf.table-migration-options/0.6'){
+      const subject=g11DependencySubject(previous!,table.id,'grant','',path),step:TableMigrationStep={id:'',kind:'grant',sourcePath:path,transaction:'required',sql:g11RevokeGrantSql(previous!,table.id,path),phaseOperation:'dependency-drop',phaseDependency:subject,operation:'dependency-drop'};
+      steps.push(internalGrantEffect(step,'grant-revoke',previous!,table.id,path));
+     }else{
+      const sql=options?.version==='umf.table-migration-options/0.4'?g11RevokeGrantSql(previous!,table.id,path):revokeGrantSql(grant,table,next.configuration,audience);
+      const step:TableMigrationStep={id:'',kind:'grant',sourcePath:path,transaction:'required',sql};
+      steps.push(options?.version==='umf.table-migration-options/0.4'?internalGrantEffect(step,'grant-revoke',previous!,table.id,path):step);
+     }
     }
     revokedGrantChanges.add(path);
    };
@@ -543,7 +580,7 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
     const parts=step.sourcePath.split('/');
     if(parts[5]!=='tables'||!/^\d+$/.test(parts[6]??''))continue;
     const tableIndex=Number(parts[6]);
-    if(tableIndex>=firstNew){steps.push(step);continue;}
+    if(tableIndex>=previous!.expectedCatalog.tables.length){steps.push(step);continue;}
     if(step.kind==='table'&&parts.length===7&&!emittedColumns.has(tableIndex)){
      emittedColumns.add(tableIndex);
      const table=next.expectedCatalog.tables[tableIndex]!;
@@ -552,30 +589,33 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
      for(const column of changes.notNullColumns.get(tableIndex)??[]){
       const fill=options?.version==='umf.table-migration-options/0.3'||options?.version==='umf.table-migration-options/0.4'?options.backfills.find(item=>item.table===table.id&&refKey(item.column)===refKey(column.field)&&previous.expectedCatalog.columns.some(old=>old.table===table.id&&refKey(old.field)===refKey(column.field))):undefined;
       const phaseTarget={table:table.id,field:{...column.field}};
-      if(fill)steps.push({id:'',kind:'backfill',sourcePath:'/options/backfills/'+options!.backfills.indexOf(fill),transaction:'required',sql:'',operation:fill.operation,phaseOperation:'backfill',phaseTarget});
-      steps.push({id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ALTER COLUMN '+quoteIdentifier(column.name)+' SET NOT NULL',...(fill?{phaseOperation:'tighten-not-null' as const,phaseTarget}:{})});
+      const mapping=table.columns.find(item=>refKey(item.field)===refKey(column.field))!;
+      if(fill){const path='/options/backfills/'+options!.backfills.indexOf(fill),rendered=renderG02FieldEffect({role:'backfill',schema:next.configuration.schema,table:table.id,tableName:table.name,column:mapping,sourcePath:path,field:column.field,rowOperationId:fill.operation}),backfillStep:TableMigrationStep={id:'',kind:'backfill',sourcePath:path,transaction:'required',sql:rendered.sql,operation:fill.operation,phaseOperation:'backfill',phaseTarget};steps.push(internalFieldEffect(backfillStep,'backfill',phaseTarget,fill.operation));}
+      const renderedTighten=fill?renderG02FieldEffect({role:'tighten-not-null',schema:next.configuration.schema,table:table.id,tableName:table.name,column:mapping,sourcePath:column.sourcePath,field:column.field}):undefined,tightenStep:TableMigrationStep={id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:renderedTighten?.sql??'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ALTER COLUMN '+quoteIdentifier(column.name)+' SET NOT NULL',...(fill?{phaseOperation:'tighten-not-null' as const,phaseTarget}:{})};
+      steps.push(fill?internalFieldEffect(tightenStep,'tighten-not-null',phaseTarget):tightenStep);
      }
      for(const column of changes.relaxNullColumns.get(tableIndex)??[])steps.push({id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ALTER COLUMN '+quoteIdentifier(column.name)+' DROP NOT NULL'});
      for(const change of changes.typeChanges.get(tableIndex)??[]){const targetColumn=table.columns.find(c=>refKey(c.field)===refKey(change.fresh.field))!;const type=nativeType(targetColumn.nativeType);steps.push({id:'',kind:'table',sourcePath:change.fresh.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ALTER COLUMN '+quoteIdentifier(change.fresh.name)+' TYPE '+type+' USING '+quoteIdentifier(change.old.name)+'::'+type});}
-     for(const index of changes.indexChanges.get(tableIndex)?.drops??[]){const typed=options?.version==='umf.table-migration-options/0.6',sourcePath=typed?g11DependencyPath(previous,table.id,'index',index.id):'/next/expectedCatalog/indexes/'+index.id;steps.push({id:'',kind:'index',sourcePath,transaction:'required',sql:'DROP INDEX '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(index.name),...(typed?{phaseOperation:'dependency-drop' as const,phaseDependency:g11DependencySubject(previous,table.id,'index',index.id,sourcePath),operation:'dependency-drop'}:{})});}
-     for(const check of changes.droppedChecks.get(tableIndex)??[]){const typed=options?.version==='umf.table-migration-options/0.6',sourcePath=typed?g11DependencyPath(previous,table.id,'check',check.id):'/next/expectedCatalog/checks/'+check.id;steps.push({id:'',kind:'table',sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' DROP CONSTRAINT '+quoteIdentifier(check.name),...(typed?{phaseOperation:'dependency-drop' as const,phaseDependency:g11DependencySubject(previous,table.id,'check',check.id,sourcePath),operation:'dependency-drop'}:{})});}
-     for(const fk of changes.foreignKeyChanges.get(tableIndex)?.drops??[]){const typed=options?.version==='umf.table-migration-options/0.6',sourcePath=typed?g11DependencyPath(previous,table.id,'foreignKey',fk.id):'/next/expectedCatalog/foreignKeys/'+fk.id;steps.push({id:'',kind:typed?'foreignKey':'table',sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' DROP CONSTRAINT '+quoteIdentifier(fk.name),...(typed?{phaseOperation:'dependency-drop' as const,phaseDependency:g11DependencySubject(previous,table.id,'foreignKey',fk.id,sourcePath),operation:'dependency-drop'}:{})});}
-     for(const key of changes.keyChanges.get(tableIndex)?.drops??[]){const typed=options?.version==='umf.table-migration-options/0.6',sourcePath=typed?g11DependencyPath(previous,table.id,'key',key.id):'/next/expectedCatalog/keys/'+key.id;steps.push({id:'',kind:'table',sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' DROP CONSTRAINT '+quoteIdentifier(key.name),...(typed?{phaseOperation:'dependency-drop' as const,phaseDependency:g11DependencySubject(previous,table.id,'key',key.id,sourcePath),operation:'dependency-drop'}:{})});}
-     for(const key of changes.keyChanges.get(tableIndex)?.adds??[]){const typed=options?.version==='umf.table-migration-options/0.6',sourcePath=typed?g11DependencyPath(next,table.id,'key',key.id):'/next/expectedCatalog/keys/'+key.id;steps.push({id:'',kind:'table',sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ADD '+key.definitionSql,...(typed?{phaseOperation:'dependency-add' as const,phaseDependency:g11DependencySubject(next,table.id,'key',key.id,sourcePath),operation:'dependency-add'}:{})});}
+     for(const index of changes.indexChanges.get(tableIndex)?.drops??[]){const typed=options?.version==='umf.table-migration-options/0.6',sourcePath=typed?g11DependencyPath(previous,table.id,'index',index.id):'/next/expectedCatalog/indexes/'+index.id,subject=typed?g11DependencySubject(previous,table.id,'index',index.id,sourcePath):undefined,step:TableMigrationStep={id:'',kind:'index',sourcePath,transaction:'required',sql:'DROP INDEX '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(index.name),...(typed?{phaseOperation:'dependency-drop' as const,phaseDependency:subject,operation:'dependency-drop'}:{})};steps.push(subject?internalDependencyEffect(step,'dependency-drop',subject):step);}
+     for(const check of changes.droppedChecks.get(tableIndex)??[]){const typed=options?.version==='umf.table-migration-options/0.6',sourcePath=typed?g11DependencyPath(previous,table.id,'check',check.id):'/next/expectedCatalog/checks/'+check.id,subject=typed?g11DependencySubject(previous,table.id,'check',check.id,sourcePath):undefined,step:TableMigrationStep={id:'',kind:'table',sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' DROP CONSTRAINT '+quoteIdentifier(check.name),...(typed?{phaseOperation:'dependency-drop' as const,phaseDependency:subject,operation:'dependency-drop'}:{})};steps.push(subject?internalDependencyEffect(step,'dependency-drop',subject):step);}
+     for(const fk of changes.foreignKeyChanges.get(tableIndex)?.drops??[]){const typed=options?.version==='umf.table-migration-options/0.6',sourcePath=typed?g11DependencyPath(previous,table.id,'foreignKey',fk.id):'/next/expectedCatalog/foreignKeys/'+fk.id,subject=typed?g11DependencySubject(previous,table.id,'foreignKey',fk.id,sourcePath):undefined,step:TableMigrationStep={id:'',kind:typed?'foreignKey':'table',sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' DROP CONSTRAINT '+quoteIdentifier(fk.name),...(typed?{phaseOperation:'dependency-drop' as const,phaseDependency:subject,operation:'dependency-drop'}:{})};steps.push(subject?internalDependencyEffect(step,'dependency-drop',subject):step);}
+     for(const key of changes.keyChanges.get(tableIndex)?.drops??[]){const typed=options?.version==='umf.table-migration-options/0.6',sourcePath=typed?g11DependencyPath(previous,table.id,'key',key.id):'/next/expectedCatalog/keys/'+key.id,subject=typed?g11DependencySubject(previous,table.id,'key',key.id,sourcePath):undefined,step:TableMigrationStep={id:'',kind:'table',sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' DROP CONSTRAINT '+quoteIdentifier(key.name),...(typed?{phaseOperation:'dependency-drop' as const,phaseDependency:subject,operation:'dependency-drop'}:{})};steps.push(subject?internalDependencyEffect(step,'dependency-drop',subject):step);}
+     for(const key of changes.keyChanges.get(tableIndex)?.adds??[]){const typed=options?.version==='umf.table-migration-options/0.6',sourcePath=typed?g11DependencyPath(next,table.id,'key',key.id):'/next/expectedCatalog/keys/'+key.id,subject=typed?g11DependencySubject(next,table.id,'key',key.id,sourcePath):undefined,step:TableMigrationStep={id:'',kind:'table',sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ADD '+key.definitionSql,...(typed?{phaseOperation:'dependency-add' as const,phaseDependency:subject,operation:'dependency-add'}:{})};steps.push(subject?internalDependencyEffect(step,'dependency-add',subject):step);}
      for(const column of changes.columnChanges.get(tableIndex)??[]){
       const selectedAppend=(options?.version==='umf.table-migration-options/0.4'||options?.version==='umf.table-migration-options/0.6')&&(options.version==='umf.table-migration-options/0.6'||options.backfills.some(b=>b.table===table.id&&refKey(b.column)===refKey(column.field)&&!previous.expectedCatalog.columns.some(old=>old.table===table.id&&refKey(old.field)===refKey(column.field))));
-      const phaseTarget={table:table.id,field:{...column.field}};
-      steps.push({id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ADD COLUMN '+(quoteIdentifier(column.name)+' '+nativeType(table.columns.find(c=>refKey(c.field)===refKey(column.field))!.nativeType)+(column.collation==='C'?' COLLATE pg_catalog.\"C\"':'')),...(selectedAppend?{phaseOperation:'add-column' as const,phaseTarget,...(options?.version==='umf.table-migration-options/0.6'?{operation:'add-column'}:{})}:{})});
+      const phaseTarget={table:table.id,field:{...column.field}},mapping=table.columns.find(c=>refKey(c.field)===refKey(column.field))!,rendered=selectedAppend?renderG02FieldEffect({role:'add-column',schema:next.configuration.schema,table:table.id,tableName:table.name,column:mapping,collation:column.collation,sourcePath:column.sourcePath,field:column.field}):undefined,step:TableMigrationStep={id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:rendered?.sql??'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ADD COLUMN '+(quoteIdentifier(column.name)+' '+nativeType(mapping.nativeType)+(column.collation==='C'?' COLLATE pg_catalog.\"C\"':'')),...(selectedAppend?{phaseOperation:'add-column' as const,phaseTarget,...(options?.version==='umf.table-migration-options/0.6'?{operation:'add-column'}:{})}:{})};
+      steps.push(selectedAppend?internalFieldEffect(step,'add-column',phaseTarget):step);
      }
    for(const backfill of options?.backfills.filter(b=>b.table===table.id&&!((options.version==='umf.table-migration-options/0.3'||options.version==='umf.table-migration-options/0.4'||options.version==='umf.table-migration-options/0.6')&&previous.expectedCatalog.columns.some(old=>old.table===table.id&&refKey(old.field)===refKey(b.column))))??[]){
       const appended=(options!.version==='umf.table-migration-options/0.4'||options!.version==='umf.table-migration-options/0.6')&&!previous.expectedCatalog.columns.some(old=>old.table===table.id&&refKey(old.field)===refKey(backfill.column));
       const phaseTarget={table:table.id,field:{...backfill.column}};
-      steps.push({id:'',kind:'backfill',sourcePath:'/options/backfills/'+options!.backfills.indexOf(backfill),transaction:'required',sql:'',operation:backfill.operation,...(appended?{phaseOperation:'backfill' as const,phaseTarget}:{})});
+      const backfillPath='/options/backfills/'+options!.backfills.indexOf(backfill),mapping=table.columns.find(c=>refKey(c.field)===refKey(backfill.column))!,renderedBackfill=appended?renderG02FieldEffect({role:'backfill',schema:next.configuration.schema,table:table.id,tableName:table.name,column:mapping,sourcePath:backfillPath,field:backfill.column,rowOperationId:backfill.operation}):undefined,backfillStep:TableMigrationStep={id:'',kind:'backfill',sourcePath:backfillPath,transaction:'required',sql:renderedBackfill?.sql??'',operation:backfill.operation,...(appended?{phaseOperation:'backfill' as const,phaseTarget}:{})};
+      steps.push(appended?internalFieldEffect(backfillStep,'backfill',phaseTarget,backfill.operation):backfillStep);
       const column=next.expectedCatalog.columns.find(c=>c.table===table.id&&refKey(c.field)===refKey(backfill.column))!;
       const defaultValue=table.columns.find(c=>refKey(c.field)===refKey(column.field))!.default;
       const defaultSql=defaultValue?typedDefaultExpressionSql(defaultValue):'';
-      if(defaultSql)steps.push({id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ALTER COLUMN '+quoteIdentifier(column.name)+' SET DEFAULT '+defaultSql,...(appended?{phaseOperation:'install-default' as const,phaseTarget,...(options?.version==='umf.table-migration-options/0.6'?{operation:'install-default'}:{})}:{})});
-      if(!column.nullable)steps.push({id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ALTER COLUMN '+quoteIdentifier(column.name)+' SET NOT NULL',...(appended?{phaseOperation:'tighten-not-null' as const,phaseTarget,...(options?.version==='umf.table-migration-options/0.6'?{operation:'tighten-not-null'}:{})}:{})});
+      if(defaultSql){const mapping=table.columns.find(c=>refKey(c.field)===refKey(column.field))!,rendered=appended?renderG02FieldEffect({role:'install-default',schema:next.configuration.schema,table:table.id,tableName:table.name,column:mapping,sourcePath:column.sourcePath,field:column.field}):undefined,defaultStep:TableMigrationStep={id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:rendered?.sql??'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ALTER COLUMN '+quoteIdentifier(column.name)+' SET DEFAULT '+defaultSql,...(appended?{phaseOperation:'install-default' as const,phaseTarget,...(options?.version==='umf.table-migration-options/0.6'?{operation:'install-default'}:{})}:{})};steps.push(appended?internalFieldEffect(defaultStep,'install-default',phaseTarget):defaultStep);}
+      if(!column.nullable){const mapping=table.columns.find(c=>refKey(c.field)===refKey(column.field))!,rendered=appended?renderG02FieldEffect({role:'tighten-not-null',schema:next.configuration.schema,table:table.id,tableName:table.name,column:mapping,sourcePath:column.sourcePath,field:column.field}):undefined,tightenStep:TableMigrationStep={id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:rendered?.sql??'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ALTER COLUMN '+quoteIdentifier(column.name)+' SET NOT NULL',...(appended?{phaseOperation:'tighten-not-null' as const,phaseTarget,...(options?.version==='umf.table-migration-options/0.6'?{operation:'tighten-not-null'}:{})}:{})};steps.push(appended?internalFieldEffect(tightenStep,'tighten-not-null',phaseTarget):tightenStep);}
      }
      if(options?.version==='umf.table-migration-options/0.6')for(const column of changes.columnChanges.get(tableIndex)??[]){
       if(options.backfills.some(fill=>fill.table===table.id&&refKey(fill.column)===refKey(column.field)))continue;
@@ -584,7 +624,8 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
       if(!mapping?.default)continue;
       const already=steps.some(step=>step.phaseOperation==='install-default'&&step.phaseTarget?.table===table.id&&refKey(step.phaseTarget.field)===refKey(column.field));
       if(already)continue;
-      steps.push({id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ALTER COLUMN '+quoteIdentifier(column.name)+' SET DEFAULT '+typedDefaultExpressionSql(mapping.default),phaseOperation:'install-default',phaseTarget:{table:table.id,field:{...column.field}},operation:'install-default'});
+      const phaseTarget={table:table.id,field:{...column.field}},defaultStep:TableMigrationStep={id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ALTER COLUMN '+quoteIdentifier(column.name)+' SET DEFAULT '+typedDefaultExpressionSql(mapping.default),phaseOperation:'install-default',phaseTarget,operation:'install-default'};
+      steps.push(internalFieldEffect(defaultStep,'install-default',phaseTarget));
      }
      const checkPaths=changes.checkPaths.get(tableIndex);
      for(const check of changes.checkChanges.get(tableIndex)??[]){
@@ -595,9 +636,11 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
        :(options?.version==='umf.table-migration-options/0.4'&&options.backfills.find(item=>item.table===table.id&&!previous.expectedCatalog.columns.some(old=>old.table===table.id&&refKey(old.field)===refKey(item.column))&&path===next.expectedCatalog.columns.find(column=>column.table===table.id&&refKey(column.field)===refKey(item.column))?.sourcePath+'/domain'));
       const phaseField=options?.version==='umf.table-migration-options/0.6'?(appendedTarget as TableMigrationStep['phaseTarget']|undefined)?.field:(appendedTarget as {table:string;column:TableRef}|undefined)?.column;
       const phaseTarget=phaseField?{table:table.id,field:{...phaseField}}:undefined;
-      const isG11=options?.version==='umf.table-migration-options/0.6',targetCheck=!!phaseTarget&&isG11;
-      steps.push({id:'',kind:'table',sourcePath:path,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ADD '+check.definitionSql+(selected?' NOT VALID':''),...(selected?{operation:'add-not-valid',constraintKind:'check' as const}:{}),...(targetCheck?{phaseOperation:'target-check' as const,phaseTarget,operation:'target-check'}:isG11?{phaseOperation:'dependency-add' as const,phaseDependency:g11DependencySubject(next,table.id,'check',check.id,path),operation:'dependency-add'}:phaseTarget?{phaseOperation:'target-check' as const,phaseTarget}:{})});
-      if(selected)steps.push({id:'',kind:'table',sourcePath:path,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' VALIDATE CONSTRAINT '+quoteIdentifier(check.name),operation:'validate',constraintKind:'check'});
+      const isG11=options?.version==='umf.table-migration-options/0.6',targetCheck=!!phaseTarget&&isG11,legacyG02TargetCheck=!!phaseTarget&&options?.version==='umf.table-migration-options/0.4';
+      const checkSubject=targetCheck?undefined:isG11?g11DependencySubject(next,table.id,'check',check.id,path):undefined;
+      const fieldMapping=phaseTarget?table.columns.find(c=>refKey(c.field)===refKey(phaseTarget.field)):undefined,renderedTarget=(targetCheck||legacyG02TargetCheck)&&fieldMapping?renderG02FieldEffect({role:'target-check',schema:next.configuration.schema,table:table.id,tableName:table.name,column:fieldMapping,sourcePath:path,field:phaseTarget!.field,notValid:selected,checkDefinitionSql:check.definitionSql}):undefined,checkStep:TableMigrationStep={id:'',kind:'table',sourcePath:path,transaction:'required',sql:renderedTarget?.sql??'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ADD '+check.definitionSql+(selected?' NOT VALID':''),...(selected?{operation:'add-not-valid',constraintKind:'check' as const}:{}),...(targetCheck?{phaseOperation:'target-check' as const,phaseTarget,operation:'target-check'}:checkSubject?{phaseOperation:'dependency-add' as const,phaseDependency:checkSubject,operation:'dependency-add'}:phaseTarget?{phaseOperation:'target-check' as const,phaseTarget}:{})};
+      steps.push(phaseTarget&&(isG11||legacyG02TargetCheck)?internalFieldEffect(checkStep,'target-check',phaseTarget):checkSubject?internalDependencyEffect(checkStep,'dependency-add',checkSubject):checkStep);
+      if(selected){const renderedValidation=phaseTarget&&(isG11||legacyG02TargetCheck)&&fieldMapping?renderG02FieldEffect({role:'validate-target-check',schema:next.configuration.schema,table:table.id,tableName:table.name,column:fieldMapping,sourcePath:path,field:phaseTarget.field,constraintName:check.name}):undefined;steps.push({id:'',kind:'table',sourcePath:path,transaction:'required',sql:renderedValidation?.sql??'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' VALIDATE CONSTRAINT '+quoteIdentifier(check.name),operation:'validate',constraintKind:'check'});}
      }
      continue;
     }
@@ -612,8 +655,9 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
      if(isNewStableId||replaced){
       const selected=options.validations?.some(item=>item.table===next.expectedCatalog.tables[tableIndex]!.id&&item.constraint===fk.id&&item.kind==='foreignKey')??false;
       const g11=options.version==='umf.table-migration-options/0.6',sourcePath=g11?g11DependencyPath(next,next.expectedCatalog.tables[tableIndex]!.id,'foreignKey',fk.id):step.sourcePath;
-      const sql=selected?{...step,sql:step.sql+' NOT VALID',operation:'add-not-valid',constraintKind:'foreignKey' as const}:g11?{...step,sourcePath,operation:'dependency-add',phaseOperation:'dependency-add' as const,phaseDependency:g11DependencySubject(next,next.expectedCatalog.tables[tableIndex]!.id,'foreignKey',fk.id,sourcePath)}:{...step};
-      steps.push(sql);
+      const subject=g11?g11DependencySubject(next,next.expectedCatalog.tables[tableIndex]!.id,'foreignKey',fk.id,sourcePath):undefined;
+      const sql:TableMigrationStep=selected?{...step,sql:step.sql+' NOT VALID',operation:'add-not-valid',constraintKind:'foreignKey'}:g11?{...step,sourcePath,operation:'dependency-add',phaseOperation:'dependency-add',phaseDependency:subject}:{...step};
+      steps.push(subject?internalDependencyEffect(sql,'dependency-add',subject):sql);
       if(selected)steps.push({id:'',kind:'foreignKey',sourcePath:step.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(next.expectedCatalog.tables[tableIndex]!.name)+' VALIDATE CONSTRAINT '+quoteIdentifier(fk.name),operation:'validate',constraintKind:'foreignKey'});
       continue;
      }
@@ -621,7 +665,7 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
     if(step.kind==='index'&&parts[7]==='indexes'&&/^\d+$/.test(parts[8]??'')){
      const index=next.expectedCatalog.tables[tableIndex]!.indexes[Number(parts[8])]!,oldIndexes=previous.expectedCatalog.tables[tableIndex]!.indexes;
      if(!oldIndexes.some(old=>old.id===index.id)||changes.indexChanges.get(tableIndex)?.replacements.has(index.id)){
-      if(options?.version==='umf.table-migration-options/0.6'){const sourcePath=g11DependencyPath(next,next.expectedCatalog.tables[tableIndex]!.id,'index',index.id);steps.push({...step,sourcePath,operation:'dependency-add',phaseOperation:'dependency-add',phaseDependency:g11DependencySubject(next,next.expectedCatalog.tables[tableIndex]!.id,'index',index.id,sourcePath)});}else steps.push(step);continue;
+      if(options?.version==='umf.table-migration-options/0.6'){const sourcePath=g11DependencyPath(next,next.expectedCatalog.tables[tableIndex]!.id,'index',index.id),subject=g11DependencySubject(next,next.expectedCatalog.tables[tableIndex]!.id,'index',index.id,sourcePath);steps.push(internalDependencyEffect({...step,sourcePath,operation:'dependency-add',phaseOperation:'dependency-add',phaseDependency:subject},'dependency-add',subject));}else steps.push(step);continue;
      }
     }
     if(step.kind==='policy'){
@@ -630,9 +674,13 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
      if(changes.policyChanges.has(step.sourcePath)){
       if(options?.version==='umf.table-migration-options/0.6'){
        const relation=quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name),name='umf_'+audience+'_'+command;
-       steps.push({id:'',kind:'policy',sourcePath:step.sourcePath,transaction:'required',sql:'DROP POLICY '+quoteIdentifier(name)+' ON '+relation,phaseOperation:'dependency-drop',phaseDependency:g11DependencySubject(previous!,table.id,'policy','',step.sourcePath),operation:'dependency-drop'});
-       steps.push({...step,id:'',operation:'dependency-add',phaseOperation:'dependency-add',phaseDependency:g11DependencySubject(next,table.id,'policy','',step.sourcePath)});
-      }else steps.push({...step,id:'',sql:alterPolicySql(step,table,next.configuration,audience,command)});
+       const beforeSubject=g11DependencySubject(previous!,table.id,'policy','',step.sourcePath),afterSubject=g11DependencySubject(next,table.id,'policy','',step.sourcePath);
+       steps.push(internalDependencyEffect({id:'',kind:'policy',sourcePath:step.sourcePath,transaction:'required',sql:'DROP POLICY '+quoteIdentifier(name)+' ON '+relation,phaseOperation:'dependency-drop',phaseDependency:beforeSubject,operation:'dependency-drop'},'dependency-drop',beforeSubject));
+       steps.push(internalDependencyEffect({...step,id:'',operation:'dependency-add',phaseOperation:'dependency-add',phaseDependency:afterSubject},'dependency-add',afterSubject));
+      }else{
+       const altered={...step,id:'',sql:alterPolicySql(step,table,next.configuration,audience,command)};
+       steps.push(options?.version==='umf.table-migration-options/0.4'?internalPolicyEffect(altered,previous!,next,table.id,step.sourcePath):altered);
+      }
      }
      const change=changes.grantChanges.get(step.sourcePath);
      if(change&&change.next.length===0){addRevokes(step.sourcePath,tableIndex);emittedGrantChanges.add(step.sourcePath);}
@@ -644,8 +692,10 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
       if(!emittedGrantChanges.has(step.sourcePath)){
        addRevokes(step.sourcePath,tableIndex);
        for(const grant of change.next){
-        if(options?.version==='umf.table-migration-options/0.6')steps.push({...grant,operation:'dependency-add',phaseOperation:'dependency-add',phaseDependency:g11DependencySubject(next,next.expectedCatalog.tables[tableIndex]!.id,'grant','',step.sourcePath)});
-        else steps.push(grant);
+        if(options?.version==='umf.table-migration-options/0.6'){
+         const subject=g11DependencySubject(next,next.expectedCatalog.tables[tableIndex]!.id,'grant','',step.sourcePath);
+         steps.push(internalGrantEffect({...grant,operation:'dependency-add',phaseOperation:'dependency-add',phaseDependency:subject},'grant-add',next,next.expectedCatalog.tables[tableIndex]!.id,step.sourcePath));
+        }else steps.push(options?.version==='umf.table-migration-options/0.4'?internalGrantEffect(grant as TableMigrationStep,'grant-add',next,next.expectedCatalog.tables[tableIndex]!.id,step.sourcePath):grant);
        }
        emittedGrantChanges.add(step.sourcePath);
       }
@@ -662,7 +712,7 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
    steps.push({id:'',kind:'comment',sourcePath:'/next/expectedCatalog/comments',transaction:'required',sql:'COMMENT ON '+(comment.column===undefined?'TABLE ':'COLUMN ')+target+' IS NULL'});
   }
   const deferredColumnDrops:typeof steps=[];
-  for(const[tableIndex,columns]of changes.droppedColumns){const table=next.expectedCatalog.tables[tableIndex]!;for(const column of columns)deferredColumnDrops.push({id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' DROP COLUMN '+quoteIdentifier(column.name),...(options?.version==='umf.table-migration-options/0.6'?{phaseOperation:'drop-column' as const,phaseTarget:{table:table.id,field:{...column.field}},operation:'drop-column'}:{})});}
+  for(const[tableIndex,columns]of changes.droppedColumns){const table=next.expectedCatalog.tables[tableIndex]!;for(const column of columns){const phaseTarget={table:table.id,field:{...column.field}},step:TableMigrationStep={id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' DROP COLUMN '+quoteIdentifier(column.name),...(options?.version==='umf.table-migration-options/0.6'?{phaseOperation:'drop-column' as const,phaseTarget,operation:'drop-column'}:{})};deferredColumnDrops.push(options?.version==='umf.table-migration-options/0.6'?internalFieldEffect(step,'drop-column',phaseTarget):step);}}
   steps.push(...deferredColumnDrops);
   if(steps.length>8192)fail('Migration step count exceeds8192','/steps');
   const stepIds=new Set(steps.filter(step=>step.id).map(step=>step.id));let syntheticId=90000;
@@ -740,9 +790,23 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
   const migrationVersion=options?.version==='umf.table-migration-options/0.6'?'umf.table-migration/0.6' as const:options?.version==='umf.table-migration-options/0.4'?'umf.table-migration/0.4' as const:options?.version==='umf.table-migration-options/0.3'?'umf.table-migration/0.3' as const:options?.version==='umf.table-migration-options/0.2'?'umf.table-migration/0.2' as const:'umf.table-migration/0.1' as const;
   const phased=migrationVersion==='umf.table-migration/0.1'?undefined:phaseTableMigrationSteps(migrationSteps,previous,next,options,seedExecution);
   if(phased)migrationSteps=phased.steps as TableMigrationStep[];
+  const internalOperationTags=new Map<string,TableMigrationOperationTag>();
+  for(const step of migrationSteps){
+   const tagged=step as TableMigrationStep&{[TABLE_MIGRATION_OPERATION]?:TableMigrationOperationTag},tag=tagged[TABLE_MIGRATION_OPERATION];
+   if(tag&&captureInternalOperations)internalOperationTags.set(step.id,tag);
+   if(tag)delete tagged[TABLE_MIGRATION_OPERATION];
+  }
   const body={version:migrationVersion,canonicalization:'RFC8785' as const,id:request.id,predecessor:request.predecessor,previous,next,fromBundleDigest:previous?.bundleDigest??null,toBundleDigest:next.bundleDigest,steps:migrationSteps,seedExecution,...(phased?{phases:phased.phases,executionProfile:phased.executionProfile}:{}),...(migrationVersion==='umf.table-migration/0.3'||migrationVersion==='umf.table-migration/0.4'||migrationVersion==='umf.table-migration/0.6'?{approvalProfile:{version:'umf.table-migration-approval/0.1' as const,relation:'umf_lifecycle_approvals' as const,ownerOnly:true as const}}:{}),...(options?{options,review}:{}),requiresApproval:true as const,nativeQualified:false as const};
   if(new TextEncoder().encode(canonical(body)).length>24_000_000)fail('Migration plan exceeds24MB');
-  return {status:'compiled',plan:copyJson({...body,digest:hashCanonical(body)}) as unknown as TableMigrationPlan,diagnostics:[]};
+  const plan=copyJson({...body,digest:hashCanonical(body)}) as unknown as TableMigrationPlan;
+  if(captureInternalOperations){
+   const copiedSteps=new Map(plan.steps.map(step=>[step.id,step]));
+   for(const[stepId,tag]of internalOperationTags){
+    const copied=copiedSteps.get(stepId);
+    if(tag&&copied)Object.defineProperty(copied,TABLE_MIGRATION_OPERATION,{value:tag,enumerable:true,configurable:true});
+   }
+  }
+  return {status:'compiled',plan,diagnostics:[]};
  }catch(error){
   if(error instanceof UmfError)return {status:'blocked',diagnostics:[{code:error.code,path:error.path,message:error.message,severity:'error'}]};
   if(error instanceof Error&&['INPUT','LIMIT'].includes(error.message))return {status:'blocked',diagnostics:[{code:'TABLE_MIGRATION_INPUT',path:'',message:'Invalid Unicode or resource limit',severity:'error'}]};
@@ -750,7 +814,7 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
  }
 }
 
-function compileG03DefaultChangePlan(request:TableMigrationRequest,previous:TableDeploymentBundle,next:TableDeploymentBundle,options:TableMigrationOptions):TableMigrationResult{
+function compileG03DefaultChangePlan(request:TableMigrationRequest,previous:TableDeploymentBundle,next:TableDeploymentBundle,options:TableMigrationOptions,captureInternalOperations=false):TableMigrationResult{
  const candidate=validateG03DefaultChange(previous,next,options.reviewedChanges),match=/^\/modules\/(\d+)\/extensions\/umf\.tables\/tables\/(\d+)\/columns\/(\d+)\/default$/.exec(candidate.path);
  if(!match)fail('G03 marker path is not a selected native default','/options/reviewedChanges/0/path');
  const doc=readDocument(next.source.utf8,'json'),module=doc.modules[Number(match![1])]!,table=(module.extensions!['umf.tables'] as any).tables[Number(match![2])]!,column=table.columns[Number(match![3])]!;
@@ -766,6 +830,7 @@ function compileG03DefaultChangePlan(request:TableMigrationRequest,previous:Tabl
   preconditions:{phase:'before-plan',kind:'installed-source-cohort',bundleDigest:previous.bundleDigest},
   expectedOutcome:{phase:'before-commit',kind:'complete-next-source-catalog',bundleDigest:next.bundleDigest},
   verification:'native-catalog-privileges-and-role-scope',recovery:'rollback-transaction'};
+ const operationTag:TableMigrationOperationTag|undefined=captureInternalOperations?{profile:'umf.table-migration-renderer-operation/0.1',role:'change-default',sourcePath:candidate.path,subject:{type:'field',table:table.id,field}}:undefined;
  const phased=phaseTableMigrationSteps([step],previous,next,options,'none');
  const body={version:'umf.table-migration/0.5' as const,canonicalization:'RFC8785' as const,id:request.id,predecessor:request.predecessor,previous,next,
   fromBundleDigest:previous.bundleDigest,toBundleDigest:next.bundleDigest,steps:phased.steps,seedExecution:'none' as const,
@@ -773,11 +838,13 @@ function compileG03DefaultChangePlan(request:TableMigrationRequest,previous:Tabl
   approvalProfile:{version:'umf.table-migration-approval/0.1' as const,relation:'umf_lifecycle_approvals' as const,ownerOnly:true as const},
   options,review:[],requiresApproval:true as const,nativeQualified:false as const};
  if(new TextEncoder().encode(canonical(body)).length>24_000_000)fail('Migration plan exceeds24MB');
- return {status:'compiled',plan:copyJson({...body,digest:hashCanonical(body)}) as unknown as TableMigrationPlan,diagnostics:[]};
+ const plan=copyJson({...body,digest:hashCanonical(body)}) as unknown as TableMigrationPlan;
+ if(operationTag)Object.defineProperty(plan.steps[0]!,TABLE_MIGRATION_OPERATION,{value:operationTag,enumerable:true,configurable:true});
+ return {status:'compiled',plan,diagnostics:[]};
 }
 
 export function compileTableMigration(input:TableMigrationRequest):TableMigrationResult{
- return compileTableMigrationInternal(input,false);
+ return compileTableMigrationInternal(input,false,hasTableMigrationOperationCapture(input));
 }
 
 /** Source recompilation verifies complete plans, even after untrusted rehashing. */
@@ -789,3 +856,11 @@ export function verifyTableMigration(input:unknown):TableMigrationPlan{
  if(!same(value,result.plan))fail('Migration differs from exact source recompilation');
  return result.plan;
 }
+
+// G10 portable inventory API. These names are deliberately distinct from the
+// legacy .1–.6 table-migration entrypoints above.
+export {compileTableInventoryMigration,discoverTableInventoryMigrationChanges,verifyTableInventoryMigration,serializeTableInventoryMigration} from './inventory';
+export type {TableInventoryMigrationPlan,TableInventoryMigrationResult,TableInventoryMigrationStep,TableInventoryMigrationPhase,TableInventoryExecutionProfile,TableInventoryPlanInventory} from './inventory';
+export type {TableInventoryMigrationRequest,TableInventoryMigrationOptions,TableInventoryDiscoverySelector,TableInventorySourceHistory,TableInventoryHistoryPlan,TableInventoryHistoryExecution,TableInventorySeedOutcome,TableInventoryReviewedChangeKind,TableInventoryMigrationMarker,TableInventoryTableIntent,TableInventoryDiscoveryIntent,TableInventoryDiscoveryConversion,TableInventoryConversion,TableInventoryRetirement,TableInventoryRestoration,TableInventoryArchiveSource} from './inventory-options';
+export type {TableInventoryReviewedChangeCandidate,TableInventoryTableReview,TableInventoryTableReviewEffects,TableInventorySeedReview,TableInventoryReviewValue} from './inventory-review';
+export {irreversiblePurgeDisclosure} from './inventory-review';

@@ -8371,3 +8371,53 @@ local catalog, complete row preservation, absent/null behavior, schema-global
 effects, cross-table cycles, remapped refs with correct operation/identity and
 before/after indivisible phases. This is a design requirement; no source, native
 or release case is declared passed by this clarification.
+
+### G10 review marker adoption addendum002: typed review-value union and purge disclosure
+
+This additive interpretation adopts the exact accepted design
+`g10-review-marker-adoption-addendum-002.md`
+(`d7b08f67c4945cbe285e0555ca92fff9acfaec859030b17707d7dc58f09eb278`) and the
+four-API handoff's candidate wrapper. It explicitly overrides any reading of
+the earlier G10 text that requires every new candidate `oldValue` and
+`newValue` to be a TableReview P projection. Existing component candidates
+retain their complete original value shapes and only the optional source paths
+their original constructors provide; legacy values are not cast to P or
+SeedReview.
+
+The G10 review value union is closed by candidate kind. `create-table`,
+`remove-table`, and `table-removal-effects` use complete
+`umf.table-inventory-review/0.1` TableReview P values. An initial create has
+`oldValue: null` and `oldPath: null`; for an installed create whose target is
+absent before, `oldValue` is the complete previous-side absent P projection
+while `oldPath` remains null. `retire-seed-history` uses the exact
+`umf.table-inventory-seed-retirement-review/0.1` SeedReview on both sides,
+including the original definition/source digests and execution state. The
+candidate wrapper remains the five marker keys plus mandatory `oldValue` and
+`newValue`, with `oldPath`/`newPath` optional only where original component
+constructors supply them. The marker itself remains exactly the five keys.
+
+For every `table-removal-effects` candidate, applications present the following
+disclosure from that candidate before the approval decision:
+
+```text
+{code:'IRREVERSIBLE_TABLE_PURGE',path:c.path,markerId:c.id,
+ message:'Irreversible purge of all stored rows and columns for table '+
+ c.oldValue.table+'. Metadata history is not a data backup; this profile performs immediate physical deletion.'}
+```
+
+This presentation is derived from the existing candidate; it adds no candidate,
+plan, options, or compiled diagnostic field. `nativeQualified` remains false and
+this source/type clarification grants no native purge authority. Native carrier
+census, approved provider records, and all removal acceptance remain separate
+requirements.
+
+The public entrypoints and required explicit original history are
+`compileTableInventoryMigration(request)`,
+`discoverTableInventoryMigrationChanges(previous,next,selector,originalHistory)`,
+`verifyTableInventoryMigration(plan,originalHistory)`, and
+`serializeTableInventoryMigration(plan,originalHistory)`, with their exact
+request/result/plan types in the matching TD-085 amendment. Verification
+recompiles the complete source/history request; serialization returns those
+verified canonical plan bytes without a terminal newline. These API statements
+do not mean runtime, browser, schema, native, installed-artifact, or release
+qualification has passed.
