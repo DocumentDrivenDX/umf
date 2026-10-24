@@ -49,8 +49,8 @@ rehashed; corruption refuses rather than silently fetching replacement bytes.
 
 68 baseline resources have an exact, checksum-matching upstream URL with no
 recorded transformation. In addition, the dedicated `domain-pack-assets-2026-10-23`
-release is the selected destination for 21 redistributable large files (6,132,614
-bytes), including derived CSV/JSON and a TCIA DICOM original. The publication
+release now publishes 21 redistributable large files (6,132,614
+bytes), including derived CSV/JSON and a TCIA DICOM original. All 21 passed cold hash-verified download and offline materialization. The publication
 index is `scripts/assets/published-assets.json`; source rights, original hashes,
 media types and attribution remain in each lock entry and the release's provenance
 index/notices. These exact-byte URLs do not substitute upstream originals for

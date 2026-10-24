@@ -63,16 +63,18 @@ transitive closure or proof that a split works.
 
 | Proposed destination | Files | Baseline bytes |
 | --- | ---: | ---: |
-| Retain in core | 10,323 | 64,833,073 |
+| Retain in core | 10,323 | 65,053,889 |
 | Pinned conformance distribution | 17,248 | 249,079,352 |
 | Generated publication artifact | 5,183 | 107,931,951 |
-| On-demand domain-pack assets | 61 | 29,008,455 |
+| On-demand domain-pack assets | 61 | 28,787,639 |
 | Total | 32,815 | 450,852,831 |
 
-The retained baseline plus planning artifacts is approximately **66.05 MB**;
-with the existing **3 MB** new-resource allowance, approximately **69.05 MB**.
+The retained baseline plus planning artifacts is approximately **66.29 MB**;
+with the existing **3 MB** new-resource allowance, approximately **69.29 MB**.
 This supersedes the earlier 98.76 MB projection and all-pack-bytes-local rule.
-The reduction includes 29.01 MB of pack asset candidates and 205 adapter test/data
+The inventory includes the large DICOM original as external data and retains the
+747,274-byte unknown-rights legal derived CSV in core.
+The reduction includes 28.79 MB of pack asset candidates and 205 adapter test/data
 files (0.73 MB) newly classified outside core. The 3 MB allowance is not a cap on
 required migration resources: rebase against the jointly agreed post-migration
 head and measure the actual checkout before claiming the target is met.
@@ -409,3 +411,29 @@ post-0.5.7 handoff revision still does not exist. A current checkout measurement
 is about 453 MB, not the conditional under-100 MB projection. The final fresh
 checkout measurement and core/offline/conformance validation follow the approved
 consumer cut; preview byte arithmetic cannot establish that gate.
+
+### Published assets and remaining cut gate
+
+The dedicated [asset release](https://github.com/DocumentDrivenDX/umf/releases/tag/domain-pack-assets-2026-10-23)
+is public, pinned to source commit `d5ba7b4f321140c37c0c2346617bc09faaf27520`.
+[Publication receipt](asset-publication-receipt.json) records all 26 release-file
+identities, hashes and sizes. All 21 payloads / 6,132,614 bytes were cold-downloaded
+through the actual resolver with no retained asset files used, then materialized
+and rehashed offline. A separate fresh GitHub download verified all 26 payload,
+notice, provenance and checksum files. Local regeneration reproduced all 26 file
+hashes. The asset release is not the latest release; that endpoint resolves to
+`umf-v0.5.5`. No SDK release asset was replaced.
+
+The additive commits are `adff33512` and `d5ba7b4f3`, published on
+`codex/domain-pack-assets` without changing remote main. No unrelated Rust docs
+entered either commit. Root source HEAD measured 32,833 files / 453,205,677 bytes
+before this final publication receipt, so **under 100 MB is not yet verified**.
+Do not report the conditional 69 MB inventory projection as a completed checkout.
+
+Migration reiterated that no actual published post-0.5.7 handoff tree exists:
+its successor is resolving main integration conflicts and regenerating its
+cohort. No extraction approval has been issued. Current files/default workflows
+remain intact. Resume EX-02 against the supplied actual tree, review the concrete
+old-path-to-resolver and selector/producer closure, then apply the already
+user-authorized cut once migration approves; finally build a fresh core checkout
+and prove its real under-100 MB size plus offline/core/full-conformance gates.

@@ -21,7 +21,7 @@ def pack_asset(path, size):
  parts = path.split('/')
  return (len(parts) > 4 and parts[:2] == ['spec', 'domain-packs']
          and parts[3] in ('sources', 'data') and size > SMALL_SAMPLE_MAX_BYTES
-         and Path(path).suffix.lower() in ('.pdf', '.csv', '.json', '.jsonl', '.parquet', '.zip', '.txt', '.html', '.xml'))
+         and Path(path).suffix.lower() in ('.pdf', '.csv', '.json', '.jsonl', '.parquet', '.zip', '.txt', '.html', '.xml', '.dcm'))
 
 
 def git(*args):
@@ -29,6 +29,8 @@ def git(*args):
 
 def classify(path, size):
  if path.startswith('spec/domain-packs/'):
+  if path=='spec/domain-packs/legal/data/evidence_pages.csv':
+   return 'keep', 'uncleared-derived-asset-retained-no-public-mirror'
   if pack_asset(path, size):
    return 'pack-assets', 'hash-verified-on-demand-pack-data-closure-review'
   return 'keep', 'pack-schema-loader-metadata-or-small-sample'
