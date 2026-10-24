@@ -27,6 +27,7 @@ def _fixture(kind="read"):
                         "commands": [
                             {
                                 "id": "operation",
+                                "version": "umf.table-operation/0.1",
                                 "consistency": "snapshot",
                                 "replay": "none",
                                 "body": {"kind": kind, "table": "table"},
@@ -71,6 +72,8 @@ def _fixture(kind="read"):
             return self
 
     class Policy:
+        table_operation_module_profile = "weft.table-operation-module/0.1"
+
         @staticmethod
         def role(identity):
             registry = {"alice":"alice", "bob":"bob"} if identity.kind=="person" else {"job":"job"}
@@ -94,6 +97,7 @@ class _CompilerCapture:
         self.original_digest = table_reads.digest
         self.digests = []
         self.requests = []
+        self.module_requests = []
 
     def digest(self, value):
         self.digests.append(value)
@@ -114,7 +118,9 @@ class _CompilerCapture:
                 def bind_json(self, raw):return capture.compile(raw)
             class Module:
                 def prepare(self, _operation):return Operation()
-            compiler.prepare_table_operation_module_json = lambda _raw: Module()
+            compiler.prepare_table_operation_module_json = lambda raw: capture.module_requests.append(
+                json.loads(raw)
+            ) or Module()
             stack.enter_context(patch.dict(sys.modules, {"weft": compiler}))
             yield
 
@@ -136,6 +142,21 @@ def _mutate(tree):
 
 
 class InputSnapshotTests(unittest.IsolatedAsyncioTestCase):
+    def test_operation_scope_adds_only_opt_in_module_profile(self):
+        context={'module':'module','schema':'public','sourceDigest':'a'*64,
+                 'configurationDigest':'c'*64,'bundleDigest':'b'*64,
+                 'headDigest':'h'*64,'referenceDigest':'r'*64}
+        legacy=table_reads._operation_scope(context,'operation','postgresql18',{'value':1},None,None,
+                                            'weft.table-operation-module/0.1')
+        selected=table_reads._operation_scope(context,'operation','postgresql18',{'value':1},None,None,
+                                              'weft.table-operation-module/0.2')
+        self.assertEqual(legacy,{
+            **context,'operation':'operation','target':'postgresql18',
+            'inputsDigest':table_reads.digest({'value':1}),'requestedSize':None,
+            'profile':'python-sorted-json/0.1'})
+        self.assertNotIn('tableOperationModuleProfile',legacy)
+        self.assertEqual(selected,{**legacy,'tableOperationModuleProfile':'weft.table-operation-module/0.2'})
+
     def test_sync_read_compiles_and_hashes_one_owned_snapshot(self):
         session, binding, probe, identity = _fixture()
         reader = table_reads.SyncTableReader(session, {}, {}, binding, cursor_secret=b"s" * 32)
@@ -156,24 +177,28 @@ class InputSnapshotTests(unittest.IsolatedAsyncioTestCase):
         capture.assert_snapshot(original)
 
     async def test_async_read_snapshots_before_thread_offload(self):
-        session, binding, probe, identity = _fixture()
-        reader = table_reads.AsyncTableReader(session, {}, {}, binding, cursor_secret=b"s" * 32)
-        caller = {"filter": {"name": "before", "tags": ["a"]}}
-        original = {"filter": {"name": "before", "tags": ["a"]}}
-        capture = _CompilerCapture(self)
-        original_to_thread = asyncio.to_thread
+        for profile in ("weft.table-operation-module/0.1", "weft.table-operation-module/0.2"):
+            with self.subTest(profile=profile):
+                session, binding, probe, identity = _fixture()
+                session.policy.table_operation_module_profile = profile
+                reader = table_reads.AsyncTableReader(session, {}, {}, binding, cursor_secret=b"s" * 32)
+                caller = {"filter": {"name": "before", "tags": ["a"]}}
+                original = {"filter": {"name": "before", "tags": ["a"]}}
+                capture = _CompilerCapture(self)
+                original_to_thread = asyncio.to_thread
 
-        async def mutate_after_snapshot(function, *args, **kwargs):
-            _mutate(caller)
-            return await original_to_thread(function, *args, **kwargs)
+                async def mutate_after_snapshot(function, *args, **kwargs):
+                    _mutate(caller)
+                    return await original_to_thread(function, *args, **kwargs)
 
-        with capture.patches(lambda *_args, **_kwargs: probe), patch.object(
-            asyncio, "to_thread", side_effect=mutate_after_snapshot
-        ), self.assertRaisesRegex(SessionError, "stop after compiler input capture"):
-            await reader.read(identity, "operation", caller)
+                with capture.patches(lambda *_args, **_kwargs: probe), patch.object(
+                    asyncio, "to_thread", side_effect=mutate_after_snapshot
+                ), self.assertRaisesRegex(SessionError, "stop after compiler input capture"):
+                    await reader.read(identity, "operation", caller)
 
-        self.assertEqual(caller["filter"], {"name": "after", "tags": ["a", "b"]})
-        capture.assert_snapshot(original)
+                self.assertEqual(caller["filter"], {"name": "after", "tags": ["a", "b"]})
+                capture.assert_snapshot(original)
+                self.assertEqual(capture.module_requests[0]["version"], profile)
 
     def test_sync_write_batch_compiles_and_hashes_one_owned_snapshot(self):
         session, binding, probe, identity = _fixture("update")
@@ -195,24 +220,28 @@ class InputSnapshotTests(unittest.IsolatedAsyncioTestCase):
         capture.assert_snapshot(original, batch=True)
 
     async def test_async_write_batch_snapshots_before_thread_offload(self):
-        session, binding, probe, identity = _fixture("update")
-        writer = table_writes.AsyncTableWriter(session, {}, {}, binding, outcome_secret=b"s" * 32)
-        caller = [{"filter": {"name": "before", "tags": ["a"]}}]
-        original = [{"filter": {"name": "before", "tags": ["a"]}}]
-        capture = _CompilerCapture(self)
-        original_to_thread = asyncio.to_thread
+        for profile in ("weft.table-operation-module/0.1", "weft.table-operation-module/0.2"):
+            with self.subTest(profile=profile):
+                session, binding, probe, identity = _fixture("update")
+                session.policy.table_operation_module_profile = profile
+                writer = table_writes.AsyncTableWriter(session, {}, {}, binding, outcome_secret=b"s" * 32)
+                caller = [{"filter": {"name": "before", "tags": ["a"]}}]
+                original = [{"filter": {"name": "before", "tags": ["a"]}}]
+                capture = _CompilerCapture(self)
+                original_to_thread = asyncio.to_thread
 
-        async def mutate_after_snapshot(function, *args, **kwargs):
-            _mutate(caller)
-            return await original_to_thread(function, *args, **kwargs)
+                async def mutate_after_snapshot(function, *args, **kwargs):
+                    _mutate(caller)
+                    return await original_to_thread(function, *args, **kwargs)
 
-        with capture.patches(lambda *_args, **_kwargs: probe), patch.object(
-            asyncio, "to_thread", side_effect=mutate_after_snapshot
-        ), self.assertRaisesRegex(SessionError, "stop after compiler input capture"):
-            await writer.write_batch(identity, "operation", caller)
+                with capture.patches(lambda *_args, **_kwargs: probe), patch.object(
+                    asyncio, "to_thread", side_effect=mutate_after_snapshot
+                ), self.assertRaisesRegex(SessionError, "stop after compiler input capture"):
+                    await writer.write_batch(identity, "operation", caller)
 
-        self.assertEqual(caller[0]["filter"], {"name": "after", "tags": ["a", "b"]})
-        capture.assert_snapshot(original, batch=True)
+                self.assertEqual(caller[0]["filter"], {"name": "after", "tags": ["a", "b"]})
+                capture.assert_snapshot(original, batch=True)
+                self.assertEqual(capture.module_requests[0]["version"], profile)
 
 
 if __name__ == "__main__":

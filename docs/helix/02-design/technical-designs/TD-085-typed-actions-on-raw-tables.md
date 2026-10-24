@@ -507,3 +507,33 @@ any prior public action-runtime integration.
 Testing follows STP-085. Known-aborted default changes roll back DDL/progress;
 committed changes require exact resume or separately approved forward default
 repair. Neither repair nor source rollback erases rows inserted in between.
+
+
+### G03 selected module 0.2 integration amendment
+
+Apply CONTRACT-081's trusted `SessionPolicy.table_operation_module_profile`
+selector at the common ordinary-operation preparation boundary. The frozen
+policy defaults to Weft module 0.1; explicit 0.2 is passed through the Python
+wrapper to the selected native parser. Keep ordinary UMF declaration ASTs and
+G03 migration phase generation unchanged. Read/query/write and their sync/async
+wrappers share a profile-coherent source owner and prepared-module cache; refuse
+cross-profile reuse before dispatch. Do not infer support from Core defaults or
+retry a different profile after a refusal.
+
+`session_policy.py` owns validation and the versioned opt-in cursor-key scope;
+`table_reads.py` owns selected module preparation and authority scope;
+`table_writes.py` includes that same scope in existing outcome digests while
+`outcome_values.py` preserves its stable slot algorithm. Profile selection is
+not appended to native connection settings. Audit copied handles, page tokens,
+write retries and outcome observation across profile boundaries, including an
+already occupied native outcome row. Merely comparing newly computed hashes is
+insufficient. Keep legacy profile scopes and wire/storage schemas unchanged.
+
+Weft owns its selected module source admission, literal/domain checks and
+ordinary operation lowering. UMF's tables adapter owns retained logical/native
+default correspondence and migration DDL. The host owns trusted selection,
+connections, transaction authority and recovery. Generated examples must show
+the explicit host policy opt-in and its immutable compatible dependency; they
+must not expose an author/request selector or imply logical default resolution
+performs SQL insertion. Existing administrative seed/backfill dispatch is not
+silently widened. CONTRACT-081 and STP-085 are the release gates for this work.

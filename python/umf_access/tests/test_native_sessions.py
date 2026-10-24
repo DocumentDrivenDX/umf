@@ -26,6 +26,7 @@ from umf_access.unified.session_policy import (
     SET_SETTINGS,
     SETTING_NAMES,
 )
+from umf_access.unified.operation_values import token_decode, token_encode
 
 ALICE = SessionIdentity("person", "alice")
 BATCH = SessionIdentity("batch", "run")
@@ -122,6 +123,19 @@ class AsyncConnection(Connection):
 
 
 class PolicyTests(unittest.TestCase):
+    def test_table_operation_profile_is_a_trusted_closed_policy_choice(self):
+        legacy=SessionPolicy(POLICY.people,POLICY.batches,POLICY.schema)
+        selected=SessionPolicy(POLICY.people,POLICY.batches,POLICY.schema,
+                               table_operation_module_profile='weft.table-operation-module/0.2')
+        self.assertEqual(legacy.table_operation_module_profile,'weft.table-operation-module/0.1')
+        self.assertEqual(selected.table_operation_module_profile,'weft.table-operation-module/0.2')
+        self.assertNotIn('table_operation_module_profile',legacy.settings(ALICE))
+        self.assertNotIn('table_operation_module_profile',selected.settings(ALICE))
+        for invalid in ('weft.table-operation-module/0.3',None,0):
+            with self.subTest(invalid=invalid),self.assertRaisesRegex(ValueError,'unsupported table operation module profile'):
+                SessionPolicy(POLICY.people,POLICY.batches,POLICY.schema,
+                              table_operation_module_profile=invalid)
+
     def test_catalog_only_resolution_is_explicit_and_scoped(self):
         catalog=SessionPolicy(POLICY.people,POLICY.batches,POLICY.schema,catalog_only=True)
         self.assertEqual(catalog.settings(ALICE)['search_path'],'pg_catalog')
@@ -143,6 +157,30 @@ class PolicyTests(unittest.TestCase):
         self.assertNotEqual(a, POLICY.cursor_secret(BATCH, secret))
         other = SessionPolicy(POLICY.people, POLICY.batches, "other")
         self.assertNotEqual(a, other.cursor_secret(ALICE, secret))
+
+    def test_cursor_profile_domain_preserves_legacy_bytes_and_separates_opt_in(self):
+        secret=b'x'*32
+        legacy=POLICY.cursor_secret(ALICE,secret)
+        self.assertEqual(legacy.hex(),'4527fd2331403ffb065ebeea0a0543794076dc4f904fe15ecdd50d8fd040e1ca')
+        selected=SessionPolicy(POLICY.people,POLICY.batches,POLICY.schema,
+                               table_operation_module_profile='weft.table-operation-module/0.2')
+        self.assertEqual(selected.cursor_secret(ALICE,secret).hex(),
+                         'cd8f2827db824d10cc40f39bba20f6a370070ebf5b52118a82ac13d937ed4571')
+        self.assertNotEqual(legacy,selected.cursor_secret(ALICE,secret))
+
+    def test_authenticated_page_tokens_refuse_across_module_profiles_both_directions(self):
+        root=b'x'*32
+        legacy=POLICY
+        selected=SessionPolicy(POLICY.people,POLICY.batches,POLICY.schema,
+                               table_operation_module_profile='weft.table-operation-module/0.2')
+        old_scope={'module':'demo','operation':'page'}
+        new_scope={**old_scope,'tableOperationModuleProfile':'weft.table-operation-module/0.2'}
+        old_token=token_encode(legacy.cursor_secret(ALICE,root),old_scope,[{'integerToken':'1'}])
+        self.assertEqual(token_decode(legacy.cursor_secret(ALICE,root),old_token)['scope'],old_scope)
+        with self.assertRaises(SessionError):token_decode(selected.cursor_secret(ALICE,root),old_token)
+        new_token=token_encode(selected.cursor_secret(ALICE,root),new_scope,[{'integerToken':'1'}])
+        self.assertEqual(token_decode(selected.cursor_secret(ALICE,root),new_token)['scope'],new_scope)
+        with self.assertRaises(SessionError):token_decode(legacy.cursor_secret(ALICE,root),new_token)
 
 
 class SyncTests(unittest.TestCase):

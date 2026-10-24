@@ -332,3 +332,37 @@ G02 candidate artifacts, guessed dependency counts, another package's release
 version and local native feasibility do not satisfy these G03 gates. Managed
 consumer, other backends, G10/G11 command composition and Praxis changes remain
 outside this slice.
+
+
+### G03 selected-module compatibility allocation
+
+These are additional planned acceptance criteria, not completed evidence.
+Allocate US-051-AC12/15/16 citations to the actual source-admission, native
+session, fixed-query, operation-input and table-outcome suites.
+
+- Validate policy default/exact opt-in, unknown strings/non-string refusal,
+  immutability and absence of a request-wire/GUC selector. Freeze historical 0.1
+  module outputs, cursor derivation, authority scope and outcome receipt bytes.
+- On the same default-bearing retained source, module 0.1 still refuses while
+  selected 0.2 admits the qualified literal subset. Invalid/mismatched defaults,
+  unknown qualifiers and unsupported temporal logical defaults refuse. Native
+  date-only defaults retain their separate positive and negative controls.
+- Use an actual compatible immutable Weft native artifact and freshly installed
+  UMF packages. Selected 0.2 against historical Weft refuses without fallback or
+  database effects. Exercise wrapper propagation, not a native-only shortcut.
+- Execute ordinary read, declared query, create/update and outcome recovery in
+  sync and async routes. Preserve omitted, explicit NULL and explicit value
+  behavior and complete historical rows. No default input materialization or
+  UPDATE may be introduced merely by preparation.
+- Reuse a source-owner cache/prepared handle across profiles and require early
+  refusal. Copy a valid page token across profiles and refuse authentication.
+  Seed an occupied native outcome slot with the same identity, operation and
+  key, then retry/recover under the other profile: find the same slot, refuse
+  incompatible scope/invocation and prove exactly one original business effect.
+  Repeat both profile directions; a different secret or deployment must not
+  evade the stable occupied slot. Include rollback and lost-COMMIT recovery.
+- Run the full G03 future-default native matrix after admission is fixed;
+  successful preparation alone is insufficient. Preserve G01/G02 historical
+  profile checks, actual Chromium/compiler parity, package closure/custody and
+  independent published artifact verification. Report any unqualified carrier,
+  wrapper, host route or managed identity as an explicit remaining limit.

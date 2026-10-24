@@ -1812,3 +1812,71 @@ For example, an optional integer column may change from absent native default to
 a command omitting the column receives 5, explicit NULL remains NULL, and an
 explicit 9 remains 9. Replacing that declaration with a literal NULL still
 requires the reviewed, committed phase even if its catalog matches no default.
+
+
+#### G03 ordinary-operation source admission and trusted selection
+
+This amendment supersedes only the G03 version-table Weft cell: ordinary UMF
+operation declarations retain their existing versions and AST. The explicitly
+selected Weft envelope is `weft.table-operation-module/0.2`; its `/0.1`
+predecessor retains its exact admission and behavior. This is source admission,
+not an additional default expression or migration phase. The existing G03
+options/plan 0.5, execution 0.4, discovery 0.2, approval 0.1 and installation 0.3
+rules remain unchanged. No installation-reference or author/request wire
+selector is added by this amendment.
+
+The trusted, frozen Python `SessionPolicy` gains
+`table_operation_module_profile`, whose exact string values are
+`weft.table-operation-module/0.1` (default) and
+`weft.table-operation-module/0.2` (explicit host opt-in). Other values or types
+MUST refuse policy construction. Source contents, installed dependency version,
+request JSON and a failed engine call MUST NOT select or change this profile.
+`settings()` MUST continue to contain only its existing native settings; the
+profile is not a PostgreSQL GUC. Unsupported selected Weft versions MUST refuse
+before ordinary database effects, with no engine/profile fallback.
+
+The selected module profile MUST propagate coherently through sync and async
+ordinary reads, queries, writes and write-outcome observation/recovery. Prepared
+module and operation handles, shared source-owner caches and source/binding
+custody MUST bind that profile; cross-profile handle reuse MUST refuse even if
+the lowered SQL happens to match. Separate direct Weft query/raw-read 0.1 APIs
+and administrative seed/backfill routes retain their existing dispatch unless a
+separately reviewed explicit contract selects their successor.
+
+For selected module 0.2, the known logical Field default admitted by this slice
+has exactly `{on:"missing",value:CoreLiteral}`. It MUST satisfy existing Core
+literal/domain/facet validation and the UMF tables adapter's matching logical
+and native default rule in the retained source mapping. Unknown selected
+qualifiers and unsupported carriers MUST refuse. Native-only defaults retain
+their existing admission. Logical temporal defaults remain unsupported in this
+slice; admitting native date defaults does not admit them. The actual qualified
+literal/carrier subset MUST be enumerated by fixtures and release evidence.
+No invented default property on the raw native binding substitutes for checking
+the retained mapping. Source defaults remain preserved as authored; preparing
+an operation MUST NOT fill omitted inputs or rewrite stored rows. Existing
+ordinary operation validation and native omission/NULL/value distinctions apply.
+
+Default profile 0.1 MUST retain byte-identical cursor key derivation and scope.
+For profile 0.2, cursor key derivation MUST be HMAC-SHA256 over the UTF-8 bytes of
+Python `json.dumps(["umf.session-table-operation-profile/0.1",
+"weft.table-operation-module/0.2",identity.kind,identity.subject,
+policy.settings(identity)],sort_keys=True)` using the existing cursor root
+secret. Do not reuse the old scope's serialization-profile member for the
+selected module profile. Ordinary authority scope gains exactly
+`tableOperationModuleProfile:"weft.table-operation-module/0.2"` only for the
+opt-in profile. Its authenticated cursor and outcome scope/invocation digests
+MUST include that member. Existing outcome payload shapes and storage versions
+remain unchanged: the existing scope/invocation digests authenticate this scope.
+
+The outcome slot MUST remain independent of selected module profile, inputs,
+secret rotation and deployment generation. The same principal/module/schema/
+operation/idempotency-key lookup MUST find an occupied predecessor slot and
+refuse an incompatible authenticated scope or invocation; it MUST NOT create a
+different slot and execute again. This applies to write and recovery paths.
+Legacy 0.1 outputs and receipt authentication remain unchanged. A selected
+profile changes authorization identity, not native subject authentication.
+
+No G03 release claim is admitted until a new immutable Weft artifact implements
+the selected module, its Python wrapper propagates the selector without loss,
+and the exact installed cohort passes both profile compatibility and G03 native
+acceptance. Published Weft 0.4.53 bytes MUST NOT be replaced to add this support.
