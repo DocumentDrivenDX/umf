@@ -4858,3 +4858,647 @@ remain reserved. Lose enrollment COMMIT acknowledgement and settle the original
 outcome without a second enrollment. Retain timings and resource behavior of
 per-table issuance locking. Source tests, random UUID improbability, or a test
 that replaces the production guard are not native identity proof.
+
+
+#### G05 retained retirement, current-instance restore and separate purge
+
+Select new options/plan0.8, execution0.7 and discovery0.5 for this closed
+successor. Historical immediate irreversible DROP is unchanged. The following
+first native profile composes the adopted exact G04 originals/issued-instance
+ledger with G11 original custody and actual ingress fencing. It explicitly
+preserves unrelated current application updates during a G05 restore, unlike
+G04 strict post-conversion revision matching. All exact interfaces below are
+proposed governing intent; actual immutable Weft/session owner agreement, host
+clock/authority implementation and native/installed/browser evidence are still
+enablement gates. No generic JSON/SQL substitute or subset completion claim.
+
+##### Ownership and finite first scope
+
+UMF owns full source intent, dependency/source correspondence, deterministic
+portable plans, review and schema transition receipts. Weft owns checked typed
+fill/conversion semantics and native expression lowering. The trusted host owns
+actual authorization, original target custody, private originals, retention time,
+current policy/holds, connections, fencing and transaction/outcome observation.
+The database supplies actual typed storage, constraints, transactions and locks.
+Browser planning cannot establish native completeness or purge eligibility.
+
+First profile is PostgreSQL18.6/UTF8, original same-physical-database private
+originals store, explicitly selected new fixed composition
+`umf.native-row-originals-store/0.2`, bounded protected maintenance, exact G04 native scalar domains
+and protected row identity with the issued-instance ledger. No copied table,
+partition, generated/identity carrier, shadow lineage or external archive is
+admitted by this first profile. Restoring the SAME original Field/native value domain
+is first scope. Explicit nullability/default changes use their selected existing
+contracts and complete validation; they are not inferred from archive values. Restore plus type conversion, table retirement and old-only Field
+replacement are additional explicit compositions; unsupported cases refuse.
+
+##### Closed portable intent and archive source closure
+
+Options0.8 adds exactly `retirements`, `restorations`, `archiveSources`, each
+required under that profile; empty arrays are explicit. Other existing options
+retain their previously selected exact semantics. At most256 entries in each
+effect array and no duplicate table/Field across either array or another selected
+conversion/backfill/replacement. No unused selection. Every newly selected
+retained DROP consumes one retirement; every archive-backed addition consumes
+one restoration; other transitions do not acquire archive semantics by inference.
+
+A retirement is exactly `{table,field,retention}`. Table is the existing stable
+binding; field is complete `{module,element}` identifying the original Field in
+the before source. It is removed from that table in the after source. Retention
+is exactly `{policyId,policyRevision,minimumRetentionMs}`: nonempty policy IDs
+<=128 UTF8 bytes, positive safe-integer revision, duration integer0..315360000000
+(ten365-day years). No duration default. Host policy must authenticate and admit
+this exact revision and duration before capture; author intent cannot grant
+retention/purge authority. Zero still requires a separately approved purge.
+
+A restoration is exactly `{table,field,archive,newInstances}`. Field is the SAME
+complete original Field instance, absent from the current before table and
+reintroduced in after with the same original logical/native value domain.
+Complete original Field meaning remains source-bound; explicit after-source
+nullability/default changes are separately validated through G01/G03 rather
+than silently inferred. Other semantic/type changes refuse this first profile.
+Archive is exactly `{profile:"umf.retired-field-archive-ref/0.1",providerId,
+archiveId,tableToken,targetCustody,retirementPlanDigest,retirementSourceDigest,
+fieldMeaningDigest}`. UUIDs are canonical lowercase; targetCustody uses the
+exact adopted closed G11 TargetCustody shape, not a pathname/DSN or copied
+assertion. Digests are lowercase64hex, recomputed from complete original source
+and exact Field/domain meaning. This descriptor is portable identification, NOT
+a native capability or proof the data still exists.
+
+NewInstances has exactly one of:
+
+- `{mode:"refuse"}`: any current live instance without an archive value refuses.
+- `{mode:"null"}`: every such instance receives native NULL; after-source Field
+  must be optional and the complete target constraints must permit it.
+- `{mode:"fill",expression}`: one admitted G02 typed same-row expression against
+  the CURRENT before source, compiled by the qualified scoped Weft capability
+  below. No callback, SQL, historical instance values or implicit default input.
+
+All surviving archived originals receive their exact native retained values,
+including NULL, irrespective of the selected newInstances policy. A required
+after Field with an original NULL refuses rather than silently filling it. If
+there are no new instances the selected fill still type-checks; no artificial
+error is caused by evaluating it against archived originals. Future defaults
+are explicit source declarations handled by G03. They never populate the
+restoration population implicitly. Unchanged/changed defaults, checks, Keys,
+FKs, indexes, policies, grants, commands and clients must each be valid under
+the after-source meaning; original historical objects are not blindly reinstalled.
+
+ArchiveSources is an array of at most64 exact `{digest,source}` records, unique
+by digest, each consumed by a restoration. Source uses the existing complete
+JSON source input form, including unknown extensions; digest hashes its full
+original bytes using existing source hashing, not a reconstructed projection.
+Each retained source <=1MiB UTF8, aggregate <=4MiB, serialized complete option
+wire <=6MiB; reject overflow/unused/missing or disagreeing sources. The complete
+retirement before source must be present, not just a copied Field snippet. Its
+native/source/plan custody correspondence is checked by the host against the
+original private archive. No old row values or per-value hashes enter options,
+source bundles, plans, exported diagnostics or receipts.
+
+##### Dependency and phase plan
+
+Discover retained retirement as a distinct candidate with explicit policy/window
+selection, and restoration only with the exact source/identity descriptor.
+Discovery is not native custody validation. New plan0.8 uses exact empty-SQL
+`kind:"retirement"` steps for `capture-retired-values|retire-field|restore-field|
+validate-restoration`. Each has common source-bound step members and exactly
+`operation,phaseOperation,phaseTarget,retirementBinding`, transaction `required`.
+Operation and phaseOperation are identical, phaseTarget is `{table,field}`.
+RetirementBinding is exactly `{profile:"umf.field-retirement-step/0.1",action,
+selectionIndex,intentDigest,fieldMeaningDigest}`; action is `retire|restore`,
+index0..255 into the appropriate original options array. Digests recompute from
+complete closed intent and complete source-derived Field/logical/native mapping.
+No author SQL, seed replay or generic empty-SQL execution fallback.
+
+Capture precedes retirement under the same protected phase; restore-field adds
+its carrier, populates the exact population and validates before dependency
+activation. Validation follows all selected current dependency changes. Step
+source paths locate their exact options entry; fieldMeaningDigest for restoration
+binds the original archived Field meaning and verified target meaning. Before
+and after complete-catalog/source witnesses, original approval/step IDs and
+G11 ingress retirement/publication rules remain mandatory. Recompile the full
+DAG from original sources/options; refuse missing/duplicate/unconsumed/injected
+steps and unknown dependency meaning. Never use CASCADE.
+
+Retirement captures every protected instance/value into its private genuinely
+old-typed values relation, checks complete identity set and count, then drops
+the live application column and approved dependencies. Merely withholding a
+generated accessor or using RLS does not retire direct column access. Capture,
+manifest/lifecycle state, live DDL and phase completion share ONE actual native
+connection/transaction. Actual source ingestion and catalog proof handle FORCE
+RLS. Old readers, prepared statements, cursors, streams and writers must pass
+the G11 actual fence/drain protocol. No current-generation publication until
+all data/catalog/grant/client proofs succeed. Capture alone is not retirement.
+
+##### Same-instance restore after unrelated application updates
+
+Acquire the protected business lock/fence and original private archive lifecycle
+row lock; revalidate native origin/ACL/domain and complete current source/history.
+The target Field must have remained absent since the authenticated retirement:
+prove the full authenticated consecutive published phase chain, not merely its
+latest snapshot. Any intervening reintroduction/replacement/ambiguous history
+refuses this first composition. Ordinary updates of other Fields, including Key
+changes and no-op updates, are allowed: they did not write an absent target.
+The issued-instance ledger makes the original UUID non-reusable, even after
+value purge/deletion. Native identity/revision guard continuity is mandatory.
+
+For live UUIDs with originals, require revision >= captured retirement revision,
+not equality with G04's strict post-conversion baseline. Counter rollback,
+missing continuity, forged ID, broken guard or unresolved administrative rewrite
+refuses. Restore only the target's retained value and leave all current unrelated
+columns/Keys unchanged. For live UUIDs without originals apply ONLY the selected
+newInstances policy. Archived UUIDs absent from live rows stay absent. Never
+join on mutable Keys, ctid, xmin, row order or a coincidentally reused name.
+
+Add the temporary nullable live carrier without a future default, populate and
+validate, install selected NOT NULL/default/dependencies and full after catalog
+only after all rows pass. The identity guard increments revisions for actual
+restoration updates; capture actual post-restore observations, never assume
+unchanged revision. No partial row/schema activation. Every conflict rolls back
+the entire phase and retains the archive; the durable ingress fence may remain.
+Successful restore does not purge values. Mark its original archive restored
+atomically; a later retirement creates a new archive identity. The restored
+archive cannot be replayed to overwrite later target writes. Duplicate original
+COMMIT recovery observes original outcomes instead of reapplying values.
+
+##### Required Weft scoped-fill boundary
+
+Existing all-target-row G02 lowering is INSUFFICIENT for newInstances fill:
+evaluating against originals then overwriting them can spuriously fail or expose
+wrong values. Do not rewrite returned UPDATE SQL or hand-lower the expression
+in UMF. Agree/qualify an immutable Weft capability that compiles the existing
+G02 expression for the exact provider-owned NEW INSTANCE population mask.
+
+The host supplies original qualified table/ID/archive population authority;
+this is not an author predicate or callback. Its fixed native scope is exactly
+live instances whose protected UUID has no original in the selected archive.
+The qualified compiler owns typed scalar generation, exact-value guards and
+placement of that scope before expression evaluation. Prepared artifacts bind
+original plan/source/target/domain and actual native archive/table identity;
+matching echoed dictionaries are not compiler or custody authority. Public
+wrapper/profile names and the closed request/reply must be agreed with the
+actual Weft owner before enabling fill. Until that concrete port and actual
+empty/new/original mixed-population tests pass, fill mode refuses; null/refuse
+are distinct modes, not evidence that required-target fill is delivered.
+
+##### Private archive lifecycle, serialization and tombstones
+
+Retain G04 immutable archives/old native values and non-purgeable issued IDs.
+Add a separately versioned fixed private `archive_lifecycle` heap, one row per
+archive, with PK/FK archive_id RESTRICT, positive native revision, closed state,
+immutable retirement plan/Field/target/policy/publication references and current
+hold/policy/request/outcome references. Its exact columns, canonical record and
+native inventory must be frozen before implementation; generic JSON state or
+caller SQL is not an implementation-ready substitute. States are
+`captured|retired|restore-pending|restored|purge-pending|purged|abandoned`.
+A captured archive cannot age toward purge before authenticated retirement
+publication. Publication and native outcomes are linked under original custody,
+not claimed as distributed atomicity with an external host journal.
+
+Every restore/purge/current-policy/hold mutation locks this same original row
+FOR UPDATE and checks its original revision/custody. Restore reservations bind
+one original request before effects; native data/DDL/outcome share one database
+transaction. Native pending/unknown outcomes must be settled before conflicting
+actions. No caller-supplied pending flag or process-local mutex establishes this.
+A hold becomes effective when its authenticated native mutation commits; an
+unacknowledged concurrent request is not falsely reported as installed. A purge
+that obtains the lock after a committed hold must refuse.
+
+Purging values keeps the archive identity/old relation OID as historical identity
+plus a durable purge tombstone; the expected native inventory explicitly expects
+that exact old value relation absent only in confirmed purged state. G04's old
+complete-value relation invariant is not silently waived for arbitrary absence.
+No automatic purging of source/custody/phase/identity history, issued IDs or
+lifecycle row. Restored archives may be separately purged when eligible and no
+pending effect/dependency needs them. Source-table retirement and destruction of
+provider history remain unqualified separate compositions.
+
+##### Retention lower bound and current holds
+
+First time profile is an original enrolled host-custodian elapsed-time authority,
+not client wall clock or database session GUC. It starts age only at authenticated
+retirement publication observation; late observation conservatively extends
+retention. Bind original publication outcome, observed informational wall instant,
+time-source identity, actual kernel boot identity, precision/error qualification,
+monotonic sample and external non-rewind custody sequence. Compute elapsed lower
+bound using qualified monotonic ticks and subtract admitted uncertainty. Persist
+only monotonic lower-bound progress durably under original custody.
+
+Within one verified boot, count only proven nonnegative elapsed ticks. Across
+OS reboot, unavailable clock/origin, uncertain jump or missing interval, credit
+ZERO for the uncertain interval and re-anchor through the original authenticated
+custodian, retaining prior proved elapsed lower bound. Clock rewind or restored
+custody refuses; new deployment identity cannot reset/adopt old evidence.
+Suspend/unknown downtime need not count. This conservative profile may retain
+longer than calendar duration; it cannot delete earlier. Actual OS/runtime clock
+and reboot/checkpoint behavior require qualification before enabling eligibility.
+No actual monotonic source is presumed trustworthy merely from a function name.
+
+Purge requires a fresh authenticated certificate bound to the original archive,
+publication, policy revision, time-source/custody sequence and elapsed lower
+bound >= selected minimum. The original host authority validates that certificate;
+the final protected native decision rechecks current policy/holds/dependencies
+and original state/revision. Earlier valid lower bound does not decrease as time
+passes; a policy/hold revision mismatch refuses. A duration is a MINIMUM retention
+window; eligibility does not itself invalidate retained recovery or schedule a
+delete. Current policy may separately deny restore; mere eligibility is not
+purged/expired data. Any maximum-age/guaranteed-deletion claim is a future profile.
+
+##### Separate irreversible purge and precise override
+
+Purge is a host-only operation, never migration-options JSON, a source Field
+removal or schema-head reset. Its original signed intent binds exact target
+custody/provider/archive/tableToken/Field/retirement incarnation, original value
+relation OID, current policy/hold/lifecycle revision, eligibility certificate or
+explicit override, effect bound ONE archive value relation and irreversible
+acknowledgement. Signing uses an originally enrolled authenticated host data
+custodian authority with explicit purge scope; schema migration approval and
+G11 physical target creation signatures do not grant it. Exact signing/wire and
+native renderer are readiness gates, not implied arbitrary signed JSON.
+
+Ordinary mode requires actual lower-bound eligibility and no hold, pending
+restore/unsettled retirement, or live retained-data dependency. An explicit
+`minimum-window-override` may waive ONLY the minimum duration and records the
+unmet window; it does not fabricate elapsed eligibility. It requires separately
+enrolled override authority and exact reviewed reason/scope. It cannot bypass
+holds, pending/unknown outcomes, missing native origin or live data dependency.
+Hold release/restore abandonment is its own authenticated settled operation;
+no purge flag silently disposes of either. Other override kinds refuse.
+
+Under original row lock, verify actual relation/custody/ACL/dependencies and
+current state, then DROP ONLY that original qualified values relation RESTRICT
+and atomically record original purge outcome/tombstone and native revision in
+the SAME database transaction. No CASCADE, wildcard/prefix deletion, copied
+metadata adoption or unbounded effect. Unknown COMMIT observes that original
+request/tombstone and actual relation inventory; it never retries deletion
+against a new same-named relation. Known abort preserves values. Confirmed purge
+makes restore unavailable. No claim of erasure from backups, WAL, logs, client
+copies or external stores outside this exact inventory.
+
+##### Qualification and remaining readiness work
+
+The companion g05-native-lifecycle-runtime-003 freezes the lifecycle native
+schema/closed records, signed purge/hold/time wire, proposed scoped Weft port
+and execution0.7 receipt/policy. Actual Weft owner agreement/immutable artifacts,
+original host clock qualification and implementation acceptance remain gates;
+a proposed interface is not permission to substitute generic JSON or SQL. Adopt completed contracts
+into CONTRACT-081, TD-085 and STP-085 and independently audit actual commits.
+
+Native acceptance must cover populated/NULL/empty retirement; complete RLS
+population; direct/generated archive denial and retired-column removal; exact
+native dependency closure; old prepared readers/cursors/writers; unrelated and
+no-op updates; Key changes/reuse, new/deleted rows; null/refuse and required
+scoped fill, with an expression invalid on originals but valid on new rows;
+original NULL refusal for required restore; native identity collision and
+post-purge reservation; tamper/missing source/custody and intervening Field
+reintroduction; full constraints/current defaults and client binding validation.
+Use independent per-instance native-value oracles, not counts alone.
+
+Inject cancellation, known abort and lost acknowledgement at capture, cutover,
+publication, restore/purge reservation and COMMIT. Prove original outcome lookup,
+no duplicate values/DDL and no archive replay over later writes. Test actual
+clock rollback/reboot/unknown interval and no early purge; concurrent hold and
+restore versus purge; explicit minimum-only override and non-bypassable hold/
+unknown/dependency refusal. Qualify finite resource caps, private diagnostics,
+source/browser parity, actual installed native consumers and public artifact
+bytes separately. None of G04, immediate DROP, external custody or G06 online
+success substitutes for these G05 effects. Keep every unimplemented family or
+composition explicitly tracked in release notes.
+
+
+##### Explicit originals-store composition
+
+Select `umf.native-row-originals-store/0.2` for G05. It consists EXACTLY of the
+adopted .1 row_tables/archives/issued_instances/guard footprint plus this fixed
+archive_lifecycle relation and its declared constraints/index/dependencies.
+The schema naming and original target/store custody discipline are unchanged;
+profile .2 is separately signed in the exact native-store-creation store tuple.
+G11's six scopes stay unchanged; .2 is an additional finite profile admitted by
+that store intent only when G05's fixed renderer/observation is implemented.
+No runtime .1 store gains permission for an extra lifecycle table. No implicit
+in-place upgrade/adoption is admitted; first provider creates a new .2 store
+under original ownership/approval. Reusing/migrating an existing qualified .1
+archive store requires an explicit future store-upgrade contract, not attaching
+new tables and weakening old inventory checks.
+
+##### Exact lifecycle relation and canonical record
+
+In the original private originals schema add exactly:
+
+```sql
+CREATE TABLE <originals>.archive_lifecycle (
+ archive_id pg_catalog.uuid PRIMARY KEY REFERENCES <originals>.archives(archive_id) ON UPDATE RESTRICT ON DELETE RESTRICT,
+ state pg_catalog.text COLLATE pg_catalog."C" NOT NULL CHECK (state IN ('captured','retired','restore-pending','restored','purge-pending','purged','abandoned')),
+ revision pg_catalog.int8 NOT NULL CHECK (revision BETWEEN 1 AND 9007199254740991),
+ policy_revision pg_catalog.int8 NOT NULL CHECK (policy_revision BETWEEN 1 AND 9007199254740991),
+ hold_revision pg_catalog.int8 NOT NULL CHECK (hold_revision BETWEEN 1 AND 9007199254740991),
+ active_request_id pg_catalog.uuid,
+ record pg_catalog.jsonb NOT NULL CHECK (pg_catalog.jsonb_typeof(record) = 'object'),
+ record_digest pg_catalog.text COLLATE pg_catalog."C" NOT NULL CHECK (record_digest ~ '^[a-f0-9]{64}$')
+) USING heap;
+```
+
+Exactly the same private owner/ACL/no RLS/trigger/rule/partition/dependency and
+native registration discipline as archives. Cap lifecycle rows4096/provider,
+record1MiB RFC8785 UTF8. Native duplicated columns must equal canonical record
+members on every protected observation. Record digest hashes the complete
+canonical record; unknown/missing keys refuse. A row is exactly
+`{profile:"umf.retired-field-lifecycle/0.1",providerId,archiveId,tableToken,
+targetCustody,field,fieldMeaningDigest,retirementPlanDigest,
+retirementSourceDigest,retirementOutcomeId,publication,policy,holds,state,
+revision,activeRequest,lastOutcome}`.
+
+Field and targetCustody are exact adopted source/G11 shapes. UUIDs lowercase
+canonical, digests lowercase64hex. RetirementOutcomeId is the actual original
+phase outcome UUID, not a caller-created success. Publication is null until
+original authenticated retirement publication is observed; then exactly
+`{outcomeId,bundleDigest,epochDigest,custodySequence,clockAnchorDigest}` from
+that original published transition and enrolled time authority. A complete
+G04 archives row may remain state complete after G05 purge as HISTORICAL
+identity metadata; actual presence/absence of its old values relation is now
+controlled by this exact lifecycle state, never by a generic exception.
+
+Policy is exactly `{policyId,revision,minimumRetentionMs,restoreAllowed,
+authorityConfigDigest,statementDigest}`. Revision is positive safe integer and
+matches policy_revision; duration uses intent001 bounds and cannot be below
+the original selected minimum except through a distinct approved purge-window
+override. RestoreAllowed is a real boolean. StatementDigest binds the original
+authenticated policy statement and authority context, not a submitted key.
+Holds is exactly `{revision,ids}` with <=256 unique UUID hold IDs, sorted bytewise;
+revision matches hold_revision and increments for each actual hold mutation.
+Hold reasons/identities are private; no row values in any record. Initial hold
+revision1 and empty IDs; authenticated preexisting holds must be installed before
+retirement publication. Missing current policy/hold context refuses actions.
+
+ActiveRequest is null or exactly `{requestId,kind,intentDigest,
+reservationDigest}`, kind `restore|purge`. Active_request_id is null iff this is
+null, otherwise its actual requestId. LastOutcome is null or exactly
+`{requestId,kind,intentDigest,outcomeId,status}`, kind `retire|restore|purge|abandon`,
+status `confirmed|aborted`. Every outcome is original native outcome custody,
+not a caller-supplied phase index. Safe integer revision overflow refuses.
+
+The original private effect registry retains ALL original request/outcome
+history, not only lastOutcome. Reuse the enrolled durable original-custody
+request ledger (bounded4096requests/8MiB) with a distinct G05 namespace and
+original native reservation/outcome binding. Exhaustion refuses; never truncate
+history to create room. Observe original older outcomes through that registry;
+lastOutcome alone is insufficient for replay. No production in-memory-only seal.
+
+##### State and native transaction protocol
+
+Capture creates immutable archives and lifecycle captured, revision1, with no
+publication/activeRequest. It shares the retirement phase's business DDL and
+actual native completion. Actual retirement publication observation moves
+captured->retired and sets publication/time anchor under original custody and
+row lock; until then no age, restore or purge admission. A crash between native
+phase COMMIT and publication observes the SAME original transition. Abandonment
+requires settled unpublished retirement outcome and separately authenticated
+cleanup authorization; it never invents rollback of committed business DDL.
+First provider refuses automatic abandoned-value cleanup: it remains tracked
+until an explicit qualified cleanup composition is added.
+
+Reserve restore only from retired, reserve purge only from retired/restored.
+A reservation sets activeRequest, state restore-pending/purge-pending and bumps
+revision in its own original acknowledged native transaction. Before reservation
+consume original signed/plan approval and bind it in original durable custody;
+unknown reservation COMMIT observes the original request, never creates another.
+Each business effect transaction locks that row, checks exact active request
+and original native reservation, rechecks current authority/policy/holds and
+inventory, then performs effects and records confirmed outcome atomically.
+Restore success ->restored; purge success ->purged; clear activeRequest and
+increment revision. No row/schema data effect is committed separately from its
+native outcome. The external journal may be uncertain until native observation;
+its uncertainty blocks new effects rather than pretending distributed atomicity.
+
+Known aborted effect transaction does NOT mean reservation absent. It leaves
+pending state until original authenticated abort settlement proves no effect
+COMMIT and records aborted outcome, restores predecessor retired/restored and
+clears activeRequest. Unknown COMMIT must first observe original native outcome.
+No timeout or exception alone is abort proof. After restoring, a new replay of
+the archive is forbidden; only duplicate original-request outcome observation
+is allowed. Purged is terminal for values. All native state transitions check
+current revision and original target/provider/record/ACL closure under FOR UPDATE.
+
+Policy/hold mutations also lock the same row and increment native revision plus
+their own revision. They may add a hold while a reservation is pending; the
+subsequent effect must recheck it. Removal/policy change requires exact expected
+revision and original enrolled data-custodian authorization. Already executing
+purge owns the same lock: a later hold is not acknowledged until it commits and
+must not be represented as predating that effect. Purged state cannot gain a
+fictional protective hold or restore authorization.
+
+The original native reservation descriptor is exactly
+`{profile:"umf.retained-data-reservation/0.1",providerId,archiveId,targetCustody,
+requestId,kind,intentDigest,priorState,priorRevision,reservedRevision,
+policyRevision,holdRevision}`. Kind is restore|purge; priorState retired|restored,
+with restored allowed only for purge. PriorRevision is the actual locked revision,
+reservedRevision exactly priorRevision+1, all positive safe integers. Its digest
+binds activeRequest.reservationDigest and original external effect registry.
+The confirmed reservation record is retained in original custody, not supplied
+as caller-created JSON capability. Abort settlement returns precisely priorState
+from this original descriptor, never a guessed retired state. Current policy/
+hold mutations may increase revision while pending; native effect dispatch must
+revalidate their exact signed revisions and refuse a stale request. Original
+abort settlement observes current row under lock and preserves newer policy/
+holds, never overwrites them with reservation-time snapshots.
+
+No new business retirement/restore/purge effect may start until an earlier native
+outcome and its original external custody confirmation are settled. Authenticated
+hold additions may still serialize and preserve lastOutcome; they cannot erase
+it or fabricate an earlier effective time. This prevents a later effect from
+overwriting the sole native lastOutcome before a lost acknowledgement can be
+resolved. Once positively confirmed, full original outcome history remains in
+the private bounded durable registry. No claim of cross-store atomicity.
+
+##### Separate signed data authority
+
+Use original configured Ed25519 authority, standard library dependency selected
+by the project, immutable enrolled key/principal/scope/target/purpose context,
+strict32-byte keys/64-byte base64url signatures, canonical JSON, private original
+request registry and consume-once effect binding. G11's six-scope creation
+interface does NOT become a generic signer. Implement a separate
+ConfiguredRetainedDataAuthority admitting ONLY the closed scopes here. Its
+native-acceptance fixture is purpose-isolated and uses the SAME effect code;
+production never accepts fixture context or self-enrolled request keys.
+
+Signing bytes are ASCII `umf.retained-data-approval/0.1` followed by NUL then
+RFC8785 UTF8 of exactly `{profile:"umf.retained-data-approval/0.1",authorityId,
+principalId,requestId,purpose,scope,targetCustody,intent}`. Envelope is exactly
+`{payload,keyId,signature}`. Purpose is `production|native-acceptance` and must
+match original immutable context. IDs <=128 UTF8 bytes; canonical request UUID;
+whole envelope <=1MiB. Supplied keyId only selects an originally enrolled key.
+No TTY/UID shortcut, embedded public key, arbitrary JSON scope or approvalDigest
+cycle. Scope-specific intents are EXACTLY:
+
+- `purge-retained-field`: `{archive,expectedLifecycleRevision,policyRevision,
+  holdRevision,valuesRelation,effect,eligibility,irreversibleMarker}`. Archive is
+  the exact portable archive ref verified against original private record.
+  ValuesRelation is actual `{schemaOid,tableOid,schemaName,tableName}` of ONLY
+  that original value heap. Effect is exactly `drop-one-values-relation-restrict`.
+  IrreversibleMarker is a nonempty approved located marker <=256 UTF8 bytes,
+  tied to complete archive/Field/target/plan identity. Eligibility is either
+  `{mode:"elapsed",certificate}` or `{mode:"minimum-window-override",reasonCode,
+  overriddenMinimumRetentionMs}`. ReasonCode is enrolled finite token <=128 UTF8
+  bytes, not arbitrary SQL/text; override requires a distinct enrolled override
+  permission in addition to purge scope. Its bound must equal actual minimum.
+- `mutate-retention-hold`: `{archive,expectedLifecycleRevision,
+  expectedHoldRevision,operation,holdId}`; operation exactly `add|remove` and
+  holdId UUID. Removal requires the current exact hold, addition absence, no
+  silently successful duplicates. Original request duplicate observes outcome.
+- `update-retention-policy`: `{archive,expectedLifecycleRevision,
+  expectedPolicyRevision,nextPolicy}`. NextPolicy is the exact policy shape
+  above; authenticated new statement/config and explicit restore meaning must
+  validate. It cannot lower the original minimum. No changing policy identity
+  to evade original signed duration. A separate minimum-window override only
+  authorizes that one purge, not rewriting historical retention.
+
+Each prepared request includes original context/registry-native IDs and complete
+intent for actual authenticated external signer inspection. Exports are data
+copies, never signing capabilities. Verification checks exact shape, original
+registry request, current original authority/scope/purpose/key and full intent;
+consume/signature/effect/outcome race discipline matches adopted G11. Native
+effectKey is original target/provider/archive/scope plus expected revision; all
+repeated prepares reuse the same original request and resolvable capability.
+No nonce can manufacture a second native effect for the same reservation.
+Revocation affects new actions; original readonly settlement uses retained
+original signature/key history. Time certificates use distinct enrolled clock
+keys and domain below; data signer cannot fabricate elapsed time by re-signing.
+
+Restore uses original UMF verified plan approval PLUS original enrolled data
+policy permitting restoration; a schema author cannot grant themselves archive
+access. It reserves under the same data-custodian private authority using the
+exact source/plan/archive/current-lifecycle correspondence, not a public raw
+archive reader or arbitrary per-value callback. Data policy registration and
+its original keys must exist before any archive-backed capability is issued.
+
+##### Exact elapsed-time certificate and conservative checkpoints
+
+The enrolled host clock authority prepares payload exactly
+`{profile:"umf.retention-elapsed-certificate/0.1",authorityId,purpose,providerId,archiveId,
+targetCustody,publicationOutcomeId,anchorDigest,policyRevision,
+custodySequence,elapsedLowerBoundMs}`. Its signed envelope is exactly
+`{payload,keyId,signature}`; signing prefix ASCII profile then NUL then RFC8785
+payload. Actual configured context/key/purpose and original archive/publication
+anchor must match; scope cannot be supplied by caller. Integer bounds are
+positive safe custody sequence and nonnegative safe elapsed milliseconds.
+Certificate max65536 UTF8 bytes. Reject unknown keys/fields, source mismatch,
+rewound custody, unqualified clock or invalid signature.
+
+Original clock anchor/checkpoints privately retain actual boot identity,
+monotonic tick/runtime units, precision/error, publication observation, last
+proved lower bound and custody sequence. Compute integers exactly; floor any
+fractional milliseconds after subtracting uncertainty. Within same verified
+boot, accumulated lower bound may advance by max(0, elapsedTicks minus admitted
+uncertainty). Never accumulate overlapping intervals twice: every checkpoint
+atomically records original prior sample, new sample and new cumulative lower
+bound under the original durable single-writer lock/fsync custody sequence.
+Crash/lost acknowledgement settles that original checkpoint; a retry cannot add
+its interval twice. Across uncertain interval/reboot, retain only the last
+proved lower bound and re-anchor with zero added age. Negative ticks/rewind
+refuse rather than re-anchor past a suspected rollback. No unqualified wall
+instant, VM snapshot, shared UID or Python monotonic name is evidence of origin.
+
+The actual local supervisor/custodian must expose this concrete native clock
+profile before certificate issuance, including platform/reboot identity and
+nonrewind proof. Absence refuses normal purge; only separately authenticated
+minimum-window override can omit a clock certificate and it cannot evade
+holds/dependencies/pending native outcomes. Certificates enter private purge
+intent, not public per-row data. A delayed valid certificate conservatively
+understates age; final current policy/hold/native-state checks still apply.
+
+##### Proposed exact Weft new-instance fill port
+
+Require an immutable qualified Weft public prepare function with request
+`{version:"weft.archive-new-instance-fill-request/0.1",target:"postgresql18",
+binding,domain,expression,population,nulls:"reject-for-required"}`. Binding is
+exactly `{previousSource,nextSource,previousBundleDigest,nextBundleDigest,
+configurationDigest,planDigest,table,field}` using existing full source refs.
+Domain is complete current target physical/logical/mapping. Expression is the
+existing closed G02 typed expression. Population is exactly
+`{kind:"retained-archive-complement",archiveId,tableToken,businessRelation,
+identityColumn,valuesRelation}`. Native relation records are exact qualified
+schema/table names plus schema/table OIDs; identityColumn includes actual attnum,
+name,typeOid,typeMod. All are HOST-derived from original custody, not author
+supplied SQL. Weft accepts only qualified request/context and its fixed relational
+predicate, never a callback or generic free-form WHERE.
+
+Reply is exactly `{version:"weft.archive-new-instance-fill/0.1",status:"compiled",
+target:"postgresql18",requestDigest,binding,populationDigest,expressionDigest,
+domainDigest,program,nativeExactValueGuard}`. Program uses the existing admitted
+G02 native prepared program/result format with a NEW explicit population profile;
+its scalar/typed bind lowering remains Weft-owned. The actual compiler builds
+`NOT EXISTS` against the original private archive IDs before evaluating fills,
+under a qualified maintenance role that can read both original business and
+private archive. This is host-only execution, never ordinary businessOwner
+access to originals. Any role-scope expansion is explicitly enrolled and native
+qualified; matching SQL text or dictionaries do not confer prepared authority.
+No UMF SQL rewrite or arbitrary SECURITY DEFINER author function workaround.
+The actual Weft owner must accept the exact request/program extension and freeze
+public symbols/artifacts before enablement; an unsupported immutable Weft fails
+closed and required-target fill remains tracked, not silently downgraded.
+
+##### Exact execution policy and resource admission
+
+Select trusted `umf.g05.execution-policy/0.1` exactly
+`{profile,transactionTimeoutMs,maxRetiredRows,maxRestoredRows,
+maxRetainedLogicalBytes,dataAuthorityConfigDigest,clockAuthorityConfigDigest}`.
+The profile member is the literal above; timeout is integer1000..3600000ms,
+row limits integers0..1000000 each, retained limit integer0..1073741824 bytes,
+and both config digests are lowercase64hex of originally enrolled immutable
+host authority contexts. Defaults are60000ms,1000000 rows each and67108864 bytes;
+configuration digests have no fabricated/default context. Policy is host-selected
+and original-approval-bound, not an options author privilege. Match actual native
+transaction_timeout, absolute host deadline and bounded driver/cancellation waits
+before BEGIN; the selected actual immutable session wrappers must agree this
+policy variant before admission. No old Weft/session module gains new meaning.
+
+Limits count the aggregate actual retirement/restoration row populations in
+that phase, not each entry separately. Restored rows include all new instances,
+even mode null; deleted originals do not count as restored rows. Complete
+population/byte estimates are protected and rechecked before actual COMMIT;
+exhaustion aborts the whole phase. Archive and row-table/provider caps still
+apply. Lowered policy cannot erase pending effects or approve another cohort.
+Ledger/lifecycle/host journal counts are separate finite metadata caps; these
+logical limits do not bound physical heap/index/WAL or external copies.
+
+##### Native receipt and purge result
+
+Execution0.7 selects private native transition record0.3, retaining original
+keys but using selected G05 policy and phaseBudgetReceipt exactly
+`{profile:"umf.g05.phase-budget-receipt/0.1",policyDigest,retirementEffects,
+restorationEffects,retainedLogicalBytes,nativeTransactionTimeoutMs}`.
+RetirementEffects ordered actual effects, each exactly
+`{stepId,table,field,intentDigest,archiveId,fieldMeaningDigest,sourceCount,
+archivedCount}`. Counts must equal complete protected actual populations.
+RestorationEffects each exactly `{stepId,table,field,intentDigest,archiveId,
+fieldMeaningDigest,originalSurvivorCount,newInstanceCount,deletedOriginalCount,
+restoredCount,fillProgramDigest,compilerArtifactDigest}`. All counts nonnegative
+safe integers; restoredCount=originalSurvivorCount+newInstanceCount. Last two
+digests null iff newInstances is not fill; otherwise actual verified immutable
+Weft program/artifact digests even for empty population. Arrays <=256 each.
+Counts/IDs contain no values/per-value hashes. Validate same-instance partition
+by exact protected joins, not counts alone. Bind actual native reservations,
+archive/receipt/catalog/source/approval and save in SAME actual phase transaction.
+RetainedLogicalBytes uses G04 cycle-free per-archive measure, distinct ledger/
+lifecycle metadata caps, with selected trusted policy max1GiB and row1million caps.
+
+Purge does not mutate schema head. Public host result is exactly
+`{profile:"umf.retained-field-purge-result/0.1",requestId,archiveId,targetCustody,
+intentDigest,status,outcomeId}`. Status `confirmed|aborted|unknown`; outcomeId UUID
+for confirmed/aborted and null for unknown. Confirmed corresponds to actual native
+tombstone and absent original relation; aborted to actual original no-effect
+settlement. Unknown is explicitly unresolved, never success or purge replay
+permission. Host readonly original-outcome lookup uses original authority and
+reveals no retained values. No new arbitrary portable execution side channel.
+
+##### Explicit readiness status
+
+These forms complete the proposed concrete lifecycle/data-authority/time/receipt
+interfaces. Actual implementation, immutable session/compiler wrapper agreement,
+crypto/clock/native acceptance, complete
+source/browser/installed evidence and public bytes remain required. The proposed
+Weft port is not owner-agreed or implemented merely by this document. External
+custody, online restore/capture, source-table retirement, combined type-change
+restore, abandoned cleanup and generalized hold/override workflows remain
+separately tracked compositions. No source-only or irreversible-only subset
+closes all G05 obligations.

@@ -780,3 +780,49 @@ are explicit compatibility limits. Archive logicalBytes excludes separately
 bounded ledger metadata and does not claim a physical disk/WAL ceiling. Values
 purge never removes issued IDs, resets counters or authorizes identity reuse.
 No online cap raising/ledger compaction or experimental-store adoption is claimed.
+
+
+### G05 protected retained retirement and new current-source restore
+
+Implement the selected options/plan0.8, execution0.7, discovery0.5 closed
+retirement/restoration/archiveSources forms, typed empty-SQL step variants and
+original-source recompile verification. Keep all prior-profile byte/meaning
+contracts. Bind complete original source/Field/native domains, selected retention
+and original archive descriptors; unknown dependencies, unused entries and
+unsupported type/lineage composition refuse. Never replay seeds or infer fill
+from future defaults. Retire direct column access, not just generated accessors.
+
+Use the exact original same-database typed archive plus issued-instance ledger
+and lifecycle relation/record. Capture/drop/private metadata/native outcome
+share one actual transaction under the actual ingress fence and exclusive
+protection. Retirement publication is separately authenticated original outcome
+observation; no aging/restore/purge before confirmed publication. Unknown native
+COMMIT observes the original effect and holds ingress fenced, not repeat capture.
+
+Restore as a NEW current-source approved plan. Prove continuous absent-target
+history and original instance/guard/custody. Surviving originals receive exact
+old values while preserving unrelated current columns/Keys and allowing greater
+revision; deleted originals stay deleted. New instances get only selected
+null/refuse/scoped fill. Required original NULL refuses. Weft owns the actual
+qualified archive-complement typed fill and guards; do not rewrite its SQL,
+evaluate fills against originals, or grant ordinary archive reads to make it
+work. Actual immutable compiler/session agreement is required before admission.
+
+Freeze exact lifecycle native inventory, private original request/consumption/
+reservation/outcome registry, separately configured Ed25519 retained-data scope
+authority and actual enrolled clock certificate/checkpoint implementation.
+Serialize restore, purge and current policy/hold changes on the same original
+lifecycle row; acknowledged holds and unknown native effects cannot be bypassed.
+Purge is host-only, signed for exactly one original values relation, separately
+irreversible; no schema-head reset, archive-prefix deletion or CASCADE. Normal
+mode needs proved elapsed lower bound; minimum-only override never waives holds,
+origin or pending/live dependency. Preserve identity reservations/history after
+value purge and confirm original native tombstone/absence before success.
+
+Enforce the exact G05 trusted execution policy, per-phase complete row/value-byte
+limits, distinct finite metadata caps, native transaction timeout and host
+deadline before effects. Save verified per-effect source/identity/count/compiler
+receipt with actual business/catalog/outcome COMMIT. No logical-byte/row bound
+claims physical disk/WAL or external copy erasure. External/online custody,
+combined type-change restore, table retirement and abandoned cleanup remain
+separate unqualified compositions with explicit release tracking.

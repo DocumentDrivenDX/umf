@@ -663,3 +663,41 @@ read/write/trigger/parameter bypass refusal. Lose enrollment COMMIT acknowledgem
 and settle the original outcome without repeating enrollment. Record counter
 contention/resource behavior and distinguish reservation bounds from archive
 value-byte accounting. These are required native gates, not source-test claims.
+
+
+### G05 independent retained retirement, restoration and purge acceptance
+
+Prove closed source/options/discovery/step/recompile semantics in Bun and an
+actual browser, including historical replay, duplicate/unused/unknown entries,
+complete archive source closure and bounds, explicit current defaults/dependencies
+and no seed replay. Source-only archive descriptors cannot create native custody.
+
+Execute populated/NULL/empty and FORCE RLS retirement with native per-instance
+oracles; verify actual private old typed values and complete source/instance
+set, direct/generated ACL denial, no retired live-column leak, dependency closure
+and actual old prepared reader/cursor/writer fencing. After current unrelated/
+no-op/Key-changing updates, restores preserve all unrelated values. Test deleted
+originals, new and Key-reused instances, null/refuse and required scoped fill
+with a fill invalid on originals but valid on new instances. Required original
+NULL, changed type/meaning/history/guard, missing/tampered/foreign origin and
+post-restore replay must refuse without partial activation. Test real issued-ID
+collision and persistence after value purge; matching counts are insufficient.
+
+Verify actual Ed25519 signatures/config/scope/purpose/target and original durable
+request/effect/history races, current policy and hold mutation serialization,
+native reservation separate from effect COMMIT and original positive recovery.
+Exercise real enrolled monotonic clock checkpoints/reboot/uncertain intervals/
+rollback/rewind and no early purge. Normal purge requires actual lower-bound
+eligibility; minimum-only override records unmet duration and cannot bypass hold,
+unknown effect, native origin or retained dependency. Lose capture/publication/
+restore/purge acknowledgements, prove original outcome lookup and no duplicate
+DDL/value effects. Known abort preserves values; confirmed purge is exact native
+relation removal plus original tombstone, no source-head reset or UUID reuse.
+
+Test real capacity/time bounds and private diagnostics, current generated
+consumers, frozen installed native wrappers/artifacts, source census/platform
+CI matrix and fresh public-download bytes. Qualify the actual immutable Weft
+archive-complement port and session policy explicitly; its absence is a refusal,
+not a fill pass. Keep every remaining family/backend/composition and external
+backup/log erasure limitation explicit in the release, rather than closing G05
+from an irreversible/null-only/source-only subset.
