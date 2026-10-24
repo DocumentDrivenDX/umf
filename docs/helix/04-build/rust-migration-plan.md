@@ -897,10 +897,15 @@ success/refusal packet is reproducible byte-for-byte. Independent Sol rereview
 closed three P2 differences in serialized request length, copy/refusal order,
 and UTF-16 compiler identity; it found no remaining P1/P2 in this bounded
 slice. Pinned offline Rust tests pass 8/8 source, 5/5 document and 9/9
-inspector cases. The capture compiler is a stub, and the existing TypeScript
-native-oracle test reached its assertions but failed while writing its fixture
-report in this worktree. Real compiler qualification, bindings, source emission,
-Edition 2024 and default cutover remain open.
+inspector cases. The immutable TypeScript capture compiler is a stub, and the
+existing TypeScript native-oracle test reached its assertions but failed while
+writing its fixture report in this worktree. An additive
+[real protoc callback run](evidence/rust-migration/r5-protobuf-source/README.md#additive-real-native-compiler-callback-run--2026-10-23)
+now passes on the pinned local protoc 36.2 binary: full Python
+`FileDescriptorSet` message equality, all 42 Python protobuf behavior checks,
+source refusals and child-control cleanup are recorded. This one-host result is
+pending independent Sol review; broader compiler qualification, bindings,
+source emission, Edition 2024 and default cutover remain open.
 
 The [opt-in Protobuf source-export checkpoint](evidence/rust-migration/r5-protobuf-source-export/README.md)
 adds a Rust `prepare_source_export`/`finish_source_export` boundary around an

@@ -67,3 +67,89 @@ propagation, copy isolation, lone-surrogate source/identity values, descriptor
 bounds and malformed compiler output. Source compilation remains an external
 host capability; this slice adds no binding parity, browser execution, Edition
 2024 compilation, source emission, or complete Protobuf semantics.
+
+## Additive real native compiler callback run — 2026-10-23
+
+The separate Rust integration harness
+[`r5_protobuf_source_real_compiler.rs`](../../../../../../crates/umf-core/tests/r5_protobuf_source_real_compiler.rs)
+now exercises the real `prepare_source_import` → trusted callback → finish path.
+The callback writes only the supplied source map beneath a fresh temporary
+directory, invokes the installed `protoc` executable with
+`--include_imports --include_source_info --retain_options`, polls the child while
+charging the same Rust `Context`, and returns its descriptor bytes and exact
+compiler identity. On host-control refusal it terminates a running child or
+reaps one that completed in the race, propagating the original control error
+after successful cleanup. Production `umf-core` still does not start a process
+or discover a compiler.
+
+This Darwin arm64 host ran `libprotoc 36.2` from
+`/opt/homebrew/bin/protoc`; executable SHA-256 is
+`acb9d966be4bc739afc77f1f55f14bd5d277e50efd31de49678edb7f3843d784`.
+The frozen inputs are the existing proto2, proto3 and Edition 2023 roots plus
+the supplied `google/protobuf/descriptor.proto`; their SHA-256 values are
+`f48dc0aa3004bc65034a3757062a57bac66d6c4e439607e7f7530d06223ec19c`,
+`10a660d267f564faf3f3fa13299ae94d7662b61e39d072bfa54c3a60c661bd29`,
+`38830d46dc6244297c80dac766081161b4cf4c895ef9805966f3b1f748344c34`, and
+`c96db5406336ebcc82523c1dfb122721986a1f43c4aaed45a4a4ad6996efacc2`.
+The current harness source SHA-256 is
+`3a1dcc669f6864d89f65f82017cdbfcbb75413287a1f246e6a008af9b340153f`.
+The full-message comparator SHA-256 is
+`9479a25776ec4e8157bb15297533bef32cfb130b96182114b31f3e95aea57453`.
+
+The real callback completed source compilation, Rust descriptor-set import and
+descriptor-set export. The imported archive retained all request roots and
+identified `libprotoc 36.2`; inspection remained valid but incomplete with the
+contracted compiler-required warning. A fresh protoc baseline and exported Rust
+bytes were checked by
+[`compare-descriptor-full.py`](compare-descriptor-full.py) using Python protobuf
+7.36.2 on CPython 3.11.17/Darwin arm64. Full `FileDescriptorSet` message
+equality passed across all four files, including SourceCodeInfo, field presence,
+and file order. Their raw binary bytes differ
+(baseline SHA-256 `cadf45487f6fc01048a6dcf8725edc7a83c00af15f315ac5c0349b625d5c215a`,
+Rust round trip SHA-256 `d537b6a4ec3226a27c82d27500b95516a34f4a074514b8787bdce6eca3daac5e`); no
+raw-byte equality claim is made. Python protobuf 7.36.2 independently passed
+all 42 retained native behavior checks on the same pair. Missing-import and
+duplicate-field-number sources were refused by the real compiler callback. An
+injected host-control error after child start was propagated unchanged after
+confirmed child cleanup; the receipt distinguishes a killed running child from
+a process that completed before the kill race. The separate Rust source test
+continues to cover refusal of a noncooperative compiler before dispatch.
+
+The control replay reported `reaped=true`, `killed_running=true`, and
+`completed_before_kill=false`. Python was
+`/private/tmp/umf-r4-build-env/bin/python` (CPython 3.11.17, arm64 Darwin) with
+`protobuf==7.36.2`. The available host did not have a `buf` CLI; Go was 1.27.3,
+so this run did not build or invoke the ADR's Go 1.27.1/protocompile 0.14.1
+compiler. This evidence is specifically for the installed protoc 36.2
+capability.
+
+Reproduction uses Rust/Cargo 1.90.0 and writes compiler output only under
+`/private/tmp`:
+
+```sh
+mkdir -p /private/tmp/umf-r5-protobuf-source-real
+PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:/opt/homebrew/bin:/usr/bin:/bin \
+UMF_PROTOC_PATH=/opt/homebrew/bin/protoc \
+UMF_R5_PROTOBUF_DESCRIPTOR_OUT=/private/tmp/umf-r5-protobuf-source-real/rust-roundtrip.pb \
+CARGO_TARGET_DIR=/private/tmp/umf-r5-protobuf-source-real-target \
+cargo test --locked --offline -p umf-core --test r5_protobuf_source_real_compiler -- --ignored --nocapture
+
+/opt/homebrew/bin/protoc -I fixtures/protobuf/upstream -I fixtures/protobuf \
+  --include_imports --retain_options --include_source_info \
+  --descriptor_set_out=/private/tmp/umf-r5-protobuf-source-real/protoc-baseline.pb \
+  fixtures/protobuf/legacy.proto fixtures/protobuf/modern.proto fixtures/protobuf/edition.proto
+
+/private/tmp/umf-r4-build-env/bin/python docs/helix/04-build/evidence/rust-migration/r5-protobuf-source/compare-descriptor-full.py \
+  /private/tmp/umf-r5-protobuf-source-real/protoc-baseline.pb \
+  /private/tmp/umf-r5-protobuf-source-real/rust-roundtrip.pb
+UMF_BEHAVIOR_REPORT=/private/tmp/umf-r5-protobuf-source-real/behavior-results.json \
+  /private/tmp/umf-r4-build-env/bin/python scripts/protobuf-behavior-oracle.py \
+  /private/tmp/umf-r5-protobuf-source-real/protoc-baseline.pb \
+  /private/tmp/umf-r5-protobuf-source-real/rust-roundtrip.pb
+```
+
+This is one local compiler cohort and an integration-test host capability, not a
+default adapter, packaged compiler binding, general source-language qualification,
+Buf CLI run, Edition 2024 support, or independent review. The test is ignored by
+default because it requires the exact local compiler binary; reproduction names
+the binary explicitly and checks its SHA-256 before invoking it.
