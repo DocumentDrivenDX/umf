@@ -153,7 +153,10 @@ fn inspect_payload_profile(
     {
         ctx.charge_work(1, extension_path.clone())?;
         ctx.charge_work(uri.len(), extension_path.clone())?;
-        if !matches!(tree.root(), NativeJsonNode::Object(_) | NativeJsonNode::Boolean(_)) {
+        if !matches!(
+            tree.root(),
+            NativeJsonNode::Object(_) | NativeJsonNode::Boolean(_)
+        ) {
             push(
                 &mut diagnostics,
                 "JSON_SCHEMA_ROOT",
@@ -303,28 +306,32 @@ fn inspect_payload_profile(
         has_numeric_limit |= resource_numeric_limit;
         if resource_numeric_limit {
             ctx.charge_work(uri.len().saturating_add(1), extension_path.clone())?;
-            numeric_limit_resources.push(uri.clone());
+            numeric_limit_resources.push(numeric_refusal_message(tree, uri, ctx)?);
         }
     }
 
-    for uri in numeric_limit_resources {
+    for message in numeric_limit_resources {
         push(
             &mut diagnostics,
             "JSON_SCHEMA_NUMERIC",
             extension_path,
-            &format!(
-                "Resource {}: native values retained but JavaScript validation unavailable for one or more numeric tokens",
-                display(&uri)
-            ),
+            &message,
             Severity::Warning,
         );
     }
 
-    if diagnostics.iter().any(|item| item.severity == Severity::Error) {
+    if diagnostics
+        .iter()
+        .any(|item| item.severity == Severity::Error)
+    {
         return Ok(diagnostics);
     }
 
-    if payload.resources.iter().any(|(uri, _)| uri == &payload.base_uri) {
+    if payload
+        .resources
+        .iter()
+        .any(|(uri, _)| uri == &payload.base_uri)
+    {
         push(
             &mut diagnostics,
             "JSON_SCHEMA_RESOURCE_COLLISION",
@@ -389,6 +396,62 @@ fn handle_compile_error(
     Ok(())
 }
 
+/// Preserve the predecessor's useful refusal detail for the exact unsafe
+/// integer category. Other unsafe decimal/overflow categories deliberately
+/// remain generalized until their host wording has independent replay proof.
+fn numeric_refusal_message(
+    tree: &NativeJsonTree,
+    uri: &Utf16,
+    ctx: &mut Context<'_>,
+) -> Result<String, EngineError> {
+    let mut stack = vec![tree.root()];
+    while let Some(node) = stack.pop() {
+        ctx.charge_work(1, Utf16::default())?;
+        match node {
+            NativeJsonNode::Number(token) => {
+                ctx.charge_work(token.len(), Utf16::default())?;
+                if let Ok(value) = token.parse::<f64>() {
+                    if number_token_is_unsafe(token, value) {
+                        if is_integer_lexeme(token) && is_unsafe_integer(token, value) {
+                            return Ok(format!("Resource {}: native values retained but JavaScript validation unavailable: UmfError: Integer exceeds exact JavaScript range", display(uri)));
+                        }
+                        return Ok(format!("Resource {}: native values retained but JavaScript validation unavailable for one or more numeric tokens", display(uri)));
+                    }
+                }
+            }
+            NativeJsonNode::Array(items) => stack.extend(items.iter().rev()),
+            NativeJsonNode::Object(members) => stack.extend(members.iter().rev().map(|(_, v)| v)),
+            _ => {}
+        }
+    }
+    Ok(format!("Resource {}: native values retained but JavaScript validation unavailable for one or more numeric tokens", display(uri)))
+}
+
+fn is_integer_lexeme(token: &str) -> bool {
+    !token.contains(['.', 'e', 'E'])
+}
+
+fn is_unsafe_integer(token: &str, value: f64) -> bool {
+    if value.fract() != 0.0 {
+        return false;
+    }
+    canonical_decimal(token).is_some_and(|(_, digits, scale)| {
+        if scale < 0 {
+            return false;
+        }
+        let integer_digits = i64::try_from(digits.len())
+            .unwrap_or(i64::MAX)
+            .saturating_add(scale);
+        if integer_digits > 16 {
+            return true;
+        }
+        if integer_digits < 16 {
+            return false;
+        }
+        format!("{}{}", digits, "0".repeat(scale as usize)).as_str() > "9007199254740991"
+    })
+}
+
 fn compile_payload(payload: &JsonSchemaPayload, ctx: &mut Context<'_>) -> Result<(), EngineError> {
     ctx.charge_work(payload.resources.len().saturating_add(1), Utf16::default())?;
     let mut root = native_to_value(payload.root.root(), ctx)?;
@@ -412,7 +475,12 @@ fn compile_payload(payload: &JsonSchemaPayload, ctx: &mut Context<'_>) -> Result
         match CompiledSchema::validate_consumer_metaschema_only(schema, ctx) {
             Ok(_) => {}
             Err(error) if error.is_control_failure() || error.code == "LIMIT" => return Err(error),
-            Err(error) if error.code == "SCHEMA_INVALID" => {
+            Err(mut error) if error.code == "SCHEMA_INVALID" => {
+                if let Some(detail) =
+                    invalid_type_ajv_detail(&error, schema, &schemas[target_index].0)
+                {
+                    error.message = Utf16::from(detail);
+                }
                 metaschema_error.get_or_insert(error);
             }
             Err(error) => {
@@ -433,7 +501,12 @@ fn compile_payload(payload: &JsonSchemaPayload, ctx: &mut Context<'_>) -> Result
         match CompiledSchema::compile_consumer(schema, &resolution, false, ctx) {
             Ok(_) => {}
             Err(error) if error.is_control_failure() || error.code == "LIMIT" => return Err(error),
-            Err(error) if error.code == "SCHEMA_INVALID" => {
+            Err(mut error) if error.code == "SCHEMA_INVALID" => {
+                if let Some(detail) =
+                    invalid_type_ajv_detail(&error, schema, &schemas[target_index].0)
+                {
+                    error.message = Utf16::from(detail);
+                }
                 metaschema_error.get_or_insert(error);
             }
             Err(error) => {
@@ -448,6 +521,47 @@ fn compile_payload(payload: &JsonSchemaPayload, ctx: &mut Context<'_>) -> Result
         return Err(error);
     }
     Ok(())
+}
+
+/// Compose the pinned Ajv 8.20 error sequence for the exact `{"type":12}`
+/// shape in the R5 host replay contract. This does not claim general Ajv
+/// parity; all other compiler errors keep their native bounded diagnostic.
+fn invalid_type_ajv_detail(error: &EngineError, schema: &Value, uri: &Utf16) -> Option<String> {
+    if error.path != Utf16::from("/type")
+        || error.message != Utf16::from("must be equal to one of the allowed values")
+    {
+        return None;
+    }
+    let type_value = get_value(schema, "type")?;
+    if !matches!(type_value, Value::Number(value) if *value == 12.0) {
+        return None;
+    }
+    // Admit only this single semantic field plus the compiler's safe retrieval
+    // metadata. Other keywords may add ordered Ajv errors.
+    let Value::Object(members) = schema else {
+        return None;
+    };
+    if members.iter().any(|(key, _)| match key.to_utf8() {
+        Ok(key) if key == "type" => false,
+        Ok(key) if key == "$id" => !matches!(members.iter().find(|(name, _)| name.to_utf8().ok().as_deref() == Some("$id")).map(|(_, value)| value), Some(Value::String(_))),
+        Ok(key) if key == "$schema" => !matches!(members.iter().find(|(name, _)| name.to_utf8().ok().as_deref() == Some("$schema")).map(|(_, value)| value), Some(Value::String(value)) if value == &Utf16::from(DIALECT_2020_12)),
+        Ok(_) => true,
+        Err(_) => true,
+    }) {
+        return None;
+    }
+    const DETAILS: &str = r##"[{"instancePath":"/type","schemaPath":"#/$defs/simpleTypes/enum","keyword":"enum","params":{"allowedValues":["array","boolean","integer","null","number","object","string"]},"message":"must be equal to one of the allowed values"},{"instancePath":"/type","schemaPath":"#/properties/type/anyOf/1/type","keyword":"type","params":{"type":"array"},"message":"must be array"},{"instancePath":"/type","schemaPath":"#/properties/type/anyOf","keyword":"anyOf","params":{},"message":"must match a schema in anyOf"}]"##;
+    Some(format!("Resource {}: {}", display(uri), DETAILS))
+}
+
+fn get_value<'a>(value: &'a Value, key: &str) -> Option<&'a Value> {
+    let Value::Object(members) = value else {
+        return None;
+    };
+    members
+        .iter()
+        .find(|(name, _)| name.to_utf8().ok().as_deref() == Some(key))
+        .map(|(_, value)| value)
 }
 
 /// Give the compiler the retrieval URI as a base when the native document has
@@ -783,6 +897,91 @@ mod tests {
         handle_compile_error(semantic, &path, &mut diagnostics).unwrap();
         assert_eq!(diagnostics.len(), 1);
         assert_eq!(diagnostics[0].code, Utf16::from("JSON_SCHEMA_META"));
+    }
+
+    #[test]
+    fn exact_integer_refusal_has_compatibility_detail_and_other_numeric_losses_stay_generic() {
+        let unsafe_integer = NativeJsonTree::parse_json(
+            &br#"{"minimum":9007199254740993}"#.iter().map(|b| *b as u16).collect::<Vec<_>>(),
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        let message = numeric_refusal_message(
+            &unsafe_integer,
+            &Utf16::from("https://example.test/root"),
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        assert_eq!(message, "Resource https://example.test/root: native values retained but JavaScript validation unavailable: UmfError: Integer exceeds exact JavaScript range");
+
+        for source in [
+            r#"{"minimum":0.10000000000000000001}"#,
+            r#"{"minimum":1e400}"#,
+            r#"{"minimum":-0}"#,
+            r#"{"minimum":9007199254740993.0}"#,
+            r#"{"first":-0,"second":9007199254740993}"#,
+        ] {
+            let tree = NativeJsonTree::parse_json(
+                &source.encode_utf16().collect::<Vec<_>>(),
+                &mut Context::ordinary(),
+            )
+            .unwrap();
+            let message = numeric_refusal_message(
+                &tree,
+                &Utf16::from("https://example.test/root"),
+                &mut Context::ordinary(),
+            )
+            .unwrap();
+            assert!(message.ends_with("native values retained but JavaScript validation unavailable for one or more numeric tokens"), "{source}: {message}");
+        }
+    }
+
+    #[test]
+    fn only_the_replayed_numeric_type_shape_gets_nested_ajv_ordered_detail() {
+        let schema = Value::Object(vec![(Utf16::from("type"), Value::Number(12.0))]);
+        let error = EngineError::new(
+            "SCHEMA_INVALID",
+            Utf16::from("/type"),
+            "must be equal to one of the allowed values",
+        );
+        let detail = invalid_type_ajv_detail(
+            &error,
+            &schema,
+            &Utf16::from("https://schemas.example.test/root.json"),
+        )
+        .unwrap();
+        assert_eq!(
+            detail,
+            r##"Resource https://schemas.example.test/root.json: [{"instancePath":"/type","schemaPath":"#/$defs/simpleTypes/enum","keyword":"enum","params":{"allowedValues":["array","boolean","integer","null","number","object","string"]},"message":"must be equal to one of the allowed values"},{"instancePath":"/type","schemaPath":"#/properties/type/anyOf/1/type","keyword":"type","params":{"type":"array"},"message":"must be array"},{"instancePath":"/type","schemaPath":"#/properties/type/anyOf","keyword":"anyOf","params":{},"message":"must match a schema in anyOf"}]"##
+        );
+        let non_type_error =
+            EngineError::new("SCHEMA_INVALID", Utf16::from("/title"), "must be string");
+        assert!(invalid_type_ajv_detail(
+            &non_type_error,
+            &schema,
+            &Utf16::from("https://schemas.example.test/root.json")
+        )
+        .is_none());
+        let multi_invalid = Value::Object(vec![
+            (Utf16::from("type"), Value::Number(12.0)),
+            (Utf16::from("minLength"), Value::Number(-1.0)),
+        ]);
+        assert!(invalid_type_ajv_detail(
+            &error,
+            &multi_invalid,
+            &Utf16::from("https://schemas.example.test/root.json")
+        )
+        .is_none());
+        let unknown_also_present = Value::Object(vec![
+            (Utf16::from("type"), Value::Number(12.0)),
+            (Utf16::from("x-opaque"), Value::Bool(true)),
+        ]);
+        assert!(invalid_type_ajv_detail(
+            &error,
+            &unknown_also_present,
+            &Utf16::from("https://schemas.example.test/root.json")
+        )
+        .is_none());
     }
 }
 fn schema_positions(
