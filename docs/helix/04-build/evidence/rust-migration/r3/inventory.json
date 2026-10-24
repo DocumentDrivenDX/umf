@@ -189,16 +189,16 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "482bc76146b8c289759979c5bd5a7bbd260b3b4cbd6cc028487d023a82cd984d",
+    "sourceCohortSha256": "eda13720ddc6a28b4190c7eb28714c65b6aa9fe1a8939d55d82b1e2868cec0a9",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 330,
-    "algorithmSymbols": 10177,
+    "algorithmSymbols": 10178,
     "pythonModules": 104,
     "rustBuildInputs": 76,
     "rustModules": 118,
-    "scriptFiles": 2944,
+    "scriptFiles": 2945,
     "sourceModules": 579,
     "typescriptModules": 475
   },
@@ -8533,7 +8533,7 @@
       "language": "py",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "python/src/umf/__init__.py",
-      "sha256": "bfd0c2e4da3e59790897a0ef90a2ee9a8c1b650867d24bd178fdcf922c7e985b"
+      "sha256": "21f23a653cd24df58d0fe34892d8be361b9dc4da9c6f8b16d5c858b0033e0d03"
     },
     {
       "activationEvidence": [
@@ -8680,12 +8680,12 @@
         "register",
         "register_package"
       ],
-      "bytes": 3400,
+      "bytes": 3411,
       "disposition": "active-host-tooling-algorithm",
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "python/src/umf/registry.py",
-      "sha256": "24e457eeb4ccd369bb3c18288e3bf855744b90922495ce239a8887085f6587be"
+      "sha256": "c4c69b2af2245a816f7af4fef7199933dc27bb4baa6e092dcbc23c3a828d0c88"
     },
     {
       "activationEvidence": [],
@@ -8774,12 +8774,12 @@
         "inspect_extension_kinds",
         "validate_document"
       ],
-      "bytes": 1361,
+      "bytes": 1363,
       "disposition": "unreferenced-script-source",
       "language": "py",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "python/src/umf/validation.py",
-      "sha256": "aac6f413ab68fa7ece1e7733e9030445aea17faad6f9adccab0e4cdceeef22b5"
+      "sha256": "4860946222fa5d25f2076766e52cb71dd18b82449451f26adab1b371e2896142"
     },
     {
       "activationEvidence": [],
@@ -16896,7 +16896,7 @@
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "python/umf_codegen/src/umf_codegen/_release.py",
-      "sha256": "920dd45af7dbec497920c907ae42d9d863360e686da6e58f286d885e9922a07b"
+      "sha256": "2d74404eecf3f4448f61e098ef7ace4f95b717365960ae928ab2dfcc5ced9aae"
     },
     {
       "activationEvidence": [
@@ -16966,14 +16966,15 @@
         "buildAcceptanceLedger",
         "filesBelow",
         "indexFiles",
+        "readSources",
         "repositoryPath"
       ],
-      "bytes": 8731,
+      "bytes": 9358,
       "disposition": "unreferenced-script-source",
       "language": "ts",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/acceptance-traceability.ts",
-      "sha256": "9e8ad8c4b852c26033955fc83c96ed058f260b5165a478831e1fda488bf51611"
+      "sha256": "a08330ed56c66e03c3111c5f17517de482e252523c4d64a3b0523973cee25511"
     },
     {
       "activationEvidence": [
@@ -28743,6 +28744,7 @@
         "scripts/metamodel/build.ts",
         "scripts/metamodel/compile.ts",
         "scripts/metamodel/grammar.ts",
+        "tests/metamodel/compiler-kernel.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -32657,12 +32659,12 @@
         "sourceClosure",
         "walk"
       ],
-      "bytes": 68368,
+      "bytes": 68436,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/rust-core/full-conformance.ts",
-      "sha256": "468caf8036cc8b6514f3fe841173bac61d1ec2663509b923ed853a210c510be9"
+      "sha256": "56b9c9292b93105ed62b71c8bfcbc982b821b4aa7d9224166b4ebf99f940f1f7"
     },
     {
       "activationEvidence": [],
@@ -32781,12 +32783,12 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [],
-      "bytes": 3157,
+      "bytes": 3184,
       "disposition": "unreferenced-script-source",
       "language": "ts",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/rust-inventory-typescript.ts",
-      "sha256": "f08cced43bfcf88227bfd7e20e733601f2d4a3b96919075158f64023738ad940"
+      "sha256": "e9cd4ec974b629d262bc73ca73b39cd479732fd14674e72b0810c571d56acccd"
     },
     {
       "activationEvidence": [
@@ -43113,12 +43115,12 @@
         "program",
         "run"
       ],
-      "bytes": 13865,
+      "bytes": 15194,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "ts",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/metamodel/compiler-kernel.test.ts",
-      "sha256": "5e7083e72de34682004c9a16c9a28d405bdc3dab7462eb517c82bc01ec4ff89e"
+      "sha256": "5c0b47a111db9351efead0adaf28eda15ff81a43071f2acc48dcf45ca65e9d6b"
     },
     {
       "activationEvidence": [
@@ -44090,12 +44092,12 @@
       ],
       "active": true,
       "algorithmSymbols": [],
-      "bytes": 2672,
+      "bytes": 3019,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "ts",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/reference/self-model.test.ts",
-      "sha256": "9610457f7557d7dc61761198614c0790d8bfe749bd7b593da49d9a2476d52178"
+      "sha256": "a5ab1411acf4876d411995755032d31a7ad22822a62bbdb590faece19605abb5"
     },
     {
       "activationEvidence": [],
@@ -44307,6 +44309,17 @@
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/rust-inventory/test_inventory.py",
       "sha256": "8c16db0bdcce681c4052fc67d2f60c9436239e61e6a554dc1846a7fbc611afaf"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [],
+      "bytes": 2129,
+      "disposition": "unreferenced-test-source",
+      "language": "ts",
+      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "path": "tests/rust-inventory/typescript-resolution.test.ts",
+      "sha256": "ee570b07fb5067e94b865a27324e7a9b04409d44b50cfb751ecebdd8c65de4e5"
     },
     {
       "activationEvidence": [],
@@ -53265,7 +53278,7 @@
         "write_json_value"
       ],
       "resolvedInternalImports": [],
-      "sha256": "bfd0c2e4da3e59790897a0ef90a2ee9a8c1b650867d24bd178fdcf922c7e985b"
+      "sha256": "21f23a653cd24df58d0fe34892d8be361b9dc4da9c6f8b16d5c858b0033e0d03"
     },
     {
       "bytes": 13793,
@@ -53407,7 +53420,7 @@
       "sha256": "c625c5f187268ce66c60a396a7cad14d2b5e3d9ddb976719e0cc6209fcfc08e1"
     },
     {
-      "bytes": 3400,
+      "bytes": 3411,
       "disposition": "python-registry-binding",
       "imports": [
         "._rust",
@@ -53426,7 +53439,7 @@
         "Validation"
       ],
       "resolvedInternalImports": [],
-      "sha256": "24e457eeb4ccd369bb3c18288e3bf855744b90922495ce239a8887085f6587be"
+      "sha256": "c4c69b2af2245a816f7af4fef7199933dc27bb4baa6e092dcbc23c3a828d0c88"
     },
     {
       "bytes": 8935,
@@ -53501,7 +53514,7 @@
       "sha256": "d77a9afc1bd7d500d341fa00f3c8af73ed89694a0a5cd3f2382f577e6fdb947a"
     },
     {
-      "bytes": 1361,
+      "bytes": 1363,
       "disposition": "python-validation-binding",
       "imports": [
         "._rust",
@@ -53516,7 +53529,7 @@
         "validate_document"
       ],
       "resolvedInternalImports": [],
-      "sha256": "aac6f413ab68fa7ece1e7733e9030445aea17faad6f9adccab0e4cdceeef22b5"
+      "sha256": "4860946222fa5d25f2076766e52cb71dd18b82449451f26adab1b371e2896142"
     },
     {
       "bytes": 2063,
@@ -55992,7 +56005,7 @@
       "path": "python/umf_codegen/src/umf_codegen/_release.py",
       "publicExports": [],
       "resolvedInternalImports": [],
-      "sha256": "920dd45af7dbec497920c907ae42d9d863360e686da6e58f286d885e9922a07b"
+      "sha256": "2d74404eecf3f4448f61e098ef7ace4f95b717365960ae928ab2dfcc5ced9aae"
     },
     {
       "bytes": 8411,
@@ -56523,7 +56536,7 @@
         "proposeAvroNodeEdit"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/avsc/etc/browser/avsc-types.js",
+        "node_modules/avsc/etc/browser/avsc-types.js",
         "spec/extensions/avro/native-schema.schema.json",
         "spec/extensions/avro/package.json",
         "src/adapters/avro/metadata.ts",
@@ -57170,7 +57183,7 @@
         "proposeGeneralizedRdfQuadEdit"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/ajv/dist/2020.d.ts",
+        "node_modules/ajv/dist/2020.d.ts",
         "spec/extensions/generalized-rdf/dataset-schema.json",
         "spec/extensions/generalized-rdf/package.json",
         "src/adapters/jsonld/rdf-terms.ts",
@@ -57213,7 +57226,7 @@
         "inspectGraphql"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/graphql/index.d.mts",
+        "node_modules/graphql/index.d.mts",
         "spec/extensions/graphql/package.json",
         "src/generated/core-model.ts",
         "src/model/document.ts",
@@ -57512,7 +57525,7 @@
         "walkJsonSchema"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/ajv/dist/2020.d.ts",
+        "node_modules/ajv/dist/2020.d.ts",
         "spec/extensions/json-schema/package.json",
         "spec/extensions/json-schema/schema.json",
         "src/adapters/json-schema/tree.ts",
@@ -57596,8 +57609,8 @@
         "proposeRdfToJsonLd"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/jsonld/lib/flatten.js",
-        "../../../../Projects/umf/node_modules/jsonld/lib/index.js",
+        "node_modules/jsonld/lib/flatten.js",
+        "node_modules/jsonld/lib/index.js",
         "spec/extensions/jsonld/package.json",
         "src/adapters/generalized-rdf/index.ts",
         "src/adapters/jsonld/rdf-terms.ts",
@@ -57765,7 +57778,7 @@
         "proposeLinkmlDocumentNodeEdit"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/ajv/dist/2019.d.ts",
+        "node_modules/ajv/dist/2019.d.ts",
         "spec/extensions/linkml/native-schema.json",
         "spec/extensions/linkml/package.json",
         "src/generated/core-model.ts",
@@ -57866,7 +57879,7 @@
         "proposeOdcsDocumentNodeEdit"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/ajv/dist/2019.d.ts",
+        "node_modules/ajv/dist/2019.d.ts",
         "spec/extensions/odcs/native-3.0.0.json",
         "spec/extensions/odcs/native-3.0.1.json",
         "spec/extensions/odcs/native-3.0.2.json",
@@ -58049,7 +58062,7 @@
         "proposeOpenapiEdit"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/ajv-draft-04/dist/index.d.ts",
+        "node_modules/ajv-draft-04/dist/index.d.ts",
         "spec/extensions/openapi/package.json",
         "spec/extensions/openapi/upstream/2.0-schema.json",
         "spec/extensions/openapi/upstream/3.0-schema.json",
@@ -59371,9 +59384,9 @@
         "writeDescriptorSet"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/@bufbuild/protobuf/dist/esm/index.d.ts",
-        "../../../../Projects/umf/node_modules/@bufbuild/protobuf/dist/esm/reflect/index.d.ts",
-        "../../../../Projects/umf/node_modules/@bufbuild/protobuf/dist/esm/wkt/index.d.ts",
+        "node_modules/@bufbuild/protobuf/dist/esm/index.d.ts",
+        "node_modules/@bufbuild/protobuf/dist/esm/reflect/index.d.ts",
+        "node_modules/@bufbuild/protobuf/dist/esm/wkt/index.d.ts",
         "src/model/json.ts",
         "src/model/types.ts"
       ],
@@ -59419,9 +59432,9 @@
         "writeDescriptorSet"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/@bufbuild/protobuf/dist/esm/index.d.ts",
-        "../../../../Projects/umf/node_modules/@bufbuild/protobuf/dist/esm/wkt/index.d.ts",
-        "../../../../Projects/umf/node_modules/ajv/dist/2020.d.ts",
+        "node_modules/@bufbuild/protobuf/dist/esm/index.d.ts",
+        "node_modules/@bufbuild/protobuf/dist/esm/wkt/index.d.ts",
+        "node_modules/ajv/dist/2020.d.ts",
         "spec/extensions/protobuf/package.json",
         "src/adapters/protobuf/descriptor.ts",
         "src/adapters/protobuf/source.ts",
@@ -59497,8 +59510,8 @@
         "rdfRegistry"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/@rdfjs/types/index.d.ts",
-        "../../../../Projects/umf/node_modules/n3/browser/n3.esm.min.js",
+        "node_modules/@rdfjs/types/index.d.ts",
+        "node_modules/n3/browser/n3.esm.min.js",
         "spec/extensions/rdf/package.json",
         "src/generated/core-model.ts",
         "src/model/json.ts",
@@ -59547,8 +59560,8 @@
         "proposeShaclEngineValidation"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/n3/browser/n3.esm.min.js",
-        "../../../../Projects/umf/node_modules/rdf-validate-shacl/index.d.ts",
+        "node_modules/n3/browser/n3.esm.min.js",
+        "node_modules/rdf-validate-shacl/index.d.ts",
         "src/adapters/rdf/index.ts",
         "src/adapters/shacl/index.ts",
         "src/adapters/shacl/lists.ts",
@@ -59681,11 +59694,11 @@
         "installExactShaclNumbers"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/@rdfjs/types/index.d.ts",
-        "../../../../Projects/umf/node_modules/rdf-literal/index.d.ts",
-        "../../../../Projects/umf/node_modules/rdf-validate-shacl/index.d.ts",
-        "../../../../Projects/umf/node_modules/rdf-validate-shacl/src/property-path.d.ts",
-        "../../../../Projects/umf/node_modules/rdf-validate-shacl/src/shapes-graph.d.ts",
+        "node_modules/@rdfjs/types/index.d.ts",
+        "node_modules/rdf-literal/index.d.ts",
+        "node_modules/rdf-validate-shacl/index.d.ts",
+        "node_modules/rdf-validate-shacl/src/property-path.d.ts",
+        "node_modules/rdf-validate-shacl/src/shapes-graph.d.ts",
         "src/adapters/shacl/float.ts",
         "src/adapters/shacl/strings.ts",
         "src/model/types.ts"
@@ -59709,9 +59722,9 @@
         "installShaclStrings"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/rdf-validate-shacl/index.d.ts",
-        "../../../../Projects/umf/node_modules/rdf-validate-shacl/src/dataset-utils.d.ts",
-        "../../../../Projects/umf/node_modules/rdf-validate-shacl/src/shapes-graph.d.ts",
+        "node_modules/rdf-validate-shacl/index.d.ts",
+        "node_modules/rdf-validate-shacl/src/dataset-utils.d.ts",
+        "node_modules/rdf-validate-shacl/src/shapes-graph.d.ts",
         "src/model/types.ts"
       ],
       "sha256": "e27fcf3f348ddb2f1c7573e2e8092a3c7760db5d61c07f3a39ce5e7d3e2ecb49"
@@ -60199,7 +60212,7 @@
         "typeSpecCompilerReport"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/@typespec/compiler/dist/src/index.d.ts",
+        "node_modules/@typespec/compiler/dist/src/index.d.ts",
         "node_modules/@typespec/compiler/dist/src/lib/intrinsic/tsp-index.d.ts",
         "node_modules/@typespec/compiler/dist/src/lib/tsp-index.d.ts",
         "node_modules/@typespec/json-schema/dist/src/index.d.ts",
@@ -60264,7 +60277,7 @@
         "typespecRegistry"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/@typespec/compiler/dist/src/ast/index.d.ts",
+        "node_modules/@typespec/compiler/dist/src/ast/index.d.ts",
         "spec/extensions/typespec/package.json",
         "src/adapters/typespec/compiler.ts",
         "src/adapters/typespec/libraries.ts",
@@ -60339,7 +60352,7 @@
         "getTypeSpecSemanticGraph"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/@typespec/compiler/dist/src/index.d.ts",
+        "node_modules/@typespec/compiler/dist/src/index.d.ts",
         "src/adapters/typespec/compiler.ts",
         "src/adapters/typespec/index.ts",
         "src/model/json.ts",
@@ -60623,7 +60636,7 @@
         "avroFieldAllowsNull"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/avsc/etc/browser/avsc-types.js",
+        "node_modules/avsc/etc/browser/avsc-types.js",
         "src/model/native-json.ts",
         "src/model/serialization.ts"
       ],
@@ -60651,7 +60664,7 @@
         "inspectAvroTypeShape"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/avsc/etc/browser/avsc-types.js",
+        "node_modules/avsc/etc/browser/avsc-types.js",
         "src/model/json.ts",
         "src/model/native-json.ts",
         "src/model/serialization.ts"
@@ -63761,7 +63774,7 @@
         "verifyRelationshipExtra"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/graphql/index.d.mts",
+        "node_modules/graphql/index.d.mts",
         "spec/core/relationship-extras.schema.json",
         "spec/core/relationship-operation.schema.json",
         "spec/core/schema.json",
@@ -67550,7 +67563,7 @@
         "checkSemanticTypeReferences"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/ajv/dist/ajv.d.ts"
+        "node_modules/ajv/dist/ajv.d.ts"
       ],
       "sha256": "e3df1b029062b675c04f1fa38d29af2a252643e901ff9f4324cec9aefa8378be"
     },
@@ -71012,7 +71025,7 @@
         "treeChild"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/yaml/dist/index.d.ts",
+        "node_modules/yaml/dist/index.d.ts",
         "src/model/json.ts",
         "src/model/types.ts"
       ],
@@ -71646,7 +71659,7 @@
         "writeJsonValue"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/yaml/dist/index.d.ts",
+        "node_modules/yaml/dist/index.d.ts",
         "src/model/errors.ts",
         "src/model/internal/json-number.ts",
         "src/model/internal/scan-json-frame.ts",
@@ -72329,7 +72342,7 @@
         "verifyDddGraphqlProjection"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/graphql/index.d.mts",
+        "node_modules/graphql/index.d.mts",
         "spec/core/schema.json",
         "spec/projections/ddd-graphql.schema.json",
         "src/adapters/graphql/index.ts",
@@ -72548,7 +72561,7 @@
         "projectGraphqlInputToJsonSchema"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/graphql/index.d.mts",
+        "node_modules/graphql/index.d.mts",
         "src/adapters/graphql/index.ts",
         "src/adapters/json-schema/index.ts",
         "src/model/json.ts",
@@ -73013,7 +73026,7 @@
         "SemanticValidator"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/ajv/dist/ajv.d.ts",
+        "node_modules/ajv/dist/ajv.d.ts",
         "src/generated/core-model.ts",
         "src/model/json.ts",
         "src/model/types.ts",
@@ -73716,7 +73729,7 @@
         "installJsonEquality"
       ],
       "resolvedImports": [
-        "../../../../Projects/umf/node_modules/ajv/dist/2020.d.ts",
+        "node_modules/ajv/dist/2020.d.ts",
         "src/generated/core-model.ts",
         "src/generated/core-validators.ts",
         "src/validation/internal-schema.ts",

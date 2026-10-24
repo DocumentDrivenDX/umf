@@ -72,11 +72,11 @@ stripping issue. The ordinary test prerequisite builds/stages that Node artifact
 | Lakeview tests plus existing kind/core/dashboard suites | 193 passed, 4,217 assertions |
 | Rust core/wire libraries and integration tests | 221 passed across 30 result groups, including four native Lakeview tests, eight kind tests and frozen runtime/schema corpora |
 | Installed Python core, Rust compatibility and kinds tests | 212 passed on Python 3.13.16/Pydantic 2.14.1; generic regression, not a new Python Lakeview API claim |
-| Existing metamodel tests | 58 passed; clean-room generation hit its 120-second timeout. Source-bound generated-resource freshness passes separately; no full 59-test pass claimed |
+| Existing metamodel tests | 59 passed, 405 assertions; source-only cold compilation, fixed point, no-write and extra-output rejection all pass |
 | Generic kind installed parity | 15 cases across CLI, Node, Bun, Python and Chromium; zero mismatches in the refreshed [kind receipt](../extension-kinds/receipt.json) |
 | Extension and JSON Schema audits | 72/72 packages and 382/382 schemas pass |
-| Library type checking, generated-resource check, Rust boundary checker and controls | Pass; 28 boundary/inventory/transport controls pass; combined tools typecheck retains the #46 baseline limitation |
-| Core authority, compilation boundaries and acceptance traceability | Authority/boundary checks and ledger freshness pass; 841 criteria. Ledger unit reruns encountered the preparation/time-budget limits below |
+| Combined type checking, Python lint, generated-resource check and Rust boundary controls | Pass; 28 Python controls plus linked-dependency resolution regression pass |
+| Core authority, compilation boundaries and acceptance traceability | Pass; 841 criteria; 5 ledger tests with 1,272 assertions pass |
 
 The shared interpreter is unchanged from the #46 prerequisite; current main
 already shares immutable lexical snapshots. Native/core edits, broken members
@@ -94,16 +94,36 @@ structurally checked; full nested consistency requires the explicitly selected
 Rust validator. Missing capabilities remain incomplete, not implicitly trusted.
 
 This revision builds on [PR #46](https://github.com/DocumentDrivenDX/umf/pull/46)
-at `1a1d234833c74ff35799030e01d8824011b5e25e`. Generic kind admission,
+with shared validation fixes at `07598886f762e896781977148083a3dae74363ca`. Generic kind admission,
 discovery and interpretation remain in that prerequisite; this PR owns the
 Lakeview package, adapter/runtime integration and original-byte tests. Receipts
 are refreshed on the stacked source cohort and qualify local built artifacts,
 not hosted CI, a package release or native workspace acceptance.
 
-Combined `bun run typecheck` retains the prerequisite baseline error in unchanged
-`scripts/rust-core/full-conformance.ts:50`; library `tsc --noEmit` passes.
-Initial metamodel and acceptance-ledger unit runs timed out during compiler
-preparation and filesystem-backed source scans while other builds were running.
-The metamodel semantic rerun uses the freshly built native CLI; generated-resource
-freshness is independently source-bound and passes. Timeout runs do not count as
-a full metamodel or ledger-unit pass.
+## Clean-validation follow-up — 2026-10-23
+
+The earlier metamodel/ledger timeouts and command-redaction type error are
+resolved in the shared prerequisite. This stacked revision passes combined
+`bun run typecheck`, all 59 metamodel tests (405 assertions, 120.60 seconds
+including cold preparation), and all five ledger tests (1,272 assertions,
+7.67 seconds). The scanner reads fresh files with bounded concurrency rather
+than serializing more than a thousand reads. No ledger classifications change.
+
+Semantic assertions use an immutable compiler freshly qualified from source.
+Clean-room compilation still copies the declared sources and removes any
+installed-compiler override. Its cold preparation, existing fixed-point/no-write
+assertion budget and native temporary-tree cleanup are bounded separately; all
+assertions and negative controls remain enabled. Both subprocess pipes drain
+concurrently. This is the same fix exercised by #46, with no Lakeview-specific
+exception or skipped test.
+
+Python lint, logical dependency census paths, reference graph identity checks and
+the regenerated Bun 1.4.3 compiler payload also pass. Core/package versions are
+unchanged. The 193-test Lakeview/kind/core/dashboard suite, 212 installed Python
+regressions, nine CLI transport controls, five-host kind parity and four-host
+original-byte reconstruction pass again. The native engine and Lakeview source
+semantics are unchanged by these build/test fixes.
+
+These results qualify the existing PR stack. Newer main release work at 259bf1e
+is not integrated here; hosted checks and current-main merge validation remain
+separate gates before merging.
