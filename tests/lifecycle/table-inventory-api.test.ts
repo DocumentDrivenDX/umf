@@ -8,7 +8,7 @@ import {compileG10InventoryPlan,createHistoricalG10Verifier} from '../../src/tab
 import {partitionRendererDependencies,verifySourcePublicationCoverage} from '../../src/table-migration/inventory-effects';
 import {deriveInventorySeedLineage} from '../../src/table-migration/inventory-history';
 import {projectG10Bundle} from '../../src/table-migration/inventory-source';
-import {partitionInventoryMarkersForG02} from '../../src/table-migration/inventory-g02-source';
+import {partitionInventoryMarkersForG02,sameSourceExceptG02AndCreates} from '../../src/table-migration/inventory-g02-source';
 import {consumeTableMigrationChangesBounded} from '../../src/table-migration/reviewed';
 import {legalSource} from './legal-fixture';
 import {legalG10MixedSources,mixedCreatedTableSeedCommand,mixedCreatedTableSeedSet} from './g10-mixed-create-g02-fixture';
@@ -291,6 +291,37 @@ test('G10 mixed CREATE plus existing-target G02 partitions only the exact tighte
  expect(result.plan.review).toEqual(candidates);expect(verifyTableInventoryMigration(result.plan,history)).toEqual(result.plan);
  const foreignTightening={...request,options:{...request.options,reviewedChanges:request.options.reviewedChanges.map((marker:any)=>marker.kind==='tighten-not-null'?{...marker,path:'/modules/0/extensions/umf.tables/tables/0/columns/0'}:marker)}};
  expect(compileTableInventoryMigration(foreignTightening).status).toBe('blocked');
+});
+
+test('G10 G02 source certificate accepts only the owned change and selected CREATE closure',()=>{
+ const {request}=mixedG02Request(true),created=request.options.tableIntents.filter((intent:any)=>intent.kind==='create').map((intent:any)=>intent.table);
+ expect(sameSourceExceptG02AndCreates(request.previous!,request.next,request.options,created)).toBe(true);
+ const original=JSON.parse(request.next.source.utf8);
+ const mutations:Array<[string,(document:any)=>void]>=[
+  ['retained-table',(document)=>{const table=document.modules[0]!.extensions['umf.tables'].tables.find((item:any)=>item.id==='clients');table.name='client_registry';}],
+  ['retained-mapping',(document)=>{const table=document.modules[0]!.extensions['umf.tables'].tables.find((item:any)=>item.id==='clients');table.columns[0].name='client_key';}],
+  ['retained-policy',document=>{const table=document.modules[0]!.extensions['umf.tables'].tables.find((item:any)=>item.id==='clients');table.policy.person.select={kind:'deny'};}],
+  ['retained-command',document=>{const command=document.modules[0]!.extensions['umf.tables'].commands.find((item:any)=>item.id==='read_clients');command.body.maxRows=99;}],
+  ['raw-opaque-extension-retention',document=>{document.modules[0]!.extensions['example.retained']='changed';}],
+  ['retained-seed',document=>{const seed=document.modules[0]!.extensions['umf.tables'].seedSets.find((item:any)=>item.id==='synthetic-bootstrap'),row=seed.rows.find((item:any)=>item.table==='clients'),cell=row.values.find((item:any)=>item.field.element==='clients__client_name');cell.value={string:'Changed client'};}],
+ ];
+ for(const [label,mutate] of mutations){
+  const document=structuredClone(original);mutate(document);
+  const changed={...request.next,source:{...request.next.source,utf8:JSON.stringify(document)}};
+  expect(sameSourceExceptG02AndCreates(request.previous!,changed as any,request.options,created),label).toBe(false);
+ }
+ const wrongOperation=structuredClone(original);wrongOperation.modules[0]!.extensions['umf.tables'].commands.find((item:any)=>item.id==='derive_matter_review_date').id='derive_other_field';
+ expect(sameSourceExceptG02AndCreates(request.previous!,{...request.next,source:{...request.next.source,utf8:JSON.stringify(wrongOperation)}} as any,request.options,created)).toBe(false);
+});
+
+test('G10 per-table review meanings are detached from one shared projection graph',()=>{
+ const projected=projectG10Bundle(deploy(legalSource()),'next'),catalogRow=structuredClone(projected.projection.catalog.tables[0]!);
+ const first=projected.reviews[0]!.meaning as any;
+ first.physicalTable.value.name='mutated-review';
+ first.catalog.tables[0]!.meaning.declaration.name='mutated-review-catalog';
+ expect(projected.projection.catalog.tables[0]).toEqual(catalogRow);
+ const second=projected.reviews.find(review=>review.table!==projected.reviews[0]!.table)!;
+ expect((second.meaning as any).physicalTable.value.name).not.toBe('mutated-review');
 });
 
 test('G10 prepared public calls own source/history inputs and never invoke request accessors',()=>{

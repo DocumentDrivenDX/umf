@@ -171,9 +171,9 @@ function catalogProjection(bundle:TableDeploymentBundle,source:any,payload:any,m
  for(const [i,seed]of payload.seedSets.entries()){const seedId=push(out.operations,'seed-set',null,seed.id,seed,`${extension}/seedSets/${i}`);out.seedStates.push({id:seed.id,definitionDigest:hashCanonical(seed),sourcePath:`${extension}/seedSets/${i}`,state:'not-run'});for(const row of seed.rows??[]){if(!tableIdentity.has(row.table))throw new Error('G10_SEED_TABLE_UNBOUND');out.dependencies.push({from:seedId,to:tableIdentity.get(row.table)!,reason:'seed-set-requires-table',sourcePath:`${extension}/seedSets/${i}`,state:'present'});}}
  return {catalog:out.catalog,dependencies:out.dependencies,operations:out.operations,rendererOperations:out.rendererOperations,seedStates:out.seedStates,sourcePaths};
 }
-function projectOne(verified:TableDeploymentBundle,side:Side,tableId:string,rendererOps:InternalTableDeploymentOperationRecord[]):{review:InventoryProjection;table:InventoryTable;projection:CatalogProjection} {
- const {source,module,payload,moduleIndex,extensionPath}=sourcePayload(verified),i=payload.tables.findIndex((t:any)=>t.id===tableId);if(i<0)throw new Error('G10_TABLE_MISSING:'+tableId);
- const declaration=payload.tables[i] as TableDeclaration,record=findElement(source,declaration.record,extensionPath+'/tables/'+i+'/record'),projection=catalogProjection(verified,source,payload,moduleIndex,rendererOps),pathValues=sourcePathIndex(source as Json);
+function projectOne(verified:TableDeploymentBundle,side:Side,tableId:string,parts:ReturnType<typeof sourcePayload>,projection:CatalogProjection,pathValues:Map<string,Json>,sourceOrder:Map<string,number>):{review:InventoryProjection;table:InventoryTable;projection:CatalogProjection} {
+ const {source,module,payload,moduleIndex,extensionPath}=parts,i=payload.tables.findIndex((t:any)=>t.id===tableId);if(i<0)throw new Error('G10_TABLE_MISSING:'+tableId);
+ const declaration=payload.tables[i] as TableDeclaration,record=findElement(source,declaration.record,extensionPath+'/tables/'+i+'/record');
  const start=ik(identity('table',tableId,declaration.record)),included=new Set([start]);let changed=true;
  // Dependency closure follows typed compiler-derived edges in both directions:
  // inbound FKs/policies/operations/seeds and outbound key/field requirements all remain visible.
@@ -197,7 +197,6 @@ function projectOne(verified:TableDeploymentBundle,side:Side,tableId:string,rend
   for(const domain of domains){if(!domain||typeof domain.definitionPath!=='string'||!domain.definition||typeof domain.definition!=='object'||Array.isArray(domain.definition))throw new Error('G10_OPERATION_PARAMETER_DOMAIN_SHAPE');selectedPaths.add(domain.definitionPath);}
  }
  for(const edge of selectedEdges)selectedPaths.add(edge.sourcePath);
- const sourceOrder=new Map([...pathValues.keys()].map((path,index)=>[path,index]));
  const closurePaths=[...selectedPaths].filter(path=>pathValues.has(path)).sort((a,b)=>sourceOrder.get(a)!-sourceOrder.get(b)!);
  const sourceClosure=closurePaths.map(path=>({path:path||'/',value:clone(pathValues.get(path)!) as Json}));
  const selectedOperationIds=new Set(projection.operations.filter(item=>item.identity.kind==='operation'&&included.has(ik(item.identity))).map(item=>item.identity.subject as string));
@@ -209,5 +208,5 @@ function projectOne(verified:TableDeploymentBundle,side:Side,tableId:string,rend
 }
 export function projectG10Bundle(input:unknown,side:Side):{bundle:TableDeploymentBundle;tables:InventoryTable[];reviews:InventoryProjection[];projection:CatalogProjection} {
  const bundle=verifyTableDeployment(input),parts=sourcePayload(bundle),{payload}=parts;
- const operations=rendererOperations(bundle,parts.source,payload,parts.moduleIndex),rows=(payload.tables as TableDeclaration[]).map(t=>projectOne(bundle,side,t.id,operations)),projection=catalogProjection(bundle,parts.source,payload,parts.moduleIndex,operations);return {bundle,tables:rows.map(x=>x.table),reviews:rows.map(x=>x.review),projection};
+ const operations=rendererOperations(bundle,parts.source,payload,parts.moduleIndex),projection=catalogProjection(bundle,parts.source,payload,parts.moduleIndex,operations),pathValues=sourcePathIndex(parts.source as Json),sourceOrder=new Map([...pathValues.keys()].map((path,index)=>[path,index])),rows=(payload.tables as TableDeclaration[]).map(t=>projectOne(bundle,side,t.id,parts,projection,pathValues,sourceOrder));return {bundle,tables:rows.map(x=>x.table),reviews:rows.map(x=>x.review),projection};
 }

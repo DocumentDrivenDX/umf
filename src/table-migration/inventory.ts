@@ -29,6 +29,15 @@ type MetadataPaths={prepare:'/inventory/metadata/prepare';approval:'/inventory/m
 const metadataPaths:MetadataPaths={prepare:'/inventory/metadata/prepare',approval:'/inventory/metadata/approval',publication:'/inventory/metadata/publication'};
 const metadataSubject:InventorySubject={kind:'metadata',profile:'umf.table-inventory-metadata/0.1'};
 function fail(code:string):never{throw new Error('G10_PLAN_'+code);}
+function validateExactTableIntentCoverage(previous:ReturnType<typeof projectG10Bundle>|null,next:ReturnType<typeof projectG10Bundle>,options:G10ValidatedRequest['options']):void{
+ const oldTables=new Map((previous?.tables??[]).map(table=>[table.table,table])),newTables=new Map(next.tables.map(table=>[table.table,table])),intents=new Map<string,TableIntent>();
+ for(const intent of options.tableIntents){const key=JSON.stringify([intent.kind,intent.table]);if(intents.has(key))throw new Error('G10_INTENT_DUPLICATE');intents.set(key,intent);const old=oldTables.get(intent.table),fresh=newTables.get(intent.table);
+  if(intent.kind==='create'){if(old||!fresh||!sameRef(intent.record,fresh.record))throw new Error('G10_CREATE_INTENT_MISMATCH:'+intent.table);}
+  else if(!old||fresh||!sameRef(intent.record,old.record))throw new Error('G10_REMOVE_INTENT_MISMATCH:'+intent.table);
+ }
+ for(const table of oldTables.values())if(!newTables.has(table.table)&&!intents.has(JSON.stringify(['remove',table.table]))||newTables.has(table.table)&&intents.has(JSON.stringify(['remove',table.table])))throw new Error('G10_REMOVE_INTENT_COVERAGE:'+table.table);
+ for(const table of newTables.values())if(!oldTables.has(table.table)&&!intents.has(JSON.stringify(['create',table.table]))||oldTables.has(table.table)&&intents.has(JSON.stringify(['create',table.table])))throw new Error('G10_CREATE_INTENT_COVERAGE:'+table.table);
+}
 function metadataStep(id:string,operation:'prepare-inventory-metadata'|'record-inventory-approval'|'publish-inventory',sourcePath:string):EffectNode{return {id,kind:'metadata',operation,subject:metadataSubject,sourcePath,sql:'',transaction:'required',recovery:'rollback-transaction',sourceOrder:0,atomicGroup:null,transition:{action:'update',collection:'tables',meaning:{state:operation==='publish-inventory'?'published':'pending'}}};}
 function inventorySubject(subject:InventorySubject):Json {
  if(subject.kind==='schema-grant')return {kind:'schema-grant',schema:subject.schema,audiences:['person','batch'],privilege:'USAGE'};
@@ -373,8 +382,7 @@ export function createHistoricalG10Verifier():HistoricalG10PlanVerifier {
   active.add(index);
   try{
    const request={id:plan.id,predecessor:plan.predecessor,previous:plan.previous,next:plan.next,options:plan.options,history:priorHistory};
-   const rebuiltRaw=compileG10InventoryPlanInternal(request,verify);
-   const rebuilt=withReview(rebuiltRaw,exactReview(request as TableInventoryMigrationRequest,verify));
+   const rebuilt=compileG10InventoryPlanInternal(request,verify);
    if(canonical(rebuilt)!==canonical(plan))fail('HISTORICAL_G10_RECOMPILE:'+index);
    // Keep at most the admitted original history once (plans and executions),
    // plus one plan snapshot per position; never materialize nested full-prefix
@@ -405,9 +413,17 @@ function compileG10InventoryDeltaFromPrepared(request:G10ValidatedRequest,next:R
   compileG02FieldEffects({previous:previous.bundle,next:next.bundle,options:{version:'umf.table-migration-options/0.4',backfills:options.backfills,concurrentIndexes:[],reviewedChanges:ownedMarkers,validations:[]} as unknown as TableMigrationOptions,createdTables:g02Tables});
  }
  if(previous&&hashCanonical(previous.bundle.configuration)!==hashCanonical(next.bundle.configuration))throw new Error('G10_CONFIGURATION_CHANGE_UNSUPPORTED');
+ validateExactTableIntentCoverage(previous,next,options);
+ const g02SourceExact=options.backfills.length===1&&!!previous&&sameSourceExceptG02AndCreates(previous.bundle,next.bundle,options,g02Tables);
+ if(options.backfills.length&&!g02SourceExact)throw new Error('G10_G02_SOURCE_DELTA_UNRELATED');
+ // backfills stays unknown[] at the public options boundary; prior closed
+ // admission and the unchanged G02 constructor have already validated it here.
+ const selectedBackfill=options.backfills.length===1?options.backfills[0]:undefined;
+ const g02Target=selectedBackfill!==undefined&&selectedBackfill!==null&&typeof selectedBackfill==='object'&&!Array.isArray(selectedBackfill)&&'table' in selectedBackfill&&typeof selectedBackfill.table==='string'?selectedBackfill.table:undefined;
+ const priorOwned=g02SourceExact?ownedNativeTableMeanings(previous!.projection):null,freshOwned=g02SourceExact?ownedNativeTableMeanings(next.projection):null;
  const selected=new Map<string,TableIntent>();for(const [i,intent]of options.tableIntents.entries()){const k=JSON.stringify([intent.kind,intent.table]);if(selected.has(k))throw new Error('G10_INTENT_DUPLICATE:'+i);selected.set(k,intent);}
  const oldMap=new Map((previous?.tables??[]).map(t=>[t.table,t])),newMap=new Map(next.tables.map(t=>[t.table,t])),zero=hashCanonical(null),changes:InventoryChange[]=[],fieldChanges:InventoryFieldChange[]=[];
- for(const old of previous?.tables??[]){const fresh=newMap.get(old.table);if(fresh){if(!sameRef(old.record,fresh.record)||old.schema!==fresh.schema||old.name!==fresh.name)throw new Error('G10_RETAINED_TABLE_BINDING_CHANGED:'+old.table);const oldMeaning=previous!.reviews.find(r=>r.table===old.table)!.meaning,nextMeaning=next.reviews.find(r=>r.table===old.table)!.meaning,g02Selected=options.backfills.length===1&&(options.backfills[0] as any).table===old.table,g02SourceExact=!g02Selected||sameSourceExceptG02AndCreates(previous!.bundle,next.bundle,options,g02Tables);if(!g02SourceExact)throw new Error('G10_G02_SOURCE_DELTA_UNRELATED:'+old.table);if(stableMeaningDigest(oldMeaning)!==stableMeaningDigest(nextMeaning)&&!sameSourceExceptG05SelectedFields(previous!.bundle,next.bundle,options,old.table)&&!g02Selected)throw new Error('G10_RETAINED_SEMANTIC_CHANGE_UNIMPLEMENTED:'+old.table);continue;}const key=JSON.stringify(['remove',old.table]),intent=selected.get(key);if(!intent||!sameRef(intent.record,old.record))throw new Error('G10_REMOVE_INTENT_MISSING:'+old.table);selected.delete(key);changes.push({kind:'remove-table',table:old.table,record:clone(intent.record),beforePath:String((previous!.reviews.find(r=>r.table===old.table)!.meaning as any).physicalTable.path),afterPath:null,beforeMeaningDigest:old.meaningDigest,afterMeaningDigest:zero});}
+ for(const old of previous?.tables??[]){const fresh=newMap.get(old.table);if(fresh){if(!sameRef(old.record,fresh.record)||old.schema!==fresh.schema||old.name!==fresh.name)throw new Error('G10_RETAINED_TABLE_BINDING_CHANGED:'+old.table);if(g02SourceExact&&old.table!==g02Target&&canonical(priorOwned!.get(old.table)??[])!==canonical(freshOwned!.get(old.table)??[]))throw new Error('G10_G02_RETAINED_NATIVE_MEANING_CHANGED:'+old.table);const oldMeaning=previous!.reviews.find(r=>r.table===old.table)!.meaning,nextMeaning=next.reviews.find(r=>r.table===old.table)!.meaning;if(stableMeaningDigest(oldMeaning)!==stableMeaningDigest(nextMeaning)&&!sameSourceExceptG05SelectedFields(previous!.bundle,next.bundle,options,old.table)&&!g02SourceExact)throw new Error('G10_RETAINED_SEMANTIC_CHANGE_UNIMPLEMENTED:'+old.table);continue;}const key=JSON.stringify(['remove',old.table]),intent=selected.get(key);if(!intent||!sameRef(intent.record,old.record))throw new Error('G10_REMOVE_INTENT_MISSING:'+old.table);selected.delete(key);changes.push({kind:'remove-table',table:old.table,record:clone(intent.record),beforePath:String((previous!.reviews.find(r=>r.table===old.table)!.meaning as any).physicalTable.path),afterPath:null,beforeMeaningDigest:old.meaningDigest,afterMeaningDigest:zero});}
  for(const fresh of next.tables){if(oldMap.has(fresh.table))continue;const key=JSON.stringify(['create',fresh.table]),intent=selected.get(key);if(!intent||!sameRef(intent.record,fresh.record))throw new Error('G10_CREATE_INTENT_MISSING:'+fresh.table);selected.delete(key);changes.push({kind:'create-table',table:fresh.table,record:clone(fresh.record),beforePath:null,afterPath:String((next.reviews.find(r=>r.table===fresh.table)!.meaning as any).physicalTable.path),beforeMeaningDigest:zero,afterMeaningDigest:fresh.meaningDigest});}
  if(selected.size)throw new Error('G10_INTENT_UNUSED');
  for(const item of [...options.retirements as any[],...options.restorations as any[]]){
@@ -441,6 +457,26 @@ function stableMeaningValue(meaning:Json|null):Json|null {
  return value as Json;
 }
 function stableMeaningDigest(meaning:Json|null):string{return hashCanonical(stableMeaningValue(meaning));}
+function ownedNativeTableMeanings(projection:CatalogProjection):Map<string,Json[]>{
+ const output=new Map<string,Json[]>();
+ for(const collection of Object.keys(projection.catalog) as (keyof PrefixCatalog)[]){
+  for(const row of projection.catalog[collection]){
+   const table=row.identity.table;if(table===null)continue;
+   const meaning=clone(row.meaning) as any;
+   // Source paths are provenance coordinates. They may move when selected
+   // CREATE declarations are authored before a retained table; native meaning
+   // and every other catalog field remain exact.
+   if(meaning&&typeof meaning==='object'){
+    // Match only the diagnostic coordinates already excluded by stableMeaningValue.
+    // This applies to key/check/FK/index/comment expectations as well as columns.
+    if(Object.hasOwn(meaning,'sourcePath'))delete meaning.sourcePath;
+    if(meaning.expectation&&typeof meaning.expectation==='object'&&Object.hasOwn(meaning.expectation,'sourcePath'))delete meaning.expectation.sourcePath;
+   }
+   const rows=output.get(table)??[];rows.push({collection,identity:clone(row.identity) as unknown as Json,meaning,state:row.state,...(row.validation!==undefined?{validation:row.validation}:{}),...(row.validity!==undefined?{validity:row.validity}:{})} as unknown as Json);output.set(table,rows);
+  }
+ }
+ return output;
+}
 export function deriveInventoryReviewCandidates(input:unknown,verifyHistoricalG10?:import('./inventory-options').HistoricalG10PlanVerifier):InventoryProjection[] {
  const delta=compileG10InventoryDelta(input,verifyHistoricalG10),request:G10ValidatedRequest=validateG10RequestShape(input,verifyHistoricalG10),next=projectG10Bundle(request.next,'next'),previous=request.previous===null?null:projectG10Bundle(request.previous,'previous'),byIntent=new Map<string,TableIntent>(request.options.tableIntents.map(x=>[JSON.stringify([x.kind,x.table]),x]));
  const candidates:InventoryProjection[]=[];
