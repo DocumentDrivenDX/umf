@@ -98,7 +98,8 @@ def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
         from .approval import APPROVAL_PROFILE
 
         expected_profile = {'version': 'umf.table-migration-execution/0.5',
-                            'progressRelation': PROGRESS, 'ownerOnly': True}
+                            'progressRelation': PROGRESS, 'ownerOnly': True,
+                            'ingressProfile': 'umf.table-generation-ingress/0.1'}
         if (plan.get('version') != 'umf.table-migration/0.6'
                 or plan.get('approvalProfile') != APPROVAL_PROFILE):
             raise CatalogError('approval-profile-mismatch')

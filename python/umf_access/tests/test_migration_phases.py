@@ -173,7 +173,8 @@ class MigrationPhaseTests(unittest.TestCase):
                 'concurrentIndexes': [], 'reviewedChanges': [], 'validations': []},
             'approvalProfile': APPROVAL_PROFILE,
             'executionProfile': {'version': 'umf.table-migration-execution/0.5',
-                'progressRelation': 'umf_lifecycle_progress', 'ownerOnly': True},
+                'progressRelation': 'umf_lifecycle_progress', 'ownerOnly': True,
+                'ingressProfile': 'umf.table-generation-ingress/0.1'},
             'steps': steps, 'phases': [phase],
             'previous': {'expectedCatalog': {'columns': [
                 {'table': 'items', 'field': old_field,
@@ -193,6 +194,51 @@ class MigrationPhaseTests(unittest.TestCase):
             with self.subTest(mutation=mutate):
                 with self.assertRaisesRegex(CatalogError, 'mixed-phase-profile'):
                     _verified_phases(forged)
+
+    def test_g11_execution05_requires_exact_generation_ingress_profile(self):
+        candidate = self._g11_minimal_plan()
+        # The current compiler emits this exact four-member execution profile.
+        candidate['executionProfile'] = {
+            'version': 'umf.table-migration-execution/0.5',
+            'progressRelation': 'umf_lifecycle_progress',
+            'ownerOnly': True,
+            'ingressProfile': 'umf.table-generation-ingress/0.1',
+        }
+        self.assertEqual(_verified_phases(candidate), candidate['phases'])
+
+        for mutate in (
+                lambda value: value['executionProfile'].pop('ingressProfile'),
+                lambda value: value['executionProfile'].update(
+                    ingressProfile='umf.table-generation-ingress/0.2'),
+                lambda value: value['executionProfile'].update(extra=True)):
+            forged = copy.deepcopy(candidate)
+            mutate(forged)
+            with self.subTest(mutation=mutate):
+                with self.assertRaisesRegex(CatalogError, 'mixed-phase-profile'):
+                    _verified_phases(forged)
+
+    def test_g11_native_host_still_refuses_unreleased06_before_acquire(self):
+        from umf_access.lifecycle.host import apply_migration_on_host
+
+        candidate = self._g11_minimal_plan()
+        candidate['executionProfile'] = {
+            'version': 'umf.table-migration-execution/0.5',
+            'progressRelation': 'umf_lifecycle_progress',
+            'ownerOnly': True,
+            'ingressProfile': 'umf.table-generation-ingress/0.1',
+        }
+
+        class HostMustNotAcquire:
+            def acquire(self, *args, **kwargs):
+                raise AssertionError('unreleased .6 reached host acquisition')
+
+        with patch('umf_access.lifecycle.ledger._verified_plan',
+                   return_value=candidate):
+            with self.assertRaisesRegex(CatalogError, 'host-migration-profile'):
+                apply_migration_on_host(
+                    HostMustNotAcquire(), candidate,
+                    expected_head='a' * 64, file_digest='b' * 64,
+                    qualification_profile='test', evidence_digest='c' * 64)
 
     def test_g11_phase_refuses_forged_role_subject_order_and_omitted_backfill(self):
         import copy
