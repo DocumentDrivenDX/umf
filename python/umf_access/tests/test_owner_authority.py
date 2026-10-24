@@ -12,6 +12,7 @@ import tempfile
 import threading
 import unittest
 import uuid
+from contextlib import contextmanager
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -71,6 +72,16 @@ class OwnerAuthorityTests(unittest.TestCase):
         for issuer in self.test_issuers:
             native._BOOTSTRAP_ISSUERS.pop(id(issuer), None)
         self.temp.cleanup()
+
+    @contextmanager
+    def _synthetic_native_lease(self, supervisor, operation_kind):
+        from umf_access.lifecycle import ingress_local_postgres as native
+
+        lease = SimpleNamespace(_operation_kind=operation_kind)
+        object.__setattr__(supervisor, '_active_control_lease', lease)
+        with patch.object(native, '_resolve_original_control_lease',
+                          return_value=lease):
+            yield
 
     def _config(self, *, public_key: bytes | None = None, scopes=None,
                 supervisor_ids=None, provider_ids=None, installation_ids=None):
@@ -308,7 +319,16 @@ class OwnerAuthorityTests(unittest.TestCase):
                     reservation_id=reservation_id,
                     journal_record_digest=reservation_event['recordDigest'])
                 supervisor._native_effect_reservations[id(reservation)] = reservation
-                binding = session.bind_native_effect(verified, reservation)
+                operation_kind = {
+                    'local-target-creation': 'target-apply',
+                    'native-principal-preparation': 'principals-apply',
+                    'local-target-registration': 'registration-apply',
+                    'native-store-creation': 'store',
+                    'disabled-epoch-provision': 'epoch',
+                    'generation-ingress-transition': 'transition',
+                }[scope]
+                with self._synthetic_native_lease(supervisor, operation_kind):
+                    binding = session.bind_native_effect(verified, reservation)
                 pending = self.authority.observe_original_request(
                     self.authority.authority_context, request.effect_key)
                 self.assertEqual(pending.approval_status, 'consumed')
@@ -329,7 +349,8 @@ class OwnerAuthorityTests(unittest.TestCase):
                     receipt_digest=receipt,
                     journal_record_digest=outcome_event['recordDigest'])
                 supervisor._native_effect_outcomes[id(outcome)] = outcome
-                terminal = session.record_native_outcome(binding, outcome)
+                with self._synthetic_native_lease(supervisor, operation_kind):
+                    terminal = session.record_native_outcome(binding, outcome)
                 self.assertEqual(terminal.approval_id, request._approval_id)
                 self.assertEqual(terminal.scope, scope)
                 self.assertEqual(terminal.approval_status, 'consumed')
@@ -504,13 +525,15 @@ class OwnerAuthorityTests(unittest.TestCase):
             self.authority, bootstrap_issuer=supervisor._bootstrap_issuer,
             supervisor=supervisor)
 
-        binding = session.bind_native_effect(approval, reservation)
-        self.assertIs(session.bind_native_effect(approval, reservation), binding)
+        with self._synthetic_native_lease(supervisor, 'store'):
+            binding = session.bind_native_effect(approval, reservation)
+            self.assertIs(session.bind_native_effect(approval, reservation), binding)
         pending = self.authority.observe_original_request(
             self.authority.authority_context, request.effect_key)
         self.assertEqual(pending.approval_status, 'consumed')
         self.assertEqual(pending.effect_status, 'effect-pending')
-        with self.assertRaisesRegex(OwnerAuthorityError, 'native-outcome-untrusted'):
+        with (self._synthetic_native_lease(supervisor, 'store'),
+              self.assertRaisesRegex(OwnerAuthorityError, 'native-outcome-untrusted')):
             session.record_native_outcome(binding, {'status': 'confirmed'})
 
         receipt = _hex('2')
@@ -524,7 +547,8 @@ class OwnerAuthorityTests(unittest.TestCase):
             sequence=2, status='confirmed', receipt_digest=receipt,
             journal_record_digest=outcome_event['recordDigest'])
         supervisor._native_effect_outcomes[id(native_outcome)] = native_outcome
-        completed = session.record_native_outcome(binding, native_outcome)
+        with self._synthetic_native_lease(supervisor, 'store'):
+            completed = session.record_native_outcome(binding, native_outcome)
         self.assertEqual(completed.effect_status, 'confirmed')
         self.assertEqual(completed.effect_receipt_digest, receipt)
 

@@ -1,0 +1,26 @@
+{
+  "changes": [
+    {
+      "path": "python/umf_access/src/umf_access/lifecycle/owner_bootstrap.py",
+      "postimageSha256": "7c3285e1d62c2e836b712b9c6e098e1c4f20b617eeb2c5263b67664797d8f7c9",
+      "postimageWorktreePath": "/Users/erik/.codex/worktrees/g11-field-replacement/umf/python/umf_access/src/umf_access/lifecycle/owner_bootstrap.py",
+      "preimagePath": "/private/tmp/g11-native-lease-source-007/source/python/umf_access/src/umf_access/lifecycle/owner_bootstrap.py",
+      "preimageSha256": "17f88e96ef1b861c403fa530433807e4004f589e23069d4a9db7f276738c9a72"
+    },
+    {
+      "path": "python/umf_access/tests/test_original_control_lease.py",
+      "postimageSha256": "4b1bc6b743e343ef7c47ea338925fa84b43b3756a18ad13b9f5db2aeee0c8245",
+      "postimageWorktreePath": "/Users/erik/.codex/worktrees/g11-field-replacement/umf/python/umf_access/tests/test_original_control_lease.py",
+      "preimagePath": "/private/tmp/g11-native-lease-root-review008/source/python/umf_access/tests/test_original_control_lease.py",
+      "preimageSha256": "baa7d89c087369106cec9a05829b4d6569bec357f2536705d12d63545a62faee"
+    }
+  ],
+  "diffCheckLogSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "parentPacket": "G11 native lease 008 exact preimages supplied by root",
+  "patchSha256": "f6f251c7ae0681aff4aeecae963caf28f834f83dad464eb8d19fe3e7688b4e50",
+  "ruffCommand": "/private/tmp/umf-current010-host-20261019/bin/ruff check --no-cache --config .ruff.toml python/umf_access/src/umf_access/lifecycle/owner_bootstrap.py python/umf_access/tests/test_original_control_lease.py",
+  "ruffLogSha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+  "status": "source-only lease successor; not native qualification",
+  "testCommand": "PYTHONPATH=<G11 source>:<G11 tests>:/private/tmp/g11-owner-authority-crypto-001/venv/lib/python3.12/site-packages:/private/tmp/umf056-public-wheel-verify/venv/lib/python3.12/site-packages /Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12 -B -m unittest test_original_control_lease",
+  "testLogSha256": "41ce1c40ae2a0710201b0fe0d8670029cc8158ad5ac71d12a11ab1d282a04943"
+}

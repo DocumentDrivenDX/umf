@@ -19,9 +19,16 @@ from umf_access.lifecycle import ingress_local_postgres as native
 from umf_access.lifecycle import owner_bootstrap as bootstrap
 from umf_access.lifecycle.owner_authority import create_owner_authority_session
 
+_FIXTURE_SIGNERS: dict[Path, Ed25519PrivateKey] = {}
+
+
+def signing_key_for_fixture(control_home: Path) -> Ed25519PrivateKey:
+    return _FIXTURE_SIGNERS[control_home]
+
 
 class OwnerLedgerBirthRecoveryTests(unittest.TestCase):
-    def _fixture(self, *, generation_roots: bool = False):
+    def _fixture(self, *, generation_roots: bool = False,
+                 owner_scopes: tuple[str, ...] = ('local-target-creation',)):
         temporary = tempfile.TemporaryDirectory(prefix='umf-owner-setup-')
         root = Path(temporary.name).resolve()
         os.chmod(root, 0o700)
@@ -46,7 +53,7 @@ class OwnerLedgerBirthRecoveryTests(unittest.TestCase):
                 'keyId': 'ledger-birth-key',
                 'publicKey': base64.urlsafe_b64encode(public).decode('ascii').rstrip('='),
                 'principalId': 'ledger-birth-owner',
-                'scopes': ['local-target-creation'],
+                'scopes': list(owner_scopes),
                 'supervisorIds': [ids['supervisor']],
                 'providerIds': [ids['provider']],
                 'installationIds': [ids['installation']],
@@ -85,6 +92,7 @@ class OwnerLedgerBirthRecoveryTests(unittest.TestCase):
             }
         enrollment_bytes = bootstrap._canonical(enrollment)
         bootstrap._write_private(control / 'owner-bootstrap-enrollment.json', enrollment_bytes)
+        _FIXTURE_SIGNERS[control] = private
         path = control / 'owner-approvals.jsonl'
         setup = install_pending_owner_setup(
             control, enrollment, enrollment_bytes, path,
@@ -94,7 +102,7 @@ class OwnerLedgerBirthRecoveryTests(unittest.TestCase):
 
     def test_invalid_setup_and_resource_leases_close_descriptors_and_preserve_errors(self) -> None:
         with tempfile.TemporaryDirectory(prefix='umf-owner-lease-fd-') as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             setup_lock = root / bootstrap._OWNER_SETUP_LOCK
             setup_lock.write_bytes(b''); os.chmod(setup_lock, 0o644)
             resource_lock = root / 'resource.lock'

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+from functools import wraps
 from pathlib import Path
 from typing import Any
 
@@ -152,6 +153,21 @@ class ConfiguredEd25519OwnerAuthority:
             scope=scope, intent_digest=intent_digest)
 
 
+def _under_native_control_lease(operation_kind: str):
+    """Keep one fixed original physical lease across a complete facade call."""
+    def decorate(method):
+        @wraps(method)
+        def invoke(self, *args, **kwargs):
+            with self._supervisor._original_control_lease(
+                    operation_kind=operation_kind) as lease:
+                result = method(self, *args, **kwargs)
+                self._supervisor._require_original_control_lease(
+                    lease, operation_kind=operation_kind)
+                return result
+        return invoke
+    return decorate
+
+
 class OwnerAuthoritySession:
     """Native owner-session facade; all core/native transitions are joined here."""
 
@@ -195,6 +211,7 @@ class OwnerAuthoritySession:
 
     def bind_native_effect(self, verified_approval: VerifiedOwnerApproval,
                            reservation: object) -> OriginalEffectBinding:
+        self._supervisor._require_original_control_lease()
         request = (verified_approval._request
                    if type(verified_approval) is VerifiedOwnerApproval else None)
         if type(request) is not OwnerApprovalRequest:
@@ -259,6 +276,7 @@ class OwnerAuthoritySession:
 
     def record_native_outcome(self, binding: OriginalEffectBinding,
                               outcome: object) -> OriginalApprovalOutcome:
+        self._supervisor._require_original_control_lease()
         if (type(binding) is not OriginalEffectBinding or binding._issuer is not self
                 or self._effect_bindings.get(id(binding)) is not binding
                 or binding._kind != 'umf.owner-native-effect-binding/0.1'):
@@ -285,9 +303,11 @@ class OwnerAuthoritySession:
             receipt_digest=outcome.receipt_digest)
         return result
 
+    @_under_native_control_lease('target-prepare')
     def prepare_target_creation(self):
         return self._supervisor.prepare_target_creation()
 
+    @_under_native_control_lease('target-recover')
     def reattach_original_target(self):
         """Reattach native state, then settle its exact owner-ledger outcome."""
         target = self._supervisor.reattach_original_target()
@@ -309,6 +329,7 @@ class OwnerAuthoritySession:
     def export_owner_signing_request(self, request: object) -> dict[str, Any]:
         return self._supervisor.export_owner_signing_request(request)
 
+    @_under_native_control_lease('target-apply')
     def create_target(self, pending: object, signed_envelope: object) -> object:
         request = pending._request
         approval = self._authority.verify_approval(request, signed_envelope)
@@ -330,9 +351,11 @@ class OwnerAuthoritySession:
         self.record_native_outcome(binding, outcome)
         return target
 
+    @_under_native_control_lease('principals-prepare')
     def prepare_original_principals(self, target: object):
         return self._supervisor.prepare_original_principals(target)
 
+    @_under_native_control_lease('principals-recover')
     def resume_original_principal_stage(self, target: object) -> dict[str, Any]:
         reservation = self._supervisor.prepare_original_principal_recovery(target)
         binding = self.bind_native_effect(reservation._approval, reservation)
@@ -352,6 +375,7 @@ class OwnerAuthoritySession:
     def export_principal_signing_request(self, prepared: object) -> dict[str, Any]:
         return self._supervisor.export_principal_signing_request(prepared)
 
+    @_under_native_control_lease('principals-apply')
     def apply_original_principals(self, prepared: object,
                                   signed_envelope: object) -> dict[str, Any]:
         request = prepared._request
@@ -374,9 +398,11 @@ class OwnerAuthoritySession:
         self.record_native_outcome(binding, outcome)
         return receipt
 
+    @_under_native_control_lease('registration-prepare')
     def prepare_target_registration(self, target: object):
         return self._supervisor.prepare_target_registration(target)
 
+    @_under_native_control_lease('registration-recover')
     def reattach_original_registration(self, target: object) -> object:
         reservation = self._supervisor.prepare_original_registration_reattachment(target)
         binding = self.bind_native_effect(reservation._approval, reservation)
@@ -397,6 +423,7 @@ class OwnerAuthoritySession:
     def export_target_registration_request(self, prepared: object) -> dict[str, Any]:
         return self._supervisor.export_target_registration_request(prepared)
 
+    @_under_native_control_lease('registration-apply')
     def apply_target_registration(self, prepared: object,
                                   signed_envelope: object) -> object:
         request = prepared._request

@@ -1,0 +1,78 @@
+{
+  "profile": "umf.independent-sol-source-review/0.1",
+  "status": "accepted-bounded-exact009-source-composition",
+  "reviewer": "Independent Sol, not author",
+  "reviewedAtUtc": "2026-10-24T15:51:16.933723+00:00",
+  "exactComposition": {
+    "source007ManifestSha256": "d6eb2a7f073cb024dcb2b84826f0c4a05e51d1b799f9ec125615d2771a299788",
+    "source007MetadataErratumSha256": "cfda436769ab119279728fcd22b0a31e7c1dee396335164f06cee907b6487eda",
+    "overlay008ManifestSha256": "361cced72b2833641139900ea765e6b909369c6a62a27726466fdb16571e44c0",
+    "overlay008PatchSha256": "3d51ae566a5a9800a8cf14e4a52f0cdb71e63e47db7a100e17f57f93f58bb7e4",
+    "source009ManifestSha256": "da8f39417826b06c2f95da8cca784f0031ec228f5c6403b653c381114bda0bfa",
+    "source009PatchSha256": "f6f251c7ae0681aff4aeecae963caf28f834f83dad464eb8d19fe3e7688b4e50",
+    "baseHead": "0f3a0b4970a9374abd3178269c907763398de262",
+    "postimages": [
+      {
+        "path": "python/umf_access/src/umf_access/lifecycle/owner_bootstrap.py",
+        "postimageSha256": "7c3285e1d62c2e836b712b9c6e098e1c4f20b617eeb2c5263b67664797d8f7c9",
+        "postimageWorktreePath": "/Users/erik/.codex/worktrees/g11-field-replacement/umf/python/umf_access/src/umf_access/lifecycle/owner_bootstrap.py",
+        "preimagePath": "/private/tmp/g11-native-lease-source-007/source/python/umf_access/src/umf_access/lifecycle/owner_bootstrap.py",
+        "preimageSha256": "17f88e96ef1b861c403fa530433807e4004f589e23069d4a9db7f276738c9a72"
+      },
+      {
+        "path": "python/umf_access/tests/test_original_control_lease.py",
+        "postimageSha256": "4b1bc6b743e343ef7c47ea338925fa84b43b3756a18ad13b9f5db2aeee0c8245",
+        "postimageWorktreePath": "/Users/erik/.codex/worktrees/g11-field-replacement/umf/python/umf_access/tests/test_original_control_lease.py",
+        "preimagePath": "/private/tmp/g11-native-lease-root-review008/source/python/umf_access/tests/test_original_control_lease.py",
+        "preimageSha256": "baa7d89c087369106cec9a05829b4d6569bec357f2536705d12d63545a62faee"
+      }
+    ]
+  },
+  "custody": {
+    "exactPatchAppliedToIndependentlyRetained007Plus008Snapshot": true,
+    "bothPrePostHashesVerified": true,
+    "all3AuthorLogHashesVerifiedBeforeAfter": true,
+    "postimageWorktreePathsNotRead": true,
+    "inputPacketNeverModified": true,
+    "prior007MetadataWithdrawalHistoryRetained": true,
+    "prior008AcceptanceWithdrawalPreserved": true,
+    "immutableReview008CorrectionReceiptSha256": "66a730fd88fd53cb0e35d695b64aeda5588267d4ceff982adfce08ee29bd265c"
+  },
+  "findings": [],
+  "resolvedFinding": {
+    "id": "008-FORK1",
+    "resolution": "Both setup and resource lease normal/exception LOCK_UN calls require currentPID==captured acquisitionPID. Child inherited descriptor closes without unlocking parent open-file-description. Other product AST is unchanged.",
+    "normalForkExitRuntime": "Independently replayed for both helpers; outsider blocked while parent holds, acquires after parent exit.",
+    "exceptionForkExitRuntime": "Not independently executed; both exception unlock sites source/AST inspected."
+  },
+  "actualResults": {
+    "onlyNewTestMethodsReplayed": 2,
+    "passed": 2,
+    "newNormalForkExitAndOutsiderControlForBothHelpers": true,
+    "constructorObserverFailureLeavesNativeRegistryUnchanged": true,
+    "ownedRunnerPidPgid": 49772,
+    "ownedRunnerReturncode": 0,
+    "timedOut": false,
+    "ownedProcessGroupAbsentAfterReap": true,
+    "fourPIDGuardedUnlockSites": true,
+    "wholeProductASTOnlyExpectedPIDChanges": true
+  },
+  "preservedPreviousFactsNotRerun": [
+    "108 current007 source/test and12 evidence member checks",
+    "Original3 byteidentical expected refusal probes",
+    "Four safe kernel methods and five focused API tests",
+    "Two corrected owner request/outcome API field reads and four changed helper callsites",
+    "008 removes only unused unbound deletion helper; no alternate cleanup route",
+    "Exact constructor type/instance/PID origin plus registered signed pending/reservation/handle/config correspondence"
+  ],
+  "separateEvidence": "Root owns its14test replay and broader source suites; author14 focused log is retained but no broader pass count is claimed as independently rerun here.",
+  "scopeLimits": [
+    "This source acceptance binds exact007+externalerratum+008+009 composition only; earlier008 acceptance remains withdrawn.",
+    "Two new controls are real finite kernel/fork and injected constructor failure observations; not exhaustive exception/fork/native/process custody qualification.",
+    "No actual PostgreSQL, initdb/postmaster, SQL server, product/build/browser/copy/full inventory or native campaign.",
+    "Actual signed full native apply/recovery, ROOT durable checkpoints/pending fences, store/epoch/transition/provider integration and fullG11 acceptance remain OPEN.",
+    "No repository or frozen packet source edits; reconstructed local review snapshot only."
+  ],
+  "sourceAcceptance": true,
+  "nativeQualification": false
+}

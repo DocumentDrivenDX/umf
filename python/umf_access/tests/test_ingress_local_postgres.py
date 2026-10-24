@@ -7,10 +7,12 @@ import sys
 import tempfile
 import unittest
 import uuid
+from contextlib import contextmanager
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
+from umf_access.lifecycle import ingress_local_postgres as native
 from umf_access.lifecycle.ingress_local_postgres import (
     _NATIVE_EFFECT_OUTCOME_SEAL,
     _VERIFIED_STORE_PREPARATION_SEAL,
@@ -44,6 +46,18 @@ from umf_access.lifecycle.ingress_local_postgres import (
 from umf_access.lifecycle.owner_authority import OwnerApprovalRequest
 
 
+@contextmanager
+def _synthetic_control_lease(supervisor, operation_kind):
+    """Bypass only the physical lock for isolated method-logic fixtures."""
+    lease = SimpleNamespace(_operation_kind=operation_kind)
+    if not hasattr(supervisor, '_authority_context'):
+        object.__setattr__(supervisor, '_authority_context', object())
+    object.__setattr__(supervisor, '_active_control_lease', lease)
+    with patch('umf_access.lifecycle.ingress_local_postgres._resolve_original_control_lease',
+               return_value=lease):
+        yield lease
+
+
 class LocalPostgresSupervisorSourceTests(unittest.TestCase):
     def test_registration_observation_consumes_flat_native_database_fields(self) -> None:
         supervisor = object.__new__(LocalPostgresSupervisor)
@@ -60,7 +74,8 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
               patch.object(LocalPostgresSupervisor, '_registration_observation',
                            return_value={'profile': 'fixture'}),
               patch.object(LocalPostgresSupervisor, '_issue_evidence', return_value=evidence)
-              as issue):
+              as issue,
+              _synthetic_control_lease(supervisor, 'registration-apply')):
             self.assertIs(supervisor.observe_original_registration(
                 request, original_payload=payload, custodian_sequence=3), evidence)
         issue.assert_called_once_with(request, payload, {'profile': 'fixture'}, attestation)
@@ -284,8 +299,9 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         }.items():
             object.__setattr__(supervisor, name, value)
 
-        observed = supervisor.observe_original_owner_request(
-            'native-principal-preparation')
+        with _synthetic_control_lease(supervisor, 'principals-recover'):
+            observed = supervisor.observe_original_owner_request(
+                'native-principal-preparation')
         self.assertIs(observed, outcome)
         self.assertEqual(len(authority.recovered), 1)
         self.assertEqual(authority.recovered[0][0], 'native-principal-preparation')
@@ -326,8 +342,9 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             '_authority_context': object(),
         }.items():
             object.__setattr__(supervisor, name, value)
-        with self.assertRaisesRegex(LocalPostgresError,
-                                    'local-postgresql-original-request-unavailable'):
+        with (_synthetic_control_lease(supervisor, 'principals-recover'),
+              self.assertRaisesRegex(LocalPostgresError,
+                                     'local-postgresql-original-request-unavailable')):
             supervisor.observe_original_owner_request('native-principal-preparation')
         self.assertFalse(authority.called)
 
@@ -437,8 +454,9 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         }.items():
             object.__setattr__(supervisor, name, value)
 
-        reservation, outcome, recovered = supervisor._recover_original_native_effect(
-            'native-principal-preparation')
+        with _synthetic_control_lease(supervisor, 'principals-recover'):
+            reservation, outcome, recovered = supervisor._recover_original_native_effect(
+                'native-principal-preparation')
         self.assertIs(recovered, request)
         self.assertIsNone(outcome)
         self.assertEqual(reservation.reservation_id, reservation_id)
@@ -473,6 +491,14 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                 self.calls.append(('execute', actual_reservation, actual_handle))
                 return receipt
 
+            @contextmanager
+            def _original_control_lease(self, *, operation_kind):
+                self.calls.append(('lease', operation_kind))
+                yield SimpleNamespace(_operation_kind=operation_kind)
+
+            def _require_original_control_lease(self, _lease, *, operation_kind):
+                self.calls.append(('lease-revalidate', operation_kind))
+
         supervisor = Supervisor()
         session = object.__new__(OwnerAuthoritySession)
         object.__setattr__(session, '_supervisor', supervisor)
@@ -491,7 +517,9 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         bind.assert_called_once_with(reservation._approval, reservation)
         pending.assert_called_once_with(binding, mode='recover')
         self.assertEqual(supervisor.calls, [
-            ('prepare', target), ('execute', reservation, handle)])
+            ('lease', 'principals-recover'),
+            ('prepare', target), ('execute', reservation, handle),
+            ('lease-revalidate', 'principals-recover')])
         self.assertEqual(observed, [(binding, outcome)])
 
     def test_target_preparation_creates_no_target_paths_or_native_journal(self) -> None:
@@ -534,8 +562,10 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             postgres, initdb = root / 'postgres', root / 'initdb'
             postgres.write_bytes(b'fixture postgres executable identity')
             initdb.write_bytes(b'fixture initdb executable identity')
-            with patch.object(LocalPostgresSupervisor, '_validate_installation_binaries',
-                              return_value=(postgres, initdb)):
+            with (patch.object(LocalPostgresSupervisor, '_validate_installation_binaries',
+                               return_value=(postgres, initdb)),
+                  patch.object(native, '_sha_file', return_value='a' * 64),
+                  _synthetic_control_lease(supervisor, 'target-prepare')):
                 pending, _request = supervisor.prepare_target_creation()
 
             self.assertIs(supervisor._pending_creations[id(pending)], pending)
@@ -634,12 +664,19 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         object.__setattr__(supervisor, '_principal_dispatches', {id(principal): reservation})
         object.__setattr__(supervisor, '_registration_dispatches', {
             id(registration): reservation})
-        with self.assertRaisesRegex(LocalPostgresError,
-                                    'local-postgresql-principal-outcome-unresolved'):
-            supervisor.reserve_original_principals(principal, object())
-        with self.assertRaisesRegex(LocalPostgresError,
-                                    'local-postgresql-registration-outcome-unresolved'):
-            supervisor.reserve_target_registration(registration, object())
+        object.__setattr__(supervisor, '_authority_context', object())
+        object.__setattr__(supervisor, '_active_control_lease',
+                           SimpleNamespace(_operation_kind='principals-apply'))
+        with patch('umf_access.lifecycle.ingress_local_postgres._resolve_original_control_lease',
+                   side_effect=lambda value, **_kwargs: value):
+            with self.assertRaisesRegex(LocalPostgresError,
+                                        'local-postgresql-principal-outcome-unresolved'):
+                supervisor.reserve_original_principals(principal, object())
+            object.__setattr__(supervisor, '_active_control_lease',
+                               SimpleNamespace(_operation_kind='registration-apply'))
+            with self.assertRaisesRegex(LocalPostgresError,
+                                        'local-postgresql-registration-outcome-unresolved'):
+                supervisor.reserve_target_registration(registration, object())
 
     def test_fixed_hba_and_external_config_are_closed(self) -> None:
         hba = _render_hba('umf_m_0123456789abcdef0123456789abcdef')

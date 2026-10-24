@@ -638,3 +638,18 @@ the complete proposal and root source review are retained in
 obligations remain open. Null ingress/application event families are unavailable;
 the full native, managed, installed, merge, release and public-byte gates remain
 required. No current setup, journal or request is automatically upgraded.
+
+
+The bounded original control lease source009 is adopted after independent Sol
+review. Original setup exclusion now spans the reviewed facade/core/native effect
+paths, validates the original lock and owner identities, and retains one bounded
+acquisition budget. Native effects additionally require original signed pending
+requests, reservations and handles; a lease kind alone grants no effect permission.
+Fork-child cleanup closes its inherited descriptor without unlocking the parent.
+Root isolated verification passed148 integrated source tests plus17 store tests;
+the14 lease tests include actual finite fork/exclusion and failed-constructor
+controls. Exact source hashes, review withdrawals, metadata erratum and qualified
+synthetic fixtures are retained in `evidence/schema-migration-native-lease009/`.
+This is source implementation evidence, not PostgreSQL/native acceptance. Journal
+birth015, durable ROOT checkpoints/all-writer fences, original ingress/application
+providers and all remaining migration/release/public-byte gates stay open.

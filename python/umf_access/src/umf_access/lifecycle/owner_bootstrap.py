@@ -11,6 +11,7 @@ import re
 import stat
 import sys
 import threading
+import time
 import uuid
 from contextlib import contextmanager
 from dataclasses import dataclass
@@ -28,11 +29,20 @@ _BOOTSTRAP_ISSUER_SEAL = object()
 _BOOTSTRAP_ISSUERS: dict[int, object] = {}
 _CONTEXT_SEAL = object()
 _CONTEXTS: dict[int, object] = {}
+_CONTROL_LEASE_SEAL = object()
+_CONTROL_LEASES: dict[int, tuple[object, object, object, object, str]] = {}
+_CONTROL_LEASES_GUARD = threading.Lock()
+_CONTROL_LEASE_KINDS = frozenset({
+    'target-prepare', 'target-apply', 'target-recover',
+    'principals-prepare', 'principals-apply', 'principals-recover',
+    'registration-prepare', 'registration-apply', 'registration-recover',
+    'process-recover', 'target-registered', 'store', 'epoch', 'transition', 'root',
+})
 _OWNER_PURPOSES = ('production', 'native-acceptance')
 _OWNER_CONTEXT_PROFILE = 'umf.local-owner-bootstrap-context/0.3'
 _OWNER_SETUP_LOCK = 'owner-bootstrap-setup.lock'
 _OWNER_LEDGER_PROFILE = 'umf.configured-owner-approval-ledger/0.1'
-_OWNER_SETUP_LOCKS: dict[str, threading.RLock] = {}
+_OWNER_SETUP_LOCKS: dict[str, threading.Lock] = {}
 _OWNER_SETUP_LOCKS_GUARD = threading.Lock()
 _NATIVE_PROFILE_KEYS = {
     'controlHome', 'dataHome', 'postgresBinary', 'initdbBinary',
@@ -277,6 +287,7 @@ class _LocalOwnerBootstrapIssuer:
         '_issuer_id',
         '_profile',
         '_purpose',
+        '_supervisor',
     )
 
     def __init__(self, seal: object, profile: LocalPostgresProfile,
@@ -289,6 +300,7 @@ class _LocalOwnerBootstrapIssuer:
         if type(configuration_digest) is not str or not _HEX.fullmatch(configuration_digest):
             raise LocalPostgresError('local-postgresql-owner-configuration-invalid')
         self._profile = profile
+        self._supervisor = None
         self._purpose = profile.purpose
         self._installation_id = profile.installation_id
         self._configuration_digest = configuration_digest
@@ -567,23 +579,144 @@ def _canonical_private_path(value: object) -> Path:
     return path
 
 
+@dataclass(frozen=True, slots=True)
+class _OwnerSetupLockHandle:
+    """Live descriptor identity for one held original setup lock."""
+
+    path: Path
+    fd: int
+    device: int
+    inode: int
+    process_id: int
+    thread_id: int
+
+
+class _OriginalControlLease:
+    """Opaque authority for the existing physical setup-file exclusion only."""
+
+    __slots__ = (
+        '_context',
+        '_control_home',
+        '_handle',
+        '_issuer',
+        '_operation_kind',
+        '_process_id',
+        '_profile',
+        '_setup_id',
+        '_supervisor',
+        '_thread_id',
+    )
+
+    def __init__(self, seal: object, issuer: object, context: object,
+                 supervisor: object, handle: _OwnerSetupLockHandle,
+                 operation_kind: str, setup_id: str):
+        if seal is not _CONTROL_LEASE_SEAL:
+            raise TypeError('original control leases are bootstrap-issued')
+        object.__setattr__(self, '_issuer', issuer)
+        object.__setattr__(self, '_context', context)
+        object.__setattr__(self, '_supervisor', supervisor)
+        object.__setattr__(self, '_profile', issuer._profile)
+        object.__setattr__(self, '_control_home', issuer._profile.control_home)
+        object.__setattr__(self, '_handle', handle)
+        object.__setattr__(self, '_operation_kind', operation_kind)
+        object.__setattr__(self, '_setup_id', setup_id)
+        object.__setattr__(self, '_process_id', os.getpid())
+        object.__setattr__(self, '_thread_id', threading.get_ident())
+
+    def __setattr__(self, _name: str, _value: object) -> None:
+        raise AttributeError('original control lease is immutable')
+
+    def __reduce_ex__(self, _protocol: int):
+        raise TypeError('original control lease cannot be serialized')
+
+    def __repr__(self) -> str:
+        return '<OriginalControlLease opaque>'
+
+
+def _verify_owner_setup_lock_handle(handle: object) -> _OwnerSetupLockHandle:
+    if type(handle) is not _OwnerSetupLockHandle:
+        raise LocalPostgresError('owner-bootstrap-setup-lock-unverified')
+    if (handle.process_id != os.getpid()
+            or handle.thread_id != threading.get_ident()):
+        raise LocalPostgresError('owner-bootstrap-setup-lock-unverified')
+    try:
+        descriptor_stat = os.fstat(handle.fd)
+        path_stat = os.lstat(handle.path)
+    except OSError:
+        raise LocalPostgresError('owner-bootstrap-setup-lock-unavailable') from None
+    if (not stat.S_ISREG(descriptor_stat.st_mode)
+            or not stat.S_ISREG(path_stat.st_mode)
+            or stat.S_ISLNK(path_stat.st_mode)
+            or descriptor_stat.st_uid != os.geteuid()
+            or path_stat.st_uid != os.geteuid()
+            or descriptor_stat.st_nlink != 1 or path_stat.st_nlink != 1
+            or stat.S_IMODE(descriptor_stat.st_mode) != 0o600
+            or stat.S_IMODE(path_stat.st_mode) != 0o600
+            or descriptor_stat.st_dev != handle.device
+            or descriptor_stat.st_ino != handle.inode
+            or path_stat.st_dev != handle.device or path_stat.st_ino != handle.inode
+            or descriptor_stat.st_size != 0 or path_stat.st_size != 0):
+        raise LocalPostgresError('owner-bootstrap-setup-lock-invalid')
+    return handle
+
+
 @contextmanager
-def _owner_setup_lease(control_home: Path):
+def _owner_setup_lease(control_home: Path, *, timeout_ms: int | None = None):
+    """Hold the original setup lock; bounded callers share the setup mutex.
+
+    Legacy setup settlement keeps its blocking behavior. Native lease callers
+    pass one exact bounded timeout, shared by local-mutex and flock acquisition.
+    """
+    if timeout_ms is not None and (type(timeout_ms) is not int
+                                   or not 1 <= timeout_ms <= 30_000):
+        raise LocalPostgresError('owner-bootstrap-setup-lock-timeout-invalid')
+    acquisition_pid = os.getpid()
+    try:
+        _private_directory(control_home)
+    except LocalPostgresError:
+        raise LocalPostgresError('owner-bootstrap-setup-lock-invalid') from None
     path = control_home / _OWNER_SETUP_LOCK
+    deadline = (None if timeout_ms is None
+                else time.monotonic() + timeout_ms / 1000)
     with _OWNER_SETUP_LOCKS_GUARD:
-        local = _OWNER_SETUP_LOCKS.setdefault(str(path), threading.RLock())
-    with local:
+        local = _OWNER_SETUP_LOCKS.setdefault(str(path), threading.Lock())
+    if deadline is None:
+        local_acquired = local.acquire()
+    else:
+        local_acquired = local.acquire(timeout=max(0.0, deadline - time.monotonic()))
+    if not local_acquired:
+        raise LocalPostgresError('owner-bootstrap-setup-lock-timeout')
+    try:
         fd = -1
         locked = False
         try:
-            fd = os.open(path, os.O_RDWR | getattr(os, 'O_NOFOLLOW', 0))
+            flags = os.O_RDWR | getattr(os, 'O_NOFOLLOW', 0)
+            flags |= getattr(os, 'O_CLOEXEC', 0) | getattr(os, 'O_NONBLOCK', 0)
+            fd = os.open(path, flags)
             st = os.fstat(fd)
             if (not stat.S_ISREG(st.st_mode) or st.st_uid != os.geteuid()
                     or st.st_nlink != 1 or stat.S_IMODE(st.st_mode) != 0o600
-                    or os.read(fd, 1)):
+                    or st.st_size != 0):
                 raise LocalPostgresError('owner-bootstrap-setup-lock-invalid')
-            fcntl.flock(fd, fcntl.LOCK_EX)
+            path_stat = os.lstat(path)
+            if (not stat.S_ISREG(path_stat.st_mode) or stat.S_ISLNK(path_stat.st_mode)
+                    or (path_stat.st_dev, path_stat.st_ino) != (st.st_dev, st.st_ino)):
+                raise LocalPostgresError('owner-bootstrap-setup-lock-invalid')
+            while True:
+                try:
+                    fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                    break
+                except BlockingIOError:
+                    if deadline is not None and time.monotonic() >= deadline:
+                        raise LocalPostgresError('owner-bootstrap-setup-lock-timeout') from None
+                    time.sleep(0.005 if deadline is None else
+                               min(0.005, max(0.0, deadline - time.monotonic())))
+            if deadline is not None and time.monotonic() > deadline:
+                raise LocalPostgresError('owner-bootstrap-setup-lock-timeout')
             locked = True
+            handle = _OwnerSetupLockHandle(
+                path, fd, st.st_dev, st.st_ino, os.getpid(), threading.get_ident())
+            _verify_owner_setup_lock_handle(handle)
         except OSError:
             if fd >= 0:
                 try:
@@ -599,11 +732,11 @@ def _owner_setup_lease(control_home: Path):
                     fd = -1
             raise
         try:
-            yield
+            yield handle
         except BaseException:
             if fd >= 0:
                 try:
-                    if locked:
+                    if locked and os.getpid() == acquisition_pid:
                         try:
                             fcntl.flock(fd, fcntl.LOCK_UN)
                         except OSError:
@@ -615,7 +748,7 @@ def _owner_setup_lease(control_home: Path):
         else:
             if fd >= 0:
                 try:
-                    if locked:
+                    if locked and os.getpid() == acquisition_pid:
                         fcntl.flock(fd, fcntl.LOCK_UN)
                 finally:
                     os.close(fd)
@@ -623,10 +756,13 @@ def _owner_setup_lease(control_home: Path):
         finally:
             if fd >= 0:
                 os.close(fd)
+    finally:
+        local.release()
 
 
 @contextmanager
 def _owner_resource_lease(path: Path, error_code: str):
+    acquisition_pid = os.getpid()
     fd = -1
     locked = False
     try:
@@ -656,7 +792,7 @@ def _owner_resource_lease(path: Path, error_code: str):
     except BaseException:
         if fd >= 0:
             try:
-                if locked:
+                if locked and os.getpid() == acquisition_pid:
                     try:
                         fcntl.flock(fd, fcntl.LOCK_UN)
                     except OSError:
@@ -668,7 +804,7 @@ def _owner_resource_lease(path: Path, error_code: str):
     else:
         if fd >= 0:
             try:
-                if locked:
+                if locked and os.getpid() == acquisition_pid:
                     fcntl.flock(fd, fcntl.LOCK_UN)
             finally:
                 os.close(fd)
@@ -1070,6 +1206,120 @@ def _require_owner_context(context: object, *, issuer: object | None = None,
         _context_reject('owner-authority-context-unverified')
     context._issuer._owner_authority_context_material()
     return context
+
+
+def _verify_control_lease_owner_binding(
+        issuer: object, context: object, supervisor: object) -> tuple[LocalPostgresProfile, str]:
+    if (type(issuer) is not _LocalOwnerBootstrapIssuer
+            or _BOOTSTRAP_ISSUERS.get(id(issuer)) is not issuer
+            or issuer._supervisor is not supervisor):
+        raise LocalPostgresError('owner-bootstrap-control-lease-unverified')
+    context = _require_owner_context(
+        context, issuer=issuer, configuration_digest=issuer._configuration_digest)
+    profile = issuer._profile
+    try:
+        if (supervisor._bootstrap_issuer is not issuer
+                or supervisor._authority_context is not context
+                or supervisor._profile is not profile
+                or supervisor._supervisor_id != profile.supervisor_id
+                or supervisor._custodian_id != profile.custodian_id
+                or supervisor._provider_id != profile.provider_id
+                or supervisor._bound_installation_id != profile.installation_id
+                or supervisor._owner_core.configuration_digest != issuer._configuration_digest
+                or Path(supervisor._owner_core._ledger.path).is_absolute() is not True):
+            raise LocalPostgresError('owner-bootstrap-control-lease-unverified')
+        _verify_confirmed_owner_ledger_birth(
+            issuer, supervisor._owner_core._ledger.path,
+            issuer._configuration_digest)
+        setup_raw = _read_private(profile.control_home / 'owner-bootstrap-context.json')
+        setup, enrollment, enrollment_raw = _parse_original_context_for_lease(
+            issuer, setup_raw)
+    except LocalPostgresError:
+        raise
+    except Exception:  # noqa: BLE001 - private owner/session details are not public diagnostics.
+        raise LocalPostgresError('owner-bootstrap-control-lease-unverified') from None
+    if (setup['state'] != 'confirmed'
+            or setup_raw != issuer._context_bytes
+            or enrollment['context'] != {
+                'custodianId': context._custodian_id,
+                'supervisorId': context._supervisor_id,
+                'providerId': context._provider_id,
+                'installationId': context._installation_id,
+            }
+            or enrollment_raw != _canonical(enrollment)):
+        raise LocalPostgresError('owner-bootstrap-control-lease-unverified')
+    return profile, setup['setupId']
+
+
+def _parse_original_context_for_lease(
+        issuer: _LocalOwnerBootstrapIssuer, raw: bytes
+        ) -> tuple[dict[str, Any], dict[str, Any], bytes]:
+    enrollment, enrollment_raw = _read_bootstrap_enrollment(
+        issuer._profile.control_home / 'owner-bootstrap-enrollment.json')
+    config, _keys = validate_owner_configuration(enrollment['ownerConfiguration'])
+    digest = hashlib.sha256(canonical_json(config).encode('utf-8')).hexdigest()
+    setup = _parse_owner_setup(
+        raw, enrollment, enrollment_raw, digest, issuer._profile.control_home)
+    return setup, enrollment, enrollment_raw
+
+
+@contextmanager
+def _acquire_original_control_lease(issuer: object, context: object,
+                                    supervisor: object, *, operation_kind: str,
+                                    timeout_ms: int = 5000):
+    """Acquire the one original setup mutex for a fixed native operation.
+
+    This lease is physical exclusion only. The native supervisor retains its
+    own target wrapper and every effect still requires its original approval,
+    reservation and phase binding.
+    """
+    if type(operation_kind) is not str or operation_kind not in _CONTROL_LEASE_KINDS:
+        raise LocalPostgresError('owner-bootstrap-control-lease-kind-invalid')
+    profile, setup_id = _verify_control_lease_owner_binding(
+        issuer, context, supervisor)
+    with _owner_setup_lease(profile.control_home, timeout_ms=timeout_ms) as lock_handle:
+        profile_now, setup_now = _verify_control_lease_owner_binding(
+            issuer, context, supervisor)
+        if profile_now is not profile or setup_now != setup_id:
+            raise LocalPostgresError('owner-bootstrap-control-lease-binding-changed')
+        lease = _OriginalControlLease(
+            _CONTROL_LEASE_SEAL, issuer, context, supervisor, lock_handle,
+            operation_kind, setup_id)
+        with _CONTROL_LEASES_GUARD:
+            _CONTROL_LEASES[id(lease)] = (
+                lease, issuer, context, supervisor, operation_kind)
+        try:
+            _resolve_original_control_lease(
+                lease, context=context, supervisor=supervisor,
+                operation_kind=operation_kind)
+            yield lease
+        finally:
+            with _CONTROL_LEASES_GUARD:
+                _CONTROL_LEASES.pop(id(lease), None)
+
+
+def _resolve_original_control_lease(value: object, *, context: object,
+                                    supervisor: object,
+                                    operation_kind: str | None = None
+                                    ) -> _OriginalControlLease:
+    if type(value) is not _OriginalControlLease:
+        raise LocalPostgresError('owner-bootstrap-control-lease-unverified')
+    entry = _CONTROL_LEASES.get(id(value))
+    if (entry is None or entry[0] is not value or entry[1] is not value._issuer
+            or entry[2] is not context or value._context is not context
+            or entry[3] is not supervisor or value._supervisor is not supervisor
+            or (operation_kind is not None and value._operation_kind != operation_kind)
+            or value._profile is not value._issuer._profile
+            or value._control_home != value._profile.control_home
+            or value._process_id != os.getpid()
+            or value._thread_id != threading.get_ident()):
+        raise LocalPostgresError('owner-bootstrap-control-lease-unverified')
+    _verify_owner_setup_lock_handle(value._handle)
+    profile, setup_id = _verify_control_lease_owner_binding(
+        value._issuer, context, supervisor)
+    if profile is not value._profile or setup_id != value._setup_id:
+        raise LocalPostgresError('owner-bootstrap-control-lease-binding-changed')
+    return value
 
 
 _OWNER_LEDGER_BIRTH_PROFILE = 'umf.owner-approval-ledger-birth/0.1'

@@ -70,10 +70,11 @@ class _OwnerRegistrationEvidence:
 class _OwnerRegistrationResolver:
     """Exact enrolled resolver binding; a structural protocol is not accepted."""
 
-    __slots__ = ('_observe', '_resolve', 'adapter', 'issuer')
+    __slots__ = ('_context', '_observe', '_resolve', 'adapter', 'issuer')
 
-    def __init__(self, seal: object, issuer: object, adapter: object):
-        if seal is not _OWNER_RESOLVER_SEAL or issuer is None:
+    def __init__(self, seal: object, issuer: object, adapter: object,
+                 control_context: object):
+        if seal is not _OWNER_RESOLVER_SEAL or issuer is None or control_context is None:
             raise TypeError('owner resolver binding is trusted-bootstrap-only')
         resolve = getattr(adapter, 'resolve_owner_registration', None)
         observe = getattr(adapter, 'observe_original_registration', None)
@@ -82,8 +83,17 @@ class _OwnerRegistrationResolver:
             raise TypeError('owner resolver must be bound to its enrolled adapter')
         self.issuer = issuer
         self.adapter = adapter
+        self._context = control_context
         self._resolve = resolve
         self._observe = observe
+
+    def require_control_lease(self, value: object, *, operation_kind: str) -> object:
+        """Resolve the fixed physical bootstrap lease without an adapter callback."""
+        from .owner_bootstrap import _resolve_original_control_lease
+
+        return _resolve_original_control_lease(
+            value, context=self._context, supervisor=self.adapter,
+            operation_kind=operation_kind)
 
     def resolve(self, request: object, custodian_id: str, provider_id: str) -> _OwnerRegistrationEvidence:
         from .generation_ingress import OwnerEnrollmentRequest
@@ -112,9 +122,11 @@ class _OwnerRegistrationResolver:
         return evidence
 
 
-def _bind_owner_registration_resolver(issuer: object, adapter: object) -> _OwnerRegistrationResolver:
+def _bind_owner_registration_resolver(issuer: object, adapter: object,
+                                      control_context: object) -> _OwnerRegistrationResolver:
     """Private bootstrap seam; only trusted host bootstrap may call this."""
-    return _OwnerRegistrationResolver(_OWNER_RESOLVER_SEAL, issuer, adapter)
+    return _OwnerRegistrationResolver(_OWNER_RESOLVER_SEAL, issuer, adapter,
+                                      control_context)
 
 
 def _issue_owner_registration_evidence(resolver: _OwnerRegistrationResolver, request: object,
@@ -801,9 +813,11 @@ class LocalTargetCustodian:
         self._issuer = object()
         self._handles: dict[int, tuple[object, _VerifiedTargetCustody]] = {}
 
-    def register_target(self, owner_enrollment: object) -> object:
+    def register_target(self, owner_enrollment: object, *, control_lease: object) -> object:
         from .generation_ingress import OwnerEnrollmentRequest, TargetCustody
 
+        self._resolver.require_control_lease(
+            control_lease, operation_kind='registration-apply')
         if type(owner_enrollment) is not OwnerEnrollmentRequest:
             raise CustodyJournalError('owner-enrollment-required')
         evidence = self._resolver.resolve(owner_enrollment, self.custodian_id, self.provider_id)
@@ -827,6 +841,8 @@ class LocalTargetCustodian:
                                   'approvalDigest': approval['approvalDigest']},
             }
             try:
+                self._resolver.require_control_lease(
+                    control_lease, operation_kind='registration-apply')
                 self._journal._append('registration-intent', expected_intent)
             except CustodyJournalError:
                 # The atomic replace may have completed before its acknowledgement
@@ -854,6 +870,8 @@ class LocalTargetCustodian:
         observation = fresh.observation
         observation_event = {'registrationId': registration_id, 'observation': observation}
         try:
+            self._resolver.require_control_lease(
+                control_lease, operation_kind='registration-apply')
             self._journal._append('registration-observation', observation_event)
         except CustodyJournalError:
             observed = self._journal._load()
@@ -876,6 +894,8 @@ class LocalTargetCustodian:
                 'registrationId': registration_id, 'targetCustody': reference,
             }
             try:
+                self._resolver.require_control_lease(
+                    control_lease, operation_kind='registration-apply')
                 self._journal._append('registration-confirmed', confirmation)
             except CustodyJournalError:
                 observed = self._journal._load()
@@ -889,9 +909,12 @@ class LocalTargetCustodian:
         verified = _VerifiedTargetCustody(_CUSTODY_SEAL, self, payload,
                                           fresh.native_attestation, reference)
         self._handles[id(handle)] = (handle, verified)
+        self._resolver.require_control_lease(
+            control_lease, operation_kind='registration-apply')
         return handle
 
-    def reattach_confirmed_target(self, owner_enrollment: object) -> object:
+    def reattach_confirmed_target(self, owner_enrollment: object, *,
+                                  control_lease: object) -> object:
         """Reissue volatile custody for the exact already-confirmed registration.
 
         This recovery path is deliberately read-only: it requires the original
@@ -901,6 +924,8 @@ class LocalTargetCustodian:
         """
         from .generation_ingress import OwnerEnrollmentRequest, TargetCustody
 
+        self._resolver.require_control_lease(
+            control_lease, operation_kind='registration-recover')
         if type(owner_enrollment) is not OwnerEnrollmentRequest:
             raise CustodyJournalError('owner-enrollment-required')
         evidence = self._resolver.resolve(owner_enrollment, self.custodian_id,
@@ -949,6 +974,8 @@ class LocalTargetCustodian:
         verified = _VerifiedTargetCustody(_CUSTODY_SEAL, self, payload,
                                           fresh.native_attestation, reference)
         self._handles[id(handle)] = (handle, verified)
+        self._resolver.require_control_lease(
+            control_lease, operation_kind='registration-recover')
         return handle
 
     @staticmethod

@@ -128,16 +128,17 @@ class RealAuthoritySupervisorBridgeTests(unittest.TestCase):
                             'recordDigest': body['recordDigest']}
 
             supervisor._journal = Journal()
-            reservation = supervisor._make_native_effect_reservation(
-                request, approval, 'local-target-creation', request.effect_key,
-                'native-acceptance', None, event_record, payload)
-            self.assertIs(supervisor._resolve_native_effect_reservation(
-                reservation, approval), reservation)
-            with self.assertRaisesRegex(
-                    native.LocalPostgresError,
-                    'local-postgresql-owner-effect-binding-required'):
-                supervisor._require_bound_pending_effect(reservation, object())
-            authority_binding = session.bind_native_effect(approval, reservation)
+            with supervisor._original_control_lease(operation_kind='target-apply'):
+                reservation = supervisor._make_native_effect_reservation(
+                    request, approval, 'local-target-creation', request.effect_key,
+                    'native-acceptance', None, event_record, payload)
+                self.assertIs(supervisor._resolve_native_effect_reservation(
+                    reservation, approval), reservation)
+                with self.assertRaisesRegex(
+                        native.LocalPostgresError,
+                        'local-postgresql-owner-effect-binding-required'):
+                    supervisor._require_bound_pending_effect(reservation, object())
+                authority_binding = session.bind_native_effect(approval, reservation)
             self.assertIsNotNone(authority_binding)
             observed = authority.observe_original_request(
                 supervisor.authority_context, request.effect_key)
@@ -156,8 +157,9 @@ class RealAuthoritySupervisorBridgeTests(unittest.TestCase):
             receipt = {'profile': 'test.native-terminal-receipt/1',
                        'requestDigest': request._intent_digest}
             pending_handle = session._pending_effect_handle(authority_binding)
-            terminal = supervisor._record_native_effect_outcome(
-                reservation, 'confirmed', receipt, pending_handle)
+            with supervisor._original_control_lease(operation_kind='target-apply'):
+                terminal = supervisor._record_native_effect_outcome(
+                    reservation, 'confirmed', receipt, pending_handle)
 
             # The native journal is terminal, but the independent owner ledger
             # remains pending until the facade records this exact outcome.
@@ -179,7 +181,8 @@ class RealAuthoritySupervisorBridgeTests(unittest.TestCase):
             self.assertFalse(birth_path.exists())
             self.assertFalse(anchor_path.exists())
 
-            session.record_native_outcome(authority_binding, terminal)
+            with supervisor._original_control_lease(operation_kind='target-apply'):
+                session.record_native_outcome(authority_binding, terminal)
             terminal_state = authority.observe_original_request(
                 supervisor.authority_context, request.effect_key)
             self.assertEqual(terminal_state.effect_status, 'confirmed')
@@ -191,8 +194,9 @@ class RealAuthoritySupervisorBridgeTests(unittest.TestCase):
                     supervisor._profile, ledger_path=authority._core._ledger.path)
             attached = attached_session.supervisor
             attached._journal = supervisor._journal
-            recovered, recovered_outcome, recovered_request = (
-                attached._recover_original_native_effect('local-target-creation'))
+            with attached._original_control_lease(operation_kind='target-recover'):
+                recovered, recovered_outcome, recovered_request = (
+                    attached._recover_original_native_effect('local-target-creation'))
             self.assertEqual(recovered.request_digest, request._intent_digest)
             self.assertEqual(recovered_request._intent_bytes, payload)
             self.assertIsNotNone(recovered_outcome)
@@ -201,19 +205,21 @@ class RealAuthoritySupervisorBridgeTests(unittest.TestCase):
 
             # The new process can reattach the exact terminal record, but that
             # record must not mint authority to execute a second native effect.
-            recovered_binding = attached_session.bind_native_effect(
-                recovered._approval, recovered)
-            recovered_handle = attached_session._pending_effect_handle(
-                recovered_binding, mode='recover')
+            with attached._original_control_lease(operation_kind='target-recover'):
+                recovered_binding = attached_session.bind_native_effect(
+                    recovered._approval, recovered)
+                recovered_handle = attached_session._pending_effect_handle(
+                    recovered_binding, mode='recover')
             self.assertIsNot(recovered_handle, pending_handle)
-            with self.assertRaisesRegex(
-                    native.LocalPostgresError,
-                    'local-postgresql-owner-effect-binding-required'):
-                attached._require_bound_pending_effect(recovered, pending_handle)
-            with self.assertRaisesRegex(
-                    native.LocalPostgresError,
-                    'local-postgresql-owner-effect-binding-required'):
-                attached._require_bound_pending_effect(recovered, recovered_handle)
+            with attached._original_control_lease(operation_kind='target-recover'):
+                with self.assertRaisesRegex(
+                        native.LocalPostgresError,
+                        'local-postgresql-owner-effect-binding-required'):
+                    attached._require_bound_pending_effect(recovered, pending_handle)
+                with self.assertRaisesRegex(
+                        native.LocalPostgresError,
+                        'local-postgresql-owner-effect-binding-required'):
+                    attached._require_bound_pending_effect(recovered, recovered_handle)
 
             # Exercise the crash gap where the native principal receipt is
             # confirmed but the facade has not yet finished the owner ledger.
@@ -275,13 +281,14 @@ class RealAuthoritySupervisorBridgeTests(unittest.TestCase):
             }
             supervisor._journal = Journal()
             supervisor._journal.events = [principal_event]
-            principal_reservation = supervisor._make_native_effect_reservation(
-                principal_request, principal_approval,
-                'native-principal-preparation', principal_request.effect_key,
-                'native-acceptance', None, principal_event, principal_bytes)
-            principal_binding = session.bind_native_effect(
-                principal_approval, principal_reservation)
-            principal_handle = session._pending_effect_handle(principal_binding)
+            with supervisor._original_control_lease(operation_kind='principals-apply'):
+                principal_reservation = supervisor._make_native_effect_reservation(
+                    principal_request, principal_approval,
+                    'native-principal-preparation', principal_request.effect_key,
+                    'native-acceptance', None, principal_event, principal_bytes)
+                principal_binding = session.bind_native_effect(
+                    principal_approval, principal_reservation)
+                principal_handle = session._pending_effect_handle(principal_binding)
             observed_roles = {'roles': 'synthetic exact native observation'}
             observed_database = {'oid': 17301, 'name': 'fixturedb',
                                  'systemIdentifier': '181818'}
@@ -295,8 +302,9 @@ class RealAuthoritySupervisorBridgeTests(unittest.TestCase):
                 'creationReceiptDigest': principal_reservation.journal_record_digest,
                 'purpose': 'native-acceptance',
             }
-            principal_outcome = supervisor._record_native_effect_outcome(
-                principal_reservation, 'confirmed', principal_receipt, principal_handle)
+            with supervisor._original_control_lease(operation_kind='principals-apply'):
+                principal_outcome = supervisor._record_native_effect_outcome(
+                    principal_reservation, 'confirmed', principal_receipt, principal_handle)
             self.assertEqual(authority.observe_original_request(
                 supervisor.authority_context,
                 principal_request.effect_key).effect_status, 'effect-pending')
@@ -310,18 +318,21 @@ class RealAuthoritySupervisorBridgeTests(unittest.TestCase):
                 observed_database, principal_intent)
             recovered_handle = session._pending_effect_handle(
                 principal_binding, mode='recover')
-            with patch.object(
-                    native.LocalPostgresSupervisor, '_finalize_recovered_principal_receipt'
-                    ) as finalize, patch.object(
-                        native.LocalPostgresSupervisor, '_create_application_database',
-                        side_effect=AssertionError('recovery must not replay DDL')):
+            with (supervisor._original_control_lease(operation_kind='principals-recover'),
+                  patch.object(
+                      native.LocalPostgresSupervisor,
+                      '_finalize_recovered_principal_receipt') as finalize,
+                  patch.object(
+                      native.LocalPostgresSupervisor, '_create_application_database',
+                      side_effect=AssertionError('recovery must not replay DDL'))):
                 self.assertEqual(supervisor.execute_original_principal_recovery(
                     principal_reservation, recovered_handle), principal_receipt)
                 finalize.assert_called_once()
             self.assertEqual(authority.observe_original_request(
                 supervisor.authority_context,
                 principal_request.effect_key).effect_status, 'effect-pending')
-            session.record_native_outcome(principal_binding, principal_outcome)
+            with supervisor._original_control_lease(operation_kind='principals-recover'):
+                session.record_native_outcome(principal_binding, principal_outcome)
             self.assertEqual(authority.observe_original_request(
                 supervisor.authority_context,
                 principal_request.effect_key).effect_status, 'confirmed')

@@ -22,6 +22,7 @@ import subprocess
 import tempfile
 import time
 import uuid
+from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -32,6 +33,7 @@ from .owner_bootstrap import (
     _BOOTSTRAP_ISSUERS,
     LocalPostgresError,
     LocalPostgresProfile,
+    _acquire_original_control_lease,
     _canonical,
     _digest,
     _fsync_directory,
@@ -41,6 +43,7 @@ from .owner_bootstrap import (
     _profile_to_enrollment,
     _read_bootstrap_enrollment,
     _read_private,
+    _resolve_original_control_lease,
     _role,
     _uuid,
     _validate_bootstrap_context_journal,
@@ -68,6 +71,7 @@ _STORE_SCHEMA_PREFIXES = {
     'umf.pg-generation-ingress-store/0.1': 'umf_ingress_',
     'umf.native-row-originals-store/0.1': 'umf_originals_',
 }
+_NATIVE_SUPERVISORS: dict[int, tuple[object, int]] = {}
 _ENV = {'PATH': '/usr/bin:/bin', 'LANG': 'C', 'LC_ALL': 'C', 'TZ': 'UTC'}
 _POSTGRES_SETTINGS = (
     "listen_addresses = '127.0.0.1'",
@@ -1129,6 +1133,38 @@ class _VerifiedNativeStorePreparation:
         raise TypeError('verified native preparation cannot be serialized')
 
 
+_TARGET_LEASE_SEAL = object()
+
+
+class _OriginalNativeTargetLease:
+    """Supervisor-owned registered-target view over the same control lease."""
+
+    __slots__ = ('_control_lease', '_custodian', '_issuer', '_reference',
+                 '_supervisor', '_target_handle', '_verified_target')
+
+    def __init__(self, seal: object, supervisor: object, control_lease: object,
+                 custodian: object, target_handle: object, verified_target: object,
+                 reference: dict[str, Any]):
+        if seal is not _TARGET_LEASE_SEAL:
+            raise TypeError('native target leases are supervisor-issued')
+        object.__setattr__(self, '_issuer', supervisor)
+        object.__setattr__(self, '_supervisor', supervisor)
+        object.__setattr__(self, '_control_lease', control_lease)
+        object.__setattr__(self, '_custodian', custodian)
+        object.__setattr__(self, '_target_handle', target_handle)
+        object.__setattr__(self, '_verified_target', verified_target)
+        object.__setattr__(self, '_reference', _canonical(reference))
+
+    def __setattr__(self, _name: str, _value: object) -> None:
+        raise AttributeError('native target lease is immutable')
+
+    def __reduce_ex__(self, _protocol: int):
+        raise TypeError('native target lease cannot be serialized')
+
+    def __repr__(self) -> str:
+        return '<OriginalNativeTargetLease opaque>'
+
+
 class LocalPostgresSupervisor:
     """Create and supervise one fresh PostgreSQL 18.6 local installation.
 
@@ -1138,7 +1174,10 @@ class LocalPostgresSupervisor:
 
     __slots__ = (
         '__resolver',
+        '_active_child',
+        '_active_control_lease',
         '_active_creation',
+        '_active_target_lease',
         '_authority_context',
         '_bootstrap_issuer',
         '_bound_installation_id',
@@ -1171,6 +1210,7 @@ class LocalPostgresSupervisor:
         '_store_issuer',
         '_store_preparations',
         '_supervisor_id',
+        '_target_leases',
         '_target_paths',
     )
 
@@ -1213,6 +1253,9 @@ class LocalPostgresSupervisor:
         self._provider_id = profile.provider_id
         self._journal: _SupervisorJournal | None = None
         self._target_paths: dict[str, Path] = {}
+        self._active_control_lease = None
+        self._active_target_lease = None
+        self._target_leases: dict[int, _OriginalNativeTargetLease] = {}
         self._maintenance_password: bytes | None = None
         self._pg_process: subprocess.Popen[bytes] | None = None
         self._launch: dict[str, Any] | None = None
@@ -1233,6 +1276,7 @@ class LocalPostgresSupervisor:
             int, tuple[_NativeEffectReservation, dict[str, Any]]
         ] = {}
         self._active_creation: _PendingTargetCreation | None = None
+        self._active_child: subprocess.Popen[bytes] | None = None
         self._native_targets: dict[int, _OriginalNativeTarget] = {}
         self._principal_preparations: dict[int, _PreparedOriginalPrincipals] = {}
         self._registration_preparations: dict[int, _PreparedTargetRegistration] = {}
@@ -1248,16 +1292,167 @@ class LocalPostgresSupervisor:
                        _VerifiedNativeEffectOutcome | None, dict[str, Any],
                        dict[str, Any], dict[str, Any] | None]
         ] = {}
+        # This exact concrete constructor binds itself once after all context
+        # and core checks; no issuer-side generic registrar accepts objects.
+        if issuer._supervisor is not None:
+            raise LocalPostgresError('local-postgresql-original-supervisor-binding-invalid')
+        object.__setattr__(issuer, '_supervisor', self)
+        _NATIVE_SUPERVISORS[id(self)] = (self, os.getpid())
 
     @property
     def authority_context(self) -> object:
         return self._authority_context
+
+    @contextmanager
+    def _original_control_lease(self, *, operation_kind: str,
+                                timeout_ms: int = 5000):
+        """Hold the existing enrolled setup exclusion for one native operation."""
+        if self._active_control_lease is not None:
+            raise LocalPostgresError('local-postgresql-control-lease-already-active')
+        with _acquire_original_control_lease(
+                self._bootstrap_issuer, self._authority_context, self,
+                operation_kind=operation_kind, timeout_ms=timeout_ms) as lease:
+            self._active_control_lease = lease
+            try:
+                self._require_original_control_lease(lease, operation_kind=operation_kind)
+                yield lease
+            finally:
+                if self._active_target_lease is not None:
+                    self._target_leases.pop(id(self._active_target_lease), None)
+                    self._active_target_lease = None
+                self._active_control_lease = None
+
+    @contextmanager
+    def _reuse_original_control_lease(self, lease: object, *, operation_kind: str):
+        """Internal same-operation reentry; never opens another descriptor/flock."""
+        self._require_original_control_lease(lease, operation_kind=operation_kind)
+        yield lease
+
+    def _require_original_control_lease(self, lease: object | None = None, *,
+                                        operation_kind: str | None = None) -> object:
+        current = getattr(self, '_active_control_lease', None)
+        if lease is None:
+            lease = current
+        if lease is None or current is not lease:
+            raise LocalPostgresError('local-postgresql-control-lease-required')
+        if (operation_kind is not None
+                and getattr(lease, '_operation_kind', None) != operation_kind):
+            raise LocalPostgresError('local-postgresql-control-lease-kind-mismatch')
+        return _resolve_original_control_lease(
+            lease, context=self._authority_context, supervisor=self,
+            operation_kind=operation_kind)
+
+    def _require_native_supervisor_origin(self) -> None:
+        if (type(self) is not LocalPostgresSupervisor
+                or _NATIVE_SUPERVISORS.get(id(self)) != (self, os.getpid())):
+            raise LocalPostgresError('local-postgresql-native-supervisor-origin-unverified')
+
+    def _require_native_effect_operation(self, *allowed: str) -> object:
+        """Bind native origin and the fixed active operation at every effect edge."""
+        self._require_native_supervisor_origin()
+        return self._require_control_operation(*allowed)
+
+    def _require_control_operation(self, *allowed: str) -> object:
+        lease = self._require_original_control_lease()
+        if lease._operation_kind not in allowed:
+            raise LocalPostgresError('local-postgresql-control-lease-kind-mismatch')
+        return lease
+
+    def _append_supervisor_journal(self, kind: str,
+                                   payload: dict[str, Any]) -> dict[str, Any]:
+        """Revalidate the exact outer lease at each durable native-journal write."""
+        lease = self._require_original_control_lease()
+        if self._journal is None:
+            raise LocalPostgresError('local-postgresql-native-effect-journal-unavailable')
+        result = self._journal.append(kind, payload)
+        self._require_original_control_lease(lease)
+        return result
+
+    def _require_effect_control_operation(self, scope: str, *, recovery: bool = False) -> object:
+        kinds = {
+            'local-target-creation': ('target-apply', 'target-recover'),
+            'native-principal-preparation': ('principals-apply', 'principals-recover'),
+            'local-target-registration': ('registration-apply', 'registration-recover'),
+            'native-store-creation': ('store',),
+            'disabled-epoch-provision': ('epoch',),
+            'generation-ingress-transition': ('transition',),
+        }.get(scope)
+        if kinds is None:
+            raise LocalPostgresError('local-postgresql-native-effect-scope-invalid')
+        return self._require_control_operation(*(kinds[1:] if recovery else kinds))
+
+    @contextmanager
+    def acquire_original_target_lease(self, custodian: object,
+                                      target_custody: object, *,
+                                      timeout_ms: int = 5000):
+        """Acquire a registered-target lease over the same original setup lock."""
+        self._require_native_supervisor_origin()
+        with self._original_control_lease(
+                operation_kind='target-registered', timeout_ms=timeout_ms) as control:
+            from .ingress_custody import CustodyJournalError, LocalTargetCustodian
+            if (type(custodian) is not LocalTargetCustodian
+                    or custodian is not self._custodian
+                    or target_custody is not self._custody_handle
+                    or target_custody is None):
+                raise LocalPostgresError('local-postgresql-target-lease-unverified')
+            self._require_original_control_lease(
+                control, operation_kind='target-registered')
+            try:
+                verified = custodian._resolve_target_custody(target_custody)
+                reference = custodian._public_reference(target_custody)
+            except CustodyJournalError:
+                raise LocalPostgresError('local-postgresql-target-lease-unverified') from None
+            if (self._launch is None
+                    or not self._native_origin_matches(
+                        reference.get('origin'), self._launch.get('nativeAttestation'))):
+                raise LocalPostgresError('local-postgresql-target-lease-origin-mismatch')
+            lease = _OriginalNativeTargetLease(
+                _TARGET_LEASE_SEAL, self, control, custodian,
+                target_custody, verified, reference)
+            if self._active_target_lease is not None:
+                raise LocalPostgresError('local-postgresql-target-lease-already-active')
+            self._active_target_lease = lease
+            self._target_leases[id(lease)] = lease
+            try:
+                self._resolve_original_target_lease(
+                    lease, custodian=custodian, target_custody=target_custody)
+                yield lease
+            finally:
+                self._target_leases.pop(id(lease), None)
+                if self._active_target_lease is lease:
+                    self._active_target_lease = None
+
+    def _resolve_original_target_lease(self, value: object, *, custodian: object,
+                                       target_custody: object) -> _OriginalNativeTargetLease:
+        if (type(value) is not _OriginalNativeTargetLease
+                or value._issuer is not self or value._supervisor is not self
+                or self._target_leases.get(id(value)) is not value
+                or self._active_target_lease is not value
+                or value._custodian is not custodian
+                or value._target_handle is not target_custody
+                or value._control_lease is not self._active_control_lease):
+            raise LocalPostgresError('local-postgresql-target-lease-unverified')
+        self._require_original_control_lease(
+            value._control_lease, operation_kind='target-registered')
+        try:
+            verified = custodian._resolve_target_custody(target_custody)
+            reference = custodian._public_reference(target_custody)
+        except Exception:  # noqa: BLE001 - custody details remain private.
+            raise LocalPostgresError('local-postgresql-target-lease-unverified') from None
+        if (verified is not value._verified_target
+                or _canonical(reference) != value._reference
+                or self._launch is None
+                or not self._native_origin_matches(
+                    reference.get('origin'), self._launch.get('nativeAttestation'))):
+            raise LocalPostgresError('local-postgresql-target-lease-origin-mismatch')
+        return value
 
     def _make_native_effect_reservation(
             self, request: object, approval: object, scope: str,
             effect_key: tuple[str, ...], purpose: str, target: object,
             journal_event: dict[str, Any], payload_bytes: bytes
             ) -> _NativeEffectReservation:
+        self._require_effect_control_operation(scope, recovery=False)
         if self._journal is None:
             raise LocalPostgresError('local-postgresql-native-effect-journal-unavailable')
         from .owner_approval_core import OwnerApprovalRequest, VerifiedOwnerApproval
@@ -1273,7 +1468,7 @@ class LocalPostgresSupervisor:
                    != journal_event.get('recordDigest')):
             raise LocalPostgresError('local-postgresql-native-effect-reservation-stale')
         reservation_id = str(uuid.uuid4())
-        event = self._journal.append('native-effect-intent', {
+        event = self._append_supervisor_journal('native-effect-intent', {
             'reservationId': reservation_id, 'scope': scope,
             'effectKey': list(effect_key), 'purpose': purpose,
             'requestId': request._approval_id, 'requestDigest': request._intent_digest,
@@ -1291,6 +1486,8 @@ class LocalPostgresSupervisor:
 
     def _resolve_native_effect_reservation(
             self, value: object, verified_approval: object) -> _NativeEffectReservation:
+        if type(value) is _NativeEffectReservation:
+            self._require_effect_control_operation(value._scope)
         from .owner_approval_core import OwnerAuthorityError
         if (type(value) is not _NativeEffectReservation
                 or value._issuer is not self or value._supervisor is not self
@@ -1321,6 +1518,8 @@ class LocalPostgresSupervisor:
             self, reservation: object, effect_handle: object, *,
             mode: str = 'execute') -> None:
         """Require the exact core-issued ledger binding before native effects."""
+        if type(reservation) is _NativeEffectReservation:
+            self._require_effect_control_operation(reservation._scope)
         from .owner_approval_core import OwnerAuthorityError
 
         if (type(reservation) is not _NativeEffectReservation
@@ -1337,13 +1536,14 @@ class LocalPostgresSupervisor:
     def _record_native_effect_outcome(
             self, reservation: _NativeEffectReservation, status: str,
             receipt: dict[str, Any], effect_handle: object) -> _VerifiedNativeEffectOutcome:
+        self._require_effect_control_operation(reservation._scope)
         self._require_bound_pending_effect(reservation, effect_handle)
         self._resolve_native_effect_reservation(reservation, reservation._approval)
         if status not in ('confirmed', 'known-aborted'):
             raise LocalPostgresError('local-postgresql-native-effect-outcome-unknown')
         assert self._journal is not None
         receipt_digest = _digest(receipt)
-        event = self._journal.append(
+        event = self._append_supervisor_journal(
             'native-effect-confirmed' if status == 'confirmed' else 'native-effect-aborted',
             {'reservationId': reservation._reservation_id,
              'receiptDigest': receipt_digest})
@@ -1356,6 +1556,8 @@ class LocalPostgresSupervisor:
 
     def _resolve_native_effect_outcome(
             self, value: object, reservation: object) -> _VerifiedNativeEffectOutcome:
+        if type(reservation) is _NativeEffectReservation:
+            self._require_effect_control_operation(reservation._scope)
         if (type(value) is not _VerifiedNativeEffectOutcome
                 or type(reservation) is not _NativeEffectReservation
                 or value._issuer is not self or value._reservation is not reservation
@@ -1383,6 +1585,7 @@ class LocalPostgresSupervisor:
         authority to resolve that exact approval ID from its existing ledger.
         It never prepares a replacement request or infers native completion.
         """
+        self._require_effect_control_operation(scope, recovery=True)
         if scope not in ('local-target-creation', 'native-principal-preparation',
                          'local-target-registration'):
             raise LocalPostgresError('local-postgresql-original-request-scope-invalid')
@@ -1468,6 +1671,7 @@ class LocalPostgresSupervisor:
         signed journal and checked against the enrolled profile, live process
         group, configuration, endpoint, and PostgreSQL native observation.
         """
+        self._require_original_control_lease(operation_kind='target-recover')
         if (os.geteuid() == 0 or self._pg_process is not None
                 or self._launch is not None or self._journal is not None):
             raise LocalPostgresError('local-postgresql-reattach-state-invalid')
@@ -1649,6 +1853,7 @@ class LocalPostgresSupervisor:
         A previously confirmed effect is only compared with the newly observed
         receipt; this method never repeats target creation.
         """
+        self._require_original_control_lease(operation_kind='target-recover')
         if (type(target) is not _OriginalNativeTarget or target._issuer is not self
                 or self._native_targets.get(id(target)) is not target
                 or self._journal is None):
@@ -1680,6 +1885,14 @@ class LocalPostgresSupervisor:
         committed; callers must perform the scope-specific native observation
         before settling an unknown outcome.
         """
+        operation_kind = {
+            'local-target-creation': 'target-recover',
+            'native-principal-preparation': 'principals-recover',
+            'local-target-registration': 'registration-recover',
+        }.get(scope)
+        if operation_kind is None:
+            raise LocalPostgresError('local-postgresql-original-effect-scope-invalid')
+        self._require_control_operation(operation_kind)
         if self._journal is None:
             suffix = self._supervisor_id.replace('-', '')
             self._journal = _SupervisorJournal(
@@ -1822,6 +2035,7 @@ class LocalPostgresSupervisor:
         enrolled owner resolver.  Journal payloads are inputs to verification,
         never authority to mint a custody capability.
         """
+        self._require_control_operation('registration-recover')
         if (type(target) is not _OriginalNativeTarget or target._issuer is not self
                 or self._native_targets.get(id(target)) is not target
                 or self._journal is None or self._launch is None):
@@ -1884,6 +2098,7 @@ class LocalPostgresSupervisor:
     def execute_original_registration_reattachment(
             self, reservation: object, effect_handle: object) -> object:
         """Run the exact recovered registration after facade ledger binding."""
+        self._require_control_operation('registration-recover')
         recovery = self._registration_recovery_dispatches.get(id(reservation))
         if (type(reservation) is not _NativeEffectReservation
                 or recovery is None or recovery[0] is not reservation
@@ -1905,7 +2120,8 @@ class LocalPostgresSupervisor:
             _bootstrap_local_target_custodian,
         )
         control = self._target_paths['control']
-        resolver = _bind_owner_registration_resolver(self, self)
+        resolver = _bind_owner_registration_resolver(
+            self, self, self._authority_context)
         custody_journal = ExternalCustodyJournal(
             control / 'target-custody.json', self._custodian_id)
         custodian = _bootstrap_local_target_custodian(
@@ -1919,9 +2135,11 @@ class LocalPostgresSupervisor:
             if outcome is not None:
                 if outcome.status != 'confirmed':
                     raise LocalPostgresError('local-postgresql-registration-outcome-mismatch')
-                handle = custodian.reattach_confirmed_target(owner_request)
+                handle = custodian.reattach_confirmed_target(
+                    owner_request, control_lease=self._require_original_control_lease())
             else:
-                handle = custodian.register_target(owner_request)
+                handle = custodian.register_target(
+                    owner_request, control_lease=self._require_original_control_lease())
             reference = custodian._public_reference(handle)
         except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
             raise LocalPostgresError(
@@ -1930,7 +2148,7 @@ class LocalPostgresSupervisor:
         self._custodian = custodian
         self._custody_handle = handle
         if owner_approved is None and outcome is None:
-            self._journal.append('owner-registration-approved', {
+            self._append_supervisor_journal('owner-registration-approved', {
                 'registrationId': registration['registrationId'],
                 'payloadDigest': _digest(payload),
                 'approvalId': reservation.approval_id,
@@ -1964,11 +2182,13 @@ class LocalPostgresSupervisor:
 
     def prepare_target_creation(self) -> tuple[_PendingTargetCreation, object]:
         """Reserve the original target identity and signed request without native effects."""
+        self._require_original_control_lease(operation_kind='target-prepare')
         if os.geteuid() == 0:
             raise LocalPostgresError('local-postgresql-nonroot-owner-required')
         if self._pending_creations or self._active_creation is not None:
             raise LocalPostgresError('local-postgresql-original-creation-already-reserved')
         postgres, initdb = self._validate_installation_binaries()
+        self._require_original_control_lease(operation_kind='target-prepare')
         cluster_id, incarnation_id = str(uuid.uuid4()), str(uuid.uuid4())
         maintenance = f'umf_m_{self._supervisor_id.replace("-", "")}'
         controller = f'umf_c_{self._supervisor_id.replace("-", "")}'
@@ -2022,8 +2242,10 @@ class LocalPostgresSupervisor:
         }
         request_bytes = _canonical(request_value)
         try:
+            self._require_original_control_lease(operation_kind='target-prepare')
             request = self._owner_core.prepare_request(
                 'local-target-creation', request_bytes, context=self._authority_context)
+            self._require_original_control_lease(operation_kind='target-prepare')
         except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
             self._maintenance_password = None
             raise LocalPostgresError('local-postgresql-owner-request-unavailable') from None
@@ -2041,6 +2263,7 @@ class LocalPostgresSupervisor:
         self._pending_creation_values[id(pending)] = (pending, values)
         self._pending_creations[id(pending)] = pending
         self._owner_payloads['creationRequest'] = request_value
+        self._require_original_control_lease(operation_kind='target-prepare')
         return pending, request
 
     def export_owner_signing_request(self, request: object) -> dict[str, Any]:
@@ -2056,6 +2279,7 @@ class LocalPostgresSupervisor:
     def reserve_target_creation(
             self, pending: object, approval: object) -> _NativeEffectReservation:
         """Durably reserve an already verified creation approval; perform no DDL."""
+        self._require_original_control_lease(operation_kind='target-apply')
         if type(pending) is not _PendingTargetCreation or pending._issuer is not self:
             raise LocalPostgresError('local-postgresql-original-creation-required')
         if self._pending_creations.get(id(pending)) is not pending or self._active_creation is not None:
@@ -2080,7 +2304,7 @@ class LocalPostgresSupervisor:
                        'requestDigest': request._intent_digest,
                        'approvalId': approval.approval_id,
                        'approvalDigest': approval.approval_digest})
-        self._journal.append('creation-intent', intent)
+        self._append_supervisor_journal('creation-intent', intent)
         effect_key = ('local-target-creation', self._supervisor_id,
                       value['clusterId'])
         reservation = self._make_native_effect_reservation(
@@ -2091,11 +2315,13 @@ class LocalPostgresSupervisor:
         self._reserved_creation_values[id(reservation)] = (reservation, pending_values[1])
         self._pending_creations.pop(id(pending), None)
         self._pending_creation_values.pop(id(pending), None)
+        self._require_original_control_lease(operation_kind='target-apply')
         return reservation
 
     def execute_target_creation(self, pending: object, reservation: object,
                                 effect_handle: object) -> object:
         """Execute only the exact reservation returned for this pending creation."""
+        self._require_original_control_lease(operation_kind='target-apply')
         if (type(pending) is not _PendingTargetCreation or pending._issuer is not self
                 or type(reservation) is not _NativeEffectReservation
                 or self._native_effect_reservations.get(id(reservation)) is not reservation
@@ -2110,12 +2336,18 @@ class LocalPostgresSupervisor:
         pending_values = self._creation_values_for_reservation(reservation)
         values = pending_values
         try:
+            self._require_original_control_lease(operation_kind='target-apply')
             _private_directory(values['control'], create=True)
+            self._require_original_control_lease(operation_kind='target-apply')
             _private_directory(values['data'], create=True)
+            self._require_original_control_lease(operation_kind='target-apply')
             _write_private(values['pwPath'], self._maintenance_password + b'\n')
+            self._require_original_control_lease(operation_kind='target-apply')
             _write_private(values['credentialPath'], self._maintenance_password + b'\n')
+            self._require_original_control_lease(operation_kind='target-apply')
             _write_private(values['identPath'], b'')
             target = self._run_target_creation(pending, reservation, values, effect_handle)
+            self._require_original_control_lease(operation_kind='target-apply')
         except BaseException:  # noqa: TRY203 - preserve the original effect failure and unresolved journal.
             # The effect is not called aborted from an exception. The original
             # journal remains authoritative until explicit observation resolves it.
@@ -2131,13 +2363,57 @@ class LocalPostgresSupervisor:
             raise LocalPostgresError('local-postgresql-original-creation-not-reserved')
         return values[1]
 
+    def _verify_original_creation_values(self, pending: _PendingTargetCreation,
+                                         reservation: _NativeEffectReservation,
+                                         values: dict[str, Any]) -> None:
+        """Tie native paths and bytes to the exact originally signed request."""
+        reserved = self._reserved_creation_values.get(id(reservation))
+        if (type(pending) is not _PendingTargetCreation or pending._issuer is not self
+                or pending._request is not reservation._request
+                or reserved is None or reserved[0] is not reservation
+                or reserved[1] is not values
+                or self._native_effect_reservations.get(id(reservation)) is not reservation
+                or type(values.get('request')) is not dict
+                or _canonical(values['request']) != pending._request_bytes):
+            raise LocalPostgresError('local-postgresql-original-creation-not-reserved')
+        request = values['request']
+        expected = {
+            'controlDirectory': values['control'], 'dataDirectory': values['data'],
+            'postgresPath': values['postgres'], 'initdbPath': values['initdb'],
+            'configDigest': hashlib.sha256(values['config']).hexdigest(),
+            'hbaDigest': hashlib.sha256(values['hba']).hexdigest(),
+        }
+        if (any(request[key] != str(value) if isinstance(value, Path)
+                else request[key] != value for key, value in expected.items())
+                or values['config'] != _render_config(
+                    self._profile.port, values['hbaPath'], values['identPath'])
+                or values['hba'] != _render_hba(request['maintenanceName'])
+                or values['configPath'] != values['control'] / 'postgresql.conf'
+                or values['hbaPath'] != values['control'] / 'pg_hba.conf'
+                or values['identPath'] != values['control'] / 'pg_ident.conf'
+                or values['pwPath'] != values['control'] / 'initdb.pwfile'):
+            raise LocalPostgresError('local-postgresql-original-creation-not-reserved')
+
     def _run_target_creation(self, pending: _PendingTargetCreation,
                              reservation: _NativeEffectReservation,
                              values: dict[str, Any],
                              effect_handle: object) -> _OriginalNativeTarget:
+        self._require_native_effect_operation('target-apply')
+        reserved = self._reserved_creation_values.get(id(reservation))
+        if (type(pending) is not _PendingTargetCreation
+                or pending._issuer is not self
+                or type(reservation) is not _NativeEffectReservation
+                or self._native_effect_reservations.get(id(reservation)) is not reservation
+                or self._active_creation is not None
+                or pending._request is not reservation._request
+                or reserved is None or reserved[0] is not reservation
+                or reserved[1] is not values):
+            raise LocalPostgresError('local-postgresql-original-creation-not-reserved')
+        self._verify_original_creation_values(pending, reservation, values)
+        self._require_bound_pending_effect(reservation, effect_handle)
         request = values['request']
         self._active_creation = pending
-        self._write_creation_config(values)
+        self._write_creation_config(values, pending, reservation, effect_handle)
         initdb_argv = [str(values['initdb']), '-D', str(values['data']),
                        '-U', request['maintenanceName'], '--encoding=UTF8',
                        '--locale=C', '--auth-local=reject',
@@ -2145,14 +2421,15 @@ class LocalPostgresSupervisor:
                        f"--pwfile={values['pwPath']}"]
         self._run_bounded_child(initdb_argv, values['control'] / 'initdb.log', 180,
                                 allowed_binaries={str(values['initdb']),
-                                                  str(values['postgres'])})
+                                                  str(values['postgres'])},
+                                reservation=reservation, effect_handle=effect_handle)
         pg_version = values['data'] / 'PG_VERSION'
         if not pg_version.is_file() or pg_version.read_text().strip() != '18':
             raise LocalPostgresError('local-postgresql-initdb-result-invalid')
         data_stat = os.stat(values['data'], follow_symlinks=False)
         assert self._journal is not None
         initdb_receipt = {'argv': initdb_argv, 'status': 'success', 'pgVersion': '18'}
-        self._journal.append('initdb-confirmed', {
+        self._append_supervisor_journal('initdb-confirmed', {
             'clusterId': request['clusterId'], 'dataDevice': str(data_stat.st_dev),
             'dataInode': str(data_stat.st_ino), 'ownerUid': os.geteuid(),
             'initdbReceiptDigest': _digest(initdb_receipt),
@@ -2164,7 +2441,8 @@ class LocalPostgresSupervisor:
             raise LocalPostgresError('local-postgresql-secret-cleanup-unverified') from None
         self._launch_postmaster(values['postgres'], values['data'], values['configPath'],
                                 values['hbaPath'], values['identPath'],
-                                values['configDigest'], values['hbaDigest'], launch_number=1)
+                                values['configDigest'], values['hbaDigest'], launch_number=1,
+                                reservation=reservation, effect_handle=effect_handle)
         receipt = {'profile': 'umf.local-supervisor-target-creation-receipt/0.1',
                    'clusterId': request['clusterId'],
                    'incarnationId': request['incarnationId'],
@@ -2184,6 +2462,7 @@ class LocalPostgresSupervisor:
     def prepare_original_principals(self, target: object
                                     ) -> tuple[_PreparedOriginalPrincipals, object]:
         """Observe the fresh bootstrap and reserve the exact principal-stage request."""
+        self._require_original_control_lease(operation_kind='principals-prepare')
         if (type(target) is not _OriginalNativeTarget or target._issuer is not self
                 or self._native_targets.get(id(target)) is not target
                 or target._creation._issuer is not self):
@@ -2283,12 +2562,14 @@ class LocalPostgresSupervisor:
         }
         intent_bytes = _canonical(intent_value)
         try:
+            self._require_original_control_lease(operation_kind='principals-prepare')
             request = self._owner_core.prepare_request(
                 'native-principal-preparation', intent_bytes,
                 context=self._authority_context)
+            self._require_original_control_lease(operation_kind='principals-prepare')
         except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
             raise LocalPostgresError('local-postgresql-principal-request-unavailable') from None
-        self._journal.append('principal-request-prepared', {
+        self._append_supervisor_journal('principal-request-prepared', {
             'preparationId': preparation_id, 'approvalId': request._approval_id,
             'intent': intent_value,
             'requestDigest': request._intent_digest,
@@ -2304,7 +2585,10 @@ class LocalPostgresSupervisor:
     def export_principal_signing_request(self, prepared: object) -> dict[str, Any]:
         if (type(prepared) is not _PreparedOriginalPrincipals
                 or prepared._issuer is not self
-                or self._principal_preparations.get(id(prepared)) is not prepared):
+                or self._principal_preparations.get(id(prepared)) is not prepared
+                or type(prepared._target) is not _OriginalNativeTarget
+                or prepared._target._issuer is not self
+                or self._native_targets.get(id(prepared._target)) is not prepared._target):
             raise LocalPostgresError('local-postgresql-principal-request-not-original')
         try:
             return self._owner_core.export_signing_request(prepared._request)
@@ -2314,6 +2598,7 @@ class LocalPostgresSupervisor:
     def reserve_original_principals(self, prepared: object,
                                     approval: object) -> _NativeEffectReservation:
         """Reserve the verified principal operation without running native DDL."""
+        self._require_original_control_lease(operation_kind='principals-apply')
         if (type(prepared) is not _PreparedOriginalPrincipals
                 or prepared._issuer is not self
                 or self._principal_preparations.get(id(prepared)) is not prepared
@@ -2344,6 +2629,7 @@ class LocalPostgresSupervisor:
     def execute_original_principals(self, prepared: object, reservation: object,
                                     effect_handle: object) -> dict[str, Any]:
         """Run native principal DDL only after the session facade ledger-binds it."""
+        self._require_original_control_lease(operation_kind='principals-apply')
         if (type(prepared) is not _PreparedOriginalPrincipals
                 or prepared._issuer is not self
                 or self._principal_preparations.get(id(prepared)) is not prepared
@@ -2356,19 +2642,20 @@ class LocalPostgresSupervisor:
         self._require_bound_pending_effect(reservation, effect_handle)
         intent_value = prepared._values['intent']
         assert self._journal is not None
-        self._journal.append('principal-roles-intent', {
+        self._append_supervisor_journal('principal-roles-intent', {
             'reservationId': reservation.reservation_id,
             'preparationId': intent_value['preparationId']})
-        role_observation = self._apply_principal_role_transaction(prepared)
+        role_observation = self._apply_principal_role_transaction(
+            prepared, reservation, effect_handle)
         role_digest = _digest(role_observation)
-        self._journal.append('principal-roles-confirmed', {
+        self._append_supervisor_journal('principal-roles-confirmed', {
             'reservationId': reservation.reservation_id,
             'observationDigest': role_digest})
-        self._journal.append('principal-database-intent', {
+        self._append_supervisor_journal('principal-database-intent', {
             'reservationId': reservation.reservation_id,
             'databaseName': intent_value['applicationDatabase']['name']})
-        database = self._create_application_database(prepared)
-        self._journal.append('principal-database-confirmed', {
+        database = self._create_application_database(prepared, effect_handle)
+        self._append_supervisor_journal('principal-database-confirmed', {
             'reservationId': reservation.reservation_id,
             'databaseOid': database['oid'],
             'systemIdentifier': database['systemIdentifier']})
@@ -2415,7 +2702,7 @@ class LocalPostgresSupervisor:
             'applicationDatabase': database,
         }
         creation_receipt_digest = _digest(creation_receipt)
-        self._journal.append('creation-finalized', {
+        self._append_supervisor_journal('creation-finalized', {
             'receipt': creation_receipt, 'receiptDigest': creation_receipt_digest})
         self._owner_payloads['creationReceipt'] = creation_receipt
         self._owner_payloads['creationReceiptDigest'] = creation_receipt_digest
@@ -2430,6 +2717,7 @@ class LocalPostgresSupervisor:
 
     def prepare_original_principal_recovery(self, target: object) -> _NativeEffectReservation:
         """Reconstruct the exact original principal dispatch without native DDL."""
+        self._require_control_operation('principals-recover')
         if (type(target) is not _OriginalNativeTarget or target._issuer is not self
                 or self._native_targets.get(id(target)) is not target
                 or self._journal is None or self._launch is None):
@@ -2470,7 +2758,7 @@ class LocalPostgresSupervisor:
                        and event['payload'].get('reservationId')
                            == reservation.reservation_id for event in events):
                 raise LocalPostgresError('local-postgresql-principal-role-intent-unavailable')
-            self._journal.append('principal-roles-confirmed', {
+            self._append_supervisor_journal('principal-roles-confirmed', {
                 'reservationId': reservation.reservation_id,
                 'observationDigest': role_digest})
 
@@ -2494,7 +2782,7 @@ class LocalPostgresSupervisor:
             # catalog row, owner, locale, and system identifier, without DDL.
             if database_intent is None:
                 raise LocalPostgresError('local-postgresql-database-intent-unavailable')
-            self._journal.append('principal-database-confirmed', {
+            self._append_supervisor_journal('principal-database-confirmed', {
                 'reservationId': reservation.reservation_id,
                 'databaseOid': database['oid'],
                 'systemIdentifier': database['systemIdentifier']})
@@ -2504,7 +2792,7 @@ class LocalPostgresSupervisor:
                     != intent['applicationDatabase']['name']):
                 raise LocalPostgresError('local-postgresql-database-intent-mismatch')
             if database_intent is None:
-                self._journal.append('principal-database-intent', {
+                self._append_supervisor_journal('principal-database-intent', {
                     'reservationId': reservation.reservation_id,
                     'databaseName': intent['applicationDatabase']['name']})
         self._principal_recovery_dispatches[id(reservation)] = (
@@ -2514,6 +2802,7 @@ class LocalPostgresSupervisor:
     def execute_original_principal_recovery(
             self, reservation: object, effect_handle: object) -> dict[str, Any]:
         """Continue only the original database substage after facade binding."""
+        self._require_control_operation('principals-recover')
         recovery = self._principal_recovery_dispatches.get(id(reservation))
         if (type(reservation) is not _NativeEffectReservation
                 or recovery is None or recovery[0] is not reservation
@@ -2542,9 +2831,9 @@ class LocalPostgresSupervisor:
                 raise LocalPostgresError('local-postgresql-principal-outcome-mismatch')
             database = self._observe_original_application_database(prepared)
             if database is None:
-                database = self._create_application_database(prepared)
+                database = self._create_application_database(prepared, effect_handle)
             assert self._journal is not None
-            self._journal.append('principal-database-confirmed', {
+            self._append_supervisor_journal('principal-database-confirmed', {
                 'reservationId': reservation.reservation_id,
                 'databaseOid': database['oid'],
                 'systemIdentifier': database['systemIdentifier']})
@@ -2651,6 +2940,15 @@ class LocalPostgresSupervisor:
             self, reservation: _NativeEffectReservation,
             receipt: dict[str, Any], role_observation: dict[str, Any],
             database: dict[str, Any]) -> None:
+        self._require_control_operation('principals-recover')
+        if (type(reservation) is not _NativeEffectReservation
+                or self._native_effect_reservations.get(id(reservation)) is not reservation
+                or reservation._supervisor is not self):
+            raise LocalPostgresError('local-postgresql-principal-recovery-unverified')
+        recovery = self._principal_recovery_dispatches.get(id(reservation))
+        if (recovery is None or recovery[0] is not reservation
+                or recovery[1]._request is not reservation._request):
+            raise LocalPostgresError('local-postgresql-principal-recovery-unverified')
         assert self._journal is not None
         chain = self._journal.read()
         creation = next(event['payload'] for event in chain['events']
@@ -2690,7 +2988,7 @@ class LocalPostgresSupervisor:
                     or finalized['receiptDigest'] != creation_receipt_digest):
                 raise LocalPostgresError('local-postgresql-final-receipt-mismatch')
         else:
-            self._journal.append('creation-finalized', {
+            self._append_supervisor_journal('creation-finalized', {
                 'receipt': creation_receipt,
                 'receiptDigest': creation_receipt_digest})
         final = self._journal.read()['events'][-1]
@@ -2709,6 +3007,7 @@ class LocalPostgresSupervisor:
     def prepare_target_registration(
             self, target: object) -> tuple[_PreparedTargetRegistration, object]:
         """Prepare registration only after the exact original principal stage."""
+        self._require_original_control_lease(operation_kind='registration-prepare')
         if (type(target) is not _OriginalNativeTarget or target._issuer is not self
                 or self._native_targets.get(id(target)) is not target
                 or self._journal is None or self._launch is None):
@@ -2749,12 +3048,14 @@ class LocalPostgresSupervisor:
                   'registration': registration}
         intent_bytes = _canonical(intent)
         try:
+            self._require_original_control_lease(operation_kind='registration-prepare')
             request = self._owner_core.prepare_request(
                 'local-target-registration', intent_bytes,
                 context=self._authority_context)
+            self._require_original_control_lease(operation_kind='registration-prepare')
         except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
             raise LocalPostgresError('local-postgresql-registration-request-unavailable') from None
-        self._journal.append('registration-request-prepared', {
+        self._append_supervisor_journal('registration-request-prepared', {
             'registrationId': registration['registrationId'],
             'approvalId': request._approval_id,
             'intent': intent, 'requestDigest': request._intent_digest,
@@ -2778,6 +3079,7 @@ class LocalPostgresSupervisor:
     def reserve_target_registration(self, prepared: object,
                                     approval: object) -> _NativeEffectReservation:
         """Verify signed registration, then let the original custodian journal it."""
+        self._require_original_control_lease(operation_kind='registration-apply')
         if (type(prepared) is not _PreparedTargetRegistration
                 or prepared._issuer is not self
                 or self._registration_preparations.get(id(prepared)) is not prepared
@@ -2797,7 +3099,7 @@ class LocalPostgresSupervisor:
         # Preserve the approved operation before any further observations. If
         # verification succeeded but later source/target checks are uncertain,
         # the same prepared identity must not be replaced by a new request.
-        self._journal.append('registration-signature-verified', {
+        self._append_supervisor_journal('registration-signature-verified', {
             'registrationId': creation['registrationId'],
             'requestDigest': request._intent_digest,
             'approvalId': approval.approval_id,
@@ -2825,6 +3127,7 @@ class LocalPostgresSupervisor:
 
     def execute_target_registration(self, prepared: object, reservation: object,
                                     effect_handle: object) -> object:
+        self._require_original_control_lease(operation_kind='registration-apply')
         if (type(prepared) is not _PreparedTargetRegistration
                 or prepared._issuer is not self
                 or self._registration_preparations.get(id(prepared)) is not prepared
@@ -2853,21 +3156,23 @@ class LocalPostgresSupervisor:
         self._owner_payloads[creation['registrationId']] = payload
         self._handles[id(owner_request)] = (
             owner_request, payload, self._launch['nativeAttestation'])
-        self._resolver = _bind_owner_registration_resolver(self, self)
+        self._resolver = _bind_owner_registration_resolver(
+            self, self, self._authority_context)
         control = self._target_paths['control']
         custody_journal = ExternalCustodyJournal(
             control / 'target-custody.json', self._custodian_id)
         self._custodian = _bootstrap_local_target_custodian(
             custody_journal, self._custodian_id, self._provider_id, self._resolver)
         try:
-            handle = self._custodian.register_target(owner_request)
+            handle = self._custodian.register_target(
+                owner_request, control_lease=self._require_original_control_lease())
             reference = self._custodian._public_reference(handle)
         except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
             # Registration may have committed in the external journal. Keep its
             # signed original intent and effect reservation for observation; do
             # not issue another registration identity or effect.
             raise LocalPostgresError('local-postgresql-registration-outcome-unresolved') from None
-        self._journal.append('owner-registration-approved', {
+        self._append_supervisor_journal('owner-registration-approved', {
             'registrationId': creation['registrationId'],
             'payloadDigest': _digest(payload),
             'approvalId': approval.approval_id,
@@ -2887,12 +3192,22 @@ class LocalPostgresSupervisor:
         return handle
 
     def _apply_principal_role_transaction(
-            self, prepared: _PreparedOriginalPrincipals) -> dict[str, Any]:
+            self, prepared: _PreparedOriginalPrincipals,
+            reservation: _NativeEffectReservation,
+            effect_handle: object) -> dict[str, Any]:
+        self._require_native_effect_operation('principals-apply')
+        if (type(prepared) is not _PreparedOriginalPrincipals
+                or self._principal_preparations.get(id(prepared)) is not prepared
+                or self._principal_dispatches.get(id(prepared)) is not reservation
+                or self._native_effect_reservations.get(id(reservation)) is not reservation):
+            raise LocalPostgresError('local-postgresql-principal-dispatch-unverified')
+        self._require_bound_pending_effect(reservation, effect_handle)
         values = prepared._values
         maintenance, controller, owner = (values['maintenance'], values['controller'],
                                             values['businessOwner'])
         try:
             with self._connect_maintenance('postgres') as connection, connection.transaction():
+                    self._require_original_control_lease(operation_kind='principals-apply')
                     connection.execute(
                         f'ALTER ROLE {_quote_identifier(maintenance)} SUPERUSER LOGIN '
                         'NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS NOINHERIT')
@@ -2943,16 +3258,50 @@ class LocalPostgresSupervisor:
         except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
             raise LocalPostgresError('local-postgresql-role-transaction-outcome-unknown') from None
 
-    def _create_application_database(self,
-                                     prepared: _PreparedOriginalPrincipals) -> dict[str, Any]:
+    def _create_application_database(self, prepared: _PreparedOriginalPrincipals,
+                                     effect_handle: object) -> dict[str, Any]:
+        lease = self._require_native_effect_operation('principals-apply', 'principals-recover')
+        if (type(prepared) is not _PreparedOriginalPrincipals
+                or prepared._issuer is not self
+                or self._principal_preparations.get(id(prepared)) is not prepared):
+            raise LocalPostgresError('local-postgresql-principal-preparation-unverified')
+        reservation = self._principal_dispatches.get(id(prepared))
+        if (type(reservation) is not _NativeEffectReservation
+                or self._native_effect_reservations.get(id(reservation)) is not reservation
+                or reservation._supervisor is not self
+                or reservation._request is not prepared._request):
+            raise LocalPostgresError('local-postgresql-principal-dispatch-unverified')
+        if lease._operation_kind == 'principals-recover':
+            recovery = self._principal_recovery_dispatches.get(id(reservation))
+            if (recovery is None or recovery[0] is not reservation
+                    or recovery[1] is not prepared or recovery[2] is not None
+                    or recovery[4] is not None or recovery[3] is None):
+                raise LocalPostgresError('local-postgresql-principal-recovery-unverified')
+        else:
+            dispatch = self._principal_dispatches.get(id(prepared))
+            if dispatch is not reservation:
+                raise LocalPostgresError('local-postgresql-principal-dispatch-unverified')
+        state = self._owner_core.observe_original_request(
+            self._authority_context, prepared._request.effect_key)
+        if (state.effect_status != 'effect-pending'
+                or state.approval_id != reservation.approval_id
+                or state.intent_digest != reservation.request_digest):
+            raise LocalPostgresError('local-postgresql-principal-effect-not-pending')
+        self._require_bound_pending_effect(
+            reservation, effect_handle,
+            mode='recover' if lease._operation_kind == 'principals-recover' else 'execute')
+        self._require_original_control_lease(lease)
         intent = prepared._values['intent']['applicationDatabase']
         try:
             with self._connect_maintenance('postgres') as connection:
+                self._require_original_control_lease(lease)
                 connection.autocommit = True
+                self._require_original_control_lease(lease)
                 connection.execute(
                     f'CREATE DATABASE {_quote_identifier(intent["name"])} '
                     f'OWNER {_quote_identifier(intent["ownerName"])} '
                     "ENCODING 'UTF8' LOCALE 'C'")
+                self._require_original_control_lease(lease)
                 row = connection.execute(
                     "SELECT d.oid,d.datname,d.datcollate,d.datctype,r.rolname "
                     "FROM pg_catalog.pg_database d JOIN pg_catalog.pg_roles r "
@@ -2961,6 +3310,7 @@ class LocalPostgresSupervisor:
                 system_identifier = connection.execute(
                     'SELECT system_identifier::pg_catalog.text FROM '
                     'pg_catalog.pg_control_system()').fetchone()[0]
+            self._require_original_control_lease(lease)
             if (row is None or row[1] != intent['name'] or row[2] != 'C'
                     or row[3] != 'C' or row[4] != intent['ownerName']):
                 raise LocalPostgresError('local-postgresql-database-observation-mismatch')
@@ -2971,36 +3321,19 @@ class LocalPostgresSupervisor:
         except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
             raise LocalPostgresError('local-postgresql-database-creation-outcome-unknown') from None
 
-    def _write_creation_config(self, values: dict[str, Any]) -> None:
+    def _write_creation_config(self, values: dict[str, Any],
+                               pending: _PendingTargetCreation,
+                               reservation: _NativeEffectReservation,
+                               effect_handle: object) -> None:
+        self._require_native_effect_operation('target-apply')
+        if pending is not self._active_creation:
+            raise LocalPostgresError('local-postgresql-original-creation-not-reserved')
+        self._verify_original_creation_values(pending, reservation, values)
+        self._require_bound_pending_effect(reservation, effect_handle)
         _write_private(values['configPath'], values['config'], exclusive=False)
+        self._require_original_control_lease(operation_kind='target-apply')
         _write_private(values['hbaPath'], values['hba'], exclusive=False)
-
-    def _cleanup_unstarted_target(self) -> None:
-        """Remove only known reversible pre-effect files/directories."""
-        paths = self._target_paths
-        control, data = paths.get('control'), paths.get('data')
-        if self._pg_process is not None or self._journal is not None and self._journal.read()['events']:
-            raise LocalPostgresError('local-postgresql-cleanup-not-proven-safe')
-        if control is not None:
-            for name in ('initdb.pwfile', 'maintenance.credential', 'postgresql.conf',
-                         'pg_hba.conf', 'pg_ident.conf', 'owner-journal.json.lock'):
-                candidate = control / name
-                try:
-                    st = os.lstat(candidate)
-                    if not stat.S_ISREG(st.st_mode) or st.st_uid != os.geteuid():
-                        raise LocalPostgresError('local-postgresql-cleanup-path-unsafe')
-                    candidate.unlink()
-                except FileNotFoundError:
-                    pass
-            try:
-                control.rmdir()
-            except OSError:
-                raise LocalPostgresError('local-postgresql-cleanup-unverified') from None
-        if data is not None:
-            try:
-                data.rmdir()
-            except OSError:
-                raise LocalPostgresError('local-postgresql-cleanup-unverified') from None
+        self._require_original_control_lease(operation_kind='target-apply')
 
     def _validate_installation_binaries(self) -> tuple[Path, Path]:
         postgres = _regular_owned(self._profile.postgres_binary, executable=True)
@@ -3037,6 +3370,10 @@ class LocalPostgresSupervisor:
 
     def resolve_owner_registration(self, request: OwnerEnrollmentRequest, *,
                                    custodian_id: str, provider_id: str):
+        control_lease = self._require_original_control_lease()
+        if control_lease._operation_kind not in ('registration-apply',
+                                                  'registration-recover'):
+            raise LocalPostgresError('local-postgresql-control-lease-kind-mismatch')
         entry = self._handles.get(id(request))
         if (entry is None or entry[0] is not request or custodian_id != self._custodian_id
                 or provider_id != self._provider_id):
@@ -3049,6 +3386,10 @@ class LocalPostgresSupervisor:
     def observe_original_registration(self, request: OwnerEnrollmentRequest, *,
                                       original_payload: dict[str, Any],
                                       custodian_sequence: int):
+        control_lease = self._require_original_control_lease()
+        if control_lease._operation_kind not in ('registration-apply',
+                                                  'registration-recover'):
+            raise LocalPostgresError('local-postgresql-control-lease-kind-mismatch')
         entry = self._handles.get(id(request))
         if (entry is None or entry[0] is not request or entry[1] != original_payload
                 or type(custodian_sequence) is not int or custodian_sequence < 1):
@@ -3082,26 +3423,84 @@ class LocalPostgresSupervisor:
 
     def _launch_postmaster(self, postgres: Path, data_dir: Path, config_path: Path,
                            hba_path: Path, ident_path: Path, config_digest: str,
-                           hba_digest: str, *, launch_number: int) -> None:
+                           hba_digest: str, *, launch_number: int,
+                           reservation: _NativeEffectReservation | None = None,
+                           effect_handle: object = None) -> None:
+        self._require_native_effect_operation('target-apply', 'target-recover',
+                                              'process-recover')
+        if launch_number == 1:
+            pending = self._active_creation
+            reserved = (self._reserved_creation_values.get(id(reservation))
+                        if reservation is not None else None)
+            if (pending is None or reserved is None or reserved[0] is not reservation
+                    or self._native_effect_reservations.get(id(reservation)) is not reservation
+                    or pending._request is not reservation._request
+                    or Path(postgres) != reserved[1]['postgres']
+                    or Path(data_dir) != reserved[1]['data']
+                    or Path(config_path) != reserved[1]['configPath']
+                    or Path(hba_path) != reserved[1]['hbaPath']
+                    or Path(ident_path) != reserved[1]['identPath']
+                    or config_digest != reserved[1]['configDigest']
+                    or hba_digest != reserved[1]['hbaDigest']):
+                raise LocalPostgresError('local-postgresql-postmaster-operation-unverified')
+            self._verify_original_creation_values(pending, reservation, reserved[1])
+            self._require_bound_pending_effect(reservation, effect_handle)
+        else:
+            targets = [target for target in self._native_targets.values()
+                       if target._issuer is self
+                       and self._native_targets.get(id(target)) is target
+                       and target._reservation._scope == 'local-target-creation']
+            if (launch_number < 2 or len(targets) != 1 or self._launch is None
+                    or self._journal is None or self._active_creation is not None
+                    or self._require_original_control_lease()._operation_kind
+                       != 'process-recover'):
+                raise LocalPostgresError('local-postgresql-postmaster-operation-unverified')
+            target = targets[0]
+            reservation = target._reservation
+            outcome = self._native_effect_outcomes.get(id(reservation))
+            request_value = json.loads(target._creation._request_bytes)
+            owner_state = self._owner_core.observe_original_request(
+                self._authority_context, reservation._effect_key)
+            if (outcome is None or outcome.status != 'confirmed'
+                    or owner_state.effect_status != 'confirmed'
+                    or owner_state.approval_id != reservation.approval_id
+                    or owner_state.intent_digest != reservation.request_digest
+                    or launch_number != int(self._launch['launchNumber']) + 1
+                    or Path(postgres) != Path(request_value['postgresPath'])
+                    or Path(data_dir) != Path(request_value['dataDirectory'])
+                    or Path(config_path) != Path(request_value['controlDirectory'])
+                    / 'postgresql.conf'
+                    or Path(hba_path) != Path(request_value['controlDirectory']) / 'pg_hba.conf'
+                    or Path(ident_path) != Path(request_value['controlDirectory']) / 'pg_ident.conf'
+                    or config_digest != request_value['configDigest']
+                    or hba_digest != request_value['hbaDigest']):
+                raise LocalPostgresError('local-postgresql-postmaster-operation-unverified')
+            self._resolve_native_effect_reservation(reservation, reservation._approval)
         assert self._journal is not None
         current_hba = _render_hba(self._maintenance_name())
         if hashlib.sha256(current_hba).hexdigest() != hba_digest:
             raise LocalPostgresError('local-postgresql-hba-profile-mismatch')
+        self._require_native_effect_operation('target-apply', 'target-recover',
+                                              'process-recover')
         _write_private(hba_path, current_hba, exclusive=False)
         argv = [str(postgres), '-D', str(data_dir), '-c', f'config_file={config_path}',
                 '-c', f'hba_file={hba_path}', '-c', f'ident_file={ident_path}']
         launch_id = str(uuid.uuid4())
         data_st = os.stat(data_dir, follow_symlinks=False)
-        self._journal.append('launch-intent', {
+        self._append_supervisor_journal('launch-intent', {
             'launchId': launch_id, 'launchNumber': launch_number,
             'argv': argv, 'configDigest': config_digest, 'hbaDigest': hba_digest,
             'binarySha256': _sha_file(postgres), 'dataDevice': str(data_st.st_dev),
             'dataInode': str(data_st.st_ino),
         })
         log_path = self._target_paths['control'] / f'postgres-launch-{launch_number}.log'
+        self._require_native_effect_operation('target-apply', 'target-recover',
+                                              'process-recover')
         log_fd = os.open(log_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
         os.fchmod(log_fd, 0o600)
         try:
+            self._require_native_effect_operation('target-apply', 'target-recover',
+                                                  'process-recover')
             self._pg_process = subprocess.Popen(
                 argv, cwd=str(self._target_paths['control']), env=dict(_ENV),
                 stdin=subprocess.DEVNULL, stdout=log_fd, stderr=subprocess.STDOUT,
@@ -3147,7 +3546,7 @@ class LocalPostgresSupervisor:
                         'sockets': sockets,
                         'nativeAttestation': _NativeAttestation(self, process, native,
                                                                endpoint_digest)}
-        self._journal.append('launch-confirmed', {
+        self._append_supervisor_journal('launch-confirmed', {
             'launchId': launch_id, 'process': process,
             'nativeObservationDigest': _digest(native),
             'endpointReceiptDigest': endpoint_digest,
@@ -3203,14 +3602,47 @@ class LocalPostgresSupervisor:
         raise LocalPostgresError('local-postgresql-process-group-still-live')
 
     def _run_bounded_child(self, argv: list[str], log_path: Path, timeout: float,
-                           *, allowed_binaries: set[str]) -> None:
+                           *, allowed_binaries: set[str],
+                           reservation: _NativeEffectReservation | None = None,
+                           effect_handle: object = None) -> None:
+        self._require_native_effect_operation('target-apply')
+        if self._active_child is not None:
+            raise LocalPostgresError('local-postgresql-child-already-active')
+        pending = self._active_creation
+        candidates = [
+            (reservation, values)
+            for reservation, values in self._reserved_creation_values.values()
+            if pending is not None
+            and values.get('request') is not None
+            and _canonical(values['request']) == pending._request_bytes
+        ]
+        if len(candidates) != 1:
+            raise LocalPostgresError('local-postgresql-child-operation-unverified')
+        candidate_reservation, values = candidates[0]
+        if (reservation is not candidate_reservation
+                or type(reservation) is not _NativeEffectReservation
+                or self._native_effect_reservations.get(id(reservation)) is not reservation):
+            raise LocalPostgresError('local-postgresql-child-operation-unverified')
+        self._verify_original_creation_values(pending, reservation, values)
+        self._require_bound_pending_effect(reservation, effect_handle)
+        expected_argv = [str(values['initdb']), '-D', str(values['data']),
+                         '-U', values['request']['maintenanceName'],
+                         '--encoding=UTF8', '--locale=C', '--auth-local=reject',
+                         '--auth-host=scram-sha-256', f"--pwfile={values['pwPath']}"]
+        if (argv != expected_argv or timeout != 180
+                or log_path != values['control'] / 'initdb.log'
+                or allowed_binaries != {str(values['initdb']), str(values['postgres'])}):
+            raise LocalPostgresError('local-postgresql-child-operation-unverified')
+        self._require_original_control_lease(operation_kind='target-apply')
         log_fd = os.open(log_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
         os.fchmod(log_fd, 0o600)
         try:
+            self._require_original_control_lease(operation_kind='target-apply')
             child = subprocess.Popen(argv, cwd=str(log_path.parent), env=dict(_ENV),
                                      stdin=subprocess.DEVNULL, stdout=log_fd,
                                      stderr=subprocess.STDOUT, close_fds=True,
                                      start_new_session=True)
+            self._active_child = child
         except OSError:
             os.close(log_fd)
             raise LocalPostgresError('local-postgresql-child-start-failed') from None
@@ -3225,13 +3657,20 @@ class LocalPostgresSupervisor:
             self._terminate_owned_child(child, allowed_binaries)
             raise LocalPostgresError('local-postgresql-child-timeout') from None
         self._assert_group_absent(child.pid)
+        if self._active_child is not child:
+            raise LocalPostgresError('local-postgresql-child-ownership-unknown')
+        self._active_child = None
         if status != 0:
             raise LocalPostgresError('local-postgresql-child-failed')
 
     def _terminate_owned_child(self, child: subprocess.Popen[bytes],
                                allowed_binaries: set[str]) -> None:
+        self._require_native_effect_operation('target-apply')
+        if self._active_child is not child:
+            raise LocalPostgresError('local-postgresql-child-ownership-unknown')
         if child.poll() is not None:
             self._assert_group_absent(child.pid)
+            self._active_child = None
             return
         members = self._observer.group(child.pid)
         expected = {str(Path(x).resolve(strict=True)) for x in allowed_binaries}
@@ -3239,6 +3678,7 @@ class LocalPostgresSupervisor:
                                or member.get('uid') != os.geteuid()
                                or member.get('path') not in expected for member in members)):
             raise LocalPostgresError('local-postgresql-child-ownership-unknown')
+        self._require_original_control_lease(operation_kind='target-apply')
         os.killpg(child.pid, signal.SIGTERM)
         try:
             child.wait(timeout=5)
@@ -3248,12 +3688,16 @@ class LocalPostgresSupervisor:
                                    or member.get('uid') != os.geteuid()
                                    or member.get('path') not in expected for member in members)):
                 raise LocalPostgresError('local-postgresql-child-ownership-unknown')
+            self._require_original_control_lease(operation_kind='target-apply')
             os.killpg(child.pid, signal.SIGKILL)
             try:
                 child.wait(timeout=5)
             except subprocess.TimeoutExpired:
                 raise LocalPostgresError('local-postgresql-child-terminal-unknown') from None
         self._assert_group_absent(child.pid)
+        if self._active_child is not child:
+            raise LocalPostgresError('local-postgresql-child-ownership-unknown')
+        self._active_child = None
 
     def _maintenance_name(self) -> str:
         if self._journal is None:
@@ -3546,13 +3990,33 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
                 and self._launch is not None and sockets == self._launch['sockets'])
 
     def _stop_postmaster(self) -> None:
+        self._require_native_effect_operation('process-recover')
         if self._pg_process is None or self._launch is None or self._journal is None:
             raise LocalPostgresError('local-postgresql-process-not-owned')
+        targets = [target for target in self._native_targets.values()
+                   if target._issuer is self
+                   and self._native_targets.get(id(target)) is target
+                   and target._reservation._scope == 'local-target-creation']
+        if len(targets) != 1:
+            raise LocalPostgresError('local-postgresql-process-recovery-unverified')
+        target_reservation = targets[0]._reservation
+        target_outcome = self._native_effect_outcomes.get(id(target_reservation))
+        owner_state = self._owner_core.observe_original_request(
+            self._authority_context, target_reservation._effect_key)
+        if (target_outcome is None or target_outcome.status != 'confirmed'
+                or owner_state.effect_status != 'confirmed'
+                or owner_state.approval_id != target_reservation.approval_id
+                or owner_state.intent_digest != target_reservation.request_digest):
+            raise LocalPostgresError('local-postgresql-process-recovery-unverified')
+        self._resolve_native_effect_reservation(
+            target_reservation, target_reservation._approval)
         process = self._verify_live_process()
         launch_id = self._launch['launchId']
-        self._journal.append('stop-intent', {'launchId': launch_id,
+        self._append_supervisor_journal('stop-intent', {'launchId': launch_id,
                                              'processStartToken': process['startToken']})
         self._verify_owned_process_group(process['pgid'])
+        self._require_control_operation('target-apply', 'target-recover',
+                                        'process-recover')
         os.killpg(process['pgid'], signal.SIGINT)
         try:
             self._pg_process.wait(timeout=20)
@@ -3561,13 +4025,15 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             if not members or any(member['startToken'] != process['startToken']
                                   for member in members if member['pid'] == process['pid']):
                 raise LocalPostgresError('local-postgresql-process-ownership-unknown')
+            self._require_control_operation('target-apply', 'target-recover',
+                                            'process-recover')
             os.killpg(process['pgid'], signal.SIGKILL)
             try:
                 self._pg_process.wait(timeout=5)
             except subprocess.TimeoutExpired:
                 raise LocalPostgresError('local-postgresql-process-terminal-unknown') from None
         self._assert_group_absent(process['pgid'])
-        self._journal.append('stop-confirmed', {'launchId': launch_id,
+        self._append_supervisor_journal('stop-confirmed', {'launchId': launch_id,
                          'processGroupAbsent': True,
                          'controlDataDigest': _digest({'systemIdentifier': self._launch['native']['systemIdentifier'],
                                                        'databaseOid': self._launch['native']['databaseOid']})})
@@ -3575,6 +4041,12 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
 
     def restart_same_target(self) -> dict[str, Any]:
         """Controlled restart retaining the original PGDATA and custody chain."""
+        with self._original_control_lease(operation_kind='process-recover'):
+            return self._restart_same_target_under_lease()
+
+    def _restart_same_target_under_lease(self) -> dict[str, Any]:
+        """Perform restart while the original control lease is retained."""
+        self._require_control_operation('process-recover')
         if self._journal is None or self._launch is None or self._pg_process is None:
             raise LocalPostgresError('local-postgresql-process-not-owned')
         intent = next(event['payload'] for event in self._journal.read()['events']
@@ -3587,6 +4059,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
         expected_hba = _render_hba(intent['maintenanceName'])
         if hashlib.sha256(expected_hba).hexdigest() != intent['hbaDigest']:
             raise LocalPostgresError('local-postgresql-hba-profile-mismatch')
+        self._require_control_operation('process-recover')
         _write_private(hba, expected_hba, exclusive=False)
         _fsync_directory(control)
         next_launch = int(self._launch['launchNumber']) + 1
@@ -3611,6 +4084,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
                                         'umf.pg-generation-ingress-store/0.1'
                                         ) -> _VerifiedNativeStorePreparation:
         """Observe the original target for one exact, admitted scope-4 store profile."""
+        self._require_control_operation('store')
         if target_custody is not self._custody_handle:
             raise LocalPostgresError('local-postgresql-original-target-unverified')
         store = _store_descriptor(store_profile, self._provider_id)
@@ -3636,9 +4110,11 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             reference, verified, registration, authority, native)
         preparation_payload = {'profile': 'umf.owner-store-create-intent/0.1',
                                'store': store, 'evidence': evidence_payload}
+        self._require_original_control_lease(operation_kind='store')
         owner_request = self._owner_core.prepare_request(
             'native-store-creation', _canonical(preparation_payload),
             context=self._authority_context)
+        self._require_original_control_lease(operation_kind='store')
         evidence = _VerifiedNativeStorePreparation(
             _VERIFIED_STORE_PREPARATION_SEAL, self._store_issuer, self,
             self._custodian, self._custody_handle, verified, owner_request,
@@ -3961,8 +4437,9 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
 
     def stop(self) -> None:
         """Stop only this adapter's verified server process group."""
-        if self._pg_process is not None:
-            self._stop_postmaster()
+        with self._original_control_lease(operation_kind='process-recover'):
+            if self._pg_process is not None:
+                self._stop_postmaster()
 
     @property
     def custodian(self):

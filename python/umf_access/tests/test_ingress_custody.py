@@ -7,6 +7,7 @@ import json
 import os
 import tempfile
 import unittest
+from contextlib import contextmanager
 from pathlib import Path
 from unittest.mock import patch
 
@@ -25,6 +26,16 @@ from umf_access.lifecycle.ingress_custody import (
 
 def _hex(char: str = 'a') -> str:
     return char * 64
+
+
+@contextmanager
+def _synthetic_control_lease(operation_kind: str):
+    """Test-only token for journal controls; no native authority is asserted."""
+    del operation_kind
+    lease = object()
+    with patch('umf_access.lifecycle.owner_bootstrap._resolve_original_control_lease',
+               return_value=lease):
+        yield lease
 
 
 def _owner_payload() -> dict:
@@ -217,7 +228,7 @@ class ExternalCustodyJournalTests(unittest.TestCase):
 
         issuer = object()
         adapter = _SourceControlOwnerAdapter()
-        resolver = _bind_owner_registration_resolver(issuer, adapter)
+        resolver = _bind_owner_registration_resolver(issuer, adapter, object())
         adapter.binding = resolver
         request = generation_ingress.OwnerEnrollmentRequest(
             generation_ingress._CAPABILITY_SEAL, issuer,
@@ -225,7 +236,8 @@ class ExternalCustodyJournalTests(unittest.TestCase):
         custodian = _bootstrap_local_target_custodian(
             self.journal, _owner_payload()['custodianId'], _owner_payload()['providerId'], resolver)
         self.assertIs(type(custodian), LocalTargetCustodian)
-        handle = custodian.register_target(request)
+        with _synthetic_control_lease('registration-apply') as lease:
+            handle = custodian.register_target(request, control_lease=lease)
         verified = custodian._resolve_target_custody(handle)
         self.assertIs(verified.custodian, custodian)
         self.assertEqual(custodian._public_reference(handle)['registrationDigest'], _hex('1'))
@@ -238,7 +250,8 @@ class ExternalCustodyJournalTests(unittest.TestCase):
 
         restarted = _bootstrap_local_target_custodian(
             self.journal, _owner_payload()['custodianId'], _owner_payload()['providerId'], resolver)
-        reissued = restarted.register_target(request)
+        with _synthetic_control_lease('registration-apply') as lease:
+            reissued = restarted.register_target(request, control_lease=lease)
         self.assertEqual(restarted._public_reference(reissued), custodian._public_reference(handle))
         self.assertEqual(self.journal.snapshot()['sequence'], 4)
 
@@ -247,7 +260,7 @@ class ExternalCustodyJournalTests(unittest.TestCase):
 
         issuer = object()
         adapter = _SourceControlOwnerAdapter()
-        resolver = _bind_owner_registration_resolver(issuer, adapter)
+        resolver = _bind_owner_registration_resolver(issuer, adapter, object())
         adapter.binding = resolver
         request = generation_ingress.OwnerEnrollmentRequest(
             generation_ingress._CAPABILITY_SEAL, issuer,
@@ -266,13 +279,15 @@ class ExternalCustodyJournalTests(unittest.TestCase):
 
         with (patch.object(ExternalCustodyJournal, '_replace', replace_then_lose_confirmation),
               self.assertRaisesRegex(CustodyJournalError,
-                                     'registration-confirmation-outcome-unknown')):
-            custodian.register_target(request)
+                                     'registration-confirmation-outcome-unknown'),
+              _synthetic_control_lease('registration-apply') as lease):
+            custodian.register_target(request, control_lease=lease)
         self.assertEqual(self.journal.snapshot()['sequence'], 3)
         self.assertEqual(self.journal.snapshot()['pending'], {})
         # The next call reobserves and issues a new volatile handle from the
         # same confirmed registration; it does not reserve a second ID.
-        reissued = custodian.register_target(request)
+        with _synthetic_control_lease('registration-apply') as lease:
+            reissued = custodian.register_target(request, control_lease=lease)
         self.assertEqual(self.journal.snapshot()['sequence'], 4)
         self.assertEqual(custodian._public_reference(reissued)['registrationId'],
                          _owner_payload()['registrationId'])
@@ -282,21 +297,23 @@ class ExternalCustodyJournalTests(unittest.TestCase):
 
         issuer = object()
         adapter = _SourceControlOwnerAdapter()
-        resolver = _bind_owner_registration_resolver(issuer, adapter)
+        resolver = _bind_owner_registration_resolver(issuer, adapter, object())
         adapter.binding = resolver
         request = generation_ingress.OwnerEnrollmentRequest(
             generation_ingress._CAPABILITY_SEAL, issuer,
             'umf.local-owner-target-registration/0.1')
         initial = _bootstrap_local_target_custodian(
             self.journal, _owner_payload()['custodianId'], _owner_payload()['providerId'], resolver)
-        original_handle = initial.register_target(request)
+        with _synthetic_control_lease('registration-apply') as lease:
+            original_handle = initial.register_target(request, control_lease=lease)
         original_ref = initial._public_reference(original_handle)
         original_bytes = self.path.read_bytes()
         original_sequence = self.journal.snapshot()['sequence']
 
         restarted = _bootstrap_local_target_custodian(
             self.journal, _owner_payload()['custodianId'], _owner_payload()['providerId'], resolver)
-        handle = restarted.reattach_confirmed_target(request)
+        with _synthetic_control_lease('registration-recover') as lease:
+            handle = restarted.reattach_confirmed_target(request, control_lease=lease)
 
         self.assertEqual(restarted._public_reference(handle), original_ref)
         self.assertIsNot(handle, original_handle)
@@ -308,7 +325,7 @@ class ExternalCustodyJournalTests(unittest.TestCase):
 
         issuer = object()
         adapter = _SourceControlOwnerAdapter()
-        resolver = _bind_owner_registration_resolver(issuer, adapter)
+        resolver = _bind_owner_registration_resolver(issuer, adapter, object())
         adapter.binding = resolver
         request = generation_ingress.OwnerEnrollmentRequest(
             generation_ingress._CAPABILITY_SEAL, issuer,
@@ -322,9 +339,10 @@ class ExternalCustodyJournalTests(unittest.TestCase):
                               'approvalDigest': _owner_payload()['ownerApproval']['approvalDigest']},
         })
         before = self.path.read_bytes()
-        with self.assertRaisesRegex(CustodyJournalError,
-                                   'registration-confirmation-required'):
-            custodian.reattach_confirmed_target(request)
+        with (self.assertRaisesRegex(CustodyJournalError,
+                                     'registration-confirmation-required'),
+              _synthetic_control_lease('registration-recover') as lease):
+            custodian.reattach_confirmed_target(request, control_lease=lease)
         self.assertEqual(self.path.read_bytes(), before)
 
     def test_unknown_members_duplicate_keys_and_noncanonical_bytes_refuse(self) -> None:

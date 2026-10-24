@@ -1,0 +1,59 @@
+--- source-007/python/umf_access/src/umf_access/lifecycle/ingress_local_postgres.py
++++ current/python/umf_access/src/umf_access/lifecycle/ingress_local_postgres.py
+@@ -3335,39 +3335,6 @@
+         _write_private(values['hbaPath'], values['hba'], exclusive=False)
+         self._require_original_control_lease(operation_kind='target-apply')
+ 
+-    def _cleanup_unstarted_target(self) -> None:
+-        """Remove only known reversible pre-effect files/directories."""
+-        lease = self._require_native_effect_operation('target-apply', 'target-recover')
+-        paths = self._target_paths
+-        control, data = paths.get('control'), paths.get('data')
+-        if self._pg_process is not None or self._journal is not None and self._journal.read()['events']:
+-            raise LocalPostgresError('local-postgresql-cleanup-not-proven-safe')
+-        if lease._operation_kind == 'target-apply' and self._active_creation is None:
+-            raise LocalPostgresError('local-postgresql-cleanup-not-proven-safe')
+-        if control is not None:
+-            for name in ('initdb.pwfile', 'maintenance.credential', 'postgresql.conf',
+-                         'pg_hba.conf', 'pg_ident.conf', 'owner-journal.json.lock'):
+-                candidate = control / name
+-                try:
+-                    st = os.lstat(candidate)
+-                    if not stat.S_ISREG(st.st_mode) or st.st_uid != os.geteuid():
+-                        raise LocalPostgresError('local-postgresql-cleanup-path-unsafe')
+-                    self._require_original_control_lease()
+-                    candidate.unlink()
+-                except FileNotFoundError:
+-                    pass
+-            try:
+-                self._require_original_control_lease()
+-                control.rmdir()
+-            except OSError:
+-                raise LocalPostgresError('local-postgresql-cleanup-unverified') from None
+-        if data is not None:
+-            try:
+-                self._require_original_control_lease()
+-                data.rmdir()
+-            except OSError:
+-                raise LocalPostgresError('local-postgresql-cleanup-unverified') from None
+-
+     def _validate_installation_binaries(self) -> tuple[Path, Path]:
+         postgres = _regular_owned(self._profile.postgres_binary, executable=True)
+         initdb = _regular_owned(self._profile.initdb_binary, executable=True)
+--- source-007/python/umf_access/tests/test_original_control_lease.py
++++ current/python/umf_access/tests/test_original_control_lease.py
+@@ -301,13 +301,13 @@
+                 session = create_owner_authority_session(profile, ledger_path=ledger)
+             supervisor = session.supervisor
+             calls: list[str] = []
++            self.assertFalse(hasattr(supervisor, '_cleanup_unstarted_target'))
+             with patch.object(native.subprocess, 'Popen',
+                               side_effect=lambda *_a, **_k: calls.append('popen')):
+                 cases = (
+                     lambda: supervisor._run_target_creation(None, None, {}, None),
+                     lambda: supervisor._finalize_recovered_principal_receipt(
+                         None, {}, {}, {}),
+-                    supervisor._cleanup_unstarted_target,
+                     lambda: supervisor._run_bounded_child(
+                         ['never-run'], profile.control_home / 'never.log', 1,
+                         allowed_binaries=set()),

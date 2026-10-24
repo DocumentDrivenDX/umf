@@ -5,6 +5,7 @@ import copy
 import os
 import tempfile
 import unittest
+from contextlib import contextmanager
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -14,6 +15,16 @@ from umf_access.lifecycle import ingress_custody as journal
 from umf_access.lifecycle import ingress_store as store
 from umf_access.lifecycle.catalog import CatalogError
 from umf_access.lifecycle.phase_policy import FieldReplacementExecutionPolicy
+
+
+@contextmanager
+def _synthetic_control_lease(operation_kind: str):
+    """Test-only token for source fixtures; it does not attest a native target."""
+    del operation_kind
+    lease = object()
+    with patch('umf_access.lifecycle.owner_bootstrap._resolve_original_control_lease',
+               return_value=lease):
+        yield lease
 
 
 def _custody():
@@ -92,14 +103,15 @@ def _registered_custody():
             return self.evidence(request, custodian_sequence)
 
     adapter = TestOwnerAdapter()
-    resolver = journal._bind_owner_registration_resolver(issuer, adapter)
+    resolver = journal._bind_owner_registration_resolver(issuer, adapter, object())
     adapter.resolver = resolver
     request = generation_ingress.OwnerEnrollmentRequest(
         generation_ingress._CAPABILITY_SEAL, issuer,
         'umf.local-owner-target-registration/0.1')
     custodian = journal._bootstrap_local_target_custodian(
         journal_file, owner['custodianId'], owner['providerId'], resolver)
-    handle = custodian.register_target(request)
+    with _synthetic_control_lease('registration-apply') as lease:
+        handle = custodian.register_target(request, control_lease=lease)
     verified = custodian._resolve_target_custody(handle)
     _custody_fixture = (temp, custodian, handle, verified, custodian._public_reference(handle))
     return _custody_fixture[1:]
