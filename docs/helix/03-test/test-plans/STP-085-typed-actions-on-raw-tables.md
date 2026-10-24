@@ -302,6 +302,12 @@ next source-format pointer, while unselected YAML discovery retains its old
 output. Test Python `options=None` omission separately from raw bridge
 `options:null` refusal; do not assign one expected result to both routes.
 
+Temporal literal controls must include a native date default `2000-02-29`
+without a logical Field default, an invalid Gregorian date, the wrong carrier,
+and temporal facets/allowedValues. Unsupported temporal logical defaults must
+still fail complete-source admission. Preserve numeric and string refinement
+refusals to prove that native temporal admission does not relax other domains.
+
 Use fabricated commerce integer/decimal targets, Person nullable values, an
 audit transaction timestamp and UUID identifiers. Manually specify expected
 historical and new row values. Include an empty table and multiple differing old

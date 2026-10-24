@@ -1733,6 +1733,17 @@ emission. Volatile defaults on enumerated/ranged logical targets MUST refuse in
 this first subset; unchanged native CHECK/unique/FK constraints still apply to
 future writes and may reject generated values.
 
+Native temporal literals use the existing table-specific interpretation: a
+`date` Field with native `date` storage accepts an exact Gregorian date carrier;
+a `timestamp` Field with native `timestamptz` storage accepts an exact UTC instant
+carrier. Temporal facets and nonempty `allowedValues` MUST refuse until separately
+qualified. Carrier/nullability checks and the existing native date/instant
+validators apply; this does not enable core temporal refinement or logical
+`Field.default` semantics. For example, a native date default may be
+`{kind:"literal",value:{date:"2000-02-29"}}` with no logical Field default.
+Both complete sources MUST still pass unchanged core and table admission.
+Non-temporal literal refinement checks MUST remain fully enforced.
+
 G03 literal admission MUST reject NUL and unpaired UTF-16 surrogates before UTF-8
 encoding, including nested string-bearing carriers. Supplementary Unicode MUST
 survive unchanged. Each decoded literal payload is limited to 1,048,576 UTF-8
