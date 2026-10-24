@@ -123,17 +123,24 @@ def profile_version() -> str:
 
 def _call(op: str, fields: dict[str, Any], *, max_work=None, meter=None,
           is_cancelled=None, now=None, deadline_ms=None, _control_state=None,
+          _has_controls=None,
           _result_decoder=None):
     if profile_version() != _PROFILE:
         raise RuntimeError("umf-core JSON Schema capability profile mismatch")
     if _control_state is None:
         charge, host_work = _controls(max_work, meter, is_cancelled, now, deadline_ms)
+        has_controls = any(value is not None for value in
+                           (max_work, meter, is_cancelled, now, deadline_ms))
     else:
         charge, host_work = _control_state
+        has_controls = bool(_has_controls)
     request = {"profile": _PROFILE, "op": op, **fields}
     wire = json.dumps(_rust._wire(request, work=host_work), ensure_ascii=True,
                       separators=(",", ":"))
-    response_text = _rust._rust_core.execute_json_schema_wire(wire, charge)
+    # Native Rust admission and resource limits still run without a Python
+    # hook; only explicit host controls need the callback-bearing entry point.
+    response_text = (_rust._rust_core.execute_json_schema_wire(wire, charge)
+                     if has_controls else _rust._rust_core.execute_json_schema_wire(wire))
     host_work(len(response_text))
     try:
         envelope = json.loads(response_text)
@@ -185,7 +192,8 @@ def import_json_schema(source: str, document_id: str, base_uri: str,
         ordered.append({"uri": uri, "source": text})
     return _call("importJsonSchema", {
         "source": source, "id": document_id, "baseUri": base_uri, "resources": ordered,
-    }, _control_state=(charge, host_work))
+    }, _control_state=(charge, host_work), _has_controls=any(value is not None for value in
+        (max_work, meter, is_cancelled, now, deadline_ms)))
 
 
 def inspect(document: Any, **controls):

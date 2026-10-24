@@ -47,6 +47,27 @@ def test_profile_and_operation_controls_are_strict():
                      meter=lambda amount: (_ for _ in ()).throw(RuntimeError("stop")))
     assert caught.value.code == "METER_FAILURE"
 
+    work = []
+    controlled = schema.inspect(document, meter=work.append)
+    assert controlled == schema.inspect(document)
+    assert work and sum(work) > 0
+
+    errors = []
+    for controls in ({}, {"meter": lambda amount: None}):
+        with pytest.raises(_rust.UmfCoreError) as caught:
+            schema.import_json_schema("{", "invalid", "https://example.test/root", **controls)
+        errors.append((caught.value.code, str(caught.value)))
+    assert errors[0] == errors[1]
+
+    events = []
+    charge, _ = schema._controls(
+        None, lambda amount: events.append(("meter", amount)),
+        lambda: events.append(("cancel", None)) or False,
+        lambda: events.append(("clock", None)) or 0, 10,
+    )
+    assert charge(1) is None
+    assert events == [("meter", 1), ("cancel", None), ("clock", None)]
+
 
 def test_import_preflights_controls_before_resource_traversal():
     class HostileMapping:

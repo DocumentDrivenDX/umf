@@ -100,6 +100,14 @@ def test_utf16_copy_isolation_and_per_operation_controls():
     assert iceberg.inspect(document, meter=work.append)["valid"] is True
     assert work and sum(work) > 0
     assert iceberg.inspect(document)["valid"] is True
+    assert iceberg.inspect(document, meter=work.append) == iceberg.inspect(document)
+
+    errors = []
+    for controls in ({}, {"meter": lambda amount: None}):
+        with pytest.raises(_rust.UmfCoreError) as caught:
+            iceberg.import_schema("null", "invalid", **controls)
+        errors.append((caught.value.code, str(caught.value)))
+    assert errors[0] == errors[1]
     for controls, code in (
         ({"max_work": 0}, "RESOURCE_LIMIT"),
         ({"is_cancelled": lambda: True}, "CANCELLED"),
@@ -108,3 +116,12 @@ def test_utf16_copy_isolation_and_per_operation_controls():
         with pytest.raises(_rust.UmfCoreError) as caught:
             iceberg.inspect(document, **controls)
         assert caught.value.code == code
+
+    events = []
+    charge, _ = iceberg._controls(
+        None, lambda amount: events.append(("meter", amount)),
+        lambda: events.append(("cancel", None)) or False,
+        lambda: events.append(("clock", None)) or 0, 10,
+    )
+    assert charge(1) is None
+    assert events == [("meter", 1), ("cancel", None), ("clock", None)]

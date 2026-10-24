@@ -70,10 +70,15 @@ def _call(op: str, fields: dict[str, Any], *, max_work=None, meter=None,
           is_cancelled=None, now=None, deadline_ms=None):
     if profile_version() != _PROFILE:
         raise RuntimeError("umf-core Iceberg schema capability profile mismatch")
+    has_controls = any(value is not None for value in
+                       (max_work, meter, is_cancelled, now, deadline_ms))
     charge, host_work = _controls(max_work, meter, is_cancelled, now, deadline_ms)
     request = {"op": f"iceberg.schema.{op}", **fields}
     wire = json.dumps(_rust._wire(request, work=host_work), ensure_ascii=True, separators=(",", ":"))
-    response_text = _rust._rust_core.execute_iceberg_wire(wire, charge)
+    # Keep core work admission active in Rust without crossing the Python FFI
+    # for every charge when the caller requested no host controls.
+    response_text = (_rust._rust_core.execute_iceberg_wire(wire, charge)
+                     if has_controls else _rust._rust_core.execute_iceberg_wire(wire))
     host_work(len(response_text))
     try:
         envelope = json.loads(response_text)
