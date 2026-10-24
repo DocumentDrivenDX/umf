@@ -32,6 +32,22 @@ _EXPECTED_ROOT_FILES = {
     "spec/core/kind-operation-v6.schema.json",
     "spec/core/nullability-operation-v7.schema.json",
     "spec/core/nullability-operation-v5.schema.json",
+    "spec/core/facet-operation-v3.schema.json",
+    "spec/core/facet-operation-v5.schema.json",
+    "spec/core/key-operation-v2.schema.json",
+    "spec/core/key-operation-v4.schema.json",
+    "spec/core/key-tuple-operation-v4.schema.json",
+    "spec/core/scalar-type-inspection-v0.3.schema.json",
+    "spec/core/record-members-inspection-v0.3.schema.json",
+    "spec/core/reference-links-inspection-v0.3.schema.json",
+    "spec/core/relationship-operation.schema.json",
+    "spec/core/relationship-operation-v3.schema.json",
+    "spec/core/dataset-value-operation.schema.json",
+    "spec/core/dataset-value-compact-operation.schema.json",
+    "spec/core/relationship-metadata-selection-v2.schema.json",
+    "spec/extensions/semantic-types/package.json",
+    "spec/core/semantic-types-operation.schema.json",
+    "spec/metamodel/umf.yaml",
     "spec/extensions/iceberg/package.json",
     "spec/extensions/iceberg/datatype-schema.json",
 }
@@ -120,6 +136,13 @@ _EXPECTED_FORCE_INCLUDE = {
     "../spec/core/schema.json": "spec/core/schema.json",
     "../spec/core/semantic-type-reference.schema.json": "spec/core/semantic-type-reference.schema.json",
     "../spec/core/extension-package.schema.json": "spec/core/extension-package.schema.json",
+    "../spec/core/relationship-operation.schema.json": "spec/core/relationship-operation.schema.json",
+    "../spec/core/relationship-operation-v3.schema.json": "spec/core/relationship-operation-v3.schema.json",
+    "../spec/core/dataset-value-operation.schema.json": "spec/core/dataset-value-operation.schema.json",
+    "../spec/core/dataset-value-compact-operation.schema.json": "spec/core/dataset-value-compact-operation.schema.json",
+    "../spec/core/relationship-metadata-selection-v2.schema.json": "spec/core/relationship-metadata-selection-v2.schema.json",
+    "../spec/extensions/semantic-types/package.json": "spec/extensions/semantic-types/package.json",
+    "../spec/core/semantic-types-operation.schema.json": "spec/core/semantic-types-operation.schema.json",
     "../spec/metamodel/generated": "spec/metamodel/generated",
     "../spec/extensions/domain-pack": "spec/extensions/domain-pack",
     "../spec/extensions/dataset-source": "spec/extensions/dataset-source",
@@ -353,6 +376,22 @@ def _source_inventory(checkout: Path) -> dict[str, str]:
         or len({source for _filename, source in resources.values()}) != 9
     ):
         _fail("action-resource-declaration-invalid")
+    inventory_helper = python_root / "src/umf/_action_runtime_manifest.py"
+    helper_values = _literal_assignments(inventory_helper, {"RESOURCES"})
+    helper_resources = helper_values["RESOURCES"]
+    if (
+        not isinstance(helper_resources, tuple)
+        or any(
+            not isinstance(row, tuple)
+            or len(row) != 3
+            or not all(isinstance(part, str) for part in row)
+            for row in helper_resources
+        )
+        or len(helper_resources) != 9
+        or len({key for key, _filename, _source in helper_resources}) != 9
+        or {key: (filename, source) for key, filename, source in helper_resources} != resources
+    ):
+        _fail("action-resource-helper-map-differs")
 
     mapping: dict[str, str] = {}
     gitignore_digest, _ = _sha_file(checkout, ".gitignore")

@@ -25,6 +25,14 @@ MACOS_DEPLOYMENT_TARGET = _NATIVE_PLATFORM.MACOS_DEPLOYMENT_TARGET
 inspect_macho_file = _NATIVE_PLATFORM.inspect_macho_file
 macos_target = _NATIVE_PLATFORM.macos_target
 
+_ACTION_MANIFEST_PATH = Path(__file__).parent / "src/umf/_action_runtime_manifest.py"
+_ACTION_MANIFEST_SPEC = importlib.util.spec_from_file_location(
+    "umf_action_runtime_manifest", _ACTION_MANIFEST_PATH
+)
+if _ACTION_MANIFEST_SPEC is None or _ACTION_MANIFEST_SPEC.loader is None:
+    raise RuntimeError("The action runtime resource inventory cannot be loaded")
+_ACTION_MANIFEST = importlib.util.module_from_spec(_ACTION_MANIFEST_SPEC)
+_ACTION_MANIFEST_SPEC.loader.exec_module(_ACTION_MANIFEST)
 ACTION_RUNTIME_RESOURCES = (
     ("coreSchema.json", "spec/core/schema.json"),
     ("referenceSchema.json", "spec/core/semantic-type-reference.schema.json"),
@@ -36,6 +44,9 @@ ACTION_RUNTIME_RESOURCES = (
     ("bindingPackage.json", "spec/extensions/binding/package.json"),
     ("stableBindingPackage.json", "spec/extensions/binding-stable/package.json"),
 )
+if tuple(sorted((filename, source) for _, filename, source in _ACTION_MANIFEST.RESOURCES)) != tuple(sorted(ACTION_RUNTIME_RESOURCES)):
+    raise RuntimeError("The fixed action runtime package map differs from its manifest authority")
+check_action_runtime_resource_manifest = _ACTION_MANIFEST.check
 
 CORE_RESOURCES = (
     "schema.json",
@@ -58,6 +69,22 @@ SDIST_SOURCE_FILES = (
     "spec/core/kind-operation-v6.schema.json",
     "spec/core/nullability-operation-v7.schema.json",
     "spec/core/nullability-operation-v5.schema.json",
+    "spec/core/facet-operation-v3.schema.json",
+    "spec/core/facet-operation-v5.schema.json",
+    "spec/core/key-operation-v2.schema.json",
+    "spec/core/key-operation-v4.schema.json",
+    "spec/core/key-tuple-operation-v4.schema.json",
+    "spec/core/scalar-type-inspection-v0.3.schema.json",
+    "spec/core/record-members-inspection-v0.3.schema.json",
+    "spec/core/reference-links-inspection-v0.3.schema.json",
+    "spec/core/relationship-operation.schema.json",
+    "spec/core/relationship-operation-v3.schema.json",
+    "spec/core/dataset-value-operation.schema.json",
+    "spec/core/dataset-value-compact-operation.schema.json",
+    "spec/core/relationship-metadata-selection-v2.schema.json",
+    "spec/extensions/semantic-types/package.json",
+    "spec/core/semantic-types-operation.schema.json",
+    "spec/metamodel/umf.yaml",
     "spec/extensions/iceberg/package.json",
     "spec/extensions/iceberg/datatype-schema.json",
 )
@@ -139,6 +166,11 @@ def add_action_runtime_resources(
         else "src/umf/action_runtime_resource_manifest.json"
     )
     build_data["force_include"][str(manifest)] = manifest_target
+    helper = package_root / "src/umf/_action_runtime_manifest.py"
+    if not helper.is_file() or helper.is_symlink():
+        raise FileNotFoundError("The action runtime manifest helper is missing")
+    helper_target = "umf/_action_runtime_manifest.py" if wheel else "src/umf/_action_runtime_manifest.py"
+    build_data["force_include"][str(helper)] = helper_target
     if wheel:
         return
     for filename, source_name in ACTION_RUNTIME_RESOURCES:
@@ -194,6 +226,7 @@ class CustomBuildHook(BuildHookInterface):
             if (package_root / "spec/core").is_dir()
             else package_root.parent
         )
+        check_action_runtime_resource_manifest(repository, package_root)
         if self.target_name == "sdist":
             # Carry the pinned native source closure so an sdist can produce
             # this abi3 wheel without JavaScript runtimes or downloads.

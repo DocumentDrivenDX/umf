@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import importlib.util
 import json
+import re
 import subprocess
 from pathlib import Path
 from typing import Any
@@ -11,7 +12,7 @@ import pytest
 
 _HELPER_PATH = Path(__file__).resolve().parents[2] / "tools/_python_sdist.py"
 assert hashlib.sha256(_HELPER_PATH.read_bytes()).hexdigest() == (
-    "c5ebe2d0347e580160169d492aae3ffd3f42592bfefa3ae8456b35c7b3a2263a"
+    "55afef3a1091a7036b2d7bdc7b9fbcf3e5b0338307f52cad09010cfa2f673ea4"
 )
 _HELPER_SPEC = importlib.util.spec_from_file_location(
     "umf_test_python_sdist", _HELPER_PATH
@@ -38,6 +39,22 @@ ROOT_FILES = (
     "spec/core/kind-operation-v6.schema.json",
     "spec/core/nullability-operation-v7.schema.json",
     "spec/core/nullability-operation-v5.schema.json",
+    "spec/core/facet-operation-v3.schema.json",
+    "spec/core/facet-operation-v5.schema.json",
+    "spec/core/key-operation-v2.schema.json",
+    "spec/core/key-operation-v4.schema.json",
+    "spec/core/key-tuple-operation-v4.schema.json",
+    "spec/core/scalar-type-inspection-v0.3.schema.json",
+    "spec/core/record-members-inspection-v0.3.schema.json",
+    "spec/core/reference-links-inspection-v0.3.schema.json",
+    "spec/core/relationship-operation.schema.json",
+    "spec/core/relationship-operation-v3.schema.json",
+    "spec/core/dataset-value-operation.schema.json",
+    "spec/core/dataset-value-compact-operation.schema.json",
+    "spec/core/relationship-metadata-selection-v2.schema.json",
+    "spec/extensions/semantic-types/package.json",
+    "spec/core/semantic-types-operation.schema.json",
+    "spec/metamodel/umf.yaml",
     "spec/extensions/iceberg/package.json",
     "spec/extensions/iceberg/datatype-schema.json",
 )
@@ -71,6 +88,13 @@ FORCE_INCLUDE = {
     "../spec/core/schema.json": "spec/core/schema.json",
     "../spec/core/semantic-type-reference.schema.json": "spec/core/semantic-type-reference.schema.json",
     "../spec/core/extension-package.schema.json": "spec/core/extension-package.schema.json",
+    "../spec/core/relationship-operation.schema.json": "spec/core/relationship-operation.schema.json",
+    "../spec/core/relationship-operation-v3.schema.json": "spec/core/relationship-operation-v3.schema.json",
+    "../spec/core/dataset-value-operation.schema.json": "spec/core/dataset-value-operation.schema.json",
+    "../spec/core/dataset-value-compact-operation.schema.json": "spec/core/dataset-value-compact-operation.schema.json",
+    "../spec/core/relationship-metadata-selection-v2.schema.json": "spec/core/relationship-metadata-selection-v2.schema.json",
+    "../spec/extensions/semantic-types/package.json": "spec/extensions/semantic-types/package.json",
+    "../spec/core/semantic-types-operation.schema.json": "spec/core/semantic-types-operation.schema.json",
     "../spec/metamodel/generated": "spec/metamodel/generated",
     "../spec/extensions/domain-pack": "spec/extensions/domain-pack",
     "../spec/extensions/dataset-source": "spec/extensions/dataset-source",
@@ -129,6 +153,12 @@ def _make_checkout(root: Path) -> dict[str, bytes]:
     files["python/src/umf/__init__.py"] = b""
     files["python/src/umf/_rust.py"] = b"native helper\n"
     files["python/src/umf/action_runtime.py"] = b"runtime\n"
+    helper_rows = tuple(
+        (Path(filename).stem, filename, source) for filename, source in RESOURCES
+    )
+    files["python/src/umf/_action_runtime_manifest.py"] = (
+        f"RESOURCES = {helper_rows!r}\n".encode()
+    )
     files["python/src/umf/py.typed"] = b""
     manifest: dict[str, Any] = {
         "format": "umf.action-runtime-resources/1",
@@ -237,12 +267,53 @@ def test_exact_source_and_archive_inventory_returns_canonical_manifest(
     assert result["sha256"] == hashlib.sha256(canonical).hexdigest()
 
 
+def test_rust_include_str_authorities_are_in_sdist_closure() -> None:
+    """Ensure production Rust spec assets exist and enter the archive hook closure."""
+    repository = Path(__file__).resolve().parents[2]
+    source_files = set(ROOT_FILES)
+    source_trees = tuple(repository / name for name in ROOT_TREES)
+    include_pattern = re.compile(r'include_str!\s*\(\s*"([^"]+)"')
+    separately_forced = {source for _name, source in RESOURCES}
+    separately_forced.add("spec/extensions/tables/operation.schema.json")
+    separately_forced_directories = (
+        "spec/metamodel/generated/",
+        "spec/extensions/domain-pack/",
+        "spec/extensions/dataset-source/",
+    )
+    missing: list[str] = []
+    for tree in source_trees:
+        for rust_source in tree.rglob("*.rs"):
+            if any(
+                component in {"tests", "examples", "benches"}
+                for component in rust_source.relative_to(repository).parts
+            ):
+                continue
+            text = rust_source.read_text(encoding="utf-8")
+            for include in include_pattern.findall(text):
+                authority = (rust_source.parent / include).resolve()
+                if not authority.is_file():
+                    missing.append(f"{rust_source.relative_to(repository)} -> missing {include}")
+                    continue
+                relative = authority.relative_to(repository).as_posix()
+                if relative.startswith("spec/") and not (
+                    relative in source_files
+                    or relative in separately_forced
+                    or relative.startswith(separately_forced_directories)
+                ) and not any(
+                    authority == tree.resolve() or tree.resolve() in authority.parents
+                    for tree in source_trees
+                ) and relative not in source_files:
+                    missing.append(f"{rust_source.relative_to(repository)} -> {relative} escapes the source archive closure")
+    assert not missing, "Rust include_str! authorities escape the source closure:\n" + "\n".join(missing)
+
+
 @pytest.mark.parametrize(
     ("relative", "replacement"),
     [
         ("Cargo.lock", b"changed lock\n"),
         ("crates/umf-core/src/lib.rs", b"changed Rust\n"),
         ("hatch_build.py", b"changed hook\n"),
+        ("src/umf/_action_runtime_manifest.py", b"RESOURCES = ()\n"),
     ],
 )
 def test_source_mutations_refuse_byte_parity_before_any_build(

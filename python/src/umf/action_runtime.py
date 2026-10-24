@@ -13,43 +13,10 @@ from pathlib import Path
 from typing import Any
 
 from .rust_codegen import CodegenEngine, UmfCodegenError
+from ._action_runtime_manifest import RESOURCES as _RESOURCE_ENTRIES
 
-_MANIFEST_SHA256 = "d420c5010fff5f4f968d99bff2c2050b9dbfd3fddccc4bae03c516a8c6037ba3"
-_RESOURCE_FILES = {
-    "coreSchema": ("coreSchema.json", "spec/core/schema.json"),
-    "referenceSchema": (
-        "referenceSchema.json",
-        "spec/core/semantic-type-reference.schema.json",
-    ),
-    "packageSchema": (
-        "packageSchema.json",
-        "spec/core/extension-package.schema.json",
-    ),
-    "constraints": (
-        "constraints.json",
-        "spec/metamodel/generated/core-constraints.json",
-    ),
-    "domainPolicy": (
-        "domainPolicy.json",
-        "spec/metamodel/generated/domain-policy.json",
-    ),
-    "tablesPackage": (
-        "tablesPackage.json",
-        "spec/extensions/tables/package.json",
-    ),
-    "actionsPackage": (
-        "actionsPackage.json",
-        "spec/extensions/actions/package.json",
-    ),
-    "bindingPackage": (
-        "bindingPackage.json",
-        "spec/extensions/binding/package.json",
-    ),
-    "stableBindingPackage": (
-        "stableBindingPackage.json",
-        "spec/extensions/binding-stable/package.json",
-    ),
-}
+_MANIFEST_SHA256 = "c6ee523ef9564b8c00fef2cf89262407fef5413b33d87e41c6fa431061bc776b"
+_RESOURCE_FILES = {key: (filename, source) for key, filename, source in _RESOURCE_ENTRIES}
 _RESOURCE_ROOT = "action_runtime_resources"
 _MANIFEST_NAME = "action_runtime_resource_manifest.json"
 _MAX_MANIFEST_BYTES = 65_536
