@@ -86,6 +86,10 @@ this offline host because pytest and pydantic are not in its package cache.
 This is local source execution only; it does not qualify an installed wheel,
 hosted matrix, TypeScript parity, or release.
 
+Real Node/Bun and fresh-package WASM/Chromium replay is recorded in
+[real-host qualification](real-hosts.md), with exact outcomes and hashes in
+[the result bundle](real-hosts-results.json).
+
 Python and CLI source hashes for this checkpoint:
 
 ```text

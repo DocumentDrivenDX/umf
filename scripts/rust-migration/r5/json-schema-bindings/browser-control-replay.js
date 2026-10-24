@@ -1,0 +1,13 @@
+import {runControlProbes} from './control-probes.js';
+const api = await import('./package/index.js');
+const wasm = await import('./package/pkg/umf_core_wasm.js');
+const wasmBytes = await (await fetch('./package/pkg/umf_core_wasm_bg.wasm')).arrayBuffer();
+await wasm.default({module: wasmBytes});
+const artifactSha256 = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', wasmBytes)), (byte) => byte.toString(16).padStart(2, '0')).join('');
+const makeEngine = (options = {}) => api.createJsonSchemaEngine(wasm, options);
+const cases = runControlProbes(makeEngine);
+const expectedCodes = ['RESOURCE_LIMIT', 'CANCELLED', 'DEADLINE', 'METER_FAILURE', 'METER_FAILURE'];
+const matched = cases.filter((item, index) => item.actual.status === 'threw' && item.actual.code === expectedCodes[index] && (index !== 4 || item.userMeterCalls === 4)).length;
+const receipt = {format: 'umf-r5-json-schema-browser-control-probes-v1', browser: navigator.userAgent, artifactSha256, caseCount: cases.length, matched, cases};
+await fetch('/controls-receipt', {method: 'POST', headers: {'content-type': 'application/json'}, body: JSON.stringify(receipt)});
+document.body.textContent = JSON.stringify({format: receipt.format, browser: receipt.browser, caseCount: receipt.caseCount, matched, cases: cases.map(({id, userMeterCalls, actual}) => ({id, userMeterCalls, status: actual.status, code: actual.code, message: actual.message}))});
