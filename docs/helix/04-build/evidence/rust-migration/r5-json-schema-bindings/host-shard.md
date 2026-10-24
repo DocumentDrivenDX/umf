@@ -90,6 +90,10 @@ Real Node/Bun and fresh-package WASM/Chromium replay is recorded in
 [real-host qualification](real-hosts.md), with exact outcomes and hashes in
 [the result bundle](real-hosts-results.json).
 
+The inspector diagnostic successor cohort (`35bf199d7`) has a separate replay
+and artifact receipt in [successor real-host qualification](successor-real-hosts-35bf199d.md)
+and [its full result bundle](successor-real-hosts-35bf199d-results.json).
+
 Python and CLI source hashes for this checkpoint:
 
 ```text
