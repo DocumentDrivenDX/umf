@@ -643,3 +643,23 @@ autoapproval evidence and show it was not applied. Native SCRAM, kernel/process
 origin, owned endpoint gate, same-connection role restoration, phase/receipt and
 publication tests still require actual artifacts and real execution; source
 signature tests alone do not complete G11.
+
+
+### G04 deleted-instance collision and durable reservation acceptance
+
+Independently execute the real fixed guard with an isolated native collision
+fixture: reserve an original ID, delete its row and retain then purge its archive
+values, force the next generated UUID to collide and prove statement failure
+with counter/ledger/business rollback. No production RNG injection or replaced
+guard counts as acceptance. Demonstrate a noncolliding Key reuse is a new
+instance and a deleted row is never resurrected by restoration.
+
+Test protected existing-row enrollment including FORCE RLS, concurrent issuing
+transactions, capacity boundary/exhaustion, rollback after increment, ON CONFLICT
+DO NOTHING and UPDATE, COPY and every admitted MERGE route. Preserve committed
+unused reservations. Verify exact native object/ACL/custody closure, original
+TG_RELID, tampered/rewound/missing ledger/counter refusal and ordinary metadata
+read/write/trigger/parameter bypass refusal. Lose enrollment COMMIT acknowledgement
+and settle the original outcome without repeating enrollment. Record counter
+contention/resource behavior and distinguish reservation bounds from archive
+value-byte accounting. These are required native gates, not source-test claims.

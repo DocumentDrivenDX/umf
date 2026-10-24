@@ -754,3 +754,29 @@ outcome observes the original, not a new approval/effect. Rotation is explicit
 authenticated settled-only host configuration enrollment, no automatic live trust
 change or loss of original read-only outcome/signature history. No source-only
 primitive or self-consistent record qualifies actual native authorization.
+
+
+### G04 native issued-instance ledger and exact provider composition
+
+Extend the selected unpublished originals store's fixed row_tables shape with
+issued_count and its immutable record with maxIssuedInstances; add exactly
+issued_instances(table_token,instance_id) with the declared PK/FK/native privacy.
+Include every actual native column/relation/constraint/index/owner/ACL dependency
+in the original custody inventory, not a prefix-based extra-object allowance.
+Earlier experimental stores cannot be adopted or upgraded implicitly.
+
+Enroll the complete protected existing population and its reserved IDs in the
+same native transaction before enabling writes or archive capture. Fixed INSERT
+guard locks/increments the original table counter within its immutable bound
+and reserves its new UUID without conflict suppression. Generation collisions
+abort the statement, including collisions with deleted or value-purged originals.
+Preserve UPDATE identity/revision checks and actual native relation binding.
+Committed unused BEFORE INSERT reservations remain counted; do not equate the
+ledger with live rows. All business effects and reservations share one native
+transaction, and unknown enrollment outcome observes the original registration.
+
+Per-table counter locking/throughput and finite lifetime reservation exhaustion
+are explicit compatibility limits. Archive logicalBytes excludes separately
+bounded ledger metadata and does not claim a physical disk/WAL ceiling. Values
+purge never removes issued IDs, resets counters or authorizes identity reuse.
+No online cap raising/ledger compaction or experimental-store adoption is claimed.

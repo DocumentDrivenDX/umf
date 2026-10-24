@@ -4702,3 +4702,159 @@ Production-unconfigured must refuse; correctly configured signed production
 verification must succeed in the actual concrete code. Preserve the rejected
 UID-based attempt and verify that it never became an alternative authorization
 path. No mandatory TTY or extra human prompt is introduced by this clarification.
+
+
+#### G04 original instance reservations across deletion and value purge
+
+This unpublished fixed-profile correction supersedes the earlier row_tables
+shape and live-UUID-only guard exactly as specified here. The .1 profile labels
+are retained only because no qualified/deployed native store exists; earlier
+experimental footprints refuse. It preserves G04 strict revision matching and
+provides the required identity invariant for separately selected G05 recovery.
+
+##### Identity invariant and compatibility
+
+Live-row UUID uniqueness alone is insufficient: a new row could collide with an
+identifier retained for a deleted original. Every issued identifier is reserved
+for the lifetime of its original tableToken and target incarnation, including
+after ordinary deletion, archive purge and business Key reuse. Recovery joins
+only this original instance identity. It never resurrects a deleted row.
+
+This is a correction to the FIRST UNPUBLISHED fixed native profiles
+`umf.native-row-originals-store/0.1` and `umf.native-row-identity/0.1`; their labels
+remain unchanged because no qualified implementation or published native store
+exists. Their selected exact shape now includes the ledger below. A store made
+from an earlier experimental draft is incompatible and refuses: there is no
+prefix adoption, guessed backfill of missing historical identifiers, or silent
+upgrade. Any already deployed profile discovered during implementation requires
+a separately versioned amendment before enabling this correction.
+
+##### Exact native footprint
+
+Add exactly one installation-owned heap in the original private originals
+schema, owned by the enrolled originals-controller:
+
+```sql
+CREATE TABLE <originals>.issued_instances (
+ table_token pg_catalog.uuid NOT NULL REFERENCES <originals>.row_tables(table_token) ON UPDATE RESTRICT ON DELETE RESTRICT,
+ instance_id pg_catalog.uuid NOT NULL,
+ PRIMARY KEY (table_token, instance_id)
+) USING heap;
+```
+
+Add `issued_count pg_catalog.int8 NOT NULL CHECK (issued_count BETWEEN 0 AND
+1000000)` to the fixed row_tables native shape. Add exactly
+`maxIssuedInstances` to its immutable row-table record, an integer1..1000000
+selected by trusted host policy before approved enrollment, default1000000.
+It cannot be raised or reset by an ordinary migration. The original enrollment
+request, approval and custody observations bind the selected limit and fixed
+renderer version. The record digest covers the immutable limit; issued_count is
+a separate mutable native scalar, not an unrefreshed JSON counter/checksum.
+At every protected provider observation issued_count must equal the actual
+ledger count for that tableToken and be <= maxIssuedInstances. Live metadata
+IDs must be a subset of that ledger. Count mismatch or missing IDs refuses.
+
+Register actual original relation/constraint/backing-index/column OIDs, exact
+native definitions, owner/ACL and FK dependency in the original provider
+inventory. This is an explicit extension of the known provider union; no extra
+object or name-prefix waiver. Existing fixed store restrictions apply: no
+private-table trigger/RLS/rule/partition/inheritance/unmanaged dependency, no
+PUBLIC/business-owner/ordinary-client access. The guard function alone has its
+fixed SECURITY DEFINER access through the controller owner. No business value,
+Key, revision, timestamp, tombstoned value or per-value hash belongs in this
+ledger. A UUID reservation is private metadata, still subject to custody.
+
+##### Enrollment and guard algorithm
+
+Within the original approved maintenance transaction, actual exclusive business
+lock and native ingress fence, reserve the new tableToken and row_tables entry
+with issued_count=0. Populate existing live metadata columns and unique/revision
+constraints by the selected original renderer. Count the COMPLETE population
+including rows hidden by FORCE RLS under the qualified maintenance protocol;
+refuse if its count exceeds the selected maximum. Insert every actual UUID into
+issued_instances without ON CONFLICT, then set issued_count to its exact count.
+A collision or failure rolls back the complete enrollment. Install the fixed
+guard, drop temporary defaults, validate the complete native inventory and
+source/client privilege correspondence before any archive capture/publication.
+There must be no writable gap between metadata assignment and guard activation.
+
+The fixed guard validates actual TG_RELID and TG_TABLE_SCHEMA/TG_TABLE_NAME
+against its original registered native business relation and fixed tableToken;
+no caller arguments, setting or supplied metadata selects another target. It
+preserves all existing UPDATE immutability/revision-overflow checks. For INSERT:
+
+1. Atomically UPDATE the original row_tables row, incrementing issued_count by1
+   only WHERE table_token matches, original business_table_oid matches TG_RELID
+   and issued_count < the immutable bound. No row means a fixed sanitized error;
+   never continue with an uncounted reservation.
+2. Generate one pg_catalog.gen_random_uuid(), set NEW's actual metadata ID and
+   revision1, then INSERT (original tableToken, generated UUID) into the ledger.
+   Do not use ON CONFLICT, retry another UUID, or catch/ignore a uniqueness
+   error. A collision with ANY earlier reserved UUID aborts the statement.
+3. Return NEW. Its ledger reservation and counter update share the caller's
+   actual business transaction. No autonomous connection or durable side effect.
+
+This counter deliberately serializes issuing inserts for a given tableToken
+through its native row lock. It is a bounded first-provider compatibility and
+throughput cost, to be measured/disclosed in native acceptance, not hidden by a
+non-atomic count query. Multi-table transactions may deadlock under normal
+native locking; the native abort must roll back every reservation and business
+effect. No automatic transaction replay is introduced here.
+
+BEFORE INSERT can run even when ON CONFLICT later updates/skips a row. Any
+reservation committed along that path remains reserved and counted, including
+when it did not become a live row's ID. Therefore issued_count is the number of
+committed reservations, NOT live rows, inserted rows or archived rows. UPDATE
+of an existing row preserves its original ID and increments its revision under
+the original fixed guard. COPY and each actually admitted MERGE/ON CONFLICT
+path must prove this behavior with native execution. Unsupported paths refuse.
+Aborted statement/transaction reservations roll back and need not survive as
+issued instances; no committed archive can refer to such an aborted instance.
+
+##### Bounds, accounting, retention and recovery
+
+The existing cap4096 enrolled tables/provider remains. Each table has at most
+1000000 ledger reservations, or its lower immutable policy bound. Capacity
+exhaustion refuses the whole issuing statement. Normal deletes, TRUNCATE,
+archive retirement/purge, failed restore and schema migrations do not clear or
+reset these reservations. TRUNCATE and native identity metadata mutation remain
+unavailable to ordinary principals. Retiring a source table does not authorize
+reusing its tableToken or removing its private history.
+
+Ledger native bytes/indices/WAL are NOT part of an archive's declared logical
+retained-value bytes; no unchanged archive logicalBytes receipt may pretend to
+bound them. Its separate finite reservation/table caps are explicit metadata
+bounds, not a physical disk/WAL ceiling. Purging retained values may reclaim
+only the selected value relation and its allowed archive state; it preserves
+this ledger, row-table identity/counter and required custody/history. Even an
+explicit value-retention override cannot authorize token reuse. Whole target
+installation destruction/replacement is separate and creates a new incarnation.
+Online ledger compaction, tableToken reset and cap raising are unqualified gaps.
+
+Original enrollment/outcome lookup governs unknown COMMIT: the host observes
+its original native transaction/row-table registration and actual inventory,
+never repeats enrollment against a guessed name or recalculates a new tableToken.
+Ordinary inserted rows and reservations commit/abort together. Unknown ordinary
+client COMMIT uses that client's existing outcome semantics; this provider does
+not promise retry-safe arbitrary INSERT or expose private IDs to add one.
+Copied/restored provider metadata is not original custody. Counter/ledger rewind,
+foreign tableToken, missing guard or mismatched native origin fails closed.
+
+##### Independent native acceptance obligations
+
+Force a collision with a previously deleted-and-archived instance using an
+isolated qualified fixture/instrumentation, not a production author-selected RNG
+or trigger bypass. Prove the actual fixed issuing path aborts, including ledger
+and counter rollback, while a noncolliding reinsert with reused business Key is
+a distinct instance. The public runtime has no deterministic UUID injection API.
+
+Execute existing-row enrollment, RLS-hidden rows, concurrent INSERT, aborted
+transaction, ON CONFLICT DO NOTHING/UPDATE, COPY and every claimed MERGE route;
+prove committed unused reservations remain counted. Test exact capacity edge,
+rollback after count increment, wrong TG_RELID/native identity, tamper/missing
+ledger/counter/constraint/ACL and ordinary metadata read/write/bypass refusals.
+Delete originals, purge their archive values, and demonstrate those identifiers
+remain reserved. Lose enrollment COMMIT acknowledgement and settle the original
+outcome without a second enrollment. Retain timings and resource behavior of
+per-table issuance locking. Source tests, random UUID improbability, or a test
+that replaces the production guard are not native identity proof.
