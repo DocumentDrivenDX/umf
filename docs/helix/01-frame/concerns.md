@@ -146,7 +146,7 @@ FEAT-001 EXT-05/06 and US-904 reuse the selected fidelity, exact identity,
 bounded-processing, conformance and runtime-boundary concerns. Apply the
 `modularity-and-encapsulation` source baseline (`baseline-policy`) to the new
 Rust registry/kind mechanics and their binding/facade paths. Architecture owns
-the scoped map; CONTRACT-906 owns exact interfaces. Implementation readiness
+the scoped map; CONTRACT-907 owns exact interfaces. Implementation readiness
 requires boundary-checker adoption and its negative controls. Generic discovery
 does not infer ecosystem equivalence or confer core Field/Record semantics.
 This library design adds no UI framework, service, datastore or telemetry sink.

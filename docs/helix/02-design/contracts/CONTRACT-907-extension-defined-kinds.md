@@ -1,6 +1,6 @@
 ---
 ddx:
-  id: CONTRACT-906
+  id: CONTRACT-907
   type: contract
   activity: design
   status: draft
@@ -23,7 +23,7 @@ ddx:
       kind: references
 ---
 
-# CONTRACT-906: Extension-defined object kinds
+# CONTRACT-907: Extension-defined object kinds
 
 **Interface profile:** 1.0.0. **Core document version:** 0.10.0, unchanged.
 Catalog activation is an explicit registration capability; package metadata alone

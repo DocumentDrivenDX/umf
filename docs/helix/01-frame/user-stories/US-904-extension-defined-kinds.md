@@ -88,7 +88,7 @@ named `record` in an extension never becomes a core Record by its spelling.
 
 ## Dependencies
 
-CONTRACT-906 defines the package, discovery, validation and compatibility
+CONTRACT-907 defines the package, discovery, validation and compatibility
 interfaces. ADR-005 / CONTRACT-080 govern generated authority; ADR-006 governs
 shared implementation. No external service is required for this story.
 

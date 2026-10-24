@@ -18,29 +18,11 @@ jobs:
       - run: python -m build python
       - run: python -m twine check python/dist/*
       - name: Verify the exact wheel payload against current sources
-        run: |
-          python - <<'PY'
-          import hashlib, json, zipfile
-          from pathlib import Path
-          wheels = list(Path('python/dist').glob('*.whl'))
-          assert len(wheels) == 1, 'Expected one official core wheel'
-          sources = {'umf/' + p.name: p for p in Path('python/src/umf').iterdir() if p.is_file()}
-          for name in ['schema.json', 'semantic-type-reference.schema.json', 'extension-package.schema.json']:
-              p = Path('spec/core') / name
-              sources['umf/' + str(p)] = p
-          sources.update({'umf/' + str(p): p for p in Path('spec/metamodel/generated').glob('*.json')})
-          for extension in ['domain-pack', 'dataset-source']:
-              p = Path('spec/extensions') / extension / 'schema.json'
-              sources['umf/' + str(p)] = p
-          with zipfile.ZipFile(wheels[0]) as wheel:
-              native = {'umf/_rust_core.abi3.so'}
-              assert {n for n in wheel.namelist() if n.startswith('umf/')} == set(sources) | native
-              assert wheel.read('umf/_rust_core.abi3.so'), 'Native Rust engine is missing'
-              assert 'Tag: cp311-abi3-' in wheel.read(next(n for n in wheel.namelist() if n.endswith('.dist-info/WHEEL'))).decode()
-              for name, source in sources.items():
-                  assert wheel.read(name) == source.read_bytes(), name
-          print(json.dumps({'wheel': wheels[0].name, 'sha256': hashlib.sha256(wheels[0].read_bytes()).hexdigest(), 'exactSourceFiles': len(sources)}))
-          PY
+        run: >-
+          python tools/verify_python_artifacts.py
+          --wheel python/dist/*.whl
+          --repository .
+          --expected-platform auto
       - name: Test the built wheel in an isolated installation
         run: |
           python -m venv /tmp/umf-core-release

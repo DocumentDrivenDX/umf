@@ -8,7 +8,7 @@ outside this task; the released U1–U3 evidence below keeps its original scope.
 
 [Extension-defined kinds design](02-design/plan-2026-10-22-extension-defined-kinds.md)
 defines package-owned kind catalogs so generic tooling can discover and validate
-a dashboard without adding its meaning to core. [CONTRACT-906](02-design/contracts/CONTRACT-906-extension-defined-kinds.md)
+a dashboard without adding its meaning to core. [CONTRACT-907](02-design/contracts/CONTRACT-907-extension-defined-kinds.md)
 defines exact identities and validation/discovery boundaries;
 [US-904](01-frame/user-stories/US-904-extension-defined-kinds.md) defines acceptance.
 The registration capability preserves core 0.10.0; scoped implementation and
