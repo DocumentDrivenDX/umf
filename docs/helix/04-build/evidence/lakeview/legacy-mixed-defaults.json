@@ -1,0 +1,55 @@
+{
+  "profile": "umf.lakeview.mixed-default-correction/1",
+  "parent": "f5700828cbfaa272176d9d70809a336fd62d2331",
+  "reviewFinding": "Numeric entries mixed with null or unknown member shapes missed the required precision diagnostic.",
+  "correction": "Detect numeric .value members before whole-selection member admission; omit the whole default and emit LAKEVIEW_FILTER_DEFAULT even when other entries are null or opaque.",
+  "checks": {
+    "red": {
+      "passed": 12,
+      "failed": 3
+    },
+    "focusedLegacy": {
+      "passed": 15,
+      "failed": 0,
+      "assertions": 45
+    },
+    "typecheck": "pass",
+    "chromium": {
+      "version": "153.0.8010.12",
+      "legacyControls": 11,
+      "newMixedMemberControls": 3,
+      "originalFiles": 3,
+      "roundtripPaths": [
+        "direct",
+        "json",
+        "yaml"
+      ],
+      "errors": []
+    },
+    "codegenCustody": "current",
+    "inventory": {
+      "modules": 580,
+      "activeScripts": 340,
+      "lockedJavaScriptPackages": 244
+    }
+  },
+  "sources": {
+    "src/adapters/lakeview/project.ts": "f9d9c30e8b28170e07fe2c623b912274d4d1535afd89f84564db7be7a541b387",
+    "tests/lakeview/legacy-fixture.ts": "720c5da56913d1e7a8b03ca412fbc8a906dc62f3f409198ff1ac0bb3a9861548",
+    "tests/lakeview/legacy-projection.test.ts": "5b347e6c44491fd7323130a4b38820bdb3ad5ff6e060e463b54368f0326a2c8e",
+    "tests/lakeview/browser-entry.ts": "83a48b58551330d466f3ee4259d6ce5348b6056d853161bda9af005ad44925e3",
+    "scripts/lakeview-browser.ts": "fabd5a63c7a76ea8811b51a628a7f01e477a8942f5287e9ea3e982231d1cfd69",
+    "docs/helix/04-build/evidence/lakeview/browser.json": "12cf1f835a7f8fd56e42b2ce5e67d1de0b5d33f9da2395e8008a0c3853617467",
+    "docs/helix/04-build/evidence/rust-migration/r3/inventory.json": "ba84f11b9bc66c911d0b75534e1cf15c2cd247946fdd84dd932efaffa4d24963"
+  },
+  "logs": {
+    "red": "3699455c9979269fbdcb282f8407ec6242a4390294ba9da38520e9af2fcdce63",
+    "green": "da8a79e16421c2ff953bbc2bdb1492d632ccf98b2bf692eb0fa1ecb2f1d0c580",
+    "typecheck": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "browser": "4c87c79f9378ab851d053a2916a14a13ae826b72aac52990b2060ded7c9f4a30",
+    "codegen-check": "c4eeb6096d2a3d04845d2495fc59193de7939233cf70f94bb0aa6abb170c5f9e",
+    "inventory": "43392bc7748d1b1ac70e62eb59060f79b4dc87d1d140a8bd329a6e4b2dc41be3"
+  },
+  "review": "Author source review resolves the f570 finding; independent delegated review remains pending.",
+  "limits": "Local scoped correction; no native rebuild, release integration or hosted-CI qualification is claimed for this successor."
+}

@@ -20,3 +20,12 @@ export function legacyNumericFixture(token:string,mixed=false){
     .replace('"NUMERIC_TOKEN"',token);
   return JSON.parse(source);
 }
+
+export const legacyMixedDefaults:{name:string;values:unknown[]}[]=[
+  {name:'numeric and null value',values:[{value:1},{value:null}]},
+  {name:'null entry before numeric',values:[null,{value:1}]},
+  {name:'numeric and opaque value',values:[{value:1},{value:{future:'unknown'}}]},
+];
+export function legacySelectionFixture(values:unknown[]){
+  return legacyFixture('column',{selection:{defaultSelection:{values:{dataType:'DECIMAL',values}}}});
+}

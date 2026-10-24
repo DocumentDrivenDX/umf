@@ -153,15 +153,14 @@ export function projectLakeview(view:any,ids:LakeviewIds,options:{title:string})
     if(!targets.length)throw new Skip(wp,'LAKEVIEW_PROJECTION','Filter has no dataset column target');
     out={kind:'filter',title:typeof frame.title==='string'?frame.title:title??w.name,...description,control,targets,position};
     const selection=spec.selection?.defaultSelection,dp=at(at(sp,'selection'),'defaultSelection');
-    if(Array.isArray(selection?.values?.values)&&selection.values.values.every((v:any)=>['string','number','boolean'].includes(typeof v?.value))){
-     // This compatibility API receives parsed values, not original numeric
-     // tokens. Even an integer may already have rounded during JSON parsing.
-     if(selection.values.values.some((v:any)=>typeof v.value==='number')){
-      issue(at(dp,'values'),'LAKEVIEW_FILTER_DEFAULT','unsupported','Numeric default precision cannot be verified from parsed JavaScript values; the complete default selection is omitted');
-     }else{
-      out.default={values:selection.values.values.map((v:any)=>v.value)};selection.values.values.forEach((_:any,i:number)=>use(at(at(at(at(dp,'values'),'values'),i),'value')));
-      if(typeof selection.values.dataType==='string')use(at(at(dp,'values'),'dataType'));
-     }
+    // Check known numeric meaning before rejecting other member shapes.
+    // Parsed values cannot prove original precision, even for an integer.
+    const defaults=selection?.values?.values;
+    if(Array.isArray(defaults)&&defaults.some((v:any)=>typeof v?.value==='number')){
+     issue(at(dp,'values'),'LAKEVIEW_FILTER_DEFAULT','unsupported','Numeric default precision cannot be verified from parsed JavaScript values; the complete default selection is omitted');
+    }else if(Array.isArray(defaults)&&defaults.every((v:any)=>['string','boolean'].includes(typeof v?.value))){
+     out.default={values:defaults.map((v:any)=>v.value)};defaults.forEach((_:any,i:number)=>use(at(at(at(at(dp,'values'),'values'),i),'value')));
+     if(typeof selection.values.dataType==='string')use(at(at(dp,'values'),'dataType'));
     } else if(selection?.range)issue(at(dp,'range'),'LAKEVIEW_FILTER_DEFAULT','unsupported','Range default '+JSON.stringify(selection.range)+' has no neutral form');
    }
    for(const {fields,name} of pending)if(!Object.hasOwn(fields,name))fields[name]={role:'column'};

@@ -183,3 +183,20 @@ and YAML paths. `browser.json` records those controls and source hashes;
 and installed receipts retain their historical source-cohort qualifications.
 No distribution or core-document version changes belong to this follow-up;
 release integration must use the settled upstream producer/migration cohort.
+
+
+### Mixed-member source-review correction — 2026-10-24
+
+Source review of `f5700828cbfaa272176d9d70809a336fd62d2331` found that
+whole-array primitive admission could bypass the required precision diagnostic
+when numeric defaults were mixed with null or unknown values. Numeric detection
+now runs first, with an optional member lookup so a null entry cannot throw.
+The whole selection remains omitted with `LAKEVIEW_FILTER_DEFAULT`; no subset
+is projected. The three added regressions first failed against the frozen
+candidate, then all 15 focused legacy tests passed (45 assertions). Combined
+typechecking passes. Chromium passes 11 compatibility controls, including all
+three new mixed-member cases, and retains exact byte comparisons for the three
+originals through direct/JSON/YAML paths. `legacy-mixed-defaults.json` records
+this successor's scoped evidence. The generated payload remains current and
+source inventory is refreshed; no native rebuild or release integration was
+performed. Independent review remains a separate pending gate.

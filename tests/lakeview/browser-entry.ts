@@ -6,7 +6,7 @@ import {readDocument,writeDocument} from '../../src/model/document';
 import {inspectExtensionKinds} from '../../src/model/extension-kinds';
 import {selectCoreElements} from '../../src/model/selection';
 import {elementKey} from '../../src/adapters/lakeview/project';
-import {legacyIds,legacyFixture,legacyNumericFixture} from './legacy-fixture';
+import {legacyIds,legacyFixture,legacyNumericFixture,legacyMixedDefaults,legacySelectionFixture} from './legacy-fixture';
 export async function verify(){
   const url='/wasm/umf_core_wasm.js';
   const runtime=await initializeWasm(()=>import(url),globalThis,{coreSchema,referenceSchema:semanticTypeReferenceSchema,packageSchema:extensionPackageSchema,constraints:coreConstraints,domainPolicy});
@@ -46,9 +46,15 @@ export async function verify(){
     const filter=projected.elements.get(elementKey('page','filter')) as any;
     if(!filter||filter.default!==undefined||!projected.issues.some(i=>i.code==='LAKEVIEW_FILTER_DEFAULT'&&i.classification==='unsupported'))throw Error('Legacy numeric precision gap hidden '+token);
   }
+  for(const example of legacyMixedDefaults){
+    const projected=legacyProject(legacySelectionFixture(example.values));
+    const filter=projected.elements.get(elementKey('page','filter')) as any;
+    const issue=projected.issues[0];
+    if(!filter||filter.default!==undefined||projected.issues.length!==1||issue?.code!=='LAKEVIEW_FILTER_DEFAULT'||issue.classification!=='unsupported'||issue.path!=='/pages/0/layout/0/widget/spec/selection/defaultSelection/values')throw Error('Legacy mixed-member precision diagnosis lost '+example.name);
+  }
   for(const empty of [{},[]]){
     const projected=legacyProject(legacyFixture('column',{futureOption:empty}));
     if(projected.issues.length!==1||projected.issues[0]?.code!=='LAKEVIEW_UNMAPPED'||projected.issues[0]?.path!=='/pages/0/layout/0/widget/spec/futureOption')throw Error('Legacy empty-container gap hidden');
   }
-  return {results,generic,legacy:{hostileNames:3,numericDefaults:3,unknownEmptyContainers:2}};
+  return {results,generic,legacy:{hostileNames:3,numericDefaults:3,unknownEmptyContainers:2,mixedUnknownDefaults:3}};
 }
