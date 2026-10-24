@@ -3941,3 +3941,251 @@ are known, and reverify actual complete record at phase completion before COMMIT
 overflow aborts the entire transaction. Counter/checksum bookkeeping is excluded
 from this declared logical measure and separately bounded by the exact store
 record/shape caps. No physical heap/WAL/disk-byte ceiling is claimed.
+
+
+#### G11 selected concrete local supervisor and native authority profile
+
+Select `postgresql18-local-supervisor/0.1` as the first actual implementation
+profile beneath `postgresql18-login-epochs/0.1`. This elaborates the original
+owner/session custody and native barrier rules without changing portable wire
+versions. It explicitly selects trusted privileged maintenance/controller
+authority and a dedicated owned PostgreSQL18.6 target. Source-only issuer objects
+and permanent refusal are not implementation completion. The following fixed
+profile must be implemented and independently qualified natively before enablement.
+
+##### Exact privilege and endpoint subset
+
+Use one dedicated isolated PostgreSQL18.6 cluster created by the actual host
+supervisor, one original application database/installation and loopback IPv4.
+No shared service adoption, replication, alternate listeners, extensions beyond
+the qualified initialization footprint, or managed/OAuth target claim. Qualify
+the exact PostgreSQL binary/toolchain, OS/native process-observer and driver.
+
+This first local profile explicitly trusts maintenance AND controller as full
+native cluster administrators. It is not a least-privilege profile. Neither
+credential/role is available to ordinary clients, source declarations or GUCs.
+The exact role flags are:
+
+| Principal | canLogin | superuser | createDatabase | createRole | replication | bypassRls | inherit |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| maintenance | true | true | false | false | false | false | false |
+| controller | false | true | false | false | false | false | false |
+| businessOwner | false | false | false | false | false | false | false |
+
+SUPERUSER conveys effective native privileges despite the other false flags;
+the native closure/authority receipt records that fact. Ordinary subjects,
+audience roles and epoch logins remain non-superuser/non-bypass and cannot reach
+these trusted roles. Every privilege/role membership outside the closed original
+approved footprint refuses. A managed/non-superuser provider requires its own
+explicit profile and actual authority qualification.
+
+Bootstrap maintenance name is `umf_m_<supervisorUUID32hex>`, controller
+`umf_c_<supervisorUUID32hex>`. BusinessOwner is the exact configured original
+owner, not renamed. This first subset requires database and admitted role names
+to match `[a-z][a-z0-9_]{0,62}` and quotes them in HBA fields; no special keyword
+or unescaped field interpretation. Original role creation/alteration is done
+under authenticated host bootstrap authority BEFORE final authority approval.
+If an original business owner already exists, its actual original installation/
+creation custody must establish it; a name/OID observation alone is insufficient.
+
+Explicitly set the flags above and grant the exact maintenance→controller and
+maintenance→businessOwner edges with INHERIT FALSE, SET TRUE, ADMIN FALSE.
+Observe actual native OIDs/names/flags/memberships/full closure, then issue final
+OriginalStoreCreationAuthority. No future OID is part of a pre-creation approval.
+Native controller and businessOwner are distinct NOLOGIN identities. Changing a
+preexisting isolated installation's authority flags requires explicit preparation
+approval; this profile does not silently mutate arbitrary existing services.
+
+##### Owned filesystem, initialization and process origin
+
+The actual non-root host owner creates unpredictable dedicated directories with
+mode0700. Native data directory and supervisor control/journal/credential directory
+are separate; control custody is outside data-directory backup/restore scope.
+Native system/binary paths are canonical and source-pinned. Refuse symlink/owner/
+mode/parent substitution or a preexisting target not proven in original custody.
+Files containing secrets/config/journal/private logs use0600 and exclusive safe
+creation. Maintain external original supervisor/cluster/incarnation UUIDs and
+durable creation intent BEFORE native initialization.
+
+Spawn the pinned initdb executable directly, never a shell, as the actual host
+owner, with explicit argv equivalent to:
+
+```text
+initdb -D <owned-datadir> -U <maintenance-name>
+ --encoding=UTF8 --locale=C --auth-local=reject --auth-host=scram-sha-256
+ --pwfile=<private-exclusive-0600-password-file>
+```
+
+Generate a fresh strong maintenance credential in the trusted private issuer;
+never put it in argv/logs/portable JSON. Do not use trust auth, --no-sync or
+group-readable initialization. Retain the credential privately for verified
+maintenance sessions/restarts, remove the transient initdb password file after
+known success, and record actual initdb terminal status, executable hash and
+new data-directory/native control identity. Unknown initialization outcome is
+observed at the original reserved target; no same-name retry/adoption.
+PostgreSQL documents initialization ownership/authentication/password controls in
+[initdb](https://www.postgresql.org/docs/18/app-initdb.html).
+
+Before ANY postmaster launch, atomically replace/fsync the external supervisor
+HBA file with maintenance-only rules below, fsync its parent directory and bind
+its exact bytes in the launch intent. Start the pinned postgres executable as an
+owned subprocess in its own process group, with no ambient PG configuration or
+credential environment, stdin closed and output to private files. Explicit
+command-line settings select external owned config_file/hba_file/ident_file;
+the external config has no includes. Its critical fixed settings are:
+
+```text
+listen_addresses = '127.0.0.1'
+port = <original supervised port>
+unix_socket_directories = ''
+password_encryption = 'scram-sha-256'
+ssl = off
+max_prepared_transactions = 0
+shared_preload_libraries = ''
+session_preload_libraries = ''
+local_preload_libraries = ''
+TimeZone = 'UTC'
+DateStyle = 'ISO, YMD'
+authentication_timeout = '10s'
+log_statement = 'none'
+log_min_error_statement = 'panic'
+log_error_verbosity = 'terse'
+```
+
+Pin all remaining effective postmaster/config settings in the actual launch
+receipt; unknown inherited settings/config paths refuse. There is no Unix or IPv6
+listener in this first profile. The loopback SCRAM qualification is local only,
+not managed TLS acceptance. Verify actual listener/socket inventory and native
+effective settings, not just intended text. A bound-port probe is advisory; if
+startup collides with another service, fail/clean up only the actual owned child,
+never adopt or terminate the other service.
+
+Record the real Popen child handle, PID/process group, host kernel start identity,
+UID, executable identity, exact argv/config hashes, data-directory device/inode
+and parent identity in original durable launch custody. Observe that same child
+alive and authenticate a private maintenance session with the newly initialized
+credential. Verify actual server version, native data_directory/config/hba/ident
+paths and settings, cluster system identifier/database OID and postmaster start
+against the original controlled target/child. Socket response, pg_isready,
+postmaster.pid, a process name or SQL-generated UUID alone is not origin proof.
+
+##### Maintenance-only HBA and actual ordinary admission
+
+The external maintenance-only HBA is exactly the following typed renderer (safe
+quoted names only), with no includes/map/certificate/trust alternatives:
+
+```text
+host all "<maintenance>" 127.0.0.1/32 scram-sha-256
+local all all reject
+host all all 0.0.0.0/0 reject
+host all all ::0/0 reject
+```
+
+On initial launch/clean restart/restore observation this file is installed
+BEFORE postgres starts, so restored native LOGIN flags cannot open ordinary
+access. Database-native maintenance authentication must still be verified;
+wrong/restored maintenance identity/credential keeps ordinary access closed.
+
+After exact provider publication AND external confirmation, the controller may
+insert only ordered explicit lines for the actual admitted active epoch logins:
+
+```text
+host "<application-database>" "<exact-active-login>" 127.0.0.1/32 scram-sha-256
+```
+
+Place these after maintenance and before rejects. No `all`, group-role, regex,
+same-prefix or old-epoch ordinary allow rule. Supervisor accepts this action only
+through the original provider/custodian-bound GenerationAdmission authority and
+verified current source/head/epoch/native role inventory, never caller text.
+Ordinary passwords/factories are released privately after original confirmation
+and actual fresh SCRAM admission probe verifies exact authenticated/effective
+identity, expected reference and source binding. Credentials never enter a
+portable receipt or public log. New authenticated login must SET ROLE to its exact
+stable subject; native ordinary privilege closure remains mandatory.
+
+HBA changes require reload on this platform; file rules are not proof of the
+currently loaded rules or of drained sessions.
+[HBA documentation](https://www.postgresql.org/docs/18/auth-pg-hba-conf.html)
+Therefore atomic file replacement/fsync, pg_reload_conf/SIGHUP acceptance and
+pg_hba_file_rules parsing are NOT by themselves fence/admission completion.
+Running migration fencing still uses committed NOLOGIN/old-wrapper membership
+retirement and the real PostgreSQL18.6 starting-backend/session barrier. Pending
+SCRAM handshakes can outlive an HBA change. Do not optimize away the original
+candidate set, all-DB old-session checks or positive termination.
+
+At the beginning of fencing, durably request maintenance-only HBA again, while
+native role retirement/barrier establishes actual ordinary exclusion. An old
+loaded HBA rule cannot authorize a permanently NOLOGIN old principal. At final
+publication, enabling only successor allow rules cannot expose a stale database
+before publication; native LOGIN/admission and external confirmation remain gated.
+Probe actual new SCRAM admission before returning a ready factory. A failed/late
+reload delays availability, never waives a native fence or restores old roles.
+
+##### Real restart, process recovery and restore observation
+
+Hold the exclusive supervisor/custodian writer lease and settle/observe original
+pending operations before a controlled restart. Write/fsync maintenance-only HBA
+and original restart intent first. Reverify the exact original postmaster token
+and use its actual owned handle/PID, not a free-form pg_ctl path/pidfile. Request
+bounded fast shutdown with SIGINT; PostgreSQL documents that mode in
+[server shutdown](https://www.postgresql.org/docs/18/server-shutdown.html).
+Observe actual child terminal status, original process-group/descendant absence
+and no owned listener before relaunch/copy. Signal acceptance/timeouts are not
+positive absence. Never signal an unverified reused PID/group or another service.
+
+For same unchanged original data directory, record original positive stop and
+next launch in the nonrewinding external chain. Launch with maintenance-only HBA
+and external config overrides again. Privately authenticate/reobserve native
+origin, exact control-store/role/phase/head state and original pending reservations.
+Reconcile unknown native COMMIT before any replay. Old retired roles remain
+NOLOGIN/sessionless/membership-inert; no metadata/epoch rewind. Only after actual
+continuity and current native/source/head/epoch confirmation may the controller
+reopen the SAME already-active epoch or explicitly issue the approved successor.
+An unchanged current generation is not silently upgraded to another one.
+
+If the supervising process itself restarts while postgres survives, reattach
+ONLY through original external launch custody plus actual fresh kernel process
+start/UID/executable/group/argv/native-target observations and exclusive original
+journal ownership. On macOS use a small source-pinned native host helper built
+against the actual pinned SDK's libproc headers to obtain proc_pidinfo's process
+start fields/UID/PGID and proc_pidpath; check returned size/status, no guessed
+ctypes layout. Bind OS build/SDK/header/helper hashes and actual boot identity in
+qualification. Apple's source defines the native process-info structure:
+[proc_info.h](https://github.com/apple-oss-distributions/xnu/blob/main/bsd/sys/proc_info.h).
+Linux needs its separately qualified /proc boot-id/start-tick/executable observer;
+do not claim it from Mac evidence. Keep the original actual child-birth receipt,
+not just fresh observable facts. If process origin cannot be established, no
+native effects/re-admission occur and no unrelated PID is terminated.
+
+A database directory restore/copy is NOT a same-target restart. The controller
+must positively stop/isolate the old owned process first and keep ordinary HBA
+closed before any restored process can start. Give a copied/changed target a
+new observed host incarnation and preserve the original external journal.
+Observe it only through private maintenance and reject copied/rewound native
+provider/epoch/source records as continuity proof. Do not reset/recreate the
+external journal to fit the copy or automatically adopt its roles/markers.
+First profile qualifies this negative restore/clone detection plus positive
+same-target restart and original-outcome recovery. General forward recovery or
+re-enrollment of restored old generations needs a separately approved concrete
+new-incarnation recovery operation; it is explicitly not inferred here.
+
+##### Required actual evidence and lifecycle
+
+Implement the real initdb/owned-postmaster/native observer/private authentication/
+HBA gate and durable issuer path, not a source object that always refuses. Native
+acceptance creates an actual dedicated cluster, records bootstrap role/store
+creation before final approval, and migrates real populated rows with actual
+old/new SCRAM clients, stable effective principal/outcome identity and prepared
+queries/cursors. Test paused authentication, reload races, all listeners, wrong
+target/config/actor, extra membership, controller denial to ordinary users,
+fencing/cutover/publication/unknown-COMMIT and positive restart reconciliation.
+
+Inject supervisor/worker crashes and lost journal/native acknowledgements;
+reobserve original custody, reject copied database/control files, wrong executable,
+PID reuse and stale/replayed admission. Raw source simulations are not native
+evidence. Bound every process/setup/fence/probe/stop stage and prove owned cleanup.
+Delete only the explicitly owned isolated target after original outcome/evidence
+settlement; preserve required private custody/evidence under its retention policy.
+Do not stop or alter shared services. Managed/native privilege variants, general
+restored-target recovery and other OS profiles remain explicit residuals until
+their own implementation/acceptance passes.

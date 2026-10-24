@@ -692,3 +692,33 @@ and effect receipt; fake/cross-bound prepared replies and cast fallback refuse.
 Execution0.6 uses the explicit G04 private transition/receipt variant; historical
 variants remain exact. AccountingManifest omits only logicalBytes, avoiding a
 self-inclusive counter while preserving defined metadata/value measurement.
+
+
+### G11 actual supervised PostgreSQL implementation
+
+Implement the selected CONTRACT-081 postgresql18-local-supervisor/0.1 in host-only
+code outside the browser library. It creates an actual dedicated PostgreSQL18.6
+cluster with original durable external creation/launch custody, private SCRAM
+maintenance credential, exact distinct approved maintenance/controller/business
+owner roles/flags/SET edges, and controlled external configuration/HBA. Trusted
+maintenance/controller are explicitly SUPERUSER in this first profile; do not
+claim managed or least-privilege qualification from it. Ordinary clients cannot
+reach these identities, source declarations never gain their authority.
+
+Implement real owned initdb/postmaster subprocess handling, native kernel process
+observer from qualified pinned host headers/helper, actual private native
+authentication/target/settings/listener checks and original birth/continuity
+receipts. Ordinary HBA is closed BEFORE process startup/restart/restore, with no
+Unix/IPv6/alternate listener. Opening exact active-epoch rules requires original
+published/externally confirmed native admission and actual fresh SCRAM probe.
+Reload acknowledgement/file parsing alone is never native gate completion.
+
+Keep committed NOLOGIN/old-wrapper retirement and the real pending-authentication
+barrier for running phases; source captures cannot replace actual termination.
+Implement positive same-target stop/start/original pending-outcome reconciliation,
+supervisor re-observation through original kernel/native custody, and negative
+restored/copied-target continuity rejection. General restored-generation recovery
+and other OS/managed privilege profiles stay explicit residuals, not automatic
+new-target adoption. Bound every process/stage and remove only verified owned
+resources after durable outcome/evidence settlement. Old trust-auth native runner
+helpers may be reused as code, never as SCRAM/issuer/supervisor evidence.

@@ -584,3 +584,33 @@ escaping inside the fixed DDL expression and no assumed driver-DDL parameters.
 Verify original-source-only input, all-row conversion coverage and exact committed
 G04 descriptor/artifact/domain/count/archive correspondence. Exercise defined
 cycle-free logical-byte projection at counter digit/metadata/NULL/limit edges.
+
+
+### G11 concrete supervisor and native issuer acceptance
+
+US-051-AC15/16 must now execute the selected privileged local profile rather than
+qualifying a structural fake. Independently create and observe an actual owned
+PG18.6 SCRAM cluster, exact native flags/role edges/authority, dedicated process
+birth/binary/PGDATA/endpoint chain, private original external journal and all
+listener/auth routes. Verify maintenance-only external HBA precedes every actual
+startup, not a later best-effort check on restored LOGIN roles. Native source/
+platform/toolchain/helper/wrapper artifact census is mandatory.
+
+Run real populated G11 migration with actual old/new authenticated clients,
+prepared direct SQL, held cursors/transactions, paused SCRAM and reload races.
+Observe actual native state/null/token populations, durable old NOLOGIN and
+positive retirement before carrier changes. Prove old identities remain retired
+after publication and stable effective subject/outcome identity is preserved.
+Test exact new-epoch admission with real SCRAM/reference/source probe.
+
+Inject worker/supervisor crashes and unknown journal/native commits, same-target
+restart, wrong target/secret/config/binary, PID/group reuse, extra membership,
+Unix/IPv6/alternate listener and external journal rewind. Prove original-outcome
+lookup without repeated effects, correct same-connection role restoration and
+no ordinary exposure while origin/epoch/source is uncertain. Copy/restore native
+data/control markers under a different observed incarnation with original
+external custody unchanged and prove rejection before ordinary access. Native
+full restored-generation forward recovery is separate and cannot be claimed
+from this rejection test. Record bounded actual owned shutdown/cleanup and no
+changes to shared services. Source simulations, old trust-auth runs and a provider
+that always refuses do not pass these acceptance gates.
