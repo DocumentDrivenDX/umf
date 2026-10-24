@@ -1,0 +1,41 @@
+{
+  "format": "umf-r5-json-schema-python-premerge-smoke-attempt-v1",
+  "status": "inconclusive-watchdog-timeout",
+  "claim": "No parity or installed qualification claim",
+  "sourceCommitAtStart": "ed58d8f9c118e8529c5dcc2ace870b425879510f",
+  "command": "/opt/homebrew/bin/timeout 180s env PYTHONPATH=/private/tmp/r5-python-source-tree-smoke /private/tmp/umf-r4-build-env/bin/python -u scripts/rust-migration/r5/json-schema-python/replay.py docs/helix/04-build/evidence/rust-migration/r5-json-schema-bindings/predecessor.json /private/tmp/r5-python-source-tree-premerge.json source-tree-premerge",
+  "runtime": {
+    "python": "3.11.17",
+    "pydantic": "2.14.1",
+    "jsonSchemaProfile": "umf-r5-json-schema/0.1.0"
+  },
+  "predecessorSha256": "06d1772cd53dd7d7660e9bd6e665cf4bb51a7c7439396dbd7f8e6dd8e91e1ee8",
+  "scriptSha256": "8a946088c9e1c15917c58caef1513d0a548653f2fc22585223211a5788e44d73",
+  "pythonModuleSha256": "4a19abe936495417f9d9e8a5c3dc67a97298767efccd19a79115c6eccbd04449",
+  "nativeExtension": "/private/tmp/umf-r5-json-schema-python-cli-package/umf/_rust_core.abi3.so, copied into a temporary source-package tree for this smoke",
+  "nativeExtensionSha256": "33c9ceff6a643cf4db1941f139ac03bdc11eeef6696ed5d768a205b19b032ca0",
+  "nativeExtensionSourceCorrespondence": "not established; this binary came from a separate package build and is not a release-cohort artifact",
+  "checkoutExtension": {
+    "path": "python/src/umf/_rust_core.abi3.so",
+    "sha256": "4161d780eff7ed82df7ec921e735d4f9ff234aaa213bcd4e16180a8ea8f89ee5",
+    "capabilityProbe": "json_schema_profile_version was absent, so this stale extension could not run the harness"
+  },
+  "observedProgress": {
+    "lastPrintedCase": "30/30 copy-isolation-get-bundle-walk",
+    "case30Started": true,
+    "completedResultRowsRetained": 0,
+    "outputReceiptWritten": false,
+    "watchdogExitCode": 124,
+    "processTerminatedByWatchdog": true,
+    "reaped": true
+  },
+  "additionalUnboundedAttempt": {
+    "status": "failed-at-receipt-serialization",
+    "exitCode": 1,
+    "loopCompleted": true,
+    "resultRowsWritten": 0,
+    "failure": "TypeError: Object of type ExactJsonNumber is not JSON serializable",
+    "interpretation": "This older unbounded invocation completed the case loop and exposed the raw-carrier serialization defect. It produced no persisted rows, so it supplies no parity count. The defect is covered by the new exact-number-safe 30-row self-test; the full replay was not rerun after the fix."
+  },
+  "interpretation": "The runner printed its final case-start marker before the 180 second watchdog expired, but it did not return from that case. Because the runner writes its JSON receipt only after all comparisons and exact-number checks complete, no case count or parity result is available. The exact final case-start marker and process termination are retained as an incomplete attempt."
+}
