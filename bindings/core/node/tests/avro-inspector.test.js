@@ -20,7 +20,7 @@ describe('opt-in Avro structural inspector', () => {
 
   test('reports unresolved names and forwards host work controls', () => {
     let charged = 0;
-    const inspector = createAvroInspector({controls: {work(amount) { charged += amount; }}});
+    const inspector = createAvroInspector({controls: {meter(amount) { charged += amount; }}});
     const result = inspector.inspect(taggedString('missing.Widget'));
     expect(result.valid).toBe(false);
     expect(result.complete).toBe(false);
