@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "status": "proposal-only-all-moves-held",
+  "baseline": "9e93fc583f809bd738409770d46c6dba8541a07a",
+  "gitObjectFormat": "sha1",
+  "units": "decimal bytes; tracked source content, excluding .git/dependencies/caches",
+  "budgetBytesExclusive": 100000000,
+  "newResourceAllowanceBytes": 3000000,
+  "baselineFiles": 32815,
+  "baselineBytes": 450852831,
+  "destinations": {
+    "keep": {
+      "files": 10323,
+      "bytes": 64833073
+    },
+    "conformance": {
+      "files": 17248,
+      "bytes": 249079352
+    },
+    "publication": {
+      "files": 5183,
+      "bytes": 107931951
+    },
+    "pack-assets": {
+      "files": 61,
+      "bytes": 29008455
+    }
+  },
+  "retainedBaselineBytes": 64833073,
+  "inventoryCompressedBytes": 1124508,
+  "inventorySha256": "f4be096b736bfd4041382232f7950e3140f03f317d3488a54dc79a1efbf97255",
+  "unknowns": [
+    "Transitive/dynamic consumer closure is not complete.",
+    "Core policy indexes, copied site examples and resolver overhead require a measured allowance.",
+    "Migration/Rust/new-main growth is outside this frozen baseline."
+  ]
+}
