@@ -865,3 +865,23 @@ original aliases/source-test purpose and actual final-native freshness guards.
 
 These source/file controls do not qualify original deployment/native provider/
 process/barrier/epoch/installed/browser/platform/CI/release/public-byte gates.
+
+
+### G04 original store creation independent confirmation/recovery matrix
+
+Verify exact legacy0.1 wire/replay and new0.2 stream birth/profile/caps/state
+guards, per-store complete key/request identity, parent chain, typed intent→
+generic native reservation/owner-core binding and no unowned interleaving. Use
+actual original scope4 signatures and current target/custody/native evidence.
+
+Inject each external/supervisor/core/DDL/COMMENT/COMMIT/return failure. Positive
+original same-request recovery must append/finish only missing confirmations,
+return same receipt/schema/reservation IDs and never repeat committed DDL.
+Exercise known-abort vs unknown, newer conflicting custody/native state, copied
+receipt/callback/constructor seal, capacity exhaustion, two creators and epoch/
+transition contention. No terminal owner-abort may be silently reused for retry.
+
+Qualify actual PG18.6 source/actor/session/privileged-DDL exclusion/COMMENT/full
+TOAST/RI/native inventory/ACL/commit/restart and dynamic registered additions.
+Old journal/store upgrade, managed/external origin, installed/browser/platform/
+CI/release/public bytes remain explicit gates, never implied by source replay.

@@ -1023,3 +1023,31 @@ use only the fixed native-free ROOT codec/current-validation edge, with no
 reverse dependency, physical context laundering, native callback or generic
 issuer registrar. Implement actual missing native hooks and positive original
 root entry issuance; naming a fail-closed future hook is insufficient.
+
+
+### G04 original store creation journal integration
+
+Implement the exact external/supervisor journal0.2 kinds, closed payloads,
+per-store original state and cross-journal parent/sequence/receipt binding from
+the G04 original store journal contract. New original target profiles only;
+old0.1 bytes/meaning/readonly recovery stay exact. No boolean/tag/hash/COMMENT
+or supplied reservation creates a native provider capability.
+
+Original external reservation precedes typed supervisor intent, which directly
+precedes the existing generic native-effect-intent. Owner core binds THAT
+generic event as its existing original reservation requires. Same native DDL+
+full COMMENT receipt commit first; actual positive fresh original outcome then
+external observation/confirmation, typed supervisor confirmation, existing
+generic native-effect confirmation and SAME owner-ledger finish precede issuing
+the opaque store creation capability. Reconcile every partial confirmation by
+original IDs/state without DDL replay. No cross-file/DB atomicity is promised.
+
+Known-abort attempt remains original operation pending; repeat only with actual
+positive noncommit proof/fresh authority/absence under remaining original bounds.
+Unknown never allocates another request/reservation or retries speculatively.
+Use fixed actual original native resolver/type/registry paths, not callbacks or
+custodian-to-native back-import; freeze exact source map before code adoption.
+Global original lease precedes either journal append lock; release append locks
+before native SQL/other journals. Current dynamic provider objects require their
+OWN positive original births; do not equate current whole catalog with initial
+empty-store receipt or waive extras. All actual qualification gates remain.

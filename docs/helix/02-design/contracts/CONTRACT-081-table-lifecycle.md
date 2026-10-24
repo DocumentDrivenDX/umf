@@ -6963,3 +6963,206 @@ IDs/path and no effects/reinstall, shared-journal loss with other confirmed root
 entries, two writers, purpose/registry/alias identity and final-native freshness
 refusal. Retain actual003–005 failures and source-only qualification; original
 deployment, installed/native/platform/browser/release gates remain mandatory.
+
+
+#### G04 explicit original store-creation custody and supervisor journals
+
+The following exact internal protocol implements the previously adopted external
+store reservation/native COMMENT receipt without inferring state from unused
+supervisor booleans. It adds no physical signature scope or SQL callback. New
+fresh journal0.2 profiles preserve old0.1 bytes/replay and refuse implicit upgrade.
+
+##### Version and original custody
+
+Use NEW `umf.local-target-custody-journal/0.2` and
+`umf.local-postgresql-supervisor-journal/0.2` for ORIGINAL newly enrolled targets
+that admit this store-creation capability. Keep original0.1 serialized bytes,
+event meanings and readonly legacy replay exact. No implicit active0.1 upgrade,
+copy/name adoption or new store effects through old unused boolean store tags.
+Original journal birth/profile/path/chain is bound by the qualified original
+native owner/controller realm before use; a new header/self-hash/UID is not origin.
+This branch admits only originals-store profiles already separately adopted and
+qualified for scope4 (originals0.1 and G05 lifecycle0.2); prospective G10 inventory
+store requires its OWN explicit tuple/renderer admission. It does not reinterpret
+the separate ingress-store marker or its creation receipt/authority.
+The original physical enrollment/context and six owner scopes remain exact.
+Old target journal upgrade remains explicitly unqualified.
+
+Both0.2 envelopes/previousDigest/recordDigest rules retain their original fixed
+journal forms and original native independent-chain verification. Add ONLY the
+closed events below. Every new mutation holds the SAME original target/custodian
+exclusive writer lease; old0.1 writers cannot mutate this0.2 stream. Snapshot,
+fresh original native observation and append occur under that lease; acquire
+actual native/custodian lease BEFORE either journal append lock and release each
+append lock before another journal/native SQL operation. No two-journal atomic
+commit is claimed. Existing4096-event/8MiB caps, safe integer sequence/canonical
+bounds and stricter target limits remain conjunctive; preflight before effects.
+
+Store key is exact `[targetCustody.registrationId,providerId,installationId,
+store.profile,store.storeId,store.schemaName]`. Match complete tuples, including
+original target incarnation/custody in every operation. Keep all store entries
+and histories; no single latest-store slot or per-profile digest substitution.
+At most256 distinct store keys and all original fixed descriptor/profile limits.
+Any different original request/approval/target/config/purpose for an occupied
+key refuses. Same original bytes reuse SAME reservation/IDs/outcome.
+
+##### Exact external events
+
+The existing reservation wire stays EXACTLY adopted
+`{profile:"umf.row-originals-store-reservation/0.1",reservationId,providerId,
+installationId,targetCustody,store,creationRequestDigest,creationApprovalDigest,
+nativeAuthorityEvidenceDigest,configurationDigest,custodySequence}`.
+CustodySequence equals its original reserved-event sequence, not a future confirm.
+All existing typed descriptor/native evidence/UUID/digest/limit rules apply.
+
+New event `originals-store-reserved` payload EXACTLY
+`{purpose,request,approvalDigest,reservation,reservationDigest,parent}`.
+Purpose original production|native-acceptance. Request is the COMPLETE canonical
+signed native-store-creation INTENT, resolved from original verified scope4
+request/approval/context, not a caller dictionary. ApprovalDigest is its actual
+verified owner-envelope digest. Reservation exact above; reservationDigest hashes
+complete reservation. Parent EXACT `{sequence,headDigest}` identifies the current
+original journal before append: sequence=event.sequence-1 and
+headDigest=event.previousDigest. Request/profile/store/native authority/config/
+purpose/target all recompute and match original reservation. Full actual owner
+request/envelope/typed native evidence remain private original custody.
+
+New event `originals-store-observation` payload EXACTLY
+`{purpose,reservationId,reservationDigest,supervisorIntentDigest,outcome,
+nativeReceipt,nativeReceiptDigest,schemaOid,nativeObservationDigest,
+transactionOutcomeDigest,parent}`.
+Outcome EXACT committed|known-aborted|unknown. Parent exact preappend chain ref.
+For committed, nativeReceipt is the COMPLETE adopted tagged creation-receipt
+record observed from SAME original schema COMMENT/catalog after actual positive
+COMMIT, nativeReceiptDigest its canonical digest, schemaOid its actual uint32.
+For known-aborted/unknown those three fields are null. NativeObservationDigest
+and transactionOutcomeDigest identify complete ACTUAL original private native
+observation and commit/noncommit/unknown evidence, never JSON authority. Purpose,
+reservation/intent/target/receipt/source/config facts must all correspond.
+Receipt<=1MiB, no private source/keys/values in the public COMMENT. Full original
+observation/evidence/connection/transaction identities remain privately retained.
+
+New event `originals-store-confirmed` payload EXACTLY
+`{purpose,reservationId,reservationDigest,supervisorIntentDigest,
+observationEventDigest,nativeReceiptDigest,schemaOid}`.
+It refers to the selected original committed observation EVENT digest, not its
+own digest. All fields match that reserved/observed store. No confirmation can
+be written from unknown/known-aborted, missing original native outcome, receipt
+hash alone or namespace presence. Repeated confirmation resolves original event
+and appends nothing. External confirmation data is never put into its own native
+receipt/comment or original pre-DDL reservation.
+
+Replay adds a `stores` collection to internal derived state only (not a journal
+wire member). Each key retains original request/reservation and status reserved|
+observed-committed|confirmed, plus original observations. Known-aborted/unknown
+observations keep it reserved and original slot occupied. Once committed was
+observed, no regression/changed receipt/schema identity is legal; only matching
+fresh verification and confirmation. Subsequent readonly recovery validates fresh
+actual native continuity without appending a new store observation/confirmation.
+Existing target registration must be confirmed before reservation. Any pending/
+unknown epoch/transition or another conflicting original store operation refuses
+until settled. A pending store birth blocks conflicting provision/transition/
+store dispatch; it cannot be overwritten by old registration/provision replay.
+
+##### Exact supervisor events and owner-core relation
+
+Do not reinterpret unused0.1 store-creation-intent/confirmed boolean flags.
+Supervisor0.2 adds `originals-store-creation-intent` EXACT payload
+`{purpose,reservation,reservationDigest,custodianReservedEventDigest,
+creationRequestDigest,creationApprovalDigest,nativeAuthorityEvidenceDigest}`.
+It retains the COMPLETE original reservation; hashes/tuple/actual purpose/core
+request match the actual already durable external event. Immediately after this typed store intent, append/resolve the EXISTING generic
+`native-effect-intent` for the SAME original signed scope4 request/approval. Its
+previousDigest must equal this typed store-intent EVENT digest; no unrelated
+event may interleave between them. Its existing native reservationId and full
+request/approval/purpose/payload binding remain unchanged. Owner core binds the
+GENERIC native-effect-intent event digest, as its existing native reservation
+requires, BEFORE DDL. In all observation/confirmation payloads above/below,
+supervisorIntentDigest means THAT generic native-effect-intent digest, not a
+second owner binding to the typed store event. Verify its exact typed predecessor
+and external reservation at every resolve/recovery. It must be the SAME core/
+context/request/approval/native reservation and pending-effect handle, not an
+independent store permission. Never allocate another generic reservation when
+recovering an existing matching pair.
+
+Supervisor0.2 adds `originals-store-creation-confirmed` EXACT payload
+`{purpose,reservationDigest,supervisorIntentDigest,custodianConfirmationDigest,
+nativeReceiptDigest,schemaOid}`. CustodianConfirmationDigest is the actual prior
+external confirmed EVENT digest. Reobserve exact original committed schema/
+COMMENT/catalog and original external reservation/confirmation before append.
+No schema OID or native receipt is guessed before DDL; no own-event digest occurs.
+
+Then append/resolve the EXISTING generic native-effect-confirmed event and its
+actual original registered native outcome for the SAME scope4 reservation and
+nativeReceiptDigest. Its original payload/receipt semantics remain exact. Only
+then may the physical owner facade finish its SAME owner ledger pending effect.
+Only after all original positive external/supervisor/native/core correspondence
+may the fixed original store issuer register/release the provider's opaque
+creation capability. No standalone typed event, COMMENT or owner signature alone
+creates that capability. All intermediate confirmations are independently
+reconciled, never inferred atomic across files/DB.
+
+##### Native order, failures and recovery
+
+Fixed flow: actual original typed authority/absence checks -> external reserve
+-> typed supervisor intent -> existing generic native-effect intent/owner-core pending binding -> SAME native transaction
+fixed DDL+complete creation receipt COMMENT -> positive COMMIT/fresh original
+schema+full footprint observation -> external observation+confirmation -> typed
+supervisor confirmation -> generic original native-effect confirmation -> SAME
+owner-ledger finish -> opaque store capability. Keep original privileged-DDL
+exclusion, complete role/ACL/default/dependency/TOAST/RI/session/catalog checks.
+No callback, user cursor or supplied object list selects DDL or observed evidence.
+
+Only the fixed original supervisor/facade coordinator exposes production store
+creation/recovery. Its custodian reserve/observe/confirm entrypoints require
+original registered target, actual scope4 core request/approval and the fixed
+original native observation/outcome resolver. Do not add a caller callback,
+structural success object, arbitrary adapter registrar or from-dict capability.
+Freeze exact source type/registry/adapter methods and acyclic imports before
+implementation adoption; custodian must not import its native consumer back.
+The actual missing native resolver must be implemented, not an always-refusing
+stub or a method-name check. Public data projections never mint original handles.
+
+Known-aborted is a TRANSACTION ATTEMPT observation, not terminal cancellation of
+the whole original scope4 store operation. Keep the same original reservation,
+supervisor intent, core pending binding and IDs. Retry only after positive
+original noncommit proof AND fresh complete actual original absence/authority,
+under remaining original qualified native/host budgets; no new request/budget
+or speculative rerun. Do not write a terminal native-effect-aborted/core-aborted
+outcome merely to retry it. Unknown is occupied/fenced; absence alone proves
+neither abort nor permission to retry. Unqualified noncommit or exhausted bounds
+refuse further effects and remain an explicit original recovery outcome.
+
+| Durable gap | Required continuation |
+| --- | --- |
+| External reservation, no supervisor intent | Revalidate same original bytes/authority/absence, append only matching original intent, no new reservation |
+| Intent/core pending, native COMMIT unknown | Observe original transaction/schema COMMENT/full native receipt/custody; unknown stays fenced; no DDL replay |
+| Native committed, external pending | Reobserve original committed exact footprint+receipt and positive COMMIT proof, append only matching observation/confirmation |
+| External confirmed, typed supervisor confirm missing | Reverify same native/external outcome, append only matching typed confirmation |
+| Typed supervisor confirmed, generic native/core pending | Reconstruct only same original registered native reservation/outcome and append/finish missing SAME confirmations, no DDL |
+| Generic native confirmed, owner core pending | Settle SAME original owner ledger from actual matching registered outcome; do not execute store creation |
+| All confirmed, response/capability lost | Readonly original state/native continuity verification and reissue only same original opaque capability, no IDs/DDL/store journal append |
+| Any conflicting/missing/rewound/copied native/external/core/receipt/target state | Refuse/fence; no namespace adoption, DROP/recreate, history repair or replacement intent |
+
+Later allowed provider objects have their OWN original archive/identity/lifecycle
+births and current full closure. Initial COMMENT/receipt stays exact; reissue
+checks initial original footprint plus positively registered current additions,
+never requires entire current catalog to equal initial empty-store bytes or
+waives unknown extras. No creation capability may be released from a partial
+initial confirmation. An original committed schema later missing/drifted is not
+an aborted first creation and cannot be recreated through this protocol.
+
+##### Independent gates and retained limits
+
+Tests must use original real owner signatures/core pending handles, exact new
+journal profiles and state validation, every inter-journal/COMMIT/return crash
+point, same original positive resumed outcome, known-abort vs unknown, original
+native receipt/schema identity, two creators/writers and conflicting epoch/other
+store operations. Prove no generic-native/core confirmation can precede actual
+external commit confirmation, and no terminal owner-abort is silently reused.
+Retain original legacy0.1 wire/replay negatives, forged typed records/digests/
+callbacks/constructor seals, capacities and actual external/native chain restore
+refusal. Qualify actual PG18.6 original actor/COMMENT/DDL/TOAST/RI/ACL/transaction/
+COMMIT/restart and installed driver/provider/platform/browser/release separately.
+Old target journal upgrade, provider/store migration, unknown managed/external
+custody and broader data-loss/recovery compositions remain explicitly tracked.
