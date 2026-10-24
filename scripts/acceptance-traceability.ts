@@ -45,11 +45,26 @@ function add(index: Map<string, Set<string>>, id: string, path: string, line: nu
   index.set(id, evidence);
 }
 
+// Bound filesystem concurrency while retaining the sorted input order. Each
+// invocation reads fresh contents; there is no process-wide citation cache.
+async function readSources(paths: string[]): Promise<string[]> {
+  const texts = new Array<string>(paths.length);
+  let next = 0;
+  await Promise.all(Array.from({length: Math.min(16, paths.length)}, async () => {
+    while (next < paths.length) {
+      const index = next++;
+      texts[index] = await Bun.file(paths[index]!).text();
+    }
+  }));
+  return texts;
+}
+
 async function indexFiles(paths: string[]) {
   const citations = new Map<string, Set<string>>();
   const mentions = new Map<string, Set<string>>();
-  for (const path of paths) {
-    const lines = (await Bun.file(path).text()).split('\n');
+  const texts = await readSources(paths);
+  for (const [index, path] of paths.entries()) {
+    const lines = texts[index]!.split('\n');
     lines.forEach((line, offset) => {
       for (const match of line.matchAll(citationPattern)) add(citations, match[1]!, path, offset + 1);
       for (const id of line.match(mentionPattern) ?? []) add(mentions, id, path, offset + 1);
@@ -62,8 +77,9 @@ export async function buildAcceptanceLedger() {
   const storyFiles = (await filesBelow(storiesRoot)).filter(path => path.endsWith('.md'));
   const criteria = new Map<string, string>();
   const storyAcceptance = new Map<string,boolean>();
-  for (const path of storyFiles) {
-    const text = await Bun.file(path).text();
+  const storyTexts = await readSources(storyFiles);
+  for (const [index, path] of storyFiles.entries()) {
+    const text = storyTexts[index]!;
     const frontmatter = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
     const storyId = frontmatter ? parse(frontmatter[1]!).ddx?.id : undefined;
     if (typeof storyId !== 'string' || !/^US-\d{3}$/.test(storyId)) {

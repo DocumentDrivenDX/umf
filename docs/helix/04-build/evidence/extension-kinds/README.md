@@ -48,7 +48,7 @@ errors occurred.
 | Installed Python `test_core.py`, `test_rust_core.py`, `test_extension_kinds.py` | 212 passed on Python 3.13.16 |
 | `scripts/extension-kinds-conformance.ts` with installed artifact paths | 15 cases × 5 hosts, zero mismatches; receipt above |
 | `bun scripts/metamodel-browser.ts` | Existing 138 core vectors plus one explicit callback/boolean-schema case pass in Chromium without unsafe eval |
-| Library TypeScript check (`tsc --noEmit`), metamodel generation/check and core authority | Pass; combined tools typecheck has the unchanged baseline error below |
+| Combined `bun run typecheck`, metamodel generation/check and core authority | Pass; the former tools type error is fixed |
 | `bun run test:schemas` | 71 extension packages and 381 JSON Schemas pass |
 | Rust boundary checker and negative controls | Pass; no findings; 28 boundary/inventory/transport control tests pass |
 | Acceptance traceability check and ledger tests | Pass; 837 criteria; 5 tests and 1,260 assertions |
@@ -88,8 +88,39 @@ regex-profile refusal; final Python qualification uses supported 3.13.16.
 The new portable full-manifest API does not expand the supported Python-native
 consumer-schema regex profiles.
 
-On the standalone current-main cohort, `bun run typecheck` fails only at
-`scripts/rust-core/full-conformance.ts:50`: an indexed previous argument has
-type `string | undefined` when passed to `RegExp.test`. That file is unchanged
-from the main base. Library typechecking passes; no full combined typecheck
-pass is claimed.
+The initial standalone cohort exposed a tools type error in the command-preview
+redaction guard. The clean-validation follow-up below resolves it without
+changing redaction behavior.
+
+## Clean-validation follow-up — 2026-10-23
+
+Combined typechecking, all 59 metamodel tests (405 assertions), and all five
+acceptance-ledger tests (1,260 assertions) pass. The original scanner took
+72.7 seconds to read its inputs; bounded reads preserve the exact ledger and
+bring each ledger test below its original 60-second limit (the full suite ran
+in 29.60 seconds). No citation cache or acceptance shortcut was introduced.
+
+Semantic compiler assertions now use one immutable executable freshly qualified
+from their source cohort. Clean-room generation still copies only declared
+sources and removes any installed-compiler override. Its cold compilation has
+a separate 180-second preparation bound; fixed-point/no-write assertions keep
+the existing 120-second bound, and teardown is bounded separately. Files copy
+with bounded concurrency, both child output pipes drain while the child runs,
+and native Bun-shell deletion removes the test-owned Cargo tree. All original
+assertions, the extra-output negative control and mtime checks remain enabled.
+The observed clean-room assertion phase took 74.29 seconds; the complete cold
+metamodel suite took 247.54 seconds including preparation and teardown.
+
+Hosted CI also exposed import/export sorting, symlink-dependent census paths,
+a stale 15-Record/86-Field reference assertion, and a stale codegen bundle. Python
+lint passes; the census keeps logical dependency paths while a regression proves
+external source imports remain visible; reference nodes are compared to authored
+Record/Field identities; and the locked Bun 1.4.3 bundle and manifest regenerate
+and check successfully. Core/package versions are unchanged. Native engine and
+schema semantics are unchanged by these build/test fixes.
+
+The focused 185-test core/kind/dashboard suite, installed 212-test Python subset,
+15-case five-host kind parity, and nine bounded CLI transport tests pass again.
+These are local source-cohort results; hosted workflow status is tracked on the
+PR and is not inferred from local passes. The PR remains based on its original
+main cohort pending separate integration of newer release work.

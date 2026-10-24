@@ -26,7 +26,7 @@ for(const source of program.getSourceFiles()){
     else if(ts.isImportEqualsDeclaration(statement)&&ts.isExternalModuleReference(statement.moduleReference))specifier=statement.moduleReference.expression;
     if(specifier&&ts.isStringLiteral(specifier)){
       imports.push(specifier.text);
-      const resolution=ts.resolveModuleName(specifier.text,source.fileName,program.getCompilerOptions(),ts.sys).resolvedModule;
+      const resolution=ts.resolveModuleName(specifier.text,source.fileName,{...program.getCompilerOptions(),preserveSymlinks:true},ts.sys).resolvedModule;
       if(resolution)resolvedImports.push(relative(root,resolve(resolution.resolvedFileName)).replaceAll('\\','/'));
     }
   }
