@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {initializeWasm} from '../../bindings/core/wasm/index.js';
 import {coreSchema,semanticTypeReferenceSchema,extensionPackageSchema,coreConstraints,domainPolicy} from '../../src/generated/core-model';
-import {importLakeviewDashboardBytes,exportLakeviewDashboardBytes,lakeviewRegistry} from '../../src/adapters/lakeview';
+import {importLakeviewDashboardBytes,exportLakeviewDashboardBytes,lakeviewRegistry,projectLakeviewToLegacyDashboard} from '../../src/adapters/lakeview';
 import {readDocument,writeDocument} from '../../src/model/document';
 import {inspectExtensionKinds} from '../../src/model/extension-kinds';
 import {selectCoreElements} from '../../src/model/selection';
+import {elementKey} from '../../src/adapters/lakeview/project';
+import {legacyIds,legacyFixture,legacyNumericFixture} from './legacy-fixture';
 export async function verify(){
   const url='/wasm/umf_core_wasm.js';
   const runtime=await initializeWasm(()=>import(url),globalThis,{coreSchema,referenceSchema:semanticTypeReferenceSchema,packageSchema:extensionPackageSchema,constraints:coreConstraints,domainPolicy});
@@ -32,5 +34,21 @@ export async function verify(){
     if(!rejected&&name!=='empty-sections')throw Error('Edited representation exported archived bytes');
     results.push({name,bytes:bytes.length,original,recoveries});
   }
-  return {results,generic};
+  const legacyProject=(view:any)=>projectLakeviewToLegacyDashboard(view,legacyIds,{title:'Legacy browser view'});
+  for(const name of ['constructor','toString','__proto__']){
+    const projected=legacyProject(legacyFixture(name));
+    const filter=projected.elements.get(elementKey('page','filter')) as any;
+    const dataset=projected.elements.get(elementKey('data','dataset')) as any;
+    if(projected.issues.length||filter?.targets[0]?.field!==name||!Object.hasOwn(dataset?.fields??{},name))throw Error('Legacy own field projection failed '+name);
+  }
+  for(const token of ['0.10000000000000001','9007199254740993','1e400']){
+    const projected=legacyProject(legacyNumericFixture(token,true));
+    const filter=projected.elements.get(elementKey('page','filter')) as any;
+    if(!filter||filter.default!==undefined||!projected.issues.some(i=>i.code==='LAKEVIEW_FILTER_DEFAULT'&&i.classification==='unsupported'))throw Error('Legacy numeric precision gap hidden '+token);
+  }
+  for(const empty of [{},[]]){
+    const projected=legacyProject(legacyFixture('column',{futureOption:empty}));
+    if(projected.issues.length!==1||projected.issues[0]?.code!=='LAKEVIEW_UNMAPPED'||projected.issues[0]?.path!=='/pages/0/layout/0/widget/spec/futureOption')throw Error('Legacy empty-container gap hidden');
+  }
+  return {results,generic,legacy:{hostileNames:3,numericDefaults:3,unknownEmptyContainers:2}};
 }

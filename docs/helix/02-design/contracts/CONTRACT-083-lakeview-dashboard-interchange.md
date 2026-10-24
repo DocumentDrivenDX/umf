@@ -113,7 +113,14 @@ This revision supersedes PR42's 0.1 compact-token export and default
 `umf.dashboard` field model. Existing core 0.10.0 packages and dashboard profile
 0.1.0 are unchanged. `projectLakeviewToLegacyDashboard` explicitly exposes the
 PR42 projection helper as a compatibility view; its field dictionary and narrower
-projection semantics are not part of the 0.2 native document. Shared concepts may
+projection semantics are not part of the 0.2 native document. The helper takes
+parsed JavaScript values, so original numeric precision is unverified. It MUST
+omit the complete default selection when any value is numeric, with an explicit
+`LAKEVIEW_FILTER_DEFAULT` unsupported issue; it MUST NOT retain a partial mixed
+selection. String and boolean defaults remain representable. Field dictionaries
+MUST treat inherited property names as ordinary own data while retaining real
+column/measure collision checks. Unconsumed empty objects and arrays MUST receive
+an attributable `LAKEVIEW_UNMAPPED` issue, like other unconsumed content. Shared concepts may
 be promoted to a future generic dashboard extension after independent systems
 provide evidence. This contract adds no dashboard semantics to core.
 

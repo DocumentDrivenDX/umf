@@ -30,7 +30,7 @@ export function projectLakeview(view:any,ids:LakeviewIds,options:{title:string})
  const datasets=new Map<string,{id:string;path:string;fields:Record<string,any>}>();
  const declared:{id:string;payload:any}[]=[];
  (Array.isArray(view.datasets)?view.datasets:[]).forEach((ds:any,i:number)=>{
-  const path=at('/datasets',i),fields:Record<string,any>={};let source:any;
+  const path=at('/datasets',i),fields:Record<string,any>=Object.create(null);let source:any;
   if(typeof ds?.name!=='string')return;use(at(path,'name'));
   if(Array.isArray(ds.queryLines)&&ds.queryLines.every((l:unknown)=>typeof l==='string')){source={kind:'query',query:{language:SQL,text:ds.queryLines.join('')}};use(at(path,'queryLines'));}
   else if(typeof ds.query==='string'){source={kind:'query',query:{language:SQL,text:ds.query}};use(at(path,'query'));}
@@ -50,7 +50,7 @@ export function projectLakeview(view:any,ids:LakeviewIds,options:{title:string})
   let m:RegExpExecArray|null;
   if(new RegExp(quoted+'\\s*\\.\\s*`').test(expression))throw new Skip(path,'LAKEVIEW_RELATIONSHIP','Qualified reference '+expression+' reads a relationship-graph source; it has no neutral form');
   if((m=new RegExp('^'+quoted+'$').exec(expression)))return {field:unquote(m[1]!),aggregation:'none'};
-  if((m=new RegExp('^MEASURE\\('+quoted+'\\)$','i').exec(expression))){const name=unquote(m[1]!);if(fields[name]?.role!=='measure')throw new Skip(path,'LAKEVIEW_EXPRESSION','MEASURE of undeclared dataset measure '+JSON.stringify(name));return {field:name,aggregation:'measure'};}
+  if((m=new RegExp('^MEASURE\\('+quoted+'\\)$','i').exec(expression))){const name=unquote(m[1]!);if(!Object.hasOwn(fields,name)||fields[name]?.role!=='measure')throw new Skip(path,'LAKEVIEW_EXPRESSION','MEASURE of undeclared dataset measure '+JSON.stringify(name));return {field:name,aggregation:'measure'};}
   if((m=new RegExp('^(SUM|AVG|MIN|MAX|COUNT)\\('+quoted+'\\)$','i').exec(expression))&&m[2]!=='*')return {field:unquote(m[2]!),aggregation:simple[m[1]!.toUpperCase()]!};
   if((m=new RegExp('^COUNT\\(DISTINCT '+quoted+'\\)$','i').exec(expression)))return {field:unquote(m[1]!),aggregation:'count-distinct'};
   const names=new Set([...expression.matchAll(new RegExp(quoted,'g'))].map(r=>unquote(r[1]!)));
@@ -96,7 +96,7 @@ export function projectLakeview(view:any,ids:LakeviewIds,options:{title:string})
   const type=spec.widgetType,chart=charts.has(type),control=controls[type];
   if(!chart&&!control){issue(wp,'LAKEVIEW_WIDGET_TYPE','unsupported','Widget type '+JSON.stringify(type)+' version '+spec.version+' has no neutral chart family; only the native payload is retained');return undefined;}
   const pending:{fields:Record<string,any>;name:string}[]=[];
-  const column=(fields:Record<string,any>,name:string,path:string)=>{if(fields[name]&&fields[name].role!=='column')throw new Skip(path,'LAKEVIEW_FIELD_COLLISION','Column '+JSON.stringify(name)+' shares its name with a dataset measure');pending.push({fields,name});};
+  const column=(fields:Record<string,any>,name:string,path:string)=>{if(Object.hasOwn(fields,name)&&fields[name].role!=='column')throw new Skip(path,'LAKEVIEW_FIELD_COLLISION','Column '+JSON.stringify(name)+' shares its name with a dataset measure');pending.push({fields,name});};
   const queries:any[]=Array.isArray(w.queries)?w.queries:[];
   const query=(index:number)=>{
    const q=queries[index],qp=at(at(wp,'queries'),index),base=at(qp,'query'),ds=datasets.get(q?.query?.datasetName);
@@ -154,11 +154,17 @@ export function projectLakeview(view:any,ids:LakeviewIds,options:{title:string})
     out={kind:'filter',title:typeof frame.title==='string'?frame.title:title??w.name,...description,control,targets,position};
     const selection=spec.selection?.defaultSelection,dp=at(at(sp,'selection'),'defaultSelection');
     if(Array.isArray(selection?.values?.values)&&selection.values.values.every((v:any)=>['string','number','boolean'].includes(typeof v?.value))){
-     out.default={values:selection.values.values.map((v:any)=>v.value)};selection.values.values.forEach((_:any,i:number)=>use(at(at(at(at(dp,'values'),'values'),i),'value')));
-     if(typeof selection.values.dataType==='string')use(at(at(dp,'values'),'dataType'));
+     // This compatibility API receives parsed values, not original numeric
+     // tokens. Even an integer may already have rounded during JSON parsing.
+     if(selection.values.values.some((v:any)=>typeof v.value==='number')){
+      issue(at(dp,'values'),'LAKEVIEW_FILTER_DEFAULT','unsupported','Numeric default precision cannot be verified from parsed JavaScript values; the complete default selection is omitted');
+     }else{
+      out.default={values:selection.values.values.map((v:any)=>v.value)};selection.values.values.forEach((_:any,i:number)=>use(at(at(at(at(dp,'values'),'values'),i),'value')));
+      if(typeof selection.values.dataType==='string')use(at(at(dp,'values'),'dataType'));
+     }
     } else if(selection?.range)issue(at(dp,'range'),'LAKEVIEW_FILTER_DEFAULT','unsupported','Range default '+JSON.stringify(selection.range)+' has no neutral form');
    }
-   for(const {fields,name} of pending)fields[name]??={role:'column'};
+   for(const {fields,name} of pending)if(!Object.hasOwn(fields,name))fields[name]={role:'column'};
    return out;
   }catch(error){
    if(!(error instanceof Skip))throw error;
@@ -199,7 +205,7 @@ export function projectLakeview(view:any,ids:LakeviewIds,options:{title:string})
  (function walk(value:any,path:string){
   if(used.has(path))return;
   const container=value!==null&&typeof value==='object';
-  if(!touched.has(path)){if(!container||Object.keys(value).length)issue(path,'LAKEVIEW_UNMAPPED','unsupported','Native content '+JSON.stringify(value).slice(0,120)+' is retained but not expressed by the neutral declaration');return;}
+  if(!touched.has(path)){issue(path,'LAKEVIEW_UNMAPPED','unsupported','Native content '+JSON.stringify(value).slice(0,120)+' is retained but not expressed by the neutral declaration');return;}
   if(container)for(const [key,child] of Object.entries(value))walk(child,at(path,key));
  })(view,'');
  return {root:root as unknown as Json,modules,elements,issues};

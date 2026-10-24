@@ -154,3 +154,32 @@ clean-room assertion phase took 77.00 seconds within its existing 120-second
 bound. Python lint, 72 package/382 schema audits, core and native architecture
 checks, codegen custody, nine CLI transport tests, four reference/gzip tests and
 Chromium's 138 core vectors plus one callback control also pass.
+
+
+## Legacy compatibility corrections — 2026-10-24
+
+A follow-up prepared against `26b0360d19abb8ca59fbc4302d5c00b0fcc14773`
+addresses the three original projection review findings in the still-exported
+`projectLakeviewToLegacyDashboard` helper. Field dictionaries use own keys, so
+`constructor`, `toString` and `__proto__` do not collide with inherited members;
+real measure/column collisions still refuse. Unknown empty objects and arrays
+now receive source-pointer loss reports.
+
+The helper receives parsed JavaScript values, not original numeric tokens. It
+cannot prove whether any numeric default has already rounded, even when the
+parsed result is an integer. It therefore omits the complete default selection
+when any member is numeric and reports `LAKEVIEW_FILTER_DEFAULT` as unsupported.
+Mixed selections are never silently narrowed. String and boolean defaults remain
+representable. The core Record/Field importer and exact native source archive
+retain their existing Rust implementation and byte-preservation contract.
+
+The focused legacy regressions first reproduced 10 failures (with two controls
+passing), then all 12 passed. The combined Lakeview/dashboard/kind run passes 28
+tests and 232 assertions. Combined typechecking passes. Real Chromium passes
+three hostile-name, three numeric-precision and two empty-container controls;
+all three committed originals still match byte for byte through direct, JSON
+and YAML paths. `browser.json` records those controls and source hashes;
+`legacy-fixes.json` records the scoped follow-up checks. Existing broader native
+and installed receipts retain their historical source-cohort qualifications.
+No distribution or core-document version changes belong to this follow-up;
+release integration must use the settled upstream producer/migration cohort.

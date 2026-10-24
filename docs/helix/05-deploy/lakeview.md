@@ -54,7 +54,13 @@ an attributable validation error. Resource/cancellation failures abort explicitl
 PR42's old `umf.dashboard` 0.1 projection helper remains available as
 `projectLakeviewToLegacyDashboard`, an explicitly separate compatibility view.
 The 0.2 native importer stores no parallel field dictionary and does not attach
-that legacy projection automatically. Edited dashboard generation and a future
+that legacy projection automatically. The helper accepts parsed values rather than
+original source tokens. If a default selection contains a number, it omits the
+whole default and reports unverified precision; this also avoids narrowing a
+mixed selection. String/boolean defaults remain available. Hostile field names
+are ordinary own keys, real measure collisions still refuse, and unknown empty
+containers receive explicit loss reports. These compatibility limits do not
+change the primary importer's exact numeric-token retention. Edited dashboard generation and a future
 generic dashboard profile need separate semantics and evidence.
 
 The [execution evidence](../04-build/evidence/lakeview/README.md) records byte

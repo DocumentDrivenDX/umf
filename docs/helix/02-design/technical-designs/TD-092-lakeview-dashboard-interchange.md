@@ -40,8 +40,10 @@ consistency checks. They must agree before untouched export succeeds.
   dispatch. Package content never selects code. The Lakeview root validator stays
   in Rust; ordinary generic catalog checks remain in their existing owner.
 - `src/adapters/lakeview/index.ts`: typed API and strict UTF-8 boundary only.
-- `src/adapters/lakeview/project.ts`: PR42's unchanged legacy dashboard 0.1 helper,
-  explicitly named and independent from the 0.2 native representation.
+- `src/adapters/lakeview/project.ts`: PR42's explicitly named legacy dashboard 0.1 helper,
+  independent from the 0.2 native representation. Compatibility fixes use own
+  field keys, report unknown empty containers, and omit numeric default
+  selections whose original precision is unavailable in parsed values.
 
 No new dependency or physical-table/core-dashboard semantic is introduced.
 Dataset records describe only explicit native column declarations, including
