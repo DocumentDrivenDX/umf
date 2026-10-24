@@ -247,7 +247,7 @@ class PsycopgMigrationHost:
         from .progress import _verified_phases
 
         plan = _verified_plan(request.plan)
-        if (plan.get("version") not in ("umf.table-migration/0.3", "umf.table-migration/0.4")
+        if (plan.get("version") not in ("umf.table-migration/0.3", "umf.table-migration/0.4", "umf.table-migration/0.5")
                 or request.expected_head is None
                 or type(request.file_digest) is not str
                 or re.fullmatch(r"[a-f0-9]{64}", request.file_digest) is None):
@@ -354,7 +354,7 @@ class _PsycopgLease:
                     or latest["plan"]["toBundleDigest"] != request.plan["fromBundleDigest"]
                     or request.plan["previous"] != latest["plan"]["next"]):
                 raise CatalogError("ledger-head-mismatch")
-            if request.plan.get("version") in ("umf.table-migration/0.3", "umf.table-migration/0.4"):
+            if request.plan.get("version") in ("umf.table-migration/0.3", "umf.table-migration/0.4", "umf.table-migration/0.5"):
                 _verify_transition_predecessor(self, request, latest, history)
             else:
                 _verify_installed(self.connection, latest, self.host._person_roles,
@@ -814,9 +814,11 @@ def apply_migration_on_host(host: MigrationHost, plan: dict[str, Any], *,
     from .progress import _phase_digest, _verified_phases
 
     source_plan = _verified_plan(plan)
-    if (source_plan.get("version") not in ("umf.table-migration/0.3", "umf.table-migration/0.4")
-            or source_plan.get("options", {}).get("version") not in ("umf.table-migration-options/0.3", "umf.table-migration-options/0.4")
+    if (source_plan.get("version") not in ("umf.table-migration/0.3", "umf.table-migration/0.4", "umf.table-migration/0.5")
+            or source_plan.get("options", {}).get("version") not in ("umf.table-migration-options/0.3", "umf.table-migration-options/0.4", "umf.table-migration-options/0.5")
             or (source_plan.get("version") == "umf.table-migration/0.3") != (source_plan.get("options", {}).get("version") == "umf.table-migration-options/0.3")
+            or (source_plan.get("version") == "umf.table-migration/0.4") != (source_plan.get("options", {}).get("version") == "umf.table-migration-options/0.4")
+            or (source_plan.get("version") == "umf.table-migration/0.5") != (source_plan.get("options", {}).get("version") == "umf.table-migration-options/0.5")
             or source_plan.get("approvalProfile") != {
                 "version": "umf.table-migration-approval/0.1",
                 "relation": "umf_lifecycle_approvals", "ownerOnly": True}):
@@ -1045,7 +1047,8 @@ def _verify_predecessor_metadata(connection: Any, plan: dict[str, Any],
 
     selected_profile = None
     if plan.get("approvalProfile") is not None:
-        if (plan.get("version") not in ("umf.table-migration/0.3", "umf.table-migration/0.4")
+        if (plan.get("version") not in ("umf.table-migration/0.3", "umf.table-migration/0.4", "umf.table-migration/0.5")
+                or plan.get("options", {}).get("version") != plan.get("version", "").replace("umf.table-migration/", "umf.table-migration-options/")
                 or plan.get("approvalProfile") != APPROVAL_PROFILE
                 or plan.get("previous") is None
                 or type(expected_head) is not str):
@@ -1108,7 +1111,8 @@ def _verify_transition_predecessor(lease: _PsycopgLease,
     )
 
     plan = request.plan
-    if (plan.get("version") not in ("umf.table-migration/0.3", "umf.table-migration/0.4")
+    if (plan.get("version") not in ("umf.table-migration/0.3", "umf.table-migration/0.4", "umf.table-migration/0.5")
+            or plan.get("options", {}).get("version") != plan.get("version", "").replace("umf.table-migration/", "umf.table-migration-options/")
             or plan.get("approvalProfile") != APPROVAL_PROFILE
             or plan.get("previous") != latest["plan"]["next"]
             or latest["entryDigest"] != request.expected_head

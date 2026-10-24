@@ -85,6 +85,15 @@ def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
                 or plan.get('approvalProfile') != APPROVAL_PROFILE):
             raise CatalogError('approval-profile-mismatch')
         allow_backfill_tighten = True
+    elif options_version == 'umf.table-migration-options/0.5':
+        from .approval import APPROVAL_PROFILE
+
+        expected_profile = {'version': 'umf.table-migration-execution/0.4',
+                            'progressRelation': PROGRESS, 'ownerOnly': True}
+        if (plan.get('version') != 'umf.table-migration/0.5'
+                or plan.get('approvalProfile') != APPROVAL_PROFILE):
+            raise CatalogError('approval-profile-mismatch')
+        allow_backfill_tighten = False
     else:
         raise CatalogError('mixed-phase-profile')
     if (profile != expected_profile
@@ -104,7 +113,7 @@ def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
     for index, phase in enumerate(phases, 1):
         if (type(phase) is not dict or set(phase) != {'id','kind','transaction','steps'}
                 or phase['id'] != 'phase-'+str(index).zfill(5)
-                or phase['kind'] not in ('transaction','backfill','concurrent-index','constraint-add','constraint-validation','seed','backfill-tighten','backfill-add')
+                or phase['kind'] not in ('transaction','backfill','concurrent-index','constraint-add','constraint-validation','seed','backfill-tighten','backfill-add','default-change')
                 or phase['transaction'] not in ('required','forbidden')
                 or type(phase['steps']) is not list or not phase['steps']):
             raise CatalogError('mixed-phase-profile')
@@ -117,25 +126,63 @@ def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
             seen.append(step_id)
         expected_kind = []
         append_group = any(step.get('phaseOperation') == 'add-column' for step in selected)
-        for step in selected:
-            if append_group and step.get('phaseOperation') in ('add-column','target-check','backfill','install-default','tighten-not-null'):
-                expected_kind.append('backfill-add')
-            elif step.get('phaseOperation') in ('backfill','tighten-not-null'):
-                expected_kind.append('backfill-tighten')
-            elif step.get('phaseOperation') in ('add-column','target-check','install-default'):
-                expected_kind.append('backfill-add')
-            elif step['kind'] == 'backfill':
-                expected_kind.append('backfill')
-            elif step['kind'] == 'index' and step['transaction'] == 'forbidden':
-                expected_kind.append('concurrent-index')
-            elif step.get('operation') == 'add-not-valid':
-                expected_kind.append('constraint-add')
-            elif step.get('operation') == 'validate':
-                expected_kind.append('constraint-validation')
-            elif step.get('kind') == 'seed':
-                expected_kind.append('seed')
-            else:
-                expected_kind.append('transaction')
+        if options_version == 'umf.table-migration-options/0.5':
+            options = plan.get('options')
+            markers = options.get('reviewedChanges') if type(options) is dict else None
+            if (len(phases) != 1 or len(plan['steps']) != 1 or len(selected) != 1
+                    or phase['kind'] != 'default-change' or phase['transaction'] != 'required'
+                    or type(options) is not dict or options.get('version') != options_version
+                    or options.get('backfills') != [] or options.get('concurrentIndexes') != []
+                    or options.get('validations') != [] or type(markers) is not list or len(markers) != 1):
+                raise CatalogError('mixed-phase-profile')
+            marker, step = markers[0], selected[0]
+            target = step.get('phaseTarget')
+            expected_path = marker.get('path') if type(marker) is dict and type(marker.get('path')) is str else None
+            target_columns = []
+            next_columns = plan.get('next', {}).get('expectedCatalog', {}).get('columns', [])
+            if type(expected_path) is str and expected_path.endswith('/default') and type(next_columns) is list:
+                column_path = expected_path[:-len('/default')]
+                target_columns = [column for column in next_columns
+                                  if type(column) is dict
+                                  and column.get('sourcePath') == column_path
+                                  and column.get('table') == (target.get('table') if type(target) is dict else None)
+                                  and column.get('field') == (target.get('field') if type(target) is dict else None)]
+            if (type(marker) is not dict or marker.get('kind') != 'change-default'
+                    or type(expected_path) is not str or not expected_path.endswith('/default')
+                    or len(target_columns) != 1
+                    or step.get('kind') != 'table' or step.get('transaction') != 'required'
+                    or step.get('phaseOperation') != 'change-default'
+                    or step.get('operation') not in ('set-default', 'drop-default')
+                    or type(step.get('sql')) is not str or not step['sql']
+                    or step.get('sourcePath') != expected_path
+                    or type(target) is not dict or set(target) != {'table', 'field'}
+                    or type(target.get('table')) is not str or not target['table']
+                    or type(target.get('field')) is not dict
+                    or set(target['field']) != {'module', 'element'}
+                    or any(type(target['field'].get(key)) is not str or not target['field'][key]
+                           for key in ('module', 'element'))):
+                raise CatalogError('mixed-phase-profile')
+            expected_kind.append('default-change')
+        else:
+            for step in selected:
+                if append_group and step.get('phaseOperation') in ('add-column','target-check','backfill','install-default','tighten-not-null'):
+                    expected_kind.append('backfill-add')
+                elif step.get('phaseOperation') in ('backfill','tighten-not-null'):
+                    expected_kind.append('backfill-tighten')
+                elif step.get('phaseOperation') in ('add-column','target-check','install-default'):
+                    expected_kind.append('backfill-add')
+                elif step['kind'] == 'backfill':
+                    expected_kind.append('backfill')
+                elif step['kind'] == 'index' and step['transaction'] == 'forbidden':
+                    expected_kind.append('concurrent-index')
+                elif step.get('operation') == 'add-not-valid':
+                    expected_kind.append('constraint-add')
+                elif step.get('operation') == 'validate':
+                    expected_kind.append('constraint-validation')
+                elif step.get('kind') == 'seed':
+                    expected_kind.append('seed')
+                else:
+                    expected_kind.append('transaction')
         if ((len(set(expected_kind)) != 1 or expected_kind[0] != phase['kind']
                 or phase['kind'] not in ('transaction','backfill-add') and len(selected) != 1)
                 and (phase['kind'] not in ('backfill-tighten','backfill-add') or not allow_backfill_tighten)):

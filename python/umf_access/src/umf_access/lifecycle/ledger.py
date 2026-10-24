@@ -104,7 +104,7 @@ def _verify_installed(connection: Any, entry: dict[str, Any], person_roles: tupl
     source = entry['plan']['next']
     approval_profile = entry['plan'].get('approvalProfile')
     selected_profile = None
-    if entry['plan'].get('version') in ('umf.table-migration/0.3','umf.table-migration/0.4'):
+    if entry['plan'].get('version') in ('umf.table-migration/0.3','umf.table-migration/0.4','umf.table-migration/0.5'):
         from .approval import APPROVAL_PROFILE, _verify_approval_relation
 
         if approval_profile != APPROVAL_PROFILE or not _verify_approval_relation(connection, source):
@@ -210,7 +210,7 @@ FROM pg_catalog.pg_namespace n WHERE n.nspname=%s""",(schema,))
         if approval_profile is not None:
             from .approval import APPROVAL_PROFILE
 
-            if (source_plan.get('version') not in ('umf.table-migration/0.3','umf.table-migration/0.4')
+            if (source_plan.get('version') not in ('umf.table-migration/0.3','umf.table-migration/0.4','umf.table-migration/0.5')
                     or approval_profile != APPROVAL_PROFILE):
                 raise CatalogError('approval-catalog-mismatch')
         verify_native_privileges(connection,source,person_roles=person_roles,
