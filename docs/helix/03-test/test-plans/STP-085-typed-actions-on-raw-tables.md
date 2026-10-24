@@ -1225,3 +1225,15 @@ Test initial empty/nonempty, installed and mixed plans; reject missing, duplicat
 mismatched and caller-overridden metadata paths. Preserve denied approval and
 same-original unknown-COMMIT cases. No source/native/installed/release case is
 marked passed by this design clarification.
+
+
+### G11 verification checkpoint016: replay and typed parent controls
+
+Require full pure signed ROOT replay with clearly synthetic canonical observation
+data, without an invented ingress creation alias. Exercise repeated restart and
+second stop, noncanonical/non-JSON/non-object observation bytes, exact ROOT
+associations, immediate bare-scope4 refusal, multiple typed per-store reservations
+and unavailable ingress/application families. Source fixtures never satisfy the
+genuine native origin/snapshot/provider gates. Keep original signed versus fresh
+observation digests distinct; original semantics permit changing native facts.
+All native/installed/managed/release acceptance remains open.

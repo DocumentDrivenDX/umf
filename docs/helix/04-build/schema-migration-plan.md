@@ -673,3 +673,15 @@ retained in `evidence/schema-migration-design-review/g10-fixed-metadata-paths-00
 All three fixed steps remain present for empty, initial and installed plans;
 paths confer no authority. Original prefix, approval denial, recovery and
 source/native/browser/installed/merge/release/public-byte gates remain open.
+
+
+G11 checkpoint016 clarifies journal family ownership and the pure ROOT/native
+issuer boundary; its complete definition and root review are retained in
+`evidence/schema-migration-design-review/g11-journal-family-codec-boundary-001.md`
+and the adjacent adoption receipt. Independent source002 review found valid
+second-stop replay failure, noncanonical observation acceptance and missing typed
+scope4 parent/per-store state. Candidate002 is not adopted; Luna is implementing
+003 with regressions. Full signed pure ROOT replay remains required, while
+null-ingress cannot create its genuine native prerequisite. Actual original
+creator/snapshot/ROOT writer/provider and all native/installed/managed/merge/
+release/public-byte gates remain open.

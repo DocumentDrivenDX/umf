@@ -1356,3 +1356,15 @@ The compiler derives the three reserved diagnostic paths from their exact fixed
 metadata operations. They are not authored source/options pointers or effect
 authority. All original step/phase/prefix, denied approval and recovery semantics
 remain required. Implementation and native acceptance remain open.
+
+
+### G11 implementation checkpoint016: codec and native authority boundary
+
+Adopt CONTRACT-081 checkpoint016 and the complete retained clarification
+`../../04-build/evidence/schema-migration-design-review/g11-journal-family-codec-boundary-001.md`.
+ROOT pure signed replay remains positive under its non-null family, with strict
+canonical observation data and exact associations. ORIGINALS admits G04 typed
+per-store reservations only; bare scope4 effects and ingress aliases refuse.
+Actual native ROOT authority still requires genuine committed ingress origin,
+complete closed snapshots and the separately adopted creator/provider grammar.
+No known tuple, active enrollment, signature scope or native capability expands.

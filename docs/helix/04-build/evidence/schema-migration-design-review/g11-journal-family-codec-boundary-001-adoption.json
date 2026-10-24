@@ -1,0 +1,30 @@
+{
+  "profile": "umf.g11.codec-family-adoption/0.1",
+  "status": "PASS-design-only",
+  "baseCommit": "8ebde8027aca2fbb89a840df5c49a2fd8768ea48",
+  "normativeSha256": "525437a341882531207d015ff2a89232eb950002caf9c2b3db4d8667e69483ea",
+  "files": [
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-081-table-lifecycle.md",
+      "priorBytes": 556454,
+      "priorSha256": "570314d35224df3abff0c6fa2bf35e27e5084ff3a8efebe6170bc6cd7b16a382",
+      "appendSha256": "2e734f9cc9732f80f77f9df412cb5dd1dfe2b5afa76cabbe8fe8dcf3a0a7e90e",
+      "candidateSha256": "23db27eef6666c911531a59f07f0511907ce026cadbf3d08c06cce29f63de2c0"
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-085-typed-actions-on-raw-tables.md",
+      "priorBytes": 107108,
+      "priorSha256": "b88b020a89ec6b74530e96dc9b6d7f7843433b1c00882d5acd5e035c6d1685a7",
+      "appendSha256": "7bdb303fc4750ceb64eefbe7971eaf5bef0a3266c8f213579e3e8aeec81a02fb",
+      "candidateSha256": "969b693de32374aaddea302d8f4acd0c7ed442b5ce96b86bdca715aaef3dc072"
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-085-typed-actions-on-raw-tables.md",
+      "priorBytes": 119951,
+      "priorSha256": "cf11bb71987c32356b90f0371d8e4973ca60c75fe2906982d60f81c9b3f08f28",
+      "appendSha256": "c362ac6ccbced560f90beb95796295844aa27eca9ea0503961494371dd1d5a6e",
+      "candidateSha256": "462c9cd8bec06605d109951d93a55b07f9da37d7194b2d0533eec977c9d3c784"
+    }
+  ],
+  "review": "Root read complete external clarification against adopted014/015 explicit event-family tuple and ownership lines. Preserves positive pure ROOT grammar and actual signature/state verification while separating native issuer original-capability gates. Per-store original parent association and strict canonical object validation required. No tuple expansion or fixture-origin promotion. Prior document bytes/frontmatter preserved; source002 remains rejected,003 fixes and independent review remain required."
+}
