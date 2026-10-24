@@ -737,6 +737,23 @@ passed 207 offline core library tests and independent Sol metered-lookup review
 without P1/P2. This closes the pinned Rust core evaluator corpus, not the full
 JSON Schema adapter, bindings, browser path or default cutover.
 
+The next JSON Schema delivery boundary is an opt-in
+`umf-r5-json-schema/0.1.0` host engine for import, inspect, root/resource/bundle
+export, node lookup and schema-position walk. Sol's interface review selects
+one closed dispatcher in `umf-core-wire` and a single tagged UTF-16 transport
+reused by Node/Bun, WASM, Python and the CLI. Import accepts explicitly ordered
+retrieval-URI/source pairs; caller schema resources cannot replace the five
+pinned core validation resources. Admission and control preflight precede host
+object traversal, with one context spanning decode, operation and encode.
+Freeze the TypeScript predecessor's seven-operation success/refusal envelopes,
+then qualify packed Node/Bun, installed wheels, a clean native CLI and packaged
+real-Chromium WASM with exact resources, diagnostics, copy isolation and
+controls. `parseNativeJson` is a separate public operation gate.
+`editJsonSchemaNode` and `jsonSchemaRegistry` require the live callback/registry
+interface and remain separate; this opt-in engine does not retire them or switch
+the default adapter. The current Rust operation façade still has open review
+corrections and no binding qualification at this checkpoint.
+
 The next bounded CONTRACT-003 Protobuf shard is only the binary descriptor
 codec, `readDescriptorSet` and `writeDescriptorSet`; source compilation,
 emission, inspection and JSON Schema projection remain separate. The
