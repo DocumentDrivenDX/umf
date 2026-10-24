@@ -523,6 +523,9 @@ impl Engine {
     pub fn policy(&self) -> &PreparedPolicy {
         &self.policy
     }
+    pub(crate) fn kind_policy(&self) -> &Value {
+        get(&self.resources.domain_policy, "extensions").unwrap_or(&Value::Null)
+    }
     pub fn reference_schema(&self) -> &CompiledSchema {
         &self.reference
     }

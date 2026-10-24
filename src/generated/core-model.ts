@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-// Generated from spec/metamodel/umf.yaml; model 1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce; compiler f63bb4e9dbb8c094958d3ef50dad48f7ba30e047a5ebcac0a8ae402a27bed951
+// Generated from spec/metamodel/umf.yaml; model 42144576e3b15da4945ca744623a31967e3b29efa54da8ba3961e446b1c0e34b; compiler d4d3a53295b173b24cbdc7f4ba5ea1cf0012f30c5c2b5665f6aaf4c7916ead76
 export const CURRENT_CORE_VERSION="0.10.0" as const;
 export {default as coreSchema} from '../../spec/core/schema.json';
 export {default as semanticTypeReferenceSchema} from '../../spec/core/semantic-type-reference.schema.json';
@@ -29,5 +29,14 @@ export type RelationshipMultiplicity = {"min":number;"max":number | "*";[key:str
 export type Relationship = {"id":Id;"name":Id;"source":(RelationshipEndpoint)[];"target":(RelationshipTarget)[];"sourceMultiplicity":RelationshipMultiplicity;"targetMultiplicity":RelationshipMultiplicity;"targetLifecycle":string;"directed":boolean;"inverse"?:Id;"associationRecord"?:RelationshipEndpoint;[key:string]:unknown;};
 export type Literal = null | {"boolean":boolean;} | {"integerToken":string;} | {"decimalToken":string;} | {"string":string;} | {"binaryHex":string;} | {"floatToken":string;} | {"date":string;} | {"time":string;} | {"timestamp":string;} | {"array":(Literal)[];} | {"map":{[key:string]:Literal;};} | {"bits128Hex":string;} | {"uuid":string;};
 export type CoreSemanticTypeReference = {"vocabulary":string;"version":string;"term":string;[key:string]:unknown;};
-export type ExtensionPackage = {"id":string;"version":string;"coreVersion":"0.10.0";"description":string;"schema":{[key:string]:unknown;} | boolean;"semantics":string;"scopes":("document" | "module" | "element")[];"capabilities":{"validation":"structural" | "semantic";"directions":("import" | "export")[];"evidence":(string)[];"native"?:{"system":string;"version":string;"subset":string;[key:string]:unknown;};[key:string]:unknown;};[key:string]:unknown;};
+export type ExtensionPackage = {"id":string;"version":string;"coreVersion":"0.10.0";"description":string;"schema":{[key:string]:unknown;} | boolean;"semantics":string;"scopes":("document" | "module" | "element")[];"capabilities":{"validation":"structural" | "semantic";"directions":("import" | "export")[];"evidence":(string)[];"native"?:{"system":string;"version":string;"subset":string;[key:string]:unknown;};[key:string]:unknown;};"kindCatalog"?:unknown;[key:string]:unknown;};
+export type ExtensionKindDefinition = {"title":string;"description":string;"scopes":("document" | "module" | "element")[];[key:string]:unknown;};
+export type ExtensionKindCatalog = {"profile":string;"definitions"?:unknown;[key:string]:unknown;};
+export type ExtensionKindReference = {"extension":string;"version":string;"kind":string;};
+export type ExtensionKindDiagnostic = {"code":string;"path":string;"message":string;"severity":"error" | "warning";};
+export type ExtensionKindValidation = {"valid":boolean;"complete":boolean;"diagnostics":(ExtensionKindDiagnostic)[];};
+export type ExtensionKindEntry = {"reference":ExtensionKindReference;"owner":{"scope":"document";} | {"scope":"module";"module":string;} | {"scope":"element";"module":string;"element":string;};"payloadPath":string;"definition":ExtensionKindDefinition;};
+export type ExtensionKindCoverage = {"owner":{"scope":"document";} | {"scope":"module";"module":string;} | {"scope":"element";"module":string;"element":string;};"extension":string;"version":string | null;"payloadPath":string;"status":"resolved" | "absent-catalog" | "unavailable" | "unsupported-catalog" | "invalid";"diagnostics":(ExtensionKindDiagnostic)[];};
+export type ExtensionKindListResult = {"definitions":({"reference":ExtensionKindReference;"definition":ExtensionKindDefinition;})[];"packages":({"extension":string;"version":string;"catalog":"available" | "absent" | "unsupported";"diagnostics":(ExtensionKindDiagnostic)[];})[];"complete":boolean;};
+export type ExtensionKindInspection = {"source":unknown;"sourceValidation":ExtensionKindValidation;"entries":(ExtensionKindEntry)[];"coverage":(ExtensionKindCoverage)[];"complete":boolean;};
 export type Document = {"umf":"0.10.0";"id":Id;"vocabularies":{[key:string]:{"version":Version;[key:string]:unknown;};};"modules":(Module)[];"extensions"?:Extensions;"title"?:string;"aliases"?:(string)[];[key:string]:unknown;};
