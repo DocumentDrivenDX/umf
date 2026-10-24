@@ -2014,7 +2014,8 @@ require their existing exact review markers and complete typed dependency checks
 Plan 0.6 retains the closed plan 0.5 members and fixes `seedExecution:"none"`.
 Its execution profile is exactly
 `{version:"umf.table-migration-execution/0.5",
-progressRelation:"umf_lifecycle_progress",ownerOnly:true}` and approval profile
+progressRelation:"umf_lifecycle_progress",ownerOnly:true,
+ingressProfile:"umf.table-generation-ingress/0.1"}` and approval profile
 remains 0.1. There is exactly one phase with `kind:"field-replacement"`,
 `transaction:"required"` and all emitted migration-effect step IDs exactly once.
 Surrounding publication/bookkeeping follows the existing lifecycle contract;
@@ -2113,3 +2114,680 @@ Unsupported source/dependency/schedule returns a located
 profile/target/phase/approval/progress mismatch refuses before effects and native
 errors retain bounded SQLSTATE/identifiers without row DETAIL. Opt-in Rust must
 explicitly refuse unsupported successor 0.6, without engine fallback.
+
+
+#### G11 selected generation ingress protocol amendment
+
+This section supersedes the earlier G11 execution0.5 three-member shape. All
+other G11 source, multiple-fill, dependency and irreversible-loss rules remain.
+The following selected protocol is normative for this unreleased successor;
+implementation and independent native/release qualification remain separate.
+
+##### Selected mechanism and identity
+
+Select `umf.table-generation-ingress/0.1`, first provider
+`postgresql18-login-epochs/0.1`. Use native credential epochs and actual session
+retirement, not a quiescence boolean, a metadata-head check or an ACL restore
+for the same live login. Preserve stable effective subject roles (`alice`,
+`bob`, batch subject), their role OIDs, configured audience/group roles and
+CURRENT_USER meaning. They are NOLOGIN roles. Rotate **authentication LOGIN
+roles**, not effective subject roles. This preserves owner values and stable
+idempotency outcome slots while retiring old authenticated connections.
+
+Each epoch gets fresh, disjoint provider-owned login roles and credentials. A
+login has SET-only, non-inheriting, non-admin membership to its exact stable
+subject role. It is not an owner, superuser, BYPASSRLS, CREATEROLE, CREATEDB or
+replication role and cannot reach another subject or the controller owner.
+Unintended inherited/SET paths, PUBLIC/native object access, definer views or
+other unknown access paths block enrollment/effects. Configured native policy
+and grant meaning is unchanged. No new GUC grants authority.
+
+An existing LOGIN subject role may be explicitly enrolled and permanently
+converted to NOLOGIN, preserving its name/OID and subject/group meaning. All
+its original authenticated sessions must then be retired. A fresh wrapper login
+is granted access to that stable role. This is a reviewed enrollment operation,
+not implicit adoption of a shared role. Roles shared with another installation
+need a separate identity migration before this provider can claim exclusivity.
+New epoch login IDs never overlap old logins or stable role IDs. Retired logins
+are never re-enabled, renamed/reused or granted successor membership.
+
+PostgreSQL treats authentication and SET ROLE as separate mechanisms: LOGIN
+controls initial connection identity, while SET and INHERIT memberships control
+effective authority. These facts justify preserving subject roles and retiring
+authentication roles; they do not replace native tests. See [role attributes](https://www.postgresql.org/docs/18/role-attributes.html),
+[SET ROLE](https://www.postgresql.org/docs/18/sql-set-role.html) and
+[memberships](https://www.postgresql.org/docs/18/role-membership.html).
+
+##### Trusted API and mandatory execution selection
+
+This amendment selects unpublished G11 execution 0.5 as exactly
+`{version:"umf.table-migration-execution/0.5",
+progressRelation:"umf_lifecycle_progress",ownerOnly:true,
+ingressProfile:"umf.table-generation-ingress/0.1"}`. Older profiles remain
+unchanged. The portable plan states a required protocol; it cannot name login
+roles, issue credentials, terminate sessions or approve enrollment.
+
+Add an explicit trusted `ingress_provider` argument to PsycopgMigrationHost and
+a host-neutral qualified-provider protocol. A provider-less host refuses G11
+before acquisition/effects. HostCapabilities booleans cannot substitute for it.
+The concrete provider must execute/observe the native protocol below. Its
+capability receipt binds provider implementation/census, native/authentication
+profile and actual installation enrollment/evidence, not a caller claim.
+
+Selected Python host surface (frozen values, private connections/credentials):
+
+```text
+provider.enroll_installation(enrollment_request, enrollment_approval)
+    -> GenerationEnrollment
+provider.provision_disabled_epoch(enrollment, provision_request, provisioning_approval)
+    -> PreparedGenerationEpoch
+provider.transition_request(plan_request, enrollment, prepared_epoch, plan_approval)
+    -> GenerationIngressRequest
+provider.prepare_transition(request, enrollment, ingress_approval)
+    -> GenerationTransition
+provider.acquire(transition) -> context manager[GenerationIngressLease]
+lease.observe() -> GenerationIngressObservation
+lease.fence_and_retire(deadline) -> GenerationFenceReceipt
+lease.require_fenced(native_phase_connection, catalog_side)
+lease.record_phase(native_phase_connection, verified_phase_receipt)
+lease.record_publication(native_final_connection, verified_reference)
+provider.admit(authenticated_subject, expected_reference, purpose)
+    -> GenerationAdmission
+```
+
+`native_*_connection` is the adapter's same private physical connection and
+transaction, not a caller callback or author SQL interface. The lease must
+authenticate this connection/target. `catalog_side` is an internal closed enum
+`previous|next` derived from authenticated progress, never caller-selected.
+No credential is returned through plans, migration reports or these receipts.
+GenerationAdmission is an opaque host credential/connection-factory capability,
+not a serializable author/request selector. Admission validates the actual
+committed head, active epoch and authenticated subject before releasing a fresh
+credential/factory. Old factories, source references and admission handles
+cannot be refreshed implicitly to a successor generation.
+
+The transition's closed authority binding has exactly `profile,providerId,
+enrollmentId,installationId,targetIdentityDigest,planDigest,fileDigest,
+expectedHead,previousSourceDigest,nextSourceDigest,previousBundleDigest,
+nextBundleDigest,oldEpoch,newEpoch,oldPrincipalsDigest,newPrincipalsDigest,
+approvalDigest`. Profile is the exact ingress version; IDs are original provider
+UUIDs/installation identity; digests are lowercase SHA256 over exact original
+values. A native principal inventory binds role OID AND name, effective subject
+OID/name, membership edges/options, ownership marker, credential issuer/profile
+and epoch. Native continuity/installation custody is required in addition to
+names/OIDs; restore, drop/recreation and wrong target refuse. No passwords/tokens
+or business values enter this binding. Existing plan approval stays intact;
+separate ingress approval authorizes exact owned credential/session retirement
+and new admission, tied to the same plan/file/head and enrollment.
+
+##### External physical custody, restore and exposure
+
+An external trusted target custodian is mandatory; a copied database marker,
+schema/role OID or self-consistent control-store hash is not physical continuity.
+Add `custodian.register_target(owner_enrollment)` returning an opaque
+`TargetCustody` capability and require that capability when constructing the
+provider. Its exact public reference is
+`{profile:"umf.native-target-custody/0.1",custodianId,registrationId,
+resourceId,incarnation,registrationDigest}`. The issuer retains authoritative
+registration, monotonically increasing external sequence, original pending
+transition and last committed epoch/head outside the database backup/restore
+scope. No author JSON, boolean or caller-created dictionary mints this capability.
+Bind its canonical reference and external reservation digest into the transition
+approval/record; extending the previous binding shape is explicit.
+
+For the first local provider, implement a private host custodian journal with
+exclusive locking, atomically replaced/fsynced records and retained append-chain
+sequence, plus the actual owner-operated native server/endpoint/data-directory
+registration. Bind physical directory/process/start custody, cluster identity,
+database registration and controlled restart chain; a socket path, PID, name,
+cluster system identifier or OID alone is insufficient. Provider-owned controller
+credentials remain separate. A future managed custodian binds the actual
+immutable control-plane resource UID/incarnation and its restore/exposure
+protocol; it does not inherit a filesystem custodian's evidence.
+
+`custodian.reserve_transition(binding)` persists the exact original intent and
+new external sequence BEFORE native effects. Store that reservation in native
+transition custody. `custodian.observe(target)` verifies actual connection/
+resource continuity and compares native state to the authoritative last state
+or its ONE pending original transition. It refuses unexplained rewind, another
+resource, copied control schema or contradictory incarnation. Completing a
+native phase/publication writes its receipt in the same native transaction;
+`custodian.confirm_transition(original_reservation,native_receipt)` then advances
+the external journal. This is an explicit intent/observe/complete protocol,
+not distributed atomicity. Crash after native COMMIT but before external confirm
+reconciles that original reservation with exact native progress/head; it does
+not execute effects again. Credentials stay unreleased until confirmation.
+
+Authorized restore/restart is custodian-owned and fail-closed to ordinary
+connections until this comparison passes. The local server/HBA exposure profile
+must start in controller-only admission and open its ordinary route only after
+native/external continuity verification. A restore cannot expose copied old
+LOGIN state first and hope that a later API read catches it. A mismatched restore
+needs explicit new incarnation/re-enrollment/recovery approval and fresh auth
+epochs, never automatic same-name adoption. Out-of-band host-root/database
+superuser rewrites of both authorities remain outside the trusted-host model;
+this profile claims no hostile whole-host anti-rollback attestation. Native
+qualification must actually restore/copy the DB while retaining the external
+journal and prove refusal before ordinary credential exposure.
+
+##### Disabled epoch provisioning before actual-principal approval
+
+Actual new role OIDs do not exist before provisioning; do not guess them or
+retroactively rewrite an approved request. Add a separate enrollment-authorized
+disabled-epoch provisioning operation before the transition request/approval.
+Its closed request is exactly
+`{profile:"umf.ingress-epoch-provision/0.1",providerId,enrollmentId,
+installationId,targetCustody,planDigest,fileDigest,expectedHead,
+previousSourceDigest,nextSourceDigest,nextBundleDigest,newEpoch,issuerProfile,
+principals,maximumRoles}`. Each ordered principal entry has exactly
+`{loginName,subject:{oid,name},audience}`. Subject identities already exist;
+login names derive from the newly reserved UUID and ordinal and must be absent.
+maximumRoles is a positive integer at most256 and equals the declared count.
+This is authority for a finite set of NEW disabled identities, not permission
+to retire an old login, enable LOGIN, change business data or release credentials.
+
+The external custodian reserves the original provision request/digest and its
+separate provisioning approval before native work. The concrete controller then
+creates exactly those NOLOGIN/NOSUPERUSER/NOBYPASSRLS/NOCREATEROLE/NOCREATEDB/
+NOREPLICATION/NOINHERIT roles, their final SET-only/noninherit/noADMIN memberships
+to the exact stable subjects and native ownership receipts, in the same native
+transaction as the prepared epoch record. Credentials remain issuer-private.
+Any unexpected preexisting role refuses; names or guessed OIDs cannot supply
+missing original creation custody. Unknown provisioning COMMIT is observed from
+its original native epoch/ownership receipt and external pending intent before
+replay; no second epoch or blind CREATE/IF NOT EXISTS adoption.
+
+After native/external confirmation, observe the real role OIDs/names/flags and
+membership options and freeze PreparedGenerationEpoch. Its original provisioning
+receipt binds these actual identities and exact source/plan/enrollment/target.
+Only NOW construct GenerationIngressRequest.newPrincipalsDigest over that actual
+inventory, obtain ingress-retirement/admission approval and reserve the final
+transition. The prepared identities remain disabled while the old generation
+continues. Changing OIDs/memberships or source/target invalidates the request;
+no post-approval rewrite is allowed.
+
+Provision failure never retires old credentials or implies rollback of an
+unknown role creation. Keep its original external/native outcome pending.
+Abandonment/deletion of confirmed owned disabled identities requires a separate
+bounded cleanup approval and original ownership/no-dependant proof; migration
+rollback never authorizes deleting an uncertain or different role. Their
+disabled state and provision journal remain durable on controller crash.
+
+##### Binding order without recursive receipt hashes
+
+Freeze the earlier authority binding as `GenerationIngressRequest`: its existing
+exact fields plus exactly `targetCustody`, the canonical external reference.
+Here `approvalDigest` refers to the already issued ordinary plan approval,
+not to this request's own future ingress approval. Hash this request once as
+`requestDigest`. A separate trusted ingress approval receipt binds that digest
+and the enrolled exact retirement/admission authority. It is not included in
+the value it authenticates.
+
+Reserve external custody using that request and ingress approval. The closed
+reservation is exactly `{profile:"umf.native-target-reservation/0.1",id,
+custodianId,registrationId,incarnation,sequence,requestDigest,
+ingressApprovalDigest,parentStateDigest}`. The external sequence is a positive
+safe integer in its qualified range; exhaustion refuses. Hash the reservation
+as `reservationDigest`. The frozen transition handle has exactly `request,
+requestDigest,ingressApprovalDigest,reservation,reservationDigest`. Native
+transition records retain these original values. No hash incorporates itself,
+a future confirmation or a credential. External confirmation appends a native
+receipt digest to the original reservation's outcome; it never rewrites the
+reservation or creates a replacement after uncertainty.
+
+##### Same physical transaction, separate controller role
+
+The business owner must receive NO provider-schema privileges or external
+object ownership. A separate trusted controller role owns the private provider
+schema/store and exact role/session-management authority. The actual
+authenticated maintenance actor has explicitly enrolled SET-only authority to
+both business owner and provider controller. It stays outside ordinary-client
+authentication; stable subject and epoch-login roles cannot reach either owner
+or controller. Verify native membership options/closures, not only role names.
+Do not add provider access to business-owner external inventory exceptions.
+
+The concrete Psycopg lease implements a private scoped role hook on its SAME
+physical connection and native transaction for `record_phase` and
+`record_publication`. Immediately before entry, verify expected target and
+SESSION_USER, current business-owner role/OID and exact required local settings.
+Issue only the fixed internal SET LOCAL ROLE to the enrolled provider controller,
+verify native current role and unchanged SESSION_USER/target/settings, execute
+the finite source-bound provider store statement, then SET LOCAL ROLE back to
+the exact business owner and reverify native role/settings. Keep search_path
+pg_catalog and fully qualify provider objects. No author-supplied role, SQL,
+callable or generic elevated cursor crosses this boundary.
+
+Missing SET permission, wrong actor/controller/owner, changed settings or hook
+failure aborts the entire surrounding phase/final-publication transaction.
+Never catch that error and commit business effects without the provider row.
+If the transaction is already failed, do not try to continue business SQL: roll
+it back, then verify restored owner/idle connection authority. Repeated
+cancellation or failed restoration closes/quarantines the connection and leaves
+the original outcome/fence unresolved until native settlement is observed.
+Do not return a controller-role connection to a pool. Existing uncertain-COMMIT
+observation still applies if COMMIT was dispatched; no local exception proves
+rollback of an unknown commit.
+
+Native tests must prove businessOwner cannot read/write the provider schema,
+provider hooks use exactly one transaction/connection, controller-role entry is
+visible only inside the fixed hook, and exact owner authority is restored before
+any business witness/effect. Inject denied SET, SQL error, timeout/cancellation
+inside the hook and lost final COMMIT acknowledgement. Prove no business-only
+commit, leaked controller role, extra provider object allowance or old-principal
+admission. Verify actual previous catalog at index0 and next catalog at index1;
+pending metadata head and committed business carrier may be on different sides.
+
+##### PostgreSQL18.6 starting-backend admission barrier
+
+This selected mechanism requires native qualification; source reasoning is not executed proof.
+The immutable PostgreSQL18.6 source initializes a visible backend status entry
+before authentication; user/database identity is filled later. Initialization
+also flushes role invalidations before its role lookup/login check. Therefore
+a role-filtered scan can miss a pending old authentication, while an unfiltered
+starting-backend set can bound it. Sources:
+[postinit.c](https://github.com/postgres/postgres/blob/REL_18_6/src/backend/utils/init/postinit.c),
+[miscinit.c](https://github.com/postgres/postgres/blob/REL_18_6/src/backend/utils/init/miscinit.c),
+[backend_status.c](https://github.com/postgres/postgres/blob/REL_18_6/src/backend/utils/activity/backend_status.c),
+[pgstatfuncs.c](https://github.com/postgres/postgres/blob/REL_18_6/src/backend/utils/adt/pgstatfuncs.c).
+
+After fencing COMMIT is positively observed, take a fresh full client-backend
+status snapshot using the qualified controller's actual full-statistics access.
+Clear/discard cached activity snapshots; use bounded short observation
+transactions. Include rows with starting state, unknown user OR unknown database;
+do not filter them out by role/database. Capture every candidate's actual
+`pid,backend_start` plus native status identity and the observation receipt.
+Record original barrier candidates durably, not a wall-clock cutoff comparison.
+
+Track each captured token until it exits or its authenticated identity becomes
+known. An enrolled old identity is retired using exact owned signaling and
+positive absence proof. Another identified principal is not killed. Unknown
+starting principals are waited/observed until resolved or the bounded deadline.
+The complete barrier sample is capped at4096 candidates, including unknown and
+unrelated starts; read up to4097 to detect overflow and refuse/preserve fencing,
+never truncate the candidate set and continue. Qualify the native server's
+finite max_connections/statistics resource profile. They cannot be guessed to belong to this installation or ignored. Newly
+appearing known old principals are also retired and trigger consistency checks.
+An unexplained old admission after the barrier refuses cutover and preserves
+fencing. The proof relies on qualified startup/status ordering: a backend able
+to use pre-fence cached role state had already registered a starting entry;
+a backend registering only after the barrier must encounter closed admission.
+Do not equate two empty snapshots, timestamp comparison or a fixed sleep with
+this proof. Native PID reuse, concurrent status entry changes and snapshot
+freshness must be independently exercised.
+
+Test a paused actual SCRAM handshake begun before fencing, including one with
+role authentication information already fetched, then release it after the
+barrier. Also test a session already past authentication and SET ROLE with old
+prepared SQL/held cursor. The provider must track/retire both categories before
+the carrier phase, without terminating unrelated pending handshakes. Pin the
+actual native server version/build and source ordering; this source inference
+does not qualify other PostgreSQL releases, vendor authentication hooks or a
+managed OAuth issuer. If their native startup primitive cannot establish this
+ordering, implement a qualified concrete gateway/issuer pending-handshake barrier
+for that target instead. This is an implementation obligation, not a permanent
+refusal substitute for complete G11 execution.
+
+##### Native control store and ownership
+
+Implement a protected provider control schema in the SAME physical PostgreSQL
+database, outside the UMF business schema. The provider owns its creation,
+original UUID marker, exact object inventory, schema/OID continuity and ACLs;
+do not silently use IF NOT EXISTS or exempt unknown business-schema objects.
+It has fixed `epochs` and `transitions` tables, native primary keys, a unique
+transition binding digest and a unique active epoch per installation. Typed
+SQL DDL, exact columns/constraints/indexes and closed JSON record validators
+must be frozen with the provider implementation before native qualification.
+This is a finite provider store, not a generic arbitrary-metadata allowance.
+
+Epoch records retain original enrollment, target, source/bundle/head, principal
+inventory/issuer custody and `prepared|active|retired` state. Transition records
+retain the closed binding, its canonical digest and `prepared|fencing|fenced|
+cutover|published` state, with original fence/phase/publication receipts and
+their native witnesses. Writes require the private controller owner. No
+ordinary role gets schema USAGE, SELECT/mutation or definer-function access.
+Validate complete exact records on read; self-consistent rewritten hashes do
+not authorize a changed plan/identity. Never delete retirement/transition
+evidence as ordinary phase cleanup.
+
+Credential creation/storage/distribution belongs to the trusted host issuer.
+The first native qualification uses fresh per-epoch SCRAM-authenticated logins
+and actual independent TCP connections; it does not infer authentication from
+administrative SET ROLE or a trust-authenticated connection. Verify the selected
+HBA/authentication path and credential issuer custody. Keep credentials out of
+argv, environment, public receipts, SQL diagnostic traces and artifacts. The
+host must qualify redaction of its native credential-provisioning path. See
+[PostgreSQL password authentication](https://www.postgresql.org/docs/18/auth-password.html).
+Managed OAuth/SCIM issuers require a distinct qualified implementation; they
+cannot inherit the local SCRAM evidence.
+
+##### Lifecycle and exact native enforcement
+
+Lock order is lifecycle/installation custody, provider transition custody, then
+affected native relation locks in deterministic native identity order. Preserve
+original attempt/transition on timeout; no replacement transition is created
+merely because an acknowledgement or process disappeared.
+
+1. **Prepare transition.** Complete the separately approved disabled-epoch
+   provisioning above first. Verify its actual immutable principal inventory,
+   complete source/target, ordinary plan approval, ingress approval, enrollment,
+   ownership and bounded access closure. Reserve the exact final transition
+   externally. No role creation is deferred until after approval of guessed
+   principal OIDs. Credentials remain private and stable effective role identities
+   and source configuration are unchanged.
+2. **Commit fencing.** In one native control transaction, set every enrolled
+   old authentication role NOLOGIN, remove old wrapper memberships/access
+   paths, revoke affected data SELECT/write and column grants and head ingress,
+   and write `fencing` plus exact native role/ACL witness. Preserve stable
+   subject/audience memberships needed by successor identities; do not confuse
+   them with retired wrapper memberships. Previously LOGIN subject roles stay
+   permanently NOLOGIN. Native direct login is now closed durably. No carrier
+   effect has occurred. An unknown fence COMMIT is observed from original
+   control receipt AND role/ACL state before continuing; it is not assumed.
+3. **Retire sessions.** Close registered old factories/pools, then terminate
+   every native backend whose authenticated role belongs to the old inventory.
+   Bound identity by role OID, database, PID and backend_start; recheck before
+   signaling, including PID reuse/race controls. All provider-owned logins are
+   exclusive to this installation; unexpected shared usage refuses rather than
+   broadening a kill. Handle another database explicitly under approved owned
+   scope, or refuse before signaling it. Require positive termination and fresh
+   zero-session observations; signal-sent, cancellation, timeout, empty
+   permission-filtered statistics or client process exit are insufficient.
+   Native prepared transactions must be absent/settled and cannot outlive this
+   proof. The first profile may require max_prepared_transactions=0; verify it
+   natively. Use the starting-backend barrier specified below as well as
+   identified old-session retirement. Only then record `fenced` with full native
+   quiescence witness. Empty role-filtered activity alone never closes admission.
+4. **Atomic carrier phase.** Reverify old logins remain NOLOGIN/unreachable,
+   successor logins disabled, native session set empty, effective access closure
+   and strict business inventory under actual ACCESS EXCLUSIVE locks. At phase
+   index0 verify the PREVIOUS native catalog. Run all G11 effects/validation.
+   Verify NEXT native catalog only after effects. Commit verified phase progress
+   and provider `cutover` receipt in the SAME transaction. On abort those phase
+   effects roll back; durable credential retirement/fencing remains. Unknown
+   phase COMMIT requires matching provider receipt, lifecycle progress and native
+   postcondition. No provider receipt alone permits replay or publication.
+5. **Atomic publication.** With committed index1, NEXT is the business catalog
+   even while metadata head is still predecessor. Verify that distinction;
+   never call next-shape verification before phase0 effects. In the same final
+   transaction publish source/history/reference, restore exact successor native
+   data/head grants, verify unchanged prepared successor SET memberships,
+   activate only the new epoch's login roles and write provider `published`/active epoch with exact
+   reference. Retired old logins remain NOLOGIN, membership-inert and sessionless.
+   There is no restore of the old credential principal. Credentials/factories
+   are released only after independent committed-head/epoch observation.
+6. **Explicit admission.** Authenticate the real subject through the issuer,
+   require the exact successor reference/source and active native epoch, and
+   issue a fresh generation-bound connection factory or direct credential.
+   Verify actual SESSION_USER login and stable CURRENT_USER subject on every
+   factory checkout. Stable subject role OIDs retain old owner/outcome identity.
+   A newly authorized human can intentionally issue SQL, but prior authenticated
+   sessions/prepared statements/credentials receive no automatic successor
+   authority. Already delivered old data cannot be retracted; it never becomes
+   a new-generation decoding claim. Materialized/held server cursors are retired
+   with their original sessions before the carrier phase.
+
+PostgreSQL's zero-timeout terminate result may mean signal dispatch only; the
+provider must use bounded positive native termination/wait and independently
+observe absence. Relevant authority and timeout semantics are in
+[server signaling](https://www.postgresql.org/docs/18/functions-admin.html#FUNCTIONS-ADMIN-SIGNAL).
+NOLOGIN does not by itself prove existing sessions ended. Nor does membership
+revocation substitute for retiring a session that already changed effective role.
+These are explicit negative/native controls for this provider.
+
+##### Crash, recovery and bounds
+
+Every observation binds original provider/enrollment/transition, exact
+source/plan/file/target/epoch and progress-side witness. `fencing` resumes native
+retirement; `fenced` may execute an uncommitted phase; `cutover` finalizes only;
+`published` observes active generation and admits it without repeating effects.
+Contradictory/missing native and control facts keep ingress closed and require
+repair. Unknown COMMIT cannot re-enable old logins or release new credentials.
+Provider loss/process death does not remove the durable fence. Signal permission
+or topology failure keeps retirement pending, without carrier effects.
+
+A known pre-phase abort may later use a separately approved reopen-original-
+source procedure, with exact old catalog/head proof and a FRESH credential epoch;
+retired login credentials never return. That recovery lane needs its own tests
+before support is claimed. No automatic abort cleanup restores old access.
+After committed destructive cutover, only exact forward resume or separately
+qualified repair is available; metadata is not a data archive.
+
+Initial provider bounds: at most256 retiring and256 successor logins,1024 owned
+membership edges,256 concurrent enrolled backend sessions, at most4096 TOTAL
+observed barrier candidates including unrelated/unknown starting backends, one installation
+transition, native retirement deadline at most300s and the separately selected
+finite whole-phase budget/deadline. Exceeding a bound refuses/keeps pending
+fence; it never broadens scope, skips a principal or resets elapsed budget.
+Superuser/BYPASS/owner/control credentials are outside the ordinary-client
+domain and must never be distributed as direct generation credentials. Their
+trusted maintenance use cannot be presented as fenced ordinary authority.
+
+##### Required implementation and independent native evidence
+
+Amend CONTRACT-081/TD-085/STP-085 before enabling native G11 apply. Add the
+concrete provider and enrollment/issuer APIs, fixed control-store verifier,
+native ACL/login/session retirement, same-transaction phase/publication hooks
+and actual source-side witnesses. A fake provider or unattested capability
+boolean remains source-test-only. Both host-neutral and Psycopg routes must
+use the selected protocol; no legacy helper may bypass it.
+
+Native tests must retain old SCRAM connections with SET ROLE already active,
+prepared SQL and held cursor, plus idle/active reader and writer transactions.
+Race old reconnects and late pool checkout with fencing. Prove old credentials
+cannot reconnect after fence or after successor publication, native old sessions
+terminate, wrappers cannot SET another subject/owner or access provider store,
+and only newly admitted successor credentials can read the replaced SQL name.
+Verify original CURRENT_USER/owner values and principal OIDs are unchanged;
+existing outcome slots do not become misses when login credentials rotate.
+
+Inject failure and lost acknowledgement at fence commit, each termination,
+phase commit and final publication, then crash/restart the provider and host.
+Independently observe actual native role flags/memberships/session absence,
+private transition receipt, correct previous/next catalog and source head.
+Include wrong role/OID/marker, extra inherited/PUBLIC/definer access, PID reuse,
+permission-filtered stats, termination failure, exhausted bounds and prepared
+transaction refusal. Reproduce the exact crash gap between committed carrier
+phase and finalization: old prepared/direct SQL must remain unable to execute.
+Finish the existing multiple-fill/default/dependency/client native matrix and
+fresh artifact/release verification. Managed issuers stay explicitly open until
+their actual native implementation and real principal evidence pass.
+
+
+##### Fixed native store profile
+
+The selected provider store is `umf.pg-generation-ingress-store/0.1`. The trusted
+control schema name is exactly `umf_ingress_` plus the provider UUID's32 lowercase
+hex digits. It is created exclusively with the provider-controller owner and
+native original-creation receipt. `<control>` below denotes that one safely
+quoted schema identifier, never arbitrary author input. The owner executes the
+following fixed typed schema, with no IF NOT EXISTS reuse:
+
+```sql
+CREATE TABLE <control>.epochs (
+  provider_id pg_catalog.uuid NOT NULL,
+  installation_id pg_catalog.text COLLATE pg_catalog."C" NOT NULL,
+  epoch pg_catalog.uuid NOT NULL,
+  state pg_catalog.text COLLATE pg_catalog."C" NOT NULL,
+  source_digest pg_catalog.text COLLATE pg_catalog."C" NOT NULL,
+  bundle_digest pg_catalog.text COLLATE pg_catalog."C" NOT NULL,
+  head_digest pg_catalog.text COLLATE pg_catalog."C",
+  principals_digest pg_catalog.text COLLATE pg_catalog."C" NOT NULL,
+  custody_sequence pg_catalog.int8 NOT NULL,
+  record pg_catalog.jsonb NOT NULL,
+  record_digest pg_catalog.text COLLATE pg_catalog."C" NOT NULL,
+  CONSTRAINT ingress_epochs_pk PRIMARY KEY (provider_id, installation_id, epoch),
+  CONSTRAINT ingress_epochs_installation CHECK (installation_id <> ''),
+  CONSTRAINT ingress_epochs_state CHECK (state IN ('prepared','active','retired')),
+  CONSTRAINT ingress_epochs_head CHECK ((state = 'prepared' AND head_digest IS NULL)
+    OR (state IN ('active','retired') AND head_digest IS NOT NULL
+      AND head_digest ~ '^[a-f0-9]{64}$')),
+  CONSTRAINT ingress_epochs_digests CHECK (source_digest ~ '^[a-f0-9]{64}$'
+    AND bundle_digest ~ '^[a-f0-9]{64}$'
+    AND principals_digest ~ '^[a-f0-9]{64}$'
+    AND record_digest ~ '^[a-f0-9]{64}$'),
+  CONSTRAINT ingress_epochs_sequence CHECK (custody_sequence BETWEEN 1 AND 9007199254740991),
+  CONSTRAINT ingress_epochs_record CHECK (pg_catalog.jsonb_typeof(record) = 'object')
+) USING heap;
+CREATE UNIQUE INDEX ingress_epochs_one_active
+  ON <control>.epochs (provider_id, installation_id) WHERE state = 'active';
+CREATE TABLE <control>.transitions (
+  transition_id pg_catalog.uuid NOT NULL,
+  provider_id pg_catalog.uuid NOT NULL,
+  installation_id pg_catalog.text COLLATE pg_catalog."C" NOT NULL,
+  old_epoch pg_catalog.uuid NOT NULL,
+  new_epoch pg_catalog.uuid NOT NULL,
+  request_digest pg_catalog.text COLLATE pg_catalog."C" NOT NULL,
+  reservation_digest pg_catalog.text COLLATE pg_catalog."C" NOT NULL,
+  state pg_catalog.text COLLATE pg_catalog."C" NOT NULL,
+  phase_index pg_catalog.int2 NOT NULL,
+  record pg_catalog.jsonb NOT NULL,
+  record_digest pg_catalog.text COLLATE pg_catalog."C" NOT NULL,
+  CONSTRAINT ingress_transitions_pk PRIMARY KEY (transition_id),
+  CONSTRAINT ingress_transitions_request UNIQUE (request_digest),
+  CONSTRAINT ingress_transitions_reservation UNIQUE (reservation_digest),
+  CONSTRAINT ingress_transitions_epochs CHECK (old_epoch <> new_epoch),
+  CONSTRAINT ingress_transitions_state CHECK (state IN ('prepared','fencing','fenced','cutover','published')),
+  CONSTRAINT ingress_transitions_phase CHECK
+    ((state IN ('prepared','fencing','fenced') AND phase_index = 0)
+      OR (state IN ('cutover','published') AND phase_index = 1)),
+  CONSTRAINT ingress_transitions_digests CHECK (request_digest ~ '^[a-f0-9]{64}$'
+    AND reservation_digest ~ '^[a-f0-9]{64}$'
+    AND record_digest ~ '^[a-f0-9]{64}$'),
+  CONSTRAINT ingress_transitions_record CHECK (pg_catalog.jsonb_typeof(record) = 'object'),
+  CONSTRAINT ingress_transitions_old_fk FOREIGN KEY (provider_id,installation_id,old_epoch)
+    REFERENCES <control>.epochs (provider_id,installation_id,epoch) ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT ingress_transitions_new_fk FOREIGN KEY (provider_id,installation_id,new_epoch)
+    REFERENCES <control>.epochs (provider_id,installation_id,epoch) ON UPDATE RESTRICT ON DELETE RESTRICT
+) USING heap;
+```
+
+All objects have exact controller ownership and persistent heap/ordinary index
+shape, no RLS, triggers, rules, partitions, inheritance, extra columns or unmanaged
+dependants. Revoke PUBLIC and every ordinary/business-owner schema/table access;
+default ACLs and inherited privileges are independently verified. Native primary/
+unique/FK indexes are the only admitted indexes. Schema marker and controller
+OID/name must match original external enrollment. A temporary typed scratch
+comparison may normalize PostgreSQL's native constraint text; it cannot replace
+original creation/target custody. No app-facing SECURITY DEFINER functions are
+part of this first store. Unknown objects/refinements refuse.
+
+The provider validates each complete JSON record before writing AND after
+reading, compares all duplicated native columns, and recomputes RFC8785 SHA256
+record_digest. JSONB is only for provider metadata: original user source bytes
+remain in the existing source/plan custody and are never replaced by JSONB.
+No scalar counter exceeds9007199254740991, no nonfinite number or unknown member
+is admitted. An epoch record has exactly `profile,providerId,enrollmentId,
+installationId,targetCustody,epoch,state,sourceDigest,bundleDigest,headDigest,
+principals,principalsDigest,custodySequence,origin,originReceipt`. Profile is
+`umf.native-ingress-epoch/0.1`. The closed ordered principal entries are exactly
+`{login:{oid,name},subject:{oid,name},audience,issuerProfile,
+issuerReceiptDigest,ownershipReceiptDigest,memberships}`. Audience is person|batch; memberships are
+ordered exact `{roleOid,roleName,inherit,set,admin}` records with boolean options.
+The native envelope must satisfy the selected identity/privilege closure;
+constructing these values does not establish enrollment authority. Origin is
+`enrollment|provision`. The provision receipt has exactly
+`{profile:"umf.native-ingress-provision-receipt/0.1",providerId,enrollmentId,
+epoch,requestDigest,reservationDigest,principalsDigest,nativeOwnershipDigest,
+targetObservationDigest}`. Its original external provision reservation has
+profile `umf.native-epoch-provision-reservation/0.1` and exactly the final
+reservation's other fields, except `provisioningApprovalDigest` replaces
+`ingressApprovalDigest`. The custodian retains original request/approval and
+native creation observations; the receipt does not authorize guessed OIDs.
+Enrollment receipts have exactly
+`{profile:"umf.native-ingress-enrollment/0.1",providerId,enrollmentId,
+installationId,targetCustody,epoch,sourceDigest,bundleDigest,headDigest,
+principalsDigest,ownershipObservationDigest,externalReservationDigest}` and
+bind the original explicitly approved existing-role/target enrollment. These
+receipts are host-issued authority objects, not caller-minted JSON. Separate
+disabled provisioning creates actual native identities before a later transition
+approval hashes their inventory. No recursive or future-identity approval.
+
+A transition record has exactly `profile,transitionId,request,requestDigest,
+ingressApprovalDigest,reservation,reservationDigest,state,phaseIndex,
+executionPolicy,fenceReceipt,phaseReceipt,phaseBudgetReceipt,publicationReceipt`. Profile is
+`umf.native-ingress-transition/0.1`; absent receipts are explicit null. Request
+and reservation have the closed shapes above. PhaseReceipt reuses the existing
+verified phase index/digest/completed-step/prefix-witness/state representation;
+publicationReceipt is the exact verified installation reference0.3. They must
+match original source/plan/native state, not just internally consistent hashes.
+
+The fence receipt has exactly `profile,requestDigest,reservationDigest,
+targetObservationDigest,oldRolesDigest,oldMembershipsDigest,affectedAclsDigest,
+barrierCandidates,retiredSessions,catalogSide`. Profile is
+`umf.native-ingress-fence/0.1`, catalogSide previous|next. Barrier entries have
+exactly `{pid,backendStart,databaseOid,loginOid,state}`, permitting null OIDs only
+while starting; session retirement entries have exactly
+`{pid,backendStart,databaseOid,loginOid,outcome}`, outcome terminated|already-exited.
+Original observations needed by these digests are retained privately by the
+custodian under the same transition; a public digest alone cannot prove their
+population or absence. Fence completion requires all candidates resolved, zero
+old sessions and qualified source/native binding, irrespective of a supplied
+record's state string. Bound one record to1MiB UTF8 canonical form, one native
+observation to4096 backend rows, and retained provider history to4096 epochs and
+4096 transitions. Exhaustion refuses further issuance; it never silently deletes
+retirement evidence. Broader retention/compaction needs a separate qualified
+provider-store profile.
+
+These store/API rules plus the protocol's actual native enforcement are the
+implementation contract. A fake/structural-only provider must never satisfy
+native apply. Install/issuer/custodian qualification and actual source/platform
+census remain release gates; the closed design permits reference implementation
+to proceed without claiming that those gates already passed.
+
+
+##### Trusted phase budget and derived admin identity
+
+The immutable trusted host `FieldReplacementExecutionPolicy` has exact integer
+members (booleans refuse): `phase_timeout_ms` default30000, range1..300000;
+`aggregate_affected_rows` default100000, range0..1000000;
+`statement_timeout_ms` default30000, range1..phase_timeout_ms; and
+`lock_timeout_ms` default5000, range1..statement_timeout_ms. There are no author
+plan/options members selecting these values. Before ingress approval the host
+canonicalizes exactly `{version:"umf.g11.execution-policy/0.1",phaseTimeoutMs,
+aggregateAffectedRows,statementTimeoutMs,lockTimeoutMs,
+derivedModuleProfile:"weft.table-operation-module/0.2"}`. Add its RFC8785 SHA256
+`executionPolicyDigest` to GenerationIngressRequest and its approval binding;
+the native transition retains the complete policy and verifies that digest.
+A resumed transition cannot silently change policy or obtain a fresh budget.
+
+For options/plan0.6 only, derived backfill program AST0.2 uses explicitly trusted
+`weft.table-operation-module/0.2`, under a dedicated admin authorization identity
+bound to that profile. Legacy plan0.4 keeps module0.1. Neither author wire data,
+presence inference, fallback nor SQL rewriting may select a different profile.
+Retain full source/default meaning, native `pg18-row-expression-exact/0.1`
+guard semantics and private result markers. Future missing-only defaults do not
+populate historical rows without an explicit selected backfill. Ordinary client
+access to default-bearing sources separately selects the G03 trusted SessionPolicy
+module0.2; derived admin selection does not silently upgrade ordinary clients.
+
+Validate each actual private result marker and the fill's own maxRows first.
+Then charge the count of validated result rows against one shared whole-phase
+aggregate counter. A business row affected by two fills counts twice. Do not use
+cursor.rowcount, declared maxima, operation count or a preflight estimate as the
+actual charge. Overflow in a later fill aborts all earlier fills and carrier DDL.
+Internal count-return/budget plumbing may change while preserving legacy public
+return behavior. A no-fill phase dispatches no Weft backfill. DDL and validation
+scans are bounded by time and existing step caps; their scanned rows are not
+represented as affected backfill rows.
+
+For this PostgreSQL18 profile, acquire an idle private maintenance connection,
+set and verify session transaction_timeout BEFORE BEGIN, then enter the phase
+transaction. The native transaction timer runs across every statement in that
+one transaction. Also maintain a host monotonic absolute deadline; before each
+dispatch and COMMIT, refuse expiry and clamp statement_timeout and lock_timeout
+to the positive remaining budget and their configured caps. Driver waits and
+cancellation are bounded. Per-statement resets or checks only between statements
+do not implement the phase deadline. Restore previous session timeouts after
+known healthy COMMIT/ROLLBACK; discard terminated or unverified connections.
+Unknown COMMIT reconciles the original progress/provider reservation, never
+redispatches. A known fully aborted attempt may explicitly retry with a fresh
+budget only after positive rollback proof. Fence and publication have separate
+bounded stages; phase_timeout_ms is not an end-to-end migration promise.
+
+The closed phase budget receipt is exactly
+`{profile:"umf.g11.phase-budget-receipt/0.1",policyDigest,affectedRows,
+fillEffects:[{stepId,operation,rows}],nativeTransactionTimeoutMs}`. Entries use
+actual validated counts in execution order; sum(rows) equals affectedRows and
+must fit the policy. Record it with phase completion and provider cutover in the
+SAME native transaction. Null means no committed phase-budget receipt; it is
+neither proof of zero effects nor permission to replay an unknown commit.

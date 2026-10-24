@@ -440,3 +440,79 @@ diagnostics. Editing/removing those declarations to make a fixture pass also
 refuses as an unsupported seed companion, explicitly reported as a remaining
 G11 limit. Metadata history/source custody is not mistaken for restoring purged
 business values.
+
+
+### G11 generation ingress acceptance
+
+Allocate US-051-AC15/16 to the concrete provider/custodian/store tests and real
+G11 installed-native runner. Structural/fake provider tests are source controls;
+they cannot qualify any native capability. Pin full artifacts/auth/HBA/runtime
+versions, source census, custody and the actual PostgreSQL18.6 source ordering.
+
+- Enroll an existing isolated populated installation with stable Alice/Bob/batch
+  roles and real SCRAM login epochs. Verify unchanged CURRENT_USER/roleOIDs,
+  owner values and occupied outcome slots across credential rotation. Prove
+  wrapper memberships SET-only/noninherit/noADMIN and no cross-subject/owner/
+  controller reachability. Legacy LOGIN-subject enrollment permanently converts
+  that authentication role to NOLOGIN without changing subject identity.
+- Use old actual connections that already SET ROLE, prepared SQL, held cursors,
+  idle and active transactions. Race reconnects/late pool checkout and a paused
+  actual SCRAM handshake begun before fencing. Capture starting/NULLidentity
+  backend tokens without role/database filtering; wait unknown unrelated
+  handshakes, never broadly kill them. Prove all old sessions actually gone,
+  wrong credentials/old principals denied after fence AND publication, and only
+  explicitly re-admitted successor logins can bind the reused native name.
+- Independently verify full native stats access/fresh snapshots, exact owned PID/
+  backend_start identity, timeout-positive termination versus signal-only result,
+  PID reuse and native authentication registration ordering. Failed termination,
+  invisible stats, extra PUBLIC/inherited/definer access, prepared transaction,
+  unknown role/marker/target and resource exhaustion refuse before carrier effects.
+- Verify exact private store DDL/owner/inventory/constraints/indexes/ACL and
+  closed record/column/digest correspondence. Native concurrent requests cannot
+  create two active epochs or competing original transition bindings. No app or
+  business owner can access the store; no extra-object namespace waiver.
+- Verify actual same-connection controller-role hook entry/restore around phase
+  and publication DML. Inject denied SET, wrong actor/settings, SQL error,
+  timeout/cancellation and failed restoration. Prove no business-only commit or
+  controller connection returned to a pool. Record previous catalog at index0,
+  next at index1 and distinguish predecessor metadata head from cutover carriers.
+- Inject failure/crash/lost acknowledgement at fence commit, each retirement,
+  phase commit, final publication and external confirmation. Reconcile original
+  binding/reservation/progress/native state without duplicate effects or a new
+  transition. Preserve durable fence/retired credentials on uncertainty.
+- Copy/restore the database/control schema while retaining the actual external
+  custodian journal. Prove wrong resource/incarnation/rewind is refused BEFORE
+  ordinary endpoint exposure; no same-name/OID-marker adoption. Authorized
+  restart/restore is custodian-controlled and opens admission only after verified
+  continuity or separately approved recovery/new incarnation.
+- Reproduce the real commit-to-finalize crash gap with old prepared direct SQL:
+  no old login/session regains authority when successor data/head ACLs return.
+  Newly authenticated principals require exact new reference and explicit fresh
+  admission; source factory/head/token checks remain effective. Cached old data
+  already delivered is not represented as new-generation results.
+
+Complete the independent multiple-fill rollback oracle, whole dependency/CHECK
+and command matrix, both host routes, browser/planning compatibility, final
+installed artifact cohort and public release-byte gates. Record unqualified
+managed issuers, seed-history evolution, generated dependency compositions,
+old-only copies and retained recovery separately; passing this provider subset
+must not erase the full remaining backlog.
+
+- Provision disabled successor roles before final OID-bound transition approval.
+  Lose the provision COMMIT acknowledgement and reconcile the original creation
+  receipt; reject same-name adoption, guessed OIDs and a recursive future digest.
+- Verify exact trusted policy bounds, boolean/unknown-member refusal, immutable
+  approval binding and legacy behavior. Execute two fills that individually fit
+  maxRows but jointly exceed the actual aggregate counter; prove the first fill
+  executed and the second overflow rolls back all business effects. Count the
+  same business row twice when two fills affect it; prove no-fill dispatch is zero.
+- Use multiple individually short native statements whose combined runtime
+  exceeds the phase budget, including a blocked statement and COMMIT boundary.
+  Prove transaction_timeout was installed before BEGIN, the native transaction
+  aborts, the host cannot dispatch after expiry, and timeout restoration/discard
+  and unknown COMMIT reconciliation preserve original custody. Fake clocks are
+  source controls only; actual PostgreSQL18 timeout behavior must pass.
+- Qualify a retained missing-only-default source through module0.2 with an
+  explicit typed backfill and unchanged future-default behavior. Pin the actual
+  new Weft artifact and prove trusted admin/client identities and legacy0.1
+  compatibility separately. Record exact committed budget receipt and counts.

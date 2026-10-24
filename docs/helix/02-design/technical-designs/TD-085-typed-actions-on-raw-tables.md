@@ -594,3 +594,46 @@ Keep authored seedSets unchanged and never execute/replay them; seed-dependent
 invalid successor or requested seed edit must refuse at its original location.
 Seed-history evolution remains explicitly tracked within G11 rather than being
 hidden behind a successful command-free/seed-free fixture.
+
+
+### G11 concrete native generation ingress implementation
+
+Implement CONTRACT-081's mandatory execution0.5 ingressProfile before native
+0.6 admission. Preserve stable effective subject role OIDs/CURRENT_USER and
+outcome slots; rotate only separately authenticated login epochs. Add trusted
+GenerationEnrollment, GenerationIngressRequest/Transition/Lease/Observation,
+GenerationFenceReceipt and opaque GenerationAdmission APIs, concrete Psycopg
+provider, exact private store and external TargetCustody/Reservation service.
+Keep the provider store outside the business schema under a separate controller
+owner; no external-object exception or privilege is granted to businessOwner.
+
+Integrate exact source/target/plan/file/approval binding, original external
+reservation before native effects, durable NOLOGIN/data/head fence, complete
+starting-authentication/session barrier, actual bounded owned termination and
+same-transaction phase/publication records. Native store and external journal
+use explicit intent/observe/confirm recovery; no distributed atomicity claim.
+Credential release follows confirmed active head/epoch, never a process-local
+success flag. The external custodian controls restore/start exposure before
+ordinary connections, with fixed ownership and nonrewinding sequence custody.
+
+Phase witness index0 is previous native catalog; index1 is next. Committed
+business cutover may precede metadata-head publication. Both host routes must
+keep that distinction and preserve fence on crash/unknown COMMIT. Fixed private
+SET LOCAL ROLE hooks on the SAME physical phase/final transaction enter the
+controller only for provider DML, restore/reverify business owner/settings and
+abort the whole transaction on failure. No generic elevated SQL callback.
+
+First qualify PostgreSQL18.6 with actual SCRAM-authenticated client sessions and
+the pinned startup/status ordering. Owner-created SET ROLE probes do not qualify
+authentication or pending handshakes. Reference provider may be implemented
+behind fail-closed native admission while these tests are being built; it is not
+complete until actual independent native evidence passes. Managed OAuth issuers
+and restore providers need their own evidence and stay explicitly tracked.
+
+Implement the trusted phase policy and module0.2 derived admin identity exactly
+as CONTRACT-081. Move the private connection setup seam before BEGIN so native
+transaction_timeout covers the whole carrier phase, then retain the absolute
+host clock and clamp each dispatch. Share one actual marker-row counter across
+all fills; record policy and budget receipt with the cutover transaction. Legacy
+module0.1 and return behavior stay compatible. New Weft module0.2 artifacts and
+installed-native default-bearing G11 evidence are prerequisites for admission.
