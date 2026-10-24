@@ -84,9 +84,35 @@ test('generated columns are excluded while insertion remains denied for both aud
  const grants=result.operations.filter(operation=>operation.operation==='grant-table'&&operation.subject.kind==='tableGrant');
  const update=grants.find(operation=>operation.sourcePath.endsWith('/policy/person/update'));
  expect(update?.sql).toBe('GRANT UPDATE ("owner", "parent_id", "caption", "amount", "second") ON TABLE "generated_schema"."notes""雪" TO "person"');
- expect(grants.some(operation=>operation.sourcePath.endsWith('/policy/person/insert'))).toBe(false);
- expect(grants.some(operation=>operation.sourcePath.endsWith('/policy/batch/insert'))).toBe(false);
+ const notesInsert=(role:string)=>grants.some(operation=>operation.subject.kind==='tableGrant'&&operation.subject.table==='notes'&&operation.subject.role===role&&operation.subject.privilege==='insert');
+ expect(notesInsert('person')).toBe(false);
+ expect(notesInsert('batch')).toBe(false);
+ expect(grants.some(operation=>operation.subject.kind==='tableGrant'&&operation.subject.table==='parents'&&operation.subject.role==='person'&&operation.subject.privilege==='insert')).toBe(true);
 });
+
+test('large valid comment-rich deployment retains standard bundle admission and copies its bounded private sidecar',()=>{
+ const source=completeGrantFixture(false),module=source.modules[0]!;
+ for(const tableId of ['notes','parents']){
+  const table=module.extensions['umf.tables'].tables.find((item:any)=>item.id===tableId),record=module.elements.find((item:any)=>item.kind==='record'&&item.id===table.record.element);
+  for(let index=0;index<1550;index++){
+   const id=`${tableId}_comment_${index}`,field={module:'demo',element:id};
+   module.elements.push({id,name:id,kind:'field',scalarType:'string',cardinality:'one',nullability:'required',description:`Reviewed deployment comment ${index}: source-owned text retained exactly.`,extensions:{}});
+   record.members.push(field);table.columns.push({field,name:`comment_${index}`,nativeType:{kind:'text'}});
+  }
+ }
+ const text=JSON.stringify(source),publicResult=compileTableDeployment({text,configuration}),internalResult=compileTableDeploymentWithOperations({text,configuration});
+ expect(publicResult.status).toBe('compiled');expect(internalResult.status).toBe('compiled');
+ if(publicResult.status!=='compiled'||internalResult.status!=='compiled')return;
+ expect(publicResult.bundle.expectedCatalog.comments).toHaveLength(3100);
+ const commentOperations=internalResult.operations.filter(operation=>operation.operation==='set-comment');
+ expect(commentOperations).toHaveLength(3100);
+ const target=commentOperations[0]!;
+ if(target.subject.kind!=='comment')throw new Error('Expected a typed comment operation');
+ const original=publicResult.bundle.expectedCatalog.comments![0]!.text;
+ target.subject.text='mutated private copy';
+ expect(publicResult.bundle.expectedCatalog.comments![0]!.text).toBe(original);
+ expect(JSON.parse(text).modules[0]!.elements.some((element:any)=>element.description==='mutated private copy')).toBe(false);
+},60000);
 
 test('shared grant SQL renderer refuses malformed row variants instead of coercing them',()=>{
  const base={table:'notes',schema:'s',relation:'t',role:'r',privilege:'update' as const,columns:['owner'],grantOption:false as const};

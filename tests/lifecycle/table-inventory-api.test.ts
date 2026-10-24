@@ -4,7 +4,7 @@ import {hashCanonical} from '../../src/compilation/bundle/hash';
 import {UmfError} from '../../src/model/errors';
 import {compileTableDeployment} from '../../src/table-deployment';
 import {compileTableMigration,compileTableInventoryMigration,discoverTableInventoryMigrationChanges,irreversiblePurgeDisclosure,serializeTableInventoryMigration,verifyTableInventoryMigration} from '../../src/table-migration';
-import {createHistoricalG10Verifier} from '../../src/table-migration/inventory';
+import {compileG10InventoryPlan,createHistoricalG10Verifier} from '../../src/table-migration/inventory';
 import {partitionInventoryMarkersForG02} from '../../src/table-migration/inventory-g02-source';
 import {consumeTableMigrationChangesBounded} from '../../src/table-migration/reviewed';
 import {legalSource} from './legal-fixture';
@@ -27,7 +27,7 @@ const selector=(tableIntents:TableInventoryMigrationOptions['tableIntents'],reti
  conversions:[],retiredSeedSets,retirements:[],restorations:[],archiveSources:[],
 });
 function originalHistory(bundle:ReturnType<typeof deploy>):TableInventorySourceHistory{
- const result=compileTableMigration({id:'inventory-history-initial',predecessor:null,previous:null,next:bundle,options:{version:'umf.table-migration-options/0.1',backfills:[],concurrentIndexes:[]}});
+ const result=compileTableMigration({id:'inventory-history-initial',predecessor:null,previous:null,next:bundle});
  if(result.status!=='compiled')throw new Error('Original initial migration refused: '+JSON.stringify(result.diagnostics));
  return {profile:'umf.table-inventory-source-history/0.1',plans:[result.plan],executions:[{planDigest:result.plan.digest,entryDigest:'c'.repeat(64),seedOutcomes:[]}]};
 }
@@ -35,7 +35,10 @@ function initialG10History(bundle:ReturnType<typeof deploy>,id='inventory-g10-hi
  const tableIntents=bundle.expectedCatalog.tables.map(table=>({kind:'create' as const,table:table.id,record:{...table.record}}));
  const candidates=discoverTableInventoryMigrationChanges(null,bundle,selector(tableIntents),emptyHistory);
  const result=compileTableInventoryMigration({id,predecessor:null,previous:null,next:bundle,options:options(tableIntents,candidates.map(({oldValue:_old,newValue:_new,oldPath:_oldPath,newPath:_newPath,...marker})=>marker)),history:emptyHistory});
- if(result.status!=='compiled')throw new Error('Original G10 initial plan refused: '+JSON.stringify(result.diagnostics));
+ if(result.status!=='compiled'){
+  compileG10InventoryPlan({id,predecessor:null,previous:null,next:bundle,options:options(tableIntents,candidates.map(({oldValue:_old,newValue:_new,oldPath:_oldPath,newPath:_newPath,...marker})=>marker)),history:emptyHistory});
+  throw new Error('Original G10 initial plan refused: '+JSON.stringify(result.diagnostics));
+ }
  return {profile:'umf.table-inventory-source-history/0.1',plans:[result.plan],executions:[{planDigest:result.plan.digest,entryDigest:'c'.repeat(64),seedOutcomes:[]}]};
 }
 function appendArchiveTable(source:any,id='api_archive'){
@@ -54,7 +57,11 @@ test('G10 public initial compile, full verification and serialization retain the
  expect(candidates.every(candidate=>candidate.kind==='create-table'&&candidate.oldValue===null&&candidate.oldPath===null&&typeof candidate.newPath==='string')).toBe(true);
  const request={id:'inventory-api-initial',predecessor:null,previous:null,next,options:options(tableIntents,candidates.map(({oldValue:_old,newValue:_new,oldPath:_oldPath,newPath:_newPath,...marker})=>marker)),history:emptyHistory};
  const result=compileTableInventoryMigration(request);
- expect(result.status).toBe('compiled');if(result.status!=='compiled')throw new Error(JSON.stringify(result.diagnostics));
+ if(result.status!=='compiled'){
+  // Preserve the public response while exposing the lowerer error in this test.
+  compileG10InventoryPlan(request);
+  throw new Error(JSON.stringify(result.diagnostics));
+ }
  expect(result.plan.review).toEqual(candidates);
  expect(verifyTableInventoryMigration(result.plan,emptyHistory)).toEqual(result.plan);
  const serialized=serializeTableInventoryMigration(result.plan,emptyHistory);
@@ -149,7 +156,7 @@ function optionalReviewDate(source:any):void{
  const module=source.modules[0]!,field={module:'legal_lifecycle',element:'matters__review_date'},record=module.elements.find((item:any)=>item.kind==='record'&&item.id==='matters'),table=module.extensions['umf.tables'].tables.find((item:any)=>item.id==='matters');
  if(!record||!table)throw new Error('mixed fixture lost retained matters source');
  module.elements.push({id:field.element,name:field.element,kind:'field',scalarType:'date',cardinality:'one',nullability:'absent-allowed',extensions:{}});
- record.members.push(field);table.columns.push({field,name:'review_date',nativeType:{kind:'date'}});
+ record.members.push(field);table.columns.push({field,name:'review_date',nativeType:{kind:'date'},default:{kind:'literal',value:{date:'2000-02-29'}}});
 }
 
 function appendForeignSameIdCommand(source:any):void{
@@ -183,6 +190,8 @@ test('G10 mixed legal fixture builders clone exported definitions into each retu
 
 test('G10 mixed CREATE plus appended G02 uses global source ownership without widening the legacy marker parser',()=>{
  const {history,candidates,request}=mixedG02Request(false);
+ const originalSeeds=(legalSource() as any).modules[0]!.extensions['umf.tables'].seedSets;
+ expect(JSON.parse(request.next.source.utf8).modules[0]!.extensions['umf.tables'].seedSets.slice(0,originalSeeds.length)).toEqual(originalSeeds);
  expect(candidates.some(candidate=>candidate.kind==='create-table'&&(candidate.newValue as any).table==='matter_review_groups')).toBe(true);
  expect(candidates.some(candidate=>candidate.kind==='change-operation'&&(candidate.newValue as any)?.id==='derive_matter_review_date')).toBe(true);
  expect(candidates.some(candidate=>candidate.kind==='change-operation'&&(candidate.newValue as any)?.id==='create_review_team')).toBe(true);
@@ -195,7 +204,11 @@ test('G10 mixed CREATE plus appended G02 uses global source ownership without wi
  const oldGrantColumns=mutableNames(request.previous!),newGrantColumns=mutableNames(request.next),format=(direction:'GRANT'|'REVOKE',columns:string[])=>`${direction} UPDATE (${columns.map((column:string)=>'"'+column.replaceAll('"','""')+'"').join(', ')}) ON TABLE "${request.next.configuration.schema}"."matters" ${direction==='GRANT'?'TO':'FROM'} "${request.next.configuration.personRole}"`;
  expect(grantSteps.map(step=>step.sql)).toEqual([format('REVOKE',oldGrantColumns),format('GRANT',newGrantColumns)]);
  const fieldColumn=request.next.expectedCatalog.columns.find(column=>column.table==='matters'&&column.field.element==='matters__review_date')!,fieldSteps=result.plan.steps.filter(step=>step.sourcePath===fieldColumn.sourcePath||step.sourcePath==='/options/backfills/0'&&step.operation==='apply-backfill');
- expect(fieldSteps.map(step=>step.operation)).toEqual(['add-column','apply-backfill','tighten-not-null']);
+ expect(fieldSteps.map(step=>step.operation)).toEqual(['add-column','apply-backfill','install-default','tighten-not-null']);
+ const reviewDateColumn=JSON.parse(request.next.source.utf8).modules[0]!.extensions['umf.tables'].tables.find((table:any)=>table.id==='matters').columns.find((column:any)=>column.field.element==='matters__review_date');
+ expect(reviewDateColumn.default).toEqual({kind:'literal',value:{date:'2000-02-29'}});
+ const backfillOperation=JSON.parse(request.next.source.utf8).modules[0]!.extensions['umf.tables'].commands.find((command:any)=>command.id==='derive_matter_review_date');
+ expect(backfillOperation.body.values[0]!.value).toEqual({kind:'rowExpression',expression:{op:'field',field:{module:'legal_lifecycle',element:'matters__open_date'}}});
  const groupPhase=result.plan.phases.find(phase=>grantSteps.every(step=>phase.steps.includes(step.id))&&fieldSteps.every(step=>phase.steps.includes(step.id)));
  expect(groupPhase).toBeDefined();expect(result.plan.steps.indexOf(grantSteps[0]!)<result.plan.steps.indexOf(fieldSteps[0]!)).toBe(true);expect(result.plan.steps.indexOf(fieldSteps.at(-1)!)<result.plan.steps.indexOf(grantSteps[1]!)).toBe(true);
  const finalPrefix=result.plan.prefixes.at(-1)! as any;
@@ -208,6 +221,10 @@ test('G10 mixed CREATE plus appended G02 uses global source ownership without wi
 
 test('G10 mixed CREATE plus existing-target G02 partitions only the exact tightening marker',()=>{
  const {history,candidates,request}=mixedG02Request(true);
+ const previousColumn=JSON.parse(request.previous!.source.utf8).modules[0]!.extensions['umf.tables'].tables.find((table:any)=>table.id==='matters').columns.find((column:any)=>column.field.element==='matters__review_date');
+ const nextColumn=JSON.parse(request.next.source.utf8).modules[0]!.extensions['umf.tables'].tables.find((table:any)=>table.id==='matters').columns.find((column:any)=>column.field.element==='matters__review_date');
+ expect(previousColumn.default).toEqual({kind:'literal',value:{date:'2000-02-29'}});
+ expect(nextColumn.default).toEqual(previousColumn.default);
  expect(candidates.some(candidate=>candidate.kind==='tighten-not-null')).toBe(true);
  const result=compileTableInventoryMigration(request);
  expect(result.status).toBe('compiled');if(result.status!=='compiled')throw new Error(JSON.stringify(result.diagnostics));

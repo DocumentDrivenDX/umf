@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {copyJson} from '../model/json';
+import {copyJson,withCatalogResourceProfile} from '../model/json';
 import {readDocument} from '../model/document';
 import {UmfError} from '../model/types';
 import {canonical,hashCanonical,sha256Text} from '../compilation/bundle/hash';
@@ -56,7 +56,7 @@ function compileDeploymentInternal(input:{text:string;format?:'json'|'yaml';conf
   // copyJson prevents output aliases from escaping into caller input or authority.
   if(new TextEncoder().encode(canonical(body)).length>16_000_000)deploymentError('Deployment bundle exceeds16MB');
   const bundle=copyJson({...body,bundleDigest:hashCanonical(body)}) as unknown as TableDeploymentBundle;
-  const copiedOperations:InternalTableDeploymentOperationRecord[]=structuredClone(operations);
+  const copiedOperations=withCatalogResourceProfile(()=>copyJson(operations)) as unknown as InternalTableDeploymentOperationRecord[];
   return {status:'compiled',bundle,diagnostics:[],operations:copiedOperations};
  }catch(error){
   if(error instanceof UmfError)return {status:'blocked',diagnostics:[{code:error.code,path:error.path,message:error.message,severity:'error'}]};

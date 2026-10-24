@@ -36,7 +36,7 @@ test('G02 internal renderer sidecar reports typed source-site effects without ch
  expect(internal.result.plan.digest).toBe(publicResult.plan.digest);
  expect(internal.result.plan.steps.some(step=>Object.getOwnPropertySymbols(step).length>0)).toBe(false);
  const fieldEffects=internal.operations.filter(item=>item.subject.type==='field');
- expect(fieldEffects.map(item=>item.role)).toEqual(['add-column','backfill','tighten-not-null','target-check']);
+ expect(fieldEffects.map(item=>item.role)).toEqual(['add-column','target-check','backfill','tighten-not-null']);
  expect(fieldEffects.every(item=>item.subject.type==='field'&&item.subject.table==='notes'&&item.subject.field.module==='demo'&&item.subject.field.element==='summary')).toBe(true);
  expect(fieldEffects.find(item=>item.role==='backfill')).toMatchObject({sourcePath:'/options/backfills/0',rowOperationId:'derive_summary'});
  expect(fieldEffects.every(item=>internal.result.status==='compiled'&&internal.result.plan.steps.some(step=>step.id===item.stepId&&step.sourcePath===item.sourcePath))).toBe(true);

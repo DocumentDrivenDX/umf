@@ -123,7 +123,7 @@ export function compileG02FieldEffects(input:{previous:TableDeploymentBundle;nex
   if(validate)result.push(renderG02FieldEffect({role:'validate-target-check',schema:next.configuration.schema,table:selected.table,tableName,column:mapping,sourcePath:check.sourcePath,field:subjectField,operation:'validate',constraintName:check.name}));
  }
  result.push(make('backfill','/options/backfills/0',selected.operation));
- if(!oldColumn&&column.default)result.push(make('install-default',column.sourcePath));
+ if(!oldColumn&&mapping.default)result.push(make('install-default',column.sourcePath));
  result.push(make('tighten-not-null',column.sourcePath));
  return result;
 }

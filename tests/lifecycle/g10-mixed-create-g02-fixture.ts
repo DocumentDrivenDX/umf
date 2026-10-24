@@ -47,7 +47,7 @@ function appendReviewDate(source:Json):void{
  if(!matterRecord||!matterTable)throw new Error('legal fixture lost matters identity');
  source.modules[0]!.elements.push({id:field.element,name:field.element,kind:'field',scalarType:'date',cardinality:'one',nullability:'required',extensions:{}});
  matterRecord.members.push(field);
- matterTable.columns.push({field,name:'review_date',nativeType:{kind:'date'}});
+ matterTable.columns.push({field,name:'review_date',nativeType:{kind:'date'},default:{kind:'literal',value:{date:'2000-02-29'}}});
  payload(source).commands.push({version:'umf.table-operation/0.2',id:'derive_matter_review_date',parameters:[],consistency:'transaction',replay:'caller-key-required',body:{kind:'update',table:'matters',where:{op:'isNull',field},values:[{field,value:{kind:'rowExpression',expression:{op:'field',field:ref('matters__open_date')}}}],returning:[],maxRows:2}});
 }
 
