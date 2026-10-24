@@ -1,0 +1,30 @@
+{
+  "capturedAtUtc": "2026-10-24T03:43:27Z",
+  "changedTest": "python/tests/test_distribution_artifact.py",
+  "changedTestSha256": "59b4dd5d2bcba4ee76d1aa55bd56133bd89e17e0c536327b35fa57e3d10b509a",
+  "checks": {
+    "build": "not run",
+    "gitDiffCheck": "pass",
+    "native": "not run"
+  },
+  "focused": {
+    "command": "uv run --no-project --python 3.12 --with pytest==8.4.2 --with hatchling==1.27.0 python -B -m pytest -q -p no:cacheprovider python/tests/test_distribution_artifact.py::test_sdist_extraction_selects_the_single_top_level_project_with_nested_projects",
+    "exitCode": 0,
+    "stdoutChunks": [
+      "WARN `--no-project` was provided, but no project was found\n",
+      ".                                                                        [100%]\n1 passed in 1.90s\n"
+    ]
+  },
+  "schema": "umf.core-0102-test-receipt/1",
+  "sourceOnlySuites": {
+    "command": "uv run --no-project --python 3.12 --with pytest==8.4.2 --with hatchling==1.27.0 python -B -m pytest -q -p no:cacheprovider python/tests/test_distribution_artifact.py python/tests/test_python_artifact_custody.py python/tests/test_python_sdist.py",
+    "exitCode": 0,
+    "stdoutChunks": [
+      "WARN `--no-project` was provided, but no project was found\n",
+      ".......................",
+      "........................",
+      ".                         [100%]\n48 passed in 50.42s\n"
+    ]
+  },
+  "sourceRoot": "/Users/erik/.codex/worktrees/g02-final-integration/umf"
+}
