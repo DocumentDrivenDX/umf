@@ -25,7 +25,7 @@ from .serialization import (
     write_document,
     write_json_value,
 )
-from .validation import validate_document, inspect_extension_kinds
+from .validation import inspect_extension_kinds, validate_document
 
 __version__ = "0.10.0"
 __all__ = [
@@ -44,12 +44,12 @@ __all__ = [
     "current_core_version",
     "dataset_source_schema",
     "domain_pack_schema",
+    "inspect_extension_kinds",
     "read_document",
     "read_json_value",
     "schema_validator",
     "semantic_type_reference_schema",
     "validate_document",
-    "inspect_extension_kinds",
     "write_document",
     "write_json_value",
 ]

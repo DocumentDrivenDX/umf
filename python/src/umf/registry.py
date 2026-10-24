@@ -1,13 +1,19 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 """Explicit consumer registration; document content never loads executable code."""
 
+import json
 import sys
 from collections.abc import Callable
 from dataclasses import dataclass
 
-from ._rust import _raise_native, copy_python_consumer_value, copy_json, new_registry
-from ._rust import encode_wire, _from_wire
-import json
+from ._rust import (
+    _from_wire,
+    _raise_native,
+    copy_json,
+    copy_python_consumer_value,
+    encode_wire,
+    new_registry,
+)
 
 
 @dataclass(frozen=True)
