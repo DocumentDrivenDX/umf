@@ -660,3 +660,35 @@ signal-only result as termination. fencing→fenced can introduce the newly
 verified receipt; original request/reservation/candidate authority cannot change.
 Implement the real supervisor/issuer/native observation path before production
 enablement; source test attestations are insufficient.
+
+
+### G04 checked conversion implementation
+
+Implement CONTRACT-081's options/plan0.7, execution0.6, discovery0.4 without
+changing historical meanings. Weft owns the finite checked scalar compiler; UMF
+owns typed dependency scheduling/DDL and complete source/default correspondence.
+Implement cycle-free conversion-effect discovery/markers and strict unused-entry
+consumption; never lower an author SQL cast or treat generic G02 as old-source
+conversion authority. Bind the complete trusted policy in original ingress
+approval/resume. Use actual G11 credential retirement, protected whole-phase
+native deadline and one-transaction capture/rewrite/validation/receipt.
+
+Implement the exact originals-store/row-token/trigger/native-ACL composition and
+original external creation custody, not a blanket extra-object exception. Source
+business declarations remain distinct from provider metadata and archives remain
+native typed/private. Qualify pre-adaptation source domains, complete FORCERLS
+capture, post-cutover revision baseline and strict restore conflicts. Native
+old-bound CHECK enforcement is mandatory for finite integer round-trip mode.
+No provider/module capability is enabled merely by structural interface support.
+
+Keep G05 purge/retirement and G06 online capture separate. A smaller delivered
+recipe/recovery subset must leave every unimplemented family/mode tracked.
+
+Implement the exact empty-SQL conversion step variants and cycle-free step/domain
+bindings. Runtime Weft preparation returns only the actual qualified closed
+checked scalar descriptor; UMF owns its fixed DDL shell. Bind request, original
+source/domains/recipe and native compiler artifact through original qualification
+and effect receipt; fake/cross-bound prepared replies and cast fallback refuse.
+Execution0.6 uses the explicit G04 private transition/receipt variant; historical
+variants remain exact. AccountingManifest omits only logicalBytes, avoiding a
+self-inclusive counter while preserving defined metadata/value measurement.

@@ -541,3 +541,46 @@ positive termination and fresh zero-old-session proof. Lose fence acknowledgemen
 and prove original candidates survive. Test introducing the verified fence
 receipt on fencing→fenced and no old-client authority through carrier COMMIT,
 publication or recovery. Native/profile/artifact/release gates remain mandatory.
+
+
+### G04 checked conversion acceptance
+
+Allocate US-051-AC14 plus AC15/16 recovery/client gates to the exact selected
+CONTRACT-081 successor. The50 manually specified cases in the design-review
+g04-independent-oracle-001.json are planned scalar oracles, not native passes.
+Exercise all12 recipes/NULL cases and refusals through actual typed native
+conversion, not a source-only helper that never changes a carrier. Include
+numeric ties/negative/carry/nonfinite, Gregorian/UTC bounds, offset/precision,
+strict lexical/token/UUID cases and complete target facets/Key collisions.
+
+Test exact discovery wire, cycle-free marker/irreversibility binding, full
+unknown source preservation, explicit companion defaults/commands/dependencies,
+old version replay/refusal and browser parity. Native round-trip CHECKs must
+reject broad target-domain writes through real direct SQL/COPY/admitted MERGE,
+not only generated clients.
+
+Independently observe all native private-store objects, exact typed old values
+including NULL, counts and logical-byte accounting, complete nonempty FORCERLS
+capture, no data in public receipts/logs, private controller-role restoration,
+column grants, token supplied/RETURNING/COPY/ON CONFLICT/MERGE attacks, parameter
+role/trigger bypass, UUID collision, revision overflow and no-op updates. Test
+unchanged/updated/inserted/deleted/Key-reused restore populations; verify current
+revision matches actual post-cutover baseline and conflicts cause full refusal.
+
+Inject lost acknowledgements and errors at enrollment/capture/rewrite/validation/
+phase COMMIT/publication. Actual held prepared readers/cursors/direct writers
+must stay fenced through the commit-to-publication gap; original-progress lookup
+proves no double conversion. Missing/tampered/expired/restored custody, unknown
+objects/ACLs and budget exhaustion refuse. Qualify native function/trigger
+authority and each pinned platform/driver, then freeze installed artifacts,
+browser/CI matrix and fresh public release bytes. No G05/G06/other-backend
+claim follows from this maintenance subset.
+
+Test exact source recompile and closed step.kind/operation/phaseOperation/SQL/path
+variants; swapped before/after/source/target/recipe/program/artifact and fake
+prepared handles; descriptor injection/truncation and wrong private guards;
+no portable runtime Weft dependency or fallback native cast; native recipe-token
+escaping inside the fixed DDL expression and no assumed driver-DDL parameters.
+Verify original-source-only input, all-row conversion coverage and exact committed
+G04 descriptor/artifact/domain/count/archive correspondence. Exercise defined
+cycle-free logical-byte projection at counter digit/metadata/NULL/limit edges.

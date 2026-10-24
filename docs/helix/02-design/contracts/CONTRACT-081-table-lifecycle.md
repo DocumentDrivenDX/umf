@@ -3239,3 +3239,705 @@ activity-disabled clients, held transactions/cursors, PID reuse, unrelated
 pending clients, cross-database old sessions, failed/late termination and lost
 fence commit acknowledgements. Store/source tests of these shapes are separate
 from the required real PostgreSQL18.6 admission-barrier evidence.
+
+
+#### G04 selected checked conversion successor
+
+Reserve options/plan `umf.table-migration-options/0.7` and
+`umf.table-migration/0.7`, execution `umf.table-migration-execution/0.6`, discovery
+`umf.table-migration-discovery/0.4`. This section is the selected successor
+contract, not implementation/native evidence. Historical profiles remain exact.
+UMF owns intent/dependencies/DDL/correspondence; Weft owns checked scalar recipe
+semantics/lowering, and hosts own actual values, authority and storage effects.
+
+Options0.7 contain exactly `version,backfills,concurrentIndexes,reviewedChanges,
+validations,conversions`. Backfills, concurrentIndexes and validations are empty.
+The existing bounded reviewedChanges array uses the closed five-member marker
+shape; no legacy `conversion` string qualifier is admitted. Conversions are the
+closed entries below. Plan0.7 retains plan0.6's top-level members with these
+explicit successor meanings. Its executionProfile is exactly
+`{version:"umf.table-migration-execution/0.6",progressRelation:"umf_lifecycle_progress",
+ownerOnly:true,ingressProfile:"umf.table-generation-ingress/0.1",
+conversionProfile:"umf.checked-field-conversion/0.1",originalsProfile:P}`,
+where P is `umf.pg-row-originals/0.1` if any selection retains originals, otherwise
+null. Profile values are compiler-derived, not author capability attestations.
+At least one retained Field changes type. Table/Record/Field identities,
+configuration, table inventory/names/order and other source meaning remain
+unchanged except selected type/facets and explicitly reviewed supported dependent
+changes, including companion default and command/query changes. Unknown affected
+qualifiers cannot be concealed by projecting away a selected Field. Added/dropped
+Fields, nullability changes, seeds and unselected mutations refuse in this first
+profile. G11 is not implicitly composed merely because it shares ingress.
+
+The first execution is one atomic `field-conversion` phase. Typed steps declare
+`phaseTarget:{table,field}` and compiler-owned phaseOperation values
+`capture-originals`, `convert-field`, `validate-conversion` as applicable, plus
+existing reviewed dependency/default steps. Step coverage/DAG derives from typed
+identities and source/catalog dependencies, never SQL text/rank matching. Capture
+precedes its conversion; every conversion precedes full target validation and
+phase receipt. Only one selected recipe consumes each type-changing target.
+Native catalog index0 is previous and index1 next; metadata head can still be the
+predecessor while committed carriers are next. Old ingress stays retired/fenced.
+
+##### Closed discovery, effect and irreversibility review
+
+Discovery0.4 takes exactly `{version,conversionIntents}`. Each intent is the
+closed conversion entry below, except irreversible recovery is exactly
+`{mode:"irreversible"}`: omit its eventual reviewMarker reference to prevent a
+hash/ID cycle. All other recovery shapes are unchanged. Compiler options0.7
+normalize to this exact discovery shape by removing ONLY that reference. Intents
+never include reviewedChanges, approved digests, arbitrary SQL or host policy.
+Both retained sources must be exact independently valid JSON. Duplicate, stale,
+unknown or unused intents refuse. Actual old/new pointers are preserved in
+candidate diagnostics; authority path is the selected successor mapping pointer.
+
+Discovery emits the existing complete `change-column-type`, dependent/default/
+operation/context markers, plus exactly one `conversion-effects` marker for each
+selected conversion, including mathematically exact conversions. Every marker
+has exactly `id,kind,path,oldDigest,newDigest`. Existing deterministic marker ID
+construction and RFC8785 SHA256 apply. For conversion-effects, oldValue/newValue
+are exactly `{version:"umf.field-conversion-review/0.1",side,source,configuration,
+table,field,meaning,conversionIntent,effects}`. Side is previous|next. Source is
+`{format:"json",sha256}` over complete original retained bytes; configuration is
+complete validated configuration; meaning is `{physical,logical,mapping}` with
+complete original expectations/declaration/mapping, not a lossy field projection.
+ConversionIntent is the exact cycle-free normalized intent above. Effects is the
+ordered string array derived by these rules, not author prose:
+
+- Every recipe: `original-representation-replaced`.
+- numeric-exact with any decimal domain additionally: `lexical-scale-not-promised`.
+- numeric-rescale additionally: `numeric-quantization`.
+- text-instant additionally: `lexical-offset-and-fraction-spelling`.
+- instant-date with discard additionally: `time-component`.
+- date-instant additionally: `utc-midnight-assignment`.
+- date-text, instant-text or uuid-text additionally: `canonical-text-spelling`.
+- text-boolean or boolean-text additionally: `explicit-boolean-token-mapping`.
+
+No other effects or order normalization is admitted. These are potential
+representation/meaning dispositions, not a claim that every actual row loses a
+value. The marker binds them even for an empty/currently lossless population.
+Irreversible recovery.reviewMarker MUST reference this exact conversion-effects
+marker ID, consumed exactly once, with its irreversible recovery intent. The
+returned plan also emits a review disclosure with exact code
+`IRREVERSIBLE_FIELD_CONVERSION`, path equal to that source mapping pointer and
+message naming source/target domains and irrecoverable original representation.
+Retained/round-trip choices still consume their conversion-effects marker; an
+archive does not waive disclosed forward losses. No separate author-controlled
+loss boolean or arbitrary effect text grants authority. Target validity and
+native capability refusal cannot be overridden by review.
+
+Round-trip integer-widening admission additionally installs/witnesses a native
+CHECK enforcing the OLD integer bounds throughout the target-era write domain,
+including direct SQL, COPY and every admitted native write path. It is not a
+client-only promise. Bind the typed derived constraint to conversion/proof intent,
+full native inventory, future plans and restoration. If the target source cannot
+express that restricted allowed write domain or a later migration removes it,
+the selected proof is unavailable until a separately approved recovery change.
+
+The trusted policy normal form is exactly
+`{version:"umf.g04.execution-policy/0.1",phasePolicy,conversionEntryLimit,
+retainedLogicalBytesLimit}`. phasePolicy is the complete G11 policy record,
+conversionEntryLimit default100000/range0..1000000 and retainedLogicalBytesLimit
+default67108864/range0..1073741824, exact integers excluding booleans. The shared
+entry count is one row per converted Field; this is additional to G11 fill
+accounting (no fill is selected here). Bind this complete policy digest in the
+ingress request, approval and native transition. Execution0.6 explicitly selects
+this policy variant; execution0.5 retains its original policy-only contract.
+No generic unknown-policy fallback. Phase timeouts and native setup match G11.
+##### Closed conversion intent
+
+The successor adds `conversions`, an ordered array of at most256 entries. Each
+entry has exactly `{table,field,recipe,nulls,invalid,recovery}`. `table` is the
+existing stable table binding identifier, `field` is the complete local
+`{module,element}` reference to the SAME retained Field identity in both sources.
+Duplicates by table/Field refuse. Nulls is exactly `preserve`; invalid is exactly
+`abort`. Missing arrays normalize only under the new successor's explicit rules,
+never historical plans. Both sources and all identifiers remain source-bound.
+
+Recipe is exactly `{version:"umf.conversion-recipe/0.1",kind,parameters}` with
+the kind-specific closed parameter shape below. Unknown members, implicit
+coercion, booleans used as numbers, partial parsing and unsupported native/logical
+domains refuse. A retained type-changing Field needs exactly one matching
+conversion entry; an unchanged or removed Field cannot consume one. Unused
+entries refuse. A replacement identity is G11, not a conversion inferred by name.
+Source inputs resolve against the original before source/column, never a target
+Field that happens to have the same name. Bind the original source format, full
+byte digest and field pointer plus exact native source domain in the derived
+plan. Complete original bytes remain available for replay and unknown content.
+
+First mode changes logical/native type only. Nullability changes, old-only copies,
+arbitrary edits and fills require separately selected composition; they do not
+silently ride a conversion. Explicit companion default, query/command parameter,
+Key/FK/CHECK/index/policy/grant changes are permitted only through reviewed typed
+dependency steps with complete correspondence. Unknown meaning refuses. A default
+is never silently cast: unchanged defaults must be proven valid in the target
+meaning, or the author explicitly replaces/drops them under G03's closed rules.
+Seed sets are never replayed. Invalidated seeds require a separately qualified
+history-evolution composition and remain an explicit residual.
+
+##### Finite recipe inventory
+
+All recipes validate the full target logical facets, allowed values and native
+capacity after conversion. Source invalidity also refuses. Every input NULL maps
+to NULL and consumes no non-null parsing/rounding path. A target that disallows
+that NULL fails complete activation; conversion itself never supplies a value.
+
+| kind | parameters | Exact semantics |
+| --- | --- | --- |
+| `numeric-exact` | `{}` | Integer/finite-decimal to integer/finite-decimal. Preserve the mathematical rational value exactly. Reject any fractional result for an integer, nonzero discarded decimal digits, overflow, nonfinite values or target facet failure. Dropping only trailing zero digits preserves numeric value, not a promise to preserve lexical scale. No binary floating-point intermediates. |
+| `numeric-rescale` | `{rounding:"half-even"}` or `{rounding:"toward-zero"}` | Finite decimal source to decimal target with explicit finite target scale. Quantize to that scale using exact decimal/integer arithmetic. Half-even chooses the nearest representable value, ties to an even retained digit, symmetrically for negative values; toward-zero discards fractional magnitude. Check carry overflow after rounding. Actual changed mathematical values require the selected loss review below. No integer target in this first rescale recipe. |
+| `text-date` | `{}` | Exactly10 ASCII characters `YYYY-MM-DD`, Gregorian AD year0001..9999, real calendar/leap-day validity. Full consumption; no trim, BC, infinity, locale, guessed years or alternate separators. |
+| `date-text` | `{}` | Gregorian AD0001..9999 to exactly `YYYY-MM-DD`. Source BC/infinity/out-of-range refuses. |
+| `text-instant` | `{}` | ASCII `YYYY-MM-DDTHH:mm:ss` plus optional `.` and1..6 digits, then `Z` or signed `HH:MM`. Calendar year0001..9999, hours00..23, minutes/seconds00..59; no leap seconds. Offset magnitude at most14:00, with zero minutes at14. Reject `-00:00` (unknown offset). Full consumption, no whitespace. Convert exactly to UTC microseconds; reject UTC results outside AD0001..9999. No truncation or guessed zone. Original lexical offset/precision loss is disclosed. |
+| `instant-text` | `{}` | Finite native microsecond instant in AD0001..9999 UTC to `YYYY-MM-DDTHH:mm:ss.ffffffZ`, always six fractional digits. Native infinity/BC/out-of-range refuses. No session timezone dependence. |
+| `date-instant` | `{at:"00:00:00",offset:"Z"}` | Gregorian AD0001..9999 date to exactly midnight UTC. No named zone, local timezone or DST inference. |
+| `instant-date` | `{time:"require-midnight",offset:"Z"}` or `{time:"discard",offset:"Z"}` | UTC calendar date for a finite microsecond instant in AD0001..9999. `require-midnight` rejects any nonzero time component. `discard` explicitly drops time and requires loss review. No session timezone or named zone selection. |
+| `text-uuid` | `{}` | Exactly lower-case canonical ASCII `8-4-4-4-12` hexadecimal UUID spelling, no braces/whitespace/alternate layout/case folding. All128-bit values allowed subject to target facets; no inferred UUID version restriction. |
+| `uuid-text` | `{}` | Canonical lower-case `8-4-4-4-12` ASCII spelling. |
+| `text-boolean` | `{trueToken,falseToken}` | Two distinct nonempty exact strings, each at most128 UTF8 bytes. Full string equality, no trim, Unicode normalization, case folding or truthiness. Every other token refuses. |
+| `boolean-text` | `{trueToken,falseToken}` | Exact selected token for true/false; same distinctness/bounds as parsing. Target text facets still apply. |
+
+This inventory is finite, not a claim of all possible type pairs. Float families,
+numeric/text parsing, arbitrary text reformatting, extra instant precision,
+named-zone gap/fold rules, spatial/JSON/arrays/generated values and user-defined
+recipes remain explicitly unsupported until independently specified and tested.
+Delivering one family does not close G04's remaining families.
+
+##### Loss and recovery are separate obligations
+
+The existing destructive-review marker binds full old/new Field meaning and
+declared conversion effects, not merely SQL type names. Add a located explicit
+loss marker whenever the selected recipe permits changed mathematical values,
+discarded time, changed lexical scale/spelling or lost lexical offset/precision.
+The plan records potential loss even on an empty or presently lossless sample.
+A boolean approval cannot suppress target validity, unknown semantics or native
+capability refusal. Public receipts contain aggregate counts and located schema
+diagnostics; no original/reject values or low-entropy per-value hashes.
+
+Recovery has exactly one closed shape:
+
+- `{mode:"irreversible",reviewMarker}`: explicit immediate loss of the original
+  representation. The marker must exist, bind this exact conversion and be
+  included in approval. It is required even when a narrow mathematical value
+  preservation claim holds, unless an admitted round-trip proof covers recovery.
+- `{mode:"retained-originals",policy:{id,revision}}`: select an authenticated
+  immutable host retention policy and the actual `umf.pg-row-originals/0.1`
+  provider. Policy is not an author-selected pathname, arbitrary archive SQL or
+  unauthenticated window. Missing provider/policy refuses.
+- `{mode:"round-trip",proofProfile}`: allowed only for a finite compiler/host
+  capability whose closed source and allowed post-cutover write domain prove
+  the inverse. Initially whitelist `umf.exact-integer-widening-roundtrip/0.1`,
+  restricted to the old integer bounds on BOTH source values and target-era
+  admitted writes. Broader target writes make the mode unavailable; a tested
+  sample or an author-supplied inverse cast is not a proof.
+
+Round-trip reversibility still needs a new approved restore plan, current-domain
+validation and ingress protection. It never resets metadata history or promises
+that deleted rows can be reconstructed. Retained mode and loss review may both
+be required: keeping originals does not make the forward target semantics equal.
+
+##### First native execution strategy
+
+`postgresql18-checked-inplace/0.1` is maintenance-only. Use the adopted G11 actual
+credential/session retirement provider, external target custody and private
+same-connection controller hooks. Keep stable effective subjects and occupied
+outcome slots. Native locks alone do not qualify protection of the gap after
+carrier COMMIT and before publication. Acquire the complete affected table/FK
+closure in deterministic order with exclusive carrier protection; another
+migrator cannot race the selected transition. Refuse unowned inbound/native
+dependencies and prohibited object kinds. Do not use CASCADE.
+
+Use one protected business transaction for original capture, checked conversion,
+full target constraint/dependency validation, post-cutover revision capture and
+phase receipt. The admitted Weft recipe lowers the actual conversion expression;
+the adapter may place that expression into its fixed DDL but cannot replace it
+with a permissive native cast. No author `USING` SQL. Validate the entire actual
+population, including target Key collisions after conversion. A prior unprotected
+scan is advisory. Zero-row conversions still validate schema/default/dependencies.
+
+Apply the trusted G11 execution policy to the whole transaction, including native
+transaction_timeout before BEGIN, absolute host deadline, bounded driver waits
+and positive rollback/unknown-COMMIT handling. Add a trusted protected-population
+bound default100000/max1000000 rows and private retained logical-byte bound
+default64MiB/max1GiB. These are trusted policy, included in approval identity, not
+author wire members. Count the locked complete population once per converted
+Field; converting two Fields in one row charges two entries. A finite qualified
+measurement must include actual retained values and metadata; an estimated
+preflight or disk-block count does not prove the logical-byte bound. Fail before
+conversion on overflow, and roll back any capture/DDL already in that transaction.
+No promise of a physical disk-byte ceiling follows from this logical-byte limit.
+
+Record completed recipe/profile/policy digests, exact population/effect counts,
+custody/archive identifier when selected, native prefix witness and original
+approval/progress binding in the SAME transaction. Keep ingress fenced until
+new source/binding/head and epoch are atomically published and externally
+confirmed. Unknown COMMIT observes the original transition and native witnesses;
+never apply a second conversion to values already converted. Failed uncommitted
+capture/rewrite rolls back together; durable fence/progress can remain.
+
+##### Row-originals provider contract
+
+First provider is one exact installation-owned private schema in the same
+physical PostgreSQL database. Provider inventory names each native object and
+original creation identity under external custody; no prefix adoption or schema
+exception for arbitrary objects. It is distinct from the G11 ingress control
+store and cannot grant ordinary clients or businessOwner access to originals.
+
+Before conversion, enroll protected hidden row-instance UUID and positive int8
+revision columns, a native unique constraint and fixed owned INSERT/UPDATE
+trigger/function profile. The compiler must reserve exact collision-checked
+native names under the selected provider. UUIDs are assigned once for each
+insert; updates preserve identity and increase revision, including no-op updates.
+Overflow/collision aborts, never wraps or resets. DELETE then INSERT with a reused
+business Key creates a different UUID. Neither `ctid`, `xmin`, mutable Keys nor
+row order substitutes for this identity. Native generated/identity/partitioned
+tables need separate admission and are not silently included.
+
+The native expected inventory is the explicit union of the compiled business
+catalog and this exact enrolled provider footprint, including physical column
+order and dependency ownership. Keep their source correspondences distinct:
+provider columns are not silently added to Core Fields or generated API results.
+Existing blanket extra-column/trigger refusal needs a versioned exact provider
+composition, not a generic allowance for extra objects or trusted name prefixes.
+Migrations without this selected capability retain their original refusal rules.
+PostgreSQL columns are not intrinsically hidden: ordinary `SELECT *`/implicit
+full-column writes can fail under the required column privileges. Generated
+queries must select explicit application columns, and this direct-SQL
+compatibility boundary is part of enrollment approval and native acceptance.
+
+Ordinary principals have only explicit application-column SELECT/INSERT/UPDATE
+grants, no inherited or direct table-level grants exposing metadata. Trigger
+invariants plus the actual column privilege boundary reject supplied/returned
+tokens; ordinary SQL cannot reset identity/revision or disable/change the
+trigger, function, replication role or relevant ALTER/parameter privileges.
+No caller GUC enables a bypass. Safe search path, exact function body/owner,
+memberships and every dependency are catalog-witnessed. Old implicit full-column
+INSERT/direct-writer compatibility changes must be disclosed, not patched with
+metadata privileges. Superuser/controller authority is outside ordinary clients
+and remains trusted host authority, with its explicit private fixed operations.
+
+Capture every original instance's native old typed value and NULL presence,
+source Field/type/facets/encoding, instance UUID and capture revision. Archive
+metadata binds installation/target incarnation, archive/migration UUID,
+source/target/plan/approval digests, exact policy revision and selected native
+object identities. After actual conversion and validation, capture each same
+instance's actual post-cutover revision as its restore baseline IN THE SAME
+transaction. Do not assume that capture revision equals post-cutover revision:
+some native strategies may perform updates. New strategies require their own
+identity-lineage qualification; first strategy is in-place only.
+
+Archive access returns an opaque host capability, never raw values in portable
+plan/receipts. Verify native typed custody, original external creation binding,
+exact row set/count and private object/ACL/catalog inventory before relying on
+recovery. Retention policy has a qualified time authority, authenticated current
+holds and monotonic custody; expiry only permits separately approved G05 purge.
+No automatic deletion or historical-source-as-data claim.
+
+Restore is a new approved protected plan with the exact original archive. An
+original instance is restorable only if still present and its current revision
+equals the recorded post-cutover baseline. Any later update initially conflicts,
+even to an unrelated Field. Do not infer an exception from unchanged value.
+Deleted originals remain deleted. New/reinserted instances have no originals;
+default is complete restore refusal until a separately selected reverse recipe
+or explicit fill/repair disposition covers every such instance. Never join an
+archive solely on business Key or resurrect a deleted row. Verify the complete
+restored target, dependencies, defaults and client bindings before publication.
+Conflicts/missing/tampered/expired custody cause full refusal, no partial schema
+activation or silent overwrite. Restore itself does not purge the archive.
+
+G05 retirement/restore/purge, G06 online capture/shadow lineage, external archives,
+key management, archive compaction and relaxed unrelated-update reconciliation
+remain distinct unqualified capabilities. G04 is not complete until both its
+selected recipes and its selected recovery modes have actual native evidence;
+irreversible-only delivery must explicitly retain the originals-mode gap.
+
+##### Independent acceptance and release allocation
+
+Amend all three governing documents before enabling a successor. Each recipe
+gets manually specified values and refusals: signed numeric bounds, ties/carry/
+negative rounding, trailing zeros, NaN/infinity; leap calendars; full-consumption
+and whitespace refusal; explicit offsets/unknown offset, precision and UTC year
+boundaries; midnight/discard; UUID spellings; exact boolean tokens and target
+Key collisions. No runtime float, locale, DateStyle or session TimeZone changes
+may alter the selected meaning. Qualify the native runtime/version explicitly.
+
+Exercise defaults and actual generated query/command clients, affected inbound
+FKs, CHECKs, indexes, RLS/grants and unknown extension preservation. Native data
+must match complete independently authored expected rows under a qualified
+observer, including FORCE RLS. Source/browser parity is separate evidence.
+
+For retained recovery, execute unchanged, no-op-updated, unrelated-updated,
+changed, inserted, deleted and Key-reused instances; supplied/RETURNING tokens,
+COPY, ON CONFLICT and each actually admitted MERGE path; trigger/parameter/role
+bypass attempts, collision and revision overflow; tampered/missing archive/ACL,
+restored database/rewound custody; and current policy/hold/expiry refusal. Pause
+real old prepared readers/cursors/direct writers at fence, carrier COMMIT and
+publication. Inject cancellation and lost acknowledgements at capture, rewrite,
+validation, phase COMMIT and publication. Prove rollback or original committed
+outcome lookup and no double conversion. Native provider absence is not a
+passing substitute for these effects.
+
+Freeze complete installed Core/Weft/Codegen/Access/SDK artifacts, actual wrapper
+profile propagation, native source census, browser/CI/platform matrix and fresh
+public-download byte correspondence. Release notes enumerate exact delivered
+recipes, source/target domains, recovery/host modes, versions/evidence and every
+remaining family/composition/backend gap. Do not close the whole backlog from a
+single maintenance conversion.
+
+
+##### Exact first originals store and row-identity footprint
+
+Select `umf.native-row-originals-store/0.1` only on the qualified PostgreSQL18.6
+UTF8 database subset. The trusted original-creation schema is `umf_originals_`
+plus the provider UUID's32 lowercase hex digits, owned by a distinct enrolled
+originals-controller. It has no PUBLIC/business-owner/ordinary-client access.
+The maintenance SESSION_USER has separately enrolled SET-only authority to the
+business owner and originals-controller; ordinary subjects cannot reach them.
+The same G11 fixed same-connection role-hook discipline applies. Provider native
+registration binds external target custody and original schema/table/function/
+constraint/index/trigger OIDs and names. Copied metadata/name/OID equality alone
+never establishes original authority. No IF NOT EXISTS or prefix adoption.
+
+The fixed registration table is:
+
+```sql
+CREATE TABLE <originals>.row_tables (
+ table_token pg_catalog.uuid PRIMARY KEY,
+ installation_id pg_catalog.text COLLATE pg_catalog."C" NOT NULL CHECK (installation_id <> ''),
+ business_table_oid pg_catalog.oid NOT NULL UNIQUE,
+ business_schema_oid pg_catalog.oid NOT NULL,
+ table_binding pg_catalog.text COLLATE pg_catalog."C" NOT NULL,
+ record pg_catalog.jsonb NOT NULL CHECK (pg_catalog.jsonb_typeof(record) = 'object'),
+ record_digest pg_catalog.text COLLATE pg_catalog."C" NOT NULL CHECK (record_digest ~ '^[a-f0-9]{64}$')
+) USING heap;
+CREATE TABLE <originals>.archives (
+ archive_id pg_catalog.uuid PRIMARY KEY,
+ table_token pg_catalog.uuid NOT NULL REFERENCES <originals>.row_tables(table_token) ON UPDATE RESTRICT ON DELETE RESTRICT,
+ state pg_catalog.text COLLATE pg_catalog."C" NOT NULL CHECK (state IN ('capturing','complete')),
+ values_relation_oid pg_catalog.oid NOT NULL UNIQUE,
+ row_count pg_catalog.int8 NOT NULL CHECK (row_count BETWEEN 0 AND 1000000),
+ logical_bytes pg_catalog.int8 NOT NULL CHECK (logical_bytes BETWEEN 0 AND 1073741824),
+ record pg_catalog.jsonb NOT NULL CHECK (pg_catalog.jsonb_typeof(record) = 'object'),
+ record_digest pg_catalog.text COLLATE pg_catalog."C" NOT NULL CHECK (record_digest ~ '^[a-f0-9]{64}$')
+) USING heap;
+```
+
+A row-table record has exactly `{profile:"umf.native-row-identity/0.1",providerId,
+installationId,targetCustody,tableToken,tableBinding,businessRelation,
+idColumn,revisionColumn,uniqueConstraint,revisionConstraint,trigger,function,
+creationReservationDigest}`. businessRelation is exact `{schemaOid,schemaName,
+tableOid,tableName}`; column entries are `{attnum,name,typeOid,typeMod}`;
+constraint/trigger/function entries are `{oid,name,definitionDigest}`. Their
+native definitions, owners, flags, ACLs/dependencies and exact provider shape
+must independently match the fixed renderer; digest self-consistency is not
+native proof. IDs/OIDs are typed positive native identifiers, not name inference.
+
+An archive record has exactly `{profile:"umf.native-row-originals/0.1",providerId,
+installationId,targetCustody,archiveId,tableToken,field,sourceDigest,targetDigest,
+planDigest,approvalDigest,policy,sourceNativeDomain,valuesRelation,
+creationReservationDigest,state,rowCount,logicalBytes}`. Field is complete
+module/element, policy is authenticated id/revision, sourceNativeDomain is exact
+`{schema,name,typeOid,typeMod,collationOid}` from the selected previous catalog,
+valuesRelation exact schema/name/OID. All digest fields are lowercase64hex.
+Native duplicate columns and recomputed record digests must agree on every read.
+These records have no row originals or per-value hashes. Full original private
+creation/policy/source observations remain in authenticated host custody.
+
+Each archive owns exactly one heap `values_<archiveUUID32hex>`:
+
+```sql
+CREATE TABLE <originals>.<values> (
+ instance_id pg_catalog.uuid PRIMARY KEY,
+ captured_revision pg_catalog.int8 NOT NULL CHECK (captured_revision > 0),
+ post_revision pg_catalog.int8 CHECK (post_revision > 0),
+ old_value <qualified-old-native-type>
+) USING heap;
+```
+
+The sole variable scalar type is compiler-rendered from the exact source native
+domain, initially pg_catalog int2/int4/int8, finite numeric(p,s) within admitted
+capacity, text COLLATE pg_catalog."C", uuid, bool, finite date AD0001..9999 or
+finite timestamptz(6) whose UTC year is in that range. Unknown types/domains/
+collations/generated/identity/partitioned carriers refuse. No author SQL type.
+Old_value remains genuinely native typed and nullable; no JSON/float/string
+substitute is its retained value. Native NULL is preserved; this does not invent
+an absent-versus-NULL distinction that the original SQL carrier did not store.
+There is NO FK from archive instances to live business rows: deletion must not
+cascade originals or forbid ordinary deletes. Only fixed PK/check backing
+indexes are admitted; no RLS, triggers, rules, partitions/inheritance or unmanaged
+dependencies on any private store table. One record is at most1MiB canonical
+UTF8; cap enrolled tables/archives at4096 each, refuse exhaustion, never autoerase.
+
+For each enrolled business table choose one original trusted tableToken UUID.
+Its exact metadata names are `__umf_row_id_<token32>`, `__umf_row_rev_<token32>`,
+`__umf_row_key_<token32>`, `__umf_row_positive_<token32>` and
+`__umf_row_guard_<token32>`. Collision with any existing object refuses. Under the
+same approved protected transaction, append id UUID NOT NULL with temporary
+pg_catalog.gen_random_uuid() default, and revision int8 NOT NULL with temporary1
+default to populate existing rows. Install native unique(id) and CHECK(rev>0),
+then drop both defaults and install the exact fixed BEFORE INSERT OR UPDATE
+FOR EACH ROW guard; ENABLE ALWAYS the guard. No native table rewrite equivalence
+is assumed without actual evidence.
+
+The fixed function/trigger renderer is as follows. Angle-bracket identifiers are
+only the original safely quoted provider schema/function/table/column/trigger
+identities described above; they are not author SQL or template parameters:
+
+```sql
+CREATE FUNCTION <originals>.<identity>() RETURNS trigger
+ LANGUAGE plpgsql VOLATILE CALLED ON NULL INPUT SECURITY DEFINER
+ PARALLEL UNSAFE COST 100 SET search_path = pg_catalog
+ AS $umf_identity$
+BEGIN
+ IF TG_OP = 'INSERT' THEN
+  NEW.<id> := pg_catalog.gen_random_uuid();
+  NEW.<rev> := 1;
+ ELSIF TG_OP = 'UPDATE' THEN
+  IF NEW.<id> IS DISTINCT FROM OLD.<id> OR NEW.<rev> IS DISTINCT FROM OLD.<rev> THEN
+   RAISE EXCEPTION USING ERRCODE = '42501', MESSAGE = 'umf row identity mutation denied';
+  END IF;
+  IF OLD.<rev> = 9223372036854775807 THEN
+   RAISE EXCEPTION USING ERRCODE = '22003', MESSAGE = 'umf row revision exhausted';
+  END IF;
+  NEW.<id> := OLD.<id>;
+  NEW.<rev> := OLD.<rev> OPERATOR(pg_catalog.+) 1::pg_catalog.int8;
+ ELSE
+  RAISE EXCEPTION USING ERRCODE = '42501', MESSAGE = 'umf row identity trigger event denied';
+ END IF;
+ RETURN NEW;
+END;
+$umf_identity$;
+CREATE TRIGGER <guard> BEFORE INSERT OR UPDATE ON <business>.<table>
+ FOR EACH ROW EXECUTE FUNCTION <originals>.<identity>();
+ALTER TABLE <business>.<table> ENABLE ALWAYS TRIGGER <guard>;
+```
+
+The function name is `<originals>.identity_<token32>()`, RETURNS trigger,
+LANGUAGE plpgsql, VOLATILE, SECURITY DEFINER, PARALLEL UNSAFE, CALLED ON NULL INPUT,
+SET search_path=pg_catalog; owner is originals-controller. Its fixed generated
+body admits TG_OP INSERT and UPDATE only. INSERT assigns NEW.id from
+pg_catalog.gen_random_uuid() and NEW.rev=1. UPDATE raises SQLSTATE42501 if NEW.id
+or NEW.rev differs from OLD; raises22003 if OLD.rev=9223372036854775807;
+otherwise preserves id and sets rev=OLD.rev+1. Return NEW. No dynamic SQL,
+caller-selected function, ambient GUC bypass or arbitrary dependency. Native
+schema guards compare every pg_proc option/body/dependency and trigger
+properties, not a function-name allowlist. Revoke PUBLIC EXECUTE in the same
+creation transaction; create the trigger through the explicitly enrolled
+maintenance authority, then remove temporary setup grants. Qualify actual native
+trigger invocation and direct EXECUTE denial, not an assumption about privilege
+checks. PostgreSQL's documented trigger, function and grant surfaces inform this
+selected shape, not executed proof:
+[CREATE TRIGGER](https://www.postgresql.org/docs/18/sql-createtrigger.html),
+[CREATE FUNCTION](https://www.postgresql.org/docs/18/sql-createfunction.html),
+[GRANT](https://www.postgresql.org/docs/18/sql-grant.html).
+
+Explicit application-column privileges replace ordinary table-level SELECT,
+INSERT and UPDATE grants. Allowed DELETE stays its independently selected table
+privilege/RLS meaning. Revoke PUBLIC/direct/inherited whole-table privileges and
+metadata column access, including REFERENCES, TRIGGER, MAINTAIN and ALTER/role/
+parameter authority that could expose or bypass the guard. Preserve the actual
+application-field/person/batch deny/allow semantics and FORCE RLS. No ordinary
+SELECT/RETURNING/COPY may expose metadata or archives. Complete typed native
+expected ACLs are the exact source-derived business grants translated to known
+application columns plus the original enrolled provider footprint. Unknown extra
+columns/triggers/functions/ACLs still refuse; no external-object waiver. Old
+SELECT* and implicit full-column write compatibility changes require explicit
+enrollment disclosure and actual client evidence.
+
+Under actual exclusive table/dependency protection and durable ingress fencing,
+the fixed private maintenance scope may disable RLS on the business table, verify
+that state, collect the complete original typed rows as businessOwner on the
+SAME connection, then enter the controller hook only to insert bounded native
+values into the exact archive, and restore/reverify owner/settings. No archive
+privilege goes to businessOwner and no general controller SELECT grant goes to
+business data. Private bounded buffers and parameter adaptation remain exact;
+no values enter public logs or portable receipts. Re-enable/force RLS and verify
+its original/next source policy surface before the committed phase receipt.
+Any error aborts that entire transaction. This narrow transactional RLS scope
+must be qualified with real FORCERLS rows; owner-visible empty rows are not a
+capture oracle. Source expressions cannot acquire this maintenance authority.
+
+Logical retained bytes are exactly the canonical accountingManifest projection
+(complete archive record with ONLY logicalBytes omitted, retaining actual
+rowCount/state complete and all source/policy/object bindings) UTF8 byte length plus,
+for each retained instance,41 bytes (UUID16, captured/post revision8 each,
+NULLtag1, value-length8) plus N bytes. N is zero for NULL, otherwise the length of
+that admitted native scalar's canonical text output encoded as UTF8 under pinned
+ISO,YMD DateStyle/UTC settings. It measures logical custody, not heap/WAL/disk.
+Only fixed pg_catalog scalar casts/I/O are used for this measurement, not author
+casts. Retained old_value itself remains native typed. Native/driver tests must
+prove exact values and this bounded accounting; policy count/budget failure
+rolls capture and conversion back together. Check source finite/calendar domain
+BEFORE adapting values to a driver that might collapse a native special value.
+
+After conversion, same-instance post_revision observations populate every
+archive row, then set post_revision NOT NULL and mark complete in the SAME
+business transaction and native phase receipt. Verify complete row-set equality
+and unchanged tableToken/identity before commit. Capturing archives cannot be
+recovery authority; unknown COMMIT observes original archive/progress, never
+creates a replacement. Restore compares CURRENT revision with that actual
+post-cutover baseline, never merely captured_revision. Any changed original or
+new instance without admitted reverse/fill disposition causes full restore
+refusal; deleted originals are not resurrected and reused Keys do not match.
+Archive purge, relaxed unrelated-update restore, online capture/shadow copies
+and storage outside this exact database are separately selected G05/G06 work.
+
+
+##### Plan effect variants
+
+Source-only UMF planning does not call Weft. Add `kind:"conversion"` only for
+plan0.7. Every such step has exactly the common source-bound step members plus
+`operation,phaseOperation,phaseTarget,conversionBinding`; sql is exactly the empty
+string and transaction exactly `required`. Operation and phaseOperation are the
+SAME literal, one of `capture-originals|convert-field|validate-conversion`.
+PhaseTarget is exact `{table,field}`. Common members are the existing
+`id,kind,sourcePath,transaction,sql,preconditions,expectedOutcome,verification,
+recovery`, preserving their existing fixed phase/source/native-witness meanings.
+No phaseDependency/constraintKind/seedSets or author executable SQL on these steps.
+
+ConversionBinding is exactly
+`{profile:"umf.field-conversion-step/0.1",selectionIndex,intentDigest,
+beforeDomainDigest,afterDomainDigest}`. Index is the actual normalized options
+array index0..255; digests recompute from cycle-free intent and complete original
+before/after `{physical,logical,mapping}`. Capture sourcePath is exactly
+`/options/conversions/<index>/recovery`, conversion sourcePath exactly
+`/options/conversions/<index>/recipe`, and validation sourcePath the exact
+successor column mapping sourcePath. Preconditions are exactly
+`{phase:"before-plan",kind:"installed-source-cohort",bundleDigest:previous.digest}`;
+expectedOutcome exactly `{phase:"before-commit",kind:"complete-next-source-catalog",
+bundleDigest:next.digest}`. Verification is exactly
+`"native-catalog-privileges-and-role-scope"`, recovery exactly
+`"rollback-transaction"`, with the concrete data/custody validation obligations
+below. IDs retain the existing ordered `step-` plus five ASCII digits algorithm.
+These located paths are never SQL authority.
+
+Emit capture-originals exactly once before that conversion if and only if its
+recovery selects retained-originals; otherwise emit none. Emit exactly one
+convert-field and validate-conversion per selection. Validate-conversion follows
+all relevant conversions and reinstalled dependencies, including cross-Field
+CHECK/Key/FK closure. Step ordering is a typed DAG, not operation-name/SQL adjacency.
+All three run in one atomic field-conversion phase under original approval and
+actual source/native custody; generic empty-SQL fallback is forbidden. Plan
+verification recompiles these exact variants from original sources/options and
+rejects injected/missing/duplicate/cross-target bindings before native effects.
+
+##### Native preparation request
+
+The trusted host prepares the actual conversion through a newly qualified Weft
+checked-recipe capability. It uses exact installed immutable Weft artifacts from
+the original approved native qualification evidence/census, not an author module,
+caller callback or arbitrary JSON-returning fake. Public wrapper function names
+must be agreed with the Weft owner before enabling this port; profile semantics
+and closed records below are the required boundary.
+
+Request is exactly
+`{version:"weft.checked-conversion-request/0.1",target:"postgresql18",binding,
+beforeDomain,afterDomain,recipe,nulls:"preserve",invalid:"abort"}`.
+Binding is exactly `{previousSource,nextSource,previousBundleDigest,
+nextBundleDigest,configurationDigest,table,field}`. Each source is exactly
+`{format:"json",sha256}` over full original retained bytes. Domain is the exact
+complete source-derived `{physical,logical,mapping}`; recipe is the selected
+closed recipe. Every binding/domain/digest is rederived by UMF from the verified
+plan and original source, not accepted from a supplied prepared descriptor.
+Weft admits its exact logical/native domains and checked recipe or refuses;
+unknown qualifiers/meaning cannot be dropped to get a compilation result.
+
+Native preparation happens before any phase dispatch, with finite resource
+bounds. It does not scan/change rows or acquire a connection in Weft. The host
+retains the actual qualified prepared compiler handle and verifies the complete
+reply/request correspondence. It may reprepare deterministic artifacts after
+known safe restart, but unknown/committed conversion effects are never replayed.
+
+##### Checked scalar descriptor and SQL authority
+
+A successful reply is exactly
+`{version:"weft.checked-conversion/0.1",status:"compiled",target:"postgresql18",
+requestDigest,binding,recipeDigest,beforeDomainDigest,afterDomainDigest,
+expression,nativeExactValueGuard}`. RequestDigest is RFC8785 SHA256 of that actual
+closed request; binding is exact request binding. All other digests recompute.
+Host qualification separately verifies actual immutable native compiler/artifact
+identity; an echoed digest or arbitrary matching dictionary is not authority.
+
+Expression is exactly `{kind:"checked-scalar",sql,input,output}`. Input is exact
+`{table,field,column}` from the original source; output is exact
+`{schema,name,typeMod,collation}` from its admitted next native domain. SQL is one
+finite scalar expression generated/escaped by Weft, at most65536 UTF8 bytes.
+It refers only to the selected original source column, known pg_catalog
+operations and recipe constants. No outer DDL/DML, multiple statement, callback,
+catalog query, user-defined object, arbitrary function or connection authority.
+There are no driver parameter slots in this first DDL expression profile:
+Weft owns typed literal rendering/escaping for finite recipe parameters. The host
+must not interpolate token strings or assume utility-DDL parameter support.
+
+NativeExactValueGuard is exactly
+`{profile:"pg18-checked-conversion-exact/0.1",sqlstate:"22012",
+scope:"all-protected-source-rows",nullInput:"preserve-null",
+invalidInput:"statement-error-and-transaction-rollback",
+nonfiniteInput:"statement-error-and-transaction-rollback",
+lossPolicy:"selected-recipe-only",privateResults:true}`. Selected rounding/time
+discard is explicit recipe meaning, never generic lossy coercion. Target
+constraints/Key collisions may produce their actual native SQLSTATE; all errors
+abort the complete phase and public diagnostics omit values/DETAIL samples.
+
+UMF renders only its fixed safe DDL shell:
+`ALTER TABLE <verified qualified table> ALTER COLUMN <verified target column>
+TYPE <compiler-owned target native type> [COLLATE <qualified admitted collation>]
+USING (<verified Weft checked scalar>)`. The destination type/collation comes
+from the verified next catalog. The scalar comes only from the actual qualified
+Weft preparation above. Do not parse an author SQL string, replace it with a
+native cast, rewrite a returned scalar, or move migration DDL into Weft. Matching
+names/digests alone cannot authorize a foreign prepared handle.
+
+Capture-originals invokes the exact private typed store/row-identity protocol;
+validate-conversion invokes protected complete target/domain/catalog/dependency
+validation. Neither step executes author SQL or becomes a no-op merely because
+plan.sql is empty. Source-only export/check is descriptive and cannot qualify
+native apply when this concrete compiler/provider is unavailable.
+
+##### Committed runtime correspondence
+
+For execution0.6 select private transition record variant
+`umf.native-ingress-transition/0.2`; keep the exact original transition keys but
+executionPolicy must have G04's closed policy profile, and phaseBudgetReceipt
+must have the following G04 variant after committed phase completion. Other
+execution profiles retain their original exact record variants/refusal rules.
+
+Receipt is exactly
+`{profile:"umf.g04.phase-budget-receipt/0.1",policyDigest,conversionEntries,
+retainedLogicalBytes,fieldEffects,nativeTransactionTimeoutMs}`. FieldEffects is
+ordered in selected conversion execution order, at most256 unique targets, each
+exactly `{stepId,table,field,intentDigest,recipeDigest,beforeDomainDigest,
+afterDomainDigest,programDigest,compilerArtifactDigest,sourceCount,
+convertedCount,archiveId}`. SourceCount/convertedCount are exact nonnegative safe
+integers from the actual complete protected population; equality is required for
+this non-row-deleting/non-filtering profile. ConversionEntries is their shared
+sum and must fit policy. ArchiveId is actual original custody UUID or null iff
+no retained recovery was selected. ProgramDigest hashes the complete actual
+verified reply; compilerArtifactDigest matches original native qualification
+evidence and the actual installed native module census. RetainedLogicalBytes is
+the defined complete sum across selected archives, within policy. No row values
+or per-value hashes enter this receipt.
+
+Persist the verified descriptor/custody observations privately and this exact
+receipt with business cutover/phase completion/provider record on the SAME
+transaction. The host checks original selected step order/target, actual compiler
+identity, complete digests, counts and archive correspondence before recording.
+An internally consistent invented receipt is insufficient. Unknown COMMIT
+observes original progress/store receipt; never reexecutes conversion to obtain
+a missing local descriptor/result. Native tests must prove this boundary and
+actual scalar correctness before production admission.
+
+##### Cycle-free retained-byte accounting
+
+For each archive compute accountingManifest from the COMPLETE actual archive
+record with exactly its `logicalBytes` member omitted. Keep every other member,
+including actual rowCount, values relation/source/target/approval/policy bindings
+and state `complete`. Hash/checksum columns outside that record are not part of
+accountingManifest. Do not include its own counter or introduce a least-fixed-point
+iteration. Canonical RFC8785 UTF8 bytes of that projection plus the specified
+41+N bytes per instance define this profile's logical byte count. Sum archives
+with exact integers, compare bound before conversion when all projected inputs
+are known, and reverify actual complete record at phase completion before COMMIT;
+overflow aborts the entire transaction. Counter/checksum bookkeeping is excluded
+from this declared logical measure and separately bounded by the exact store
+record/shape caps. No physical heap/WAL/disk-byte ceiling is claimed.
