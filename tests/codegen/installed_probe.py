@@ -54,7 +54,7 @@ def only_native_worker(command, *args, **kwargs):
     assert (command == [native_cli, 'codegen', '--capabilities'] or
             (len(command) == 9 and command[1] == 'codegen' and command[2] in codegen_operations
              and command[3:] == ['--request', '-', '--input-format', 'json',
-                                  '--output-format', 'wire'])), command
+                                  '--output-format', 'json'])), command
     worker_launches.append(command)
     return real_popen(command, *args, **kwargs)
 
@@ -71,7 +71,14 @@ with patch.object(subprocess,'Popen',side_effect=only_native_worker), \
         except GenerationError as error:
             observed = {'ok':False,'error':{'code':error.code,'message':str(error)}}
             if error.path is not None: observed['error']['path']=error.path
-        assert observed == item['expected'], item['name']
+        # Equality would treat int 1 and float 1.0 as equal. The retained
+        # predecessor corpus is a JSON-byte contract, so compare canonical
+        # output bytes to preserve numeric token/type behavior as well.
+        observed_bytes = json.dumps(observed, ensure_ascii=True,
+                                    separators=(',', ':'), allow_nan=False).encode('ascii')
+        expected_bytes = json.dumps(item['expected'], ensure_ascii=True,
+                                     separators=(',', ':'), allow_nan=False).encode('ascii')
+        assert observed_bytes == expected_bytes, item['name']
         results.append({'name':item['name'],'accepted':observed['ok'],'completeBytesAndRefusalEqual':True})
     result = corpus[0]['expected']['result']
     with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve(),prefix='umf-codegen-writer-') as directory:

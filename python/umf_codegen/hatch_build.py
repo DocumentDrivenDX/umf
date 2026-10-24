@@ -4,6 +4,8 @@ import ast
 import hashlib
 import json
 from pathlib import Path
+import subprocess
+import sys
 
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
 
@@ -28,6 +30,10 @@ def _resource_pin(package: Path) -> str:
 class CustomBuildHook(BuildHookInterface):
     def initialize(self, version, build_data):
         root = Path(self.root)
+        repository = root.resolve().parents[1]
+        canonical_check = repository / "scripts/rust-migration/r4/sync_codegen_resources.py"
+        if canonical_check.is_file():
+            subprocess.run([sys.executable, str(canonical_check)], cwd=repository, check=True)
         package = root / 'src/umf_codegen'
         assets = package / '_resources'
         raw = (assets / 'manifest.json').read_bytes()

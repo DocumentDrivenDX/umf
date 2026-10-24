@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import os
 import selectors
 import subprocess
@@ -34,6 +35,8 @@ _MAX_REQUEST = 32 * 1024 * 1024
 _MAX_RESPONSE = 64 * 1024 * 1024
 _MAX_SOURCE = 16 * 1024 * 1024
 _MAX_CAPABILITIES = 1024 * 1024
+_MAX_JSON_RESPONSE_VALUES = 1_000_000
+_MAX_SAFE_INTEGER = 9_007_199_254_740_991
 _RESOURCE_FILES = {
     "tablesPackage": "tables.package.json",
     "actionsPackage": "actions.package.json",
@@ -79,17 +82,13 @@ def _cli_binary() -> Iterator[Path]:
         raise GenerationError("ENGINE_UNAVAILABLE", "Pinned native codegen CLI is unavailable") from error
 
 
-def _verify_native() -> tuple[Any, Any, Any, type[ValueError]]:
+def _verify_native() -> tuple[Any, type[ValueError]]:
     try:
         installed = version("umf-core")
         if installed != UMF_CORE_VERSION:
             raise ImportError(f"umf-core {UMF_CORE_VERSION} is required")
         from umf._rust import _rust_core
-        from umf.rust_codegen import (
-            UmfCoreError,
-            decode_codegen_cli_response_wire,
-            encode_codegen_cli_request_json,
-        )
+        from umf.rust_codegen import UmfCoreError, encode_codegen_cli_request_json
 
         if not callable(getattr(_rust_core, "execute_codegen_wire", None)):
             raise ImportError("Native codegen wire API is missing")
@@ -97,9 +96,9 @@ def _verify_native() -> tuple[Any, Any, Any, type[ValueError]]:
             raise ImportError("Native core ABI identity differs")
         if _rust_core.codegen_protocol_version() != CODEGEN_PROTOCOL_VERSION:
             raise ImportError("Native codegen protocol identity differs")
-        if not callable(encode_codegen_cli_request_json) or not callable(decode_codegen_cli_response_wire):
-            raise ImportError("Native codegen CLI transport helpers are missing")
-        return _rust_core, encode_codegen_cli_request_json, decode_codegen_cli_response_wire, UmfCoreError
+        if not callable(encode_codegen_cli_request_json):
+            raise ImportError("Native codegen CLI request helper is missing")
+        return encode_codegen_cli_request_json, UmfCoreError
     except (ImportError, PackageNotFoundError, AttributeError, ValueError, RuntimeError) as error:
         raise GenerationError(
             "ENGINE_UNAVAILABLE", f"Pinned umf-core {UMF_CORE_VERSION} native codegen engine is required"
@@ -274,6 +273,94 @@ def _decode_cli_error(raw: bytes) -> dict[str, Any]:
     return error
 
 
+def _decode_cli_json_response(raw: bytes, deadline: float) -> dict[str, Any]:
+    """Decode bounded CLI JSON while retaining ECMAScript numeric tokens.
+
+    The core-wire decoder intentionally materializes every binary64 value as a
+    Python float. Codegen's historical JSON result contract materializes
+    ECMAScript integer tokens as Python ints, so this CLI-only path consumes
+    the CLI's already-supported compact JSON output. The strict parser rejects
+    response shapes the core serializer cannot produce.
+    """
+    if len(raw) > _MAX_RESPONSE:
+        raise GenerationError("GENERATION_CAPACITY", "Native codegen CLI exceeded its output limit")
+
+    def reject_constant(value: str) -> Any:
+        raise ValueError(f"non-finite JSON constant: {value}")
+
+    def parse_integer(token: str) -> int:
+        value = int(token)
+        if abs(value) > _MAX_SAFE_INTEGER or (value == 0 and token.startswith("-")):
+            raise ValueError("integer outside the core interoperable numeric profile")
+        return value
+
+    def parse_float(token: str) -> float:
+        value = float(token)
+        if (not math.isfinite(value)
+                or (value == 0.0 and math.copysign(1.0, value) < 0.0)
+                or (value.is_integer() and abs(value) > _MAX_SAFE_INTEGER)):
+            raise ValueError("number outside the core interoperable numeric profile")
+        return value
+
+    def object_pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+        value: dict[str, Any] = {}
+        for key, item in pairs:
+            if key in value:
+                raise ValueError("duplicate JSON object key")
+            value[key] = item
+        return value
+
+    try:
+        text = raw.decode("utf-8")
+        envelope = json.loads(
+            text,
+            parse_constant=reject_constant,
+            parse_int=parse_integer,
+            parse_float=parse_float,
+            object_pairs_hook=object_pairs,
+        )
+    except (UnicodeDecodeError, ValueError, RecursionError) as error:
+        raise GenerationError("GENERATION_FAILED", "Native codegen CLI returned an invalid response") from error
+    if time.monotonic() >= deadline:
+        raise GenerationError("GENERATION_TIMEOUT", "Generation deadline expired")
+
+    remaining = _MAX_JSON_RESPONSE_VALUES
+
+    def check_tree(value: Any, depth: int = 0) -> None:
+        nonlocal remaining
+        remaining -= 1
+        if remaining < 0 or depth > 256:
+            raise ValueError("Native codegen CLI JSON response exceeds structural limits")
+        if time.monotonic() >= deadline:
+            raise GenerationError("GENERATION_TIMEOUT", "Generation deadline expired")
+        if value is None or type(value) in (bool, int, float):
+            return
+        if type(value) is str:
+            for offset in range(0, len(value), 4096):
+                if time.monotonic() >= deadline:
+                    raise GenerationError("GENERATION_TIMEOUT", "Generation deadline expired")
+                value[offset:offset + 4096].encode("utf-8", "surrogatepass")
+            return
+        if type(value) is list:
+            for item in value:
+                check_tree(item, depth + 1)
+            return
+        if type(value) is dict:
+            for key, item in value.items():
+                check_tree(key, depth + 1)
+                check_tree(item, depth + 1)
+            return
+        raise ValueError("Native codegen CLI JSON response contains an unsupported value")
+
+    try:
+        check_tree(envelope)
+    except GenerationError:
+        raise
+    except ValueError as error:
+        raise GenerationError("GENERATION_FAILED", "Native codegen CLI returned an invalid response") from error
+    return envelope
+
+
 def execute(request: dict[str, object], timeout_seconds: float, *, operation: str = "generate") -> dict[str, object]:
     if type(timeout_seconds) not in (int, float) or not 0 < timeout_seconds <= 60:
         raise ValueError("timeout_seconds must be greater than zero and at most 60")
@@ -293,7 +380,7 @@ def execute(request: dict[str, object], timeout_seconds: float, *, operation: st
             if source_bytes > _MAX_SOURCE:
                 raise ValueError("source text must be at most 16 MiB of UTF-8")
 
-    native, encode_request, decode_response, core_error = _verify_native()
+    encode_request, core_error = _verify_native()
     try:
         encoded = encode_request(request, deadline=deadline, max_bytes=_MAX_REQUEST)
     except core_error as error:
@@ -323,7 +410,7 @@ def execute(request: dict[str, object], timeout_seconds: float, *, operation: st
         status, response = _run_cli(
             binary,
             ["codegen", cli_operation, "--request", "-", "--input-format", "json",
-             "--output-format", "wire"],
+             "--output-format", "json"],
             request_bytes, deadline, _MAX_RESPONSE,
         )
     if status == 73:
@@ -335,12 +422,7 @@ def execute(request: dict[str, object], timeout_seconds: float, *, operation: st
         raise GenerationError(error["code"], error["message"], path=error.get("path"))
     if status != 0:
         raise GenerationError("GENERATION_FAILED", "Native codegen CLI exited unexpectedly")
-    try:
-        envelope = decode_response(response.decode("ascii"), deadline=deadline)
-    except Exception as error:  # noqa: BLE001 -- sanitize malformed core-wire response
-        if getattr(error, "code", None) == "DEADLINE":
-            raise GenerationError("GENERATION_TIMEOUT", "Generation deadline expired") from error
-        raise GenerationError("GENERATION_FAILED", "Native codegen CLI returned an invalid response") from error
+    envelope = _decode_cli_json_response(response, deadline)
     if type(envelope) is not dict or type(envelope.get("ok")) is not bool:
         raise GenerationError("GENERATION_FAILED", "Native codegen CLI returned an invalid response")
     if envelope["ok"] is not True:

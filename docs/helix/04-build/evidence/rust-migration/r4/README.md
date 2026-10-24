@@ -83,6 +83,11 @@ arrays. The 32 MiB sample reached 424,886,272 bytes max RSS after parsing in
 0.242 seconds. This demonstrates amplification for one input shape and supplies
 no hard memory or time guarantee for arbitrary JSON.
 
+The [frozen-source offline wheel qualification](current-source-offline-wheel-qualification-20261023.md)
+records the corrected extracted-sdist build and installed CPython 3.11/3.14
+cohort. It is explicitly bounded to its frozen source snapshot; final R8
+resource synchronization and wheel qualification remain required.
+
 The 512 MiB limit means live requested bytes managed through the Rust CLI's
 global allocator, tallied from process start and enforced for codegen. It is
 not a process RSS or total-process memory limit: Python parent allocations,

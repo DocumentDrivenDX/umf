@@ -30,9 +30,9 @@ def only_native_cli(command, *args, **kwargs):
     assert command[0] == native_cli and command[1] == 'codegen', command
     assert kwargs.get('cwd') == str(Path(native_cli).parent), kwargs
     assert command[2:] == ['--capabilities'] or command[2:] == [
-        'deployment', '--request', '-', '--input-format', 'json', '--output-format', 'wire'
+        'deployment', '--request', '-', '--input-format', 'json', '--output-format', 'json'
     ] or command[2:] == [
-        'verify-deployment', '--request', '-', '--input-format', 'json', '--output-format', 'wire'
+        'verify-deployment', '--request', '-', '--input-format', 'json', '--output-format', 'json'
     ], command
     native_launches.append(command)
     return real_popen(command, *args, **kwargs)

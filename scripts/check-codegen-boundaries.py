@@ -8,7 +8,7 @@ HOST_EXECUTION = {'system', 'popen', 'spawnl', 'spawnle', 'spawnlp', 'spawnlpe',
 
 ALLOWED = {
     '__init__': {'__future__', 'typing', '_native', '_release'},
-    '_native': {'__future__', 'hashlib', 'json', 'os', 'selectors', 'subprocess', 'sys', 'time', 'contextlib', 'importlib', 'importlib.metadata', 'pathlib', 'typing', 'umf._rust', 'umf.rust_codegen', '_release'},
+    '_native': {'__future__', 'hashlib', 'json', 'math', 'os', 'selectors', 'subprocess', 'sys', 'time', 'contextlib', 'importlib', 'importlib.metadata', 'pathlib', 'typing', 'umf._rust', 'umf.rust_codegen', '_release'},
     '_embedded': {'_native'},
     '_release': set(),
     '_writer': {'__future__', 'hashlib', 'json', 'os', 'shutil', 'tempfile', 'collections.abc', 'pathlib', ''},

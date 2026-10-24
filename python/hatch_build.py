@@ -23,6 +23,18 @@ SDIST_SOURCE_FILES = (
     "LICENSE.md",
     "LICENSE-MIT",
     "LICENSE-APACHE",
+    # Keep native include_str! authority files available for offline builds
+    # from an extracted source archive.
+    "spec/extensions/avro/package.json",
+    "spec/extensions/json-schema/package.json",
+    "spec/core/cardinality-operation-v6.schema.json",
+    "spec/core/cardinality-operation-v4.schema.json",
+    "spec/core/kind-operation-v8.schema.json",
+    "spec/core/kind-operation-v6.schema.json",
+    "spec/core/nullability-operation-v7.schema.json",
+    "spec/core/nullability-operation-v5.schema.json",
+    "spec/extensions/iceberg/package.json",
+    "spec/extensions/iceberg/datatype-schema.json",
 )
 SDIST_SOURCE_TREES = (
     "crates",

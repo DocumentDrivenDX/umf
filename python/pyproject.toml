@@ -20,6 +20,7 @@ packages = ["src/umf"]
 
 [tool.hatch.build.targets.sdist.force-include]
 "../spec/extensions/tables/operation.schema.json" = "spec/extensions/tables/operation.schema.json"
+"../spec/extensions/json-schema/package.json" = "spec/extensions/json-schema/package.json"
 "../spec/extensions/tables/package.json" = "spec/extensions/tables/package.json"
 "../spec/extensions/actions/package.json" = "spec/extensions/actions/package.json"
 "../spec/extensions/binding/package.json" = "spec/extensions/binding/package.json"
