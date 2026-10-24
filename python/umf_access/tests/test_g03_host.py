@@ -287,6 +287,25 @@ class G03HostTests(unittest.TestCase):
                 run(forged, lease)
             self.assertEqual(lease.acquired, 0)
 
+    def test_g11_host_dispatch_remains_fail_closed_before_host_custody(self):
+        candidate = g03_plan()
+        candidate['version'] = 'umf.table-migration/0.6'
+        candidate['options']['version'] = 'umf.table-migration-options/0.6'
+        candidate['executionProfile'] = {
+            'version': 'umf.table-migration-execution/0.5',
+            'progressRelation': 'umf_lifecycle_progress', 'ownerOnly': True}
+        lease = FakeLease()
+        host = FakeHost(lease)
+        with patch("umf_access.lifecycle.ledger._verified_plan", side_effect=lambda value: value):
+            with self.assertRaisesRegex(CatalogError, 'host-migration-profile'):
+                apply_migration_on_host(host, candidate, expected_head='1' * 64,
+                    file_digest='2' * 64, qualification_profile='local-g11',
+                    evidence_digest='3' * 64)
+        self.assertEqual(lease.acquired, 0)
+        from umf_access.lifecycle.cli import _require_host_profile
+        with self.assertRaisesRegex(CatalogError, 'host-migration-profile'):
+            _require_host_profile(candidate)
+
 
 if __name__ == "__main__":
     unittest.main()

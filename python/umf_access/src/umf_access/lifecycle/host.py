@@ -387,17 +387,20 @@ class _PsycopgLease:
                 file_digest=binding.file_digest)
             return _phase_receipt(row)
 
-    def observe_prefix(self, plan: dict[str, Any]) -> dict[str, Any]:
+    def observe_prefix(self, plan: dict[str, Any], *, phase_index: int = 0) -> dict[str, Any]:
+        from .mixed import _source_at_phase_prefix
         from .witness import _capture_witness
 
-        return _capture_witness(self.connection, plan["next"])
+        return _capture_witness(self.connection,
+                                _source_at_phase_prefix(plan, phase_index))
 
     def begin(self, request: MigrationRequest, initial: PhaseReceipt) -> None:
         from .catalog import _installation
         from .mixed import (
             _lock_phase_tables,
-            _verify_mixed_metadata_inventory,
-            _verify_phase_execution_boundary,
+            _source_at_phase_prefix,
+            _verify_phase_source_boundary,
+            _verify_source_metadata_inventory,
         )
         from .phase_fence import _head_grants
         from .progress import _create_progress, _verify_progress_schema, _write_progress
@@ -411,12 +414,17 @@ class _PsycopgLease:
                 raise CatalogError("progress-state-mismatch")
             _create_progress(self.connection, self.schema)
             _lock_phase_tables(self.connection, self.plan)
-            _verify_phase_execution_boundary(self.connection, self.plan,
-                                             self.host._person_roles)
-            current = self.observe_prefix(self.plan)
+            _verify_phase_source_boundary(self.connection, self.plan,
+                self.host._person_roles,
+                _source_at_phase_prefix(self.plan, 0))
+            from .witness import _capture_witness
+            current = _capture_witness(self.connection,
+                _source_at_phase_prefix(self.plan, 0))
             if current != initial.prefix_witness:
                 raise CatalogError("progress-prefix-mismatch")
-            _verify_mixed_metadata_inventory(self.connection, self.plan)
+            _verify_source_metadata_inventory(self.connection,
+                _source_at_phase_prefix(self.plan, 0),
+                self.plan.get('approvalProfile'))
             _head_grants(self.connection, self.bundle, False)
             _write_progress(self.connection, self.schema,
                             _receipt_row(self.plan, self.expected_head,
@@ -440,8 +448,9 @@ class _PsycopgLease:
         from .catalog import _installation
         from .mixed import (
             _lock_phase_tables,
-            _verify_mixed_metadata_inventory,
-            _verify_phase_execution_boundary,
+            _source_at_phase_prefix,
+            _verify_phase_source_boundary,
+            _verify_source_metadata_inventory,
         )
 
         with self.host._atomic(), _installation(
@@ -450,9 +459,13 @@ class _PsycopgLease:
                 lock_timeout_ms=self.host._lock_timeout_ms):
             self._verify_bound_approval()
             _lock_phase_tables(self.connection, self.plan)
-            _verify_phase_execution_boundary(self.connection, self.plan,
-                                             self.host._person_roles)
-            _verify_mixed_metadata_inventory(self.connection, self.plan)
+            phase_index = prior.phase_index if prior is not None else 0
+            _verify_phase_source_boundary(self.connection, self.plan,
+                self.host._person_roles,
+                _source_at_phase_prefix(self.plan, phase_index))
+            _verify_source_metadata_inventory(self.connection,
+                _source_at_phase_prefix(self.plan, phase_index),
+                self.plan.get('approvalProfile'))
             transaction = _PsycopgRequiredPhase(self, phase)
             transaction.verify_boundary(self.plan, phase, prior)
             yield transaction
@@ -476,7 +489,7 @@ class _PsycopgLease:
             _verify_phase_execution_boundary(self.connection, self.plan,
                                              self.host._person_roles)
             _verify_mixed_metadata_inventory(self.connection, self.plan)
-            if self.observe_prefix(self.plan) != prior.prefix_witness:
+            if self.observe_prefix(self.plan, phase_index=prior.phase_index) != prior.prefix_witness:
                 raise CatalogError("progress-prefix-mismatch")
             intent = PhaseReceipt(prior.phase_index,
                 _phase_hash(self.plan, phase), prior.completed_steps,
@@ -702,13 +715,15 @@ class _PsycopgRequiredPhase:
     def verify_boundary(self, plan: dict[str, Any], phase: dict[str, Any],
                         prior: PhaseReceipt) -> None:
         from .mixed import _verify_backfill_add_target, _verify_backfill_tighten_target
+        from .mixed import _source_at_phase_prefix
         from .witness import _capture_witness
 
         if phase["kind"] == "backfill-tighten":
             _verify_backfill_tighten_target(plan, phase)
         if phase["kind"] == "backfill-add":
             _verify_backfill_add_target(plan, phase)
-        if _capture_witness(self.lease.connection, plan["next"]) != prior.prefix_witness:
+        source = _source_at_phase_prefix(plan, prior.phase_index)
+        if _capture_witness(self.lease.connection, source) != prior.prefix_witness:
             raise CatalogError("progress-prefix-mismatch")
         self.prior = prior
 
@@ -745,7 +760,15 @@ class _PsycopgRequiredPhase:
         self.cursor += 1
 
     def observe_prefix(self, plan: dict[str, Any]) -> dict[str, Any]:
-        return self.lease.observe_prefix(plan)
+        from .mixed import _source_at_phase_prefix
+        from .witness import _capture_witness
+
+        phase_index = self.prior.phase_index if self.prior is not None else 0
+        if (plan.get('options', {}).get('version') == 'umf.table-migration-options/0.6'
+                and self.cursor == len(self.steps)):
+            phase_index += 1
+        return _capture_witness(self.lease.connection,
+                                _source_at_phase_prefix(plan, phase_index))
 
     def record_completion(self, receipt: PhaseReceipt) -> None:
         from .mixed import (

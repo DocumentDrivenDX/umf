@@ -94,6 +94,15 @@ def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
                 or plan.get('approvalProfile') != APPROVAL_PROFILE):
             raise CatalogError('approval-profile-mismatch')
         allow_backfill_tighten = False
+    elif options_version == 'umf.table-migration-options/0.6':
+        from .approval import APPROVAL_PROFILE
+
+        expected_profile = {'version': 'umf.table-migration-execution/0.5',
+                            'progressRelation': PROGRESS, 'ownerOnly': True}
+        if (plan.get('version') != 'umf.table-migration/0.6'
+                or plan.get('approvalProfile') != APPROVAL_PROFILE):
+            raise CatalogError('approval-profile-mismatch')
+        allow_backfill_tighten = False
     else:
         raise CatalogError('mixed-phase-profile')
     if (profile != expected_profile
@@ -113,7 +122,7 @@ def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
     for index, phase in enumerate(phases, 1):
         if (type(phase) is not dict or set(phase) != {'id','kind','transaction','steps'}
                 or phase['id'] != 'phase-'+str(index).zfill(5)
-                or phase['kind'] not in ('transaction','backfill','concurrent-index','constraint-add','constraint-validation','seed','backfill-tighten','backfill-add','default-change')
+                or phase['kind'] not in ('transaction','backfill','concurrent-index','constraint-add','constraint-validation','seed','backfill-tighten','backfill-add','default-change','field-replacement')
                 or phase['transaction'] not in ('required','forbidden')
                 or type(phase['steps']) is not list or not phase['steps']):
             raise CatalogError('mixed-phase-profile')
@@ -124,6 +133,11 @@ def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
                 raise CatalogError('mixed-phase-profile')
             selected.append(step)
             seen.append(step_id)
+        if options_version == 'umf.table-migration-options/0.6':
+            _verify_field_replacement_phase(plan, phase, selected)
+            if phase['kind'] != 'field-replacement':
+                raise CatalogError('mixed-phase-profile')
+            continue
         expected_kind = []
         append_group = any(step.get('phaseOperation') == 'add-column' for step in selected)
         if options_version == 'umf.table-migration-options/0.5':
@@ -245,6 +259,152 @@ def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
     if seen != [step['id'] for step in plan['steps']]:
         raise CatalogError('mixed-phase-profile')
     return phases
+
+
+def _verify_field_replacement_phase(plan: dict[str, Any], phase: dict[str, Any],
+                                    selected: list[dict[str, Any]]) -> None:
+    """Validate the closed host-facing shape for the atomic G11 phase.
+
+    Compiler verification remains authoritative for complete source/dependency
+    correspondence and DAG construction. This boundary independently refuses
+    phase or target mutations before host custody or native effects.
+    """
+    options = plan.get('options')
+    steps = plan.get('steps')
+    if (plan.get('version') != 'umf.table-migration/0.6'
+            or type(options) is not dict
+            or set(options) != {'version', 'backfills', 'concurrentIndexes',
+                                'reviewedChanges', 'validations'}
+            or options.get('version') != 'umf.table-migration-options/0.6'
+            or type(options.get('backfills')) is not list
+            or type(options.get('reviewedChanges')) is not list
+            or options.get('concurrentIndexes') != []
+            or options.get('validations') != []
+            or type(steps) is not list or len(steps) < 2
+            or len(selected) != len(steps)
+            or len(plan.get('phases', [])) != 1
+            or phase.get('kind') != 'field-replacement'
+            or phase.get('transaction') != 'required'
+            or phase.get('steps') != [step.get('id') for step in steps]
+            or any(step.get('transaction') != 'required' for step in steps)):
+        raise CatalogError('mixed-phase-profile')
+
+    column_roles = {'drop-column', 'add-column', 'target-check', 'backfill',
+                    'install-default', 'tighten-not-null'}
+    dependency_roles = {'dependency-drop', 'dependency-add'}
+    previous = plan.get('previous')
+    next_bundle = plan.get('next')
+    if type(previous) is not dict or type(next_bundle) is not dict:
+        raise CatalogError('mixed-phase-profile')
+    previous_columns = previous.get('expectedCatalog', {}).get('columns')
+    next_columns = next_bundle.get('expectedCatalog', {}).get('columns')
+    if type(previous_columns) is not list or type(next_columns) is not list:
+        raise CatalogError('mixed-phase-profile')
+
+    drops: set[tuple[str, str, str]] = set()
+    adds: set[tuple[str, str, str]] = set()
+    seen_backfills: set[tuple[str, str, str]] = set()
+    for step in selected:
+        role = step.get('phaseOperation')
+        if role not in column_roles | dependency_roles:
+            raise CatalogError('mixed-phase-profile')
+        target = step.get('phaseTarget')
+        dependency = step.get('phaseDependency')
+        if role in column_roles:
+            if (type(target) is not dict or set(target) != {'table', 'field'}
+                    or type(target.get('table')) is not str or not target['table']
+                    or type(target.get('field')) is not dict
+                    or set(target['field']) != {'module', 'element'}
+                    or any(type(target['field'].get(key)) is not str
+                           or not target['field'][key]
+                           for key in ('module', 'element'))
+                    or 'phaseDependency' in step):
+                raise CatalogError('mixed-phase-profile')
+            identity = (target['table'], target['field']['module'],
+                        target['field']['element'])
+            old_matches = [column for column in previous_columns
+                           if column.get('table') == identity[0]
+                           and column.get('field') == {'module': identity[1],
+                                                       'element': identity[2]}]
+            new_matches = [column for column in next_columns
+                           if column.get('table') == identity[0]
+                           and column.get('field') == {'module': identity[1],
+                                                       'element': identity[2]}]
+            if role == 'drop-column':
+                if (step.get('kind') != 'table' or len(old_matches) != 1
+                        or new_matches or step.get('sourcePath') != old_matches[0].get('sourcePath')
+                        or type(step.get('sql')) is not str or not step['sql']):
+                    raise CatalogError('mixed-phase-profile')
+                if identity in drops or 'operation' in step:
+                    raise CatalogError('mixed-phase-profile')
+                drops.add(identity)
+            elif role == 'add-column':
+                if (step.get('kind') != 'table' or old_matches or len(new_matches) != 1
+                        or step.get('sourcePath') != new_matches[0].get('sourcePath')
+                        or type(step.get('sql')) is not str or not step['sql']
+                        or identity in adds):
+                    raise CatalogError('mixed-phase-profile')
+                adds.add(identity)
+            else:
+                if len(new_matches) != 1 or old_matches:
+                    raise CatalogError('mixed-phase-profile')
+                expected_path = new_matches[0].get('sourcePath')
+                if role == 'backfill':
+                    if (step.get('kind') != 'backfill' or step.get('sql') != ''
+                            or type(step.get('operation')) is not str or not step['operation']):
+                        raise CatalogError('mixed-phase-profile')
+                    selected_backfills = [(index, item) for index, item in enumerate(options['backfills'])
+                        if type(item) is dict and item.get('table') == identity[0]
+                        and item.get('column') == {'module': identity[1],
+                                                    'element': identity[2]}
+                        and item.get('operation') == step['operation']
+                        and item.get('scopedRows') is True]
+                    if (len(selected_backfills) != 1 or identity in seen_backfills
+                            or step.get('sourcePath') != '/options/backfills/'
+                                + str(selected_backfills[0][0])):
+                        raise CatalogError('mixed-phase-profile')
+                    seen_backfills.add(identity)
+                else:
+                    if (step.get('kind') != 'table'
+                            or type(step.get('sql')) is not str or not step['sql']):
+                        raise CatalogError('mixed-phase-profile')
+                    if (type(step.get('sourcePath')) is not str
+                            or not step['sourcePath']):
+                        raise CatalogError('mixed-phase-profile')
+                    if (role in ('install-default', 'tighten-not-null')
+                            and step.get('sourcePath') != expected_path):
+                        raise CatalogError('mixed-phase-profile')
+        elif role in dependency_roles:
+            if ('phaseTarget' in step or type(dependency) is not dict
+                    or set(dependency) != {'table', 'kind', 'id', 'sourcePath', 'meaningDigest'}
+                    or type(dependency.get('table')) is not str or not dependency['table']
+                    or dependency.get('kind') not in ('check', 'foreignKey', 'index',
+                                                      'key', 'policy', 'grant')
+                    or type(dependency.get('id')) is not str or not dependency['id']
+                    or type(dependency.get('sourcePath')) is not str
+                    or not dependency['sourcePath']
+                    or type(dependency.get('meaningDigest')) is not str
+                    or len(dependency['meaningDigest']) != 64
+                    or any(char not in '0123456789abcdef'
+                           for char in dependency['meaningDigest'])
+                    or step.get('sourcePath') != dependency['sourcePath']
+                    or step.get('transaction') != 'required'
+                    or step.get('sql') is None):
+                raise CatalogError('mixed-phase-profile')
+            if (step.get('kind') not in {'table', 'constraint', 'foreignKey',
+                                         'index', 'policy', 'grant'}
+                    or type(step.get('sql')) is not str or not step['sql']):
+                raise CatalogError('mixed-phase-profile')
+            if (type(dependency['sourcePath']) is not str
+                    or not dependency['sourcePath']):
+                raise CatalogError('mixed-phase-profile')
+        else:
+            raise CatalogError('mixed-phase-profile')
+
+    if (not drops or not adds or len(seen_backfills) != len(options['backfills'])
+            or sum(1 for step in selected if step.get('phaseOperation') == 'drop-column') != len(drops)
+            or sum(1 for step in selected if step.get('phaseOperation') == 'add-column') != len(adds)):
+        raise CatalogError('mixed-phase-profile')
 
 
 def _create_progress(connection: Any, schema: str, name: str = PROGRESS) -> dict[str, str]:

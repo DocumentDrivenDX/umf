@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import copy
 import unittest
+from unittest.mock import patch
 
 from umf_access.lifecycle.catalog import CatalogError
 from umf_access.lifecycle.mixed import (
@@ -125,6 +126,240 @@ class MigrationPhaseTests(unittest.TestCase):
         forged=copy.deepcopy(plan);forged['steps'][1]['sourcePath']='/modules/0/other/column'
         with self.assertRaisesRegex(CatalogError,'mixed-phase-profile'):
             _verify_backfill_tighten_target(forged,phase)
+
+    def test_g11_field_replacement_accepts_one_closed_ordered_atomic_phase(self):
+        import copy
+        from umf_access.lifecycle.approval import APPROVAL_PROFILE
+
+        old_field = {'module': 'm', 'element': 'old'}
+        new_field = {'module': 'm', 'element': 'new'}
+        steps = [
+            {'id': 'step-00001', 'kind': 'table', 'transaction': 'required',
+             'sourcePath': '/modules/0/tables/0/keys/0',
+             'sql': 'ALTER TABLE "s"."items" DROP CONSTRAINT "old_key"',
+             'phaseOperation': 'dependency-drop',
+             'phaseDependency': {'table': 'items', 'kind': 'key', 'id': 'old-key',
+                 'sourcePath': '/modules/0/tables/0/keys/0',
+                 'meaningDigest': 'a' * 64}},
+            {'id': 'step-00002', 'kind': 'table', 'transaction': 'required',
+             'sourcePath': '/modules/0/extensions/umf.tables/tables/0/columns/0',
+             'sql': 'ALTER TABLE "s"."items" DROP COLUMN "old_name"',
+             'phaseOperation': 'drop-column',
+             'phaseTarget': {'table': 'items', 'field': old_field}},
+            {'id': 'step-00003', 'kind': 'table', 'transaction': 'required',
+             'sourcePath': '/modules/0/extensions/umf.tables/tables/0/columns/1',
+             'sql': 'ALTER TABLE "s"."items" ADD COLUMN "new_name" text',
+             'phaseOperation': 'add-column',
+             'phaseTarget': {'table': 'items', 'field': new_field}},
+            {'id': 'step-00004', 'kind': 'backfill', 'transaction': 'required',
+             'sourcePath': '/options/backfills/0', 'sql': '', 'operation': 'copy_new',
+             'phaseOperation': 'backfill',
+             'phaseTarget': {'table': 'items', 'field': new_field}},
+            {'id': 'step-00005', 'kind': 'table', 'transaction': 'required',
+             'sourcePath': '/modules/1/tables/0/keys/0',
+             'sql': 'ALTER TABLE "s"."items" ADD CONSTRAINT "new_key" PRIMARY KEY ("new_name")',
+             'phaseOperation': 'dependency-add',
+             'phaseDependency': {'table': 'items', 'kind': 'key', 'id': 'new-key',
+                 'sourcePath': '/modules/1/tables/0/keys/0',
+                 'meaningDigest': 'b' * 64}},
+        ]
+        phase = {'id': 'phase-00001', 'kind': 'field-replacement',
+                 'transaction': 'required', 'steps': [item['id'] for item in steps]}
+        candidate = {
+            'version': 'umf.table-migration/0.6',
+            'options': {'version': 'umf.table-migration-options/0.6',
+                'backfills': [{'table': 'items', 'column': new_field,
+                               'operation': 'copy_new', 'scopedRows': True}],
+                'concurrentIndexes': [], 'reviewedChanges': [], 'validations': []},
+            'approvalProfile': APPROVAL_PROFILE,
+            'executionProfile': {'version': 'umf.table-migration-execution/0.5',
+                'progressRelation': 'umf_lifecycle_progress', 'ownerOnly': True},
+            'steps': steps, 'phases': [phase],
+            'previous': {'expectedCatalog': {'columns': [
+                {'table': 'items', 'field': old_field,
+                 'sourcePath': '/modules/0/extensions/umf.tables/tables/0/columns/0'}]}},
+            'next': {'expectedCatalog': {'columns': [
+                {'table': 'items', 'field': new_field,
+                 'sourcePath': '/modules/0/extensions/umf.tables/tables/0/columns/1'}]}},
+        }
+        self.assertEqual(_verified_phases(candidate), [phase])
+        for mutate in (
+                lambda value: value['steps'][0]['phaseDependency'].update(
+                    meaningDigest='z' * 64),
+                lambda value: value['steps'][0]['phaseDependency'].update(
+                    sourcePath='/modules/9/tables/0/keys/0')):
+            forged = copy.deepcopy(candidate)
+            mutate(forged)
+            with self.subTest(mutation=mutate):
+                with self.assertRaisesRegex(CatalogError, 'mixed-phase-profile'):
+                    _verified_phases(forged)
+
+    def test_g11_phase_refuses_forged_role_subject_order_and_omitted_backfill(self):
+        import copy
+
+        case = self._g11_minimal_plan()
+        mutations = [
+            lambda value: value['phases'][0].update(kind='transaction'),
+            lambda value: value['steps'][0].update(phaseOperation='add-column'),
+            lambda value: value['steps'][0].update(phaseDependency={}),
+            lambda value: value['steps'].__setitem__(0, value['steps'][1]),
+            lambda value: value['steps'][2].update(sql='not-empty'),
+            lambda value: value['options']['backfills'].clear(),
+            lambda value: value['previous']['expectedCatalog']['columns'][0].update(
+                sourcePath='/modules/0/extensions/umf.tables/tables/0/columns/9'),
+            lambda value: value['next']['expectedCatalog']['columns'][0].update(
+                sourcePath='/modules/0/extensions/umf.tables/tables/0/columns/9'),
+            lambda value: _duplicate_g11_drop(value),
+        ]
+        for mutate in mutations:
+            with self.subTest(mutation=mutate):
+                candidate = copy.deepcopy(case)
+                mutate(candidate)
+                with self.assertRaisesRegex(CatalogError, 'mixed-phase-profile'):
+                    _verified_phases(candidate)
+
+    def test_g11_recovery_witness_selects_predecessor_until_atomic_completion(self):
+        from umf_access.lifecycle.mixed import _source_at_phase_prefix
+
+        candidate = self._g11_minimal_plan()
+        self.assertIs(_source_at_phase_prefix(candidate, 0), candidate['previous'])
+        self.assertIs(_source_at_phase_prefix(candidate, 1), candidate['next'])
+        with self.assertRaisesRegex(CatalogError, 'mixed-phase-profile'):
+            _source_at_phase_prefix(candidate, 2)
+        legacy = {'options': {'version': 'umf.table-migration-options/0.5'},
+                  'next': candidate['next']}
+        self.assertIs(_source_at_phase_prefix(legacy, 0), legacy['next'])
+
+    def test_g11_native_boundary_checks_the_explicit_source_bundle(self):
+        from umf_access.lifecycle.mixed import _verify_phase_source_boundary
+
+        candidate = self._g11_minimal_plan()
+        old_source, new_source = candidate['previous'], candidate['next']
+        for source, schema, owner in ((old_source, 'old_schema', 'old_owner'),
+                                      (new_source, 'new_schema', 'new_owner')):
+            source['configuration'] = {'schema': schema, 'ownerRole': owner,
+                                       'personRole': 'person', 'batchRole': 'batch'}
+            source['expectedCatalog']['tables'] = []
+        observed_inventory = []
+        observed_roles = []
+
+        def one(_connection, query, parameters):
+            if 'pg_roles' in query:
+                return ({'old_owner': (1,), 'new_owner': (2,),
+                         'person': (3,), 'batch': (4,)}[parameters[0]])
+            if 'has_database_privilege' in query:
+                return (False,)
+            if 'pg_namespace' in query:
+                return (10 if parameters[0] == 'old_schema' else 20,)
+            raise AssertionError(query)
+
+        def all_rows(_connection, query, parameters):
+            if 'nspacl' in query:
+                owner = 1 if parameters[0] == 10 else 2
+                return [(owner, owner, 'USAGE', False), (owner, 3, 'USAGE', False),
+                        (owner, 4, 'USAGE', False)]
+            if 'acldefault' in query:
+                return [(parameters[0], parameters[0], 'USAGE', False)]
+            raise AssertionError(query)
+
+        with (patch('umf_access.lifecycle.mixed._verify_source_metadata_inventory',
+                    side_effect=lambda _connection, bundle, approval, **kwargs:
+                    observed_inventory.append((bundle, approval, kwargs))),
+              patch('umf_access.lifecycle.mixed._verify_history_schema'),
+              patch('umf_access.lifecycle.mixed._verify_outcomes'),
+              patch('umf_access.lifecycle.mixed._verify_progress_schema'),
+              patch('umf_access.lifecycle.mixed._verify_phase_head'),
+              patch('umf_access.lifecycle.mixed._one', side_effect=one),
+              patch('umf_access.lifecycle.mixed._all', side_effect=all_rows),
+              patch('umf_access.lifecycle.mixed.verify_native_role_scope',
+                    side_effect=lambda _connection, bundle, *, person_roles:
+                    observed_roles.append((bundle, person_roles)))):
+            _verify_phase_source_boundary(object(), candidate, {'person'}, old_source)
+            _verify_phase_source_boundary(object(), candidate, {'person'}, new_source)
+        self.assertIs(observed_inventory[0][0], old_source)
+        self.assertIs(observed_inventory[1][0], new_source)
+        self.assertIs(observed_roles[0][0], old_source)
+        self.assertIs(observed_roles[1][0], new_source)
+        self.assertEqual([item[1] for item in observed_inventory],
+                         [candidate['approvalProfile']] * 2)
+
+    def test_g11_psycopg_lease_observes_the_requested_recovery_prefix(self):
+        from umf_access.lifecycle.host import (
+            PhaseReceipt, _PsycopgLease, _PsycopgRequiredPhase)
+
+        candidate = self._g11_minimal_plan()
+        lease = object.__new__(_PsycopgLease)
+        lease.connection = object()
+        observed = []
+
+        def capture(connection, source):
+            observed.append(source)
+            return source
+
+        with patch('umf_access.lifecycle.witness._capture_witness', side_effect=capture):
+            self.assertIs(lease.observe_prefix(candidate, phase_index=0), candidate['previous'])
+            self.assertIs(lease.observe_prefix(candidate, phase_index=1), candidate['next'])
+        self.assertEqual(observed, [candidate['previous'], candidate['next']])
+
+        transaction = object.__new__(_PsycopgRequiredPhase)
+        transaction.lease = lease
+        transaction.prior = PhaseReceipt(0, '0' * 64, (), {}, 'ready')
+        transaction.steps = candidate['steps']
+        transaction.cursor = 0
+        observed.clear()
+        with patch('umf_access.lifecycle.witness._capture_witness', side_effect=capture):
+            self.assertIs(transaction.observe_prefix(candidate), candidate['previous'])
+            transaction.cursor = len(transaction.steps)
+            self.assertIs(transaction.observe_prefix(candidate), candidate['next'])
+        self.assertEqual(observed, [candidate['previous'], candidate['next']])
+
+    def _g11_minimal_plan(self):
+        from umf_access.lifecycle.approval import APPROVAL_PROFILE
+
+        old_field = {'module': 'm', 'element': 'old'}
+        new_field = {'module': 'm', 'element': 'new'}
+        steps = [
+            {'id': 'step-00001', 'kind': 'table', 'transaction': 'required',
+             'sourcePath': '/modules/0/extensions/umf.tables/tables/0/columns/0',
+             'sql': 'DROP COLUMN old', 'phaseOperation': 'drop-column',
+             'phaseTarget': {'table': 'items', 'field': old_field}},
+            {'id': 'step-00002', 'kind': 'table', 'transaction': 'required',
+             'sourcePath': '/modules/0/extensions/umf.tables/tables/0/columns/1',
+             'sql': 'ADD COLUMN new text', 'phaseOperation': 'add-column',
+             'phaseTarget': {'table': 'items', 'field': new_field}},
+            {'id': 'step-00003', 'kind': 'backfill', 'transaction': 'required',
+             'sourcePath': '/options/backfills/0', 'sql': '', 'operation': 'copy_new',
+             'phaseOperation': 'backfill',
+             'phaseTarget': {'table': 'items', 'field': new_field}},
+        ]
+        phase = {'id': 'phase-00001', 'kind': 'field-replacement',
+                 'transaction': 'required', 'steps': [item['id'] for item in steps]}
+        return {
+            'version': 'umf.table-migration/0.6',
+            'options': {'version': 'umf.table-migration-options/0.6',
+                'backfills': [{'table': 'items', 'column': new_field,
+                               'operation': 'copy_new', 'scopedRows': True}],
+                'concurrentIndexes': [], 'reviewedChanges': [], 'validations': []},
+            'approvalProfile': APPROVAL_PROFILE,
+            'executionProfile': {'version': 'umf.table-migration-execution/0.5',
+                'progressRelation': 'umf_lifecycle_progress', 'ownerOnly': True},
+            'steps': steps, 'phases': [phase],
+            'previous': {'expectedCatalog': {'columns': [
+                {'table': 'items', 'field': old_field,
+                 'sourcePath': '/modules/0/extensions/umf.tables/tables/0/columns/0'}]}},
+            'next': {'expectedCatalog': {'columns': [
+                {'table': 'items', 'field': new_field,
+                 'sourcePath': '/modules/0/extensions/umf.tables/tables/0/columns/1'}]}},
+        }
+
+
+def _duplicate_g11_drop(value):
+    import copy
+
+    duplicate = copy.deepcopy(value['steps'][0])
+    duplicate['id'] = 'step-00004'
+    value['steps'].insert(1, duplicate)
+    value['phases'][0]['steps'].insert(1, duplicate['id'])
 
 
 if __name__ == '__main__':

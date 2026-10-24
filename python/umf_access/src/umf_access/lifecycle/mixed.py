@@ -46,6 +46,28 @@ def _phase_hash(plan, phase):
     return _phase_digest(phase, _phase_steps(plan, phase))
 
 
+def _source_at_phase_prefix(plan, phase_index):
+    """Select the source image represented by a durable G11 phase prefix."""
+    if plan.get('options', {}).get('version') == 'umf.table-migration-options/0.6':
+        if phase_index == 0:
+            source = plan.get('previous')
+            if type(source) is not dict:
+                raise CatalogError('mixed-phase-profile')
+            return source
+        if phase_index == 1 and len(plan.get('phases', [])) == 1:
+            return plan['next']
+        raise CatalogError('mixed-phase-profile')
+    return plan['next']
+
+
+def _verify_phase_source_boundary(connection, plan, person_roles, source, *,
+                                  progress_required=True):
+    """Verify a source-bound catalog side under the phase locks."""
+    _verify_native_source_boundary(
+        connection, source, plan.get('approvalProfile'), person_roles,
+        progress_required=progress_required)
+
+
 def _verify_mixed_prefix(connection, plan, receipt):
     """Verify the source-derived completed phase prefix before any resume work.
 
@@ -69,15 +91,17 @@ def _verify_mixed_prefix(connection, plan, receipt):
             raise CatalogError('progress-phase-mismatch')
     else:
         raise CatalogError('progress-state-mismatch')
-    current_witness = _capture_witness(connection, plan['next'])
+    current_witness = _capture_witness(connection,
+        _source_at_phase_prefix(plan, index))
     expected_witness = (_without_concurrent_effect(current_witness, plan, phases[index])
                         if receipt['state'] == 'intent' else current_witness)
     if type(receipt['prefixWitness']) is not dict or expected_witness != receipt['prefixWitness']:
         raise CatalogError('progress-prefix-mismatch')
-    bundle = plan['next']
+    bundle = _source_at_phase_prefix(plan, index)
     # The fixed metadata relation set is explicit. App relations may only be
-    # names in the verified next source; no umf_* namespace blanket is used.
-    _verify_mixed_metadata_inventory(connection, plan)
+    # names in the source image represented by this durable phase prefix.
+    _verify_source_metadata_inventory(connection, bundle,
+                                      plan.get('approvalProfile'))
     if plan.get('approvalProfile') == APPROVAL_PROFILE:
         _verify_approval_relation(connection, bundle)
     _verify_history_schema(connection, bundle)
@@ -87,13 +111,19 @@ def _verify_mixed_prefix(connection, plan, receipt):
 
 
 def _verify_mixed_metadata_inventory(connection, plan, *, progress_required=True):
-    bundle = plan['next']
+    return _verify_source_metadata_inventory(
+        connection, plan['next'], plan.get('approvalProfile'),
+        progress_required=progress_required)
+
+
+def _verify_source_metadata_inventory(connection, bundle, approval_profile, *,
+                                      progress_required=True):
     schema = bundle['configuration']['schema']
     rows = _all(connection, "SELECT c.relname,c.relkind FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%s AND c.relkind IN ('r','p','v','m','S','f') ORDER BY c.relname", (schema,))
     fixed = {HISTORY:'r', OUTCOMES:'r', HEAD:'v'}
     if progress_required:
         fixed[PROGRESS] = 'r'
-    if plan.get('approvalProfile') == APPROVAL_PROFILE:
+    if approval_profile == APPROVAL_PROFILE:
         fixed[APPROVAL_PROFILE['relation']] = 'r'
     actual_fixed = {name:kind for name,kind in rows if name in fixed}
     if actual_fixed != fixed:
@@ -101,7 +131,7 @@ def _verify_mixed_metadata_inventory(connection, plan, *, progress_required=True
     app_names = {table['name'] for table in bundle['expectedCatalog']['tables']}
     if any(name not in app_names and name not in fixed for name, _ in rows):
         raise CatalogError('progress-inventory-mismatch')
-    if plan.get('approvalProfile') == APPROVAL_PROFILE:
+    if approval_profile == APPROVAL_PROFILE:
         _verify_approval_relation(connection, bundle)
 
 
@@ -169,11 +199,18 @@ def _verify_phase_execution_boundary(connection, plan, person_roles, *,
     changed schema ACLs, unexpected app relations, and newly widened role
     authority before any next source-authored data or DDL effect can run.
     """
-    bundle = plan['next']
+    return _verify_native_source_boundary(
+        connection, plan['next'], plan.get('approvalProfile'), person_roles,
+        progress_required=progress_required)
+
+
+def _verify_native_source_boundary(connection, bundle, approval_profile,
+                                   person_roles, *, progress_required=True):
+    """Verify native boundaries against exactly one typed source bundle."""
     schema = bundle['configuration']['schema']
     cfg = bundle['configuration']
-    _verify_mixed_metadata_inventory(connection, plan,
-                                     progress_required=progress_required)
+    _verify_source_metadata_inventory(connection, bundle, approval_profile,
+                                      progress_required=progress_required)
     _verify_history_schema(connection, bundle)
     _verify_outcomes(connection, bundle)
     if progress_required:
