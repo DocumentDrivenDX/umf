@@ -1,0 +1,55 @@
+{
+  "status": "cleanup-verified",
+  "sourceRevision": "14cc001d8944cb3ed61da720c7795b8b521d496e",
+  "actualControllerTerminalExitCode": 0,
+  "receiptSha256": "d349d4e2c52df35bda5d3d94221348eb8a3d593d8bdbf4cc3b0b8b5d550948bb",
+  "controllerElapsedSeconds": 96.149,
+  "pidsIndependentlyAbsent": [
+    70381,
+    70386,
+    70387,
+    70388,
+    70430,
+    70432,
+    70433,
+    70434,
+    70563,
+    70567,
+    70568,
+    71520
+  ],
+  "pgidsIndependentlyAbsent": [
+    70381,
+    70386,
+    70387,
+    70388,
+    70430,
+    70432,
+    70433,
+    70434,
+    70563,
+    70567,
+    70568,
+    71520
+  ],
+  "worktreePathAbsent": true,
+  "gitRegistrationAbsent": true,
+  "allChildrenTerminalAndGroupsAbsent": true,
+  "nodeModulesBefore": "f97d9a3f77efe220f3b5f11473d81755ee14f9beb7007968c795187794433cdf",
+  "nodeModulesAfter": "f97d9a3f77efe220f3b5f11473d81755ee14f9beb7007968c795187794433cdf",
+  "nodeModulesEntryCount": 19517,
+  "inventorySha256": "66166e441062358f3f8ba73943079e7bfcca964157f6076fcc754c4c21cdffea",
+  "check": {
+    "argv": [
+      "/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12",
+      "scripts/rust-inventory.py",
+      "--check"
+    ],
+    "inventorySha256After": "66166e441062358f3f8ba73943079e7bfcca964157f6076fcc754c4c21cdffea",
+    "inventorySha256Before": "66166e441062358f3f8ba73943079e7bfcca964157f6076fcc754c4c21cdffea",
+    "returncode": 0,
+    "stdout": "Rust inventory current: 578 source modules; 342 active scripts\n",
+    "timedOut": false,
+    "unchanged": true
+  }
+}

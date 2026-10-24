@@ -54,7 +54,7 @@ def _wheel(
     path,
     package,
     *,
-    version="0.10.1",
+    version="0.10.2",
     tag="cp311-abi3-linux_x86_64",
     native=b"native",
     metadata_extra="",
@@ -173,17 +173,17 @@ def test_source_inventory_contains_all_nine_bound_runtime_resources():
 
 def test_exact_wheel_payload_and_record_are_accepted(tmp_path):
     verifier = _verifier()
-    package = {"umf/__init__.py": b"__version__ = '0.10.1'\n"}
+    package = {"umf/__init__.py": b"__version__ = '0.10.2'\n"}
     expected_licenses = {
         name: b"license" for name in ("LICENSE.md", "LICENSE-MIT", "LICENSE-APACHE")
     }
     wheel = _wheel(tmp_path / "valid.whl", package)
 
     result = verifier._validate_wheel(
-        wheel, package, expected_licenses, "0.10.1", "linux_x86_64"
+        wheel, package, expected_licenses, "0.10.2", "linux_x86_64"
     )
 
-    assert result["version"] == "0.10.1"
+    assert result["version"] == "0.10.2"
     assert result["tag"] == "cp311-abi3-linux_x86_64"
     assert result["package_file_count"] == 2
 
@@ -202,7 +202,7 @@ def test_macos_arm64_tag_is_accepted_only_for_the_arm64_cohort(tmp_path):
     )
 
     result = verifier._validate_wheel(
-        wheel, package, expected_licenses, "0.10.1", "macos_arm64"
+        wheel, package, expected_licenses, "0.10.2", "macos_arm64"
     )
 
     assert result["tag"] == "cp311-abi3-macosx_11_0_arm64"
@@ -239,7 +239,7 @@ def test_macos_artifact_rejects_fat_wrong_cpu_or_unqualified_minimum(
     )
 
     with pytest.raises(ValueError, match=message):
-        verifier._validate_wheel(wheel, package, licenses, "0.10.1", "macos_arm64")
+        verifier._validate_wheel(wheel, package, licenses, "0.10.2", "macos_arm64")
 
 
 def test_hatch_hook_loads_its_native_inspector_outside_project_directory(
@@ -325,7 +325,7 @@ def test_sdist_rebuild_accepts_distinct_native_bytes_without_claiming_identity(
     [
         (
             {"umf/__init__.py": b"changed"},
-            "0.10.1",
+            "0.10.2",
             "cp311-abi3-linux_x86_64",
             "non-native",
         ),
@@ -337,19 +337,19 @@ def test_sdist_rebuild_accepts_distinct_native_bytes_without_claiming_identity(
         ),
         (
             {"umf/__init__.py": b"source"},
-            "0.10.1",
+            "0.10.2",
             "cp311-abi3-linux_aarch64",
             "platform tag",
         ),
         (
             {"umf/__init__.py": b"source"},
-            "0.10.1",
+            "0.10.2",
             "cp311-abi3-linux_x86_64",
             "wheel METADATA",
         ),
         (
             {"umf/__init__.py": b"source"},
-            "0.10.1",
+            "0.10.2",
             "cp311-abi3-linux_x86_64",
             "wheel WHEEL",
         ),
@@ -375,12 +375,12 @@ def test_sdist_rebuild_rejects_source_version_tag_or_metadata_drift(
 
 def test_installed_wheel_payload_and_record_match_the_exact_archive(tmp_path):
     verifier = _verifier()
-    package = {"umf/__init__.py": b"__version__ = '0.10.1'\n"}
+    package = {"umf/__init__.py": b"__version__ = '0.10.2'\n"}
     wheel = _wheel(tmp_path / "installed.whl", package)
     platlib = tmp_path / "site-packages"
     _install_wheel(wheel, platlib)
 
-    result = verifier._validate_installed_wheel(wheel, platlib, "0.10.1")
+    result = verifier._validate_installed_wheel(wheel, platlib, "0.10.2")
 
     assert result["status"] == "passed"
     assert result["all_files_inside_platlib"] is True
@@ -406,7 +406,7 @@ def test_installed_wheel_verification_rejects_changed_or_escaped_files(
         package_file.write_bytes(b"replaced")
         expected = "RECORD"
     elif damage == "extra":
-        extra = platlib / "umf_core-0.10.1.dist-info/EXTRA"
+        extra = platlib / "umf_core-0.10.2.dist-info/EXTRA"
         extra.write_text("unexpected", encoding="utf-8")
         expected = "omitted from RECORD"
     elif damage == "pyc":
@@ -422,7 +422,7 @@ def test_installed_wheel_verification_rejects_changed_or_escaped_files(
         expected = "symlink"
 
     with pytest.raises(ValueError, match=expected):
-        verifier._validate_installed_wheel(wheel, platlib, "0.10.1")
+        verifier._validate_installed_wheel(wheel, platlib, "0.10.2")
 
 
 def test_installed_workflow_disables_bytecode_and_hashes_verifier_source():
@@ -491,9 +491,9 @@ def _write_finalizer_inputs(
     malformed_source_map: bool = False,
 ) -> None:
     direct = {
-        "filename": "umf_core-0.10.1-cp311-abi3-macosx_11_0_arm64.whl",
+        "filename": "umf_core-0.10.2-cp311-abi3-macosx_11_0_arm64.whl",
         "sha256": "a" * 64,
-        "version": "0.10.1",
+        "version": "0.10.2",
         "tag": "cp311-abi3-macosx_11_0_arm64",
         "package_file_count": 14,
         "native_sha256": "b" * 64,
@@ -506,14 +506,14 @@ def _write_finalizer_inputs(
     }
     rebuilt = {
         **direct,
-        "filename": "umf_core-0.10.1-cp311-abi3-macosx_11_0_arm64.whl",
+        "filename": "umf_core-0.10.2-cp311-abi3-macosx_11_0_arm64.whl",
         "sha256": "c" * 64,
         "native_sha256": "d" * 64,
     }
     receipt = {
         "schema": "umf.python-artifact-qualification/1",
         "source_payload_verification": "passed",
-        "distribution_version": "0.10.1",
+        "distribution_version": "0.10.2",
         "semantic_core_version": "0.10.0",
         "action_runtime_resource_count": 9,
         "artifacts": {"direct": direct, "sdist_rebuilt": rebuilt},
@@ -541,7 +541,7 @@ def _write_finalizer_inputs(
             json.dumps(
                 {
                     "installed_inside_environment": True,
-                    "distribution_version": "0.10.1",
+                    "distribution_version": "0.10.2",
                     "semantic_core_version": "0.10.0",
                 }
             ),
@@ -712,17 +712,17 @@ def test_sdist_extraction_selects_the_single_top_level_project_with_nested_proje
     archive_path = tmp_path / "source.tar.gz"
     with tarfile.open(archive_path, "w:gz") as archive:
         for name in (
-            "umf_core-0.10.1/",
-            "umf_core-0.10.1/nested/",
+            "umf_core-0.10.2/",
+            "umf_core-0.10.2/nested/",
         ):
             member = tarfile.TarInfo(name)
             member.type = tarfile.DIRTYPE
             archive.addfile(member)
         files = {
-            "umf_core-0.10.1/pyproject.toml": (
-                b'[project]\nname = "umf-core"\nversion = "0.10.1"\n'
+            "umf_core-0.10.2/pyproject.toml": (
+                b'[project]\nname = "umf-core"\nversion = "0.10.2"\n'
             ),
-            "umf_core-0.10.1/nested/pyproject.toml": (
+            "umf_core-0.10.2/nested/pyproject.toml": (
                 b'[project]\nname = "nested-helper"\nversion = "1.0"\n'
             ),
         }
@@ -731,20 +731,22 @@ def test_sdist_extraction_selects_the_single_top_level_project_with_nested_proje
             member.size = len(payload)
             archive.addfile(member, io.BytesIO(payload))
 
-    root = verifier._extract_sdist(archive_path, tmp_path / "source")
+    root = verifier._extract_sdist(
+        archive_path, tmp_path / "source", expected_version="0.10.2"
+    )
 
-    assert root.name == "umf_core-0.10.1"
+    assert root.name == "umf_core-0.10.2"
     assert (root / "nested/pyproject.toml").is_file()
 
 
 @pytest.mark.parametrize(
     ("mutate", "version", "tag", "platform", "message"),
     [
-        ("extra", "0.10.1", "cp311-abi3-linux_x86_64", "linux_x86_64", "payload"),
-        ("record", "0.10.1", "cp311-abi3-linux_x86_64", "linux_x86_64", "RECORD"),
+        ("extra", "0.10.2", "cp311-abi3-linux_x86_64", "linux_x86_64", "payload"),
+        ("record", "0.10.2", "cp311-abi3-linux_x86_64", "linux_x86_64", "RECORD"),
         (None, "0.10.0", "cp311-abi3-linux_x86_64", "linux_x86_64", "version"),
-        (None, "0.10.1", "py3-none-any", "linux_x86_64", "abi3"),
-        (None, "0.10.1", "cp311-abi3-linux_x86_64", "macos_arm64", "platform"),
+        (None, "0.10.2", "py3-none-any", "linux_x86_64", "abi3"),
+        (None, "0.10.2", "cp311-abi3-linux_x86_64", "macos_arm64", "platform"),
     ],
 )
 def test_wheel_verifier_rejects_unexpected_payload_or_claim(
@@ -766,4 +768,4 @@ def test_wheel_verifier_rejects_unexpected_payload_or_claim(
         with zipfile.ZipFile(wheel, "a") as archive:
             archive.writestr("umf/unexpected.py", b"unexpected")
     with pytest.raises(ValueError, match=message):
-        verifier._validate_wheel(wheel, package, expected_licenses, "0.10.1", platform)
+        verifier._validate_wheel(wheel, package, expected_licenses, "0.10.2", platform)

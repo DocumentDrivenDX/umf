@@ -1,0 +1,16 @@
+{
+  "status": "approved",
+  "role": "root",
+  "revision": "091aea5d111045fe70b229bc72fb47ef95febb9d",
+  "mode": "check-only",
+  "controllerSha256": "bdd777716cc14e5a4d819238d70969aff6352c92a72ed9f903f5061b98c92ffb",
+  "reviewedUtc": "2026-10-24T06:01:27.533904+00:00",
+  "manifestSha256": "5e50207cd482b3ada78c9d8561edd681410a5ba27527706a0848056bf91ce862",
+  "review": "Compared full delta against reviewed generation rev4: source/tool/process-group/bounded cleanup/output ownership controls preserved; exact completed predecessor and candidate pinned; sole source command unmodified rust-inventory.py --check; verifies exact candidate unchanged. No launch/build/native/publication authority inferred.",
+  "actualControls": {
+    "session": 35801,
+    "exitCode": 0,
+    "count": 4
+  },
+  "independentReviewAndCoordinatorGoPending": true
+}

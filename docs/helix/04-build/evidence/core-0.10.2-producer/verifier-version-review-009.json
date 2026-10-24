@@ -1,0 +1,67 @@
+{
+  "status": "narrow-source-fix-accepted-fresh-inventory-and-native-CI-open",
+  "baseCommit": "937dcd04b365dafe8ebec4565aff392fa67126d8",
+  "packetManifestSha256": "28734f56ddac5f74c91125424ca13c827ec0a388352424ced881b60bf88cafe3",
+  "patchSha256": "8477ae119d1bfc4fc057f0da45930d19d3773e55d5724e0fe073c8a85c3dad8a",
+  "independentTests": {
+    "count": 3,
+    "exitCode": 0,
+    "failures": 0,
+    "skips": 0,
+    "seconds": 0.344,
+    "mode": "source-only synthetic controls, separate copied hash-verified packet, isolated Python3.11"
+  },
+  "additionalControls": [
+    "Default historical0.10.1 source positive preserved",
+    "Actual937 committed base bytes match",
+    "All4workflowcalls explicitlyselect0.10.2; source regressionteststepbeforebuild",
+    "Selected distribution version flows through source/package/wheel/sdist and installed payload gates; semanticCore0.10.0 remains fixed"
+  ],
+  "limits": [
+    "Existing48suite not rerun or claimed on this patch",
+    "FreshR3required for source-helper/newtest/workflowactivation change",
+    "Old937Linuxfailure remains actualfailed qualification; newnative direct+rebuiltplatformmatrix and publication stillrequired"
+  ],
+  "files": [
+    {
+      "path": ".github/workflows/python-action-runtime.yml",
+      "sha256": "639a30c9e6b5aa73338203104f0bc86cec4e4b132b11498e74280faf7110bb24"
+    },
+    {
+      "path": "base/python-action-runtime.yml",
+      "sha256": "e53d602a209f10596ab8b60b01074db314f8e6f510e992c18a63a851c3a83180"
+    },
+    {
+      "path": "base/verify_python_artifacts.py",
+      "sha256": "7892ab07d78abc0fc368046aa3435728a4d107300798d14ad6287c95e4f836a5"
+    },
+    {
+      "path": "existing-48-suite-attempt.log",
+      "sha256": "e6adefa5e19a6c366db67a37f9f58a243a9a53a53eaf3c838cf747b210ce0d2c"
+    },
+    {
+      "path": "proposed.patch",
+      "sha256": "8477ae119d1bfc4fc057f0da45930d19d3773e55d5724e0fe073c8a85c3dad8a"
+    },
+    {
+      "path": "python/tests/test_python_artifact_version.py",
+      "sha256": "629b6303a22c08a1ca4af68aadc3448d0f30e0ed9b6dbbb9134e39004e7e8d57"
+    },
+    {
+      "path": "tools/verify_python_artifacts.py",
+      "sha256": "628bc0ea00eabca17e976b537ba2534c00a6fe53b09acb46399f74f3c0c85fb3"
+    },
+    {
+      "path": "packet-manifest.json",
+      "sha256": "28734f56ddac5f74c91125424ca13c827ec0a388352424ced881b60bf88cafe3"
+    },
+    {
+      "path": "independent-tests.log",
+      "sha256": "7196623414167d75b156ed2a2c9da614cd0808798f08f1dbf279dbce1ef1c012"
+    },
+    {
+      "path": "independent-controls.json",
+      "sha256": "2228b4ad7a5ab5ee84d60b87bc18e8554846c682c2d38ddc3aad3dec48ecf11a"
+    }
+  ]
+}
