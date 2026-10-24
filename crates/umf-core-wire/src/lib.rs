@@ -680,11 +680,13 @@ pub fn error_envelope(error: EngineError) -> String {
 /// Context as request decoding, the operation, and result encoding.
 pub const JSON_SCHEMA_PROFILE: &str = "umf-r5-json-schema/0.1.0";
 
+#[cfg(feature = "embedded-adapters")]
 pub fn execute_json_schema_wire(wire_json: &str) -> String {
     let mut no_control = |_amount: usize| Ok(());
     execute_json_schema_wire_with_control(wire_json, &mut no_control)
 }
 
+#[cfg(feature = "embedded-adapters")]
 pub fn execute_json_schema_wire_with_control(
     wire_json: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
@@ -751,6 +753,7 @@ pub const ICEBERG_SCHEMA_PROFILE: &str = "umf-r5-iceberg-schema/0.1.0";
 /// Execute the standalone Iceberg 1.11 schema subset through pinned Rust
 /// resources. The tagged wire carries UTF-16 strings and lossless document
 /// values; host bindings never parse the native schema or replacement JSON.
+#[cfg(feature = "embedded-adapters")]
 pub fn execute_iceberg_wire(wire_json: &str) -> String {
     let mut no_control = |_amount: usize| Ok(());
     execute_iceberg_wire_with_control(wire_json, &mut no_control)
@@ -758,6 +761,7 @@ pub fn execute_iceberg_wire(wire_json: &str) -> String {
 
 /// The caller's work hook covers wire admission, resource construction, the
 /// selected operation, and result encoding under one fresh ordinary Context.
+#[cfg(feature = "embedded-adapters")]
 pub fn execute_iceberg_wire_with_control(
     wire_json: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
@@ -962,11 +966,13 @@ pub fn execute_avro_inspect_wire_with_control(
 /// Inspect a UMF document through the Rust core and return its diagnostics in
 /// the ordinary `umf.core-wire/1` result envelope. Admission, inspection, and
 /// result encoding share one fresh cooperative context and caller control.
+#[cfg(feature = "embedded-adapters")]
 pub fn execute_protobuf_inspect_wire(wire_json: &str) -> String {
     let mut no_control = |_amount: usize| Ok(());
     execute_protobuf_inspect_wire_with_control(wire_json, &mut no_control)
 }
 
+#[cfg(feature = "embedded-adapters")]
 pub fn execute_protobuf_inspect_wire_with_control(
     wire_json: &str,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,

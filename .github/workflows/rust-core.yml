@@ -58,6 +58,9 @@ jobs:
       - run: bunx playwright install --with-deps chromium
       - name: Rust compiler and semantic engine
         run: cargo test --locked --workspace
+      - name: Compiler-only feature isolation
+        if: matrix.python == '3.11.17'
+        run: bun scripts/metamodel/check-feature-isolation.ts
       - name: Generated resources and fixed point
         run: bun run check:metamodel
       - name: Installed cross-runtime conformance

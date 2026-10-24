@@ -8,9 +8,10 @@ publish = false
 [dependencies]
 serde = { version = "=1.0.219", features = ["derive"] }
 serde_json = "=1.0.140"
-umf-core = { path = "../umf-core" }
+umf-core = { path = "../umf-core", default-features = false }
 umf-codegen = { path = "../umf-codegen", optional = true }
 
 [features]
-default = ["codegen"]
+default = ["codegen", "embedded-adapters"]
 codegen = ["dep:umf-codegen"]
+embedded-adapters = ["umf-core/embedded-adapters"]

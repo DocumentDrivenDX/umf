@@ -1,3 +1,4 @@
+#![cfg(feature = "embedded-adapters")]
 // SPDX-License-Identifier: MIT OR Apache-2.0
 // Real trusted-host compiler exercise for the Rust prepare/finish boundary.
 // This test harness owns filesystem/process access; production umf-core does not.

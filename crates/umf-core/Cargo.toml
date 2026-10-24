@@ -9,6 +9,10 @@ publish = false
 name = "umf_core"
 path = "src/lib.rs"
 
+[features]
+default = ["embedded-adapters"]
+embedded-adapters = []
+
 [dependencies]
 num-bigint = "=0.4.8"
 num-traits = "=0.2.19"

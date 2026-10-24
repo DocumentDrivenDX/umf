@@ -1,3 +1,4 @@
+#![cfg(feature = "embedded-adapters")]
 // SPDX-License-Identifier: MIT OR Apache-2.0
 use umf_core::{protobuf_document, protobuf_source, Context, EngineError, Utf16, Value};
 use std::cell::Cell;

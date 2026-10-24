@@ -1,3 +1,4 @@
+#![cfg(feature = "embedded-adapters")]
 // SPDX-License-Identifier: MIT OR Apache-2.0
 use umf_core::{json_schema_adapter as js, Context, Limits, ResourceProfile, Utf16, Value};
 

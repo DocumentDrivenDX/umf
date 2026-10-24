@@ -586,15 +586,18 @@ fn run(args: Vec<String>) -> Result<(), String> {
     if args.first().map(String::as_str) == Some("reference") {
         return reference_run(&args[1..]);
     }
+    #[cfg(feature = "embedded-adapters")]
     if args.first().map(String::as_str) == Some("iceberg") {
         return iceberg_run(&args[1..]);
     }
+    #[cfg(feature = "embedded-adapters")]
     if args.first().map(String::as_str) == Some("protobuf") {
         return protobuf_run(&args[1..]);
     }
     if args.first().map(String::as_str) == Some("avro") {
         return avro_run(&args[1..]);
     }
+    #[cfg(feature = "embedded-adapters")]
     if args.first().map(String::as_str) == Some("json-schema") {
         return json_schema_run(&args[1..]);
     }
@@ -745,6 +748,7 @@ fn run(args: Vec<String>) -> Result<(), String> {
     Ok(())
 }
 
+#[cfg(feature = "embedded-adapters")]
 fn iceberg_run(args: &[String]) -> Result<(), String> {
     if args == ["schema", "--version"] {
         println!(
@@ -811,6 +815,7 @@ fn iceberg_run(args: &[String]) -> Result<(), String> {
     Ok(())
 }
 
+#[cfg(feature = "embedded-adapters")]
 fn protobuf_run(args: &[String]) -> Result<(), String> {
     if args == ["inspect", "--version"] {
         println!(
@@ -918,6 +923,7 @@ fn avro_run(args: &[String]) -> Result<(), String> {
     Ok(())
 }
 
+#[cfg(feature = "embedded-adapters")]
 fn json_schema_run(args: &[String]) -> Result<(), String> {
     if args == ["--version"] {
         println!(

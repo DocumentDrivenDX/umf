@@ -1,3 +1,4 @@
+#![cfg(feature = "embedded-adapters")]
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Source-bound Rust evaluator capture for the pinned JSON Schema upstream suite.
 //! Run through scripts/rust-migration/r5/json-schema/upstream-oracle.ts.

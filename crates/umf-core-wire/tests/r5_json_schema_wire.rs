@@ -1,3 +1,4 @@
+#![cfg(feature = "embedded-adapters")]
 use umf_core::{Context, Utf16, Value};
 use umf_core_wire::{decode, encode, execute_json_schema_wire, JSON_SCHEMA_PROFILE};
 

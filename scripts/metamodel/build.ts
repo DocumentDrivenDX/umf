@@ -6,9 +6,9 @@ import {rustMetamodel} from './rust';
 import {structuralSource} from './structural';
 import {rustCompileResources} from './source-closure';
 const root=resolve(import.meta.dir,'../..'),json=(v:any)=>JSON.stringify(v,null,2)+'\n',hash=(v:string|Uint8Array)=>createHash('sha256').update(v).digest('hex');
-// External compile-time inputs in the Rust CLI dependency closure. The other
-// schema-looking includes in Rust sources are behind cfg(test) and are not
-// part of this CLI build's compile-time resource set.
+// External compile-time inputs in the compiler-only Rust CLI dependency closure.
+// Production adapter resources are excluded by the embedded-adapters Cargo
+// feature, which is intentionally absent from the source-bound bootstrap build.
 // The explicit Ajv backend remains a build-time dependency until the JS cutover.
 // It never executes inside the native core, CLI, Python wheel or WASM engine.
 async function compilerClosure():Promise<string[]>{

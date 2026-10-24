@@ -1,3 +1,4 @@
+#![cfg(feature = "embedded-adapters")]
 // SPDX-License-Identifier: MIT OR Apache-2.0
 use umf_core::{protobuf_inspect::inspect_protobuf_document, Context, EngineError, Severity, Utf16, Value};
 

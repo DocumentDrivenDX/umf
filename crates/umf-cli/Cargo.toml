@@ -10,7 +10,7 @@ name = "umf"
 path = "src/main.rs"
 
 [dependencies]
-umf-core = { path = "../umf-core" }
+umf-core = { path = "../umf-core", default-features = false }
 umf-metamodel = { path = "../umf-metamodel" }
 umf-core-wire = { path = "../umf-core-wire", default-features = false }
 sha2 = "=0.10.8"
@@ -20,8 +20,9 @@ path = "../umf-codegen"
 optional = true
 
 [features]
-default = ["codegen"]
+default = ["codegen", "embedded-adapters"]
 codegen = ["dep:umf-codegen", "umf-core-wire/codegen"]
+embedded-adapters = ["umf-core/embedded-adapters", "umf-core-wire/embedded-adapters"]
 # Enables a disposable child-process probe for allocator tests. Never enable in published binaries.
 allocator-test = ["codegen"]
 
