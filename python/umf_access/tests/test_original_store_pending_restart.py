@@ -515,7 +515,20 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                      patch.object(native.LocalPostgresSupervisor, '_observe_native', native_observation), \
                      patch.object(native.LocalPostgresSupervisor, '_connect_maintenance', connect_maintenance):
                     restarted_target = restarted.reattach_original_target()
-                    public_reference = restarted.reattach_original_registration(restarted_target)
+                    custodian_type = type(supervisor._custodian)
+                    original_reattach = custodian_type.reattach_confirmed_target
+                    def capture_reattach_failure(issuer, *args, **kwargs):
+                        try:
+                            return original_reattach(issuer, *args, **kwargs)
+                        except Exception as error:
+                            diagnostic = ' '.join(str(error).split())[:256]
+                            print(
+                                f'G04 reattach_confirmed_target: {type(error).__name__}: {diagnostic}',
+                                file=sys.stderr,
+                            )
+                            raise
+                    with patch.object(custodian_type, 'reattach_confirmed_target', capture_reattach_failure):
+                        public_reference = restarted.reattach_original_registration(restarted_target)
                     self.assertEqual(public_reference, reference)
                     self.assertIsNone(restarted_supervisor.custody_handle)
                     caller_connection = _FakeConnection(db)
