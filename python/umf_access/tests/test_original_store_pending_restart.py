@@ -458,48 +458,55 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                 self.assertIs(supervisor.custody_handle, public_or_handle)
                 self.assertIs(supervisor._custodian._journal._issuer,
                               supervisor._bootstrap_issuer)
-                evidence = supervisor.prepare_original_store_evidence(public_or_handle,
-                    store_profile=STORE_PROFILE)
-                store_request = evidence.owner_request
-                store_approval = supervisor.prepare_original_store_authority(
-                    store_request, self._signed_envelope(authority, private_key, store_request))[1]
-                payload = json.loads(store_request._intent_bytes)
-                store = payload['store']
-                reference = supervisor._custodian._public_reference(public_or_handle)
-                external_reservation = {
-                    'profile': 'umf.row-originals-store-reservation/0.1',
-                    'reservationId': str(uuid.uuid4()), 'providerId': provider_id,
-                    'installationId': installation_id, 'targetCustody': reference,
-                    'store': store, 'creationRequestDigest': store_request._intent_digest,
-                    'creationApprovalDigest': store_approval.approval_digest,
-                    'nativeAuthorityEvidenceDigest': payload['evidence']['nativeAuthorityObservationDigest'],
-                    'configurationDigest': authority.configuration_digest, 'custodySequence': 0,
-                }
-                # This is the real first durable append inside reserve_originals_store_creation;
-                # interruption immediately afterward leaves the genuine external-only prefix.
-                external_append = supervisor._custodian._journal._reserve_originals_store(
-                    purpose=profile.purpose, request=payload,
-                    approval_digest=store_approval.approval_digest,
-                    reservation=external_reservation)
-                external_event = next(
-                    event for event in supervisor._custodian._journal.read()['events']
-                    if event['recordDigest'] == external_append['recordDigest'])
-                external_payload = external_event['payload']
-                external_reservation = external_payload['reservation']
-                self.assertEqual(external_payload['request'], payload)
-                self.assertEqual(external_payload['approvalDigest'],
-                                 store_approval.approval_digest)
-                self.assertEqual(external_payload['reservationDigest'],
-                                 native._digest(external_reservation))
-                self.assertEqual(external_reservation['creationRequestDigest'],
-                                 store_request._intent_digest)
-                self.assertEqual(external_reservation['creationApprovalDigest'],
-                                 store_approval.approval_digest)
-                state = supervisor._custodian._journal.snapshot()
-                self.assertEqual(state['pending']['stores'], [external_reservation['reservationId']])
-                self.assertFalse(any(event['kind'] == 'originals-store-creation-intent'
-                    for event in supervisor._journal.read()['events']))
-                ddl_before_recovery = list(db.ddl)
+                with supervisor._original_control_lease(operation_kind='store'):
+                    evidence = supervisor.prepare_original_store_evidence(
+                        public_or_handle, store_profile=STORE_PROFILE)
+                    store_request = evidence.owner_request
+                    store_approval = supervisor.prepare_original_store_authority(
+                        store_request, self._signed_envelope(
+                            authority, private_key, store_request))[1]
+                    payload = json.loads(store_request._intent_bytes)
+                    store = payload['store']
+                    reference = supervisor._custodian._public_reference(public_or_handle)
+                    external_reservation = {
+                        'profile': 'umf.row-originals-store-reservation/0.1',
+                        'reservationId': str(uuid.uuid4()), 'providerId': provider_id,
+                        'installationId': installation_id, 'targetCustody': reference,
+                        'store': store, 'creationRequestDigest': store_request._intent_digest,
+                        'creationApprovalDigest': store_approval.approval_digest,
+                        'nativeAuthorityEvidenceDigest': payload['evidence'][
+                            'nativeAuthorityObservationDigest'],
+                        'configurationDigest': authority.configuration_digest,
+                        'custodySequence': 0,
+                    }
+                    # This is the real first durable append inside
+                    # reserve_originals_store_creation; interruption immediately afterward
+                    # leaves the genuine external-only prefix.
+                    external_append = supervisor._custodian._journal._reserve_originals_store(
+                        purpose=profile.purpose, request=payload,
+                        approval_digest=store_approval.approval_digest,
+                        reservation=external_reservation)
+                    external_event = next(
+                        event for event in supervisor._custodian._journal.read()['events']
+                        if event['recordDigest'] == external_append['recordDigest'])
+                    external_payload = external_event['payload']
+                    external_reservation = external_payload['reservation']
+                    self.assertEqual(external_payload['request'], payload)
+                    self.assertEqual(external_payload['approvalDigest'],
+                                     store_approval.approval_digest)
+                    self.assertEqual(external_payload['reservationDigest'],
+                                     native._digest(external_reservation))
+                    self.assertEqual(external_reservation['creationRequestDigest'],
+                                     store_request._intent_digest)
+                    self.assertEqual(external_reservation['creationApprovalDigest'],
+                                     store_approval.approval_digest)
+                    state = supervisor._custodian._journal.snapshot()
+                    self.assertEqual(state['pending']['stores'],
+                                     [external_reservation['reservationId']])
+                    self.assertFalse(any(
+                        event['kind'] == 'originals-store-creation-intent'
+                        for event in supervisor._journal.read()['events']))
+                    ddl_before_recovery = list(db.ddl)
 
                 # Recreate Core and supervisor on the same durable enrollment and journals.
                 with patch.object(native, 'sys_platform_darwin', return_value=True), \
@@ -555,7 +562,9 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                         'FROM pg_catalog.pg_namespace n WHERE n.nspname=%s',
                         new_namespace_queries[0][0])
                     self.assertEqual(new_namespace_queries[0][1], (store['schemaName'],))
-                    first_events = restarted_supervisor._journal.read()['events']
+                    with restarted_supervisor._original_control_lease(
+                            operation_kind='store'):
+                        first_events = restarted_supervisor._journal.read()['events']
                     typed_events = [event for event in first_events
                                     if event['kind'] == 'originals-store-creation-intent'
                                     and event['payload'].get('reservationDigest')
@@ -643,7 +652,9 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     before_retry_observations = len(readonly_observations)
                     before_retry_absence_queries = len(db.absence_queries)
                     before_retry_namespace_queries = len(db.namespace_queries)
-                    before_retry_events = after_pending_supervisor._journal.read()['events']
+                    with after_pending_supervisor._original_control_lease(
+                            operation_kind='store'):
+                        before_retry_events = after_pending_supervisor._journal.read()['events']
                     second_recovery_codes = []
                     second_original_recover = (
                         native.LocalPostgresSupervisor.recover_originals_store_creation)
@@ -676,7 +687,9 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                         retry_namespace_queries[0][0])
                     self.assertEqual(retry_namespace_queries[0][1], (store['schemaName'],))
                     self.assertGreater(len(readonly_observations), before_retry_observations)
-                    second_events = after_pending_supervisor._journal.read()['events']
+                    with after_pending_supervisor._original_control_lease(
+                            operation_kind='store'):
+                        second_events = after_pending_supervisor._journal.read()['events']
                     self.assertEqual(second_events, before_retry_events)
                     self.assertEqual(len([event for event in second_events
                         if event['kind'] == 'originals-store-creation-intent'
