@@ -1,5 +1,5 @@
 /** Source-verified catalog projection leaf for table inventory compilation. */
-import {compileTableDeploymentWithOperations,verifyTableDeployment,verifyTableDeploymentWithAccounting,type TableDeploymentBundle} from '../table-deployment';
+import {compileTableDeploymentWithOperations,verifyTableDeployment,type TableDeploymentBundle} from '../table-deployment';
 import type {InternalTableDeploymentOperationRecord} from '../table-deployment/types';
 import {deriveTableGrantEffectRow} from '../table-deployment/grants';
 import {canonical,canonicalCharged,hashCanonical,hashCanonicalCharged} from '../compilation/bundle/hash';
@@ -8,7 +8,7 @@ import type {AccountingContext} from '../model/internal/accounting-context';
 import {buildOwnedSourceFieldIndex,type OwnedSourceFieldIndex} from './inventory-g05-selection';
 import {operationReferences,type FieldBinding} from './inventory-operation-references';
 import type {TableDeclaration,TableOperation,TableRowRule,TableRef} from '../extensions/tables/types';
-import {consumeVerifiedG10Deployment} from './inventory-verified-deployment';
+import {consumeVerifiedG10Deployment,verifyAndRememberG10Deployment} from './inventory-verified-deployment';
 
 type Json=null|boolean|number|string|Json[]|{[key:string]:Json};
 export type Side='previous'|'next';
@@ -251,7 +251,7 @@ export function projectG10Bundle(input:unknown,side:Side):{bundle:TableDeploymen
 }
 /** R2 projection entry: verifier, projection copies, path output and meaning hashes share one request meter. */
 export function projectG10BundleWithAccounting(input:unknown,side:Side,accounting:AccountingContext):{bundle:TableDeploymentBundle;document:import('../model/types').Document;tables:InventoryTable[];reviews:InventoryProjection[];projection:CatalogProjection;sourceIndex:OwnedSourceFieldIndex}{
- const bundleInput=input as TableDeploymentBundle,verified=consumeVerifiedG10Deployment(bundleInput,accounting,`/${side}/bundle`)??verifyTableDeploymentWithAccounting(bundleInput,accounting),bundle=verified.bundle,parts=sourcePayload(bundle,verified.document,accounting),{payload}=parts;
+ const bundleInput=input as TableDeploymentBundle;let verified=consumeVerifiedG10Deployment(bundleInput,accounting,`/${side}/bundle`);if(!verified){const remembered=verifyAndRememberG10Deployment(bundleInput,accounting);verified=consumeVerifiedG10Deployment(remembered,accounting,`/${side}/bundle`);if(!verified)throw new TypeError(`R2_VERIFIED_BUNDLE_MISSING:/${side}`);}const bundle=verified.bundle,parts=sourcePayload(bundle,verified.document,accounting),{payload}=parts;
  const sourceIndex=buildOwnedSourceFieldIndex(bundle,parts.source,accounting);
  accounting.visit('inventory-projection-path-index','/source');const pathValues=new Map<string,Json>();const walk=(value:Json,path:string):void=>{accounting.visit('inventory-projection-path-index-node',path);pathValues.set(path,value);if(Array.isArray(value)){for(let i=0;i<value.length;i++){accounting.visit('inventory-projection-path-index-array-slot',`${path}/${i}`);walk(value[i]!,`${path}/${i}`);}return;}if(value&&typeof value==='object'){for(const key of Object.keys(value)){accounting.scanUtf8(key,path);walk(value[key]!,`${path}/${ptr(key)}`);}}};walk(parts.source as Json,'');
  const sourceOrder=new Map<string,number>();let ordinal=0;for(const path of pathValues.keys()){accounting.visit('inventory-projection-path-order-index',path);sourceOrder.set(path,ordinal++);}

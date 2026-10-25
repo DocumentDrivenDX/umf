@@ -11,6 +11,7 @@ import type {PrefixFrame} from './inventory-graph';
 import {copyInventoryReviewForSide,projectG10Bundle,projectG10BundleWithAccounting,type InventoryProjection,type InventoryChange,type InventoryFieldChange,type InventoryTable,type InventoryDelta,type CatalogProjection,type Identity,type PrefixCatalog,type Subject} from './inventory-projection';
 import {ShapeError,validateG10RequestShape,validateTableInventorySourceHistory,type G10ValidatedRequest,type HistoricalG10PlanVerifier,type TableIntent,type TableInventoryDiscoveryIntent,type TableInventoryReviewedChangeKind,type TableInventoryMigrationMarker} from './inventory-options';
 import {deriveInventorySeedLineage,type InventoryHistory,type SeedLineageEntry} from './inventory-history';
+import {withVerifiedG10BundleScope} from './inventory-verified-deployment';
 import {partitionInventoryMarkersForG02,sameSourceExceptG02AndCreates} from './inventory-g02-source';
 import {sameSourceExceptG05SelectedFields,sourceFieldMeaning,sourceMappingPath} from './inventory-g05-selection';
 import {compileG02FieldEffects} from './internal';
@@ -76,7 +77,10 @@ function projectG10BundleScoped(bundle:TableDeploymentBundle,side:'previous'|'ne
  * to resolve archives, alter schema or issue native capabilities.
  */
 export function prepareR2InventorySourceContext(input:unknown):R2InventorySourceContext{
- const meter=new R2WorkMeter(),owned=ownR2SourceComponents(input,meter),verifier=createHistoricalG10Verifier(meter);
+ const meter=new R2WorkMeter();return withVerifiedG10BundleScope(meter,()=>prepareR2InventorySourceContextInScope(input,meter));
+}
+function prepareR2InventorySourceContextInScope(input:unknown,meter:R2WorkMeter):R2InventorySourceContext{
+ const owned=ownR2SourceComponents(input,meter),verifier=createHistoricalG10Verifier(meter);
  const ownedBudget=meter.snapshot();
  const history=freezeOwnedHistory(validateTableInventorySourceHistory(owned.history as unknown as TableInventorySourceHistory,owned.previous as TableDeploymentBundle|null,verifier,meter),meter);
  const historyBudget=meter.snapshot();

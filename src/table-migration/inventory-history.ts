@@ -1,8 +1,9 @@
 import {hashCanonical,hashCanonicalCharged,sha256Text,sha256TextCharged} from '../compilation/bundle/hash';
-import {verifyTableDeployment,verifyTableDeploymentWithAccounting,type TableDeploymentBundle} from '../table-deployment';
+import {verifyTableDeployment,type TableDeploymentBundle} from '../table-deployment';
 import {verifyTableMigration} from './index';
 import type {AccountingContext} from '../model/internal/accounting-context';
 import {ownedR2HistoryMember,R2WorkMeter} from './inventory-r2-context';
+import {verifyG10BundleForLineage,withVerifiedG10BundleScope} from './inventory-verified-deployment';
 
 type Json=null|boolean|number|string|Json[]|{[key:string]:Json};
 type SeedSet=TableDeploymentBundle['seedSets'][number];
@@ -22,7 +23,7 @@ function isObject(value:unknown):value is Record<string,unknown>{return !!value&
 function exact(value:unknown,keys:readonly string[]):value is Record<string,unknown>{return isObject(value)&&Object.keys(value).length===keys.length&&keys.every(key=>Object.hasOwn(value,key));}
 function sha(value:unknown):value is string{return typeof value==='string'&&SHA.test(value);}
 function withoutDigest(plan:Record<string,unknown>):Json {const copy:Record<string,Json>={};for(const [key,value]of Object.entries(plan)){if(key==='digest')continue;copy[key]=value as Json;}return copy;}
-function verifiedBundle(value:unknown,accounting?:AccountingContext):TableDeploymentBundle {const result=accounting?verifyTableDeploymentWithAccounting(value as TableDeploymentBundle,accounting).bundle:verifyTableDeployment(value);if(result.bundleDigest!==((value as Record<string,unknown>).bundleDigest))fail('BUNDLE_DIGEST');return result;}
+function verifiedBundle(value:unknown,accounting?:AccountingContext):TableDeploymentBundle {if(accounting)return verifyG10BundleForLineage(value as TableDeploymentBundle,accounting,'/history-bundle');const result=verifyTableDeployment(value);if(result.bundleDigest!==((value as Record<string,unknown>).bundleDigest))fail('BUNDLE_DIGEST');return result;}
 function seedMap(bundle:TableDeploymentBundle,accounting?:AccountingContext,path='/seedSets'):Map<string,SeedSet>{const out=new Map<string,SeedSet>();for(let index=0;index<bundle.seedSets.length;index++){accounting?.visit('seed-lineage-map-entry',`${path}/${index}`);const definition=bundle.seedSets[index]!;if(out.has(definition.id))fail('DUPLICATE_DEFINITION');accounting?.visit('seed-lineage-map-retention',`${path}/${index}`);out.set(definition.id,definition);}return out;}
 function pythonCanonical(value:unknown):string {
  if(value===null||typeof value==='string'||typeof value==='boolean')return JSON.stringify(value);
@@ -130,7 +131,11 @@ function applyConfirmed(states:Map<string,State>,selected:string[],outcomes:Seed
 }
 
 /** Derive source lineage only. This never proves that a reported native outcome occurred. */
-export function deriveInventorySeedLineage(history:InventoryHistory,current:CurrentSeedRequest,verifyG10?:import('./inventory-options').HistoricalG10PlanVerifier,accounting?:AccountingContext):SeedLineageEntry[] {
+export function deriveInventorySeedLineage(history:InventoryHistory,current:CurrentSeedRequest,verifyG10?:import('./inventory-options').HistoricalG10PlanVerifier,accounting?:AccountingContext):SeedLineageEntry[]{
+ if(accounting)return withVerifiedG10BundleScope(accounting,()=>deriveInventorySeedLineageCore(history,current,verifyG10,accounting));
+ return deriveInventorySeedLineageCore(history,current,verifyG10,accounting);
+}
+function deriveInventorySeedLineageCore(history:InventoryHistory,current:CurrentSeedRequest,verifyG10?:import('./inventory-options').HistoricalG10PlanVerifier,accounting?:AccountingContext):SeedLineageEntry[]{
  if(!exact(history,['profile','plans','executions'])||history.profile!=='umf.table-inventory-source-history/0.1'||!Array.isArray(history.plans)||!Array.isArray(history.executions)||history.plans.length!==history.executions.length||history.plans.length>128)return fail('HISTORY_SHAPE');
  const states=new Map<string,State>();let priorPlan:Record<string,unknown>|null=null,priorBundle:TableDeploymentBundle|null=null;
  for(let i=0;i<history.plans.length;i++){

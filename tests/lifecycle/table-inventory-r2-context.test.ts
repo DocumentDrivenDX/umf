@@ -273,7 +273,7 @@ test('R2 owned history canonical spans bind exact frozen roots and members',()=>
  const copy=structuredClone(raw),copyMeter=new R2WorkMeter(),ownedCopy=ownR2HistoryComponent(copy,copyMeter);
  expect(Object.isFrozen(ownedCopy.value)&&Object.isFrozen(ownedCopy.value.plans)&&Object.isFrozen(ownedCopy.value.plans[0])).toBe(true);
  expect(ownedR2HistoryMember(ownedCopy.value.plans[0],copyMeter,'/controlled-copy/plans/0')?.text).toBe(canonical(copy.plans[0]));
- const execution=ownedR2HistoryExecutionWrapper(owned.value.executions[0],meter,'/wrapper-control');
+ const execution=ownR2HistoryExecutionWrapper(owned.value.executions[0],meter,'/wrapper-control');
  expect(ownedR2HistoryMember(execution,meter,'/wrapper-control/member')?.text).toBe(canonical(owned.value.executions[0]));
  const extra=Object.freeze({...owned.value.executions[0],extension:true});expect(()=>ownR2HistoryExecutionWrapper(extra,meter,'/extra')).toThrow(/R2_HISTORY_EXECUTION_SOURCE/);
  let getterCalls=0;const accessor=Object.create(null) as Record<string,unknown>;
