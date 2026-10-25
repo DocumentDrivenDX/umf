@@ -1,0 +1,30 @@
+{
+  "status": "pass",
+  "profile": "umf.javascript-numeric/1.0.0",
+  "vectors": 27,
+  "independentOracle": "Python Decimal/Fraction/struct",
+  "typescriptDifferential": true,
+  "hostOrderChecks": [
+    {"label": "invalid exact decimal before context", "tsCode": "JAVASCRIPT_NUMERIC", "rustOptInCode": "JAVASCRIPT_NUMERIC", "equal": true, "getterCalls": 0},
+    {"label": "unsupported number family before context", "tsCode": "JAVASCRIPT_NUMERIC", "rustOptInCode": "JAVASCRIPT_NUMERIC", "equal": true, "getterCalls": 0}
+  ],
+  "work": {
+    "bun": "1.4.3",
+    "node": "v26.12.1",
+    "scalarExactDecimal1": 383,
+    "contextIntegerFromBigInt1": 402391568,
+    "sameContextWorkLimitRefusesAtTotalMinusOne": true,
+    "freshPublicCallResetsContextWorkLedger": true
+  },
+  "command": "UMF_R5_NODE_PACKAGE=/private/tmp/umf-r5-numeric/node/index.js UMF_R5_NUMERIC_ORACLE=/private/tmp/umf-r5-numeric/oracle.json bun run scripts/rust-migration/r5/javascript-numeric-parity.ts",
+  "artifact": {
+    "package": "/private/tmp/umf-r5-numeric/node",
+    "addonSha256": "57f794c99b1b57b2e8358c99e72df46b73142c69c4b735a055f7b5b86eb3663f"
+  },
+  "sourceSha256": {
+    "coreWire": "a154801f4f414f215303ee83bb7675924b60895a18fbdcbac4c1aaab010aa228",
+    "nodeNumericFacade": "9ab632e5f4eb4a55ad8f7b9f1057486c3e367f21e8d2ca2160ac88f2813fd2f7",
+    "wasmNumericFacade": "9ab632e5f4eb4a55ad8f7b9f1057486c3e367f21e8d2ca2160ac88f2813fd2f7",
+    "nodeParityHarness": "ced5cdc2287d2b78dadf829ab8339ac0d6a80c33c46c5f9a8a00c8ff6744d794"
+  }
+}

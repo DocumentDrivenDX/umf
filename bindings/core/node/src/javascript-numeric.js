@@ -100,42 +100,46 @@ function contextWire(context) {
   return {document, field: {module, element}};
 }
 
-function run(module, op, args, context, resources, controls) {
-  const request = {profile: JAVASCRIPT_NUMERIC_PROFILE, op, ...args};
-  if (context !== undefined) {
-    if (resources === undefined) throw new TypeError('Explicit engine resources are required for Field context');
-    request.context = contextWire(context);
-    request.resources = resources;
+function run(native, runtime, op, args, context, controls) {
+  const controlBridge = controls && Object.keys(controls).length ? createControlBridge(controls) : undefined;
+  const invoke = (fn, ...args) => {
+    try { return fn(...args, controlBridge); }
+    catch (error) {
+      throw mapNativeError(error);
+    }
+  };
+  if (!runtime) {
+    if (context !== undefined) throw coreError('RUST_NUMERIC_PREPARED_RUNTIME_MISSING', 'Field context requires explicit resources and a retained Rust runtime');
+    const response = JSON.parse(native.executeJavascriptNumericWire(encodeRequestWire({profile:JAVASCRIPT_NUMERIC_PROFILE, op, ...args}, controlBridge), controlBridge));
+    const failure = resultError(response);
+    if (failure) throw coreError(failure.code, failure.message, failure.path);
+    return fromWire(JSON.parse(response.wire));
   }
-  let charged = 0;
-  const controlBridge = controls && Object.keys(controls).length ? (amount) => {
-    charged += amount;
-    if (controls.maxWork !== undefined && charged > controls.maxWork) return encodeRequestWire({ok: false, code: 'RESOURCE_LIMIT', message: 'Host work budget exceeded'});
-    try {
-      controls.meter?.(amount);
-      if (controls.isCancelled?.()) return encodeRequestWire({ok: false, code: 'CANCELLED', message: 'Operation cancelled by host'});
-      if (controls.deadlineMs !== undefined) {
-        const now = controls.now?.();
-        if (typeof now !== 'number' || !Number.isFinite(now)) return encodeRequestWire({ok: false, code: 'CLOCK_CAPABILITY_REQUIRED', message: 'Host clock did not return a finite millisecond value'});
-        if (now > controls.deadlineMs) return encodeRequestWire({ok: false, code: 'DEADLINE', message: 'Deadline elapsed'});
-      }
-    } catch { return encodeRequestWire({ok: false, code: 'HOST_CONTROL', message: 'Host control callback failed'}); }
-    return '';
-  } : undefined;
-  const response = JSON.parse(module(encodeRequestWire(request), controlBridge));
-  const failure = resultError(response);
-  if (failure) throw coreError(failure.code, failure.message, failure.path);
-  const output = fromWire(JSON.parse(response.wire));
-  if (context !== undefined) {
-    if (!output.validation?.valid || !output.validation?.complete) throw coreError('JAVASCRIPT_NUMERIC', JSON.stringify(output.validation?.diagnostics ?? []));
-    return output.result;
-  }
-  return output;
+  const stage = invoke(runtime.prepare.bind(runtime), op, encodeWire(args, {work:(amount)=>chargeSerialization(controlBridge, amount)}));
+  const takeOutput = stage.takeOutput ?? stage.take_output;
+  const validateContext = stage.validateContext ?? stage.validate_context;
+  if (context === undefined) return fromWire(JSON.parse(invoke(takeOutput.bind(stage))));
+  const wire = invoke(validateContext.bind(stage), encodeWire(contextWire(context), {work:(amount)=>chargeSerialization(controlBridge, amount)}));
+  const validation = fromWire(JSON.parse(wire));
+  if (!validation.valid || !validation.complete) throw coreError('JAVASCRIPT_NUMERIC', JSON.stringify(validation.diagnostics ?? []));
+  return fromWire(JSON.parse(invoke(takeOutput.bind(stage))));
 }
 
 /** Create the opt-in CONTRACT-049 numeric adapter over the Rust core. */
-export function createJavascriptNumericEngine(native, resources, controls) {
-  const invoke = (op, args, context) => run(native, op, args, context, resources, controls);
+export function createJavascriptNumericEngine(native, resources, options = {}) {
+  if (typeof native?.executeJavascriptNumericWire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  const setupControls = options.setupControls;
+  const setupBridge = setupControls && Object.keys(setupControls).length ? createControlBridge(setupControls) : undefined;
+  let runtime;
+  if (resources !== undefined) {
+    try {
+      runtime = new native.JavascriptNumericRuntime(
+        encodeWire(resources, {work:(amount)=>chargeSerialization(setupBridge, amount)}), setupBridge,
+      );
+    } catch (error) { throw mapNativeError(error); }
+  }
+  const controls = options.controls;
+  const invoke = (op, args, context) => run(native, runtime, op, args, context, controls);
   return Object.freeze({
     exactDecimal(token, context) {
       if (typeof token !== 'string') throw coreError('JAVASCRIPT_NUMERIC', 'Expected exact JSON numeric token');
@@ -163,4 +167,43 @@ export function createJavascriptNumericEngine(native, resources, controls) {
       return invoke('numericToNumberLossless', {literal}, context);
     },
   });
+}
+
+function createControlBridge(controls) {
+  let charged = 0;
+  return (amount) => {
+    charged += amount;
+    if (controls.maxWork !== undefined && charged > controls.maxWork) return encodeRequestWire({ok:false, code:'RESOURCE_LIMIT', message:'Host work budget exceeded'});
+    try {
+      controls.meter?.(amount);
+      if (controls.isCancelled?.()) return encodeRequestWire({ok:false, code:'CANCELLED', message:'Operation cancelled by host'});
+      if (controls.deadlineMs !== undefined) {
+        const now = controls.now?.();
+        if (typeof now !== 'number' || !Number.isFinite(now)) return encodeRequestWire({ok:false, code:'CLOCK_CAPABILITY_REQUIRED', message:'Host clock did not return a finite millisecond value'});
+        if (now > controls.deadlineMs) return encodeRequestWire({ok:false, code:'DEADLINE', message:'Deadline elapsed'});
+      }
+    } catch { return encodeRequestWire({ok:false, code:'HOST_CONTROL', message:'Host control callback failed'}); }
+    return '';
+  };
+}
+
+function chargeSerialization(controlBridge, amount) {
+  if (!controlBridge) return;
+  const response = controlBridge(amount);
+  if (!response) return;
+  try {
+    const failure = resultError(JSON.parse(response));
+    if (failure) throw coreError(failure.code, failure.message, failure.path);
+  } catch (error) {
+    if (error?.code) throw error;
+  }
+  throw coreError('HOST_CONTROL', 'Host serialization control failed');
+}
+
+function mapNativeError(error) {
+  let response;
+  try { response = JSON.parse(typeof error === 'string' ? error : error?.message ?? ''); } catch {}
+  const failure = response && resultError(response);
+  if (failure) return coreError(failure.code, failure.message, failure.path);
+  return error;
 }

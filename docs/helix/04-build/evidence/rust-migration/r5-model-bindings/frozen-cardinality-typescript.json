@@ -833,6 +833,23 @@
       "nativePath": null
     }
   },
+  "invalidSource": {
+    "umf": "0.10.0",
+    "id": "urn:test",
+    "vocabularies": [],
+    "modules": [
+      {
+        "id": "m",
+        "elements": [
+          {
+            "id": "e",
+            "kind": "field",
+            "scalarType": "string"
+          }
+        ]
+      }
+    ]
+  },
   "verified": {
     "ok": true,
     "value": {
@@ -1028,6 +1045,615 @@
         },
         "provenance": "unverified"
       }
+    },
+    "invalidSourceDiagnostics": {
+      "ok": false,
+      "error": {
+        "code": "CORE_CARDINALITY_SOURCE",
+        "message": "[{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/vocabularies\",\"message\":\"must be object\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0\",\"message\":\"must have required property 'namespace'\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/0\",\"message\":\"must have required property 'extensions'\",\"severity\":\"error\"}]",
+        "path": ""
+      }
     }
+  },
+  "identityControls": {
+    "nullIdentity": {
+      "ok": false,
+      "error": {
+        "code": "CORE_CARDINALITY_IDENTITY",
+        "message": "Expected explicit module and element identities",
+        "path": ""
+      }
+    },
+    "extraIdentity": {
+      "ok": false,
+      "error": {
+        "code": "CORE_CARDINALITY_IDENTITY",
+        "message": "Expected explicit module and element identities",
+        "path": ""
+      }
+    },
+    "accessorIdentity": {
+      "ok": false,
+      "error": {
+        "code": "NON_JSON",
+        "message": "Hidden fields and accessors cannot be serialized faithfully",
+        "path": "/module"
+      }
+    },
+    "accessorGetterCalls": 0
+  },
+  "orderingControls": {
+    "declareInvalidRequestBeforeSource": {
+      "ok": false,
+      "error": {
+        "code": "CORE_CARDINALITY_REQUEST",
+        "message": "[{\"instancePath\":\"/itemType/module\",\"schemaPath\":\"#/$defs/itemType/properties/module/minLength\",\"keyword\":\"minLength\",\"params\":{\"limit\":1},\"message\":\"must NOT have fewer than 1 characters\"},{\"instancePath\":\"/itemType/element\",\"schemaPath\":\"#/$defs/itemType/properties/element/minLength\",\"keyword\":\"minLength\",\"params\":{\"limit\":1},\"message\":\"must NOT have fewer than 1 characters\"},{\"instancePath\":\"/itemType\",\"schemaPath\":\"#/properties/itemType/oneOf/1/type\",\"keyword\":\"type\",\"params\":{\"type\":\"null\"},\"message\":\"must be null\"},{\"instancePath\":\"/itemType\",\"schemaPath\":\"#/properties/itemType/oneOf\",\"keyword\":\"oneOf\",\"params\":{\"passingSchemas\":null},\"message\":\"must match exactly one schema in oneOf\"}]",
+        "path": ""
+      }
+    },
+    "declareSourceBeforeIdentity": {
+      "ok": false,
+      "error": {
+        "code": "NON_JSON",
+        "message": "Hidden fields and accessors cannot be serialized faithfully",
+        "path": "/future"
+      }
+    },
+    "inspectSourceBeforeIdentity": {
+      "ok": false,
+      "error": {
+        "code": "NON_JSON",
+        "message": "Hidden fields and accessors cannot be serialized faithfully",
+        "path": "/future"
+      }
+    }
+  },
+  "hostAdmissionControls": {
+    "hidden": {
+      "ok": false,
+      "error": {
+        "code": "NON_JSON",
+        "message": "Hidden fields and accessors cannot be serialized faithfully",
+        "path": "/hidden"
+      }
+    },
+    "symbol": {
+      "ok": false,
+      "error": {
+        "code": "NON_JSON",
+        "message": "Symbol keys are not JSON-compatible",
+        "path": ""
+      }
+    },
+    "customPrototype": {
+      "ok": false,
+      "error": {
+        "code": "NON_JSON",
+        "message": "Custom object prototype",
+        "path": ""
+      }
+    },
+    "sparse": {
+      "ok": false,
+      "error": {
+        "code": "NON_JSON",
+        "message": "Sparse arrays are not JSON values",
+        "path": "/modules"
+      }
+    },
+    "cycle": {
+      "ok": false,
+      "error": {
+        "code": "CYCLE",
+        "message": "Cyclic value",
+        "path": "/extensions/self"
+      }
+    },
+    "nan": {
+      "ok": false,
+      "error": {
+        "code": "NUMBER",
+        "message": "Number outside the core interoperable numeric profile",
+        "path": "/extensions/future"
+      }
+    },
+    "infinity": {
+      "ok": false,
+      "error": {
+        "code": "NUMBER",
+        "message": "Number outside the core interoperable numeric profile",
+        "path": "/extensions/future"
+      }
+    },
+    "undefined": {
+      "ok": false,
+      "error": {
+        "code": "NON_JSON",
+        "message": "Value is not JSON-compatible",
+        "path": "/extensions/future"
+      }
+    },
+    "bigint": {
+      "ok": false,
+      "error": {
+        "code": "NON_JSON",
+        "message": "Value is not JSON-compatible",
+        "path": "/extensions/future"
+      }
+    },
+    "nestedPath": {
+      "ok": false,
+      "error": {
+        "code": "NON_JSON",
+        "message": "Value is not JSON-compatible",
+        "path": "/modules/0/elements/0/extensions/future/deep"
+      }
+    },
+    "requestControls": {
+      "nan": {
+        "ok": false,
+        "error": {
+          "code": "NUMBER",
+          "message": "Number outside the core interoperable numeric profile",
+          "path": "/future"
+        }
+      },
+      "infinity": {
+        "ok": false,
+        "error": {
+          "code": "NUMBER",
+          "message": "Number outside the core interoperable numeric profile",
+          "path": "/future"
+        }
+      },
+      "undefined": {
+        "ok": false,
+        "error": {
+          "code": "NON_JSON",
+          "message": "Value is not JSON-compatible",
+          "path": "/future"
+        }
+      },
+      "bigint": {
+        "ok": false,
+        "error": {
+          "code": "NON_JSON",
+          "message": "Value is not JSON-compatible",
+          "path": "/future"
+        }
+      },
+      "sparse": {
+        "ok": false,
+        "error": {
+          "code": "NON_JSON",
+          "message": "Sparse arrays are not JSON values",
+          "path": "/itemType"
+        }
+      },
+      "cycle": {
+        "ok": false,
+        "error": {
+          "code": "CYCLE",
+          "message": "Cyclic value",
+          "path": "/itemType/future"
+        }
+      }
+    },
+    "requestSchemaControls": {
+      "null": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_REQUEST",
+          "message": "[{\"instancePath\":\"\",\"schemaPath\":\"#/type\",\"keyword\":\"type\",\"params\":{\"type\":\"object\"},\"message\":\"must be object\"}]",
+          "path": ""
+        }
+      },
+      "empty": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_REQUEST",
+          "message": "[{\"instancePath\":\"\",\"schemaPath\":\"#/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"cardinality\"},\"message\":\"must have required property 'cardinality'\"}]",
+          "path": ""
+        }
+      },
+      "number": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_REQUEST",
+          "message": "[{\"instancePath\":\"\",\"schemaPath\":\"#/type\",\"keyword\":\"type\",\"params\":{\"type\":\"object\"},\"message\":\"must be object\"}]",
+          "path": ""
+        }
+      },
+      "boolean": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_REQUEST",
+          "message": "[{\"instancePath\":\"\",\"schemaPath\":\"#/type\",\"keyword\":\"type\",\"params\":{\"type\":\"object\"},\"message\":\"must be object\"}]",
+          "path": ""
+        }
+      },
+      "array": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_REQUEST",
+          "message": "[{\"instancePath\":\"\",\"schemaPath\":\"#/type\",\"keyword\":\"type\",\"params\":{\"type\":\"object\"},\"message\":\"must be object\"}]",
+          "path": ""
+        }
+      },
+      "extra": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_REQUEST",
+          "message": "[{\"instancePath\":\"\",\"schemaPath\":\"#/additionalProperties\",\"keyword\":\"additionalProperties\",\"params\":{\"additionalProperty\":\"future\"},\"message\":\"must NOT have additional properties\"}]",
+          "path": ""
+        }
+      },
+      "invalidCardinality": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_REQUEST",
+          "message": "[{\"instancePath\":\"/cardinality\",\"schemaPath\":\"#/$defs/cardinality/enum\",\"keyword\":\"enum\",\"params\":{},\"message\":\"must pass \\\"enum\\\" keyword validation\"}]",
+          "path": ""
+        }
+      },
+      "nullCardinality": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_REQUEST",
+          "message": "[{\"instancePath\":\"/cardinality\",\"schemaPath\":\"#/$defs/cardinality/enum\",\"keyword\":\"enum\",\"params\":{},\"message\":\"must pass \\\"enum\\\" keyword validation\"}]",
+          "path": ""
+        }
+      },
+      "numberCardinality": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_REQUEST",
+          "message": "[{\"instancePath\":\"/cardinality\",\"schemaPath\":\"#/$defs/cardinality/enum\",\"keyword\":\"enum\",\"params\":{},\"message\":\"must pass \\\"enum\\\" keyword validation\"}]",
+          "path": ""
+        }
+      },
+      "conditionalOne": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_REQUEST",
+          "message": "[{\"instancePath\":\"/cardinality\",\"schemaPath\":\"#/allOf/0/then/properties/cardinality/enum\",\"keyword\":\"enum\",\"params\":{},\"message\":\"must pass \\\"enum\\\" keyword validation\"},{\"instancePath\":\"\",\"schemaPath\":\"#/allOf/0/if\",\"keyword\":\"if\",\"params\":{\"failingKeyword\":\"then\"},\"message\":\"must match \\\"then\\\" schema\"}]",
+          "path": ""
+        }
+      },
+      "arrayNullItem": {
+        "ok": true,
+        "value": {
+          "operation": "declare-core-cardinality",
+          "version": "4.0.0",
+          "source": {
+            "umf": "0.10.0",
+            "id": "author",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "e",
+                    "kind": "field",
+                    "nullability": "required",
+                    "extensions": {
+                      "future": {
+                        "opaque": "retain"
+                      }
+                    }
+                  },
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "integer",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.10.0",
+            "id": "author",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "e",
+                    "kind": "field",
+                    "nullability": "required",
+                    "extensions": {
+                      "future": {
+                        "opaque": "retain"
+                      }
+                    },
+                    "cardinality": "array"
+                  },
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "integer",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "request": {
+            "cardinality": "array",
+            "itemType": null
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/cardinality",
+            "cardinality": "array",
+            "binding": {
+              "id": "umf.core.cardinality.authoring",
+              "version": "4.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        }
+      },
+      "arrayEmptyItem": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_REQUEST",
+          "message": "[{\"instancePath\":\"/itemType\",\"schemaPath\":\"#/$defs/itemType/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"module\"},\"message\":\"must have required property 'module'\"},{\"instancePath\":\"/itemType\",\"schemaPath\":\"#/$defs/itemType/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"element\"},\"message\":\"must have required property 'element'\"},{\"instancePath\":\"/itemType\",\"schemaPath\":\"#/properties/itemType/oneOf/1/type\",\"keyword\":\"type\",\"params\":{\"type\":\"null\"},\"message\":\"must be null\"},{\"instancePath\":\"/itemType\",\"schemaPath\":\"#/properties/itemType/oneOf\",\"keyword\":\"oneOf\",\"params\":{\"passingSchemas\":null},\"message\":\"must match exactly one schema in oneOf\"}]",
+          "path": ""
+        }
+      },
+      "arrayModuleEmpty": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_REQUEST",
+          "message": "[{\"instancePath\":\"/itemType/module\",\"schemaPath\":\"#/$defs/itemType/properties/module/minLength\",\"keyword\":\"minLength\",\"params\":{\"limit\":1},\"message\":\"must NOT have fewer than 1 characters\"},{\"instancePath\":\"/itemType\",\"schemaPath\":\"#/properties/itemType/oneOf/1/type\",\"keyword\":\"type\",\"params\":{\"type\":\"null\"},\"message\":\"must be null\"},{\"instancePath\":\"/itemType\",\"schemaPath\":\"#/properties/itemType/oneOf\",\"keyword\":\"oneOf\",\"params\":{\"passingSchemas\":null},\"message\":\"must match exactly one schema in oneOf\"}]",
+          "path": ""
+        }
+      },
+      "arrayElementEmpty": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_REQUEST",
+          "message": "[{\"instancePath\":\"/itemType/element\",\"schemaPath\":\"#/$defs/itemType/properties/element/minLength\",\"keyword\":\"minLength\",\"params\":{\"limit\":1},\"message\":\"must NOT have fewer than 1 characters\"},{\"instancePath\":\"/itemType\",\"schemaPath\":\"#/properties/itemType/oneOf/1/type\",\"keyword\":\"type\",\"params\":{\"type\":\"null\"},\"message\":\"must be null\"},{\"instancePath\":\"/itemType\",\"schemaPath\":\"#/properties/itemType/oneOf\",\"keyword\":\"oneOf\",\"params\":{\"passingSchemas\":null},\"message\":\"must match exactly one schema in oneOf\"}]",
+          "path": ""
+        }
+      },
+      "arrayItemExtra": {
+        "ok": true,
+        "value": {
+          "operation": "declare-core-cardinality",
+          "version": "4.0.0",
+          "source": {
+            "umf": "0.10.0",
+            "id": "author",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "e",
+                    "kind": "field",
+                    "nullability": "required",
+                    "extensions": {
+                      "future": {
+                        "opaque": "retain"
+                      }
+                    }
+                  },
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "integer",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "target": {
+            "umf": "0.10.0",
+            "id": "author",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "m",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "e",
+                    "kind": "field",
+                    "nullability": "required",
+                    "extensions": {
+                      "future": {
+                        "opaque": "retain"
+                      }
+                    },
+                    "cardinality": "array",
+                    "itemType": {
+                      "module": "m",
+                      "element": "v",
+                      "future": true
+                    }
+                  },
+                  {
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "integer",
+                    "extensions": {}
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "module": "m",
+            "element": "e"
+          },
+          "request": {
+            "cardinality": "array",
+            "itemType": {
+              "module": "m",
+              "element": "v",
+              "future": true
+            }
+          },
+          "provenance": {
+            "origin": "authored",
+            "idealPath": "/modules/0/elements/0/cardinality",
+            "cardinality": "array",
+            "binding": {
+              "id": "umf.core.cardinality.authoring",
+              "version": "4.0.0"
+            },
+            "basis": "explicit-author-declaration",
+            "nativePath": null
+          }
+        }
+      },
+      "arrayItemArray": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_REQUEST",
+          "message": "[{\"instancePath\":\"/itemType\",\"schemaPath\":\"#/$defs/itemType/type\",\"keyword\":\"type\",\"params\":{\"type\":\"object\"},\"message\":\"must be object\"},{\"instancePath\":\"/itemType\",\"schemaPath\":\"#/properties/itemType/oneOf/1/type\",\"keyword\":\"type\",\"params\":{\"type\":\"null\"},\"message\":\"must be null\"},{\"instancePath\":\"/itemType\",\"schemaPath\":\"#/properties/itemType/oneOf\",\"keyword\":\"oneOf\",\"params\":{\"passingSchemas\":null},\"message\":\"must match exactly one schema in oneOf\"}]",
+          "path": ""
+        }
+      },
+      "mapItemNumber": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_REQUEST",
+          "message": "[{\"instancePath\":\"/itemType\",\"schemaPath\":\"#/$defs/itemType/type\",\"keyword\":\"type\",\"params\":{\"type\":\"object\"},\"message\":\"must be object\"},{\"instancePath\":\"/itemType\",\"schemaPath\":\"#/properties/itemType/oneOf/1/type\",\"keyword\":\"type\",\"params\":{\"type\":\"null\"},\"message\":\"must be null\"},{\"instancePath\":\"/itemType\",\"schemaPath\":\"#/properties/itemType/oneOf\",\"keyword\":\"oneOf\",\"params\":{\"passingSchemas\":null},\"message\":\"must match exactly one schema in oneOf\"}]",
+          "path": ""
+        }
+      },
+      "conditionalUnspecified": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_REQUEST",
+          "message": "[{\"instancePath\":\"/cardinality\",\"schemaPath\":\"#/allOf/0/then/properties/cardinality/enum\",\"keyword\":\"enum\",\"params\":{},\"message\":\"must pass \\\"enum\\\" keyword validation\"},{\"instancePath\":\"\",\"schemaPath\":\"#/allOf/0/if\",\"keyword\":\"if\",\"params\":{\"failingKeyword\":\"then\"},\"message\":\"must match \\\"then\\\" schema\"}]",
+          "path": ""
+        }
+      },
+      "conditionalNull": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_REQUEST",
+          "message": "[{\"instancePath\":\"/cardinality\",\"schemaPath\":\"#/allOf/0/then/properties/cardinality/enum\",\"keyword\":\"enum\",\"params\":{},\"message\":\"must pass \\\"enum\\\" keyword validation\"},{\"instancePath\":\"\",\"schemaPath\":\"#/allOf/0/if\",\"keyword\":\"if\",\"params\":{\"failingKeyword\":\"then\"},\"message\":\"must match \\\"then\\\" schema\"},{\"instancePath\":\"/cardinality\",\"schemaPath\":\"#/$defs/cardinality/enum\",\"keyword\":\"enum\",\"params\":{},\"message\":\"must pass \\\"enum\\\" keyword validation\"}]",
+          "path": ""
+        }
+      },
+      "conditionalNumber": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_REQUEST",
+          "message": "[{\"instancePath\":\"/cardinality\",\"schemaPath\":\"#/allOf/0/then/properties/cardinality/enum\",\"keyword\":\"enum\",\"params\":{},\"message\":\"must pass \\\"enum\\\" keyword validation\"},{\"instancePath\":\"\",\"schemaPath\":\"#/allOf/0/if\",\"keyword\":\"if\",\"params\":{\"failingKeyword\":\"then\"},\"message\":\"must match \\\"then\\\" schema\"},{\"instancePath\":\"/cardinality\",\"schemaPath\":\"#/$defs/cardinality/enum\",\"keyword\":\"enum\",\"params\":{},\"message\":\"must pass \\\"enum\\\" keyword validation\"}]",
+          "path": ""
+        }
+      },
+      "conditionalBogus": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_REQUEST",
+          "message": "[{\"instancePath\":\"/cardinality\",\"schemaPath\":\"#/allOf/0/then/properties/cardinality/enum\",\"keyword\":\"enum\",\"params\":{},\"message\":\"must pass \\\"enum\\\" keyword validation\"},{\"instancePath\":\"\",\"schemaPath\":\"#/allOf/0/if\",\"keyword\":\"if\",\"params\":{\"failingKeyword\":\"then\"},\"message\":\"must match \\\"then\\\" schema\"},{\"instancePath\":\"/cardinality\",\"schemaPath\":\"#/$defs/cardinality/enum\",\"keyword\":\"enum\",\"params\":{},\"message\":\"must pass \\\"enum\\\" keyword validation\"}]",
+          "path": ""
+        }
+      },
+      "arrayItemNumberKeys": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_REQUEST",
+          "message": "[{\"instancePath\":\"/itemType/module\",\"schemaPath\":\"#/$defs/itemType/properties/module/type\",\"keyword\":\"type\",\"params\":{\"type\":\"string\"},\"message\":\"must be string\"},{\"instancePath\":\"/itemType/element\",\"schemaPath\":\"#/$defs/itemType/properties/element/type\",\"keyword\":\"type\",\"params\":{\"type\":\"string\"},\"message\":\"must be string\"},{\"instancePath\":\"/itemType\",\"schemaPath\":\"#/properties/itemType/oneOf/1/type\",\"keyword\":\"type\",\"params\":{\"type\":\"null\"},\"message\":\"must be null\"},{\"instancePath\":\"/itemType\",\"schemaPath\":\"#/properties/itemType/oneOf\",\"keyword\":\"oneOf\",\"params\":{\"passingSchemas\":null},\"message\":\"must match exactly one schema in oneOf\"}]",
+          "path": ""
+        }
+      }
+    },
+    "identityControlsFull": {
+      "nullIdentity": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_IDENTITY",
+          "message": "Expected explicit module and element identities",
+          "path": ""
+        }
+      },
+      "extraIdentity": {
+        "ok": false,
+        "error": {
+          "code": "CORE_CARDINALITY_IDENTITY",
+          "message": "Expected explicit module and element identities",
+          "path": ""
+        }
+      },
+      "accessorIdentity": {
+        "ok": false,
+        "error": {
+          "code": "NON_JSON",
+          "message": "Hidden fields and accessors cannot be serialized faithfully",
+          "path": "/module"
+        }
+      },
+      "nonEnumerable": {
+        "ok": false,
+        "error": {
+          "code": "NON_JSON",
+          "message": "Hidden fields and accessors cannot be serialized faithfully",
+          "path": "/element"
+        }
+      },
+      "symbol": {
+        "ok": false,
+        "error": {
+          "code": "NON_JSON",
+          "message": "Symbol keys are not JSON-compatible",
+          "path": ""
+        }
+      },
+      "customPrototype": {
+        "ok": false,
+        "error": {
+          "code": "NON_JSON",
+          "message": "Custom object prototype",
+          "path": ""
+        }
+      }
+    },
+    "receiptBeforeCurrent": {
+      "ok": false,
+      "error": {
+        "code": "CORE_CARDINALITY_UNKNOWN",
+        "message": "Unknown cardinality cannot be overwritten by this operation",
+        "path": "/modules/0/elements/0/cardinality"
+      }
+    },
+    "accessorGetterCalls": 0
   }
 }

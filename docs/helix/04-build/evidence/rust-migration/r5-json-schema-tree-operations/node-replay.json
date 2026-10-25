@@ -1,0 +1,496 @@
+{
+  "format": "umf-r5-json-schema-tree-operations-installed-replay/1",
+  "host": "node-26.12.1",
+  "packetSha256": "7fa939527796db5b0c541378fa7c877c413d53ed4c88db8a24945e9b08dc8a57",
+  "cases": 22,
+  "matched": 16,
+  "mismatchCount": 6,
+  "mismatches": [
+    {
+      "id": "edit.success.changed-number-and-source-unchanged",
+      "expected": {
+        "status": "returned",
+        "value": {
+          "edited": {
+            "umf": "0.10.0",
+            "id": "urn:umf:r5:tree",
+            "vocabularies": {
+              "umf.json-schema": {
+                "version": "0.1.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "schema",
+                "namespace": "https://schemas.example.test/tree.json",
+                "elements": [
+                  {
+                    "id": "schema",
+                    "extensions": {
+                      "umf.json-schema": {
+                        "dialect": "https://json-schema.org/draft/2020-12/schema",
+                        "baseUri": "https://schemas.example.test/tree.json",
+                        "root": {
+                          "kind": "object",
+                          "members": {
+                            "$schema": {
+                              "kind": "string",
+                              "value": "https://json-schema.org/draft/2020-12/schema"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "amount": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "number"
+                                    },
+                                    "minimum": {
+                                      "kind": "number",
+                                      "value": "10"
+                                    }
+                                  }
+                                },
+                                "text": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    },
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "$defs": {
+                              "kind": "object",
+                              "members": {
+                                "nested": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "resources": {}
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "editedSource": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"amount\":{\"type\":\"number\",\"minimum\":10},\"text\":{\"type\":\"string\",\"minLength\":1}},\"$defs\":{\"nested\":{\"type\":\"string\"}}}\n",
+          "sourceUnchanged": true
+        }
+      },
+      "actual": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "UNSAFE_EDIT",
+        "path": "",
+        "message": "All present semantics must be validated before editing"
+      }
+    },
+    {
+      "id": "edit.invalid-existing-node-target",
+      "expected": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "INVALID_EDIT",
+        "path": "",
+        "message": "[{\"code\":\"JSON_SCHEMA_META\",\"path\":\"/modules/0/elements/0/extensions/umf.json-schema\",\"message\":\"Resource https://schemas.example.test/tree.json: [{\\\"instancePath\\\":\\\"/properties/amount/minimum\\\",\\\"schemaPath\\\":\\\"#/properties/minimum/type\\\",\\\"keyword\\\":\\\"type\\\",\\\"params\\\":{\\\"type\\\":\\\"number\\\"},\\\"message\\\":\\\"must be number\\\"}]\",\"severity\":\"error\"}]"
+      },
+      "actual": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "UNSAFE_EDIT",
+        "path": "",
+        "message": "All present semantics must be validated before editing"
+      }
+    },
+    {
+      "id": "edit.root-boolean-accepted",
+      "expected": {
+        "status": "returned",
+        "value": {
+          "umf": "0.10.0",
+          "id": "urn:umf:r5:tree",
+          "vocabularies": {
+            "umf.json-schema": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "https://schemas.example.test/tree.json",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.json-schema": {
+                      "dialect": "https://json-schema.org/draft/2020-12/schema",
+                      "baseUri": "https://schemas.example.test/tree.json",
+                      "root": {
+                        "kind": "boolean",
+                        "value": true
+                      },
+                      "resources": {}
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "actual": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "UNSAFE_EDIT",
+        "path": "",
+        "message": "All present semantics must be validated before editing"
+      }
+    },
+    {
+      "id": "edit.root-scalar-refused",
+      "expected": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "INVALID_EDIT",
+        "path": "",
+        "message": "[{\"code\":\"JSON_SCHEMA_ROOT\",\"path\":\"/modules/0/elements/0/extensions/umf.json-schema\",\"message\":\"Resource https://schemas.example.test/tree.json must be object or boolean\",\"severity\":\"error\"}]"
+      },
+      "actual": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "UNSAFE_EDIT",
+        "path": "",
+        "message": "All present semantics must be validated before editing"
+      }
+    },
+    {
+      "id": "edit.escaped-pointer-and-astral-key-success",
+      "expected": {
+        "status": "returned",
+        "value": {
+          "slashEditedSource": "{\"properties\":{\"a/b~c\":{\"type\":\"string\",\"minLength\":2},\"😀\":{\"type\":\"number\"}}}\n",
+          "astralEditedSource": "{\"properties\":{\"a/b~c\":{\"type\":\"string\",\"minLength\":1},\"😀\":{\"type\":\"integer\"}}}\n",
+          "sourceUnchanged": true
+        }
+      },
+      "actual": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "UNSAFE_EDIT",
+        "path": "",
+        "message": "All present semantics must be validated before editing"
+      }
+    },
+    {
+      "id": "edit.array-pointer-existing-index",
+      "expected": {
+        "status": "returned",
+        "value": {
+          "umf": "0.10.0",
+          "id": "urn:umf:r5:tree-array",
+          "vocabularies": {
+            "umf.json-schema": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "https://schemas.example.test/tree.json",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.json-schema": {
+                      "dialect": "https://json-schema.org/draft/2020-12/schema",
+                      "baseUri": "https://schemas.example.test/tree.json",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "prefixItems": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "integer"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "resources": {}
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "actual": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "UNSAFE_EDIT",
+        "path": "",
+        "message": "All present semantics must be validated before editing"
+      }
+    }
+  ],
+  "actual": {
+    "parse.valid.exact-number-tokens": {
+      "status": "returned",
+      "value": {
+        "kind": "object",
+        "members": {
+          "integer": {
+            "kind": "number",
+            "value": "9007199254740993"
+          },
+          "fraction": {
+            "kind": "number",
+            "value": "0.10000000000000000001"
+          },
+          "exponent": {
+            "kind": "number",
+            "value": "1e-5000"
+          },
+          "negativeZero": {
+            "kind": "number",
+            "value": "-0.000"
+          }
+        }
+      }
+    },
+    "parse.valid.utf16-prototype-and-lone-surrogate": {
+      "status": "returned",
+      "value": {
+        "kind": "object",
+        "members": {
+          "__proto__": {
+            "kind": "object",
+            "members": {
+              "toString": {
+                "kind": "string",
+                "value": "kept"
+              }
+            }
+          },
+          "lone": {
+            "kind": "string",
+            "value": "\ud800"
+          },
+          "astral": {
+            "kind": "string",
+            "value": "😀"
+          }
+        }
+      }
+    },
+    "parse.valid.scalar-and-empty-containers": {
+      "status": "returned",
+      "value": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "null"
+          },
+          {
+            "kind": "boolean",
+            "value": true
+          },
+          {
+            "kind": "boolean",
+            "value": false
+          },
+          {
+            "kind": "string",
+            "value": ""
+          },
+          {
+            "kind": "object",
+            "members": {}
+          },
+          {
+            "kind": "array",
+            "items": []
+          }
+        ]
+      }
+    },
+    "parse.syntax.empty": {
+      "status": "threw",
+      "name": "UmfError",
+      "code": "JSON_SCHEMA_SYNTAX",
+      "path": "",
+      "message": "Invalid native JSON"
+    },
+    "parse.syntax.trailing-comma": {
+      "status": "threw",
+      "name": "UmfError",
+      "code": "JSON_SCHEMA_SYNTAX",
+      "path": "",
+      "message": "Invalid native JSON"
+    },
+    "parse.syntax.trailing-token": {
+      "status": "threw",
+      "name": "UmfError",
+      "code": "JSON_SCHEMA_SYNTAX",
+      "path": "",
+      "message": "Invalid native JSON"
+    },
+    "parse.duplicate-key": {
+      "status": "threw",
+      "name": "UmfError",
+      "code": "JSON_SCHEMA_SYNTAX",
+      "path": "",
+      "message": "Map keys must be unique at line 1, column 8:\n\n{\"x\":1,\"x\":2}\n       ^\n"
+    },
+    "parse.duplicate-key-malformed-tail": {
+      "status": "threw",
+      "name": "UmfError",
+      "code": "JSON_SCHEMA_SYNTAX",
+      "path": "",
+      "message": "Invalid native JSON"
+    },
+    "parse.refusal.depth-limit": {
+      "status": "threw",
+      "name": "UmfError",
+      "code": "LIMIT",
+      "path": "",
+      "message": "Native JSON structural limit exceeded"
+    },
+    "parse.refusal.text-limit": {
+      "status": "threw",
+      "name": "UmfError",
+      "code": "LIMIT",
+      "path": "",
+      "message": "Native JSON exceeds text limit"
+    },
+    "parse.refusal.value-limit": {
+      "status": "threw",
+      "name": "UmfError",
+      "code": "LIMIT",
+      "path": "",
+      "message": "Native JSON structural limit exceeded"
+    },
+    "edit.success.changed-number-and-source-unchanged": {
+      "status": "threw",
+      "name": "UmfError",
+      "code": "UNSAFE_EDIT",
+      "path": "",
+      "message": "All present semantics must be validated before editing"
+    },
+    "edit.pointer-escape-before-invalid-replacement": {
+      "status": "threw",
+      "name": "UmfError",
+      "code": "JSON_SCHEMA_POINTER",
+      "path": "",
+      "message": "Invalid JSON Pointer"
+    },
+    "edit.replacement-parse-before-target-lookup": {
+      "status": "threw",
+      "name": "UmfError",
+      "code": "JSON_SCHEMA_SYNTAX",
+      "path": "",
+      "message": "Invalid native JSON"
+    },
+    "edit.invalid-source-before-target-lookup": {
+      "status": "threw",
+      "name": "UmfError",
+      "code": "UNSAFE_EDIT",
+      "path": "",
+      "message": "All present semantics must be validated before editing"
+    },
+    "edit.invalid-existing-node-target": {
+      "status": "threw",
+      "name": "UmfError",
+      "code": "UNSAFE_EDIT",
+      "path": "",
+      "message": "All present semantics must be validated before editing"
+    },
+    "edit.root-boolean-accepted": {
+      "status": "threw",
+      "name": "UmfError",
+      "code": "UNSAFE_EDIT",
+      "path": "",
+      "message": "All present semantics must be validated before editing"
+    },
+    "edit.root-scalar-refused": {
+      "status": "threw",
+      "name": "UmfError",
+      "code": "UNSAFE_EDIT",
+      "path": "",
+      "message": "All present semantics must be validated before editing"
+    },
+    "edit.incomplete-schema-refused": {
+      "status": "threw",
+      "name": "UmfError",
+      "code": "UNSAFE_EDIT",
+      "path": "",
+      "message": "All present semantics must be validated before editing"
+    },
+    "edit.lone-surrogate-schema-refused-atomically": {
+      "status": "returned",
+      "value": {
+        "refusal": {
+          "name": "UmfError",
+          "code": "UNSAFE_EDIT",
+          "path": "",
+          "message": "All present semantics must be validated before editing"
+        },
+        "sourceUnchanged": true
+      }
+    },
+    "edit.escaped-pointer-and-astral-key-success": {
+      "status": "threw",
+      "name": "UmfError",
+      "code": "UNSAFE_EDIT",
+      "path": "",
+      "message": "All present semantics must be validated before editing"
+    },
+    "edit.array-pointer-existing-index": {
+      "status": "threw",
+      "name": "UmfError",
+      "code": "UNSAFE_EDIT",
+      "path": "",
+      "message": "All present semantics must be validated before editing"
+    }
+  }
+}

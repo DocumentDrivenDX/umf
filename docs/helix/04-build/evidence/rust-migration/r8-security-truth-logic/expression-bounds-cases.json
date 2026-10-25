@@ -1,0 +1,26 @@
+{
+  "format": "umf-r8-security-expression-bounds/1",
+  "predecessor": {
+    "runtime": "Bun 1.4.3",
+    "source": "src/extensions/security/policy.ts",
+    "sourceSha256": "e8909187fcefaefb9f0c655c4bb2295098f12e99142a6037addec5bb22ac7715",
+    "testSource": "tests/security/policy.test.ts",
+    "testSourceSha256": "3715f5440ff898150cf3be494a4d32433b58b13f96e9d1402fdaac4f64d07df3",
+    "contract": "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md",
+    "contractSha256": "1183e2ea8ba55fade4007554905b7175d7796e867a67814f511e9cd3ee514800"
+  },
+  "scope": "First SECURITY_BOUND diagnostic from inspectSecurityPolicy over a schema-valid policy whose condition is an admitted 0.1.0 expression. Schema errors, term semantics, ontology closure, raw-host accessors and whole-policy interpretation are outside this packet.",
+  "cases": [
+    {"name":"depth-16-is-admitted","builder":{"depth":16}},
+    {"name":"depth-17-refuses-at-first-overflow","builder":{"depth":17},"expected":{"code":"SECURITY_BOUND","path":"/rules/0/condition/arg/arg/arg/arg/arg/arg/arg/arg/arg/arg/arg/arg/arg/arg/arg/arg","message":"Expression depth/node bound exceeded"}},
+    {"name":"4096-nodes-is-admitted","builder":{"nodes":4096}},
+    {"name":"4097-nodes-refuses-at-4097th-depth-first-node","builder":{"nodes":4097},"expected":{"code":"SECURITY_BOUND","path":"/rules/0/condition/args/63/args/62","message":"Expression depth/node bound exceeded"}},
+    {"name":"depth-overflow-precedes-later-sibling","builder":{"depthFirstDepth":16},"expected":{"code":"SECURITY_BOUND","path":"/rules/0/condition/args/0/arg/arg/arg/arg/arg/arg/arg/arg/arg/arg/arg/arg/arg/arg/arg","message":"Expression depth/node bound exceeded"}}
+  ],
+  "oracleMethod": "The predecessor increments one shared node counter on each depth-first visit, uses one-based root depth, and appends SECURITY_BOUND at the first depth>16 or node>4096 visit. This packet records the first such diagnostic; the TypeScript inspector may continue sibling traversal and append later bound diagnostics.",
+  "limitations": [
+    "The Rust helper is an internal core primitive over already schema-admitted tagged ASTs; it is not a schema validator or policy inspector.",
+    "The helper stops at the first bound violation and applies invocation work controls. It does not implement the TypeScript inspector's full ordered diagnostic list.",
+    "No `requireSecurityInterpretation`, authorization, policy evaluation, default route or raw-host parity claim is made."
+  ]
+}

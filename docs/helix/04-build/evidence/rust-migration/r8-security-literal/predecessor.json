@@ -1,0 +1,411 @@
+{
+  "format": "umf.rust.security-literal.predecessor/1",
+  "runtime": {
+    "bun": "1.4.3"
+  },
+  "sourceHashes": {
+    "src/model/schema-literals.ts": "0e7ce8c901b834679d5ed49c7465b08eee916c132e37adbbf3f037c34b548b88",
+    "src/validation/literal-kernel.ts": "0fffe57279a745891f4cbbd33eb1296a34bfcb083bd8e05a3ff7a7b8048db071",
+    "src/validation/literal-policy.ts": "a59e2a18b735f647f23a198e70af0f9c3ca57eeeccec77d012487a9b9b803e08",
+    "src/validation/current-policy.ts": "010d8dcc062363592713d68fcd54000775420cae779a074474bcca19b862cd33",
+    "spec/metamodel/generated/domain-policy.json": "9dc6ae47136d82d19b5a88f4e5437fa7fe93b65059560cfeb4bed7c2ca122594"
+  },
+  "captureScriptSha256": "8712f5963d1fd73403b43a72c6887b0bd5c3f447934011711b02867563a705e9",
+  "caseCount": 11,
+  "cases": [
+    {
+      "id": "integer-max-i64",
+      "field": {
+        "id": "n",
+        "kind": "field",
+        "scalarType": "integer",
+        "cardinality": "one",
+        "nullability": "required",
+        "facets": {
+          "integerWidth": {
+            "bits": 64,
+            "signed": true
+          }
+        },
+        "extensions": {}
+      },
+      "value": {
+        "integerToken": "9223372036854775807"
+      },
+      "document": {
+        "umf": "0.10.0",
+        "id": "security-literal",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:security-literal",
+            "elements": []
+          }
+        ]
+      },
+      "outcome": {
+        "accepted": true
+      }
+    },
+    {
+      "id": "integer-overflow",
+      "field": {
+        "id": "n",
+        "kind": "field",
+        "scalarType": "integer",
+        "cardinality": "one",
+        "nullability": "required",
+        "facets": {
+          "integerWidth": {
+            "bits": 64,
+            "signed": true
+          }
+        },
+        "extensions": {}
+      },
+      "value": {
+        "integerToken": "9223372036854775808"
+      },
+      "document": {
+        "umf": "0.10.0",
+        "id": "security-literal",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:security-literal",
+            "elements": []
+          }
+        ]
+      },
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "message": "Integer outside width/signedness"
+      }
+    },
+    {
+      "id": "integer-malformed-token",
+      "field": {
+        "id": "n",
+        "kind": "field",
+        "scalarType": "integer",
+        "cardinality": "one",
+        "nullability": "required",
+        "facets": {
+          "integerWidth": {
+            "bits": 64,
+            "signed": true
+          }
+        },
+        "extensions": {}
+      },
+      "value": {
+        "integerToken": "01"
+      },
+      "document": {
+        "umf": "0.10.0",
+        "id": "security-literal",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:security-literal",
+            "elements": []
+          }
+        ]
+      },
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "message": "Expected exact JSON numeric token"
+      }
+    },
+    {
+      "id": "integer-null-required",
+      "field": {
+        "id": "n",
+        "kind": "field",
+        "scalarType": "integer",
+        "cardinality": "one",
+        "nullability": "required",
+        "facets": {
+          "integerWidth": {
+            "bits": 64,
+            "signed": true
+          }
+        },
+        "extensions": {}
+      },
+      "value": null,
+      "document": {
+        "umf": "0.10.0",
+        "id": "security-literal",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:security-literal",
+            "elements": []
+          }
+        ]
+      },
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "message": "Null requires explicit absent-allowed"
+      }
+    },
+    {
+      "id": "integer-null-absent-allowed",
+      "field": {
+        "id": "n",
+        "kind": "field",
+        "scalarType": "integer",
+        "cardinality": "one",
+        "nullability": "absent-allowed",
+        "facets": {
+          "integerWidth": {
+            "bits": 64,
+            "signed": true
+          }
+        },
+        "extensions": {}
+      },
+      "value": null,
+      "document": {
+        "umf": "0.10.0",
+        "id": "security-literal",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:security-literal",
+            "elements": []
+          }
+        ]
+      },
+      "outcome": {
+        "accepted": true
+      }
+    },
+    {
+      "id": "integer-unknown-wrapper-member",
+      "field": {
+        "id": "n",
+        "kind": "field",
+        "scalarType": "integer",
+        "cardinality": "one",
+        "nullability": "required",
+        "facets": {
+          "integerWidth": {
+            "bits": 64,
+            "signed": true
+          }
+        },
+        "extensions": {}
+      },
+      "value": {
+        "integerToken": "1",
+        "future": 0
+      },
+      "document": {
+        "umf": "0.10.0",
+        "id": "security-literal",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:security-literal",
+            "elements": []
+          }
+        ]
+      },
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "message": "Expected one typed literal wrapper"
+      }
+    },
+    {
+      "id": "unknown-facet-precedes-null",
+      "field": {
+        "id": "n",
+        "kind": "field",
+        "scalarType": "integer",
+        "cardinality": "one",
+        "nullability": "required",
+        "facets": {
+          "integerWidth": {
+            "bits": 64,
+            "signed": true
+          },
+          "future": 1
+        },
+        "extensions": {}
+      },
+      "value": null,
+      "document": {
+        "umf": "0.10.0",
+        "id": "security-literal",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:security-literal",
+            "elements": []
+          }
+        ]
+      },
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+        "path": "/facets/future",
+        "message": "Unknown relevant qualifier: future"
+      }
+    },
+    {
+      "id": "decimal-exact-scale",
+      "field": {
+        "id": "d",
+        "kind": "field",
+        "scalarType": "decimal",
+        "cardinality": "one",
+        "nullability": "required",
+        "facets": {
+          "precision": 6,
+          "scale": 2
+        },
+        "extensions": {}
+      },
+      "value": {
+        "decimalToken": "1.230"
+      },
+      "document": {
+        "umf": "0.10.0",
+        "id": "security-literal",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:security-literal",
+            "elements": []
+          }
+        ]
+      },
+      "outcome": {
+        "accepted": true
+      }
+    },
+    {
+      "id": "decimal-rounding-refusal",
+      "field": {
+        "id": "d",
+        "kind": "field",
+        "scalarType": "decimal",
+        "cardinality": "one",
+        "nullability": "required",
+        "facets": {
+          "precision": 6,
+          "scale": 2
+        },
+        "extensions": {}
+      },
+      "value": {
+        "decimalToken": "1.234"
+      },
+      "document": {
+        "umf": "0.10.0",
+        "id": "security-literal",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:security-literal",
+            "elements": []
+          }
+        ]
+      },
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "message": "Numeric value would require rounding"
+      }
+    },
+    {
+      "id": "string-supplementary-unicode-length",
+      "field": {
+        "id": "s",
+        "kind": "field",
+        "scalarType": "string",
+        "cardinality": "one",
+        "nullability": "required",
+        "facets": {
+          "length": {
+            "min": 1,
+            "max": 1,
+            "unit": "unicode-scalar"
+          }
+        },
+        "extensions": {}
+      },
+      "value": {
+        "string": "😀"
+      },
+      "document": {
+        "umf": "0.10.0",
+        "id": "security-literal",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:security-literal",
+            "elements": []
+          }
+        ]
+      },
+      "outcome": {
+        "accepted": true
+      }
+    },
+    {
+      "id": "string-lone-surrogate-refusal",
+      "field": {
+        "id": "s",
+        "kind": "field",
+        "scalarType": "string",
+        "cardinality": "one",
+        "nullability": "required",
+        "facets": {},
+        "extensions": {}
+      },
+      "value": {
+        "string": "\ud800"
+      },
+      "document": {
+        "umf": "0.10.0",
+        "id": "security-literal",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "urn:security-literal",
+            "elements": []
+          }
+        ]
+      },
+      "outcome": {
+        "accepted": false,
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "",
+        "message": "Unpaired Unicode surrogate"
+      }
+    }
+  ]
+}

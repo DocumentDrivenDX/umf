@@ -15,6 +15,12 @@ use umf_core::{Context, Utf16, Value};
 const MAX_REFERENCE_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_ICEBERG_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_PROTOBUF_INSPECT_REQUEST_BYTES: usize = 32 * 1024 * 1024;
+#[cfg(feature = "embedded-adapters")]
+const MAX_PROTOBUF_DESCRIPTOR_INPUT_BYTES: usize = 4_000_000;
+#[cfg(feature = "embedded-adapters")]
+const PROTOBUF_DESCRIPTOR_READ_CLI_PROFILE: &str = "umf.protobuf-descriptor-read-cli/0.1.0";
+#[cfg(feature = "embedded-adapters")]
+const MAX_AVRO_CANDIDATE_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_JSON_SCHEMA_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 
 fn main() {
@@ -602,7 +608,9 @@ fn run(args: Vec<String>) -> Result<(), String> {
         return json_schema_run(&args[1..]);
     }
     if args.first().map(String::as_str) != Some("metamodel") {
-        return Err("usage: umf <metamodel|reference|iceberg|protobuf|avro|json-schema> ...".into());
+        return Err(
+            "usage: umf <metamodel|reference|iceberg|protobuf|avro|json-schema> ...".into(),
+        );
     }
     let operation = args
         .get(1)
@@ -777,13 +785,21 @@ fn iceberg_run(args: &[String]) -> Result<(), String> {
             "--stdin-wire" if !stdin_wire => stdin_wire = true,
             "--max-work" if max_work.is_none() => {
                 index += 1;
-                max_work = Some(args.get(index).ok_or("--max-work requires a value")?
-                    .parse::<u64>().map_err(|_| "--max-work requires a nonnegative integer")?);
+                max_work = Some(
+                    args.get(index)
+                        .ok_or("--max-work requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--max-work requires a nonnegative integer")?,
+                );
             }
             "--timeout-ms" if timeout_ms.is_none() => {
                 index += 1;
-                timeout_ms = Some(args.get(index).ok_or("--timeout-ms requires a value")?
-                    .parse::<u64>().map_err(|_| "--timeout-ms requires a nonnegative integer")?);
+                timeout_ms = Some(
+                    args.get(index)
+                        .ok_or("--timeout-ms requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--timeout-ms requires a nonnegative integer")?,
+                );
             }
             _ => return Err("invalid Iceberg schema option".into()),
         }
@@ -800,23 +816,33 @@ fn iceberg_run(args: &[String]) -> Result<(), String> {
         let amount = amount as u64;
         if amount > remaining {
             return Err(umf_core::EngineError::new(
-                "RESOURCE_LIMIT", Utf16::default(), "Iceberg work budget exhausted",
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Iceberg work budget exhausted",
             ));
         }
         remaining -= amount;
         if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
             return Err(umf_core::EngineError::new(
-                "DEADLINE", Utf16::default(), "Iceberg deadline elapsed",
+                "DEADLINE",
+                Utf16::default(),
+                "Iceberg deadline elapsed",
             ));
         }
         Ok(())
     };
-    println!("{}", umf_core_wire::execute_iceberg_wire_with_control(&wire, &mut control));
+    println!(
+        "{}",
+        umf_core_wire::execute_iceberg_wire_with_control(&wire, &mut control)
+    );
     Ok(())
 }
 
 #[cfg(feature = "embedded-adapters")]
 fn protobuf_run(args: &[String]) -> Result<(), String> {
+    if args.first().map(String::as_str) == Some("descriptor") {
+        return protobuf_descriptor_run(&args[1..]);
+    }
     if args == ["inspect", "--version"] {
         println!(
             "{{\"profile\":\"{}\",\"version\":\"{}\"}}",
@@ -844,13 +870,21 @@ fn protobuf_run(args: &[String]) -> Result<(), String> {
             "--stdin-wire" if !stdin_wire => stdin_wire = true,
             "--max-work" if max_work.is_none() => {
                 index += 1;
-                max_work = Some(args.get(index).ok_or("--max-work requires a value")?
-                    .parse::<u64>().map_err(|_| "--max-work requires a nonnegative integer")?);
+                max_work = Some(
+                    args.get(index)
+                        .ok_or("--max-work requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--max-work requires a nonnegative integer")?,
+                );
             }
             "--timeout-ms" if timeout_ms.is_none() => {
                 index += 1;
-                timeout_ms = Some(args.get(index).ok_or("--timeout-ms requires a value")?
-                    .parse::<u64>().map_err(|_| "--timeout-ms requires a nonnegative integer")?);
+                timeout_ms = Some(
+                    args.get(index)
+                        .ok_or("--timeout-ms requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--timeout-ms requires a nonnegative integer")?,
+                );
             }
             _ => return Err("invalid Protobuf inspect option".into()),
         }
@@ -860,31 +894,174 @@ fn protobuf_run(args: &[String]) -> Result<(), String> {
         return Err("--stdin-wire is required".into());
     }
     let started = std::time::Instant::now();
-    let wire = String::from_utf8(read_limited(io::stdin(), MAX_PROTOBUF_INSPECT_REQUEST_BYTES)?)
-        .map_err(|_| "Protobuf inspect wire request is not valid UTF-8".to_owned())?;
+    let wire = String::from_utf8(read_limited(
+        io::stdin(),
+        MAX_PROTOBUF_INSPECT_REQUEST_BYTES,
+    )?)
+    .map_err(|_| "Protobuf inspect wire request is not valid UTF-8".to_owned())?;
     let mut remaining = max_work.unwrap_or(u64::MAX);
     let mut control = |amount: usize| {
         let amount = amount as u64;
         if amount > remaining {
             return Err(umf_core::EngineError::new(
-                "RESOURCE_LIMIT", Utf16::default(), "Protobuf inspect work budget exhausted",
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Protobuf inspect work budget exhausted",
             ));
         }
         remaining -= amount;
         if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
             return Err(umf_core::EngineError::new(
-                "DEADLINE", Utf16::default(), "Protobuf inspect deadline elapsed",
+                "DEADLINE",
+                Utf16::default(),
+                "Protobuf inspect deadline elapsed",
             ));
         }
         Ok(())
     };
-    println!("{}", umf_core_wire::execute_protobuf_inspect_wire_with_control(&wire, &mut control));
+    println!(
+        "{}",
+        umf_core_wire::execute_protobuf_inspect_wire_with_control(&wire, &mut control)
+    );
+    Ok(())
+}
+
+#[cfg(feature = "embedded-adapters")]
+fn protobuf_descriptor_run(args: &[String]) -> Result<(), String> {
+    if args == ["read", "--version"] {
+        println!(
+            "{{\"profile\":\"{}\",\"version\":\"{}\"}}",
+            PROTOBUF_DESCRIPTOR_READ_CLI_PROFILE,
+            env!("CARGO_PKG_VERSION"),
+        );
+        return Ok(());
+    }
+    if args == ["read", "--capabilities"] {
+        println!(
+            "{{\"profile\":\"{}\",\"operations\":[\"protobuf.descriptor.read\"],\"input\":\"raw FileDescriptorSet bytes\",\"maxInputBytes\":{},\"output\":\"umf.core-wire/1 tagged descriptor tree\",\"resourceProfile\":\"cooperative\"}}",
+            PROTOBUF_DESCRIPTOR_READ_CLI_PROFILE,
+            MAX_PROTOBUF_DESCRIPTOR_INPUT_BYTES,
+        );
+        return Ok(());
+    }
+    if args.first().map(String::as_str) != Some("read") {
+        return Err(
+            "usage: umf protobuf descriptor read --input PATH [--max-work N] [--timeout-ms N]"
+                .into(),
+        );
+    }
+    let mut input_path = None;
+    let mut max_work = None;
+    let mut timeout_ms = None;
+    let mut index = 1;
+    while index < args.len() {
+        match args[index].as_str() {
+            "--input" if input_path.is_none() => {
+                index += 1;
+                input_path = Some(args.get(index).ok_or("--input requires a path")?.clone());
+            }
+            "--max-work" if max_work.is_none() => {
+                index += 1;
+                max_work = Some(
+                    args.get(index)
+                        .ok_or("--max-work requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--max-work requires a nonnegative integer")?,
+                );
+            }
+            "--timeout-ms" if timeout_ms.is_none() => {
+                index += 1;
+                timeout_ms = Some(
+                    args.get(index)
+                        .ok_or("--timeout-ms requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--timeout-ms requires a nonnegative integer")?,
+                );
+            }
+            _ => return Err("invalid Protobuf descriptor read option".into()),
+        }
+        index += 1;
+    }
+    let input_path = input_path.ok_or("--input is required")?;
+    let started = std::time::Instant::now();
+    let mut file = fs::File::open(&input_path).map_err(|error| error.to_string())?;
+    // Check metadata before reserving or reading caller bytes, then cap the
+    // read itself as protection against a concurrent file growth.
+    if file.metadata().map_err(|error| error.to_string())?.len()
+        > MAX_PROTOBUF_DESCRIPTOR_INPUT_BYTES as u64
+    {
+        println!(
+            "{}",
+            umf_core_wire::result_envelope(Err(umf_core::EngineError::new(
+                "LIMIT",
+                Utf16::default(),
+                "Descriptor input exceeds limit",
+            )))
+        );
+        return Ok(());
+    }
+    let mut bytes = Vec::new();
+    file.by_ref()
+        .take((MAX_PROTOBUF_DESCRIPTOR_INPUT_BYTES + 1) as u64)
+        .read_to_end(&mut bytes)
+        .map_err(|error| error.to_string())?;
+    if bytes.len() > MAX_PROTOBUF_DESCRIPTOR_INPUT_BYTES {
+        println!(
+            "{}",
+            umf_core_wire::result_envelope(Err(umf_core::EngineError::new(
+                "LIMIT",
+                Utf16::default(),
+                "Descriptor input exceeds limit",
+            )))
+        );
+        return Ok(());
+    }
+
+    let request = object(vec![("op", Value::string_utf8("protobuf.descriptor.read"))]);
+    let request_wire = umf_core_wire::encode(&request, &mut Context::ordinary())
+        .map_err(|error| engine_error(error))?;
+    let mut remaining = max_work.unwrap_or(u64::MAX);
+    let mut control = |amount: usize| {
+        let amount = amount as u64;
+        if amount > remaining {
+            return Err(umf_core::EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Protobuf descriptor read work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(umf_core::EngineError::new(
+                "DEADLINE",
+                Utf16::default(),
+                "Protobuf descriptor read deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    let response = umf_core_wire::protobuf_document::execute(&request_wire, &bytes, &mut control);
+    println!("{}", response.wire_envelope);
     Ok(())
 }
 
 fn avro_run(args: &[String]) -> Result<(), String> {
+    if args.first().map(String::as_str) == Some("candidate-edit") {
+        #[cfg(feature = "embedded-adapters")]
+        {
+            return avro_candidate_run(&args[1..]);
+        }
+        #[cfg(not(feature = "embedded-adapters"))]
+        {
+            return Err("Avro candidate-edit requires the embedded-adapters CLI feature".into());
+        }
+    }
     if args == ["inspect", "--version"] {
-        println!("{{\"profile\":\"{}\",\"version\":\"{}\"}}", umf_core_wire::AVRO_INSPECT_PROFILE, env!("CARGO_PKG_VERSION"));
+        println!(
+            "{{\"profile\":\"{}\",\"version\":\"{}\"}}",
+            umf_core_wire::AVRO_INSPECT_PROFILE,
+            env!("CARGO_PKG_VERSION")
+        );
         return Ok(());
     }
     if args == ["inspect", "--capabilities"] {
@@ -892,7 +1069,7 @@ fn avro_run(args: &[String]) -> Result<(), String> {
         return Ok(());
     }
     if args.first().map(String::as_str) != Some("inspect") {
-        return Err("usage: umf avro inspect <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>".into());
+        return Err("usage: umf avro <inspect|candidate-edit> ...".into());
     }
     let mut stdin_wire = false;
     let mut max_work = None;
@@ -901,25 +1078,143 @@ fn avro_run(args: &[String]) -> Result<(), String> {
     while index < args.len() {
         match args[index].as_str() {
             "--stdin-wire" if !stdin_wire => stdin_wire = true,
-            "--max-work" if max_work.is_none() => { index += 1; max_work = Some(args.get(index).ok_or("--max-work requires a value")?.parse::<u64>().map_err(|_| "--max-work requires a nonnegative integer")?); }
-            "--timeout-ms" if timeout_ms.is_none() => { index += 1; timeout_ms = Some(args.get(index).ok_or("--timeout-ms requires a value")?.parse::<u64>().map_err(|_| "--timeout-ms requires a nonnegative integer")?); }
+            "--max-work" if max_work.is_none() => {
+                index += 1;
+                max_work = Some(
+                    args.get(index)
+                        .ok_or("--max-work requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--max-work requires a nonnegative integer")?,
+                );
+            }
+            "--timeout-ms" if timeout_ms.is_none() => {
+                index += 1;
+                timeout_ms = Some(
+                    args.get(index)
+                        .ok_or("--timeout-ms requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--timeout-ms requires a nonnegative integer")?,
+                );
+            }
             _ => return Err("invalid Avro inspect option".into()),
         }
         index += 1;
     }
-    if !stdin_wire { return Err("--stdin-wire is required".into()); }
+    if !stdin_wire {
+        return Err("--stdin-wire is required".into());
+    }
     let started = std::time::Instant::now();
-    let wire = String::from_utf8(read_limited(io::stdin(), MAX_PROTOBUF_INSPECT_REQUEST_BYTES)?)
-        .map_err(|_| "Avro inspect wire request is not valid UTF-8".to_owned())?;
+    let wire = String::from_utf8(read_limited(
+        io::stdin(),
+        MAX_PROTOBUF_INSPECT_REQUEST_BYTES,
+    )?)
+    .map_err(|_| "Avro inspect wire request is not valid UTF-8".to_owned())?;
     let mut remaining = max_work.unwrap_or(u64::MAX);
     let mut control = |amount: usize| {
         let amount = amount as u64;
-        if amount > remaining { return Err(umf_core::EngineError::new("RESOURCE_LIMIT", Utf16::default(), "Avro inspect work budget exhausted")); }
+        if amount > remaining {
+            return Err(umf_core::EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Avro inspect work budget exhausted",
+            ));
+        }
         remaining -= amount;
-        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) { return Err(umf_core::EngineError::new("DEADLINE", Utf16::default(), "Avro inspect deadline elapsed")); }
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(umf_core::EngineError::new(
+                "DEADLINE",
+                Utf16::default(),
+                "Avro inspect deadline elapsed",
+            ));
+        }
         Ok(())
     };
-    println!("{}", umf_core_wire::execute_avro_inspect_wire_with_control(&wire, &mut control));
+    println!(
+        "{}",
+        umf_core_wire::execute_avro_inspect_wire_with_control(&wire, &mut control)
+    );
+    Ok(())
+}
+
+#[cfg(feature = "embedded-adapters")]
+fn avro_candidate_run(args: &[String]) -> Result<(), String> {
+    if args == ["--version"] {
+        println!(
+            "{{\"profile\":\"{}\",\"version\":\"{}\"}}",
+            umf_core_wire::AVRO_CANDIDATE_PROFILE,
+            env!("CARGO_PKG_VERSION")
+        );
+        return Ok(());
+    }
+    if args == ["--capabilities"] {
+        println!(
+            "{{\"profile\":\"{}\",\"operations\":[\"avro.schema.proposeNodeEdit\"],\"semanticCompleteness\":false,\"resourceProfile\":\"cooperative\"}}",
+            umf_core_wire::AVRO_CANDIDATE_PROFILE
+        );
+        return Ok(());
+    }
+    if args.iter().any(|arg| arg == "--help") {
+        return Err("usage: umf avro candidate-edit <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>".into());
+    }
+    let mut stdin_wire = false;
+    let mut max_work = None;
+    let mut timeout_ms = None;
+    let mut index = 0;
+    while index < args.len() {
+        match args[index].as_str() {
+            "--stdin-wire" if !stdin_wire => stdin_wire = true,
+            "--max-work" if max_work.is_none() => {
+                index += 1;
+                max_work = Some(
+                    args.get(index)
+                        .ok_or("--max-work requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--max-work requires a nonnegative integer")?,
+                );
+            }
+            "--timeout-ms" if timeout_ms.is_none() => {
+                index += 1;
+                timeout_ms = Some(
+                    args.get(index)
+                        .ok_or("--timeout-ms requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--timeout-ms requires a nonnegative integer")?,
+                );
+            }
+            _ => return Err("invalid Avro candidate-edit option".into()),
+        }
+        index += 1;
+    }
+    if !stdin_wire {
+        return Err("--stdin-wire is required".into());
+    }
+    let started = std::time::Instant::now();
+    let wire = String::from_utf8(read_limited(io::stdin(), MAX_AVRO_CANDIDATE_REQUEST_BYTES)?)
+        .map_err(|_| "Avro candidate-edit wire request is not valid UTF-8".to_owned())?;
+    let mut remaining = max_work.unwrap_or(u64::MAX);
+    let mut control = |amount: usize| {
+        let amount = amount as u64;
+        if amount > remaining {
+            return Err(umf_core::EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Avro candidate-edit work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(umf_core::EngineError::new(
+                "DEADLINE",
+                Utf16::default(),
+                "Avro candidate-edit deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    println!(
+        "{}",
+        umf_core_wire::execute_avro_candidate_wire_with_control(&wire, &mut control)
+    );
     Ok(())
 }
 
@@ -928,7 +1223,9 @@ fn json_schema_run(args: &[String]) -> Result<(), String> {
     if args == ["--version"] {
         println!(
             "{{\"profile\":\"{}\",\"version\":\"{}\"}}",
-            umf_core_wire::JSON_SCHEMA_PROFILE, env!("CARGO_PKG_VERSION"));
+            umf_core_wire::JSON_SCHEMA_PROFILE,
+            env!("CARGO_PKG_VERSION")
+        );
         return Ok(());
     }
     if args == ["--capabilities"] {

@@ -5,7 +5,7 @@ use crate::{
     python_regex::PythonReVersion,
     python_value::{PythonConsumerValue, PythonSchemaResources},
     schema::{CompiledSchema, SchemaResources},
-    value::{copy_json, Utf16, Value},
+    value::{Utf16, Value, copy_json},
 };
 #[derive(Clone, Debug)]
 pub struct Registration {
@@ -89,7 +89,10 @@ fn core_version(
     Ok(property.clone())
 }
 impl Registry {
-    pub(crate) fn with_kind_policy(policy: &Value, ctx: &mut Context<'_>) -> Result<Self, EngineError> {
+    pub(crate) fn with_kind_policy(
+        policy: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Self, EngineError> {
         Ok(Self {
             entries: Vec::new(),
             kind_policy: Some(copy_json(policy, ctx)?),

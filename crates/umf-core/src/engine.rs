@@ -494,7 +494,7 @@ impl Engine {
                     "CORE_SCHEMA_PROPERTIES",
                     "Expected object",
                     "/identity",
-                ))
+                ));
             }
         };
         for (name, _) in identity_fields {
@@ -589,10 +589,23 @@ impl Engine {
                 "",
             ));
         }
+        self.validate_core_field_value_admitted(&source, field, &value, ctx)
+    }
+
+    /// Shared Field-value body for callers that already own an admitted
+    /// immutable source and have selected the exact Field. This intentionally
+    /// performs no source copy or document revalidation.
+    pub(crate) fn validate_core_field_value_admitted(
+        &self,
+        source: &Value,
+        field: &Value,
+        value: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Validation, EngineError> {
         let mut diagnostics = crate::literal::literal_field_value_errors_admitted(
-            &source,
+            source,
             field,
-            &value,
+            value,
             true,
             &self.policy,
             ctx,
@@ -611,6 +624,60 @@ impl Engine {
             complete,
             diagnostics,
         })
+    }
+
+    /// Evaluate a Field literal against an already selected, possibly edited
+    /// source. This matches the predecessor schema-literal check used while
+    /// declaring allowed values/defaults: it does not require the whole
+    /// intermediate document to validate before the literal is checked.
+    pub fn validate_schema_literal_public(
+        &self,
+        source: &Value,
+        field: &Value,
+        value: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Validation, EngineError> {
+        let diagnostics = crate::literal::literal_field_value_errors_admitted(
+            source,
+            field,
+            value,
+            true,
+            &self.policy,
+            ctx,
+        )?;
+        let valid = !diagnostics
+            .iter()
+            .any(|item| item.severity == Severity::Error);
+        let complete = diagnostics.is_empty();
+        Ok(Validation {
+            valid,
+            complete,
+            diagnostics,
+        })
+    }
+
+    /// Apply the direct `checkSchemaLiteral` contract to an already admitted
+    /// source, selected Field and literal. Unlike the validation projection,
+    /// this returns the first literal diagnostic as an operation error.
+    pub fn check_schema_literal_public(
+        &self,
+        source: &Value,
+        field: &Value,
+        value: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<(), EngineError> {
+        let validation = self.validate_schema_literal_public(source, field, value, ctx)?;
+        if let Some(diagnostic) = validation.diagnostics.into_iter().next() {
+            let code = diagnostic.code.to_utf8().map_err(|_| {
+                EngineError::new(
+                    "CONSTRAINT_POLICY",
+                    Utf16::default(),
+                    "Literal diagnostic code is not UTF-8",
+                )
+            })?;
+            return Err(EngineError::new(code, diagnostic.path, diagnostic.message));
+        }
+        Ok(())
     }
 
     pub fn new(resources: ResourceSet, ctx: &mut Context<'_>) -> Result<Self, EngineError> {
@@ -667,6 +734,19 @@ impl Engine {
         capabilities: &mut dyn Capabilities,
         ctx: &mut Context<'_>,
     ) -> Result<Validation, EngineError> {
+        self.validate_document_observed(value, registry, capabilities, ctx, None)
+    }
+
+    /// Validate a document while reporting the predecessor's observational
+    /// work categories. The observer never charges or alters `Context`.
+    pub(crate) fn validate_document_observed(
+        &self,
+        value: &Value,
+        registry: &Registry,
+        capabilities: &mut dyn Capabilities,
+        ctx: &mut Context<'_>,
+        mut observer: Option<&mut dyn FnMut(&'static str, usize)>,
+    ) -> Result<Validation, EngineError> {
         let document = match copy_json(value, ctx) {
             Ok(v) => v,
             Err(e) => {
@@ -687,7 +767,10 @@ impl Engine {
                 });
             }
         };
-        self.validate_admitted_document(document, None, registry, capabilities, ctx)
+        if let Some(observer) = observer.as_deref_mut() {
+            observer("document-copy", crate::dataset_values::tree_values(value));
+        }
+        self.validate_admitted_document(document, None, registry, capabilities, ctx, observer)
     }
 
     /// Validate one value against an explicitly selected Field in the current
@@ -797,7 +880,7 @@ impl Engine {
                         severity: Severity::Error,
                         python_text_origin: None,
                     }],
-                })
+                });
             }
             Err(error) => return Err(error),
         };
@@ -807,6 +890,7 @@ impl Engine {
             registry,
             capabilities,
             ctx,
+            None,
         )
     }
 
@@ -817,6 +901,7 @@ impl Engine {
         registry: &Registry,
         capabilities: &mut dyn Capabilities,
         ctx: &mut Context<'_>,
+        observer: Option<&mut dyn FnMut(&'static str, usize)>,
     ) -> Result<Validation, EngineError> {
         let diagnostics = self.core_structure_diagnostics(&document, ctx)?;
         if !diagnostics.is_empty() {
@@ -835,13 +920,14 @@ impl Engine {
                 ctx,
             )?
         } else {
-            execute_constraints_admitted(
+            crate::constraints::execute_constraints_admitted_observed(
                 &document,
                 &self.program,
                 &self.resources.domain_policy,
                 registry,
                 capabilities,
                 ctx,
+                observer,
             )?
         };
         let valid = !diagnostics.iter().any(|d| d.severity == Severity::Error);

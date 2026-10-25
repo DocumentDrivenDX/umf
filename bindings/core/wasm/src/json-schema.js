@@ -22,6 +22,9 @@ function resourceMap(entries, work) {
   }
   return result;
 }
+function orderedDiagnostics(items) {
+  return items.map(({code, path, severity, message}) => ({code, path, severity, message}));
+}
 export function createJsonSchemaOperations(call, preflight) {
   const own = (value, key, required = true) => {
     if (!value || (Object.getPrototypeOf(value) !== Object.prototype && Object.getPrototypeOf(value) !== null)) throw new TypeError('JSON Schema options must be plain objects');
@@ -50,8 +53,10 @@ export function createJsonSchemaOperations(call, preflight) {
     inspectJsonSchema(document) { const admission = preflight(); return call('inspectJsonSchema', {document}, admission); },
     exportJsonSchema(document) { const admission = preflight(); return call('exportJsonSchema', {document}, admission); },
     exportJsonSchemaResources(document) { const admission = preflight(); return resourceMap(call('exportJsonSchemaResources', {document}, admission), admission.work); },
-    exportJsonSchemaBundle(document) { const admission = preflight(); const bundle = call('exportJsonSchemaBundle', {document}, admission); return {schema: bundle.root, resources: resourceMap(bundle.resources, admission.work), source: bundle.source, diagnostics: bundle.diagnostics}; },
+    exportJsonSchemaBundle(document) { const admission = preflight(); const bundle = call('exportJsonSchemaBundle', {document}, admission); return {schema: bundle.root, resources: resourceMap(bundle.resources, admission.work), source: bundle.source, diagnostics: orderedDiagnostics(bundle.diagnostics)}; },
     getJsonSchemaNode(document, pointer) { const admission = preflight(); return call('getJsonSchemaNode', {document, pointer}, admission); },
     walkJsonSchema(document) { const admission = preflight(); return call('walkJsonSchema', {document}, admission); },
+    parseNativeJson(source) { const admission = preflight(); return call('parseNativeJson', {source}, admission); },
+    editJsonSchemaNode(document, pointer, replacement) { const admission = preflight(); return call('editJsonSchemaNode', {document, pointer, replacement}, admission); },
   });
 }

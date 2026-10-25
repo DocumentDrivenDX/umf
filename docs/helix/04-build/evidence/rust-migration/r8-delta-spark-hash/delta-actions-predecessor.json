@@ -1,0 +1,667 @@
+{
+  "format": "umf-r8-delta-actions-predecessor/1",
+  "cases": [
+    {
+      "id": "int64-boundaries",
+      "text": "{\"txn\":{\"appId\":\"x\",\"version\":9223372036854775807}}\n{\"txn\":{\"appId\":\"x\",\"version\":-9223372036854775808}}\n{\"txn\":{\"appId\":\"x\",\"version\":9223372036854775808}}\n{\"txn\":{\"appId\":\"x\",\"version\":-9223372036854775809}}",
+      "sourceSha256": "cd97a4f96f54b2075543ac0fc7d7b4f002316152ab2e73f63113645c41550b79",
+      "parsedAll": true,
+      "complete": false,
+      "knownShapesValid": false,
+      "lines": [
+        {
+          "line": 1,
+          "start": 0,
+          "end": 51,
+          "terminator": "\n",
+          "status": "parsed",
+          "action": "txn",
+          "node": {
+            "kind": "object",
+            "members": {
+              "txn": {
+                "kind": "object",
+                "members": {
+                  "appId": {
+                    "kind": "string",
+                    "value": "x"
+                  },
+                  "version": {
+                    "kind": "number",
+                    "value": "9223372036854775807"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "line": 2,
+          "start": 52,
+          "end": 104,
+          "terminator": "\n",
+          "status": "parsed",
+          "action": "txn",
+          "node": {
+            "kind": "object",
+            "members": {
+              "txn": {
+                "kind": "object",
+                "members": {
+                  "appId": {
+                    "kind": "string",
+                    "value": "x"
+                  },
+                  "version": {
+                    "kind": "number",
+                    "value": "-9223372036854775808"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "line": 3,
+          "start": 105,
+          "end": 156,
+          "terminator": "\n",
+          "status": "parsed",
+          "action": "txn",
+          "node": {
+            "kind": "object",
+            "members": {
+              "txn": {
+                "kind": "object",
+                "members": {
+                  "appId": {
+                    "kind": "string",
+                    "value": "x"
+                  },
+                  "version": {
+                    "kind": "number",
+                    "value": "9223372036854775808"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "line": 4,
+          "start": 157,
+          "end": 209,
+          "terminator": "",
+          "status": "parsed",
+          "action": "txn",
+          "node": {
+            "kind": "object",
+            "members": {
+              "txn": {
+                "kind": "object",
+                "members": {
+                  "appId": {
+                    "kind": "string",
+                    "value": "x"
+                  },
+                  "version": {
+                    "kind": "number",
+                    "value": "-9223372036854775809"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_INTEGER",
+          "path": "/lines/2/txn/version",
+          "severity": "error",
+          "message": "Integer exceeds its declared signed range"
+        },
+        {
+          "code": "DELTA_ACTION_INTEGER",
+          "path": "/lines/3/txn/version",
+          "severity": "error",
+          "message": "Integer exceeds its declared signed range"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state"
+        }
+      ]
+    },
+    {
+      "id": "integer-token-grammar",
+      "text": "{\"txn\":{\"appId\":\"x\",\"version\":9007199254740992.1}}\n{\"txn\":{\"appId\":\"x\",\"version\":1e400}}\n{\"protocol\":{\"minReaderVersion\":2147483648,\"minWriterVersion\":2}}",
+      "sourceSha256": "dd4dd6d5ced6878505a632466178afa3c48b8b65cfb799825653fea04868eeed",
+      "parsedAll": true,
+      "complete": false,
+      "knownShapesValid": false,
+      "lines": [
+        {
+          "line": 1,
+          "start": 0,
+          "end": 50,
+          "terminator": "\n",
+          "status": "parsed",
+          "action": "txn",
+          "node": {
+            "kind": "object",
+            "members": {
+              "txn": {
+                "kind": "object",
+                "members": {
+                  "appId": {
+                    "kind": "string",
+                    "value": "x"
+                  },
+                  "version": {
+                    "kind": "number",
+                    "value": "9007199254740992.1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "line": 2,
+          "start": 51,
+          "end": 88,
+          "terminator": "\n",
+          "status": "parsed",
+          "action": "txn",
+          "node": {
+            "kind": "object",
+            "members": {
+              "txn": {
+                "kind": "object",
+                "members": {
+                  "appId": {
+                    "kind": "string",
+                    "value": "x"
+                  },
+                  "version": {
+                    "kind": "number",
+                    "value": "1e400"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "line": 3,
+          "start": 89,
+          "end": 154,
+          "terminator": "",
+          "status": "parsed",
+          "action": "protocol",
+          "node": {
+            "kind": "object",
+            "members": {
+              "protocol": {
+                "kind": "object",
+                "members": {
+                  "minReaderVersion": {
+                    "kind": "number",
+                    "value": "2147483648"
+                  },
+                  "minWriterVersion": {
+                    "kind": "number",
+                    "value": "2"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_INTEGER",
+          "path": "/lines/0/txn/version",
+          "severity": "error",
+          "message": "Expected an exact signed integer token in the declared range"
+        },
+        {
+          "code": "DELTA_ACTION_SHAPE",
+          "path": "/lines/1/txn/version",
+          "severity": "error",
+          "message": "must be integer"
+        },
+        {
+          "code": "DELTA_ACTION_INTEGER",
+          "path": "/lines/1/txn/version",
+          "severity": "error",
+          "message": "Expected an exact signed integer token in the declared range"
+        },
+        {
+          "code": "DELTA_ACTION_INTEGER",
+          "path": "/lines/2/protocol/minReaderVersion",
+          "severity": "error",
+          "message": "Integer exceeds its declared signed range"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state"
+        }
+      ]
+    },
+    {
+      "id": "required-fields-and-shapes",
+      "text": "{\"add\":{}}\n{\"cdc\":{\"path\":\"p\",\"partitionValues\":{},\"size\":1,\"dataChange\":true}}\n{\"domainMetadata\":{\"domain\":\"d\",\"configuration\":{},\"removed\":false}}",
+      "sourceSha256": "813629029b2776eb4609dbf3e6ba16fa06c83e00c8a6533aab1f346034b5e185",
+      "parsedAll": true,
+      "complete": false,
+      "knownShapesValid": false,
+      "lines": [
+        {
+          "line": 1,
+          "start": 0,
+          "end": 10,
+          "terminator": "\n",
+          "status": "parsed",
+          "action": "add",
+          "node": {
+            "kind": "object",
+            "members": {
+              "add": {
+                "kind": "object",
+                "members": {}
+              }
+            }
+          }
+        },
+        {
+          "line": 2,
+          "start": 11,
+          "end": 79,
+          "terminator": "\n",
+          "status": "parsed",
+          "action": "cdc",
+          "node": {
+            "kind": "object",
+            "members": {
+              "cdc": {
+                "kind": "object",
+                "members": {
+                  "path": {
+                    "kind": "string",
+                    "value": "p"
+                  },
+                  "partitionValues": {
+                    "kind": "object",
+                    "members": {}
+                  },
+                  "size": {
+                    "kind": "number",
+                    "value": "1"
+                  },
+                  "dataChange": {
+                    "kind": "boolean",
+                    "value": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "line": 3,
+          "start": 80,
+          "end": 148,
+          "terminator": "",
+          "status": "parsed",
+          "action": "domainMetadata",
+          "node": {
+            "kind": "object",
+            "members": {
+              "domainMetadata": {
+                "kind": "object",
+                "members": {
+                  "domain": {
+                    "kind": "string",
+                    "value": "d"
+                  },
+                  "configuration": {
+                    "kind": "object",
+                    "members": {}
+                  },
+                  "removed": {
+                    "kind": "boolean",
+                    "value": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_SHAPE",
+          "path": "/lines/0/add",
+          "severity": "error",
+          "message": "must have required property 'path'"
+        },
+        {
+          "code": "DELTA_ACTION_SHAPE",
+          "path": "/lines/0/add",
+          "severity": "error",
+          "message": "must have required property 'partitionValues'"
+        },
+        {
+          "code": "DELTA_ACTION_SHAPE",
+          "path": "/lines/0/add",
+          "severity": "error",
+          "message": "must have required property 'size'"
+        },
+        {
+          "code": "DELTA_ACTION_SHAPE",
+          "path": "/lines/0/add",
+          "severity": "error",
+          "message": "must have required property 'modificationTime'"
+        },
+        {
+          "code": "DELTA_ACTION_SHAPE",
+          "path": "/lines/0/add",
+          "severity": "error",
+          "message": "must have required property 'dataChange'"
+        },
+        {
+          "code": "DELTA_ACTION_SHAPE",
+          "path": "/lines/1/cdc/dataChange",
+          "severity": "error",
+          "message": "must pass \"const\" keyword validation"
+        },
+        {
+          "code": "DELTA_ACTION_SHAPE",
+          "path": "/lines/2/domainMetadata/configuration",
+          "severity": "error",
+          "message": "must be string"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state"
+        }
+      ]
+    },
+    {
+      "id": "unknown-content-and-provenance",
+      "text": "{\"txn\":{\"appId\":\"x\",\"version\":1,\"future\":9}}\n{\"__proto__\":{\"x\":1}}\n{\"commitInfo\":{\"raw\":\"keep\"}}\n{\"futureAction\":{\"opaque\":true}}",
+      "sourceSha256": "027e960dd55c11d5f4feb08b6ee09b1850adbb73d8dc8d48217362d9669c9bec",
+      "parsedAll": true,
+      "complete": false,
+      "knownShapesValid": true,
+      "lines": [
+        {
+          "line": 1,
+          "start": 0,
+          "end": 44,
+          "terminator": "\n",
+          "status": "parsed",
+          "action": "txn",
+          "node": {
+            "kind": "object",
+            "members": {
+              "txn": {
+                "kind": "object",
+                "members": {
+                  "appId": {
+                    "kind": "string",
+                    "value": "x"
+                  },
+                  "version": {
+                    "kind": "number",
+                    "value": "1"
+                  },
+                  "future": {
+                    "kind": "number",
+                    "value": "9"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "line": 2,
+          "start": 45,
+          "end": 66,
+          "terminator": "\n",
+          "status": "parsed",
+          "action": "__proto__",
+          "node": {
+            "kind": "object",
+            "members": {
+              "__proto__": {
+                "kind": "object",
+                "members": {
+                  "x": {
+                    "kind": "number",
+                    "value": "1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "line": 3,
+          "start": 67,
+          "end": 96,
+          "terminator": "\n",
+          "status": "parsed",
+          "action": "commitInfo",
+          "node": {
+            "kind": "object",
+            "members": {
+              "commitInfo": {
+                "kind": "object",
+                "members": {
+                  "raw": {
+                    "kind": "string",
+                    "value": "keep"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "line": 4,
+          "start": 97,
+          "end": 129,
+          "terminator": "",
+          "status": "parsed",
+          "action": "futureAction",
+          "node": {
+            "kind": "object",
+            "members": {
+              "futureAction": {
+                "kind": "object",
+                "members": {
+                  "opaque": {
+                    "kind": "boolean",
+                    "value": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_LOG_UNKNOWN_ACTION",
+          "path": "/lines/1",
+          "severity": "warning",
+          "message": "Unknown action retained without interpretation: __proto__"
+        },
+        {
+          "code": "DELTA_LOG_UNKNOWN_ACTION",
+          "path": "/lines/3",
+          "severity": "warning",
+          "message": "Unknown action retained without interpretation: futureAction"
+        },
+        {
+          "code": "DELTA_ACTION_UNKNOWN_FIELD",
+          "path": "/lines/0/txn/future",
+          "severity": "warning",
+          "message": "Unknown field is preserved without interpretation"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state"
+        }
+      ]
+    },
+    {
+      "id": "duplicate-keys",
+      "text": "{\"txn\":{\"appId\":\"x\",\"app\\u0049d\":\"y\"}}\n",
+      "sourceSha256": "bbe2860a46fff771fee06b46c0dbccff66c0dfa884a0a30c2504a9c27b33860d",
+      "parsedAll": false,
+      "complete": false,
+      "knownShapesValid": false,
+      "lines": [
+        {
+          "line": 1,
+          "start": 0,
+          "end": 38,
+          "terminator": "\n",
+          "status": "invalid"
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_LOG_JSON",
+          "path": "/lines/0",
+          "severity": "error",
+          "message": "Map keys must be unique at line 1, column 21:\n\n{\"txn\":{\"appId\":\"x\",\"app\\u0049d\":\"y\"}}\n                    ^\n"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state"
+        }
+      ]
+    },
+    {
+      "id": "non-object-commit-info",
+      "text": "{\"commitInfo\":null}\n{\"commitInfo\":1e400}\n{\"commitInfo\":[]}",
+      "sourceSha256": "6185a52cd5b6902fa0b2c065b998628e451c8a7e9c063ef12ed9a4193bed944f",
+      "parsedAll": true,
+      "complete": false,
+      "knownShapesValid": true,
+      "lines": [
+        {
+          "line": 1,
+          "start": 0,
+          "end": 19,
+          "terminator": "\n",
+          "status": "parsed",
+          "action": "commitInfo",
+          "node": {
+            "kind": "object",
+            "members": {
+              "commitInfo": {
+                "kind": "null"
+              }
+            }
+          }
+        },
+        {
+          "line": 2,
+          "start": 20,
+          "end": 40,
+          "terminator": "\n",
+          "status": "parsed",
+          "action": "commitInfo",
+          "node": {
+            "kind": "object",
+            "members": {
+              "commitInfo": {
+                "kind": "number",
+                "value": "1e400"
+              }
+            }
+          }
+        },
+        {
+          "line": 3,
+          "start": 41,
+          "end": 58,
+          "terminator": "",
+          "status": "parsed",
+          "action": "commitInfo",
+          "node": {
+            "kind": "object",
+            "members": {
+              "commitInfo": {
+                "kind": "array",
+                "items": []
+              }
+            }
+          }
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state"
+        }
+      ]
+    }
+  ]
+}

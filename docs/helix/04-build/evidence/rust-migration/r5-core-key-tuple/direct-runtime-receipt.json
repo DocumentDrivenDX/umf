@@ -1,0 +1,60 @@
+{
+  "profile": "r5-core-key-tuple-direct-runtime/0.1.0",
+  "status": "pass",
+  "defaultSelectionChanged": false,
+  "frozenPacket": {
+    "path": "docs/helix/04-build/evidence/rust-migration/r5-core-key-tuple/frozen-typescript.json",
+    "sha256": "1e0649ea8a723ce9f9836eceda2fd7cb83c6554bf5f01d908016baf0b69aefb5",
+    "results": "87 in-profile encoder outcomes, one separately pinned out-of-profile host Number refusal, and five verification outcomes"
+  },
+  "sourceSha256": {
+    "crates/umf-core-wire/src/core_key_tuple_binding.rs": "dab8a5c3131dc85d837df1b6a3408b389b58c218f617433886b640ec2ef0dc37",
+    "bindings/core/node/src/core_key_tuple.rs": "a5028f1500f1fa9a97e42a7a06a3edd45383be175f7a643cdbbcb06ff5f4fb6d",
+    "bindings/core/wasm/src/core_key_tuple.rs": "8c50531e5b59551fa12e0a88d9e4cbfd7c4803a3958da728c24f748ab8091efa",
+    "bindings/core/node/index.js": "7f668ab55260b2fab4578c405cd43e7ae5473bc9fc2468d98356775d69371c53",
+    "bindings/core/wasm/index.js": "e4de9ae820f0fad9c5e373bfaba62247acaa0e7b479b3f4e1ee73ed1a4dcb14d",
+    "bindings/core/node/tests/core-key-tuple-direct-runtime.test.js": "ff463d35a34f0327215a57144d72508057f1566e1f813a5e411ca7a0bcf2a2fa",
+    "bindings/core/node/tests/core-key-tuple-factory.test.js": "660d3d2874a323df03e3a1f886bcdced82148026707890369d0845a886a41c9c"
+  },
+  "verification": {
+    "rust": {
+      "command": "cargo test --locked --offline -p umf-core-wire --lib direct_runtime_tests -- --nocapture",
+      "result": "2 passed"
+    },
+    "bindings": {
+      "commands": [
+        "cargo check --locked --offline -p umf-core-node",
+        "cargo check --locked --offline --target wasm32-unknown-unknown -p umf-core-wasm",
+        "bun run typecheck",
+        "UMF_CORE_NODE_ADDON=/private/tmp/umf-keytuple-direct-addon-final.node bun test ./bindings/core/node/tests/core-key-tuple-direct-runtime.test.js ./bindings/core/node/tests/core-key-tuple-factory.test.js"
+      ],
+      "result": "7 passed, 153 assertions; typecheck and Node/WASM cargo checks passed"
+    },
+    "browser": {
+      "harness": "/private/tmp/keytuple-direct-browser.mjs",
+      "harnessSha256": "daf3ac3d64ca362ffaee5d1977be3f2213e681146760f922c6cc3c28c9a20cba",
+      "browser": "Microsoft Edge 156.0.4314.42",
+      "result": "88 encoder outcomes and five verification outcomes passed; malformed receipt precedes current admission; cumulative control refusal, per-call reset, and one-shot handle behavior passed; raw byte outputs of 100001 and 4000000 bytes passed and 4000001 refused; final JavaScript byte-copy work was charged before allocation"
+    }
+  },
+  "artifacts": {
+    "nodeAddon": {
+      "path": "/private/tmp/umf-keytuple-direct-node-final/release/libumf_core_node.dylib",
+      "sha256": "312bbce0292532276c944c70c2085d78e78dbc0ac5f9e11fcc8f5a2835a01b45"
+    },
+    "wasmBindgenVersion": "0.2.100",
+    "wasmJavaScript": {
+      "path": "/private/tmp/umf-keytuple-direct-wasm-pkg/umf_core_wasm.js",
+      "sha256": "84558ccf7dfd04f9cce4a6986649130119adeab1fc0bcdcfd7dfc60690313b0e"
+    },
+    "wasmBinary": {
+      "path": "/private/tmp/umf-keytuple-direct-wasm-pkg/umf_core_wasm_bg.wasm",
+      "sha256": "30588175d6df9736da8dd2d9ef631e8cfdfa9153f0e8fb0a7b3c6e1ea6bbf55c"
+    }
+  },
+  "scopeNotes": [
+    "Retained direct Rust encode and receipt-first verify/read methods are implemented for the opt-in native and WASM runtime.",
+    "Verification and byte-read stage handles are single-use and carry Rust TransportUsage across receipt admission, current admission, and output; each new stage starts a fresh usage ledger.",
+    "The public default source selection remains unchanged. This receipt does not qualify or select the four Key tuple exports as default routes."
+  ]
+}

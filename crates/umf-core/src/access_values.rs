@@ -319,13 +319,28 @@ mod tests {
     fn binary32_admission_preserves_finite_overflow_and_rounding_classes() {
         assert_eq!(validate_float32(-0.0), Ok(()));
         assert_eq!(validate_float32(2.0f64.powi(-149)), Ok(()));
-        assert_eq!(validate_float32(2.0f64.powi(-150)), Err(Float32Error::Rounding));
+        assert_eq!(
+            validate_float32(2.0f64.powi(-150)),
+            Err(Float32Error::Rounding)
+        );
         assert_eq!(validate_float32(f64::from(f32::MAX)), Ok(()));
-        assert_eq!(validate_float32(f64::from_bits(0x47efffffefffffff)), Err(Float32Error::Rounding));
-        assert_eq!(validate_float32(f64::from_bits(0x47effffff0000000)), Err(Float32Error::Overflow));
-        assert_eq!(validate_float32(f64::from_bits(0x47effffff0000001)), Err(Float32Error::Overflow));
+        assert_eq!(
+            validate_float32(f64::from_bits(0x47efffffefffffff)),
+            Err(Float32Error::Rounding)
+        );
+        assert_eq!(
+            validate_float32(f64::from_bits(0x47effffff0000000)),
+            Err(Float32Error::Overflow)
+        );
+        assert_eq!(
+            validate_float32(f64::from_bits(0x47effffff0000001)),
+            Err(Float32Error::Overflow)
+        );
         assert_eq!(validate_float32(f64::NAN), Err(Float32Error::NonFinite));
-        assert_eq!(validate_float32(f64::INFINITY), Err(Float32Error::NonFinite));
+        assert_eq!(
+            validate_float32(f64::INFINITY),
+            Err(Float32Error::NonFinite)
+        );
         assert_eq!(
             validate_float32(1.0 + 2.0f64.powi(-24)),
             Err(Float32Error::Rounding)
@@ -338,24 +353,12 @@ mod tests {
         let codepoints = [u32::from('a'), 0xD800, u32::from('b')]
             .into_iter()
             .inspect(|_| consumed += 1);
-        assert!(!validate_unicode_scalar_stream(
-            codepoints,
-            &mut Context::ordinary()
-        )
-        .unwrap());
+        assert!(!validate_unicode_scalar_stream(codepoints, &mut Context::ordinary()).unwrap());
         assert_eq!(consumed, 2);
 
         let accepted = [u32::from('A'), 0x1F600, 0x0301];
-        assert!(validate_unicode_scalar_stream(
-            accepted,
-            &mut Context::ordinary()
-        )
-        .unwrap());
-        assert!(!validate_unicode_scalar_stream(
-            [0x110000],
-            &mut Context::ordinary()
-        )
-        .unwrap());
+        assert!(validate_unicode_scalar_stream(accepted, &mut Context::ordinary()).unwrap());
+        assert!(!validate_unicode_scalar_stream([0x110000], &mut Context::ordinary()).unwrap());
     }
 
     #[test]

@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 use crate::{
     context::Context,
-    ecma_coercion::{abstract_relational_compare, Primitive},
+    ecma_coercion::{Primitive, abstract_relational_compare},
     error::{Diagnostic, EngineError, Severity},
     literal::{literal_errors_admitted, literal_identity_admitted, numeric_interval_admitted},
-    literal_policy::{prepare_policy, PreparedPolicy},
-    value::{copy_json, Utf16, Value},
+    literal_policy::{PreparedPolicy, prepare_policy},
+    value::{Utf16, Value, copy_json},
 };
 use std::{cell::RefCell, cmp::Ordering, rc::Rc};
 
@@ -29,6 +29,25 @@ enum Runtime {
     },
     Missing,
     Map(Rc<RefCell<Vec<(Vec<u16>, Runtime)>>>),
+}
+fn runtime_tree_nodes(value: &Runtime) -> usize {
+    1 + match value {
+        Runtime::Json(value) => crate::dataset_values::tree_values(value).saturating_sub(1),
+        Runtime::Array(items) => items.iter().map(runtime_tree_nodes).sum(),
+        Runtime::Object(items) | Runtime::CopiedObject(items) => items
+            .iter()
+            .map(|(_, value)| runtime_tree_nodes(value))
+            .sum(),
+        Runtime::Text { .. } | Runtime::Missing | Runtime::Map(_) => 0,
+    }
+}
+fn observe_runtime_visit(
+    observer: &mut Option<&mut dyn FnMut(&'static str, usize)>,
+    value: &Runtime,
+) {
+    if let Some(observer) = observer.as_deref_mut() {
+        observer("constraint-value-visit", runtime_tree_nodes(value));
+    }
 }
 type Env = Vec<(Utf16, Rc<Runtime>)>;
 fn k(s: &str) -> Utf16 {
@@ -1311,8 +1330,12 @@ fn eval(
     caps: &mut dyn crate::engine::Capabilities,
     ctx: &mut Context<'_>,
     diagnostics: &mut Vec<Diagnostic>,
+    observer: &mut Option<&mut dyn FnMut(&'static str, usize)>,
 ) -> Result<Runtime, EngineError> {
     ctx.charge_constraint_step(Utf16::default())?;
+    if let Some(observer) = observer.as_deref_mut() {
+        observer("constraint-instruction", 1);
+    }
     match e {
         Value::Object(_) => {
             if let Some(v) = get(e, "var") {
@@ -1328,7 +1351,8 @@ fn eval(
                 if matches!(name.as_str(), "and" | "or") {
                     if name == "and" {
                         for a in args {
-                            let v = eval(a, env, doc, policy, reg, caps, ctx, diagnostics)?;
+                            let v =
+                                eval(a, env, doc, policy, reg, caps, ctx, diagnostics, observer)?;
                             if !truth(&v) {
                                 return Ok(Runtime::Json(Value::Bool(false)));
                             }
@@ -1336,7 +1360,7 @@ fn eval(
                         return Ok(Runtime::Json(Value::Bool(true)));
                     }
                     for a in args {
-                        let v = eval(a, env, doc, policy, reg, caps, ctx, diagnostics)?;
+                        let v = eval(a, env, doc, policy, reg, caps, ctx, diagnostics, observer)?;
                         if truth(&v) {
                             return Ok(Runtime::Json(Value::Bool(true)));
                         }
@@ -1345,7 +1369,17 @@ fn eval(
                 }
                 let mut av = Vec::with_capacity(args.len());
                 for a in args {
-                    av.push(eval(a, env, doc, policy, reg, caps, ctx, diagnostics)?)
+                    av.push(eval(
+                        a,
+                        env,
+                        doc,
+                        policy,
+                        reg,
+                        caps,
+                        ctx,
+                        diagnostics,
+                        observer,
+                    )?)
                 }
                 let x = av
                     .first()
@@ -1385,6 +1419,18 @@ fn eval(
                         Ok(Runtime::Json(Value::Bool(present)))
                     }
                     "keys" | "values" | "entries" => {
+                        if let Some(observer) = observer.as_deref_mut() {
+                            let amount = match &x {
+                                Runtime::Object(items) | Runtime::CopiedObject(items) => {
+                                    items.len()
+                                }
+                                Runtime::Array(items) => items.len(),
+                                Runtime::Json(Value::Object(items)) => items.len(),
+                                Runtime::Json(Value::Array(items)) => items.len(),
+                                _ => 0,
+                            };
+                            observer("constraint-enumeration", amount);
+                        }
                         if let Runtime::Object(members) | Runtime::CopiedObject(members) = &x {
                             ctx.charge_work(members.len(), Utf16::default())?;
                             let mut out = Vec::with_capacity(members.len());
@@ -1466,6 +1512,24 @@ fn eval(
                         Ok(Runtime::Json(Value::Array(out)))
                     }
                     "without" => {
+                        if let Some(observer) = observer.as_deref_mut() {
+                            let object_len = match &x {
+                                Runtime::Object(items) | Runtime::CopiedObject(items) => {
+                                    items.len()
+                                }
+                                Runtime::Json(Value::Object(items)) => items.len(),
+                                _ => 0,
+                            };
+                            let remove_len = match &y {
+                                Runtime::Array(items) => items.len(),
+                                Runtime::Json(Value::Array(items)) => items.len(),
+                                _ => 0,
+                            };
+                            observer(
+                                "constraint-enumeration",
+                                object_len.saturating_mul(1 + remove_len),
+                            );
+                        }
                         let yj = runtime_json_copy(&y, ctx)?;
                         if let Runtime::Object(members) = &x {
                             let remove_values =
@@ -1512,6 +1576,27 @@ fn eval(
                         Ok(Runtime::Json(Value::Object(out)))
                     }
                     "flatten" => {
+                        if let Some(observer) = observer.as_deref_mut() {
+                            let amount = match &x {
+                                Runtime::Array(items) => items
+                                    .iter()
+                                    .map(|item| match item {
+                                        Runtime::Array(inner) => 1 + inner.len(),
+                                        Runtime::Json(Value::Array(inner)) => 1 + inner.len(),
+                                        _ => 1,
+                                    })
+                                    .sum(),
+                                Runtime::Json(Value::Array(items)) => items
+                                    .iter()
+                                    .map(|item| match item {
+                                        Value::Array(inner) => 1 + inner.len(),
+                                        _ => 1,
+                                    })
+                                    .sum(),
+                                _ => 0,
+                            };
+                            observer("constraint-enumeration", amount);
+                        }
                         if let Runtime::Array(items) = x {
                             let cost = items
                                 .iter()
@@ -1607,7 +1692,7 @@ fn eval(
                         Ok(length)
                     }
                     "eq" | "ne" => {
-                        let same = runtime_equal(&x, &y, ctx)?;
+                        let same = runtime_equal(&x, &y, ctx, observer)?;
                         Ok(Runtime::Json(Value::Bool(if name == "eq" {
                             same
                         } else {
@@ -1631,6 +1716,7 @@ fn eval(
                     "in" => {
                         let yes = match (&y, &x) {
                             (Runtime::Map(m), _) => {
+                                observe_runtime_visit(observer, &x);
                                 let key = canonical_runtime(&x, ctx)?
                                     .map(|(units, _)| units)
                                     .unwrap_or_else(|| Utf16::from("undefined").into_units());
@@ -1641,7 +1727,7 @@ fn eval(
                                 let mut found = false;
                                 for value in a {
                                     let candidate = Runtime::Json(clone_private(value, ctx)?);
-                                    if runtime_equal(&candidate, &x, ctx)? {
+                                    if runtime_equal(&candidate, &x, ctx, observer)? {
                                         found = true;
                                         break;
                                     }
@@ -1651,7 +1737,7 @@ fn eval(
                             (Runtime::Array(items), _) => {
                                 let mut found = false;
                                 for value in items {
-                                    if runtime_equal(value, &x, ctx)? {
+                                    if runtime_equal(value, &x, ctx, observer)? {
                                         found = true;
                                         break;
                                     }
@@ -1733,6 +1819,19 @@ fn eval(
                         Ok(Runtime::Array(av))
                     }
                     "sort" => {
+                        if let Some(observer) = observer.as_deref_mut() {
+                            let len = match &x {
+                                Runtime::Array(items) => Some(items.len()),
+                                Runtime::Json(Value::Array(items)) => Some(items.len()),
+                                _ => None,
+                            };
+                            if let Some(len) = len {
+                                observer("constraint-value-visit", runtime_tree_nodes(&x));
+                                let sort_work =
+                                    ((len as f64) * ((len + 1) as f64).log2()).ceil() as usize;
+                                observer("constraint-sort", sort_work);
+                            }
+                        }
                         if let Runtime::Array(mut values) = x {
                             let n = values.len();
                             let cost =
@@ -1813,15 +1912,19 @@ fn eval(
                         }
                         Ok(Runtime::Json(Value::Array(sorted)))
                     }
-                    "canonical" => Ok(canonical_runtime(&x, ctx)?
-                        .map(|(units, origin)| Runtime::Text {
-                            value: Utf16::new(units),
-                            python_origin: Some(origin),
-                            python_source_path: false,
-                        })
-                        .unwrap_or(Runtime::Missing)),
+                    "canonical" => {
+                        observe_runtime_visit(observer, &x);
+                        Ok(canonical_runtime(&x, ctx)?
+                            .map(|(units, origin)| Runtime::Text {
+                                value: Utf16::new(units),
+                                python_origin: Some(origin),
+                                python_source_path: false,
+                            })
+                            .unwrap_or(Runtime::Missing))
+                    }
                     "set" => Ok(Runtime::Map(Rc::new(RefCell::new(Vec::new())))),
                     "lookup" => {
+                        observe_runtime_visit(observer, &y);
                         let key = canonical_runtime(&y, ctx)?
                             .map(|(units, _)| units)
                             .unwrap_or_else(|| Utf16::from("undefined").into_units());
@@ -1963,7 +2066,17 @@ fn eval(
                                     Rc::new(Runtime::Json(Value::Number(i as f64))),
                                 ))
                             }
-                            let v = eval(body, &local, doc, policy, reg, caps, ctx, diagnostics)?;
+                            let v = eval(
+                                body,
+                                &local,
+                                doc,
+                                policy,
+                                reg,
+                                caps,
+                                ctx,
+                                diagnostics,
+                                observer,
+                            )?;
                             match name.as_str() {
                                 "filter" => {
                                     if truth(&v) {
@@ -1990,6 +2103,7 @@ fn eval(
                                     }
                                 }
                                 "index" => {
+                                    observe_runtime_visit(observer, &v);
                                     let key = canonical_runtime(&v, ctx)?
                                         .map(|(units, _)| units)
                                         .unwrap_or_else(|| Utf16::from("undefined").into_units());
@@ -2023,7 +2137,17 @@ fn eval(
                 let mut members = Vec::with_capacity(member_count);
                 let mut preserve_origin = false;
                 for (key, value) in obj(e).unwrap() {
-                    let evaluated = eval(value, env, doc, policy, reg, caps, ctx, diagnostics)?;
+                    let evaluated = eval(
+                        value,
+                        env,
+                        doc,
+                        policy,
+                        reg,
+                        caps,
+                        ctx,
+                        diagnostics,
+                        observer,
+                    )?;
                     ctx.charge_work(key.len(), Utf16::default())?;
                     preserve_origin |= matches!(
                         evaluated,
@@ -2051,7 +2175,7 @@ fn eval(
             let mut out = Vec::with_capacity(a.len());
             let mut preserve_origin = false;
             for v in a {
-                let evaluated = eval(v, env, doc, policy, reg, caps, ctx, diagnostics)?;
+                let evaluated = eval(v, env, doc, policy, reg, caps, ctx, diagnostics, observer)?;
                 preserve_origin |= matches!(
                     evaluated,
                     Runtime::Text { .. }
@@ -2124,10 +2248,19 @@ fn runtime_to_value(v: Runtime, ctx: &mut Context<'_>) -> Result<Value, EngineEr
         Runtime::Map(_) => Ok(Value::Array(vec![])),
     }
 }
-fn runtime_equal(a: &Runtime, b: &Runtime, ctx: &mut Context<'_>) -> Result<bool, EngineError> {
+fn runtime_equal(
+    a: &Runtime,
+    b: &Runtime,
+    ctx: &mut Context<'_>,
+    observer: &mut Option<&mut dyn FnMut(&'static str, usize)>,
+) -> Result<bool, EngineError> {
     // The retained TypeScript equality is canonical JSON equality. Maps have
     // no enumerable own properties, so each one canonicalizes as an empty
     // object regardless of its internal entries.
+    if !matches!(a, Runtime::Missing) && !matches!(b, Runtime::Missing) {
+        observe_runtime_visit(observer, a);
+        observe_runtime_visit(observer, b);
+    }
     let left = canonical_runtime(a, ctx)?;
     let right = canonical_runtime(b, ctx)?;
     Ok(match (left, right) {
@@ -2401,8 +2534,19 @@ fn eval_bool(
     caps: &mut dyn crate::engine::Capabilities,
     ctx: &mut Context<'_>,
     diagnostics: &mut Vec<Diagnostic>,
+    observer: &mut Option<&mut dyn FnMut(&'static str, usize)>,
 ) -> Result<bool, EngineError> {
-    Ok(truth(&eval(e, env, doc, p, reg, caps, ctx, diagnostics)?))
+    Ok(truth(&eval(
+        e,
+        env,
+        doc,
+        p,
+        reg,
+        caps,
+        ctx,
+        diagnostics,
+        observer,
+    )?))
 }
 fn exec(
     body: &Value,
@@ -2413,9 +2557,13 @@ fn exec(
     caps: &mut dyn crate::engine::Capabilities,
     ctx: &mut Context<'_>,
     diags: &mut Vec<Diagnostic>,
+    observer: &mut Option<&mut dyn FnMut(&'static str, usize)>,
 ) -> Result<(), EngineError> {
     for step in arr(body).unwrap_or(&[]) {
         ctx.charge_constraint_step(Utf16::default())?;
+        if let Some(observer) = observer.as_deref_mut() {
+            observer("constraint-instruction", 1);
+        }
         let op = txt(get(step, "op").unwrap_or(&Value::Null)).unwrap_or_default();
         match op.as_str() {
             "let" => {
@@ -2429,6 +2577,7 @@ fn exec(
                     caps,
                     ctx,
                     diags,
+                    observer,
                 )?;
                 if let Some(index) = find_env_key_metered(env, &n, ctx)? {
                     env[index].1 = Rc::new(v)
@@ -2446,6 +2595,7 @@ fn exec(
                     caps,
                     ctx,
                     diags,
+                    observer,
                 )?;
                 for (i, v) in as_values(values, ctx)?.into_iter().enumerate() {
                     let mut local = clone_env(env, ctx)?;
@@ -2468,6 +2618,7 @@ fn exec(
                         caps,
                         ctx,
                         diags,
+                        observer,
                     )?
                 }
             }
@@ -2481,6 +2632,7 @@ fn exec(
                     caps,
                     ctx,
                     diags,
+                    observer,
                 )?;
                 if test {
                     let mut local = clone_env(env, ctx)?;
@@ -2493,15 +2645,16 @@ fn exec(
                         caps,
                         ctx,
                         diags,
+                        observer,
                     )?
                 } else if let Some(other) = get(step, "else") {
                     let mut local = clone_env(env, ctx)?;
-                    exec(other, &mut local, doc, p, reg, caps, ctx, diags)?
+                    exec(other, &mut local, doc, p, reg, caps, ctx, diags, observer)?
                 }
             }
             "emit" => {
                 let should_emit = match get(step, "when") {
-                    Some(w) => eval_bool(w, env, doc, p, reg, caps, ctx, diags)?,
+                    Some(w) => eval_bool(w, env, doc, p, reg, caps, ctx, diags, observer)?,
                     None => true,
                 };
                 if should_emit {
@@ -2514,6 +2667,7 @@ fn exec(
                         caps,
                         ctx,
                         diags,
+                        observer,
                     )?;
                     diags.push(diagnostic_from_runtime(v, ctx)?)
                 }
@@ -2528,6 +2682,7 @@ fn exec(
                     caps,
                     ctx,
                     diags,
+                    observer,
                 )?;
                 let key_runtime = eval(
                     get(step, "key").unwrap(),
@@ -2538,7 +2693,9 @@ fn exec(
                     caps,
                     ctx,
                     diags,
+                    observer,
                 )?;
+                observe_runtime_visit(observer, &key_runtime);
                 let key = canonical_runtime(&key_runtime, ctx)?
                     .map(|(units, _)| units)
                     .unwrap_or_else(|| Utf16::from("undefined").into_units());
@@ -2548,12 +2705,12 @@ fn exec(
                     drop(entries);
                     if duplicate {
                         if let Some(d) = get(step, "diagnostic") {
-                            let diagnostic = eval(d, env, doc, p, reg, caps, ctx, diags)?;
+                            let diagnostic = eval(d, env, doc, p, reg, caps, ctx, diags, observer)?;
                             diags.push(diagnostic_from_runtime(diagnostic, ctx)?)
                         }
                     } else {
                         let stored = if let Some(value) = get(step, "value") {
-                            eval(value, env, doc, p, reg, caps, ctx, diags)?
+                            eval(value, env, doc, p, reg, caps, ctx, diags, observer)?
                         } else {
                             Runtime::Json(Value::Bool(true))
                         };
@@ -2682,7 +2839,25 @@ pub(crate) fn execute_constraints_admitted(
     caps: &mut dyn crate::engine::Capabilities,
     ctx: &mut Context<'_>,
 ) -> Result<Vec<Diagnostic>, EngineError> {
+    execute_constraints_admitted_observed(document, program, policy, registry, caps, ctx, None)
+}
+
+pub(crate) fn execute_constraints_admitted_observed(
+    document: &Value,
+    program: &PreparedProgram,
+    policy: &Value,
+    registry: &crate::registry::Registry,
+    caps: &mut dyn crate::engine::Capabilities,
+    ctx: &mut Context<'_>,
+    mut observer: Option<&mut dyn FnMut(&'static str, usize)>,
+) -> Result<Vec<Diagnostic>, EngineError> {
     let mut diags = Vec::new();
+    if let Some(observer) = observer.as_deref_mut() {
+        observer(
+            "constraint-copy",
+            crate::dataset_values::tree_values(document),
+        );
+    }
     let mut env = vec![
         (
             "doc".into(),
@@ -2702,6 +2877,7 @@ pub(crate) fn execute_constraints_admitted(
         caps,
         ctx,
         &mut diags,
+        &mut observer,
     )?;
     Ok(diags)
 }
@@ -2786,6 +2962,7 @@ mod runtime_diagnostic_tests {
             &mut NoCapabilities,
             ctx,
             &mut Vec::new(),
+            &mut None,
         )
         .unwrap()
     }
@@ -2856,7 +3033,9 @@ mod runtime_diagnostic_tests {
             &mut ctx,
         );
         assert!(matches!(equality, Runtime::Json(Value::Bool(true))));
-        assert!(runtime_equal(&diagnostic_object, &diagnostic_object, &mut ctx).unwrap());
+        assert!(
+            runtime_equal(&diagnostic_object, &diagnostic_object, &mut ctx, &mut None).unwrap()
+        );
 
         for operator in ["keys", "values", "entries"] {
             let result = run_expr(&operation(operator, vec![variable("diag")]), &env, &mut ctx);
@@ -2997,9 +3176,11 @@ mod runtime_diagnostic_tests {
                 ..
             }
         ));
-        assert!(runtime_property(&without, &k("message"), &mut ctx)
-            .unwrap()
-            .is_none());
+        assert!(
+            runtime_property(&without, &k("message"), &mut ctx)
+                .unwrap()
+                .is_none()
+        );
 
         let mut marker_path = diagnostic.clone();
         marker_path.path = Utf16::from("/~p000061");
@@ -3543,6 +3724,7 @@ mod runtime_diagnostic_tests {
             &mut NoCapabilities,
             &mut ctx,
             &mut Vec::new(),
+            &mut None,
         )
         .unwrap_err();
         assert_eq!(error.code, "METER_FAILURE");
@@ -3566,15 +3748,17 @@ mod runtime_diagnostic_tests {
         for _ in 0..128 {
             depth_128 = Value::Array(vec![depth_128]);
         }
-        assert!(execute_constraints(
-            &depth_128,
-            &program,
-            &empty_policy,
-            &registry,
-            &mut caps,
-            &mut Context::ordinary(),
-        )
-        .is_ok());
+        assert!(
+            execute_constraints(
+                &depth_128,
+                &program,
+                &empty_policy,
+                &registry,
+                &mut caps,
+                &mut Context::ordinary(),
+            )
+            .is_ok()
+        );
         let depth_129 = Value::Array(vec![depth_128]);
         assert_eq!(
             execute_constraints(
@@ -3630,37 +3814,43 @@ mod runtime_diagnostic_tests {
             .code,
             "CONSTRAINT_POLICY"
         );
-        assert!(execute_constraints(
-            &Value::Null,
-            &program,
-            &object(vec![]),
-            &registry,
-            &mut caps,
-            &mut Context::ordinary(),
-        )
-        .is_ok());
+        assert!(
+            execute_constraints(
+                &Value::Null,
+                &program,
+                &object(vec![]),
+                &registry,
+                &mut caps,
+                &mut Context::ordinary(),
+            )
+            .is_ok()
+        );
 
         let text = Value::String(Utf16::new(vec![b'x' as u16; 4_000_001]));
-        assert!(execute_constraints(
-            &text,
-            &program,
-            &empty_policy,
-            &registry,
-            &mut caps,
-            &mut Context::ordinary(),
-        )
-        .is_ok());
+        assert!(
+            execute_constraints(
+                &text,
+                &program,
+                &empty_policy,
+                &registry,
+                &mut caps,
+                &mut Context::ordinary(),
+            )
+            .is_ok()
+        );
 
         let admitted_count = Value::Array(vec![Value::Null; 99_999]);
-        assert!(execute_constraints(
-            &admitted_count,
-            &program,
-            &empty_policy,
-            &registry,
-            &mut caps,
-            &mut Context::ordinary(),
-        )
-        .is_ok());
+        assert!(
+            execute_constraints(
+                &admitted_count,
+                &program,
+                &empty_policy,
+                &registry,
+                &mut caps,
+                &mut Context::ordinary(),
+            )
+            .is_ok()
+        );
         let excessive_count = Value::Array(vec![Value::Null; 100_000]);
         assert_eq!(
             execute_constraints(
@@ -3830,6 +4020,7 @@ mod shared_env_tests {
             &mut NoCapabilities,
             ctx,
             &mut Vec::new(),
+            &mut None,
         )
         .unwrap()
     }
@@ -3844,6 +4035,7 @@ mod shared_env_tests {
             &mut NoCapabilities,
             ctx,
             &mut Vec::new(),
+            &mut None,
         )
         .unwrap();
     }
@@ -4056,11 +4248,12 @@ mod shared_env_tests {
             assert_eq!(error.code, code);
             assert!(error.is_control_failure());
             assert_eq!(calls, stop_call);
-            assert!(env
-                .iter()
-                .zip(&original)
-                .all(|((name, value), (old_name, old_value))| name == old_name
-                    && Rc::ptr_eq(value, old_value)));
+            assert!(
+                env.iter()
+                    .zip(&original)
+                    .all(|((name, value), (old_name, old_value))| name == old_name
+                        && Rc::ptr_eq(value, old_value))
+            );
         }
     }
 }

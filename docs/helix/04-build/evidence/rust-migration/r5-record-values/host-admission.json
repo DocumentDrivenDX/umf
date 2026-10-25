@@ -1,0 +1,1136 @@
+{
+  "profile": "core-record-values-host-admission/1",
+  "predecessor": "src/model/record-values.ts",
+  "runtime": {
+    "host": "Bun",
+    "bunVersion": "1.4.3",
+    "nodeCompatibility": "v26.3.0"
+  },
+  "captureScriptSha256": "36634ba989ff8776a4502cef7e818e2f195de80bbcf9ac4c5d821939a41b61d4",
+  "sourceClosureSha256": {
+    "src/model/record-values.ts": "925f28808e17058ee97cd7ab80c4358e5a09539613c5a8bf77b5a6e745ed8d74",
+    "src/model/internal/record-body.ts": "59f558d7811a14a64460178d1368bdc55b3f0c900a200f2dcd11fcf32feef6b2",
+    "src/model/schema-properties.ts": "2a7fb88a8a560f070c0f4ff7685b2e1be474082271e96ee7c8b85ab5ac6d905f",
+    "src/model/internal/field-body.ts": "a45eaa50d18a20e2ef7f92190b7deb6dbfbd8854ab2766bace5a7bce069d1208",
+    "src/model/internal/inspection-meanings.ts": "4df6d4b8eae02864ade2c2a17d89e08e1b4740a057f48220538c59f06553237d",
+    "src/model/schema-literals.ts": "0e7ce8c901b834679d5ed49c7465b08eee916c132e37adbbf3f037c34b548b88",
+    "src/model/json.ts": "d0a06bd26beb215d262b92f5c47d5cea9e85291bb4a780f0aea98b8277c15f98",
+    "src/model/types.ts": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
+    "src/model/errors.ts": "65bc53689f6aa0546be249ff4bd42616b446966cfc5f9d525faf9a428031dbd6",
+    "src/generated/core-model.ts": "adc6c84b657419322c8bd52a6ef769d6ede514dd5476ee38436fde76b070853b",
+    "src/generated/core-validators.ts": "a96c5846a5033d64f422c4ad3b5a75cf9f8aa5a481796bf06b823508ee9ba0ce",
+    "src/validation/document.ts": "bb88c43790277f67269cea09af251b908e93ddd356a1a4aa8bc10c0cf135720a",
+    "src/validation/current-policy.ts": "010d8dcc062363592713d68fcd54000775420cae779a074474bcca19b862cd33",
+    "src/validation/constraint-kernel.ts": "968bde65e6e7e8da7ec92849498dbfbe9a71f931c9538094a18c85be5b4a4362",
+    "src/validation/internal-schema.ts": "df2f752489b4cf90c083c1411f88e2ff2952c8269f50810308cab65b0106d237",
+    "src/validation/json-equality.ts": "a9ecbd0d4d513223889eaf83d053bc0d48e8020f8a73cae3fe32a8bc06d1e20f",
+    "src/validation/literal-kernel.ts": "0fffe57279a745891f4cbbd33eb1296a34bfcb083bd8e05a3ff7a7b8048db071",
+    "src/validation/literal-policy.ts": "a59e2a18b735f647f23a198e70af0f9c3ca57eeeccec77d012487a9b9b803e08",
+    "src/validation/constraint-language.ts": "decf47ca801a2c03d0c01b92ef3418813c79992c042be879ba0c1d2561678597",
+    "src/validation/schema-properties.ts": "f28349f54014067e8cefe914eee3e93727145e89ab02b40bb5db843ba9b9357e",
+    "src/model/bit128.ts": "c4db81a14022db2413ee991e8705d3bee688d0ed1e7c880e6170520a2694d543",
+    "src/model/uuid.ts": "43b2ea37b050a835e7723c9ea9b32f886fca63f5bb94eb5f8b17b242cf4444f7",
+    "src/registry/registry.ts": "3fa010311edc23c5dc74826eb7a74a8a19a9a4c41da3031bc66e6f741d1164c1",
+    "spec/core/schema.json": "2171ad1df6b0e421772151d642484f094ec248c4f173dd48300b307c3c3329e9",
+    "spec/core/semantic-type-reference.schema.json": "c32450a646c34d0b2ff4e5227de1ef32835cf255ef77444c5480f0eabfd2ee1f",
+    "spec/core/extension-package.schema.json": "35b5c3cce0dc6fcb179f9fac959886c572ed9beb196480911442d35501d3dd14",
+    "spec/metamodel/generated/core-constraints.json": "542400b3927202464a6d4e07d0526c884ba437b74b9a803ac0721e621b5364a2",
+    "spec/metamodel/generated/domain-policy.json": "3db0d9158725fcef55f35d867d1565f27168062dcf8ffd4bca2c3aade11faf88",
+    "fixtures/core/record-values-current.umf.json": "e633aab0fff350bb924b1a11909fe13936845cee14d6f70f5eadcd624236e2ef",
+    "tests/core-record-values.test.ts": "d88b84109c54a84794214e423b8e8f6974c6c0e0ba65460fa58096ce7b8c4bf1",
+    "docs/helix/02-design/contracts/CONTRACT-001-core-envelope.md": "000747cf9c84697333bb55a18c5a8a4eebd5f5c953ad08d580378d950ce9612d",
+    "docs/helix/02-design/contracts/CONTRACT-002-json-schema.md": "1b113e256c6171bf3b729fa006b103e34e413807d20888d347adda6c964ab0f0",
+    "docs/helix/02-design/contracts/CONTRACT-003-protobuf.md": "fb0d01b950d30a44421e5d17aa8ab447b1738aee6dd687d81a9b1759712c9e4b",
+    "docs/helix/02-design/contracts/CONTRACT-004-json-schema-protobuf-projection.md": "d3695b634dbd77b289c95497e8ecb3847cb320f2eb76d3abff2fba04c2772c7c",
+    "docs/helix/02-design/contracts/CONTRACT-005-ddd-profile.md": "1f449dcec33fb31956c719970494ec8f88fcfed04b2ba68598cf86dc598fe741",
+    "docs/helix/02-design/contracts/CONTRACT-006-ddd-document-projection.md": "931fb8b6057df9882532357cff20b4fe5da4d08cfcfa0dd46fdd775d7cad1f57",
+    "docs/helix/02-design/contracts/CONTRACT-007-avro.md": "7db5553878fda5fd8552ee9c0e2bc5d56f80e3a1c35b0bfeaefde4618f3fd1d1",
+    "docs/helix/02-design/contracts/CONTRACT-008-avro-document-projection.md": "88574834ed5389db8cca05d92c13890809f5fc7036e33ffabe9db9b5b9ba5406",
+    "docs/helix/02-design/contracts/CONTRACT-009-graphql-sdl.md": "18ffef71b5f35c84624ab5eeadb30568de3522562ae817e597d3c76e30897efb",
+    "docs/helix/02-design/contracts/CONTRACT-010-graphql-input-projection.md": "9d5a64dd827e9ef432cec8854e3330b0787ba6b6d8f21bcebb4e672a1f3c9884",
+    "docs/helix/02-design/contracts/CONTRACT-011-openapi.md": "bb68f60f59ef65486acfdda6026ee1672aa096f2d33f749d3f508dc477c042ac",
+    "docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md": "6ced1294f64710b4a70edcaec1d470b17834b5b1a63c10ed3df70e07be1bd9f1"
+  },
+  "fixture": {
+    "source": {
+      "umf": "0.10.0",
+      "id": "truss-weft-source-review-fixture",
+      "vocabularies": {},
+      "modules": [
+        {
+          "id": "fixture",
+          "namespace": "fixture",
+          "elements": [
+            {
+              "id": "item",
+              "name": "Item",
+              "kind": "record",
+              "members": [
+                {
+                  "module": "fixture",
+                  "element": "label"
+                },
+                {
+                  "module": "fixture",
+                  "element": "caption"
+                }
+              ],
+              "extensions": {}
+            },
+            {
+              "id": "label",
+              "name": "label",
+              "kind": "field",
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "extensions": {}
+            },
+            {
+              "id": "caption",
+              "name": "caption",
+              "kind": "field",
+              "scalarType": "string",
+              "nullability": "absent-allowed",
+              "cardinality": "one",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    },
+    "identity": {
+      "module": "fixture",
+      "element": "item"
+    },
+    "values": [
+      {
+        "field": {
+          "module": "fixture",
+          "element": "label"
+        },
+        "state": "present",
+        "value": {
+          "string": "x"
+        }
+      }
+    ]
+  },
+  "outcomes": {
+    "base": {
+      "ok": true,
+      "value": {
+        "operation": "validate-core-record-values",
+        "version": "2.0.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "truss-weft-source-review-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "fixture",
+              "namespace": "fixture",
+              "elements": [
+                {
+                  "id": "item",
+                  "name": "Item",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "fixture",
+                      "element": "label"
+                    },
+                    {
+                      "module": "fixture",
+                      "element": "caption"
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "label",
+                  "name": "label",
+                  "kind": "field",
+                  "scalarType": "string",
+                  "nullability": "required",
+                  "cardinality": "one",
+                  "extensions": {}
+                },
+                {
+                  "id": "caption",
+                  "name": "caption",
+                  "kind": "field",
+                  "scalarType": "string",
+                  "nullability": "absent-allowed",
+                  "cardinality": "one",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "fixture",
+          "element": "item"
+        },
+        "values": [
+          {
+            "field": {
+              "module": "fixture",
+              "element": "label"
+            },
+            "state": "present",
+            "value": {
+              "string": "x"
+            }
+          }
+        ],
+        "documentValidation": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "validation": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        },
+        "fields": [
+          {
+            "field": {
+              "module": "fixture",
+              "element": "label"
+            },
+            "state": "present",
+            "validation": {
+              "valid": true,
+              "complete": true,
+              "diagnostics": []
+            }
+          },
+          {
+            "field": {
+              "module": "fixture",
+              "element": "caption"
+            },
+            "state": "absent",
+            "validation": {
+              "valid": true,
+              "complete": true,
+              "diagnostics": []
+            }
+          }
+        ]
+      }
+    },
+    "prototypeOrder": {
+      "kind": "null-object",
+      "keys": [
+        "operation",
+        "version",
+        "source",
+        "identity",
+        "values",
+        "documentValidation",
+        "validation",
+        "fields"
+      ],
+      "fields": {
+        "operation": "string",
+        "version": "string",
+        "source": {
+          "kind": "null-object",
+          "keys": [
+            "umf",
+            "id",
+            "vocabularies",
+            "modules"
+          ],
+          "fields": {
+            "umf": "string",
+            "id": "string",
+            "vocabularies": {
+              "kind": "null-object",
+              "keys": [],
+              "fields": {}
+            },
+            "modules": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "null-object",
+                  "keys": [
+                    "id",
+                    "namespace",
+                    "elements"
+                  ],
+                  "fields": {
+                    "id": "string",
+                    "namespace": "string",
+                    "elements": {
+                      "kind": "array",
+                      "items": [
+                        {
+                          "kind": "null-object",
+                          "keys": [
+                            "id",
+                            "name",
+                            "kind",
+                            "members",
+                            "extensions"
+                          ],
+                          "fields": {
+                            "id": "string",
+                            "name": "string",
+                            "kind": "string",
+                            "members": {
+                              "kind": "array",
+                              "items": [
+                                {
+                                  "kind": "null-object",
+                                  "keys": [
+                                    "module",
+                                    "element"
+                                  ],
+                                  "fields": {
+                                    "module": "string",
+                                    "element": "string"
+                                  }
+                                },
+                                {
+                                  "kind": "null-object",
+                                  "keys": [
+                                    "module",
+                                    "element"
+                                  ],
+                                  "fields": {
+                                    "module": "string",
+                                    "element": "string"
+                                  }
+                                }
+                              ]
+                            },
+                            "extensions": {
+                              "kind": "null-object",
+                              "keys": [],
+                              "fields": {}
+                            }
+                          }
+                        },
+                        {
+                          "kind": "null-object",
+                          "keys": [
+                            "id",
+                            "name",
+                            "kind",
+                            "scalarType",
+                            "nullability",
+                            "cardinality",
+                            "extensions"
+                          ],
+                          "fields": {
+                            "id": "string",
+                            "name": "string",
+                            "kind": "string",
+                            "scalarType": "string",
+                            "nullability": "string",
+                            "cardinality": "string",
+                            "extensions": {
+                              "kind": "null-object",
+                              "keys": [],
+                              "fields": {}
+                            }
+                          }
+                        },
+                        {
+                          "kind": "null-object",
+                          "keys": [
+                            "id",
+                            "name",
+                            "kind",
+                            "scalarType",
+                            "nullability",
+                            "cardinality",
+                            "extensions"
+                          ],
+                          "fields": {
+                            "id": "string",
+                            "name": "string",
+                            "kind": "string",
+                            "scalarType": "string",
+                            "nullability": "string",
+                            "cardinality": "string",
+                            "extensions": {
+                              "kind": "null-object",
+                              "keys": [],
+                              "fields": {}
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "identity": {
+          "kind": "null-object",
+          "keys": [
+            "module",
+            "element"
+          ],
+          "fields": {
+            "module": "string",
+            "element": "string"
+          }
+        },
+        "values": {
+          "kind": "array",
+          "items": [
+            {
+              "kind": "null-object",
+              "keys": [
+                "field",
+                "state",
+                "value"
+              ],
+              "fields": {
+                "field": {
+                  "kind": "null-object",
+                  "keys": [
+                    "module",
+                    "element"
+                  ],
+                  "fields": {
+                    "module": "string",
+                    "element": "string"
+                  }
+                },
+                "state": "string",
+                "value": {
+                  "kind": "null-object",
+                  "keys": [
+                    "string"
+                  ],
+                  "fields": {
+                    "string": "string"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "documentValidation": {
+          "kind": "null-object",
+          "keys": [
+            "valid",
+            "complete",
+            "diagnostics"
+          ],
+          "fields": {
+            "valid": "boolean",
+            "complete": "boolean",
+            "diagnostics": {
+              "kind": "array",
+              "items": []
+            }
+          }
+        },
+        "validation": {
+          "kind": "null-object",
+          "keys": [
+            "valid",
+            "complete",
+            "diagnostics"
+          ],
+          "fields": {
+            "valid": "boolean",
+            "complete": "boolean",
+            "diagnostics": {
+              "kind": "array",
+              "items": []
+            }
+          }
+        },
+        "fields": {
+          "kind": "array",
+          "items": [
+            {
+              "kind": "null-object",
+              "keys": [
+                "field",
+                "state",
+                "validation"
+              ],
+              "fields": {
+                "field": {
+                  "kind": "null-object",
+                  "keys": [
+                    "module",
+                    "element"
+                  ],
+                  "fields": {
+                    "module": "string",
+                    "element": "string"
+                  }
+                },
+                "state": "string",
+                "validation": {
+                  "kind": "null-object",
+                  "keys": [
+                    "valid",
+                    "complete",
+                    "diagnostics"
+                  ],
+                  "fields": {
+                    "valid": "boolean",
+                    "complete": "boolean",
+                    "diagnostics": {
+                      "kind": "array",
+                      "items": []
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "kind": "null-object",
+              "keys": [
+                "field",
+                "state",
+                "validation"
+              ],
+              "fields": {
+                "field": {
+                  "kind": "null-object",
+                  "keys": [
+                    "module",
+                    "element"
+                  ],
+                  "fields": {
+                    "module": "string",
+                    "element": "string"
+                  }
+                },
+                "state": "string",
+                "validation": {
+                  "kind": "null-object",
+                  "keys": [
+                    "valid",
+                    "complete",
+                    "diagnostics"
+                  ],
+                  "fields": {
+                    "valid": "boolean",
+                    "complete": "boolean",
+                    "diagnostics": {
+                      "kind": "array",
+                      "items": []
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "rawCases": {
+      "sourceAccessor": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "NON_JSON",
+          "message": "Hidden fields and accessors cannot be serialized faithfully",
+          "path": "/future"
+        }
+      },
+      "identityAccessor": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "NON_JSON",
+          "message": "Hidden fields and accessors cannot be serialized faithfully",
+          "path": "/module"
+        }
+      },
+      "valuesAccessorBeforeSourceVersion": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "NON_JSON",
+          "message": "Hidden fields and accessors cannot be serialized faithfully",
+          "path": "/0/value"
+        }
+      },
+      "hiddenSource": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "NON_JSON",
+          "message": "Hidden fields and accessors cannot be serialized faithfully",
+          "path": "/hidden"
+        }
+      },
+      "symbolSource": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "NON_JSON",
+          "message": "Symbol keys are not JSON-compatible",
+          "path": ""
+        }
+      },
+      "customPrototypeSource": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "NON_JSON",
+          "message": "Custom object prototype",
+          "path": ""
+        }
+      },
+      "sparseValues": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "NON_JSON",
+          "message": "Sparse arrays are not JSON values",
+          "path": ""
+        }
+      },
+      "cyclicSource": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "CYCLE",
+          "message": "Cyclic value",
+          "path": "/cycle"
+        }
+      },
+      "invalidNumbers": [
+        {
+          "id": "nan",
+          "outcome": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NUMBER",
+              "message": "Number outside the core interoperable numeric profile",
+              "path": "/0/value/number"
+            }
+          }
+        },
+        {
+          "id": "positiveInfinity",
+          "outcome": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NUMBER",
+              "message": "Number outside the core interoperable numeric profile",
+              "path": "/0/value/number"
+            }
+          }
+        },
+        {
+          "id": "negativeInfinity",
+          "outcome": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NUMBER",
+              "message": "Number outside the core interoperable numeric profile",
+              "path": "/0/value/number"
+            }
+          }
+        },
+        {
+          "id": "negativeZero",
+          "outcome": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NUMBER",
+              "message": "Number outside the core interoperable numeric profile",
+              "path": "/0/value/number"
+            }
+          }
+        },
+        {
+          "id": "unsafeInteger",
+          "outcome": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NUMBER",
+              "message": "Number outside the core interoperable numeric profile",
+              "path": "/0/value/number"
+            }
+          }
+        }
+      ],
+      "nonJsonValues": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "NON_JSON",
+          "message": "Value is not JSON-compatible",
+          "path": "/0"
+        }
+      },
+      "hiddenIdentity": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "NON_JSON",
+          "message": "Hidden fields and accessors cannot be serialized faithfully",
+          "path": "/element"
+        }
+      },
+      "symbolIdentity": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "NON_JSON",
+          "message": "Symbol keys are not JSON-compatible",
+          "path": ""
+        }
+      },
+      "customPrototypeIdentity": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "NON_JSON",
+          "message": "Custom object prototype",
+          "path": ""
+        }
+      },
+      "crossedInvalidSemanticSource": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "CORE_RECORD_VALUE_SOURCE",
+          "message": "Valid current core 0.10.0 source required",
+          "path": ""
+        }
+      },
+      "sourceThenIdentityThenValuesGetterCounts": {
+        "sourceFirst": {
+          "sourceGetterCalls": 0,
+          "identityGetterCalls": 0,
+          "valuesGetterCalls": 0
+        },
+        "identityFirst": {
+          "sourceGetterCalls": 0,
+          "identityGetterCalls": 0,
+          "valuesGetterCalls": 0
+        },
+        "valuesBeforeSemantic": {
+          "sourceGetterCalls": 0,
+          "identityGetterCalls": 0,
+          "valuesGetterCalls": 0
+        }
+      }
+    },
+    "semanticOrder": {
+      "invalidSourceBeforeIdentityMeaning": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "CORE_RECORD_VALUE_SOURCE",
+          "message": "Valid current core 0.10.0 source required",
+          "path": ""
+        }
+      },
+      "copiedValuesBeforeIdentityMeaning": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "CORE_RECORD_VALUE_IDENTITY",
+          "message": "Explicit qualified identity required",
+          "path": ""
+        }
+      }
+    },
+    "large": {
+      "units": 700000,
+      "outcome": {
+        "ok": true,
+        "value": {
+          "length": 700000,
+          "prototypeOrder": {
+            "kind": "null-object",
+            "keys": [
+              "operation",
+              "version",
+              "source",
+              "identity",
+              "values",
+              "documentValidation",
+              "validation",
+              "fields"
+            ],
+            "fields": {
+              "operation": "string",
+              "version": "string",
+              "source": {
+                "kind": "null-object",
+                "keys": [
+                  "umf",
+                  "id",
+                  "vocabularies",
+                  "modules",
+                  "x-future-assertion"
+                ],
+                "fields": {
+                  "umf": "string",
+                  "id": "string",
+                  "vocabularies": {
+                    "kind": "null-object",
+                    "keys": [],
+                    "fields": {}
+                  },
+                  "modules": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "null-object",
+                        "keys": [
+                          "id",
+                          "namespace",
+                          "elements"
+                        ],
+                        "fields": {
+                          "id": "string",
+                          "namespace": "string",
+                          "elements": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "null-object",
+                                "keys": [
+                                  "id",
+                                  "name",
+                                  "kind",
+                                  "members",
+                                  "extensions"
+                                ],
+                                "fields": {
+                                  "id": "string",
+                                  "name": "string",
+                                  "kind": "string",
+                                  "members": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "null-object",
+                                        "keys": [
+                                          "module",
+                                          "element"
+                                        ],
+                                        "fields": {
+                                          "module": "string",
+                                          "element": "string"
+                                        }
+                                      },
+                                      {
+                                        "kind": "null-object",
+                                        "keys": [
+                                          "module",
+                                          "element"
+                                        ],
+                                        "fields": {
+                                          "module": "string",
+                                          "element": "string"
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "extensions": {
+                                    "kind": "null-object",
+                                    "keys": [],
+                                    "fields": {}
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "null-object",
+                                "keys": [
+                                  "id",
+                                  "name",
+                                  "kind",
+                                  "scalarType",
+                                  "nullability",
+                                  "cardinality",
+                                  "extensions"
+                                ],
+                                "fields": {
+                                  "id": "string",
+                                  "name": "string",
+                                  "kind": "string",
+                                  "scalarType": "string",
+                                  "nullability": "string",
+                                  "cardinality": "string",
+                                  "extensions": {
+                                    "kind": "null-object",
+                                    "keys": [],
+                                    "fields": {}
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "null-object",
+                                "keys": [
+                                  "id",
+                                  "name",
+                                  "kind",
+                                  "scalarType",
+                                  "nullability",
+                                  "cardinality",
+                                  "extensions"
+                                ],
+                                "fields": {
+                                  "id": "string",
+                                  "name": "string",
+                                  "kind": "string",
+                                  "scalarType": "string",
+                                  "nullability": "string",
+                                  "cardinality": "string",
+                                  "extensions": {
+                                    "kind": "null-object",
+                                    "keys": [],
+                                    "fields": {}
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "x-future-assertion": {
+                    "kind": "null-object",
+                    "keys": [
+                      "opaque"
+                    ],
+                    "fields": {
+                      "opaque": "string"
+                    }
+                  }
+                }
+              },
+              "identity": {
+                "kind": "null-object",
+                "keys": [
+                  "module",
+                  "element"
+                ],
+                "fields": {
+                  "module": "string",
+                  "element": "string"
+                }
+              },
+              "values": {
+                "kind": "array",
+                "items": [
+                  {
+                    "kind": "null-object",
+                    "keys": [
+                      "field",
+                      "state",
+                      "value"
+                    ],
+                    "fields": {
+                      "field": {
+                        "kind": "null-object",
+                        "keys": [
+                          "module",
+                          "element"
+                        ],
+                        "fields": {
+                          "module": "string",
+                          "element": "string"
+                        }
+                      },
+                      "state": "string",
+                      "value": {
+                        "kind": "null-object",
+                        "keys": [
+                          "string"
+                        ],
+                        "fields": {
+                          "string": "string"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "documentValidation": {
+                "kind": "null-object",
+                "keys": [
+                  "valid",
+                  "complete",
+                  "diagnostics"
+                ],
+                "fields": {
+                  "valid": "boolean",
+                  "complete": "boolean",
+                  "diagnostics": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "null-object",
+                        "keys": [
+                          "code",
+                          "path",
+                          "message",
+                          "severity"
+                        ],
+                        "fields": {
+                          "code": "string",
+                          "path": "string",
+                          "message": "string",
+                          "severity": "string"
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "validation": {
+                "kind": "null-object",
+                "keys": [
+                  "valid",
+                  "complete",
+                  "diagnostics"
+                ],
+                "fields": {
+                  "valid": "boolean",
+                  "complete": "boolean",
+                  "diagnostics": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "null-object",
+                        "keys": [
+                          "code",
+                          "path",
+                          "message",
+                          "severity"
+                        ],
+                        "fields": {
+                          "code": "string",
+                          "path": "string",
+                          "message": "string",
+                          "severity": "string"
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "fields": {
+                "kind": "array",
+                "items": [
+                  {
+                    "kind": "null-object",
+                    "keys": [
+                      "field",
+                      "state",
+                      "validation"
+                    ],
+                    "fields": {
+                      "field": {
+                        "kind": "null-object",
+                        "keys": [
+                          "module",
+                          "element"
+                        ],
+                        "fields": {
+                          "module": "string",
+                          "element": "string"
+                        }
+                      },
+                      "state": "string",
+                      "validation": {
+                        "kind": "null-object",
+                        "keys": [
+                          "valid",
+                          "complete",
+                          "diagnostics"
+                        ],
+                        "fields": {
+                          "valid": "boolean",
+                          "complete": "boolean",
+                          "diagnostics": {
+                            "kind": "array",
+                            "items": []
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "kind": "null-object",
+                    "keys": [
+                      "field",
+                      "state",
+                      "validation"
+                    ],
+                    "fields": {
+                      "field": {
+                        "kind": "null-object",
+                        "keys": [
+                          "module",
+                          "element"
+                        ],
+                        "fields": {
+                          "module": "string",
+                          "element": "string"
+                        }
+                      },
+                      "state": "string",
+                      "validation": {
+                        "kind": "null-object",
+                        "keys": [
+                          "valid",
+                          "complete",
+                          "diagnostics"
+                        ],
+                        "fields": {
+                          "valid": "boolean",
+                          "complete": "boolean",
+                          "diagnostics": {
+                            "kind": "array",
+                            "items": []
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "countLimit": {
+      "inputLength": 100001,
+      "outcome": {
+        "ok": false,
+        "error": {
+          "name": "UmfError",
+          "code": "LIMIT",
+          "message": "JSON structural limit exceeded",
+          "path": "/99999"
+        }
+      }
+    }
+  }
+}

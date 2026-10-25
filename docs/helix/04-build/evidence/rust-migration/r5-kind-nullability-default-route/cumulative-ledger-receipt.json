@@ -1,0 +1,68 @@
+{
+  "status": "passed; default route held pending Sol review",
+  "scope": "opt-in core kind/nullability host-input route; no default root selection",
+  "resourceAccounting": {
+    "factoryLedger": "A factory-scoped Context covers JS snapshot/encoding plus Rust tagged resource decode and catalog admission. Resources are retained in immutable Engine after setup.",
+    "invocationLedger": "Each method call creates a fresh Context covering staged host admission/copies, semantics, and output encoding. No single cumulative ledger spans factory creation and later method calls, per CONTRACT-080 \u00a7R2.",
+    "resourceOwnership": "Decoded resource members are moved from the wire Value before Engine::new; zero-work setup refuses before resource accessor reflection. Snapshot isolation verified in Node and Chromium.",
+    "perCallReset": "Fresh controls are created per method call; maxWork refusal, meter callbacks, and cancellation are exercised.",
+    "hostReplyTransport": "Host reflection reply framing is separately bounded by the existing 600 KiB bridge limit."
+  },
+  "node": {
+    "command": "bun scripts/rust-migration/r5/kind-nullability-default-route/host-json-parity.mjs",
+    "result": {
+      "status": "node-host-json-parity-passed",
+      "semanticCases": 6,
+      "negativeControls": 10,
+      "thrownValueIdentity": true,
+      "setupWork": 432196353,
+      "repeatedSetupWork": 432196353,
+      "operationWork": 1139633,
+      "meterCalls": 145801,
+      "resetWork": 2277545
+    },
+    "moduleSource": "bindings/core/node/index.js and relative sources loaded directly from this worktree, not an npm tarball.",
+    "nativeAddonPath": "bindings/core/node/umf_core_node.node",
+    "nativeAddonSha256": "d1622f390d25ecabed9e382d958839cb7a320c6be929910c764b191c3752482b",
+    "nodeIndexSha256": "10d95d1e7e50d9d6a8d420b97e9d2e93449a712841c7dcc4dff91899616e1f6d",
+    "hostJsonBindingSha256": "072b36b2b2caa063886fad55610e3dd5a21640810fd49bd9f291dccbdee1176e",
+    "hostJsonJavaScriptSha256": "fbfa820268ff1d30fbb398c09a2ea3de8f32315a5f0704fa7e52743a72783a09",
+    "wireJavaScriptSha256": "a6187bb3e6704eacf6b100b622888bbb1cc08fd482721f8119ab81b9719d93f8"
+  },
+  "chromium": {
+    "command": "bun scripts/rust-migration/r5/kind-nullability-default-route/host-json-browser.mjs",
+    "result": {
+      "status": "chromium-host-json-parity-passed",
+      "operations": 6,
+      "negativeControls": 9,
+      "freshWasm": true,
+      "setupWork": 432196353,
+      "repeatedSetupWork": 432196353,
+      "operationWork": 1139633,
+      "meterCalls": 145801,
+      "resetWork": 2277545,
+      "cancellationChecks": 4
+    },
+    "applicationSource": "bindings/core/wasm/index.js and relative host sources loaded directly from this worktree.",
+    "wasmArtifactsServedFrom": "/private/tmp/umf-kind-wasm-fresh/pkg",
+    "wasmBindgenVersion": "0.2.100",
+    "wasmJavascriptSha256": "e90c8bb958f699ca7b0c7d374cdbdd003879f3f38d28399e1c5dee1d0293131d",
+    "wasmBinarySha256": "7baad26de9e1be673e31e88837da0c6a8604c827ab8100248cca404be469d57a",
+    "wasmIndexSha256": "0c8faa29194bf679852ebc444696e23d67ef2501e1aa713318b814f4dd8656f4",
+    "wasmHostJsonBindingSha256": "139f559fe8dc9e172bdcaf87e836bdf2586dc84a09dc475eda47372c233c8a7d",
+    "hostJsonJavaScriptSha256": "fbfa820268ff1d30fbb398c09a2ea3de8f32315a5f0704fa7e52743a72783a09",
+    "wireJavaScriptSha256": "a6187bb3e6704eacf6b100b622888bbb1cc08fd482721f8119ab81b9719d93f8"
+  },
+  "rustSources": {
+    "stagedHostModuleSha256": "94f386ea4e93586baaa593546b1891c7cb819eb435356242162183a9ae5118a5",
+    "coreKindSha256": "97d239aceb03f7da69d1e3a409a679621430ced66d5015eed402cdb09277f5b4",
+    "nullabilitySha256": "911b5040fd4ae5db99b9d8ea687b6c024281c43c46a2c09ec8abbb74bcd38d9d"
+  },
+  "limitations": [
+    "Direct workspace-source/package-artifact qualification, not packed or published package qualification.",
+    "Custom registered extension callbacks remain outside these APIs; default empty-registry behavior for unknown IDs is qualified by the frozen unknown-payload case.",
+    "No Node/browser default root was switched. Per-runtime schema ownership makes setup charging deterministic across prior factory calls, but retained factory setup takes about 3.17 seconds and operation latency remains about 15.7x TypeScript in this local fixture; see resource-cost-benchmark.json.",
+    "The reduced tagged toWire negative-control replay is harness-level, not the exact production wrapper path; see README. Production wrapper outcomes are captured separately by Node and Chromium parity scripts.",
+    "Verifier operations remain TypeScript-selected at the public default roots; the opt-in staged Rust API preserves receipt-first ordering in the qualified cases."
+  ]
+}

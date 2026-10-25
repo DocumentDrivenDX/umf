@@ -1,0 +1,32 @@
+{
+  "status": "pass",
+  "profile": "umf.javascript-numeric/1.0.0",
+  "browser": "Microsoft Edge 156.0.4314.42",
+  "vectors": 27,
+  "hostOrderChecks": [
+    {"label": "invalid exact decimal before context", "predecessorCode": "JAVASCRIPT_NUMERIC", "rustOptInCode": "JAVASCRIPT_NUMERIC", "equal": true, "getterCalls": 0},
+    {"label": "unsupported number family before context", "predecessorCode": "JAVASCRIPT_NUMERIC", "rustOptInCode": "JAVASCRIPT_NUMERIC", "equal": true, "getterCalls": 0}
+  ],
+  "work": {
+    "scalarExactDecimal1": 383,
+    "contextIntegerFromBigInt1": 402391568,
+    "sameContextWorkLimitRefusesAtTotalMinusOne": true,
+    "freshPublicCallResetsContextWorkLedger": true
+  },
+  "resourceBudget": true,
+  "expandedFormattingBudget": true,
+  "nodeGlobalsAbsent": true,
+  "command": "UMF_CHROMIUM_PATH='/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge' UMF_R5_NUMERIC_ORACLE=/private/tmp/umf-r5-numeric-oracle.json bun run scripts/rust-migration/r5/javascript-numeric-browser.ts",
+  "artifact": {
+    "packageRoot": "/private/tmp/umf-r5-numeric/wasm",
+    "wasmSha256": "cc3cc9f1cf925feafa9fde9f38b1d0e0964f7a1b2c55896cef4477920571daa3",
+    "wasmBindgenJsSha256": "0c95324f4c9379e3a1f0639c6b710b81c1203df24e9443419d7169805f919435"
+  },
+  "sourceSha256": {
+    "coreWire": "a154801f4f414f215303ee83bb7675924b60895a18fbdcbac4c1aaab010aa228",
+    "wasmIndex": "e1b86c2fec0a39327424a53a529b79d146b620325243141b43bdf8b63e737843",
+    "nodeNumericFacade": "9ab632e5f4eb4a55ad8f7b9f1057486c3e367f21e8d2ca2160ac88f2813fd2f7",
+    "wasmNumericFacade": "9ab632e5f4eb4a55ad8f7b9f1057486c3e367f21e8d2ca2160ac88f2813fd2f7",
+    "browserHarness": "da76039f6c794c4ecd7e61ccdec94c39f2db8f13926378903062da70623b08a4"
+  }
+}

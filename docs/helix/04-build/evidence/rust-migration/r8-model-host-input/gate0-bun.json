@@ -1,0 +1,107 @@
+{
+  "profile": "umf.model-host-input-gate0/1",
+  "operation": "declareCoreSchemaProperties",
+  "predecessorSources": {
+    "src/model/json.ts": "d0a06bd26beb215d262b92f5c47d5cea9e85291bb4a780f0aea98b8277c15f98",
+    "src/model/schema-properties.ts": "2a7fb88a8a560f070c0f4ff7685b2e1be474082271e96ee7c8b85ab5ac6d905f"
+  },
+  "rows": {
+    "patch-refusal-before-source": {
+      "events": [
+        "patch.getPrototypeOf",
+        "patch.ownKeys",
+        "patch.ownKeys",
+        "patch.descriptor:unknown"
+      ],
+      "outcome": {
+        "ok": true,
+        "value": {
+          "sameSentinel": false,
+          "name": "UmfError",
+          "message": "Unknown relevant qualifier: unknown"
+        }
+      }
+    },
+    "patch-copy-before-source-with-host-throw": {
+      "events": [
+        "patch.getPrototypeOf",
+        "patch.ownKeys",
+        "patch.ownKeys",
+        "patch.descriptor:title"
+      ],
+      "outcome": {
+        "ok": true,
+        "value": {
+          "sameSentinel": false,
+          "name": "UmfError",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        }
+      }
+    },
+    "successful-source-then-identity-then-declare": {
+      "events": [
+        "patch.getPrototypeOf",
+        "patch.ownKeys",
+        "patch.ownKeys",
+        "patch.descriptor:title",
+        "source.getPrototypeOf",
+        "source.ownKeys",
+        "source.ownKeys",
+        "source.descriptor:umf",
+        "source.descriptor:id",
+        "source.descriptor:vocabularies",
+        "source.descriptor:title",
+        "source.descriptor:aliases",
+        "source.descriptor:modules",
+        "identity.getPrototypeOf",
+        "identity.ownKeys",
+        "identity.ownKeys",
+        "identity.descriptor:scope",
+        "source.get:title"
+      ],
+      "outcome": {
+        "ok": true,
+        "value": {
+          "title": "Gate0",
+          "sourceTitle": "Orders"
+        }
+      }
+    },
+    "array-length-read-coercion": {
+      "events": [
+        "aliases.getPrototypeOf",
+        "aliases.ownKeys",
+        "aliases.ownKeys",
+        "aliases.descriptor:0",
+        "aliases.descriptor:length",
+        "aliases.get:length",
+        "aliases.ownKeys",
+        "aliases.descriptor:0",
+        "aliases.descriptor:length",
+        "aliases.get:length"
+      ],
+      "outcome": {
+        "ok": true,
+        "value": {
+          "aliases": [
+            "x"
+          ]
+        }
+      }
+    },
+    "array-isarray-repeated-after-descriptor-snapshot": {
+      "events": [
+        "aliases.ownKeys",
+        "aliases.ownKeys",
+        "aliases.descriptor:length"
+      ],
+      "outcome": {
+        "ok": true,
+        "value": {
+          "name": "TypeError",
+          "message": "Array.isArray cannot be called on a Proxy that has been revoked"
+        }
+      }
+    }
+  }
+}

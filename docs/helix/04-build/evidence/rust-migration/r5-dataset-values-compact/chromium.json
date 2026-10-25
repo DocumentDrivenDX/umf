@@ -1,0 +1,44 @@
+{
+  "format": "umf.r5.dataset-values-compact.chromium/1",
+  "status": "pass",
+  "runtime": {
+    "browser": "Chromium 153.0.8010.12",
+    "target": "standalone extracted @umf/core-rust-wasm package",
+    "nodeGlobalsAbsent": true
+  },
+  "package": {
+    "archivePath": "/private/tmp/umf-r5-dataset-compact-wasm/umf-core-rust-wasm-0.1.0.tgz",
+    "archiveSha256": "c3385834bf4c8b479b4760e5e151fc8779ff374ac2f96a85be77ad622337069b",
+    "extractedPath": "/private/tmp/umf-r5-dataset-compact-wasm/clean-extracted",
+    "wasmSha256": "638d8db7fa9a6e86f9d0d01d0159d75b3932ac2d4866509e48c05eafd89f9494",
+    "wrapperSha256": "a11e46eff5044d7f604a34a782d319aa4ad1e0e0435f36cbd93f3606514a6dce",
+    "wasmBindgen": "0.2.100",
+    "rustToolchain": "1.90.0"
+  },
+  "sourceCohort": {
+    "predecessorIndexSha256": "f22dfc6bea1d30cdf194682465db510ead1c5d4050fdbc4c11127044c9551db7",
+    "currentTypeScriptClosure": "current-source-closure.json",
+    "currentTypeScriptClosureSha256": "8352dd785230478bf0af6fc5e55ace1d49719da518aa0681bdec98be5e5248ad",
+    "rustAndBindingInputs": {
+      "crates/umf-core/src/dataset_values.rs": "4d94b0daf38a925711e790778360d806adc178f20d1a2309fc3a22ea8becc720",
+      "crates/umf-core-wire/src/lib.rs": "c1edc00d89d1837248e1eeb758b9631917d61e1e383f568ec9d259c51c87c45a",
+      "bindings/core/wasm/src/lib.rs": "08b8557073c3b4a78cc79b431d1da5c68a045948062aee414036afb193c5cbf5",
+      "bindings/core/wasm/index.js": "a11e46eff5044d7f604a34a782d319aa4ad1e0e0435f36cbd93f3606514a6dce",
+      "bindings/core/wasm/src/dataset-values-compact.js": "60c78863e833cc0cdc03f69a97ce41ac451f7f5961cab11ee6390425ab9a3899",
+      "bindings/core/wasm/src/core-evolution.js": "d72a448cc854c9483a6a3456f770a33a1d67d35aa04075ce674ee5ea61ff7967",
+      "bindings/core/wasm/src/shared-sources.json": "2fe2c4cfe87695eb6b2d0ff480ebe2e784a88323f41db4fa77125fc13fe3f3b3"
+    }
+  },
+  "verification": {
+    "casesPassed": 17,
+    "cases": ["commerce", "supply-chain", "archaeology", "ecology", "unknown-and-residual", "absent-state", "present-null", "exact-decimal-token", "duplicate-key", "duplicate-locator", "missing-links", "parallel-links", "structural-limit", "work-limit", "forged-receipt", "near-threshold-accepted", "near-threshold-first-refused"],
+    "controls": ["zero-work RESOURCE_LIMIT", "cancel CANCELLED", "deadline DEADLINE"],
+    "comparison": "Exact frozen result/refusal data; object-key order ignored, arrays and UTF-16 strings preserved. Compact receipts are verified and the forged receipt is refused.",
+    "browserHarness": "scripts/rust-migration/r5/dataset-values-compact-binding-browser.mjs",
+    "browserHarnessSha256": "ee53792903a72a828007ce65ef77b3afe2c2fcb6e530bf0a3691e8a976583bf3"
+  },
+  "qualificationLimits": [
+    "Private opt-in WASM package evidence only; no package-root/default-route change is claimed.",
+    "This Chromium receipt is for its captured archive/source cohort and does not qualify later changes to shared Rust wire or binding sources."
+  ]
+}

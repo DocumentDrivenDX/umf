@@ -1,10 +1,9 @@
 #![cfg(feature = "embedded-adapters")]
 // SPDX-License-Identifier: MIT OR Apache-2.0
 use umf_core::{
-    json_schema_inspect,
+    Context, Utf16, Value, json_schema_inspect,
     native_json::NativeJsonTree,
     schema::{CompiledSchema, SchemaResources},
-    Context, Utf16, Value,
 };
 
 fn tree(source: &str) -> NativeJsonTree {
@@ -238,22 +237,26 @@ fn document_inspection_matches_typescript_occurrence_and_uri_diagnostics() {
     let validation =
         umf_core::json_schema_adapter::inspect_json_schema(&document, &mut Context::ordinary())
             .unwrap();
-    assert!(validation
-        .diagnostics
-        .iter()
-        .any(|d| d.code == Utf16::from("JSON_SCHEMA_URI")
-            && d.path == Utf16::from("/modules/0/elements/1/extensions/umf.json-schema")));
+    assert!(
+        validation
+            .diagnostics
+            .iter()
+            .any(|d| d.code == Utf16::from("JSON_SCHEMA_URI")
+                && d.path == Utf16::from("/modules/0/elements/1/extensions/umf.json-schema"))
+    );
     assert_eq!(
         umf_core::json_schema_adapter::export_json_schema(&document, &mut Context::ordinary())
             .unwrap(),
         Utf16::from("{}\n")
     );
-    assert!(umf_core::json_schema_adapter::export_json_schema_resources(
-        &document,
-        &mut Context::ordinary()
-    )
-    .unwrap()
-    .is_empty());
+    assert!(
+        umf_core::json_schema_adapter::export_json_schema_resources(
+            &document,
+            &mut Context::ordinary()
+        )
+        .unwrap()
+        .is_empty()
+    );
     assert_eq!(
         umf_core::json_schema_adapter::get_json_schema_node(
             &document,
@@ -277,10 +280,12 @@ fn document_inspection_matches_typescript_occurrence_and_uri_diagnostics() {
     )
     .unwrap();
     assert_eq!(bundle.root_json, Utf16::from("{}\n"));
-    assert!(bundle
-        .diagnostics
-        .iter()
-        .any(|d| d.code == Utf16::from("JSON_SCHEMA_URI")));
+    assert!(
+        bundle
+            .diagnostics
+            .iter()
+            .any(|d| d.code == Utf16::from("JSON_SCHEMA_URI"))
+    );
 
     let document = imported();
     let target_charge = "https://example.test/root".encode_utf16().count() * 12;
@@ -319,6 +324,47 @@ fn document_inspection_matches_typescript_occurrence_and_uri_diagnostics() {
     assert_eq!(error.code, "JSON_SCHEMA_URI");
     assert_eq!(error.message, Utf16::from("host stop"));
     assert!(error.is_control_failure());
+}
+
+#[test]
+fn retained_json_schema_runtime_has_deterministic_setup_and_inspection() {
+    fn imported() -> Value {
+        umf_core::json_schema_adapter::import_json_schema(
+            &r#"{"type":"object","properties":{"item":{"type":"string"}}}"#
+                .encode_utf16()
+                .collect::<Vec<_>>(),
+            &Utf16::from("retained-runtime"),
+            &Utf16::from("https://example.test/root"),
+            &[],
+            &mut Context::ordinary(),
+        )
+        .unwrap()
+    }
+
+    let document = imported();
+    let expected =
+        umf_core::json_schema_adapter::inspect_json_schema(&document, &mut Context::ordinary())
+            .unwrap();
+
+    let mut first_setup = Context::ordinary();
+    let first_runtime =
+        umf_core::json_schema_adapter::JsonSchemaRuntime::new(&mut first_setup).unwrap();
+    let first_setup_work = first_setup.charged_work();
+    let mut second_setup = Context::ordinary();
+    let second_runtime =
+        umf_core::json_schema_adapter::JsonSchemaRuntime::new(&mut second_setup).unwrap();
+    assert_eq!(second_setup.charged_work(), first_setup_work);
+
+    let actual = first_runtime
+        .inspect_document(&document, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(actual, expected);
+    assert_eq!(
+        second_runtime
+            .inspect_document(&document, &mut Context::ordinary())
+            .unwrap(),
+        expected
+    );
 }
 
 #[test]
@@ -384,7 +430,9 @@ fn root_resource_collision_follows_unknown_dialect_and_numeric_warnings() {
                     if expected_warning == "JSON_SCHEMA_DIALECT" {
                         "Uninterpreted dialect https://example.test/other".to_owned()
                     } else {
-                        format!("Resource {base}: native values retained but JavaScript validation unavailable: UmfError: Integer exceeds exact JavaScript range")
+                        format!(
+                            "Resource {base}: native values retained but JavaScript validation unavailable: UmfError: Integer exceeds exact JavaScript range"
+                        )
                     },
                 ),
                 (
@@ -502,9 +550,11 @@ fn inspection_preserves_unknown_dialect_keyword_and_numeric_diagnostics() {
         &mut ctx,
     )
     .unwrap();
-    assert!(!safe_decimal
-        .iter()
-        .any(|diagnostic| diagnostic.code == Utf16::from("JSON_SCHEMA_NUMERIC")));
+    assert!(
+        !safe_decimal
+            .iter()
+            .any(|diagnostic| diagnostic.code == Utf16::from("JSON_SCHEMA_NUMERIC"))
+    );
 }
 
 #[test]
@@ -551,9 +601,11 @@ fn inspection_resolves_only_explicit_packaged_resources_and_checks_metaschema() 
     let mut ctx = Context::ordinary();
     let diagnostics =
         json_schema_inspect::inspect_payload(&source, &Utf16::from("/schema"), &mut ctx).unwrap();
-    assert!(!diagnostics
-        .iter()
-        .any(|d| d.code.to_utf8().unwrap() == "JSON_SCHEMA_COMPILE"));
+    assert!(
+        !diagnostics
+            .iter()
+            .any(|d| d.code.to_utf8().unwrap() == "JSON_SCHEMA_COMPILE")
+    );
 
     let mut ctx = Context::ordinary();
     let invalid = json_schema_inspect::inspect_payload(
@@ -676,5 +728,636 @@ fn independent_upstream_type_vectors_match_the_native_rust_compiler() {
             "{}",
             test["description"].as_str().unwrap()
         );
+    }
+}
+
+#[test]
+fn local_and_cross_resource_reference_paths_remain_outside_the_profile() {
+    let mut source = payload(
+        r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/root","type":"object","required":["item"],"properties":{"item":{"$ref":"#/$defs/text"},"other":{"$ref":"https://example.test/amount"}},"$defs":{"text":{"type":"string"}}}"##,
+    );
+    source.resources.push((
+        Utf16::from("https://example.test/amount"),
+        tree(r#"{"type":"integer"}"#),
+    ));
+    let diagnostics = json_schema_inspect::inspect_payload(
+        &source,
+        &Utf16::from("/schema"),
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    assert!(
+        diagnostics
+            .iter()
+            .any(|item| item.code == Utf16::from("JSON_SCHEMA_VALIDATOR_LIMIT"))
+    );
+
+    let root = from_serde(&serde_json::from_str::<serde_json::Value>(
+        r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/root","type":"object","required":["item"],"properties":{"item":{"$ref":"#/$defs/text"},"other":{"$ref":"https://example.test/amount"}},"$defs":{"text":{"type":"string"}}}"##,
+    ).unwrap());
+    struct AmountRetriever;
+    impl jsonschema::Retrieve for AmountRetriever {
+        fn retrieve(
+            &self,
+            uri: &jsonschema::Uri<String>,
+        ) -> Result<serde_json::Value, Box<dyn std::error::Error + Send + Sync>> {
+            if uri.as_str() == "https://example.test/amount" {
+                Ok(serde_json::json!({
+                    "$id":"https://example.test/amount",
+                    "type":"integer"
+                }))
+            } else {
+                Err(format!("unexpected retrieval URI {uri}").into())
+            }
+        }
+    }
+    let independent = jsonschema::draft202012::options()
+        .with_retriever(AmountRetriever)
+        .build(&serde_json::from_str::<serde_json::Value>(
+            r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/root","type":"object","required":["item"],"properties":{"item":{"$ref":"#/$defs/text"},"other":{"$ref":"https://example.test/amount"}},"$defs":{"text":{"type":"string"}}}"##,
+        ).unwrap())
+        .unwrap();
+    let resources = SchemaResources {
+        entries: vec![(
+            Utf16::from("https://example.test/amount"),
+            from_serde(&serde_json::json!({"type":"integer"})),
+        )],
+    };
+    let compiled =
+        CompiledSchema::compile_consumer(&root, &resources, false, &mut Context::ordinary())
+            .unwrap();
+    let valid = from_serde(&serde_json::json!({"item":"ok","other":5}));
+    assert!(
+        compiled
+            .validate(&valid, &mut Context::ordinary())
+            .unwrap()
+            .is_empty()
+    );
+    let invalid = from_serde(&serde_json::json!({"item":1,"other":"bad"}));
+    assert!(independent.is_valid(&serde_json::json!({"item":"ok","other":5})));
+    assert!(!independent.is_valid(&serde_json::json!({"item":1,"other":"bad"})));
+    let independent_paths = independent
+        .iter_errors(&serde_json::json!({"item":1,"other":"bad"}))
+        .map(|error| {
+            (
+                error.instance_path.to_string(),
+                format!("#{}", error.schema_path),
+            )
+        })
+        .collect::<Vec<_>>();
+    assert_eq!(
+        independent_paths,
+        [
+            ("/item".to_owned(), "#/properties/item/$ref/type".to_owned()),
+            (
+                "/other".to_owned(),
+                "#/properties/other/$ref/type".to_owned()
+            )
+        ]
+    );
+    let errors = compiled
+        .validate(&invalid, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(
+        errors
+            .iter()
+            .map(|error| (
+                error.instance_path.to_utf8().unwrap(),
+                error.schema_path.to_utf8().unwrap(),
+                error.keyword.clone()
+            ))
+            .collect::<Vec<_>>(),
+        [
+            (
+                "/item".to_owned(),
+                "https://example.test/root#/$defs/text/type".to_owned(),
+                "type".to_owned()
+            ),
+            (
+                "/other".to_owned(),
+                "https://example.test/amount#/type".to_owned(),
+                "type".to_owned()
+            )
+        ]
+    );
+
+    let missing = from_serde(&serde_json::json!({"other":2}));
+    let missing_errors = compiled
+        .validate(&missing, &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(
+        missing_errors
+            .iter()
+            .map(|error| (
+                error.instance_path.to_utf8().unwrap(),
+                error.schema_path.to_utf8().unwrap(),
+                error.keyword.clone()
+            ))
+            .collect::<Vec<_>>(),
+        [(
+            "".to_owned(),
+            "#/required".to_owned(),
+            "required".to_owned()
+        )]
+    );
+}
+
+#[test]
+fn qualified_profile_matches_required_and_nested_type_paths() {
+    let source_text = r#"{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","required":["item"],"properties":{"flag":{"type":"boolean"},"item":{"type":"string"},"other":{"type":"integer"},"score":{"type":"number"}},"$defs":{"nested":{"type":"boolean"}}}"#;
+    let source = payload(source_text);
+    let diagnostics = json_schema_inspect::inspect_payload(
+        &source,
+        &Utf16::from("/schema"),
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    assert!(
+        !diagnostics
+            .iter()
+            .any(|item| item.code == Utf16::from("JSON_SCHEMA_VALIDATOR_LIMIT"))
+    );
+
+    let oracle_schema: serde_json::Value = serde_json::from_str(source_text).unwrap();
+    let oracle = jsonschema::draft202012::new(&oracle_schema).unwrap();
+    let schema = from_serde(&oracle_schema);
+    let compiled = CompiledSchema::compile_consumer(
+        &schema,
+        &SchemaResources::default(),
+        false,
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    let valid = from_serde(&serde_json::json!({"item":"ok","other":5,"score":-0.0,"flag":true}));
+    assert!(
+        compiled
+            .validate(&valid, &mut Context::ordinary())
+            .unwrap()
+            .is_empty()
+    );
+    assert!(oracle.is_valid(&serde_json::json!({"item":"ok","other":5,"score":-0.0,"flag":true})));
+    let invalid =
+        from_serde(&serde_json::json!({"item":1,"other":"bad","score":"bad","flag":"bad"}));
+    let errors = compiled
+        .validate(&invalid, &mut Context::ordinary())
+        .unwrap();
+    let oracle_errors = oracle
+        .iter_errors(&serde_json::json!({"item":1,"other":"bad","score":"bad","flag":"bad"}))
+        .map(|error| {
+            (
+                error.instance_path.to_string(),
+                format!("#{}", error.schema_path),
+            )
+        })
+        .collect::<Vec<_>>();
+    assert_eq!(
+        oracle_errors,
+        [
+            ("/flag".to_owned(), "#/properties/flag/type".to_owned()),
+            ("/item".to_owned(), "#/properties/item/type".to_owned()),
+            ("/other".to_owned(), "#/properties/other/type".to_owned()),
+            ("/score".to_owned(), "#/properties/score/type".to_owned())
+        ]
+    );
+    assert_eq!(
+        errors
+            .iter()
+            .map(|error| (
+                error.instance_path.to_utf8().unwrap(),
+                error.schema_path.to_utf8().unwrap(),
+                error.keyword.clone()
+            ))
+            .collect::<Vec<_>>(),
+        [
+            (
+                "/flag".to_owned(),
+                "#/properties/flag/type".to_owned(),
+                "type".to_owned()
+            ),
+            (
+                "/item".to_owned(),
+                "#/properties/item/type".to_owned(),
+                "type".to_owned()
+            ),
+            (
+                "/other".to_owned(),
+                "#/properties/other/type".to_owned(),
+                "type".to_owned()
+            ),
+            (
+                "/score".to_owned(),
+                "#/properties/score/type".to_owned(),
+                "type".to_owned()
+            )
+        ]
+    );
+    let missing = from_serde(&serde_json::json!({"other":2}));
+    let errors = compiled
+        .validate(&missing, &mut Context::ordinary())
+        .unwrap();
+    let oracle_errors = oracle
+        .iter_errors(&serde_json::json!({"other":2}))
+        .map(|error| {
+            (
+                error.instance_path.to_string(),
+                format!("#{}", error.schema_path),
+            )
+        })
+        .collect::<Vec<_>>();
+    assert_eq!(oracle_errors, [("".to_owned(), "#/required".to_owned())]);
+    assert_eq!(errors.len(), 1);
+    assert_eq!(errors[0].instance_path, Utf16::default());
+    assert_eq!(errors[0].schema_path, Utf16::from("#/required"));
+    assert_eq!(errors[0].keyword, "required");
+}
+
+#[test]
+fn qualified_profile_accepts_slash_and_unicode_property_names() {
+    let source_text = r#"{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","properties":{"a/b":{"type":"string"},"é":{"type":"integer"},"😀":{"type":"boolean"}}}"#;
+    let source = payload(source_text);
+    let diagnostics = json_schema_inspect::inspect_payload(
+        &source,
+        &Utf16::from("/schema"),
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    assert!(
+        !diagnostics
+            .iter()
+            .any(|item| item.code == Utf16::from("JSON_SCHEMA_VALIDATOR_LIMIT"))
+    );
+
+    let oracle_schema: serde_json::Value = serde_json::from_str(source_text).unwrap();
+    let oracle = jsonschema::draft202012::new(&oracle_schema).unwrap();
+    let schema = from_serde(&oracle_schema);
+    let compiled = CompiledSchema::compile_consumer(
+        &schema,
+        &SchemaResources::default(),
+        false,
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+
+    let valid = serde_json::json!({"a/b":"ok","é":1,"😀":true});
+    assert!(oracle.is_valid(&valid));
+    assert!(
+        compiled
+            .validate(&from_serde(&valid), &mut Context::ordinary())
+            .unwrap()
+            .is_empty()
+    );
+
+    let invalid = serde_json::json!({"a/b":1,"é":"bad","😀":1});
+    assert!(!oracle.is_valid(&invalid));
+    let expected_paths = ["/a~1b", "/é", "/😀"];
+    let oracle_paths = oracle
+        .iter_errors(&invalid)
+        .map(|error| error.instance_path.to_string())
+        .collect::<Vec<_>>();
+    assert_eq!(oracle_paths, expected_paths);
+    let errors = compiled
+        .validate(&from_serde(&invalid), &mut Context::ordinary())
+        .unwrap();
+    assert_eq!(
+        errors
+            .iter()
+            .map(|error| error.instance_path.to_utf8().unwrap())
+            .collect::<Vec<_>>(),
+        expected_paths
+    );
+}
+
+#[test]
+fn qualified_profile_covers_number_relative_resource_id_and_boolean_schema() {
+    let mut source = payload(
+        r#"{"$schema":"https://json-schema.org/draft/2020-12/schema","properties":{"score":{"type":"number"}}}"#,
+    );
+    source.resources = vec![
+        (
+            Utf16::from("https://example.test/z.json"),
+            tree(r#"{"$id":"z","type":"boolean"}"#),
+        ),
+        (Utf16::from("https://example.test/deny.json"), tree("false")),
+    ];
+    let diagnostics = json_schema_inspect::inspect_payload(
+        &source,
+        &Utf16::from("/schema"),
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    assert!(
+        !diagnostics
+            .iter()
+            .any(|item| item.code == Utf16::from("JSON_SCHEMA_VALIDATOR_LIMIT"))
+    );
+
+    let schema = from_serde(&serde_json::json!({"type":"number"}));
+    let compiled = CompiledSchema::compile_consumer(
+        &schema,
+        &SchemaResources::default(),
+        false,
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    assert!(
+        compiled
+            .validate(&Value::Number(1.5), &mut Context::ordinary())
+            .unwrap()
+            .is_empty()
+    );
+    let errors = compiled
+        .validate(
+            &Value::string_utf8("not a number"),
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+    assert_eq!(errors.len(), 1);
+    assert_eq!(errors[0].instance_path, Utf16::default());
+    assert_eq!(errors[0].schema_path, Utf16::from("#/type"));
+    assert_eq!(errors[0].keyword, "type");
+
+    let relative_resource = serde_json::json!({"$id":"z","type":"boolean"});
+    let relative_oracle = jsonschema::draft202012::new(&relative_resource).unwrap();
+    let relative_compiled = CompiledSchema::compile_consumer(
+        &from_serde(&relative_resource),
+        &SchemaResources::default(),
+        false,
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    for (instance, expected) in [
+        (serde_json::json!(true), true),
+        (serde_json::json!(1), false),
+    ] {
+        assert_eq!(relative_oracle.is_valid(&instance), expected);
+        assert_eq!(
+            relative_compiled
+                .validate(&from_serde(&instance), &mut Context::ordinary())
+                .unwrap()
+                .is_empty(),
+            expected
+        );
+    }
+
+    let false_resource = serde_json::Value::Bool(false);
+    let false_oracle = jsonschema::draft202012::new(&false_resource).unwrap();
+    let false_compiled = CompiledSchema::compile_consumer(
+        &from_serde(&false_resource),
+        &SchemaResources::default(),
+        false,
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    let instance = from_serde(&serde_json::json!("anything"));
+    assert!(!false_oracle.is_valid(&serde_json::json!("anything")));
+    assert_eq!(
+        false_compiled
+            .validate(&instance, &mut Context::ordinary())
+            .unwrap()
+            .len(),
+        1
+    );
+}
+
+#[test]
+fn frozen_validator_limit_mismatch_profile_is_complete_after_recursive_qualification() {
+    let root = r#"{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","properties":{"x":{"type":"number"}},"$defs":{"nested":{"type":"string"}}}"#;
+    let resources = [
+        (
+            Utf16::from("https://schemas.example.test/z.json"),
+            r#"{"$id":"z","type":"boolean"}"#,
+        ),
+        (Utf16::from("https://schemas.example.test/a.json"), "false"),
+    ];
+    let resource_sources = resources
+        .iter()
+        .map(|(uri, source)| (uri.clone(), source.encode_utf16().collect::<Vec<_>>()))
+        .collect::<Vec<_>>();
+    let document = umf_core::json_schema_adapter::import_json_schema(
+        &root.encode_utf16().collect::<Vec<_>>(),
+        &Utf16::from("urn:umf:r5:fixture"),
+        &Utf16::from("https://schemas.example.test/root.json"),
+        &resource_sources,
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+
+    let validation =
+        umf_core::json_schema_adapter::inspect_json_schema(&document, &mut Context::ordinary())
+            .unwrap();
+    assert!(validation.valid);
+    assert!(validation.complete);
+    assert!(validation.diagnostics.is_empty());
+
+    let bundle = umf_core::json_schema_adapter::export_json_schema_bundle(
+        &document,
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    assert_eq!(bundle.root_json, Utf16::from(format!("{root}\n")));
+    assert_eq!(
+        bundle
+            .resources_json
+            .iter()
+            .map(|(uri, source)| (uri.to_utf8().unwrap(), source.to_utf8().unwrap()))
+            .collect::<Vec<_>>(),
+        [
+            (
+                "https://schemas.example.test/z.json".to_owned(),
+                "{\"$id\":\"z\",\"type\":\"boolean\"}\n".to_owned()
+            ),
+            (
+                "https://schemas.example.test/a.json".to_owned(),
+                "false\n".to_owned()
+            )
+        ]
+    );
+    assert_eq!(bundle.diagnostics.len(), 1);
+    assert_eq!(
+        bundle.diagnostics[0].code,
+        Utf16::from("SOURCE_ARTIFACT_REQUIRED")
+    );
+}
+
+#[test]
+fn admitted_numeric_types_match_native_oracle_at_binary64_boundaries() {
+    let cases = [
+        ("number", serde_json::json!(0), true),
+        ("number", serde_json::json!(-0.0), true),
+        ("number", serde_json::json!(1.5), true),
+        ("number", serde_json::json!(9007199254740991_i64), true),
+        ("number", serde_json::json!(9007199254740992_i64), true),
+        ("integer", serde_json::json!(0), true),
+        ("integer", serde_json::json!(-0.0), true),
+        ("integer", serde_json::json!(1.5), false),
+        ("integer", serde_json::json!(9007199254740991_i64), true),
+        ("integer", serde_json::json!(9007199254740992_i64), true),
+    ];
+    for (type_name, instance, expected) in cases {
+        let schema = serde_json::json!({"type":type_name});
+        let independent = jsonschema::draft202012::new(&schema).unwrap();
+        let compiled = CompiledSchema::compile_consumer(
+            &from_serde(&schema),
+            &SchemaResources::default(),
+            false,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        let actual = compiled
+            .validate(&from_serde(&instance), &mut Context::ordinary())
+            .unwrap()
+            .is_empty();
+        assert_eq!(actual, expected, "UMF type={type_name} data={instance}");
+        assert_eq!(
+            independent.is_valid(&instance),
+            expected,
+            "native oracle type={type_name} data={instance}"
+        );
+    }
+
+    let unsafe_integer = payload(r#"{"type":"integer","maximum":9007199254740992}"#);
+    let diagnostics = json_schema_inspect::inspect_payload(
+        &unsafe_integer,
+        &Utf16::from("/schema"),
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    assert!(
+        diagnostics
+            .iter()
+            .any(|item| item.code == Utf16::from("JSON_SCHEMA_NUMERIC"))
+    );
+}
+
+#[test]
+fn outside_recursive_profile_keeps_generic_limit_warning() {
+    for source in [
+        r#"{"$id":"."}"#,
+        r#"{"$id":".."}"#,
+        r#"{"pattern":"^[a-z]+$"}"#,
+        // This schema compiles under the general Draft 2020-12 compiler, but
+        // is outside the narrow predecessor-parity profile and must remain
+        // visibly incomplete rather than inherit complete:true.
+        r#"{"type":"object","additionalProperties":false}"#,
+        r#"{"type":"object","additionalProperties":{"type":"string"}}"#,
+        r#"{"properties":{"child":{"pattern":"x"}}}"#,
+        r#"{"$anchor":"part"}"#,
+        r#"{"required":["__proto__"]}"#,
+    ] {
+        let diagnostics = json_schema_inspect::inspect_payload(
+            &payload(source),
+            &Utf16::from("/schema"),
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        assert!(
+            diagnostics.iter().any(|item| {
+                item.code == Utf16::from("JSON_SCHEMA_VALIDATOR_LIMIT")
+                    && item.severity == umf_core::Severity::Warning
+            }),
+            "source={source}"
+        );
+    }
+    let encoded_pointer = payload(
+        r##"{"properties":{"child":{"$ref":"#/$defs/a%2Fb"}},"$defs":{"a/b":{"type":"string"}}}"##,
+    );
+    let diagnostics = json_schema_inspect::inspect_payload(
+        &encoded_pointer,
+        &Utf16::from("/schema"),
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    assert!(diagnostics.iter().any(|item| {
+        item.code == Utf16::from("JSON_SCHEMA_COMPILE")
+            && item.severity == umf_core::Severity::Warning
+    }));
+    assert!(
+        !diagnostics
+            .iter()
+            .any(|item| item.code == Utf16::from("JSON_SCHEMA_VALIDATOR_LIMIT"))
+    );
+}
+
+#[test]
+fn additional_properties_true_is_admitted_and_matches_independent_oracles() {
+    let source = r#"{"type":"object","properties":{"known":{"type":"string"},"child":{"type":"object","properties":{"name":{"type":"string"}},"additionalProperties":true}},"additionalProperties":true}"#;
+    let diagnostics = json_schema_inspect::inspect_payload(
+        &payload(source),
+        &Utf16::from("/schema"),
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    assert!(diagnostics.is_empty(), "diagnostics={diagnostics:?}");
+
+    let schema: serde_json::Value = serde_json::from_str(source).unwrap();
+    let independent = jsonschema::draft202012::new(&schema).unwrap();
+    let compiled = CompiledSchema::compile_consumer(
+        &from_serde(&schema),
+        &SchemaResources::default(),
+        false,
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    for (instance, expected) in [
+        (
+            serde_json::json!({"known":"ok","extra":1,"child":{"name":"ok","extra":1}}),
+            true,
+        ),
+        (
+            serde_json::json!({"known":1,"extra":1,"child":{"name":"ok"}}),
+            false,
+        ),
+    ] {
+        let rust_valid = compiled
+            .validate(&from_serde(&instance), &mut Context::ordinary())
+            .unwrap()
+            .is_empty();
+        assert_eq!(rust_valid, expected, "Rust instance={instance}");
+        assert_eq!(
+            independent.is_valid(&instance),
+            expected,
+            "oracle instance={instance}"
+        );
+    }
+}
+
+#[test]
+fn additional_properties_false_and_schema_values_remain_outside_profile() {
+    for source in [
+        r#"{"type":"object","additionalProperties":false}"#,
+        r#"{"type":"object","additionalProperties":{"type":"string"}}"#,
+        r#"{"properties":{"nested":{"type":"object","additionalProperties":false}}}"#,
+    ] {
+        let diagnostics = json_schema_inspect::inspect_payload(
+            &payload(source),
+            &Utf16::from("/schema"),
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        assert!(
+            diagnostics.iter().any(|item| {
+                item.code == Utf16::from("JSON_SCHEMA_VALIDATOR_LIMIT")
+                    && item.severity == umf_core::Severity::Warning
+            }),
+            "source={source}"
+        );
+    }
+}
+
+#[test]
+fn duplicate_native_schema_members_are_not_validator_profile_qualified() {
+    for source in [
+        r#"{"type":"string","type":"integer"}"#,
+        r#"{"properties":{"item":{"type":"string"},"item":{"type":"integer"}}}"#,
+    ] {
+        let parsed = NativeJsonTree::parse_json(
+            &source.encode_utf16().collect::<Vec<_>>(),
+            &mut Context::ordinary(),
+        );
+        assert!(
+            parsed.is_err(),
+            "duplicate native key was accepted: {source}"
+        );
+        assert_eq!(parsed.unwrap_err().code, "JSON_SCHEMA_SYNTAX");
     }
 }

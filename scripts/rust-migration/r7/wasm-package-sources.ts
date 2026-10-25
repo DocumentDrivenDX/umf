@@ -9,7 +9,17 @@ const pairs = [
   ['bindings/core/node/src/wire.js', 'bindings/core/wasm/src/wire.js'],
   ['bindings/core/node/src/javascript-numeric.js', 'bindings/core/wasm/src/javascript-numeric.js'],
   ['bindings/core/node/src/bit128.js', 'bindings/core/wasm/src/bit128.js'],
+  ['bindings/core/node/src/json-number.js', 'bindings/core/wasm/src/json-number.js'],
   ['bindings/core/node/src/json-schema.js', 'bindings/core/wasm/src/json-schema.js'],
+  ['bindings/core/node/src/core-key-tuple.js', 'bindings/core/wasm/src/core-key-tuple.js'],
+  ['bindings/core/node/src/core-keys.js', 'bindings/core/wasm/src/core-keys.js'],
+  ['bindings/core/node/src/dataset-values-compact.js', 'bindings/core/wasm/src/dataset-values-compact.js'],
+  ['bindings/core/node/src/dataset-values.js', 'bindings/core/wasm/src/dataset-values.js'],
+  ['bindings/core/node/src/core-relationships.js', 'bindings/core/wasm/src/core-relationships.js'],
+  ['bindings/core/node/src/core-evolution.js', 'bindings/core/wasm/src/core-evolution.js'],
+  ['bindings/core/node/src/csv-boolean-lexical.js', 'bindings/core/wasm/src/csv-boolean-lexical.js'],
+  ['bindings/core/node/src/document-comparison.js', 'bindings/core/wasm/src/document-comparison.js'],
+  ['bindings/core/node/src/host-json.js', 'bindings/core/wasm/src/host-json.js'],
 ] as const;
 const manifestPath = 'bindings/core/wasm/src/shared-sources.json';
 const check = process.argv.includes('--check');

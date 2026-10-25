@@ -80,13 +80,19 @@ fn deep_native_json_preflight_is_iterative_and_preserves_error_precedence() {
         r#"{{"x":1,"x":2,"deep":{}}}"#,
         format!("{}null{}", "[".repeat(10_000), "]".repeat(10_000))
     );
-    assert_eq!(parse(&duplicate_then_deep).unwrap_err().code, "JSON_SCHEMA_SYNTAX");
+    assert_eq!(
+        parse(&duplicate_then_deep).unwrap_err().code,
+        "JSON_SCHEMA_SYNTAX"
+    );
 
     let malformed_after_duplicate = format!(
         r#"{{"x":1,"x":2,"deep":{}]}}"#,
         format!("{}null{}", "[".repeat(10_000), "]".repeat(10_000))
     );
-    assert_eq!(parse(&malformed_after_duplicate).unwrap_err().code, "JSON_SCHEMA_SYNTAX");
+    assert_eq!(
+        parse(&malformed_after_duplicate).unwrap_err().code,
+        "JSON_SCHEMA_SYNTAX"
+    );
 }
 
 #[test]
@@ -161,10 +167,7 @@ fn subtree_copy_rebases_and_retains_unknown_representation_fields() {
                         Utf16::from("value"),
                         umf_core::Value::String(Utf16::from("kept")),
                     ),
-                    (
-                        Utf16::from("futureFlag"),
-                        umf_core::Value::Bool(true),
-                    ),
+                    (Utf16::from("futureFlag"), umf_core::Value::Bool(true)),
                 ]),
             )]),
         ),
@@ -222,8 +225,8 @@ fn subtree_copy_admits_many_extras_before_copy_allocation() {
         max_values: 1,
         ..umf_core::context::Limits::ordinary()
     };
-    let mut low_budget = Context::with_limits(umf_core::context::ResourceProfile::Cooperative, limits)
-        .unwrap();
+    let mut low_budget =
+        Context::with_limits(umf_core::context::ResourceProfile::Cooperative, limits).unwrap();
     assert_eq!(
         tree.subtree_clone(&Utf16::default(), &mut low_budget)
             .unwrap_err()
@@ -273,12 +276,10 @@ fn meter_failure_propagates_without_a_partial_result() {
 
 #[test]
 fn large_malformed_tag_kind_is_metered_before_ascii_conversion() {
-    let tagged = umf_core::Value::Object(vec![
-        (
-            Utf16::from("kind"),
-            umf_core::Value::String(Utf16::new(vec![b'x' as u16; 1_000_000])),
-        ),
-    ]);
+    let tagged = umf_core::Value::Object(vec![(
+        Utf16::from("kind"),
+        umf_core::Value::String(Utf16::new(vec![b'x' as u16; 1_000_000])),
+    )]);
     let mut meter = |amount: usize| {
         if amount > 1_000 {
             Err(umf_core::EngineError::new(

@@ -75,6 +75,15 @@ const [coreSchema, referenceSchema, packageSchema, constraints, domainPolicy, do
   readJson('spec/metamodel/generated/domain-policy.json'), readJson('tests/lifecycle/fixtures/legacy-note.json'),
 ]);
 const resources = {coreSchema, referenceSchema, packageSchema, constraints, domainPolicy};
+let setupMeasuredWork = 0;
+let factoryOperationWork = 0;
+const setupControlledEngine = nativePackage.createJavascriptNumericEngine(resources, {
+  setupControls:{meter:(amount:number) => {setupMeasuredWork += amount;}},
+  controls:{meter:(amount:number) => {factoryOperationWork += amount;}},
+});
+if (setupMeasuredWork <= 0 || factoryOperationWork !== 0) throw new Error('Retained resources were not admitted under separate factory setup controls');
+setupControlledEngine.exactDecimal('1');
+if (factoryOperationWork <= 0) throw new Error('Per-call controls did not begin with the first numeric operation');
 const nativeContextEngine = nativePackage.createJavascriptNumericEngine(resources);
 const fieldContext = {document, field:{module:'note_lifecycle', element:'notes__note_id'}};
 const actualCurrent = nativeContextEngine.integerFromBigInt(1n, fieldContext);
@@ -116,6 +125,82 @@ for (const [label, context, value = 1n] of contextRefusals) {
 }
 const extraOuterContext = {...fieldContext, future:'accepted by existing TS context contract'};
 if (canonical(nativeContextEngine.integerFromBigInt(1n, extraOuterContext)) !== canonical(integerFromBigInt(1n, extraOuterContext))) throw new Error('Extra outer context compatibility differs');
+const contextCopyTrace = (operation: (context: any) => unknown) => {
+  const trace: string[] = [];
+  const target = {field:fieldContext.field, document:fieldContext.document};
+  const context = new Proxy(target, {
+    ownKeys() { trace.push('keys'); return ['field', 'document']; },
+    getOwnPropertyDescriptor(object, key) { trace.push(String(key)); return Reflect.getOwnPropertyDescriptor(object, key); },
+  });
+  operation(context);
+  return trace;
+};
+const contextCopyOrder = [
+  contextCopyTrace((context) => integerFromBigInt(1n, context)),
+  contextCopyTrace((context) => nativeContextEngine.integerFromBigInt(1n, context)),
+];
+if (canonical(contextCopyOrder[0]) !== canonical(contextCopyOrder[1])) throw new Error(`Whole-context copy/member order differs: ${canonical(contextCopyOrder)}`);
+// Freeze predecessor host-touch order. Both implementations must reject bad
+// numeric input before optional context inspection, and must not invoke the
+// context accessor while doing so.
+let orderGetterCalls = 0;
+const accessorContext = Object.defineProperty({}, 'document', {
+  enumerable:true,
+  get() { orderGetterCalls++; return document; },
+});
+const orderCases: [string, () => unknown, () => unknown, string, string][] = [
+  ['invalid exact decimal before context', () => exactDecimal('NaN', accessorContext as any), () => nativeContextEngine.exactDecimal('NaN', accessorContext as any), 'JAVASCRIPT_NUMERIC', 'JAVASCRIPT_NUMERIC'],
+  ['unsupported number family before context', () => admitJavascriptNumber(1, 'future' as any, accessorContext as any), () => nativeContextEngine.admitJavascriptNumber(1, 'future' as any, accessorContext as any), 'JAVASCRIPT_NUMERIC', 'JAVASCRIPT_NUMERIC'],
+];
+const hostOrderChecks = orderCases.map(([label, tsOperation, nativeOperation, tsCode, nativeCode]) => {
+  const code = (operation: () => unknown) => {
+    try { operation(); return 'ACCEPTED'; }
+    catch (error) { return (error as {code?:string}).code ?? 'UNMAPPED'; }
+  };
+  const outcomes = [code(tsOperation), code(nativeOperation)];
+  if (outcomes[0] !== tsCode || outcomes[1] !== nativeCode) {
+    throw new Error(`${label} differs from predecessor host-touch order: ${canonical(outcomes)}`);
+  }
+  return {label, tsCode:outcomes[0], rustOptInCode:outcomes[1], equal:true};
+});
+if (orderGetterCalls !== 0) throw new Error('Host-order control invoked an accessor');
+const crossedLossyContext = {...fieldContext, field:{module:'note_lifecycle', element:'absent'}};
+const crossedLossyErrors = [
+  () => ts.numericToNumberLossless({decimalToken:'0.1'}, crossedLossyContext),
+  () => nativeContextEngine.numericToNumberLossless({decimalToken:'0.1'}, crossedLossyContext),
+].map((operation) => {
+  try { operation(); return null; }
+  catch (error) { const item = error as {code?:string; path?:string; message?:string}; return {code:item.code, path:item.path, message:item.message}; }
+});
+if (canonical(crossedLossyErrors[0]) !== canonical(crossedLossyErrors[1])) throw new Error(`Invalid context must precede lossy conversion: ${canonical(crossedLossyErrors)}`);
+if (crossedLossyErrors[0]?.code !== 'JAVASCRIPT_NUMERIC' || crossedLossyErrors[0]?.message?.includes('Number conversion would change')) throw new Error(`Lossy conversion ran before invalid context: ${canonical(crossedLossyErrors)}`);
+const malformedNumericContext = {...fieldContext, field:{module:'note_lifecycle', element:'absent'}};
+for (const [label, literal] of [['malformed decimal', {decimalToken:'NaN'}], ['fractional integer carrier', {integerToken:'1.5'}]] as const) {
+  const errors = [
+    () => ts.numericToNumberLossless(literal as any, malformedNumericContext),
+    () => nativeContextEngine.numericToNumberLossless(literal as any, malformedNumericContext),
+  ].map((operation) => {
+    try { operation(); return null; }
+    catch (error) { const item = error as {code?:string; path?:string; message?:string}; return {code:item.code, path:item.path, message:item.message}; }
+  });
+  if (canonical(errors[0]) !== canonical(errors[1])) throw new Error(`${label} grammar must precede invalid context: ${canonical(errors)}`);
+}
+let measuredWork = 0;
+nativePackage.createJavascriptNumericEngine(undefined, {controls:{meter:(amount:number) => {measuredWork += amount;}}}).exactDecimal('1');
+if (measuredWork <= 0) throw new Error('Numeric operation did not report work to its host meter');
+const perCallLimited = nativePackage.createJavascriptNumericEngine(undefined, {controls:{maxWork:measuredWork}});
+perCallLimited.exactDecimal('1');
+perCallLimited.exactDecimal('1');
+let contextMeasuredWork = 0;
+nativePackage.createJavascriptNumericEngine(resources, {controls:{meter:(amount:number) => {contextMeasuredWork += amount;}}}).integerFromBigInt(1n, fieldContext);
+if (contextMeasuredWork <= measuredWork) throw new Error('Context stages were not metered cumulatively beyond the scalar operation');
+const contextCumulativeLimited = nativePackage.createJavascriptNumericEngine(resources, {controls:{maxWork:contextMeasuredWork - 1}});
+try { contextCumulativeLimited.integerFromBigInt(1n, fieldContext); throw new Error('Context operation exceeded its cumulative maxWork without refusal'); }
+catch (error) { if ((error as {code?:string}).code !== 'RESOURCE_LIMIT') throw error; }
+const contextPerCallLimited = nativePackage.createJavascriptNumericEngine(resources, {controls:{maxWork:contextMeasuredWork}});
+contextPerCallLimited.integerFromBigInt(1n, fieldContext);
+contextPerCallLimited.integerFromBigInt(1n, fieldContext);
+
 let getterCalls = 0;
 const nestedGetterContext = {...fieldContext, future:{get value(){getterCalls++; return 1;}}};
 const nonJsonContexts: [string, unknown][] = [
@@ -140,4 +225,4 @@ catch (error) { if ((error as {code?:string}).code !== 'RESOURCE_LIMIT') throw e
 const formatLimited = nativePackage.createJavascriptNumericEngine(undefined, {controls:{maxWork:20_000_000}});
 try { formatLimited.integerToBigInt({integerToken:'1e99999'}); throw new Error('Expanded BigInt formatting bypassed host work budget'); }
 catch (error) { if ((error as {code?:string}).code !== 'RESOURCE_LIMIT') throw error; }
-console.log(JSON.stringify({status:'pass', profile:nativePackage.JAVASCRIPT_NUMERIC_PROFILE, vectors:checked, independentOracle:'Python Decimal/Fraction/struct', tsDifferential:true}));
+console.log(JSON.stringify({status:'pass', profile:nativePackage.JAVASCRIPT_NUMERIC_PROFILE, vectors:checked, independentOracle:'Python Decimal/Fraction/struct', tsDifferential:true, hostOrderChecks, crossedLossyContext:crossedLossyErrors[0], contextCopyOrder, setupMeasuredWork, factoryOperationWork, perCallWorkReset:true, measuredWork, contextCumulativeWorkReset:true, contextMeasuredWork}));

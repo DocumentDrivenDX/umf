@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {describe,expect,test} from 'bun:test';
-import {inspectCoreAuthority,inspectCoreDistribution} from '../../scripts/check-core-authority';
+import {readFile} from 'node:fs/promises';
+import {resolve} from 'node:path';
+import {inspectCoreAuthority,inspectCoreDistribution,r5PredecessorRejectionControls} from '../../scripts/check-core-authority';
 const inspect=(path:string,source:string)=>inspectCoreAuthority([{path,source}]);
 // @covers US-089-AC19 @covers US-089-AC22 @covers US-089-AC24
 describe('current-core authority boundaries',()=>{
@@ -46,6 +48,27 @@ describe('current-core authority boundaries',()=>{
   expect(inspect(path,source.replace("refuses(","accepts(")).length).toBeGreaterThan(0);
   expect(inspect(path,source+source).length).toBeGreaterThan(0);
   expect(inspect(path,'')).toHaveLength(1);
+ });
+ test('R5 frozen predecessor refusals are exact, case-specific controls',async()=>{
+  const paths=[...new Set(r5PredecessorRejectionControls.map(control=>control.path))];
+  const files=await Promise.all(paths.map(async path=>({path,source:await readFile(resolve(import.meta.dir,'../..',path),'utf8')})));
+  expect(r5PredecessorRejectionControls).toHaveLength(19);
+  expect(inspectCoreAuthority(files)).toEqual([]);
+  const target=files.find(file=>file.path==='scripts/rust-migration/r5/freeze-core-keys.ts')!;
+  const withUnlistedMarker=files.map(file=>file.path===target.path?{...file,source:file.source+"\nconst unlisted={umf:'0.8.0'};\n"}:file);
+  expect(inspectCoreAuthority(withUnlistedMarker).some(issue=>issue.includes('scripts/rust-migration/r5/freeze-core-keys.ts')&&issue.includes('constructs a retired core marker'))).toBe(true);
+ });
+ test('each R5 predecessor control becomes stale when its exact snippet changes or disappears',async()=>{
+  const paths=[...new Set(r5PredecessorRejectionControls.map(control=>control.path))];
+  const files=await Promise.all(paths.map(async path=>({path,source:await readFile(resolve(import.meta.dir,'../..',path),'utf8')})));
+  for(const control of r5PredecessorRejectionControls){
+   const original=files.find(file=>file.path===control.path)!;
+   expect(original.source.indexOf(control.source)).toBe(original.source.lastIndexOf(control.source));
+   for(const replacement of [control.source.replace(/0\.[1-9]\.0/g,'0.10.0'),'']){
+    const changed=files.map(file=>file.path===control.path?{...file,source:file.source.replace(control.source,replacement)}:file);
+    expect(inspectCoreAuthority(changed)).toContain(control.path+': stale or changed explicit core-rejection control');
+   }
+  }
  });
  test('dynamic document identities require the generated current version',()=>{
   for(const source of ["const refs=versions.map(v=>({$ref:'urn:umf:core:'+v}))",'const ref=`urn:umf:core:0.${i+1}.0`','const ref=`urn:umf:core:${version}`'])expect(inspect('scripts/example-schema.ts',source).some(issue=>issue.includes('noncurrent dynamic core document'))).toBe(true);

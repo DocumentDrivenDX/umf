@@ -1,0 +1,47 @@
+{
+  "status": "pass",
+  "runtime": {
+    "host": "Chromium",
+    "version": "153.0.8010.12"
+  },
+  "binding": "clean-extracted-standalone-wasm-package",
+  "package": {
+    "path": "/private/tmp/umf-r5-core-rel-final/wasm-tarball/umf-core-rust-wasm-0.1.0.tgz",
+    "sha256": "66ed1b6a3cc6806a176fd8f07fe976d726ca4a317fb017a7f1ccb2ba140fa2af",
+    "members": 16
+  },
+  "wasmBindgen": "0.2.100",
+  "rawWasmSha256": "2904118a4af39a58bc6e89fec22038cb55477980f0532c69e24234ed25454632",
+  "generatedGlueSha256": "a529650ad33bc71fe6e319fc315b5c25ef8da223dbe59f69396b1a10ce3d45c5",
+  "generatedWasmSha256": "37edfd370a8a22fb46c6aea60a3d5cb161f966ea34c9f7945630bceae96ba9f8",
+  "operationCases": 17,
+  "receiptVerifiers": 2,
+  "forgedReceipt": "pass",
+  "copyIsolation": "pass",
+  "controls": {
+    "zeroWork": "RESOURCE_LIMIT",
+    "cancellation": "CANCELLED",
+    "deadline": "DEADLINE"
+  },
+  "frozenPacketSha256": "b7e2d26ad9333141f0db2f78c559ad4ed55e8f6f6359464ceedad570db1f75cc",
+  "sourceHashes": {
+    "bindings/core/wasm/index.js": "e163b0df3949c7b4ec97ff2583192b1689793371fa0bde0301b41fadf875fccd",
+    "bindings/core/wasm/index.d.ts": "dc2de761539fd5ec92fbd0e46032c5c128e4612ac63171a76940d5b2f5a18d3f",
+    "bindings/core/wasm/src/core-relationships.js": "3b73434ef7c0115cf2816333738c6fe0ff9763aff9d426ff82917c06cf6f9e3c",
+    "bindings/core/wasm/src/wire.js": "a6187bb3e6704eacf6b100b622888bbb1cc08fd482721f8119ab81b9719d93f8",
+    "bindings/core/wasm/package.json": "fb8671743700da211e9a17c29f521b24cc2069e5f4947d09cb7c9c513c231f90",
+    "crates/umf-core/src/core_relationships.rs": "b68b93fbefeda05debbd130f9801b49e0952634b40fbe1bed967f65664349b35",
+    "bindings/core/wasm/src/shared-sources.json": "a0afaf0b3c2d55c51cf94c602898a747fbc22ce7e94d4054c9a5f9aedc17bae6",
+    "crates/umf-core-wire/src/lib.rs": "31cf3843617016d37db8d9442714b058b9fadce0ccfd57ff616c5806fa704933",
+    "crates/umf-core-wire/tests/r5_core_relationships_wire.rs": "646730597e36cf9084301c7ffcba56d2bc17466c309d90719633b2c4a1877b6c",
+    "scripts/rust-migration/r5/core-relationships-browser.mjs": "b512ba32bc27858bfa286c2d9960d232b3d68905b430dc8b26f5fa75b5c25058",
+    "docs/helix/04-build/evidence/rust-migration/r5-core-relationships/frozen-typescript.json": "b7e2d26ad9333141f0db2f78c559ad4ed55e8f6f6359464ceedad570db1f75cc",
+    "src/generated/core-model.ts": "814b69879fc1eb839afa1459b26797fa5ee21c80af82431779e790bbe5ffb5c8",
+    "src/generated/core-validators.ts": "12da8b36c5c26ad69416ec8e8cf0eb59fdc09ef01325688e3a28d8e6796b58ef",
+    "spec/core/schema.json": "b7842c143e24c8a039c7d79be4503b8f5feb21391b800b5ccec19ccd530bb525",
+    "spec/core/semantic-type-reference.schema.json": "02d73498cde6217ee38377f7e43a79cf778119eab67fe998509af7a5905e3bde",
+    "spec/core/extension-package.schema.json": "c5b470a5106cb9dffda1f2abd005c7f7147566545ce466b281b2f4e1a8cc298a",
+    "spec/metamodel/generated/core-constraints.json": "ecf57b3bd7fcfad62b2ce6bbf1b280cd30d71008fe1c5d8500d61841c33f02c1",
+    "spec/metamodel/generated/domain-policy.json": "465f5065989d6d9b556027f32cad4f0974ae0770036d5c0084180bfb2b2c56e9"
+  }
+}

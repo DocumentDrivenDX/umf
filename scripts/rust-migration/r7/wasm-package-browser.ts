@@ -22,16 +22,28 @@ const inputs = JSON.stringify({
   resources,
   bit128: JSON.parse(await readFile(join(root, 'fixtures/validation/uuid/bit128-oracle.json'), 'utf8')),
   field: JSON.parse(await readFile(join(root, 'docs/helix/04-build/evidence/rust-migration/r5-field-value/frozen-typescript.json'), 'utf8')),
+  frozenComparison: JSON.parse(await readFile(join(root, 'docs/helix/04-build/evidence/rust-migration/r7-schema-comparison/predecessor-cases.json'), 'utf8')),
 });
 
 const mime = (path: string) => path.endsWith('.wasm') ? 'application/wasm'
   : path.endsWith('.js') ? 'text/javascript' : 'application/octet-stream';
+let missingWasmRequests = 0;
+let invalidWasmRequests = 0;
 const server = createServer(async (request, response) => {
   const path = new URL(request.url ?? '/', 'http://127.0.0.1').pathname;
   if (path === '/') { response.writeHead(200, {'content-type': 'text/html'}); response.end('<!doctype html><meta charset="utf-8">'); return; }
   if (path === '/inputs.json') { response.writeHead(200, {'content-type': 'application/json'}); response.end(inputs); return; }
-  const local = resolve(pkgRoot, `.${decodeURIComponent(path.slice('/package'.length))}`);
-  if (path.startsWith('/package/') && (local === pkgRoot || local.startsWith(`${pkgRoot}${sep}`))) {
+  const variant = path.startsWith('/missing/package/') ? 'missing' : path.startsWith('/invalid/package/') ? 'invalid' : '';
+  const packagePath = variant ? path.slice(`/${variant}`.length) : path;
+  if (variant && packagePath.endsWith('/pkg/umf_core_wasm_bg.wasm')) {
+    if (variant === 'missing') { missingWasmRequests++; response.writeHead(404); response.end('missing WASM asset'); return; }
+    invalidWasmRequests++;
+    response.writeHead(200, {'content-type': 'application/wasm', 'cache-control': 'no-store'});
+    response.end(new Uint8Array([0, 1, 2]));
+    return;
+  }
+  const local = resolve(pkgRoot, `.${decodeURIComponent(packagePath.slice('/package'.length))}`);
+  if (packagePath.startsWith('/package/') && (local === pkgRoot || local.startsWith(`${pkgRoot}${sep}`))) {
     try {
       const bytes = await readFile(local);
       response.writeHead(200, {'content-type': mime(local), 'cache-control': 'no-store'});
@@ -46,14 +58,17 @@ const address = server.address();
 if (!address || typeof address === 'string') throw new Error('Browser server did not start');
 let browser;
 try {
-  browser = await chromium.launch({headless: true, ...(process.env.UMF_CHROMIUM_PATH ? {executablePath: process.env.UMF_CHROMIUM_PATH} : {})});
+  console.error('R7 browser: launch Chromium');
+  browser = await chromium.launch({headless: true, timeout: 30_000, ...(process.env.UMF_CHROMIUM_PATH ? {executablePath: process.env.UMF_CHROMIUM_PATH} : {})});
   const page = await browser.newPage();
-  await page.goto(`http://127.0.0.1:${address.port}/`);
-  const result = await page.evaluate(async () => {
+  console.error('R7 browser: navigate');
+  await page.goto(`http://127.0.0.1:${address.port}/`, {timeout: 15_000});
+  console.error('R7 browser: execute matrix');
+  const result = await Promise.race([page.evaluate(async () => {
     const wrapper = await import(new URL('/package/index.js', location.href).href);
     const wasm = await import(new URL('/package/pkg/umf_core_wasm.js', location.href).href);
     if (typeof wasm.default === 'function') await wasm.default();
-    const {resources, bit128, field} = await fetch('/inputs.json').then(response => response.json());
+    const {resources, bit128, field, frozenComparison} = await fetch('/inputs.json').then(response => response.json());
     const base = wrapper.createEngine(wasm);
     const sample = Object.assign(Object.create(null), {z: 1, a: [true, null, 'x']});
     const copied = base.copyJson(sample);
@@ -104,14 +119,92 @@ try {
         .validateCoreFieldValue(field.cases[0].source ?? field.source, field.cases[0].identity, field.cases[0].value);
     } catch (error: any) { fieldCancellation = error.code ?? ''; }
     if (fieldCancellation !== 'CANCELLED') throw Error('Field-value cancellation mismatch');
+    const comparison = wrapper.createDocumentComparisonEngine(wasm, {snapshot: (value: any) => structuredClone(value)});
+    for (const row of frozenComparison.cases) {
+      const actual = comparison.compareDocuments(row.before, row.after);
+      if (JSON.stringify(actual) !== JSON.stringify(row.expected)) throw Error(`Frozen comparison mismatch: ${row.id}`);
+    }
+    const diff = comparison.compareDocuments(JSON.parse('{"z":1,"a":"before"}'), JSON.parse('{"z":2,"a":"after"}'));
+    if (JSON.stringify(diff) !== JSON.stringify([
+      {path: '/z', status: 'changed', before: 1, after: 2},
+      {path: '/a', status: 'changed', before: 'before', after: 'after'},
+    ])) throw Error('WASM document-comparison mismatch');
+    let comparisonCancellation = '';
+    try { wrapper.createDocumentComparisonEngine(wasm, {snapshot: (value: any) => structuredClone(value), controls: {isCancelled: () => true}}).compareDocuments(null, true); }
+    catch (error: any) { comparisonCancellation = error.code ?? ''; }
+    if (comparisonCancellation !== 'CANCELLED') throw Error('WASM document-comparison cancellation mismatch');
+    const nulJoinedOrder = comparison.compareDocuments(
+      [{id: 'a', value: 'first'}, {id: 'a\u0000a', value: 'second'}],
+      [{id: 'a\u0000a', value: 'second'}, {id: 'a', value: 'first'}],
+    );
+    if (JSON.stringify(nulJoinedOrder) !== '[]') throw Error('WASM predecessor NUL-join collision mismatch');
+    let comparisonWork = 0;
+    wrapper.createDocumentComparisonEngine(wasm, {
+      snapshot: (value: any) => structuredClone(value), controls: {meter: (amount: number) => comparisonWork += amount},
+    }).compareDocuments({x: 1}, {x: 2});
+    const budgetedComparison = wrapper.createDocumentComparisonEngine(wasm, {
+      snapshot: (value: any) => structuredClone(value), controls: {maxWork: comparisonWork},
+    });
+    budgetedComparison.compareDocuments({x: 1}, {x: 2});
+    budgetedComparison.compareDocuments({x: 1}, {x: 2});
+    let comparisonCancelledOnce = true;
+    const recoveringComparison = wrapper.createDocumentComparisonEngine(wasm, {
+      snapshot: (value: any) => structuredClone(value),
+      controls: {maxWork: comparisonWork * 3, isCancelled: () => { if (comparisonCancelledOnce) { comparisonCancelledOnce = false; return true; } return false; }},
+    });
+    let recoveredAfterCancellation = false;
+    try { recoveringComparison.compareDocuments({x: 1}, {x: 2}); }
+    catch (error: any) { if (error.code !== 'CANCELLED') throw error; }
+    recoveredAfterCancellation = recoveringComparison.compareDocuments({x: 1}, {x: 2}).length === 1;
+    if (!recoveredAfterCancellation) throw Error('WASM comparison did not recover after cancellation refusal');
+    let comparisonWorkRefusal = '';
+    const comparisonBudget = {maxWork: comparisonWork};
+    const budgetRecovery = wrapper.createDocumentComparisonEngine(wasm, {snapshot: (value: any) => structuredClone(value), controls: comparisonBudget});
+    const largeBefore = Object.fromEntries(Array.from({length: 100}, (_, index) => [`k${index}`, index]));
+    const largeAfter = Object.fromEntries(Array.from({length: 100}, (_, index) => [`k${index}`, index + 1]));
+    try { budgetRecovery.compareDocuments(largeBefore, largeAfter); } catch (error: any) { comparisonWorkRefusal = error.code ?? ''; }
+    const afterWorkRefusal = budgetRecovery.compareDocuments({x: 1}, {x: 2});
+    if (comparisonWorkRefusal !== 'RESOURCE_LIMIT' || afterWorkRefusal.length !== 1) throw Error('WASM comparison work refusal/recovery mismatch');
+    const depth = (levels: number) => { let value: any = 0; for (let index = 0; index < levels; index++) value = {x: value}; return value; };
+    let comparisonDepthRefusal = '';
+    try { comparison.compareDocuments(depth(300), depth(300)); } catch (error: any) { comparisonDepthRefusal = error.code ?? ''; }
+    if (!['LIMIT', 'RESOURCE_LIMIT'].includes(comparisonDepthRefusal)) throw Error('WASM comparison depth refusal mismatch');
+    let afterSnapshotReads = 0;
+    const badBefore = Object.defineProperty({}, 'x', {enumerable: true, get() { throw Object.assign(new Error('before refused'), {code: 'NON_JSON', path: '/x'}); }});
+    const badAfter = Object.defineProperty({}, 'x', {enumerable: true, get() { afterSnapshotReads++; return 1; }});
+    let beforeRefusal = '';
+    try { comparison.compareDocuments(badBefore, badAfter); } catch (error: any) { beforeRefusal = `${error.code}:${error.path}`; }
+    if (beforeRefusal !== 'NON_JSON:/x' || afterSnapshotReads !== 0) throw Error('WASM before-first snapshot refusal mismatch');
+    const loaderFailure = async (variant: string) => {
+      const brokenGlue = await import(new URL(`/package/pkg/umf_core_wasm.js?fresh-${variant}`, location.href).href);
+      let compareDocuments: undefined | ((before: unknown, after: unknown) => unknown);
+      let refusal = false;
+      try {
+        await brokenGlue.default({module_or_path: new URL(`/${variant}/package/pkg/umf_core_wasm_bg.wasm`, location.href)});
+        compareDocuments = wrapper.createDocumentComparisonEngine(brokenGlue, {snapshot: (value: any) => structuredClone(value)}).compareDocuments;
+      } catch { refusal = true; }
+      if (!refusal || compareDocuments !== undefined) throw Error(`${variant} package loader did not fail closed`);
+      return {refused: true, comparisonUnavailable: true};
+    };
+    const missingLoader = await loaderFailure('missing');
+    const invalidLoader = await loaderFailure('invalid');
     if (typeof process !== 'undefined' || typeof Buffer !== 'undefined') throw Error('Node globals leaked into Chromium');
     return {
       core: {copyJson: 'pass', jsonRoundTrip: 'pass'},
       bit128: {vectors: bit128.cases.length, accessorReads: getterReads, meteredWork: bitWork, cancellation: bitCancellation},
       fieldValue: {cases: field.cases.length, nativeTypeErrors: field.cases.filter((row: any) => row.thrown).length, meteredWork: fieldWork, cancellation: fieldCancellation},
+      documentComparison: {
+        records: diff.length, frozenCases: frozenComparison.cases.length, nulJoinedOrder: nulJoinedOrder.length, meteredWork: comparisonWork,
+        repeatedBudgetCalls: 2, cancellation: comparisonCancellation, recoveredAfterCancellation,
+        hostWorkRefusal: comparisonWorkRefusal, recoveredAfterWorkRefusal: true, depthRefusal: comparisonDepthRefusal,
+        beforeFirstRefusal: beforeRefusal, refusalAfterReads: afterSnapshotReads,
+        missingWasmAssetRefusal: missingLoader.refused, missingAssetComparisonUnavailable: missingLoader.comparisonUnavailable,
+        invalidWasmRefusal: invalidLoader.refused, invalidAssetComparisonUnavailable: invalidLoader.comparisonUnavailable,
+      },
       nodeGlobalsAbsent: true,
     };
-  });
+  }), new Promise<never>((_, reject) => setTimeout(() => reject(new Error('R7 Chromium matrix timed out after 60 seconds')), 60_000))]);
+  if (missingWasmRequests !== 1 || invalidWasmRequests !== 1) throw new Error(`Fresh package loaders requested missing=${missingWasmRequests} invalid=${invalidWasmRequests} WASM assets`);
   console.log(JSON.stringify({status: 'pass', packageRoot: pkgRoot, browser: browser.version(), ...result}));
 } finally {
   await browser?.close();

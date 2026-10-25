@@ -1,0 +1,80 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
+name: Rust SDK default archive qualification
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  default-archive:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - cohort: macos-arm64
+            runner: macos-15
+            expected_os: darwin
+            expected_arch: arm64
+          - cohort: linux-x86_64
+            runner: ubuntu-24.04
+            expected_os: linux
+            expected_arch: x64
+    runs-on: ${{ matrix.runner }}
+    env:
+      CARGO_BUILD_JOBS: '2'
+      CARGO_INCREMENTAL: '0'
+      UMF_RUST_DEFAULT_BUILD_ONLY: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26.12.1
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+          targets: wasm32-unknown-unknown
+      - run: bun install --frozen-lockfile
+      - run: cargo install wasm-bindgen-cli --locked --version 0.2.100
+      - name: Assert and record host/toolchain cohort
+        env:
+          EXPECTED_OS: ${{ matrix.expected_os }}
+          EXPECTED_ARCH: ${{ matrix.expected_arch }}
+        run: |
+          node -e 'if(process.platform!==process.env.EXPECTED_OS||process.arch!==process.env.EXPECTED_ARCH)throw new Error(`runner mismatch: ${process.platform}-${process.arch}`)'
+          node --version
+          bun --version
+          rustc --version
+          cargo --version
+          wasm-bindgen --version
+      - run: bun run typecheck
+      - name: Build native and browser SDK assets from a private source snapshot
+        run: bun scripts/package-sdk-rust-default.ts
+      - name: Require fixed-point source and private qualification status
+        run: >-
+          bun -e 'const m=JSON.parse(await Bun.file("dist/rust-default-manifest.json").text());
+          if(m.sourceClosure.transform.status!=="fixed-point"||m.sourceClosure.transform.generatedInputs.length!==0)
+          throw new Error("SDK source snapshot is not a fixed point");
+          if(m.releaseStatus!=="private-r7-default-route-qualification-not-publishable")
+          throw new Error("SDK artifact is not marked private/nonpublishable");'
+      - name: Verify and package the canonical SDK archive
+        run: bun scripts/package-sdk.ts
+      - name: Run archive manifest and tamper tests
+        run: python3 scripts/test-sdk-package.py
+      - run: bunx playwright install --with-deps chromium
+      - name: Replay installed SDK in Node, Bun, and Chromium
+        run: bun scripts/test-sdk-rust-default.ts .cache/sdk-distribution/umf-sdk.tgz
+      - name: Preserve qualified archive and installed replay receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: umf-rust-sdk-default-${{ matrix.cohort }}
+          path: |
+            .cache/sdk-distribution/umf-sdk.tgz
+            .cache/sdk-distribution/manifest.json
+            .cache/sdk-distribution/installed-test-receipt.json
+          if-no-files-found: error

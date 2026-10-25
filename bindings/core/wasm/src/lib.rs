@@ -1,11 +1,24 @@
 use js_sys::Function;
 use umf_core::{
     gregorian_date::{parse_gregorian_date, truncate_gregorian_date},
-    rfc3339_exact_instant::{parse_rfc3339_exact_instant, same_rfc3339_exact_instant},
-    Capabilities, CapabilityError, Context, Diagnostic, EngineError, ResourceProfile,
-    SemanticContext, Severity, Utf16, Value,
+    rfc3339_exact_instant::parse_rfc3339_exact_instant,
+    copy_json, context::TransportUsage, Capabilities, CapabilityError, Context, Diagnostic,
+    EngineError, ResourceProfile, SemanticContext, Severity, Utf16, Value,
 };
 use wasm_bindgen::prelude::*;
+
+mod host_json;
+mod core_key_tuple;
+mod core_key_verification;
+mod core_record_type_verification;
+mod record_members_inspection;
+mod json_schema_runtime;
+mod protobuf_document;
+mod protobuf_source;
+mod javascript_numeric_runtime;
+
+const HOST_READ_FRAME_EVENT: &str = "__umf_host_read_v3_frame__";
+const HOST_READ_ARRAY_ITEM_EVENT: &str = "__umf_host_read_v3_array_item__";
 
 fn temporal_value(value: &JsValue) -> Value {
     value
@@ -17,15 +30,20 @@ fn temporal_value(value: &JsValue) -> Value {
 pub fn temporal_parse_gregorian_date_wire(token: JsValue) -> String {
     match parse_gregorian_date(&temporal_value(&token)) {
         Ok(date) => format!("OK|{}|{}|{}", date.year(), date.month(), date.day()),
-        Err(error) => error.name().to_owned(),
+        Err(error) => format!("ERR|{}|{}", error.name(), error.message()),
     }
 }
 
 #[wasm_bindgen(js_name = temporalTruncateGregorianDateWire)]
 pub fn temporal_truncate_gregorian_date_wire(token: JsValue, unit: JsValue) -> String {
-    match truncate_gregorian_date(&temporal_value(&token), &temporal_value(&unit)) {
+    let token = temporal_value(&token);
+    if let Err(error) = parse_gregorian_date(&token) {
+        return format!("ERR|{}|{}", error.name(), error.message());
+    }
+    let unit = temporal_value(&unit);
+    match truncate_gregorian_date(&token, &unit) {
         Ok(result) => format!("OK|{}", result.to_utf8().expect("truncated date is ASCII")),
-        Err(error) => error.name().to_owned(),
+        Err(error) => format!("ERR|{}|{}", error.name(), error.message()),
     }
 }
 
@@ -39,16 +57,27 @@ pub fn temporal_parse_rfc3339_exact_instant_wire(token: JsValue) -> String {
             parsed.original_offset(),
             parsed.local_offset_known()
         ),
-        Err(error) => error.name().to_owned(),
+        Err(error) => format!("ERR|{}|{}", error.name(), error.message()),
     }
 }
 
 #[wasm_bindgen(js_name = temporalSameRfc3339ExactInstantWire)]
 pub fn temporal_same_rfc3339_exact_instant_wire(left: JsValue, right: JsValue) -> String {
-    match same_rfc3339_exact_instant(&temporal_value(&left), &temporal_value(&right)) {
-        Ok(same) => format!("OK|{same}"),
-        Err(error) => error.name().to_owned(),
-    }
+    let left = temporal_value(&left);
+    let parsed_left = match parse_rfc3339_exact_instant(&left) {
+        Ok(parsed) => parsed,
+        Err(error) => return format!("ERR|{}|{}", error.name(), error.message()),
+    };
+    let right = temporal_value(&right);
+    let parsed_right = match parse_rfc3339_exact_instant(&right) {
+        Ok(parsed) => parsed,
+        Err(error) => return format!("ERR|{}|{}", error.name(), error.message()),
+    };
+    format!(
+        "OK|{}",
+        parsed_left.utc_seconds() == parsed_right.utc_seconds()
+            && parsed_left.fractional_digits() == parsed_right.fractional_digits()
+    )
 }
 
 /// Trusted static-corpus probe used only by the Chromium qualification build.
@@ -115,6 +144,44 @@ pub fn copy_json_wire(wire_json: &str) -> Result<String, JsValue> {
     Ok(umf_core_wire::copy_wire_envelope(wire_json))
 }
 
+#[wasm_bindgen(js_name = executeSemanticValueWire)]
+pub fn execute_semantic_value_wire(wire_json: &str, dispatcher: Function, control_dispatcher: Option<Function>) -> String {
+    let mut validator = WasmSemanticTypeValidator { dispatcher };
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::semantic_value::execute(wire_json, &mut validator, &mut hook)
+    } else {
+        let mut no_control = |_amount| Ok(());
+        umf_core_wire::semantic_value::execute(wire_json, &mut validator, &mut no_control)
+    }
+}
+
+struct WasmSemanticTypeValidator { dispatcher: Function }
+impl umf_core::core_semantic_types::SemanticTypeValidator for WasmSemanticTypeValidator {
+    fn validate(&mut self, token: u64, value: &Value, definition: &Value, ctx: &mut Context<'_>) -> Result<Value, CapabilityError> {
+        let wire = umf_core_wire::encode_semantic_validator_request(value, definition, ctx).map_err(CapabilityError::Engine)?;
+        let output = self.dispatcher.call2(&JsValue::NULL, &JsValue::from_f64(token as f64), &JsValue::from_str(&wire)).map_err(|_| CapabilityError::Host(Utf16::default()))?;
+        let output = output.as_string().ok_or_else(|| CapabilityError::Host(Utf16::default()))?;
+        let response = umf_core_wire::decode(&output, ctx).map_err(CapabilityError::Engine)?;
+        let reported_work: u64 = match value_field(&response, "reportedWork") {
+            Some(Value::Number(n)) if n.is_finite() && *n >= 0.0 && n.fract() == 0.0 && *n <= 9_007_199_254_740_991.0 => *n as u64,
+            _ => return Err(CapabilityError::Engine(EngineError::new("HOST_CONTROL", Utf16::default(), "Invalid semantic validator reported work"))),
+        };
+        ctx.charge_work_u64(reported_work, Utf16::default()).map_err(CapabilityError::Engine)?;
+        match value_field(&response, "status").and_then(value_text).and_then(|s| s.to_utf8().ok()).as_deref() {
+            Some("returned") => value_field(&response, "result").cloned().ok_or_else(|| CapabilityError::Host(Utf16::from("Value is not JSON-compatible"))),
+            Some("threw") => Err(CapabilityError::Host(value_field(&response, "message").and_then(value_text).cloned().unwrap_or_default())),
+            Some("resource") => {
+                let code = value_field(&response, "code").and_then(value_text).and_then(|s| s.to_utf8().ok()).unwrap_or_else(|| "RESOURCE_LIMIT".to_owned());
+                let message = value_field(&response, "message").and_then(value_text).cloned().unwrap_or_default();
+                Err(CapabilityError::Engine(EngineError::new(code, Utf16::default(), message.to_utf8().unwrap_or_default())))
+            }
+            _ => Err(CapabilityError::Host(Utf16::from("Malformed semantic validator response"))),
+        }
+    }
+}
+
 #[wasm_bindgen(js_name = executeBit128Wire)]
 pub fn execute_bit128_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
     if let Some(dispatcher) = control_dispatcher {
@@ -124,6 +191,76 @@ pub fn execute_bit128_wire(wire_json: &str, control_dispatcher: Option<Function>
     } else {
         umf_core_wire::execute_bit128_wire(wire_json)
     }
+}
+
+#[wasm_bindgen(js_name = jsonNumberProfileVersion)]
+pub fn json_number_profile_version() -> String {
+    umf_core_wire::json_number_binding::JSON_NUMBER_PROFILE.to_owned()
+}
+
+#[wasm_bindgen(js_name = executeJsonNumberWire)]
+pub fn execute_json_number_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::json_number_binding::execute_json_number_wire_with_control(
+            wire_json, &mut hook,
+        )
+    } else {
+        umf_core_wire::json_number_binding::execute_json_number_wire(wire_json)
+    }
+}
+
+#[wasm_bindgen(js_name = executeCodegenHostReadV3Wire)]
+pub fn execute_codegen_host_read_v3_wire(
+    wire_json: &str,
+    profile: &str,
+    dispatcher: &Function,
+    control_dispatcher: Option<Function>,
+) -> String {
+    let profile = match profile {
+        "cooperative" => ResourceProfile::Cooperative,
+        "hard-isolated" => ResourceProfile::HardIsolated,
+        _ => {
+            return umf_core_wire::error_envelope(EngineError::new(
+                "RESOURCE_PROFILE",
+                Utf16::default(),
+                "Unknown resource profile",
+            ));
+        }
+    };
+    let mut host = WasmHostRead {
+        dispatcher: dispatcher.clone(),
+        control_dispatcher: control_dispatcher.clone(),
+        transport_usage: TransportUsage::default(),
+    };
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::execute_codegen_host_read_v3_wire_with_control(
+            wire_json, profile, &mut host, &mut hook,
+        )
+    } else {
+        let mut no_control = |_amount| Ok(());
+        umf_core_wire::execute_codegen_host_read_v3_wire_with_control(
+            wire_json,
+            profile,
+            &mut host,
+            &mut no_control,
+        )
+    }
+}
+
+/// Narrow V3 bridge probe: call the JS-owned closed dispatcher synchronously
+/// and return its already-serialized wire response without touching the
+/// original host exception value.
+#[wasm_bindgen(js_name = executeCodegenHostReadV3Probe)]
+pub fn execute_codegen_host_read_v3_probe(dispatcher: &Function) -> Result<String, JsValue> {
+    let event = JsValue::from_str("InitialPackage");
+    dispatcher
+        .call1(&JsValue::NULL, &event)?
+        .as_string()
+        .ok_or_else(|| JsValue::from_str("Host-read dispatcher returned non-text data"))
 }
 
 #[wasm_bindgen(js_name = readValueWire)]
@@ -213,7 +350,10 @@ pub fn iceberg_schema_profile_version() -> String {
 }
 
 #[wasm_bindgen(js_name = executeProtobufInspectWire)]
-pub fn execute_protobuf_inspect_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
+pub fn execute_protobuf_inspect_wire(
+    wire_json: &str,
+    control_dispatcher: Option<Function>,
+) -> String {
     if let Some(dispatcher) = control_dispatcher {
         let mut control = WasmControl { dispatcher };
         let mut hook = |amount| control.check(amount);
@@ -234,11 +374,34 @@ pub fn execute_json_schema_wire(wire_json: &str, control_dispatcher: Option<Func
         let mut control = WasmControl { dispatcher };
         let mut hook = |amount| control.check(amount);
         umf_core_wire::execute_json_schema_wire_with_control(wire_json, &mut hook)
-    } else { umf_core_wire::execute_json_schema_wire(wire_json) }
+    } else {
+        umf_core_wire::execute_json_schema_wire(wire_json)
+    }
 }
 
 #[wasm_bindgen(js_name = jsonSchemaProfileVersion)]
-pub fn json_schema_profile_version() -> String { umf_core_wire::JSON_SCHEMA_PROFILE.to_owned() }
+pub fn json_schema_profile_version() -> String {
+    umf_core_wire::JSON_SCHEMA_PROFILE.to_owned()
+}
+
+#[wasm_bindgen(js_name = executeDocumentComparisonWire)]
+pub fn execute_document_comparison_wire(
+    wire_json: &str,
+    control_dispatcher: Option<Function>,
+) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::execute_document_comparison_wire_with_control(wire_json, &mut hook)
+    } else {
+        umf_core_wire::execute_document_comparison_wire(wire_json)
+    }
+}
+
+#[wasm_bindgen(js_name = documentComparisonProfile)]
+pub fn document_comparison_profile() -> String {
+    umf_core_wire::DOCUMENT_COMPARISON_PROFILE.to_owned()
+}
 
 #[wasm_bindgen(js_name = executeAvroFieldsWire)]
 pub fn execute_avro_fields_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
@@ -251,8 +414,29 @@ pub fn execute_avro_fields_wire(wire_json: &str, control_dispatcher: Option<Func
     }
 }
 
+#[wasm_bindgen(js_name = executeRecordTypeWire)]
+pub fn execute_record_type_wire(
+    wire_json: &str,
+    control_dispatcher: Option<Function>,
+) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::record_type_binding::execute_wire_with_control(wire_json, &mut hook)
+    } else {
+        umf_core_wire::record_type_binding::execute_wire(wire_json)
+    }
+}
+
+#[wasm_bindgen(js_name = recordTypeBindingProfileVersion)]
+pub fn record_type_binding_profile_version() -> String {
+    umf_core_wire::record_type_binding::PROFILE.to_owned()
+}
+
 #[wasm_bindgen(js_name = avroFieldsProfileVersion)]
-pub fn avro_fields_profile_version() -> String { umf_core_wire::AVRO_FIELDS_PROFILE.to_owned() }
+pub fn avro_fields_profile_version() -> String {
+    umf_core_wire::AVRO_FIELDS_PROFILE.to_owned()
+}
 
 #[wasm_bindgen(js_name = executeJavascriptNumericWire)]
 pub fn execute_javascript_numeric_wire(
@@ -319,6 +503,167 @@ impl WasmControl {
             .unwrap_or_default();
         Err(EngineError::new(code, path, message))
     }
+}
+
+struct WasmHostRead {
+    dispatcher: Function,
+    control_dispatcher: Option<Function>,
+    transport_usage: TransportUsage,
+}
+
+impl umf_core_wire::PythonClientHostReadV3 for WasmHostRead {
+    fn read(&mut self, event: &str, argument: Option<&str>) -> Result<Value, EngineError> {
+        let descriptor_text = self.call_host_dispatcher(event, argument)?;
+        let descriptor = umf_core_wire::host_response_frames::HostReadResponseDescriptor::parse(
+            &descriptor_text,
+        )
+        .map_err(|_| host_read_frame_error("WASM host-read dispatcher returned invalid descriptor"))?;
+        let tokens = descriptor
+            .tagged_wire_token_count()
+            .map_err(|_| host_read_frame_error("WASM host-read response accounting overflowed"))?;
+        self.charge_host_response(tokens)?;
+        let value = match descriptor {
+            umf_core_wire::host_response_frames::HostReadResponseDescriptor::Null => Value::Null,
+            umf_core_wire::host_response_frames::HostReadResponseDescriptor::Bool(value) => {
+                Value::Bool(value)
+            }
+            umf_core_wire::host_response_frames::HostReadResponseDescriptor::Abort => {
+                Value::Object(vec![(
+                    Utf16::from("kind"),
+                    Value::String(Utf16::from("umf.host-abort/3")),
+                )])
+            }
+            umf_core_wire::host_response_frames::HostReadResponseDescriptor::ResourceLimit { path } => {
+                return Err(EngineError::new("RESOURCE_LIMIT", Utf16::from(path), "V4 host-read resource limit exceeded"));
+            }
+            umf_core_wire::host_response_frames::HostReadResponseDescriptor::String {
+                token,
+                units,
+            } => Value::String(self.read_host_string(token, units)?),
+            umf_core_wire::host_response_frames::HostReadResponseDescriptor::StringArray {
+                token,
+                items,
+                units,
+            } => {
+                let mut values = Vec::new();
+                values.try_reserve(items).map_err(|_| {
+                    host_read_frame_error("WASM host-read array allocation failed")
+                })?;
+                let mut observed_units = 0usize;
+                for index in 0..items {
+                    let argument = format!("{token}:{index}");
+                    let item = self.call_host_dispatcher(
+                        HOST_READ_ARRAY_ITEM_EVENT,
+                        Some(&argument),
+                    )?;
+                    let descriptor = umf_core_wire::host_response_frames::HostReadResponseDescriptor::parse(&item)
+                        .map_err(|_| host_read_frame_error("WASM host-read array descriptor was invalid"))?;
+                    let umf_core_wire::host_response_frames::HostReadResponseDescriptor::String { token, units: item_units } = descriptor else {
+                        return Err(host_read_frame_error("WASM host-read array item was not a string"));
+                    };
+                    observed_units = observed_units.checked_add(item_units).ok_or_else(|| {
+                        host_read_frame_error("WASM host-read array length overflowed")
+                    })?;
+                    if observed_units > units {
+                        return Err(host_read_frame_error("WASM host-read array exceeded declared unit count"));
+                    }
+                    values.push(Value::String(self.read_host_string(token, item_units)?));
+                }
+                if umf_core_wire::host_response_frames::verify_string_array_units(units, observed_units).is_err() {
+                    return Err(host_read_frame_error("WASM host-read array length did not match descriptor"));
+                }
+                Value::Array(values)
+            }
+        };
+        self.admit_host_response(value)
+    }
+}
+
+impl WasmHostRead {
+    fn call_host_dispatcher(
+        &self,
+        event: &str,
+        argument: Option<&str>,
+    ) -> Result<String, EngineError> {
+        let event = JsValue::from_str(event);
+        let argument = argument.map_or(JsValue::UNDEFINED, JsValue::from_str);
+        let output = self
+            .dispatcher
+            .call2(&JsValue::NULL, &event, &argument)
+            .map_err(|_| host_read_frame_error("WASM host-read bridge failed"))?;
+        output
+            .as_string()
+            .ok_or_else(|| host_read_frame_error("WASM host-read descriptor was not a string"))
+    }
+
+    fn read_host_string(&self, token: u64, total_units: usize) -> Result<Utf16, EngineError> {
+        use umf_core_wire::host_response_frames::HostReadStringFrames;
+        let mut frames = HostReadStringFrames::new(token, total_units)
+            .map_err(|_| host_read_frame_error("WASM host-read frame header was invalid"))?;
+        while let Some((token, offset, maximum)) = frames.request() {
+            let argument = format!("{token}:{offset}:{maximum}");
+            let frame = self.call_host_value(HOST_READ_FRAME_EVENT, &argument)?;
+            let frame = frame
+                .as_string()
+                .ok_or_else(|| host_read_frame_error("WASM host-read frame was not text"))?;
+            frames
+                .append_ascii_frame(&frame)
+                .map_err(|_| host_read_frame_error("WASM host-read frame was invalid"))?;
+        }
+        frames
+            .finish()
+            .map_err(|_| host_read_frame_error("WASM host-read frames were incomplete"))
+    }
+
+    fn call_host_value(&self, event: &str, argument: &str) -> Result<JsValue, EngineError> {
+        self.dispatcher
+            .call2(
+                &JsValue::NULL,
+                &JsValue::from_str(event),
+                &JsValue::from_str(argument),
+            )
+            .map_err(|_| host_read_frame_error("WASM host-read frame request failed"))
+    }
+
+    fn charge_host_response(&mut self, tokens: usize) -> Result<(), EngineError> {
+        if let Some(dispatcher) = self.control_dispatcher.clone() {
+            let mut control = WasmControl { dispatcher };
+            let mut hook = |amount| control.check(amount);
+            let mut context = umf_core_wire::transport_context().with_host_control(&mut hook);
+            self.transport_usage.seed(&mut context);
+            let result = context.charge_work(tokens, Utf16::default());
+            self.transport_usage.capture(&context);
+            result
+        } else {
+            let mut context = umf_core_wire::transport_context();
+            self.transport_usage.seed(&mut context);
+            let result = context.charge_work(tokens, Utf16::default());
+            self.transport_usage.capture(&context);
+            result
+        }
+    }
+
+    fn admit_host_response(&mut self, value: Value) -> Result<Value, EngineError> {
+        if let Some(dispatcher) = self.control_dispatcher.clone() {
+            let mut control = WasmControl { dispatcher };
+            let mut hook = |amount| control.check(amount);
+            let mut context = umf_core_wire::transport_context().with_host_control(&mut hook);
+            self.transport_usage.seed(&mut context);
+            let result = copy_json(&value, &mut context);
+            self.transport_usage.capture(&context);
+            result
+        } else {
+            let mut context = umf_core_wire::transport_context();
+            self.transport_usage.seed(&mut context);
+            let result = copy_json(&value, &mut context);
+            self.transport_usage.capture(&context);
+            result
+        }
+    }
+}
+
+fn host_read_frame_error(message: &str) -> EngineError {
+    EngineError::new("HOST_READ_BRIDGE", Utf16::default(), message)
 }
 
 struct WasmCapabilities {
@@ -449,6 +794,79 @@ fn value_text(value: &Value) -> Option<&Utf16> {
 /// Exercise bounded schema recursion on actual wasm32 with the production
 /// evaluator and ordinary resource profile. This exists only in the isolated
 /// conformance build, not the shipped binding surface.
+/// Opt-in owner for compiled codegen resources. The JS wrapper provides setup
+/// and per-call controls independently; callbacks are never retained here.
+#[wasm_bindgen(js_name = RetainedCodegenResourcesRuntime)]
+pub struct RetainedCodegenResourcesRuntime {
+    inner: Option<umf_core_wire::CodegenResourcesHandle>,
+}
+
+#[wasm_bindgen]
+impl RetainedCodegenResourcesRuntime {
+    #[wasm_bindgen(constructor)]
+    pub fn new(setup_wire: String, setup_dispatcher: Option<Function>) -> Result<Self, JsValue> {
+        let inner = if let Some(dispatcher) = setup_dispatcher {
+            let mut control = WasmControl { dispatcher };
+            let mut hook = |amount| control.check(amount);
+            umf_core_wire::CodegenResourcesHandle::new_with_control(&setup_wire, &mut hook)
+        } else {
+            let mut no_control = |_amount| Ok(());
+            umf_core_wire::CodegenResourcesHandle::new_with_control(
+                &setup_wire,
+                &mut no_control,
+            )
+        }
+        .map_err(|error| JsValue::from_str(&umf_core_wire::error_envelope(error)))?;
+        Ok(Self { inner: Some(inner) })
+    }
+
+    #[wasm_bindgen(js_name = executeWire)]
+    pub fn execute_wire(&self, request_wire: String, control_dispatcher: Option<Function>) -> String {
+        if let Some(dispatcher) = control_dispatcher {
+            let mut control = WasmControl { dispatcher };
+            let mut hook = |amount| control.check(amount);
+            self.inner.as_ref().map_or_else(
+                || umf_core_wire::error_envelope(EngineError::new("RUST_CODEGEN_HANDLE_DISPOSED", Utf16::default(), "Retained codegen resources have been disposed")),
+                |inner| inner.execute_with_control(&request_wire, &mut hook),
+            )
+        } else {
+            let mut no_control = |_amount| Ok(());
+            self.inner.as_ref().map_or_else(
+                || umf_core_wire::error_envelope(EngineError::new("RUST_CODEGEN_HANDLE_DISPOSED", Utf16::default(), "Retained codegen resources have been disposed")),
+                |inner| inner.execute_with_control(&request_wire, &mut no_control),
+            )
+        }
+    }
+
+    #[wasm_bindgen(js_name = executeHostReadV3Wire)]
+    pub fn execute_host_read_v3_wire(
+        &self,
+        request_wire: String,
+        dispatcher: Function,
+        control_dispatcher: Option<Function>,
+    ) -> String {
+        let mut host = WasmHostRead {
+            dispatcher,
+            control_dispatcher: control_dispatcher.clone(),
+            transport_usage: TransportUsage::default(),
+        };
+        if let Some(dispatcher) = control_dispatcher {
+            let mut control = WasmControl { dispatcher };
+            let mut hook = |amount| control.check(amount);
+            self.inner.as_ref().map_or_else(
+                || umf_core_wire::error_envelope(EngineError::new("RUST_CODEGEN_HANDLE_DISPOSED", Utf16::default(), "Retained codegen resources have been disposed")),
+                |inner| inner.execute_host_read_v3_with_control(&request_wire, &mut host, &mut hook),
+            )
+        } else {
+            let mut no_control = |_amount| Ok(());
+            self.inner.as_ref().map_or_else(
+                || umf_core_wire::error_envelope(EngineError::new("RUST_CODEGEN_HANDLE_DISPOSED", Utf16::default(), "Retained codegen resources have been disposed")),
+                |inner| inner.execute_host_read_v3_with_control(&request_wire, &mut host, &mut no_control),
+            )
+        }
+    }
+}
+
 #[cfg(feature = "conformance")]
 #[wasm_bindgen(js_name = schemaDepthProbe)]
 pub fn schema_depth_probe() -> String {

@@ -1,0 +1,1788 @@
+{
+  "packetSha256": "dd1c939de24d02abec0e1cf2a9ed75eb6cb3e029655036805578fc850b4689ee",
+  "runnerSha256": "ff61adcf49686667490d276e50231058d2d06f438bfe3b731c2a0b77f64a0d0e",
+  "sourcePins": {
+    "fixtures/parquet/containers/list-tuple.parquet": "d865757dae18e11d4e0f071356aa3d8cac7e4a3b63269932404d39dbf3c6f5a5",
+    "fixtures/parquet/containers/list-array.parquet": "6df1f25f59236fcd69c98d68f919fb05068c398196f3ca46010a9f87d625c246",
+    "fixtures/parquet/containers/list-items_tuple.parquet": "2c018ed431f7ff0b1dcaab6782ae94050eb404c2043702a7f1c75278f3d5f144",
+    "fixtures/parquet/containers/list-three-element.parquet": "58a190c2de19268f8111c042882952fa53806dfbbe3262f9b7fbf94840e60253",
+    "fixtures/parquet/containers/map-canonical.parquet": "2c1ec4e20d355a6f85df8d12650c8524a43608d513abfd17d54d50ed66b35b31"
+  },
+  "runtime": {
+    "Python": "3.13.16",
+    "implementation": "CPython",
+    "PyArrow": "21.0.0"
+  },
+  "files": [
+    {
+      "path": "fixtures/parquet/containers/list-tuple.parquet",
+      "sha256": "d865757dae18e11d4e0f071356aa3d8cac7e4a3b63269932404d39dbf3c6f5a5",
+      "rows": 0,
+      "parquetPhysicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 items (List) {\n    repeated group field_id=-1 tuple {\n      required int32 field_id=-1 a;\n      optional int32 field_id=-1 b;\n    }\n  }\n}\n",
+      "rootName": "items",
+      "rootArrowType": "list<tuple: struct<a: int32 not null, b: int32> not null>",
+      "listElementType": "struct<a: int32 not null, b: int32>",
+      "nativeListStructMember": true,
+      "listElementSchemaIndex": 2,
+      "selectedNativeSchemaIndexNode": null,
+      "predecessorCases": [
+        {
+          "key": "classified/list-tuple/strict",
+          "selectedSchemaIndex": 2,
+          "predecessorStatus": "classified",
+          "orderedPredecessorMappings": [
+            {
+              "kind": "field",
+              "nativePath": "/schema/3",
+              "basis": "checked-record-field-membership",
+              "outcome": "exact",
+              "nativeSchemaIndex": 3
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/4",
+              "basis": "checked-record-field-membership",
+              "outcome": "exact",
+              "nativeSchemaIndex": 4
+            },
+            {
+              "kind": "record",
+              "nativePath": "/schema/2",
+              "basis": "checked-record-declaration",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/2",
+              "basis": "checked-struct-valued-member",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "record-type",
+              "nativePath": "/schema/2",
+              "basis": "checked-struct-valued-member",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            }
+          ],
+          "nativeSelectedListElementIsStruct": true,
+          "nativeVsPredecessorStatusMatches": true
+        },
+        {
+          "key": "classified/list-tuple/report",
+          "selectedSchemaIndex": 2,
+          "predecessorStatus": "classified",
+          "orderedPredecessorMappings": [
+            {
+              "kind": "field",
+              "nativePath": "/schema/3",
+              "basis": "checked-record-field-membership",
+              "outcome": "exact",
+              "nativeSchemaIndex": 3
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/4",
+              "basis": "checked-record-field-membership",
+              "outcome": "exact",
+              "nativeSchemaIndex": 4
+            },
+            {
+              "kind": "record",
+              "nativePath": "/schema/2",
+              "basis": "checked-record-declaration",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/2",
+              "basis": "checked-struct-valued-member",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "record-type",
+              "nativePath": "/schema/2",
+              "basis": "checked-struct-valued-member",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            }
+          ],
+          "nativeSelectedListElementIsStruct": true,
+          "nativeVsPredecessorStatusMatches": true
+        }
+      ],
+      "nativeVsPredecessorStatusMatches": true,
+      "nativeThriftSchemaElements": [
+        {
+          "preorderIndex": 0,
+          "name": "schema",
+          "physicalType": null,
+          "repetitionType": null,
+          "numChildren": "1",
+          "convertedType": null,
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "736368656d61"
+                }
+              },
+              {
+                "id": 5,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "preorderIndex": 1,
+          "name": "items",
+          "physicalType": null,
+          "repetitionType": "1",
+          "numChildren": "1",
+          "convertedType": "3",
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 3,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "6974656d73"
+                }
+              },
+              {
+                "id": 5,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 6,
+                "value": {
+                  "kind": "i32",
+                  "value": "3"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "preorderIndex": 2,
+          "name": "tuple",
+          "physicalType": null,
+          "repetitionType": "2",
+          "numChildren": "2",
+          "convertedType": null,
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 3,
+                "value": {
+                  "kind": "i32",
+                  "value": "2"
+                }
+              },
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "7475706c65"
+                }
+              },
+              {
+                "id": 5,
+                "value": {
+                  "kind": "i32",
+                  "value": "2"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "preorderIndex": 3,
+          "name": "a",
+          "physicalType": "1",
+          "repetitionType": "0",
+          "numChildren": null,
+          "convertedType": null,
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 1,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 3,
+                "value": {
+                  "kind": "i32",
+                  "value": "0"
+                }
+              },
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "61"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "preorderIndex": 4,
+          "name": "b",
+          "physicalType": "1",
+          "repetitionType": "1",
+          "numChildren": null,
+          "convertedType": null,
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 1,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 3,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "62"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "fixtures/parquet/containers/list-array.parquet",
+      "sha256": "6df1f25f59236fcd69c98d68f919fb05068c398196f3ca46010a9f87d625c246",
+      "rows": 0,
+      "parquetPhysicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 items (List) {\n    repeated group field_id=-1 array {\n      optional int32 field_id=-1 a;\n    }\n  }\n}\n",
+      "rootName": "items",
+      "rootArrowType": "list<array: struct<a: int32> not null>",
+      "listElementType": "struct<a: int32>",
+      "nativeListStructMember": true,
+      "listElementSchemaIndex": 2,
+      "selectedNativeSchemaIndexNode": null,
+      "predecessorCases": [
+        {
+          "key": "classified/list-array/strict",
+          "selectedSchemaIndex": 2,
+          "predecessorStatus": "classified",
+          "orderedPredecessorMappings": [
+            {
+              "kind": "field",
+              "nativePath": "/schema/3",
+              "basis": "checked-record-field-membership",
+              "outcome": "exact",
+              "nativeSchemaIndex": 3
+            },
+            {
+              "kind": "record",
+              "nativePath": "/schema/2",
+              "basis": "checked-record-declaration",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/2",
+              "basis": "checked-struct-valued-member",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "record-type",
+              "nativePath": "/schema/2",
+              "basis": "checked-struct-valued-member",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            }
+          ],
+          "nativeSelectedListElementIsStruct": true,
+          "nativeVsPredecessorStatusMatches": true
+        },
+        {
+          "key": "classified/list-array/report",
+          "selectedSchemaIndex": 2,
+          "predecessorStatus": "classified",
+          "orderedPredecessorMappings": [
+            {
+              "kind": "field",
+              "nativePath": "/schema/3",
+              "basis": "checked-record-field-membership",
+              "outcome": "exact",
+              "nativeSchemaIndex": 3
+            },
+            {
+              "kind": "record",
+              "nativePath": "/schema/2",
+              "basis": "checked-record-declaration",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/2",
+              "basis": "checked-struct-valued-member",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "record-type",
+              "nativePath": "/schema/2",
+              "basis": "checked-struct-valued-member",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            }
+          ],
+          "nativeSelectedListElementIsStruct": true,
+          "nativeVsPredecessorStatusMatches": true
+        }
+      ],
+      "nativeVsPredecessorStatusMatches": true,
+      "nativeThriftSchemaElements": [
+        {
+          "preorderIndex": 0,
+          "name": "schema",
+          "physicalType": null,
+          "repetitionType": null,
+          "numChildren": "1",
+          "convertedType": null,
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "736368656d61"
+                }
+              },
+              {
+                "id": 5,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "preorderIndex": 1,
+          "name": "items",
+          "physicalType": null,
+          "repetitionType": "1",
+          "numChildren": "1",
+          "convertedType": "3",
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 3,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "6974656d73"
+                }
+              },
+              {
+                "id": 5,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 6,
+                "value": {
+                  "kind": "i32",
+                  "value": "3"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "preorderIndex": 2,
+          "name": "array",
+          "physicalType": null,
+          "repetitionType": "2",
+          "numChildren": "1",
+          "convertedType": null,
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 3,
+                "value": {
+                  "kind": "i32",
+                  "value": "2"
+                }
+              },
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "6172726179"
+                }
+              },
+              {
+                "id": 5,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "preorderIndex": 3,
+          "name": "a",
+          "physicalType": "1",
+          "repetitionType": "1",
+          "numChildren": null,
+          "convertedType": null,
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 1,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 3,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "61"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "fixtures/parquet/containers/list-items_tuple.parquet",
+      "sha256": "2c018ed431f7ff0b1dcaab6782ae94050eb404c2043702a7f1c75278f3d5f144",
+      "rows": 0,
+      "parquetPhysicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 items (List) {\n    repeated group field_id=-1 items_tuple {\n      optional int32 field_id=-1 a;\n    }\n  }\n}\n",
+      "rootName": "items",
+      "rootArrowType": "list<items_tuple: struct<a: int32> not null>",
+      "listElementType": "struct<a: int32>",
+      "nativeListStructMember": true,
+      "listElementSchemaIndex": 2,
+      "selectedNativeSchemaIndexNode": null,
+      "predecessorCases": [
+        {
+          "key": "classified/list-items_tuple/strict",
+          "selectedSchemaIndex": 2,
+          "predecessorStatus": "classified",
+          "orderedPredecessorMappings": [
+            {
+              "kind": "field",
+              "nativePath": "/schema/3",
+              "basis": "checked-record-field-membership",
+              "outcome": "exact",
+              "nativeSchemaIndex": 3
+            },
+            {
+              "kind": "record",
+              "nativePath": "/schema/2",
+              "basis": "checked-record-declaration",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/2",
+              "basis": "checked-struct-valued-member",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "record-type",
+              "nativePath": "/schema/2",
+              "basis": "checked-struct-valued-member",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            }
+          ],
+          "nativeSelectedListElementIsStruct": true,
+          "nativeVsPredecessorStatusMatches": true
+        },
+        {
+          "key": "classified/list-items_tuple/report",
+          "selectedSchemaIndex": 2,
+          "predecessorStatus": "classified",
+          "orderedPredecessorMappings": [
+            {
+              "kind": "field",
+              "nativePath": "/schema/3",
+              "basis": "checked-record-field-membership",
+              "outcome": "exact",
+              "nativeSchemaIndex": 3
+            },
+            {
+              "kind": "record",
+              "nativePath": "/schema/2",
+              "basis": "checked-record-declaration",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/2",
+              "basis": "checked-struct-valued-member",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "record-type",
+              "nativePath": "/schema/2",
+              "basis": "checked-struct-valued-member",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            }
+          ],
+          "nativeSelectedListElementIsStruct": true,
+          "nativeVsPredecessorStatusMatches": true
+        }
+      ],
+      "nativeVsPredecessorStatusMatches": true,
+      "nativeThriftSchemaElements": [
+        {
+          "preorderIndex": 0,
+          "name": "schema",
+          "physicalType": null,
+          "repetitionType": null,
+          "numChildren": "1",
+          "convertedType": null,
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "736368656d61"
+                }
+              },
+              {
+                "id": 5,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "preorderIndex": 1,
+          "name": "items",
+          "physicalType": null,
+          "repetitionType": "1",
+          "numChildren": "1",
+          "convertedType": "3",
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 3,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "6974656d73"
+                }
+              },
+              {
+                "id": 5,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 6,
+                "value": {
+                  "kind": "i32",
+                  "value": "3"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "preorderIndex": 2,
+          "name": "items_tuple",
+          "physicalType": null,
+          "repetitionType": "2",
+          "numChildren": "1",
+          "convertedType": null,
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 3,
+                "value": {
+                  "kind": "i32",
+                  "value": "2"
+                }
+              },
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "6974656d735f7475706c65"
+                }
+              },
+              {
+                "id": 5,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "preorderIndex": 3,
+          "name": "a",
+          "physicalType": "1",
+          "repetitionType": "1",
+          "numChildren": null,
+          "convertedType": null,
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 1,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 3,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "61"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "fixtures/parquet/containers/list-three-element.parquet",
+      "sha256": "58a190c2de19268f8111c042882952fa53806dfbbe3262f9b7fbf94840e60253",
+      "rows": 0,
+      "parquetPhysicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 items (List) {\n    repeated group field_id=-1 list {\n      optional int32 field_id=-1 element;\n    }\n  }\n}\n",
+      "rootName": "items",
+      "rootArrowType": "list<element: int32>",
+      "listElementType": "int32",
+      "nativeListStructMember": false,
+      "listElementSchemaIndex": 2,
+      "selectedNativeSchemaIndexNode": null,
+      "predecessorCases": [
+        {
+          "key": "blocked/list-three-element/1/strict",
+          "selectedSchemaIndex": 1,
+          "predecessorStatus": "blocked",
+          "orderedPredecessorMappings": [
+            {
+              "kind": "field",
+              "nativePath": "/schema/2",
+              "nativeFragment": {
+                "repetition_type": "2",
+                "name": "list",
+                "num_children": "1"
+              },
+              "basis": "checked-record-field-membership",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "record",
+              "nativePath": "/schema/1",
+              "nativeFragment": {
+                "repetition_type": "1",
+                "name": "items",
+                "num_children": "1",
+                "converted_type": "3"
+              },
+              "basis": "checked-record-declaration",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 1
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/1",
+              "nativeFragment": {
+                "repetition_type": "1",
+                "name": "items",
+                "num_children": "1",
+                "converted_type": "3"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 1
+            },
+            {
+              "kind": "record-type",
+              "nativePath": "/schema/1",
+              "nativeFragment": {
+                "repetition_type": "1",
+                "name": "items",
+                "num_children": "1",
+                "converted_type": "3"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 1
+            }
+          ],
+          "nativeSelectedListElementIsStruct": false,
+          "nativeVsPredecessorStatusMatches": true
+        },
+        {
+          "key": "blocked/list-three-element/1/report",
+          "selectedSchemaIndex": 1,
+          "predecessorStatus": "blocked",
+          "orderedPredecessorMappings": [
+            {
+              "kind": "field",
+              "nativePath": "/schema/2",
+              "nativeFragment": {
+                "repetition_type": "2",
+                "name": "list",
+                "num_children": "1"
+              },
+              "basis": "checked-record-field-membership",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "record",
+              "nativePath": "/schema/1",
+              "nativeFragment": {
+                "repetition_type": "1",
+                "name": "items",
+                "num_children": "1",
+                "converted_type": "3"
+              },
+              "basis": "checked-record-declaration",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 1
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/1",
+              "nativeFragment": {
+                "repetition_type": "1",
+                "name": "items",
+                "num_children": "1",
+                "converted_type": "3"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 1
+            },
+            {
+              "kind": "record-type",
+              "nativePath": "/schema/1",
+              "nativeFragment": {
+                "repetition_type": "1",
+                "name": "items",
+                "num_children": "1",
+                "converted_type": "3"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 1
+            }
+          ],
+          "nativeSelectedListElementIsStruct": false,
+          "nativeVsPredecessorStatusMatches": true
+        },
+        {
+          "key": "blocked/list-three-element/2/strict",
+          "selectedSchemaIndex": 2,
+          "predecessorStatus": "blocked",
+          "orderedPredecessorMappings": [
+            {
+              "kind": "field",
+              "nativePath": "/schema/3",
+              "nativeFragment": {
+                "type": "1",
+                "repetition_type": "1",
+                "name": "element"
+              },
+              "basis": "checked-record-field-membership",
+              "outcome": "exact",
+              "nativeSchemaIndex": 3
+            },
+            {
+              "kind": "record",
+              "nativePath": "/schema/2",
+              "nativeFragment": {
+                "repetition_type": "2",
+                "name": "list",
+                "num_children": "1"
+              },
+              "basis": "checked-record-declaration",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/2",
+              "nativeFragment": {
+                "repetition_type": "2",
+                "name": "list",
+                "num_children": "1"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "record-type",
+              "nativePath": "/schema/2",
+              "nativeFragment": {
+                "repetition_type": "2",
+                "name": "list",
+                "num_children": "1"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 2
+            }
+          ],
+          "nativeSelectedListElementIsStruct": false,
+          "nativeVsPredecessorStatusMatches": true
+        },
+        {
+          "key": "blocked/list-three-element/2/report",
+          "selectedSchemaIndex": 2,
+          "predecessorStatus": "blocked",
+          "orderedPredecessorMappings": [
+            {
+              "kind": "field",
+              "nativePath": "/schema/3",
+              "nativeFragment": {
+                "type": "1",
+                "repetition_type": "1",
+                "name": "element"
+              },
+              "basis": "checked-record-field-membership",
+              "outcome": "exact",
+              "nativeSchemaIndex": 3
+            },
+            {
+              "kind": "record",
+              "nativePath": "/schema/2",
+              "nativeFragment": {
+                "repetition_type": "2",
+                "name": "list",
+                "num_children": "1"
+              },
+              "basis": "checked-record-declaration",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/2",
+              "nativeFragment": {
+                "repetition_type": "2",
+                "name": "list",
+                "num_children": "1"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "record-type",
+              "nativePath": "/schema/2",
+              "nativeFragment": {
+                "repetition_type": "2",
+                "name": "list",
+                "num_children": "1"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 2
+            }
+          ],
+          "nativeSelectedListElementIsStruct": false,
+          "nativeVsPredecessorStatusMatches": true
+        },
+        {
+          "key": "blocked/list-three-element/3/strict",
+          "selectedSchemaIndex": 3,
+          "predecessorStatus": "blocked",
+          "orderedPredecessorMappings": [
+            {
+              "kind": "record",
+              "nativePath": "/schema/3",
+              "nativeFragment": {
+                "type": "1",
+                "repetition_type": "1",
+                "name": "element"
+              },
+              "basis": "checked-record-declaration",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 3
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/3",
+              "nativeFragment": {
+                "type": "1",
+                "repetition_type": "1",
+                "name": "element"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 3
+            },
+            {
+              "kind": "record-type",
+              "nativePath": "/schema/3",
+              "nativeFragment": {
+                "type": "1",
+                "repetition_type": "1",
+                "name": "element"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 3
+            }
+          ],
+          "nativeSelectedListElementIsStruct": false,
+          "nativeVsPredecessorStatusMatches": true
+        },
+        {
+          "key": "blocked/list-three-element/3/report",
+          "selectedSchemaIndex": 3,
+          "predecessorStatus": "blocked",
+          "orderedPredecessorMappings": [
+            {
+              "kind": "record",
+              "nativePath": "/schema/3",
+              "nativeFragment": {
+                "type": "1",
+                "repetition_type": "1",
+                "name": "element"
+              },
+              "basis": "checked-record-declaration",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 3
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/3",
+              "nativeFragment": {
+                "type": "1",
+                "repetition_type": "1",
+                "name": "element"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 3
+            },
+            {
+              "kind": "record-type",
+              "nativePath": "/schema/3",
+              "nativeFragment": {
+                "type": "1",
+                "repetition_type": "1",
+                "name": "element"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 3
+            }
+          ],
+          "nativeSelectedListElementIsStruct": false,
+          "nativeVsPredecessorStatusMatches": true
+        }
+      ],
+      "nativeVsPredecessorStatusMatches": true,
+      "nativeThriftSchemaElements": [
+        {
+          "preorderIndex": 0,
+          "name": "schema",
+          "physicalType": null,
+          "repetitionType": null,
+          "numChildren": "1",
+          "convertedType": null,
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "736368656d61"
+                }
+              },
+              {
+                "id": 5,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "preorderIndex": 1,
+          "name": "items",
+          "physicalType": null,
+          "repetitionType": "1",
+          "numChildren": "1",
+          "convertedType": "3",
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 3,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "6974656d73"
+                }
+              },
+              {
+                "id": 5,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 6,
+                "value": {
+                  "kind": "i32",
+                  "value": "3"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "preorderIndex": 2,
+          "name": "list",
+          "physicalType": null,
+          "repetitionType": "2",
+          "numChildren": "1",
+          "convertedType": null,
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 3,
+                "value": {
+                  "kind": "i32",
+                  "value": "2"
+                }
+              },
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "6c697374"
+                }
+              },
+              {
+                "id": 5,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "preorderIndex": 3,
+          "name": "element",
+          "physicalType": "1",
+          "repetitionType": "1",
+          "numChildren": null,
+          "convertedType": null,
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 1,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 3,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "656c656d656e74"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "fixtures/parquet/containers/map-canonical.parquet",
+      "sha256": "2c1ec4e20d355a6f85df8d12650c8524a43608d513abfd17d54d50ed66b35b31",
+      "rows": 0,
+      "parquetPhysicalSchema": "required group field_id=-1 schema {\n  optional group field_id=-1 mapping (Map) {\n    repeated group field_id=-1 key_value (Map) {\n      required int32 field_id=-1 key;\n      optional int32 field_id=-1 value;\n    }\n  }\n}\n",
+      "rootName": "mapping",
+      "rootArrowType": "map<int32, int32 ('mapping')>",
+      "listElementType": null,
+      "nativeListStructMember": false,
+      "listElementSchemaIndex": null,
+      "selectedNativeSchemaIndexNode": null,
+      "predecessorCases": [
+        {
+          "key": "blocked/map-canonical/1/strict",
+          "selectedSchemaIndex": 1,
+          "predecessorStatus": "blocked",
+          "orderedPredecessorMappings": [
+            {
+              "kind": "field",
+              "nativePath": "/schema/2",
+              "nativeFragment": {
+                "repetition_type": "2",
+                "name": "key_value",
+                "num_children": "2",
+                "converted_type": "2"
+              },
+              "basis": "checked-record-field-membership",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "record",
+              "nativePath": "/schema/1",
+              "nativeFragment": {
+                "repetition_type": "1",
+                "name": "mapping",
+                "num_children": "1",
+                "converted_type": "1"
+              },
+              "basis": "checked-record-declaration",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 1
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/1",
+              "nativeFragment": {
+                "repetition_type": "1",
+                "name": "mapping",
+                "num_children": "1",
+                "converted_type": "1"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 1
+            },
+            {
+              "kind": "record-type",
+              "nativePath": "/schema/1",
+              "nativeFragment": {
+                "repetition_type": "1",
+                "name": "mapping",
+                "num_children": "1",
+                "converted_type": "1"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 1
+            }
+          ],
+          "nativeSelectedListElementIsStruct": false,
+          "nativeVsPredecessorStatusMatches": true
+        },
+        {
+          "key": "blocked/map-canonical/1/report",
+          "selectedSchemaIndex": 1,
+          "predecessorStatus": "blocked",
+          "orderedPredecessorMappings": [
+            {
+              "kind": "field",
+              "nativePath": "/schema/2",
+              "nativeFragment": {
+                "repetition_type": "2",
+                "name": "key_value",
+                "num_children": "2",
+                "converted_type": "2"
+              },
+              "basis": "checked-record-field-membership",
+              "outcome": "exact",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "record",
+              "nativePath": "/schema/1",
+              "nativeFragment": {
+                "repetition_type": "1",
+                "name": "mapping",
+                "num_children": "1",
+                "converted_type": "1"
+              },
+              "basis": "checked-record-declaration",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 1
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/1",
+              "nativeFragment": {
+                "repetition_type": "1",
+                "name": "mapping",
+                "num_children": "1",
+                "converted_type": "1"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 1
+            },
+            {
+              "kind": "record-type",
+              "nativePath": "/schema/1",
+              "nativeFragment": {
+                "repetition_type": "1",
+                "name": "mapping",
+                "num_children": "1",
+                "converted_type": "1"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 1
+            }
+          ],
+          "nativeSelectedListElementIsStruct": false,
+          "nativeVsPredecessorStatusMatches": true
+        },
+        {
+          "key": "blocked/map-canonical/2/strict",
+          "selectedSchemaIndex": 2,
+          "predecessorStatus": "blocked",
+          "orderedPredecessorMappings": [
+            {
+              "kind": "field",
+              "nativePath": "/schema/3",
+              "nativeFragment": {
+                "type": "1",
+                "repetition_type": "0",
+                "name": "key"
+              },
+              "basis": "checked-record-field-membership",
+              "outcome": "exact",
+              "nativeSchemaIndex": 3
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/4",
+              "nativeFragment": {
+                "type": "1",
+                "repetition_type": "1",
+                "name": "value"
+              },
+              "basis": "checked-record-field-membership",
+              "outcome": "exact",
+              "nativeSchemaIndex": 4
+            },
+            {
+              "kind": "record",
+              "nativePath": "/schema/2",
+              "nativeFragment": {
+                "repetition_type": "2",
+                "name": "key_value",
+                "num_children": "2",
+                "converted_type": "2"
+              },
+              "basis": "checked-record-declaration",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/2",
+              "nativeFragment": {
+                "repetition_type": "2",
+                "name": "key_value",
+                "num_children": "2",
+                "converted_type": "2"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "record-type",
+              "nativePath": "/schema/2",
+              "nativeFragment": {
+                "repetition_type": "2",
+                "name": "key_value",
+                "num_children": "2",
+                "converted_type": "2"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 2
+            }
+          ],
+          "nativeSelectedListElementIsStruct": false,
+          "nativeVsPredecessorStatusMatches": true
+        },
+        {
+          "key": "blocked/map-canonical/2/report",
+          "selectedSchemaIndex": 2,
+          "predecessorStatus": "blocked",
+          "orderedPredecessorMappings": [
+            {
+              "kind": "field",
+              "nativePath": "/schema/3",
+              "nativeFragment": {
+                "type": "1",
+                "repetition_type": "0",
+                "name": "key"
+              },
+              "basis": "checked-record-field-membership",
+              "outcome": "exact",
+              "nativeSchemaIndex": 3
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/4",
+              "nativeFragment": {
+                "type": "1",
+                "repetition_type": "1",
+                "name": "value"
+              },
+              "basis": "checked-record-field-membership",
+              "outcome": "exact",
+              "nativeSchemaIndex": 4
+            },
+            {
+              "kind": "record",
+              "nativePath": "/schema/2",
+              "nativeFragment": {
+                "repetition_type": "2",
+                "name": "key_value",
+                "num_children": "2",
+                "converted_type": "2"
+              },
+              "basis": "checked-record-declaration",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/2",
+              "nativeFragment": {
+                "repetition_type": "2",
+                "name": "key_value",
+                "num_children": "2",
+                "converted_type": "2"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 2
+            },
+            {
+              "kind": "record-type",
+              "nativePath": "/schema/2",
+              "nativeFragment": {
+                "repetition_type": "2",
+                "name": "key_value",
+                "num_children": "2",
+                "converted_type": "2"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 2
+            }
+          ],
+          "nativeSelectedListElementIsStruct": false,
+          "nativeVsPredecessorStatusMatches": true
+        },
+        {
+          "key": "blocked/map-canonical/3/strict",
+          "selectedSchemaIndex": 3,
+          "predecessorStatus": "blocked",
+          "orderedPredecessorMappings": [
+            {
+              "kind": "record",
+              "nativePath": "/schema/3",
+              "nativeFragment": {
+                "type": "1",
+                "repetition_type": "0",
+                "name": "key"
+              },
+              "basis": "checked-record-declaration",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 3
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/3",
+              "nativeFragment": {
+                "type": "1",
+                "repetition_type": "0",
+                "name": "key"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 3
+            },
+            {
+              "kind": "record-type",
+              "nativePath": "/schema/3",
+              "nativeFragment": {
+                "type": "1",
+                "repetition_type": "0",
+                "name": "key"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 3
+            }
+          ],
+          "nativeSelectedListElementIsStruct": false,
+          "nativeVsPredecessorStatusMatches": true
+        },
+        {
+          "key": "blocked/map-canonical/3/report",
+          "selectedSchemaIndex": 3,
+          "predecessorStatus": "blocked",
+          "orderedPredecessorMappings": [
+            {
+              "kind": "record",
+              "nativePath": "/schema/3",
+              "nativeFragment": {
+                "type": "1",
+                "repetition_type": "0",
+                "name": "key"
+              },
+              "basis": "checked-record-declaration",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 3
+            },
+            {
+              "kind": "field",
+              "nativePath": "/schema/3",
+              "nativeFragment": {
+                "type": "1",
+                "repetition_type": "0",
+                "name": "key"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 3
+            },
+            {
+              "kind": "record-type",
+              "nativePath": "/schema/3",
+              "nativeFragment": {
+                "type": "1",
+                "repetition_type": "0",
+                "name": "key"
+              },
+              "basis": "checked-struct-valued-member",
+              "outcome": "unknown",
+              "nativeSchemaIndex": 3
+            }
+          ],
+          "nativeSelectedListElementIsStruct": false,
+          "nativeVsPredecessorStatusMatches": true
+        }
+      ],
+      "nativeVsPredecessorStatusMatches": true,
+      "nativeThriftSchemaElements": [
+        {
+          "preorderIndex": 0,
+          "name": "schema",
+          "physicalType": null,
+          "repetitionType": null,
+          "numChildren": "1",
+          "convertedType": null,
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "736368656d61"
+                }
+              },
+              {
+                "id": 5,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "preorderIndex": 1,
+          "name": "mapping",
+          "physicalType": null,
+          "repetitionType": "1",
+          "numChildren": "1",
+          "convertedType": "1",
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 3,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "6d617070696e67"
+                }
+              },
+              {
+                "id": 5,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 6,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "preorderIndex": 2,
+          "name": "key_value",
+          "physicalType": null,
+          "repetitionType": "2",
+          "numChildren": "2",
+          "convertedType": "2",
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 3,
+                "value": {
+                  "kind": "i32",
+                  "value": "2"
+                }
+              },
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "6b65795f76616c7565"
+                }
+              },
+              {
+                "id": 5,
+                "value": {
+                  "kind": "i32",
+                  "value": "2"
+                }
+              },
+              {
+                "id": 6,
+                "value": {
+                  "kind": "i32",
+                  "value": "2"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "preorderIndex": 3,
+          "name": "key",
+          "physicalType": "1",
+          "repetitionType": "0",
+          "numChildren": null,
+          "convertedType": null,
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 1,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 3,
+                "value": {
+                  "kind": "i32",
+                  "value": "0"
+                }
+              },
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "6b6579"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "preorderIndex": 4,
+          "name": "value",
+          "physicalType": "1",
+          "repetitionType": "1",
+          "numChildren": null,
+          "convertedType": null,
+          "rawThriftSchemaElement": {
+            "kind": "struct",
+            "fields": [
+              {
+                "id": 1,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 3,
+                "value": {
+                  "kind": "i32",
+                  "value": "1"
+                }
+              },
+              {
+                "id": 4,
+                "value": {
+                  "kind": "binary",
+                  "hex": "76616c7565"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "existingApacheThriftFooterOracle": {
+    "script": "scripts/parquet-footer-oracle.py",
+    "scriptSha256": "db6d185e9c989ef85d01714130f1a86420b1130eacff14934e25b0eb0b41b39e",
+    "thriftVersion": "0.22.0",
+    "stdout": "{'files': 6}"
+  },
+  "count": {
+    "files": 5,
+    "nativeListStructMembers": 3,
+    "nativeVsPredecessorStatusMatches": 18,
+    "comparedPredecessorCases": 18,
+    "mismatches": []
+  },
+  "scope": "PyArrow independently reads each pinned PAR1 file and exposes its physical and Arrow schemas; the existing Apache Thrift Compact Protocol oracle independently decodes the full ordered SchemaElement list, retaining raw field IDs and values. The frozen TypeScript packet supplies selected schema indexes, mapping order and status labels; native type facts come from PyArrow and footer facts from Thrift. This pinned one-root-field subset admits only a LIST struct element; primitive LIST elements and MAP are unsupported. The generic Thrift decoder is not full Parquet IDL validation. Matching does not establish UMF target or receipt parity, Rust correctness, or support for other layouts."
+}

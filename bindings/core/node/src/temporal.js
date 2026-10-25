@@ -3,6 +3,11 @@ export const RFC3339_EXACT_INSTANT_PROFILE = 'umf-rfc3339-exact-instant/1.0.0';
 export const RFC3339_EXACT_INSTANT_MAXIMUM_BYTES = 1_048_576;
 
 function decoded(wire) {
+  if (typeof wire === 'string' && wire.startsWith('ERR|')) {
+    const [, name, ...parts] = wire.split('|');
+    const ErrorType = name === 'TypeError' ? TypeError : RangeError;
+    throw new ErrorType(parts.join('|'));
+  }
   if (wire === 'TypeError') throw new TypeError('Temporal token requires text');
   if (wire === 'RangeError') throw new RangeError('Temporal token is outside the selected profile');
   return wire.split('|');

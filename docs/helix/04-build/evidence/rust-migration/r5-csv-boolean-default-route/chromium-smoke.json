@@ -1,0 +1,41 @@
+{
+  "format": "umf-r5-csv-boolean-default-route-chromium/1",
+  "status": "pass",
+  "browser": "153.0.8010.12",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+  "isolatedPackage": "/private/tmp/umf-semantic-wasm-build/package",
+  "wasmSha256": "a6635f109ea1ef738d30701e4e8691154741382d255ba8be97b3640756d2bbfd",
+  "wasmGlueSha256": "fdf4925f6fdf0db94c6181710f8970c7fdd75f7651dc8c6e3e1d5e57d8472a16",
+  "predecessorSha256": "b960bac93d6027b03808bb984381e0c78cc78f91b3e5d1012faf539ec3890470",
+  "sourceHashes": {
+    "bindings/core/wasm/tests/csv-boolean-default-browser.mjs": "a9c23e00d06cfdade28cdc4db920f8fb4311e0be774e1165a6c844a67b75f91c",
+    "src/access/rust-csv-boolean-default.ts": "0288f990cd2ab74d9d1be8cb7b6841c0687cae24f86caff0fe1be8d18825b87a",
+    "src/index-browser-v4.ts": "ff268b2d65cbc0ef86a84813b6741d72d8275736f7ff90bb55d9d078c805f373",
+    "src/index-node-v4.ts": "e15fdf25af964928aa430ab07488b41a9ea6970dc2999ec8ca216adfd063d0cd"
+  },
+  "operations": [
+    "validateCsvBooleanLexical",
+    "verifyCsvBooleanLexical"
+  ],
+  "tokens": [
+    "token:true",
+    "token:false",
+    "token:True",
+    "token:False"
+  ],
+  "fullReceiptPredecessorParity": true,
+  "receiptRecomputationParity": true,
+  "malformedReceiptBeforeExpectedSource": {
+    "result": {
+      "status": "refused",
+      "name": "UmfError",
+      "prototype": "UmfError",
+      "code": "CSV_BOOLEAN_LEXICAL",
+      "path": "",
+      "message": "Malformed Boolean lexical receipt"
+    },
+    "expectedSourceReads": 0
+  },
+  "nodeGlobalsAbsent": true,
+  "qualification": "Fresh isolated-package source replay only; installed SDK qualification and broader CSV support are not claimed."
+}

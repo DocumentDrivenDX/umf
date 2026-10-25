@@ -138,7 +138,10 @@ fn catalogs_are_exact_sorted_copied_and_atomic() {
 fn empty_kind_queries_require_the_shared_runtime() {
     let registry = Registry::new();
     assert_eq!(
-        registry.list_kinds(&mut Context::ordinary()).unwrap_err().code,
+        registry
+            .list_kinds(&mut Context::ordinary())
+            .unwrap_err()
+            .code,
         "EXTENSION_KIND_RUNTIME_REQUIRED"
     );
     let reference = value(json!({"extension":"example","version":"1.0.0","kind":"dashboard"}));

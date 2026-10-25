@@ -3,7 +3,7 @@
 use umf_codegen::{CodegenEngine, CodegenResources};
 use umf_core::{Context, EngineError, ResourceSet, Utf16, Value};
 
-use super::{encode, field, take_field, transport_context};
+use super::{encode, field, take_field};
 
 fn required(value: &mut Value, name: &str) -> Result<Value, EngineError> {
     take_field(value, name).ok_or_else(|| {
@@ -53,7 +53,7 @@ fn invoke(
                         "MIGRATION_CHANGES_FAILED",
                         Utf16::default(),
                         "Expected exact previous and next deployment bundle members",
-                    ))
+                    ));
                 }
             };
             if fields.len() != 2
@@ -143,7 +143,7 @@ fn semantic_error(
 pub(super) fn execute(
     operation: &str,
     request: &mut Value,
-    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+    ctx: &mut Context<'_>,
 ) -> Result<String, EngineError> {
     let mut raw = take_field(request, "resources").ok_or_else(|| {
         EngineError::new(
@@ -152,19 +152,26 @@ pub(super) fn execute(
             "Explicit resources are required",
         )
     })?;
-    let resources = {
-        let mut catalog = Context::catalog().with_host_control(control);
+    let resources = build_resources(&mut raw, ctx)?;
+    execute_with_resources(operation, request, &resources, ctx)
+}
+
+pub(super) fn build_resources(
+    raw: &mut Value,
+    ctx: &mut Context<'_>,
+) -> Result<CodegenResources, EngineError> {
+    ctx.with_catalog_value_limit(|catalog| {
         let core = ResourceSet::new(
-            required(&mut raw, "coreSchema")?,
-            required(&mut raw, "referenceSchema")?,
-            required(&mut raw, "packageSchema")?,
-            required(&mut raw, "constraints")?,
-            required(&mut raw, "domainPolicy")?,
+            required(raw, "coreSchema")?,
+            required(raw, "referenceSchema")?,
+            required(raw, "packageSchema")?,
+            required(raw, "constraints")?,
+            required(raw, "domainPolicy")?,
         );
-        let tables = required(&mut raw, "tablesPackage")?;
-        let actions = required(&mut raw, "actionsPackage")?;
-        let binding = required(&mut raw, "bindingPackage")?;
-        let stable_binding = required(&mut raw, "stableBindingPackage")?;
+        let tables = required(raw, "tablesPackage")?;
+        let actions = required(raw, "actionsPackage")?;
+        let binding = required(raw, "bindingPackage")?;
+        let stable_binding = required(raw, "stableBindingPackage")?;
         let tables_schema = umf_core::copy_json(
             field(&tables, "schema").ok_or_else(|| {
                 EngineError::new(
@@ -173,7 +180,7 @@ pub(super) fn execute(
                     "Table package schema is required",
                 )
             })?,
-            &mut catalog,
+            catalog,
         )?;
         let actions_schema = umf_core::copy_json(
             field(&actions, "schema").ok_or_else(|| {
@@ -183,7 +190,7 @@ pub(super) fn execute(
                     "Action package schema is required",
                 )
             })?,
-            &mut catalog,
+            catalog,
         )?;
         CodegenResources::new(
             core,
@@ -193,23 +200,206 @@ pub(super) fn execute(
             actions_schema,
             binding,
             stable_binding,
-            &mut catalog,
-        )?
-    };
+            catalog,
+        )
+    })
+}
+
+pub(super) fn execute_with_resources(
+    operation: &str,
+    request: &mut Value,
+    resources: &CodegenResources,
+    ctx: &mut Context<'_>,
+) -> Result<String, EngineError> {
     let payload = field(request, "request").ok_or_else(|| {
         EngineError::new("REQUEST", Utf16::default(), "Codegen request is required")
     })?;
+    let result = match invoke(&CodegenEngine::new(resources), operation, payload, ctx) {
+        Ok(result) => object(vec![("ok", Value::Bool(true)), ("result", result)]),
+        Err(error) => semantic_error(error, operation, ctx)?,
+    };
+    ctx.with_tagged_transport_limit(|ctx| encode(&result, ctx))
+}
+
+pub(super) fn execute_host_read_v3(
+    request: &mut Value,
+    host_read: &mut dyn umf_codegen::generation::PythonClientHostReadV3,
+    ctx: &mut Context<'_>,
+) -> Result<String, EngineError> {
+    let mut raw = take_field(request, "resources").ok_or_else(|| {
+        EngineError::new(
+            "REQUEST",
+            Utf16::default(),
+            "Explicit resources are required",
+        )
+    })?;
+    let resources = build_resources(&mut raw, ctx)?;
+    execute_host_read_with_resources(request, host_read, &resources, ctx)
+}
+
+pub(super) fn execute_host_read_with_resources(
+    request: &mut Value,
+    host_read: &mut dyn umf_codegen::generation::PythonClientHostReadV3,
+    resources: &CodegenResources,
+    ctx: &mut Context<'_>,
+) -> Result<String, EngineError> {
     let result = {
-        let mut ctx = Context::ordinary().with_host_control(control);
-        match invoke(
-            &CodegenEngine::new(&resources),
-            operation,
-            payload,
-            &mut ctx,
-        ) {
+        let v4 = field(request, "hostReadProfile")
+            == Some(&Value::string_utf8("umf.python-client-host-read/4"));
+        let generated = if v4 {
+            CodegenEngine::new(resources).generate_python_client_host_v4(host_read, ctx)
+        } else {
+            CodegenEngine::new(resources).generate_python_client_host_v3(host_read, ctx)
+        };
+        match generated {
             Ok(result) => object(vec![("ok", Value::Bool(true)), ("result", result)]),
-            Err(error) => semantic_error(error, operation, &mut ctx)?,
+            Err(error) => semantic_error(error, "generatePythonClient", ctx)?,
         }
     };
-    encode(&result, &mut transport_context().with_host_control(control))
+    ctx.with_tagged_transport_limit(|ctx| encode(&result, ctx))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn parse(source: &str) -> Value {
+        umf_core::serialization::read_json_value(
+            &source.encode_utf16().collect::<Vec<_>>(),
+            umf_core::serialization::Format::Json,
+            &mut Context::catalog(),
+        )
+        .unwrap()
+    }
+
+    fn request() -> Value {
+        let tables = parse(include_str!(
+            "../../../python/umf_codegen/src/umf_codegen/_resources/tables.package.json"
+        ));
+        let actions = parse(include_str!(
+            "../../../python/umf_codegen/src/umf_codegen/_resources/actions.package.json"
+        ));
+        let resources = object(vec![
+            (
+                "coreSchema",
+                parse(include_str!("../../../spec/core/schema.json")),
+            ),
+            (
+                "referenceSchema",
+                parse(include_str!(
+                    "../../../spec/core/semantic-type-reference.schema.json"
+                )),
+            ),
+            (
+                "packageSchema",
+                parse(include_str!(
+                    "../../../spec/core/extension-package.schema.json"
+                )),
+            ),
+            (
+                "constraints",
+                parse(include_str!(
+                    "../../../spec/metamodel/generated/core-constraints.json"
+                )),
+            ),
+            (
+                "domainPolicy",
+                parse(include_str!(
+                    "../../../spec/metamodel/generated/domain-policy.json"
+                )),
+            ),
+            ("tablesPackage", tables),
+            ("actionsPackage", actions),
+            (
+                "bindingPackage",
+                parse(include_str!(
+                    "../../../python/umf_codegen/src/umf_codegen/_resources/binding.package.json"
+                )),
+            ),
+            (
+                "stableBindingPackage",
+                parse(include_str!(
+                    "../../../python/umf_codegen/src/umf_codegen/_resources/stable-binding.package.json"
+                )),
+            ),
+        ]);
+        object(vec![
+            ("resources", resources),
+            ("request", Value::Object(Vec::new())),
+        ])
+    }
+
+    #[test]
+    fn codegen_resource_admission_uses_the_context_carried_from_decode() {
+        let mut request = request();
+        let mut context = Context::ordinary();
+        // Simulate tagged decode leaving only ten units in the wide counter.
+        // Catalog copying in this real codegen entry must continue the same
+        // counter and overflow; the former fresh catalog Context would pass.
+        context.carry_transport_usage(u64::MAX - 10, 0);
+        let error = execute("singleSetCapabilities", &mut request, &mut context).unwrap_err();
+        assert_eq!(error.code, "LIMIT");
+        assert_eq!(error.message, Utf16::from("Work counter overflow"));
+        assert_eq!(context.charged_work(), u64::MAX - 2);
+        assert_eq!(
+            context.limits().max_values,
+            umf_core::Limits::ordinary().max_values
+        );
+    }
+
+    #[test]
+    fn retained_resources_reuse_compilation_but_keep_each_call_control_fresh() {
+        let mut envelope = request();
+        let mut raw = take_field(&mut envelope, "resources").unwrap();
+        let mut setup = Context::ordinary();
+        let resources = build_resources(&mut raw, &mut setup).unwrap();
+
+        let request_value = object(vec![("request", Value::Object(Vec::new()))]);
+        let mut first = request_value.clone();
+        let mut allow = |_amount| Ok(());
+        let mut call_context = Context::ordinary().with_host_control(&mut allow);
+        let first_output = execute_with_resources(
+            "singleSetCapabilities",
+            &mut first,
+            &resources,
+            &mut call_context,
+        )
+        .unwrap();
+
+        let mut second = request_value.clone();
+        let mut calls = 0usize;
+        let mut fail_second = |_amount| {
+            calls += 1;
+            if calls > 1 {
+                Err(EngineError::new(
+                    "CANCELLED",
+                    Utf16::default(),
+                    "call two stopped",
+                ))
+            } else {
+                Ok(())
+            }
+        };
+        let mut second_context = Context::ordinary().with_host_control(&mut fail_second);
+        let second_output = execute_with_resources(
+            "singleSetCapabilities",
+            &mut second,
+            &resources,
+            &mut second_context,
+        )
+        .unwrap_err();
+        assert_eq!(second_output.code, "CANCELLED");
+
+        let mut third = request_value;
+        let mut allow_again = |_amount| Ok(());
+        let mut third_context = Context::ordinary().with_host_control(&mut allow_again);
+        let third_output = execute_with_resources(
+            "singleSetCapabilities",
+            &mut third,
+            &resources,
+            &mut third_context,
+        )
+        .unwrap();
+        assert_eq!(first_output, third_output);
+    }
 }

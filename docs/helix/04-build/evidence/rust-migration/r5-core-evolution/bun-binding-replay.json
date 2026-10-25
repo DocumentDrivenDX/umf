@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "runtime": {
+    "host": "darwin",
+    "arch": "arm64",
+    "node": "v26.3.0",
+    "bun": "1.4.3"
+  },
+  "route": "installed-package-name",
+  "profile": "current-source-0.10.0; receipt literal core-0.8-absent-string-additions/0.1",
+  "frozenSha256": "672213c111d51899c0a537faae22ead1e39921538810abc30401aed4d815b3e0",
+  "sourceHashes": {
+    "spec/core/schema.json": "b7842c143e24c8a039c7d79be4503b8f5feb21391b800b5ccec19ccd530bb525",
+    "spec/core/semantic-type-reference.schema.json": "02d73498cde6217ee38377f7e43a79cf778119eab67fe998509af7a5905e3bde",
+    "spec/core/extension-package.schema.json": "c5b470a5106cb9dffda1f2abd005c7f7147566545ce466b281b2f4e1a8cc298a",
+    "spec/metamodel/generated/core-constraints.json": "ecf57b3bd7fcfad62b2ce6bbf1b280cd30d71008fe1c5d8500d61841c33f02c1",
+    "spec/metamodel/generated/domain-policy.json": "465f5065989d6d9b556027f32cad4f0974ae0770036d5c0084180bfb2b2c56e9",
+    "docs/helix/04-build/evidence/rust-migration/r5-core-evolution/frozen-typescript-0.10.json": "672213c111d51899c0a537faae22ead1e39921538810abc30401aed4d815b3e0",
+    "src/model/evolution.ts": "f4833f850c30257421dd92c286539ea93c35114fca2b749452cee5d1feeb7e24",
+    "crates/umf-core/src/core_evolution.rs": "df72efa4087962355ec0096a03e0d7b97db988fe313ac37207caa68e71a98c3a",
+    "crates/umf-core-wire/src/lib.rs": "c1edc00d89d1837248e1eeb758b9631917d61e1e383f568ec9d259c51c87c45a",
+    "bindings/core/node/index.js": "86eb1a09d7f28a6dac2a2ced9a6d26e7171fd10057074a92616e0b6ef28aede5",
+    "bindings/core/node/index.d.ts": "66d22341727e8988b7a6bf509e39fc5ee59485e5f03945c14c364117313862ca",
+    "bindings/core/node/package.json": "94cd7e27f0835fe58d1ab6a7eec6754117e3f9930cba9061be1f50d961348006",
+    "bindings/core/node/src/core-evolution.js": "d72a448cc854c9483a6a3456f770a33a1d67d35aa04075ce674ee5ea61ff7967",
+    "bindings/core/node/src/wire.js": "a6187bb3e6704eacf6b100b622888bbb1cc08fd482721f8119ab81b9719d93f8",
+    "bindings/core/wasm/index.js": "a11e46eff5044d7f604a34a782d319aa4ad1e0e0435f36cbd93f3606514a6dce",
+    "bindings/core/wasm/index.d.ts": "4c32fcdcc0fb288b6648850b63588eeb23fb1a56b42528e437cc68707eb4fa93",
+    "bindings/core/wasm/src/core-evolution.js": "d72a448cc854c9483a6a3456f770a33a1d67d35aa04075ce674ee5ea61ff7967",
+    "bindings/core/wasm/src/shared-sources.json": "2fe2c4cfe87695eb6b2d0ff480ebe2e784a88323f41db4fa77125fc13fe3f3b3",
+    "scripts/rust-migration/r7/wasm-package-sources.ts": "eeb2cd4a63579082d1663a3d08bcaac646bc9ed33d19e3eb36ab2f9790a152e2"
+  },
+  "buildSourceManifestSha256": "ca222064ec2274aebf8978614a4108dc426b42ab449fea692d5129fd99e799d7",
+  "testHarnessSha256": "87dc20c4ea5e60052bcb34818fd89f5772503329250196f755eb304fc85d0809",
+  "packageAssetHashes": {
+    "index.js": "86eb1a09d7f28a6dac2a2ced9a6d26e7171fd10057074a92616e0b6ef28aede5",
+    "index.d.ts": "66d22341727e8988b7a6bf509e39fc5ee59485e5f03945c14c364117313862ca",
+    "package.json": "94cd7e27f0835fe58d1ab6a7eec6754117e3f9930cba9061be1f50d961348006",
+    "src/core-evolution.js": "d72a448cc854c9483a6a3456f770a33a1d67d35aa04075ce674ee5ea61ff7967",
+    "src/wire.js": "a6187bb3e6704eacf6b100b622888bbb1cc08fd482721f8119ab81b9719d93f8",
+    "umf_core_node.node": "bc50d7534d78cbbfaafefe2c4af38e2d2df0bd4cf34586dfe1eae87e1b2f679a"
+  },
+  "nativeArtifactSha256": "bc50d7534d78cbbfaafefe2c4af38e2d2df0bd4cf34586dfe1eae87e1b2f679a",
+  "packageArchiveSha256": "1e0ff05e13159bd6412c25ccdecec77d4657943ed047bdc75627942dcd680d4d",
+  "frozenInspectionCases": 7,
+  "currentReceiptVerifier": true,
+  "forgedReceiptRefused": "CORE_EVOLUTION_RECEIPT",
+  "controls": {
+    "zeroWork": "RESOURCE_LIMIT",
+    "cancellation": "CANCELLED",
+    "deadline": "DEADLINE"
+  }
+}

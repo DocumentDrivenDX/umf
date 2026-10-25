@@ -6,7 +6,7 @@ use crate::{
     error::{EngineError, Severity, Validation},
     registry::Registry,
     serialization::stringify_compact_metered,
-    value::{copy_json, Utf16, Value},
+    value::{Utf16, Value, copy_json},
 };
 
 fn key(name: &str) -> Utf16 {
@@ -220,7 +220,7 @@ where
                 "MISSING_ELEMENT",
                 Utf16::default(),
                 "Extension instance not found",
-            ))
+            ));
         }
     };
     let mut target_index = None;

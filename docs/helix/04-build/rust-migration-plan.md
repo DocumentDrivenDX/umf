@@ -53,6 +53,70 @@ CONTRACT-079 (unified access), and CONTRACT-081 (table lifecycle). Before portin
 contract, design, tests and execution record, including amendments. Older
 implementation-plan evidence remains scoped to the artifacts it actually tested.
 
+### Completion status — 2026-10-24
+
+The Rust port is incomplete. R0–R3 have their recorded reviewed and merged
+checkpoints. R4 removed V8 from the authored Python production source boundary,
+but its coordinated wheel/sdist release matrix is still a nonpublishing
+candidate and needs a final source-coherent hosted receipt. R5 has growing
+bounded opt-in Rust families and host bindings; it has not retired the broader
+TypeScript engine. R6 consumer bridges, R7 default package build qualification
+and complete tooling retirement, and R8 final integrated qualification remain
+open. The source `package.json` selects the Rust V4 Node/browser entries for
+synchronous `generatePythonClient` and retains TypeScript under `./reference`.
+The prior fixed-point private SDK archive qualifies its captured generator
+cohort on macOS arm64 only; the current expanded source cohort is being rebuilt
+and replayed. Neither private archive qualifies the full production SDK, other
+hosts, or publication. The current R8 inventory covers ten package conditions
+and 1,120 declarations per Node, browser, and explicit TypeScript reference
+root. Each default root source-selects 24 Rust operations (generator,
+cardinality trio, facets quartet, compact Dataset validation, four Core Keys
+operations, and eleven Bit128/UUID operations), inherits 898 TypeScript
+executable declarations, and exports 198 JSON resources. Compact Dataset
+verification and `verifyCoreKeyOperation` remain TypeScript. All 922 unique
+executable declarations retain logical retirement gaps; zero binding routes
+are proven against the current combined source cohort. The inventory SHA-256
+is `fa373173f1a2601c589feddb35088479ff07fdb4e3a3895c65dd214f3437d0d4`;
+the condition-aware gap ledger SHA-256 is
+`0f4efd3b52989893c9a2ef8dd3a5b95aceb3d404693e534ae078003cfb7881a0`.
+The 43 bounded opt-in Rust operation mappings remain separate from default
+source selection and installed qualification. Neither census qualifies full
+production SDK parity or release.
+The ledger's `executable` label is a broad public-runtime category: independent
+AST review of the 1,120-name reference root found 750 function declarations,
+167 variable declarations, five class declarations and 198 JSON resource
+exports. Constants, aliases and structured public values among those variables
+still require compatibility/authority review, but should not be mistaken for
+unported algorithms solely from the current label. Keep all 922 non-JSON
+runtime declarations in the retirement denominator until an evidence-backed
+per-row semantic/host/data disposition is reviewed; do not subtract a category
+by naming heuristic.
+No complete-port PR, merge, tag or
+release has been cut from this worktree. The active goal remains all R4–R8
+gates, independent review, current-main integration and a tested release.
+
+After that inventory snapshot, the default Node/browser source entries selected
+two bounded CSV Boolean lexical operations and three bounded core inspectors.
+Their frozen Bun and real-Chromium source-route replays pass, but the inventory
+and ledger must be recaptured before using a new selected-operation count or
+making an integrated-source claim. The prior private SDK archive stopped at a
+harness count assertion that included a Key `getterCalls` metadata field; the
+harness now excludes it, and a fresh source-coherent archive and installed
+Node/Bun/Chromium replay are still required. Cardinality, facets and Core Keys
+default binders still run TypeScript `copyJson` admission before Rust and thus
+remain executable-retirement work despite their source-selected operations.
+Core Key tuple default selection is held: the tagged byte route imposes a
+100,000-value ceiling below the 4,000,000-byte predecessor bound, and its
+prepared route revalidates instead of retaining Rust diagnostics. A direct
+native/WASM byte and prepared-object interface is under implementation and
+must pass exact parity before selection.
+The separate `verifyCoreKeyOperation` default route is also held: the generic
+wire admits both receipt and current before Rust can reject a malformed
+receipt, while its existing staged wrapper reruns full verification and the
+current binder uses TypeScript JSON admission. Its frozen receipt-before-current
+getter order and single recomputation require a Rust-owned staged verification
+handle plus a reviewed host admission translation before source selection.
+
 ### R3 current status
 
 R3 implementation, independent source review and local installed-artifact
@@ -357,6 +421,15 @@ independent Sol rereview found no P1/P2 in the gate. Those local checks include
 the historical wheel, not a current-source rebuilt wheel. The four-platform/
 interpreter hosted matrix and exact source-to-artifact release proof remain open.
 
+At the 2026-10-24 moving-tree integration check,
+`sync_codegen_resources.py --check` exposed five stale Python codegen copies of
+current canonical core resources plus a stale manifest pin. The deterministic
+`--write` sync refreshed the nine-resource mirror and `_release.py` to manifest
+SHA-256 `7e2ceba9f5a75c80a314bf6010848fa65f5a739059f11e89ec9eeb6cae6d9aaa`;
+the follow-up `--check` passes. This aligns current source files only. Fresh
+installed wheels, offline sdist rebuilds and hosted release qualifications
+must use the new resource cohort.
+
 ### R5–R7 dependency order and retirement
 
 The live successor census captured at the R4 checkpoint remains the source of
@@ -412,9 +485,12 @@ The R5 core-model opt-in binding should route cardinality, kind and nullability
 through the existing tagged `executeRequestWire` transport as `model/*`
 operations. That transport retains isolated UTF-16 units in values, keys and
 identities; direct native UTF-8 string arguments would lose accepted source
-meaning. A single ordinary `Context` must cover admission, trusted resource
-and registry construction, model operation, result validation and verification,
-with existing host cancellation/deadline/work controls. Node/Bun and real
+meaning. For this original opt-in transport, one ordinary `Context` covered
+admission, trusted resource and registry construction, model operation, result
+validation and verification with existing host cancellation/deadline/work
+controls. The production retained-Engine interface is resolved below from
+CONTRACT-080: admit immutable resources at factory setup and use a fresh
+cumulative operation `Context` for every invocation. Node/Bun and real
 Chromium WASM need identical complete-envelope fixtures and resource/refusal
 gates before the opt-in binding is counted. This does not authorize R7 default
 SDK cutover or removal of the retained TypeScript implementations.
@@ -627,6 +703,16 @@ control provenance, exact-number refusal and metaschema-before-reference
 ordering after repair. Full Ajv 8.20 behavior, the upstream 46-file oracle,
 atomic edits and host/browser bindings remain open; this checkpoint does not
 qualify general JSON Schema validity.
+
+The successor [qualified validator profile](evidence/rust-migration/r5-json-schema-inspect/README.md)
+closes one deliberately small Draft 2020-12 grammar containing boolean schemas,
+scalar type, required, properties, definitions, and restricted relative IDs.
+Independent [Sol review](evidence/rust-migration/r5-json-schema-inspect/sol-review.md)
+verified the source and artifact hashes, reran the 13-test Rust suite and
+installed Node 30-case replay, and checked the Bun and real Chromium 30-case
+and five-control receipts. This is an opt-in bounded qualification; general
+references, anchors, URI semantics, the full corpus, edit semantics and R7
+default routing remain open.
 
 The [R5 JSON Schema atomic-edit checkpoint](evidence/rust-migration/r5-json-schema-edit/README.md)
 adds a copied Rust transaction for existing native root pointers. Mandatory
@@ -1431,6 +1517,830 @@ still exports active predecessor semantics, so R7 default cutover and the R8
 zero-owner, installed-host, browser, CI and release gates remain open. Recheck
 feature isolation and fixed point after the extension-kind main merge.
 
+The 2026-10-24 current-main integration commit `108a0ba3a` incorporates the
+extension-defined-kind work at `f5f4b7dbef12a757bc0bba6ae2f581998fe50dba`.
+An earlier whole-workspace run exposed a 2 MiB `allOf` helper-stack overflow;
+the repaired helper passed its focused stack suite and a subsequent
+`cargo test --locked --offline --workspace` run exited successfully, including
+the 139-vector core-wire dispatcher and Iceberg corpus. That run compiled the
+source immediately before the later Avro wire and dynamic-anchor cache edits,
+so it is an integration checkpoint rather than final-source qualification.
+The ordinary workspace run intentionally ignores the report-dependent R5 JSON
+Schema full-corpus test; its upstream-oracle wrapper runs that test with
+`--ignored` and a fresh report. The 139-vector dispatcher took 621.70 seconds
+on this source/toolchain cohort, materially longer than historical R2 runs.
+Independent analysis identified repeated dynamic-anchor resource walks as a
+likely cost amplified by the larger current-main schema. A reviewed
+resource-local cache passed seven focused Draft 2020-12 tests, including
+dynamic references, warm-cache host-callback reentry and
+cold/warm work refusals. The same 139-vector test on the corrected source
+passed in 472.23 seconds with all fresh `Engine::new` calls retained, versus
+621.70 seconds before the cache. This is a debug-test improvement on this
+machine, not a release-mode latency claim; final-source workspace and hosted
+qualification remain open.
+
+After the opt-in binding projection and action evaluator repairs, an integrated
+`cargo check --locked --offline --workspace` and then
+`cargo test --locked --offline --workspace` both exited successfully on Rust
+1.90.0. The latter passed the 139-vector core-wire dispatcher in 473.14
+seconds, Iceberg wire in 205.79 seconds, the nine binding projection tests and
+the focused action evaluator within the workspace. This checkpoint precedes
+the planned canonical-numeric, binding-inspector and staged-codegen Rust edits;
+it is not the frozen final-release cohort. The report-dependent JSON Schema
+upstream corpus and trusted-protoc test remain separate ignored tests requiring
+their exact local or hosted prerequisites.
+
+R5 now has an opt-in Avro candidate-edit core, versioned report and Rust
+wire/CLI route. The candidate source/dependency edit preserves authored order
+and unknown content, admits both source and candidate, and reports native
+inspection separately. The [candidate wire packet](evidence/rust-migration/r5-avro-candidate-wire/README.md)
+passed four wire tests across 16 frozen cases, three CLI tests, and focused
+no-default-feature compiler checks. Opt-in Python and Node/Bun bindings pass
+focused native tests. An official `umf-core` 0.11.0 wheel with its declared
+dependencies passed normal installed-package imports and three candidate-edit
+tests on both CPython 3.11.17 and 3.14.8; Sol verified wheel RECORD and installed
+bytes. That wheel predates the latest metamodel/resource pins, so the release
+artifact must be rebuilt and replayed. Default Avro routing, native-oracle
+comparison, browser binding and broader adapter parity remain open.
+
+The R5 binding-family [index projection Gate0](evidence/rust-migration/r5-binding-index-projection/README.md)
+freezes complete `projectBindingIndexes` strict/report outputs and exact
+refusals from five target profiles and boundary variants. Its 200 pinned inputs
+include the transitive import/resource closure; 13 Bun tests pass with 323
+assertions, and independent Sol review found no remaining P1/P2 in this
+predecessor packet. The approved next slice is an opt-in generic Rust
+projection. The TypeScript default and downstream native target effects remain
+open. The first Rust candidate passed five frozen fixture tests but independent
+review found incomplete source admission, Delta version normalization, and
+discarded diagnostic-control errors. These are blocking corrections before the
+candidate can be qualified.
+The repaired opt-in projection now uses prepared immutable core/binding
+validators and a fresh context per call; nine focused Rust tests pass in 3.46
+seconds, including malformed input, exact Delta spelling, late meter failure
+and same-resource recovery. Sol found no remaining P1/P2 in that bounded
+source cohort. A separate [binding inspector Gate0](evidence/rust-migration/r5-binding-inspect/README.md)
+freezes full `Validation` reports and admission precedence for 0.1/0.2/0.3;
+four Bun tests pass with 168 assertions and Sol approved only an opt-in 0.1/0.2
+generic inspector next. The 0.3 profile and current consumers remain separate.
+The first opt-in Rust inspector passed its three-test focused frozen
+differential, but independent Sol review reproduced four P2 gaps outside those
+captures: logical nonfinite-number admission preceding binding validation,
+the second conditional-schema error for column plus `documentColumn`,
+last-assignment field lookup after duplicate identities, and ECMAScript
+enumeration order for numeric unknown keys. The implementation is under
+correction; its passing frozen subset does not qualify inspector parity or
+consumer cutover.
+The first repair matched all four repros, but Sol's rereview found two
+combined admission edges: numeric unknown-key order within the raw Rust
+`Value` tree, and a trusted host-control error with code `NUMBER` being
+misclassified as a data diagnostic. A private ordered admission copier and
+control-origin guard corrected those edges. A global change to shared `copy_json`
+would require a separate caller census and wider regression; this bounded
+inspector repair does not establish that broader property.
+The second repair passed independent Sol rereview at inspector source SHA-256
+`88acb5fc08cfb602ff5d844b7620ee8b70c8835efb69ed32b425466c93ef5372`.
+The six additive TS controls, four focused Rust tests, both original and
+combined-edge repros, nested numeric key order, duplicate/depth/value limits,
+host-control provenance, metering and recovery showed no remaining P1/P2 in
+the bounded opt-in 0.1/0.2 profile. The successor 29-file receipt SHA-256 is
+`8c057792fc09a3cc11bbd06bbedef9b803f6880258c35f437dad4c84c5f3c26d`.
+Its historical manifest remains unchanged; installed binding hosts, 0.3
+carrier semantics, default consumer routing and final release cohort are open.
+
+The R5 action-rule [predecessor packet](evidence/rust-migration/r5-actions/evaluate-action-rule/README.md)
+freezes 49 cases from the current TypeScript evaluator. An opt-in Rust
+evaluator matched 46 exact outcomes; accessor-bearing JavaScript state and two
+multi-megabyte arithmetic boundaries remain open. Independent review found
+control-error remapping, input refusal-order differences, collapsed literal
+diagnostics, and unmetered arithmetic result work. Those issues were repaired,
+as was a later falsy-`outputs` parity mismatch; Sol found no remaining P1/P2
+in the bounded 46-case source cohort.
+The original Gate0 source pins remain historical while concurrent metamodel
+and package edits move the tree; current-cohort qualification requires a new
+source-bound capture.
+The first corrections passed focused Rust and interim current-source differential
+checks. At that checkpoint the two four-million-digit cases still required
+canonical-digit arithmetic preserving the complete admitted decimal
+exponent/scale grammar and refusal order, with metered normalization,
+carry/borrow, output construction and live cancellation.
+The canonical-digit Rust completion now passes both previously open four-million-
+digit result-boundary cases and all 92 supplemental numeric controls. At reviewed
+`literal.rs` SHA-256 `7e0451f79987f35418d280c50cb3b46fbd16a1913384658f6e06745aaca1b286`
+and action evaluator SHA-256 `87b64d9c597eeb4a722aa47c5e54dfdb66dcc4981ee1c1183f60ec02f90781b9`,
+Sol independently ran 12 action and 16 core literal Rust tests and the two Bun
+numeric capture/receipt tests; no P1/P2 remained in this bounded numeric slice.
+Accessor-bearing JavaScript state, complete action support, bindings/default
+routing and a frozen final-source release cohort remain open. Historical Gate0
+and prior current-review closure hashes were not rewritten to match this later
+source; their behavioral captures still pass but their live-source closure
+checks cannot qualify the later cohort.
+
+R6 has an opt-in Rust reviewed-parameter scanner through PyO3 for exact Python
+strings; the Python host retains digit parsing and exception order. Source
+tests pass on CPython 3.11 and 3.14. The [DB-API transport packet](evidence/rust-migration/r6-dbapi-transport/README.md)
+and focused source tests cover reviewed positions, refusal order, percent
+escaping and sealed/legacy routing. A current-source abi3 wheel-derived native
+overlay matched all 13 frozen transport cases under CPython 3.11.17 and 3.14.8;
+Sol verified its wheel/extension/source hashes and found no P1/P2 in that
+bounded evidence. The harness supplies an artificial `umf` package and extracts
+access functions from source, so this is not a full installed-package claim.
+Native database/driver, Weft-backed build and installed access-wheel
+qualification remain open.
+
+R7 has a structural-comparison core, wire, Node/Bun and WASM wrapper.
+The [candidate evidence](evidence/rust-migration/r7-schema-comparison/README.md)
+includes frozen predecessor, focused Rust/wrapper tests, built Node/Bun addon
+and extracted WASM package execution in Node, Bun and real Chromium. The
+schema-browser default build now compiles pinned Rust WASM offline, ships its
+asset, and awaits initialization before exposing the existing synchronous
+comparison API; there is no production TypeScript comparison fallback. Its
+packed/offline-installed package passed 30 real Chromium checks, including
+missing/corrupt asset import refusal. Two clean builds produced byte-identical
+release, asset, provenance and checksum manifests. Sol found no remaining
+P1/P2 in the default cutover after the provenance collector was expanded to
+the complete current local Cargo source and literal resource closure. The
+extracted WASM package also passed the eight frozen cases and
+work/depth/cancellation, first-refusal, recovery and missing/invalid-asset
+matrix in Node 26.12.1, Bun 1.4.3 and Chromium 153.0.8010.12. This is the
+schema-browser comparison default cutover only; later Rust source edits require
+a rebuilt artifact and renewed provenance/authority checks, and broader R7
+consumer and release qualification remain open. R8 authority-bound census
+controls pass 17 Python unit tests, but the active successor census is not
+zero-owner and final release gates remain open. A provisional live census
+before the browser default edits found 594 semantic modules, 329 active
+scripts and 137 unresolved ownership rows. A later moving-tree capture found
+599 modules, 332 active scripts and 244 locked JavaScript packages but refused
+its stale metamodel digest; it is not a qualified successor census. Of the
+earlier 137 rows, 102 were reachable
+active TypeScript entries; many overlap partial Rust implementations and need
+symbol-level reconciliation rather than wholesale reimplementation. Three
+active rows are types-only. Thirty-five unrooted rows need activation/intent
+review before they are counted as default executable work. Regenerate and pin the
+metamodel/resource source closure after the current edits, then rerun all
+affected boundaries, installed hosts and independent review on one frozen
+cohort before claiming R5–R8 completion.
+The census checker permits read-only stale-cohort difference diagnostics but
+cannot return success for matching stale bytes or overwrite the canonical
+census under stale authority. Its 35 inventory/boundary unit tests pass, and
+Sol found no remaining P1/P2 in that guard. This is diagnostic machinery, not
+the zero-owner release result.
+
+A read-only decomposition of the historical R4 census identifies 418 reachable
+TypeScript rows assigned to R5, R5/R7 or R7, with 4,109 declared public exports
+and 2,151 statically reachable algorithm symbols. The rows span 142 adapter,
+94 core-ideal, 73 extension, 41 model, 40 projection, 14 validation, nine
+domain-pack, two generated, two registry and one root-barrel modules. These are
+historical module/symbol counts, not 4,109 independently unported operations:
+type exports, forwarding barrels, host boundaries, already ported subsets and
+inactive entry points need symbol-level dispositions. Conversely, a module-level
+Rust owner does not close all its exported operations. Before R8, record each
+reachable executable export's Rust owner or justified host role, its default
+route and predecessor retirement evidence, then regenerate the exact-source
+census. Passing the Rust workspace tests cannot substitute for this gate.
+
+A first [R8 symbol-level export map](evidence/rust-migration/r8-symbol-inventory/README.md)
+now records eight source package routes, including the executable
+`./loader-contract` subpath, and 1,135 route-specific runtime declarations
+across 504 source files after the V4 opt-in route was added. A review of the
+first capture found it omitted 198
+public JSON resource exports from `spec/`; the corrected map includes them.
+All 1,135 still lack exact operation/resource authority and retirement
+dispositions; 922 default root declarations remain sourced from TypeScript and
+198 default root JSON resources come from `spec/`. Coarse path-family owner labels and zero unassigned labels are
+navigation aids, not a zero-owner result. Active scripts, CLI/Python APIs,
+transitive helpers, installed archive routing and contract-specific Rust mapping
+still require the broader authority-bound R8 census. Sol independently
+reproduced the earlier corrected six-route `--check`, verified its route/build
+correspondence and 87 direct root JSON re-exports, and found no P1/P2 false
+closure in that bounded inventory. Sol subsequently reviewed the two V4
+opt-in routes and refreshed the eight-route capture after the V4 source
+repair; its `--check` passes at the pinned inventory hash. That review still
+leaves all 1,135 exact retirement dispositions unresolved. Future type-only
+aliases, ambient declarations, erased
+const enums and changed condition targets need additional negative controls
+or renewed review before the inventory can serve as final release authority.
+
+Within the 922 still-TypeScript default-root runtime declarations, the largest
+source families are adapters (391), core ideals (254), extensions (112), model
+(85), projections (52), and domain packs (14); the remaining 14 are scattered
+across smaller source families. These are declaration counts, not distinct
+operations or estimated port effort. The family split makes adapter and ideal
+coverage an explicit R5/R8 release dependency instead of treating the growing
+opt-in core slices as a completed default route.
+
+The [authority-bound gap ledger](evidence/rust-migration/r8-symbol-inventory/README.md#authority-bound-gap-ledger)
+now gives every package-root declaration an explicit row and groups it by
+source/API family. Of 1,120 rows, 922 are executable TypeScript declarations
+and 198 are inert JSON resources. Thirty-two declarations map to reviewed,
+bounded opt-in Rust core operations; some now have separately qualified host
+bindings, but none has default-route retirement. The other 890 executable rows
+lack an accepted-operation disposition. A
+separate 26-row JSON Schema/Protobuf supplement records exact owners and
+scoped opt-in evidence without promoting candidate rows to parity or changing
+default routing. All 922 executable declarations retain a TypeScript
+default-route gap. The
+census separately lists all 42 package scripts and 45 direct source-file
+entrypoints, hashes 1,518 script sources while leaving non-entrypoint
+reachability unresolved, and records eight CLI dispatch modes with feature
+gates, recursive Python API surfaces and 14 hashed tracked Python package
+assets. Ignored or untracked native binaries are excluded because clean
+checkouts cannot reproduce them. It justifies no thin host boundary from
+path/name alone. Resource authority,
+installed routes, CLI detail and Python submodule/API status remain open. The
+deterministic interim generator and focused test are under
+`scripts/rust-migration/r8/gap-ledger.mjs` and `gap-ledger.test.mjs`.
+
+The next resource pass resolves those 198 JSON aliases to 189 distinct
+`spec/` files and records separate authoring, generator, package-route and
+installed-qualification fields. Four aliases have metamodel-manifest authority;
+112 have a candidate literal writer path whose input/write relationship is
+unproved; 82 have no identified generator authority. The current production
+SDK copy route is only a build rule, not a fresh installed artifact receipt.
+Sol reviewed the status schema and an unresolved Arrow example without
+promoting candidates to accepted authority. The fixed nine-resource Python
+action-runtime manifest and its digest pin were refreshed from canonical
+`spec/`; a single helper now checks the explicit name/source pairs before
+wheel or sdist work. Sol found and closed two review gaps: a self-referential
+manifest check and the source-archive checker's dependency on a literal Hatch
+resource list. The final checker rejects missing, extra, substituted and
+symlinked inputs; local source tests pass 45/45 and the actual Python source
+archive inventory returns 736 files. The moving source tree still needs a
+fresh gap-ledger capture, built-wheel/sdist byte checks and platform receipts.
+
+A narrow exact-operation supplement now covers the 26 package-root JSON Schema
+and Protobuf exports (13 each). Its generated rows separate 3
+`accepted-opt-in-subset`, 13 `candidate-core`, 2 `partial-host-boundary`, 3
+`unported`, and 5 `data-or-constant` dispositions, each with source/evidence
+hashes and predecessor/native/host gates. The JSON Schema evidence remains
+27/30 against its frozen predecessor with three known validator-limit
+mismatches; the mapping does not imply full adapter parity. Protobuf
+descriptor codec evidence is distinct from document operations, and source
+compiler/emitter callbacks remain host-owned. All 922 executable root exports
+continue using the TypeScript default, and zero exports are retired. Row-level
+owner/evidence review and the final frozen all-source cohort remain open.
+Sol independently reran the generated ledger check and 3/3 focused tests,
+verified all 26 source/evidence hash closures and their unique status totals,
+and checked representative Rust owner functions and literal core-wire dispatch
+strings. That accepts the bounded inventory supplement; individual operation
+parity, installed route and retirement decisions remain pending.
+
+A later [source-pinned JSON Schema inspector replay](evidence/rust-migration/r5-json-schema-inspect/validator-limit-successor.md)
+matches the unchanged 30-case predecessor and five controls in extracted Node,
+Bun-native, Bun-WASM and Chromium candidates. The prior 27/30 result remains
+historical evidence for its earlier source cohort. This qualifies only the
+captured opt-in read-only profile. A separate [JSON Schema tree-operation
+checkpoint](evidence/rust-migration/r5-json-schema-tree-operations/README.md)
+now freezes parser/edit behavior: the full 22-case predecessor matches 16/22,
+while duplicate/syntax/depth/value parser controls match; six edit outcomes
+remain outside the strict Rust validator profile. A qualified type/properties
+edit subset, including root-scalar `INVALID_EDIT` diagnostic order, passes
+3/3 on Node 26, Bun 1.4.3, and HeadlessChrome 153 against recorded native and
+WASM artifacts. The subset receipt pins the exact package/addon, glue, source,
+and build hashes. This does not qualify general editing or change default
+routing. Registry callback ownership, full Draft 2020-12 behavior, and release
+qualification remain open.
+
+A later opt-in tree-operation source cohort expands the deliberately bounded
+edit profile to safe `minimum`, `minLength`, recursively checked `prefixItems`
+and valid Unicode member names except `__proto__`. The unchanged frozen
+22-case parser/edit packet now matches 22/22 in fresh Node, Bun and Chromium
+artifacts. The earlier 16/22 result and three-case `minimum` refusal remain
+historical source-cohort evidence. Independent [Sol review](evidence/rust-migration/r5-json-schema-tree-operations/sol-review.md)
+reran seven focused Rust tests and required a corrected Chromium receipt after
+Playwright's object transport omitted an own `__proto__` member from the first
+receipt. The fixed in-browser assertion and JSON-text receipt preserve it.
+Complete Draft 2020-12 parity, default routing and retirement remain open.
+
+The independent R5–R8 gap review identified the next bounded core queue after
+the schema-property and staged host-read candidates: CONTRACT-053 CSV Boolean
+lexical validate/verify; read-only scalar, record-member and reference-link
+inspectors; core facet inspect/declare/verify; core key/member authoring; and
+key-tuple encode/verify/read/prepared operations. Each needs a frozen predecessor
+packet, opt-in Rust route, independent source review, then its installed-host and
+default-package gate. This queue reduces actual model gaps but is not the full
+port: relationships, selection, semantic types, record/dataset/compact values,
+evolution, action/security/table extension operations and broad adapter/native
+ideal/projection families still need symbol-level disposition and qualification.
+
+The opt-in core facet checkpoint is recorded at
+[its evidence packet](evidence/rust-migration/r5-core-facets/README.md). The
+review repair preserves merged length bounds and unknown qualifiers, validates
+the complete historical bounds schema before version refusal, and retains lone
+UTF-16 identity and qualifier units. Receipt schema/recomputation checks also
+precede admission of the current document. Six focused Rust tests, seven
+TypeScript predecessor tests, the full Python sdist test file, and a fresh
+extracted-sdist offline core check pass. Independent Sol re-review replayed the
+malformed and forged receipt ordering, earlier meaning/UTF-16 repairs and
+resource-meter refusals, and found no remaining P1/P2 in this bounded core
+slice. At that core-only checkpoint, tagged wire and Node/Bun/browser WASM were
+unqualified; the subsequent binding checkpoint below covers those opt-in
+routes. Production packages, exhaustive allocation-failure qualification and
+default routing remain unqualified.
+
+The subsequent bounded binding checkpoint is now recorded in the same
+[facet evidence packet](evidence/rust-migration/r5-core-facets/README.md).
+The four tagged operations match their frozen TypeScript predecessor cases in
+an installed local Node package under Node 26.12.1 and Bun 1.4.3, and in rebuilt
+WASM under Chromium 153.0.8010.12 and Edge 155.0.4283.62. Receipts pin the
+installed tarball, addon/WASM assets, source cohort and predecessor packets;
+all four hosts prove zero-work refusal. This extends the older native-only
+checkpoint without changing default package routing. Independent Sol review
+verified the exact source/packet/host-receipt pins and reran six Rust core tests,
+one tagged-wire test, seven TypeScript tests (110 assertions), packed Node/Bun
+and real Chromium/Edge replays without P1/P2 in this bounded slice. Armed host
+cancellation and zero-work refusal pass. Mid-kernel cancellation, Python
+exposure, maximum-size/allocation-failure boundaries and default cutover remain
+open.
+
+The core Key/Record-member authoring module now has a bounded opt-in Rust
+checkpoint at [its evidence packet](evidence/rust-migration/r5-core-keys/README.md):
+16 frozen TypeScript operation cases and 19 outcomes, complete envelope/refusal
+comparison, six focused Rust tests, and eight Bun predecessor tests (99
+assertions). Independent Sol review found and drove closure of three P2
+failure-order defects in duplicate requests, lookup identity, and receipt
+validation; a final malformed-key plus invalid-source vector makes the lookup
+ordering check mutation-sensitive. Sol verified the final source/packet hashes
+and 25-file closure with no remaining P1/P2 in this core slice. A follow-on
+opt-in binding adds five tagged Rust wire operations and Node/Bun and WASM
+facades. Independent Sol review reran six core tests, two frozen wire tests and
+two facade tests; a clean installed Node replay passed 17 cases, and actual
+receipts passed Draft 2020-12 validation. The wire tests cover immediate
+resource and cancellation refusals. The installed replay proves JSON-data
+equality after normalizing decoded null-prototype objects; installed Bun,
+real-browser WASM, Python exposure, default routing and broader interruption
+remain open. This is not an R5 or R8 completion claim.
+
+The [opt-in core Key tuple checkpoint](evidence/rust-migration/r5-core-key-tuple/README.md)
+now covers encode, verify, byte-read and prepared-source methods. Its frozen
+packet compares 87 Rust-representable encoder cases and five verification cases
+against the current TypeScript predecessor, including signed exponent, invalid
+numeric grammar, UTF-16 and control-meter boundaries. Independent Sol review
+drove repairs to control provenance, exponent precedence, shared literal
+isolation and pre-normalization charging, then replayed the corrected packet and
+found no remaining P1/P2 in this bounded core slice. A successor tagged-wire
+route and private installed Node/Bun package now pass 87/87 Rust-representable
+encoder cases, five receipt verifiers, one byte extraction, prepared-source
+isolation, and resource/cancellation/meter controls on their captured source
+cohort. Independent [Sol binding review](evidence/rust-migration/r5-core-key-tuple/sol-binding-review.md)
+checked the archive/addon hashes and wrapper suite. The one unsafe JavaScript Number case is a separately recorded Rust
+transport boundary with a path difference; it is not exact parity. The current
+shared wire has since advanced beyond that installed cohort. Python, real
+browser WASM, refreshed source-coherent artifacts, default routing and full
+source-distribution qualification remain open.
+
+A later moving-source Key tuple binding retains the prepared Rust value in
+target-native Node and WASM objects and returns byte reads directly as raw
+bytes. A focused real Chromium 153 replay covers a 100,001-unit retained source,
+100,001- and 4,000,000-byte success boundaries, 4,000,001-byte refusal,
+object shape and host controls. The captured receipt also demonstrates an
+unresolved ordering difference: malformed receipt plus accessor-backed current
+returns `ACCESSOR_PROPERTY` where the TypeScript predecessor returns
+`KEY_TUPLE_RECEIPT`. The direct route stays opt-in pending a staged admission
+repair, full frozen packet replay on both targets, and installed-source
+qualification. Its evidence and exact hashes are in the linked checkpoint;
+the earlier private Node/Bun archive does not qualify this newer binding.
+
+The [opt-in core relationship checkpoint](evidence/rust-migration/r5-core-relationships/README.md)
+now covers inspect, stable-ID lookup, authoring and retained-operation
+verification for core 0.10.0. Its frozen predecessor packet has 17 operation
+cases plus receipt, copy-isolation and structural-limit controls; four focused
+Rust tests and the six-test Bun predecessor baseline pass. Independent Sol
+review found an aggregate-result LIMIT path/message mismatch and confirmed its
+repair against the 60,000-value boundary: both sides now refuse at
+`/target/unknownPayload/39504` with the same code and message, without changing
+the caller's source. The review also verified metered receipt comparison and
+found no remaining P1/P2 in this bounded core slice. Core-wire, Node/Bun,
+browser WASM, installed/default routing and native relationship qualification
+remain open.
+
+The [opt-in core relationship selection checkpoint](evidence/rust-migration/r5-core-relationship-selection/README.md)
+ports authored metadata selection and navigation for core 0.10.0. Its
+source-bound TypeScript packet includes ordered endpoints, unknown qualifiers,
+UTF-16 identities and an assembled-result structural limit. Independent Sol
+review found unmetered filter, Key, Record and navigation scans; the repaired
+core charges ordered property comparisons and filter extraction through the
+invocation `Context`. Six focused Rust tests and the four-test Bun predecessor
+baseline pass, including early/late work and cancellation probes. The final
+core source passed independent rereview without P1/P2 in this bounded
+operation. Wire, Python, Node/Bun, WASM/browser, installed assets and default
+routing remain open; this checkpoint does not qualify native relationship
+enforcement.
+
+The first read-only scalar-type inspector candidate now has an opt-in Rust
+core/wire route, a frozen eight-case TypeScript packet, focused Rust tests, and
+fresh Node/Bun addon differential evidence at
+[its bounded checkpoint](evidence/rust-migration/r5-scalar-type-inspection/README.md).
+Independent Sol review verified the exact Rust/test/frozen packet hashes,
+replayed two isolated Rust tests and all eight Bun-addon/predecessor outcomes,
+and found no P1/P2 within the recorded packet scope. The existing local addon
+binary was not independently rebuilt in that replay. Rebuilt browser WASM,
+installed-package parity, host proxy/resource boundaries, result-schema
+failure-branch equivalence and default routing remain open. The result-schema
+branch is a known P2 outside the packet claim: Rust returns its first error,
+while the predecessor serializes the complete Ajv array. Its
+eleven recognized labels match the current generated core vocabulary; this
+does not imply the rest of the scalar/model family has moved to Rust.
+The next read-only record-members inspector now has a nine-case frozen
+predecessor packet, opt-in Rust core/wire and WASM method, focused Rust replay
+and real Chromium 153 equality across all nine cases, recorded in its
+[checkpoint](evidence/rust-migration/r5-record-members-inspection/README.md).
+The packet distinguishes absent from explicitly empty membership and retains
+unknown qualifier warnings as partial/uninterpreted paths. Its Node/Bun
+differential was interrupted under concurrent build resource pressure. Sol
+independently verified the four source/packet/receipt hashes and 22 resource
+pins, replayed all nine predecessor outcomes and the isolated Rust test, and
+found no P1/P2 inside the packet scope. The browser receipt pins WASM and
+packet bytes but not Rust/glue source, toolchain or command; independent
+current-source/browser rebuild correspondence, installed artifacts,
+result-schema error presentation and default routing remain open. This is a
+bounded inspector, not the full
+record/member authoring family.
+An opt-in reference-links inspector now has a nine-case frozen predecessor
+packet, Rust core/wire, Node-API and real Chromium 153 WASM equality at its
+[checkpoint](evidence/rust-migration/r5-reference-links-inspection/README.md).
+It retains ordered duplicate links, opaque qualifiers and scoped unknown-field
+warning paths without promoting a bare role to type authority. Independent Sol
+review verified the nine-case semantic packet and identified a P2 resource gap:
+per-link target lookup and warning filtering repeatedly scan whole collections
+without charging or checking the invocation Context. A charged index and
+per-occurrence work checks, with a cancellation/budget replay, are required
+before accepting bounded core work. A successor now charges its repeated
+target and warning scans to the shared Context; its implementer-run direct
+meter test, nine-case Rust wire replay, Bun 1.4.3 Node-API replay and Chromium
+153 WASM replay pass. Updated candidate receipts pin source, glue, toolchain
+and binaries. Independent Sol review replayed both focused Rust tests, the
+nine-case predecessor and pinned Node addon, and found no remaining P1/P2 in
+this bounded metering repair. The Chromium receipt is historical after
+concurrent WASM wrapper/binary edits; current-source browser correspondence
+needs a final integrated rebuild. Exact
+installed routing, result-schema failure presentation and default retirement
+remain open; this does not close record-type assertions or the broader
+reference family.
+CONTRACT-053's CSV wording was reconciled to the published request schema and
+live current-schema helper's core 0.10.0 admission; its independent historical
+graph schema-selection profile remains core 0.8.0. Freeze 0.8.0, 0.9.0,
+0.10.0 and unknown-version observations before implementing the Rust operation.
+
+The next core-model dependency cluster is CONTRACT-049's four public schema-
+property operations. Rust already exposes `validateCoreFieldValue` and
+`resolveCoreDefault` through the opt-in model wire; `inspectCoreSchemaProperties`
+and `declareCoreSchemaProperties` still execute in TypeScript. Freeze their
+complete source/identity/patch and refusal behavior before porting them, then
+replay the original source against the Rust result with unknown qualifiers,
+copy isolation, resource controls and JSON/YAML round-trip preservation.
+CONTRACT-049 declaration returns a validated Document directly; it has no
+persistent declaration receipt or inverse conversion. Only after
+that shared Field-value boundary is qualified should the narrower
+CONTRACT-053 CSV Boolean lexical conversion and receipt verification be ported.
+The retained CONTRACT-049 predecessor suites pass 58 tests with 439 assertions;
+the CSV predecessor suite passes eight tests with 91 assertions.
+Those suites are baselines, not Rust-port evidence. Both CSV operations must keep
+source context unverified, exact four-token grammar and independent original
+source/request receipt recomputation. Sol approved the existing CSV profile and
+receipt `1.0.0` over current core `0.10.0` after the narrow CONTRACT-053
+correction; the historical graph `0.8.0` remains separate.
+`verifyCsvBooleanLexical` admits and budgets the supplied receipt before reading
+the independently supplied expected
+source/request. Freeze crossed malformed-receipt versus getter/cyclic/oversized
+expected-input cases, including zero expected-source getter reads. A single eager
+JavaScript request snapshot would change that precedence; the binding needs a
+reviewed staged host-read boundary with one live Rust context before any default
+switch. Rust's existing `measure_json` counts serialized UTF-16 units, not the
+contract's UTF-8 bytes; use a bounded exact UTF-8 traversal including lone
+surrogate escaping. An immutable predecessor packet and opt-in Rust core slice
+now exist at [the initial CSV Boolean evidence packet](evidence/rust-migration/r5-csv-boolean-lexical/README.md):
+the predecessor retains eight passing tests/91 assertions, the Rust core passes
+two focused operation tests and UTF-8 boundary controls, and the default-feature
+core wire checks offline. Independent Sol source review found that its first
+source archive lacks a generated constraints resource for standalone replay;
+preserve that failed replay and add a newly hashed complete successor archive.
+The first independent source review confirmed a P1 control-
+failure remapping during receipt admission and two P2 differences: semantic
+receipt-source validation before expected inputs and missing complete-receipt
+copy limits. Exact predecessor-crossed repairs and a complete source archive
+were added: the repaired core passes four focused operation tests and its exact
+UTF-8 unit test, the default core wire checks offline, and an extracted
+successor predecessor closure passes all eight tests/91 assertions. Sol
+independently rereviewed source SHA-256
+`b62bfd182a7a6c6a2e1209ae6d3c5dc25fc11303bb04aaf00d56e64b83741348`
+and the successor receipt with no remaining P1/P2 in this bounded Rust core
+slice. The review reproduced the control failures, unknown-content and
+duplicate-ID structural admission, final depth and aggregate value limits,
+and eight predecessor tests/91 assertions from the extracted successor archive.
+Node, Bun, Python, browser and staged host-read
+parity remain unqualified; default routing and public export retirement require
+their own installed-host and package gates.
+An initial frozen CONTRACT-049 predecessor packet at
+`evidence/rust-migration/r5-schema-properties/frozen-typescript.json` (SHA-256
+`2427c2eb140226a93ac32e25d49a1f60a91582758c620d238dcdd9aaf8506e4a`)
+records inspect/declare results and errors from unchanged TypeScript source
+SHA-256 `2a7fb88a8a560f070c0f4ff7685b2e1be474082271e96ee7c8b85ab5ac6d905f`.
+It includes patch-before-invalid-source refusal and unknown facet group controls.
+The first capture SHA `853292803b6c262e40f0e4136707fbd71cbf872ca2783c876519717eb12894e5`
+preceded an explicit input block needed to replay the same unchanged predecessor;
+the final packet was not refreshed to match Rust. The opt-in Rust wire passed
+three focused tests; packed Node/Bun and real Chromium 153 WASM matched the
+captured operations/refusals, JSON/YAML round-trips and control cases. Sol's
+independent source review then found mismatches in source-versus-identity refusal
+order, slash-bearing unknown-key paths, declaration validation detail, and
+eager host admission of source before a malformed patch. They are being repaired
+and must pass fresh addon/WASM adversarial parity before this slice is reviewed
+complete. The three original Rust core defects were repaired; four focused Rust
+wire tests and a fresh-addon Bun parity harness pass. Independent Sol rereview
+closed those three but found a further P2: invalid or missing identity scope
+with nonempty members must report the first unknown identity key before the
+generic explicit-identity refusal. That Rust core repair and its successor
+evidence are complete. Five focused Rust wire tests pass. A fresh Darwin arm64
+Node addon matches the unchanged TypeScript predecessor across 5 operation
+groups, 12 refusal comparisons, JSON/YAML round-trips, metering and cancellation.
+Current source hashes: `schema_properties.rs`
+`01e44cbbe6df0b81d931796dccb2d1330e5637234c11179216c81e95f7ba6407`, wire tests
+`ef2af909e77c7ac4663787882a4392ca44e68f4c99f35b4858833235c5d32292`, parity
+harness `f2983f3c531aaf1d86527db8aaa2fadfd999a3e06a6c7b0db9ab94b6fe10bf60`,
+and fresh addon `f23bc001f16b882ad6e6b99dc7432011024416360a53d13829c85ef20a1eeaaa`.
+The unchanged TypeScript predecessor remains
+`2a7fb88a8a560f070c0f4ff7685b2e1be474082271e96ee7c8b85ab5ac6d905f`; the
+immutable frozen capture remains
+`2427c2eb140226a93ac32e25d49a1f60a91582758c620d238dcdd9aaf8506e4a`.
+Independent Sol rereview reproduced the five Rust wire cases and twelve
+fresh-addon refusal comparisons at those hashes and found no remaining P1/P2
+in the bounded opt-in Rust core.
+The host admission-order P2 remains open; no JavaScript semantic unknown-key
+shortcut was retained. Wider patch matrices, installed package/default routing
+and R8 gates remain open.
+
+The schema-property patch-before-source and CSV receipt-before-expected-input
+cases expose the same R7 boundary requirement: Rust must request host values at
+the predecessor's semantic checkpoints, with one live operation context and
+original host-control failures preserved. A wrapper that duplicates unknown-key
+or receipt-schema validation in JavaScript can be an opt-in experiment, but it
+does not satisfy the Rust ownership/default-retirement gate. Sol's reviewed
+design is a private synchronous `umf.host-json/1` reflection protocol: Rust
+owns guarded JSON traversal, limits, number admission, paths and operation
+checkpoints; one invocation-local JavaScript dispatcher retains opaque values,
+descriptor snapshots and exact thrown values while performing primitive
+reflection. Its first opt-in route is `declareCoreSchemaProperties`: copy and
+admit patch before reading source, copy source before identity, then validate
+source and locate identity in Rust. CSV verification follows after a separate
+Gate0 and receipt-before-expected-input parity gate. Repeated `Array.isArray`,
+descriptor snapshot order, JavaScript array-length coercion, one live Rust
+context, reentrancy and raw callback exception identity are explicit gates.
+No default route changes until fresh Node/Bun/real-browser and installed-package
+evidence qualifies the endpoint.
+An initial opt-in Rust `host_json` traversal shard and five fake-host tests now
+exist, along with a five-case Bun predecessor reflection Gate0. Neither is a
+binding or declaration route. Independent Sol source review found a P1 in
+eager descriptor-vector expansion before resource checks, plus P2 differences
+in exact refusal messages, predecessor-facing string metering and array-index
+placement under live proxy mutation. A token/count/one-descriptor-at-a-time
+revision closes the eager Rust-vector allocation, matches the ordinary messages
+and avoids silent array compaction, but Sol's second review found new early
+descriptor-count and 4M text refusals, a fallible release checkpoint before
+final live array inspection, and wrong precedence for ordinary sparse arrays.
+Large root strings and callback framing still lack a bounded transport design.
+A further core revision removes the early descriptor and 4M text admissions,
+makes token cleanup non-observable, and restores ordinary sparse-array refusal
+precedence. Ten focused fake-host tests pass. Sol independently rereviewed
+`host_json.rs` SHA-256 `b137345f23385d45c9dc5c204ec12c79df95e3e5d0dc746c56b77350a7153f0a`
+and closed the four prior P2 findings without finding a new P2 in that isolated
+core. This is fake-host control evidence, not browser equivalence. At that
+reviewed source, whole UTF-16 keys, values and roots still crossed the host
+trait in one owned allocation. The next revision must use invocation-local immutable string tokens and fixed-size
+chunk reads with exact length/offset checks, preserve lone surrogates, and pass
+the original key token for array-index checks. A chunk size is a frame bound,
+not an admission limit; accepted output can still grow with input. That core
+revision is now staged at `host_json.rs` SHA-256
+`8e6b59c2cd8bbb4330e99736330f65efe3acf3493ff9a1581e67351675f44600`:
+all twelve focused fake-host tests pass, including multi-chunk root, oversized
+key/value, malformed framing and hidden accessor controls. Sol independently
+reproduced those twelve plus temporary UTF-16 boundary, lone-surrogate, empty,
+oversized-reply, wrong-offset/kind and immediate-host-error controls, finding
+no P1/P2 in the pinned fake-host protocol. Its
+[bounded receipt](evidence/rust-migration/r8-model-host-input/host-json-core-prototype.md)
+does not qualify a real Node/WASM adapter, invocation token store, callback
+exception transport or browser behavior. Adapter enforcement of immutable
+tokens, bounded reply allocation and infallible cleanup, followed by independent
+binding review, remains an integration gate. The Gate0 also
+needs a complete source/resource closure and Node/browser evidence.
+The first [opt-in Node/Bun adapter prototype](evidence/rust-migration/r8-model-host-input/node-adapter-prototype.md)
+now uses that protocol for staged `declareCoreSchemaProperties`. Its current
+repair cohort fixes event-aware boolean classification and checks callback
+frame length before N-API string conversion. A fresh isolated addon passes
+19 focused cases in Node 26.12.1 and Bun 1.4.3, including crossed patch/source
+order, raw thrown-object identity, scalar roots and a 20,000-unit string.
+Sol accepted those exact 19-case binary/source pins as a bounded prototype,
+then found a P1 in a later dispatcher revision: a mutated typed-array length
+getter silently zeroed numeric result fields. The successor fixes numeric
+decode to eight fixed bytes; fresh Node/Bun runs pass a 20-case packet at
+dispatcher SHA-256 `ab99a6c9455ae42972816d9bd22ab9ce21bdfa096eb4e059ce362a1c72d2f162`.
+A later source-traversal control exposed another output-parity fault: a Proxy
+could mutate inherited `toJSON` methods before the dispatcher serialized its
+reply. The current opt-in successor uses null-prototype transport records and
+arrays; its implementer-run Node 26.12.1/Bun 1.4.3 packet passes 21 cases at
+dispatcher SHA-256 `3122df6c4ec0211edd164dac63d7041e4fba40c971ff7ef113696f686586b636`.
+Independent Sol review verified the current dispatcher/harness/addon pins and
+replayed all 21 cases in Node and Bun with no new P1/P2 in this focused
+prototype. The addon was hash-checked rather than independently rebuilt.
+Controls are explicitly refused on this opt-in method; cumulative transport
+accounting, complete predecessor/resource closure, dynamic sparse snapshot
+equivalence, WASM/Chromium, installed package and independent adapter review
+remain open. The existing default model method is unchanged.
+
+An R7 [`generatePythonClient` V2 Rust candidate](evidence/rust-migration/r7-codegen-candidate-v2/README.md)
+uses an explicit opt-in subpath
+and asynchronous initialization that returns a synchronous generator in Node
+and Chromium. Packed-host tests cover the 31 R3 cases and cancellation/recovery.
+The snapshot boundary differs from the legacy API on getter/proxy reads and
+crossed invalid-package/accessor errors, so default cutover requires a reviewed
+host-read protocol or versioned contract change. The packed payload now
+includes the existing `./loader-contract` export; Node/Bun, TypeScript and
+Chromium V2 evidence and the final source hashes passed independent rereview
+with no remaining P1/P2 in this bounded opt-in slice. The packed test supplied
+local Ajv/YAML dependencies by symlink and is not a clean registry install.
+Sol's production-interface review found that exact legacy compatibility
+requires synchronous Rust-driven host reads at the original checkpoints:
+initial package admission, source `text`/`format`, later digest `text`, record
+selection, conditional native `format`, action selection, and file/path/archive
+construction. The JavaScript host must retain the original request, preserve
+getter/proxy/coercion order, and rethrow original callback exceptions. An eager
+snapshot cannot satisfy those crossed-error and changing-getter cases. A
+separate [host-read Gate0](evidence/rust-migration/r7-codegen-host-read-gate0/README.md)
+freezes changing getter/proxy/coercion traces and raw exception identity across
+Bun, Node and real Chromium, including four source-text reads and the
+conditional `_table_runtime.py` package read before `source.json`. Its 218
+bundle inputs and external capture inputs are pinned; 46 host assertions pass,
+and Sol found no remaining P1/P2 for using the packet to guide staged
+implementation. An opt-in [V3 staged Rust host-read candidate](evidence/rust-migration/r7-codegen-host-read-v3/README.md)
+now passes the 46-case deep Gate0 candidate/predecessor equality in Bun 1.4.3,
+Node 26.12.1 and an extracted-package Playwright run on Edge 155.0.4283.62,
+plus the 31-case R3 Node corpus and resource/cancellation controls. Its evidence
+pins a 26-input source closure and packed artifact hashes. Independent Sol
+source review found three P2 parity gaps: a record getter before legacy-action
+and identity refusals, rejection of a later unpaired-UTF-16 package path, and
+loss of meter/cancel failure provenance during host-response decoding. Repairs
+and a [source-pinned successor replay](evidence/rust-migration/r7-codegen-host-read-v3/repairs-p2/README.md)
+now pass the 46-case Gate0, 31 R3 requests and three new adversarials in Bun
+1.4.3, packed Node 26.12.1 and extracted-package Edge 155. Independent Sol
+rereview verified the exact receipt, archive, bundle and source hashes and
+reproduced all three new adversarials in pinned Node with no remaining P1 in
+those repairs. Its bounded full 46+31 Node replay did not finish, so the
+receipt's complete replay remains Luna-executed, while the independent review
+qualifies the three focused controls only. An additional adversarial
+selection with an unpaired-UTF-16 module ID is now reproduced outside Gate0:
+the TypeScript predecessor reaches `Selected Record not found` at that ID,
+while the earlier V3 revision refused early at `/records` during UTF-8
+conversion. A further [UTF-16 and cumulative transport successor](evidence/rust-migration/r7-codegen-host-read-v3/utf16-cumulative-transport/README.md)
+repairs record/action selection and carries work/constraint counters across
+host-response decodes. A packed Node 26.12.1 and Edge 155 replay passes the
+46 Gate0 observations, 31 R3 requests, both surrogate selections and an
+integrated two-response meter-failure/recovery probe. Its archive and runtime
+bits are pinned, but concurrent core-wire edits prevent claiming a complete
+frozen build-time source closure; independent review of this successor and
+one final source-cohort rebuild remain required before default routing. That
+review identified an additional current-source mismatch: the WASM host-read
+binding still contains a 32 MiB response admission cap, whereas the tested
+packed WASM and the successor receipt describe no cap. The source limit must
+be removed and a fresh browser artifact replayed before accepting the
+source-to-binary cohort.
+Chrome-channel qualification,
+dependency-clean installed SDK export/default routing and retirement remain
+open; V2 and V3 stay opt-in.
+The earlier V3 host dispatcher constructed a complete tagged response string
+that Node/WASM copied into Rust before decode. A proposed fixed 32 MiB response
+ceiling was rejected because runtime selection/text responses have no matching
+predecessor total-byte limit. Sol's parity-safe production direction is
+invocation-local response tokens with bounded UTF-16/array frames, exact
+offset/count validation and fallible incremental accumulation; frame bounds
+must not become total semantic admission limits. Any new transport meter debit
+needs its own ordered-control parity proof. Hard total-memory isolation for
+otherwise unbounded accepted text belongs in a worker/process boundary. This
+pre-copy/aggregate-resource gate motivated the successor transport.
+
+The [V3 ASCII-frame successor](evidence/rust-migration/r7-codegen-host-read-v3/hex-ascii-transport/README.md)
+now uses call-scoped descriptors and bounded UTF-16 frames encoded as primitive
+ASCII strings. Fresh packed Node v26.12.1, Bun 1.4.3 and Edge 155 matched 46
+Gate 0 observations and 31 R3 requests; Edge also passed live `Uint16Array`
+poisoning with no external requests. Independent Sol review verified the
+receipt-pinned source/artifact identities and found no remaining P1/P2 in this
+bounded opt-in transport scope. The reviewer could not rerun Rust tests during
+a concurrent unrelated core edit; the seven passing Rust frame tests remain
+implementer evidence until a coherent integrated rebuild. Dense selected-array
+enumeration/snapshot still precedes Rust precharge; binding-level mutation-
+sensitive `TransportUsage` carry and final one-cohort rebuild/replay remain open.
+These gates, synchronous production loading and installed default routing block
+R7 activation.
+
+The production default direction is the explicitly versioned V4 cooperative
+host-read profile now specified in CONTRACT-079, with a scoped CONTRACT-080
+exception. It caps raw record positions at 10,000, raw action positions at
+1,000 and cumulative selected identity text at 4,000,000 UTF-16 units before
+deduplication, using `RESOURCE_LIMIT` / `V4 host-read resource limit exceeded`
+at `/records` or `/actions`. It captures one array length and traverses indexed
+positions rather than invoking caller `map`/iterator behavior; this is an
+intentional versioned difference, including the 10,001-duplicate case. Preserve
+the Rust-driven checkpoint order, frozen selected strings, original thrown
+value, call-scoped counters and <=8,192-unit ASCII frames. CONTRACT-067's
+separate selected/reached limits are not authority for these raw caps. Freeze
+crossed sparse, duplicate, getter/mutation, surrogate, exception and control
+traces before implementation; then qualify synchronous installed Node/Bun and
+browser loading and complete archive asset closure. Arbitrary getters/proxies
+remain cooperative host work; V4 makes no hard memory or deadline-isolation
+claim. Independent Sol planning review selected this profile. The codegen wire
+boundary now carries one ordinary Rust `Context` through tagged
+transport admission, catalog construction, generation, error conversion and
+output encoding for both ordinary dispatch and host-read V3/V4. Scoped transport
+and catalog allowances restore ordinary limits while preserving cumulative
+counters and host controls. Focused counter, restoration, control-hook and wire
+route tests are recorded in the [V4 evidence](evidence/rust-migration/r7-codegen-host-read-v4/README.md#unified-codegen-context-follow-up--2026-10-24).
+This closes that implementation blocker for the tested source cohort only;
+source-cohort replay/review and default activation remain open. The neighboring
+generic non-codegen request path still uses a separate operation Context and
+is outside this focused change.
+
+An [integrated V4 checkpoint](evidence/rust-migration/r7-codegen-host-read-v4/README.md#integrated-candidate-checkpoint--2026-10-24)
+rebuilt the native addon and release WASM after that Context change. The
+repository-tarball V4 route passed Node, Edge 155, Chromium 153 and a clean
+package extraction; packed V3 Node and Edge each replayed the 46-case host-read
+Gate 0 and 31 R3 cases. The same rebuilt bindings passed the opt-in R5 Record
+value cases in Node, Bun, Edge and Chromium. The evidence pins archive and asset
+hashes and confirms temporary generated assets were restored. Concurrent R5
+module edits prevent treating these binaries as a frozen all-source cohort.
+Independent review, final-cohort rebuild, release SDK archive routing, Chrome
+release-channel qualification and default activation therefore remain open.
+
+Sol's R7 production-interface decision preserves synchronous
+`generatePythonClient(request)` after the ESM import resolves. Separate
+Node/Bun NAPI and browser WASM root entries will initialize at module load;
+missing or incompatible assets reject the import, with no TypeScript generator
+fallback. The first native packaging cohorts are the existing CI-supported
+macOS arm64 and Linux x86_64 hosts. Archives must identify their platform and
+fail clearly on other native targets; this is a selected initial distribution
+matrix, not a universal Node/Bun claim. Nine repository-owned resources remain
+in the trusted package closure, with the reviewed V4 position and UTF-16 text
+limits. The opt-in entrypoint sources and preview archive are now built without
+changing the default route; their evidence and review are recorded below.
+
+The [opt-in root-entry preparation](evidence/rust-migration/r7-codegen-host-read-v4/README.md#production-root-entry-preparation--2026-10-24)
+now has separate Node/Bun and browser sources that await Rust V4
+initialization at module import and expose the existing synchronous generator
+call. Sol independently reviewed the export/type and failure path and reran
+the focused Bun parity and host-read controls; Node/Bun and Chromium smoke
+checks passed against the earlier integrated addon/WASM pair. The package
+root remains TypeScript. A clean source-bound macOS arm64 preview archive now
+passes extracted-package Node 26, Bun 1.4.3 and Chromium 153 checks, including
+missing-native and corrupt-WASM refusals. Sol independently reproduced the
+installed matrix and all 489 manifest asset hashes in the 491-member archive.
+The Linux x86_64 CI job is defined but unrun; frozen all-source replay, exact
+retirement mapping and production default cutover remain open. This preview
+receipt cannot qualify the moving source worktree or the published SDK.
+Sol subsequently replayed all 31 frozen R3 cases independently in Node, Bun
+and Chromium from the immutable preview archive and verified the complete
+2,147-input snapshot digest and 489-asset/491-member archive manifest. The
+snapshot used existing build-tool dependencies and remains a preview; the
+moving worktree and installed production route still need a final frozen
+cohort and qualified CI matrix.
+
+A newer [private SDK Rust default-route archive](evidence/rust-migration/r7-sdk-default-route/README.md)
+uses a fresh 3,226-input source snapshot and routes the installed package root
+to synchronous Rust V4 code generation. The clean macOS arm64 archive passes
+all 31 frozen generator cases, root export-name comparison, resource controls
+and native/WASM missing-or-corrupt refusals in Node 26.12.1, Bun 1.4.3 and
+real Chromium 153.0.8010.12. Independent [Sol review](evidence/rust-migration/r7-sdk-default-route/sol-review.md)
+recomputed all retained source hashes, all 1,771 archive asset hashes and the
+exact 1,777-member archive inventory. The captured live and derived build
+source trees differ in 11 generated inputs; the manifest marks the archive
+private and nonpublishable. The repository root still selects TypeScript at
+this checkpoint. Metamodel fixed point, source-root activation, hosted platform
+cohorts, broader export retirement and R8 release gates remain open.
+
+For the first production SDK route, preserve the existing synchronous
+`generatePythonClient` call after module import. The current async V3 factory
+is an opt-in loading interface, not a substitute for that export. Build
+platform-specific Node/Bun and browser entries that initialize their native
+addon or WASM before exposing the synchronous call; the browser package's
+existing top-level-await loading pattern is a candidate, subject to a clean
+installed Chrome/Chromium and bundler check. Missing, corrupt or incompatible
+assets must fail at loading rather than invoke the predecessor implementation.
+If this cannot be made portable, require an explicitly reviewed versioned
+loading-contract change before default routing; never silently turn the
+existing call into a Promise. The exact export, reached helpers, nine trusted
+resources, ABI and predecessor retirement need an authority-bound ledger row
+and independent review before that one-family cutover.
+
+The public root package manifest is not the shipped SDK manifest.
+`scripts/build.ts` still builds the TypeScript `src/index.ts` as the development
+default `dist/umf.js`. The previous `scripts/package-sdk.py` release path
+filtered root-level bundles to `umf.js`, its map and `loader-contract.js`; it
+does not establish a Rust default route. The new private
+`scripts/package-sdk-rust-default.ts` path builds a fresh source-snapshot Rust
+addon and browser WASM, then synthesizes an archive whose package root selects
+the V4 synchronous Rust generator. This archive is a bounded candidate until
+the extracted installed manifest and assets, unsymlinked dependency install,
+original host-read/exception controls, Node/Bun and real-browser routes, and
+missing/corrupt-asset refusals pass on one captured source cohort. Only then
+may the one-family archive cutover be reviewed; the other TypeScript root
+exports and the broad R7 retirement gate remain open.
+
 Each family retains immutable predecessor outcomes, contract controls, independent
 version-pinned native oracles, required recovery directions, unknown-content/edit
 refusals, explicit losses, copy isolation and ordered failures. Qualify the declared
@@ -1442,6 +2352,11 @@ all other unqualified native subsets unless independently qualified.
 
 - [ ] Successor census has zero unresolved active rows; each has Rust ownership,
       generated inert-data ownership or a justified thin host boundary.
+- [ ] The shipped `./reference` condition and development package entrypoints
+      contain no surviving TypeScript semantic implementation. Preserve frozen
+      predecessor fixtures outside the production artifact; route every
+      supported runtime operation through Rust or record an explicit,
+      reviewed compatibility removal before calling the port complete.
 - [ ] Independent reviews name exact source hashes and reviewers who did not
       implement reviewed changes; required corrections are closed.
 - [ ] One frozen source/model cohort passes boundary/authority checks, metamodel
@@ -1461,6 +2376,44 @@ all other unqualified native subsets unless independently qualified.
 - [ ] Publish authorized reviewed UMF artifacts and verify actual registry/index
       artifacts and clean installs against hashes. Distinguish prepared artifacts,
       publication and consumer adoption.
+
+The current manual `.github/workflows/pypi.yml` publishes only the `umf-core`
+project from one Ubuntu build. R8 must prepare and review a coordinated
+`umf-core`/`umf-codegen` release workflow and verified platform artifacts before
+using that publisher. The existing source-bound access workflow exercises both
+installed distributions, but a passing PR check is not a publication receipt.
+The latest [published UMF SDK tag](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.5.6)
+observed before this work is `umf-v0.5.6`;
+the moving worktree still declares `@umf/core` 0.5.6 with `private: true`.
+Select a new SDK tag/version after default routing and compatibility review,
+and keep its channel distinct from the proposed Python core 0.11.0 and codegen
+0.2.0 distributions. The existing tag is not a release of this Rust port.
+The Python distribution version `umf-core` 0.11.0 is a packaging/API version;
+this migration does not reserve a new semantic envelope revision. Current Rust
+core validators continue to require the `umf: "0.10.0"` document profile.
+Any future envelope revision requires its own governed design and qualification.
+
+R8 coordinated Python release validation is now a separate, non-publishing
+workflow at `.github/workflows/python-coordinated-release.yml`. Its six-job
+matrix matches the plan's required Ubuntu/macOS × CPython 3.11.17/3.12.15/3.13.16
+cohorts (Linux x86_64, macOS arm64). It builds the `umf-core` 0.11.0 and
+`umf-codegen` 0.2.0 wheel/sdist pair, checks the core wheel payload
+and offline extracted-sdist rebuild with `tools/verify_python_artifacts.py`,
+then installs the exact pair and exercises the installed codegen API/CLI. Its
+second verifier rebuilds the codegen sdist offline and records SHA-256 values,
+source revision, runner cohort and the core verifier receipt. A dependent
+aggregate job downloads only artifacts from that workflow run and requires all
+six exact cohorts, one source revision/run, current source pins, matching host
+and wheel platforms, receipt-linked artifact hashes, and identical source,
+resource and sdist-input closures. It emits a non-publishing aggregate receipt;
+no publication job consumes it yet. The former independent
+`.github/workflows/pypi.yml` publisher now fails closed and has no registry
+credentials or publish action, so it cannot bypass the six-cohort gate. Sol
+independently reran the aggregate negative and positive tests (23/23 passed).
+Hosted execution of all six jobs, Windows, macOS x86_64, a reviewed coordinated
+publisher, registry artifact verification, rollback, and consumer adoption
+remain open. See the source-bound R8 release evidence directory for current
+source and test hashes.
 
 ## Validation plan
 
@@ -2401,3 +3354,1401 @@ hash tokens changed. The [supplemental build review](evidence/rust-migration/r3/
 records exact file and bundle identities. The original full qualification receipt
 remains scoped to its captured sources. Complete hosted qualification is required
 against the successor PR head before merge.
+
+### R5 opt-in core Record values checkpoint — 2026-10-24
+
+The bounded [Rust core Record value slice](evidence/rust-migration/r5-record-values/README.md)
+ports `validateCoreRecordValues` against its live TypeScript predecessor. Its
+source-bound packet freezes live operation 2.0.0/core 0.10.0 behavior, including
+copy/preservation, unknown source content, selected Field validation, diagnostics
+and thrown-error order. Sol's independent review then identified refusal-order,
+unknown-member, warning-order, UTF-16, and resource-boundary gaps. The Rust port
+now includes the crossed refusal/result vectors, uses UTF-16 keyed indexes and
+paths, and matches the 15,000-duplicate structural limit location. A second Sol
+review then found three remaining edge mismatches; the frozen packet now also
+covers null/array and missing identities, raw slash/tilde qualifier paths, and
+output-copy depth failure. The Bun verifier replays the frozen predecessor cases
+plus both resource controls. CONTRACT-049's older 1.0.0/core 0.8.0 passage
+remains historical context; this slice follows the current source/API. This is
+opt-in core evidence only. It does not qualify bindings, default/package
+behavior, browser execution, dataset/native enforcement or adapter support; the
+corrected source passed final independent Sol re-review without P1/P2 in the
+bounded logical Record-values scope. The reviewer verified source
+`02636eef58b8f31355f4c798bae0dbec77682397f9fb0ab8ae50614aa52d9b42`,
+packet `50d52bab545eae6566e8da6064c4fbec6d8880c89b4a32c9f2c5c614d4a3b5a9`
+and test `921ae36a2fa72acb9e6da7532628dc066fff8bed1c58eaccb7ceb73547c4db22`;
+the focused Rust test, four Bun tests (27 assertions), 24 frozen cases and both
+resource controls passed. The separate binding/default/installed-host gates
+remain open.
+
+The subsequent opt-in `validateCoreRecordValues` tagged-wire binding is now
+implemented in the local Node/Bun and browser WASM packages. Its
+[binding packet](evidence/rust-migration/r5-record-values/README.md) pins the
+accepted core, tagged-wire and wrapper sources, a packed native addon, and a
+rebuilt release WASM artifact. Four frozen success/refusal cases and copy
+isolation pass in Node 26.12.1, Bun 1.4.3, Chromium 153.0.8010.12 and Edge
+155.0.4283.62; browser zero-work refusal also passes. This is a bounded
+implementation and host checkpoint. Python exposure, default routing,
+native row enforcement and broader resource qualification remain open.
+
+Independent Sol binding review found no P1/P2 in that opt-in scope. It replayed
+the focused core and tagged-wire Rust tests, wrappers, all 24 frozen results
+and refusals in a packed Node install, and the four-case packed Node/Bun checks.
+The reviewer verified the earlier Chromium/Edge receipts and exact WASM/glue
+hashes, but its own browser launch was denied by the macOS sandbox; it did not
+claim a new browser pass. Concurrent codegen Context work has since changed
+the shared `crates/umf-core-wire/src/lib.rs` source beyond the binding receipts.
+Rebuild and replay the final shared wire/addon/WASM cohort before integrated
+qualification or default routing.
+
+The opt-in Rust `validateCoreDatasetValues` and `verifyCoreDatasetValues`
+[predecessor packet](evidence/rust-migration/r5-dataset-values/README.md)
+now covers complete commerce, mutation-sensitive Key and relationship outcomes,
+wrong-version validation order, nested host controls and full-receipt verify
+recomputation. Sol independently reviewed the repair, reran the focused Rust
+suite (9/9) and the live Bun dataset suite (8/8, 86 assertions); no P1/P2
+remains in this bounded full-receipt cohort. This is not complete dataset
+parity: broader relationship/key/verify adversarial cases, final assembled-copy
+boundary reachability, bindings, native enforcement and installed-host
+qualification remain open.
+
+Compact validate/verify requires shared Record/Field/Key semantic evaluator
+bodies over one frozen source context and a composable invocation-local work
+ledger; it cannot call the full repeated-source operation and strip the result.
+CONTRACT-056's historical core 0.8.0 sentence has been reconciled to the live
+core 0.10.0 request schema and TypeScript implementation, without authorizing
+implicit conversion. The [opt-in compact core packet](evidence/rust-migration/r5-dataset-values-compact/README.md)
+now passes 15 frozen complete envelopes and the 349/350 production work-ledger
+boundary; 349 records match all 59 TypeScript categories at 998,489 units.
+Independent [Sol review](evidence/rust-migration/r5-dataset-values-compact/sol-review.md)
+verified the source/packet hashes, exact threshold map, three iterative
+depth/control unit tests, and the direct public API depth case. The agent's
+final serial suite passed 4/4. This accepts only the bounded Rust core slice:
+phase-internal first-stop equivalence, regex/resource graphs, native bindings,
+installed hosts, default routing, and R5 completion remain open.
+
+### R5 opt-in core semantic-type operations checkpoint — 2026-10-24
+
+The bounded [semantic-type operation packet](evidence/rust-migration/r5-core-semantic-types/README.md)
+freezes the live TypeScript `inspect`, `get`, `declare`, and `verify` operations
+for core 0.10.0 / operation 2.0.0. Rust replays the complete inspection and
+declaration envelopes, exact identity and request refusal order, unknown
+qualifier edit guard, schema-first malformed receipt refusal, and recomputed
+receipt consistency. Independent Sol review found and corrected a verifier
+error conversion: a valid receipt whose recomputation fails now propagates
+`SEMANTIC_TYPE_UNKNOWN` and nested control failures. The 13-source packet
+closure matches, the final focused Rust suite passes 2/2, and the repository
+typecheck passes. No P1/P2 remains in these four opt-in core operations.
+Older-core `legacy` inspection is a live TypeScript/CONTRACT-078 gap, so the
+0.9.0 cases qualify refusal only. Registry lookup, value validation, extension
+APIs, bindings, maximum-budget allocation boundaries, default routing and
+installed-host qualification remain open. This is not full semantic-type or
+R5 completion.
+
+The next bounded [data-only semantic registry slice](evidence/rust-migration/r5-semantic-type-registry/README.md)
+adds caller-owned Rust `register`/`lookup` for exact vocabulary/version/term
+triples. It copies definitions, rejects unknown registration qualifiers and
+duplicates, retains unknown lookup qualifiers without interpreting them, and
+uses the caller's `Context` for copy, index comparison and control work.
+Sol independently reviewed the final source and five-source TypeScript packet;
+the final focused Rust suite passes 4/4 with no P1/P2 in this data-only scope.
+The next bounded [semantic value-check slice](evidence/rust-migration/r5-semantic-value/README.md)
+adds opt-in `registry.check`, `validate_semantic_type_value` and
+`validate_core_semantic_type_value` with an invocation-scoped trusted validator
+trait. The 21-source TypeScript freeze covers ordered checks, status precedence,
+copy isolation, malformed/failed validators, absent declarations and validation
+precedence. Sol independently reproduced the final focused Rust 10/10 replay,
+checked the freeze closure and corrected two large UTF-16 callback-result
+metering gaps before acceptance. The validator is cooperative and receives the
+same mutable `Context`; this does not promise preemption of a non-cooperative
+callback. Host work transport, Node/Bun/browser/Python bindings,
+CONTRACT-078 transition/source reconciliation, default routes and retirement
+remain open.
+
+The opt-in [retained extension-accessor slice](evidence/rust-migration/r5-semantic-type-accessors/README.md)
+adds copied `getSemanticTypes`, copy-on-write `setSemanticTypes`, and the
+prototype's semantic warning validation against the current
+`umf.semantic-types` 0.1.0 package. Sol independently checked the 25-source
+transitive TypeScript freeze, reran the focused Rust tests (4/4), and found no
+P1/P2 in the bounded accessor behavior. Generic extension-registry API shape,
+archived transition operations, host bindings and default routes remain open.
+
+The subsequent [six-operation semantic binding packet](evidence/rust-migration/r5-semantic-types-bindings/README.md)
+qualifies those opt-in core and extension operations in a clean installed
+Node/Bun package and real Chromium WASM. Sol reran the installed package by
+name under Node 26.12.1 and Bun 1.4.3, the Chromium 153 browser replay, the
+six wrapper tests, and all 16 receipt source hashes. The initial Node evidence
+script's `Bun.version` exit error was corrected before acceptance. This packet
+does not include Python, trusted validator callbacks, the generic semantic
+registry, the frozen runtime-invalid `vocabularies: null` native error, default
+SDK routing or release qualification. Its installed replay reads frozen
+resources from this repository, so a self-contained release resource closure
+is still needed.
+
+The [opt-in Node/Bun trusted-validator binding packet](evidence/rust-migration/r5-semantic-value-node/README.md)
+adds caller-owned registry admission, lookup, exact value checks and aggregate
+core semantic-type checks through the Rust engine. A clean installed npm
+tarball passes Node 26.12.1 and Bun 1.4.3; focused Rust, Bun and TypeScript
+tests and typecheck pass at the receipt's exact source hashes. Independent
+[Sol review](evidence/rust-migration/r5-semantic-value-node/sol-review.md)
+closed callback work charging on throws and duplicate host-bridge copying,
+then reopened a callback-error provenance issue. The Node dispatcher now
+distinguishes caller-thrown engine-like codes from private report-work and
+frame-limit signals; source and clean installed Node/Bun spoof controls pass.
+Sol then rebuilt the shared-wire/native addon from the settled source, packed
+it, and independently reran the 9/9 source suite and installed Node/Bun
+package-name and spoof controls. The refreshed receipt pins that accepted
+opt-in Node/Bun cohort. Ordering preflights use a
+separate control-free Context, aggregate document validation runs twice, and
+each final operation replays registry entries; large-registry resource parity
+is unqualified. Browser callback bindings, generic transition APIs, default
+routing and retirement remain open.
+
+The additive [Python trusted-validator binding packet](evidence/rust-migration/r5-semantic-value-python/README.md)
+now has independent [Sol review](evidence/rust-migration/r5-semantic-value-python/sol-review.md)
+and a clean installed CPython 3.11.17 abi3 wheel replay (5/5 focused tests).
+The review repaired a forged private control-exception route: only the exact
+sticky `report_work` fault can become a terminal host-control response;
+caller-raised resource-shaped exceptions become semantic unknowns. The wheel,
+native member, source and predecessor hashes are pinned in its receipt. This
+accepts the opt-in Python callback facade for that host and source cohort,
+while cooperative-only callbacks, registry-replay scaling, default routing,
+additional platforms and full family retirement remain unqualified.
+
+### R8 integrated retirement and release checkpoint — 2026-10-24
+
+The latest [source-pinned private SDK
+checkpoint](evidence/rust-migration/r8-integrated-private-sdk/README.md) reached
+a fixed point and passed installed Node v26.12.1, Bun 1.4.3 and real Chromium
+153.0.8010.12 replay, package verifier 9/9, and Python extracted-sdist
+closure 12/12. [Sol's independent review](evidence/rust-migration/r8-integrated-private-sdk/sol-review.md)
+limits that acceptance to the 29 Rust-selected default operations and their
+named packet cases. It is private and nonpublishable. The recaptured inventory
+still reports 893 inherited TypeScript executable declarations per default
+root and 922 logical retirement gaps; hosted Python six-cohort qualification,
+remaining resource authority, full regression, and publication are open.
+
+The next parallel R8 waves are bounded by the current dependency graph. Delta
+continues with JSONL log capture/export/inspection, then action inspection and
+commit/checkpoint reconciliation before Parquet-backed checkpoint recovery;
+source and ordered diagnostics remain the authority until separate native
+reader/writer evidence exists. Resource authority continues with the three
+CONTRACT-016 Arrow IPC result schemas and their exact single-output writers,
+then transitive Arrow base inputs. Security disclosure starts with shared
+literal admission and transport behavior, then V2 protection-source/domain/
+parameter resolution; legacy policy/ontology interpretation remains a distinct
+dependency before its three codec exports. These waves create opt-in owners and
+evidence, not automatic default-route retirement.
+
+An [eleven-case Core relationship host-boundary
+packet](evidence/rust-migration/r8-core-relationships-default-boundary/README.md)
+now freezes source/identity/request/receipt/current refusal order and raw
+reflection traces before a default cutover. Its read-only replay passes. The
+four operations still use TypeScript at the production root; the opt-in Rust
+binding needs exact host-boundary comparison and a source-pinned installed
+Node/Bun/Chromium replay before it can replace that route.
+
+The [condition-aware symbol inventory](evidence/rust-migration/r8-symbol-inventory/README.md)
+is the current release denominator, subject to deliberate recapture after the
+active source edits. It identifies 922 unique executable root exports and 198
+JSON resource aliases. The Node and browser roots each source-select 24 Rust
+declarations and inherit 898 TypeScript executable declarations; the explicit
+`./reference` route retains the predecessor. No executable row has passed the
+combined source-cohort, installed-host and retirement gate. An opt-in Rust core
+mapping or a private archive replay does not close a default-route row.
+
+The resource audit has independently reviewed seven authored Smithy schemas
+against CONTRACT-014 and six OpenAPI result schemas against CONTRACT-011/012,
+with explicit source/build closure in their [Smithy
+receipt](evidence/rust-migration/r8-symbol-inventory/smithy-resource-authority.md)
+and [OpenAPI receipt](evidence/rust-migration/r8-symbol-inventory/openapi-resource-authority.md).
+Their separate [Smithy](evidence/rust-migration/r8-symbol-inventory/smithy-sol-review.md)
+and [OpenAPI](evidence/rust-migration/r8-symbol-inventory/openapi-sol-review.md)
+Sol reviews leave 69 resource authorities unresolved and 112
+candidate-generated aliases requiring generator proof. Installed archive bytes
+remain unqualified.
+
+A subsequent [domain-pack/dataset-source authority
+receipt](evidence/rust-migration/r8-symbol-inventory/domain-pack-resource-authority.md)
+and [Sol review](evidence/rust-migration/r8-symbol-inventory/domain-pack-sol-review.md)
+prove the generator and source/build closure for four more JSON resources.
+The ledger now reports eight generated-known, thirteen authored-known, 112
+candidate-generated and 65 unresolved unique aliases. Installed package bytes
+and executable retirement are unchanged.
+
+The later [Arrow IPC](evidence/rust-migration/r8-symbol-inventory/arrow-ipc-resource-authority.md)
+and [Arrow base](evidence/rust-migration/r8-symbol-inventory/arrow-base-resource-authority.md)
+authority slices proved six more generated schemas, including the base
+generator's transitive PostgreSQL and FlatBuffer inputs. Separate
+[IPC](evidence/rust-migration/r8-symbol-inventory/arrow-ipc-sol-review.md) and
+[base](evidence/rust-migration/r8-symbol-inventory/arrow-base-sol-review.md)
+Sol reviews independently passed the read-only writers and current ledger
+suite (12/12). The current count is fourteen generated-known, thirteen
+authored-known, 109 candidate-generated and 62 unresolved; installed bytes
+and executable retirement remain open.
+
+The subsequent [Delta report-schema authority
+receipt](evidence/rust-migration/r8-symbol-inventory/delta-log-resource-authority.md)
+and [Sol review](evidence/rust-migration/r8-symbol-inventory/delta-log-sol-review.md)
+pin four more generated outputs with direct exports and transitive Delta and
+Parquet inputs. The four read-only generator checks, current ledger check and
+focused suite (13/13) pass. This moving-source checkpoint reports eighteen
+generated-known, thirteen authored-known, 105 candidate-generated and 62
+unresolved aliases. Installed bytes and executable retirement remain open.
+
+The [Spark forward/reverse projection
+receipt](evidence/rust-migration/r8-symbol-inventory/spark-projection-resource-authority.md)
+and [Sol review](evidence/rust-migration/r8-symbol-inventory/spark-projection-sol-review.md)
+pin two additional generated schemas, including the reverse writer's exact
+forward-schema input. Both read-only writer checks pass; the focused ledger
+suite passed 14/14 at its checkpoint. Counts move to twenty generated-known,
+thirteen authored-known, 103 candidate-generated and 62 unresolved aliases.
+Concurrent wire edits made the ledger check stale afterward; a coordinated
+recapture is still required.
+
+The [Parquet report-schema
+receipt](evidence/rust-migration/r8-symbol-inventory/parquet-report-schema-authority.md)
+and [Sol review](evidence/rust-migration/r8-symbol-inventory/parquet-report-sol-review.md)
+pin four more generated resources, their direct and transitive input chain,
+public exports, and build closure. All four no-write generator checks passed;
+the focused ledger suite passed 15/15 at its moving-source checkpoint. Counts
+became twenty-four generated-known, thirteen authored-known, 99
+candidate-generated and 62 unresolved aliases. Final recapture and installed
+bytes remain open.
+
+A later moving-source inventory captures 29 Rust-selected and 893 inherited
+TypeScript executable declarations in each default root, with the same 922
+logical retirement gaps. This supersedes the 24/898 route-selection count
+above for source inspection only. Its exact hashes must be regenerated after
+the active bindings settle. The ten-route inventory has 3,375 route-specific
+rows, all marked `migrationDisposition: unreviewed`; source selection alone
+does not close their Rust owner, installed route or retirement decisions.
+[Eight kind/nullability host controls](evidence/rust-migration/r5-kind-nullability-default-route/README.md)
+now prove that the generic eager tagged boundary changes source and request error identity,
+reads identity getters before source admission, and admits `current` before a
+malformed receipt can be refused. All six kind/nullability default selections
+remain held pending a staged Rust-owned host boundary and browser/installed
+parity. [Cardinality's crossed host-admission review](evidence/rust-migration/r5-cardinality-default-route/README.md)
+found divergent paths for accessor/hidden fields, cycles and out-of-profile
+numbers at the generic tagged boundary. That boundary retains its opt-in
+`AdmissionError` contract; the selected cardinality route keeps its existing
+TypeScript copying sequence until a distinct Rust-driven host-admission
+interface passes those controls.
+
+The staged kind/nullability host-input route has since passed six operation
+outcomes and eight predecessor-order controls in Node/Bun, plus a fresh real
+Chromium WASM replay. Its factory snapshots explicit resources and preserves
+callback exception identity. Its first binding admitted resource
+snapshot/transport/catalog separately from source, identity, receipt, current
+and output. The exact opt-in scope is recorded in the linked evidence.
+Independent Sol reran its Node/Bun parity packet and six focused Rust tests;
+source-frozen installed qualification and a reviewed resource-accounting
+boundary are still required for default selection.
+
+A later opt-in revision charges resource snapshot, transport, catalog and
+operation work to one per-call control ledger and has direct-source Node and
+fresh Chromium receipts. Preliminary independent timing on the moving
+worktree for one representative
+`inspectCoreElementKind` source found the TypeScript predecessor at 6.28 ms,
+the Rust factory at 27.46 ms, and the current Rust route at 3172.42 ms and
+3181.48 ms for two unmetered calls on this local host. Rebuilding the resource
+Engine per call creates a material latency regression. Retain this revision as
+opt-in while a reusable immutable resource Engine and reviewed accounting
+boundary are designed; the direct-source receipt is not a packed release
+qualification. These timings are one local workload, not a source-frozen or
+cross-host performance claim; repeat them on the final isolated artifact.
+CONTRACT-080's R2 production interface already resolves the accounting
+boundary: `Engine::new(ResourceSet)` admits and privately owns immutable
+resources at factory setup; a fresh operation `Context` cumulatively charges
+its source/identity/request/receipt/current/semantic/output work. Resource
+construction is not repeated per method call, and private transport overhead
+does not consume an independently admitted payload budget. The next
+kind/nullability binding revision must implement that retained Engine boundary,
+prove factory failure/snapshot isolation and per-call reset, and benchmark
+its final installed artifact before source selection.
+
+The moving retained-Engine candidate now separates factory resource admission
+from per-call work. Sol review caught a factory-order error where resource
+reflection preceded a zero-work/cancellation preflight, and an uncharged clone
+of decoded resource trees before `Engine::new`. Both have been corrected in the
+source candidate; fresh native/browser controls, a repeated-call benchmark and
+installed-artifact review are still required before default selection. The
+full Dataset-values host-input candidate uses the same factory/operation split.
+Its nine focused Rust tests and fresh isolated Node/Bun and Chromium 153
+replays pass all eight frozen host-order controls, successful validate/verify
+parity, copy isolation, and zero-touch setup refusal. Sol independently reran
+the Node/Bun packet and accepted this bounded opt-in result in the
+[host-admission review](evidence/rust-migration/r5-dataset-values-host-admission/sol-review.md).
+Integrated packed-package and default-route qualification remain open.
+
+The retained kind/nullability opt-in route subsequently passed six semantic
+cases and ten host-order/control cases in Node/Bun, plus six operations and nine
+controls in fresh Chromium. Sol independently reran the combined-index Bun
+packet. A repeated local three-call sample measured 285.84 ms for Rust
+operations after 2825.25 ms factory setup, versus 5.32 ms for TypeScript
+operations. This roughly 54-fold operation latency on the representative
+fixture is a default-selection blocker; targeted profiling and optimization
+must preserve the staged host order and zero-touch factory refusals. Final
+packed-package source-cohort qualification remains open.
+
+The first schema-cache optimization reduced local call time to roughly
+25–28 ms, but Sol review found that its process-global cache made factory
+setup work depend on prior unrelated factories. The corrected revision owns
+compiled schemas per retained runtime; two successive factories now report
+identical charged setup work and below-budget refusal in Node and Chromium.
+[Sol's follow-up review](evidence/rust-migration/r5-kind-nullability-default-route/sol-review.md)
+accepts the bounded opt-in route. A fresh local three-call sample remains
+81.65 ms for Rust after 3.17 seconds of setup versus 5.20 ms for TypeScript,
+so default selection stays held for performance and installed-package review.
+
+The full Key tuple Chromium packet exposed a target-width portability defect:
+the frozen MAX_SAFE decimal precision/scale case succeeds in 64-bit Node but
+was initially refused on wasm32 by a `usize` conversion; a subsequent
+saturation-only repair still encoded the scale through 32-bit `usize` and
+changed the receipt bytes. Exact 64-bit wire semantics and all related
+precision/width casts now pass a fresh bounded Node/Bun/real-Chromium replay:
+87 in-profile encoders, five verifiers, 4,000,000 raw output bytes, and staged
+receipt-before-current controls. The [independent Sol follow-up review](evidence/rust-migration/r5-core-key-tuple/sol-binding-review.md)
+accepts that opt-in packet but holds default selection because its resource
+runtime still initializes lazily inside the first operation. CONTRACT-080
+requires resource admission at factory setup; a retained eager-runtime revision
+and integrated installed replay are the next gates. The wasm32 defect also
+adds an R8 cross-target integer-width audit for other Rust operations that
+turn semantic integers into `usize` before encoding or comparing meanings.
+
+The eager Key tuple revision now admits immutable resources at factory setup
+and passes fresh isolated Node 26.12.1, Bun 1.4.3 and Chromium 153 packets:
+87 exact in-profile encoders, one separately pinned host-number refusal, five
+verifiers, large byte boundaries, receipt-before-current order and setup
+controls. [Sol's eager factory review](evidence/rust-migration/r5-core-key-tuple/sol-binding-review.md)
+independently checked artifact timing/hashes and a focused installed Node
+smoke. It accepts the bounded opt-in revision; default routing still awaits a
+source-frozen integrated installed package, broader resource bounds and R8
+retirement review. The sampled factory cost was 1.86 seconds and 401,221,260
+charged work units on the cited resource set.
+
+The v4 Node and browser roots now use internal model factories that omit
+the unselected Key tuple runtime and its methods; public generic and
+standalone tuple factories remain eager. [Sol's scoped split review](evidence/rust-migration/r5-core-key-tuple/sol-binding-review.md)
+accepts the factory shape after five focused tests, typecheck, and a captured
+Node/Bun/Edge Chromium WASM package replay. One local cold Bun root import
+fell from roughly 10.4 seconds to 6.7 seconds, a diagnostic sample. The
+package captured a pre-Protobuf shared index and the Node test used an older
+addon, so current combined-source installed qualification, direct tuple
+root selection, and retirement remain open.
+
+The next [six-operation semantic-reference candidate](evidence/rust-migration/r8-semantic-reference-parity-candidate/README.md)
+now has an opt-in retained-Engine Python binding for core inspection/read/
+declaration/verification and interim extension get/set. Staged Rust entrypoints
+preserve declaration types-first, verifier receipt-first, and setter
+profile/target-before-annotation admission. [Sol's independent Python review](evidence/rust-migration/r8-semantic-reference-python/sol-review.md)
+replayed six focused checks from a fresh isolated CPython 3.14 arm64 wheel and
+accepts only that bounded scope. The ordinary Hatchling build, declared hosted
+wheel/sdist matrix, full frozen 16+16 parity, default Node/browser source
+selection and the known `vocabularies: null` TypeError mismatch remain open.
+Sol's expanded installed-wheel replay matched all 15 core cases representable
+through the Python call signature. Of 15 accessor cases, 12 matched exactly,
+one preserved the expected annotation without a separate diagnostics replay,
+and two differed: JavaScript `undefined` versus Python `None`, and the
+`vocabularies: null` native TypeError versus Rust profile error. The separate
+diagnostic-order case was not exercised through these wrappers. This does not
+close the full frozen packet or hosted-platform gate.
+
+Sol selected the [R8 adapter operation wave](evidence/rust-migration/r8-adapter-operation-wave-map/README.md)
+as the next bounded investigation: eight JSON Schema exports and nine
+Protobuf descriptor/document/source exports, or 34 Node/browser root
+declarations. The two standards retain separate contracts and evidence.
+First compose a current-source, all-eight JSON Schema opt-in packet from the
+existing seven-operation and tree/edit predecessors; then compose descriptor
+read/write/import/get/export/bundle/inspect evidence separately from explicit
+compiler-callback source operations. Existing Rust owners and historical
+receipts establish candidates, not default-root retirement. Route changes
+require exact host admission/control parity, one installed Node/Bun/Chromium
+source cohort and row-level review. The Protobuf source compiler remains an
+explicit host capability and may not be silently replaced or dropped.
+
+The descriptor/document subcohort now has a seven-operation opt-in Node/WASM
+binding over raw owned descriptor bytes. [Sol's packet review](evidence/rust-migration/r8-protobuf-descriptor-document/sol-review.md)
+independently reran five final Bun binding tests and accepted the focused
+unknown-wire, copy, 4 MB and host-order controls for the cited artifacts.
+The public predecessor's `UmfError` class is still returned as
+`UmfCoreError` by this opt-in route, and the full frozen descriptor/native
+packet has not been replayed through the binding. Default selection, compiler
+callbacks, installed SDK and R8 retirement remain held. An additive
+[`umf protobuf descriptor read`](evidence/rust-migration/r8-protobuf-descriptor-read-cli/README.md)
+pure Rust CLI command now reads bounded raw descriptor bytes and advertises
+only that operation. Its 46-test CLI suite, three frozen wire-vector hashes
+and release-binary `PATH`-empty smoke run have [Sol review](evidence/rust-migration/r8-protobuf-descriptor-read-cli/sol-review.md).
+It does not qualify source compilation or other CLI operations.
+
+The [opt-in Protobuf source-import host packet](evidence/rust-migration/r8-protobuf-source-import-host/README.md)
+now exposes the explicit caller-supplied compiler callback through Node and
+browser WASM. [Sol independently reran](evidence/rust-migration/r8-protobuf-source-import-host/sol-review.md)
+10 Bun tests (27 assertions) and the final Chromium host-order/diagnostic
+case against source-bound artifacts. Controls are boundary-only across an
+ordinary asynchronous callback, and the supported callback-result subset is
+recorded explicitly. The separate [opt-in source-export host packet](evidence/rust-migration/r8-protobuf-source-export-host/README.md)
+now stages the document/payload reads and emitter callback from Rust. [Sol
+independently reran](evidence/rust-migration/r8-protobuf-source-export-host/sol-review.md)
+the 14-case Node/Bun predecessor differential and fresh Chromium WASM replay,
+plus focused Rust tests. The packet retains a named replaced-`Array.prototype.find`
+host gap, takes roughly 177 seconds for its nine-test Node suite, and does not
+establish the default SDK route. Neither source operation is selected by the
+default SDK.
+
+The JSON Schema eight-operation packet reports 41 exact frozen cases and five controls on
+each of four host paths. The escaped/Unicode property-name regression was
+corrected against Ajv 8.20.0 and the Rust native oracle; the affected Rust
+target passes 16/16. [Sol independently replayed the captured Node packet](evidence/rust-migration/r8-json-schema-eight-operations/sol-review.md)
+at 41/41 and accepts only this opt-in source cohort. Its sampled operation
+latency still blocks default selection; retained immutable resource
+compilation, per-call controls and installed routing need separate review.
+
+The retained [prepared JSON Schema runtime](evidence/rust-migration/r8-json-schema-eight-operations/README.md)
+now pays resource/schema setup once and passed the same 41-case predecessor
+packet on Node, Bun native, Bun WASM and real Chromium. [Sol independently
+replayed all four paths](evidence/rust-migration/r8-json-schema-eight-operations/sol-review.md)
+from frozen packages and verified their artifact hashes. The 251-byte sample
+fell from roughly 0.9 seconds per stateless Rust operation to 14–16 ms per
+prepared operation after a 594 ms setup. Default selection remains held because
+constructor-time resource admission changes the per-call `maxWork` and meter
+sequence; a `maxWork: 10000` bundle control demonstrates the difference. The
+prepared entrypoint is an opt-in compatibility profile, not retirement of the
+eight TypeScript root exports.
+
+The next integration order is: finish raw-host admission and binding evidence
+for the bounded core families; freeze one repository source cohort and regenerate
+metamodel, action identity and Python resource mirrors to a check-only fixed
+point; recapture the inventory and gap ledger; build the private SDK archive and
+run its installed Node/Bun/Chromium replay plus the hosted macOS arm64/Linux
+x86_64 archive jobs.
+
+The [R8 archive replay preparation](evidence/rust-migration/r8-sdk-default-package-replay-prep/README.md)
+now checks the extracted package condition map for Node, browser and the
+explicit `./reference` rollback route, exercises three tampered-route refusals,
+and records the archive hash. Sol reviewed the guard against the current
+`package.json` and builder route map and reran `bun run typecheck`. The historical
+R7 archive is deliberately rejected because its extracted manifest lacks
+`./reference`; it produced no new host receipt. A fresh fixed-point archive
+and installed replay remain required before any source-selected route retires.
+
+The [compact Dataset evidence](evidence/rust-migration/r5-dataset-values-compact-default-cutover/README.md)
+currently qualifies selected validation vectors, while compact verification
+remains TypeScript-root pending host-order and browser resource evidence. The
+[full Dataset tagged-wire packet](evidence/rust-migration/r5-dataset-values-wire-bindings/README.md)
+now passes seven frozen validation cases, four verification cases and host
+cancellation through the opt-in Node/WASM operation wrappers. Its longest
+four-case verifier run took 281.72 seconds; raw-host visitation order, one
+cumulative admission ledger, installed hosts and default routing remain open.
+The [Record value host packet](evidence/rust-migration/r5-record-values/README.md)
+qualifies an opt-in Node/Bun/Chromium raw-host subset, not default routing or
+the browser count-limit boundary. Full Dataset values now have the separate
+host-admission packet above; their default-root selection and installed package
+qualification remain open. The 128-bit and UUID family has an opt-in Rust binding for its
+eleven public functions, including typed-array and descriptor-aware host
+admission. Its [frozen predecessor packet](evidence/rust-migration/r5-bit128-default-route/README.md)
+and [default-route adapter](evidence/rust-migration/r5-bit128-default-adapter/README.md)
+now pass focused Bun parity and oracle checks; `BIT128_PROFILE` remains inert
+data. The eleven functions are source-selected in the Node and browser root
+entrypoints, and a direct Bun import of the Node source route passed. They
+remain retirement gaps until a clean installed Node/Bun/Chromium archive replay
+passes with exact source hashes, including Node `Buffer` and browser WASM
+initialization.
+The next shared-semantic family is semantic-type registry and value checking:
+its [15-export predecessor packet](evidence/rust-migration/r5-semantic-types-default-root/README.md)
+is frozen for a bounded registry/value subset, and opt-in Rust core plus a
+bounded six-operation Node binding already exist. Browser callback transport
+has a scoped opt-in replay; installed default routing and the remaining public
+extension surface still need qualification before retirement.
+
+The [current-source semantic binding follow-up](evidence/rust-migration/r5-semantic-types-bindings/current-source-replay-2026-10-24.md)
+now passes a clean-installed Node replay of the six opt-in operations and two
+fresh Chromium 153 WASM replays, including callback transport (14 direct,
+10 registration and five aggregate cases). [Sol independently reran the host
+packets](evidence/rust-migration/r5-semantic-types-bindings/sol-current-source-review.md)
+and checked the package/addon/browser-harness hashes. The six operations still
+need a current-source installed default SDK route, the broader registry
+surface, and resolution of the frozen `vocabularies: null` error difference;
+the TypeScript root declarations remain retirement gaps.
+
+The reviewed next-wave order after that browser transport is CSV Boolean
+lexical validate/verify (two root operations), the scalar/record-member/reference
+inspectors (three operations), then Core Key tuple encode/verify/read/prepare
+(four operations). Existing Rust cores and focused predecessors make these
+bounded candidates, but each still needs source-selected Node/browser routing,
+current-cohort installed replay and a separate retirement decision. CSV
+verification currently uses staged contexts, the inspectors need an installed
+SDK cohort, and the tuple browser route has a narrower response limit than
+the core ceiling. Those limitations must be resolved or explicitly versioned
+before claiming parity. This sequence does not change the 922-gap release
+denominator by itself.
+
+The [CSV Boolean](evidence/rust-migration/r5-csv-boolean-default-route/README.md)
+and [three-inspector](evidence/rust-migration/r5-core-inspectors-default/README.md)
+source routes now have fresh Chromium 153 isolated-WASM replays. [Sol reran the
+CSV packet](evidence/rust-migration/r5-csv-boolean-default-route/sol-browser-review.md)
+with all four receipts and receipt-first expected-source ordering, and [Sol
+reran the inspector packet](evidence/rust-migration/r5-core-inspectors-default/sol-browser-review.md)
+at 26/26 frozen outcomes with work and reference-order controls. These are
+captured source-route artifacts; a clean integrated SDK archive, broader
+resource/adversarial host behavior and explicit retirement review are still
+required for those five logical exports.
+
+The [JavaScript numeric host-order follow-up](evidence/rust-migration/r5-javascript-numeric/README.md)
+keeps all five numeric adapter exports opt-in. Its 27-vector oracle replay
+passes, but two crossed invalid-scalar/accessor-context probes produce
+`JAVASCRIPT_NUMERIC` in the predecessor before context access and `NON_JSON`
+in the current Rust wrapper. The Rust route also rebuilds the resource Engine
+per operation. Resolve staged scalar/context ordering and immutable resource
+admission with one public-call work ledger, then rerun installed Node/Bun and
+browser evidence before any default selection.
+
+The retained [numeric stage revision](evidence/rust-migration/r5-javascript-numeric/README.md)
+now passes those crossed host-order controls through an opaque Rust-owned,
+single-use stage and a retained Engine. [Sol independently replayed](evidence/rust-migration/r5-javascript-numeric/sol-retained-stage-review.md)
+the 27-vector Node/Bun differential and Edge WASM packet from the frozen
+artifacts, including malformed-carrier precedence, invalid Field before
+lossy conversion, direct forgery refusal and cumulative per-call controls.
+Factory setup has a separate explicit resource ledger. This qualifies only
+the opt-in subset; the five TypeScript root exports, installed SDK route and
+Python distribution still require their own retirement evidence.
+
+The `parseNativeJson` opt-in tagged string parser has a six-case direct
+TypeScript raw-host [supplement](evidence/rust-migration/r5-json-schema-tree-operations/native-json-host-predecessor.json)
+and [Sol review](evidence/rust-migration/r5-json-schema-tree-operations/sol-review.md).
+Direct wrong-type JavaScript calls and tagged-wire admission differ, so the
+existing 22-case installed JSON Schema parser receipt does not authorize a
+default-root route for the helper or the eight JSON Schema operations.
+The separate [eight-operation boundary audit](evidence/rust-migration/r8-json-schema-eight-operations/README.md)
+freezes 24 current TypeScript host, export and validator cases. It keeps all eight
+default exports on TypeScript: `additionalProperties: true` is complete in the
+predecessor but incomplete in the pinned Rust profile, and raw option/resource
+accessors, proxy traps, wrong-type errors and caller controls are observably
+different at the host boundary. Those are explicit compatibility and profile
+decisions, not evidence for silently routing the default exports to Rust.
+
+The [R8 security truth and composition slice](evidence/rust-migration/r8-security-truth-logic/README.md)
+adds Rust ownership for `securityNot`, `securityAnd`, `securityOr`, and
+`composeSecurityRules` over admitted tagged Values and already evaluated rules.
+[Sol independently replayed](evidence/rust-migration/r8-security-truth-logic/sol-review.md)
+the truth and 22-case composition predecessors, existing security suite, and
+four focused Rust wire tests. This is four of 43 security-family executable
+exports and has no installed host route; raw JavaScript accessors/proxies,
+policy/fact selection and native enforcement remain outside the accepted
+subset. The 922 default-route retirement gaps are unchanged.
+
+A subsequent [independent Sol review](evidence/rust-migration/r8-security-truth-logic/sol-review.md)
+accepted `securityRefIdentity` as a fifth bounded opt-in tagged-value
+operation after an unmetered component clone was corrected and the eight-case
+predecessor plus three Rust wire tests passed. An internal expression-tree
+helper also passed five Bun first-fault bound cases and four Rust core tests;
+it stops at the first fault, whereas the TypeScript inspector can collect
+multiple sibling diagnostics. Neither addition implements policy/ontology
+interpretation, a default binding route or security authorization.
+
+The subsequent [25-case disclosure codec audit](evidence/rust-migration/r8-security-truth-logic/README.md)
+and [Sol review](evidence/rust-migration/r8-security-truth-logic/sol-review.md)
+keep all six legacy/V2 disclosure validation and codec exports on TypeScript.
+Their success paths require policy/ontology/Field or protection/catalog/domain
+interpretation and literal-budget checks before JSON/YAML transport. A
+parser-only Rust port would change acceptance. The existing truth and identity
+subsets do not satisfy those dependencies.
+
+The shared [security literal foundation](evidence/rust-migration/r8-security-literal/README.md)
+now exposes the Rust Engine's first-diagnostic `checkSchemaLiteral` behavior
+for an already admitted source, Field and JSON literal. [Sol independently
+replayed](evidence/rust-migration/r8-security-literal/sol-review.md) all eleven
+current Bun predecessor cases and two Rust integration tests. This does not
+resolve either legacy policy/ontology interpretation or V2 protection-source,
+domain and parameter authority, nor the JSON/YAML and raw-host codec boundary.
+All six disclosure codec exports remain on TypeScript.
+
+The [opt-in literal wire
+primitive](evidence/rust-migration/r8-security-literal/README.md) exposes the
+same caller-selected Rust admission stage with explicit core resources. [Sol
+independently reviewed](evidence/rust-migration/r8-security-literal/sol-review.md)
+the eleven-case exact tagged replay and three focused wire tests. This does
+not select policy/catalog/domain meaning, implement batch disclosure or JSON/
+YAML codecs, or retire any of the six TypeScript exports.
+
+The subsequent [14-case V2 protection resolution
+packet](evidence/rust-migration/r8-security-protection-resolution/README.md)
+and [Sol review](evidence/rust-migration/r8-security-protection-resolution/sol-review.md)
+pin policy/catalog/domain ordering and unknown-member retention. The internal
+Rust candidate preserves tagged policy, catalog and closure snapshots and
+always refuses authority; its focused test passes. It does not reproduce the
+TypeScript resolver's schema, pin, reference, Field or domain outcomes, and it
+does not close either resolver or any disclosure default route.
+
+The [Delta Spark hash slice](evidence/rust-migration/r8-delta-spark-hash/README.md)
+adds one exact scalar operation with a bounded opt-in JSON wire entry. [Sol
+independently reviewed](evidence/rust-migration/r8-delta-spark-hash/sol-review.md)
+the 26-case Spark 4.0.1 fixture authority and reran two core plus two wire
+tests. The eight Delta schema/table exact-tree operations now have reviewed
+core-only candidates. A current TypeScript predecessor packet and focused Rust
+suites cover 37 exact schema corpus round trips, two structural rejects, five
+ordered schema-warning families, eight table numeric boundary outcomes,
+pointer/replacement error order and immutable edits. [Sol's review](evidence/rust-migration/r8-delta-spark-hash/sol-review.md)
+records independent schema 4/4, table 2/2, numeric grammar 2/2, TypeScript
+packet and typecheck passes; Python source-distribution closure passes 12/12.
+The numeric shape projections fail closed on future grammar rules. A subsequent
+[nine-case table-context warning receipt](evidence/rust-migration/r8-delta-spark-hash/delta-table-warning-predecessor.json)
+has independent read-only TypeScript verification and Rust schema 4/4 plus
+table 3/3 test passes; its ordered code/path/message/severity matches those
+exact cases. Warning coverage beyond those inputs and exact structural error
+messages remain open. An
+opt-in tagged [wire slice](evidence/rust-migration/r8-delta-spark-hash/delta-wire.json)
+now dispatches all eight operations; Sol independently reran its three tests
+for round trip, edit, error order, closed dispatch and control refusal. Host
+bindings and installed route evidence remain open. Native Delta reader/writer
+support, default route and family-level completion remain unclaimed.
+
+The same opt-in wire now includes schema/table inspection, ten operations in
+all. [Sol independently reviewed](evidence/rust-migration/r8-delta-spark-hash/sol-review.md)
+the four-test wire differential for five schema and three table warning inputs;
+the Rust table core differential covers all nine frozen table inputs. These
+ordered diagnostics match their current TypeScript cases, while wider context
+parity and native Delta/log validity remain open.
+
+The following [Delta JSONL source
+slice](evidence/rust-migration/r8-delta-spark-hash/README.md) adds Rust
+capture/export/inspection and an opt-in tagged wire. [Sol reviewed](evidence/rust-migration/r8-delta-spark-hash/sol-review.md)
+the five-case predecessor, two core tests and three wire tests for exact
+source, UTF-16 line offsets, native JSON tokens and ordered diagnostics.
+Action inspection, commit/checkpoint reconciliation, native log validity,
+Node/Bun/browser binding and default retirement remain open.
+
+The explicit Gregorian civil-date core has an [opt-in tagged-wire
+candidate](evidence/rust-migration/r5-gregorian-date-wire/README.md) for parse
+and truncate. Its 50-case current Bun predecessor, three core tests and five
+wire tests have [independent Sol review](evidence/rust-migration/r5-gregorian-date-wire/sol-review.md).
+It preserves tested date results and refusal classes but not all RangeError
+messages or raw JavaScript host behavior. Node/browser binding and default
+retirement remain open; no generic UMF `date` receives calendar semantics.
+
+The separate explicit [Access temporal token
+parser](evidence/rust-migration/r5-access-temporal/README.md) now has a Rust
+core and opt-in tagged wire for date, local and known-offset instant values.
+Its 56-case current Bun predecessor includes 48 tagged cases compared by
+exact result/error message in Rust and eight raw-host observations. [Sol
+review](evidence/rust-migration/r5-access-temporal/sol-review.md) independently
+replayed the packet and passed six core plus three wire tests. This does not
+replace Python carrier admission or select a temporal interpretation for an
+unqualified core scalar; host bindings and default retirement remain open.
+
+The explicit [RFC3339 exact-instant tagged-wire
+candidate](evidence/rust-migration/r5-rfc3339-exact-instant-wire/README.md)
+adds parse and equality operations backed by the existing Rust core kernel.
+[Sol's independent review](evidence/rust-migration/r5-rfc3339-exact-instant-wire/sol-review.md)
+reran the four Rust wire tests and five Bun adapter tests against a packet with
+12 tagged and four excluded raw-host cases. A subsequent diagnostic refinement
+passed five Rust core and five wire tests with exact tagged TypeScript messages,
+first-fault order, and the 1,048,576/1,048,577 UTF-16-unit boundary. Raw-host
+parity, Node/Bun/browser binding, default selection, and retirement remain open.
+
+The direct retained [Core Key tuple runtime receipt](evidence/rust-migration/r5-core-key-tuple/direct-runtime-receipt.json)
+now covers 87 frozen in-profile encoders, five verifiers, receipt-first staged
+verification and byte reads, cumulative host work, one-shot stage consumption,
+the 4 MB boundary, and a fresh Edge 156 WASM replay. [Sol independently
+replayed the Node/Bun test pair](evidence/rust-migration/r5-core-key-tuple/sol-binding-review.md)
+(7 tests, 153 assertions) and accepts the direct opt-in runtime for that
+captured source/artifact cohort. The public opt-in factory still routes some
+operations through generic wire dispatch; its direct-runtime promotion,
+default-root selection and installed package replay remain open.
+
+The public opt-in factory has now been promoted to the direct retained
+runtime. Its [source-bound receipt](evidence/rust-migration/r5-core-key-tuple/direct-factory-route-receipt.json)
+and [independent Sol review](evidence/rust-migration/r5-core-key-tuple/sol-binding-review.md)
+cover 87 frozen encoders, five verifiers, per-argument transport limits,
+source/identity/value/options order, receipt-first verification, cumulative
+work, and large byte/output-copy limits in Bun and a fresh Edge WASM replay.
+Sol independently reran the isolated Bun packet (11 tests, 273 assertions)
+and the recorded browser harness after verifying all 15 receipt source and
+artifact hashes. This accepts only the captured opt-in factory; the four
+default tuple exports still inherit TypeScript and await one combined-source
+installed SDK route, broader parity and retirement review.
+
+An earlier shared Rust source and generated metamodel/action/Python resource
+mirror cohort reached a local check-only fixed point. `bun run typecheck`,
+`check:rust-boundaries`, and `check:core-authority` pass; the production
+boundary census reports zero V8 debt. The authority checker now registers the
+19 historical R5 refusal controls by exact source text, and its focused tests
+still reject an unregistered retired-core marker. Inventory and ledger
+check-only recaptures passed for that cohort. Active binding edits require a
+new source-frozen regeneration, census and installed host replay before the
+successor cohort may advance to release gates.
+
+The next fixed-point local SDK snapshot had source-tree SHA-256
+`d3de6880d8d004a841a4671bb7c1727b99c225af008c2fe782317709f20baedf`
+and private archive SHA-256
+`f59fb58427849761c7295bfa7f8b24e64a807889f136cb47398504073a2b7244`.
+The installed route/tamper guards and the 31-case codegen plus frozen
+cardinality, facets, Keys, Bit128 and compact Dataset comparisons completed on
+Node 26.12.1 and Bun 1.4.3, but the aggregate gate failed before browser replay:
+the harness expected 65 cardinality outcomes while its frozen packet and both
+hosts produced 66. The assertion is corrected in moving source; that archive
+is not a passing installed receipt, and a new source-pinned build/replay is
+required. The same run exposed repeated per-call schema compilation (Node
+stage about eight minutes including source-package smoke, Bun aggregate about
+13 minutes from start), so retained-resource performance and budget semantics
+are qualified separately. An [opt-in retained codegen handle](evidence/rust-migration/r7/retained-codegen-handle/README.md)
+compiles explicit resources once and uses fresh per-call controls. [Sol
+review](evidence/rust-migration/r7/retained-codegen-handle/sol-review.md)
+independently passed the Rust 2/2 context suite, Node 10/10 host-admission
+suite, generated Node-target WASM and real Chromium browser-target replays with
+frozen output parity and later meter/cancel/deadline/disposal checks. This does
+not change the default stateless factory or establish installed SDK
+performance. A measured Node/Chromium differential prevents a transparent
+promotion: stateless calls charge 952,618,338 work units and reject a shared
+484,209,895-unit budget that the retained call (15,801,452 units after a
+937,053,874-unit setup) accepts. Invalid resources also fail at first call
+versus constructor. The default remains stateless pending a separately
+versioned behavior decision; the [Sol review](evidence/rust-migration/r7/retained-codegen-handle/sol-review.md)
+records the exact comparison. The refreshed R8 inventory still records 922
+logical executable retirement gaps, with 29 Rust-selected operations per
+default root and 893 inherited TypeScript implementations. New Delta and
+security opt-in source edits after this snapshot require another recapture.
+
+Milestone A is also open at its distribution gate. The Python production
+source no longer relies on V8, but the
+[coordinated release matrix](evidence/rust-migration/r8-python-coordinated-release/README.md)
+has not produced the six hosted wheel/sdist pair receipts. The legacy PyPI
+publisher is fail-closed, and the SDK archive is private. Do not merge or tag
+this as a complete Rust port, or publish the Python pair, until the R8 checklist
+above and its actual hosted/consumer evidence pass on one reviewed source
+cohort. A release must name the remaining versioned platform/subset limits and
+pin rollback artifacts; historical private receipts cannot be promoted to
+release evidence.
+
+The next reviewed R8 Delta slice has an [opt-in action-shape and ordinary
+reconciliation receipt](evidence/rust-migration/r8-delta-spark-hash/README.md)
+and [independent Sol review](evidence/rust-migration/r8-delta-spark-hash/sol-review.md).
+Six frozen action inputs and five reconciliation inputs pass their tagged
+wire differentials; neither operation is selected by the default host roots.
+The five-case reconciliation implementation does not yet cover add/remove
+conflicts, cross-commit replacement order, checkpoints or broad numeric
+diagnostics. The [V2 protection source candidate](evidence/rust-migration/r8-security-protection-resolution/README.md)
+now passes ten tagged source-stage cases from a 16-case predecessor packet.
+[Sol's review](evidence/rust-migration/r8-security-protection-resolution/sol-review.md)
+found and closed a cross-input diagnostic bug; domain-stage and raw-host
+cases, interpretation and authority remain open.
+
+The next [V2 domain-stage candidate](evidence/rust-migration/r8-security-protection-resolution/README.md)
+passes all five tagged domain cases from that packet. [Sol's review](evidence/rust-migration/r8-security-protection-resolution/sol-review.md)
+replayed the Rust core and wire suites after shared-source stabilization. It
+retains the closure and exact Field occurrences but remains data-only:
+`complete:false`, `authority:false`, one raw-host case outside tagged JSON,
+and no default route or policy/literal interpretation. The
+[Delta mapped-field rename candidate](evidence/rust-migration/r8-delta-spark-hash/README.md)
+passes nine current-TypeScript cases and one malformed-UTF-16 pointer refusal
+under its opt-in wire. [Sol's review](evidence/rust-migration/r8-delta-spark-hash/sol-review.md)
+closed a meaning-loss bug before accepting this bounded proposal; native
+transactions, historical state and default host routing remain open.
+
+The four explicit Gregorian/RFC3339 temporal operations are selected by the
+moving Node/Bun and browser V4 root entries. A [source-bound private archive
+checkpoint](evidence/rust-migration/r5-temporal-default-route/README.md)
+passed exact error/raw-host and left-first comparisons on Bun 1.4.3 and
+Node 26.12.1, plus 17 real Chromium 153 checks. Its manifest reports eleven
+generator-derived inputs and `source-drift-not-publishable`; it is not a
+release-fixed-point cohort. Sol independently verified the package artifact
+hashes and reran the installed Node/Bun/Chromium comparisons in the
+[independent review](evidence/rust-migration/r5-temporal-default-route/sol-review.md). Current
+parallel Delta edits require a fresh Rust wire and fixed-point replay before
+any complete default-route or release claim. The executable retirement census,
+including `./reference`, remains open.
+
+The V2 security source and domain candidates now retain isolated UTF-16 units
+in diagnostic paths and messages; [Sol's follow-up review](evidence/rust-migration/r8-security-protection-resolution/sol-review.md)
+reran the tagged packet and focused core/wire cases. The
+[Delta reconciliation packet](evidence/rust-migration/r8-delta-spark-hash/README.md)
+has expanded from five to eight cases and now covers ordered map replacement
+and selected add/remove conflicts; [Sol's review](evidence/rust-migration/r8-delta-spark-hash/sol-review.md)
+accepts only those ordinary-action histories. Checkpoints, broader
+deletion-vector transitions and native transaction validity remain open.
+
+The four Core relationship operations are selected by the moving Node/Bun and
+browser V4 roots. The [eleven-case installed replay](evidence/rust-migration/r8-core-relationships-default-boundary/README.md)
+matches the current TypeScript raw-host outcome and operand-reflection order
+on Bun 1.4.3, Node 26.12.1 and Chromium 153.0.8010.12. Node used a
+Node-target-bundled test harness against the installed package. The browser
+had no Node globals. [Sol independently replayed and reviewed this
+candidate](evidence/rust-migration/r8-core-relationships-default-boundary/sol-review.md).
+The package manifest records eleven generator-derived inputs, so this is a
+private nonpublishable checkpoint; `./reference` and the executable retirement
+census remain TypeScript gaps.
+
+The [regenerated relationship package](evidence/rust-migration/r8-core-relationships-default-boundary/README.md#regenerated-fixed-point-candidate)
+now has identical live/captured source hashes and zero generated transforms.
+[Sol's fixed-point review](evidence/rust-migration/r8-core-relationships-default-boundary/sol-review.md)
+independently reran all eleven installed cases on Bun, Node and Chromium. The
+manifest still marks this package private/nonpublishable; R8 retirement and
+hosted release gates remain open.
+
+### R7/R8 continuation checkpoint — 2026-10-25
+
+The [staged Core Key verification candidate](evidence/rust-migration/r7-core-key-staged-verification/README.md)
+resolves the receipt-first production interface for an opt-in Node/WASM
+binding. Rust owns a one-use, engine-bound handle: receipt admission and
+recomputation happen before current admission, and finish moves the retained
+receipt without copying it again. The runtime admits exactly five explicit
+resources. [Sol's independent review](evidence/rust-migration/r7-core-key-staged-verification/sol-review.md)
+passed the fresh private Node package's four binding tests and a real Chromium
+153 staged-handle replay. Extension semantic callbacks, installed archives,
+other hosts and default-root selection remain outside that evidence.
+
+The [current R8 inventory](evidence/rust-migration/r8-symbol-inventory/README.md)
+now derives V4 direct exports from TypeScript-checker-resolved declarations.
+Node and browser roots each select 37 Rust names, including four temporal and
+four relationship operations omitted by the earlier static 29-name list.
+The latest ledger records 922 logical executable retirement gaps, 52 accepted
+opt-in Rust mappings, 870 unmatched executable names, and zero binding routes
+proven for this combined source cohort. Its `./reference` route remains
+TypeScript. The [independent review](evidence/rust-migration/r8-symbol-inventory/sol-review.md)
+also pins direct writer authority for six Field/Cardinality projection
+schemas and a subsequent [two-output Parquet metadata writer](evidence/rust-migration/r8-symbol-inventory/parquet-metadata-resource-authority.md). Resource authority
+stands at 32 generated-known, 19 authored-known, 91 candidate-generated and
+56 unresolved resource aliases. The four frozen model
+vocabulary aliases and the executable `scalarTypesForVersion` gate have
+separate [dispositions](evidence/rust-migration/r8-symbol-inventory/model-vocabulary-export-dispositions.md);
+none is retired. This coordinated recapture pins inventory SHA-256
+`2fa3e288ea62bf75d7e08baa79c081db50afae8ef153ded8ed1ba1c31f5d5ba9`
+and ledger SHA-256
+`971a6e327e55fa81cde44e2b7f0c5e3f3d8a8fdf2b35c8527088ecab3ac08ab4`;
+both generator `--check` modes, the full R8 ledger suite (27/27), metamodel
+and resource checks, TypeScript typecheck, the 693-module Rust boundary gate,
+and Python sdist/artifact custody tests (16/16) pass. Subsequent source edits
+require another recapture.
+
+For sequencing, the explicit `./reference` executable rows at this capture
+concentrate in `src/core-ideals` (254), `src/model` (85), and
+`src/projections` (52), followed by adapter and extension families. These are
+row counts, not estimated Rust functions or a claim that similarly named
+operations share semantics. Port and retire each source/route only after its
+contract, resource, host-boundary and installed-package checks pass.
+The [AST classification of 167 variable rows](evidence/rust-migration/r8-symbol-inventory/package-reference-variable-analysis.md)
+finds no additional inert generated-data alias to retire: four frozen
+vocabulary arrays and `CURRENT_CORE_VERSION` have generated value provenance,
+while `scalarTypesForVersion` is an authored executable gate. Authored package
+descriptors and other static values still need separate source authority and
+consumer-route decisions.
+
+The [Delta reconciliation candidate](evidence/rust-migration/r8-delta-spark-hash/README.md)
+now covers eight ordinary histories with exact report parity and an explicit
+malformed-UTF-16 refusal in its nine-case packet. The
+[security protection parameter candidate](evidence/rust-migration/r8-security-protection-parameters/README.md)
+has reviewed source/domain/catalog bounds and eight tagged exact predecessor
+outcomes. Both remain opt-in and bounded; neither qualifies native Delta
+transaction validity, security authorization or default-root selection.
+
+The subsequent [ordinary DV transition packet](evidence/rust-migration/r8-delta-spark-hash/sol-review.md#ordinary-deletion-vector-transition-packet--2026-10-25)
+expands the Delta candidate to twelve exact ordinary histories plus one
+malformed-UTF-16 source-preserving refusal. Sol independently replayed the
+frozen wire differential. The Rust implementation required no change; DV
+bytes, feature consistency, checkpoints and native transaction validity remain
+unqualified.
+
+The [security reference-function slice](evidence/rust-migration/r8-security-protection-functions/README.md)
+now covers `mask/constant`, `mask/null-out`, `mask/partial`,
+`mask/fixed-length-redact`, and `generalize/prefix-only` in opt-in Rust
+core/wire. Its [independent review](evidence/rust-migration/r8-security-protection-functions/sol-review.md)
+replayed 25 exact tagged cases from 29 frozen predecessor outcomes and closed
+Field-shape, diagnostic-order and host-budget labeling defects. Two
+malformed-schema cases and two raw-host accessor cases remain outside exact
+tagged parity. No authorization, native custody, default route or installed
+archive is qualified.
+
+Next, complete the remaining security functions and adapter ownership slices,
+resolve every executable retirement and resource-authority row, and replay a
+single source-fixed package across Node/Bun, real browser, Rust CLI and Python.
+Then regenerate and verify metamodel/resource provenance, run the Rust boundary
+gate and coordinated six-cohort hosted Python wheel/sdist matrix, review the
+installed archives, reconcile current main, and only then create/merge the
+complete-port PR and cut the paired release. The R8 gate remains open.
+The current source-bound metamodel build and `--check` pass after a deliberate
+regeneration; subsequent source changes require another check before release.
+
+For the next Core model wave, Sol fixes the production interfaces before Rust
+edits. `declareCoreRecordType` and `verifyCoreRecordTypeDeclaration` retain
+their public v6 receipts. Verification must expose Rust receipt
+admission/recomputation and later current comparison as distinct phases, so a
+host can preserve receipt-first admission; a tagged opt-in wire accepting both
+values cannot prove raw-host order. Its engine takes exactly `coreSchema`,
+`referenceSchema`, `packageSchema`, `constraints` and `domainPolicy`, while the
+kind/record-type v6 operation schemas compile from pinned repository sources.
+`inspectCoreRecordMembers` keeps the public 0.3.0 report, full source copy and
+missing-versus-explicit-empty meaning. Its production Node/WASM interface
+should retain a pinned five-resource engine and compiled result schema, with
+fresh per-call controls. The current request-embedded tagged wire is only a
+bounded test adapter; no performance, callback or default-route claim follows.
+
+Sol's next Record Type production interface decision is a retained Rust
+runtime owning the exact five-resource Engine/Registry and a compiled v6
+receipt schema. It must return a Rust-owned, engine-bound, one-use preparation
+handle after receipt admission/recomputation, then admit and compare the
+current document only on finish. Node and WASM wrappers must preserve that
+order for raw getters, reject forged/cross-engine/reused handles, and consume a
+handle even if finish admission fails. The logical public verification call
+must carry cumulative work/deadline/cancellation accounting across both stages;
+two independently reset budgets would not preserve the predecessor bound.
+The generic tagged wire remains a differential adapter and may not substitute
+for this host interface. The [bounded candidate and Sol review](evidence/rust-migration/r5-core-record-type/sol-review.md)
+cover three declaration/verification pairs and eight tagged refusals; raw
+getter order, retained schema lifecycle and installed hosts remain open.
+
+The [Record members Sol review](evidence/rust-migration/r5-record-members-inspection/sol-review.md)
+replays all eleven frozen core/wire cases, including UTF-16 qualifier paths and
+caller identity ordering. Fresh isolated Node 26.12.1, Bun 1.4.3 and Chromium
+153.0.8010.12 packages each replay all eleven outcomes, with independent Sol
+replay; the historical Chromium receipt covers nine cases only. These receipts
+pin a scoped source slice and do not qualify the installed default SDK; the
+later retained Node/WASM receipts qualify a bounded Engine/Registry lifecycle
+separately. The [Python sdist resource-closure review](evidence/rust-migration/r8-python-sdist-rust-resource-closure.md)
+adds unconditional Rust `include_str!` compiler inputs to the source archive;
+the focused sdist suite passes 12/12. After the generated fixed point, an
+actual Hatch `umf_core` 0.11.0 source archive built and its extracted 872-file
+inventory matched the checkout byte-for-byte at that source checkpoint.
+Offline `cargo check --locked -p umf-cli` passed from that extraction on macOS
+arm64. Subsequent source edits require a new archive and the coordinated
+hosted wheel/sdist matrix remains a separate gate.
+Neither v6 operation schema has an identified exact authoring authority, so
+the R8 resource ledger leaves them unresolved.
+
+The retained Core Record Type interface now has an exact-five-resource Rust
+runtime with one compiled receipt schema, an engine-bound one-use stage, and
+cumulative receipt/current accounting. The [independent Sol review](evidence/rust-migration/r5-core-record-type/sol-review.md)
+records 4/4 runtime units, 2/2 tagged wire tests, 8/8 focused Node facade
+tests, and frozen private Node/Bun replays. The opt-in WASM wrapper passed 5/5
+and a real Chromium replay; Sol independently reran its combined binary after
+the direct Rust finish guard. Neither host result retires a
+default route. The next parallel slice gives Record Members a retained
+Engine/Registry and compiled result schema with direct Node/WASM factories.
+The Rust retained runtime now passes 3/3 units, and a combined WASM package
+replays all eleven frozen cases in real Chromium. A combined private Node addon
+replays all eleven cases on Node and Bun, and the focused facade suite passes
+5/5. Its earlier generic-wire receipts alone did not prove that lifecycle.
+The generated metamodel, resource mirrors, symbol inventory and R8 ledger have
+been refreshed and checked. The ledger still records 922 logical executable
+default-route gaps, 870 without an accepted Rust operation mapping, and only
+37 Rust-selected direct exports per Node/browser root. This remains a private
+source cohort, not an installed SDK or release qualification.
+
+The [Python/CLI route audit](evidence/rust-migration/r8-python-cli-closure/README.md)
+confirms that `umf-codegen`'s seven semantic operations source-route through
+the pinned Rust CLI without V8, while its Python process/file writer and the
+broader `umf-core`/`umf_access` public surfaces still have Python behavior.
+The default Node/Bun/browser SDK also still inherits TypeScript executable
+exports. The six-cohort Python wheel/sdist pair receipts and same-run
+aggregate have not been produced for this moving source, and the current
+default SDK workflow is deliberately private/nonpublishing. Those are release
+and full-retirement gates, not evidence that V8 remains in the codegen route.
+
+The current Python source/build audit finds no executable V8 or JavaScript
+runtime dependency in the default `umf-core`, `umf-codegen`, or `umf_access`
+package paths. `umf-codegen` invokes the native Rust CLI/extension; its Python
+subprocess code manages that native process. This is source-route evidence,
+not a current published-artifact or full Rust-port claim. The stage-two
+`umf_access` catalog/compiler algorithms remain Python-owned and require a
+separate CONTRACT-067/070/071/072 migration and installed-cohort evidence.
+
+The [next core-ideals inventory](evidence/rust-migration/r8-core-ideals-next-wave/README.md)
+selects the two Avro Record Type exports as a coherent next candidate. Its
+[frozen TypeScript predecessor](evidence/rust-migration/r8-avro-record-type/README.md)
+and [independent review](evidence/rust-migration/r8-avro-record-type/sol-review.md)
+capture 10 classified, 24 blocked and 20 JSON/YAML recovery outcomes, with
+author, tamper, ambiguity, raw-host and 100,001-value controls. The Rust
+production interface should retain exact core, kind-operation-v6 and
+Avro-record-type result-schema resources, expose classify and recover with
+caller-owned controls, and recompute receipt provenance before current-target
+comparison. A tagged adapter is differential evidence only; raw host order,
+Node/Bun, Chromium and installed routes require separate checks. Neither Avro
+export has an accepted Rust operation mapping yet.
+
+The first [Avro Rust foundation](evidence/rust-migration/r8-avro-record-type/README.md#rust-candidate-foundation-2026-10-25)
+adds only an opt-in, caller-controlled native record-resolution candidate and
+tagged test transport. [Sol's review](evidence/rust-migration/r8-avro-record-type/sol-review.md#rust-resolution-foundation-follow-up)
+required a schema-position-only search so a record-shaped extension annotation
+cannot be mistaken for a native declaration. The focused Rust core test,
+core-wire check and Python source-archive closure test pass. Neither
+`classifyAvroRecordType` nor `recoverAvroRecordTypeBundle` is implemented in
+Rust; the 922-gap ledger count does not decrease. Its declared schemas are
+not yet compiled into a retained runtime, and Node/browser binding work waits
+for real classification and recovery semantics.
+
+The [bounded Avro Field classifier](evidence/r8-avro-field-classifier/README.md)
+now checks retained archives and author provenance for declared record/error
+membership under the exact request/result schema. [Sol's review](evidence/r8-avro-field-classifier/sol-review.md)
+independently passed three integration cases, the author-receipt unit and a
+no-default-features core check after correcting selected-field and feature-gate
+defects. The opt-in [bundle recovery follow-up](evidence/r8-avro-field-classifier/README.md#scoped-classified-bundle-recovery-follow-up)
+now recomputes and compares classified receipts and current targets; Sol
+independently passed four focused Rust cases, including exact native root and
+dependency text retention. Full predecessor replay, retained production
+runtime and host routes remain open. The
+next [Avro Record Type discovery dependency](evidence/rust-migration/r8-avro-record-type/README.md)
+resolves the selected native record and its ordered direct `avro.fields`
+identities, with five focused Rust tests passing and explicit ambiguity and
+unsupported refusals. It still does not classify a Record or Record Type,
+reconcile author receipts, or recover a bundle. None of these opt-in operations
+reduces the default-route ledger count.
+The [declaration inventory](evidence/rust-migration/r8-avro-record-type/README.md#rust-declaration-inventory-foundation-2026-10-25)
+adds the ordered dependency-before-root `avroRecords` schema-position walk
+with retained native subtrees; three focused Rust tests and an independent
+[Sol review](evidence/rust-migration/r8-avro-record-type/sol-review.md#declaration-inventory-follow-up)
+pass. It is an input to Avro Record classification, not that operation.
+
+The later [Parquet Record Type predecessor](evidence/rust-migration/r8-parquet-record-type/README.md)
+and [Sol review](evidence/rust-migration/r8-parquet-record-type/sol-review.md)
+freeze 6 classified, 12 blocked and 12 recovery outcomes after removing
+evolving plan/ledger files from executable source pins. Its two exports have
+no Rust mapping; a Parquet byte-capture and schema/container interpretation
+foundation was required before attempting the classifier.
+
+The subsequent opt-in Parquet foundation decodes a bounded plaintext PAR1
+footer into the narrow schema view and resolves pinned LIST struct elements
+while retaining the exact source bytes. Focused Rust tests pass 5/5 for the
+decoder and 3/3 for the composition layer; [Sol's review](evidence/rust-migration/r8-parquet-record-type/sol-review.md#retained-byte-decoder-and-list-candidate-review)
+records the resource-order repairs and fixture pins. UMF Document
+capture now passes three focused Rust cases for the pinned profile, byte
+retention and schema identity, with resource and ambiguity repairs recorded
+in the [follow-up review](evidence/rust-migration/r8-parquet-record-type/sol-review.md#umf-document-capture-follow-up).
+Classification, author provenance, receipt recovery, native-oracle comparison
+and default host routes remain open, so neither Parquet export is retired.
+The [JSON number packet](evidence/rust-migration/r8-json-number-predecessor/README.md)
+has an opt-in Rust core and tagged wire operation with all 18 frozen cases
+passing. The wire represents the TypeScript `void` result as tagged null and
+cannot carry the JavaScript exception name. Default routing and retirement
+remain open. Sol held the attempted default-route selection after the host
+probe showed that JavaScript calls `Number(token)` before its later string
+coercion, while the tagged Rust transport accepts only materialized UTF-16
+text. Both native and WASM addons also lack an exported operation. The
+production interface must either preserve that raw host conversion order or
+explicitly narrow the runtime contract, then pass installed Node/Bun and real
+Chromium evidence before retirement.
+
+Opt-in Avro and Parquet Record classifiers and their recomputing recovery
+operations now compose the reviewed discovery/capture foundations. The Avro
+classifier accumulates field and author conflicts into a schema-validated
+receipt even when a requested module collides; recovery compares the complete
+receipt and current target before returning the exact retained root/dependency
+texts. The Parquet classifier admits only the LIST struct subset proven by its
+retained interpreter; recovery compares provenance and current target before
+returning the original bytes. After Sol resource-order fixes and formatting,
+the combined Rust `record_` library filter passed 27/27 focused cases. These
+are still opt-in core operations: full TypeScript receipt parity, broader
+Parquet layouts and native fragments, host bindings, installed Node/Bun and
+Chromium evidence, and default-route retirement remain open. Their two direct
+result schemas are in the Python sdist compiler-input inventory, with 12/12
+focused closure tests passing.
+
+The next opt-in Record Type composition is now implemented in Rust for the
+bounded Avro direct/qualified record-field and Parquet LIST struct-member
+subsets, with recomputing recovery operations for exact retained Avro source
+text and Parquet bytes. Sol's first independent test exposed a missing Avro
+target Field kind; review then corrected the Field-versus-declaration
+dependency mapping, Parquet inherited author handling and mapping
+duplication, and caller-budget accounting. After those changes, the Rust
+1.90.0 locked/offline `record_type` filter passed 23/23; no-default-features
+core, core-wire and formatting checks passed. The frozen TypeScript packets
+were refreshed for generated core-schema and Rust module-registration source
+pins only; their Avro 10/24/20 and Parquet 6/12/12 classified/blocked/recovery
+outcomes did not change. At that checkpoint the Rust Avro candidate refused
+nonempty author lists; the Parquet candidate retained only its interpreted LIST subset
+and decoded schema fragments. Full receipt parity, native oracles, raw host
+semantics, Node/Bun/Chromium bindings, installed SDK evidence and default
+retirement remain open. The current R8 gap denominator is unchanged by these
+opt-in modules.
+
+The refreshed 10-condition inventory SHA-256 is
+`99f396e7b853c5eafd3658de56624e97dbb1d6cc0866cfcf0fd83e0aedadd9d2`
+and the 922-gap ledger SHA-256 is
+`ec6395e1549f5ff5f0a636733d1122078171540d4b6d96271e775e198d06b28b`;
+both `--check` modes pass. Python source-distribution closure passes 12/12,
+but the six hosted cohorts and same-run aggregate remain unrun for this
+source.
+
+The subsequent Record Type integration gate now has a versioned, opt-in Rust
+wire profile, `umf.record-type-binding/1.0.0`, over full structured source,
+request, receipt and current-target values. It rejects malformed or duplicate
+request fields, retains caller resource control, initializes the pinned core
+and adapter resources, and returns recovered Parquet bytes without loss. The
+public Node and WASM facades expose only this tagged profile. Fresh final-source
+native addon and WASM builds passed bounded Bun and Node facade replay and
+real Chromium replay, including classify/recover, malformed-request and host
+limit controls; the [wire-binding receipt](evidence/rust-migration/r8-avro-record-type/wire-binding.md)
+pins their source and artifact hashes. The final Rust wire filter passed 4/4,
+and no-default-features core and core-wire checks passed. This profile does
+not establish raw JavaScript admission order or select a default SDK route.
+
+The current Avro classifier accepts verified selected-Field and direct
+Record-member author receipts and preserves conflicting or duplicate selected
+authors as ordered blocked mappings with exact residuals and diagnostics in
+the frozen cases. Stale and forged selected-Field receipts refuse before
+classification. The Parquet classifier distinguishes omitted `authors` from
+an explicit empty array and preserves original `SchemaElement.converted_type`
+field 6 in the frozen blocked native fragments. The 12 blocked Parquet mapping
+arrays match the complete ordered TypeScript packet. This remains a bounded
+direct/qualified Avro record-field and LIST struct-member Parquet subset;
+unrelated authors, generic blocked Record-classifier composition, unions,
+containers, other Parquet layouts, modern `logicalType`, raw host wrappers and
+default routing remain explicit gaps. No full-support claim follows from the
+tagged binding.
+
+The final-source [Avro native oracle](evidence/rust-migration/r8-avro-record-type/avro-native-oracle.json)
+uses Apache Avro 1.12.0 and fastavro 1.12.2 to check 15/15 selected strict
+native record positions. The [Parquet native oracle](evidence/rust-migration/r8-parquet-record-type/parquet-native-oracle.json)
+uses PyArrow 21.0.0 and Apache Thrift 0.22.0 to check 18/18 requests across
+five pinned files, including original SchemaElement fields and the complete
+ordered predecessor mappings. These independently establish bounded native
+schema facts against the frozen TypeScript selections; they do not establish
+Rust target/receipt parity, broad format support, or default host behavior.
+The final predecessor packet SHA-256 values are
+`335537275bb992cbae9ecc0130a0df9510d6106431a25eeccd2de37b38bdc0bc`
+for Avro and
+`dd1c939de24d02abec0e1cf2a9ed75eb6cb3e029655036805578fc850b4689ee`
+for Parquet. Their behavior stayed fixed across the generated-source repins:
+Avro 10 classified/24 blocked/20 recovered, Parquet 6/12/12.
+
+The active R8 tranche is the eight JSON Schema adapter exports:
+`importJsonSchema`, `inspectJsonSchema`, `exportJsonSchema`,
+`exportJsonSchemaResources`, `exportJsonSchemaBundle`, `getJsonSchemaNode`,
+`walkJsonSchema`, and `editJsonSchemaNode`. The existing
+[41-case opt-in packet](evidence/rust-migration/r8-json-schema-eight-operations/README.md)
+and [24-case raw boundary audit](evidence/rust-migration/r8-json-schema-eight-operations/boundary-predecessor.json)
+are the starting evidence. Sol's disposition keeps both V4 default roots on
+TypeScript until raw getter/proxy and refusal order, wrong-type pointer
+errors, prepared-versus-stateless work controls and a current installed
+Node/Bun/Chromium cohort are reconciled per export. Work on that bounded
+profile can proceed independently of Record Type; no route promotion follows
+from the older 41-case receipt alone.
+
+The first bounded profile difference has been resolved in opt-in Rust:
+`additionalProperties: true` is now admitted recursively only when every
+other schema keyword remains in the previously qualified grammar. Boolean
+`false` and schema-valued forms remain incomplete. Sol reviewed the exact
+change and independently reran the locked/offline focused Rust suite (18/18),
+which includes Rust `jsonschema` 0.29.1 vectors. The R8 packet also records
+matching current TypeScript inspection and Ajv 8.20.0 outcomes for a nested
+valid/invalid pair. This closes one profile mismatch, not raw host parity,
+default-route retirement or the installed release gate.
+
+The [R6 catalog custody projection](evidence/rust-migration/r6-catalog-custody/README.md)
+now has an explicit opt-in Rust/PyO3 profile. It matches 14 frozen Python
+predecessor inputs for ordered native binding references and refusals; Sol
+independently reran three Rust units and twelve Python custody tests against
+the rebuilt extension. The direct bridge admits exact built-in dictionary
+targets and bounded JSON-shaped values, preserves Python bool/integer/float
+equality for related bindings, and compares wide objects in `O(n log n)`.
+Filesystem custody, Python reflection, Weft compilation, publication and the
+default catalog route remain Python-owned; this does not close the stage-two
+catalog compiler row or qualify the six Python release cohorts.
+
+The [R8 native JSON parser audit](evidence/rust-migration/r8-native-json-parser/README.md)
+found the existing opt-in Rust `parseNativeJson` wire operation in Node and
+WASM. Fresh Node, Bun and real Chromium replays matched the complete frozen
+22-case tree packet, including its 11 parser cases; raw wrong-type JavaScript
+host behavior still differs from tagged-string admission. The ledger now maps
+that exact opt-in operation, raising accepted mappings from 51 to 52 without
+retiring the TypeScript default export. The [versioned core schema authority
+review](evidence/rust-migration/r8-symbol-inventory/versioned-core-schema-authority.md)
+pins direct authorship for five current resources, with historical blob hashes
+and installed-archive limits; older versions remain unresolved.
+
+The legacy unified-client boundary check scans every `src/access/*.ts` file,
+including newer Rust host adapters alongside the portable Python client
+generator, and flags their exact imports. Sol removed the three
+`Function.call.bind` hooks in the V4 host-read adapter using captured
+`Reflect.apply` and intrinsic methods; the focused 10-case host-read suite
+and typecheck pass. The boundary checker now keeps its full directory scan
+and universal dynamic-import, forbidden host-hook, and Python-template checks.
+Its previous global import allowance has been replaced with exact per-file
+lists for the current portable generator and Rust facade/resource files; a
+new file fails until reviewed and listed. Sol independently reran the checker
+and three negative-control tests: an unapproved import in an existing facade,
+an unlisted new file, and dynamic import plus a `process` host hook all fail.
+The checker and focused tests pass. An earlier scan-scope reduction was
+rejected by automatic approval review because it could hide forbidden imports;
+this in-place repair preserves that coverage. It does not establish that the
+default Rust facade routes are behaviorally qualified or release-ready.
+
+At the earlier settled source checkpoint, the metamodel, action/codegen
+resource mirrors, WASM source map, symbol inventory, R8 ledger, typecheck,
+Rust boundary gate and Python sdist closure checks pass. Fresh local
+`umf-core` 0.11.0 and `umf-codegen` 0.2.0 wheels and sdists built with pinned
+build tools on macOS arm64/Python 3.13.16. Twine passed all four; the core
+artifact verifier rebuilt the core sdist wheel offline, and the pair verifier
+rebuilt the codegen sdist wheel byte-identically, installed both direct wheels,
+and passed import, generation and CLI smokes. The
+[local pair receipts](evidence/rust-migration/r8-release-pair-readiness/README.md)
+pin the artifacts and their source-bound limitations. They are not hosted
+revision/run-bound receipts. Subsequent Rust and Python source edits have
+superseded that source checkpoint; a fresh pair is required. The
+six hosted cohorts, same-run aggregate, publisher and complete default-route
+retirement remain open.
+
+The next opt-in [stage-one source membership join](evidence/rust-migration/r6-catalog-source-join/README.md)
+now runs in Rust after Python has established the stage-one path, manifest
+entry, source-file digest and parsed JSON value. Its eight frozen predecessor
+cases retain duplicate-ID refusal, tolerated non-object entries, source-text
+equality and the empty-binding short circuit. Sol independently replayed 15
+Python tests against the newly built CPython 3.11 abi3 wheel and four focused
+Rust tests. This moves one pure post-filesystem check; `catalog.py` still owns
+the default stage-two compiler, filesystem custody, Python reflection and
+Weft interactions.
+
+The [JSON/YAML value serialization audit](evidence/rust-migration/r8-json-value-serialization/README.md)
+freezes 24 direct TypeScript cases for `readJsonValue` and `writeJsonValue`.
+The existing Rust generic wire supports explicit JSON and YAML, but its
+Node/WASM aliases default to JSON while the public TypeScript functions
+default to YAML. YAML refusal codes, messages and public error classes also
+differ. Sol independently verified the predecessor packet and three focused
+Rust wire tests. Both exports remain unmapped; the next interface step is a
+versioned YAML-default facade with packet-driven error and admission parity,
+followed by installed Node/Bun/browser replay before any default selection.
+
+The [PostgreSQL schema authority review](evidence/rust-migration/r8-symbol-inventory/postgresql-schema-authority.md)
+now identifies three CONTRACT-015-authored representation/capture schemas
+and the exact descriptor-driven writer for the native-AST schema. The focused
+ledger test and `scripts/postgresql-schema.ts --check` passed independently;
+the latter checked 272 messages, 71 enums, 1,665 fields and 4,560 field wire
+vectors. The full R8 ledger suite passed 28/28 in the delegated tranche.
+These four source-authority rows await the next coordinated ledger recapture;
+installed archive bytes and default-route retirement are still unqualified.
+
+The [TypeSpec schema authority review](evidence/rust-migration/r8-symbol-inventory/typespec-schema-authority.md)
+similarly classifies five exact CONTRACT-013 result/projection schemas as
+authored resources. The nearby TypeSpec bundle writers produce different
+outputs and are not credited as generators for these five files. Sol checked
+the contract's named schemas and independently reran the focused ledger test;
+the delegated full suite passed 29/29. These source-authority rows also await
+the coordinated ledger recapture and installed archive qualification.
+
+The Core Evolution export audit found that `inspectCoreEvolution` and
+`verifyCoreEvolution` already have bounded opt-in Rust core, tagged wire and
+prior Node/Bun/Chromium evidence, but [R5's open resource-boundary
+review](evidence/rust-migration/r5-core-evolution/README.md) required
+metering repeated object-member scans. Rust now charges the containing
+object's full member count before each scan, and Sol independently reran the
+eight focused core tests, including a 4,096-member host-meter refusal.
+Combined control-order work and a 0.10 predecessor versus draft CONTRACT-058
+0.8 precondition remain open. Its two remaining
+schema exports are checker-resolved aliases to authored JSON resources, with
+caller-visible mutable module identity; returning fresh Rust values would
+change that interface. They need an explicit resource/route disposition rather
+than two redundant Rust operations. All four remain default-route gaps until
+that review and current installed-source qualification are complete.
+
+The [three cross-format projection result schemas](evidence/rust-migration/r8-symbol-inventory/projection-schema-authority.md)
+named by CONTRACT-004, CONTRACT-008 and CONTRACT-010 now have authored
+source authority, exact consumer/test and SDK copy-rule closure. No exact
+writer was found for these checked-in schema bytes. Sol independently reran
+their focused ledger regression; the delegated full suite passed 30/30.
+Installed archive bytes and the next coordinated ledger snapshot remain open.
+
+The [DDD, Bit128 and PostgreSQL projection-schema authority review](evidence/rust-migration/r8-symbol-inventory/domain-projection-schema-authority.md)
+pins three further contract-named authored resources with distinct consumer
+relationships. Bit128 imports its schema at runtime; DDD and PostgreSQL
+validate through package exports and tests. No exact schema writer was found.
+Sol independently reran the focused ledger regression. The next coordinated
+resource snapshot and installed archive-byte qualification remain open.
+
+The [exact JSON-number binding packet](evidence/rust-migration/r8-json-number-predecessor/README.md)
+now has a reviewed accepted opt-in mapping from `assertExactJsonNumber` to
+`umf_core::json_number::assert_exact_json_number`. Frozen string-input outcomes
+replay 18/18 in Node, Bun and real Chromium against freshly built addon/WASM
+artifacts. The wrapper preserves error name, code and message but does not
+provide `instanceof UmfError` identity; raw object coercion and TypeScript's
+unbounded resource behavior remain outside this profile. Both package-root
+defaults still use TypeScript, and the ledger records no retirement or proven
+current default binding route for this operation. Sol's focused mapping test
+passed; a coordinated inventory/ledger recapture and installed-package
+qualification are next.
+
+The [full and compact dataset-value operation schemas](evidence/rust-migration/r8-symbol-inventory/dataset-value-schema-authority.md)
+now have contract-attested authored authority with independently verified
+historical blob pins and current consumer/package source closure. The two
+resource rows move from unresolved to authored-known in the next ledger
+recapture; their SDK archive bytes remain unqualified. No operation is retired
+by this resource classification.
+
+The [catalog compiler boundary audit](evidence/rust-migration/r8-catalog-compiler-boundary/README.md)
+separates the existing opt-in Rust source-custody/join stage from trusted Python
+module capture, Pydantic reflection, Weft lowering, and filesystem
+publication. There is no larger inert Rust input yet. The next meaningful
+port requires a versioned captured-declaration JSON form and frozen outcomes
+from actual declarations before pre-Weft logical lowering can be evaluated.
+Sol reran the scoped source-join tests against an installed local core wheel
+with the correct import path: 9 tests and 8 subtests passed. This does not
+qualify the catalog compiler, a coordinated Python release pair, or default
+route retirement.
+
+The [Delta checkpoint and native JSON resource review](evidence/rust-migration/r8-symbol-inventory/delta-checkpoint-and-native-json-authority.md)
+pins one exact generated schema writer and three composition inputs, and one
+directly contract-attested authored JSON-tree schema. Sol verified the cited
+historical blobs and the isolated writer-byte comparison; the focused tests
+passed 4/4. That checkpoint established 34 generated-known, 36
+authored-known, and 37 unresolved resource sources; later authority reviews
+supersede those counts below. Installed SDK archive
+bytes and executable retirement remain unqualified.
+
+The [relationship-selection opt-in binding](evidence/rust-migration/r8-core-relationship-selection-binding/README.md)
+now routes `model/selectCoreRelationships` through the Rust core, tagged wire,
+and public Node/WASM `createCoreModelEngine` facades. Sol independently replayed
+the 16-case predecessor through Node, Bun and real Chromium: zero mismatches
+in each host. Error code/message/path parity is scoped; JavaScript error class
+identity, arbitrary Registry callbacks and default package selection remain
+unqualified. A reviewed accepted mapping records this operation without
+retiring the TypeScript default.
+
+The coordinated [R8 inventory and ledger recapture](evidence/rust-migration/r8-symbol-inventory/README.md)
+is current at inventory SHA-256
+`03b684d7e58c6df7997d70021f9a34c9fef196432b53d024ada96d78b79052a4`
+and ledger SHA-256
+`0b62c22af96cebdee3f96f26a50f2f90fcea7e08ce7572fa5c13065a8ff9eb69`.
+It records 922 logical executable default-route gaps, 54 accepted opt-in Rust
+operations, 868 unmapped executable names, and zero proven current-cohort
+default binding routes. Resource authority is 39 generated-known, 36
+authored-known, 88 candidate-generated and 35 unresolved files. The
+metamodel fixed point, mirrors, inventory/ledger `--check`, 37/37 ledger tests,
+typecheck, WASM source map, Rust-boundary gate, Python sdist/artifact custody
+(16/16), and diff check pass. Current publishable SDK/Python installed cohorts,
+default-route retirement review, and release gates remain open; a complete
+Rust-port PR, merge and release cannot yet be claimed.
+
+The [captured-declaration predecessor packet](evidence/rust-migration/r8-captured-declarations/README.md)
+now freezes three trusted Python DSL captures and one refusal as versioned
+tagged JSON, ending before Weft or catalog output. Sol caught and corrected
+an encoder omission of nullable aliases; container identity is now tagged too.
+The packet `--check` and 19 focused/capture tests pass. This supplies a small
+predecessor boundary for a future Rust DTO but does not establish native
+parity, generated-package capture, or default catalog routing.
+
+The [PostgreSQL Key-catalog schema authority review](evidence/rust-migration/r8-symbol-inventory/postgresql-key-catalog-schema-authority.md)
+pins one exact self-contained writer for three versioned schemas under the
+bounded CONTRACT-015 / US-015-AC6 catalog profile. Sol verified the historical
+blob hashes and the isolated three-output byte comparison. The focused test
+passes; the coordinated ledger capture moved these three files from
+candidate-generated to generated-known. No installed SDK archive bytes or
+Rust runtime behavior are inferred from this source authority.
+
+The [pre-Weft logical-render probe](evidence/rust-migration/r8-captured-logical-render/README.md)
+shows that the first four captured variants all refuse before producing a
+logical request: their authored Record namespace/name and field logical names
+are absent. Sol independently reran the frozen refusal packet and focused
+tests. Deriving names from physical module/element identities would add meaning
+not present in the declaration. The [positive successor packet](evidence/rust-migration/r8-captured-logical-render-positive/README.md)
+authors those names and freezes four live capture-to-logical-request outputs at
+SHA-256 `08ea0f4a70292be9b363c3d0c554708d212af3442673bf41be96c086bcc811e4`.
+Sol independently reran its packet check and focused test. This supplies a
+bounded positive Rust input/output target before Weft; Rust parity, Weft
+acceptance, backend SQL, and installed-wheel qualification remain open.
+
+The [Delta profile schema authority review](evidence/rust-migration/r8-symbol-inventory/delta-profile-schema-authority.md)
+pins exact writers and contract clauses for the recursive datatype and table
+context schemas. Sol checked that each isolated writer reproduces all three of
+its checked-in outputs byte-for-byte. The ledger recapture classifies these two
+resources as generated-known, leaving 35 authority-unresolved files; their
+installed SDK archive bytes remain unqualified. The refreshed ledger check and
+37/37 focused tests pass. The access boundary checker now also applies its
+exact per-file import policy to static re-exports, with a negative control;
+Sol independently reran its four focused controls and full-directory check.

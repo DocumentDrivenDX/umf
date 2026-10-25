@@ -7,9 +7,10 @@
 
 use crate::{
     avro_fields::{AvroDependency, AvroFieldMetadata, derive_avro_fields},
+    avro_semantics::{Dependency as InspectionDependency, inspect_schema},
     context::Context,
     engine::{Capabilities, Engine, ResourceSet, SemanticContext},
-    error::{Diagnostic, EngineError},
+    error::{Diagnostic, EngineError, Severity, Validation},
     native_json::NativeJsonTree,
     registry::Registry,
     serialization::{self, Format},
@@ -17,6 +18,7 @@ use crate::{
 };
 
 pub const AVRO_EXTENSION: &str = "umf.avro";
+pub const AVRO_CANDIDATE_PROFILE: &str = "umf-r5-avro-candidate/0.1.0";
 const CORE_VERSION: &str = "0.10.0";
 const EXTENSION_VERSION: &str = "0.1.0";
 const AVRO_VERSION: &str = "1.12.0";
@@ -177,6 +179,566 @@ pub fn get_node(
             .ok_or_else(|| err("AVRO_DEPENDENCY_ID", "Unknown dependency"))?,
     };
     tree.subtree_clone(pointer, ctx)
+}
+
+/// Propose an explicit, lossless node edit to an admitted Avro document.
+///
+/// Successful UMF/payload admission is reported separately from bounded native
+/// schema inspection. Inspector findings, including errors, do not turn an
+/// admitted candidate into an operation failure.
+pub fn propose_avro_node_edit(
+    input: &Value,
+    path: &Utf16,
+    replacement_json: &[u16],
+    dependency_id: Option<&Utf16>,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let source = copy_json(input, ctx)?;
+    let payload = payload_from_document(&source, ctx)?;
+    check_field_metadata(&source, &payload, ctx)?;
+    ensure_candidate_editable(&payload, ctx)?;
+
+    // The TypeScript operation validates pointer syntax before parsing the
+    // replacement JSON. replace_node repeats pointer parsing while resolving
+    // and copying the selected native tree; both passes are charged.
+    crate::native_json::native_pointer(path, ctx)?;
+    let replacement = NativeJsonTree::parse_json(replacement_json, ctx)?;
+    let mut candidate_payload = payload;
+    let selected_dependency_index = match dependency_id {
+        None => {
+            candidate_payload.root =
+                candidate_payload
+                    .root
+                    .replace_node(path, &replacement, ctx)?;
+            None
+        }
+        Some(id) => {
+            ctx.charge_work(id.len().saturating_add(1), Utf16::default())?;
+            let mut found = None;
+            for (index, (candidate, _)) in candidate_payload.dependencies.iter().enumerate() {
+                ctx.charge_work(candidate.len().saturating_add(1), Utf16::default())?;
+                if candidate == id {
+                    found = Some(index);
+                    break;
+                }
+            }
+            let index = found.ok_or_else(|| err("AVRO_DEPENDENCY_ID", "Unknown dependency"))?;
+            let next =
+                candidate_payload.dependencies[index]
+                    .1
+                    .replace_node(path, &replacement, ctx)?;
+            candidate_payload.dependencies[index].1 = next;
+            Some(index)
+        }
+    };
+
+    let mut document = copy_json(&source, ctx)?;
+    replace_payload_roots(
+        &mut document,
+        &candidate_payload,
+        selected_dependency_index,
+        ctx,
+    )?;
+    synchronize_candidate_field_metadata(&mut document, &candidate_payload, ctx)?;
+
+    let admitted_candidate = payload_from_document(&document, ctx)?;
+    check_field_metadata(&document, &admitted_candidate, ctx)?;
+    let source_admission = successful_admission();
+    let candidate_admission = successful_admission();
+
+    let admitted_source = payload_from_document(&source, ctx)?;
+    let source_dependencies = inspection_dependencies(&admitted_source, ctx)?;
+    let source_inspection = inspect_schema(&admitted_source.root, &source_dependencies, ctx)?;
+    let candidate_dependencies = inspection_dependencies(&admitted_candidate, ctx)?;
+    let candidate_inspection =
+        inspect_schema(&admitted_candidate.root, &candidate_dependencies, ctx)?;
+
+    let replacement_value = tagged_value(&replacement, ctx)?;
+    ctx.charge_work(8, Utf16::default())?;
+    let mut edit_fields = vec![(Utf16::from("path"), Value::String(path.clone()))];
+    if let Some(id) = dependency_id {
+        ctx.charge_work(id.len().saturating_add(1), Utf16::default())?;
+        edit_fields.push((Utf16::from("dependencyId"), Value::String(id.clone())));
+    }
+    edit_fields.push((Utf16::from("replacement"), replacement_value));
+    let report = Value::Object(vec![
+        (
+            Utf16::from("profile"),
+            Value::string_utf8(AVRO_CANDIDATE_PROFILE),
+        ),
+        (Utf16::from("status"), Value::string_utf8("candidate")),
+        (Utf16::from("source"), source),
+        (Utf16::from("document"), document),
+        (Utf16::from("edit"), Value::Object(edit_fields)),
+        (
+            Utf16::from("admission"),
+            Value::Object(vec![
+                (
+                    Utf16::from("source"),
+                    validation_value(source_admission, ctx)?,
+                ),
+                (
+                    Utf16::from("candidate"),
+                    validation_value(candidate_admission, ctx)?,
+                ),
+            ]),
+        ),
+        (
+            Utf16::from("nativeInspection"),
+            Value::Object(vec![
+                (
+                    Utf16::from("source"),
+                    validation_value(source_inspection, ctx)?,
+                ),
+                (
+                    Utf16::from("candidate"),
+                    validation_value(candidate_inspection, ctx)?,
+                ),
+            ]),
+        ),
+    ]);
+    copy_json(&report, ctx)
+}
+
+fn successful_admission() -> Validation {
+    Validation {
+        valid: true,
+        complete: true,
+        diagnostics: Vec::new(),
+    }
+}
+
+fn validation_value(validation: Validation, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    ctx.charge_work(
+        validation.diagnostics.len().saturating_add(3),
+        Utf16::default(),
+    )?;
+    let mut diagnostics = Vec::with_capacity(validation.diagnostics.len());
+    for item in validation.diagnostics {
+        ctx.charge_work(
+            item.code
+                .len()
+                .saturating_add(item.path.len())
+                .saturating_add(item.message.len())
+                .saturating_add(4),
+            item.path.clone(),
+        )?;
+        diagnostics.push(Value::Object(vec![
+            (Utf16::from("code"), Value::String(item.code)),
+            (Utf16::from("path"), Value::String(item.path)),
+            (Utf16::from("message"), Value::String(item.message)),
+            (
+                Utf16::from("severity"),
+                Value::string_utf8(if item.severity == Severity::Warning {
+                    "warning"
+                } else {
+                    "error"
+                }),
+            ),
+        ]));
+    }
+    Ok(Value::Object(vec![
+        (Utf16::from("valid"), Value::Bool(validation.valid)),
+        (Utf16::from("complete"), Value::Bool(validation.complete)),
+        (Utf16::from("diagnostics"), Value::Array(diagnostics)),
+    ]))
+}
+
+fn inspection_dependencies<'a>(
+    payload: &'a Payload,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<InspectionDependency<'a>>, EngineError> {
+    ctx.charge_work(
+        payload.dependencies.len().saturating_add(1),
+        Utf16::default(),
+    )?;
+    let mut dependencies = Vec::with_capacity(payload.dependencies.len());
+    for (id, tree) in &payload.dependencies {
+        ctx.charge_work(id.len().saturating_add(1), Utf16::default())?;
+        dependencies.push(InspectionDependency { id, tree });
+    }
+    Ok(dependencies)
+}
+
+fn ensure_candidate_editable(payload: &Payload, ctx: &mut Context<'_>) -> Result<(), EngineError> {
+    ctx.charge_work(
+        payload.dependencies.len().saturating_add(1),
+        Utf16::default(),
+    )?;
+    if payload.unknown_envelope
+        || payload.root.has_representation_extras()
+        || payload
+            .dependencies
+            .iter()
+            .any(|(_, tree)| tree.has_representation_extras())
+    {
+        return Err(err(
+            "AVRO_REPRESENTATION",
+            "Unknown representation content prevents native node replacement",
+        ));
+    }
+    Ok(())
+}
+
+fn replace_payload_roots(
+    document: &mut Value,
+    payload: &Payload,
+    selected_dependency_index: Option<usize>,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let modules = array_mut(
+        required_member_mut(
+            document,
+            "modules",
+            "AVRO_DOCUMENT",
+            "modules are required",
+            ctx,
+        )?,
+        "AVRO_DOCUMENT",
+        "modules must be an array",
+    )?;
+    ctx.charge_work(modules.len().saturating_add(1), Utf16::default())?;
+    let module = modules
+        .iter_mut()
+        .find(|module| {
+            value_text(optional_field(object_fields_read(module), "id"))
+                .is_some_and(|id| id == &Utf16::from("schema"))
+        })
+        .ok_or_else(|| err("AVRO_DOCUMENT", "Schema module is missing"))?;
+    let elements = array_mut(
+        required_member_mut(
+            module,
+            "elements",
+            "AVRO_DOCUMENT",
+            "Schema module elements are missing",
+            ctx,
+        )?,
+        "AVRO_DOCUMENT",
+        "Schema module elements must be an array",
+    )?;
+    ctx.charge_work(elements.len().saturating_add(1), Utf16::default())?;
+    let element = elements
+        .iter_mut()
+        .find(|element| {
+            value_text(optional_field(object_fields_read(element), "id"))
+                .is_some_and(|id| id == &Utf16::from("schema"))
+        })
+        .ok_or_else(|| err("AVRO_DOCUMENT", "Schema element is missing"))?;
+    let payload_value = required_member_mut(
+        element,
+        "extensions",
+        "AVRO_DOCUMENT",
+        "Schema element extensions are missing",
+        ctx,
+    )?;
+    let payload_value = required_member_mut(
+        payload_value,
+        AVRO_EXTENSION,
+        "AVRO_PAYLOAD",
+        "Avro payload is missing",
+        ctx,
+    )?;
+    let payload_fields =
+        object_fields_mut(payload_value, "AVRO_PAYLOAD", "Payload must be an object")?;
+    let tagged_root = tagged_value(&payload.root, ctx)?;
+    set_member(payload_fields, "root", tagged_root, ctx)?;
+    if let Some(index) = selected_dependency_index {
+        ctx.charge_work(index.saturating_add(1), Utf16::default())?;
+        let dependency = array_mut(
+            required_member_mut(
+                payload_value,
+                "dependencies",
+                "AVRO_DEPENDENCIES",
+                "Dependency list is missing",
+                ctx,
+            )?,
+            "AVRO_DEPENDENCIES",
+            "Dependencies must be an array",
+        )?
+        .get_mut(index)
+        .ok_or_else(|| err("AVRO_DEPENDENCY_ID", "Dependency index is unavailable"))?;
+        let root = required_member_mut(
+            dependency,
+            "root",
+            "AVRO_DEPENDENCY",
+            "Dependency root is missing",
+            ctx,
+        )?;
+        *root = tagged_value(
+            &payload
+                .dependencies
+                .get(index)
+                .ok_or_else(|| err("AVRO_DEPENDENCY_ID", "Dependency index is unavailable"))?
+                .1,
+            ctx,
+        )?;
+    }
+    Ok(())
+}
+
+fn synchronize_candidate_field_metadata(
+    document: &mut Value,
+    payload: &Payload,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let modules = array_mut(
+        required_member_mut(
+            document,
+            "modules",
+            "AVRO_DOCUMENT",
+            "modules are required",
+            ctx,
+        )?,
+        "AVRO_DOCUMENT",
+        "modules must be an array",
+    )?;
+    ctx.charge_work(modules.len().saturating_add(1), Utf16::default())?;
+    let Some(module_index) = modules.iter().position(|module| {
+        value_text(optional_field(object_fields_read(module), "id"))
+            == Some(&Utf16::from("avro.fields"))
+    }) else {
+        return Ok(());
+    };
+    let fields = payload
+        .dependencies
+        .iter()
+        .map(|(id, root)| AvroDependency { id, root })
+        .collect::<Vec<_>>();
+    ctx.charge_work(fields.len().saturating_add(1), Utf16::default())?;
+    let next_module = fields_module(derive_avro_fields(&payload.root, &fields, ctx)?);
+    let expected = array(
+        optional_field(object_fields_read(&next_module), "elements")
+            .ok_or_else(|| err("AVRO_FIELD_METADATA", "Derived fields are unavailable"))?,
+        "AVRO_FIELD_METADATA",
+        "Derived fields are unavailable",
+    )?;
+    let module = &mut modules[module_index];
+    let old = array_mut(
+        required_member_mut(
+            module,
+            "elements",
+            "AVRO_FIELD_METADATA",
+            "Field metadata elements are missing",
+            ctx,
+        )?,
+        "AVRO_FIELD_METADATA",
+        "Field metadata elements must be an array",
+    )?;
+    ctx.charge_work(
+        expected.len().saturating_add(old.len()).saturating_add(1),
+        Utf16::default(),
+    )?;
+    let mut merged = Vec::with_capacity(expected.len());
+    for fresh in expected {
+        let fresh_id = optional_field(object_fields_read(fresh), "id")
+            .ok_or_else(|| err("AVRO_FIELD_METADATA", "Derived field ID is missing"))?;
+        let fresh_id_len = value_text(Some(fresh_id)).map_or(1, Utf16::len);
+        ctx.charge_work(
+            old.len().saturating_mul(fresh_id_len).saturating_add(1),
+            Utf16::default(),
+        )?;
+        let previous = old
+            .iter()
+            .find(|item| optional_field(object_fields_read(item), "id") == Some(fresh_id));
+        let Some(previous) = previous else {
+            merged.push(copy_json(fresh, ctx)?);
+            continue;
+        };
+        let old_name = optional_field(object_fields_read(previous), "name");
+        let new_name = optional_field(object_fields_read(fresh), "name");
+        ctx.charge_work(
+            value_text(old_name)
+                .map_or(0, Utf16::len)
+                .saturating_add(value_text(new_name).map_or(0, Utf16::len)),
+            Utf16::default(),
+        )?;
+        if old_name != new_name && element_has_attached_metadata(previous, ctx)? {
+            return Err(err(
+                "AVRO_FIELD_METADATA",
+                "Field identity changed with attached metadata; explicit reassociation required",
+            ));
+        }
+        let mut next = copy_json(fresh, ctx)?;
+        let previous_fields = object_fields_read(previous);
+        ctx.charge_work(previous_fields.len().saturating_add(1), Utf16::default())?;
+        for (key, value) in previous_fields {
+            let known = matches_ascii(
+                key,
+                &["id", "name", "description", "scalarType", "extensions"],
+            );
+            if !known || matches_ascii(key, &["extensions"]) {
+                let value = copy_json(value, ctx)?;
+                set_member_units(
+                    object_fields_mut(
+                        &mut next,
+                        "AVRO_FIELD_METADATA",
+                        "Derived field must be an object",
+                    )?,
+                    key.clone(),
+                    value,
+                    ctx,
+                )?;
+            }
+        }
+        merged.push(next);
+    }
+    for previous in old.iter() {
+        let old_id = optional_field(object_fields_read(previous), "id");
+        let old_id_len = value_text(old_id).map_or(1, Utf16::len);
+        ctx.charge_work(
+            expected.len().saturating_mul(old_id_len).saturating_add(1),
+            Utf16::default(),
+        )?;
+        if !expected
+            .iter()
+            .any(|fresh| optional_field(object_fields_read(fresh), "id") == old_id)
+            && element_has_attached_metadata(previous, ctx)?
+        {
+            return Err(err(
+                "AVRO_FIELD_METADATA",
+                "Removing a field would discard attached core metadata",
+            ));
+        }
+    }
+    set_member(
+        object_fields_mut(
+            module,
+            "AVRO_FIELD_METADATA",
+            "Field metadata module must be an object",
+        )?,
+        "elements",
+        Value::Array(merged),
+        ctx,
+    )?;
+    Ok(())
+}
+
+fn element_has_attached_metadata(
+    value: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<bool, EngineError> {
+    let fields = object_fields_read(value);
+    ctx.charge_work(fields.len().saturating_add(1), Utf16::default())?;
+    for (key, value) in fields {
+        if matches_ascii(key, &["extensions"]) {
+            match value {
+                Value::Object(items) if items.is_empty() => continue,
+                _ => return Ok(true),
+            }
+        }
+        if !matches_ascii(
+            key,
+            &["id", "name", "description", "scalarType", "extensions"],
+        ) {
+            return Ok(true);
+        }
+    }
+    Ok(false)
+}
+
+fn object_fields_read(value: &Value) -> &[(Utf16, Value)] {
+    match value {
+        Value::Object(fields) => fields,
+        _ => &[],
+    }
+}
+
+fn object_fields_mut<'a>(
+    value: &'a mut Value,
+    code: &'static str,
+    message: &'static str,
+) -> Result<&'a mut Vec<(Utf16, Value)>, EngineError> {
+    match value {
+        Value::Object(fields) => Ok(fields),
+        _ => Err(err(code, message)),
+    }
+}
+
+fn array_mut<'a>(
+    value: &'a mut Value,
+    code: &'static str,
+    message: &'static str,
+) -> Result<&'a mut Vec<Value>, EngineError> {
+    match value {
+        Value::Array(items) => Ok(items),
+        _ => Err(err(code, message)),
+    }
+}
+
+fn optional_field_mut<'a>(fields: &'a mut [(Utf16, Value)], key: &str) -> Option<&'a mut Value> {
+    fields
+        .iter_mut()
+        .find(|(name, _)| name.units().iter().copied().eq(key.encode_utf16()))
+        .map(|(_, value)| value)
+}
+
+fn required_member_mut<'a>(
+    value: &'a mut Value,
+    key: &str,
+    code: &'static str,
+    message: &'static str,
+    ctx: &mut Context<'_>,
+) -> Result<&'a mut Value, EngineError> {
+    let fields = object_fields_mut(value, code, message)?;
+    let key_length = key.encode_utf16().count();
+    ctx.charge_work(
+        fields.len().saturating_mul(key_length.saturating_add(1)),
+        Utf16::default(),
+    )?;
+    optional_field_mut(fields, key).ok_or_else(|| err(code, message))
+}
+
+fn value_text(value: Option<&Value>) -> Option<&Utf16> {
+    match value {
+        Some(Value::String(text)) => Some(text),
+        _ => None,
+    }
+}
+
+fn set_member(
+    fields: &mut Vec<(Utf16, Value)>,
+    key: &str,
+    value: Value,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    set_member_units(fields, Utf16::from(key), value, ctx)
+}
+
+fn set_member_units(
+    fields: &mut Vec<(Utf16, Value)>,
+    key: Utf16,
+    value: Value,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    ctx.charge_work(
+        fields
+            .len()
+            .saturating_mul(key.len().saturating_add(1))
+            .saturating_add(1),
+        Utf16::default(),
+    )?;
+    if let Some((_, old)) = fields.iter_mut().find(|(candidate, _)| candidate == &key) {
+        *old = value;
+    } else {
+        fields.push((key, value));
+    }
+    Ok(())
+}
+
+fn remove_member(
+    fields: &mut Vec<(Utf16, Value)>,
+    key: &str,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    ctx.charge_work(
+        fields
+            .len()
+            .saturating_mul(key.encode_utf16().count().saturating_add(1))
+            .saturating_add(1),
+        Utf16::default(),
+    )?;
+    fields.retain(|(candidate, _)| !candidate.units().iter().copied().eq(key.encode_utf16()));
+    Ok(())
 }
 
 fn payload_from_document(document: &Value, ctx: &mut Context<'_>) -> Result<Payload, EngineError> {

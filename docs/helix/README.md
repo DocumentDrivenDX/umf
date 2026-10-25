@@ -20,8 +20,11 @@ sequences a native Rust CLI and Python/Node/Bun/browser bindings over one engine
 [ADR-006](02-design/adr/ADR-006-shared-rust-implementation.md) records the target
 ownership; the [R0 inventory](04-build/evidence/rust-migration/r0/README.md) and
 [R1 installed binding/browser evidence](04-build/evidence/rust-migration/r1/README.md)
-qualify a bounded Darwin-arm64 spike. Production V8 removal and the full Rust
-migration remain unimplemented.
+qualify the initial Darwin-arm64 spike. R2 and R3 establish the shared Rust core
+and seven-operation codegen engine; [R4 installed-artifact evidence](04-build/evidence/rust-migration/r4/README.md)
+demonstrates a bounded V8-free Python codegen path. Current-source portable
+qualification, remaining R5–R7 semantic ownership, and the R8 release gates
+remain open.
 
 [Schema migration design](02-design/solution-designs/SD-007-schema-migrations.md)
 and [delivery plan](04-build/schema-migration-plan.md) define field additions,

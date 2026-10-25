@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import base from '../../spec/core/field-tablespec-projection.schema.json';
+const check=process.argv.includes('--check');
 const schema:any=structuredClone(base);
 schema.$id='urn:umf:core:cardinality-tablespec-projection:1.0.0';schema.title='Authored Cardinality to explicit TableSpec carrier';
 schema.properties.operation.const='project-cardinality-tablespec';schema.properties.source.$ref='urn:umf:core:0.10.0';schema.properties.author.$ref='urn:umf:core:cardinality-operation:4.0.0#/$defs/declaration';
@@ -14,5 +15,11 @@ const mapping=schema.properties.mapping;
 Object.assign(mapping.properties,{cardinality:{enum:['one','array','map','unspecified']},encoding:{enum:['scalar','embedding','carrier-only']},profile:request.properties.profile,itemPath:{anyOf:[{type:'string',minLength:1},{type:'null'}]}});mapping.required.push('cardinality','encoding','profile','itemPath');
 mapping.properties.outcome.enum.push('approximated');schema.properties.residuals.items.properties.outcome.enum.push('approximated');
 if(!schema.required.includes('diagnostics'))schema.required.push('diagnostics');
-await Bun.write('spec/core/cardinality-tablespec-projection.schema.json',JSON.stringify(schema,null,2)+'\n');
+const output='spec/core/cardinality-tablespec-projection.schema.json';
+const rendered=JSON.stringify(schema,null,2)+'\n';
+if(check){
+ const current=await Bun.file(output).text();
+ if(current!==rendered)throw new Error(`${output} is stale; regenerate deliberately.`);
+ console.log(`${output} is current.`);
+}else await Bun.write(output,rendered);
 export {};

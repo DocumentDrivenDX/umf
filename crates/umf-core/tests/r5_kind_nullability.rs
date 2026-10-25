@@ -4,7 +4,7 @@ use umf_core::{
     engine::{Capabilities, Engine, ResourceSet, SemanticContext},
     error::Diagnostic,
     registry::Registry,
-    serialization::{Format, read_json_value},
+    serialization::{read_json_value, Format},
     value::{Utf16, Value},
 };
 
@@ -541,17 +541,15 @@ fn receipt_replay_rejects_stale_forged_and_wrong_role_inputs() {
         &mut Context::ordinary(),
     )
     .unwrap();
-    assert!(
-        umf_core::core_kind::verify_core_kind_declaration(
-            &kind,
-            get(&kind, "target").unwrap(),
-            &e,
-            &r,
-            &mut c,
-            &mut Context::ordinary()
-        )
-        .is_ok()
-    );
+    assert!(umf_core::core_kind::verify_core_kind_declaration(
+        &kind,
+        get(&kind, "target").unwrap(),
+        &e,
+        &r,
+        &mut c,
+        &mut Context::ordinary()
+    )
+    .is_ok());
     let null = umf_core::nullability::declare_core_nullability(
         &s,
         &nul_id("missing"),
@@ -562,44 +560,38 @@ fn receipt_replay_rejects_stale_forged_and_wrong_role_inputs() {
         &mut Context::ordinary(),
     )
     .unwrap();
-    assert!(
-        umf_core::nullability::verify_core_nullability_declaration(
-            &null,
-            get(&null, "target").unwrap(),
-            &e,
-            &r,
-            &mut c,
-            &mut Context::ordinary()
-        )
-        .is_ok()
-    );
-    assert!(
-        umf_core::nullability::declare_core_nullability(
-            &s,
-            &nul_id("record"),
-            "required",
-            &e,
-            &r,
-            &mut c,
-            &mut Context::ordinary()
-        )
-        .is_err()
-    );
+    assert!(umf_core::nullability::verify_core_nullability_declaration(
+        &null,
+        get(&null, "target").unwrap(),
+        &e,
+        &r,
+        &mut c,
+        &mut Context::ordinary()
+    )
+    .is_ok());
+    assert!(umf_core::nullability::declare_core_nullability(
+        &s,
+        &nul_id("record"),
+        "required",
+        &e,
+        &r,
+        &mut c,
+        &mut Context::ordinary()
+    )
+    .is_err());
     let mut stale = get(&null, "target").unwrap().clone();
     if let Value::Object(m) = &mut stale {
         m.push((Utf16::from("later"), Value::Bool(true)));
     }
-    assert!(
-        umf_core::nullability::verify_core_nullability_declaration(
-            &null,
-            &stale,
-            &e,
-            &r,
-            &mut c,
-            &mut Context::ordinary()
-        )
-        .is_err()
-    );
+    assert!(umf_core::nullability::verify_core_nullability_declaration(
+        &null,
+        &stale,
+        &e,
+        &r,
+        &mut c,
+        &mut Context::ordinary()
+    )
+    .is_err());
 }
 
 #[test]

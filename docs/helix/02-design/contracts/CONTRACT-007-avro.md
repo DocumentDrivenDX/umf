@@ -106,6 +106,55 @@ script. Native results in fixtures/avro/candidate-edits-oracle.json fingerprint 
 input fixture and contain ten source/candidate comparisons and twenty candidate
 recovery observations. Chromium checks five proposals and ten candidate recoveries.
 
+### Rust core candidate profile — `umf-r5-avro-candidate/0.1.0`
+
+The opt-in Rust core operation is `avro_document::propose_avro_node_edit(document,
+path, replacement_json, dependency_id, context)`. `path` is an RFC 6901 JSON
+Pointer encoded as UTF-16; the empty pointer selects the chosen root. The optional
+`dependency_id` selects one ordered dependency by exact ID. It is an artifact ID;
+the operation performs no path, URL, registry, or network lookup. The replacement
+is raw JSON text encoded as UTF-16 and is parsed by the lossless native JSON parser,
+so numeric lexemes such as `9223372036854775807` remain exact.
+
+The operation returns one bounded report with exactly `profile`, `status`,
+`source`, `document`, `edit`, `admission`, and `nativeInspection`. `profile` is
+`umf-r5-avro-candidate/0.1.0`; `status` is `candidate`. `source` and `document`
+are detached UMF documents. `edit` contains `path`, optional `dependencyId`, and
+the exact tagged `replacement` tree. `admission` contains `source` and `candidate`
+validation results for the complete UMF/core and Avro payload representation
+profile. Successful admission results have `valid: true`, `complete: true`, and
+no diagnostics; completeness here is limited to that admission profile and is
+not Avro semantic completeness. `nativeInspection` contains separate `source`
+and `candidate` results from the bounded Rust structural inspector. That
+inspector always declares its limited scope, may report errors, and never
+certifies full Avro 1.12 validity. A candidate whose admission succeeds is
+returned even when either native inspection contains errors. Resource, deadline,
+cancellation, and host-control failures are operation errors.
+
+This Rust report deliberately has no predecessor `validation` member. The
+TypeScript `proposeAvroNodeEdit` currently reports its validator result under
+`validation`; the Rust profile separates complete UMF/payload admission from
+the bounded native structural inspection so neither is presented as the other.
+This is an explicit profile difference, not full report parity. No core-wire,
+CLI, Node, Python, or WASM transport is included in this profile until separately
+versioned and qualified.
+
+Refusal order is normative: source UMF/payload admission and stale `avro.fields`
+metadata; unknown Avro envelope or tagged representation content anywhere in
+the root or dependencies; pointer syntax; replacement JSON parsing; dependency
+ID and target resolution; field metadata rename/removal guard; candidate UMF/
+payload admission and projection consistency; source/candidate native
+inspection; final report bounds. Unknown tagged representation extras in any
+Avro root or dependency block an edit before pointer/replacement processing,
+including extras outside the selected subtree. Known native metadata and
+unrelated UMF extensions remain preserved. Existing Avro payload member order
+and explicit dependency-member presence are retained by a candidate edit,
+including an explicitly empty `dependencies: []`. A replacement may replace the
+selected subtree and its contents. Field metadata is regenerated on a copy;
+renaming or removing a field that has attached core metadata requires a separate
+reassociation operation and is refused here. The exact report schema is
+[`spec/extensions/avro/rust-candidate-edit-report.schema.json`](../../../spec/extensions/avro/rust-candidate-edit-report.schema.json).
+
 ## Validation Profile
 
 The structural package validator checks the tagged tree. Root scalars other than

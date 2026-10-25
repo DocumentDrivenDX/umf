@@ -27,6 +27,16 @@ def is_canonical_output(path: Path) -> bool:
     return path.resolve() == OUT.resolve()
 
 
+def refuses_canonical_replace(output: Path, authority_status: str, *, check_only: bool) -> bool:
+    """Protect writes to the canonical census without blocking read-only diagnostics."""
+    return is_canonical_output(output) and authority_status != "current" and not check_only
+
+
+def census_check_passes(stored_payload: str, fresh_payload: str, authority_status: str) -> bool:
+    """A matching census is qualified only when its metamodel cohort is current."""
+    return stored_payload == fresh_payload and authority_status == "current"
+
+
 def metamodel_authority_snapshot(root: Path = ROOT) -> dict[str, object]:
     """Bind authored metamodel inputs and their generated schema/output cohort."""
     manifest_path = root / "spec/metamodel/generated/manifest.json"
@@ -443,7 +453,7 @@ def main() -> int:
         print(f"Live successor census validated: {len(data['sourceModules'])} modules; "
               f"{data['summary']['unresolvedModuleRows']} rows need review; metamodel fixed point still requires `bun scripts/metamodel/build.ts --check`")
         return 0
-    if is_canonical_output(output) and authority_status != "current":
+    if refuses_canonical_replace(output, authority_status, check_only="--check" in sys.argv):
         print(f"Refusing to replace the canonical R8 census with metamodel manifest digest status {authority_status}; "
               "regenerate and verify outputs first", file=sys.stderr)
         return 1
@@ -468,6 +478,10 @@ def main() -> int:
                     print(f"added={len(added)} removed={len(removed)}", file=sys.stderr)
                 except (KeyError, TypeError, ValueError) as exc:
                     print(f"could not summarize census changes: {exc}", file=sys.stderr)
+            return 1
+        if not census_check_passes(current, payload, authority_status):
+            print(f"R4 successor census matches a {authority_status} metamodel cohort; "
+                  "regenerate and verify the metamodel before qualification", file=sys.stderr)
             return 1
         print(f"R4 successor census current: {len(data['sourceModules'])} modules; "
               f"{data['summary']['unresolvedModuleRows']} rows need review")

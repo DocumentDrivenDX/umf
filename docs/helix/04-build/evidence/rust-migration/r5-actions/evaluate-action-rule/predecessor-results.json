@@ -1,0 +1,451 @@
+{
+  "cases": [
+    {
+      "id": "input-absent-present-is-false",
+      "outcome": {
+        "value": false
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "input-absent-unguarded-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_RULE_EVALUATION",
+          "message": "Absent operand must be guarded with present/exists",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "explicit-null-is-present",
+      "outcome": {
+        "value": true
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "explicit-null-equals-null",
+      "outcome": {
+        "value": true
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "nullable-boolean-equals-nonnull-boolean",
+      "outcome": {
+        "value": false
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "nullable-mixed-family-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_RULE_TYPE",
+          "message": "Equality needs the same scalar family or compatible explicit nullable null",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "explicit-null-is-not-boolean",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_RULE_EVALUATION",
+          "message": "Expected non-null boolean operand",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "and-short-circuit-skips-absent-input",
+      "outcome": {
+        "value": false
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "or-short-circuit-skips-absent-input",
+      "outcome": {
+        "value": true
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "bigint-add-beyond-safe-integer",
+      "outcome": {
+        "value": true
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "bigint-exponent-token-equality",
+      "outcome": {
+        "value": true
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "integer-less-than",
+      "outcome": {
+        "value": true
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "integer-less-than-or-equal",
+      "outcome": {
+        "value": true
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "integer-greater-than-or-equal",
+      "outcome": {
+        "value": true
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "bigint-negative-subtraction-order",
+      "outcome": {
+        "value": true
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "boolean-equality",
+      "outcome": {
+        "value": true
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "string-field-equality",
+      "outcome": {
+        "value": true
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "existing-frame-absence-guard-is-false",
+      "outcome": {
+        "value": false
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "existing-frame-unguarded-field-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_RULE_EVALUATION",
+          "message": "Absent entity field reads must be guarded with exists",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "declared-frame-identity-unavailable-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_RULE_EVALUATION",
+          "message": "Frozen frame state is unavailable",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "malformed-frozen-frame-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_RULE_EVALUATION",
+          "message": "Frozen frame state is unavailable",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "post-frame-unavailable-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_RULE_EVALUATION",
+          "message": "Frozen frame state is unavailable",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "post-state-in-precondition-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_RULE_PHASE",
+          "message": "Post-state is forbidden in preconditions",
+          "path": "/args/0"
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "existing-entity-missing-field-present-is-false",
+      "outcome": {
+        "value": false
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "existing-entity-missing-field-unguarded-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_RULE_EVALUATION",
+          "message": "Absent operand must be guarded with present/exists",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "malformed-stored-field-wrapper-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_RULE_EVALUATION",
+          "message": "Expected exact typed field literal",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "output-precondition-is-refused-before-read",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_RULE_DEPENDENCY",
+          "message": "Output dependency is forbidden or missing",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "postcondition-output-is-read",
+      "outcome": {
+        "value": true
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "postcondition-missing-output-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_RULE_EVALUATION",
+          "message": "Absent operand must be guarded with present/exists",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "unknown-operator-refuses-during-compilation",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_RULE_SYNTAX",
+          "message": "Unknown operator or wrong arity",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "unknown-expression-member-refuses-during-compilation",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_RULE_SYNTAX",
+          "message": "Unknown or missing expression member",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "invalid-syntax-in-short-circuited-branch-still-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_RULE_SYNTAX",
+          "message": "Unknown operator or wrong arity",
+          "path": "/args/1"
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "exact-depth-32-is-admitted",
+      "outcome": {
+        "value": false
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "exact-node-limit-512-is-admitted",
+      "outcome": {
+        "value": true
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "depth-limit-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "LIMIT",
+          "message": "Expression depth/node bound exceeded",
+          "path": "/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0/args/0"
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "node-limit-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "LIMIT",
+          "message": "Expression depth/node bound exceeded",
+          "path": "/args/1"
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "text-limit-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "LIMIT",
+          "message": "Expression text exceeds bounded profile",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "exact-text-limit-65536-is-admitted",
+      "outcome": {
+        "value": true
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "numeric-expansion-refuses-before-evaluation",
+      "outcome": {
+        "refusal": {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Numeric value exceeds precision/resource limit",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "arithmetic-result-at-core-text-boundary-is-admitted",
+      "outcome": {
+        "value": true
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "runtime-numeric-coefficient-bound-refuses-on-arithmetic-expansion",
+      "outcome": {
+        "refusal": {
+          "code": "LIMIT",
+          "message": "Expanded arithmetic result exceeds core numeric bound",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "relationship-snapshot-missing-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_RULE_EVALUATION",
+          "message": "Relationship snapshot is unavailable",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "relationship-snapshot-malformed-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_RULE_EVALUATION",
+          "message": "Malformed relationship snapshot",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "relationship-snapshot-valid-match-before-malformed-entry-still-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_RULE_EVALUATION",
+          "message": "Malformed relationship snapshot",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "relationship-snapshot-no-matching-link-is-false",
+      "outcome": {
+        "value": false
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "relationship-snapshot-matching-link-is-true",
+      "outcome": {
+        "value": true
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "rule-compilation-precedes-invalid-runtime-state",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_RULE_DEPENDENCY",
+          "message": "Expression dependency must be explicitly declared",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "valid-rule-then-invalid-runtime-input-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "ACTION_PARAMETER",
+          "message": "Unknown input/output identity",
+          "path": ""
+        }
+      },
+      "stateUnchanged": true
+    },
+    {
+      "id": "valid-rule-then-accessor-runtime-state-refuses",
+      "outcome": {
+        "refusal": {
+          "code": "NON_JSON",
+          "message": "Hidden fields and accessors cannot be serialized faithfully",
+          "path": "/inputs/quantity"
+        }
+      },
+      "stateUnchanged": true
+    }
+  ]
+}

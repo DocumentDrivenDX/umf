@@ -12,7 +12,7 @@ import pytest
 
 _HELPER_PATH = Path(__file__).resolve().parents[2] / "tools/_python_sdist.py"
 assert hashlib.sha256(_HELPER_PATH.read_bytes()).hexdigest() == (
-    "55afef3a1091a7036b2d7bdc7b9fbcf3e5b0338307f52cad09010cfa2f673ea4"
+    "9e069554ddd6433599bc2a3533a249d17023acbf698e294bf77ca8b2784b2b66"
 )
 _HELPER_SPEC = importlib.util.spec_from_file_location(
     "umf_test_python_sdist", _HELPER_PATH
@@ -32,11 +32,28 @@ ROOT_FILES = (
     "rust-toolchain.toml",
     ".cargo/config.toml",
     "spec/extensions/avro/package.json",
+    "spec/extensions/parquet/package.json",
     "spec/extensions/json-schema/package.json",
+    "spec/extensions/delta/package.json",
+    "spec/extensions/delta/datatype-schema.json",
+    "spec/extensions/delta-table/package.json",
+    "spec/extensions/delta-table/context-schema.json",
+    "spec/extensions/protobuf/package.json",
     "spec/core/cardinality-operation-v6.schema.json",
     "spec/core/cardinality-operation-v4.schema.json",
     "spec/core/kind-operation-v8.schema.json",
     "spec/core/kind-operation-v6.schema.json",
+    "spec/core/record-type-operation-v6.schema.json",
+    "spec/core/avro-record-type-classification.schema.json",
+    "spec/core/avro-record-classification.schema.json",
+    "spec/core/avro-field-classification.schema.json",
+    "spec/core/parquet-record-type-classification.schema.json",
+    "spec/core/parquet-record-classification.schema.json",
+    "spec/extensions/delta-log/package.json",
+    "spec/extensions/delta-log/action-schema.json",
+    "spec/extensions/security-v0.2/package.json",
+    "spec/extensions/security-protection/package.json",
+    "spec/extensions/security-protection/domain-resolution.schema.json",
     "spec/core/nullability-operation-v7.schema.json",
     "spec/core/nullability-operation-v5.schema.json",
     "spec/core/facet-operation-v3.schema.json",
@@ -49,6 +66,7 @@ ROOT_FILES = (
     "spec/core/reference-links-inspection-v0.3.schema.json",
     "spec/core/relationship-operation.schema.json",
     "spec/core/relationship-operation-v3.schema.json",
+    "spec/core/evolution-operation.schema.json",
     "spec/core/dataset-value-operation.schema.json",
     "spec/core/dataset-value-compact-operation.schema.json",
     "spec/core/relationship-metadata-selection-v2.schema.json",
@@ -81,6 +99,7 @@ RESOURCES = (
 FORCE_INCLUDE = {
     "../spec/extensions/tables/operation.schema.json": "spec/extensions/tables/operation.schema.json",
     "../spec/extensions/json-schema/package.json": "spec/extensions/json-schema/package.json",
+    "../spec/extensions/protobuf/package.json": "spec/extensions/protobuf/package.json",
     "../spec/extensions/tables/package.json": "spec/extensions/tables/package.json",
     "../spec/extensions/actions/package.json": "spec/extensions/actions/package.json",
     "../spec/extensions/binding/package.json": "spec/extensions/binding/package.json",
@@ -88,6 +107,17 @@ FORCE_INCLUDE = {
     "../spec/core/schema.json": "spec/core/schema.json",
     "../spec/core/semantic-type-reference.schema.json": "spec/core/semantic-type-reference.schema.json",
     "../spec/core/extension-package.schema.json": "spec/core/extension-package.schema.json",
+    "../spec/core/record-type-operation-v6.schema.json": "spec/core/record-type-operation-v6.schema.json",
+    "../spec/core/avro-record-type-classification.schema.json": "spec/core/avro-record-type-classification.schema.json",
+    "../spec/core/avro-record-classification.schema.json": "spec/core/avro-record-classification.schema.json",
+    "../spec/core/avro-field-classification.schema.json": "spec/core/avro-field-classification.schema.json",
+    "../spec/core/parquet-record-type-classification.schema.json": "spec/core/parquet-record-type-classification.schema.json",
+    "../spec/core/parquet-record-classification.schema.json": "spec/core/parquet-record-classification.schema.json",
+    "../spec/extensions/delta-log/package.json": "spec/extensions/delta-log/package.json",
+    "../spec/extensions/delta-log/action-schema.json": "spec/extensions/delta-log/action-schema.json",
+    "../spec/extensions/security-v0.2/package.json": "spec/extensions/security-v0.2/package.json",
+    "../spec/extensions/security-protection/package.json": "spec/extensions/security-protection/package.json",
+    "../spec/extensions/security-protection/domain-resolution.schema.json": "spec/extensions/security-protection/domain-resolution.schema.json",
     "../spec/core/relationship-operation.schema.json": "spec/core/relationship-operation.schema.json",
     "../spec/core/relationship-operation-v3.schema.json": "spec/core/relationship-operation-v3.schema.json",
     "../spec/core/dataset-value-operation.schema.json": "spec/core/dataset-value-operation.schema.json",
@@ -260,6 +290,9 @@ def test_exact_source_and_archive_inventory_returns_canonical_manifest(
         result["files"]["crates/umf-core/src/lib.rs"]
         == hashlib.sha256(b"pub fn source() {}\n").hexdigest()
     )
+    assert result["files"]["spec/core/evolution-operation.schema.json"] == (
+        hashlib.sha256(b"root:spec/core/evolution-operation.schema.json\n").hexdigest()
+    )
     assert result["files"]["PKG-INFO"] == hashlib.sha256(PKG_INFO).hexdigest()
     canonical = json.dumps(
         result["files"], sort_keys=True, separators=(",", ":")
@@ -311,6 +344,7 @@ def test_rust_include_str_authorities_are_in_sdist_closure() -> None:
     ("relative", "replacement"),
     [
         ("Cargo.lock", b"changed lock\n"),
+        ("spec/core/evolution-operation.schema.json", b"changed evolution schema\n"),
         ("crates/umf-core/src/lib.rs", b"changed Rust\n"),
         ("hatch_build.py", b"changed hook\n"),
         ("src/umf/_action_runtime_manifest.py", b"RESOURCES = ()\n"),

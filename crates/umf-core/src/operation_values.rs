@@ -4,7 +4,7 @@ use crate::{
     native_json::{NativeJsonNode, NativeJsonTree},
     value::Utf16,
 };
-use base64::{engine::general_purpose::URL_SAFE_NO_PAD, Engine as _};
+use base64::{Engine as _, engine::general_purpose::URL_SAFE_NO_PAD};
 use sha2::{Digest, Sha256};
 use std::{fmt, fmt::Write as _};
 

@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "command": "bun scripts/test-sdk-install.ts",
+  "runtime": "Bun 1.4.3",
+  "archive": ".cache/sdk-distribution/umf-sdk.tgz",
+  "archiveSha256": "1fc91d66f756edcc8fd39fe3180b684beb8381f16f986807cb9b5fb257ea0dee",
+  "sourceBuildManifestSha256": "19a8be279630086b3def5fe29d3b5697c5f8e6be3335ffc9330b40787aa09585",
+  "testScript": "scripts/test-sdk-install.ts",
+  "testScriptSha256": "ea44304fcbaa89d6df8f2b551260ebb63812d2099a1f07cf7de3367b31a0278e",
+  "installedDistributionFiles": 1779,
+  "conformanceCases": 139,
+  "checks": {
+    "unifiedGenerator": true,
+    "singleInstall": true,
+    "bundledActions": true,
+    "loaderEntrypoint": true,
+    "opaqueMeaningRemainsUnchecked": true
+  },
+  "stdout": [
+    "{\"installedCoreDistribution\":{\"files\":1779}}",
+    "{\"unifiedGenerator\":true,\"conformanceCases\":139,\"singleInstall\":true,\"bundledActions\":true,\"loaderEntrypoint\":true,\"opaqueMeaningRemainsUnchecked\":true}"
+  ]
+}

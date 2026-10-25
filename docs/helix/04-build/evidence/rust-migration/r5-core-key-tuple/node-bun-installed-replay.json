@@ -1,0 +1,127 @@
+{
+  "format": "umf-r5-core-key-tuple-installed-replay-receipt-v1",
+  "status": "passed-with-explicit-host-boundary",
+  "candidate": {
+    "packageName": "@umf/core-rust-native",
+    "packageVersion": "0.1.0",
+    "private": true,
+    "defaultPackageRouteChanged": false,
+    "archive": {
+      "path": "/private/tmp/umf-r5-core-keytuple-install/umf-core-rust-native-0.1.0.tgz",
+      "sha256": "877ec9480964236e4fb275c2bdadc97c27b5084cc1b52f54ac1e733489bd9f66",
+      "memberCount": 13,
+      "members": [
+        "package/package.json",
+        "package/index.d.ts",
+        "package/index.js",
+        "package/src/bit128.js",
+        "package/src/core-key-tuple.js",
+        "package/src/core-model.js",
+        "package/src/document-comparison.js",
+        "package/src/host-json.js",
+        "package/src/javascript-numeric.js",
+        "package/src/json-schema.js",
+        "package/src/semantic-value.js",
+        "package/src/wire.js",
+        "package/umf_core_node.node"
+      ]
+    },
+    "addon": {
+      "kind": "N-API native module",
+      "target": "macOS arm64",
+      "sha256": "4def550a00f4ec2e2af802e9a16592191216a51f47d2ca956ae942fc10c27cc3"
+    },
+    "build": "cargo build --locked --offline -p umf-core-node; CARGO_TARGET_DIR=/private/tmp/umf-r5-keytuple-node-target; Rust 1.90.0; CARGO_BUILD_JOBS=2; CARGO_INCREMENTAL=0"
+  },
+  "frozenPredecessor": {
+    "path": "docs/helix/04-build/evidence/rust-migration/r5-core-key-tuple/frozen-typescript.json",
+    "sha256": "1e0649ea8a723ce9f9836eceda2fd7cb83c6554bf5f01d908016baf0b69aefb5",
+    "encoderCases": 88,
+    "verificationCases": 5
+  },
+  "hosts": {
+    "node": {
+      "version": "26.12.1",
+      "exitCode": 0,
+      "receiptSha256": "ac3944fcee4f5d16c8f20336b6643c5cff7fadf8ae7c7198f3596822985ccc0f",
+      "receiptPath": "/private/tmp/umf-r5-core-keytuple-install/node-replay.json"
+    },
+    "bun": {
+      "version": "1.4.3",
+      "exitCode": 0,
+      "receiptSha256": "ac3944fcee4f5d16c8f20336b6643c5cff7fadf8ae7c7198f3596822985ccc0f",
+      "receiptPath": "/private/tmp/umf-r5-core-keytuple-install/bun-replay.json"
+    }
+  },
+  "results": {
+    "encoderCaseCount": 88,
+    "exactEncoderMatches": 87,
+    "outOfProfileHostBoundary": 1,
+    "verificationCaseCount": 5,
+    "verificationMatched": 5,
+    "readBytes": "one successful receipt compared byte-for-byte as Uint8Array",
+    "prepared": {
+      "sourceAdmissionBeforeFreeze": true,
+      "frozenCopyIsolation": true,
+      "outputAndRefusalParity": true,
+      "routesEachOperationThroughWire": true
+    },
+    "controls": {
+      "resource": "RESOURCE_LIMIT",
+      "cancellation": "CANCELLED",
+      "meter": "METER_FAILURE"
+    }
+  },
+  "preparedRoutingBasis": {
+    "claim": "Each prepared encode/verify method calls the tagged Rust wire operation with the Rust-admitted retained source.",
+    "basis": "Source inspection, not a distinct runtime counter assertion.",
+    "source": "bindings/core/node/src/core-key-tuple.js",
+    "sourceSha256": "684c01d780622a063f89356066e34ac7cb0bbed64cf5783dc3d163a7f77df438"
+  },
+  "reportingOnlyHarnessUpdate": {
+    "executedHarnessSha256": "f45243b7b5205adaf365619aa9834176f4a5596980eee89d70cdb7d01dd52695",
+    "currentHarnessSha256": "8900f6698fd70ac5d6788caa7f64a2fcd0b7336cb8ef76a92480fd05aa37986a",
+    "change": "Renamed the prepared-operation summary field to routesEachOperationThroughWire; source inspection basis is explicit. Replay assertions and native package are unchanged."
+  },
+  "knownBoundary": {
+    "case": "integer-host-number",
+    "frozenTypeScript": {
+      "code": "NUMBER",
+      "message": "Number outside the core interoperable numeric profile",
+      "path": "/0/integerToken"
+    },
+    "rustBinding": {
+      "code": "NUMBER",
+      "message": "Number outside the core interoperable numeric profile",
+      "path": "/0"
+    },
+    "reason": "Tagged transport validates the unsafe number while decoding the containing values array, before tuple semantics can report the typed integerToken member path."
+  },
+  "sourceHashesAtBuildAndCapture": {
+    "crates/umf-core/src/core_key_tuple.rs": "d3f82c374da48ff27da7869649342ea555b2197acdec684d0edd6eff2771e7f8",
+    "crates/umf-core-wire/src/lib.rs": "c6806b21f8b7c8a2f34150b1188314f8749989e033ecc53b4dff48f209e7f68a",
+    "bindings/core/node/index.js": "483d39b9399cf43f394caf5ccf3a9136ec86d31a02590ddc3a42ae39b9f7acfd",
+    "bindings/core/node/index.d.ts": "5ae8de87932bd4c41c8e237b02ec8b39b034ee46b60ea2d1809be24df4d20eff",
+    "bindings/core/node/package.json": "a8ce8e9e86e5b694c2f88e71dad9dcd67a6aea185b068b5edd31b42814b9cbd6",
+    "bindings/core/node/src/core-key-tuple.js": "684c01d780622a063f89356066e34ac7cb0bbed64cf5783dc3d163a7f77df438",
+    "bindings/core/node/tests/core-key-tuple-wrapper.test.js": "37105992ea08173f8b32a655ec55be9803bcef26b394615233586f556230d2da",
+    "bindings/core/wasm/index.js": "f867b2930b8e2d91f366afda509bf8bc594f03eeb550b17629f4393e64737188",
+    "bindings/core/wasm/index.d.ts": "025c3215e5f0869144b92109781f0cb400fedb992fe980326dac8b274c68dc9a",
+    "bindings/core/wasm/src/core-key-tuple.js": "684c01d780622a063f89356066e34ac7cb0bbed64cf5783dc3d163a7f77df438",
+    "bindings/core/wasm/src/shared-sources.json": "137c4992ddc3d9952f71337a8c8ec1b092b727e762b70d099dfa3107fd6f4907",
+    "scripts/rust-migration/r7/wasm-package-sources.ts": "80ecfd958a4144159b3a1ee6d9555787be29bba347b7b6df596cfb827fa27cae",
+    "scripts/rust-migration/r5/core-key-tuple-binding-replay.mjs": "f45243b7b5205adaf365619aa9834176f4a5596980eee89d70cdb7d01dd52695",
+    "Cargo.lock": "d74d138ee00f217cd0b77840d0f0262384c8e3930ed736382fd2b62ef7905fc3",
+    "spec/core/schema.json": "1cef049948bf2c743dacf0348f0f17444e72f81d9a74034ff823429f4c7c4fb1",
+    "spec/core/semantic-type-reference.schema.json": "adca63532b1424637f49f7e2c8e1c35ce68edd71b3904f476d28322e54d24747",
+    "spec/core/extension-package.schema.json": "3b47c85750357831c13d902c9375a081c8ed97bc16db5df71fb7607523d9cd2a",
+    "spec/metamodel/generated/core-constraints.json": "0972db27e5d272dd4ca6a978e33a55e5e8b0406edc3a01f0856e71de30708c13",
+    "spec/metamodel/generated/domain-policy.json": "0dd7b527889037d849452410bf662b285a9c74d70ce8f6449e792b02270313cd"
+  },
+  "limitations": [
+    "The replay deliberately avoids two redundant Rust operation calls for every successful encoder case: all frozen encoder outcomes remain checked, all five frozen verifications are checked, and one successful byte extraction is checked.",
+    "Prepared handles re-admit and revalidate the Rust-owned frozen source on each wire operation; validation work is not cached.",
+    "The wire byte-array output has a 100,000-value bound, below the core tuple byte ceiling.",
+    "This is a local macOS arm64 candidate archive, not a published package or default route; WASM/browser and Python installed routes are unqualified."
+  ]
+}

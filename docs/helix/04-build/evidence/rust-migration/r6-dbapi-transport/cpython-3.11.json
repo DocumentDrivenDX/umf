@@ -1,0 +1,298 @@
+{
+  "build_transport_gate": {
+    "rebuild_guard_calls_dbapi_and_order": true,
+    "sealed_predicate_precedes_rebuild": true
+  },
+  "cases": [
+    {
+      "dbapi_order": [
+        "second",
+        "first"
+      ],
+      "dbapi_sql": "SELECT %s, '$3', -- $4 %%\n%s, 50%% /* $5 %% */",
+      "id": "percent-comments-literals-and-ordered-slots",
+      "positions": [
+        [
+          7,
+          9,
+          1
+        ],
+        [
+          25,
+          27,
+          0
+        ]
+      ],
+      "sql_type": "str"
+    },
+    {
+      "dbapi_order": [
+        "zero",
+        "zero",
+        "two"
+      ],
+      "dbapi_sql": "%s + %s + %s",
+      "id": "repeated-and-high-ordinal-slots",
+      "positions": [
+        [
+          0,
+          2,
+          0
+        ],
+        [
+          5,
+          7,
+          0
+        ],
+        [
+          10,
+          12,
+          2
+        ]
+      ],
+      "sql_type": "str"
+    },
+    {
+      "dbapi_order": [
+        "one"
+      ],
+      "dbapi_sql": "'\ud83d\ude00' || %s",
+      "id": "unicode-codepoint-span",
+      "positions": [
+        [
+          7,
+          9,
+          1
+        ]
+      ],
+      "sql_type": "str"
+    },
+    {
+      "dbapi_order": [
+        "p0"
+      ],
+      "dbapi_sql": "\ud800 %s",
+      "id": "lone-surrogate-indexing",
+      "positions": [
+        [
+          2,
+          4,
+          0
+        ]
+      ],
+      "sql_type": "str"
+    },
+    {
+      "dbapi_order": [
+        "p0"
+      ],
+      "dbapi_sql": "\ud83d\ude00 %s",
+      "id": "explicit-surrogate-pair-indexing",
+      "positions": [
+        [
+          3,
+          5,
+          0
+        ]
+      ],
+      "sql_type": "str"
+    },
+    {
+      "dbapi_order": [
+        "p1"
+      ],
+      "dbapi_sql": "\u1c89E'foo\\' $1' + %s",
+      "id": "unicode-e-prefix-classification",
+      "positions": [
+        [
+          15,
+          17,
+          1
+        ]
+      ],
+      "sql_type": "str"
+    },
+    {
+      "dbapi_order": [],
+      "dbapi_sql": "$1 %%",
+      "id": "str-subclass-overrides-startswith",
+      "positions": [],
+      "sql_type": "StartsComment",
+      "startswith_calls": [
+        [
+          "--",
+          0
+        ],
+        [
+          "--",
+          0
+        ],
+        [
+          "--",
+          0
+        ]
+      ]
+    },
+    {
+      "dbapi_sql": "SELECT %s",
+      "id": "ordinal-outside-order-inventory",
+      "order_error": {
+        "cause": null,
+        "context": null,
+        "message": "compiler parameter ordinal outside inventory",
+        "suppress_context": false,
+        "type": "ReadBuildError"
+      },
+      "positions": [
+        [
+          7,
+          9,
+          1
+        ]
+      ],
+      "sql_type": "str"
+    },
+    {
+      "dbapi_error": {
+        "cause": null,
+        "context": null,
+        "message": "unterminated compiler SQL comment",
+        "suppress_context": false,
+        "type": "ReadBuildError"
+      },
+      "id": "lexical-refusal-precedes-order-inventory-check",
+      "order_error": {
+        "cause": null,
+        "context": null,
+        "message": "unterminated compiler SQL comment",
+        "suppress_context": false,
+        "type": "ReadBuildError"
+      },
+      "positions_error": {
+        "cause": null,
+        "context": null,
+        "message": "unterminated compiler SQL comment",
+        "suppress_context": false,
+        "type": "ReadBuildError"
+      },
+      "sql_type": "str"
+    },
+    {
+      "dbapi_error": {
+        "cause": null,
+        "context": null,
+        "message": "unterminated compiler SQL comment",
+        "suppress_context": false,
+        "type": "ReadBuildError"
+      },
+      "id": "unterminated-nested-comment",
+      "order_error": {
+        "cause": null,
+        "context": null,
+        "message": "unterminated compiler SQL comment",
+        "suppress_context": false,
+        "type": "ReadBuildError"
+      },
+      "positions_error": {
+        "cause": null,
+        "context": null,
+        "message": "unterminated compiler SQL comment",
+        "suppress_context": false,
+        "type": "ReadBuildError"
+      },
+      "sql_type": "str"
+    },
+    {
+      "dbapi_error": {
+        "cause": null,
+        "context": null,
+        "message": "unterminated compiler SQL quote",
+        "suppress_context": false,
+        "type": "ReadBuildError"
+      },
+      "id": "unterminated-quoted-string",
+      "order_error": {
+        "cause": null,
+        "context": null,
+        "message": "unterminated compiler SQL quote",
+        "suppress_context": false,
+        "type": "ReadBuildError"
+      },
+      "positions_error": {
+        "cause": null,
+        "context": null,
+        "message": "unterminated compiler SQL quote",
+        "suppress_context": false,
+        "type": "ReadBuildError"
+      },
+      "sql_type": "str"
+    },
+    {
+      "dbapi_error": {
+        "cause": null,
+        "context": null,
+        "message": "unterminated compiler SQL dollar quote",
+        "suppress_context": false,
+        "type": "ReadBuildError"
+      },
+      "id": "unterminated-dollar-quote",
+      "order_error": {
+        "cause": null,
+        "context": null,
+        "message": "unterminated compiler SQL dollar quote",
+        "suppress_context": false,
+        "type": "ReadBuildError"
+      },
+      "positions_error": {
+        "cause": null,
+        "context": null,
+        "message": "unterminated compiler SQL dollar quote",
+        "suppress_context": false,
+        "type": "ReadBuildError"
+      },
+      "sql_type": "str"
+    },
+    {
+      "dbapi_error": {
+        "cause": null,
+        "context": null,
+        "message": "Exceeds the limit (4300 digits) for integer string conversion: value has 4301 digits; use sys.set_int_max_str_digits() to increase the limit",
+        "suppress_context": false,
+        "type": "ValueError"
+      },
+      "id": "python-int-limit-before-later-lexical-refusal",
+      "order_error": {
+        "cause": null,
+        "context": null,
+        "message": "Exceeds the limit (4300 digits) for integer string conversion: value has 4301 digits; use sys.set_int_max_str_digits() to increase the limit",
+        "suppress_context": false,
+        "type": "ValueError"
+      },
+      "positions_error": {
+        "cause": null,
+        "context": null,
+        "message": "Exceeds the limit (4300 digits) for integer string conversion: value has 4301 digits; use sys.set_int_max_str_digits() to increase the limit",
+        "suppress_context": false,
+        "type": "ValueError"
+      },
+      "sql_type": "str"
+    }
+  ],
+  "implementation": "cpython",
+  "int_max_str_digits": 4300,
+  "predecessor_ast_sha256": {
+    "ReadBuildError": "118ad87d8511ed3115458c1d82789678a5049fb77f5127ccdd4cfe58e25031bf",
+    "_compiler_transport": "0536982bc20855fecd136f509d5e299315d21197c47228c68332d8f8f6f82e8f",
+    "_dbapi": "2b850c971344c435ba14658aa2d3dca8f3fce743594ae9a32ff1c76d95c982a9",
+    "_dbapi_order": "609b3df8c6b830493af490255883725dee1ee512c4796f7616cc641db75d6ab1",
+    "_json": "dc9111db3fe716cf4d7f3e92d8c7b6ecbfbb428669554bec0b03cfbd4d3b0e06",
+    "_parameter_positions_python": "a654683f568bf73812434f72002f825133cb55a2063a7b301faa61c0ad2b2321"
+  },
+  "python": "3.11.17",
+  "reviewed_py_sha256": "a5e10e1101229deaae38e05394c93e77217a4e8eca00fc7d41a17eacc48871be",
+  "transport_seal": {
+    "legacy_without_transport": false,
+    "sealed_transport": true
+  },
+  "unicode_version": "14.0.0"
+}

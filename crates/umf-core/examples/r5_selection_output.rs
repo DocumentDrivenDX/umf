@@ -6,7 +6,7 @@ use umf_core::{
     error::Diagnostic,
     registry::Registry,
     selection::select_core_elements,
-    serialization::{Format, read_json_value, write_json_value},
+    serialization::{read_json_value, write_json_value, Format},
     value::{Utf16, Value},
 };
 

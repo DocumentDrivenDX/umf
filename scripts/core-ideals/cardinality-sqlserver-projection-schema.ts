@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import base from '../../spec/core/field-sqlserver-projection.schema.json';
 const schema:any=structuredClone(base);
+const check=process.argv.includes('--check');
 schema.$id='urn:umf:core:cardinality-sqlserver-projection:1.0.0';schema.title='Authored Cardinality projection to SQL Server stored columns';
 schema.properties.operation.const='project-cardinality-sqlserver';schema.properties.source.$ref='urn:umf:core:0.10.0';
 schema.properties.author.$ref='urn:umf:core:cardinality-operation:4.0.0#/$defs/declaration';
@@ -12,4 +13,10 @@ const mapping=schema.properties.mapping;
 Object.assign(mapping.properties,{basis:{const:'Explicit author declaration and selected native carrier; residuals qualify unrepresented obligations'},cardinality:{enum:['one','array','map','unspecified']},encoding:{enum:['scalar','json-array','json-object','carrier-only']}});mapping.required.push('basis','cardinality','encoding');
 mapping.properties.outcome.enum.push('approximated');schema.properties.residuals.items.properties.outcome.enum.push('approximated');
 schema.properties.binding.const.subset='Single authored Field and explicit scalar/checked JSON text carrier; item/value conversion and native equivalence are not implied';
-await Bun.write('spec/core/cardinality-sqlserver-projection.schema.json',JSON.stringify(schema,null,2)+'\n');
+const output='spec/core/cardinality-sqlserver-projection.schema.json';
+const rendered=JSON.stringify(schema,null,2)+'\n';
+if(check){
+ const current=await Bun.file(output).text();
+ if(current!==rendered)throw new Error(`${output} is stale; regenerate deliberately.`);
+ console.log(`${output} is current.`);
+}else await Bun.write(output,rendered);

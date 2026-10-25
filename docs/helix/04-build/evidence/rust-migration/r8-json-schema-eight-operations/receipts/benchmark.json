@@ -1,0 +1,28 @@
+{
+  "format": "umf-r8-json-schema-operation-benchmark/1",
+  "runtime": {
+    "bun": "1.4.3",
+    "node": "v26.3.0"
+  },
+  "sourceBytes": 251,
+  "rounds": 20,
+  "fixture": {
+    "source": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"account\":{\"type\":\"string\",\"minLength\":1},\"amount\":{\"type\":\"number\",\"minimum\":0}},\"$defs\":{\"nested\":{\"type\":\"object\",\"properties\":{\"enabled\":{\"type\":\"boolean\"}}}}}",
+    "id": "urn:umf:r8:benchmark",
+    "baseUri": "https://schemas.example.test/benchmark.json"
+  },
+  "millisecondsPerCall": {
+    "typescript": {
+      "factory": null,
+      "import": 13.9850292,
+      "inspect": 12.00805415,
+      "export": 3.83131665
+    },
+    "rust": {
+      "factoryOnce": 0.221292,
+      "import": 940.8118729,
+      "inspect": 884.9851479000001,
+      "export": 907.3299375
+    }
+  }
+}

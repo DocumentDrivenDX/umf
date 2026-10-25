@@ -6,7 +6,7 @@
 use crate::{
     context::Context,
     error::{Diagnostic, EngineError, Severity},
-    json_schema_adapter::{self, JsonSchemaPayload, SchemaPosition, DIALECT_2020_12},
+    json_schema_adapter::{self, DIALECT_2020_12, JsonSchemaPayload, SchemaPosition},
     native_json::{NativeJsonNode, NativeJsonTree},
     schema::{CompiledSchema, SchemaResources},
     value::{Utf16, Value},
@@ -127,6 +127,7 @@ fn inspect_payload_profile(
     let mut unknown_dialect = false;
     let mut has_numeric_limit = false;
     let mut numeric_limit_resources = Vec::new();
+    let mut validator_profile = true;
 
     // The resource count is known without constructing a second URI/tree
     // collection. Charge it before either retaining resource identities or
@@ -194,6 +195,7 @@ fn inspect_payload_profile(
         } else {
             schema_positions(tree, ctx)?
         };
+        validator_profile &= validator_profile_positions(&positions);
         for position in positions {
             let NativeJsonNode::Object(members) = position.node.root() else {
                 continue;
@@ -351,7 +353,11 @@ fn inspect_payload_profile(
     // qualification, so known oracle limitations remain explicit above.
     match compile_payload(payload, ctx) {
         Ok(()) => {
-            if include_profile_warning && !interpretation_unknown && diagnostics.is_empty() {
+            if include_profile_warning
+                && !interpretation_unknown
+                && !validator_profile
+                && diagnostics.is_empty()
+            {
                 push(
                     &mut diagnostics,
                     "JSON_SCHEMA_VALIDATOR_LIMIT",
@@ -364,6 +370,121 @@ fn inspect_payload_profile(
         Err(error) => handle_compile_error(error, extension_path, &mut diagnostics)?,
     }
     Ok(diagnostics)
+}
+
+/// A deliberately small, recursively checked Draft 2020-12 grammar for which
+/// `CompiledSchema` validation has independent Ajv/native vector coverage.
+/// It admits boolean schemas and schema objects containing only `$schema`
+/// (the exact 2020-12 URI), one-component ASCII relative `$id`, scalar
+/// `type` (`boolean`, `integer`, `number`, `object`, or `string`), `required`
+/// (unique safe member names), `properties`, `$defs`, `minimum`, `minLength`,
+/// `additionalProperties: true`, and recursively walked `prefixItems`. Property names are nonempty valid
+/// Unicode except `__proto__`, which the pinned JavaScript oracle does not
+/// reliably assert. Numeric limits are independently checked against the
+/// JavaScript-safe token profile before compilation. References and every
+/// other keyword remain outside the complete profile. Every resource is
+/// checked independently; the general metaschema compiler is not a parity
+/// certificate.
+fn validator_profile_positions(positions: &[SchemaPosition]) -> bool {
+    for position in positions {
+        let NativeJsonNode::Object(members) = position.node.root() else {
+            if matches!(position.node.root(), NativeJsonNode::Boolean(_)) {
+                continue;
+            }
+            return false;
+        };
+        for (key, value) in members {
+            let Ok(keyword) = key.to_utf8() else {
+                return false;
+            };
+            match keyword.as_str() {
+                "$schema" => {
+                    if !matches!(value, NativeJsonNode::String(text) if text.to_utf8().ok().as_deref() == Some(DIALECT_2020_12))
+                    {
+                        return false;
+                    }
+                }
+                "$id" => {
+                    if !matches!(value, NativeJsonNode::String(text) if validator_profile_id(text))
+                    {
+                        return false;
+                    }
+                }
+                "$ref" => return false,
+                "type" => {
+                    if !matches!(value, NativeJsonNode::String(text) if matches!(text.to_utf8().ok().as_deref(), Some("boolean" | "integer" | "number" | "object" | "string")))
+                    {
+                        return false;
+                    }
+                }
+                "properties" | "$defs" => {
+                    let NativeJsonNode::Object(children) = value else {
+                        return false;
+                    };
+                    for (name, _) in children {
+                        if !validator_profile_name(name) {
+                            return false;
+                        }
+                    }
+                }
+                "required" => {
+                    let NativeJsonNode::Array(names) = value else {
+                        return false;
+                    };
+                    if names
+                        .iter()
+                        .any(|name| {
+                            !matches!(name, NativeJsonNode::String(text) if validator_profile_name(text))
+                        })
+                    {
+                        return false;
+                    }
+                    for (i, name) in names.iter().enumerate() {
+                        if names[..i].iter().any(|prior| prior == name) {
+                            return false;
+                        }
+                    }
+                }
+                "minimum" | "minLength" => {
+                    if !matches!(value, NativeJsonNode::Number(_)) {
+                        return false;
+                    }
+                }
+                "additionalProperties" => {
+                    if !matches!(value, NativeJsonNode::Boolean(true)) {
+                        return false;
+                    }
+                }
+                "prefixItems" => {
+                    if !matches!(value, NativeJsonNode::Array(_)) {
+                        return false;
+                    }
+                    // `walk` has enumerated each entry as a schema position;
+                    // the profile loop validates every child recursively.
+                }
+                _ => return false,
+            }
+        }
+    }
+    true
+}
+
+fn validator_profile_id(text: &Utf16) -> bool {
+    let Ok(text) = text.to_utf8() else {
+        return false;
+    };
+    !text.is_empty() && text != "." && text != ".." && text.bytes().all(profile_uri_segment_byte)
+}
+
+fn validator_profile_name(text: &Utf16) -> bool {
+    let Ok(text) = text.to_utf8() else {
+        return false;
+    };
+    !text.is_empty() && text != "__proto__"
+}
+
+fn profile_uri_segment_byte(byte: u8) -> bool {
+    byte.is_ascii_alphanumeric() || matches!(byte, b'.' | b'_' | b'-')
 }
 
 fn handle_compile_error(
@@ -413,9 +534,15 @@ fn numeric_refusal_message(
                 if let Ok(value) = token.parse::<f64>() {
                     if number_token_is_unsafe(token, value) {
                         if is_integer_lexeme(token) && is_unsafe_integer(token, value) {
-                            return Ok(format!("Resource {}: native values retained but JavaScript validation unavailable: UmfError: Integer exceeds exact JavaScript range", display(uri)));
+                            return Ok(format!(
+                                "Resource {}: native values retained but JavaScript validation unavailable: UmfError: Integer exceeds exact JavaScript range",
+                                display(uri)
+                            ));
                         }
-                        return Ok(format!("Resource {}: native values retained but JavaScript validation unavailable for one or more numeric tokens", display(uri)));
+                        return Ok(format!(
+                            "Resource {}: native values retained but JavaScript validation unavailable for one or more numeric tokens",
+                            display(uri)
+                        ));
                     }
                 }
             }
@@ -424,7 +551,10 @@ fn numeric_refusal_message(
             _ => {}
         }
     }
-    Ok(format!("Resource {}: native values retained but JavaScript validation unavailable for one or more numeric tokens", display(uri)))
+    Ok(format!(
+        "Resource {}: native values retained but JavaScript validation unavailable for one or more numeric tokens",
+        display(uri)
+    ))
 }
 
 fn is_integer_lexeme(token: &str) -> bool {
@@ -480,6 +610,10 @@ fn compile_payload(payload: &JsonSchemaPayload, ctx: &mut Context<'_>) -> Result
                     invalid_type_ajv_detail(&error, schema, &schemas[target_index].0)
                 {
                     error.message = Utf16::from(detail);
+                } else if let Some(detail) =
+                    numeric_type_ajv_detail(&error, &schemas[target_index].0)
+                {
+                    error.message = Utf16::from(detail);
                 }
                 metaschema_error.get_or_insert(error);
             }
@@ -504,6 +638,10 @@ fn compile_payload(payload: &JsonSchemaPayload, ctx: &mut Context<'_>) -> Result
             Err(mut error) if error.code == "SCHEMA_INVALID" => {
                 if let Some(detail) =
                     invalid_type_ajv_detail(&error, schema, &schemas[target_index].0)
+                {
+                    error.message = Utf16::from(detail);
+                } else if let Some(detail) =
+                    numeric_type_ajv_detail(&error, &schemas[target_index].0)
                 {
                     error.message = Utf16::from(detail);
                 }
@@ -552,6 +690,38 @@ fn invalid_type_ajv_detail(error: &EngineError, schema: &Value, uri: &Utf16) -> 
     }
     const DETAILS: &str = r##"[{"instancePath":"/type","schemaPath":"#/$defs/simpleTypes/enum","keyword":"enum","params":{"allowedValues":["array","boolean","integer","null","number","object","string"]},"message":"must be equal to one of the allowed values"},{"instancePath":"/type","schemaPath":"#/properties/type/anyOf/1/type","keyword":"type","params":{"type":"array"},"message":"must be array"},{"instancePath":"/type","schemaPath":"#/properties/type/anyOf","keyword":"anyOf","params":{},"message":"must match a schema in anyOf"}]"##;
     Some(format!("Resource {}: {}", display(uri), DETAILS))
+}
+
+/// Preserve Ajv's Draft 2020-12 metaschema envelope for a numeric validation
+/// keyword with a non-numeric value. The Rust compiler reports the exact
+/// instance pointer and type failure; this projects that failure into the
+/// same single-error Ajv diagnostic used by the public adapter.
+fn numeric_type_ajv_detail(error: &EngineError, uri: &Utf16) -> Option<String> {
+    let instance_path = error.path.to_utf8().ok()?;
+    let keyword = instance_path.rsplit('/').next()?;
+    let expected = match keyword {
+        "minimum" | "maximum" | "exclusiveMinimum" | "exclusiveMaximum" | "multipleOf"
+            if error.message == Utf16::from("must be number")
+                || error.message == Utf16::from("Numeric keyword must be a number") =>
+        {
+            "number"
+        }
+        "minLength" | "maxLength" | "minItems" | "maxItems" | "minProperties" | "maxProperties"
+        | "minContains" | "maxContains"
+            if error.message == Utf16::from("must be integer") =>
+        {
+            "integer"
+        }
+        _ => return None,
+    };
+    let encoded_path = crate::serialization::stringify_compact(&Value::String(error.path.clone()))
+        .ok()?
+        .to_utf8()
+        .ok()?;
+    let detail = format!(
+        "[{{\"instancePath\":{encoded_path},\"schemaPath\":\"#/properties/{keyword}/type\",\"keyword\":\"type\",\"params\":{{\"type\":\"{expected}\"}},\"message\":\"must be {expected}\"}}]"
+    );
+    Some(format!("Resource {}: {detail}", display(uri)))
 }
 
 fn get_value<'a>(value: &'a Value, key: &str) -> Option<&'a Value> {
@@ -912,7 +1082,10 @@ mod tests {
             &mut Context::ordinary(),
         )
         .unwrap();
-        assert_eq!(message, "Resource https://example.test/root: native values retained but JavaScript validation unavailable: UmfError: Integer exceeds exact JavaScript range");
+        assert_eq!(
+            message,
+            "Resource https://example.test/root: native values retained but JavaScript validation unavailable: UmfError: Integer exceeds exact JavaScript range"
+        );
 
         for source in [
             r#"{"minimum":0.10000000000000000001}"#,
@@ -956,32 +1129,38 @@ mod tests {
         );
         let non_type_error =
             EngineError::new("SCHEMA_INVALID", Utf16::from("/title"), "must be string");
-        assert!(invalid_type_ajv_detail(
-            &non_type_error,
-            &schema,
-            &Utf16::from("https://schemas.example.test/root.json")
-        )
-        .is_none());
+        assert!(
+            invalid_type_ajv_detail(
+                &non_type_error,
+                &schema,
+                &Utf16::from("https://schemas.example.test/root.json")
+            )
+            .is_none()
+        );
         let multi_invalid = Value::Object(vec![
             (Utf16::from("type"), Value::Number(12.0)),
             (Utf16::from("minLength"), Value::Number(-1.0)),
         ]);
-        assert!(invalid_type_ajv_detail(
-            &error,
-            &multi_invalid,
-            &Utf16::from("https://schemas.example.test/root.json")
-        )
-        .is_none());
+        assert!(
+            invalid_type_ajv_detail(
+                &error,
+                &multi_invalid,
+                &Utf16::from("https://schemas.example.test/root.json")
+            )
+            .is_none()
+        );
         let unknown_also_present = Value::Object(vec![
             (Utf16::from("type"), Value::Number(12.0)),
             (Utf16::from("x-opaque"), Value::Bool(true)),
         ]);
-        assert!(invalid_type_ajv_detail(
-            &error,
-            &unknown_also_present,
-            &Utf16::from("https://schemas.example.test/root.json")
-        )
-        .is_none());
+        assert!(
+            invalid_type_ajv_detail(
+                &error,
+                &unknown_also_present,
+                &Utf16::from("https://schemas.example.test/root.json")
+            )
+            .is_none()
+        );
     }
 }
 fn schema_positions(

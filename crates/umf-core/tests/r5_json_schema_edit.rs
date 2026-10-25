@@ -1,11 +1,11 @@
 #![cfg(feature = "embedded-adapters")]
 // SPDX-License-Identifier: MIT OR Apache-2.0
 use umf_core::{
-    Context, Diagnostic, Severity, Utf16, Value,
     engine::{Capabilities, Engine, ResourceSet, SemanticContext},
     json_schema_adapter as js,
     registry::Registry,
     serialization::{self, Format},
+    Context, Diagnostic, Severity, Utf16, Value,
 };
 
 fn parse(source: &str) -> Value {
@@ -55,6 +55,24 @@ fn field(value: &Value, name: &str) -> Value {
 }
 fn wide(text: &str) -> Vec<u16> {
     text.encode_utf16().collect()
+}
+fn imported_schema(source: &str, id: &str, base_uri: &str) -> Value {
+    js::import_json_schema(
+        &wide(source),
+        &Utf16::from(id),
+        &Utf16::from(base_uri),
+        &[],
+        &mut Context::ordinary(),
+    )
+    .unwrap()
+}
+fn embedded_edit(document: &Value, pointer: &str, replacement: &str) -> Result<Value, umf_core::EngineError> {
+    js::edit_node_with_embedded_registry(
+        document,
+        &Utf16::from(pointer),
+        &wide(replacement),
+        &mut Context::ordinary(),
+    )
 }
 fn find_key_mut<'a>(value: &'a mut Value, name: &str) -> Option<&'a mut Value> {
     if let Value::Array(items) = value {
@@ -250,18 +268,22 @@ fn edit_matches_frozen_success_and_refusal_with_atomic_source() {
 
 #[test]
 fn edit_inspection_omits_only_the_generic_profile_warning() {
-    let payload = js::payload_from_document(&document(), &mut Context::ordinary()).unwrap();
+    let mut unsupported = document();
+    add_native_keyword(
+        &mut unsupported,
+        "maxLength",
+        parse(r#"{"kind":"number","value":"1"}"#),
+    );
+    let payload = js::payload_from_document(&unsupported, &mut Context::ordinary()).unwrap();
     let ordinary = umf_core::json_schema_inspect::inspect_payload(
         &payload,
         &Utf16::default(),
         &mut Context::ordinary(),
     )
     .unwrap();
-    assert!(
-        ordinary
-            .iter()
-            .any(|item| item.code == Utf16::from("JSON_SCHEMA_VALIDATOR_LIMIT"))
-    );
+    assert!(ordinary
+        .iter()
+        .any(|item| item.code == Utf16::from("JSON_SCHEMA_VALIDATOR_LIMIT")));
     let edit = umf_core::json_schema_inspect::inspect_payload_for_edit(
         &payload,
         &Utf16::default(),
@@ -388,6 +410,81 @@ fn candidate_semantic_limits_fail_edit_atomically() {
         assert_eq!(error.code, "INVALID_EDIT", "replacement={replacement}");
         assert_eq!(source, before, "replacement={replacement}");
     }
+}
+
+#[test]
+fn expanded_edit_profile_matches_frozen_tree_operations_without_losing_source() {
+    let uri = "https://schemas.example.test/tree.json";
+    let source_text = r#"{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","properties":{"amount":{"type":"number","minimum":0},"text":{"type":"string","minLength":1}},"$defs":{"nested":{"type":"string"}}}"#;
+    let source = imported_schema(source_text, "urn:umf:r5:tree", uri);
+    let before = source.clone();
+    let edited = embedded_edit(&source, "/properties/amount/minimum", "10").unwrap();
+    assert_eq!(source, before);
+    assert_eq!(
+        js::export_json_schema(&edited, &mut Context::ordinary()).unwrap(),
+        Utf16::from(format!(
+            "{}\n",
+            r#"{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","properties":{"amount":{"type":"number","minimum":10},"text":{"type":"string","minLength":1}},"$defs":{"nested":{"type":"string"}}}"#
+        ))
+    );
+
+    let invalid_target = embedded_edit(&source, "/properties/amount/minimum", "\"not a number\"")
+        .unwrap_err();
+    assert_eq!(invalid_target.code, "INVALID_EDIT");
+    assert!(invalid_target.message.to_utf8().unwrap().contains("JSON_SCHEMA_META"));
+    assert_eq!(source, before);
+
+    let root_boolean = embedded_edit(&source, "", "true").unwrap();
+    assert_eq!(
+        js::export_json_schema(&root_boolean, &mut Context::ordinary()).unwrap(),
+        Utf16::from("true\n")
+    );
+    let scalar_root = embedded_edit(&source, "", "1").unwrap_err();
+    assert_eq!(scalar_root.code, "INVALID_EDIT");
+    assert!(scalar_root.message.to_utf8().unwrap().contains("JSON_SCHEMA_ROOT"));
+
+    let named = imported_schema(
+        r#"{"properties":{"a/b~c":{"type":"string","minLength":1},"😀":{"type":"number"}}}"#,
+        "urn:umf:r5:names",
+        uri,
+    );
+    let slash = embedded_edit(&named, "/properties/a~1b~0c/minLength", "2").unwrap();
+    assert_eq!(
+        js::export_json_schema(&slash, &mut Context::ordinary()).unwrap(),
+        Utf16::from(format!("{}\n", r#"{"properties":{"a/b~c":{"type":"string","minLength":2},"😀":{"type":"number"}}}"#))
+    );
+    let astral = embedded_edit(&named, "/properties/😀/type", "\"integer\"").unwrap();
+    assert_eq!(
+        js::export_json_schema(&astral, &mut Context::ordinary()).unwrap(),
+        Utf16::from(format!("{}\n", r#"{"properties":{"a/b~c":{"type":"string","minLength":1},"😀":{"type":"integer"}}}"#))
+    );
+    assert_eq!(named, imported_schema(
+        r#"{"properties":{"a/b~c":{"type":"string","minLength":1},"😀":{"type":"number"}}}"#,
+        "urn:umf:r5:names",
+        uri,
+    ));
+
+    let tuple = imported_schema(
+        r#"{"prefixItems":[{"type":"string"},{"type":"number"}]}"#,
+        "urn:umf:r5:tree-array",
+        uri,
+    );
+    let tuple_edit = embedded_edit(&tuple, "/prefixItems/1/type", "\"integer\"").unwrap();
+    assert_eq!(
+        js::export_json_schema(&tuple_edit, &mut Context::ordinary()).unwrap(),
+        Utf16::from(format!("{}\n", r#"{"prefixItems":[{"type":"string"},{"type":"integer"}]}"#))
+    );
+
+    // The wider Unicode member profile must retain the pinned oracle's
+    // explicit prototype-property exclusion.
+    let proto = imported_schema(
+        r#"{"properties":{"__proto__":{"type":"string"}}}"#,
+        "urn:umf:r5:tree-proto",
+        uri,
+    );
+    let proto_refusal = embedded_edit(&proto, "/properties/__proto__/type", "\"integer\"")
+        .unwrap_err();
+    assert_eq!(proto_refusal.code, "UNSAFE_EDIT");
 }
 
 #[test]

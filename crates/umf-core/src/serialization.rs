@@ -148,11 +148,12 @@ pub(crate) fn read_native_json_tree(
     // long scans before any caller-visible result is produced.
     ctx.charge_work(source.len(), Utf16::default())?;
     let duplicate = preflight_native_json(source, ctx).map_err(native_json_parse_error)?;
-    if duplicate {
+    if let Some(offset) = duplicate {
+        let message = native_duplicate_key_message(source, offset, ctx)?;
         return Err(EngineError::new(
             "JSON_SCHEMA_SYNTAX",
             Utf16::default(),
-            "Invalid native JSON",
+            message,
         ));
     }
     let raw = JsonParser::<_, NativeJsonBuilder>::native(source, ctx)
@@ -200,11 +201,11 @@ enum NativeAction {
 fn preflight_native_json(
     source: &[u16],
     ctx: &mut Context<'_>,
-) -> Result<bool, EngineError> {
+) -> Result<Option<usize>, EngineError> {
     let mut at = 0usize;
     let mut stack = Vec::<NativeFrame>::new();
     let mut root_done = false;
-    let mut duplicate = false;
+    let mut duplicate = None;
     loop {
         while source
             .get(at)
@@ -219,18 +220,12 @@ fn preflight_native_json(
             Some(NativeFrame::Array(NativeArrayState::ValueOrEnd)) => {
                 NativeAction::ArrayValue(true)
             }
-            Some(NativeFrame::Array(NativeArrayState::Value)) => {
-                NativeAction::ArrayValue(false)
-            }
-            Some(NativeFrame::Array(NativeArrayState::Separator)) => {
-                NativeAction::ArraySeparator
-            }
+            Some(NativeFrame::Array(NativeArrayState::Value)) => NativeAction::ArrayValue(false),
+            Some(NativeFrame::Array(NativeArrayState::Separator)) => NativeAction::ArraySeparator,
             Some(NativeFrame::Object(NativeObjectState::KeyOrEnd, _)) => {
                 NativeAction::ObjectKey(true)
             }
-            Some(NativeFrame::Object(NativeObjectState::Key, _)) => {
-                NativeAction::ObjectKey(false)
-            }
+            Some(NativeFrame::Object(NativeObjectState::Key, _)) => NativeAction::ObjectKey(false),
             Some(NativeFrame::Object(NativeObjectState::Colon, _)) => NativeAction::ObjectColon,
             Some(NativeFrame::Object(NativeObjectState::Value, _)) => NativeAction::ObjectValue,
             Some(NativeFrame::Object(NativeObjectState::Separator, _)) => {
@@ -315,16 +310,17 @@ fn preflight_native_json(
                 if source.get(at) != Some(&(b'"' as u16)) {
                     return Err(fail("SYNTAX", "JSON object keys must be strings"));
                 }
-                let key = scan_native_string(source, &mut at, ctx, true)?
-                    .expect("decoded native key");
+                let key_offset = at;
+                let key =
+                    scan_native_string(source, &mut at, ctx, true)?.expect("decoded native key");
                 if let Some(NativeFrame::Object(state, seen)) = stack.last_mut() {
                     let comparisons = btree_search_comparisons(seen.len());
                     ctx.charge_work_u64(
                         (key.len() as u64).saturating_mul(comparisons),
                         Utf16::default(),
                     )?;
-                    if !seen.insert(key) {
-                        duplicate = true;
+                    if !seen.insert(key) && duplicate.is_none() {
+                        duplicate = Some(key_offset);
                     }
                     *state = NativeObjectState::Colon;
                 }
@@ -403,7 +399,7 @@ fn scan_native_string(
                 }
             }
             0x00..=0x1f => {
-                return Err(fail("SYNTAX", "Unescaped control character in JSON string"))
+                return Err(fail("SYNTAX", "Unescaped control character in JSON string"));
             }
             other => {
                 if let Some(output) = decoded.as_mut() {
@@ -465,12 +461,18 @@ fn scan_native_number(
     match source.get(*at).copied() {
         Some(0x30) => {
             *at += 1;
-            if source.get(*at).is_some_and(|unit| (0x30..=0x39).contains(unit)) {
+            if source
+                .get(*at)
+                .is_some_and(|unit| (0x30..=0x39).contains(unit))
+            {
                 return Err(fail("SYNTAX", "Leading zero in JSON number"));
             }
         }
         Some(0x31..=0x39) => {
-            while source.get(*at).is_some_and(|unit| (0x30..=0x39).contains(unit)) {
+            while source
+                .get(*at)
+                .is_some_and(|unit| (0x30..=0x39).contains(unit))
+            {
                 *at += 1;
             }
         }
@@ -479,20 +481,32 @@ fn scan_native_number(
     if source.get(*at) == Some(&(b'.' as u16)) {
         *at += 1;
         let fraction = *at;
-        while source.get(*at).is_some_and(|unit| (0x30..=0x39).contains(unit)) {
+        while source
+            .get(*at)
+            .is_some_and(|unit| (0x30..=0x39).contains(unit))
+        {
             *at += 1;
         }
         if fraction == *at {
             return Err(fail("SYNTAX", "Malformed JSON fraction"));
         }
     }
-    if source.get(*at).is_some_and(|unit| matches!(*unit, 0x65 | 0x45)) {
+    if source
+        .get(*at)
+        .is_some_and(|unit| matches!(*unit, 0x65 | 0x45))
+    {
         *at += 1;
-        if source.get(*at).is_some_and(|unit| matches!(*unit, 0x2b | 0x2d)) {
+        if source
+            .get(*at)
+            .is_some_and(|unit| matches!(*unit, 0x2b | 0x2d))
+        {
             *at += 1;
         }
         let exponent = *at;
-        while source.get(*at).is_some_and(|unit| (0x30..=0x39).contains(unit)) {
+        while source
+            .get(*at)
+            .is_some_and(|unit| (0x30..=0x39).contains(unit))
+        {
             *at += 1;
         }
         if exponent == *at {
@@ -505,9 +519,53 @@ fn scan_native_number(
 fn native_json_parse_error(error: EngineError) -> EngineError {
     if error.code == "SYNTAX" || error.code == "DUPLICATE_KEY" {
         EngineError::new("JSON_SCHEMA_SYNTAX", error.path, "Invalid native JSON")
+    } else if error.code == "LIMIT"
+        && matches!(
+            error.message.to_utf8().ok().as_deref(),
+            Some("Nesting depth exceeded" | "JSON structural value limit exceeded")
+        )
+    {
+        EngineError::new("LIMIT", error.path, "Native JSON structural limit exceeded")
     } else {
         error
     }
+}
+
+fn native_duplicate_key_message(
+    source: &[u16],
+    offset: usize,
+    ctx: &mut Context<'_>,
+) -> Result<Utf16, EngineError> {
+    let offset = offset.min(source.len());
+    let line = source[..offset]
+        .iter()
+        .filter(|unit| **unit == b'\n' as u16)
+        .count()
+        + 1;
+    let line_start = source[..offset]
+        .iter()
+        .rposition(|unit| *unit == b'\n' as u16)
+        .map_or(0, |index| index + 1);
+    let line_end = source[offset..]
+        .iter()
+        .position(|unit| *unit == b'\n' as u16)
+        .map_or(source.len(), |index| offset + index);
+    let column = offset.saturating_sub(line_start) + 1;
+    let label = format!("Map keys must be unique at line {line}, column {column}:\n\n");
+    let message_units = label
+        .encode_utf16()
+        .count()
+        .saturating_add(line_end.saturating_sub(line_start))
+        .saturating_add(1)
+        .saturating_add(column.saturating_sub(1))
+        .saturating_add(2);
+    ctx.charge_text(message_units, Utf16::default())?;
+    let excerpt = String::from_utf16_lossy(&source[line_start..line_end]);
+    let message = format!(
+        "{label}{excerpt}\n{}^\n",
+        " ".repeat(column.saturating_sub(1))
+    );
+    Ok(Utf16::from(message))
 }
 
 /// Read JSON or YAML into Python's source-preserving value profile. Unlike
@@ -974,7 +1032,7 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
                     }
                 }
                 0x00..=0x1f => {
-                    return Err(fail("SYNTAX", "Unescaped control character in JSON string"))
+                    return Err(fail("SYNTAX", "Unescaped control character in JSON string"));
                 }
                 other => output.push((other, false)),
             }
@@ -2078,7 +2136,7 @@ fn reject_yaml_11_directive(text: &str, profile: ScanProfile) -> Result<(), Engi
                     return Err(fail(
                         "YAML_DIRECTIVE",
                         "Unknown or unsupported YAML directive",
-                    ))
+                    ));
                 }
             }
         } else {
@@ -2379,7 +2437,7 @@ fn resolve_python_scalar(
         "false" | "False" | "FALSE" => return Ok(PythonConsumerValue::Bool(false)),
         ".inf" | ".Inf" | ".INF" | "-.inf" | "-.Inf" | "-.INF" | "+.inf" | "+.Inf" | "+.INF"
         | ".nan" | ".NaN" | ".NAN" => {
-            return Err(fail("NUMBER", "Non-finite numbers are not supported"))
+            return Err(fail("NUMBER", "Non-finite numbers are not supported"));
         }
         _ => {}
     }
@@ -2871,7 +2929,7 @@ fn resolve_scalar(
         "false" | "False" | "FALSE" => return Ok(Value::Bool(false)),
         ".inf" | ".Inf" | ".INF" | "-.inf" | "-.Inf" | "-.INF" | "+.inf" | "+.Inf" | "+.INF"
         | ".nan" | ".NaN" | ".NAN" => {
-            return Err(fail("NUMBER", "Non-finite numbers are not supported"))
+            return Err(fail("NUMBER", "Non-finite numbers are not supported"));
         }
         _ => {}
     }
@@ -2972,7 +3030,7 @@ fn yaml_number_token(raw: &str) -> Option<YamlNumber> {
     }
     None
 }
-fn decimal_canonical(source: &str) -> Option<(bool, String, i64)> {
+pub(crate) fn decimal_canonical(source: &str) -> Option<(bool, String, i64)> {
     let (negative, body) = if let Some(body) = source.strip_prefix('-') {
         (true, body)
     } else if let Some(body) = source.strip_prefix('+') {
@@ -3553,11 +3611,13 @@ mod tests {
             "YAML_VERSION"
         );
         assert!(parse("%YAML 1.2\n---\nx: yes", Format::Yaml).is_ok());
-        assert!(parse(
-            "%TAG !e! tag:example.com,2020:\n---\nx: value",
-            Format::Yaml
-        )
-        .is_ok());
+        assert!(
+            parse(
+                "%TAG !e! tag:example.com,2020:\n---\nx: value",
+                Format::Yaml
+            )
+            .is_ok()
+        );
         assert!(parse("x: &unused value", Format::Yaml).is_ok());
         assert!(parse("x: &unused {y: 1}", Format::Yaml).is_ok());
         assert!(parse("x: &unused [1, 2]", Format::Yaml).is_ok());

@@ -66,18 +66,44 @@ impl NativeJsonTree {
                         ctx.charge_work(members.len(), path.clone())?;
                         path = tagged_pointer_child(&path, &Utf16::from("members"), ctx)?;
                         path = tagged_pointer_child(&path, segment, ctx)?;
-                        node = members.iter().find(|(key, _)| key == segment).map(|(_, value)| value)
-                            .ok_or_else(|| fail("NATIVE_JSON_REPRESENTATION", "Unknown representation path is unavailable"))?;
+                        node = members
+                            .iter()
+                            .find(|(key, _)| key == segment)
+                            .map(|(_, value)| value)
+                            .ok_or_else(|| {
+                                fail(
+                                    "NATIVE_JSON_REPRESENTATION",
+                                    "Unknown representation path is unavailable",
+                                )
+                            })?;
                     }
                     NativeJsonNode::Array(items) => {
                         path = tagged_pointer_child(&path, &Utf16::from("items"), ctx)?;
                         ctx.charge_work(segment.len(), path.clone())?;
                         path = tagged_pointer_child(&path, segment, ctx)?;
-                        let index = segment.to_utf8().ok().and_then(|value| value.parse::<usize>().ok())
-                            .ok_or_else(|| fail("NATIVE_JSON_REPRESENTATION", "Unknown representation array path is unavailable"))?;
-                        node = items.get(index).ok_or_else(|| fail("NATIVE_JSON_REPRESENTATION", "Unknown representation array path is unavailable"))?;
+                        let index = segment
+                            .to_utf8()
+                            .ok()
+                            .and_then(|value| value.parse::<usize>().ok())
+                            .ok_or_else(|| {
+                                fail(
+                                    "NATIVE_JSON_REPRESENTATION",
+                                    "Unknown representation array path is unavailable",
+                                )
+                            })?;
+                        node = items.get(index).ok_or_else(|| {
+                            fail(
+                                "NATIVE_JSON_REPRESENTATION",
+                                "Unknown representation array path is unavailable",
+                            )
+                        })?;
                     }
-                    _ => return Err(fail("NATIVE_JSON_REPRESENTATION", "Unknown representation path is unavailable")),
+                    _ => {
+                        return Err(fail(
+                            "NATIVE_JSON_REPRESENTATION",
+                            "Unknown representation path is unavailable",
+                        ));
+                    }
                 }
             }
             for (key, _) in &extra.fields {
@@ -161,12 +187,24 @@ impl NativeJsonTree {
 
     /// Materialize tagged form for copied edits while retaining unknown
     /// representation fields. Native export still refuses these fields.
-    pub fn tagged_value_preserving_extras(&self, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    pub fn tagged_value_preserving_extras(
+        &self,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
         let mut value = tagged_value(&self.root, ctx)?;
         for extra in &self.representation_extras {
-            let target = tagged_at_native_path_mut(&mut value, &extra.parent)
-                .ok_or_else(|| fail("NATIVE_JSON_REPRESENTATION", "Tagged extra path is unavailable"))?;
-            let Value::Object(fields) = target else { return Err(fail("NATIVE_JSON_REPRESENTATION", "Tagged node is not an object")); };
+            let target = tagged_at_native_path_mut(&mut value, &extra.parent).ok_or_else(|| {
+                fail(
+                    "NATIVE_JSON_REPRESENTATION",
+                    "Tagged extra path is unavailable",
+                )
+            })?;
+            let Value::Object(fields) = target else {
+                return Err(fail(
+                    "NATIVE_JSON_REPRESENTATION",
+                    "Tagged node is not an object",
+                ));
+            };
             for (key, item) in &extra.fields {
                 ctx.charge_work(key.len().saturating_add(1), Utf16::default())?;
                 fields.push((key.clone(), crate::copy_json(item, ctx)?));
@@ -230,13 +268,7 @@ impl NativeJsonTree {
         let selected = self.child(pointer, ctx)?;
         let mut admitted_values = 0usize;
         let mut admitted_depth = 0usize;
-        count_clone_values(
-            selected,
-            0,
-            &mut admitted_values,
-            &mut admitted_depth,
-            ctx,
-        )?;
+        count_clone_values(selected, 0, &mut admitted_values, &mut admitted_depth, ctx)?;
         for extra in &self.representation_extras {
             let Some(relative) = extra.parent.strip_prefix(segments.as_slice()) else {
                 ctx.charge_work(extra.parent.len(), Utf16::default())?;
@@ -246,10 +278,7 @@ impl NativeJsonTree {
                 .iter()
                 .map(Utf16::len)
                 .fold(0usize, usize::saturating_add);
-            ctx.charge_work(
-                path_cost.saturating_add(relative.len()),
-                Utf16::default(),
-            )?;
+            ctx.charge_work(path_cost.saturating_add(relative.len()), Utf16::default())?;
             for (key, value) in &extra.fields {
                 ctx.charge_work(key.len(), Utf16::default())?;
                 count_extra_values(
@@ -312,17 +341,27 @@ impl NativeJsonTree {
             ctx.charge_work(path[0].len(), Utf16::default())?;
             let child = match node {
                 NativeJsonNode::Object(members) => {
-                    let cost = members.iter().fold(0u64, |total, (key, _)| total.saturating_add(key.len().max(1) as u64));
+                    let cost = members.iter().fold(0u64, |total, (key, _)| {
+                        total.saturating_add(key.len().max(1) as u64)
+                    });
                     ctx.charge_work_u64(cost, Utf16::default())?;
-                    members.iter_mut().find(|(key, _)| key == &path[0]).map(|(_, value)| value)
+                    members
+                        .iter_mut()
+                        .find(|(key, _)| key == &path[0])
+                        .map(|(_, value)| value)
                 }
-                NativeJsonNode::Array(items) => array_index(&path[0]).and_then(|index| items.get_mut(index)),
+                NativeJsonNode::Array(items) => {
+                    array_index(&path[0]).and_then(|index| items.get_mut(index))
+                }
                 _ => None,
-            }.ok_or_else(pointer_missing)?;
+            }
+            .ok_or_else(pointer_missing)?;
             replace(child, &path[1..], replacement, ctx)
         }
         replace(&mut candidate.root, &segments, &replacement.root, ctx)?;
-        candidate.representation_extras.retain(|extra| !extra.parent.starts_with(segments.as_slice()));
+        candidate
+            .representation_extras
+            .retain(|extra| !extra.parent.starts_with(segments.as_slice()));
         Ok(candidate)
     }
 }
@@ -330,9 +369,12 @@ impl NativeJsonTree {
 fn tagged_value(node: &NativeJsonNode, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     ctx.charge_work(1, Utf16::default())?;
     let kind = match node {
-        NativeJsonNode::Null => "null", NativeJsonNode::Boolean(_) => "boolean",
-        NativeJsonNode::String(_) => "string", NativeJsonNode::Number(_) => "number",
-        NativeJsonNode::Array(_) => "array", NativeJsonNode::Object(_) => "object",
+        NativeJsonNode::Null => "null",
+        NativeJsonNode::Boolean(_) => "boolean",
+        NativeJsonNode::String(_) => "string",
+        NativeJsonNode::Number(_) => "number",
+        NativeJsonNode::Array(_) => "array",
+        NativeJsonNode::Object(_) => "object",
     };
     let mut fields = vec![(Utf16::from("kind"), Value::string_utf8(kind))];
     match node {
@@ -340,8 +382,24 @@ fn tagged_value(node: &NativeJsonNode, ctx: &mut Context<'_>) -> Result<Value, E
         NativeJsonNode::Boolean(v) => fields.push((Utf16::from("value"), Value::Bool(*v))),
         NativeJsonNode::String(v) => fields.push((Utf16::from("value"), Value::String(v.clone()))),
         NativeJsonNode::Number(v) => fields.push((Utf16::from("value"), Value::string_utf8(v))),
-        NativeJsonNode::Array(items) => fields.push((Utf16::from("items"), Value::Array(items.iter().map(|v| tagged_value(v,ctx)).collect::<Result<_,_>>()?))),
-        NativeJsonNode::Object(members) => fields.push((Utf16::from("members"), Value::Object(members.iter().map(|(k,v)|Ok((k.clone(),tagged_value(v,ctx)?))).collect::<Result<_,EngineError>>()?))),
+        NativeJsonNode::Array(items) => fields.push((
+            Utf16::from("items"),
+            Value::Array(
+                items
+                    .iter()
+                    .map(|v| tagged_value(v, ctx))
+                    .collect::<Result<_, _>>()?,
+            ),
+        )),
+        NativeJsonNode::Object(members) => fields.push((
+            Utf16::from("members"),
+            Value::Object(
+                members
+                    .iter()
+                    .map(|(k, v)| Ok((k.clone(), tagged_value(v, ctx)?)))
+                    .collect::<Result<_, EngineError>>()?,
+            ),
+        )),
     }
     Ok(Value::Object(fields))
 }
@@ -349,18 +407,33 @@ fn tagged_value(node: &NativeJsonNode, ctx: &mut Context<'_>) -> Result<Value, E
 fn tagged_at_native_path_mut<'a>(root: &'a mut Value, path: &[Utf16]) -> Option<&'a mut Value> {
     let mut node = root;
     for segment in path {
-        let fields = match node { Value::Object(v) => v, _ => return None };
-        let kind = fields.iter().find(|(k,_)| k == &Utf16::from("kind"))?.1.clone();
+        let fields = match node {
+            Value::Object(v) => v,
+            _ => return None,
+        };
+        let kind = fields
+            .iter()
+            .find(|(k, _)| k == &Utf16::from("kind"))?
+            .1
+            .clone();
         match kind {
             Value::String(kind) if kind == Utf16::from("object") => {
-                let members = fields.iter_mut().find(|(k,_)| k == &Utf16::from("members"))?;
-                let Value::Object(members) = &mut members.1 else { return None };
-                node = &mut members.iter_mut().find(|(k,_)| k == segment)?.1;
+                let members = fields
+                    .iter_mut()
+                    .find(|(k, _)| k == &Utf16::from("members"))?;
+                let Value::Object(members) = &mut members.1 else {
+                    return None;
+                };
+                node = &mut members.iter_mut().find(|(k, _)| k == segment)?.1;
             }
             Value::String(kind) if kind == Utf16::from("array") => {
                 let index = array_index(segment)?;
-                let items = fields.iter_mut().find(|(k,_)| k == &Utf16::from("items"))?;
-                let Value::Array(items) = &mut items.1 else { return None };
+                let items = fields
+                    .iter_mut()
+                    .find(|(k, _)| k == &Utf16::from("items"))?;
+                let Value::Array(items) = &mut items.1 else {
+                    return None;
+                };
                 node = items.get_mut(index)?;
             }
             _ => return None,
@@ -381,7 +454,10 @@ fn count_clone_values(
         .ok_or_else(|| fail("LIMIT", "JSON structural limit exceeded"))?;
     *max_depth = (*max_depth).max(depth.saturating_add(1));
     ctx.charge_work(2, Utf16::default())?;
-    if matches!(node, NativeJsonNode::Boolean(_) | NativeJsonNode::String(_) | NativeJsonNode::Number(_)) {
+    if matches!(
+        node,
+        NativeJsonNode::Boolean(_) | NativeJsonNode::String(_) | NativeJsonNode::Number(_)
+    ) {
         *values = values
             .checked_add(1)
             .ok_or_else(|| fail("LIMIT", "JSON structural limit exceeded"))?;

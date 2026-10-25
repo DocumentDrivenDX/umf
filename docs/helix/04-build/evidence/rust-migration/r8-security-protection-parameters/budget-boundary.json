@@ -1,0 +1,411 @@
+{
+  "format": "umf-r8-security-parameters-budget-boundary/1",
+  "runtime": {
+    "bun": "1.4.3"
+  },
+  "sourceHashes": {
+    "src/extensions/security/protection/parameters.ts": "30d5b50f1eeeb72d6a4ded7740096dfde49d28f075757d340c3c8cac5d24a16d",
+    "src/extensions/security/protection/literals.ts": "236c03112237be15ffee41494c7f99252bf11f908a76c2e5143abf1dd6bcab95",
+    "src/extensions/security/protection/domains.ts": "0e8fa68ef906e7f6bac290813f7fef61846d9aeb17fadb5b7a3717680047005a",
+    "src/extensions/security/protection/catalog.ts": "52efc07592dbf5b61fb1fbb156ef19d14bb38747a98b4286295fd48ef6e7f448",
+    "src/extensions/security/protection/core-fields.ts": "7d9cd5c9eb55f224a226f38c7989ff86086c36c77480472887b1799c5807d01f",
+    "src/model/schema-literals.ts": "0e7ce8c901b834679d5ed49c7465b08eee916c132e37adbbf3f037c34b548b88",
+    "src/validation/literal-kernel.ts": "0fffe57279a745891f4cbbd33eb1296a34bfcb083bd8e05a3ff7a7b8048db071",
+    "tests/security/protection/domain-fixture.ts": "077bf045c70964d90c0788b6c2eb22565611672420370b4c7a1c97730e0a1d18",
+    "spec/extensions/security-protection/package.json": "30ec4eed50b7e0113fbf64289df6a210f59477409409c52e9269e68d7708294a",
+    "spec/extensions/security-protection/domain-resolution.schema.json": "205d7e1e96912785ffdc9d8add009b6316e81e0754b45e5824ea04a2a316c75b",
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "1183e2ea8ba55fade4007554905b7175d7796e867a67814f511e9cd3ee514800"
+  },
+  "captureScriptSha256": "b19abd765fb1ede695b150bb2bb1d712793d641186249394c91e7d4eba234f13",
+  "case": {
+    "id": "parameters.cumulative-normalized-text-bound",
+    "input": "two individually admitted integer tokens have normalized coefficient lengths 60001 and 40001; the second exceeds the shared 100000-unit text budget",
+    "sources": {
+      "policy": {
+        "vocabulary": "umf.security",
+        "version": "0.2.0",
+        "id": "p",
+        "revision": "p1",
+        "ontology": {
+          "documentId": "ontology",
+          "revision": "o1"
+        },
+        "protection": {
+          "id": "catalog",
+          "revision": "c1"
+        },
+        "rules": [
+          {
+            "id": "permit",
+            "effect": "permit",
+            "actions": [
+              "read"
+            ],
+            "target": [
+              {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "record"
+              }
+            ],
+            "condition": {
+              "op": "literal",
+              "value": true
+            },
+            "disclosure": [
+              {
+                "field": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "input"
+                },
+                "disposition": {
+                  "kind": "transformed",
+                  "vocabulary": "umf.security.protection",
+                  "transform": "transform",
+                  "version": "t1",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "output"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "catalog": {
+        "vocabulary": "umf.security.protection",
+        "version": "0.1.0",
+        "id": "catalog",
+        "revision": "c1",
+        "transforms": [
+          {
+            "id": "transform",
+            "version": "t1",
+            "kind": "mask",
+            "function": "constant",
+            "inputDomain": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "input"
+            },
+            "outputDomain": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "output"
+            },
+            "determinism": "deterministic",
+            "reversibility": "none",
+            "disclosureProfile": [
+              {
+                "kind": "range",
+                "bucket": {
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "parameter"
+                  },
+                  "value": {
+                    "integerToken": "10"
+                  }
+                }
+              }
+            ],
+            "queryUse": {},
+            "parameters": [
+              {
+                "name": "large-a",
+                "field": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "parameter"
+                },
+                "value": {
+                  "integerToken": "1e60000"
+                }
+              },
+              {
+                "name": "large-b",
+                "field": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "parameter"
+                },
+                "value": {
+                  "integerToken": "1e40000"
+                }
+              }
+            ]
+          }
+        ],
+        "native": {
+          "sql": "opaque\r\n😀"
+        }
+      },
+      "closure": {
+        "pins": [
+          {
+            "documentId": "domain",
+            "revision": "schema1"
+          }
+        ],
+        "documents": [
+          {
+            "revision": "schema1",
+            "document": {
+              "umf": "0.10.0",
+              "id": "domain",
+              "vocabularies": {},
+              "modules": [
+                {
+                  "id": "m",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "input",
+                      "kind": "field",
+                      "scalarType": "integer",
+                      "cardinality": "one",
+                      "nullability": "required",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "output",
+                      "kind": "field",
+                      "scalarType": "string",
+                      "cardinality": "one",
+                      "nullability": "required",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "parameter",
+                      "kind": "field",
+                      "scalarType": "integer",
+                      "cardinality": "one",
+                      "nullability": "required",
+                      "extensions": {}
+                    },
+                    {
+                      "id": "record",
+                      "kind": "record",
+                      "extensions": {}
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "outcome": {
+      "status": "returned",
+      "value": {
+        "status": "refused",
+        "complete": false,
+        "authority": false,
+        "policy": {
+          "vocabulary": "umf.security",
+          "version": "0.2.0",
+          "id": "p",
+          "revision": "p1",
+          "ontology": {
+            "documentId": "ontology",
+            "revision": "o1"
+          },
+          "protection": {
+            "id": "catalog",
+            "revision": "c1"
+          },
+          "rules": [
+            {
+              "id": "permit",
+              "effect": "permit",
+              "actions": [
+                "read"
+              ],
+              "target": [
+                {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "record"
+                }
+              ],
+              "condition": {
+                "op": "literal",
+                "value": true
+              },
+              "disclosure": [
+                {
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "input"
+                  },
+                  "disposition": {
+                    "kind": "transformed",
+                    "vocabulary": "umf.security.protection",
+                    "transform": "transform",
+                    "version": "t1",
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "output"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "catalog": {
+          "vocabulary": "umf.security.protection",
+          "version": "0.1.0",
+          "id": "catalog",
+          "revision": "c1",
+          "transforms": [
+            {
+              "id": "transform",
+              "version": "t1",
+              "kind": "mask",
+              "function": "constant",
+              "inputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "input"
+              },
+              "outputDomain": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "output"
+              },
+              "determinism": "deterministic",
+              "reversibility": "none",
+              "disclosureProfile": [
+                {
+                  "kind": "range",
+                  "bucket": {
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "parameter"
+                    },
+                    "value": {
+                      "integerToken": "10"
+                    }
+                  }
+                }
+              ],
+              "queryUse": {},
+              "parameters": [
+                {
+                  "name": "large-a",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "parameter"
+                  },
+                  "value": {
+                    "integerToken": "1e60000"
+                  }
+                },
+                {
+                  "name": "large-b",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "parameter"
+                  },
+                  "value": {
+                    "integerToken": "1e40000"
+                  }
+                }
+              ]
+            }
+          ],
+          "native": {
+            "sql": "opaque\r\n😀"
+          }
+        },
+        "closure": {
+          "pins": [
+            {
+              "documentId": "domain",
+              "revision": "schema1"
+            }
+          ],
+          "documents": [
+            {
+              "revision": "schema1",
+              "document": {
+                "umf": "0.10.0",
+                "id": "domain",
+                "vocabularies": {},
+                "modules": [
+                  {
+                    "id": "m",
+                    "namespace": "",
+                    "elements": [
+                      {
+                        "id": "input",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "output",
+                        "kind": "field",
+                        "scalarType": "string",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "parameter",
+                        "kind": "field",
+                        "scalarType": "integer",
+                        "cardinality": "one",
+                        "nullability": "required",
+                        "extensions": {}
+                      },
+                      {
+                        "id": "record",
+                        "kind": "record",
+                        "extensions": {}
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "validated": [],
+        "diagnostics": [
+          {
+            "code": "PROTECTION_DOMAIN_ONLY",
+            "path": "",
+            "severity": "warning",
+            "message": "Core definitions resolved only; domain compatibility, literal/function/query semantics, ontology and native authority remain separate"
+          },
+          {
+            "code": "PROTECTION_LITERAL_BOUND",
+            "path": "/transforms/0/parameters/1",
+            "message": "resource-exhausted: normalized coefficient text exceeds100000 units",
+            "severity": "error"
+          },
+          {
+            "code": "PROTECTION_PARAMETERS_ONLY",
+            "path": "",
+            "severity": "warning",
+            "message": "Typed declaration values only; function arity/names, domain compatibility, output behavior and authority remain separate"
+          }
+        ]
+      }
+    }
+  }
+}

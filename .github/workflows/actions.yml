@@ -10,7 +10,7 @@ permissions:
 jobs:
   commands:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -27,8 +27,13 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: 1.90.0
+          targets: wasm32-unknown-unknown
       - name: Fetch locked native compiler dependencies
         run: cargo fetch --locked
+      - name: Install pinned WASM binding generator
+        run: cargo install wasm-bindgen-cli --locked --version 0.2.100
+      - name: Install Chromium for real browser SDK replay
+        run: bunx playwright install --with-deps chromium
       - name: Build bundled SDK
         run: bun run test:sdk
       - name: Test command API in Chromium

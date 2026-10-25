@@ -1,0 +1,771 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+//! Private `umf.host-json/1` WASM adapter for logical record values.
+use js_sys::{Error, Function};
+use std::collections::BTreeMap;
+use umf_core::{
+    context::Context,
+    host_json::{
+        HostDescriptorSnapshot, HostDescriptorValue, HostHandle, HostJsonEvent, HostJsonKind,
+        HostJsonReflection, HostJsonReply, HostPropertyDescriptor, HostPrototype, HostStringRef,
+    },
+    record_values, Engine, EngineError, ResourceSet, Utf16, Value,
+};
+use wasm_bindgen::prelude::*;
+
+fn kind_nullability_operation(
+    name: &str,
+) -> Result<umf_core::core_kind_nullability_host_json::CoreKindNullabilityHostOperation, EngineError>
+{
+    use umf_core::core_kind_nullability_host_json::CoreKindNullabilityHostOperation as Op;
+    match name {
+        "inspectCoreKind" => Ok(Op::InspectKind),
+        "declareCoreKind" => Ok(Op::DeclareKind),
+        "verifyCoreKindDeclaration" => Ok(Op::VerifyKind),
+        "inspectCoreNullability" => Ok(Op::InspectNullability),
+        "declareCoreNullability" => Ok(Op::DeclareNullability),
+        "verifyCoreNullabilityDeclaration" => Ok(Op::VerifyNullability),
+        _ => Err(EngineError::new(
+            "REQUEST",
+            Utf16::default(),
+            "Unknown kind/nullability host operation",
+        )),
+    }
+}
+
+/// Retained immutable resources/engine for one Core kind/nullability factory.
+/// Construction admits resources once; each method gets a fresh operation Context.
+#[wasm_bindgen]
+pub struct CoreKindNullabilityRuntime {
+    engine: Engine,
+    kind_schemas: umf_core::core_kind::OperationSchemas,
+    nullability_schemas: umf_core::nullability::OperationSchemas,
+}
+
+#[wasm_bindgen]
+impl CoreKindNullabilityRuntime {
+    #[wasm_bindgen(constructor)]
+    pub fn new(
+        resources_wire: &str,
+        control_dispatcher: Option<Function>,
+    ) -> Result<CoreKindNullabilityRuntime, JsValue> {
+        let result = if let Some(dispatcher) = control_dispatcher {
+            let mut control = super::WasmControl { dispatcher };
+            let mut hook = |amount| control.check(amount);
+            let mut ctx = Context::ordinary().with_host_control(&mut hook);
+            let resources =
+                ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(resources_wire, ctx));
+            resources.and_then(|mut resources| {
+                let engine = ctx.with_catalog_value_limit(|catalog| {
+                    Engine::new(
+                        ResourceSet::new(
+                            take_core_resource(&mut resources, "coreSchema")?,
+                            take_core_resource(&mut resources, "referenceSchema")?,
+                            take_core_resource(&mut resources, "packageSchema")?,
+                            take_core_resource(&mut resources, "constraints")?,
+                            take_core_resource(&mut resources, "domainPolicy")?,
+                        ),
+                        catalog,
+                    )
+                })?;
+                let kind_schemas = umf_core::core_kind::prepare_operation_schemas(&mut ctx)?;
+                let nullability_schemas =
+                    umf_core::nullability::prepare_operation_schemas(&mut ctx)?;
+                Ok((engine, kind_schemas, nullability_schemas))
+            })
+        } else {
+            let mut ctx = Context::ordinary();
+            let resources =
+                ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(resources_wire, ctx));
+            resources.and_then(|mut resources| {
+                let engine = ctx.with_catalog_value_limit(|catalog| {
+                    Engine::new(
+                        ResourceSet::new(
+                            take_core_resource(&mut resources, "coreSchema")?,
+                            take_core_resource(&mut resources, "referenceSchema")?,
+                            take_core_resource(&mut resources, "packageSchema")?,
+                            take_core_resource(&mut resources, "constraints")?,
+                            take_core_resource(&mut resources, "domainPolicy")?,
+                        ),
+                        catalog,
+                    )
+                })?;
+                let kind_schemas = umf_core::core_kind::prepare_operation_schemas(&mut ctx)?;
+                let nullability_schemas =
+                    umf_core::nullability::prepare_operation_schemas(&mut ctx)?;
+                Ok((engine, kind_schemas, nullability_schemas))
+            })
+        };
+        result
+            .map(|(engine, kind_schemas, nullability_schemas)| Self {
+                engine,
+                kind_schemas,
+                nullability_schemas,
+            })
+            .map_err(|error| Error::new(&umf_core_wire::error_envelope(error)).into())
+    }
+
+    #[wasm_bindgen(js_name = execute)]
+    pub fn execute_js(
+        &self,
+        operation: &str,
+        first: u32,
+        second: u32,
+        third: u32,
+        dispatcher: &Function,
+        control_dispatcher: Option<Function>,
+    ) -> String {
+        let operation = match kind_nullability_operation(operation) {
+            Ok(operation) => operation,
+            Err(error) => return umf_core_wire::result_envelope(Err(error)),
+        };
+        let handles: Vec<_> = [first, second, third]
+            .into_iter()
+            .filter(|handle| *handle != 0)
+            .map(|handle| handle as HostHandle)
+            .collect();
+        let mut host = WasmHostJson {
+            dispatcher: dispatcher.clone(),
+            string_lengths: BTreeMap::new(),
+        };
+        let result = if let Some(dispatcher) = control_dispatcher {
+            let mut control = super::WasmControl { dispatcher };
+            let mut hook = |amount| control.check(amount);
+            let mut ctx = Context::ordinary().with_host_control(&mut hook);
+            umf_core::core_kind_nullability_host_json::execute(
+                operation,
+                &handles,
+                &mut host,
+                &self.engine,
+                &self.kind_schemas,
+                &self.nullability_schemas,
+                &mut ctx,
+            )
+            .and_then(|value| umf_core_wire::encode(&value, &mut ctx))
+        } else {
+            let mut ctx = Context::ordinary();
+            umf_core::core_kind_nullability_host_json::execute(
+                operation,
+                &handles,
+                &mut host,
+                &self.engine,
+                &self.kind_schemas,
+                &self.nullability_schemas,
+                &mut ctx,
+            )
+            .and_then(|value| umf_core_wire::encode(&value, &mut ctx))
+        };
+        umf_core_wire::result_envelope(result)
+    }
+}
+
+#[wasm_bindgen(js_name = executeCoreKindNullabilityHostJson)]
+pub fn execute_core_kind_nullability_host_json(
+    resources_wire: &str,
+    operation: &str,
+    first: u32,
+    second: u32,
+    third: u32,
+    dispatcher: &Function,
+    control_dispatcher: Option<Function>,
+) -> String {
+    let result = (|| -> Result<String, EngineError> {
+        let operation = kind_nullability_operation(operation)?;
+        let handles: Vec<_> = [first, second, third]
+            .into_iter()
+            .filter(|handle| *handle != 0)
+            .map(|handle| handle as HostHandle)
+            .collect();
+        let mut host = WasmHostJson {
+            dispatcher: dispatcher.clone(),
+            string_lengths: BTreeMap::new(),
+        };
+        if let Some(dispatcher) = control_dispatcher {
+            let mut control = super::WasmControl { dispatcher };
+            let mut hook = |amount| control.check(amount);
+            let mut ctx = Context::ordinary().with_host_control(&mut hook);
+            let resources =
+                ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(resources_wire, ctx))?;
+            let resource = |name: &str| {
+                field(&resources, name).cloned().ok_or_else(|| {
+                    EngineError::new(
+                        "REQUEST",
+                        Utf16::from(name),
+                        "Explicit resource is required",
+                    )
+                })
+            };
+            let engine = ctx.with_catalog_value_limit(|catalog| {
+                Engine::new(
+                    ResourceSet::new(
+                        resource("coreSchema")?,
+                        resource("referenceSchema")?,
+                        resource("packageSchema")?,
+                        resource("constraints")?,
+                        resource("domainPolicy")?,
+                    ),
+                    catalog,
+                )
+            })?;
+            let kind_schemas = umf_core::core_kind::prepare_operation_schemas(&mut ctx)?;
+            let nullability_schemas = umf_core::nullability::prepare_operation_schemas(&mut ctx)?;
+            let value = umf_core::core_kind_nullability_host_json::execute(
+                operation,
+                &handles,
+                &mut host,
+                &engine,
+                &kind_schemas,
+                &nullability_schemas,
+                &mut ctx,
+            )?;
+            umf_core_wire::encode(&value, &mut ctx)
+        } else {
+            let mut ctx = Context::ordinary();
+            let resources =
+                ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(resources_wire, ctx))?;
+            let resource = |name: &str| {
+                field(&resources, name).cloned().ok_or_else(|| {
+                    EngineError::new(
+                        "REQUEST",
+                        Utf16::from(name),
+                        "Explicit resource is required",
+                    )
+                })
+            };
+            let engine = ctx.with_catalog_value_limit(|catalog| {
+                Engine::new(
+                    ResourceSet::new(
+                        resource("coreSchema")?,
+                        resource("referenceSchema")?,
+                        resource("packageSchema")?,
+                        resource("constraints")?,
+                        resource("domainPolicy")?,
+                    ),
+                    catalog,
+                )
+            })?;
+            let kind_schemas = umf_core::core_kind::prepare_operation_schemas(&mut ctx)?;
+            let nullability_schemas = umf_core::nullability::prepare_operation_schemas(&mut ctx)?;
+            let value = umf_core::core_kind_nullability_host_json::execute(
+                operation,
+                &handles,
+                &mut host,
+                &engine,
+                &kind_schemas,
+                &nullability_schemas,
+                &mut ctx,
+            )?;
+            umf_core_wire::encode(&value, &mut ctx)
+        }
+    })();
+    umf_core_wire::result_envelope(result)
+}
+
+struct WasmHostJson {
+    dispatcher: Function,
+    string_lengths: BTreeMap<u64, usize>,
+}
+
+/// Reuse the invocation-local opaque reflection adapter for source import.
+pub(super) fn protobuf_source_host(dispatcher: &Function) -> impl HostJsonReflection {
+    WasmHostJson {
+        dispatcher: dispatcher.clone(),
+        string_lengths: BTreeMap::new(),
+    }
+}
+
+impl HostJsonReflection for WasmHostJson {
+    fn reflect(&mut self, event: HostJsonEvent) -> Result<HostJsonReply, EngineError> {
+        let wire = self
+            .dispatcher
+            .call1(&JsValue::NULL, &JsValue::from_str(&event_json(&event)))
+            .map_err(|_| bridge_error())?
+            .as_string()
+            .ok_or_else(bridge_error)?;
+        let value = umf_core_wire::decode(&wire, &mut umf_core_wire::transport_context())
+            .map_err(|_| protocol_error())?;
+        decode_reply(&event, value, &mut self.string_lengths)
+    }
+    fn release_descriptor_snapshot(&mut self, _token: u64) {}
+}
+
+#[wasm_bindgen(js_name = executeValidateCoreRecordValuesHostJson)]
+pub fn execute_validate_core_record_values_host_json(
+    resources_wire: &str,
+    source: u32,
+    identity: u32,
+    values: u32,
+    dispatcher: &Function,
+    control_dispatcher: Option<Function>,
+) -> String {
+    let result = (|| -> Result<String, EngineError> {
+        let resources =
+            umf_core_wire::decode(resources_wire, &mut umf_core_wire::transport_context())?;
+        let resource = |name: &str| {
+            field(&resources, name).cloned().ok_or_else(|| {
+                EngineError::new(
+                    "REQUEST",
+                    Utf16::from(name),
+                    "Explicit resource is required",
+                )
+            })
+        };
+        let engine = {
+            let mut catalog = Context::catalog();
+            Engine::new(
+                ResourceSet::new(
+                    resource("coreSchema")?,
+                    resource("referenceSchema")?,
+                    resource("packageSchema")?,
+                    resource("constraints")?,
+                    resource("domainPolicy")?,
+                ),
+                &mut catalog,
+            )?
+        };
+        let mut host = WasmHostJson {
+            dispatcher: dispatcher.clone(),
+            string_lengths: BTreeMap::new(),
+        };
+        if let Some(dispatcher) = control_dispatcher {
+            let mut control = super::WasmControl { dispatcher };
+            let mut hook = |amount| control.check(amount);
+            let mut ctx = Context::ordinary().with_host_control(&mut hook);
+            let result = record_values::validate_core_record_values_host_json(
+                source as HostHandle,
+                identity as HostHandle,
+                values as HostHandle,
+                &mut host,
+                &engine,
+                &mut ctx,
+            )?;
+            umf_core_wire::encode(&result, &mut ctx)
+        } else {
+            let mut ctx = Context::ordinary();
+            let result = record_values::validate_core_record_values_host_json(
+                source as HostHandle,
+                identity as HostHandle,
+                values as HostHandle,
+                &mut host,
+                &engine,
+                &mut ctx,
+            )?;
+            umf_core_wire::encode(&result, &mut ctx)
+        }
+    })();
+    umf_core_wire::result_envelope(result)
+}
+
+fn event_json(event: &HostJsonEvent) -> String {
+    match event {
+        HostJsonEvent::ReadProperty { handle, key } => {
+            let units = key.iter().map(u16::to_string).collect::<Vec<_>>().join(",");
+            format!(r#"{{"event":"read-property","handle":{handle},"keyUnits":[{units}]}}"#)
+        }
+        HostJsonEvent::Classify { handle } => {
+            format!(r#"{{"event":"classify","handle":{handle}}}"#)
+        }
+        HostJsonEvent::GetPrototype { handle } => {
+            format!(r#"{{"event":"get-prototype","handle":{handle}}}"#)
+        }
+        HostJsonEvent::IsArray { handle } => format!(r#"{{"event":"is-array","handle":{handle}}}"#),
+        HostJsonEvent::OwnSymbolCount { handle } => {
+            format!(r#"{{"event":"own-symbol-count","handle":{handle}}}"#)
+        }
+        HostJsonEvent::DescriptorSnapshot { handle } => {
+            format!(r#"{{"event":"descriptor-snapshot","handle":{handle}}}"#)
+        }
+        HostJsonEvent::DescriptorAt { token, index } => {
+            format!(r#"{{"event":"descriptor-at","token":{token},"index":{index}}}"#)
+        }
+        HostJsonEvent::ArrayIndexAtOrPastLength { handle, key } => format!(
+            r#"{{"event":"array-index-at-or-past-length","handle":{handle},"keyToken":{}}}"#,
+            key.token
+        ),
+        HostJsonEvent::ArrayIsSparseOrExtended { handle } => {
+            format!(r#"{{"event":"array-is-sparse-or-extended","handle":{handle}}}"#)
+        }
+        HostJsonEvent::ReadUtf16Chunk {
+            token,
+            offset,
+            max_units,
+        } => format!(
+            r#"{{"event":"read-utf16-chunk","token":{token},"offset":{offset},"maxUnits":{max_units}}}"#
+        ),
+    }
+}
+
+fn decode_reply(
+    event: &HostJsonEvent,
+    value: Value,
+    lengths: &mut BTreeMap<u64, usize>,
+) -> Result<HostJsonReply, EngineError> {
+    let kind = text(&value, "kind").ok_or_else(protocol_error)?;
+    let kind = kind.to_utf8().map_err(|_| protocol_error())?;
+    let valid = match event {
+        HostJsonEvent::Classify { .. } | HostJsonEvent::ReadProperty { .. } => matches!(
+            kind.as_str(),
+            "null" | "boolean" | "number" | "string" | "object" | "unsupported" | "host-exception"
+        ),
+        HostJsonEvent::GetPrototype { .. } => {
+            matches!(kind.as_str(), "prototype" | "host-exception")
+        }
+        HostJsonEvent::IsArray { .. }
+        | HostJsonEvent::ArrayIndexAtOrPastLength { .. }
+        | HostJsonEvent::ArrayIsSparseOrExtended { .. } => {
+            matches!(kind.as_str(), "boolean" | "host-exception")
+        }
+        HostJsonEvent::OwnSymbolCount { .. } => matches!(kind.as_str(), "count" | "host-exception"),
+        HostJsonEvent::DescriptorSnapshot { .. } => {
+            matches!(kind.as_str(), "snapshot" | "host-exception")
+        }
+        HostJsonEvent::DescriptorAt { .. } => {
+            matches!(kind.as_str(), "descriptor" | "host-exception")
+        }
+        HostJsonEvent::ReadUtf16Chunk { .. } => {
+            matches!(kind.as_str(), "utf16-chunk" | "host-exception")
+        }
+    };
+    if !valid {
+        return Err(protocol_error());
+    }
+    if kind == "host-exception" {
+        return Err(EngineError::new(
+            "HOST_JSON_CALLBACK",
+            Utf16::default(),
+            "Host reflection threw",
+        ));
+    }
+    Ok(match kind.as_str() {
+        "null" => HostJsonReply::Kind(HostJsonKind::Null),
+        "boolean" => {
+            let value = boolean(&value, "value").ok_or_else(protocol_error)?;
+            if matches!(
+                event,
+                HostJsonEvent::Classify { .. } | HostJsonEvent::ReadProperty { .. }
+            ) {
+                HostJsonReply::Kind(HostJsonKind::Boolean(value))
+            } else {
+                HostJsonReply::Boolean(value)
+            }
+        }
+        "number" => HostJsonReply::Kind(HostJsonKind::Number(
+            number(&value, "bits").ok_or_else(protocol_error)?,
+        )),
+        "string" => HostJsonReply::Kind(HostJsonKind::String(string_ref(&value, lengths)?)),
+        "object" => HostJsonReply::Kind(HostJsonKind::Object(
+            unsigned(&value, "handle").ok_or_else(protocol_error)?,
+        )),
+        "unsupported" => HostJsonReply::Kind(HostJsonKind::Unsupported(
+            match text(&value, "value")
+                .and_then(|v| v.to_utf8().ok())
+                .as_deref()
+            {
+                Some("undefined") => "undefined",
+                Some("function") => "function",
+                Some("symbol") => "symbol",
+                Some("bigint") => "bigint",
+                _ => return Err(protocol_error()),
+            },
+        )),
+        "prototype" => HostJsonReply::Prototype(
+            match text(&value, "value")
+                .and_then(|v| v.to_utf8().ok())
+                .as_deref()
+            {
+                Some("ordinary") => HostPrototype::OrdinaryObject,
+                Some("null") => HostPrototype::Null,
+                Some("array") => HostPrototype::Array,
+                Some("other") => HostPrototype::Other,
+                _ => return Err(protocol_error()),
+            },
+        ),
+        "count" => {
+            HostJsonReply::Count(unsigned(&value, "value").ok_or_else(protocol_error)? as usize)
+        }
+        "snapshot" => HostJsonReply::Snapshot(HostDescriptorSnapshot {
+            token: unsigned(&value, "token").ok_or_else(protocol_error)?,
+            count: unsigned(&value, "count").ok_or_else(protocol_error)? as usize,
+        }),
+        "descriptor" => {
+            let key = string_ref(field(&value, "key").ok_or_else(protocol_error)?, lengths)?;
+            let enumerable = boolean(&value, "enumerable").ok_or_else(protocol_error)?;
+            let is_data = boolean(&value, "isData").ok_or_else(protocol_error)?;
+            let has_value = boolean(&value, "hasValue").ok_or_else(protocol_error)?;
+            let value = if has_value {
+                Some(descriptor_value(
+                    field(&value, "value").ok_or_else(protocol_error)?,
+                    lengths,
+                )?)
+            } else {
+                None
+            };
+            HostJsonReply::Descriptor(HostPropertyDescriptor {
+                key,
+                enumerable,
+                is_data,
+                value,
+            })
+        }
+        "utf16-chunk" => {
+            let offset = unsigned(&value, "offset").ok_or_else(protocol_error)? as usize;
+            let Value::Array(items) = field(&value, "units").ok_or_else(protocol_error)? else {
+                return Err(protocol_error());
+            };
+            let HostJsonEvent::ReadUtf16Chunk {
+                token,
+                offset: requested,
+                max_units,
+            } = event
+            else {
+                return Err(protocol_error());
+            };
+            let length = *lengths.get(token).ok_or_else(protocol_error)?;
+            let expected = (length.saturating_sub(*requested)).min(*max_units);
+            if offset != *requested || *max_units != 8192 || items.len() != expected {
+                return Err(protocol_error());
+            };
+            let mut units = Vec::with_capacity(expected);
+            for item in items {
+                let Value::Number(n) = item else {
+                    return Err(protocol_error());
+                };
+                if !n.is_finite() || n.fract() != 0.0 || !(0.0..=65535.0).contains(n) {
+                    return Err(protocol_error());
+                };
+                units.push(*n as u16);
+            }
+            HostJsonReply::Utf16Chunk { offset, units }
+        }
+        _ => return Err(protocol_error()),
+    })
+}
+fn descriptor_value(
+    v: &Value,
+    lengths: &mut BTreeMap<u64, usize>,
+) -> Result<HostDescriptorValue, EngineError> {
+    Ok(
+        match text(v, "kind").and_then(|v| v.to_utf8().ok()).as_deref() {
+            Some("null") => HostDescriptorValue::Null,
+            Some("boolean") => {
+                HostDescriptorValue::Boolean(boolean(v, "value").ok_or_else(protocol_error)?)
+            }
+            Some("number") => {
+                HostDescriptorValue::Number(number(v, "bits").ok_or_else(protocol_error)?)
+            }
+            Some("string") => HostDescriptorValue::String(string_ref(v, lengths)?),
+            Some("object") => {
+                HostDescriptorValue::Object(unsigned(v, "handle").ok_or_else(protocol_error)?)
+            }
+            Some("unsupported") => HostDescriptorValue::Unsupported(
+                match text(v, "value").and_then(|v| v.to_utf8().ok()).as_deref() {
+                    Some("undefined") => "undefined",
+                    Some("function") => "function",
+                    Some("symbol") => "symbol",
+                    Some("bigint") => "bigint",
+                    _ => return Err(protocol_error()),
+                },
+            ),
+            _ => return Err(protocol_error()),
+        },
+    )
+}
+fn string_ref(v: &Value, lengths: &mut BTreeMap<u64, usize>) -> Result<HostStringRef, EngineError> {
+    let token = unsigned(v, "token").ok_or_else(protocol_error)?;
+    let units = unsigned(v, "units").ok_or_else(protocol_error)? as usize;
+    if lengths.insert(token, units).is_some_and(|old| old != units) {
+        return Err(protocol_error());
+    }
+    Ok(HostStringRef { token, units })
+}
+fn field<'a>(v: &'a Value, name: &str) -> Option<&'a Value> {
+    match v {
+        Value::Object(items) => items
+            .iter()
+            .find(|(k, _)| k == &Utf16::from(name))
+            .map(|(_, v)| v),
+        _ => None,
+    }
+}
+fn take_core_resource(value: &mut Value, name: &str) -> Result<Value, EngineError> {
+    let Value::Object(fields) = value else {
+        return Err(EngineError::new(
+            "REQUEST",
+            Utf16::from(name),
+            "Explicit resource is required",
+        ));
+    };
+    let index = fields
+        .iter()
+        .position(|(key, _)| key == &Utf16::from(name))
+        .ok_or_else(|| {
+            EngineError::new(
+                "REQUEST",
+                Utf16::from(name),
+                "Explicit resource is required",
+            )
+        })?;
+    Ok(fields.swap_remove(index).1)
+}
+fn text<'a>(v: &'a Value, name: &str) -> Option<&'a Utf16> {
+    match field(v, name) {
+        Some(Value::String(s)) => Some(s),
+        _ => None,
+    }
+}
+fn boolean(v: &Value, name: &str) -> Option<bool> {
+    match field(v, name) {
+        Some(Value::Bool(b)) => Some(*b),
+        _ => None,
+    }
+}
+fn unsigned(v: &Value, name: &str) -> Option<u64> {
+    match field(v, name) {
+        Some(Value::Number(n))
+            if n.is_finite() && *n >= 0.0 && n.fract() == 0.0 && *n <= 9_007_199_254_740_991.0 =>
+        {
+            Some(*n as u64)
+        }
+        _ => None,
+    }
+}
+fn number(v: &Value, name: &str) -> Option<f64> {
+    let s = text(v, name)?.to_utf8().ok()?;
+    if s.len() != 16 {
+        return None;
+    }
+    u64::from_str_radix(&s, 16).ok().map(f64::from_bits)
+}
+fn protocol_error() -> EngineError {
+    EngineError::new(
+        "HOST_JSON_PROTOCOL",
+        Utf16::default(),
+        "Malformed umf.host-json/1 response",
+    )
+}
+fn bridge_error() -> EngineError {
+    EngineError::new(
+        "HOST_JSON_BRIDGE",
+        Utf16::default(),
+        "WASM host-json dispatcher bridge failed",
+    )
+}
+
+/// Retained immutable engine and Dataset schemas for the host-admission facade.
+#[wasm_bindgen]
+pub struct CoreDatasetValuesRuntime {
+    engine: Engine,
+    validator: umf_core::dataset_values::CoreDatasetValueValidator,
+}
+
+#[wasm_bindgen]
+impl CoreDatasetValuesRuntime {
+    #[wasm_bindgen(constructor)]
+    pub fn new(
+        resources_wire: &str,
+        control_dispatcher: Option<Function>,
+    ) -> Result<CoreDatasetValuesRuntime, JsValue> {
+        let build = |ctx: &mut Context<'_>| -> Result<
+            (Engine, umf_core::dataset_values::CoreDatasetValueValidator),
+            EngineError,
+        > {
+            let mut resources =
+                ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(resources_wire, ctx))?;
+            let engine = ctx.with_catalog_value_limit(|catalog| {
+                Engine::new(
+                    ResourceSet::new(
+                        take_dataset_resource(&mut resources, "coreSchema")?,
+                        take_dataset_resource(&mut resources, "referenceSchema")?,
+                        take_dataset_resource(&mut resources, "packageSchema")?,
+                        take_dataset_resource(&mut resources, "constraints")?,
+                        take_dataset_resource(&mut resources, "domainPolicy")?,
+                    ),
+                    catalog,
+                )
+            })?;
+            let validator = ctx.with_catalog_value_limit(|catalog| {
+                umf_core::dataset_values::CoreDatasetValueValidator::new(&engine, catalog)
+            })?;
+            Ok((engine, validator))
+        };
+        let result = if let Some(dispatcher) = control_dispatcher {
+            let mut control = super::WasmControl { dispatcher };
+            let mut hook = |amount| control.check(amount);
+            let mut ctx = Context::ordinary().with_host_control(&mut hook);
+            build(&mut ctx)
+        } else {
+            build(&mut Context::ordinary())
+        };
+        result
+            .map(|(engine, validator)| Self { engine, validator })
+            .map_err(|error| JsValue::from_str(&umf_core_wire::error_envelope(error)))
+    }
+
+    #[wasm_bindgen]
+    pub fn execute(
+        &self,
+        operation_name: &str,
+        source_handle: u32,
+        input_handle: u32,
+        expected_handle: u32,
+        dispatcher: Function,
+        control_dispatcher: Option<Function>,
+    ) -> String {
+        use umf_core::core_dataset_values_host_json::CoreDatasetValuesHostOperation as Op;
+        let operation = match operation_name {
+            "validateCoreDatasetValues" => Ok(Op::Validate),
+            "verifyCoreDatasetValues" => Ok(Op::Verify),
+            _ => Err(EngineError::new(
+                "REQUEST",
+                Utf16::default(),
+                "Unknown Dataset values host operation",
+            )),
+        };
+        let handles = [source_handle, input_handle, expected_handle].map(HostHandle::from);
+        let mut host = WasmHostJson {
+            dispatcher,
+            string_lengths: BTreeMap::new(),
+        };
+        let execute =
+            |ctx: &mut Context<'_>, host: &mut WasmHostJson| -> Result<String, EngineError> {
+                let value = umf_core::core_dataset_values_host_json::execute(
+                    operation?,
+                    &handles,
+                    host,
+                    &self.validator,
+                    &self.engine,
+                    ctx,
+                )?;
+                umf_core_wire::encode(&value, ctx)
+            };
+        let result = if let Some(dispatcher) = control_dispatcher {
+            let mut control = super::WasmControl { dispatcher };
+            let mut hook = |amount| control.check(amount);
+            let mut ctx = Context::ordinary().with_host_control(&mut hook);
+            execute(&mut ctx, &mut host)
+        } else {
+            execute(&mut Context::ordinary(), &mut host)
+        };
+        umf_core_wire::result_envelope(result)
+    }
+}
+
+fn take_dataset_resource(resources: &mut Value, name: &str) -> Result<Value, EngineError> {
+    let Value::Object(members) = resources else {
+        return Err(EngineError::new(
+            "REQUEST",
+            Utf16::from(name),
+            "Explicit resource is required",
+        ));
+    };
+    let Some(index) = members
+        .iter()
+        .position(|(key, _)| key == &Utf16::from(name))
+    else {
+        return Err(EngineError::new(
+            "REQUEST",
+            Utf16::from(name),
+            "Explicit resource is required",
+        ));
+    };
+    Ok(members.remove(index).1)
+}

@@ -1,0 +1,199 @@
+name: Coordinated Python release validation
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+      - '.cargo/**'
+      - 'rust-toolchain.toml'
+      - 'python/**'
+      - 'bindings/core/python/**'
+      - 'crates/**'
+      - 'spec/**'
+      - 'fixtures/actions-binding/source.json'
+      - 'tools/_python_sdist.py'
+      - 'tools/verify_python_artifacts.py'
+      - 'tools/verify_python_release_pair.py'
+      - 'tools/verify_python_release_matrix.py'
+      - 'python/tests/test_coordinated_python_release.py'
+      - 'python/tests/test_python_release_matrix.py'
+      - '.github/workflows/python-coordinated-release.yml'
+      - '.github/workflows/pypi.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build-verify-pair:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - cohort: linux-x86_64-cpython-311
+            runs-on: ubuntu-24.04
+            python-architecture: x64
+            python-version: '3.11.17'
+            expected-platform: linux_x86_64
+          - cohort: linux-x86_64-cpython-312
+            runs-on: ubuntu-24.04
+            python-architecture: x64
+            python-version: '3.12.15'
+            expected-platform: linux_x86_64
+          - cohort: linux-x86_64-cpython-313
+            runs-on: ubuntu-24.04
+            python-architecture: x64
+            python-version: '3.13.16'
+            expected-platform: linux_x86_64
+          - cohort: macos-arm64-cpython-311
+            runs-on: macos-15
+            python-architecture: arm64
+            python-version: '3.11.17'
+            expected-platform: macos_arm64
+          - cohort: macos-arm64-cpython-312
+            runs-on: macos-15
+            python-architecture: arm64
+            python-version: '3.12.15'
+            expected-platform: macos_arm64
+          - cohort: macos-arm64-cpython-313
+            runs-on: macos-15
+            python-architecture: arm64
+            python-version: '3.13.16'
+            expected-platform: macos_arm64
+    runs-on: ${{ matrix.runs-on }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Isolate Rust build state
+        run: |
+          printf 'CARGO_TARGET_DIR=%s/umf-coordinated-target\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: ${{ matrix.python-architecture }}
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+      - name: Check runner and capture toolchain provenance
+        env:
+          EXPECTED_COHORT: ${{ matrix.cohort }}
+          EXPECTED_PYTHON: ${{ matrix.python-version }}
+        run: |
+          python - <<'PY'
+          import os, platform, sys, sysconfig
+          cohort = os.environ['EXPECTED_COHORT']
+          machine = platform.machine().lower()
+          expected = 'x86_64' if cohort.startswith('linux-x86_64-') else 'arm64'
+          if machine != expected:
+              raise SystemExit(f'Expected {expected}, found {machine}')
+          if cohort.startswith('linux-x86_64-') and sys.platform != 'linux':
+              raise SystemExit('Unexpected Linux cohort')
+          if cohort.startswith('macos-arm64-') and sys.platform != 'darwin':
+              raise SystemExit('Unexpected macOS cohort')
+          if platform.python_version() != os.environ['EXPECTED_PYTHON']:
+              raise SystemExit(f"Expected Python {os.environ['EXPECTED_PYTHON']}; found {platform.python_version()}")
+          print(f'python={sys.version} platform={sysconfig.get_platform()} machine={machine}')
+          PY
+          rustc -Vv > "$RUNNER_TEMP/rustc-version.txt"
+          cargo --version > "$RUNNER_TEMP/cargo-version.txt"
+      - name: Install pinned build tools
+        run: python -m pip install 'build==1.3.0' 'hatchling==1.27.0' 'twine==6.2.0'
+      - name: Build both distributions for this host
+        run: |
+          python -m build --no-isolation --wheel --sdist python
+          python -m build --no-isolation --wheel --sdist python/umf_codegen
+          python -m twine check python/dist/* python/umf_codegen/dist/*
+          mkdir -p "$RUNNER_TEMP/umf-coordinated-artifacts"
+          cp python/dist/* python/umf_codegen/dist/* "$RUNNER_TEMP/umf-coordinated-artifacts/"
+      - name: Verify core wheel payload and offline extracted-sdist rebuild
+        env:
+          EXPECTED_PLATFORM: ${{ matrix.expected-platform }}
+          CARGO_NET_OFFLINE: 'true'
+        run: |
+          python tools/verify_python_artifacts.py \
+            --wheel python/dist/*.whl \
+            --sdist python/dist/*.tar.gz \
+            --rebuilt-wheel-directory "$RUNNER_TEMP/umf-core-sdist-rebuilt" \
+            --repository . \
+            --expected-platform "$EXPECTED_PLATFORM" \
+            --receipt "$RUNNER_TEMP/umf-core-artifact-receipt.json"
+      - name: Verify the installed coordinated pair and codegen sdist rebuild
+        run: |
+          python tools/verify_python_release_pair.py \
+            --repository . \
+            --artifacts "$RUNNER_TEMP/umf-coordinated-artifacts" \
+            --core-receipt "$RUNNER_TEMP/umf-core-artifact-receipt.json" \
+            --receipt "$RUNNER_TEMP/umf-coordinated-release-receipt.json"
+      - name: Run source tests against the installed pair
+        run: |
+          python -m venv "$RUNNER_TEMP/umf-pair-tests"
+          "$RUNNER_TEMP/umf-pair-tests/bin/python" -m pip install 'pydantic==2.11.9' 'pytest==8.4.2'
+          "$RUNNER_TEMP/umf-pair-tests/bin/python" -m pip install --no-index --no-deps \
+            "$RUNNER_TEMP/umf-coordinated-artifacts"/umf_core-*.whl \
+            "$RUNNER_TEMP/umf-coordinated-artifacts"/umf_codegen-*.whl
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/umf-pair-tests/bin/python" -I -B -m pytest -q \
+            "$GITHUB_WORKSPACE/python/umf_codegen/tests" \
+            "$GITHUB_WORKSPACE/python/tests/test_core.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_rust_core.py"
+      - name: Attach toolchain provenance to the receipt
+        run: |
+          python - "$RUNNER_TEMP/umf-core-artifact-receipt.json" \
+            "$RUNNER_TEMP/umf-coordinated-release-receipt.json" \
+            "$RUNNER_TEMP/rustc-version.txt" "$RUNNER_TEMP/cargo-version.txt" <<'PY'
+          import hashlib, json, os, sys
+          from pathlib import Path
+          core, pair, rustc, cargo = map(Path, sys.argv[1:])
+          result = json.loads(pair.read_text())
+          result['cohort'] = os.environ['COHORT']
+          result['sourceRevision'] = os.environ['SOURCE_REVISION']
+          result['runId'] = os.environ['RUN_ID']
+          result['rustcVersionSha256'] = hashlib.sha256(rustc.read_bytes()).hexdigest()
+          result['cargoVersionSha256'] = hashlib.sha256(cargo.read_bytes()).hexdigest()
+          result['corePayloadReceiptSha256'] = hashlib.sha256(core.read_bytes()).hexdigest()
+          pair.write_text(json.dumps(result, sort_keys=True, separators=(',', ':')) + '\n')
+          PY
+        env:
+          COHORT: ${{ matrix.cohort }}
+          SOURCE_REVISION: ${{ github.sha }}
+          RUN_ID: ${{ github.run_id }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: python-release-${{ matrix.cohort }}
+          path: |
+            ${{ runner.temp }}/umf-coordinated-artifacts/*
+            ${{ runner.temp }}/umf-core-sdist-rebuilt/*
+            ${{ runner.temp }}/umf-core-artifact-receipt.json
+            ${{ runner.temp }}/umf-coordinated-release-receipt.json
+
+  aggregate-release-cohorts:
+    needs: build-verify-pair
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+      - name: Test the release receipt verifiers
+        run: |
+          python -m pip install 'pytest==8.4.2'
+          python -m pytest -q \
+            python/tests/test_coordinated_python_release.py \
+            python/tests/test_python_release_matrix.py
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: python-release-*
+          path: ${{ runner.temp }}/umf-release-cohorts
+          merge-multiple: false
+      - name: Require all six receipts from this source revision and workflow run
+        run: |
+          python tools/verify_python_release_matrix.py \
+            --artifacts "$RUNNER_TEMP/umf-release-cohorts" \
+            --source-revision "$GITHUB_SHA" \
+            --run-id "$GITHUB_RUN_ID" \
+            --receipt "$RUNNER_TEMP/umf-python-release-matrix.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: python-release-aggregate-${{ github.run_id }}
+          path: ${{ runner.temp }}/umf-python-release-matrix.json
+          if-no-files-found: error

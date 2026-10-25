@@ -1,0 +1,55 @@
+{
+  "baselineCommit": "23bf095b768b6e391da1967339cd559e22ff2eff",
+  "pythonBaselineSources": {
+    "bindings/core/python/src/lib.rs": "9f2eb8347bab0244ea483538604c9bfcc9ee179bb3a7a9d7b81dd24e0a7b80e0",
+    "python/src/umf/__init__.py": "6c7676a25cb8f4824e82e484508519ed7bdb3c055b16c7424aea94886495f62f",
+    "python/src/umf/_rust.py": "f3b573f016fe6c89ac0d45da62cc49f145ea08622d9244490411248dfbb9fddf",
+    "python/src/umf/registry.py": "c4c69b2af2245a816f7af4fef7199933dc27bb4baa6e092dcbc23c3a828d0c88",
+    "python/tests/test_core.py": "19603e859cdca0411b4c43570843c7d8b136a1210132e8557db60b93456be5a2"
+  },
+  "pythonExportsAtBaseline": [
+    "CoreItemTypeReference",
+    "CoreSemanticTypeReference",
+    "Diagnostic",
+    "Document",
+    "Element",
+    "Extension",
+    "Module",
+    "Reference",
+    "Registry",
+    "Validation",
+    "Vocabulary",
+    "core_schema",
+    "current_core_version",
+    "dataset_source_schema",
+    "domain_pack_schema",
+    "inspect_extension_kinds",
+    "read_document",
+    "read_json_value",
+    "schema_validator",
+    "semantic_type_reference_schema",
+    "validate_document",
+    "write_document",
+    "write_json_value"
+  ],
+  "pythonRuntime": "3.11.17",
+  "schema": "umf.r5.semantic-value.python-predecessor.v1",
+  "scope": "The pinned TypeScript v3 packet is the semantic predecessor. Python at HEAD has no semantic value registry/validator API; this additive slice introduces cooperative-v1.",
+  "semanticValidatorExportsAtBaseline": [
+    "CoreSemanticTypeReference",
+    "schema_validator",
+    "semantic_type_reference_schema"
+  ],
+  "typescriptAndAuthoritySources": {
+    "docs/helix/02-design/contracts/CONTRACT-078-semantic-types.md": "380b7193e747603d5e5bc4ee295e3a8cd9d1ac17c160130cec0da657a278ff82",
+    "src/extensions/semantic-types/index.ts": "64482ca4d9d8abd65b19b342e1722eaff8497ce52ff44bf5dc3a7ca6f415c6e2",
+    "src/model/semantic-types.ts": "f1be6e2ed74adbc0bf0d3b7e96a2c62e6b5b9a7321cdaad402aecb861110bd20",
+    "tests/semantic-types/core.test.ts": "66802539ed14cc02ef18e3ee8e475ee41b374da3d6946a0e1949dfc357b07272"
+  },
+  "typescriptPacket": {
+    "caseCount": 4,
+    "path": "docs/helix/04-build/evidence/rust-migration/r5-semantic-value/frozen-typescript.json",
+    "schema": "umf.r5.semantic-value.typescript-freeze.v3",
+    "sha256": "ef39fe513a8f1fe457cc696d987e31d2248313b59a66f3e9ed80a6e7d2720c48"
+  }
+}

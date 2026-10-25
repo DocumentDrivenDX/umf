@@ -4,11 +4,197 @@ use num_traits::{Signed, ToPrimitive, Zero};
 
 use crate::{
     context::Context,
-    ecma_coercion::{to_number, Primitive},
+    ecma_coercion::{Primitive, to_number},
     error::{Diagnostic, EngineError, Severity},
     literal_policy::PreparedPolicy,
-    value::{copy_json, Utf16, Value},
+    value::{Utf16, Value, copy_json},
 };
+
+/// Canonical base-10 integer coefficient used when decimal text must stay
+/// linear in its number of digits instead of passing through BigInt radix
+/// conversion. Zero is always positive and has the single digit `0`.
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct CanonicalInteger {
+    negative: bool,
+    digits: String,
+}
+
+impl CanonicalInteger {
+    pub fn is_negative(&self) -> bool {
+        self.negative
+    }
+
+    pub fn digits(&self) -> &str {
+        &self.digits
+    }
+
+    pub fn decimal_len(&self) -> usize {
+        self.digits.len() + usize::from(self.negative)
+    }
+
+    pub fn compare(&self, other: &Self) -> std::cmp::Ordering {
+        match (self.negative, other.negative) {
+            (true, false) => std::cmp::Ordering::Less,
+            (false, true) => std::cmp::Ordering::Greater,
+            (negative, _) => {
+                let magnitude = self
+                    .digits
+                    .len()
+                    .cmp(&other.digits.len())
+                    .then_with(|| self.digits.cmp(&other.digits));
+                if negative {
+                    magnitude.reverse()
+                } else {
+                    magnitude
+                }
+            }
+        }
+    }
+
+    /// Add or subtract two canonical values with work admitted before output
+    /// allocation. The decimal algorithm is linear in the input digit count.
+    pub fn arithmetic(
+        &self,
+        other: &Self,
+        subtract: bool,
+        ctx: &mut Context<'_>,
+    ) -> Result<Self, EngineError> {
+        let rhs_negative = other.negative ^ subtract;
+        let maximum = self.digits.len().max(other.digits.len());
+        let estimate = maximum.saturating_mul(3).saturating_add(1);
+        ctx.charge_work(estimate, Utf16::default())?;
+        let (negative, digits) = if self.negative == rhs_negative {
+            (
+                self.negative,
+                add_magnitudes(&self.digits, &other.digits, ctx)?,
+            )
+        } else {
+            match compare_magnitudes(&self.digits, &other.digits) {
+                std::cmp::Ordering::Equal => (false, "0".to_owned()),
+                std::cmp::Ordering::Greater => (
+                    self.negative,
+                    subtract_magnitudes(&self.digits, &other.digits, ctx)?,
+                ),
+                std::cmp::Ordering::Less => (
+                    rhs_negative,
+                    subtract_magnitudes(&other.digits, &self.digits, ctx)?,
+                ),
+            }
+        };
+        let is_zero = digits == "0";
+        Ok(Self {
+            negative: negative && !is_zero,
+            digits,
+        })
+    }
+
+    /// Produce the public exact decimal spelling after its text/work precharge.
+    pub fn to_decimal_string(&self, ctx: &mut Context<'_>) -> Result<String, EngineError> {
+        let length = self.decimal_len();
+        ctx.charge_work(length, Utf16::default())?;
+        let mut out = String::new();
+        reserve_numeric_string(&mut out, length)?;
+        if self.negative {
+            out.push('-');
+        }
+        out.push_str(&self.digits);
+        ctx.check_cancelled(Utf16::default())?;
+        ctx.check_deadline(Utf16::default())?;
+        Ok(out)
+    }
+}
+
+fn allocation_refusal() -> EngineError {
+    EngineError::new(
+        "LIMIT",
+        Utf16::default(),
+        "Numeric work allocation exceeds resource limit",
+    )
+}
+
+fn reserve_numeric<T>(buffer: &mut Vec<T>, capacity: usize) -> Result<(), EngineError> {
+    buffer
+        .try_reserve_exact(capacity)
+        .map_err(|_| allocation_refusal())
+}
+
+fn reserve_numeric_string(buffer: &mut String, capacity: usize) -> Result<(), EngineError> {
+    buffer
+        .try_reserve_exact(capacity)
+        .map_err(|_| allocation_refusal())
+}
+
+fn compare_magnitudes(left: &str, right: &str) -> std::cmp::Ordering {
+    left.len().cmp(&right.len()).then_with(|| left.cmp(right))
+}
+
+fn checkpoint(ctx: &mut Context<'_>, completed: usize) -> Result<(), EngineError> {
+    if completed.is_multiple_of(65_536) {
+        ctx.check_cancelled(Utf16::default())?;
+        ctx.check_deadline(Utf16::default())?;
+    }
+    Ok(())
+}
+
+fn add_magnitudes(left: &str, right: &str, ctx: &mut Context<'_>) -> Result<String, EngineError> {
+    let capacity = left.len().max(right.len()).saturating_add(1);
+    let mut reversed = Vec::new();
+    reserve_numeric(&mut reversed, capacity)?;
+    let (mut i, mut j, mut carry) = (left.len(), right.len(), 0u8);
+    while i > 0 || j > 0 || carry > 0 {
+        let a = if i > 0 {
+            left.as_bytes()[i - 1] - b'0'
+        } else {
+            0
+        };
+        let b = if j > 0 {
+            right.as_bytes()[j - 1] - b'0'
+        } else {
+            0
+        };
+        let sum = a + b + carry;
+        reversed.push(b'0' + sum % 10);
+        carry = sum / 10;
+        i = i.saturating_sub(1);
+        j = j.saturating_sub(1);
+        checkpoint(ctx, reversed.len())?;
+    }
+    reversed.reverse();
+    Ok(String::from_utf8(reversed).expect("decimal digits are ASCII"))
+}
+
+fn subtract_magnitudes(
+    larger: &str,
+    smaller: &str,
+    ctx: &mut Context<'_>,
+) -> Result<String, EngineError> {
+    debug_assert!(compare_magnitudes(larger, smaller) != std::cmp::Ordering::Less);
+    let mut reversed = Vec::new();
+    reserve_numeric(&mut reversed, larger.len())?;
+    let (mut i, mut j, mut borrow) = (larger.len(), smaller.len(), 0i8);
+    while i > 0 {
+        let a = (larger.as_bytes()[i - 1] - b'0') as i8 - borrow;
+        let b = if j > 0 {
+            (smaller.as_bytes()[j - 1] - b'0') as i8
+        } else {
+            0
+        };
+        let mut digit = a - b;
+        borrow = i8::from(digit < 0);
+        if digit < 0 {
+            digit += 10;
+        }
+        reversed.push(b'0' + digit as u8);
+        i -= 1;
+        j = j.saturating_sub(1);
+        checkpoint(ctx, reversed.len())?;
+    }
+    while reversed.len() > 1 && reversed.last() == Some(&b'0') {
+        reversed.pop();
+    }
+    reversed.reverse();
+    Ok(String::from_utf8(reversed).expect("decimal digits are ASCII"))
+}
 
 #[derive(Debug)]
 struct LiteralFault {
@@ -89,7 +275,9 @@ fn public_string_carrier_count(raw: &Value, ctx: &mut Context<'_>) -> Result<usi
         LengthValue::Undefined => return Ok(0),
         LengthValue::Number(value) => {
             if value > 0.0 {
-                return Err(type_error("value.charCodeAt is not a function. (In 'value.charCodeAt(i)', 'value.charCodeAt' is undefined)"));
+                return Err(type_error(
+                    "value.charCodeAt is not a function. (In 'value.charCodeAt(i)', 'value.charCodeAt' is undefined)",
+                ));
             }
             return Ok(0);
         }
@@ -111,7 +299,7 @@ fn public_string_carrier_count(raw: &Value, ctx: &mut Context<'_>) -> Result<usi
                         "TYPE_ERROR",
                         Utf16::default(),
                         "No default value",
-                    ))
+                    ));
                 }
             }
         }
@@ -163,7 +351,9 @@ fn public_string_carrier_count(raw: &Value, ctx: &mut Context<'_>) -> Result<usi
         Value::Object(_) => return Err(type_error("No default value")),
     };
     if number > 0.0 {
-        return Err(type_error("value.charCodeAt is not a function. (In 'value.charCodeAt(i)', 'value.charCodeAt' is undefined)"));
+        return Err(type_error(
+            "value.charCodeAt is not a function. (In 'value.charCodeAt(i)', 'value.charCodeAt' is undefined)",
+        ));
     }
     Ok(0)
 }
@@ -171,6 +361,15 @@ fn public_string_carrier_count(raw: &Value, ctx: &mut Context<'_>) -> Result<usi
 #[cfg(test)]
 mod public_carrier_tests {
     use super::*;
+
+    #[test]
+    fn decimal_precision_limits_saturate_by_target_width_but_reject_invalid_facets() {
+        let max_safe = Some(9_007_199_254_740_991i64);
+        let expected = usize::try_from(9_007_199_254_740_991u64).unwrap_or(usize::MAX);
+        assert_eq!(precision_limit(max_safe), Some(expected));
+        assert_eq!(precision_limit(Some(-1)), None);
+        assert_eq!(num_at(&Value::Object(vec![(key("p"), Value::Number(1.5))]), "p"), None);
+    }
 
     #[test]
     fn array_length_coercion_is_stopped_by_the_cooperative_meter_before_join() {
@@ -211,17 +410,24 @@ mod public_carrier_tests {
         let error = public_string_carrier_count(&raw, &mut ctx).unwrap_err();
         assert_eq!(error.code, "METER_STOP");
     }
+
+    #[test]
+    fn shared_literal_bound_counts_exponent_sign() {
+        let negative = Utf16::from(format!("1e-{}", "1".repeat(32)));
+        let error = exact_coefficient(&negative, 0, None, &mut Context::ordinary()).unwrap_err();
+        assert_eq!(error.code, "numeric-exponent");
+
+        let positive = Utf16::from(format!("1e+{}", "1".repeat(32)));
+        let error = exact_coefficient(&positive, 0, None, &mut Context::ordinary()).unwrap_err();
+        assert_eq!(error.code, "numeric-exponent");
+    }
 }
 fn utf8(value: &Value) -> Option<String> {
     text(value)?.to_utf8().ok()
 }
 fn ascii(value: &Value) -> Option<String> {
     let s = utf8(value)?;
-    if s.is_ascii() {
-        Some(s)
-    } else {
-        None
-    }
+    if s.is_ascii() { Some(s) } else { None }
 }
 fn object(value: &Value) -> Option<&[(Utf16, Value)]> {
     match value {
@@ -253,6 +459,16 @@ fn num_at(value: &Value, name: &str) -> Option<i64> {
         }
         _ => None,
     }
+}
+/// Precision limits are counts compared with bounded input digits. On a
+/// narrower target, preserve any nonnegative i64 limit by saturating to the
+/// largest representable count; reachable input remains bounded by Context.
+fn precision_limit(value: Option<i64>) -> Option<usize> {
+    let value = value?;
+    if value < 0 {
+        return None;
+    }
+    Some(usize::try_from(value).unwrap_or(usize::MAX))
 }
 fn ptr_escape(source: &Utf16) -> Utf16 {
     let mut out = Vec::new();
@@ -467,19 +683,18 @@ pub(crate) fn format_bigint_decimal_for_numeric(
     Ok(text)
 }
 
-fn parse_token(
+fn parse_token_digits(
     token: &Utf16,
     scale: i64,
     precision: Option<usize>,
     ctx: &mut Context<'_>,
-) -> Result<BigInt, LiteralFault> {
+) -> Result<CanonicalInteger, LiteralFault> {
     let units = token.units();
     // Numeric tokens are typed carrier strings, not serialized source text.
-    // Bound their actual processing through the operation meter without
-    // applying the 4M source/output text ceiling.
+    // Bound scanning before materializing ASCII digits; do not apply the
+    // source/output text ceiling to an admitted coefficient.
     ctx.charge_work(units.len(), Utf16::default())
         .map_err(LiteralFault::from_engine)?;
-    // The typed numeric carrier is ASCII JSON number text. Do not round-trip it through f64.
     let s = token.to_utf8().map_err(|_| fail("numeric-token"))?;
     let bytes = s.as_bytes();
     if bytes.is_empty() {
@@ -543,22 +758,29 @@ fn parse_token(
     let digit_count = int_end - int_start + frac_len;
     ctx.charge_work(digit_count, Utf16::default())
         .map_err(LiteralFault::from_engine)?;
-    let mut digits = String::with_capacity(digit_count);
+    let mut digits = String::new();
+    digits
+        .try_reserve_exact(digit_count)
+        .map_err(|_| LiteralFault::from_engine(allocation_refusal()))?;
     digits.push_str(&s[int_start..int_end]);
     if frac_len > 0 {
         digits.push_str(&s[frac_start..frac_start + frac_len]);
     }
     let trimmed = digits.trim_start_matches('0');
+    // The predecessor canonicalizes zero before applying the exponent spelling
+    // bound; retain that behavior, including negative zero.
     if trimmed.is_empty() {
-        return Ok(BigInt::zero());
+        return Ok(CanonicalInteger {
+            negative: false,
+            digits: "0".to_owned(),
+        });
     }
     let digits = trimmed;
-    // The predecessor returns zero before applying its exponent-spelling
-    // limit. For nonzero coefficients retain that spelling limit, but parse
-    // the exponent exactly so large values classify as rounding/resource
-    // outcomes instead of an i64 conversion failure.
     let exponent = if let Some((start, end)) = exponent_range {
         let source = &s[start..end];
+        // Preserve the shared literal/schema contract: the bound includes an
+        // optional sign. The tuple encoder applies its specific admission
+        // before calling this parser.
         if source.len() > 32 {
             return Err(fail("numeric-exponent"));
         }
@@ -571,11 +793,7 @@ fn parse_token(
             .map_err(LiteralFault::from_engine)?;
         let parsed = BigInt::parse_bytes(magnitude.as_bytes(), 10)
             .ok_or_else(|| fail("numeric-exponent"))?;
-        if negative {
-            -parsed
-        } else {
-            parsed
-        }
+        if negative { -parsed } else { parsed }
     } else {
         BigInt::zero()
     };
@@ -602,7 +820,7 @@ fn parse_token(
         let bound = precision
             .unwrap_or(ctx.limits().max_coefficient_digits)
             .min(ctx.limits().max_coefficient_digits);
-        let size = BigInt::from(digits.len()) + shift;
+        let size = BigInt::from(digits.len()) + &shift;
         if size > BigInt::from(bound) {
             return Err(fail("numeric-resource"));
         }
@@ -610,7 +828,9 @@ fn parse_token(
         let shift = size - digits.len();
         ctx.charge_work(size, Utf16::default())
             .map_err(LiteralFault::from_engine)?;
-        let mut out = String::with_capacity(size);
+        let mut out = String::new();
+        out.try_reserve_exact(size)
+            .map_err(|_| LiteralFault::from_engine(allocation_refusal()))?;
         out.push_str(digits);
         out.extend(std::iter::repeat_n('0', shift));
         out
@@ -629,14 +849,36 @@ fn parse_token(
     }
     ctx.charge_work(significant.len(), Utf16::default())
         .map_err(LiteralFault::from_engine)?;
-    ctx.charge_work_u64(decimal_parse_work(significant.len()), Utf16::default())
-        .map_err(LiteralFault::from_engine)?;
-    let mut result =
-        BigInt::parse_bytes(significant.as_bytes(), 10).ok_or_else(|| fail("numeric-token"))?;
-    if negative && !result.is_zero() {
-        result = -result;
+    if significant.is_empty() {
+        return Ok(CanonicalInteger {
+            negative: false,
+            digits: "0".to_owned(),
+        });
     }
-    Ok(result)
+    Ok(CanonicalInteger {
+        negative,
+        digits: significant.to_owned(),
+    })
+}
+
+fn parse_token(
+    token: &Utf16,
+    scale: i64,
+    precision: Option<usize>,
+    ctx: &mut Context<'_>,
+) -> Result<BigInt, LiteralFault> {
+    let canonical = parse_token_digits(token, scale, precision, ctx)?;
+    if canonical.digits == "0" {
+        return Ok(BigInt::zero());
+    }
+    ctx.charge_work_u64(decimal_parse_work(canonical.digits.len()), Utf16::default())
+        .map_err(LiteralFault::from_engine)?;
+    let mut value = BigInt::parse_bytes(canonical.digits.as_bytes(), 10)
+        .ok_or_else(|| fail("numeric-token"))?;
+    if canonical.negative {
+        value = -value;
+    }
+    Ok(value)
 }
 
 pub fn exact_coefficient(
@@ -650,6 +892,22 @@ pub fn exact_coefficient(
             .unwrap_or_else(|| EngineError::new(e.reason, e.path, "Invalid exact numeric token"))
     })
 }
+
+/// Parse an exact numeric token into canonical sign/digits without constructing
+/// a BigInt. The parser is shared with [`exact_coefficient`] so grammar,
+/// exponent, scale, precision, and resource refusal order stay aligned.
+pub fn exact_coefficient_digits(
+    token: &Utf16,
+    scale: i64,
+    precision: Option<usize>,
+    ctx: &mut Context<'_>,
+) -> Result<CanonicalInteger, EngineError> {
+    parse_token_digits(token, scale, precision, ctx).map_err(|e| {
+        e.engine_error
+            .unwrap_or_else(|| EngineError::new(e.reason, e.path, "Invalid exact numeric token"))
+    })
+}
+
 fn family<'a>(field: &Value, policy: &'a Value) -> Option<&'a Value> {
     let scalar = get(field, &selector(policy, "family"))?;
     let scalar = text(scalar)?.to_utf8().ok()?;
@@ -715,19 +973,23 @@ fn exact_identity(
             let Some(s) = text(raw) else {
                 return Err(fail("numeric-token"));
             };
-            format_decimal(&parse_token(s, 0, None, ctx)?, ctx)?
+            parse_token_digits(s, 0, None, ctx)?
+                .to_decimal_string(ctx)
+                .map_err(LiteralFault::from_engine)?
         }
         "decimal" => {
             let facets = get(field, &selector(policy, "facets")).unwrap_or(&Value::Null);
             let scale =
                 num_at(facets, &selector(policy, "scale")).ok_or_else(|| fail("decimal-domain"))?;
             let precision = num_at(facets, &selector(policy, "precision"))
-                .and_then(|v| usize::try_from(v).ok())
+                .and_then(|v| precision_limit(Some(v)))
                 .ok_or_else(|| fail("decimal-domain"))?;
             let Some(s) = text(raw) else {
                 return Err(fail("numeric-token"));
             };
-            format_decimal(&parse_token(s, scale, Some(precision), ctx)?, ctx)?
+            parse_token_digits(s, scale, Some(precision), ctx)?
+                .to_decimal_string(ctx)
+                .map_err(LiteralFault::from_engine)?
         }
         "unicode" => {
             let Some(s) = text(raw) else {
@@ -923,7 +1185,7 @@ fn apply_refinements(
                 let token = text(carrier(value, family).ok_or_else(|| fail("family"))?)
                     .ok_or_else(|| fail("numeric-token"))?;
                 let precision = num_at(facets, &selector(policy, "precision"))
-                    .and_then(|n| usize::try_from(n).ok());
+                    .and_then(|n| precision_limit(Some(n)));
                 let number = parse_token(token, facet_scale, precision, ctx)?;
                 for (bound, inclusive, lower) in [
                     (
@@ -1369,7 +1631,8 @@ pub(crate) fn numeric_interval_admitted(
     } else {
         0
     };
-    let precision = num_at(facets, &selector(p, "precision")).and_then(|n| usize::try_from(n).ok());
+    let precision = num_at(facets, &selector(p, "precision"))
+        .and_then(|n| precision_limit(Some(n)));
     let field_members = object(field).ok_or_else(|| {
         EngineError::new(
             "CONSTRAINT_POLICY",

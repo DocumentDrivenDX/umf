@@ -15,6 +15,8 @@ ddx:
       kind: references
     - id: CONTRACT-078
       kind: references
+    - id: CONTRACT-079
+      kind: references
 ---
 
 # CONTRACT-080: Authoritative current-core metamodel and generated enforcement
@@ -300,6 +302,14 @@ meters remain cumulative where contracted. Private wire tags/code-unit arrays
 are transport overhead, not extra semantic JSON values. The R1 8-MiB request
 ceiling MUST NOT narrow the production 4-million-code-unit profile. No parser/regex/trusted-callback
 preemption claim follows from cooperative checks around those calls.
+
+The separately versioned `umf.python-client-host-read/4` selection profile in
+CONTRACT-079 admits at most 4,000,000 cumulative UTF-16 units of selected
+record/action identity strings before deduplication. This is a specific new
+host-selection admission rule, not a reinterpretation of the ordinary source
+limit and not a general ceiling on private copied values, generated output or
+other computed text. Its raw-reference and frame limits, ordered controls and
+cooperative-host qualification are governed by CONTRACT-079.
 
 `crates/umf-metamodel` exposes `parse_model`, `compile_model` and `render_outputs`;
 the compiler accepts independently admitted source, then checks the complete closed

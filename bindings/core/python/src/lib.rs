@@ -17,6 +17,160 @@ use umf_core::{
 mod python_value;
 mod related_keys;
 
+fn semantic_field<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
+    let Value::Object(fields) = value else {
+        return None;
+    };
+    fields
+        .iter()
+        .find(|(key, _)| key == &Utf16::from(name))
+        .map(|(_, value)| value)
+}
+
+struct PythonSemanticTypeValidator<'py> {
+    py: Python<'py>,
+    dispatcher: PyObject,
+}
+impl umf_core::core_semantic_types::SemanticTypeValidator for PythonSemanticTypeValidator<'_> {
+    fn validate(
+        &mut self,
+        token: u64,
+        value: &Value,
+        definition: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, CapabilityError> {
+        let request = umf_core_wire::encode_semantic_validator_request(value, definition, ctx)
+            .map_err(CapabilityError::Engine)?;
+        let response = self
+            .dispatcher
+            .bind(self.py)
+            .call1((token, request))
+            .map_err(|error| capability_py_error(self.py, error, ctx))?;
+        let response: String = response
+            .extract()
+            .map_err(|error| capability_py_error(self.py, error, ctx))?;
+        let response = umf_core_wire::decode(&response, ctx).map_err(CapabilityError::Engine)?;
+        let reported = match semantic_field(&response, "reportedWork") {
+            Some(Value::Number(number))
+                if number.is_finite()
+                    && *number >= 0.0
+                    && number.fract() == 0.0
+                    && *number <= 9_007_199_254_740_991.0 =>
+            {
+                *number as usize
+            }
+            _ => {
+                return Err(CapabilityError::Engine(EngineError::new(
+                    "HOST_CONTROL",
+                    Utf16::default(),
+                    "Invalid semantic validator reported work",
+                )));
+            }
+        };
+        ctx.charge_work(reported, Utf16::default())
+            .map_err(CapabilityError::Engine)?;
+        let status = match semantic_field(&response, "status") {
+            Some(Value::String(text)) => text.to_utf8().ok(),
+            _ => None,
+        };
+        match status.as_deref() {
+            Some("returned") => semantic_field(&response, "result")
+                .cloned()
+                .ok_or_else(|| CapabilityError::Host(Utf16::from("Value is not JSON-compatible"))),
+            Some("threw") => Err(CapabilityError::Host(
+                match semantic_field(&response, "message") {
+                    Some(Value::String(text)) => text.clone(),
+                    _ => Utf16::default(),
+                },
+            )),
+            Some("resource") => {
+                let code = match semantic_field(&response, "code") {
+                    Some(Value::String(text)) => text
+                        .to_utf8()
+                        .unwrap_or_else(|_| "RESOURCE_LIMIT".to_owned()),
+                    _ => "RESOURCE_LIMIT".to_owned(),
+                };
+                let message = match semantic_field(&response, "message") {
+                    Some(Value::String(text)) => text.to_utf8().unwrap_or_default(),
+                    _ => String::new(),
+                };
+                Err(CapabilityError::Engine(EngineError::new(
+                    code,
+                    Utf16::default(),
+                    message,
+                )))
+            }
+            _ => Err(CapabilityError::Host(Utf16::from(
+                "Malformed semantic validator response",
+            ))),
+        }
+    }
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, dispatcher, *, max_work=None, meter=None, is_cancelled=None, now=None, deadline_ms=None))]
+fn execute_semantic_value_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    dispatcher: PyObject,
+    max_work: Option<usize>,
+    meter: Option<PyObject>,
+    is_cancelled: Option<PyObject>,
+    now: Option<PyObject>,
+    deadline_ms: Option<u64>,
+) -> PyResult<String> {
+    for (name, callback) in [
+        ("dispatcher", Some(&dispatcher)),
+        ("meter", meter.as_ref()),
+        ("is_cancelled", is_cancelled.as_ref()),
+        ("now", now.as_ref()),
+    ] {
+        if callback.is_some_and(|value| !value.bind(py).is_callable()) {
+            return Err(PyValueError::new_err(format!("{name} must be callable")));
+        }
+    }
+    if deadline_ms.is_some() && now.is_none() {
+        return Err(PyValueError::new_err("now is required with deadline_ms"));
+    }
+    let state = Rc::new(RefCell::new(PythonWorkControl {
+        py,
+        max_work,
+        charged: 0,
+        meter,
+        is_cancelled,
+        now,
+        host_callback_failed: false,
+    }));
+    let mut meter_hook = {
+        let state = state.clone();
+        move |amount| state.borrow_mut().meter(amount)
+    };
+    let mut cancel_hook = {
+        let state = state.clone();
+        move || state.borrow_mut().cancelled()
+    };
+    let mut clock_hook = {
+        let state = state.clone();
+        move || state.borrow_mut().clock()
+    };
+    let mut ctx = Context::ordinary();
+    if max_work.is_some() || state.borrow().meter.is_some() {
+        ctx = ctx.with_meter(&mut meter_hook);
+    }
+    if state.borrow().is_cancelled.is_some() {
+        ctx = ctx.with_fallible_cancellation(&mut cancel_hook);
+    }
+    if let Some(deadline) = deadline_ms {
+        ctx = ctx.with_fallible_clock(&mut clock_hook, deadline);
+    }
+    let mut validator = PythonSemanticTypeValidator { py, dispatcher };
+    Ok(umf_core_wire::semantic_value::execute_with_context(
+        wire_json,
+        &mut validator,
+        &mut ctx,
+    ))
+}
+
 fn python_bigint(
     py: Python<'_>,
     value: &Bound<'_, PyAny>,
@@ -44,7 +198,6 @@ fn python_bigint(
         .downcast_into::<PyBytes>()?;
     Ok(BigInt::from_signed_bytes_le(bytes.as_bytes()))
 }
-
 #[pyfunction]
 fn access_values_profile_version() -> &'static str {
     "umf-access-values/0.1.0"
@@ -53,6 +206,86 @@ fn access_values_profile_version() -> &'static str {
 #[pyfunction]
 fn access_values_string_profile_version() -> &'static str {
     "umf-access-string/0.1.0"
+}
+
+#[pyclass(name = "ReviewedParameterScanner")]
+struct PyReviewedParameterScanner {
+    scanner: umf_core::reviewed_parameters::Scanner,
+}
+
+fn reviewed_scanner_error(error: umf_core::reviewed_parameters::Error) -> PyErr {
+    match error {
+        umf_core::reviewed_parameters::Error::Allocation => {
+            pyo3::exceptions::PyMemoryError::new_err("reviewed SQL ordinal allocation failed")
+        }
+        _ => PyValueError::new_err("reviewed scanner protocol error"),
+    }
+}
+
+#[pymethods]
+impl PyReviewedParameterScanner {
+    #[new]
+    fn new(py: Python<'_>, sql: &Bound<'_, PyString>) -> PyResult<Self> {
+        let length = unsafe { pyo3::ffi::PyUnicode_GetLength(sql.as_ptr()) };
+        if length < 0 {
+            return Err(PyErr::fetch(py));
+        }
+        let length = length as usize;
+        if length > isize::MAX as usize / std::mem::size_of::<u32>() {
+            return Err(pyo3::exceptions::PyMemoryError::new_err(
+                "reviewed SQL exceeds Rust scanner capacity",
+            ));
+        }
+        let mut codepoints = Vec::new();
+        codepoints.try_reserve_exact(length).map_err(|_| {
+            pyo3::exceptions::PyMemoryError::new_err("reviewed SQL scanner allocation failed")
+        })?;
+        for index in 0..length {
+            let codepoint = unsafe { pyo3::ffi::PyUnicode_ReadChar(sql.as_ptr(), index as isize) };
+            if codepoint == u32::MAX {
+                if PyErr::occurred(py) {
+                    return Err(PyErr::fetch(py));
+                }
+                return Err(PyValueError::new_err("invalid CPython code point"));
+            }
+            codepoints.push(codepoint);
+        }
+        let scanner = umf_core::reviewed_parameters::Scanner::new(codepoints)
+            .map_err(|_| PyValueError::new_err("invalid CPython code-point vector"))?;
+        Ok(Self { scanner })
+    }
+
+    #[pyo3(signature = (python_isalnum=None))]
+    fn next(&mut self, py: Python<'_>, python_isalnum: Option<bool>) -> PyResult<Py<PyDict>> {
+        use umf_core::reviewed_parameters::Event;
+        let event = self.scanner.next(python_isalnum);
+        let dict = PyDict::new_bound(py);
+        match event {
+            Ok(Event::NeedPythonIsAlnum { index }) => {
+                dict.set_item("kind", "need_python_isalnum")?;
+                dict.set_item("index", index)?;
+            }
+            Ok(Event::Placeholder { start, end, digits }) => {
+                dict.set_item("kind", "placeholder")?;
+                dict.set_item("start", start)?;
+                dict.set_item("end", end)?;
+                dict.set_item("digits", digits)?;
+            }
+            Ok(Event::Done) => dict.set_item("kind", "done")?,
+            Err(error) if error.python_code().is_some() => {
+                dict.set_item("kind", "error")?;
+                dict.set_item("code", error.python_code())?;
+                dict.set_item("message", error.python_message())?;
+            }
+            Err(error) => return Err(reviewed_scanner_error(error)),
+        }
+        Ok(dict.unbind())
+    }
+}
+
+#[pyfunction]
+fn access_reviewed_parameter_profile_version() -> &'static str {
+    "umf-access-reviewed-transport/0.1.0"
 }
 
 #[pyfunction]
@@ -113,23 +346,33 @@ fn execute_iceberg_wire(
     wire_json: &str,
     control: Option<PyObject>,
 ) -> PyResult<String> {
-    if control.as_ref().is_some_and(|value| !value.bind(py).is_callable()) {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
         return Err(PyValueError::new_err("control must be callable"));
     }
     let Some(control) = control else {
         return Ok(umf_core_wire::execute_iceberg_wire(wire_json));
     };
     let mut hook = |amount: usize| {
-        let outcome = control.bind(py).call1((amount,))
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
             .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
-        if outcome.is_none() { return Ok(()); }
-        let (code, message, path): (String, String, String) = outcome.extract()
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
             .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
         let mut error = EngineError::new(code, Utf16::from(path), Utf16::from(message));
         error.python_message_origin = None;
         Err(error)
     };
-    Ok(umf_core_wire::execute_iceberg_wire_with_control(wire_json, &mut hook))
+    Ok(umf_core_wire::execute_iceberg_wire_with_control(
+        wire_json, &mut hook,
+    ))
 }
 
 #[pyfunction]
@@ -143,29 +386,80 @@ fn avro_inspect_profile_version() -> &'static str {
 }
 
 #[pyfunction]
+fn avro_candidate_profile_version() -> &'static str {
+    umf_core_wire::AVRO_CANDIDATE_PROFILE
+}
+
+#[pyfunction]
 #[pyo3(signature = (wire_json, control=None))]
 fn execute_avro_inspect_wire(
     py: Python<'_>,
     wire_json: &str,
     control: Option<PyObject>,
 ) -> PyResult<String> {
-    if control.as_ref().is_some_and(|value| !value.bind(py).is_callable()) {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
         return Err(PyValueError::new_err("control must be callable"));
     }
     let Some(control) = control else {
         return Ok(umf_core_wire::execute_avro_inspect_wire(wire_json));
     };
     let mut hook = |amount: usize| {
-        let outcome = control.bind(py).call1((amount,))
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
             .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
-        if outcome.is_none() { return Ok(()); }
-        let (code, message, path): (String, String, String) = outcome.extract()
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
             .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
         let mut error = EngineError::new(code, Utf16::from(path), Utf16::from(message));
         error.python_message_origin = None;
         Err(error)
     };
-    Ok(umf_core_wire::execute_avro_inspect_wire_with_control(wire_json, &mut hook))
+    Ok(umf_core_wire::execute_avro_inspect_wire_with_control(
+        wire_json, &mut hook,
+    ))
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_avro_candidate_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::execute_avro_candidate_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        let mut error = EngineError::new(code, Utf16::from(path), Utf16::from(message));
+        error.python_message_origin = None;
+        Err(error)
+    };
+    Ok(umf_core_wire::execute_avro_candidate_wire_with_control(
+        wire_json, &mut hook,
+    ))
 }
 
 #[pyfunction]
@@ -216,23 +510,33 @@ fn execute_protobuf_inspect_wire(
     wire_json: &str,
     control: Option<PyObject>,
 ) -> PyResult<String> {
-    if control.as_ref().is_some_and(|value| !value.bind(py).is_callable()) {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
         return Err(PyValueError::new_err("control must be callable"));
     }
     let Some(control) = control else {
         return Ok(umf_core_wire::execute_protobuf_inspect_wire(wire_json));
     };
     let mut hook = |amount: usize| {
-        let outcome = control.bind(py).call1((amount,))
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
             .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
-        if outcome.is_none() { return Ok(()); }
-        let (code, message, path): (String, String, String) = outcome.extract()
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
             .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
         let mut error = EngineError::new(code, Utf16::from(path), Utf16::from(message));
         error.python_message_origin = None;
         Err(error)
     };
-    Ok(umf_core_wire::execute_protobuf_inspect_wire_with_control(wire_json, &mut hook))
+    Ok(umf_core_wire::execute_protobuf_inspect_wire_with_control(
+        wire_json, &mut hook,
+    ))
 }
 
 #[pyfunction]
@@ -618,7 +922,7 @@ fn operation_native_token_classify(kind: &str, token: &str) -> PyResult<&'static
         _ => {
             return Err(PyValueError::new_err(
                 "unsupported native result token kind",
-            ))
+            ));
         }
     };
     let mut context = Context::ordinary();
@@ -645,7 +949,7 @@ fn operation_native_result_classify(kind: &str, token: &str) -> PyResult<&'stati
         _ => {
             return Err(PyValueError::new_err(
                 "unsupported native result carrier kind",
-            ))
+            ));
         }
     };
     let mut context = Context::ordinary();
@@ -1291,6 +1595,125 @@ fn execute_codegen_wire(
         ));
     }
     Ok(response)
+}
+
+#[pyfunction]
+fn access_catalog_custody_profile_version() -> &'static str {
+    "umf-access-catalog-custody/0.1.0"
+}
+
+#[pyfunction]
+fn access_native_column_bindings(py: Python<'_>, target: &Bound<'_, PyAny>) -> PyResult<PyObject> {
+    if !target.is_exact_instance_of::<PyDict>() {
+        return Err(PyValueError::new_err(
+            "native catalog target must be an exact dict",
+        ));
+    }
+    let mut context = Context::ordinary();
+    let mut count = 0usize;
+    let target =
+        python_value::from_python(py, target, &mut context, 0, &mut count).map_err(py_error)?;
+    target.admit(&mut context).map_err(py_error)?;
+    let response = match umf_core::access_catalog_custody::native_column_bindings(&target) {
+        Ok(bindings) => {
+            let values = bindings
+                .into_iter()
+                .map(|binding| {
+                    PythonConsumerValue::Object(vec![
+                        (
+                            umf_core::PyText::from_utf8("sourceId"),
+                            PythonConsumerValue::String(binding.source_id),
+                        ),
+                        (
+                            umf_core::PyText::from_utf8("documentJson"),
+                            PythonConsumerValue::String(binding.document_json),
+                        ),
+                        (
+                            umf_core::PyText::from_utf8("documentSha256"),
+                            PythonConsumerValue::String(binding.document_sha256),
+                        ),
+                    ])
+                })
+                .collect();
+            PythonConsumerValue::Object(vec![
+                (
+                    umf_core::PyText::from_utf8("outcome"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8("returned")),
+                ),
+                (
+                    umf_core::PyText::from_utf8("bindings"),
+                    PythonConsumerValue::Array(values),
+                ),
+            ])
+        }
+        Err(refusal) => PythonConsumerValue::Object(vec![
+            (
+                umf_core::PyText::from_utf8("outcome"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8("refused")),
+            ),
+            (
+                umf_core::PyText::from_utf8("code"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.code())),
+            ),
+            (
+                umf_core::PyText::from_utf8("message"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(
+                    refusal.predecessor_message(),
+                )),
+            ),
+        ]),
+    };
+    python_value::to_python(py, &response, &mut context)
+}
+
+#[pyfunction]
+fn access_catalog_source_join_profile_version() -> &'static str {
+    "umf-access-catalog-source-join/0.1.0"
+}
+
+#[pyfunction]
+fn access_check_native_column_sources(
+    py: Python<'_>,
+    bindings: &Bound<'_, PyAny>,
+    sources: &Bound<'_, PyAny>,
+) -> PyResult<PyObject> {
+    if !bindings.is_exact_instance_of::<PyList>() {
+        return Err(PyValueError::new_err(
+            "native binding references must be an exact list",
+        ));
+    }
+    let mut context = Context::ordinary();
+    let mut count = 0usize;
+    let bindings =
+        python_value::from_python(py, bindings, &mut context, 0, &mut count).map_err(py_error)?;
+    let sources =
+        python_value::from_python(py, sources, &mut context, 0, &mut count).map_err(py_error)?;
+    bindings.admit(&mut context).map_err(py_error)?;
+    sources.admit(&mut context).map_err(py_error)?;
+    let response =
+        match umf_core::access_catalog_custody::check_native_column_sources(&bindings, &sources) {
+            Ok(()) => PythonConsumerValue::Object(vec![(
+                umf_core::PyText::from_utf8("outcome"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8("returned")),
+            )]),
+            Err(refusal) => PythonConsumerValue::Object(vec![
+                (
+                    umf_core::PyText::from_utf8("outcome"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8("refused")),
+                ),
+                (
+                    umf_core::PyText::from_utf8("code"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.code())),
+                ),
+                (
+                    umf_core::PyText::from_utf8("message"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8(
+                        refusal.predecessor_message(),
+                    )),
+                ),
+            ]),
+        };
+    python_value::to_python(py, &response, &mut context)
 }
 
 #[pyfunction]
@@ -2178,6 +2601,235 @@ impl NativeEngine {
             .map_err(py_error)?;
         diagnostics_to_python(py, diagnostics, &mut ctx)
     }
+
+    #[pyo3(signature = (op, args, *, max_work=None, meter=None, is_cancelled=None, now=None, deadline_ms=None))]
+    fn semantic_types_operation(
+        &self,
+        py: Python<'_>,
+        op: &str,
+        args: &Bound<'_, PyTuple>,
+        max_work: Option<usize>,
+        meter: Option<PyObject>,
+        is_cancelled: Option<PyObject>,
+        now: Option<PyObject>,
+        deadline_ms: Option<u64>,
+    ) -> PyResult<PyObject> {
+        for (name, callback) in [
+            ("meter", meter.as_ref()),
+            ("is_cancelled", is_cancelled.as_ref()),
+            ("now", now.as_ref()),
+        ] {
+            if callback.is_some_and(|value| !value.bind(py).is_callable()) {
+                return Err(PyValueError::new_err(format!("{name} must be callable")));
+            }
+        }
+        if deadline_ms.is_some() && now.is_none() {
+            return Err(PyValueError::new_err("now is required with deadline_ms"));
+        }
+        let expected = match op {
+            "inspectCoreSemanticTypes"
+            | "getCoreSemanticTypes"
+            | "verifyCoreSemanticTypeDeclaration" => 2,
+            "declareCoreSemanticTypes" => 3,
+            "getSemanticTypes" => 3,
+            "setSemanticTypes" => 4,
+            _ => return Err(PyValueError::new_err("Unknown semantic type operation")),
+        };
+        if args.len() != expected {
+            return Err(PyValueError::new_err(
+                "Incorrect semantic type operation arguments",
+            ));
+        }
+        let hook_meter = max_work.is_some() || meter.is_some();
+        let hook_cancel = is_cancelled.is_some();
+        let hook_clock = deadline_ms.is_some();
+        let state = Rc::new(RefCell::new(PythonWorkControl {
+            py,
+            max_work,
+            charged: 0,
+            meter,
+            is_cancelled,
+            now,
+            host_callback_failed: false,
+        }));
+        let mut meter_hook = {
+            let state = state.clone();
+            move |amount| state.borrow_mut().meter(amount)
+        };
+        let mut cancel_hook = {
+            let state = state.clone();
+            move || state.borrow_mut().cancelled()
+        };
+        let mut clock_hook = {
+            let state = state.clone();
+            move || state.borrow_mut().clock()
+        };
+        let mut ctx = Context::ordinary();
+        if hook_meter {
+            ctx = ctx.with_meter(&mut meter_hook);
+        }
+        if hook_cancel {
+            ctx = ctx.with_fallible_cancellation(&mut cancel_hook);
+        }
+        if hook_clock {
+            ctx = ctx.with_fallible_clock(
+                &mut clock_hook,
+                deadline_ms.expect("clock hook requires deadline"),
+            );
+        }
+        // Preflight before reflection or conversion of the first caller value.
+        ctx.charge_work(1, Utf16::default()).map_err(py_error)?;
+
+        let convert = |index: usize, ctx: &mut Context<'_>| -> PyResult<Value> {
+            let item = args.get_item(index)?;
+            let mut count = 0;
+            let admitted = python_value::from_python(py, &item, ctx, 0, &mut count)
+                .map_err(|error| py_error_preserving_origin(py, error, ctx))?;
+            admitted
+                .project_schema_to_core(ctx)
+                .map_err(|error| py_error_preserving_origin(py, error, ctx))
+        };
+        let mut no_capabilities = NoPythonCapabilities;
+        let mut registry = self
+            .engine
+            .registry(&mut ctx)
+            .map_err(|error| py_error_preserving_origin(py, error, &mut ctx))?;
+        let result = match op {
+            "inspectCoreSemanticTypes" => {
+                let document = convert(0, &mut ctx)?;
+                let identity = convert(1, &mut ctx)?;
+                umf_core::core_semantic_types::inspect_core_semantic_types(&document, &identity, &self.engine, &registry, &mut no_capabilities, &mut ctx)
+                    .map(Some)
+            }
+            "getCoreSemanticTypes" => {
+                let document = convert(0, &mut ctx)?;
+                let identity = convert(1, &mut ctx)?;
+                umf_core::core_semantic_types::get_core_semantic_types(&document, &identity, &self.engine, &registry, &mut no_capabilities, &mut ctx)
+            }
+            "declareCoreSemanticTypes" => {
+                // The TypeScript predecessor admits and validates the types
+                // request before reading source or identity.
+                let types = convert(2, &mut ctx)?;
+                let admit = |index: usize, ctx: &mut Context<'_>| -> Result<Value, EngineError> {
+                    let item = args.get_item(index).map_err(|_| EngineError::new("PYTHON_VALUE", Utf16::default(), "Could not access semantic operation argument"))?;
+                    let mut count = 0;
+                    let value = python_value::from_python(py, &item, ctx, 0, &mut count)?;
+                    value.project_schema_to_core(ctx)
+                };
+                umf_core::core_semantic_types::declare_core_semantic_types_with_inputs(
+                    &types, &self.engine, &registry, &mut no_capabilities, &mut ctx,
+                    |ctx| Ok((admit(0, ctx)?, admit(1, ctx)?)),
+                ).map(Some)
+            }
+            "verifyCoreSemanticTypeDeclaration" => {
+                let receipt = convert(0, &mut ctx)?;
+                let current = args.get_item(1)?;
+                umf_core::core_semantic_types::verify_core_semantic_type_declaration_with_current(
+                    &receipt, &self.engine, &registry, &mut no_capabilities, &mut ctx,
+                    |ctx| {
+                        let mut count = 0;
+                        let admitted = python_value::from_python(py, &current, ctx, 0, &mut count)?;
+                        admitted.project_schema_to_core(ctx)
+                    },
+                ).map(Some)
+            }
+            "getSemanticTypes" | "setSemanticTypes" => {
+                let document = convert(0, &mut ctx)?;
+                let module = convert(1, &mut ctx)?;
+                let element = convert(2, &mut ctx)?;
+                let module = match module { Value::String(text) => text, _ => return Err(PyValueError::new_err("module must be a string")) };
+                let element = match element { Value::String(text) => text, _ => return Err(PyValueError::new_err("element must be a string")) };
+                if op == "getSemanticTypes" {
+                    umf_core::semantic_type_accessors::get_semantic_types_units(&document, &module, &element, &self.engine, &mut ctx).map(Some)
+                } else {
+                    umf_core::semantic_type_accessors::set_semantic_types_units_optional_with_annotation(
+                        &document, &module, &element, &self.engine, &mut ctx,
+                        |ctx| {
+                            let item = args.get_item(3).map_err(|_| EngineError::new("PYTHON_VALUE", Utf16::default(), "Could not access annotation argument"))?;
+                            let mut count = 0;
+                            let admitted = python_value::from_python(py, &item, ctx, 0, &mut count)?;
+                            let value = admitted.project_schema_to_core(ctx)?;
+                            umf_core::copy_json(&value, ctx).map(Some)
+                        },
+                    ).map(Some)
+                }
+            }
+            _ => unreachable!(),
+        }.map_err(|error| py_error_preserving_origin(py, error, &mut ctx))?;
+        match result {
+            Some(value) => {
+                let projected = core_value_to_python_consumer(&value, &mut ctx)
+                    .map_err(|error| py_error_preserving_origin(py, error, &mut ctx))?;
+                python_value::to_python(py, &projected, &mut ctx)
+            }
+            None => Ok(py.None()),
+        }
+    }
+}
+
+struct NoPythonCapabilities;
+impl Capabilities for NoPythonCapabilities {
+    fn validate_extension(
+        &mut self,
+        _: u64,
+        _: &Value,
+        _: &SemanticContext,
+    ) -> Result<Vec<Diagnostic>, Utf16> {
+        Err(Utf16::from("No Python extension callback is registered"))
+    }
+}
+
+fn core_value_to_python_consumer(
+    value: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<PythonConsumerValue, EngineError> {
+    fn text(units: &[u16], ctx: &mut Context<'_>) -> Result<umf_core::PyText, EngineError> {
+        ctx.charge_work(units.len(), Utf16::default())?;
+        let mut points = Vec::with_capacity(units.len());
+        let mut index = 0;
+        while index < units.len() {
+            let first = units[index];
+            if (0xd800..=0xdbff).contains(&first)
+                && units
+                    .get(index + 1)
+                    .is_some_and(|next| (0xdc00..=0xdfff).contains(next))
+            {
+                let second = units[index + 1];
+                points.push(
+                    0x10000 + (((u32::from(first) - 0xd800) << 10) | (u32::from(second) - 0xdc00)),
+                );
+                index += 2;
+            } else {
+                points.push(u32::from(first));
+                index += 1;
+            }
+        }
+        umf_core::PyText::from_codepoints(points)
+    }
+    ctx.charge_work(1, Utf16::default())?;
+    Ok(match value {
+        Value::Null => PythonConsumerValue::Null,
+        Value::Bool(value) => PythonConsumerValue::Bool(*value),
+        Value::Number(value) => PythonConsumerValue::float(*value),
+        Value::String(value) => PythonConsumerValue::String(text(value.units(), ctx)?),
+        Value::Array(values) => PythonConsumerValue::Array(
+            values
+                .iter()
+                .map(|item| core_value_to_python_consumer(item, ctx))
+                .collect::<Result<_, _>>()?,
+        ),
+        Value::Object(fields) => PythonConsumerValue::Object(
+            fields
+                .iter()
+                .map(|(key, value)| {
+                    Ok((
+                        text(key.units(), ctx)?,
+                        core_value_to_python_consumer(value, ctx)?,
+                    ))
+                })
+                .collect::<Result<_, EngineError>>()?,
+        ),
+    })
 }
 
 fn diagnostics_to_python(
@@ -2563,7 +3215,7 @@ impl PythonCapabilities<'_, '_> {
                     _ => {
                         return Err(CapabilityError::Host(Utf16::from(
                             "Extension callback diagnostic severity must be error or warning",
-                        )))
+                        )));
                     }
                 };
                 let diagnostic = Diagnostic {
@@ -2765,8 +3417,22 @@ fn py_error_utf16(py: Python<'_>, error: PyErr) -> Utf16 {
 
 #[pymodule]
 fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
+    module.add_function(wrap_pyfunction!(execute_semantic_value_wire, module)?)?;
     module.add_function(wrap_pyfunction!(execute_codegen_wire, module)?)?;
     module.add_function(wrap_pyfunction!(copy_json_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        access_catalog_custody_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(access_native_column_bindings, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        access_catalog_source_join_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_check_native_column_sources,
+        module
+    )?)?;
     module.add_function(wrap_pyfunction!(copy_python_consumer_value, module)?)?;
     module.add_function(wrap_pyfunction!(copy_python_json_value, module)?)?;
     module.add_function(wrap_pyfunction!(engine_version, module)?)?;
@@ -2774,7 +3440,14 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(access_temporal_canonical_token, module)?)?;
     module.add_function(wrap_pyfunction!(access_temporal_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(access_values_profile_version, module)?)?;
-    module.add_function(wrap_pyfunction!(access_values_string_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        access_reviewed_parameter_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_values_string_profile_version,
+        module
+    )?)?;
     module.add_function(wrap_pyfunction!(access_values_validate_string, module)?)?;
     module.add_function(wrap_pyfunction!(operation_values_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(avro_fields_profile_version, module)?)?;
@@ -2783,6 +3456,8 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(protobuf_inspect_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(avro_inspect_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_avro_inspect_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(avro_candidate_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_avro_candidate_wire, module)?)?;
     module.add_function(wrap_pyfunction!(execute_protobuf_inspect_wire, module)?)?;
     module.add_function(wrap_pyfunction!(json_schema_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_json_schema_wire, module)?)?;
@@ -2907,6 +3582,7 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(literal_identity_wire, module)?)?;
     module.add_function(wrap_pyfunction!(numeric_interval_wire, module)?)?;
     module.add_class::<NativeEngine>()?;
+    module.add_class::<PyReviewedParameterScanner>()?;
     module.add_class::<NativeRegistry>()?;
     module.add_class::<NativePythonSchema>()?;
     Ok(())

@@ -1,10 +1,10 @@
 #![cfg(feature = "embedded-adapters")]
 // SPDX-License-Identifier: MIT OR Apache-2.0
 use umf_core::{
-    Context, Utf16, Value,
-    avro_document::{AvroDependencySource, export_bundle, export_schema, get_node, import_schema},
+    avro_document::{export_bundle, export_schema, get_node, import_schema, AvroDependencySource},
     context::{Limits, ResourceProfile},
     native_json::NativeJsonNode,
+    Context, Utf16, Value,
 };
 
 const ROOT: &str = r#"{"type":"record","name":"Invoice","namespace":"billing","doc":"source-doc","aliases":["OldInvoice"],"x/y~z":{"retained":true},"fields":[{"name":"amount","type":{"type":"bytes","logicalType":"decimal","precision":8,"scale":2,"customFieldTag":{"x":1}}},{"name":"memo","type":["null","string"],"default":null},{"name":"count","type":"long","default":7}],"customTopTag":{"preserve":[1,"x"]}}"#;
@@ -178,17 +178,50 @@ fn recursive_dependency_inspection_and_exact_bundle_export_match_native_oracle_i
     let document = import_schema(
         &id,
         &u16s(root_json),
-        &[AvroDependencySource { id: &dependency_id, schema_json: &u16s(dependency_json) }],
+        &[AvroDependencySource {
+            id: &dependency_id,
+            schema_json: &u16s(dependency_json),
+        }],
         &mut Context::ordinary(),
-    ).unwrap();
-    let bundle=export_bundle(&document,&mut Context::ordinary()).unwrap();
-    assert_eq!(bundle.schema_json.to_utf8().unwrap(),format!("{root_json}\n"));
-    assert_eq!(bundle.dependencies[0].1.to_utf8().unwrap(),format!("{dependency_json}\n"));
-    let trees=import_schema(&id,&u16s(root_json),&[AvroDependencySource{id:&dependency_id,schema_json:&u16s(dependency_json)}],&mut Context::ordinary()).unwrap();
-    let root_tree=get_node(&trees,&Utf16::default(),None,&mut Context::ordinary()).unwrap();
-    let dependency_tree=get_node(&trees,&Utf16::default(),Some(&dependency_id),&mut Context::ordinary()).unwrap();
-    let inspection=umf_core::avro_semantics::inspect_schema(&root_tree,&[umf_core::avro_semantics::Dependency{id:&dependency_id,tree:&dependency_tree}],&mut Context::ordinary()).unwrap();
-    assert!(inspection.valid,"{:?}",inspection.diagnostics);
+    )
+    .unwrap();
+    let bundle = export_bundle(&document, &mut Context::ordinary()).unwrap();
+    assert_eq!(
+        bundle.schema_json.to_utf8().unwrap(),
+        format!("{root_json}\n")
+    );
+    assert_eq!(
+        bundle.dependencies[0].1.to_utf8().unwrap(),
+        format!("{dependency_json}\n")
+    );
+    let trees = import_schema(
+        &id,
+        &u16s(root_json),
+        &[AvroDependencySource {
+            id: &dependency_id,
+            schema_json: &u16s(dependency_json),
+        }],
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    let root_tree = get_node(&trees, &Utf16::default(), None, &mut Context::ordinary()).unwrap();
+    let dependency_tree = get_node(
+        &trees,
+        &Utf16::default(),
+        Some(&dependency_id),
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    let inspection = umf_core::avro_semantics::inspect_schema(
+        &root_tree,
+        &[umf_core::avro_semantics::Dependency {
+            id: &dependency_id,
+            tree: &dependency_tree,
+        }],
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    assert!(inspection.valid, "{:?}", inspection.diagnostics);
     assert!(!inspection.complete);
 }
 

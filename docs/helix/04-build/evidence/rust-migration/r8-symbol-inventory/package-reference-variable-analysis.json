@@ -1,0 +1,2753 @@
+{
+  "format": "umf.r8.package-reference-variable-initializer-analysis/1",
+  "method": "TypeScript compiler AST declarations resolved through the package-reference entry; no name/regex-based initializer inference.",
+  "inventorySha256": "dacc99e18fdc5a7297a76e5fa358fb96062c0125f97f8dcbcc84fcc8d4f51017",
+  "packageReferenceVariableDeclarationCount": 167,
+  "initializerClasses": {
+    "alias-or-property-read": 69,
+    "dynamic-executable": 4,
+    "frozen-data-expression": 2,
+    "function-valued": 13,
+    "static-literal-data": 79
+  },
+  "authorityClasses": {
+    "authored-json-data-alias": 2,
+    "authored-package-descriptor-alias": 64,
+    "authored-static-data": 78,
+    "dynamic-executable": 4,
+    "frozen-authored-data-expression": 1,
+    "function-valued": 13,
+    "generated-data-alias": 3,
+    "generated-frozen-data-alias": 1,
+    "generated-source-declaration": 1
+  },
+  "generatedVariableDeclarationCount": 1,
+  "generatedVariableDeclarations": [
+    {
+      "routeId": "package-reference",
+      "exportName": "CURRENT_CORE_VERSION",
+      "declarationName": "CURRENT_CORE_VERSION",
+      "source": "src/generated/core-model.ts",
+      "line": 3,
+      "sourceSha256": "6536e081663c2662866e2805c0db981807ca658fb10e195d4732034691b9761e",
+      "initializerKind": "AsExpression",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "generated-source-declaration",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": true,
+      "initializerText": "\"0.10.0\" as const"
+    }
+  ],
+  "generatedCoreModel": {
+    "source": "src/generated/core-model.ts",
+    "sourceSha256": "6536e081663c2662866e2805c0db981807ca658fb10e195d4732034691b9761e",
+    "metamodelSource": "spec/metamodel/umf.yaml",
+    "metamodelSha256": "42144576e3b15da4945ca744623a31967e3b29efa54da8ba3961e446b1c0e34b",
+    "outputSha256": "6536e081663c2662866e2805c0db981807ca658fb10e195d4732034691b9761e",
+    "compilerSourceSetSha256": "36f78865b9aa911953d6356f0de46db2eb83f2e5a93d37df3e7d33afa64af7e3",
+    "manifestSha256": "91ba17abc0ceb61d9725aa76e31faad235de8a79379ecf355bc771e154819a6d",
+    "currentWriterSha256": "f2a0b2f18c09b8bcff2099d4cadd20a7d91017b53ccfa2596226818189f054c3",
+    "manifestWriterSha256": "f2a0b2f18c09b8bcff2099d4cadd20a7d91017b53ccfa2596226818189f054c3",
+    "currentOutputMatchesCapturedManifest": true,
+    "currentWriterMatchesCapturedManifest": true,
+    "capturedSourceFileCount": 460,
+    "generatedOutputFreshness": "captured-output-matches-manifest; current full source closure unverified",
+    "currentCoreVersionConsumers": [
+      "src/model/types.ts",
+      "src/compilation/admission/index.ts",
+      "src/access/index.ts"
+    ],
+    "disposition": "generated semantic constant; compile-time generated data with runtime version-gating consumers, not inert-only data"
+  },
+  "symbols": [
+    {
+      "routeId": "package-reference",
+      "exportName": "ACCESS_TEMPORAL_PROFILE",
+      "declarationName": "ACCESS_TEMPORAL_PROFILE",
+      "source": "src/adapters/access-temporal.ts",
+      "line": 6,
+      "sourceSha256": "aecc4b45d5ce53b5cc9d0bca6f3897b42aea0eb4cdedbf3ae6c0dbcaf1bc10f2",
+      "initializerKind": "AsExpression",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf-access-temporal/0.1.0' as const"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "ARROW_IPC_EXTENSION",
+      "declarationName": "ARROW_IPC_EXTENSION",
+      "source": "src/adapters/arrow/capture.ts",
+      "line": 8,
+      "sourceSha256": "d8b75f23a0d2637eac6c18e7826c6c75a3c217b1c5933120e4174812934d79f9",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.arrow.ipc'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "ARROW_IPC_MAX_BYTES",
+      "declarationName": "ARROW_IPC_MAX_BYTES",
+      "source": "src/adapters/arrow/capture.ts",
+      "line": 9,
+      "sourceSha256": "d8b75f23a0d2637eac6c18e7826c6c75a3c217b1c5933120e4174812934d79f9",
+      "initializerKind": "FirstLiteralToken",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "1_000_000"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "arrowIpcPackage",
+      "declarationName": "arrowIpcPackage",
+      "source": "src/adapters/arrow/capture.ts",
+      "line": 10,
+      "sourceSha256": "d8b75f23a0d2637eac6c18e7826c6c75a3c217b1c5933120e4174812934d79f9",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/arrow-ipc/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "ARROW_FLATBUFFER_EXTENSION",
+      "declarationName": "ARROW_FLATBUFFER_EXTENSION",
+      "source": "src/adapters/arrow/flatbuffer-model.ts",
+      "line": 9,
+      "sourceSha256": "1d1abd83bf6cc6546742954b040871c2ff670f060d0a7c9373aaec457a741d7b",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.arrow.flatbuffer'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "arrowFlatbufferPackage",
+      "declarationName": "arrowFlatbufferPackage",
+      "source": "src/adapters/arrow/flatbuffer-model.ts",
+      "line": 10,
+      "sourceSha256": "1d1abd83bf6cc6546742954b040871c2ff670f060d0a7c9373aaec457a741d7b",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/arrow-flatbuffer/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "ARROW_EXTENSION",
+      "declarationName": "ARROW_EXTENSION",
+      "source": "src/adapters/arrow/index.ts",
+      "line": 11,
+      "sourceSha256": "8fbb5d8a00ee1cc49f0e3f725347eeb2d7ad47653c689e96d3b10e5848c94da5",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.arrow'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "arrowPackage",
+      "declarationName": "arrowPackage",
+      "source": "src/adapters/arrow/index.ts",
+      "line": 12,
+      "sourceSha256": "8fbb5d8a00ee1cc49f0e3f725347eeb2d7ad47653c689e96d3b10e5848c94da5",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/arrow/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "AVRO_EXTENSION",
+      "declarationName": "AVRO_EXTENSION",
+      "source": "src/adapters/avro/index.ts",
+      "line": 16,
+      "sourceSha256": "c8f3bceb8f7e347565578b8003c12860968abdcd4a5ec4f6991668edd9d00dff",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.avro'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "avroPackage",
+      "declarationName": "avroPackage",
+      "source": "src/adapters/avro/index.ts",
+      "line": 17,
+      "sourceSha256": "c8f3bceb8f7e347565578b8003c12860968abdcd4a5ec4f6991668edd9d00dff",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/avro/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "DBT_ARTIFACT_EXTENSION",
+      "declarationName": "DBT_ARTIFACT_EXTENSION",
+      "source": "src/adapters/dbt/artifact.ts",
+      "line": 13,
+      "sourceSha256": "83f336a1c8cb0af41962bbbe68cc56a2a8267f737b9858db7c4bb5f3f37befb3",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.dbt.artifact'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "dbtArtifactPackage",
+      "declarationName": "dbtArtifactPackage",
+      "source": "src/adapters/dbt/artifact.ts",
+      "line": 14,
+      "sourceSha256": "83f336a1c8cb0af41962bbbe68cc56a2a8267f737b9858db7c4bb5f3f37befb3",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/dbt-artifact/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "DBT_MANIFEST_EXTENSION",
+      "declarationName": "DBT_MANIFEST_EXTENSION",
+      "source": "src/adapters/dbt/index.ts",
+      "line": 11,
+      "sourceSha256": "368888b1bc90cbcc9e7ae6a3ee526825450fa801afe34aae23eebea1fe648c2b",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.dbt.manifest'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "dbtManifestPackage",
+      "declarationName": "dbtManifestPackage",
+      "source": "src/adapters/dbt/index.ts",
+      "line": 12,
+      "sourceSha256": "368888b1bc90cbcc9e7ae6a3ee526825450fa801afe34aae23eebea1fe648c2b",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/dbt-manifest/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "DBT_SEMANTIC_MANIFEST_EXTENSION",
+      "declarationName": "DBT_SEMANTIC_MANIFEST_EXTENSION",
+      "source": "src/adapters/dbt/semantic.ts",
+      "line": 11,
+      "sourceSha256": "5efb36bcf82e69d96c1b8c2473462eaa69febf2ce4b72a6e9d33ecd69f10d141",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.dbt.semantic'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "dbtSemanticManifestPackage",
+      "declarationName": "dbtSemanticManifestPackage",
+      "source": "src/adapters/dbt/semantic.ts",
+      "line": 12,
+      "sourceSha256": "5efb36bcf82e69d96c1b8c2473462eaa69febf2ce4b72a6e9d33ecd69f10d141",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/dbt-semantic/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "DELTA_DEFINITION_EXTENSION",
+      "declarationName": "DELTA_DEFINITION_EXTENSION",
+      "source": "src/adapters/delta/ddl.ts",
+      "line": 10,
+      "sourceSha256": "8e4f694b7e3ecbdc0548f06b4db0a67339ea9319d3b70939003d4a0d18856051",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.delta.definition'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "deltaDefinitionPackage",
+      "declarationName": "deltaDefinitionPackage",
+      "source": "src/adapters/delta/ddl.ts",
+      "line": 11,
+      "sourceSha256": "8e4f694b7e3ecbdc0548f06b4db0a67339ea9319d3b70939003d4a0d18856051",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/delta-definition/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "DELTA_EXTENSION",
+      "declarationName": "DELTA_EXTENSION",
+      "source": "src/adapters/delta/index.ts",
+      "line": 11,
+      "sourceSha256": "3b432e603dc96bc0d9cfbb36584f0d87286daba89e4b713460e126c22f8fe4bb",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.delta'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "deltaPackage",
+      "declarationName": "deltaPackage",
+      "source": "src/adapters/delta/index.ts",
+      "line": 12,
+      "sourceSha256": "3b432e603dc96bc0d9cfbb36584f0d87286daba89e4b713460e126c22f8fe4bb",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/delta/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "DELTA_LOG_EXTENSION",
+      "declarationName": "DELTA_LOG_EXTENSION",
+      "source": "src/adapters/delta/log.ts",
+      "line": 9,
+      "sourceSha256": "1a28d81d20448cc95815572d9ec9d9f828f052e2adce93acf8fdc1be7ceef989",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.delta.log'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "deltaLogPackage",
+      "declarationName": "deltaLogPackage",
+      "source": "src/adapters/delta/log.ts",
+      "line": 10,
+      "sourceSha256": "1a28d81d20448cc95815572d9ec9d9f828f052e2adce93acf8fdc1be7ceef989",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/delta-log/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "DELTA_TABLE_EXTENSION",
+      "declarationName": "DELTA_TABLE_EXTENSION",
+      "source": "src/adapters/delta/table.ts",
+      "line": 13,
+      "sourceSha256": "90f86c40ac4fa10e17fc3119299cbfc1cdbcf0ab61d0b7812b1aaab32d8fd10c",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.delta.table'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "deltaTablePackage",
+      "declarationName": "deltaTablePackage",
+      "source": "src/adapters/delta/table.ts",
+      "line": 14,
+      "sourceSha256": "90f86c40ac4fa10e17fc3119299cbfc1cdbcf0ab61d0b7812b1aaab32d8fd10c",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/delta-table/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "GENERALIZED_RDF_EXTENSION",
+      "declarationName": "GENERALIZED_RDF_EXTENSION",
+      "source": "src/adapters/generalized-rdf/index.ts",
+      "line": 12,
+      "sourceSha256": "e3fdddec3655666fdf465bb58fc3d15ef85bd3ed81879941068a4e1b76a24344",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.generalized-rdf'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "generalizedRdfPackage",
+      "declarationName": "generalizedRdfPackage",
+      "source": "src/adapters/generalized-rdf/index.ts",
+      "line": 13,
+      "sourceSha256": "e3fdddec3655666fdf465bb58fc3d15ef85bd3ed81879941068a4e1b76a24344",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/generalized-rdf/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "GRAPHQL_EXTENSION",
+      "declarationName": "GRAPHQL_EXTENSION",
+      "source": "src/adapters/graphql/index.ts",
+      "line": 11,
+      "sourceSha256": "3eddb1c2f74308922a677a881ab03c2dd4439e35c0b493fdc6a720f75d556753",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.graphql'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "graphqlPackage",
+      "declarationName": "graphqlPackage",
+      "source": "src/adapters/graphql/index.ts",
+      "line": 12,
+      "sourceSha256": "3eddb1c2f74308922a677a881ab03c2dd4439e35c0b493fdc6a720f75d556753",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/graphql/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "GREGORIAN_DATE_PROFILE",
+      "declarationName": "GREGORIAN_DATE_PROFILE",
+      "source": "src/adapters/gregorian-date.ts",
+      "line": 3,
+      "sourceSha256": "af5b02baa1bdef53ee4291cccc78586d0f2162a217a4241fd9d9a8a93dba069c",
+      "initializerKind": "AsExpression",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf-gregorian-date/1.0.0' as const"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "ICEBERG_EXTENSION",
+      "declarationName": "ICEBERG_EXTENSION",
+      "source": "src/adapters/iceberg/index.ts",
+      "line": 11,
+      "sourceSha256": "e905f3c9356362268e785eafe0ce0b7ea3973c46f5c343aca74e2d980db2d0ac",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.iceberg'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "icebergPackage",
+      "declarationName": "icebergPackage",
+      "source": "src/adapters/iceberg/index.ts",
+      "line": 12,
+      "sourceSha256": "e905f3c9356362268e785eafe0ce0b7ea3973c46f5c343aca74e2d980db2d0ac",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/iceberg/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "ICEBERG_TABLE_EXTENSION",
+      "declarationName": "ICEBERG_TABLE_EXTENSION",
+      "source": "src/adapters/iceberg/table.ts",
+      "line": 12,
+      "sourceSha256": "1ea282433b7a1394f20881b8bcf4dbf7977e330d6b6e3d2cd52ccee30dd97299",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.iceberg.table'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "icebergTablePackage",
+      "declarationName": "icebergTablePackage",
+      "source": "src/adapters/iceberg/table.ts",
+      "line": 13,
+      "sourceSha256": "1ea282433b7a1394f20881b8bcf4dbf7977e330d6b6e3d2cd52ccee30dd97299",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/iceberg-table/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "JSON_SCHEMA_DIALECT",
+      "declarationName": "JSON_SCHEMA_DIALECT",
+      "source": "src/adapters/json-schema/index.ts",
+      "line": 15,
+      "sourceSha256": "f65807123b937c91d984a1c77d15b7941475ce9ef294f02770da991befdaf900",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'https://json-schema.org/draft/2020-12/schema'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "JSON_SCHEMA_EXTENSION",
+      "declarationName": "JSON_SCHEMA_EXTENSION",
+      "source": "src/adapters/json-schema/index.ts",
+      "line": 16,
+      "sourceSha256": "f65807123b937c91d984a1c77d15b7941475ce9ef294f02770da991befdaf900",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.json-schema'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "jsonSchemaPackage",
+      "declarationName": "jsonSchemaPackage",
+      "source": "src/adapters/json-schema/index.ts",
+      "line": 17,
+      "sourceSha256": "f65807123b937c91d984a1c77d15b7941475ce9ef294f02770da991befdaf900",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/json-schema/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "packageData as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "JSONLD_EXTENSION",
+      "declarationName": "JSONLD_EXTENSION",
+      "source": "src/adapters/jsonld/index.ts",
+      "line": 14,
+      "sourceSha256": "351c228c03031065f65b287dffea9be951ee241cfc93fb6a04777311cadab781",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.jsonld'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "jsonldPackage",
+      "declarationName": "jsonldPackage",
+      "source": "src/adapters/jsonld/index.ts",
+      "line": 15,
+      "sourceSha256": "351c228c03031065f65b287dffea9be951ee241cfc93fb6a04777311cadab781",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/jsonld/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "LINKML_EXTENSION",
+      "declarationName": "LINKML_EXTENSION",
+      "source": "src/adapters/linkml/index.ts",
+      "line": 13,
+      "sourceSha256": "84c90e64cbda035a259d8970eea87a36314fee13c0a3a0cb41adfb3b5f85c265",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.linkml'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "linkmlPackage",
+      "declarationName": "linkmlPackage",
+      "source": "src/adapters/linkml/index.ts",
+      "line": 14,
+      "sourceSha256": "84c90e64cbda035a259d8970eea87a36314fee13c0a3a0cb41adfb3b5f85c265",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/linkml/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "LINKML_MERGE_COLLECTIONS",
+      "declarationName": "LINKML_MERGE_COLLECTIONS",
+      "source": "src/adapters/linkml/merge.ts",
+      "line": 7,
+      "sourceSha256": "3bc6502d31cb1a88f0532064eda6ab5291a43fccde1070be45b811ea93445d9e",
+      "initializerKind": "AsExpression",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "['prefixes','classes','slots','enums','subsets','types'] as const"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "LINKML_SCALAR_SLOT_FIELDS",
+      "declarationName": "LINKML_SCALAR_SLOT_FIELDS",
+      "source": "src/adapters/linkml/slot-values.ts",
+      "line": 7,
+      "sourceSha256": "76f2e021e7fba6441594d41e8b7f50ba1da98bc3c7034409d97d4be43e969bf8",
+      "initializerKind": "AsExpression",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "{domain:'string',inherited:'boolean',readonly:'string',ifabsent:'string',list_elements_unique:'boolean',list_elements_ordered:'boolean',shared:'boolean',key:'boolean',identifier:'boolean',designates_type:'boolean',role:'string',relational_role:'string',range:'string',required:'boolean',recommended:'boolean',multivalued:'boolean',inlined:'boolean',inlined_as_list:'boolean',minimum_value:'number',maximum_value:'number',pattern:'string',value_presence:'string',equals_string:'string',equals_number:'number',equals_expression:'string',exact_cardinality:'number',minimum_cardinality:'number',maximum_cardinality:'number',description:'string'} as const"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "ODCS_EXTENSION",
+      "declarationName": "ODCS_EXTENSION",
+      "source": "src/adapters/odcs/index.ts",
+      "line": 17,
+      "sourceSha256": "6d500274992f8985635200af4aef77943cc049c2c80d0bbf6eb269314038d21b",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.odcs'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "odcsPackage",
+      "declarationName": "odcsPackage",
+      "source": "src/adapters/odcs/index.ts",
+      "line": 18,
+      "sourceSha256": "6d500274992f8985635200af4aef77943cc049c2c80d0bbf6eb269314038d21b",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/odcs/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "OPENAPI_EXTENSION",
+      "declarationName": "OPENAPI_EXTENSION",
+      "source": "src/adapters/openapi/index.ts",
+      "line": 18,
+      "sourceSha256": "ed0e3a10bab28db9a58e8a164e2605800d5652c6a25f64d619f1481f0ae640e2",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.openapi'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "openapiPackage",
+      "declarationName": "openapiPackage",
+      "source": "src/adapters/openapi/index.ts",
+      "line": 19,
+      "sourceSha256": "ed0e3a10bab28db9a58e8a164e2605800d5652c6a25f64d619f1481f0ae640e2",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/openapi/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "OWL_EXTENSION",
+      "declarationName": "OWL_EXTENSION",
+      "source": "src/adapters/owl/index.ts",
+      "line": 9,
+      "sourceSha256": "6a52e374d9611a59d456a6e0a240852a6b1b5e07042b4cde9d998bbc16f5f479",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.owl'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "owlPackage",
+      "declarationName": "owlPackage",
+      "source": "src/adapters/owl/index.ts",
+      "line": 10,
+      "sourceSha256": "6a52e374d9611a59d456a6e0a240852a6b1b5e07042b4cde9d998bbc16f5f479",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/owl/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "PARQUET_EXTENSION",
+      "declarationName": "PARQUET_EXTENSION",
+      "source": "src/adapters/parquet/index.ts",
+      "line": 9,
+      "sourceSha256": "81238e0a13603c4838d135af569473dace9d4f5d6ff27e4591b52114d6c35dfe",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.parquet'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "PARQUET_MAX_BYTES",
+      "declarationName": "PARQUET_MAX_BYTES",
+      "source": "src/adapters/parquet/index.ts",
+      "line": 10,
+      "sourceSha256": "81238e0a13603c4838d135af569473dace9d4f5d6ff27e4591b52114d6c35dfe",
+      "initializerKind": "FirstLiteralToken",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "1_000_000"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "parquetPackage",
+      "declarationName": "parquetPackage",
+      "source": "src/adapters/parquet/index.ts",
+      "line": 11,
+      "sourceSha256": "81238e0a13603c4838d135af569473dace9d4f5d6ff27e4591b52114d6c35dfe",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/parquet/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "PARQUET_PAGE_LIMITS",
+      "declarationName": "PARQUET_PAGE_LIMITS",
+      "source": "src/adapters/parquet/pages.ts",
+      "line": 8,
+      "sourceSha256": "50bbacffd30c5606a1585a823d4c4c394055f8dc497f2f072d3e97ee3f303293",
+      "initializerKind": "AsExpression",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "{headerBytes:65536,pages:10000,pageBytes:8*1024*1024,totalBytes:64*1024*1024,pageValues:100000,totalValues:1000000,rows:10000} as const"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "PARQUET_ROW_NODE_LIMIT",
+      "declarationName": "PARQUET_ROW_NODE_LIMIT",
+      "source": "src/adapters/parquet/rows.ts",
+      "line": 8,
+      "sourceSha256": "530450a97a5cb8f68e709512a7ef7e72a344d37163c56c4ae80039f9b2f4e6bc",
+      "initializerKind": "FirstLiteralToken",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "100000"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "POSTGRESQL_CATALOG_EXTENSION",
+      "declarationName": "POSTGRESQL_CATALOG_EXTENSION",
+      "source": "src/adapters/postgresql/catalog.ts",
+      "line": 14,
+      "sourceSha256": "2806dfef4b513bce48709aa09e5e1e91c79c115606729dca0d97ef7327d56aa0",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.postgresql.catalog'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "postgresqlCatalogPackage",
+      "declarationName": "postgresqlCatalogPackage",
+      "source": "src/adapters/postgresql/catalog.ts",
+      "line": 15,
+      "sourceSha256": "2806dfef4b513bce48709aa09e5e1e91c79c115606729dca0d97ef7327d56aa0",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/postgresql-catalog/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "POSTGRESQL_EXTENSION",
+      "declarationName": "POSTGRESQL_EXTENSION",
+      "source": "src/adapters/postgresql/index.ts",
+      "line": 11,
+      "sourceSha256": "5ab9ade96f0b9bb923cad57eb33213653846f39808952d0f20bc3708e5b81810",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.postgresql'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "postgresqlPackage",
+      "declarationName": "postgresqlPackage",
+      "source": "src/adapters/postgresql/index.ts",
+      "line": 12,
+      "sourceSha256": "5ab9ade96f0b9bb923cad57eb33213653846f39808952d0f20bc3708e5b81810",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/postgresql/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "PROTOBUF_EXTENSION",
+      "declarationName": "PROTOBUF_EXTENSION",
+      "source": "src/adapters/protobuf/index.ts",
+      "line": 13,
+      "sourceSha256": "cb4aa58974bc7a82073d41a3c4cf18564f9dff3a823b2a5da699165679a92a01",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.protobuf'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "protobufPackage",
+      "declarationName": "protobufPackage",
+      "source": "src/adapters/protobuf/index.ts",
+      "line": 14,
+      "sourceSha256": "cb4aa58974bc7a82073d41a3c4cf18564f9dff3a823b2a5da699165679a92a01",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/protobuf/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "RDF_EXTENSION",
+      "declarationName": "RDF_EXTENSION",
+      "source": "src/adapters/rdf/index.ts",
+      "line": 10,
+      "sourceSha256": "6a19c8bc5f9e70fb75cc19e7acaec9c66f52640ffb6883f729ee12f2cca11b2e",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.rdf'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "rdfPackage",
+      "declarationName": "rdfPackage",
+      "source": "src/adapters/rdf/index.ts",
+      "line": 11,
+      "sourceSha256": "6a19c8bc5f9e70fb75cc19e7acaec9c66f52640ffb6883f729ee12f2cca11b2e",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/rdf/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "RFC3339_EXACT_INSTANT_PROFILE",
+      "declarationName": "RFC3339_EXACT_INSTANT_PROFILE",
+      "source": "src/adapters/rfc3339-exact-instant.ts",
+      "line": 3,
+      "sourceSha256": "17f524ce64ea0ddca713b3d5c2e3105b3f6dfcf4bb52ae903c19b01388edd84e",
+      "initializerKind": "AsExpression",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf-rfc3339-exact-instant/1.0.0' as const"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "RFC3339_EXACT_INSTANT_MAXIMUM_BYTES",
+      "declarationName": "RFC3339_EXACT_INSTANT_MAXIMUM_BYTES",
+      "source": "src/adapters/rfc3339-exact-instant.ts",
+      "line": 4,
+      "sourceSha256": "17f524ce64ea0ddca713b3d5c2e3105b3f6dfcf4bb52ae903c19b01388edd84e",
+      "initializerKind": "FirstLiteralToken",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "1048576"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "SHACL_EXTENSION",
+      "declarationName": "SHACL_EXTENSION",
+      "source": "src/adapters/shacl/index.ts",
+      "line": 9,
+      "sourceSha256": "252eaf7bbcf544ed089443ee02af660ed8fcf627ccf529da6b8b002b3a0f4d49",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.shacl'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "shaclPackage",
+      "declarationName": "shaclPackage",
+      "source": "src/adapters/shacl/index.ts",
+      "line": 10,
+      "sourceSha256": "252eaf7bbcf544ed089443ee02af660ed8fcf627ccf529da6b8b002b3a0f4d49",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/shacl/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "SMITHY_EXTENSION",
+      "declarationName": "SMITHY_EXTENSION",
+      "source": "src/adapters/smithy/index.ts",
+      "line": 12,
+      "sourceSha256": "10e482e5acb54cb609f1fa093f2882acf042657d9dbded87919d1610f87d7c5b",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.smithy'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "smithyPackage",
+      "declarationName": "smithyPackage",
+      "source": "src/adapters/smithy/index.ts",
+      "line": 13,
+      "sourceSha256": "10e482e5acb54cb609f1fa093f2882acf042657d9dbded87919d1610f87d7c5b",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/smithy/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "SPARK_EXTENSION",
+      "declarationName": "SPARK_EXTENSION",
+      "source": "src/adapters/spark/index.ts",
+      "line": 14,
+      "sourceSha256": "2ab32f0e1117f7e17b776f53abbf0c37146cdb7214efd0adf9dfd8bb06dc4e5b",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.spark'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "sparkPackage",
+      "declarationName": "sparkPackage",
+      "source": "src/adapters/spark/index.ts",
+      "line": 15,
+      "sourceSha256": "2ab32f0e1117f7e17b776f53abbf0c37146cdb7214efd0adf9dfd8bb06dc4e5b",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/spark/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "SQLSERVER_EXTENSION",
+      "declarationName": "SQLSERVER_EXTENSION",
+      "source": "src/adapters/sqlserver/index.ts",
+      "line": 12,
+      "sourceSha256": "d98bc6906b50fd5dbc24a3cb6821fefd74d871b0050a9a06ebeb0900e292f776",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.sqlserver'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "sqlserverPackage",
+      "declarationName": "sqlserverPackage",
+      "source": "src/adapters/sqlserver/index.ts",
+      "line": 13,
+      "sourceSha256": "d98bc6906b50fd5dbc24a3cb6821fefd74d871b0050a9a06ebeb0900e292f776",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/sqlserver/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "TABLESPEC_EXTENSION",
+      "declarationName": "TABLESPEC_EXTENSION",
+      "source": "src/adapters/tablespec/index.ts",
+      "line": 9,
+      "sourceSha256": "df4e859d7ae5b5707237796887676a767193754de392b703d1d30be73f071749",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.tablespec'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "tablespecPackage",
+      "declarationName": "tablespecPackage",
+      "source": "src/adapters/tablespec/index.ts",
+      "line": 10,
+      "sourceSha256": "df4e859d7ae5b5707237796887676a767193754de392b703d1d30be73f071749",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/tablespec/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "TYPESPEC_EXTENSION",
+      "declarationName": "TYPESPEC_EXTENSION",
+      "source": "src/adapters/typespec/index.ts",
+      "line": 12,
+      "sourceSha256": "966dc745ff4941faa20d89d0a5b07e4ceb7670f155b2738f8305ee1a571663f9",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.typespec'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "typespecPackage",
+      "declarationName": "typespecPackage",
+      "source": "src/adapters/typespec/index.ts",
+      "line": 13,
+      "sourceSha256": "966dc745ff4941faa20d89d0a5b07e4ceb7670f155b2738f8305ee1a571663f9",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/typespec/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "AVRO_CARDINALITY_EXTENSION",
+      "declarationName": "AVRO_CARDINALITY_EXTENSION",
+      "source": "src/core-ideals/cardinality-avro.ts",
+      "line": 16,
+      "sourceSha256": "433c55c02e83d87ae1328d4ddad02e1391a4aafbc79d9313e3283ec220d6e8a1",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.avro.cardinality'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "avroCardinalityPackage",
+      "declarationName": "avroCardinalityPackage",
+      "source": "src/core-ideals/cardinality-avro.ts",
+      "line": 17,
+      "sourceSha256": "433c55c02e83d87ae1328d4ddad02e1391a4aafbc79d9313e3283ec220d6e8a1",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/avro-cardinality/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "PARQUET_CARDINALITY_EXTENSION",
+      "declarationName": "PARQUET_CARDINALITY_EXTENSION",
+      "source": "src/core-ideals/cardinality-parquet.ts",
+      "line": 13,
+      "sourceSha256": "b80d902d24548f594fe19e35b970f37877882400ed7270367e4a62dbe7ba61d4",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.parquet.cardinality'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "parquetCardinalityPackage",
+      "declarationName": "parquetCardinalityPackage",
+      "source": "src/core-ideals/cardinality-parquet.ts",
+      "line": 14,
+      "sourceSha256": "b80d902d24548f594fe19e35b970f37877882400ed7270367e4a62dbe7ba61d4",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/parquet-cardinality/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "POSTGRESQL_CARDINALITY_EXTENSION",
+      "declarationName": "POSTGRESQL_CARDINALITY_EXTENSION",
+      "source": "src/core-ideals/cardinality-postgresql.ts",
+      "line": 17,
+      "sourceSha256": "cddc3d6db417e7f2577b546b49d734b2acf501ffbf5d55be9e5fdb236f05d151",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.postgresql.cardinality'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "postgresqlCardinalityPackage",
+      "declarationName": "postgresqlCardinalityPackage",
+      "source": "src/core-ideals/cardinality-postgresql.ts",
+      "line": 18,
+      "sourceSha256": "cddc3d6db417e7f2577b546b49d734b2acf501ffbf5d55be9e5fdb236f05d151",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/postgresql-cardinality/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "SQLSERVER_CARDINALITY_EXTENSION",
+      "declarationName": "SQLSERVER_CARDINALITY_EXTENSION",
+      "source": "src/core-ideals/cardinality-sqlserver.ts",
+      "line": 14,
+      "sourceSha256": "b51f9f4bb4caae835ccf145f073406dbb034380f0293553fe83719afaea456ef",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.sqlserver.cardinality'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "sqlserverCardinalityPackage",
+      "declarationName": "sqlserverCardinalityPackage",
+      "source": "src/core-ideals/cardinality-sqlserver.ts",
+      "line": 15,
+      "sourceSha256": "b51f9f4bb4caae835ccf145f073406dbb034380f0293553fe83719afaea456ef",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/sqlserver-cardinality/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "TABLESPEC_CARDINALITY_EXTENSION",
+      "declarationName": "TABLESPEC_CARDINALITY_EXTENSION",
+      "source": "src/core-ideals/cardinality-tablespec.ts",
+      "line": 16,
+      "sourceSha256": "cab2af0ed53c5b44f5a496bf374112e48c406abcd234f3241c841efba74d6c6e",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.tablespec.cardinality'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "tableSpecCardinalityPackage",
+      "declarationName": "tableSpecCardinalityPackage",
+      "source": "src/core-ideals/cardinality-tablespec.ts",
+      "line": 17,
+      "sourceSha256": "cab2af0ed53c5b44f5a496bf374112e48c406abcd234f3241c841efba74d6c6e",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/tablespec-cardinality/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "AVRO_FACETS_EXTENSION",
+      "declarationName": "AVRO_FACETS_EXTENSION",
+      "source": "src/core-ideals/facets-avro.ts",
+      "line": 15,
+      "sourceSha256": "406fa72a4687a0ef21a5b2dc07dfde4cc14b886aabe24b2514c019f00c90f604",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.avro.facets'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "avroFacetsPackage",
+      "declarationName": "avroFacetsPackage",
+      "source": "src/core-ideals/facets-avro.ts",
+      "line": 16,
+      "sourceSha256": "406fa72a4687a0ef21a5b2dc07dfde4cc14b886aabe24b2514c019f00c90f604",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/avro-facets/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "PARQUET_FACETS_EXTENSION",
+      "declarationName": "PARQUET_FACETS_EXTENSION",
+      "source": "src/core-ideals/facets-parquet.ts",
+      "line": 15,
+      "sourceSha256": "52a6242418aefabba868320c94e4e7c02fb81c994b1342bd97f42533a7c18458",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.parquet.facets'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "parquetFacetsPackage",
+      "declarationName": "parquetFacetsPackage",
+      "source": "src/core-ideals/facets-parquet.ts",
+      "line": 16,
+      "sourceSha256": "52a6242418aefabba868320c94e4e7c02fb81c994b1342bd97f42533a7c18458",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/parquet-facets/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "POSTGRESQL_FACETS_EXTENSION",
+      "declarationName": "POSTGRESQL_FACETS_EXTENSION",
+      "source": "src/core-ideals/facets-postgresql.ts",
+      "line": 19,
+      "sourceSha256": "9d4f71428a0477768e1a5a5c6a77cd36346ee2b304f4ec16f7b992fc0d09a2a6",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.postgresql.facets'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "postgresqlFacetsPackage",
+      "declarationName": "postgresqlFacetsPackage",
+      "source": "src/core-ideals/facets-postgresql.ts",
+      "line": 20,
+      "sourceSha256": "9d4f71428a0477768e1a5a5c6a77cd36346ee2b304f4ec16f7b992fc0d09a2a6",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/postgresql-facets/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "SQLSERVER_FACETS_EXTENSION",
+      "declarationName": "SQLSERVER_FACETS_EXTENSION",
+      "source": "src/core-ideals/facets-sqlserver.ts",
+      "line": 15,
+      "sourceSha256": "1844cefec97e4a4498b4ec8d64702bcee9709258c92e91c0180311094d20588f",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.sqlserver.facets'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "sqlserverFacetsPackage",
+      "declarationName": "sqlserverFacetsPackage",
+      "source": "src/core-ideals/facets-sqlserver.ts",
+      "line": 16,
+      "sourceSha256": "1844cefec97e4a4498b4ec8d64702bcee9709258c92e91c0180311094d20588f",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/sqlserver-facets/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "TABLESPEC_FACETS_EXTENSION",
+      "declarationName": "TABLESPEC_FACETS_EXTENSION",
+      "source": "src/core-ideals/facets-tablespec.ts",
+      "line": 15,
+      "sourceSha256": "fce791aaf35cbb3df0bd193c458c440414d69201a3bbf5a0e3578d882ae00509",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.tablespec.facets'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "tableSpecFacetsPackage",
+      "declarationName": "tableSpecFacetsPackage",
+      "source": "src/core-ideals/facets-tablespec.ts",
+      "line": 16,
+      "sourceSha256": "fce791aaf35cbb3df0bd193c458c440414d69201a3bbf5a0e3578d882ae00509",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/tablespec-facets/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "AVRO_KEYS_EXTENSION",
+      "declarationName": "AVRO_KEYS_EXTENSION",
+      "source": "src/core-ideals/key-avro.ts",
+      "line": 11,
+      "sourceSha256": "bd666d28efc46054da9b9d72fa8c6c612ef00921a462d5c7e09a1395eb121cbe",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.avro.keys'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "avroKeysPackage",
+      "declarationName": "avroKeysPackage",
+      "source": "src/core-ideals/key-avro.ts",
+      "line": 12,
+      "sourceSha256": "bd666d28efc46054da9b9d72fa8c6c612ef00921a462d5c7e09a1395eb121cbe",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/avro-keys/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "PARQUET_KEYS_EXTENSION",
+      "declarationName": "PARQUET_KEYS_EXTENSION",
+      "source": "src/core-ideals/key-parquet.ts",
+      "line": 11,
+      "sourceSha256": "9d7116650dfdd99e31470104fa281586add76e819d6edb69356289a09a12b0f9",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.parquet.keys'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "parquetKeysPackage",
+      "declarationName": "parquetKeysPackage",
+      "source": "src/core-ideals/key-parquet.ts",
+      "line": 12,
+      "sourceSha256": "9d7116650dfdd99e31470104fa281586add76e819d6edb69356289a09a12b0f9",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/parquet-keys/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "POSTGRESQL_KEYS_EXTENSION",
+      "declarationName": "POSTGRESQL_KEYS_EXTENSION",
+      "source": "src/core-ideals/key-postgresql.ts",
+      "line": 15,
+      "sourceSha256": "6dcb6734012e9ff6d0c93b320e9eb09ea92c35a2575fff16191d31af05b75d9f",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.postgresql.keys'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "postgresqlKeysPackage",
+      "declarationName": "postgresqlKeysPackage",
+      "source": "src/core-ideals/key-postgresql.ts",
+      "line": 16,
+      "sourceSha256": "6dcb6734012e9ff6d0c93b320e9eb09ea92c35a2575fff16191d31af05b75d9f",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/postgresql-keys/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "SQLSERVER_KEYS_EXTENSION",
+      "declarationName": "SQLSERVER_KEYS_EXTENSION",
+      "source": "src/core-ideals/key-sqlserver.ts",
+      "line": 11,
+      "sourceSha256": "3c07a2ffa0416cfd8ac94996b2acf49e116aa1f6e99633018ebb491e1962f84c",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.sqlserver.keys'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "sqlserverKeysPackage",
+      "declarationName": "sqlserverKeysPackage",
+      "source": "src/core-ideals/key-sqlserver.ts",
+      "line": 12,
+      "sourceSha256": "3c07a2ffa0416cfd8ac94996b2acf49e116aa1f6e99633018ebb491e1962f84c",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/sqlserver-keys/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "TABLESPEC_KEYS_EXTENSION",
+      "declarationName": "TABLESPEC_KEYS_EXTENSION",
+      "source": "src/core-ideals/key-tablespec.ts",
+      "line": 12,
+      "sourceSha256": "bf1536cea1d42df90385d08837eaa46cde01f943e0f99e07f6089a44ee5514ab",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.tablespec.keys'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "tableSpecKeysPackage",
+      "declarationName": "tableSpecKeysPackage",
+      "source": "src/core-ideals/key-tablespec.ts",
+      "line": 13,
+      "sourceSha256": "bf1536cea1d42df90385d08837eaa46cde01f943e0f99e07f6089a44ee5514ab",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/tablespec-keys/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "AVRO_NULLABILITY_EXTENSION",
+      "declarationName": "AVRO_NULLABILITY_EXTENSION",
+      "source": "src/core-ideals/nullability-avro.ts",
+      "line": 17,
+      "sourceSha256": "94a2f763560478b6dd6fcc5439813d158ce89d7f7181af88970f45d29561b2b1",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.avro.nullability'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "avroNullabilityPackage",
+      "declarationName": "avroNullabilityPackage",
+      "source": "src/core-ideals/nullability-avro.ts",
+      "line": 18,
+      "sourceSha256": "94a2f763560478b6dd6fcc5439813d158ce89d7f7181af88970f45d29561b2b1",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/avro-nullability/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "PARQUET_NULLABILITY_EXTENSION",
+      "declarationName": "PARQUET_NULLABILITY_EXTENSION",
+      "source": "src/core-ideals/nullability-parquet.ts",
+      "line": 18,
+      "sourceSha256": "fe736a3cd5abde555bccd37d3788e3e5f7a4cc6f701b0e8e11ace22b804d04ed",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.parquet.nullability'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "parquetNullabilityPackage",
+      "declarationName": "parquetNullabilityPackage",
+      "source": "src/core-ideals/nullability-parquet.ts",
+      "line": 19,
+      "sourceSha256": "fe736a3cd5abde555bccd37d3788e3e5f7a4cc6f701b0e8e11ace22b804d04ed",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/parquet-nullability/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "POSTGRESQL_NULLABILITY_EXTENSION",
+      "declarationName": "POSTGRESQL_NULLABILITY_EXTENSION",
+      "source": "src/core-ideals/nullability-postgresql.ts",
+      "line": 16,
+      "sourceSha256": "ccade50913c083bd418bdd14aae0d73fdc5a7a155bf72f455624f3cfe11d3a3d",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.postgresql.nullability'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "postgresqlNullabilityPackage",
+      "declarationName": "postgresqlNullabilityPackage",
+      "source": "src/core-ideals/nullability-postgresql.ts",
+      "line": 17,
+      "sourceSha256": "ccade50913c083bd418bdd14aae0d73fdc5a7a155bf72f455624f3cfe11d3a3d",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/postgresql-nullability/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "SQLSERVER_NULLABILITY_EXTENSION",
+      "declarationName": "SQLSERVER_NULLABILITY_EXTENSION",
+      "source": "src/core-ideals/nullability-sqlserver.ts",
+      "line": 19,
+      "sourceSha256": "7c3643aa91b831e5d63c43cb3567a4c91992ab25c7af7be21b2c15841cdd8e35",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.sqlserver.nullability'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "sqlserverNullabilityPackage",
+      "declarationName": "sqlserverNullabilityPackage",
+      "source": "src/core-ideals/nullability-sqlserver.ts",
+      "line": 20,
+      "sourceSha256": "7c3643aa91b831e5d63c43cb3567a4c91992ab25c7af7be21b2c15841cdd8e35",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/sqlserver-nullability/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "TABLESPEC_NULLABILITY_EXTENSION",
+      "declarationName": "TABLESPEC_NULLABILITY_EXTENSION",
+      "source": "src/core-ideals/nullability-tablespec.ts",
+      "line": 16,
+      "sourceSha256": "2f170db85386d1b2d3876bd0aab6907113a535ca19e0af257d27601863ec661f",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.tablespec.nullability'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "tableSpecNullabilityPackage",
+      "declarationName": "tableSpecNullabilityPackage",
+      "source": "src/core-ideals/nullability-tablespec.ts",
+      "line": 17,
+      "sourceSha256": "2f170db85386d1b2d3876bd0aab6907113a535ca19e0af257d27601863ec661f",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/tablespec-nullability/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "AVRO_RELATIONSHIPS_EXTENSION",
+      "declarationName": "AVRO_RELATIONSHIPS_EXTENSION",
+      "source": "src/core-ideals/relationship-avro.ts",
+      "line": 12,
+      "sourceSha256": "0dce0eee854ef2a4b842483bc82b4b30414d557b48ca74092dc61d281924a6de",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.avro.relationships'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "avroRelationshipsPackage",
+      "declarationName": "avroRelationshipsPackage",
+      "source": "src/core-ideals/relationship-avro.ts",
+      "line": 13,
+      "sourceSha256": "0dce0eee854ef2a4b842483bc82b4b30414d557b48ca74092dc61d281924a6de",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/avro-relationships/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "PARQUET_RELATIONSHIPS_EXTENSION",
+      "declarationName": "PARQUET_RELATIONSHIPS_EXTENSION",
+      "source": "src/core-ideals/relationship-parquet.ts",
+      "line": 11,
+      "sourceSha256": "b022bfd73ac55c724583577e6e7e4fd0ff40a2df3c49976617988cb7b5ef5e00",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.parquet.relationships'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "parquetRelationshipsPackage",
+      "declarationName": "parquetRelationshipsPackage",
+      "source": "src/core-ideals/relationship-parquet.ts",
+      "line": 12,
+      "sourceSha256": "b022bfd73ac55c724583577e6e7e4fd0ff40a2df3c49976617988cb7b5ef5e00",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/parquet-relationships/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "POSTGRESQL_RELATIONSHIPS_EXTENSION",
+      "declarationName": "POSTGRESQL_RELATIONSHIPS_EXTENSION",
+      "source": "src/core-ideals/relationship-postgresql.ts",
+      "line": 15,
+      "sourceSha256": "e2ff6582cfc0f9a516569154e50fe3850982f84072613ccfa9205930244cd251",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.postgresql.relationships'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "postgresqlRelationshipsPackage",
+      "declarationName": "postgresqlRelationshipsPackage",
+      "source": "src/core-ideals/relationship-postgresql.ts",
+      "line": 16,
+      "sourceSha256": "e2ff6582cfc0f9a516569154e50fe3850982f84072613ccfa9205930244cd251",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/postgresql-relationships/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "SQLSERVER_RELATIONSHIPS_EXTENSION",
+      "declarationName": "SQLSERVER_RELATIONSHIPS_EXTENSION",
+      "source": "src/core-ideals/relationship-sqlserver.ts",
+      "line": 9,
+      "sourceSha256": "c6d78959faa4eaf39b6e39975ddfd5d94db08d279b09ed5d92477519118bddac",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.sqlserver.relationships'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "sqlserverRelationshipsPackage",
+      "declarationName": "sqlserverRelationshipsPackage",
+      "source": "src/core-ideals/relationship-sqlserver.ts",
+      "line": 9,
+      "sourceSha256": "c6d78959faa4eaf39b6e39975ddfd5d94db08d279b09ed5d92477519118bddac",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/sqlserver-relationships/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "TABLESPEC_RELATIONSHIPS_EXTENSION",
+      "declarationName": "TABLESPEC_RELATIONSHIPS_EXTENSION",
+      "source": "src/core-ideals/relationship-tablespec.ts",
+      "line": 12,
+      "sourceSha256": "84862b2bcde1fbfcd766981ff1f5038c5d68d5033f9a9c4389a918e27d882c42",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.tablespec.relationships'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "tableSpecRelationshipsPackage",
+      "declarationName": "tableSpecRelationshipsPackage",
+      "source": "src/core-ideals/relationship-tablespec.ts",
+      "line": 13,
+      "sourceSha256": "84862b2bcde1fbfcd766981ff1f5038c5d68d5033f9a9c4389a918e27d882c42",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/tablespec-relationships/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "actionFieldValueKey",
+      "declarationName": "actionFieldValueKey",
+      "source": "src/extensions/actions/evaluation.ts",
+      "line": 12,
+      "sourceSha256": "53fd48ed24e40f0fb7d947bce7e5a68145e1da58a204a8eae3830a199ea77673",
+      "initializerKind": "ArrowFunction",
+      "initializerClass": "function-valued",
+      "authorityClass": "function-valued",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "(reference:ActionReference)=>JSON.stringify([reference.module,reference.element])"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "actionExpressionLimits",
+      "declarationName": "actionExpressionLimits",
+      "source": "src/extensions/actions/expression.ts",
+      "line": 16,
+      "sourceSha256": "d167218001f4d8fcd593b538e7b5eedda4b7fcb28505ac82f5a663470706c5e6",
+      "initializerKind": "AsExpression",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "{depth:32,nodes:512,text:65536} as const"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "actionsPackage",
+      "declarationName": "actionsPackage",
+      "source": "src/extensions/actions/structure.ts",
+      "line": 10,
+      "sourceSha256": "1adfbdcdb341bd2a84ed92c84d7d34e5314e9ce0c517aafe2e3aee1046c04280",
+      "initializerKind": "AsExpression",
+      "initializerClass": "dynamic-executable",
+      "authorityClass": "dynamic-executable",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "freezePackage(copyJson(manifest)) as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "bit128BindingPackage",
+      "declarationName": "bit128BindingPackage",
+      "source": "src/extensions/binding/bit128.ts",
+      "line": 13,
+      "sourceSha256": "0c5d28fb7641ba73a95c0802e3da67f59430eb35c7e889281b696a3394be6531",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/binding-128/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "BINDING_EXTENSION",
+      "declarationName": "BINDING_EXTENSION",
+      "source": "src/extensions/binding/index.ts",
+      "line": 13,
+      "sourceSha256": "290c6b540a4f1619b9e390082e4f621accc1033987e29972fb38a1dc41ce40ef",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.binding'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "stableBindingPackage",
+      "declarationName": "stableBindingPackage",
+      "source": "src/extensions/binding/index.ts",
+      "line": 14,
+      "sourceSha256": "290c6b540a4f1619b9e390082e4f621accc1033987e29972fb38a1dc41ce40ef",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/binding-stable/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "stableManifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "bindingPackage",
+      "declarationName": "bindingPackage",
+      "source": "src/extensions/binding/index.ts",
+      "line": 15,
+      "sourceSha256": "290c6b540a4f1619b9e390082e4f621accc1033987e29972fb38a1dc41ce40ef",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/binding/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "RAW_TABLE_BINDING_SUBSET",
+      "declarationName": "RAW_TABLE_BINDING_SUBSET",
+      "source": "src/extensions/binding/raw-profiles.ts",
+      "line": 9,
+      "sourceSha256": "7d45e61ea0e3758054615e1ae3e9ee4bc36fefbd9fd2382784ed497e339b68b2",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'typed-access-columns/0.1'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "rawTableBindingProfiles",
+      "declarationName": "rawTableBindingProfiles",
+      "source": "src/extensions/binding/raw-profiles.ts",
+      "line": 10,
+      "sourceSha256": "7d45e61ea0e3758054615e1ae3e9ee4bc36fefbd9fd2382784ed497e339b68b2",
+      "initializerKind": "CallExpression",
+      "initializerClass": "frozen-data-expression",
+      "authorityClass": "frozen-authored-data-expression",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "Object.freeze(\n  (['lakebase','unity-catalog','spark-delta'] as const).map(system=>Object.freeze({\n    system,subset:RAW_TABLE_BINDING_SUBSET,bindingProfile:'umf-binding-2' as const,\n    vocabularyVersion:'0.2.0' as const,nativeQualification:'UNTESTED' as const,\n    directions:Object.freeze([] as string[]),\n  })),\n)"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "DASHBOARD_EXTENSION",
+      "declarationName": "DASHBOARD_EXTENSION",
+      "source": "src/extensions/dashboard/index.ts",
+      "line": 8,
+      "sourceSha256": "1af5ac632626cbff8f431b0d64a9d18f8e966eb5af8c2c341cb4556b9698a283",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.dashboard'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "dashboardPackage",
+      "declarationName": "dashboardPackage",
+      "source": "src/extensions/dashboard/index.ts",
+      "line": 9,
+      "sourceSha256": "1af5ac632626cbff8f431b0d64a9d18f8e966eb5af8c2c341cb4556b9698a283",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/dashboard/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "DDD_EXTENSION",
+      "declarationName": "DDD_EXTENSION",
+      "source": "src/extensions/ddd/index.ts",
+      "line": 8,
+      "sourceSha256": "42cbf15bcaae6ff7f7f2a448696bfbff4b3fa41768efda693fc7424c598c3041",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.ddd'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "dddPackage",
+      "declarationName": "dddPackage",
+      "source": "src/extensions/ddd/index.ts",
+      "line": 9,
+      "sourceSha256": "42cbf15bcaae6ff7f7f2a448696bfbff4b3fa41768efda693fc7424c598c3041",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/ddd/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "encodeSecurityDisclosure",
+      "declarationName": "encodeSecurityDisclosure",
+      "source": "src/extensions/security/disclosure.ts",
+      "line": 58,
+      "sourceSha256": "f5148dae4102a0ea338c399ed55acdfcbdc21fbc433e14ee2303aab46cd7eb4d",
+      "initializerKind": "ArrowFunction",
+      "initializerClass": "function-valued",
+      "authorityClass": "function-valued",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "(input:SecurityDisclosureBatch,policy:SecurityPolicy,resolution:SecurityResolution):string=>\n  writeSecuritySource(validateSecurityDisclosure(input,policy,resolution))"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "securityV2Package",
+      "declarationName": "securityV2Package",
+      "source": "src/extensions/security/policy-representation-v2.ts",
+      "line": 9,
+      "sourceSha256": "1c3c66650203235da4832c68e88a08401e53db29deeb9bd1cfa92540b81a3464",
+      "initializerKind": "AsExpression",
+      "initializerClass": "dynamic-executable",
+      "authorityClass": "dynamic-executable",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "copyJson(manifest) as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "upgradeSecurityPolicySource",
+      "declarationName": "upgradeSecurityPolicySource",
+      "source": "src/extensions/security/policy-representation-v2.ts",
+      "line": 87,
+      "sourceSha256": "1c3c66650203235da4832c68e88a08401e53db29deeb9bd1cfa92540b81a3464",
+      "initializerKind": "ArrowFunction",
+      "initializerClass": "function-valued",
+      "authorityClass": "function-valued",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "(input:unknown,revision:unknown):SecurityPolicySourceMigration=>migrate(input,revision,'upgrade')"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "downgradeSecurityPolicySource",
+      "declarationName": "downgradeSecurityPolicySource",
+      "source": "src/extensions/security/policy-representation-v2.ts",
+      "line": 88,
+      "sourceSha256": "1c3c66650203235da4832c68e88a08401e53db29deeb9bd1cfa92540b81a3464",
+      "initializerKind": "ArrowFunction",
+      "initializerClass": "function-valued",
+      "authorityClass": "function-valued",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "(input:unknown,revision:unknown):SecurityPolicySourceMigration=>migrate(input,revision,'downgrade')"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "SECURITY_EXTENSION",
+      "declarationName": "SECURITY_EXTENSION",
+      "source": "src/extensions/security/policy.ts",
+      "line": 14,
+      "sourceSha256": "e8909187fcefaefb9f0c655c4bb2295098f12e99142a6037addec5bb22ac7715",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.security'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "securityPackage",
+      "declarationName": "securityPackage",
+      "source": "src/extensions/security/policy.ts",
+      "line": 16,
+      "sourceSha256": "e8909187fcefaefb9f0c655c4bb2295098f12e99142a6037addec5bb22ac7715",
+      "initializerKind": "AsExpression",
+      "initializerClass": "dynamic-executable",
+      "authorityClass": "dynamic-executable",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "copyJson(manifest) as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "readSecuritySource",
+      "declarationName": "readSecuritySource",
+      "source": "src/extensions/security/policy.ts",
+      "line": 21,
+      "sourceSha256": "e8909187fcefaefb9f0c655c4bb2295098f12e99142a6037addec5bb22ac7715",
+      "initializerKind": "ArrowFunction",
+      "initializerClass": "function-valued",
+      "authorityClass": "function-valued",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "(text:string,format:'json'|'yaml'='json'):Json=>readJsonValue(text,format)"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "writeSecuritySource",
+      "declarationName": "writeSecuritySource",
+      "source": "src/extensions/security/policy.ts",
+      "line": 22,
+      "sourceSha256": "e8909187fcefaefb9f0c655c4bb2295098f12e99142a6037addec5bb22ac7715",
+      "initializerKind": "ArrowFunction",
+      "initializerClass": "function-valued",
+      "authorityClass": "function-valued",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "(value:unknown,format:'json'|'yaml'='json'):string=>writeJsonValue(copyJson(value),format)"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "protectionPackage",
+      "declarationName": "protectionPackage",
+      "source": "src/extensions/security/protection/catalog.ts",
+      "line": 10,
+      "sourceSha256": "52efc07592dbf5b61fb1fbb156ef19d14bb38747a98b4286295fd48ef6e7f448",
+      "initializerKind": "AsExpression",
+      "initializerClass": "dynamic-executable",
+      "authorityClass": "dynamic-executable",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "copyJson(manifest) as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "readProtectionSource",
+      "declarationName": "readProtectionSource",
+      "source": "src/extensions/security/protection/source.ts",
+      "line": 7,
+      "sourceSha256": "e491c664aed53c17a315428324b26c60815bbdf24dd65d3dba6999a46264eb54",
+      "initializerKind": "ArrowFunction",
+      "initializerClass": "function-valued",
+      "authorityClass": "function-valued",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "(text:string,format:'json'|'yaml'='json'):Json=>readJsonValue(text,format)"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "writeProtectionSource",
+      "declarationName": "writeProtectionSource",
+      "source": "src/extensions/security/protection/source.ts",
+      "line": 8,
+      "sourceSha256": "e491c664aed53c17a315428324b26c60815bbdf24dd65d3dba6999a46264eb54",
+      "initializerKind": "ArrowFunction",
+      "initializerClass": "function-valued",
+      "authorityClass": "function-valued",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "(input:unknown,format:'json'|'yaml'='json'):string=>writeJsonValue(copyJson(input),format)"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "securityRefIdentity",
+      "declarationName": "securityRefIdentity",
+      "source": "src/extensions/security/types.ts",
+      "line": 39,
+      "sourceSha256": "1a7cc55dea6fc1c4c88cb486970adfdc2aad85c2fa360cc1439a27f46ca80574",
+      "initializerKind": "ArrowFunction",
+      "initializerClass": "function-valued",
+      "authorityClass": "function-valued",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "(ref:SecurityRef):string => JSON.stringify([ref.documentId,ref.moduleId,ref.elementId])"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "SEMANTIC_TYPES_EXTENSION",
+      "declarationName": "SEMANTIC_TYPES_EXTENSION",
+      "source": "src/extensions/semantic-types/index.ts",
+      "line": 9,
+      "sourceSha256": "64482ca4d9d8abd65b19b342e1722eaff8497ce52ff44bf5dc3a7ca6f415c6e2",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.semantic-types'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "semanticTypesPackage",
+      "declarationName": "semanticTypesPackage",
+      "source": "src/extensions/semantic-types/index.ts",
+      "line": 10,
+      "sourceSha256": "64482ca4d9d8abd65b19b342e1722eaff8497ce52ff44bf5dc3a7ca6f415c6e2",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/semantic-types/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "TABLES_EXTENSION",
+      "declarationName": "TABLES_EXTENSION",
+      "source": "src/extensions/tables/index.ts",
+      "line": 14,
+      "sourceSha256": "c6e0ce267d8dd4a77bedc7322556357a2a2293cbf395c14cdf85fc1843f3a4be",
+      "initializerKind": "StringLiteral",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf.tables'"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "tableLifecyclePackage",
+      "declarationName": "tableLifecyclePackage",
+      "source": "src/extensions/tables/index.ts",
+      "line": 15,
+      "sourceSha256": "c6e0ce267d8dd4a77bedc7322556357a2a2293cbf395c14cdf85fc1843f3a4be",
+      "initializerKind": "AsExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-package-descriptor-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/extensions/tables/package.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "manifest as unknown as ExtensionPackage"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "CURRENT_CORE_VERSION",
+      "declarationName": "CURRENT_CORE_VERSION",
+      "source": "src/generated/core-model.ts",
+      "line": 3,
+      "sourceSha256": "6536e081663c2662866e2805c0db981807ca658fb10e195d4732034691b9761e",
+      "initializerKind": "AsExpression",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "generated-source-declaration",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": true,
+      "initializerText": "\"0.10.0\" as const"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "BIT128_PROFILE",
+      "declarationName": "BIT128_PROFILE",
+      "source": "src/model/bit128.ts",
+      "line": 4,
+      "sourceSha256": "c4db81a14022db2413ee991e8705d3bee688d0ed1e7c880e6170520a2694d543",
+      "initializerKind": "AsExpression",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "'umf-128/1' as const"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "pointer",
+      "declarationName": "pointer",
+      "source": "src/model/errors.ts",
+      "line": 5,
+      "sourceSha256": "65bc53689f6aa0546be249ff4bd42616b446966cfc5f9d525faf9a428031dbd6",
+      "initializerKind": "ArrowFunction",
+      "initializerClass": "function-valued",
+      "authorityClass": "function-valued",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "(key:string)=>key.replace(/~/g,'~0').replace(/\\//g,'~1')"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "coreEvolutionOperationSchema",
+      "declarationName": "coreEvolutionOperationSchema",
+      "source": "src/model/evolution.ts",
+      "line": 15,
+      "sourceSha256": "f4833f850c30257421dd92c286539ea93c35114fca2b749452cee5d1feeb7e24",
+      "initializerKind": "Identifier",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-json-data-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/core/evolution-operation.schema.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "receiptInput"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "coreEvolutionPolicySchema",
+      "declarationName": "coreEvolutionPolicySchema",
+      "source": "src/model/evolution.ts",
+      "line": 15,
+      "sourceSha256": "f4833f850c30257421dd92c286539ea93c35114fca2b749452cee5d1feeb7e24",
+      "initializerKind": "Identifier",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "authored-json-data-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "spec/core/evolution-policy.schema.json",
+          "declaration": "SourceFile"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "policyInput"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "LIMITS",
+      "declarationName": "LIMITS",
+      "source": "src/model/json.ts",
+      "line": 4,
+      "sourceSha256": "d0a06bd26beb215d262b92f5c47d5cea9e85291bb4a780f0aea98b8277c15f98",
+      "initializerKind": "AsExpression",
+      "initializerClass": "static-literal-data",
+      "authorityClass": "authored-static-data",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "{ maxDepth: 128, maxValues: 100_000, maxTextLength: 4_000_000 } as const"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "SCALAR_TYPES",
+      "declarationName": "SCALAR_TYPES",
+      "source": "src/model/types.ts",
+      "line": 8,
+      "sourceSha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
+      "initializerKind": "CallExpression",
+      "initializerClass": "frozen-data-expression",
+      "authorityClass": "generated-frozen-data-alias",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "Object.freeze(coreVocabulary.scalarType)"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "scalarTypesForVersion",
+      "declarationName": "scalarTypesForVersion",
+      "source": "src/model/types.ts",
+      "line": 10,
+      "sourceSha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
+      "initializerKind": "ArrowFunction",
+      "initializerClass": "function-valued",
+      "authorityClass": "function-valued",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "(version:string):readonly string[]=>version===CURRENT_CORE_VERSION?SCALAR_TYPES:[]"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "ELEMENT_KINDS",
+      "declarationName": "ELEMENT_KINDS",
+      "source": "src/model/types.ts",
+      "line": 11,
+      "sourceSha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
+      "initializerKind": "PropertyAccessExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "generated-data-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "src/generated/core-model.ts",
+          "declaration": "VariableDeclaration"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "coreVocabulary.kind"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "NULLABILITIES",
+      "declarationName": "NULLABILITIES",
+      "source": "src/model/types.ts",
+      "line": 13,
+      "sourceSha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
+      "initializerKind": "PropertyAccessExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "generated-data-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "src/generated/core-model.ts",
+          "declaration": "VariableDeclaration"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "coreVocabulary.nullability"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "CARDINALITIES",
+      "declarationName": "CARDINALITIES",
+      "source": "src/model/types.ts",
+      "line": 15,
+      "sourceSha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
+      "initializerKind": "PropertyAccessExpression",
+      "initializerClass": "alias-or-property-read",
+      "authorityClass": "generated-data-alias",
+      "resolvedInitializerDeclarations": [
+        {
+          "path": "src/generated/core-model.ts",
+          "declaration": "VariableDeclaration"
+        }
+      ],
+      "generatedSource": false,
+      "initializerText": "coreVocabulary.cardinality"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "dddFieldBinding",
+      "declarationName": "dddFieldBinding",
+      "source": "src/projections/ddd-json-schema.ts",
+      "line": 16,
+      "sourceSha256": "75259d9e1d4a5341ecfe177f864a6180784551b7073d746a8091fb76af892e4f",
+      "initializerKind": "ArrowFunction",
+      "initializerClass": "function-valued",
+      "authorityClass": "function-valued",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "(ref:DddReference,field:string)=>'/'+pointer(ref.module)+'/'+pointer(ref.element)+'/fields/'+pointer(field)"
+    },
+    {
+      "routeId": "package-reference",
+      "exportName": "reviewedValueDigest",
+      "declarationName": "reviewedValueDigest",
+      "source": "src/table-migration/reviewed.ts",
+      "line": 11,
+      "sourceSha256": "b4891eb9def70ef2838c5a92cbcf2f92067d56758b2e6f4a88e9cf8add81d614",
+      "initializerKind": "ArrowFunction",
+      "initializerClass": "function-valued",
+      "authorityClass": "function-valued",
+      "resolvedInitializerDeclarations": [],
+      "generatedSource": false,
+      "initializerText": "(value:unknown):string=>hashCanonical(value===undefined?null:value)"
+    }
+  ],
+  "limitations": [
+    "Initializer syntax is a shape label; it does not by itself prove inertness or authority.",
+    "The five generated-backed data rows are CURRENT_CORE_VERSION and the four vocabulary arrays; scalarTypesForVersion is a separate function-valued authored version gate.",
+    "The generated model matches its captured manifest, but the full generator --check currently fails on another stale output and an isolated current-source build reports a larger source closure; exact full-tree fixed-point status is therefore open.",
+    "No ledger status, logical retirement gap, or default-route claim is changed by this analysis."
+  ]
+}

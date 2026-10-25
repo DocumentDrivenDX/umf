@@ -48,21 +48,34 @@ impl GregorianDate {
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum GregorianDateError {
     TypeError,
-    RangeError,
+    TextLength,
+    Syntax,
+    Calendar,
+    Unit,
 }
 
 impl GregorianDateError {
     pub const fn name(self) -> &'static str {
         match self {
             Self::TypeError => "TypeError",
-            Self::RangeError => "RangeError",
+            Self::TextLength | Self::Syntax | Self::Calendar | Self::Unit => "RangeError",
+        }
+    }
+
+    pub const fn message(self) -> &'static str {
+        match self {
+            Self::TypeError => "Gregorian date requires text",
+            Self::TextLength => "Gregorian date requires ten ASCII characters",
+            Self::Syntax => "Gregorian date syntax",
+            Self::Calendar => "Gregorian date calendar",
+            Self::Unit => "Gregorian date truncation unit",
         }
     }
 }
 
 impl fmt::Display for GregorianDateError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str(self.name())
+        f.write_str(self.message())
     }
 }
 
@@ -78,16 +91,16 @@ pub fn parse_gregorian_date(token: &Value) -> Result<GregorianDate, GregorianDat
     };
     let units = text.units();
     if units.len() != 10 {
-        return Err(GregorianDateError::RangeError);
+        return Err(GregorianDateError::TextLength);
     }
     if units[4] != b'-' as u16 || units[7] != b'-' as u16 {
-        return Err(GregorianDateError::RangeError);
+        return Err(GregorianDateError::Syntax);
     }
-    let year = decimal(units, 0, 4).ok_or(GregorianDateError::RangeError)?;
-    let month = decimal(units, 5, 2).ok_or(GregorianDateError::RangeError)?;
-    let day = decimal(units, 8, 2).ok_or(GregorianDateError::RangeError)?;
+    let year = decimal(units, 0, 4).ok_or(GregorianDateError::Syntax)?;
+    let month = decimal(units, 5, 2).ok_or(GregorianDateError::Syntax)?;
+    let day = decimal(units, 8, 2).ok_or(GregorianDateError::Syntax)?;
     if year == 0 || !(1..=12).contains(&month) {
-        return Err(GregorianDateError::RangeError);
+        return Err(GregorianDateError::Calendar);
     }
     let leap = year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
     let month_length = match month {
@@ -95,10 +108,10 @@ pub fn parse_gregorian_date(token: &Value) -> Result<GregorianDate, GregorianDat
         4 | 6 | 9 | 11 => 30,
         2 if leap => 29,
         2 => 28,
-        _ => return Err(GregorianDateError::RangeError),
+        _ => return Err(GregorianDateError::Calendar),
     };
     if day == 0 || day > month_length {
-        return Err(GregorianDateError::RangeError);
+        return Err(GregorianDateError::Calendar);
     }
     Ok(GregorianDate {
         profile: GREGORIAN_DATE_PROFILE,
@@ -114,7 +127,7 @@ pub fn parse_gregorian_date(token: &Value) -> Result<GregorianDate, GregorianDat
 pub fn truncate_gregorian_date(token: &Value, unit: &Value) -> Result<Utf16, GregorianDateError> {
     let source = parse_gregorian_date(token)?;
     let Value::String(unit_text) = unit else {
-        return Err(GregorianDateError::RangeError);
+        return Err(GregorianDateError::Unit);
     };
     let units = unit_text.units();
     let unit_name = if ascii_equals(units, "year") {
@@ -126,7 +139,7 @@ pub fn truncate_gregorian_date(token: &Value, unit: &Value) -> Result<Utf16, Gre
     } else if ascii_equals(units, "day") {
         "day"
     } else {
-        return Err(GregorianDateError::RangeError);
+        return Err(GregorianDateError::Unit);
     };
     if unit_name == "day" {
         return Ok(source.original_text);
@@ -245,8 +258,8 @@ mod tests {
             "2026-01-01T00:00:00Z",
         ] {
             assert_eq!(
-                parse_gregorian_date(&text(token)),
-                Err(GregorianDateError::RangeError),
+                parse_gregorian_date(&text(token)).unwrap_err().name(),
+                "RangeError",
                 "{token:?}"
             );
         }
@@ -276,7 +289,7 @@ mod tests {
         ]));
         assert_eq!(
             parse_gregorian_date(&malformed_ten_units),
-            Err(GregorianDateError::RangeError)
+            Err(GregorianDateError::Syntax)
         );
         let too_long_with_surrogate = Value::String(Utf16::new(vec![
             b'2' as u16,
@@ -293,21 +306,21 @@ mod tests {
         ]));
         assert_eq!(
             parse_gregorian_date(&too_long_with_surrogate),
-            Err(GregorianDateError::RangeError)
+            Err(GregorianDateError::TextLength)
         );
         for unit in ["week", "MONTH", "", "day\n"] {
             assert_eq!(
                 truncate_gregorian_date(&text("2026-10-15"), &text(unit)),
-                Err(GregorianDateError::RangeError)
+                Err(GregorianDateError::Unit)
             );
         }
         assert_eq!(
             truncate_gregorian_date(&text("bad"), &text("week")),
-            Err(GregorianDateError::RangeError)
+            Err(GregorianDateError::Syntax)
         );
         assert_eq!(
             truncate_gregorian_date(&text("2026-10-15"), &Value::Null),
-            Err(GregorianDateError::RangeError)
+            Err(GregorianDateError::Unit)
         );
     }
 }

@@ -1263,7 +1263,10 @@ mod tests {
         };
         let mk_catalog = |modules: Value| {
             Value::Object(vec![
-                (Utf16::from("profile"), Value::string_utf8("umf.metamodel/1")),
+                (
+                    Utf16::from("profile"),
+                    Value::string_utf8("umf.metamodel/1"),
+                ),
                 (
                     Utf16::from("document"),
                     Value::Object(vec![
@@ -1298,16 +1301,20 @@ mod tests {
                 "membersFalse",
                 Value::Array(vec![Value::Object(vec![
                     (Utf16::from("id"), Value::string_utf8("m")),
-                    (Utf16::from("elements"), Value::Array(vec![{
-                        let mut element = simple_element();
-                        set_member(&mut element, "members", Value::Bool(false));
-                        element
-                    }])),
+                    (
+                        Utf16::from("elements"),
+                        Value::Array(vec![{
+                            let mut element = simple_element();
+                            set_member(&mut element, "members", Value::Bool(false));
+                            element
+                        }]),
+                    ),
                 ])]),
             ),
         ];
         for (name, modules) in malformed {
-            let error = self_model_graph(&mk_catalog(modules), &mut Context::catalog()).unwrap_err();
+            let error =
+                self_model_graph(&mk_catalog(modules), &mut Context::catalog()).unwrap_err();
             assert_eq!(error.code, "TypeError", "{name}");
             assert_eq!(error.message.to_utf8().unwrap(), error_text(name), "{name}");
         }
@@ -1315,15 +1322,14 @@ mod tests {
 
     #[test]
     fn unsupported_dynamic_identifiers_and_reference_targets_are_explicit_refusals() {
-        let mut catalog = admit_self_model_catalog(
-            SOURCE,
-            &parse_json(MANIFEST),
-            &mut Context::catalog(),
-        )
-        .unwrap();
-        let modules = get_member_mut(get_member_mut(&mut catalog, "document").unwrap(), "modules")
-            .unwrap();
-        let Value::Array(modules) = modules else { panic!("modules expected") };
+        let mut catalog =
+            admit_self_model_catalog(SOURCE, &parse_json(MANIFEST), &mut Context::catalog())
+                .unwrap();
+        let modules =
+            get_member_mut(get_member_mut(&mut catalog, "document").unwrap(), "modules").unwrap();
+        let Value::Array(modules) = modules else {
+            panic!("modules expected")
+        };
         let Value::Array(elements) = get_member_mut(&mut modules[0], "elements").unwrap() else {
             panic!("elements expected")
         };
@@ -1340,7 +1346,10 @@ mod tests {
         );
 
         let catalog = Value::Object(vec![
-            (Utf16::from("profile"), Value::string_utf8("umf.metamodel/1")),
+            (
+                Utf16::from("profile"),
+                Value::string_utf8("umf.metamodel/1"),
+            ),
             (
                 Utf16::from("document"),
                 Value::Object(vec![
@@ -1369,7 +1378,10 @@ mod tests {
                                         (
                                             Utf16::from("references"),
                                             Value::Array(vec![Value::Object(vec![
-                                                (Utf16::from("role"), Value::string_utf8("record-type")),
+                                                (
+                                                    Utf16::from("role"),
+                                                    Value::string_utf8("record-type"),
+                                                ),
                                                 (Utf16::from("element"), Value::Bool(false)),
                                             ])]),
                                         ),

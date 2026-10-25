@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-const metamodel=Bun.spawn([process.execPath,'scripts/metamodel/build.ts'],{stdout:'inherit',stderr:'inherit'});if(await metamodel.exited)process.exit(1);
-const identity=Bun.spawn([process.execPath,'scripts/actions-plan-identity.ts'],{stdout:'inherit',stderr:'inherit'});if(await identity.exited)process.exit(1);
-import { rm, cp } from 'node:fs/promises';
-await rm('dist', {recursive:true,force:true});
-const result=await Bun.build({entrypoints:['src/index.ts'],outdir:'dist',naming:'umf.js',target:'browser',format:'esm',sourcemap:'external'});
-if(!result.success) throw new Error(result.logs.join('\n'));
-const types=Bun.spawn([process.execPath,'node_modules/typescript/bin/tsc','--emitDeclarationOnly'],{stdout:'inherit',stderr:'inherit'});
-if(await types.exited) process.exit(1);
-await cp('spec', 'dist/spec', {recursive:true});
-console.log(`Browser ESM built: ${result.outputs[0]!.size} bytes; declarations emitted.`);
+// Build the TypeScript reference and the qualified Rust root routes from one
+// immutable source snapshot. The builder stages dist and swaps it only after
+// source rehash and asset validation succeed.
+const child=Bun.spawn([process.execPath,'scripts/package-sdk-rust-default.ts'],{
+ env:{...process.env,UMF_RUST_DEFAULT_BUILD_ONLY:'1',UMF_RUST_DEFAULT_DIST:'dist'},
+ stdout:'inherit',stderr:'inherit',
+});
+const status=await child.exited;
+if(status!==0)throw new Error(`Rust SDK source build failed (${status}); dist was not published`);
+export {};

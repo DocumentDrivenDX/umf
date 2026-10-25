@@ -12,6 +12,11 @@ const INSPECTION_SCHEMA: &str =
     include_str!("../../../spec/core/nullability-operation-v7.schema.json");
 const DECLARATION_SCHEMA: &str =
     include_str!("../../../spec/core/nullability-operation-v5.schema.json");
+#[derive(Debug)]
+pub struct OperationSchemas {
+    inspection: crate::schema::CompiledSchema,
+    declaration: crate::schema::CompiledSchema,
+}
 const NULLABILITIES: [&str; 3] = ["required", "absent-allowed", "unspecified"];
 fn k(s: &str) -> Utf16 {
     Utf16::from(s)
@@ -81,12 +86,22 @@ fn validate_doc(
     let message = crate::serialization::stringify_compact_metered(&ds, ctx)?;
     Err(EngineError::new(code, k(path), message))
 }
-fn validate_op(
-    value: &Value,
+fn validate_op_with_schemas(value: &Value, schema_src: &str, ctx: &mut Context<'_>, code: &str, schemas: Option<&OperationSchemas>) -> Result<(), EngineError> {
+    let prepared = if schema_src == INSPECTION_SCHEMA { schemas.map(|s| &s.inspection) }
+        else if schema_src == DECLARATION_SCHEMA { schemas.map(|s| &s.declaration) } else { None };
+    if let Some(schema) = prepared { return validate_compiled_op(value, schema, ctx, code); }
+    let compiled = compile_operation_schema(schema_src, ctx)?;
+    validate_compiled_op(value, &compiled, ctx, code)
+}
+
+pub fn prepare_operation_schemas(ctx: &mut Context<'_>) -> Result<OperationSchemas, EngineError> {
+    Ok(OperationSchemas { inspection: compile_operation_schema(INSPECTION_SCHEMA, ctx)?, declaration: compile_operation_schema(DECLARATION_SCHEMA, ctx)? })
+}
+
+fn compile_operation_schema(
     schema_src: &str,
     ctx: &mut Context<'_>,
-    code: &str,
-) -> Result<(), EngineError> {
+) -> Result<crate::schema::CompiledSchema, EngineError> {
     let schema = crate::serialization::read_json_value(
         &schema_src.encode_utf16().collect::<Vec<_>>(),
         crate::serialization::Format::Json,
@@ -119,11 +134,19 @@ fn validate_op(
         }
     }
     let schema = inline(schema, ctx, 0)?;
-    let c = crate::schema::CompiledSchema::compile(
+    crate::schema::CompiledSchema::compile(
         &schema,
         &crate::schema::SchemaResources::default(),
         ctx,
-    )?;
+    )
+}
+
+fn validate_compiled_op(
+    value: &Value,
+    c: &crate::schema::CompiledSchema,
+    ctx: &mut Context<'_>,
+    code: &str,
+) -> Result<(), EngineError> {
     let es = c.validate(value, ctx)?;
     if es.is_empty() {
         Ok(())
@@ -142,14 +165,13 @@ pub struct Identity {
 }
 struct Located {
     source: Value,
-    target: Value,
     element: Value,
     mi: usize,
     ei: usize,
     path: String,
 }
-fn locate(
-    input: &Value,
+fn locate_copied(
+    source: Value,
     id: &Identity,
     engine: &Engine,
     registry: &Registry,
@@ -163,7 +185,6 @@ fn locate(
             "",
         ));
     }
-    let source = copy(input, ctx)?;
     validate_doc(
         &source,
         engine,
@@ -201,20 +222,11 @@ fn locate(
     }
     let (mi, ei) =
         found.ok_or_else(|| err("CORE_NULLABILITY_MISSING", "Element identity is absent", ""))?;
-    let element = copy(
-        &get(&ms[mi], "elements")
-            .and_then(|v| {
-                if let Value::Array(a) = v {
-                    a.get(ei)
-                } else {
-                    None
-                }
-            })
-            .unwrap(),
-        ctx,
-    )?;
+    let element = get(&ms[mi], "elements")
+        .and_then(|v| if let Value::Array(a) = v { a.get(ei) } else { None })
+        .expect("selected element index exists")
+        .clone();
     Ok(Located {
-        target: copy(&source, ctx)?,
         source,
         element,
         mi,
@@ -295,7 +307,28 @@ pub fn inspect_core_nullability(
     caps: &mut dyn Capabilities,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
-    let f = locate(input, id, engine, registry, caps, ctx)?;
+    let source = copy(input, ctx)?;
+    inspect_core_nullability_copied(source, id, engine, registry, caps, ctx)
+}
+
+/// Inspect an already admitted source from a host-JSON reflection boundary.
+pub fn inspect_core_nullability_copied(
+    source: Value,
+    id: &Identity,
+    engine: &Engine,
+    registry: &Registry,
+    caps: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    inspect_core_nullability_copied_inner(source, id, engine, registry, caps, ctx, None)
+}
+
+pub fn inspect_core_nullability_copied_prepared(source: Value, id: &Identity, engine: &Engine, registry: &Registry, caps: &mut dyn Capabilities, ctx: &mut Context<'_>, schemas: &OperationSchemas) -> Result<Value, EngineError> {
+    inspect_core_nullability_copied_inner(source, id, engine, registry, caps, ctx, Some(schemas))
+}
+
+fn inspect_core_nullability_copied_inner(source: Value, id: &Identity, engine: &Engine, registry: &Registry, caps: &mut dyn Capabilities, ctx: &mut Context<'_>, schemas: Option<&OperationSchemas>) -> Result<Value, EngineError> {
+    let f = locate_copied(source, id, engine, registry, caps, ctx)?;
     let meaning = match get(&f.element, "nullability") {
         None => obj(vec![(
             "state",
@@ -333,7 +366,7 @@ pub fn inspect_core_nullability(
         ("meaning", meaning),
         ("provenance", t("unverified")),
     ]);
-    validate_op(&r, INSPECTION_SCHEMA, ctx, "CORE_NULLABILITY_RESULT")?;
+    validate_op_with_schemas(&r, INSPECTION_SCHEMA, ctx, "CORE_NULLABILITY_RESULT", schemas)?;
     Ok(r)
 }
 pub fn declare_core_nullability(
@@ -345,7 +378,49 @@ pub fn declare_core_nullability(
     caps: &mut dyn Capabilities,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
-    let mut f = locate(input, id, engine, registry, caps, ctx)?;
+    let source = copy(input, ctx)?;
+    declare_core_nullability_copied(source, id, nullability, engine, registry, caps, ctx)
+}
+
+/// Declare against an already admitted source from a host-JSON reflection boundary.
+pub fn declare_core_nullability_copied(
+    source: Value,
+    id: &Identity,
+    nullability: &str,
+    engine: &Engine,
+    registry: &Registry,
+    caps: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    declare_core_nullability_copied_with_request(source, id, || Ok(Some(nullability.to_owned())), engine, registry, caps, ctx)
+}
+
+/// Host variant that asks for the enum value only after source/version/role admission.
+pub fn declare_core_nullability_copied_with_request<F>(
+    source: Value,
+    id: &Identity,
+    request: F,
+    engine: &Engine,
+    registry: &Registry,
+    caps: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError>
+where
+    F: FnOnce() -> Result<Option<String>, EngineError>,
+{
+    declare_core_nullability_copied_with_request_inner(source, id, request, engine, registry, caps, ctx, None)
+}
+
+pub fn declare_core_nullability_copied_with_request_prepared<F>(source: Value, id: &Identity, request: F, engine: &Engine, registry: &Registry, caps: &mut dyn Capabilities, ctx: &mut Context<'_>, schemas: &OperationSchemas) -> Result<Value, EngineError>
+where F: FnOnce() -> Result<Option<String>, EngineError> {
+    declare_core_nullability_copied_with_request_inner(source, id, request, engine, registry, caps, ctx, Some(schemas))
+}
+
+fn declare_core_nullability_copied_with_request_inner<F>(source: Value, id: &Identity, request: F, engine: &Engine, registry: &Registry, caps: &mut dyn Capabilities, ctx: &mut Context<'_>, schemas: Option<&OperationSchemas>) -> Result<Value, EngineError>
+where
+    F: FnOnce() -> Result<Option<String>, EngineError>,
+{
+    let f = locate_copied(source, id, engine, registry, caps, ctx)?;
     if s(get(&f.source, "umf").unwrap_or(&Value::Null)).as_deref() != Some("0.10.0") {
         return Err(err(
             "CORE_NULLABILITY_VERSION",
@@ -360,13 +435,15 @@ pub fn declare_core_nullability(
             &f.path,
         ));
     }
-    if !NULLABILITIES.contains(&nullability) {
+    let nullability = request()?.unwrap_or_default();
+    if !NULLABILITIES.contains(&nullability.as_str()) {
         return Err(err(
             "CORE_NULLABILITY_VALUE",
             "Expected required, absent-allowed or unspecified",
             &f.path,
         ));
     }
+    let mut target = copy(&f.source, ctx)?;
     if get(&f.element, "nullability")
         .is_some_and(|v| s(v).is_none_or(|x| !NULLABILITIES.contains(&x.as_str())))
     {
@@ -376,9 +453,9 @@ pub fn declare_core_nullability(
             &f.path,
         ));
     }
-    set_nullability(&mut f.target, f.mi, f.ei, Some(t(nullability)))?;
+    set_nullability(&mut target, f.mi, f.ei, Some(t(&nullability)))?;
     validate_doc(
-        &f.target,
+        &target,
         engine,
         registry,
         caps,
@@ -390,7 +467,7 @@ pub fn declare_core_nullability(
         ("operation", t("declare-core-nullability")),
         ("version", t("5.0.0")),
         ("source", f.source),
-        ("target", f.target),
+        ("target", target),
         (
             "identity",
             obj(vec![
@@ -403,7 +480,7 @@ pub fn declare_core_nullability(
             obj(vec![
                 ("origin", t("authored")),
                 ("idealPath", t(&f.path)),
-                ("nullability", t(nullability)),
+                ("nullability", t(&nullability)),
                 (
                     "binding",
                     obj(vec![
@@ -416,7 +493,7 @@ pub fn declare_core_nullability(
             ]),
         ),
     ]);
-    validate_op(&r, DECLARATION_SCHEMA, ctx, "CORE_NULLABILITY_RESULT")?;
+    validate_op_with_schemas(&r, DECLARATION_SCHEMA, ctx, "CORE_NULLABILITY_RESULT", schemas)?;
     Ok(r)
 }
 fn canonical(v: &Value, ctx: &mut Context<'_>, depth: usize) -> Result<Value, EngineError> {
@@ -461,7 +538,28 @@ pub fn verify_core_nullability_declaration(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let r = copy(receipt, ctx)?;
+    verify_core_nullability_receipt(&r, engine, registry, caps, ctx)?;
     let current = copy(current, ctx)?;
+    finish_core_nullability_verification(r, current, ctx)
+}
+
+/// Validate and recompute a declaration receipt before admitting the current document.
+/// Host bindings use this phase boundary to preserve predecessor admission order.
+pub fn verify_core_nullability_receipt(
+    r: &Value,
+    engine: &Engine,
+    registry: &Registry,
+    caps: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    verify_core_nullability_receipt_inner(r, engine, registry, caps, ctx, None)
+}
+
+pub fn verify_core_nullability_receipt_prepared(r: &Value, engine: &Engine, registry: &Registry, caps: &mut dyn Capabilities, ctx: &mut Context<'_>, schemas: &OperationSchemas) -> Result<(), EngineError> {
+    verify_core_nullability_receipt_inner(r, engine, registry, caps, ctx, Some(schemas))
+}
+
+fn verify_core_nullability_receipt_inner(r: &Value, engine: &Engine, registry: &Registry, caps: &mut dyn Capabilities, ctx: &mut Context<'_>, schemas: Option<&OperationSchemas>) -> Result<(), EngineError> {
     if s(get(&r, "operation").unwrap_or(&Value::Null)).as_deref()
         != Some("declare-core-nullability")
         || s(get(&r, "version").unwrap_or(&Value::Null)).as_deref() != Some("5.0.0")
@@ -472,7 +570,7 @@ pub fn verify_core_nullability_declaration(
             "",
         ));
     }
-    if let Err(error) = validate_op(&r, DECLARATION_SCHEMA, ctx, "CORE_NULLABILITY_RECEIPT") {
+    if let Err(error) = validate_op_with_schemas(&r, DECLARATION_SCHEMA, ctx, "CORE_NULLABILITY_RECEIPT", schemas) {
         if error.is_control_failure() || error.code == "LIMIT" {
             return Err(error);
         }
@@ -523,6 +621,15 @@ pub fn verify_core_nullability_declaration(
             "",
         ));
     }
+    Ok(())
+}
+
+/// Compare a previously admitted current document with an already verified receipt.
+pub fn finish_core_nullability_verification(
+    r: Value,
+    current: Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
     if canonical(&current, ctx, 0)? != canonical(get(&r, "target").unwrap(), ctx, 0)? {
         return Err(err(
             "CORE_NULLABILITY_STALE",

@@ -14,7 +14,7 @@ use crate::{
     context::Context,
     error::EngineError,
     literal::{exact_coefficient, format_bigint_decimal_for_numeric},
-    value::{ecma_number_to_string, Utf16},
+    value::{Utf16, ecma_number_to_string},
 };
 
 const MAX_EXPONENT_TEXT: usize = 32;
@@ -189,8 +189,11 @@ pub fn exact_decimal(token: &str, ctx: &mut Context<'_>) -> Result<String, Engin
 pub fn integer_from_bigint(token: &str, ctx: &mut Context<'_>) -> Result<String, EngineError> {
     let token = admitted_text(token, ctx)?;
     let digits = token.strip_prefix('-').unwrap_or(token);
-    if digits.is_empty() || !digits.bytes().all(|byte| byte.is_ascii_digit()) ||
-       (digits.len() > 1 && digits.starts_with('0')) || (token.starts_with('-') && digits == "0") {
+    if digits.is_empty()
+        || !digits.bytes().all(|byte| byte.is_ascii_digit())
+        || (digits.len() > 1 && digits.starts_with('0'))
+        || (token.starts_with('-') && digits == "0")
+    {
         return Err(numeric_error("Expected canonical bigint decimal spelling"));
     }
     Ok(token.to_owned())
@@ -215,7 +218,9 @@ pub fn admit_javascript_number(
     ctx: &mut Context<'_>,
 ) -> Result<String, EngineError> {
     if !value.is_finite() || (value == 0.0 && value.is_sign_negative()) {
-        return Err(numeric_error("Expected finite number without negative zero"));
+        return Err(numeric_error(
+            "Expected finite number without negative zero",
+        ));
     }
     let token = ecma_number_to_string(value);
     match scalar_type {
@@ -261,11 +266,15 @@ pub fn numeric_to_number_lossless(
         let exact = exact_coefficient(&Utf16::from(token), 0, None, ctx)?;
         let recovered = BigInt::from(value as i64);
         if exact != recovered {
-            return Err(numeric_error("Number conversion would change the exact value"));
+            return Err(numeric_error(
+                "Number conversion would change the exact value",
+            ));
         }
     }
     if identity != binary_identity(value, ctx)? {
-        return Err(numeric_error("Number conversion would change the exact value"));
+        return Err(numeric_error(
+            "Number conversion would change the exact value",
+        ));
     }
     Ok(value)
 }
@@ -279,54 +288,109 @@ mod tests {
         let mut ctx = Context::ordinary();
         assert_eq!(exact_decimal("1.2300E+02", &mut ctx).unwrap(), "1.2300E+02");
         assert_eq!(integer_to_bigint("12300e-2", &mut ctx).unwrap(), "123");
-        assert_eq!(integer_from_bigint("9223372036854775807", &mut ctx).unwrap(), "9223372036854775807");
+        assert_eq!(
+            integer_from_bigint("9223372036854775807", &mut ctx).unwrap(),
+            "9223372036854775807"
+        );
         for token in ["10", "-20", "1000000"] {
-            assert_eq!(integer_from_bigint(token, &mut Context::ordinary()).unwrap(), token);
+            assert_eq!(
+                integer_from_bigint(token, &mut Context::ordinary()).unwrap(),
+                token
+            );
         }
-        assert_eq!(integer_from_bigint("-0", &mut Context::ordinary()).unwrap_err().code, "JAVASCRIPT_NUMERIC");
-        assert_eq!(integer_to_bigint("-0", &mut ctx).unwrap_err().code, "JAVASCRIPT_NUMERIC");
+        assert_eq!(
+            integer_from_bigint("-0", &mut Context::ordinary())
+                .unwrap_err()
+                .code,
+            "JAVASCRIPT_NUMERIC"
+        );
+        assert_eq!(
+            integer_to_bigint("-0", &mut ctx).unwrap_err().code,
+            "JAVASCRIPT_NUMERIC"
+        );
         let long_exponent = format!("1e{}", "9".repeat(33));
         for token in ["01", "+1", ".1", "1.", "1e", "NaN", long_exponent.as_str()].iter() {
-            assert!(exact_decimal(token, &mut Context::ordinary()).is_err(), "{token}");
+            assert!(
+                exact_decimal(token, &mut Context::ordinary()).is_err(),
+                "{token}"
+            );
         }
     }
 
     #[test]
     fn large_bigint_text_is_refused_before_numeric_parsing_when_work_is_unavailable() {
-        let mut reject = |_amount: usize| Err(EngineError::new("RESOURCE_LIMIT", Utf16::default(), "budget"));
+        let mut reject = |_amount: usize| {
+            Err(EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "budget",
+            ))
+        };
         let mut ctx = Context::ordinary().with_host_control(&mut reject);
         let token = "9".repeat(100_000);
-        assert_eq!(integer_from_bigint(&token, &mut ctx).unwrap_err().code, "RESOURCE_LIMIT");
+        assert_eq!(
+            integer_from_bigint(&token, &mut ctx).unwrap_err().code,
+            "RESOURCE_LIMIT"
+        );
     }
 
     #[test]
     fn expanded_integer_output_is_precharged_before_radix_formatting() {
         let mut reject_large = |amount: usize| {
             if amount > 20_000_000 {
-                Err(EngineError::new("RESOURCE_LIMIT", Utf16::default(), "budget"))
+                Err(EngineError::new(
+                    "RESOURCE_LIMIT",
+                    Utf16::default(),
+                    "budget",
+                ))
             } else {
                 Ok(())
             }
         };
         let mut ctx = Context::ordinary().with_host_control(&mut reject_large);
-        assert_eq!(integer_to_bigint("1e99999", &mut ctx).unwrap_err().code, "RESOURCE_LIMIT");
+        assert_eq!(
+            integer_to_bigint("1e99999", &mut ctx).unwrap_err().code,
+            "RESOURCE_LIMIT"
+        );
     }
 
     #[test]
     fn binary64_admission_and_recovery_are_exact() {
         for value in [0.5, -0.125, 1.25, 9_007_199_254_740_992.0] {
-            let token = admit_javascript_number(value, "decimal", &mut Context::ordinary()).unwrap();
-            assert_eq!(numeric_to_number_lossless(&token, false, &mut Context::ordinary()).unwrap(), value);
+            let token =
+                admit_javascript_number(value, "decimal", &mut Context::ordinary()).unwrap();
+            assert_eq!(
+                numeric_to_number_lossless(&token, false, &mut Context::ordinary()).unwrap(),
+                value
+            );
         }
-        for value in [0.1, 0.2, 0.3, f64::MIN_POSITIVE / 2.0, f64::MAX, -0.0, f64::INFINITY, f64::NAN] {
+        for value in [
+            0.1,
+            0.2,
+            0.3,
+            f64::MIN_POSITIVE / 2.0,
+            f64::MAX,
+            -0.0,
+            f64::INFINITY,
+            f64::NAN,
+        ] {
             assert!(admit_javascript_number(value, "decimal", &mut Context::ordinary()).is_err());
         }
         let exact = "0.1000000000000000055511151231257827021181583404541015625";
-        assert_eq!(numeric_to_number_lossless(exact, false, &mut Context::ordinary()).unwrap(), 0.1);
+        assert_eq!(
+            numeric_to_number_lossless(exact, false, &mut Context::ordinary()).unwrap(),
+            0.1
+        );
         let subnormal = format!("{}e-1074", BigInt::from(5u8).pow(1074));
-        assert_eq!(numeric_to_number_lossless(&subnormal, false, &mut Context::ordinary()).unwrap(), f64::from_bits(1));
+        assert_eq!(
+            numeric_to_number_lossless(&subnormal, false, &mut Context::ordinary()).unwrap(),
+            f64::from_bits(1)
+        );
         for token in ["0.1", "1e400", "1e-400", "-0.000", "9007199254740993"] {
-            assert!(numeric_to_number_lossless(token, false, &mut Context::ordinary()).is_err(), "{token}");
+            assert!(
+                numeric_to_number_lossless(token, false, &mut Context::ordinary()).is_err(),
+                "{token}"
+            );
         }
     }
 }

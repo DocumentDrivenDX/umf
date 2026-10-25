@@ -1,0 +1,26 @@
+{
+  "format": "umf-r8-json-schema-validator-profile-boundary/1",
+  "operation": "inspectJsonSchema",
+  "runtime": {"node": "v26.12.1", "nativeAddonSha256": "12231bb22dd622f0600f66ca22a469ae2e0dca8c7283205faf8e9dd1a199bb45"},
+  "qualifiedFrozenCase": {
+    "id": "inspect.success",
+    "expected": {"valid": true, "complete": true, "diagnostics": []},
+    "actual": {"valid": true, "complete": true, "diagnostics": []},
+    "meaning": "This exact schema lies within the recursively checked narrow validator profile."
+  },
+  "outsideProfileCounterexample": {
+    "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"additionalProperties\":true}",
+    "actual": {
+      "valid": true,
+      "complete": false,
+      "diagnostics": [{"code": "JSON_SCHEMA_VALIDATOR_LIMIT", "path": "/modules/0/elements/0/extensions/umf.json-schema", "message": "Rust Draft 2020-12 compilation succeeded; parity with Ajv 8.20.0 and the complete upstream profile remains unqualified", "severity": "warning"}]
+    },
+    "classification": "General Draft 2020-12 compilation success does not certify full semantic parity; this valid schema remains explicitly incomplete."
+  },
+  "sourceHashes": {
+    "crates/umf-core/src/json_schema_inspect.rs": "089d5b5a27d5605a75f7e960cf6f9e172625112ec900fefd38dbbd07a2dae04a",
+    "crates/umf-core/tests/r5_json_schema_inspect.rs": "3e4556bd72a499d04f8db15113c3fd16a41b2d0fac8c8b7ecca21f5d48cbecc4"
+  },
+  "test": "additional_properties_stays_incomplete_outside_recursive_profile",
+  "testResult": "pass"
+}

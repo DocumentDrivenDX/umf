@@ -1,0 +1,23 @@
+{
+  "status": "pass",
+  "runtime": "Bun 1.4.3",
+  "caseCount": 11,
+  "hostAdmissionOrder": true,
+  "exactOutcomeParity": true,
+  "packetSha256": "1122fc4d019f055570ea72baf88788818091dd513c05f9070624cba15dedb71e",
+  "sourceHashes": {
+    "scripts/rust-migration/r8/relationships-default-route-parity.ts": "34344ba30ee0dcd3a7316464bca5a3a1781a72186ab8d390616c26eb23270fc0",
+    "src/index-node-v4.ts": "1050612322e5ba33a58add2f156762c2d01f8114dba6d410c28e009160881417",
+    "src/access/rust-relationships-default.ts": "65664e0b981eaf24a00a1e6a1e1d1381ecbf65a25fb819427e38ece71735d0d0",
+    "src/model/relationships.ts": "66b15764cb80059de8e98adb9741b9314a1966674f22ef4f114306e679d5e547",
+    "bindings/core/node/src/core-relationships.js": "aec10400c50aaa94e96aa47e871c387322ad418a0dd265ac0ab1ec7818b4a5e3",
+    "bindings/core/wasm/src/core-relationships.js": "aec10400c50aaa94e96aa47e871c387322ad418a0dd265ac0ab1ec7818b4a5e3",
+    "crates/umf-core/src/core_relationships.rs": "089906130b9a464122915a2aba6bc582d4a954969e6f51a4b4224aa2abad6519",
+    "crates/umf-core-wire/src/lib.rs": "571cbbf06c6a16ada15f08474f228a8c9ace9718409b165a9ee377ea50125768"
+  },
+  "artifactHashes": {
+    "nodeEntry": "c84b6966be1f577805e0b0fb15cc30e9dcfeaaa6e4633e11b53e058cf13029fe",
+    "nativeAddon": "8723b9868f209c3ff535a29a4b50088a5cd665537de60568a081046c0d85ea99"
+  },
+  "qualification": "Private package route replay only; release qualification is not claimed."
+}

@@ -10,7 +10,7 @@ use crate::{
     error::EngineError,
     registry::Registry,
     schema::{CompiledSchema, SchemaResources},
-    value::{Utf16, Value, copy_json},
+    value::{copy_json, Utf16, Value},
 };
 
 const CARDINALITIES: [&str; 4] = ["one", "array", "map", "unspecified"];
@@ -55,6 +55,7 @@ fn is_nonempty_string(value: Option<&Value>) -> bool {
 }
 fn schema_diagnostics(
     errors: &[crate::schema::StructuralError],
+    request_schema: bool,
     ctx: &mut Context<'_>,
 ) -> Result<Utf16, EngineError> {
     let mut items = Vec::with_capacity(errors.len());
@@ -68,20 +69,17 @@ fn schema_diagnostics(
         )?;
         let mut schema_path = error.schema_path.clone();
         let mut message = error.message.clone();
-        let item_type_ref = "#/$defs/request/properties/itemType"
-            .encode_utf16()
-            .collect::<Vec<_>>();
-        if let Some(start) = schema_path
-            .units()
-            .windows(item_type_ref.len())
-            .position(|w| w == item_type_ref)
-        {
-            let mut units = schema_path.units().to_vec();
-            units.splice(
-                start..start + item_type_ref.len(),
-                "#/properties/itemType".encode_utf16(),
-            );
-            schema_path = Utf16::new(units);
+        let request_ref = "#/$defs/request/".encode_utf16().collect::<Vec<_>>();
+        if request_schema {
+            if let Some(start) = schema_path
+                .units()
+                .windows(request_ref.len())
+                .position(|w| w == request_ref)
+            {
+                let mut units = schema_path.units().to_vec();
+                units.splice(start..start + request_ref.len(), "#/".encode_utf16());
+                schema_path = Utf16::new(units);
+            }
         }
         if let Ok(text) = message.to_utf8() {
             if text.contains("fewer than 1 length") {
@@ -89,6 +87,20 @@ fn schema_diagnostics(
                     Utf16::from(text.replace("fewer than 1 length", "fewer than 1 characters"));
             }
         }
+        let (params, message) = if request_schema && error.keyword == "enum" {
+            // Ajv's public error envelope intentionally omits the schema's
+            // allowed values for enum failures.
+            (
+                Value::Object(vec![]),
+                Utf16::from("must pass \"enum\" keyword validation"),
+            )
+        } else if request_schema && error.keyword == "type" {
+            let expected = get(&error.params, "type").and_then(string);
+            let message = expected.map_or(message, |kind| Utf16::from(format!("must be {kind}")));
+            (copy(&error.params, ctx)?, message)
+        } else {
+            (copy(&error.params, ctx)?, message)
+        };
         items.push(Value::Object(vec![
             (
                 key("instancePath"),
@@ -96,7 +108,7 @@ fn schema_diagnostics(
             ),
             (key("schemaPath"), Value::String(schema_path)),
             (key("keyword"), text(&error.keyword)),
-            (key("params"), copy(&error.params, ctx)?),
+            (key("params"), params),
             (key("message"), Value::String(message)),
         ]));
     }
@@ -138,11 +150,7 @@ fn validate(
             })
             .collect(),
     );
-    let message = crate::serialization::write_json_value(
-        &diagnostics,
-        crate::serialization::Format::Json,
-        ctx,
-    )?;
+    let message = crate::serialization::stringify_compact_metered(&diagnostics, ctx)?;
     Err(EngineError::new(code, Utf16::from(error_path), message))
 }
 fn copy(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
@@ -171,7 +179,7 @@ fn validate_operation_schema(
     if errors.is_empty() {
         return Ok(());
     }
-    let message = schema_diagnostics(&errors, ctx)?;
+    let message = schema_diagnostics(&errors, false, ctx)?;
     Err(EngineError::new(code, Utf16::default(), message))
 }
 fn validate_request_schema(value: &Value, ctx: &mut Context<'_>) -> Result<(), EngineError> {
@@ -207,11 +215,49 @@ fn validate_request_schema(value: &Value, ctx: &mut Context<'_>) -> Result<(), E
         ("$ref", text("#/$defs/request")),
     ]);
     let compiled = CompiledSchema::compile(&wrapper, &SchemaResources::default(), ctx)?;
-    let errors = compiled.validate_codegen_errors(value, ctx)?;
+    let mut errors = compiled.validate_codegen_errors(value, ctx)?;
     if errors.is_empty() {
         return Ok(());
     }
-    let message = schema_diagnostics(&errors, ctx)?;
+    // The schema evaluator reports errors inside `then`, while Ajv also emits
+    // the enclosing `if` diagnostic after those branch errors. Derive this
+    // from the versioned request schema's conditional semantics, so the
+    // normalization applies to any request rejected by that condition.
+    let has_then_branch_error = errors.iter().any(|error| {
+        error
+            .schema_path
+            .to_utf8()
+            .ok()
+            .is_some_and(|path| path.starts_with("#/$defs/request/allOf/0/then/"))
+    });
+    if has_then_branch_error {
+        ctx.charge_work(128, Utf16::default())?;
+        let conditional_error = crate::schema::StructuralError {
+            instance_path: Utf16::default(),
+            python_source_path: false,
+            schema_path: Utf16::from("#/$defs/request/allOf/0/if"),
+            keyword: "if".to_owned(),
+            params: obj(vec![("failingKeyword", text("then"))]),
+            message: Utf16::from("must match \"then\" schema"),
+            compiler_property_name: None,
+            python_params: None,
+            python_error: None,
+            python_physical_instance_path: None,
+            python_instance_override: None,
+        };
+        let insertion_index = errors
+            .iter()
+            .rposition(|error| {
+                error
+                    .schema_path
+                    .to_utf8()
+                    .ok()
+                    .is_some_and(|path| path.starts_with("#/$defs/request/allOf/0/then/"))
+            })
+            .map_or(errors.len(), |index| index + 1);
+        errors.insert(insertion_index, conditional_error);
+    }
+    let message = schema_diagnostics(&errors, true, ctx)?;
     Err(EngineError::new(
         "CORE_CARDINALITY_REQUEST",
         Utf16::default(),
@@ -491,6 +537,18 @@ fn parse_request(request: &Value, ctx: &mut Context<'_>) -> Result<Request, Engi
     })
 }
 
+/// Rust-owned ordered request admission for host adapters that must copy later
+/// arguments only after the request has passed semantic schema checks.
+pub fn admit_core_cardinality_request(
+    request: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let copied = copy(request, ctx)?;
+    validate_request_schema(&copied, ctx)?;
+    parse_request(&copied, ctx)?;
+    Ok(copied)
+}
+
 fn set_member(object: &mut Value, name: &str, value: Option<Value>) -> Result<(), EngineError> {
     let members = match object {
         Value::Object(m) => m,
@@ -709,17 +767,13 @@ fn canonical(value: &Value, ctx: &mut Context<'_>, depth: usize) -> Result<Value
     }
 }
 
-/// Verify a retained declaration and reject forged, altered or stale receipts.
-pub fn verify_core_cardinality_declaration(
-    receipt: &Value,
-    current: &Value,
+fn prepare_verified_cardinality_receipt(
+    receipt: Value,
     engine: &Engine,
     registry: &Registry,
     caps: &mut dyn Capabilities,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
-    let receipt = copy(receipt, ctx)?;
-    let current = copy(current, ctx)?;
     if string(get(&receipt, "operation").unwrap_or(&Value::Null)).as_deref()
         != Some("declare-core-cardinality")
         || string(get(&receipt, "version").unwrap_or(&Value::Null)).as_deref() != Some("4.0.0")
@@ -776,6 +830,45 @@ pub fn verify_core_cardinality_declaration(
             "",
         ));
     }
+    Ok(receipt)
+}
+
+/// Rust-owned receipt admission and recomputation phase used before host
+/// adapters copy the later `current` argument. The returned value is retained
+/// privately by the adapter until `finish_core_cardinality_verification`.
+pub fn prepare_core_cardinality_verification(
+    receipt: &Value,
+    engine: &Engine,
+    registry: &Registry,
+    caps: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let receipt = copy(receipt, ctx)?;
+    prepare_verified_cardinality_receipt(receipt, engine, registry, caps, ctx)
+}
+
+/// Complete the staged verification after the host has copied `current`.
+/// Revalidate the receipt here because this operation is also reachable via
+/// the generic wire protocol, where callers can construct arbitrary payloads.
+pub fn finish_core_cardinality_verification(
+    prepared: &Value,
+    current: &Value,
+    engine: &Engine,
+    registry: &Registry,
+    caps: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let prepared = copy(prepared, ctx)?;
+    let current = copy(current, ctx)?;
+    let receipt = prepare_verified_cardinality_receipt(prepared, engine, registry, caps, ctx)?;
+    finish_verified_cardinality_current(receipt, current, ctx)
+}
+
+fn finish_verified_cardinality_current(
+    receipt: Value,
+    current: Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
     let target = get(&receipt, "target")
         .ok_or_else(|| err("CORE_CARDINALITY_RECEIPT", "Missing target", ""))?;
     if canonical(&current, ctx, 0)? != canonical(target, ctx, 0)? {
@@ -786,6 +879,21 @@ pub fn verify_core_cardinality_declaration(
         ));
     }
     Ok(receipt)
+}
+
+/// Verify a retained declaration and reject forged, altered or stale receipts.
+pub fn verify_core_cardinality_declaration(
+    receipt: &Value,
+    current: &Value,
+    engine: &Engine,
+    registry: &Registry,
+    caps: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let receipt = copy(receipt, ctx)?;
+    let current = copy(current, ctx)?;
+    let prepared = prepare_verified_cardinality_receipt(receipt, engine, registry, caps, ctx)?;
+    finish_verified_cardinality_current(prepared, current, ctx)
 }
 
 #[cfg(test)]
@@ -1008,17 +1116,15 @@ mod tests {
             .code,
             "CORE_CARDINALITY_RECEIPT"
         );
-        assert!(
-            verify_core_cardinality_declaration(
-                &receipt,
-                get(&receipt, "target").unwrap(),
-                &engine(),
-                &Registry::new(),
-                &mut NoCapabilities,
-                &mut Context::ordinary()
-            )
-            .is_ok()
-        );
+        assert!(verify_core_cardinality_declaration(
+            &receipt,
+            get(&receipt, "target").unwrap(),
+            &engine(),
+            &Registry::new(),
+            &mut NoCapabilities,
+            &mut Context::ordinary()
+        )
+        .is_ok());
         let mut stale = get(&receipt, "target").unwrap().clone();
         let Value::Object(fields) = &mut stale else {
             panic!()
@@ -1034,6 +1140,134 @@ mod tests {
         )
         .unwrap_err();
         assert_eq!(error.code, "CORE_CARDINALITY_STALE");
+    }
+
+    #[test]
+    fn staged_request_admission_is_rust_owned_and_precedes_later_inputs() {
+        let admitted = admit_core_cardinality_request(
+            &obj(vec![("cardinality", text("one"))]),
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        assert_eq!(get(&admitted, "cardinality"), Some(&text("one")));
+        let error = admit_core_cardinality_request(
+            &obj(vec![("cardinality", text("future"))]),
+            &mut Context::ordinary(),
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "CORE_CARDINALITY_REQUEST");
+    }
+
+    #[test]
+    fn staged_receipt_preflight_precedes_later_current_admission() {
+        let receipt = run_declare(&source(), &obj(vec![("cardinality", text("one"))]));
+        let prepared = prepare_core_cardinality_verification(
+            &receipt,
+            &engine(),
+            &Registry::new(),
+            &mut NoCapabilities,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        assert_eq!(
+            finish_core_cardinality_verification(
+                &prepared,
+                get(&receipt, "target").unwrap(),
+                &engine(),
+                &Registry::new(),
+                &mut NoCapabilities,
+                &mut Context::ordinary(),
+            )
+            .unwrap(),
+            receipt
+        );
+
+        let mut forged = copy(&receipt, &mut Context::ordinary()).unwrap();
+        let archived = get_mut(&mut forged, "source").unwrap();
+        let modules = get_mut(archived, "modules").unwrap();
+        let Value::Array(modules) = modules else {
+            panic!()
+        };
+        let Value::Array(elements) = get_mut(&mut modules[0], "elements").unwrap() else {
+            panic!()
+        };
+        if let Value::Object(fields) = &mut elements[0] {
+            fields.push((key("cardinality"), text("future-container")));
+        }
+        let error = prepare_core_cardinality_verification(
+            &forged,
+            &engine(),
+            &Registry::new(),
+            &mut NoCapabilities,
+            &mut Context::ordinary(),
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "CORE_CARDINALITY_UNKNOWN");
+        assert_eq!(
+            error.path.to_utf8().unwrap(),
+            "/modules/0/elements/0/cardinality"
+        );
+    }
+
+    #[test]
+    fn staged_verifier_accepts_receipt_near_text_limit_when_reference_does() {
+        let mut source = source();
+        let modules = get_mut(&mut source, "modules").unwrap();
+        let Value::Array(modules) = modules else {
+            panic!()
+        };
+        let elements = get_mut(&mut modules[0], "elements").unwrap();
+        let Value::Array(elements) = elements else {
+            panic!()
+        };
+        let extensions = get_mut(&mut elements[0], "extensions").unwrap();
+        let future = get_mut(extensions, "future").unwrap();
+        *get_mut(future, "opaque").unwrap() =
+            Value::String(Utf16::from("x".repeat(3_750_000).as_str()));
+
+        let request = obj(vec![("cardinality", text("one"))]);
+        let identity = Identity {
+            module: "m".into(),
+            element: "e".into(),
+        };
+        let receipt = declare_core_cardinality(
+            &source,
+            &identity,
+            &request,
+            &engine(),
+            &Registry::new(),
+            &mut NoCapabilities,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+
+        let reference = verify_core_cardinality_declaration(
+            &receipt,
+            get(&receipt, "target").unwrap(),
+            &engine(),
+            &Registry::new(),
+            &mut NoCapabilities,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        let prepared = prepare_core_cardinality_verification(
+            &receipt,
+            &engine(),
+            &Registry::new(),
+            &mut NoCapabilities,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        let staged = finish_core_cardinality_verification(
+            &prepared,
+            get(&receipt, "target").unwrap(),
+            &engine(),
+            &Registry::new(),
+            &mut NoCapabilities,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        assert_eq!(staged, reference);
     }
 
     #[test]
@@ -1334,6 +1568,271 @@ mod tests {
                 get(get(&vectors, "expectedProvenance").unwrap(), name),
                 "provenance {name}"
             );
+        }
+    }
+
+    #[test]
+    fn request_schema_diagnostics_match_ajv_envelopes() {
+        let cases = [
+            (
+                Value::Null,
+                r##"[{"instancePath":"","schemaPath":"#/type","keyword":"type","params":{"type":"object"},"message":"must be object"}]"##,
+            ),
+            (
+                obj(vec![]),
+                r##"[{"instancePath":"","schemaPath":"#/required","keyword":"required","params":{"missingProperty":"cardinality"},"message":"must have required property 'cardinality'"}]"##,
+            ),
+            (
+                obj(vec![
+                    ("cardinality", text("one")),
+                    ("future", Value::Bool(true)),
+                ]),
+                r##"[{"instancePath":"","schemaPath":"#/additionalProperties","keyword":"additionalProperties","params":{"additionalProperty":"future"},"message":"must NOT have additional properties"}]"##,
+            ),
+            (
+                obj(vec![("cardinality", text("bogus"))]),
+                r##"[{"instancePath":"/cardinality","schemaPath":"#/$defs/cardinality/enum","keyword":"enum","params":{},"message":"must pass \"enum\" keyword validation"}]"##,
+            ),
+            (
+                obj(vec![
+                    ("cardinality", text("one")),
+                    (
+                        "itemType",
+                        obj(vec![("module", text("m")), ("element", text("e"))]),
+                    ),
+                ]),
+                r##"[{"instancePath":"/cardinality","schemaPath":"#/allOf/0/then/properties/cardinality/enum","keyword":"enum","params":{},"message":"must pass \"enum\" keyword validation"},{"instancePath":"","schemaPath":"#/allOf/0/if","keyword":"if","params":{"failingKeyword":"then"},"message":"must match \"then\" schema"}]"##,
+            ),
+            (
+                obj(vec![
+                    ("cardinality", text("bogus")),
+                    (
+                        "itemType",
+                        obj(vec![("module", text("m")), ("element", text("e"))]),
+                    ),
+                ]),
+                r##"[{"instancePath":"/cardinality","schemaPath":"#/allOf/0/then/properties/cardinality/enum","keyword":"enum","params":{},"message":"must pass \"enum\" keyword validation"},{"instancePath":"","schemaPath":"#/allOf/0/if","keyword":"if","params":{"failingKeyword":"then"},"message":"must match \"then\" schema"},{"instancePath":"/cardinality","schemaPath":"#/$defs/cardinality/enum","keyword":"enum","params":{},"message":"must pass \"enum\" keyword validation"}]"##,
+            ),
+            (
+                obj(vec![
+                    ("cardinality", Value::Null),
+                    (
+                        "itemType",
+                        obj(vec![("module", text("m")), ("element", text("e"))]),
+                    ),
+                ]),
+                r##"[{"instancePath":"/cardinality","schemaPath":"#/allOf/0/then/properties/cardinality/enum","keyword":"enum","params":{},"message":"must pass \"enum\" keyword validation"},{"instancePath":"","schemaPath":"#/allOf/0/if","keyword":"if","params":{"failingKeyword":"then"},"message":"must match \"then\" schema"},{"instancePath":"/cardinality","schemaPath":"#/$defs/cardinality/enum","keyword":"enum","params":{},"message":"must pass \"enum\" keyword validation"}]"##,
+            ),
+            (
+                obj(vec![
+                    ("cardinality", Value::Number(1.0)),
+                    (
+                        "itemType",
+                        obj(vec![("module", text("m")), ("element", text("e"))]),
+                    ),
+                ]),
+                r##"[{"instancePath":"/cardinality","schemaPath":"#/allOf/0/then/properties/cardinality/enum","keyword":"enum","params":{},"message":"must pass \"enum\" keyword validation"},{"instancePath":"","schemaPath":"#/allOf/0/if","keyword":"if","params":{"failingKeyword":"then"},"message":"must match \"then\" schema"},{"instancePath":"/cardinality","schemaPath":"#/$defs/cardinality/enum","keyword":"enum","params":{},"message":"must pass \"enum\" keyword validation"}]"##,
+            ),
+        ];
+        for (input, expected) in cases {
+            let error = validate_request_schema(&input, &mut Context::ordinary()).unwrap_err();
+            assert_eq!(error.code, "CORE_CARDINALITY_REQUEST");
+            assert_eq!(error.message.to_utf8().unwrap(), expected);
+        }
+    }
+
+    #[test]
+    fn frozen_typescript_request_matrix_matches_rust_declaration() {
+        let packet = parse(include_str!(
+            "../../../docs/helix/04-build/evidence/rust-migration/r5-model-bindings/frozen-cardinality-typescript.json"
+        ));
+        let controls = get(
+            get(&packet, "hostAdmissionControls").unwrap(),
+            "requestSchemaControls",
+        )
+        .unwrap();
+        let document = get(&packet, "document").unwrap();
+        let identity_value = get(&packet, "identity").unwrap();
+        let identity = Identity {
+            module: string(get(identity_value, "module").unwrap())
+                .unwrap()
+                .into(),
+            element: string(get(identity_value, "element").unwrap())
+                .unwrap()
+                .into(),
+        };
+        let requests = [
+            ("null", Value::Null),
+            ("empty", obj(vec![])),
+            ("number", Value::Number(42.0)),
+            ("boolean", Value::Bool(true)),
+            ("array", Value::Array(vec![])),
+            (
+                "extra",
+                obj(vec![
+                    ("cardinality", text("one")),
+                    ("future", Value::Bool(true)),
+                ]),
+            ),
+            (
+                "invalidCardinality",
+                obj(vec![("cardinality", text("bogus"))]),
+            ),
+            ("nullCardinality", obj(vec![("cardinality", Value::Null)])),
+            (
+                "numberCardinality",
+                obj(vec![("cardinality", Value::Number(1.0))]),
+            ),
+            (
+                "conditionalOne",
+                obj(vec![
+                    ("cardinality", text("one")),
+                    (
+                        "itemType",
+                        obj(vec![("module", text("m")), ("element", text("v"))]),
+                    ),
+                ]),
+            ),
+            (
+                "arrayNullItem",
+                obj(vec![
+                    ("cardinality", text("array")),
+                    ("itemType", Value::Null),
+                ]),
+            ),
+            (
+                "arrayEmptyItem",
+                obj(vec![
+                    ("cardinality", text("array")),
+                    ("itemType", obj(vec![])),
+                ]),
+            ),
+            (
+                "arrayModuleEmpty",
+                obj(vec![
+                    ("cardinality", text("array")),
+                    (
+                        "itemType",
+                        obj(vec![("module", text("")), ("element", text("v"))]),
+                    ),
+                ]),
+            ),
+            (
+                "arrayElementEmpty",
+                obj(vec![
+                    ("cardinality", text("array")),
+                    (
+                        "itemType",
+                        obj(vec![("module", text("m")), ("element", text(""))]),
+                    ),
+                ]),
+            ),
+            (
+                "arrayItemExtra",
+                obj(vec![
+                    ("cardinality", text("array")),
+                    (
+                        "itemType",
+                        obj(vec![
+                            ("module", text("m")),
+                            ("element", text("v")),
+                            ("future", Value::Bool(true)),
+                        ]),
+                    ),
+                ]),
+            ),
+            (
+                "arrayItemArray",
+                obj(vec![
+                    ("cardinality", text("array")),
+                    ("itemType", Value::Array(vec![])),
+                ]),
+            ),
+            (
+                "mapItemNumber",
+                obj(vec![
+                    ("cardinality", text("map")),
+                    ("itemType", Value::Number(1.0)),
+                ]),
+            ),
+            (
+                "conditionalUnspecified",
+                obj(vec![
+                    ("cardinality", text("unspecified")),
+                    (
+                        "itemType",
+                        obj(vec![("module", text("m")), ("element", text("v"))]),
+                    ),
+                ]),
+            ),
+            (
+                "conditionalNull",
+                obj(vec![
+                    ("cardinality", Value::Null),
+                    (
+                        "itemType",
+                        obj(vec![("module", text("m")), ("element", text("v"))]),
+                    ),
+                ]),
+            ),
+            (
+                "conditionalNumber",
+                obj(vec![
+                    ("cardinality", Value::Number(1.0)),
+                    (
+                        "itemType",
+                        obj(vec![("module", text("m")), ("element", text("v"))]),
+                    ),
+                ]),
+            ),
+            (
+                "conditionalBogus",
+                obj(vec![
+                    ("cardinality", text("bogus")),
+                    (
+                        "itemType",
+                        obj(vec![("module", text("m")), ("element", text("v"))]),
+                    ),
+                ]),
+            ),
+            (
+                "arrayItemNumberKeys",
+                obj(vec![
+                    ("cardinality", text("array")),
+                    (
+                        "itemType",
+                        obj(vec![
+                            ("module", Value::Number(1.0)),
+                            ("element", Value::Number(2.0)),
+                        ]),
+                    ),
+                ]),
+            ),
+        ];
+        for (name, request) in requests {
+            let actual = match declare_core_cardinality(
+                document,
+                &identity,
+                &request,
+                &engine(),
+                &Registry::new(),
+                &mut NoCapabilities,
+                &mut Context::ordinary(),
+            ) {
+                Ok(value) => obj(vec![("ok", Value::Bool(true)), ("value", value)]),
+                Err(error) => obj(vec![
+                    ("ok", Value::Bool(false)),
+                    (
+                        "error",
+                        obj(vec![
+                            ("code", text(&error.code)),
+                            ("message", Value::String(error.message)),
+                            ("path", Value::String(error.path)),
+                        ]),
+                    ),
+                ]),
+            };
+            assert_eq!(get(controls, name), Some(&actual), "request: {name}");
         }
     }
 }

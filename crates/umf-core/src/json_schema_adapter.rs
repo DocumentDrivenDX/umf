@@ -13,7 +13,7 @@ use crate::{
     native_json::{NativeJsonNode, NativeJsonTree},
     registry::Registry,
     serialization::{self, Format},
-    value::{Utf16, Value, copy_json},
+    value::{copy_json, Utf16, Value},
 };
 
 pub const DIALECT_2020_12: &str = "https://json-schema.org/draft/2020-12/schema";
@@ -47,6 +47,129 @@ pub struct ExportBundle {
 const CORE_VERSION: &str = "0.10.0";
 const EXTENSION_VERSION: &str = "0.1.0";
 
+/// Immutable pinned core and extension validators for a prepared JSON Schema
+/// binding. Resource parsing, Engine construction, and extension registration
+/// happen once at factory setup; invocation methods use the caller's fresh
+/// Context for only the current request and validation work.
+pub struct JsonSchemaRuntime {
+    engine: Engine,
+    plain_registry: Registry,
+    inspection_registry: Registry,
+}
+
+impl JsonSchemaRuntime {
+    /// Admit the fixed repository schemas and JSON Schema extension manifest
+    /// under the factory's setup Context. Bindings may attach a dedicated
+    /// resource-setup control bridge to that Context; operation controls are
+    /// intentionally separate.
+    pub fn new(ctx: &mut Context<'_>) -> Result<Self, EngineError> {
+        let engine = Engine::new(
+            ResourceSet::new(
+                embedded_resource(include_str!("../../../spec/core/schema.json"), ctx)?,
+                embedded_resource(
+                    include_str!("../../../spec/core/semantic-type-reference.schema.json"),
+                    ctx,
+                )?,
+                embedded_resource(
+                    include_str!("../../../spec/core/extension-package.schema.json"),
+                    ctx,
+                )?,
+                embedded_resource(
+                    include_str!("../../../spec/metamodel/generated/core-constraints.json"),
+                    ctx,
+                )?,
+                embedded_resource(
+                    include_str!("../../../spec/metamodel/generated/domain-policy.json"),
+                    ctx,
+                )?,
+            ),
+            ctx,
+        )?;
+
+        let manifest = embedded_resource(
+            include_str!("../../../spec/extensions/json-schema/package.json"),
+            ctx,
+        )?;
+        let schema_resources = engine.schema_resources_with_context(ctx)?;
+        let mut inspection_registry = Registry::new();
+        inspection_registry.register(
+            &manifest,
+            Some(1),
+            engine.package_schema(),
+            &schema_resources,
+            ctx,
+        )?;
+
+        Ok(Self {
+            engine,
+            plain_registry: Registry::new(),
+            inspection_registry,
+        })
+    }
+
+    /// Validate a complete document with the same extension capability mode
+    /// selected by the TypeScript predecessor's inspection path.
+    pub fn validate_document(
+        &self,
+        document: &Value,
+        inspect_extensions: bool,
+        ctx: &mut Context<'_>,
+    ) -> Result<Validation, EngineError> {
+        let registry = if inspect_extensions {
+            &self.inspection_registry
+        } else {
+            &self.plain_registry
+        };
+        let mut inspect_capabilities = JsonSchemaInspectionCapabilities;
+        let mut plain_capabilities = NoExtensionCapabilities;
+        let capabilities: &mut dyn Capabilities = if inspect_extensions {
+            &mut inspect_capabilities
+        } else {
+            &mut plain_capabilities
+        };
+        self.engine
+            .validate_document(document, registry, capabilities, ctx)
+    }
+
+    pub fn inspect_document(
+        &self,
+        document: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Validation, EngineError> {
+        self.validate_document(document, true, ctx)
+    }
+
+    /// Edit after pointer and replacement admission has happened in this
+    /// operation Context. The retained registry and Engine are read-only.
+    pub fn edit_node(
+        &self,
+        document: &Value,
+        pointer: &Utf16,
+        replacement_source: &[u16],
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let segments = crate::native_json::native_pointer(pointer, ctx)?;
+        let replacement = NativeJsonTree::parse_json(replacement_source, ctx)?;
+        let mut capabilities = JsonSchemaInspectionCapabilities;
+        edit_node_parsed(
+            document,
+            segments,
+            replacement,
+            &self.inspection_registry,
+            &self.engine,
+            &mut capabilities,
+            ctx,
+        )
+    }
+}
+
+fn embedded_resource(source: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    let utf16_units = source.encode_utf16().count();
+    ctx.charge_text(utf16_units, Utf16::default())?;
+    let source = source.encode_utf16().collect::<Vec<_>>();
+    serialization::read_json_value(&source, Format::Json, ctx)
+}
+
 /// Import explicit JSON Schema source and resources into one UMF document.
 /// Resource inputs are ordered and caller-owned; this operation performs no I/O.
 /// Admission order follows the TypeScript predecessor: base URI, each resource
@@ -56,6 +179,30 @@ pub fn import_json_schema(
     id: &Utf16,
     base_uri: &Utf16,
     resource_sources: &[(Utf16, Vec<u16>)],
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    import_json_schema_inner(source, id, base_uri, resource_sources, None, ctx)
+}
+
+/// Prepared-runtime form of [`import_json_schema`]. The runtime owns the
+/// pinned validator resources admitted during factory setup.
+pub fn import_json_schema_with_runtime(
+    source: &[u16],
+    id: &Utf16,
+    base_uri: &Utf16,
+    resource_sources: &[(Utf16, Vec<u16>)],
+    runtime: &JsonSchemaRuntime,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    import_json_schema_inner(source, id, base_uri, resource_sources, Some(runtime), ctx)
+}
+
+fn import_json_schema_inner(
+    source: &[u16],
+    id: &Utf16,
+    base_uri: &Utf16,
+    resource_sources: &[(Utf16, Vec<u16>)],
+    runtime: Option<&JsonSchemaRuntime>,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     parse_uri(base_uri, ctx)?;
@@ -82,13 +229,19 @@ pub fn import_json_schema(
         representation_extras: Vec::new(),
     };
     let document = make_document(id, base_uri, &payload, ctx)?;
-    let validation = match crate::json_schema_inspect::inspect_document(&document, ctx) {
+    let validation = match match runtime {
+        Some(runtime) => runtime.inspect_document(&document, ctx),
+        None => crate::json_schema_inspect::inspect_document(&document, ctx),
+    } {
         Ok(validation) => validation,
         Err(error)
             if !error.is_control_failure()
                 && error.code != "LIMIT"
                 && error.code != "CANCELLED"
-                && matches!(error.code.as_str(), "JSON_SCHEMA_ROOT" | "JSON_SCHEMA_RESOURCE" | "JSON_SCHEMA_RESOURCE_COLLISION") =>
+                && matches!(
+                    error.code.as_str(),
+                    "JSON_SCHEMA_ROOT" | "JSON_SCHEMA_RESOURCE" | "JSON_SCHEMA_RESOURCE_COLLISION"
+                ) =>
         {
             let (code, message) = semantic_admission_diagnostic(&error, &payload, ctx)?;
             Validation {
@@ -120,9 +273,26 @@ pub fn inspect_json_schema(
     crate::json_schema_inspect::inspect_document(document, ctx)
 }
 
+pub fn inspect_json_schema_with_runtime(
+    document: &Value,
+    runtime: &JsonSchemaRuntime,
+    ctx: &mut Context<'_>,
+) -> Result<Validation, EngineError> {
+    runtime.inspect_document(document, ctx)
+}
+
 /// Export the native root schema, preserving exact number lexemes.
 pub fn export_json_schema(document: &Value, ctx: &mut Context<'_>) -> Result<Utf16, EngineError> {
-    let payload = exportable_payload(document, ctx)?;
+    let payload = exportable_payload(document, None, ctx)?;
+    export_root(&payload, ctx)
+}
+
+pub fn export_json_schema_with_runtime(
+    document: &Value,
+    runtime: &JsonSchemaRuntime,
+    ctx: &mut Context<'_>,
+) -> Result<Utf16, EngineError> {
+    let payload = exportable_payload(document, Some(runtime), ctx)?;
     export_root(&payload, ctx)
 }
 
@@ -131,7 +301,16 @@ pub fn export_json_schema_resources(
     document: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<Vec<(Utf16, Utf16)>, EngineError> {
-    let payload = exportable_payload(document, ctx)?;
+    let payload = exportable_payload(document, None, ctx)?;
+    export_resources(&payload, ctx)
+}
+
+pub fn export_json_schema_resources_with_runtime(
+    document: &Value,
+    runtime: &JsonSchemaRuntime,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<(Utf16, Utf16)>, EngineError> {
+    let payload = exportable_payload(document, Some(runtime), ctx)?;
     export_resources(&payload, ctx)
 }
 
@@ -145,6 +324,16 @@ pub fn get_json_schema_node(
     get_node(&payload, pointer, ctx)
 }
 
+pub fn get_json_schema_node_with_runtime(
+    document: &Value,
+    pointer: &Utf16,
+    runtime: &JsonSchemaRuntime,
+    ctx: &mut Context<'_>,
+) -> Result<NativeJsonTree, EngineError> {
+    let payload = payload_from_document_with_runtime(document, runtime, ctx)?;
+    get_node(&payload, pointer, ctx)
+}
+
 /// Return copied Draft 2020-12 schema positions from the root resource.
 pub fn walk_json_schema(
     document: &Value,
@@ -154,16 +343,44 @@ pub fn walk_json_schema(
     walk(&payload, ctx)
 }
 
+pub fn walk_json_schema_with_runtime(
+    document: &Value,
+    runtime: &JsonSchemaRuntime,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<SchemaPosition>, EngineError> {
+    let payload = payload_from_document_with_runtime(document, runtime, ctx)?;
+    walk(&payload, ctx)
+}
+
 /// Export the complete native bundle and retain the UMF source document.
 pub fn export_json_schema_bundle(
     document: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<ExportBundle, EngineError> {
-    let payload = exportable_payload(document, ctx)?;
+    export_json_schema_bundle_inner(document, None, ctx)
+}
+
+pub fn export_json_schema_bundle_with_runtime(
+    document: &Value,
+    runtime: &JsonSchemaRuntime,
+    ctx: &mut Context<'_>,
+) -> Result<ExportBundle, EngineError> {
+    export_json_schema_bundle_inner(document, Some(runtime), ctx)
+}
+
+fn export_json_schema_bundle_inner(
+    document: &Value,
+    runtime: Option<&JsonSchemaRuntime>,
+    ctx: &mut Context<'_>,
+) -> Result<ExportBundle, EngineError> {
+    let payload = exportable_payload(document, runtime, ctx)?;
     let resources_json = export_resources(&payload, ctx)?;
     let root_json = export_root(&payload, ctx)?;
     let source = copy_json(document, ctx)?;
-    let validation = inspect_json_schema(document, ctx)?;
+    let validation = match runtime {
+        Some(runtime) => inspect_json_schema_with_runtime(document, runtime, ctx)?,
+        None => inspect_json_schema(document, ctx)?,
+    };
     let mut diagnostics = validation.diagnostics;
     ctx.charge_work(diagnostics.len().saturating_add(1), Utf16::default())?;
     diagnostics.push(Diagnostic {
@@ -237,7 +454,10 @@ fn admit_payload_inner(
     parse_uri(&base_uri, ctx)?;
     let root = NativeJsonTree::from_tagged_value(field(fields, "root")?, ctx)?;
     if !retain_invalid_schema_roots
-        && !matches!(root.root(), NativeJsonNode::Object(_) | NativeJsonNode::Boolean(_))
+        && !matches!(
+            root.root(),
+            NativeJsonNode::Object(_) | NativeJsonNode::Boolean(_)
+        )
     {
         return Err(err(
             "JSON_SCHEMA_ROOT",
@@ -257,8 +477,7 @@ fn admit_payload_inner(
         ctx.charge_work(uri.len(), Utf16::default())?;
         ctx.charge_work(1, Utf16::default())?;
         parse_uri(uri, ctx)?;
-        if (!retrieval_uris.insert(uri.clone()) || uri == &base_uri)
-            && !retain_invalid_schema_roots
+        if (!retrieval_uris.insert(uri.clone()) || uri == &base_uri) && !retain_invalid_schema_roots
         {
             return Err(err(
                 "JSON_SCHEMA_RESOURCE_COLLISION",
@@ -267,7 +486,10 @@ fn admit_payload_inner(
         }
         let native = NativeJsonTree::from_tagged_value(tree, ctx)?;
         if !retain_invalid_schema_roots
-            && !matches!(native.root(), NativeJsonNode::Object(_) | NativeJsonNode::Boolean(_))
+            && !matches!(
+                native.root(),
+                NativeJsonNode::Object(_) | NativeJsonNode::Boolean(_)
+            )
         {
             return Err(err(
                 "JSON_SCHEMA_RESOURCE",
@@ -291,7 +513,26 @@ pub fn payload_from_document(
     document: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<JsonSchemaPayload, EngineError> {
-    let validation = validate_complete_document(document, ctx)?;
+    payload_from_document_inner(document, None, ctx)
+}
+
+pub fn payload_from_document_with_runtime(
+    document: &Value,
+    runtime: &JsonSchemaRuntime,
+    ctx: &mut Context<'_>,
+) -> Result<JsonSchemaPayload, EngineError> {
+    payload_from_document_inner(document, Some(runtime), ctx)
+}
+
+fn payload_from_document_inner(
+    document: &Value,
+    runtime: Option<&JsonSchemaRuntime>,
+    ctx: &mut Context<'_>,
+) -> Result<JsonSchemaPayload, EngineError> {
+    let validation = match runtime {
+        Some(runtime) => runtime.validate_document(document, false, ctx),
+        None => validate_complete_document(document, ctx),
+    }?;
     if !validation.valid {
         return Err(validation_error("INVALID_DOCUMENT", &validation, ctx)?);
     }
@@ -415,19 +656,31 @@ impl Capabilities for JsonSchemaInspectionCapabilities {
         context: &SemanticContext,
         ctx: &mut Context<'_>,
     ) -> Result<Vec<Diagnostic>, crate::engine::CapabilityError> {
-        if !context.path.units().ends_with(Utf16::from("/extensions/umf.json-schema").units()) {
+        if !context
+            .path
+            .units()
+            .ends_with(Utf16::from("/extensions/umf.json-schema").units())
+        {
             return Ok(Vec::new());
         }
         let admitted = match admit_payload_for_inspection(payload, ctx) {
             Ok(payload) => payload,
-            Err(error) if error.is_control_failure() || error.code == "LIMIT" || error.code == "CANCELLED" => {
+            Err(error)
+                if error.is_control_failure()
+                    || error.code == "LIMIT"
+                    || error.code == "CANCELLED" =>
+            {
                 return Err(crate::engine::CapabilityError::Engine(error));
             }
             Err(error) => return Ok(vec![inspection_error_diagnostic(error, &context.path)]),
         };
         match crate::json_schema_inspect::inspect_payload(&admitted, &context.path, ctx) {
             Ok(diagnostics) => Ok(diagnostics),
-            Err(error) if error.is_control_failure() || error.code == "LIMIT" || error.code == "CANCELLED" => {
+            Err(error)
+                if error.is_control_failure()
+                    || error.code == "LIMIT"
+                    || error.code == "CANCELLED" =>
+            {
                 Err(crate::engine::CapabilityError::Engine(error))
             }
             Err(error) => Ok(vec![inspection_error_diagnostic(error, &context.path)]),
@@ -695,9 +948,17 @@ pub fn export_bundle(
     })
 }
 
-fn exportable_payload(document: &Value, ctx: &mut Context<'_>) -> Result<JsonSchemaPayload, EngineError> {
-    let payload = payload_from_document(document, ctx)?;
-    let diagnostics = crate::json_schema_inspect::inspect_payload(&payload, &Utf16::default(), ctx)?;
+fn exportable_payload(
+    document: &Value,
+    runtime: Option<&JsonSchemaRuntime>,
+    ctx: &mut Context<'_>,
+) -> Result<JsonSchemaPayload, EngineError> {
+    let payload = match runtime {
+        Some(runtime) => payload_from_document_with_runtime(document, runtime, ctx)?,
+        None => payload_from_document(document, ctx)?,
+    };
+    let diagnostics =
+        crate::json_schema_inspect::inspect_payload(&payload, &Utf16::default(), ctx)?;
     if diagnostics.iter().any(|item| {
         item.severity == Severity::Error || item.code == Utf16::from("JSON_SCHEMA_REPRESENTATION")
     }) {
@@ -720,9 +981,18 @@ fn make_document(
         resource_members.push((uri.clone(), tree.tagged_value_preserving_extras(ctx)?));
     }
     let payload_value = Value::Object(vec![
-        (Utf16::from("dialect"), Value::String(payload.dialect.clone())),
-        (Utf16::from("baseUri"), Value::String(payload.base_uri.clone())),
-        (Utf16::from("root"), payload.root.tagged_value_preserving_extras(ctx)?),
+        (
+            Utf16::from("dialect"),
+            Value::String(payload.dialect.clone()),
+        ),
+        (
+            Utf16::from("baseUri"),
+            Value::String(payload.base_uri.clone()),
+        ),
+        (
+            Utf16::from("root"),
+            payload.root.tagged_value_preserving_extras(ctx)?,
+        ),
         (Utf16::from("resources"), Value::Object(resource_members)),
     ]);
     let extension = Value::Object(vec![(Utf16::from(EXTENSION), payload_value)]);
@@ -737,7 +1007,10 @@ fn make_document(
     ]);
     let vocabularies = Value::Object(vec![(
         Utf16::from(EXTENSION),
-        Value::Object(vec![(Utf16::from("version"), Value::string_utf8(EXTENSION_VERSION))]),
+        Value::Object(vec![(
+            Utf16::from("version"),
+            Value::string_utf8(EXTENSION_VERSION),
+        )]),
     )]);
     copy_json(
         &Value::Object(vec![
@@ -770,7 +1043,9 @@ fn diagnostics_error(
         while index < units.len() {
             let unit = units[index];
             if (0xd800..=0xdbff).contains(&unit)
-                && units.get(index + 1).is_some_and(|next| (0xdc00..=0xdfff).contains(next))
+                && units
+                    .get(index + 1)
+                    .is_some_and(|next| (0xdc00..=0xdfff).contains(next))
             {
                 length = length.saturating_add(2);
                 index += 2;
@@ -792,7 +1067,9 @@ fn diagnostics_error(
         while index < units.len() {
             let unit = units[index];
             if (0xd800..=0xdbff).contains(&unit)
-                && units.get(index + 1).is_some_and(|next| (0xdc00..=0xdfff).contains(next))
+                && units
+                    .get(index + 1)
+                    .is_some_and(|next| (0xdc00..=0xdfff).contains(next))
             {
                 output.extend([unit, units[index + 1]]);
                 index += 2;
@@ -808,7 +1085,14 @@ fn diagnostics_error(
                 0x09 => output.extend([b'\\' as u16, b't' as u16]),
                 0x00..=0x1f => {
                     const HEX: &[u8; 16] = b"0123456789abcdef";
-                    output.extend([b'\\' as u16, b'u' as u16, b'0' as u16, b'0' as u16, HEX[((unit >> 4) & 0xf) as usize] as u16, HEX[(unit & 0xf) as usize] as u16]);
+                    output.extend([
+                        b'\\' as u16,
+                        b'u' as u16,
+                        b'0' as u16,
+                        b'0' as u16,
+                        HEX[((unit >> 4) & 0xf) as usize] as u16,
+                        HEX[(unit & 0xf) as usize] as u16,
+                    ]);
                 }
                 0xd800..=0xdfff => {
                     const HEX: &[u8; 16] = b"0123456789abcdef";
@@ -829,21 +1113,37 @@ fn diagnostics_error(
     }
 
     ctx.charge_work(diagnostics.len().saturating_add(1), Utf16::default())?;
-    let keys = [Utf16::from("code"), Utf16::from("path"), Utf16::from("message"), Utf16::from("severity")];
+    let keys = [
+        Utf16::from("code"),
+        Utf16::from("path"),
+        Utf16::from("message"),
+        Utf16::from("severity"),
+    ];
     let mut length = 2usize;
     for (index, item) in diagnostics.iter().enumerate() {
-        let severity = Utf16::from(match item.severity { Severity::Error => "error", Severity::Warning => "warning" });
+        let severity = Utf16::from(match item.severity {
+            Severity::Error => "error",
+            Severity::Warning => "warning",
+        });
         let fields = [
             (&keys[0], &item.code),
             (&keys[1], &item.path),
             (&keys[2], &item.message),
             (&keys[3], &severity),
         ];
-        length = length.saturating_add(if index == 0 { 0 } else { 1 }).saturating_add(2);
+        length = length
+            .saturating_add(if index == 0 { 0 } else { 1 })
+            .saturating_add(2);
         for (field_index, (key, value)) in fields.iter().enumerate() {
-            ctx.charge_work(key.len().saturating_add(value.len()).saturating_add(1), item.path.clone())?;
-            length = length.saturating_add(if field_index == 0 { 0 } else { 1 })
-                .saturating_add(string_len(key)).saturating_add(1).saturating_add(string_len(value));
+            ctx.charge_work(
+                key.len().saturating_add(value.len()).saturating_add(1),
+                item.path.clone(),
+            )?;
+            length = length
+                .saturating_add(if field_index == 0 { 0 } else { 1 })
+                .saturating_add(string_len(key))
+                .saturating_add(1)
+                .saturating_add(string_len(value));
         }
     }
     if length > ctx.limits().max_text_units {
@@ -853,9 +1153,14 @@ fn diagnostics_error(
     let mut output = Vec::with_capacity(length);
     output.push(b'[' as u16);
     for (index, item) in diagnostics.iter().enumerate() {
-        if index != 0 { output.push(b',' as u16); }
+        if index != 0 {
+            output.push(b',' as u16);
+        }
         output.push(b'{' as u16);
-        let severity = Utf16::from(match item.severity { Severity::Error => "error", Severity::Warning => "warning" });
+        let severity = Utf16::from(match item.severity {
+            Severity::Error => "error",
+            Severity::Warning => "warning",
+        });
         let values = [
             (&keys[0], &item.code),
             (&keys[1], &item.path),
@@ -863,7 +1168,9 @@ fn diagnostics_error(
             (&keys[3], &severity),
         ];
         for (field_index, (key, value)) in values.iter().enumerate() {
-            if field_index != 0 { output.push(b',' as u16); }
+            if field_index != 0 {
+                output.push(b',' as u16);
+            }
             write_string(key, &mut output);
             output.push(b':' as u16);
             write_string(value, &mut output);
@@ -882,15 +1189,29 @@ fn semantic_admission_diagnostic(
     match error.code.as_str() {
         "JSON_SCHEMA_ROOT" => Ok((
             "JSON_SCHEMA_ROOT",
-            format!("Resource {} must be object or boolean", display_uri(&payload.base_uri, ctx)?),
+            format!(
+                "Resource {} must be object or boolean",
+                display_uri(&payload.base_uri, ctx)?
+            ),
         )),
         "JSON_SCHEMA_RESOURCE" => {
-            let uri = payload.resources.iter().find(|(_, tree)| {
-                !matches!(tree.root(), NativeJsonNode::Object(_) | NativeJsonNode::Boolean(_))
-            }).map(|(uri, _)| uri).unwrap_or(&payload.base_uri);
+            let uri = payload
+                .resources
+                .iter()
+                .find(|(_, tree)| {
+                    !matches!(
+                        tree.root(),
+                        NativeJsonNode::Object(_) | NativeJsonNode::Boolean(_)
+                    )
+                })
+                .map(|(uri, _)| uri)
+                .unwrap_or(&payload.base_uri);
             Ok((
                 "JSON_SCHEMA_ROOT",
-                format!("Resource {} must be object or boolean", display_uri(uri, ctx)?),
+                format!(
+                    "Resource {} must be object or boolean",
+                    display_uri(uri, ctx)?
+                ),
             ))
         }
         _ => Ok((
@@ -902,7 +1223,9 @@ fn semantic_admission_diagnostic(
 
 fn display_uri(uri: &Utf16, ctx: &mut Context<'_>) -> Result<String, EngineError> {
     ctx.charge_work(uri.len(), Utf16::default())?;
-    Ok(uri.to_utf8().unwrap_or_else(|_| format!("{:?}", uri.units())))
+    Ok(uri
+        .to_utf8()
+        .unwrap_or_else(|_| format!("{:?}", uri.units())))
 }
 
 /// Replace one native JSON Schema node inside the existing `edit_extension`
@@ -919,17 +1242,26 @@ pub fn edit_node(
 ) -> Result<Value, EngineError> {
     let segments = crate::native_json::native_pointer(pointer, ctx)?;
     let replacement = NativeJsonTree::parse_json(replacement_source, ctx)?;
-    if segments.is_empty()
-        && !matches!(
-            replacement.root(),
-            NativeJsonNode::Object(_) | NativeJsonNode::Boolean(_)
-        )
-    {
-        return Err(err(
-            "JSON_SCHEMA_ROOT",
-            "Root schema must be an object or boolean",
-        ));
-    }
+    edit_node_parsed(
+        document,
+        segments,
+        replacement,
+        registry,
+        engine,
+        capabilities,
+        ctx,
+    )
+}
+
+fn edit_node_parsed(
+    document: &Value,
+    segments: Vec<Utf16>,
+    replacement: NativeJsonTree,
+    registry: &Registry,
+    engine: &Engine,
+    capabilities: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
     let tagged = replacement.render_tagged(ctx)?;
     let replacement_value = serialization::read_json_value(tagged.units(), Format::Json, ctx)?;
     let mut checked_capabilities = EditPreflightCapabilities {
@@ -965,6 +1297,86 @@ pub fn edit_node(
     )
 }
 
+/// Edit a node using the repository's pinned core and JSON Schema resources.
+/// This is the opt-in binding entry point; it keeps the Registry and
+/// capability implementation owned by the adapter instead of exposing a
+/// host-created or caller-fabricated prepared edit.
+pub fn edit_node_with_embedded_registry(
+    document: &Value,
+    pointer: &Utf16,
+    replacement_source: &[u16],
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    fn resource(source: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+        let units = source.encode_utf16().count();
+        ctx.charge_text(units, Utf16::default())?;
+        serialization::read_json_value(
+            &source.encode_utf16().collect::<Vec<_>>(),
+            Format::Json,
+            ctx,
+        )
+    }
+
+    // Preserve the public operation's pointer-then-replacement admission order
+    // before constructing the pinned registry used for source validation.
+    let segments = crate::native_json::native_pointer(pointer, ctx)?;
+    let replacement = NativeJsonTree::parse_json(replacement_source, ctx)?;
+
+    // These are fixed, trusted repository resources that TypeScript validates
+    // from its module-level registry. Parse/build them in an isolated context
+    // so a caller's data budget and host control cover only request/edit work.
+    let mut resource_ctx = Context::ordinary();
+
+    let engine = Engine::new(
+        ResourceSet::new(
+            resource(
+                include_str!("../../../spec/core/schema.json"),
+                &mut resource_ctx,
+            )?,
+            resource(
+                include_str!("../../../spec/core/semantic-type-reference.schema.json"),
+                &mut resource_ctx,
+            )?,
+            resource(
+                include_str!("../../../spec/core/extension-package.schema.json"),
+                &mut resource_ctx,
+            )?,
+            resource(
+                include_str!("../../../spec/metamodel/generated/core-constraints.json"),
+                &mut resource_ctx,
+            )?,
+            resource(
+                include_str!("../../../spec/metamodel/generated/domain-policy.json"),
+                &mut resource_ctx,
+            )?,
+        ),
+        &mut resource_ctx,
+    )?;
+    let manifest = resource(
+        include_str!("../../../spec/extensions/json-schema/package.json"),
+        &mut resource_ctx,
+    )?;
+    let schema_resources = engine.schema_resources_with_context(&mut resource_ctx)?;
+    let mut registry = Registry::new();
+    registry.register(
+        &manifest,
+        Some(1),
+        engine.package_schema(),
+        &schema_resources,
+        &mut resource_ctx,
+    )?;
+    let mut capabilities = JsonSchemaInspectionCapabilities;
+    edit_node_parsed(
+        document,
+        segments,
+        replacement,
+        &registry,
+        &engine,
+        &mut capabilities,
+        ctx,
+    )
+}
+
 struct EditPreflightCapabilities<'a> {
     inner: &'a mut dyn Capabilities,
 }
@@ -991,7 +1403,7 @@ impl Capabilities for EditPreflightCapabilities<'_> {
         ctx: &mut Context<'_>,
     ) -> Result<Vec<Diagnostic>, CapabilityError> {
         if is_json_schema_context(context) {
-            let admitted = match admit_payload(payload, ctx) {
+            let admitted = match admit_payload_for_inspection(payload, ctx) {
                 Ok(value) => value,
                 Err(error) => return candidate_preflight_error(error, context),
             };

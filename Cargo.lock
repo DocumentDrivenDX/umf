@@ -996,6 +996,7 @@ dependencies = [
 name = "umf-codegen"
 version = "0.1.0"
 dependencies = [
+ "num-bigint",
  "sha2",
  "umf-core",
 ]
@@ -1005,6 +1006,7 @@ name = "umf-core"
 version = "0.1.0"
 dependencies = [
  "base64",
+ "jsonschema",
  "num-bigint",
  "num-traits",
  "regress",

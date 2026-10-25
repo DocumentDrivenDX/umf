@@ -1,0 +1,867 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+//! Private synchronous `umf.host-json/1` Node adapter.
+use napi::{Env, JsFunction, JsString, ValueType};
+use napi_derive::napi;
+use std::collections::BTreeMap;
+use umf_core::{
+    host_json::{
+        HostDescriptorSnapshot, HostDescriptorValue, HostHandle, HostJsonEvent, HostJsonKind,
+        HostJsonReflection, HostJsonReply, HostPropertyDescriptor, HostPrototype, HostStringRef,
+    },
+    record_values, schema_properties, Context, Engine, EngineError, ResourceSet, Utf16, Value,
+};
+
+fn kind_nullability_operation(
+    name: &str,
+) -> Result<umf_core::core_kind_nullability_host_json::CoreKindNullabilityHostOperation, EngineError>
+{
+    use umf_core::core_kind_nullability_host_json::CoreKindNullabilityHostOperation as Op;
+    match name {
+        "inspectCoreKind" => Ok(Op::InspectKind),
+        "declareCoreKind" => Ok(Op::DeclareKind),
+        "verifyCoreKindDeclaration" => Ok(Op::VerifyKind),
+        "inspectCoreNullability" => Ok(Op::InspectNullability),
+        "declareCoreNullability" => Ok(Op::DeclareNullability),
+        "verifyCoreNullabilityDeclaration" => Ok(Op::VerifyNullability),
+        _ => Err(EngineError::new(
+            "REQUEST",
+            Utf16::default(),
+            "Unknown kind/nullability host operation",
+        )),
+    }
+}
+
+/// Retained immutable resources/engine for one Core kind/nullability factory.
+/// Construction admits resources once; each method gets a fresh operation Context.
+#[napi]
+pub struct CoreKindNullabilityRuntime {
+    engine: Engine,
+    kind_schemas: umf_core::core_kind::OperationSchemas,
+    nullability_schemas: umf_core::nullability::OperationSchemas,
+}
+
+#[napi]
+impl CoreKindNullabilityRuntime {
+    #[napi(constructor)]
+    pub fn new(
+        env: Env,
+        resources_wire: String,
+        control_dispatcher: Option<JsFunction>,
+    ) -> napi::Result<Self> {
+        let result = if let Some(dispatcher) = control_dispatcher {
+            let mut control = super::NodeControl { env, dispatcher };
+            let mut hook = |amount| control.check(amount);
+            let mut ctx = Context::ordinary().with_host_control(&mut hook);
+            let resources =
+                ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(&resources_wire, ctx));
+            resources.and_then(|mut resources| {
+                let engine = ctx.with_catalog_value_limit(|catalog| {
+                    Engine::new(
+                        ResourceSet::new(
+                            take_core_resource(&mut resources, "coreSchema")?,
+                            take_core_resource(&mut resources, "referenceSchema")?,
+                            take_core_resource(&mut resources, "packageSchema")?,
+                            take_core_resource(&mut resources, "constraints")?,
+                            take_core_resource(&mut resources, "domainPolicy")?,
+                        ),
+                        catalog,
+                    )
+                })?;
+                let kind_schemas = umf_core::core_kind::prepare_operation_schemas(&mut ctx)?;
+                let nullability_schemas =
+                    umf_core::nullability::prepare_operation_schemas(&mut ctx)?;
+                Ok((engine, kind_schemas, nullability_schemas))
+            })
+        } else {
+            let mut ctx = Context::ordinary();
+            let resources =
+                ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(&resources_wire, ctx));
+            resources.and_then(|mut resources| {
+                let engine = ctx.with_catalog_value_limit(|catalog| {
+                    Engine::new(
+                        ResourceSet::new(
+                            take_core_resource(&mut resources, "coreSchema")?,
+                            take_core_resource(&mut resources, "referenceSchema")?,
+                            take_core_resource(&mut resources, "packageSchema")?,
+                            take_core_resource(&mut resources, "constraints")?,
+                            take_core_resource(&mut resources, "domainPolicy")?,
+                        ),
+                        catalog,
+                    )
+                })?;
+                let kind_schemas = umf_core::core_kind::prepare_operation_schemas(&mut ctx)?;
+                let nullability_schemas =
+                    umf_core::nullability::prepare_operation_schemas(&mut ctx)?;
+                Ok((engine, kind_schemas, nullability_schemas))
+            })
+        };
+        result
+            .map(|(engine, kind_schemas, nullability_schemas)| Self {
+                engine,
+                kind_schemas,
+                nullability_schemas,
+            })
+            .map_err(|error| napi::Error::from_reason(umf_core_wire::error_envelope(error)))
+    }
+
+    #[napi]
+    pub fn execute(
+        &self,
+        env: Env,
+        operation: String,
+        first: u32,
+        second: u32,
+        third: u32,
+        dispatcher: JsFunction,
+        control_dispatcher: Option<JsFunction>,
+    ) -> String {
+        let operation = match kind_nullability_operation(&operation) {
+            Ok(operation) => operation,
+            Err(error) => return umf_core_wire::result_envelope(Err(error)),
+        };
+        let handles: Vec<_> = [first, second, third]
+            .into_iter()
+            .filter(|handle| *handle != 0)
+            .map(|handle| handle as HostHandle)
+            .collect();
+        let mut host = NodeHostJson {
+            env: env.clone(),
+            dispatcher,
+            string_lengths: BTreeMap::new(),
+        };
+        let result = if let Some(dispatcher) = control_dispatcher {
+            let mut control = super::NodeControl { env, dispatcher };
+            let mut hook = |amount| control.check(amount);
+            let mut ctx = Context::ordinary().with_host_control(&mut hook);
+            let value = umf_core::core_kind_nullability_host_json::execute(
+                operation,
+                &handles,
+                &mut host,
+                &self.engine,
+                &self.kind_schemas,
+                &self.nullability_schemas,
+                &mut ctx,
+            );
+            let encoded = value.and_then(|value| umf_core_wire::encode(&value, &mut ctx));
+            encoded
+        } else {
+            let mut ctx = Context::ordinary();
+            let value = umf_core::core_kind_nullability_host_json::execute(
+                operation,
+                &handles,
+                &mut host,
+                &self.engine,
+                &self.kind_schemas,
+                &self.nullability_schemas,
+                &mut ctx,
+            );
+            let encoded = value.and_then(|value| umf_core_wire::encode(&value, &mut ctx));
+            encoded
+        };
+        umf_core_wire::result_envelope(result)
+    }
+}
+
+#[napi(js_name = "executeCoreKindNullabilityHostJson")]
+pub fn execute_core_kind_nullability_host_json(
+    env: Env,
+    resources_wire: String,
+    operation: String,
+    first: u32,
+    second: u32,
+    third: u32,
+    dispatcher: JsFunction,
+    control_dispatcher: Option<JsFunction>,
+) -> String {
+    let mut host = NodeHostJson {
+        env: env.clone(),
+        dispatcher,
+        string_lengths: BTreeMap::new(),
+    };
+    let result = (|| -> Result<String, EngineError> {
+        let operation = kind_nullability_operation(&operation)?;
+        let handles: Vec<_> = [first, second, third]
+            .into_iter()
+            .filter(|handle| *handle != 0)
+            .map(|handle| handle as HostHandle)
+            .collect();
+        if let Some(dispatcher) = control_dispatcher {
+            let mut control = super::NodeControl { env, dispatcher };
+            let mut hook = |amount| control.check(amount);
+            let mut ctx = Context::ordinary().with_host_control(&mut hook);
+            let resources =
+                ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(&resources_wire, ctx))?;
+            let resource = |name: &str| {
+                object_field(&resources, name).cloned().ok_or_else(|| {
+                    EngineError::new(
+                        "REQUEST",
+                        Utf16::from(name),
+                        "Explicit resource is required",
+                    )
+                })
+            };
+            let engine = ctx.with_catalog_value_limit(|catalog| {
+                Engine::new(
+                    ResourceSet::new(
+                        resource("coreSchema")?,
+                        resource("referenceSchema")?,
+                        resource("packageSchema")?,
+                        resource("constraints")?,
+                        resource("domainPolicy")?,
+                    ),
+                    catalog,
+                )
+            })?;
+            let kind_schemas = umf_core::core_kind::prepare_operation_schemas(&mut ctx)?;
+            let nullability_schemas = umf_core::nullability::prepare_operation_schemas(&mut ctx)?;
+            let value = umf_core::core_kind_nullability_host_json::execute(
+                operation,
+                &handles,
+                &mut host,
+                &engine,
+                &kind_schemas,
+                &nullability_schemas,
+                &mut ctx,
+            )?;
+            umf_core_wire::encode(&value, &mut ctx)
+        } else {
+            let mut ctx = Context::ordinary();
+            let resources =
+                ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(&resources_wire, ctx))?;
+            let resource = |name: &str| {
+                object_field(&resources, name).cloned().ok_or_else(|| {
+                    EngineError::new(
+                        "REQUEST",
+                        Utf16::from(name),
+                        "Explicit resource is required",
+                    )
+                })
+            };
+            let engine = ctx.with_catalog_value_limit(|catalog| {
+                Engine::new(
+                    ResourceSet::new(
+                        resource("coreSchema")?,
+                        resource("referenceSchema")?,
+                        resource("packageSchema")?,
+                        resource("constraints")?,
+                        resource("domainPolicy")?,
+                    ),
+                    catalog,
+                )
+            })?;
+            let kind_schemas = umf_core::core_kind::prepare_operation_schemas(&mut ctx)?;
+            let nullability_schemas = umf_core::nullability::prepare_operation_schemas(&mut ctx)?;
+            let value = umf_core::core_kind_nullability_host_json::execute(
+                operation,
+                &handles,
+                &mut host,
+                &engine,
+                &kind_schemas,
+                &nullability_schemas,
+                &mut ctx,
+            )?;
+            umf_core_wire::encode(&value, &mut ctx)
+        }
+    })();
+    umf_core_wire::result_envelope(result)
+}
+
+struct NodeHostJson {
+    env: Env,
+    dispatcher: JsFunction,
+    string_lengths: BTreeMap<u64, usize>,
+}
+
+/// Reuse the invocation-local opaque reflection adapter for source import.
+pub(super) fn protobuf_source_host(env: Env, dispatcher: JsFunction) -> impl HostJsonReflection {
+    NodeHostJson {
+        env,
+        dispatcher,
+        string_lengths: BTreeMap::new(),
+    }
+}
+
+impl HostJsonReflection for NodeHostJson {
+    fn reflect(&mut self, event: HostJsonEvent) -> Result<HostJsonReply, EngineError> {
+        let request = event_json(&event);
+        let event_string = self
+            .env
+            .create_string(&request)
+            .map_err(|_| bridge_error())?;
+        let args = [event_string.into_unknown()];
+        let output = self
+            .dispatcher
+            .call(None, &args)
+            .map_err(|_| bridge_error())?;
+        if output.get_type().map_err(|_| bridge_error())? != ValueType::String {
+            return Err(bridge_error());
+        }
+        let output: JsString = unsafe { output.cast() };
+        // Query the N-API byte length before `into_utf8` allocates its Vec.
+        // One chunk reply is at most 8,192 decimal code units plus framing.
+        if output.utf8_len().map_err(|_| bridge_error())? > 600 * 1024 {
+            return Err(protocol_error());
+        }
+        let output = output.into_utf8().map_err(|_| bridge_error())?;
+        let output = output
+            .as_str()
+            .map(str::to_owned)
+            .map_err(|_| bridge_error())?;
+        // The only large reply is a UTF-16 chunk: at most 8,192 decimal
+        // code units plus JSON punctuation. Reject oversized framing before
+        // JSON decode can allocate its tagged tree.
+        if output.len() > 600 * 1024 {
+            return Err(protocol_error());
+        }
+        let reply = umf_core_wire::decode(&output, &mut umf_core_wire::transport_context())
+            .map_err(|_| protocol_error())?;
+        decode_reply(&event, reply, &mut self.string_lengths)
+    }
+
+    fn release_descriptor_snapshot(&mut self, token: u64) {
+        // JS owns the token table and clears the whole invocation in `finally`.
+        // No callback or per-snapshot Rust allocation occurs during cleanup.
+        let _ = token;
+    }
+}
+
+#[napi(js_name = "executeDeclareCoreSchemaPropertiesHostJson")]
+pub fn execute_declare_core_schema_properties_host_json(
+    env: Env,
+    resources_wire: String,
+    source_handle: u32,
+    identity_handle: u32,
+    patch_handle: u32,
+    dispatcher: JsFunction,
+) -> String {
+    let mut host = NodeHostJson {
+        env,
+        dispatcher,
+        string_lengths: BTreeMap::new(),
+    };
+    let result = (|| -> Result<String, EngineError> {
+        let resources =
+            umf_core_wire::decode(&resources_wire, &mut umf_core_wire::transport_context())?;
+        let resource = |name: &str| {
+            object_field(&resources, name).cloned().ok_or_else(|| {
+                EngineError::new(
+                    "REQUEST",
+                    Utf16::from(name),
+                    "Explicit resource is required",
+                )
+            })
+        };
+        let engine = {
+            let mut catalog = Context::catalog();
+            Engine::new(
+                ResourceSet::new(
+                    resource("coreSchema")?,
+                    resource("referenceSchema")?,
+                    resource("packageSchema")?,
+                    resource("constraints")?,
+                    resource("domainPolicy")?,
+                ),
+                &mut catalog,
+            )?
+        };
+        let mut ctx = Context::ordinary();
+        let declared = schema_properties::declare_core_schema_properties_host_json(
+            source_handle as HostHandle,
+            identity_handle as HostHandle,
+            patch_handle as HostHandle,
+            &mut host,
+            &engine,
+            &mut ctx,
+        )?;
+        umf_core_wire::encode(&declared, &mut ctx)
+    })();
+    umf_core_wire::result_envelope(result)
+}
+
+#[napi(js_name = "executeValidateCoreRecordValuesHostJson")]
+pub fn execute_validate_core_record_values_host_json(
+    env: Env,
+    resources_wire: String,
+    source_handle: u32,
+    identity_handle: u32,
+    values_handle: u32,
+    dispatcher: JsFunction,
+    control_dispatcher: Option<JsFunction>,
+) -> String {
+    let mut host = NodeHostJson {
+        env: env.clone(),
+        dispatcher,
+        string_lengths: BTreeMap::new(),
+    };
+    let result = (|| -> Result<String, EngineError> {
+        let resources =
+            umf_core_wire::decode(&resources_wire, &mut umf_core_wire::transport_context())?;
+        let resource = |name: &str| {
+            object_field(&resources, name).cloned().ok_or_else(|| {
+                EngineError::new(
+                    "REQUEST",
+                    Utf16::from(name),
+                    "Explicit resource is required",
+                )
+            })
+        };
+        let engine = {
+            let mut catalog = Context::catalog();
+            Engine::new(
+                ResourceSet::new(
+                    resource("coreSchema")?,
+                    resource("referenceSchema")?,
+                    resource("packageSchema")?,
+                    resource("constraints")?,
+                    resource("domainPolicy")?,
+                ),
+                &mut catalog,
+            )?
+        };
+        if let Some(dispatcher) = control_dispatcher {
+            let mut control = super::NodeControl { env, dispatcher };
+            let mut hook = |amount| control.check(amount);
+            let mut ctx = Context::ordinary().with_host_control(&mut hook);
+            let result = record_values::validate_core_record_values_host_json(
+                source_handle as HostHandle,
+                identity_handle as HostHandle,
+                values_handle as HostHandle,
+                &mut host,
+                &engine,
+                &mut ctx,
+            )?;
+            umf_core_wire::encode(&result, &mut ctx)
+        } else {
+            let mut ctx = Context::ordinary();
+            let result = record_values::validate_core_record_values_host_json(
+                source_handle as HostHandle,
+                identity_handle as HostHandle,
+                values_handle as HostHandle,
+                &mut host,
+                &engine,
+                &mut ctx,
+            )?;
+            umf_core_wire::encode(&result, &mut ctx)
+        }
+    })();
+    umf_core_wire::result_envelope(result)
+}
+
+fn event_json(event: &HostJsonEvent) -> String {
+    match event {
+        HostJsonEvent::ReadProperty { handle, key } => {
+            let units = key.iter().map(u16::to_string).collect::<Vec<_>>().join(",");
+            format!(r#"{{"event":"read-property","handle":{handle},"keyUnits":[{units}]}}"#)
+        }
+        HostJsonEvent::Classify { handle } => {
+            format!(r#"{{"event":"classify","handle":{handle}}}"#)
+        }
+        HostJsonEvent::GetPrototype { handle } => {
+            format!(r#"{{"event":"get-prototype","handle":{handle}}}"#)
+        }
+        HostJsonEvent::IsArray { handle } => format!(r#"{{"event":"is-array","handle":{handle}}}"#),
+        HostJsonEvent::OwnSymbolCount { handle } => {
+            format!(r#"{{"event":"own-symbol-count","handle":{handle}}}"#)
+        }
+        HostJsonEvent::DescriptorSnapshot { handle } => {
+            format!(r#"{{"event":"descriptor-snapshot","handle":{handle}}}"#)
+        }
+        HostJsonEvent::DescriptorAt { token, index } => {
+            format!(r#"{{"event":"descriptor-at","token":{token},"index":{index}}}"#)
+        }
+        HostJsonEvent::ArrayIndexAtOrPastLength { handle, key } => format!(
+            r#"{{"event":"array-index-at-or-past-length","handle":{handle},"keyToken":{}}}"#,
+            key.token
+        ),
+        HostJsonEvent::ArrayIsSparseOrExtended { handle } => {
+            format!(r#"{{"event":"array-is-sparse-or-extended","handle":{handle}}}"#)
+        }
+        HostJsonEvent::ReadUtf16Chunk {
+            token,
+            offset,
+            max_units,
+        } => format!(
+            r#"{{"event":"read-utf16-chunk","token":{token},"offset":{offset},"maxUnits":{max_units}}}"#
+        ),
+    }
+}
+
+fn decode_reply(
+    event: &HostJsonEvent,
+    value: Value,
+    string_lengths: &mut BTreeMap<u64, usize>,
+) -> Result<HostJsonReply, EngineError> {
+    let kind = text_field(&value, "kind").ok_or_else(protocol_error)?;
+    let kind_is_valid_for_event = match event {
+        HostJsonEvent::Classify { .. } | HostJsonEvent::ReadProperty { .. } => matches!(
+            kind.as_str(),
+            "null" | "boolean" | "number" | "string" | "object" | "unsupported" | "host-exception"
+        ),
+        HostJsonEvent::GetPrototype { .. } => {
+            matches!(kind.as_str(), "prototype" | "host-exception")
+        }
+        HostJsonEvent::IsArray { .. }
+        | HostJsonEvent::ArrayIndexAtOrPastLength { .. }
+        | HostJsonEvent::ArrayIsSparseOrExtended { .. } => {
+            matches!(kind.as_str(), "boolean" | "host-exception")
+        }
+        HostJsonEvent::OwnSymbolCount { .. } => matches!(kind.as_str(), "count" | "host-exception"),
+        HostJsonEvent::DescriptorSnapshot { .. } => {
+            matches!(kind.as_str(), "snapshot" | "host-exception")
+        }
+        HostJsonEvent::DescriptorAt { .. } => {
+            matches!(kind.as_str(), "descriptor" | "host-exception")
+        }
+        HostJsonEvent::ReadUtf16Chunk { .. } => {
+            matches!(kind.as_str(), "utf16-chunk" | "host-exception")
+        }
+    };
+    if !kind_is_valid_for_event {
+        return Err(protocol_error());
+    }
+    Ok(match kind.as_str() {
+        "host-exception" => {
+            return Err(EngineError::new(
+                "HOST_JSON_CALLBACK",
+                Utf16::default(),
+                "Host reflection threw",
+            ))
+        }
+        "null" => HostJsonReply::Kind(HostJsonKind::Null),
+        "boolean" => {
+            let boolean = bool_field(&value, "value").ok_or_else(protocol_error)?;
+            if matches!(
+                event,
+                HostJsonEvent::Classify { .. } | HostJsonEvent::ReadProperty { .. }
+            ) {
+                HostJsonReply::Kind(HostJsonKind::Boolean(boolean))
+            } else {
+                HostJsonReply::Boolean(boolean)
+            }
+        }
+        "number" => HostJsonReply::Kind(HostJsonKind::Number(
+            number_field(&value, "bits").ok_or_else(protocol_error)?,
+        )),
+        "string" => HostJsonReply::Kind(HostJsonKind::String(string_ref(&value, string_lengths)?)),
+        "object" => HostJsonReply::Kind(HostJsonKind::Object(
+            unsigned_field(&value, "handle").ok_or_else(protocol_error)?,
+        )),
+        "unsupported" => HostJsonReply::Kind(HostJsonKind::Unsupported(unsupported_type(&value)?)),
+        "prototype" => HostJsonReply::Prototype(match text_field(&value, "value").as_deref() {
+            Some("ordinary") => HostPrototype::OrdinaryObject,
+            Some("null") => HostPrototype::Null,
+            Some("array") => HostPrototype::Array,
+            Some("other") => HostPrototype::Other,
+            _ => return Err(protocol_error()),
+        }),
+        "count" => HostJsonReply::Count(
+            unsigned_field(&value, "value").ok_or_else(protocol_error)? as usize,
+        ),
+        "snapshot" => HostJsonReply::Snapshot(HostDescriptorSnapshot {
+            token: unsigned_field(&value, "token").ok_or_else(protocol_error)?,
+            count: unsigned_field(&value, "count").ok_or_else(protocol_error)? as usize,
+        }),
+        "descriptor" => {
+            let key = string_ref(
+                object_field(&value, "key").ok_or_else(protocol_error)?,
+                string_lengths,
+            )?;
+            let enumerable = bool_field(&value, "enumerable").ok_or_else(protocol_error)?;
+            let is_data = bool_field(&value, "isData").ok_or_else(protocol_error)?;
+            let has_value = bool_field(&value, "hasValue").ok_or_else(protocol_error)?;
+            let child = if has_value {
+                Some(descriptor_value(
+                    object_field(&value, "value").ok_or_else(protocol_error)?,
+                    string_lengths,
+                )?)
+            } else {
+                None
+            };
+            HostJsonReply::Descriptor(HostPropertyDescriptor {
+                key,
+                enumerable,
+                is_data,
+                value: child,
+            })
+        }
+        "utf16-chunk" => {
+            let offset = unsigned_field(&value, "offset").ok_or_else(protocol_error)? as usize;
+            let Value::Array(items) = object_field(&value, "units").ok_or_else(protocol_error)?
+            else {
+                return Err(protocol_error());
+            };
+            let HostJsonEvent::ReadUtf16Chunk {
+                token,
+                offset: requested_offset,
+                max_units,
+            } = event
+            else {
+                unreachable!()
+            };
+            if *max_units != 8192 || offset != *requested_offset {
+                return Err(protocol_error());
+            }
+            let length = *string_lengths.get(token).ok_or_else(protocol_error)?;
+            if *requested_offset > length {
+                return Err(protocol_error());
+            }
+            let expected = (length - requested_offset).min(*max_units);
+            if items.len() != expected {
+                return Err(protocol_error());
+            }
+            let mut units = Vec::with_capacity(expected);
+            for item in items {
+                let Value::Number(number) = item else {
+                    return Err(protocol_error());
+                };
+                if !number.is_finite() || number.fract() != 0.0 || !(0.0..=65535.0).contains(number)
+                {
+                    return Err(protocol_error());
+                }
+                units.push(*number as u16);
+            }
+            HostJsonReply::Utf16Chunk { offset, units }
+        }
+        _ => return Err(protocol_error()),
+    })
+}
+
+fn descriptor_value(
+    value: &Value,
+    string_lengths: &mut BTreeMap<u64, usize>,
+) -> Result<HostDescriptorValue, EngineError> {
+    let kind = text_field(value, "kind").ok_or_else(protocol_error)?;
+    Ok(match kind.as_str() {
+        "null" => HostDescriptorValue::Null,
+        "boolean" => {
+            HostDescriptorValue::Boolean(bool_field(value, "value").ok_or_else(protocol_error)?)
+        }
+        "number" => {
+            HostDescriptorValue::Number(number_field(value, "bits").ok_or_else(protocol_error)?)
+        }
+        "string" => HostDescriptorValue::String(string_ref(value, string_lengths)?),
+        "object" => {
+            HostDescriptorValue::Object(unsigned_field(value, "handle").ok_or_else(protocol_error)?)
+        }
+        "unsupported" => HostDescriptorValue::Unsupported(unsupported_type(value)?),
+        _ => return Err(protocol_error()),
+    })
+}
+
+fn string_ref(
+    value: &Value,
+    string_lengths: &mut BTreeMap<u64, usize>,
+) -> Result<HostStringRef, EngineError> {
+    let token = unsigned_field(value, "token").ok_or_else(protocol_error)?;
+    let units = unsigned_field(value, "units").ok_or_else(protocol_error)? as usize;
+    if string_lengths
+        .insert(token, units)
+        .is_some_and(|previous| previous != units)
+    {
+        return Err(protocol_error());
+    }
+    Ok(HostStringRef { token, units })
+}
+fn unsupported_type(value: &Value) -> Result<&'static str, EngineError> {
+    match text_field(value, "value").as_deref() {
+        Some("undefined") => Ok("undefined"),
+        Some("function") => Ok("function"),
+        Some("symbol") => Ok("symbol"),
+        Some("bigint") => Ok("bigint"),
+        _ => Err(protocol_error()),
+    }
+}
+fn number_field(value: &Value, key: &str) -> Option<f64> {
+    let bits = text_field(value, key)?;
+    if bits.len() != 16 {
+        return None;
+    }
+    u64::from_str_radix(&bits, 16).ok().map(f64::from_bits)
+}
+fn unsigned_field(value: &Value, key: &str) -> Option<u64> {
+    let Value::Number(number) = object_field(value, key)? else {
+        return None;
+    };
+    if !number.is_finite()
+        || *number < 0.0
+        || number.fract() != 0.0
+        || *number > 9_007_199_254_740_991.0
+    {
+        return None;
+    }
+    Some(*number as u64)
+}
+fn bool_field(value: &Value, key: &str) -> Option<bool> {
+    match object_field(value, key)? {
+        Value::Bool(value) => Some(*value),
+        _ => None,
+    }
+}
+fn text_field(value: &Value, key: &str) -> Option<String> {
+    match object_field(value, key)? {
+        Value::String(value) => value.to_utf8().ok(),
+        _ => None,
+    }
+}
+fn object_field<'a>(value: &'a Value, key: &str) -> Option<&'a Value> {
+    match value {
+        Value::Object(fields) => fields
+            .iter()
+            .find(|(name, _)| name == &Utf16::from(key))
+            .map(|(_, value)| value),
+        _ => None,
+    }
+}
+fn take_core_resource(value: &mut Value, key: &str) -> Result<Value, EngineError> {
+    let Value::Object(fields) = value else {
+        return Err(EngineError::new(
+            "REQUEST",
+            Utf16::from(key),
+            "Explicit resource is required",
+        ));
+    };
+    let index = fields
+        .iter()
+        .position(|(name, _)| name == &Utf16::from(key))
+        .ok_or_else(|| {
+            EngineError::new("REQUEST", Utf16::from(key), "Explicit resource is required")
+        })?;
+    Ok(fields.swap_remove(index).1)
+}
+fn protocol_error() -> EngineError {
+    EngineError::new(
+        "HOST_JSON_PROTOCOL",
+        Utf16::default(),
+        "Malformed umf.host-json/1 response",
+    )
+}
+fn bridge_error() -> EngineError {
+    EngineError::new(
+        "HOST_JSON_BRIDGE",
+        Utf16::default(),
+        "Node host-json dispatcher bridge failed",
+    )
+}
+
+/// Retained immutable engine and Dataset schemas for the host-admission facade.
+#[napi]
+pub struct CoreDatasetValuesRuntime {
+    engine: Engine,
+    validator: umf_core::dataset_values::CoreDatasetValueValidator,
+}
+
+#[napi]
+impl CoreDatasetValuesRuntime {
+    #[napi(constructor)]
+    pub fn new(
+        env: Env,
+        resources_wire: String,
+        control_dispatcher: Option<JsFunction>,
+    ) -> napi::Result<Self> {
+        let build = |ctx: &mut Context<'_>| -> Result<
+            (Engine, umf_core::dataset_values::CoreDatasetValueValidator),
+            EngineError,
+        > {
+            let mut resources =
+                ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(&resources_wire, ctx))?;
+            let engine = ctx.with_catalog_value_limit(|catalog| {
+                Engine::new(
+                    ResourceSet::new(
+                        take_dataset_resource(&mut resources, "coreSchema")?,
+                        take_dataset_resource(&mut resources, "referenceSchema")?,
+                        take_dataset_resource(&mut resources, "packageSchema")?,
+                        take_dataset_resource(&mut resources, "constraints")?,
+                        take_dataset_resource(&mut resources, "domainPolicy")?,
+                    ),
+                    catalog,
+                )
+            })?;
+            let validator = ctx.with_catalog_value_limit(|catalog| {
+                umf_core::dataset_values::CoreDatasetValueValidator::new(&engine, catalog)
+            })?;
+            Ok((engine, validator))
+        };
+        let result = if let Some(dispatcher) = control_dispatcher {
+            let mut control = super::NodeControl { env, dispatcher };
+            let mut hook = |amount| control.check(amount);
+            let mut ctx = Context::ordinary().with_host_control(&mut hook);
+            build(&mut ctx)
+        } else {
+            build(&mut Context::ordinary())
+        };
+        result
+            .map(|(engine, validator)| Self { engine, validator })
+            .map_err(|error| napi::Error::from_reason(umf_core_wire::error_envelope(error)))
+    }
+
+    #[napi]
+    pub fn execute(
+        &self,
+        env: Env,
+        operation_name: String,
+        source_handle: u32,
+        input_handle: u32,
+        expected_handle: u32,
+        dispatcher: JsFunction,
+        control_dispatcher: Option<JsFunction>,
+    ) -> String {
+        use umf_core::core_dataset_values_host_json::CoreDatasetValuesHostOperation as Op;
+        let operation = match operation_name.as_str() {
+            "validateCoreDatasetValues" => Ok(Op::Validate),
+            "verifyCoreDatasetValues" => Ok(Op::Verify),
+            _ => Err(EngineError::new(
+                "REQUEST",
+                Utf16::default(),
+                "Unknown Dataset values host operation",
+            )),
+        };
+        let handles = [source_handle, input_handle, expected_handle].map(HostHandle::from);
+        let mut host = NodeHostJson {
+            env: env.clone(),
+            dispatcher,
+            string_lengths: BTreeMap::new(),
+        };
+        let execute =
+            |ctx: &mut Context<'_>, host: &mut NodeHostJson| -> Result<String, EngineError> {
+                let value = umf_core::core_dataset_values_host_json::execute(
+                    operation?,
+                    &handles,
+                    host,
+                    &self.validator,
+                    &self.engine,
+                    ctx,
+                )?;
+                umf_core_wire::encode(&value, ctx)
+            };
+        let result = if let Some(dispatcher) = control_dispatcher {
+            let mut control = super::NodeControl { env, dispatcher };
+            let mut hook = |amount| control.check(amount);
+            let mut ctx = Context::ordinary().with_host_control(&mut hook);
+            execute(&mut ctx, &mut host)
+        } else {
+            execute(&mut Context::ordinary(), &mut host)
+        };
+        umf_core_wire::result_envelope(result)
+    }
+}
+
+fn take_dataset_resource(resources: &mut Value, name: &str) -> Result<Value, EngineError> {
+    let Value::Object(members) = resources else {
+        return Err(EngineError::new(
+            "REQUEST",
+            Utf16::from(name),
+            "Explicit resource is required",
+        ));
+    };
+    let Some(index) = members
+        .iter()
+        .position(|(key, _)| key == &Utf16::from(name))
+    else {
+        return Err(EngineError::new(
+            "REQUEST",
+            Utf16::from(name),
+            "Explicit resource is required",
+        ));
+    };
+    Ok(members.remove(index).1)
+}

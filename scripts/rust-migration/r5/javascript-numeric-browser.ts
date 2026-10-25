@@ -2,7 +2,7 @@ import {readFile, copyFile, mkdir} from 'node:fs/promises';
 import {join} from 'node:path';
 import {chromium} from 'playwright';
 
-const root = '/private/tmp/umf-r5-numeric';
+const root = process.env.UMF_R5_NUMERIC_BROWSER_PACKAGE ?? '/private/tmp/umf-r5-numeric';
 const pkg = join(root, 'wasm/pkg');
 const [rows, vectors, wasmIndex, wire, numericWrapper] = await Promise.all([
   readFile(process.env.UMF_R5_NUMERIC_ORACLE ?? join(root, 'oracle.json'), 'utf8'),
@@ -11,16 +11,21 @@ const [rows, vectors, wasmIndex, wire, numericWrapper] = await Promise.all([
   readFile(join(process.cwd(), 'bindings/core/node/src/wire.js'), 'utf8'),
   readFile(join(process.cwd(), 'bindings/core/node/src/javascript-numeric.js'), 'utf8'),
 ]);
+const wasmNumericFactory = wasmIndex.match(/\/\*\* Create the opt-in Rust-backed CONTRACT-049 numeric adapter\. \*\/\nexport function createJavascriptNumericEngine\(module, resources, options = \{\}\) \{[\s\S]*?\n\}/)?.[0];
+if (!wasmNumericFactory) throw new Error('Could not extract the production WASM numeric factory');
+const isolatedWasmIndex = `import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';\nexport {JAVASCRIPT_NUMERIC_PROFILE};\n${wasmNumericFactory}\n`;
 const resourcePaths: [string, string][] = [
   ['coreSchema', 'spec/core/schema.json'], ['referenceSchema', 'spec/core/semantic-type-reference.schema.json'],
   ['packageSchema', 'spec/core/extension-package.schema.json'], ['constraints', 'spec/metamodel/generated/core-constraints.json'],
   ['domainPolicy', 'spec/metamodel/generated/domain-policy.json'], ['document', 'tests/lifecycle/fixtures/legacy-note.json'],
 ];
 const resources = Object.fromEntries(await Promise.all(resourcePaths.map(async ([key, path]) => [key, await Bun.file(path).json()])));
-await mkdir(join(root, 'wasm'), {recursive:true});
+await mkdir(join(root, 'wasm/src'), {recursive:true});
 await mkdir(join(root, 'node/src'), {recursive:true});
 await Promise.all([
-  Bun.write(join(root, 'wasm/index.js'), wasmIndex),
+  Bun.write(join(root, 'wasm/index.js'), isolatedWasmIndex),
+  Bun.write(join(root, 'wasm/src/javascript-numeric.js'), numericWrapper),
+  Bun.write(join(root, 'wasm/src/wire.js'), wire),
   Bun.write(join(root, 'node/src/wire.js'), wire),
   Bun.write(join(root, 'node/src/javascript-numeric.js'), numericWrapper),
   Bun.write(join(root, 'wasm/package.json'), '{"type":"module"}'),
@@ -28,7 +33,7 @@ await Promise.all([
   Bun.write(join(root, 'vectors.json'), vectors),
   Bun.write(join(root, 'resources.json'), JSON.stringify(resources)),
 ]);
-const server = Bun.serve({hostname:'127.0.0.1', port:43175, async fetch(request) {
+const server = Bun.serve({hostname:'127.0.0.1', port:0, async fetch(request) {
   const path = new URL(request.url).pathname;
   if (path === '/') return new Response('<!doctype html><meta charset="utf-8"><title>R5 JavaScript numeric WASM parity</title>');
   if (path === '/oracle.json') return new Response(rows, {headers:{'content-type':'application/json'}});
@@ -44,10 +49,11 @@ try {
   const page = await browser.newPage();
   await page.goto(`http://127.0.0.1:${server.port}/`);
   const result = await page.evaluate(async () => {
-    const [{createJavascriptNumericEngine}, rows, resources] = await Promise.all([
+    const [{createJavascriptNumericEngine}, rows, resources, wire] = await Promise.all([
       import(new URL('/index.js', location.href).href),
       fetch('/oracle.json').then((response) => response.json()),
       fetch('/resources.json').then((response) => response.json()),
+      import(new URL('/src/wire.js', location.href).href),
     ]);
     const wasm = await import(new URL('/pkg/umf_core_wasm.js', location.href).href);
     await wasm.default();
@@ -56,6 +62,43 @@ try {
       coreSchema:resources.coreSchema, referenceSchema:resources.referenceSchema, packageSchema:resources.packageSchema,
       constraints:resources.constraints, domainPolicy:resources.domainPolicy,
     });
+    let factorySetupWork = 0;
+    let factoryOperationWork = 0;
+    const setupControlledEngine = createJavascriptNumericEngine(wasm, {
+      coreSchema:resources.coreSchema, referenceSchema:resources.referenceSchema, packageSchema:resources.packageSchema,
+      constraints:resources.constraints, domainPolicy:resources.domainPolicy,
+    }, {setupControls:{meter:(amount:number) => {factorySetupWork += amount;}}, controls:{meter:(amount:number) => {factoryOperationWork += amount;}}});
+    if (factorySetupWork === 0 || factoryOperationWork !== 0) throw new Error('WASM retained resources did not use separate factory setup controls');
+    setupControlledEngine.exactDecimal('1');
+    if (factoryOperationWork === 0) throw new Error('WASM per-call work did not start with first operation');
+    const forged = JSON.parse(wasm.executeJavascriptNumericWire(wire.encodeRequestWire({
+      profile:'umf.javascript-numeric/1.0.0', op:'validateJavascriptNumericContext',
+      literal:{decimalToken:'1'}, result:{decimalToken:'1'},
+    })));
+    if (wire.resultError(forged)?.code !== 'REQUEST') throw Error('WASM accepted a forged numeric stage wire');
+    let setupWork = 0;
+    const retained = new wasm.JavascriptNumericRuntime(wire.encodeWire({
+      coreSchema:resources.coreSchema, referenceSchema:resources.referenceSchema, packageSchema:resources.packageSchema,
+      constraints:resources.constraints, domainPolicy:resources.domainPolicy,
+    }), (amount: number) => { setupWork += amount; return ''; });
+    const retainedStage = retained.prepare('integerFromBigInt', wire.encodeWire({token:'1'}));
+    const retainedValidation = wire.fromWire(JSON.parse(retainedStage.validate_context(wire.encodeWire({
+      document:resources.document, field:{module:'note_lifecycle', element:'notes__note_id'},
+    }))));
+    const retainedResult = wire.fromWire(JSON.parse(retainedStage.take_output()));
+    if (retainedResult.integerToken !== '1' || !retainedValidation.valid || setupWork === 0) throw Error('WASM opaque stage/setup control failed');
+    try { retainedStage.validate_context(wire.encodeWire({document:resources.document, field:{module:'note_lifecycle', element:'notes__note_id'}})); throw Error('WASM reused a consumed numeric stage'); }
+    catch (error) {
+      const message = typeof error === 'string' ? error : (error as Error).message;
+      if (!String(message).includes('JAVASCRIPT_NUMERIC_STAGE')) throw error;
+    }
+    const scalarStage = retained.prepare('exactDecimal', wire.encodeWire({token:'1.250'}));
+    if (wire.fromWire(JSON.parse(scalarStage.take_output()))?.decimalToken !== '1.250') throw Error('WASM no-context one-shot output failed');
+    try { scalarStage.take_output(); throw Error('WASM reused a consumed output stage'); }
+    catch (error) {
+      const message = typeof error === 'string' ? error : (error as Error).message;
+      if (!String(message).includes('JAVASCRIPT_NUMERIC_STAGE')) throw error;
+    }
     const actual = (row: any): unknown => {
       switch (row.op) {
         case 'exactDecimal': return engine.exactDecimal(row.token);
@@ -80,6 +123,53 @@ try {
     if (engine.integerToBigInt({integerToken:'12300e-2'}) !== 123n) throw Error('integerToBigInt parity failed');
     const context = {document:resources.document, field:{module:'note_lifecycle', element:'notes__note_id'}};
     if (contextEngine.integerFromBigInt(1n, context).integerToken !== '1') throw Error('WASM current Field context admission failed');
+    let orderGetterCalls = 0;
+    const accessorContext = Object.defineProperty({}, 'document', {enumerable:true, get() { orderGetterCalls++; return resources.document; }});
+    const hostOrderChecks = [
+      ['invalid exact decimal before context', () => contextEngine.exactDecimal('NaN', accessorContext as any), 'JAVASCRIPT_NUMERIC'],
+      ['unsupported number family before context', () => contextEngine.admitJavascriptNumber(1, 'future' as any, accessorContext as any), 'JAVASCRIPT_NUMERIC'],
+    ].map(([label, operation, predecessorCode]: any) => {
+      try { operation(); throw Error(`WASM accepted ${label}`); }
+      catch (error) {
+        const candidateCode = (error as {code?:string}).code;
+        if (candidateCode !== predecessorCode) throw error;
+        return {label, predecessorCode, rustOptInCode:candidateCode, equal:true};
+      }
+    });
+    if (orderGetterCalls !== 0) throw new Error('WASM host-order check invoked an accessor');
+    let crossedLossyContext: any;
+    try { contextEngine.numericToNumberLossless({decimalToken:'0.1'}, {document:resources.document, field:{module:'note_lifecycle', element:'absent'}}); throw Error('WASM converted lossy number despite invalid context'); }
+    catch (error) {
+      const item = error as {code?:string; message?:string};
+      if (item.code !== 'JAVASCRIPT_NUMERIC' || item.message?.includes('Number conversion would change')) throw error;
+      crossedLossyContext = {code:item.code, message:item.message};
+    }
+    let malformedBeforeContext = true;
+    for (const [literal, expectedCode, expectedMessage] of [
+      [{decimalToken:'NaN'}, 'JAVASCRIPT_NUMERIC', 'Expected exact JSON numeric token'],
+      [{integerToken:'1.5'}, 'CORE_SCHEMA_PROPERTIES', 'Numeric value would require rounding'],
+    ] as const) {
+      try { contextEngine.numericToNumberLossless(literal, {document:resources.document, field:{module:'note_lifecycle', element:'absent'}}); throw Error('WASM accepted malformed numeric carrier'); }
+      catch (error) {
+        const item = error as {code?:string; message?:string};
+        if (item.code !== expectedCode || !item.message?.includes(expectedMessage)) throw error;
+      }
+    }
+    let measuredWork = 0;
+    createJavascriptNumericEngine(wasm, undefined, {controls:{meter:(amount:number) => {measuredWork += amount;}}}).exactDecimal('1');
+    if (measuredWork <= 0) throw new Error('WASM numeric operation did not report work');
+    const perCallLimited = createJavascriptNumericEngine(wasm, undefined, {controls:{maxWork:measuredWork}});
+    perCallLimited.exactDecimal('1');
+    perCallLimited.exactDecimal('1');
+    let contextMeasuredWork = 0;
+    createJavascriptNumericEngine(wasm, {coreSchema:resources.coreSchema, referenceSchema:resources.referenceSchema, packageSchema:resources.packageSchema, constraints:resources.constraints, domainPolicy:resources.domainPolicy}, {controls:{meter:(amount:number) => {contextMeasuredWork += amount;}}}).integerFromBigInt(1n, context);
+    if (contextMeasuredWork <= measuredWork) throw new Error('WASM context stages were not metered cumulatively');
+    const contextCumulativeLimited = createJavascriptNumericEngine(wasm, {coreSchema:resources.coreSchema, referenceSchema:resources.referenceSchema, packageSchema:resources.packageSchema, constraints:resources.constraints, domainPolicy:resources.domainPolicy}, {controls:{maxWork:contextMeasuredWork - 1}});
+    try { contextCumulativeLimited.integerFromBigInt(1n, context); throw Error('WASM context operation bypassed cumulative maxWork'); }
+    catch (error) { if ((error as {code?:string}).code !== 'RESOURCE_LIMIT') throw error; }
+    const contextPerCallLimited = createJavascriptNumericEngine(wasm, {coreSchema:resources.coreSchema, referenceSchema:resources.referenceSchema, packageSchema:resources.packageSchema, constraints:resources.constraints, domainPolicy:resources.domainPolicy}, {controls:{maxWork:contextMeasuredWork}});
+    contextPerCallLimited.integerFromBigInt(1n, context);
+    contextPerCallLimited.integerFromBigInt(1n, context);
     let getterCalls = 0;
     const refusedContexts = [
       {...context, future:1n}, {...context, future:()=>1}, {...context, future:{get value(){getterCalls++; return 1;}}},
@@ -100,7 +190,7 @@ try {
       try { engine.admitJavascriptNumber(value, 'decimal'); throw Error('invalid binary64 accepted'); }
       catch (error) { if ((error as {code?:string}).code !== 'JAVASCRIPT_NUMERIC') throw error; errors.push((error as Error).name); }
     }
-    return {checked, errors, contextChecks:refusedContexts.length+1, resourceBudget:true, expandedFormattingBudget:true, nodeGlobalsAbsent:!('process' in globalThis) && !('Buffer' in globalThis)};
+    return {checked, errors, contextChecks:refusedContexts.length+1, hostOrderChecks, crossedLossyContext, malformedBeforeContext, perCallWorkReset:true, measuredWork, contextCumulativeWorkReset:true, contextMeasuredWork, factorySetupWork, factoryOperationWork, resourceBudget:true, expandedFormattingBudget:true, opaqueStage:true, noContextStage:true, setupWork, nodeGlobalsAbsent:!('process' in globalThis) && !('Buffer' in globalThis)};
   });
   if (result.checked !== 27 || !result.nodeGlobalsAbsent) throw Error(`Chromium WASM numeric baseline failed: ${JSON.stringify(result)}`);
   console.log(JSON.stringify({status:'pass', chromium:browser.version(), profile:'umf.javascript-numeric/1.0.0', ...result}));

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Declarative action inspection used by portable generators.
 
+pub mod evaluation;
 pub mod single_set;
 
 use std::collections::{BTreeMap, BTreeSet};

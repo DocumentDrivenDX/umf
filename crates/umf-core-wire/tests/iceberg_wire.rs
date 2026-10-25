@@ -14,7 +14,9 @@ fn object(fields: Vec<(&str, Value)>) -> Value {
 }
 
 fn field<'a>(value: &'a Value, name: &str) -> &'a Value {
-    let Value::Object(fields) = value else { panic!("object expected") };
+    let Value::Object(fields) = value else {
+        panic!("object expected")
+    };
     &fields
         .iter()
         .find(|(key, _)| key == &Utf16::from(name))
@@ -57,7 +59,10 @@ fn standalone_iceberg_wire_preserves_exact_tokens_and_copied_edits() {
         ("pointer", Value::string_utf8("/fields/0/initial-default")),
     ]);
     assert_eq!(field(&selected, "kind"), &Value::string_utf8("number"));
-    assert_eq!(field(&selected, "value"), &Value::string_utf8("9223372036854775807"));
+    assert_eq!(
+        field(&selected, "value"),
+        &Value::string_utf8("9223372036854775807")
+    );
 
     let edit = execute(vec![
         ("op", Value::string_utf8("iceberg.schema.proposeNodeEdit")),
@@ -65,12 +70,17 @@ fn standalone_iceberg_wire_preserves_exact_tokens_and_copied_edits() {
         ("pointer", Value::string_utf8("/fields/0/name")),
         ("replacement", Value::string_utf8(r#""renamed""#)),
     ]);
-    assert_eq!(field(field(&edit, "validation"), "valid"), &Value::Bool(true));
+    assert_eq!(
+        field(field(&edit, "validation"), "valid"),
+        &Value::Bool(true)
+    );
     let renamed = execute(vec![
         ("op", Value::string_utf8("iceberg.schema.export")),
         ("document", field(&edit, "document").clone()),
     ]);
-    let Value::String(renamed) = renamed else { panic!("text expected") };
+    let Value::String(renamed) = renamed else {
+        panic!("text expected")
+    };
     assert!(renamed.to_utf8().unwrap().contains("\"name\":\"renamed\""));
     assert_eq!(
         execute(vec![
@@ -123,9 +133,10 @@ fn iceberg_wire_import_replays_all_frozen_authored_and_upstream_cases() {
             .as_str()
             .or_else(|| case["source"]["id"].as_str())
             .unwrap();
-        let relative = case["path"].as_str().map(str::to_owned).unwrap_or_else(|| {
-            format!("fixtures/iceberg/upstream/extracted/{id}.json")
-        });
+        let relative = case["path"]
+            .as_str()
+            .map(str::to_owned)
+            .unwrap_or_else(|| format!("fixtures/iceberg/upstream/extracted/{id}.json"));
         let source = std::fs::read_to_string(root.join(relative)).unwrap();
         let response = execute_envelope(vec![
             ("op", Value::string_utf8("iceberg.schema.import")),
@@ -152,11 +163,9 @@ fn iceberg_wire_import_replays_all_frozen_authored_and_upstream_cases() {
             }
         } else {
             assert_eq!(response["status"], "ok", "{id}: {response}");
-            let document = umf_core_wire::decode(
-                response["wire"].as_str().unwrap(),
-                &mut Context::ordinary(),
-            )
-            .unwrap();
+            let document =
+                umf_core_wire::decode(response["wire"].as_str().unwrap(), &mut Context::ordinary())
+                    .unwrap();
             assert_eq!(field(&document, "id"), &Value::string_utf8(id), "{id}");
         }
     }

@@ -54,21 +54,34 @@ impl Rfc3339ExactInstant {
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum Rfc3339ExactInstantError {
     TypeError,
-    RangeError,
+    TokenLimit,
+    Syntax,
+    Calendar,
+    Offset,
 }
 
 impl Rfc3339ExactInstantError {
     pub const fn name(self) -> &'static str {
         match self {
             Self::TypeError => "TypeError",
-            Self::RangeError => "RangeError",
+            Self::TokenLimit | Self::Syntax | Self::Calendar | Self::Offset => "RangeError",
+        }
+    }
+
+    pub const fn message(self) -> &'static str {
+        match self {
+            Self::TypeError => "RFC3339 exact instant requires text",
+            Self::TokenLimit => "RFC3339 exact instant token limit",
+            Self::Syntax => "RFC3339 exact instant syntax",
+            Self::Calendar => "RFC3339 exact instant calendar",
+            Self::Offset => "RFC3339 exact instant offset",
         }
     }
 }
 
 impl fmt::Display for Rfc3339ExactInstantError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str(self.name())
+        f.write_str(self.message())
     }
 }
 
@@ -84,11 +97,11 @@ pub fn parse_rfc3339_exact_instant(
     };
     let units = text.units();
     if units.len() > RFC3339_EXACT_INSTANT_MAXIMUM_BYTES {
-        return Err(Rfc3339ExactInstantError::RangeError);
+        return Err(Rfc3339ExactInstantError::TokenLimit);
     }
     // The shortest legal form is the fixed 19-unit local datetime plus Z.
     if units.len() < 20 {
-        return Err(Rfc3339ExactInstantError::RangeError);
+        return Err(Rfc3339ExactInstantError::Syntax);
     }
     if !ascii_digits(units, 0, 4)
         || !ascii_digit_at(units, 5)
@@ -107,26 +120,27 @@ pub fn parse_rfc3339_exact_instant(
         || units[13] != b':' as u16
         || units[16] != b':' as u16
     {
-        return Err(Rfc3339ExactInstantError::RangeError);
+        return Err(Rfc3339ExactInstantError::Syntax);
     }
 
-    let (offset_start, original_offset, offset_minutes, local_offset_known) = parse_offset(units)?;
+    let (offset_start, original_offset, offset_minutes, local_offset_known, offset_out_of_range) =
+        parse_offset(units)?;
     let fraction = if offset_start == 19 {
         &units[19..offset_start]
     } else {
         if units[19] != b'.' as u16 || offset_start <= 20 {
-            return Err(Rfc3339ExactInstantError::RangeError);
+            return Err(Rfc3339ExactInstantError::Syntax);
         }
         let digits = &units[20..offset_start];
         if !digits.iter().all(|unit| ascii_digit(*unit)) {
-            return Err(Rfc3339ExactInstantError::RangeError);
+            return Err(Rfc3339ExactInstantError::Syntax);
         }
         digits
     };
     // A Z suffix begins at 19 with no fraction. Numeric suffixes begin at
     // least 19 and can only follow either the fixed datetime or fraction.
     if offset_start == 19 && fraction.len() != 0 {
-        return Err(Rfc3339ExactInstantError::RangeError);
+        return Err(Rfc3339ExactInstantError::Syntax);
     }
 
     let year = number(units, 0, 4);
@@ -136,11 +150,14 @@ pub fn parse_rfc3339_exact_instant(
     let minute = number(units, 14, 2);
     let second = number(units, 17, 2);
     if !(1..=9999).contains(&year) {
-        return Err(Rfc3339ExactInstantError::RangeError);
+        return Err(Rfc3339ExactInstantError::Calendar);
     }
-    let days_in_month = month_length(year, month).ok_or(Rfc3339ExactInstantError::RangeError)?;
+    let days_in_month = month_length(year, month).ok_or(Rfc3339ExactInstantError::Calendar)?;
     if day == 0 || day > days_in_month || hour > 23 || minute > 59 || second > 59 {
-        return Err(Rfc3339ExactInstantError::RangeError);
+        return Err(Rfc3339ExactInstantError::Calendar);
+    }
+    if offset_out_of_range {
+        return Err(Rfc3339ExactInstantError::Offset);
     }
 
     let mut days = prior_year_days(year) - prior_year_days(1970) + i64::from(day) - 1;
@@ -177,7 +194,9 @@ pub fn same_rfc3339_exact_instant(
     Ok(left.utc_seconds == right.utc_seconds && left.fractional_digits == right.fractional_digits)
 }
 
-fn parse_offset(units: &[u16]) -> Result<(usize, String, i64, bool), Rfc3339ExactInstantError> {
+fn parse_offset(
+    units: &[u16],
+) -> Result<(usize, String, i64, bool, bool), Rfc3339ExactInstantError> {
     if let Some(last) = units.last().copied() {
         if last == b'Z' as u16 || last == b'z' as u16 {
             return Ok((
@@ -185,11 +204,12 @@ fn parse_offset(units: &[u16]) -> Result<(usize, String, i64, bool), Rfc3339Exac
                 String::from(char::from_u32(last as u32).unwrap()),
                 0,
                 true,
+                false,
             ));
         }
     }
     if units.len() < 25 {
-        return Err(Rfc3339ExactInstantError::RangeError);
+        return Err(Rfc3339ExactInstantError::Syntax);
     }
     let start = units.len() - 6;
     let sign = units[start];
@@ -198,13 +218,11 @@ fn parse_offset(units: &[u16]) -> Result<(usize, String, i64, bool), Rfc3339Exac
         || !ascii_digits(units, start + 1, 2)
         || !ascii_digits(units, start + 4, 2)
     {
-        return Err(Rfc3339ExactInstantError::RangeError);
+        return Err(Rfc3339ExactInstantError::Syntax);
     }
     let hours = number(units, start + 1, 2);
     let minutes = number(units, start + 4, 2);
-    if hours > 23 || minutes > 59 {
-        return Err(Rfc3339ExactInstantError::RangeError);
-    }
+    let offset_out_of_range = hours > 23 || minutes > 59;
     let magnitude = i64::from(hours * 60 + minutes);
     let offset_minutes = if sign == b'-' as u16 {
         -magnitude
@@ -212,7 +230,13 @@ fn parse_offset(units: &[u16]) -> Result<(usize, String, i64, bool), Rfc3339Exac
         magnitude
     };
     let offset = ascii_string(&units[start..]);
-    Ok((start, offset.clone(), offset_minutes, offset != "-00:00"))
+    Ok((
+        start,
+        offset.clone(),
+        offset_minutes,
+        offset != "-00:00",
+        offset_out_of_range,
+    ))
 }
 
 fn month_length(year: u32, month: u32) -> Option<u32> {
@@ -349,8 +373,21 @@ mod tests {
             "0000-01-01T00:00:00Z",
             "2016-12-31T23:59:60Z",
             "2024-01-01T24:00:00Z",
-            "2024-01-01T00:00:00+00:60",
-            "2024-01-01T00:00:00+24:00",
+        ] {
+            assert_eq!(
+                parse_rfc3339_exact_instant(&text(token)),
+                Err(Rfc3339ExactInstantError::Calendar),
+                "{token:?}"
+            );
+        }
+        for token in ["2024-01-01T00:00:00+00:60", "2024-01-01T00:00:00+24:00"] {
+            assert_eq!(
+                parse_rfc3339_exact_instant(&text(token)),
+                Err(Rfc3339ExactInstantError::Offset),
+                "{token:?}"
+            );
+        }
+        for token in [
             "2024-01-01T00:00:00",
             "2024-01-01T00:00:00Z\n",
             "2024-01-01 00:00:00Z",
@@ -361,14 +398,14 @@ mod tests {
         ] {
             assert_eq!(
                 parse_rfc3339_exact_instant(&text(token)),
-                Err(Rfc3339ExactInstantError::RangeError),
+                Err(Rfc3339ExactInstantError::Syntax),
                 "{token:?}"
             );
         }
         let oversized = "x".repeat(RFC3339_EXACT_INSTANT_MAXIMUM_BYTES + 1);
         assert_eq!(
             parse_rfc3339_exact_instant(&text(&oversized)),
-            Err(Rfc3339ExactInstantError::RangeError)
+            Err(Rfc3339ExactInstantError::TokenLimit)
         );
     }
 

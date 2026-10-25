@@ -1,0 +1,45 @@
+{
+  "format": "umf-r5-dataset-values-host-admission-freeze/1",
+  "cases": {
+    "validate_source_accessor_before_input": {
+      "status": "threw",
+      "error": {"name": "UmfError", "code": "NON_JSON", "path": "/x~1value", "message": "Hidden fields and accessors cannot be serialized faithfully"},
+      "trace": ["source.getPrototypeOf", "source.ownKeys", "source.ownKeys", "source.descriptor:x/value"]
+    },
+    "validate_source_number_before_input": {
+      "status": "threw",
+      "error": {"name": "UmfError", "code": "NUMBER", "path": "/x-number", "message": "Number outside the core interoperable numeric profile"},
+      "trace": []
+    },
+    "validate_input_sparse": {
+      "status": "threw",
+      "error": {"name": "UmfError", "code": "NON_JSON", "path": "/records", "message": "Sparse arrays are not JSON values"},
+      "trace": []
+    },
+    "validate_input_cycle": {
+      "status": "threw",
+      "error": {"name": "UmfError", "code": "CYCLE", "path": "/context/self", "message": "Cyclic value"},
+      "trace": []
+    },
+    "validate_input_custom_prototype": {
+      "status": "threw",
+      "error": {"name": "UmfError", "code": "NON_JSON", "path": "/context", "message": "Custom object prototype"},
+      "trace": []
+    },
+    "verify_receipt_schema_before_current": {
+      "status": "threw",
+      "error": {"name": "UmfError", "code": "CORE_DATASET_RECEIPT", "path": "", "message": "Dataset receipt violates its versioned schema"},
+      "trace": []
+    },
+    "verify_current_before_expected_on_stale_source": {
+      "status": "threw",
+      "error": {"name": "UmfError", "code": "CORE_DATASET_RECEIPT", "path": "", "message": "Invalid/stale original dataset receipt"},
+      "trace": ["current.getPrototypeOf", "current.ownKeys", "current.ownKeys", "current.descriptor:umf", "current.descriptor:id", "current.descriptor:title", "current.descriptor:vocabularies", "current.descriptor:modules"]
+    },
+    "verify_expected_after_current_match": {
+      "status": "threw",
+      "error": {"name": "UmfError", "code": "CORE_DATASET_RECEIPT", "path": "", "message": "Invalid/stale original dataset receipt"},
+      "trace": ["current.getPrototypeOf", "current.ownKeys", "current.ownKeys", "current.descriptor:umf", "current.descriptor:id", "current.descriptor:title", "current.descriptor:vocabularies", "current.descriptor:modules", "expected.getPrototypeOf", "expected.ownKeys", "expected.ownKeys", "expected.descriptor:scope", "expected.descriptor:context", "expected.descriptor:records", "expected.descriptor:relationships"]
+    }
+  }
+}

@@ -12,7 +12,7 @@ use pyo3::{
     types::{PyBytes, PyDict, PyList, PyString},
 };
 use umf_core::access_related_keys::{
-    parse_related_key_json, DiagnosticProfile, JsonNodeKind, ParseFailureKind,
+    DiagnosticProfile, JsonNodeKind, ParseFailureKind, parse_related_key_json,
 };
 
 pub const PROFILE_VERSION: &str = "umf-r6-related-key-json/0.1.0";
@@ -34,7 +34,7 @@ pub fn related_keys_parse(
         _ => {
             return Err(PyValueError::new_err(
                 "unsupported related-Key parser profile",
-            ))
+            ));
         }
     };
     let encoded = text.call_method1("encode", ("utf-32-le", "surrogatepass"))?;
@@ -55,11 +55,8 @@ pub fn related_keys_parse(
             // array/object. This boundary replay also accounts for the
             // json.loads frame on CPython 3.11; the Rust parser stays iterative
             // and does not grow the native stack.
-            let recursion = RecursionBudget::enter_for_json_containers(
-                py,
-                &input,
-                diagnostic_profile,
-            )?;
+            let recursion =
+                RecursionBudget::enter_for_json_containers(py, &input, diagnostic_profile)?;
             drop(recursion);
             value
         }
@@ -161,10 +158,7 @@ impl RecursionBudget {
                     // adjustment (and the direct-call matrix matches without
                     // it).
                     if !modeled_json_loads_frame && profile == DiagnosticProfile::Cpython311 {
-                        budget.enter(
-                            py,
-                            " while decoding a JSON array from a unicode string",
-                        )?;
+                        budget.enter(py, " while decoding a JSON array from a unicode string")?;
                     }
                     budget.enter(py, " while decoding a JSON array from a unicode string")?;
                     modeled_json_loads_frame = true;
@@ -172,10 +166,7 @@ impl RecursionBudget {
                 }
                 x if x == b'{' as u32 => {
                     if !modeled_json_loads_frame && profile == DiagnosticProfile::Cpython311 {
-                        budget.enter(
-                            py,
-                            " while decoding a JSON object from a unicode string",
-                        )?;
+                        budget.enter(py, " while decoding a JSON object from a unicode string")?;
                     }
                     budget.enter(py, " while decoding a JSON object from a unicode string")?;
                     modeled_json_loads_frame = true;

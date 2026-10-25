@@ -31,6 +31,12 @@ ddx:
       kind: informed_by
     - id: TD-054
       kind: informed_by
+    - id: ADR-006
+      kind: informed_by
+    - id: CONTRACT-079
+      kind: informed_by
+    - id: CONTRACT-080
+      kind: informed_by
 ---
 
 # UMF Test Plan
@@ -3380,3 +3386,19 @@ independent disagreements and held native scopes explicit. Diagnostic, generated
 byte, hash-preimage and receipt-format differences require classified corrections
 and downstream verifier replay. The detailed migration gates remain in the build
 plan until R0/R1 freezes exact implementation commands and interfaces.
+
+For CONTRACT-079's versioned `umf.python-client-host-read/4` default candidate,
+freeze V3 observations and enumerate deliberate V4 differences. Test raw
+record/action limits on both sides of 10,000/1,000, duplicate and sparse arrays,
+the cumulative 4,000,000 UTF-16-unit selected-identity boundary, isolated
+surrogates, changing getters, custom `map`/iterators, and meter mutation of
+unread positions. Verify the first `RESOURCE_LIMIT` code/message/path and
+checkpoint order without reading later request properties. Exercise exact
+thrown-value identity, cancellation/deadline provenance and one carried
+work/constraint counter across events and <=8,192-unit ASCII frames. Malformed
+frame tokens, offsets, counts, digits and V4 refusal descriptors must fail
+closed. Rebuild one source cohort; compare all 46 Gate0 observations and 31
+R3 requests with classified versioned differences, then install and import the
+actual Node/Bun/browser archives with missing/corrupt-asset controls. The
+public synchronous export must demonstrably enter Rust before retiring its
+TypeScript predecessor.

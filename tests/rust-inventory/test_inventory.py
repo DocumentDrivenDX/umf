@@ -32,6 +32,21 @@ class InventoryDependencyTests(unittest.TestCase):
                 self.assertTrue(SUCCESSOR.is_canonical_output(canonical.parent / "." / canonical.name))
                 self.assertFalse(SUCCESSOR.is_canonical_output(diagnostic))
 
+    def test_stale_authority_blocks_canonical_writes_but_allows_read_only_check(self):
+        with tempfile.TemporaryDirectory() as directory:
+            canonical = Path(directory) / "census.json"
+            with patch.object(SUCCESSOR, "OUT", canonical):
+                self.assertTrue(SUCCESSOR.refuses_canonical_replace(canonical, "stale", check_only=False))
+                self.assertFalse(SUCCESSOR.refuses_canonical_replace(canonical, "stale", check_only=True))
+                self.assertFalse(SUCCESSOR.refuses_canonical_replace(canonical, "current", check_only=False))
+
+    def test_matching_stale_census_cannot_pass_read_only_check(self):
+        payload = '{"sourceCohortSha256":"same"}\n'
+        self.assertFalse(SUCCESSOR.census_check_passes(payload, payload, "stale"))
+        self.assertFalse(SUCCESSOR.census_check_passes(payload, payload, "missing"))
+        self.assertFalse(SUCCESSOR.census_check_passes(payload, "different", "current"))
+        self.assertTrue(SUCCESSOR.census_check_passes(payload, payload, "current"))
+
     def test_successor_census_binds_metamodel_sources_and_schema_outputs_to_fixed_point(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory).resolve()

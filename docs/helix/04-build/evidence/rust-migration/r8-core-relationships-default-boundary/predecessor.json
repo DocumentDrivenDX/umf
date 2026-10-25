@@ -1,0 +1,188 @@
+{
+  "format": "umf-r8-core-relationships-default-boundary/1",
+  "runtime": {
+    "bun": "1.4.3"
+  },
+  "sourceHashes": {
+    "src/model/relationships.ts": "66b15764cb80059de8e98adb9741b9314a1966674f22ef4f114306e679d5e547",
+    "src/model/json.ts": "d0a06bd26beb215d262b92f5c47d5cea9e85291bb4a780f0aea98b8277c15f98",
+    "src/validation/document.ts": "bb88c43790277f67269cea09af251b908e93ddd356a1a4aa8bc10c0cf135720a",
+    "spec/core/relationship-operation.schema.json": "0797e1e0ec3d290c23541fb9ae38532cc19d211d8379c11231d7ff332c7320de",
+    "spec/core/relationship-operation-v3.schema.json": "42a3a7ad1e3ef7ac80ef5044948aad12847de22aaf63367e6264bfcb2434bda7",
+    "scripts/core-relationship-cases.ts": "6432ac544caee37ea8f197e799c2b82f3f3b7d92ad14f363e6fce83dad2db446",
+    "scripts/core-relationship-operation-cases.ts": "0543c77ddeacf9c065113b18f24874ffa3e9ed7088f4422aa8988ee251e5cff8"
+  },
+  "captureScriptSha256": "59a1e2ef6d5617c48c2be07e97f22f7a72cd46c74d29cab12aca600d1c2e2936",
+  "caseCount": 11,
+  "cases": [
+    {
+      "id": "inspect.source-before-identity",
+      "shape": "source accessor and watched identity",
+      "outcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "NON_JSON",
+        "path": "/umf",
+        "message": "Hidden fields and accessors cannot be serialized faithfully"
+      },
+      "trace": []
+    },
+    {
+      "id": "inspect.identity-after-source",
+      "shape": "valid source and identity accessor",
+      "outcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "NON_JSON",
+        "path": "/module",
+        "message": "Hidden fields and accessors cannot be serialized faithfully"
+      },
+      "trace": [
+        "source:getPrototypeOf",
+        "source:ownKeys",
+        "source:ownKeys",
+        "source:descriptor:umf",
+        "source:descriptor:id",
+        "source:descriptor:vocabularies",
+        "source:descriptor:extensions",
+        "source:descriptor:modules"
+      ]
+    },
+    {
+      "id": "lookup.identity-before-source",
+      "shape": "identity accessor and watched source",
+      "outcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "NON_JSON",
+        "path": "/id",
+        "message": "Hidden fields and accessors cannot be serialized faithfully"
+      },
+      "trace": []
+    },
+    {
+      "id": "declare.request-before-source",
+      "shape": "request accessor and watched source",
+      "outcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "NON_JSON",
+        "path": "/name",
+        "message": "Hidden fields and accessors cannot be serialized faithfully"
+      },
+      "trace": []
+    },
+    {
+      "id": "declare.source-before-identity",
+      "shape": "valid request, source accessor and watched identity",
+      "outcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "NON_JSON",
+        "path": "/umf",
+        "message": "Hidden fields and accessors cannot be serialized faithfully"
+      },
+      "trace": []
+    },
+    {
+      "id": "verify.receipt-before-current",
+      "shape": "receipt accessor and watched current",
+      "outcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "NON_JSON",
+        "path": "/version",
+        "message": "Hidden fields and accessors cannot be serialized faithfully"
+      },
+      "trace": []
+    },
+    {
+      "id": "verify.current-after-recompute",
+      "shape": "valid receipt and current accessor",
+      "outcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "NON_JSON",
+        "path": "/umf",
+        "message": "Hidden fields and accessors cannot be serialized faithfully"
+      },
+      "trace": [
+        "receipt:getPrototypeOf",
+        "receipt:ownKeys",
+        "receipt:ownKeys",
+        "receipt:descriptor:operation",
+        "receipt:descriptor:version",
+        "receipt:descriptor:source",
+        "receipt:descriptor:target",
+        "receipt:descriptor:identity",
+        "receipt:descriptor:request",
+        "receipt:descriptor:provenance",
+        "receipt:descriptor:diagnostics",
+        "receipt:descriptor:residuals"
+      ]
+    },
+    {
+      "id": "verify.schema-refusal-before-current",
+      "shape": "malformed receipt and watched current",
+      "outcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "RELATIONSHIP_RECEIPT",
+        "path": "",
+        "message": "Malformed relationship operation"
+      },
+      "trace": []
+    },
+    {
+      "id": "inspect.watched-success",
+      "shape": "watched source and identity",
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "operation": "inspect-core-relationships",
+          "version": "3.0.0",
+          "meaning": "known",
+          "path": "/modules/0/relationships"
+        }
+      },
+      "trace": [
+        "source:getPrototypeOf",
+        "source:ownKeys",
+        "source:ownKeys",
+        "source:descriptor:umf",
+        "source:descriptor:id",
+        "source:descriptor:vocabularies",
+        "source:descriptor:extensions",
+        "source:descriptor:modules",
+        "identity:getPrototypeOf",
+        "identity:ownKeys",
+        "identity:ownKeys",
+        "identity:descriptor:module"
+      ]
+    },
+    {
+      "id": "lookup.wrong-identity",
+      "shape": "null identity",
+      "outcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "RELATIONSHIP_IDENTITY",
+        "path": "",
+        "message": "Expected stable relationship ID"
+      },
+      "trace": []
+    },
+    {
+      "id": "declare.wrong-request",
+      "shape": "null request",
+      "outcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "RELATIONSHIP_REQUEST",
+        "path": "",
+        "message": "Expected complete known authored relationship"
+      },
+      "trace": []
+    }
+  ]
+}

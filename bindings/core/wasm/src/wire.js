@@ -1,9 +1,149 @@
 // Private umf.core-wire/1 admission for JavaScript hosts. Inspect before stringify.
 const hasOwn = Function.call.bind(Object.prototype.hasOwnProperty);
+const getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+const defineProperty = Object.defineProperty;
+const getPrototypeOf = Object.getPrototypeOf;
+const ownKeys = Reflect.ownKeys;
+const arrayIsArray = Array.isArray;
+const isSafeInteger = Number.isSafeInteger;
+const freeze = Object.freeze;
+const min = Math.min;
+const arrayPrototype = Array.prototype;
+const objectPrototype = Object.prototype;
+const toNumber = Number;
+const toString = String;
+const regexpTest = Function.call.bind(RegExp.prototype.test);
+const stringSplit = Function.call.bind(String.prototype.split);
+const stringCharCodeAt = Function.call.bind(String.prototype.charCodeAt);
+const stringCharAt = Function.call.bind(String.prototype.charAt);
+const mapSet = Function.call.bind(Map.prototype.set);
+const mapGet = Function.call.bind(Map.prototype.get);
+const mapDelete = Function.call.bind(Map.prototype.delete);
+const mapClear = Function.call.bind(Map.prototype.clear);
 // The envelope combines independently bounded catalog resources and an
 // ordinary operation tree. Its structural limits allow those payloads plus
 // their wire wrappers; copied string/key content has no aggregate text cap.
 const REQUEST_LIMITS = Object.freeze({maxDepth: 256, maxValues: Number.MAX_SAFE_INTEGER});
+
+export const HOST_READ_RESPONSE_FRAME_UNITS = 8192;
+const HOST_READ_FRAME_EVENT = '__umf_host_read_v3_frame__';
+const HOST_READ_ARRAY_ITEM_EVENT = '__umf_host_read_v3_array_item__';
+const HOST_READ_RESPONSE_PREFIX = 'UMF-HOST-READ-V3';
+const HOST_READ_FRAME_PREFIX = 'UMF-HOST-FRAME-V3';
+const HEX_DIGITS = '0123456789abcdef';
+
+/**
+ * Keep host response strings in JS and expose only bounded UTF-16 frames to
+ * native/WASM. The returned dispatcher intercepts private frame events so
+ * user host getters still run only for the original closed semantic events.
+ */
+export function createHostReadResponseFrames(readHost) {
+  const pending = new Map();
+  let nextToken = 1;
+
+  function token() {
+    if (!isSafeInteger(nextToken) || nextToken <= 0) throw new RangeError('Host response token space exhausted');
+    return nextToken++;
+  }
+
+  function storeString(value) {
+    const id = token();
+    if (value.length) mapSet(pending, id, {kind: 'string', value, offset: 0});
+    return `${HOST_READ_RESPONSE_PREFIX}|string|${id}|${value.length}`;
+  }
+
+  function describe(value) {
+    if (value === null) return `${HOST_READ_RESPONSE_PREFIX}|null`;
+    if (typeof value === 'boolean') return `${HOST_READ_RESPONSE_PREFIX}|bool|${value}`;
+    if (typeof value === 'string') return storeString(value);
+    if (arrayIsArray(value)) {
+      if (getPrototypeOf(value) !== arrayPrototype) throw new TypeError('Host-read string array prototype is invalid');
+      const length = getOwnPropertyDescriptor(value, 'length')?.value;
+      if (!isSafeInteger(length) || length < 0) throw new TypeError('Host-read string array length is invalid');
+      const keys = ownKeys(value);
+      if (keys.length !== length + 1) throw new TypeError('Host-read string array is sparse or has extra properties');
+      const items = [];
+      let units = 0;
+      for (let index = 0; index < length; index++) {
+        const descriptor = getOwnPropertyDescriptor(value, toString(index));
+        if (!descriptor || !hasOwn(descriptor, 'value') || !descriptor.enumerable || typeof descriptor.value !== 'string') {
+          throw new TypeError('Host-read string array contains a non-string entry');
+        }
+        defineProperty(items, toString(index), {value: descriptor.value, enumerable: true, writable: true, configurable: true});
+        units += descriptor.value.length;
+        if (!isSafeInteger(units)) throw new RangeError('Host-read string array length exceeds safe integer range');
+      }
+      const id = token();
+      if (items.length) mapSet(pending, id, {kind: 'array', items, nextItem: 0});
+      return `${HOST_READ_RESPONSE_PREFIX}|array|${id}|${items.length}|${units}`;
+    }
+    if (value && typeof value === 'object') {
+      const descriptor = getOwnPropertyDescriptor(value, 'kind');
+      const pathDescriptor = getOwnPropertyDescriptor(value, 'path');
+      if ((getPrototypeOf(value) === objectPrototype || getPrototypeOf(value) === null) &&
+          ownKeys(value).length === 2 && descriptor && hasOwn(descriptor, 'value') && descriptor.enumerable && descriptor.value === 'umf.host-resource-limit/4' &&
+          pathDescriptor && hasOwn(pathDescriptor, 'value') && pathDescriptor.enumerable && (pathDescriptor.value === 'records' || pathDescriptor.value === 'actions')) {
+        return `UMF-HOST-READ-V4|resource|${pathDescriptor.value}`;
+      }
+      if ((getPrototypeOf(value) === objectPrototype || getPrototypeOf(value) === null) && ownKeys(value).length === 1 && descriptor && hasOwn(descriptor, 'value') && descriptor.enumerable && descriptor.value === 'umf.host-abort/3') {
+        return `${HOST_READ_RESPONSE_PREFIX}|abort`;
+      }
+    }
+    throw new TypeError('Host-read value is outside the closed V3 response set');
+  }
+
+  function parseTriple(argument) {
+    if (typeof argument !== 'string' || !regexpTest(/^[1-9][0-9]*:[0-9]+:[0-9]+$/, argument)) {
+      throw new TypeError('Malformed private host-response request');
+    }
+    const [idText, indexText, countText] = stringSplit(argument, ':');
+    const id = toNumber(idText), index = toNumber(indexText), count = toNumber(countText);
+    if (!isSafeInteger(id) || !isSafeInteger(index) || !isSafeInteger(count)) throw new TypeError('Host-response request exceeds integer range');
+    return [id, index, count];
+  }
+
+  function dispatcher(event, argument) {
+    if (event === HOST_READ_ARRAY_ITEM_EVENT) {
+      const [id, index] = parseTriple(`${argument}:0`);
+      const entry = mapGet(pending, id);
+      if (!entry || entry.kind !== 'array' || index !== entry.nextItem || index >= entry.items.length) {
+        throw new TypeError('Host-response array token or offset mismatch');
+      }
+      entry.nextItem++;
+      const value = entry.items[index];
+      if (entry.nextItem === entry.items.length) mapDelete(pending, id);
+      return storeString(value);
+    }
+    if (event === HOST_READ_FRAME_EVENT) {
+      const [id, offset, maximum] = parseTriple(argument);
+      const entry = mapGet(pending, id);
+      if (!entry || entry.kind !== 'string' || offset !== entry.offset || maximum !== HOST_READ_RESPONSE_FRAME_UNITS) {
+        throw new TypeError('Host-response frame token or offset mismatch');
+      }
+      let end = min(offset + maximum, entry.value.length);
+      if (end < entry.value.length) {
+        const high = stringCharCodeAt(entry.value, end - 1);
+        const low = stringCharCodeAt(entry.value, end);
+        if (high >= 0xd800 && high <= 0xdbff && low >= 0xdc00 && low <= 0xdfff) end--;
+      }
+      const count = end - offset;
+      let hex = '';
+      for (let index = 0; index < count; index++) {
+        const unit = stringCharCodeAt(entry.value, offset + index);
+        hex += stringCharAt(HEX_DIGITS, unit >>> 12);
+        hex += stringCharAt(HEX_DIGITS, (unit >>> 8) & 15);
+        hex += stringCharAt(HEX_DIGITS, (unit >>> 4) & 15);
+        hex += stringCharAt(HEX_DIGITS, unit & 15);
+      }
+      entry.offset = end;
+      if (entry.offset === entry.value.length) mapDelete(pending, id);
+      return `${HOST_READ_FRAME_PREFIX}|${id}|${offset}|${count}|${hex}`;
+    }
+    return describe(readHost(event, argument));
+  }
+
+  return freeze({dispatcher, dispose() { mapClear(pending); }});
+}
 
 export class AdmissionError extends TypeError {
   constructor(code, message, path = '') {

@@ -1,0 +1,75 @@
+{
+  "format": "umf-r5-json-schema-host-control-probes-v1",
+  "label": "node",
+  "kind": "node",
+  "runtime": {
+    "node": "v26.12.1",
+    "bun": null
+  },
+  "artifactSha256": null,
+  "caseCount": 5,
+  "matched": 5,
+  "cases": [
+    {
+      "id": "controls.max-work-preflight",
+      "operation": "walkJsonSchema",
+      "meterCalls": 0,
+      "actual": {
+        "status": "threw",
+        "name": "UmfCoreError",
+        "code": "RESOURCE_LIMIT",
+        "message": "Host work budget exceeded",
+        "path": ""
+      }
+    },
+    {
+      "id": "controls.cancelled-preflight",
+      "operation": "walkJsonSchema",
+      "meterCalls": 0,
+      "actual": {
+        "status": "threw",
+        "name": "UmfCoreError",
+        "code": "CANCELLED",
+        "message": "Operation cancelled by host",
+        "path": ""
+      }
+    },
+    {
+      "id": "controls.deadline-preflight",
+      "operation": "walkJsonSchema",
+      "meterCalls": 0,
+      "actual": {
+        "status": "threw",
+        "name": "UmfCoreError",
+        "code": "DEADLINE",
+        "message": "Deadline elapsed",
+        "path": ""
+      }
+    },
+    {
+      "id": "controls.meter-first-hook-failure",
+      "operation": "walkJsonSchema",
+      "meterCalls": 1,
+      "actual": {
+        "status": "threw",
+        "name": "UmfCoreError",
+        "code": "METER_FAILURE",
+        "message": "Error: r5-meter-first-hook",
+        "path": ""
+      }
+    },
+    {
+      "id": "controls.meter-late-hook-failure",
+      "operation": "exportJsonSchemaBundle",
+      "meterCalls": 4,
+      "actual": {
+        "status": "threw",
+        "name": "UmfCoreError",
+        "code": "METER_FAILURE",
+        "message": "Error: r5-meter-late-hook",
+        "path": ""
+      },
+      "userMeterCalls": 4
+    }
+  ]
+}

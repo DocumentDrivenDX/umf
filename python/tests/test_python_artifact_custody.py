@@ -56,6 +56,24 @@ def _set_up_rebuild(monkeypatch, tmp_path, *, manifests=None, expected_pkg_info=
     return verifier, source_root, repository, helper_path, calls
 
 
+def test_extracted_sdist_helper_pin_accepts_exact_source_and_rejects_drift(
+    tmp_path: Path,
+):
+    verifier = _verifier()
+    repository = tmp_path / "checkout"
+    helper_path = repository / "tools/_python_sdist.py"
+    helper_path.parent.mkdir(parents=True)
+    source = Path(__file__).resolve().parents[2] / "tools/_python_sdist.py"
+    shutil.copyfile(source, helper_path)
+
+    _, pinned_path = verifier._sdist_helper(repository)
+    assert pinned_path == helper_path
+
+    helper_path.write_bytes(helper_path.read_bytes() + b"\\n# drift\\n")
+    with pytest.raises(ValueError, match="differs from its source pin"):
+        verifier._sdist_helper(repository)
+
+
 def test_wrong_wheel_metadata_stops_before_build_and_retains_no_wheel(
     monkeypatch, tmp_path
 ):

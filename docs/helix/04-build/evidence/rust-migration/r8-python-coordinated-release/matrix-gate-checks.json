@@ -1,0 +1,63 @@
+{
+  "schema": "umf.r8-python-release-matrix-gate-checks/1",
+  "status": "local-checks-passed",
+  "publishing": false,
+  "capturedGitHead": "23bf095b768b6e391da1967339cd559e22ff2eff",
+  "hostedCohorts": {
+    "status": "not-run",
+    "expected": 6,
+    "observed": 0
+  },
+  "ledgerCheckpoint": {
+    "inventorySha256": "8696b5bdffd59b883ccdd968c019d5b59893c65d20decc66a42f79b14a110a95",
+    "gapLedgerSha256": "59028cc13a64a2081108fecdc7dc9c339ef90d3f0ec255b960008e3e5cb08e8d",
+    "logicalDefaultRouteRetirementGaps": 922
+  },
+  "sourcePins": {
+    "tools/verify_python_release_matrix.py": "9cbc055e2c136321d37ffdb364f4071e044996350bff4b2cd578cd06f7f9cadd",
+    "python/tests/test_python_release_matrix.py": "545919e81203a1f15374fbe11d39039757b3c4fe05539e2116529899ccccaae3",
+    ".github/workflows/python-coordinated-release.yml": "241283d0e8a7816607223b1a57dc2b73b26983b267e9c394ec942ef2938fe5cc",
+    ".github/workflows/pypi.yml": "49ffa0afed27bd001439e036d7e0da1669b731ec241930b8420ef66d26f1a70e",
+    "tools/verify_python_release_pair.py": "c8a2f2d83c7aee3e468271b038faf2ee6b0d522dd11b7731adc0fb3c7357558d",
+    "tools/verify_python_artifacts.py": "87c6be5d6cfd159321c3622b7f14378df6cbecacabb85370e39d664a93fc2468",
+    "tools/_python_sdist.py": "55afef3a1091a7036b2d7bdc7b9fbcf3e5b0338307f52cad09010cfa2f673ea4",
+    "fixtures/actions-binding/source.json": "5b79b3dba5ebc52ac9452f85a75411dab5edaa34154adda76f872a53c21d0818"
+  },
+  "checks": [
+    {
+      "command": "/private/tmp/umf-r3-incremental-python/bin/python -m pytest -q -p no:cacheprovider python/tests/test_python_release_matrix.py",
+      "status": "passed",
+      "result": "18 passed"
+    },
+    {
+      "command": "/private/tmp/umf-r3-incremental-python/bin/python -m pytest -q -p no:cacheprovider python/tests/test_python_release_matrix.py python/tests/test_coordinated_python_release.py",
+      "status": "passed",
+      "result": "23 passed"
+    },
+    {
+      "command": "node --test scripts/rust-migration/r8/gap-ledger.test.mjs",
+      "status": "passed",
+      "result": "5 passed"
+    },
+    {
+      "command": "node scripts/rust-migration/r8/symbol-inventory.mjs --check",
+      "status": "passed",
+      "result": "3375 route-specific declarations across 506 files"
+    },
+    {
+      "command": "node scripts/rust-migration/r8/gap-ledger.mjs --check",
+      "status": "passed",
+      "result": "3360 route rows; 922 logical default-route retirement gaps"
+    },
+    {
+      "command": "ruby YAML.load_file for both release workflows and git diff --check on changed evidence/workflow files",
+      "status": "passed"
+    }
+  ],
+  "qualificationLimits": [
+    "No six-cohort hosted artifacts have been aggregated or qualified yet.",
+    "The aggregate receipt is nonpublishing; no publisher consumes it.",
+    "The previous local pair remains provisional and is not rebound to these current sources.",
+    "The six hosted artifact set must come from one workflow run and one source revision before any publication workflow is designed or enabled."
+  ]
+}

@@ -127,6 +127,8 @@ def check(root: Path) -> int:
             name == 'umf_access.values' and member in {'rust_temporal', 'rust_values'}
             or name == 'umf_access.pages' and member == 'rust_streams'
             or name == 'umf_access.unified.operation_values' and member == 'rust_operation_values'
+            or name == 'umf_access.unified.outcome_values' and member == 'rust_outcome_values'
+            or name == 'umf_access.reviewed' and member == 'rust_reviewed_parameters'
             or name == 'umf_access.rust_related_keys' and member == 'rust_related_keys'))
         seed_compiler = (name == 'umf_access.lifecycle.seeds' and target == 'weft' and member == 'compile_table_seed_json'
                          or name == 'umf_access.lifecycle.backfills' and target == 'weft' and member == 'prepare_table_operation_module_json')

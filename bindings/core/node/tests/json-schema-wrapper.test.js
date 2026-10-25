@@ -64,6 +64,29 @@ for (const [host, factory] of [['Node', createNodeOperations], ['WASM', createWa
       expect(bundle.diagnostics).toEqual([]);
       expect(Object.hasOwn(bundle.resources, '__proto__')).toBe(true);
     });
+
+    test('projects bundle diagnostics in predecessor field order', () => {
+      const api = factory(() => ({
+        root: '{}',
+        resources: [],
+        source: {},
+        diagnostics: [{code: 'SOURCE_ARTIFACT_REQUIRED', path: '', message: 'Retain source', severity: 'warning'}],
+      }), () => ({}));
+      const bundle = api.exportJsonSchemaBundle({});
+      expect(Object.keys(bundle.diagnostics[0])).toEqual(['code', 'path', 'severity', 'message']);
+      expect(JSON.stringify(bundle.diagnostics[0])).toBe('{"code":"SOURCE_ARTIFACT_REQUIRED","path":"","severity":"warning","message":"Retain source"}');
+    });
+
+    test('routes parser and atomic edit through the opt-in dispatcher', () => {
+      const calls = [];
+      const api = factory((op, fields) => { calls.push([op, fields]); return {kind: 'string', value: 'parsed'}; }, () => ({}));
+      api.parseNativeJson('{"x":1}');
+      api.editJsonSchemaNode({id: 'doc'}, '/properties/x', 'false');
+      expect(calls).toEqual([
+        ['parseNativeJson', {source: '{"x":1}'}],
+        ['editJsonSchemaNode', {document: {id: 'doc'}, pointer: '/properties/x', replacement: 'false'}],
+      ]);
+    });
   });
 }
 

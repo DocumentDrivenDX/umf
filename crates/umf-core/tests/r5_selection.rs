@@ -5,7 +5,7 @@ use umf_core::{
     error::{Diagnostic, EngineError},
     registry::Registry,
     selection::select_core_elements,
-    serialization::{Format, read_json_value},
+    serialization::{read_json_value, Format},
     value::{Utf16, Value},
 };
 
@@ -130,13 +130,11 @@ fn empty_filter_still_validates_entire_source_and_registry() {
     );
     let error = run(&invalid, &empty).unwrap_err();
     assert_eq!(error.code, "CORE_SELECTION_SOURCE");
-    assert!(
-        error
-            .message
-            .to_utf8()
-            .unwrap()
-            .contains("UNRESOLVED_REFERENCE")
-    );
+    assert!(error
+        .message
+        .to_utf8()
+        .unwrap()
+        .contains("UNRESOLVED_REFERENCE"));
 }
 
 #[test]

@@ -57,6 +57,38 @@ pub struct Context<'a> {
     deadline_ms: Option<u64>,
 }
 
+/// Work accumulated by transport decoders for one host operation.
+/// Bindings reuse this value across independent response decodes, while a new
+/// host operation starts with `Default` or calls `reset`.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub struct TransportUsage {
+    charged_work: u64,
+    constraint_steps: usize,
+}
+
+impl TransportUsage {
+    pub fn seed(&self, context: &mut Context<'_>) {
+        context.carry_transport_usage(self.charged_work, self.constraint_steps);
+    }
+
+    pub fn capture(&mut self, context: &Context<'_>) {
+        self.charged_work = context.charged_work();
+        self.constraint_steps = context.constraint_steps();
+    }
+
+    pub fn reset(&mut self) {
+        *self = Self::default();
+    }
+
+    pub fn charged_work(&self) -> u64 {
+        self.charged_work
+    }
+
+    pub fn constraint_steps(&self) -> usize {
+        self.constraint_steps
+    }
+}
+
 /// Restores a temporary trusted schema traversal allowance on both normal
 /// return and Rust unwinding; all counters and host capabilities remain owned
 /// by the original Context throughout the scope.
@@ -83,6 +115,17 @@ struct AggregateTextScope<'ctx, 'cap> {
 struct CatalogValueScope<'ctx, 'cap> {
     context: &'ctx mut Context<'cap>,
     original: usize,
+}
+/// Temporarily admits the larger tagged-wire representation while retaining
+/// this invocation's counters and host controls.
+struct TaggedTransportScope<'ctx, 'cap> {
+    context: &'ctx mut Context<'cap>,
+    original: Limits,
+}
+impl Drop for TaggedTransportScope<'_, '_> {
+    fn drop(&mut self) {
+        self.context.limits = self.original;
+    }
 }
 impl Drop for CatalogValueScope<'_, '_> {
     fn drop(&mut self) {
@@ -222,7 +265,28 @@ impl<'a> Context<'a> {
     ) -> T {
         let original = self.limits.max_values;
         self.limits.max_values = Limits::catalog().max_values;
-        let scope = CatalogValueScope { context: self, original };
+        let scope = CatalogValueScope {
+            context: self,
+            original,
+        };
+        operation(&mut *scope.context)
+    }
+
+    /// Temporarily apply the independent tagged-wire text, depth, and
+    /// structural bounds. Work, constraint counters, and host controls remain
+    /// cumulative on this Context and ordinary limits are restored on unwind.
+    pub fn with_tagged_transport_limit<T>(
+        &mut self,
+        operation: impl FnOnce(&mut Context<'a>) -> T,
+    ) -> T {
+        let original = self.limits;
+        self.limits.max_text_units = usize::MAX;
+        self.limits.max_depth = 256;
+        self.limits.max_values = usize::MAX;
+        let scope = TaggedTransportScope {
+            context: self,
+            original,
+        };
         operation(&mut *scope.context)
     }
 
@@ -236,6 +300,14 @@ impl<'a> Context<'a> {
 
     pub fn constraint_steps(&self) -> usize {
         self.constraint_steps
+    }
+
+    /// Seed an already-accounted transport decoder with counters accumulated
+    /// by earlier response decodes in the same host operation. This does not
+    /// charge the host meter again; subsequent work is charged normally.
+    pub fn carry_transport_usage(&mut self, charged_work: u64, constraint_steps: usize) {
+        self.charged_work = charged_work;
+        self.constraint_steps = constraint_steps;
     }
 
     /// Admit UTF-16 source/output units before allocating their storage.
@@ -432,6 +504,118 @@ mod tests {
     }
 
     #[test]
+    fn tagged_transport_allowance_keeps_one_meter_and_restores_ordinary_limits() {
+        let budget = 20usize;
+        let mut spent = 0usize;
+        let mut meter = |amount: usize| {
+            spent = spent.saturating_add(amount);
+            if spent > budget {
+                Err(EngineError::new(
+                    "RESOURCE_LIMIT",
+                    Utf16::default(),
+                    "budget",
+                ))
+            } else {
+                Ok(())
+            }
+        };
+        let mut ctx = Context::ordinary().with_host_control(&mut meter);
+        ctx.with_tagged_transport_limit(|ctx| {
+            assert_eq!(ctx.limits().max_values, usize::MAX);
+            assert_eq!(ctx.limits().max_text_units, usize::MAX);
+            ctx.charge_work(12, Utf16::default()).unwrap();
+        });
+        assert_eq!(ctx.limits().max_values, Limits::ordinary().max_values);
+        assert_eq!(
+            ctx.limits().max_text_units,
+            Limits::ordinary().max_text_units
+        );
+        assert_eq!(ctx.charged_work(), 12);
+
+        // A later operation phase crosses the same finite host budget. A
+        // separately constructed transport Context would incorrectly pass.
+        let error = ctx.charge_work(9, Utf16::default()).unwrap_err();
+        assert_eq!(error.code, "RESOURCE_LIMIT");
+        assert!(error.is_control_failure());
+        assert_eq!(ctx.charged_work(), 21);
+    }
+
+    #[test]
+    fn temporary_catalog_and_ordinary_phases_keep_the_same_wide_counter() {
+        let mut ctx = Context::ordinary();
+        // Model work already charged by tagged decode, leaving room for only
+        // one phase. Separate fresh Contexts would each accept these charges.
+        ctx.carry_transport_usage(u64::MAX - 10, 0);
+        ctx.with_catalog_value_limit(|ctx| {
+            ctx.charge_work(6, Utf16::default()).unwrap();
+        });
+        let error = ctx.charge_work(5, Utf16::default()).unwrap_err();
+        assert_eq!(error.code, "LIMIT");
+        assert_eq!(error.message, Utf16::from("Work counter overflow"));
+        assert_eq!(ctx.charged_work(), u64::MAX - 4);
+        assert_eq!(ctx.limits().max_values, Limits::ordinary().max_values);
+    }
+
+    #[test]
+    fn catalog_value_allowance_restores_limits_after_error_and_unwind() {
+        let mut ctx = Context::ordinary();
+        let result: Result<(), EngineError> = ctx.with_catalog_value_limit(|ctx| {
+            assert_eq!(ctx.limits().max_values, Limits::catalog().max_values);
+            ctx.charge_constraint_step(Utf16::default())?;
+            Err(EngineError::new("TEST", Utf16::default(), "catalog"))
+        });
+        assert!(result.is_err());
+        assert_eq!(ctx.limits().max_values, Limits::ordinary().max_values);
+        assert_eq!(ctx.constraint_steps(), 1);
+        let caught = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            ctx.with_catalog_value_limit(|_| panic!("catalog unwind proof"))
+        }));
+        assert!(caught.is_err());
+        assert_eq!(ctx.limits().max_values, Limits::ordinary().max_values);
+        assert_eq!(ctx.constraint_steps(), 1);
+    }
+
+    #[test]
+    fn tagged_transport_scope_preserves_cancellation_and_deadline_hooks() {
+        let mut cancelled = || Ok(true);
+        let mut ctx = Context::ordinary().with_fallible_cancellation(&mut cancelled);
+        let error = ctx
+            .with_tagged_transport_limit(|ctx| ctx.charge_work(1, Utf16::default()))
+            .unwrap_err();
+        assert_eq!(error.code, "CANCELLED");
+        assert!(error.is_control_failure());
+        assert_eq!(ctx.limits(), Limits::ordinary());
+        drop(ctx);
+
+        let mut clock = || Ok(Some(2));
+        let mut ctx = Context::ordinary().with_fallible_clock(&mut clock, 1);
+        let error = ctx
+            .with_tagged_transport_limit(|ctx| ctx.charge_work(1, Utf16::default()))
+            .unwrap_err();
+        assert_eq!(error.code, "DEADLINE");
+        assert!(error.is_control_failure());
+        assert_eq!(ctx.limits(), Limits::ordinary());
+    }
+
+    #[test]
+    fn tagged_transport_scope_restores_all_limits_after_error_and_unwind() {
+        let mut ctx = Context::ordinary();
+        let result: Result<(), EngineError> = ctx.with_tagged_transport_limit(|ctx| {
+            assert_eq!(ctx.limits().max_values, usize::MAX);
+            assert_eq!(ctx.limits().max_text_units, usize::MAX);
+            assert_eq!(ctx.limits().max_depth, 256);
+            Err(EngineError::new("TEST", Utf16::default(), "transport"))
+        });
+        assert!(result.is_err());
+        assert_eq!(ctx.limits(), Limits::ordinary());
+        let caught = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            ctx.with_tagged_transport_limit(|_| panic!("transport unwind proof"))
+        }));
+        assert!(caught.is_err());
+        assert_eq!(ctx.limits(), Limits::ordinary());
+    }
+
+    #[test]
     fn cooperative_failure_origin_survives_semantic_error_lookalikes() {
         for code in [
             "JSON_PARSE",
@@ -451,25 +635,111 @@ mod tests {
     }
 
     #[test]
+    fn transport_usage_can_continue_across_response_contexts() {
+        let mut usage = TransportUsage::default();
+        let mut first = Context::ordinary();
+        first.charge_work(17, Utf16::default()).unwrap();
+        first.charge_constraint_step(Utf16::default()).unwrap();
+        usage.capture(&first);
+
+        let mut second = Context::ordinary();
+        usage.seed(&mut second);
+        second.charge_work(23, Utf16::default()).unwrap();
+        second.charge_constraint_step(Utf16::default()).unwrap();
+        usage.capture(&second);
+
+        assert_eq!(second.charged_work(), 42);
+        assert_eq!(second.constraint_steps(), 2);
+        assert_eq!(usage.charged_work(), 42);
+        assert_eq!(usage.constraint_steps(), 2);
+
+        usage.reset();
+        let mut next_call = Context::ordinary();
+        usage.seed(&mut next_call);
+        assert_eq!(next_call.charged_work(), 0);
+        assert_eq!(next_call.constraint_steps(), 0);
+    }
+
+    #[test]
+    fn transport_responses_share_one_work_budget_but_new_calls_reset_it() {
+        let budget = 10usize;
+        let mut usage = TransportUsage::default();
+        let mut spent = 0usize;
+        let mut meter = |amount: usize| {
+            spent = spent.saturating_add(amount);
+            if spent > budget {
+                Err(EngineError::new(
+                    "RESOURCE_LIMIT",
+                    Utf16::default(),
+                    "Host work budget exceeded",
+                ))
+            } else {
+                Ok(())
+            }
+        };
+
+        let mut first = Context::ordinary().with_meter(&mut meter);
+        usage.seed(&mut first);
+        first.charge_work(6, Utf16::default()).unwrap();
+        usage.capture(&first);
+        drop(first);
+
+        let mut second = Context::ordinary().with_meter(&mut meter);
+        usage.seed(&mut second);
+        let failure = second.charge_work(6, Utf16::default()).unwrap_err();
+        usage.capture(&second);
+        assert_eq!(failure.code, "RESOURCE_LIMIT");
+        assert!(failure.is_control_failure());
+        assert_eq!(second.charged_work(), 12);
+        assert_eq!(usage.charged_work(), 12);
+        drop(second);
+        drop(meter);
+
+        usage.reset();
+        let mut next_call_spent = 0usize;
+        let mut next_call_meter = |amount: usize| {
+            next_call_spent += amount;
+            if next_call_spent > budget {
+                Err(EngineError::new(
+                    "RESOURCE_LIMIT",
+                    Utf16::default(),
+                    "Host work budget exceeded",
+                ))
+            } else {
+                Ok(())
+            }
+        };
+        let mut next_call = Context::ordinary().with_meter(&mut next_call_meter);
+        usage.seed(&mut next_call);
+        next_call.charge_work(6, Utf16::default()).unwrap();
+        usage.capture(&next_call);
+        assert_eq!(next_call.charged_work(), 6);
+        assert_eq!(usage.charged_work(), 6);
+    }
+
+    #[test]
     fn native_cancellation_and_deadline_have_control_origin() {
         let mut cancel = || true;
         let mut ctx = Context::ordinary().with_cancellation(&mut cancel);
-        assert!(ctx
-            .check_cancelled(Utf16::default())
-            .unwrap_err()
-            .is_control_failure());
+        assert!(
+            ctx.check_cancelled(Utf16::default())
+                .unwrap_err()
+                .is_control_failure()
+        );
         let mut clock = || Some(2);
         let mut ctx = Context::ordinary().with_clock(&mut clock, 1);
-        assert!(ctx
-            .check_deadline(Utf16::default())
-            .unwrap_err()
-            .is_control_failure());
+        assert!(
+            ctx.check_deadline(Utf16::default())
+                .unwrap_err()
+                .is_control_failure()
+        );
         let mut no_time = || None;
         let mut ctx = Context::ordinary().with_clock(&mut no_time, 1);
-        assert!(ctx
-            .check_deadline(Utf16::default())
-            .unwrap_err()
-            .is_control_failure());
+        assert!(
+            ctx.check_deadline(Utf16::default())
+                .unwrap_err()
+                .is_control_failure()
+        );
     }
 
     #[test]

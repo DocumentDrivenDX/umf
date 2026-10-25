@@ -1,0 +1,26 @@
+{
+  "status": "pass",
+  "runtime": "node",
+  "version": "v26.12.1",
+  "installation": "locally packed @umf/core-rust-native tarball",
+  "artifactSha256": "9af0043c93cf0ff989497cccf69de7b779b5c2310bfe9005b2d2d20344e8506e",
+  "packetSha256": "50d52bab545eae6566e8da6064c4fbec6d8880c89b4a32c9f2c5c614d4a3b5a9",
+  "sourceHashes": {
+    "crates/umf-core/src/record_values.rs": "02636eef58b8f31355f4c798bae0dbec77682397f9fb0ab8ae50614aa52d9b42",
+    "crates/umf-core-wire/src/lib.rs": "c8d4dfabee385736c3b9aa1256f403e16687fdb65323f7e3ffb8952967fee7e3",
+    "bindings/core/node/index.js": "6db6a6bf60fbcc74e519f2b2f47a037c4577e2fb091f2a08fd19c55e731e722f",
+    "bindings/core/node/package.json": "21f541c2032657ac16c818681b8ad41a51a48ce339e2b434e541c629ac2d32bd",
+    "bindings/core/node/src/core-model.js": "7e301790303c4e8a769e9b10f8945dc5a2d70ef13906f9a54daa59da984e5c9d",
+    "bindings/core/node/src/wire.js": "a6187bb3e6704eacf6b100b622888bbb1cc08fd482721f8119ab81b9719d93f8",
+    "bindings/core/node/index.d.ts": "f2370b37c88452435dd96871f7de7d169c7b34d64b5b1962cb8461145585222b",
+    "bindings/core/wasm/index.js": "ebf02c17d51c297c4d8f5b9586668ae9a88a91a58a14a71e3e3409eea3e471a3",
+    "bindings/core/wasm/src/core-model.js": "46edf12e41c35185d278daf4be42c1cff937e695aadbb0979d354d7ab061446c",
+    "bindings/core/wasm/src/wire.js": "a6187bb3e6704eacf6b100b622888bbb1cc08fd482721f8119ab81b9719d93f8",
+    "bindings/core/wasm/index.d.ts": "1509d01ccd8cf67379b63fa37ffd68278f076d2851c4743a70523ffa5fc36ebb",
+    "crates/umf-core-wire/tests/r5_record_values_wire.rs": "573a2f751d568435be22cbc964936b76c0af8fc52d0397e9ddeeb4c628401c11",
+    "bindings/core/node/tests/core-model-wrapper.test.js": "620d8e95e7063e2518f408eb7e2290e74657f86529cc1f9df731c8febbb378b0",
+    "docs/helix/04-build/evidence/rust-migration/r5-record-values/replay-installed.mjs": "5a85cccbcdadadbce2ef8484064ea9184da8f5b4f4bb8fc4cf4f717d7f7b04a7"
+  },
+  "cases": ["valid-present", "invalid-source-version", "sol-surrogate-present", "sol-array-record-identity"],
+  "copiedResultIsolation": true
+}

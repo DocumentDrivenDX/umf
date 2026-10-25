@@ -163,7 +163,7 @@ fn find_metered<'a, T>(
     }
     Ok(None)
 }
-fn selected_ids(items: &[Value], key: &str, ctx: &mut Context) -> Result<Vec<String>, EngineError> {
+fn selected_ids(items: &[Value], key: &str, ctx: &mut Context) -> Result<Vec<Utf16>, EngineError> {
     let mut values = Vec::new();
     let mut seen = BTreeSet::new();
     for item in items {
@@ -177,11 +177,114 @@ fn selected_ids(items: &[Value], key: &str, ctx: &mut Context) -> Result<Vec<Str
             string_at(item, "module").unwrap_or_else(|| "undefined".into()),
             string_at(item, key).unwrap_or_else(|| "undefined".into())
         );
+        let id = Utf16::from(id);
         if seen.insert(id.clone()) {
             values.push(id);
         }
     }
     Ok(values)
+}
+fn host_read_value(
+    host: &mut dyn crate::generation::PythonClientHostReadV3,
+    event: &str,
+    argument: Option<&str>,
+) -> Result<Value, EngineError> {
+    let value = host.read(event, argument)?;
+    let abort = match &value {
+        Value::Object(fields) if fields.len() == 1 => fields.first().is_some_and(|(key, value)| {
+            key == &Utf16::from("kind") && value == &Value::String(Utf16::from("umf.host-abort/3"))
+        }),
+        _ => false,
+    };
+    if abort {
+        return Err(EngineError::new(
+            "HOST_READ_ABORT",
+            Utf16::default(),
+            "Host-read callback aborted the operation",
+        ));
+    }
+    Ok(value)
+}
+fn host_selection(
+    value: Value,
+    path: &str,
+    ctx: &mut Context<'_>,
+) -> Result<Option<Vec<Utf16>>, EngineError> {
+    match value {
+        Value::Null => Ok(None),
+        Value::Array(items) => {
+            let mut result = Vec::with_capacity(items.len());
+            let mut seen = BTreeSet::new();
+            for item in items {
+                let Value::String(item) = item else {
+                    return Err(fail(path, "Selection callback returned invalid data"));
+                };
+                ctx.charge_work(item.len().saturating_add(1), Utf16::default())?;
+                if seen.insert(item.clone()) {
+                    result.push(item);
+                }
+            }
+            Ok(Some(result))
+        }
+        _ => Err(fail(path, "Selection callback returned invalid data")),
+    }
+}
+fn host_selection_v4(
+    host: &mut dyn crate::generation::PythonClientHostReadV3,
+    start_event: &str,
+    item_event: &str,
+    path: &str,
+    max_items: usize,
+    ctx: &mut Context<'_>,
+    selected_units: &mut usize,
+) -> Result<Option<Vec<Utf16>>, EngineError> {
+    let length = match host_read_value(host, start_event, None)? {
+        Value::Null => return Ok(None),
+        Value::String(text) => {
+            let raw = text.to_utf8().map_err(|_| fail(path, "Selection callback returned invalid length"))?;
+            let length = raw.parse::<usize>().map_err(|_| fail(path, "Selection callback returned invalid length"))?;
+            if length.to_string() != raw { return Err(fail(path, "Selection callback returned invalid length")); }
+            length
+        }
+        _ => return Err(fail(path, "Selection callback returned invalid length")),
+    };
+    if length > max_items {
+        return Err(EngineError::new("RESOURCE_LIMIT", path.into(), "V4 host-read resource limit exceeded"));
+    }
+    // Charge the bounded captured-position inventory before reserving or
+    // reading any indexed values. A meter callback here may mutate unread slots.
+    ctx.charge_work(length, Utf16::default())?;
+    let mut result = Vec::new();
+    result.try_reserve(length).map_err(|_| EngineError::new("RESOURCE_LIMIT", path.into(), "V4 host-read resource limit exceeded"))?;
+    let mut seen = BTreeSet::new();
+    for index in 0..length {
+        let remaining = 4_000_000usize.saturating_sub(*selected_units);
+        let argument = format!("{index}:{remaining}");
+        let Value::String(item) = host_read_value(host, item_event, Some(&argument))? else {
+            return Err(fail(path, "Selection callback returned invalid data"));
+        };
+        ctx.charge_work(item.len().saturating_add(1), Utf16::default())?;
+        *selected_units = selected_units.checked_add(item.len()).ok_or_else(|| EngineError::new("RESOURCE_LIMIT", path.into(), "V4 host-read resource limit exceeded"))?;
+        if *selected_units > 4_000_000 {
+            return Err(EngineError::new("RESOURCE_LIMIT", path.into(), "V4 host-read resource limit exceeded"));
+        }
+        if seen.insert(item.clone()) { result.push(item); }
+    }
+    Ok(Some(result))
+}
+fn host_output_path(
+    host_read: &mut Option<&mut dyn crate::generation::PythonClientHostReadV3>,
+    package: &str,
+    suffix: &str,
+) -> Result<Utf16, EngineError> {
+    if let Some(host) = host_read.as_deref_mut() {
+        match host_read_value(host, "OutputPackageSuffix", Some(suffix))? {
+            Value::String(path) => Ok(path),
+            _ => Err(fail("/package", "Generated package path is invalid")),
+        }
+    } else {
+        Ok(Utf16::from(format!("{package}{suffix}")))
+    }
 }
 fn source_name(
     value: Option<&Value>,
@@ -471,7 +574,7 @@ fn ref_id(value: &Value) -> Option<String> {
 fn build_table_modules(
     inspection: &Value,
     source_modules: &[Value],
-    requested: Option<&Vec<String>>,
+    requested: Option<&Vec<Utf16>>,
     elements: &BTreeMap<(String, String), &Value>,
     used: &mut BTreeSet<String>,
     ctx: &mut Context<'_>,
@@ -489,7 +592,7 @@ fn build_table_modules(
             let record = raw::member(table, "record").unwrap_or(&Value::Null);
             let selected = if let Some(set) = requested {
                 if let Some(key) = ref_id(record) {
-                    find_metered(set, ctx, |id| id == &key, |id| id.len())?.is_some()
+                    find_metered(set, ctx, |id| id == &Utf16::from(key.clone()), |id| id.len())?.is_some()
                 } else {
                     false
                 }
@@ -1113,19 +1216,75 @@ pub(super) fn generate(
     request: &Value,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
-    let req = raw::admit_json(request, ctx)?;
-    let package = string_at(&req, "package")
-        .ok_or_else(|| fail("/package", "Ordinary non-shadowing Python package required"))?;
-    if !ordinary_package_name(&package) {
-        return Err(fail(
-            "/package",
-            "Ordinary non-shadowing Python package required",
-        ));
-    }
-    let source = raw::string_member(&req, "text")
-        .cloned()
-        .ok_or_else(|| fail("/package", "Ordinary non-shadowing Python package required"))?;
-    let fmt = string_at(&req, "format").unwrap_or_else(|| "json".into());
+    generate_inner(engine, Some(request), None, false, ctx)
+}
+
+pub(super) fn generate_host_v3(
+    engine: &CodegenEngine<'_>,
+    host_read: &mut dyn crate::generation::PythonClientHostReadV3,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    generate_inner(engine, None, Some(host_read), false, ctx)
+}
+
+pub(super) fn generate_host_v4(
+    engine: &CodegenEngine<'_>,
+    host_read: &mut dyn crate::generation::PythonClientHostReadV3,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    generate_inner(engine, None, Some(host_read), true, ctx)
+}
+
+fn generate_inner(
+    engine: &CodegenEngine<'_>,
+    request: Option<&Value>,
+    mut host_read: Option<&mut dyn crate::generation::PythonClientHostReadV3>,
+    v4: bool,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let req = request
+        .map(|request| raw::admit_json(request, ctx))
+        .transpose()?;
+    let (package, source, fmt) = if let Some(host) = host_read.as_deref_mut() {
+        let initial = host_read_value(host, "InitialPackage", None)?;
+        if initial == Value::Bool(true) {
+            return Err(fail(
+                "/package",
+                "Ordinary non-shadowing Python package required",
+            ));
+        }
+        let source = host_read_value(host, "ParseText", None)?;
+        let source = match source {
+            Value::String(source) => source,
+            _ => {
+                return Err(fail(
+                    "/package",
+                    "Ordinary non-shadowing Python package required",
+                ))
+            }
+        };
+        let format = host_read_value(host, "ParseFormat", None)?;
+        let format = match format {
+            Value::String(format) => format.to_utf8().unwrap_or_default(),
+            _ => return Err(fail("/format", "Unsupported source format")),
+        };
+        (String::new(), source, format)
+    } else {
+        let req = req.as_ref().expect("ordinary codegen has a request");
+        let package = string_at(req, "package")
+            .ok_or_else(|| fail("/package", "Ordinary non-shadowing Python package required"))?;
+        if !ordinary_package_name(&package) {
+            return Err(fail(
+                "/package",
+                "Ordinary non-shadowing Python package required",
+            ));
+        }
+        let source = raw::string_member(req, "text")
+            .cloned()
+            .ok_or_else(|| fail("/package", "Ordinary non-shadowing Python package required"))?;
+        let format = string_at(req, "format").unwrap_or_else(|| "json".into());
+        (package, source, format)
+    };
     let format = match fmt.as_str() {
         "json" => umf_core::serialization::Format::Json,
         "yaml" => umf_core::serialization::Format::Yaml,
@@ -1136,16 +1295,38 @@ pub(super) fn generate(
     if !supported {
         return Err(fail("/umf", "Use current UMF source"));
     }
-    let source_digest = sha(&source, ctx)?;
+    let digest_source = if let Some(host) = host_read.as_deref_mut() {
+        match host_read_value(host, "DigestText", None)? {
+            Value::String(text) => text,
+            _ => return Err(fail("/text", "Source contains invalid Unicode")),
+        }
+    } else {
+        source.clone()
+    };
+    let source_digest = sha(&digest_source, ctx)?;
     let text = source
         .to_utf8()
         .map_err(|_| fail("/text", "Source contains invalid Unicode"))?;
-    let records_req = list(&req, "records")
+    let mut records_req = if host_read.is_some() {
+        None
+    } else {
+        list(
+            req.as_ref().expect("ordinary codegen has a request"),
+            "records",
+        )
         .map(|items| selected_ids(items, "element", ctx))
-        .transpose()?;
-    let actions_req = list(&req, "actions")
+        .transpose()?
+    };
+    let mut actions_req = if host_read.is_some() {
+        None
+    } else {
+        list(
+            req.as_ref().expect("ordinary codegen has a request"),
+            "actions",
+        )
         .map(|items| selected_ids(items, "action", ctx))
-        .transpose()?;
+        .transpose()?
+    };
     let modules =
         list(&doc, "modules").ok_or_else(|| fail("/modules", "Module inventory is invalid"))?;
     let mut elements = BTreeMap::<(String, String), &Value>::new();
@@ -1195,6 +1376,17 @@ pub(super) fn generate(
             }
         }
     }
+    // Legacy checks qualified identities and legacy action declarations
+    // before evaluating the records expression. Keep that getter behind both
+    // semantic refusal gates.
+    let mut selected_units = 0usize;
+    if let Some(host) = host_read.as_deref_mut() {
+        records_req = if v4 {
+            host_selection_v4(host, "SelectRecordsStart", "SelectRecordAt", "/records", 10_000, ctx, &mut selected_units)?
+        } else {
+            host_selection(host_read_value(host, "SelectRecords", None)?, "/records", ctx)?
+        };
+    }
     // Validate the general UMF envelope. Semantic extensions are admitted only
     // after their operation-specific inspectors have completed successfully.
 
@@ -1224,7 +1416,7 @@ pub(super) fn generate(
                 string_at(element, "id").unwrap_or_default()
             );
             if let Some(selected) = records_req.as_ref() {
-                if find_metered(selected, ctx, |id| id == &key, |id| id.len())?.is_none() {
+                if find_metered(selected, ctx, |id| id == &Utf16::from(key.clone()), |id| id.len())?.is_none() {
                     continue;
                 }
             }
@@ -1235,11 +1427,26 @@ pub(super) fn generate(
             break;
         }
     }
-    if has_tables && fmt != "json" {
-        return Err(fail(
-            "/format",
-            "Native operation clients currently require original JSON source",
-        ));
+    if has_tables {
+        let native_json = if let Some(host) = host_read.as_deref_mut() {
+            match host_read_value(host, "NativeFormat", None)? {
+                Value::Bool(value) => value,
+                _ => {
+                    return Err(fail(
+                        "/format",
+                        "Native format callback returned invalid data",
+                    ))
+                }
+            }
+        } else {
+            fmt == "json"
+        };
+        if !native_json {
+            return Err(fail(
+                "/format",
+                "Native operation clients currently require original JSON source",
+            ));
+        }
     }
     let mut used = UNIFIED_RESERVED
         .split_whitespace()
@@ -1326,7 +1533,9 @@ pub(super) fn generate(
                     return Err(fail(id.as_str(), "Generated type collision"));
                 }
             }
-            let selected = records_req.as_ref().map_or(true, |s| s.contains(&id));
+            let selected = records_req
+                .as_ref()
+                .map_or(true, |s| s.contains(&Utf16::from(id.clone())));
             let refs = if selected {
                 list(elem, "members").unwrap_or(&[])
             } else {
@@ -1379,8 +1588,8 @@ pub(super) fn generate(
     if let Some(selected) = records_req {
         for id in selected {
             ctx.charge_work(1, Utf16::default())?;
-            if find_metered(&records, ctx, |r| r.id == id, |r| r.id.len())?.is_none()
-                && !native_ids.contains(&id)
+            if find_metered(&records, ctx, |r| Utf16::from(r.id.clone()) == id, |r| r.id.len())?.is_none()
+                && !id.to_utf8().ok().is_some_and(|id| native_ids.contains(&id))
             {
                 return Err(fail(id, "Selected Record not found"));
             }
@@ -1567,6 +1776,13 @@ pub(super) fn generate(
         }
     }
     let mut seen_action_ids = BTreeSet::new();
+    if let Some(host) = host_read.as_deref_mut() {
+        actions_req = if v4 {
+            host_selection_v4(host, "SelectActionsStart", "SelectActionAt", "/actions", 1_000, ctx, &mut selected_units)?
+        } else {
+            host_selection(host_read_value(host, "SelectActions", None)?, "/actions", ctx)?
+        };
+    }
     let mut action_infos = Vec::new();
     let mut action_methods = BTreeSet::new();
     let mut next_module = 0usize;
@@ -1661,11 +1877,10 @@ pub(super) fn generate(
                     "Qualified action identity collision",
                 ));
             }
-            let selected_identity = format!(
-                "{}.{}",
-                module_id.to_utf8().unwrap_or_default(),
-                action_id.to_utf8().unwrap_or_default()
-            );
+            let mut selected_identity = module_id.units().to_vec();
+            selected_identity.push(u16::from(b'.'));
+            selected_identity.extend(action_id.units());
+            let selected_identity = Utf16::new(selected_identity);
             if actions_req
                 .as_ref()
                 .is_some_and(|items| !items.contains(&selected_identity))
@@ -1932,7 +2147,12 @@ pub(super) fn generate(
             if find_metered(
                 &action_infos,
                 ctx,
-                |action| format!("{}.{}", action.module, action.id) == id,
+                |action| {
+                    let mut identity = Utf16::from(action.module.clone()).units().to_vec();
+                    identity.push(u16::from(b'.'));
+                    identity.extend(Utf16::from(action.id.clone()).units());
+                    Utf16::new(identity) == id
+                },
                 |action| {
                     action
                         .module
@@ -2112,12 +2332,50 @@ pub(super) fn generate(
         }
     }
     let json = pretty(&description, 0, ctx)? + "\n";
-    let mut files=vec![file(format!("{package}/__init__.py"),"# SPDX-License-Identifier: MIT OR Apache-2.0\nfrom .models import *\nfrom ._runtime import AccessError as AccessError, Unsupported as Unsupported, SchemaMismatch as SchemaMismatch, PreconditionFailed as PreconditionFailed, WriteOutcomeUnknown as WriteOutcomeUnknown, write_outcomes_unknown as write_outcomes_unknown, LOCAL_ERROR_CODES as LOCAL_ERROR_CODES, MAX_BATCH_ITEMS as MAX_BATCH_ITEMS, Page as Page, Receipt as Receipt, BatchReceipt as BatchReceipt, BatchItemOutcome as BatchItemOutcome, ValidationResult as ValidationResult, ExactTimestamp as ExactTimestamp, MISSING as MISSING, Missing as Missing, Transport as Transport, AsyncTransport as AsyncTransport, SyncTransport as SyncTransport\n".into()),file(format!("{package}/models.py"),emit_models(&source_digest,&records,&relations,&action_infos,&table_modules,ctx)?),file(format!("{package}/_runtime.py"),python::PYTHON_RUNTIME.into()),file(format!("{package}/source.json"),text.clone()),file(format!("{package}/description.json"),json),file(format!("{package}/py.typed"),String::new())];
+    let init_path = host_output_path(&mut host_read, &package, "/__init__.py")?;
+    let models_path = host_output_path(&mut host_read, &package, "/models.py")?;
+    let models_text = emit_models(
+        &source_digest,
+        &records,
+        &relations,
+        &action_infos,
+        &table_modules,
+        ctx,
+    )?;
+    let runtime_path = host_output_path(&mut host_read, &package, "/_runtime.py")?;
+    let table_runtime_path = if !table_modules.is_empty() {
+        Some(host_output_path(
+            &mut host_read,
+            &package,
+            "/_table_runtime.py",
+        )?)
+    } else {
+        None
+    };
+    let source_path = host_output_path(&mut host_read, &package, "/source.json")?;
+    let output_source = if let Some(host) = host_read.as_deref_mut() {
+        match host_read_value(host, "OutputSourceText", None)? {
+            Value::String(source) => source,
+            _ => return Err(fail("/text", "Source contains invalid Unicode")),
+        }
+    } else {
+        Utf16::from_utf8(&text)
+    };
+    let description_path = host_output_path(&mut host_read, &package, "/description.json")?;
+    let typed_path = host_output_path(&mut host_read, &package, "/py.typed")?;
+    let mut files = vec![
+        file(init_path, "# SPDX-License-Identifier: MIT OR Apache-2.0\nfrom .models import *\nfrom ._runtime import AccessError as AccessError, Unsupported as Unsupported, SchemaMismatch as SchemaMismatch, PreconditionFailed as PreconditionFailed, WriteOutcomeUnknown as WriteOutcomeUnknown, write_outcomes_unknown as write_outcomes_unknown, LOCAL_ERROR_CODES as LOCAL_ERROR_CODES, MAX_BATCH_ITEMS as MAX_BATCH_ITEMS, Page as Page, Receipt as Receipt, BatchReceipt as BatchReceipt, BatchItemOutcome as BatchItemOutcome, ValidationResult as ValidationResult, ExactTimestamp as ExactTimestamp, MISSING as MISSING, Missing as Missing, Transport as Transport, AsyncTransport as AsyncTransport, SyncTransport as SyncTransport\n".into()),
+        file(models_path, models_text),
+        file(runtime_path, python::PYTHON_RUNTIME.into()),
+        file_units(source_path, output_source),
+        file(description_path, json),
+        file(typed_path, String::new()),
+    ];
     if !table_modules.is_empty() {
         files.insert(
             3,
             file(
-                format!("{package}/_table_runtime.py"),
+                table_runtime_path.expect("native table path was read"),
                 python::TABLE_RUNTIME.into(),
             ),
         );
@@ -2125,14 +2383,14 @@ pub(super) fn generate(
     let mut filesv = Vec::new();
     let mut inventory = Vec::new();
     for f in files {
-        let digest = sha(&Utf16::from_utf8(&f.text), ctx)?;
+        let digest = sha(&f.text, ctx)?;
         inventory.push(v::obj([
-            ("path", strval(&f.path)),
+            ("path", Value::String(f.path.clone())),
             ("sha256", strval(&digest)),
         ]));
         filesv.push(v::obj([
-            ("path", strval(&f.path)),
-            ("text", strval(&f.text)),
+            ("path", Value::String(f.path)),
+            ("text", Value::String(f.text)),
             ("sha256", strval(digest)),
         ]));
     }
@@ -2146,8 +2404,9 @@ pub(super) fn generate(
         ("inventory", v::arr(inventory)),
     ]);
     let mtext = pretty(&manifest, 0, ctx)? + "\n";
+    let manifest_path = host_output_path(&mut host_read, &package, "/_umf/manifest.json")?;
     filesv.push(v::obj([
-        ("path", strval(format!("{package}/_umf/manifest.json"))),
+        ("path", Value::String(manifest_path)),
         ("text", strval(&mtext)),
         ("sha256", strval(sha(&Utf16::from_utf8(&mtext), ctx)?)),
     ]));
@@ -2158,10 +2417,16 @@ pub(super) fn generate(
     ]))
 }
 struct File {
-    path: String,
-    text: String,
+    path: Utf16,
+    text: Utf16,
 }
-fn file(path: String, text: String) -> File {
+fn file(path: Utf16, text: String) -> File {
+    File {
+        path,
+        text: Utf16::from_utf8(&text),
+    }
+}
+fn file_units(path: Utf16, text: Utf16) -> File {
     File { path, text }
 }
 fn record_meta(r: &Record, ctx: &mut Context<'_>) -> Result<Value, EngineError> {

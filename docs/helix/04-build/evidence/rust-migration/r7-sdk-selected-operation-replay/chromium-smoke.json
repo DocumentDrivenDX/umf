@@ -1,0 +1,107 @@
+{
+  "format": "umf.r7.selected-operation-chromium-smoke/1",
+  "status": "passed",
+  "qualification": "historical-derived-private-archive-lightweight-smoke-only",
+  "archive": {
+    "path": ".cache/sdk-distribution/umf-sdk.tgz",
+    "sha256": "0461710e62958d47ee366f52fe0b36ce4cfd503a282363587f247c5d647836e7",
+    "manifestSha256": "824dcb19ceccd6c3047d83ffb96afa810d4808475f14ab0dfb09100748ddf47e",
+    "sourceTreeSha256": "5962d3f6d3c04df146675423d1291accb2c53a25041c6e2180d207a4abc9c11e",
+    "sourceTransformStatus": "derived-private-snapshot-not-release-fixed-point",
+    "sourceTransformCount": 11
+  },
+  "browser": "Chromium 153.0.8010.12",
+  "nodeBunControls": [
+    {
+      "runtime": "Node v26.12.1",
+      "invalidFixtureSameRuntimeReference": true,
+      "sourceBytesUtf8": 271,
+      "sourceUnchanged": true,
+      "validCopyIsolation": true
+    },
+    {
+      "runtime": "Bun 1.4.3",
+      "invalidFixtureSameRuntimeReference": true,
+      "sourceBytesUtf8": 271,
+      "sourceUnchanged": true,
+      "validCopyIsolation": true
+    }
+  ],
+  "temporaryHarness": {
+    "path": "/private/tmp/umf-r8-root-api-replay/staged-smoke.mjs",
+    "sha256": "addbbbbc22ecb37658f2baa75a6911b57cfaeb26776898f65057fb68003ebbea"
+  },
+  "nodeBunProbeScripts": {
+    "invalidFixture": {
+      "path": "/private/tmp/umf-r8-root-api-replay/key-invalid-runtime.mjs",
+      "sha256": "9b93ee85f8941784a324328afd5e7745eeb07a90e26deb855788f419a37e9615"
+    },
+    "validCopyIsolation": {
+      "path": "/private/tmp/umf-r8-root-api-replay/key-isolation-runtime.mjs",
+      "sha256": "117e1ec33685108705dc0c161307bdf49879c7b78c2e77edae2e6732d31faa9f"
+    }
+  },
+  "repositoryHarness": {
+    "path": "scripts/test-sdk-rust-default.ts",
+    "sha256": "00254da13506e379432d4f57e4d0702e6bf47aafad1c2059cac4857413c25ca4",
+    "typecheck": "passed"
+  },
+  "frozenPackets": {
+    "coreKeys": "3ee774e9d623c18f1d109cb9f6ce86b4c0957be24bd874c74fc6c375aa593323",
+    "commerce": "e265b1d05613602abb9b68580b05b068127528047e1b1365e639a1977d699f27"
+  },
+  "sourceHashes": {
+    "crates/umf-core/src/core_keys.rs": "65b8934a08e817d7a6a854ca5a7d2be6dac79d3d9da6f4803dd42c470b3912e4",
+    "crates/umf-core-wire/src/lib.rs": "6bd20e308cec0ecb33b45727153a133580b49e3ace93887c798672a2cf1462f1",
+    "bindings/core/wasm/src/lib.rs": "08b8557073c3b4a78cc79b431d1da5c68a045948062aee414036afb193c5cbf5",
+    "bindings/core/wasm/src/wire.js": "a6187bb3e6704eacf6b100b622888bbb1cc08fd482721f8119ab81b9719d93f8",
+    "bindings/core/wasm/src/core-keys.js": "a22a5feca048ef93a3f003c7b16cc157c2565034cec2b5248565bdfa8ad5981e",
+    "bindings/core/wasm/index.js": "b486e987962cdd2aaca1636c443cb74ef075908cef32b9c22f2039ccea60e052",
+    "bindings/core/node/index.js": "ed7b8a4181e143236ae9bc89010d98512684cc5e897c69c4f1fbca2914949c35",
+    "src/access/rust-keys-default.ts": "9418e4ebd7d373ff954a6209d714fd3745d4609bc658c2e4f4e8cb4446278289",
+    "src/index-browser-v4.ts": "aef6f668c06af12cdcf0ec4ca2bdf7e034239adb651c6792bb53727d2d9c1a2f"
+  },
+  "browserAssets": {
+    "dist/umf.js": "4bc80dd1c59eddc1b4538253b8f1838d35bc64386a8dce664c1988e579477fcf",
+    "dist/umf_core_wasm_bg.wasm": "b48e748618c4e0819e280c61263d4ceaad10fc1f249b520d4221c86456f4be60",
+    "allManifestAssetsVerified": true
+  },
+  "outcomes": {
+    "coreKeyCases": ["inspect", "lookup", "declareMembers", "declareKey"],
+    "prototypeShapeChecks": 4,
+    "invalidFixture": {
+      "sourceBytesUtf8": 271,
+      "sourceUnchanged": true,
+      "sameRuntimeReferenceMatch": true,
+      "error": {
+        "name": "UmfError",
+        "code": "CORE_KEY_CONFLICT",
+        "path": "",
+        "diagnostics": [
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0",
+            "message": "must have required property 'members'",
+            "severity": "error"
+          },
+          {
+            "code": "SEMANTIC_TYPE_STRUCTURE",
+            "path": "/modules/0/elements/0",
+            "message": "must match \"then\" schema",
+            "severity": "error"
+          }
+        ]
+      }
+    },
+    "validDeclarationCopyIsolation": true,
+    "compactDatasetCases": ["commerce"],
+    "compactDatasetInputSourceIsolation": true,
+    "compactDatasetResourceControls": 0
+  },
+  "caveats": [
+    "Historical private archive, not current-source or release qualification.",
+    "Lightweight Core Key plus one commerce Dataset case only; no 19-case Dataset browser replay and no Dataset resource controls.",
+    "The earlier broad temporary harness used an incomplete Key fixture for a success isolation call. Its uncaught page exception suppressed its result marker until timeout; the product correctly refused that fixture.",
+    "The full SDK/default-route and release gates remain open."
+  ]
+}

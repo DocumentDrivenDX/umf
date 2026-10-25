@@ -1,0 +1,131 @@
+{
+  "profile": "core-record-values-host-json-cross-host/1",
+  "status": "bounded-pass-with-qualified-limit-probe",
+  "operation": "validateCoreRecordValues",
+  "defaultRouteChanged": false,
+  "predecessorPacket": {
+    "path": "docs/helix/04-build/evidence/rust-migration/r5-record-values/host-admission.json",
+    "sha256": "622f7a65c70a02fe039660e142b77b5fcbfee80a049c9a0627c5332e83cd3fb8"
+  },
+  "replay": {
+    "path": "scripts/rust-migration/r5/record-values-host-node.mjs",
+    "sha256": "cf39666029a67ec66df00030d62f96b7ffb65d42eddafcaa87347d7998f9b621",
+    "cases": 19,
+    "meteredWork": 1559658,
+    "scope": [
+      "source-identity-values raw-host admission and getter order",
+      "prototype, key order, copy isolation, and retained 700000-unit unknown qualifier",
+      "accessors, hidden members, symbols, custom prototypes, sparse arrays, cycles, and numeric refusal outcomes",
+      "shared Context meter callback and maxWork zero refusal"
+    ]
+  },
+  "nodeAddon": {
+    "build": "PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:/opt/homebrew/bin:/usr/bin:/bin CARGO_TARGET_DIR=/private/tmp/umf-record-host-release-target CARGO_BUILD_JOBS=2 CARGO_INCREMENTAL=0 CARGO_PROFILE_RELEASE_STRIP=none RUSTFLAGS='-C debuginfo=2 -C strip=none' cargo build --locked --offline --release -p umf-core-node",
+    "path": "bindings/core/node/umf_core_node.node",
+    "sha256": "6f15b642e1a37f8f7f29bd725f3e4844b8118d013315c48be250c910b4eac0c1"
+  },
+  "sources": {
+    "crates/umf-core/src/record_values.rs": "8e34145036a1848f000125b571f0d69c8ebe909eaa95df0c01c3ccf885a9a3fc",
+    "crates/umf-core/src/host_json.rs": "a0e214193e1ddb963d0b855b74b6c31038b2c156b4cc4e8ac073a7bb82d8190e",
+    "crates/umf-core/tests/r5_record_values.rs": "89f05f7aabd7fc5de10a513f0981c7a46a9472401d16d162db180d0f85e67842",
+    "bindings/core/node/src/host_json.rs": "b682129130f2708f0700c00da565d4570264a328c1cea88f1932d32805745f88",
+    "bindings/core/wasm/src/host_json.rs": "4724574ecef01760fa77e02bacde37bbd8ee640be45ee1c398e607dd42bc77ac",
+    "bindings/core/node/src/host-json.js": "e6ff13a9fef684b3623af2cfe58de0eb827ae6c3b0afcbc92d4581b22737ad3d",
+    "bindings/core/wasm/src/host-json.js": "e6ff13a9fef684b3623af2cfe58de0eb827ae6c3b0afcbc92d4581b22737ad3d",
+    "bindings/core/node/index.js": "86f2dd517375f9911eb764a539766ebae8fe5f0b5dfdb17a3ff313338d7046ee",
+    "bindings/core/wasm/index.js": "00bfdf03af6b45d90d390ccac74bd66e74f3d9cc17fe7e72fafb29cf55a96037",
+    "bindings/core/wasm/src/shared-sources.json": "8ce21c759ef0004691d906db3a285c4c888f984591504d43f211c452407ee960",
+    "scripts/rust-migration/r5/record-values-host-browser.mjs": "0f9e521024e7ab7ab8cc2507dd4e4125d29212e9acf3f4459bdd3e7721519e67",
+    "scripts/rust-migration/r5/record-values-host-count-limit.mjs": "e1286cc356534c7cc6d3b0861a4eb2e48d31c1479cf9cd3c1dddfd893941e0fd"
+  },
+  "cleanPackage": {
+    "name": "@umf/core-rust-native@0.1.0",
+    "tarball": "/private/tmp/umf-record-host-node-pack/umf-core-rust-native-0.1.0.tgz",
+    "sha256": "004398447b73b50a421ed3a002bcf5f8116d32795840aaa8171156d2b82adac0",
+    "packCommand": "npm_config_cache=/private/tmp/umf-record-host-npm-cache npm pack --json --pack-destination /private/tmp/umf-record-host-node-pack",
+    "extractCommand": "tar -xzf /private/tmp/umf-record-host-node-pack/umf-core-rust-native-0.1.0.tgz -C /private/tmp/umf-record-host-node-consumer/node_modules/@umf/core-rust-native --strip-components=1",
+    "extractedPackage": "/private/tmp/umf-record-host-node-consumer/node_modules/@umf/core-rust-native",
+    "addonSha256": "6f15b642e1a37f8f7f29bd725f3e4844b8118d013315c48be250c910b4eac0c1",
+    "hostJsonHelperSha256": "e6ff13a9fef684b3623af2cfe58de0eb827ae6c3b0afcbc92d4581b22737ad3d"
+  },
+  "runtimes": [
+    {
+      "runtime": "Node.js",
+      "version": "v26.12.1",
+      "command": "UMF_RECORD_VALUES_BINDING=@umf/core-rust-native UMF_RECORD_VALUES_REPO_ROOT=<repo> node replay.mjs",
+      "status": "passed",
+      "cases": 19,
+      "meteredWork": 1559658,
+      "additionalHostPrimordialControl": "passed",
+      "mapGetterCalls": 0
+    },
+    {
+      "runtime": "Bun",
+      "version": "1.4.3",
+      "command": "UMF_RECORD_VALUES_BINDING=@umf/core-rust-native UMF_RECORD_VALUES_REPO_ROOT=<repo> bun replay.mjs",
+      "status": "passed",
+      "cases": 19,
+      "meteredWork": 1559658,
+      "additionalHostPrimordialControl": "passed",
+      "mapGetterCalls": 0
+    }
+  ],
+  "wasmChromium": {
+    "runtime": "Chromium 153.0.8010.12",
+    "wasmBindgen": "0.2.100",
+    "buildCommand": "PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:/opt/homebrew/bin:/usr/bin:/bin CARGO_TARGET_DIR=/private/tmp/umf-record-host-wasm-target CARGO_BUILD_JOBS=2 CARGO_INCREMENTAL=0 cargo build --locked --offline --release --target wasm32-unknown-unknown -p umf-core-wasm",
+    "glueCommand": "/private/tmp/umf-wasm-bindgen-0.2.100/bin/wasm-bindgen /private/tmp/umf-record-host-wasm-target/wasm32-unknown-unknown/release/umf_core_wasm.wasm --target web --out-dir /private/tmp/umf-record-host-wasm-bindgen --out-name umf_core_wasm",
+    "packCommand": "bun pm pack --ignore-scripts --destination /private/tmp/umf-record-host-wasm-pack",
+    "browserReplayCommand": "UMF_R5_HOST_WASM_PACKAGE=/private/tmp/umf-record-host-wasm-extracted/package bun scripts/rust-migration/r5/record-values-host-browser.mjs",
+    "tarball": "/private/tmp/umf-record-host-wasm-pack/umf-core-rust-wasm-0.1.0.tgz",
+    "tarballSha256": "b1bf6cbce89f68faf72fd9594007e16cb37a13fc1b520dc3841f9f0bc51f647e",
+    "bgWasmSha256": "0467f52a081adbf1ce189944977f8d9a42c21387ce32eb2f8b94badc9f02ee5a",
+    "glueSha256": "b73ac118243ff4d72c399f54fcc1527eb173dcb053b48f5c1cf9b1262c32caa0",
+    "hostJsonHelperSha256": "e6ff13a9fef684b3623af2cfe58de0eb827ae6c3b0afcbc92d4581b22737ad3d",
+    "browserHarness": "scripts/rust-migration/r5/record-values-host-browser.mjs",
+    "browserHarnessSha256": "0f9e521024e7ab7ab8cc2507dd4e4125d29212e9acf3f4459bdd3e7721519e67",
+    "browserReplayCommand": "UMF_R5_HOST_WASM_PACKAGE=/private/tmp/umf-record-host-wasm-extracted/package bun scripts/rust-migration/r5/record-values-host-browser.mjs",
+    "status": "passed",
+    "cases": 19,
+    "meteredWork": 1559658,
+    "zeroWorkCode": "RESOURCE_LIMIT",
+    "nodeGlobalsAbsent": true
+  },
+  "countLimitProbe": {
+    "status": "passed-on-Node-and-Bun",
+    "harness": "scripts/rust-migration/r5/record-values-host-count-limit.mjs",
+    "harnessSha256": "e1286cc356534c7cc6d3b0861a4eb2e48d31c1479cf9cd3c1dddfd893941e0fd",
+    "command": "ulimit -t 90; node --max-old-space-size=2048 scripts/rust-migration/r5/record-values-host-count-limit.mjs",
+    "nodeVersion": "v26.12.1",
+    "inputLength": 100001,
+    "elapsedMs": 4982,
+    "rssBytes": 402764776,
+    "outcome": {"code":"LIMIT","message":"JSON structural limit exceeded","path":"/99999"},
+    "bun": {
+      "status": "passed",
+      "runtime": "Bun 1.4.3",
+      "nodeCompatibilityVersion": "v26.3.0",
+      "elapsedMs": 5049,
+      "rssBytes": 546784504,
+      "supervisorPeakRssKb": 592784,
+      "supervisorLimitRssKb": 1048576,
+      "cpuLimitSeconds": 90,
+      "supervisor": "/private/tmp/umf-record-limit-supervisor.py"
+    },
+    "node": {
+      "status": "passed",
+      "runtime": "Node v26.12.1",
+      "elapsedMs": 4982,
+      "rssBytes": 402764776,
+      "heapLimitMiB": 2048,
+      "cpuLimitSeconds": 90
+    },
+    "wasmReplay": "not-run"
+  },
+  "openGaps": [
+    "The 100001-item case is qualified on Node and Bun under bounded runs, but both allocate a large descriptor snapshot (about 384 MiB Node RSS and 522 MiB Bun RSS); cross-host memory behavior remains a resource concern.",
+    "The count-limit vector has not been replayed in Chromium.",
+    "The opt-in binding has no default package route; TypeScript remains the default."
+  ],
+  "diagnosticNote": "An earlier exit-137 attempt used a debug addon that recursively loaded its sibling artifact; it was not evidence of descriptor allocation failure. The release-addon probe above is the qualified limit result."
+}

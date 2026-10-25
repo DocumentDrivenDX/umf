@@ -1,0 +1,311 @@
+{
+  "format": "umf-r8-delta-log-predecessor/1",
+  "cases": [
+    {
+      "id": "line-ending-offsets-exact-numbers",
+      "text": "😀\r\n\t \n{\"txn\":{\"appId\":\"x\",\"version\":9223372036854775807}}\n{\"future\":{\"n\":1e400}}\nnot json\n{\"add\":{},\"remove\":{}}\n{\"metaData\":null}",
+      "sourceSha256": "3ef5b2edfee0e4ab83c5c143fd6638d59258e925d8ff9c75567de771e0e3a4e2",
+      "parsedAll": false,
+      "complete": false,
+      "lines": [
+        {
+          "line": 1,
+          "start": 0,
+          "end": 2,
+          "terminator": "\r\n",
+          "status": "invalid"
+        },
+        {
+          "line": 2,
+          "start": 4,
+          "end": 6,
+          "terminator": "\n",
+          "status": "blank"
+        },
+        {
+          "line": 3,
+          "start": 7,
+          "end": 58,
+          "terminator": "\n",
+          "status": "parsed",
+          "action": "txn",
+          "node": {
+            "kind": "object",
+            "members": {
+              "txn": {
+                "kind": "object",
+                "members": {
+                  "appId": {
+                    "kind": "string",
+                    "value": "x"
+                  },
+                  "version": {
+                    "kind": "number",
+                    "value": "9223372036854775807"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "line": 4,
+          "start": 59,
+          "end": 81,
+          "terminator": "\n",
+          "status": "parsed",
+          "action": "future",
+          "node": {
+            "kind": "object",
+            "members": {
+              "future": {
+                "kind": "object",
+                "members": {
+                  "n": {
+                    "kind": "number",
+                    "value": "1e400"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "line": 5,
+          "start": 82,
+          "end": 90,
+          "terminator": "\n",
+          "status": "invalid"
+        },
+        {
+          "line": 6,
+          "start": 91,
+          "end": 113,
+          "terminator": "\n",
+          "status": "invalid",
+          "node": {
+            "kind": "object",
+            "members": {
+              "add": {
+                "kind": "object",
+                "members": {}
+              },
+              "remove": {
+                "kind": "object",
+                "members": {}
+              }
+            }
+          }
+        },
+        {
+          "line": 7,
+          "start": 114,
+          "end": 131,
+          "terminator": "",
+          "status": "invalid",
+          "action": "metaData",
+          "node": {
+            "kind": "object",
+            "members": {
+              "metaData": {
+                "kind": "null"
+              }
+            }
+          }
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_LOG_JSON",
+          "path": "/lines/0",
+          "severity": "error",
+          "message": "Invalid native JSON"
+        },
+        {
+          "code": "DELTA_LOG_BLANK",
+          "path": "/lines/1",
+          "severity": "warning",
+          "message": "Blank line preserved; it is not an action"
+        },
+        {
+          "code": "DELTA_LOG_UNKNOWN_ACTION",
+          "path": "/lines/3",
+          "severity": "warning",
+          "message": "Unknown action retained without interpretation: future"
+        },
+        {
+          "code": "DELTA_LOG_JSON",
+          "path": "/lines/4",
+          "severity": "error",
+          "message": "Invalid native JSON"
+        },
+        {
+          "code": "DELTA_LOG_ACTION_ENVELOPE",
+          "path": "/lines/5",
+          "severity": "error",
+          "message": "Expected exactly one action key in an object"
+        },
+        {
+          "code": "DELTA_LOG_ACTION_VALUE",
+          "path": "/lines/6",
+          "severity": "error",
+          "message": "Known action requires an object value"
+        }
+      ]
+    },
+    {
+      "id": "duplicate-decoded-key",
+      "text": "{\"txn\":{\"appId\":\"x\",\"app\\u0049d\":\"y\"}}\n",
+      "sourceSha256": "bbe2860a46fff771fee06b46c0dbccff66c0dfa884a0a30c2504a9c27b33860d",
+      "parsedAll": false,
+      "complete": false,
+      "lines": [
+        {
+          "line": 1,
+          "start": 0,
+          "end": 38,
+          "terminator": "\n",
+          "status": "invalid"
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_LOG_JSON",
+          "path": "/lines/0",
+          "severity": "error",
+          "message": "Map keys must be unique at line 1, column 21:\n\n{\"txn\":{\"appId\":\"x\",\"app\\u0049d\":\"y\"}}\n                    ^\n"
+        }
+      ]
+    },
+    {
+      "id": "unknown-action-and-empty",
+      "text": "{\"future\":{\"raw\":\"keep\",\"n\":-0.0e+7}}\n",
+      "sourceSha256": "b2765c44b3231442a287cc306a71752986a9a69c5c6f8da40cf58f8bec3921c8",
+      "parsedAll": true,
+      "complete": false,
+      "lines": [
+        {
+          "line": 1,
+          "start": 0,
+          "end": 37,
+          "terminator": "\n",
+          "status": "parsed",
+          "action": "future",
+          "node": {
+            "kind": "object",
+            "members": {
+              "future": {
+                "kind": "object",
+                "members": {
+                  "raw": {
+                    "kind": "string",
+                    "value": "keep"
+                  },
+                  "n": {
+                    "kind": "number",
+                    "value": "-0.0e+7"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_LOG_UNKNOWN_ACTION",
+          "path": "/lines/0",
+          "severity": "warning",
+          "message": "Unknown action retained without interpretation: future"
+        }
+      ]
+    },
+    {
+      "id": "empty-source",
+      "text": "",
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parsedAll": true,
+      "complete": false,
+      "lines": [],
+      "diagnostics": [
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_LOG_EMPTY",
+          "path": "",
+          "severity": "warning",
+          "message": "Empty source is preserved; it is not evidence of a valid commit"
+        }
+      ]
+    },
+    {
+      "id": "trailing-terminators",
+      "text": "{\"protocol\":{}}\r\n\n",
+      "sourceSha256": "e2dd41848294b855d75968a1ce726c154b1565547a7da9428c41c5ed0ed43ffb",
+      "parsedAll": true,
+      "complete": false,
+      "lines": [
+        {
+          "line": 1,
+          "start": 0,
+          "end": 15,
+          "terminator": "\r\n",
+          "status": "parsed",
+          "action": "protocol",
+          "node": {
+            "kind": "object",
+            "members": {
+              "protocol": {
+                "kind": "object",
+                "members": {}
+              }
+            }
+          }
+        },
+        {
+          "line": 2,
+          "start": 17,
+          "end": 17,
+          "terminator": "\n",
+          "status": "blank"
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_LOG_BLANK",
+          "path": "/lines/1",
+          "severity": "warning",
+          "message": "Blank line preserved; it is not an action"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "profile": "r5-core-key-tuple-direct-factory/0.2.0",
+  "status": "pass",
+  "defaultSelectionChanged": false,
+  "scope": [
+    "The opt-in createCoreKeyTupleEngine routes encode through the retained Rust runtime using a one-shot prefix stage: source, identity, and values are admitted separately, Rust checks identity and the current source version, and only then does the host admit options and complete encoding.",
+    "Source, identity, values, options, receipt, and current each retain the predecessor per-argument 100,000-value ceiling; a crossed-argument control proves the direct route does not impose a narrower aggregate ceiling.",
+    "The staged encode carries one host-control bridge and Rust TransportUsage across prefix admission and options/final encode. Verify and raw-byte reads use a fresh one-shot receipt-first prepareVerification stage with the same cumulative control/usage behavior.",
+    "PreparedCoreKeyTuples still returns the predecessor-shaped frozen object with exactly profile, source, encode, and verify.",
+    "Public createCoreModelEngine remains eager and tuple-capable; createCoreModelRootEngine continues to omit tuple methods; no default export route changed."
+  ],
+  "predecessorOrdering": {
+    "validArguments": ["source", "identity", "values", "options"],
+    "invalidIdentity": {
+      "code": "KEY_TUPLE_IDENTITY",
+      "message": "Explicit Record and stable Key identities are required",
+      "path": "/identity",
+      "optionsObserved": false
+    },
+    "invalidSourceVersion": {
+      "code": "KEY_TUPLE_SOURCE",
+      "message": "Expected current core 0.10.0 document",
+      "path": "/source/umf",
+      "optionsObserved": false
+    },
+    "omittedEqualsExplicitUndefinedOptions": true,
+    "crossedArgumentTransport": {
+      "valuesArgumentCount": 99999,
+      "sourceAndIdentityAddAtLeast": 2,
+      "result": "Per-argument transport admission succeeds; core then refuses the intentionally wrong tuple arity at /values."
+    }
+  },
+  "frozenPacket": {
+    "path": "docs/helix/04-build/evidence/rust-migration/r5-core-key-tuple/frozen-typescript.json",
+    "sha256": "1e0649ea8a723ce9f9836eceda2fd7cb83c6554bf5f01d908016baf0b69aefb5",
+    "results": "87 in-profile encoder outcomes, one separately pinned out-of-profile host Number refusal, five verification outcomes"
+  },
+  "sourceSha256": {
+    "crates/umf-core/src/core_key_tuple.rs": "e40cb227dae8a3da11923fa4340eb6eedef2be97a936f3293158c45550038bf0",
+    "crates/umf-core-wire/src/core_key_tuple_binding.rs": "3fa89a40d48f1fd5f97036bd169b77d2c6c50b4e223b5f74ad06d3e4a7605b1a",
+    "bindings/core/node/src/core_key_tuple.rs": "ed53e9fa525819dba16ca84a6de1e5badf96a18b9f44d9a9f8e18a29c11b610c",
+    "bindings/core/wasm/src/core_key_tuple.rs": "63ca8e2247eeb3176c1100b5b5a0897f49fb5295f8f5aeb4283c9143b36a1e72",
+    "bindings/core/node/src/core-key-tuple.js": "fec83f9857b2cb3d955ba0e35c63b471bf3e8bda98d2adddf65fe452e90ad290",
+    "bindings/core/wasm/src/core-key-tuple.js": "fec83f9857b2cb3d955ba0e35c63b471bf3e8bda98d2adddf65fe452e90ad290",
+    "bindings/core/node/index.js": "6797f17c3a5be5efdb1445319a26143ae44a8d1f7fb52c8a09fee60def05fd84",
+    "bindings/core/wasm/index.js": "9f359f487555f43ef5284ffd58741872514ea7f701bf071096ed6756d674c8dc",
+    "bindings/core/node/tests/core-key-tuple-factory.test.js": "c36deee199cf340acea7b9b9bbbd2f24c590c41f0bfda33080c939128ac5be8d",
+    "bindings/core/node/tests/core-key-tuple-direct-runtime.test.js": "677b09ffcbe8b5a29bded8aa988a4b6e5945d14a42e6c096214e16a92a668fb0"
+  },
+  "verification": {
+    "nodeBun": {
+      "package": "/private/tmp/umf-keytuple-direct-optin-package",
+      "addon": "/private/tmp/umf-keytuple-direct-optin-package/bindings/core/node/umf_core_node.node",
+      "addonSha256": "7d1be3d35f712ed545da6f17a544c2930f50a2100ff28c4d6d3997247bc6486e",
+      "commands": [
+        "cargo check --locked --offline -p umf-core-node",
+        "cargo check --locked --offline -p umf-core-wasm --target wasm32-unknown-unknown",
+        "bun run typecheck",
+        "bun test ./bindings/core/node/tests/core-key-tuple-factory.test.js ./bindings/core/node/tests/core-key-tuple-direct-runtime.test.js"
+      ],
+      "result": "11 tests passed; 273 assertions passed in Bun 1.4.3. The public opt-in facade matched all 87 in-profile encoder results and all five verification refusals. Per-argument admission, source→identity→values→options ordering, invalid identity/source before options, omitted/undefined options, receipt-first ordering, cumulative work, one-shot handles, byte-copy charging, and fresh-call reset passed."
+    },
+    "browser": {
+      "harness": "/private/tmp/keytuple-direct-browser.mjs",
+      "harnessSha256": "f48690bb75e5c8e0cae84421777fc8ddcada70d1908afca3652e7aa58e214682",
+      "browser": "Microsoft Edge 156.0.4314.42",
+      "wasmBindgenVersion": "0.2.100",
+      "result": "Pass: 88 direct runtime encoder outcomes (87 in-profile plus separate host Number refusal), five direct runtime verifier outcomes, 87 public-facade encoder results and five public-facade verifier refusals. Host order was source→identity→values→options; invalid identity/source returned exact predecessor codes/paths without observing options. Crossed-argument admission reached the intentional KEY_TUPLE_ARITY refusal rather than an aggregate transport ceiling. Invalid receipt left current accessor count zero. Public verification maxWork measured 33,193,601 receipt work and 16,514 current/output work; a 33,193,601 single-call cap refused cumulatively. Direct staged verification measured 33,689,442 receipt work and 7,730 current/output work; cumulative observed 33,690,233 at refusal. Fresh operation reset, one-shot verify and encode-stage reuse refusal, raw byte lengths 100001 and 4000000, 4000001 refusal, and late JS output-copy refusal passed; final output copy charged 8 bytes for the 8-byte receipt."
+    },
+    "rustUnit": {
+      "command": "cargo test --locked --offline -p umf-core-wire --lib direct_runtime_tests -- --nocapture",
+      "result": "2 passed, including frozen direct outcomes and cumulative TransportUsage carry."
+    }
+  },
+  "artifacts": {
+    "nodeAddon": {
+      "path": "/private/tmp/umf-keytuple-direct-optin-package/bindings/core/node/umf_core_node.node",
+      "sha256": "7d1be3d35f712ed545da6f17a544c2930f50a2100ff28c4d6d3997247bc6486e"
+    },
+    "wasmSourceBinary": {
+      "path": "/private/tmp/umf-keytuple-direct-optin-wasm-target/wasm32-unknown-unknown/release/umf_core_wasm.wasm",
+      "sha256": "2c91a3738f3451221c4a84af2b0e17b19c850215dda8ea858d452b6cde44cc52"
+    },
+    "wasmPackage": {
+      "path": "/private/tmp/umf-keytuple-direct-optin-wasm-pkg",
+      "wasmJavaScriptSha256": "0c95324f4c9379e3a1f0639c6b710b81c1203df24e9443419d7169805f919435",
+      "wasmBinarySha256": "fa6e7c83df227957abfe8859a6a6eabeef1842ac145c6b1baf94639045f96881"
+    }
+  },
+  "limitations": [
+    "This validates the opt-in binding factory only. Node and browser default export selection remains unchanged pending independent review.",
+    "No installed SDK integration or retirement claim is made."
+  ]
+}

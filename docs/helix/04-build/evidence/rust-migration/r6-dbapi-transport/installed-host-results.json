@@ -1,0 +1,55 @@
+{
+  "scope": "installed abi3 Python host bridge and reviewed DB-API adapter; no compiler, driver, or database execution",
+  "build": {
+    "command": "maturin build --manifest-path bindings/core/python/Cargo.toml --target-dir /private/tmp/umf-avro-bindings-target --out /private/tmp/r6-native-wheels --interpreter python3.11 --interpreter python3.14",
+    "cargo_target_was_shared_with": "concurrent umf-core-python and umf-core-node build after Avro agent released Cargo slot",
+    "wheel": "umf_core_python-0.1.0-cp311-abi3-macosx_11_0_arm64.whl",
+    "wheel_sha256": "3131168e6446c144575bb8b0860a1babad39e1736d8ef8ae6874131ba2973eb9",
+    "native_extension_sha256": "85fcadd05dd38b6dba7c6d63a87363fe051ec74b31ee3ec6fddb92edee142adb",
+    "overlay": "wheel extension and current Python wrapper sources extracted/copied into /private/tmp/r6-native-overlay; imported by capture_native.py"
+  },
+  "sources": {
+    "reviewed_py_sha256": "a5e10e1101229deaae38e05394c93e77217a4e8eca00fc7d41a17eacc48871be",
+    "public_bridge_sha256": "98091c362b22c9b9328f66d27ce3bcf731a7574facef3d9c79f4a9a0da3f11de",
+    "python_binding_sha256": "97a8ff94b866a2751911ce09181da47ff4056068bdd0ae37d1cdd9d923e14434",
+    "rust_scanner_sha256": "3b00d923cf85c58de21b607ce770497a16e46477ef040f3d2b1ec923eae4703f",
+    "native_capture_sha256": "110757c42d5ff66557b2825ff2b3b7f633ade8dddb22aa26b5e424ef56ada65b"
+  },
+  "hosts": [
+    {
+      "python": "CPython 3.11.17",
+      "unicode": "14.0.0",
+      "profile": "umf-access-reviewed-transport/0.1.0",
+      "case_count": 13,
+      "positions_dbapi_sql_dbapi_order_equal_to_predecessor": "13/13 each",
+      "unicode_e_prefix_case": "no lexical refusal; matches CPython 3.11 predecessor classification",
+      "digit_limit_case": "ValueError at 4301 digits before later unterminated-comment refusal; matches predecessor"
+    },
+    {
+      "python": "CPython 3.14.8",
+      "unicode": "16.0.0",
+      "profile": "umf-access-reviewed-transport/0.1.0",
+      "case_count": 13,
+      "positions_dbapi_sql_dbapi_order_equal_to_predecessor": "13/13 each",
+      "unicode_e_prefix_case": "unterminated compiler SQL quote; matches CPython 3.14 predecessor classification",
+      "digit_limit_case": "ValueError at 4301 digits before later unterminated-comment refusal; matches predecessor"
+    }
+  ],
+  "focused_tests": {
+    "command": "python3.14 -m unittest -v test_reviewed_dbapi_transport test_reviewed_dbapi_native_transport test_reviewed_parameter_native_adapter test_reviewed_parameter_scanner_packet",
+    "result": "16 passed; one class setup skipped because Weft is not installed and UMF_WEFT_RAW_COMPILER is unset",
+    "skip": "build-level sealed compiler transport test; source-only seal predicate and gate remain covered by Gate0 capture"
+  },
+  "database_capabilities": {
+    "psql": "PostgreSQL client 18.6",
+    "server": "pg_isready reports no response on /tmp:5432",
+    "python_drivers": "psycopg, psycopg2, and asyncpg are not installed",
+    "docker": "Docker socket permission denied",
+    "native_database_or_driver_checks": "not run; no native DB behavior claim"
+  },
+  "resource_controls": {
+    "input": "CPython Unicode code points copied into Vec<u32>; capacity checked against isize and try_reserve_exact failure becomes MemoryError",
+    "ordinals": "Rust digit-string reserve is fallible; Python int conversion retains configured interpreter digit limit",
+    "remaining_limit": "no independent SQL input byte/count budget beyond addressable scanner capacity and allocation failure"
+  }
+}

@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 use umf_core::{
     cardinality::{
-        Identity, declare_core_cardinality, inspect_core_cardinality,
-        verify_core_cardinality_declaration,
+        declare_core_cardinality, inspect_core_cardinality, verify_core_cardinality_declaration,
+        Identity,
     },
     context::Context,
     engine::{Capabilities, Engine, ResourceSet, SemanticContext},
     error::Diagnostic,
     registry::Registry,
-    serialization::{Format, write_json_value},
+    serialization::{write_json_value, Format},
     value::{Utf16, Value},
 };
 

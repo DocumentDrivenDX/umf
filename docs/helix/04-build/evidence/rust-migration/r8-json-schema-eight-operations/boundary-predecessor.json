@@ -1,0 +1,570 @@
+{
+  "format": "umf-r8-json-schema-root-boundary-typescript-predecessor/1",
+  "runtime": {
+    "bun": "1.4.3"
+  },
+  "operationScope": [
+    "importJsonSchema",
+    "inspectJsonSchema",
+    "exportJsonSchema",
+    "exportJsonSchemaResources",
+    "exportJsonSchemaBundle",
+    "getJsonSchemaNode",
+    "walkJsonSchema",
+    "editJsonSchemaNode"
+  ],
+  "captureScriptSha256": "6f1f17d9daf28ab14efa6a7b5f527395b0364065dae8313c3754f746d5d4b654",
+  "sourceHashes": {
+    "src/adapters/json-schema/index.ts": "f65807123b937c91d984a1c77d15b7941475ce9ef294f02770da991befdaf900",
+    "src/adapters/json-schema/tree.ts": "5db655867191fde2f82a3f01ddbb63f35cb748500d0bc7fbe18b08f9eb72bb84",
+    "src/model/native-json.ts": "9f8402db883a0d211c86e4a5a00e037a40410a2bf2bbfa3cf1cc288772c205f7",
+    "src/model/json.ts": "d0a06bd26beb215d262b92f5c47d5cea9e85291bb4a780f0aea98b8277c15f98",
+    "src/model/serialization.ts": "027360ffd8bf77905f7d14a3d4d933035fe11d9f52ae28d54691cc607cb43586",
+    "src/model/document.ts": "6ea8f43e4bcd3b5d7259329e6768dd563e066d7169a23bee75e88f054f348ddb",
+    "src/validation/document.ts": "bb88c43790277f67269cea09af251b908e93ddd356a1a4aa8bc10c0cf135720a",
+    "src/validation/schema.ts": "d16695d45d9611208074ae0b13dbd9ed8497e7651878f7ec71076aef697691a3"
+  },
+  "caseCount": 24,
+  "cases": [
+    {
+      "id": "import.invalid-base-before-invalid-source",
+      "input": {
+        "baseUri": "relative",
+        "source": "{"
+      },
+      "outcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "JSON_SCHEMA_URI",
+        "path": "",
+        "message": "Retrieval URI must be absolute and fragment-free"
+      }
+    },
+    {
+      "id": "import.invalid-resource-uri-before-invalid-root",
+      "input": {
+        "resourceUri": "relative",
+        "source": "{"
+      },
+      "outcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "JSON_SCHEMA_URI",
+        "path": "",
+        "message": "Retrieval URI must be absolute and fragment-free"
+      }
+    },
+    {
+      "id": "import.invalid-resource-json-before-invalid-root",
+      "input": {
+        "resourceUri": "https://schemas.example.test/bad.json",
+        "source": "{"
+      },
+      "outcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "JSON_SCHEMA_SYNTAX",
+        "path": "",
+        "message": "Invalid native JSON"
+      }
+    },
+    {
+      "id": "host.options-accessors-are-invoked",
+      "input": {
+        "shape": "accessors"
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "documentId": "urn:umf:r8:boundary",
+          "trace": [
+            "baseUri:get",
+            "resources:get",
+            "baseUri:get",
+            "baseUri:get"
+          ]
+        }
+      }
+    },
+    {
+      "id": "host.resource-accessor-is-invoked",
+      "input": {
+        "shape": "enumerable-accessor"
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "documentId": "urn:umf:r8:boundary",
+          "trace": [
+            "resource:get"
+          ]
+        }
+      }
+    },
+    {
+      "id": "host.source-api-ignores-third-argument-control",
+      "input": {
+        "controlPassedAsThirdArgument": true
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "documentId": "urn:umf:r8:boundary",
+          "controlCalls": 0
+        }
+      }
+    },
+    {
+      "id": "host.options-proxy-trap-order",
+      "input": {
+        "shape": "proxy"
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "documentId": "urn:umf:r8:boundary",
+          "trace": [
+            "options:get:baseUri",
+            "options:get:resources",
+            "options:get:baseUri",
+            "options:get:id",
+            "options:get:baseUri"
+          ]
+        }
+      }
+    },
+    {
+      "id": "host.resource-proxy-trap-order",
+      "input": {
+        "shape": "proxy"
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "documentId": "urn:umf:r8:boundary",
+          "trace": [
+            "resources:ownKeys",
+            "resources:descriptor:https://schemas.example.test/r.json",
+            "resources:get:https://schemas.example.test/r.json"
+          ]
+        }
+      }
+    },
+    {
+      "id": "profile.supported.additionalProperties-true",
+      "input": {
+        "schema": "{\"type\":\"object\",\"additionalProperties\":true}"
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        }
+      }
+    },
+    {
+      "id": "profile.unsupported.dynamicRef",
+      "input": {
+        "schema": "{\"$dynamicRef\":\"#node\"}"
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "JSON_SCHEMA_VALIDATOR_LIMIT",
+              "path": "/modules/0/elements/0/extensions/umf.json-schema/$dynamicRef",
+              "severity": "warning",
+              "message": "Pinned JavaScript oracle has known failures for this construct; native meaning retained, full semantic evaluation not certified"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "profile.unsupported.unknown-keyword",
+      "input": {
+        "schema": "{\"x-future-rule\":{\"allow\":true}}"
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "JSON_SCHEMA_KEYWORD",
+              "path": "/modules/0/elements/0/extensions/umf.json-schema/x-future-rule",
+              "severity": "warning",
+              "message": "Uninterpreted keyword in https://schemas.example.test/root.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "profile.unsupported.unevaluatedProperties",
+      "input": {
+        "schema": "{\"type\":\"object\",\"unevaluatedProperties\":false}"
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "JSON_SCHEMA_VALIDATOR_LIMIT",
+              "path": "/modules/0/elements/0/extensions/umf.json-schema/unevaluatedProperties",
+              "severity": "warning",
+              "message": "Pinned JavaScript oracle has known failures for this construct; native meaning retained, full semantic evaluation not certified"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "api.importJsonSchema",
+      "input": {
+        "source": "{\"type\":\"object\",\"properties\":{\"x\":{\"type\":\"string\"}}}",
+        "resourceUris": [
+          "https://schemas.example.test/resource.json"
+        ]
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "umf": "0.10.0",
+          "id": "urn:umf:r8:boundary:api",
+          "vocabularies": {
+            "umf.json-schema": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "https://schemas.example.test/root.json",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.json-schema": {
+                      "dialect": "https://json-schema.org/draft/2020-12/schema",
+                      "baseUri": "https://schemas.example.test/root.json",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "object"
+                          },
+                          "properties": {
+                            "kind": "object",
+                            "members": {
+                              "x": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "resources": {
+                        "https://schemas.example.test/resource.json": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "boolean"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "api.inspectJsonSchema",
+      "input": {
+        "document": "apiDoc"
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "valid": true,
+          "complete": true,
+          "diagnostics": []
+        }
+      }
+    },
+    {
+      "id": "api.exportJsonSchema",
+      "input": {
+        "document": "apiDoc"
+      },
+      "outcome": {
+        "status": "returned",
+        "value": "{\"type\":\"object\",\"properties\":{\"x\":{\"type\":\"string\"}}}\n"
+      }
+    },
+    {
+      "id": "api.exportJsonSchemaResources",
+      "input": {
+        "document": "apiDoc"
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "https://schemas.example.test/resource.json": "{\"type\":\"boolean\"}\n"
+        }
+      }
+    },
+    {
+      "id": "api.exportJsonSchemaBundle",
+      "input": {
+        "document": "apiDoc"
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "schema": "{\"type\":\"object\",\"properties\":{\"x\":{\"type\":\"string\"}}}\n",
+          "resources": {
+            "https://schemas.example.test/resource.json": "{\"type\":\"boolean\"}\n"
+          },
+          "source": {
+            "umf": "0.10.0",
+            "id": "urn:umf:r8:boundary:api",
+            "vocabularies": {
+              "umf.json-schema": {
+                "version": "0.1.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "schema",
+                "namespace": "https://schemas.example.test/root.json",
+                "elements": [
+                  {
+                    "id": "schema",
+                    "extensions": {
+                      "umf.json-schema": {
+                        "dialect": "https://json-schema.org/draft/2020-12/schema",
+                        "baseUri": "https://schemas.example.test/root.json",
+                        "root": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "x": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "resources": {
+                          "https://schemas.example.test/resource.json": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "diagnostics": [
+            {
+              "code": "SOURCE_ARTIFACT_REQUIRED",
+              "path": "",
+              "severity": "warning",
+              "message": "Standalone native root does not carry UMF metadata or supplied resource files; retain this bundle for full source recovery."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "api.getJsonSchemaNode",
+      "input": {
+        "document": "apiDoc",
+        "pointer": "/properties/x"
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "kind": "object",
+          "members": {
+            "type": {
+              "kind": "string",
+              "value": "string"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "api.walkJsonSchema",
+      "input": {
+        "document": "apiDoc"
+      },
+      "outcome": {
+        "status": "returned",
+        "value": [
+          {
+            "pointer": "",
+            "node": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "x": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "pointer": "/properties/x",
+            "node": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "api.editJsonSchemaNode",
+      "input": {
+        "document": "apiDoc",
+        "pointer": "/properties/x/type",
+        "replacement": "\"integer\""
+      },
+      "outcome": {
+        "status": "returned",
+        "value": "{\"type\":\"object\",\"properties\":{\"x\":{\"type\":\"integer\"}}}\n"
+      }
+    },
+    {
+      "id": "get.invalid-pointer-before-copy",
+      "input": {
+        "pointer": "/bad~2key"
+      },
+      "outcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "JSON_SCHEMA_POINTER",
+        "path": "",
+        "message": "Invalid JSON Pointer"
+      }
+    },
+    {
+      "id": "get.raw-non-string-pointer",
+      "input": {
+        "pointerType": "number"
+      },
+      "outcome": {
+        "status": "threw",
+        "name": "TypeError",
+        "code": null,
+        "path": null,
+        "message": "pointer.startsWith is not a function. (In 'pointer.startsWith(\"/\")', 'pointer.startsWith' is undefined)"
+      }
+    },
+    {
+      "id": "inspect.raw-null-document",
+      "input": {
+        "documentType": "null"
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "valid": false,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "SEMANTIC_TYPE_STRUCTURE",
+              "path": "",
+              "message": "must be object",
+              "severity": "error"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "export.bundle-diagnostic-order",
+      "input": {
+        "profile": "supported-root"
+      },
+      "outcome": {
+        "status": "returned",
+        "value": {
+          "schema": "{\"type\":\"object\"}\n",
+          "resourceKeys": [],
+          "diagnostics": [
+            {
+              "code": "SOURCE_ARTIFACT_REQUIRED",
+              "path": "",
+              "severity": "warning",
+              "message": "Standalone native root does not carry UMF metadata or supplied resource files; retain this bundle for full source recovery."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

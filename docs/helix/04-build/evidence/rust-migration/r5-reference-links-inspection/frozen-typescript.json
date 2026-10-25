@@ -1,0 +1,708 @@
+{
+  "profile": "inspect-core-reference-links/0.3.0",
+  "predecessor": "src/model/reference-links.ts",
+  "sourceClosureSha256": {
+    "src/model/reference-links.ts": "e7e3c104741d3202941973fdec14d6a25af8406dd909dbac7b60cea8e7c27853",
+    "src/model/types.ts": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
+    "src/model/errors.ts": "65bc53689f6aa0546be249ff4bd42616b446966cfc5f9d525faf9a428031dbd6",
+    "src/model/json.ts": "d0a06bd26beb215d262b92f5c47d5cea9e85291bb4a780f0aea98b8277c15f98",
+    "src/generated/core-model.ts": "b3bf98b99bbc6dd21ab355454fabc925b914676a9c43a2227e6de6a77e90cfbd",
+    "src/generated/core-validators.ts": "3a654aa2e944959ba07ec9c1b5692f83a5b7e7a06652bf76ca666649e0e3d095",
+    "src/validation/document.ts": "bb88c43790277f67269cea09af251b908e93ddd356a1a4aa8bc10c0cf135720a",
+    "src/validation/current-policy.ts": "010d8dcc062363592713d68fcd54000775420cae779a074474bcca19b862cd33",
+    "src/validation/constraint-kernel.ts": "968bde65e6e7e8da7ec92849498dbfbe9a71f931c9538094a18c85be5b4a4362",
+    "src/validation/schema.ts": "d16695d45d9611208074ae0b13dbd9ed8497e7651878f7ec71076aef697691a3",
+    "src/validation/internal-schema.ts": "df2f752489b4cf90c083c1411f88e2ff2952c8269f50810308cab65b0106d237",
+    "src/validation/json-equality.ts": "a9ecbd0d4d513223889eaf83d053bc0d48e8020f8a73cae3fe32a8bc06d1e20f",
+    "src/validation/literal-kernel.ts": "0fffe57279a745891f4cbbd33eb1296a34bfcb083bd8e05a3ff7a7b8048db071",
+    "src/validation/literal-policy.ts": "a59e2a18b735f647f23a198e70af0f9c3ca57eeeccec77d012487a9b9b803e08",
+    "src/validation/constraint-language.ts": "decf47ca801a2c03d0c01b92ef3418813c79992c042be879ba0c1d2561678597",
+    "src/registry/registry.ts": "3fa010311edc23c5dc74826eb7a74a8a19a9a4c41da3031bc66e6f741d1164c1",
+    "spec/core/schema.json": "1cef049948bf2c743dacf0348f0f17444e72f81d9a74034ff823429f4c7c4fb1",
+    "spec/core/reference-links-inspection-v0.3.schema.json": "c45de7d4fd54f640d8af86d088ebe8aab90138311245a6faac05840de9bdbe56",
+    "spec/metamodel/generated/core-constraints.json": "0972db27e5d272dd4ca6a978e33a55e5e8b0406edc3a01f0856e71de30708c13",
+    "spec/metamodel/generated/domain-policy.json": "0dd7b527889037d849452410bf662b285a9c74d70ce8f6449e792b02270313cd"
+  },
+  "cases": {
+    "known": {
+      "source": {
+        "umf": "0.10.0",
+        "id": "reference-links-fixture",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "m",
+            "elements": [
+              {
+                "id": "owner",
+                "kind": "record",
+                "members": [],
+                "extensions": {}
+              },
+              {
+                "id": "field",
+                "kind": "field",
+                "scalarType": "string",
+                "extensions": {},
+                "references": [
+                  {
+                    "role": "record-type",
+                    "module": "m",
+                    "element": "target"
+                  }
+                ]
+              },
+              {
+                "id": "target",
+                "kind": "record",
+                "members": [],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "field"
+      }
+    },
+    "repeated_opaque_order": {
+      "source": {
+        "umf": "0.10.0",
+        "id": "reference-links-fixture",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "m",
+            "elements": [
+              {
+                "id": "owner",
+                "kind": "record",
+                "members": [],
+                "extensions": {}
+              },
+              {
+                "id": "field",
+                "kind": "field",
+                "scalarType": "string",
+                "extensions": {},
+                "references": [
+                  {
+                    "role": "record-type",
+                    "module": "m",
+                    "element": "target"
+                  },
+                  {
+                    "role": "future-role",
+                    "module": "m",
+                    "element": "target",
+                    "future/qualifier": {
+                      "tuple": [
+                        "b",
+                        "a"
+                      ]
+                    }
+                  },
+                  {
+                    "role": "record-type",
+                    "module": "m",
+                    "element": "target"
+                  }
+                ]
+              },
+              {
+                "id": "target",
+                "kind": "record",
+                "members": [],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "field"
+      }
+    },
+    "explicit_empty": {
+      "source": {
+        "umf": "0.10.0",
+        "id": "reference-links-fixture",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "m",
+            "elements": [
+              {
+                "id": "owner",
+                "kind": "record",
+                "members": [],
+                "extensions": {}
+              },
+              {
+                "id": "field",
+                "kind": "field",
+                "scalarType": "string",
+                "extensions": {},
+                "references": []
+              },
+              {
+                "id": "target",
+                "kind": "record",
+                "members": [],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "field"
+      }
+    },
+    "absent": {
+      "source": {
+        "umf": "0.10.0",
+        "id": "reference-links-fixture",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "m",
+            "elements": [
+              {
+                "id": "owner",
+                "kind": "record",
+                "members": [],
+                "extensions": {}
+              },
+              {
+                "id": "field",
+                "kind": "field",
+                "scalarType": "string",
+                "extensions": {}
+              },
+              {
+                "id": "target",
+                "kind": "record",
+                "members": [],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "field"
+      }
+    },
+    "missing_element": {
+      "source": {
+        "umf": "0.10.0",
+        "id": "reference-links-fixture",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "m",
+            "elements": [
+              {
+                "id": "owner",
+                "kind": "record",
+                "members": [],
+                "extensions": {}
+              },
+              {
+                "id": "field",
+                "kind": "field",
+                "scalarType": "string",
+                "extensions": {},
+                "references": [
+                  {
+                    "role": "record-type",
+                    "module": "m",
+                    "element": "target"
+                  }
+                ]
+              },
+              {
+                "id": "target",
+                "kind": "record",
+                "members": [],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "absent"
+      }
+    },
+    "extra_identity_member": {
+      "source": {
+        "umf": "0.10.0",
+        "id": "reference-links-fixture",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "m",
+            "elements": [
+              {
+                "id": "owner",
+                "kind": "record",
+                "members": [],
+                "extensions": {}
+              },
+              {
+                "id": "field",
+                "kind": "field",
+                "scalarType": "string",
+                "extensions": {},
+                "references": [
+                  {
+                    "role": "record-type",
+                    "module": "m",
+                    "element": "target"
+                  }
+                ]
+              },
+              {
+                "id": "target",
+                "kind": "record",
+                "members": [],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "field",
+        "extra": true
+      }
+    },
+    "invalid_target": {
+      "source": {
+        "umf": "0.10.0",
+        "id": "reference-links-fixture",
+        "vocabularies": {},
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "m",
+            "elements": [
+              {
+                "id": "owner",
+                "kind": "record",
+                "members": [],
+                "extensions": {}
+              },
+              {
+                "id": "field",
+                "kind": "field",
+                "scalarType": "string",
+                "extensions": {},
+                "references": [
+                  {
+                    "role": "record-type",
+                    "module": "m",
+                    "element": "absent"
+                  }
+                ]
+              },
+              {
+                "id": "target",
+                "kind": "record",
+                "members": [],
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "field"
+      }
+    },
+    "source_diagnostics": {
+      "source": {
+        "umf": "0.10.0"
+      },
+      "identity": {
+        "module": "m",
+        "element": "absent"
+      }
+    },
+    "retired_version": {
+      "source": {
+        "umf": "0.9.0"
+      },
+      "identity": {
+        "module": "m",
+        "element": "field"
+      }
+    }
+  },
+  "outcomes": {
+    "known": {
+      "ok": true,
+      "value": {
+        "operation": "inspect-core-reference-links",
+        "version": "0.3.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "reference-links-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "m",
+              "elements": [
+                {
+                  "id": "owner",
+                  "kind": "record",
+                  "members": [],
+                  "extensions": {}
+                },
+                {
+                  "id": "field",
+                  "kind": "field",
+                  "scalarType": "string",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "record-type",
+                      "module": "m",
+                      "element": "target"
+                    }
+                  ]
+                },
+                {
+                  "id": "target",
+                  "kind": "record",
+                  "members": [],
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "field"
+        },
+        "path": "/modules/0/elements/1/references",
+        "meaning": {
+          "state": "present",
+          "links": [
+            {
+              "index": 0,
+              "path": "/modules/0/elements/1/references/0",
+              "reference": {
+                "role": "record-type",
+                "module": "m",
+                "element": "target"
+              },
+              "target": {
+                "identity": {
+                  "module": "m",
+                  "element": "target"
+                },
+                "path": "/modules/0/elements/2",
+                "kind": "record"
+              },
+              "uninterpretedPaths": [],
+              "typeAssertion": "unverified"
+            }
+          ]
+        },
+        "provenance": "unverified"
+      }
+    },
+    "repeated_opaque_order": {
+      "ok": true,
+      "value": {
+        "operation": "inspect-core-reference-links",
+        "version": "0.3.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "reference-links-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "m",
+              "elements": [
+                {
+                  "id": "owner",
+                  "kind": "record",
+                  "members": [],
+                  "extensions": {}
+                },
+                {
+                  "id": "field",
+                  "kind": "field",
+                  "scalarType": "string",
+                  "extensions": {},
+                  "references": [
+                    {
+                      "role": "record-type",
+                      "module": "m",
+                      "element": "target"
+                    },
+                    {
+                      "role": "future-role",
+                      "module": "m",
+                      "element": "target",
+                      "future/qualifier": {
+                        "tuple": [
+                          "b",
+                          "a"
+                        ]
+                      }
+                    },
+                    {
+                      "role": "record-type",
+                      "module": "m",
+                      "element": "target"
+                    }
+                  ]
+                },
+                {
+                  "id": "target",
+                  "kind": "record",
+                  "members": [],
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "field"
+        },
+        "path": "/modules/0/elements/1/references",
+        "meaning": {
+          "state": "present",
+          "links": [
+            {
+              "index": 0,
+              "path": "/modules/0/elements/1/references/0",
+              "reference": {
+                "role": "record-type",
+                "module": "m",
+                "element": "target"
+              },
+              "target": {
+                "identity": {
+                  "module": "m",
+                  "element": "target"
+                },
+                "path": "/modules/0/elements/2",
+                "kind": "record"
+              },
+              "uninterpretedPaths": [],
+              "typeAssertion": "unverified"
+            },
+            {
+              "index": 1,
+              "path": "/modules/0/elements/1/references/1",
+              "reference": {
+                "role": "future-role",
+                "module": "m",
+                "element": "target",
+                "future/qualifier": {
+                  "tuple": [
+                    "b",
+                    "a"
+                  ]
+                }
+              },
+              "target": {
+                "identity": {
+                  "module": "m",
+                  "element": "target"
+                },
+                "path": "/modules/0/elements/2",
+                "kind": "record"
+              },
+              "uninterpretedPaths": [
+                "/modules/0/elements/1/references/1/future~1qualifier"
+              ],
+              "typeAssertion": "unverified"
+            },
+            {
+              "index": 2,
+              "path": "/modules/0/elements/1/references/2",
+              "reference": {
+                "role": "record-type",
+                "module": "m",
+                "element": "target"
+              },
+              "target": {
+                "identity": {
+                  "module": "m",
+                  "element": "target"
+                },
+                "path": "/modules/0/elements/2",
+                "kind": "record"
+              },
+              "uninterpretedPaths": [],
+              "typeAssertion": "unverified"
+            }
+          ]
+        },
+        "provenance": "unverified"
+      }
+    },
+    "explicit_empty": {
+      "ok": true,
+      "value": {
+        "operation": "inspect-core-reference-links",
+        "version": "0.3.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "reference-links-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "m",
+              "elements": [
+                {
+                  "id": "owner",
+                  "kind": "record",
+                  "members": [],
+                  "extensions": {}
+                },
+                {
+                  "id": "field",
+                  "kind": "field",
+                  "scalarType": "string",
+                  "extensions": {},
+                  "references": []
+                },
+                {
+                  "id": "target",
+                  "kind": "record",
+                  "members": [],
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "field"
+        },
+        "path": "/modules/0/elements/1/references",
+        "meaning": {
+          "state": "present",
+          "links": []
+        },
+        "provenance": "unverified"
+      }
+    },
+    "absent": {
+      "ok": true,
+      "value": {
+        "operation": "inspect-core-reference-links",
+        "version": "0.3.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "reference-links-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "m",
+              "elements": [
+                {
+                  "id": "owner",
+                  "kind": "record",
+                  "members": [],
+                  "extensions": {}
+                },
+                {
+                  "id": "field",
+                  "kind": "field",
+                  "scalarType": "string",
+                  "extensions": {}
+                },
+                {
+                  "id": "target",
+                  "kind": "record",
+                  "members": [],
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "field"
+        },
+        "path": "/modules/0/elements/1/references",
+        "meaning": {
+          "state": "missing"
+        },
+        "provenance": "unverified"
+      }
+    },
+    "missing_element": {
+      "ok": false,
+      "error": {
+        "code": "CORE_REFERENCE_LINKS_MISSING",
+        "message": "Element identity is absent",
+        "path": ""
+      }
+    },
+    "extra_identity_member": {
+      "ok": false,
+      "error": {
+        "code": "CORE_REFERENCE_LINKS_IDENTITY",
+        "message": "Expected explicit qualified identity",
+        "path": ""
+      }
+    },
+    "invalid_target": {
+      "ok": false,
+      "error": {
+        "code": "CORE_REFERENCE_LINKS_SOURCE",
+        "message": "[{\"code\":\"UNRESOLVED_REFERENCE\",\"path\":\"/modules/0/elements/1/references/0\",\"message\":\"Target element does not exist in supplied document\",\"severity\":\"error\"}]",
+        "path": ""
+      }
+    },
+    "source_diagnostics": {
+      "ok": false,
+      "error": {
+        "code": "CORE_REFERENCE_LINKS_SOURCE",
+        "message": "[{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'id'\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'vocabularies'\",\"severity\":\"error\"},{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'modules'\",\"severity\":\"error\"}]",
+        "path": ""
+      }
+    },
+    "retired_version": {
+      "ok": false,
+      "error": {
+        "code": "CORE_REFERENCE_LINKS_VERSION",
+        "message": "Current core 0.10.0 document required",
+        "path": ""
+      }
+    }
+  }
+}

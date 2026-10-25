@@ -1,12 +1,18 @@
 #![cfg(feature = "embedded-adapters")]
 // SPDX-License-Identifier: MIT OR Apache-2.0
-use std::{io::Write, process::{Command, Stdio}};
+use std::{
+    io::Write,
+    process::{Command, Stdio},
+};
 use umf_core::{Context, Utf16, Value};
 
 fn request() -> String {
     let source = r#"{"type":"struct","schema-id":0,"fields":[{"id":1,"name":"a","type":"long","required":true}]}"#;
     let request = Value::Object(vec![
-        (Utf16::from("op"), Value::string_utf8("iceberg.schema.import")),
+        (
+            Utf16::from("op"),
+            Value::string_utf8("iceberg.schema.import"),
+        ),
         (Utf16::from("source"), Value::string_utf8(source)),
         (Utf16::from("id"), Value::string_utf8("iceberg")),
     ]);
@@ -22,9 +28,18 @@ fn run(wire: &str, options: &[&str]) -> serde_json::Value {
         .stdout(Stdio::piped())
         .spawn()
         .unwrap();
-    child.stdin.take().unwrap().write_all(wire.as_bytes()).unwrap();
+    child
+        .stdin
+        .take()
+        .unwrap()
+        .write_all(wire.as_bytes())
+        .unwrap();
     let output = child.wait_with_output().unwrap();
-    assert!(output.status.success(), "{}", String::from_utf8_lossy(&output.stderr));
+    assert!(
+        output.status.success(),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
     serde_json::from_slice(&output.stdout).unwrap()
 }
 
@@ -33,14 +48,15 @@ fn iceberg_schema_cli_runs_without_python_or_javascript() {
     let envelope = run(&request(), &[]);
     assert_eq!(envelope["profile"], "umf.core-wire/1");
     assert_eq!(envelope["status"], "ok", "{envelope}");
-    let document = umf_core_wire::decode(
-        envelope["wire"].as_str().unwrap(),
-        &mut Context::ordinary(),
-    ).unwrap();
-    let Value::Object(fields) = document else { panic!("document object expected") };
-    assert!(fields.iter().any(|(key, value)|
-        key == &Utf16::from("id") && value == &Value::string_utf8("iceberg")
-    ));
+    let document =
+        umf_core_wire::decode(envelope["wire"].as_str().unwrap(), &mut Context::ordinary())
+            .unwrap();
+    let Value::Object(fields) = document else {
+        panic!("document object expected")
+    };
+    assert!(fields
+        .iter()
+        .any(|(key, value)| key == &Utf16::from("id") && value == &Value::string_utf8("iceberg")));
 }
 
 #[test]

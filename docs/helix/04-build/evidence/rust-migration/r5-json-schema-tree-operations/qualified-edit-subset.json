@@ -1,0 +1,37 @@
+{
+  "format": "umf-r5-json-schema-qualified-edit-subset/1",
+  "profile": "Draft 2020-12 schemas composed only of object/boolean schema nodes, type, properties, and safe ASCII property names",
+  "cases": [
+    {
+      "id": "supported-type-properties-edit",
+      "schema": "{\"type\":\"object\",\"properties\":{\"x\":{\"type\":\"string\"}}}",
+      "pointer": "/properties/x/type",
+      "replacement": "\"integer\"",
+      "expectedSource": "{\"type\":\"object\",\"properties\":{\"x\":{\"type\":\"integer\"}}}\n"
+    },
+    {
+      "id": "unsupported-minimum-refused",
+      "schema": "{\"type\":\"number\",\"minimum\":0}",
+      "pointer": "/minimum",
+      "replacement": "1",
+      "expectedError": {
+        "name": "UmfError",
+        "code": "UNSAFE_EDIT",
+        "path": "",
+        "message": "All present semantics must be validated before editing"
+      }
+    },
+    {
+      "id": "supported-root-scalar-refused-after-validation",
+      "schema": "{\"type\":\"object\",\"properties\":{\"x\":{\"type\":\"string\"}}}",
+      "pointer": "",
+      "replacement": "1",
+      "expectedError": {
+        "name": "UmfError",
+        "code": "INVALID_EDIT",
+        "path": "",
+        "message": "[{\"code\":\"JSON_SCHEMA_ROOT\",\"path\":\"/modules/0/elements/0/extensions/umf.json-schema\",\"message\":\"Resource https://schemas.example.test/qualified-edit.json must be object or boolean\",\"severity\":\"error\"}]"
+      }
+    }
+  ]
+}

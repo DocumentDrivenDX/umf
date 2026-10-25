@@ -490,7 +490,7 @@ impl<'a> Parser<'a> {
                     }
                 }
                 x if x < 0x20 => {
-                    return self.malformed_at("Invalid control character at", self.at - 1)
+                    return self.malformed_at("Invalid control character at", self.at - 1);
                 }
                 _ => out.push(ch),
             }

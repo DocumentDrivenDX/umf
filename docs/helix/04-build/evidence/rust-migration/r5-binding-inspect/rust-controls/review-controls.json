@@ -1,0 +1,119 @@
+{
+  "bun": "1.4.3",
+  "cases": {
+    "admission/logical-number-before-binding": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "NUMBER",
+          "path": "/future",
+          "message": "Number outside the core interoperable numeric profile",
+          "severity": "error"
+        }
+      ]
+    },
+    "admission/logical-numeric-key-order": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "NUMBER",
+          "path": "/1",
+          "message": "Number outside the core interoperable numeric profile",
+          "severity": "error"
+        }
+      ]
+    },
+    "schema/column-with-document-column": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "EXTENSION_STRUCTURE",
+          "path": "/extensions/umf.binding/fields/0",
+          "message": "must NOT be valid",
+          "severity": "error"
+        },
+        {
+          "code": "EXTENSION_STRUCTURE",
+          "path": "/extensions/umf.binding/fields/0",
+          "message": "must match \"else\" schema",
+          "severity": "error"
+        }
+      ]
+    },
+    "duplicate-field/last-assignment-index-targets": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "BINDING_DUPLICATE",
+          "path": "/extensions/umf.binding/fields/6",
+          "message": "Duplicate fields assignment",
+          "severity": "error"
+        },
+        {
+          "code": "BINDING_INDEX",
+          "path": "/extensions/umf.binding/indexes/0/on/0",
+          "message": "Field target requires column storage",
+          "severity": "error"
+        },
+        {
+          "code": "BINDING_INDEX",
+          "path": "/extensions/umf.binding/indexes/6/on/0",
+          "message": "Field target requires column storage",
+          "severity": "error"
+        },
+        {
+          "code": "BINDING_INDEX",
+          "path": "/extensions/umf.binding/indexes/7/on/0",
+          "message": "Field target requires column storage",
+          "severity": "error"
+        }
+      ]
+    },
+    "unknown/ecmascript-numeric-property-order": {
+      "valid": true,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "BINDING_UNKNOWN",
+          "path": "/extensions/umf.binding/1",
+          "message": "Unknown binding content retained",
+          "severity": "warning"
+        },
+        {
+          "code": "BINDING_UNKNOWN",
+          "path": "/extensions/umf.binding/9",
+          "message": "Unknown binding content retained",
+          "severity": "warning"
+        }
+      ]
+    },
+    "duplicate-field/last-assignment-include": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "BINDING_DUPLICATE",
+          "path": "/extensions/umf.binding/fields/6",
+          "message": "Duplicate fields assignment",
+          "severity": "error"
+        },
+        {
+          "code": "BINDING_INDEX",
+          "path": "/extensions/umf.binding/indexes/0/include/0",
+          "message": "Included field requires declared column storage",
+          "severity": "error"
+        },
+        {
+          "code": "BINDING_INDEX",
+          "path": "/extensions/umf.binding/indexes/1/on/0",
+          "message": "Field target requires column storage",
+          "severity": "error"
+        }
+      ]
+    }
+  }
+}

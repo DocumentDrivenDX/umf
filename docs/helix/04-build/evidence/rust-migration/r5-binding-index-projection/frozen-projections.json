@@ -1,0 +1,2389 @@
+{
+  "bun": "1.4.3",
+  "cases": {
+    "delta": {
+      "report": {
+        "status": "projected",
+        "source": {
+          "umf": "0.10.0",
+          "id": "delta-layout",
+          "vocabularies": {
+            "umf.binding": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [],
+          "extensions": {
+            "umf.binding": {
+              "profile": "umf-binding-1",
+              "logical": {
+                "documentId": "delta-logical",
+                "coreVersion": "0.10.0"
+              },
+              "target": {
+                "system": "delta",
+                "version": "3.2",
+                "subset": "liquid-clustering-domain-metadata"
+              },
+              "elements": [],
+              "fields": [
+                {
+                  "module": "data",
+                  "element": "order_id",
+                  "storage": "column",
+                  "column": "order_id"
+                }
+              ],
+              "relationships": [],
+              "indexes": [
+                {
+                  "name": "order_cluster",
+                  "kind": "clustering",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "data",
+                        "element": "order_id"
+                      }
+                    }
+                  ],
+                  "unique": false
+                }
+              ]
+            }
+          }
+        },
+        "logical": {
+          "umf": "0.10.0",
+          "id": "delta-logical",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "data",
+              "namespace": "data",
+              "elements": [
+                {
+                  "id": "order_id",
+                  "kind": "field",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "system": "delta",
+          "version": "3.2",
+          "subset": "liquid-clustering-domain-metadata"
+        },
+        "outcomes": [
+          {
+            "name": "order_cluster",
+            "path": "/extensions/umf.binding/indexes/0",
+            "outcome": "exact"
+          }
+        ],
+        "candidate": [
+          {
+            "name": "order_cluster",
+            "kind": "clustering",
+            "on": [
+              {
+                "field": {
+                  "module": "data",
+                  "element": "order_id"
+                }
+              }
+            ],
+            "unique": false
+          }
+        ]
+      },
+      "strict": {
+        "status": "projected",
+        "source": {
+          "umf": "0.10.0",
+          "id": "delta-layout",
+          "vocabularies": {
+            "umf.binding": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [],
+          "extensions": {
+            "umf.binding": {
+              "profile": "umf-binding-1",
+              "logical": {
+                "documentId": "delta-logical",
+                "coreVersion": "0.10.0"
+              },
+              "target": {
+                "system": "delta",
+                "version": "3.2",
+                "subset": "liquid-clustering-domain-metadata"
+              },
+              "elements": [],
+              "fields": [
+                {
+                  "module": "data",
+                  "element": "order_id",
+                  "storage": "column",
+                  "column": "order_id"
+                }
+              ],
+              "relationships": [],
+              "indexes": [
+                {
+                  "name": "order_cluster",
+                  "kind": "clustering",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "data",
+                        "element": "order_id"
+                      }
+                    }
+                  ],
+                  "unique": false
+                }
+              ]
+            }
+          }
+        },
+        "logical": {
+          "umf": "0.10.0",
+          "id": "delta-logical",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "data",
+              "namespace": "data",
+              "elements": [
+                {
+                  "id": "order_id",
+                  "kind": "field",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "system": "delta",
+          "version": "3.2",
+          "subset": "liquid-clustering-domain-metadata"
+        },
+        "outcomes": [
+          {
+            "name": "order_cluster",
+            "path": "/extensions/umf.binding/indexes/0",
+            "outcome": "exact"
+          }
+        ],
+        "candidate": [
+          {
+            "name": "order_cluster",
+            "kind": "clustering",
+            "on": [
+              {
+                "field": {
+                  "module": "data",
+                  "element": "order_id"
+                }
+              }
+            ],
+            "unique": false
+          }
+        ]
+      }
+    },
+    "iceberg": {
+      "report": {
+        "status": "reported",
+        "source": {
+          "umf": "0.10.0",
+          "id": "iceberg-layout",
+          "vocabularies": {
+            "umf.binding": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [],
+          "extensions": {
+            "umf.binding": {
+              "profile": "umf-binding-1",
+              "logical": {
+                "documentId": "iceberg-logical",
+                "coreVersion": "0.10.0"
+              },
+              "target": {
+                "system": "iceberg",
+                "version": "3.0",
+                "subset": "table-metadata-sort-order"
+              },
+              "elements": [],
+              "fields": [
+                {
+                  "module": "data",
+                  "element": "sort_key",
+                  "storage": "column",
+                  "column": "y"
+                }
+              ],
+              "relationships": [],
+              "indexes": [
+                {
+                  "name": "sort_by_y",
+                  "kind": "clustering",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "data",
+                        "element": "sort_key"
+                      }
+                    }
+                  ],
+                  "unique": false
+                }
+              ]
+            }
+          }
+        },
+        "logical": {
+          "umf": "0.10.0",
+          "id": "iceberg-logical",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "data",
+              "namespace": "data",
+              "elements": [
+                {
+                  "id": "sort_key",
+                  "kind": "field",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "system": "iceberg",
+          "version": "3.0",
+          "subset": "table-metadata-sort-order"
+        },
+        "outcomes": [
+          {
+            "name": "sort_by_y",
+            "path": "/extensions/umf.binding/indexes/0",
+            "outcome": "approximated",
+            "reason": "Default sort order is a writer hint, not an enforced index or clustering guarantee"
+          }
+        ],
+        "candidate": []
+      },
+      "strict": {
+        "status": "blocked",
+        "source": {
+          "umf": "0.10.0",
+          "id": "iceberg-layout",
+          "vocabularies": {
+            "umf.binding": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [],
+          "extensions": {
+            "umf.binding": {
+              "profile": "umf-binding-1",
+              "logical": {
+                "documentId": "iceberg-logical",
+                "coreVersion": "0.10.0"
+              },
+              "target": {
+                "system": "iceberg",
+                "version": "3.0",
+                "subset": "table-metadata-sort-order"
+              },
+              "elements": [],
+              "fields": [
+                {
+                  "module": "data",
+                  "element": "sort_key",
+                  "storage": "column",
+                  "column": "y"
+                }
+              ],
+              "relationships": [],
+              "indexes": [
+                {
+                  "name": "sort_by_y",
+                  "kind": "clustering",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "data",
+                        "element": "sort_key"
+                      }
+                    }
+                  ],
+                  "unique": false
+                }
+              ]
+            }
+          }
+        },
+        "logical": {
+          "umf": "0.10.0",
+          "id": "iceberg-logical",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "data",
+              "namespace": "data",
+              "elements": [
+                {
+                  "id": "sort_key",
+                  "kind": "field",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "system": "iceberg",
+          "version": "3.0",
+          "subset": "table-metadata-sort-order"
+        },
+        "outcomes": [
+          {
+            "name": "sort_by_y",
+            "path": "/extensions/umf.binding/indexes/0",
+            "outcome": "approximated",
+            "reason": "Default sort order is a writer hint, not an enforced index or clustering guarantee"
+          }
+        ]
+      }
+    },
+    "parquet": {
+      "report": {
+        "status": "reported",
+        "source": {
+          "umf": "0.10.0",
+          "id": "parquet-layout",
+          "vocabularies": {
+            "umf.binding": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [],
+          "extensions": {
+            "umf.binding": {
+              "profile": "umf-binding-1",
+              "logical": {
+                "documentId": "parquet-logical",
+                "coreVersion": "0.10.0"
+              },
+              "target": {
+                "system": "parquet",
+                "version": "2.9",
+                "subset": "file-schema"
+              },
+              "elements": [
+                {
+                  "module": "data",
+                  "element": "Order",
+                  "table": "orders",
+                  "partition": "sales"
+                }
+              ],
+              "fields": [
+                {
+                  "module": "data",
+                  "element": "id",
+                  "storage": "column",
+                  "column": "id"
+                },
+                {
+                  "module": "data",
+                  "element": "payload",
+                  "storage": "embedded",
+                  "documentColumn": "document",
+                  "path": [
+                    "order",
+                    "payload"
+                  ]
+                }
+              ],
+              "relationships": [],
+              "indexes": [
+                {
+                  "name": "btree_idx",
+                  "kind": "btree",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "data",
+                        "element": "id"
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "hash_idx",
+                  "kind": "hash",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "data",
+                        "element": "id"
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "gin_idx",
+                  "kind": "gin",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "data",
+                        "element": "id"
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "gist_idx",
+                  "kind": "gist",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "data",
+                        "element": "id"
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "expression_idx",
+                  "kind": "expression",
+                  "on": [
+                    {
+                      "documentPath": {
+                        "field": {
+                          "module": "data",
+                          "element": "payload"
+                        },
+                        "path": [
+                          "order",
+                          "payload"
+                        ]
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "partial_idx",
+                  "kind": "partial",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "data",
+                        "element": "id"
+                      }
+                    }
+                  ],
+                  "unique": false,
+                  "predicate": {
+                    "language": "postgresql",
+                    "version": "17",
+                    "expression": "id > 0"
+                  }
+                },
+                {
+                  "name": "unique_idx",
+                  "kind": "unique",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "data",
+                        "element": "id"
+                      }
+                    }
+                  ],
+                  "unique": true
+                },
+                {
+                  "name": "clustering_idx",
+                  "kind": "clustering",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "data",
+                        "element": "id"
+                      }
+                    }
+                  ],
+                  "unique": false
+                }
+              ]
+            }
+          }
+        },
+        "logical": {
+          "umf": "0.10.0",
+          "id": "parquet-logical",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "data",
+              "namespace": "data",
+              "elements": [
+                {
+                  "id": "Order",
+                  "extensions": {}
+                },
+                {
+                  "id": "id",
+                  "kind": "field",
+                  "extensions": {}
+                },
+                {
+                  "id": "payload",
+                  "kind": "field",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "system": "parquet",
+          "version": "2.9",
+          "subset": "file-schema"
+        },
+        "outcomes": [
+          {
+            "name": "btree_idx",
+            "path": "/extensions/umf.binding/indexes/0",
+            "outcome": "not-expressible",
+            "reason": "Parquet file schema does not enforce indexes"
+          },
+          {
+            "name": "hash_idx",
+            "path": "/extensions/umf.binding/indexes/1",
+            "outcome": "not-expressible",
+            "reason": "Parquet file schema does not enforce indexes"
+          },
+          {
+            "name": "gin_idx",
+            "path": "/extensions/umf.binding/indexes/2",
+            "outcome": "not-expressible",
+            "reason": "Parquet file schema does not enforce indexes"
+          },
+          {
+            "name": "gist_idx",
+            "path": "/extensions/umf.binding/indexes/3",
+            "outcome": "not-expressible",
+            "reason": "Parquet file schema does not enforce indexes"
+          },
+          {
+            "name": "expression_idx",
+            "path": "/extensions/umf.binding/indexes/4",
+            "outcome": "not-expressible",
+            "reason": "Parquet file schema does not enforce indexes"
+          },
+          {
+            "name": "partial_idx",
+            "path": "/extensions/umf.binding/indexes/5",
+            "outcome": "not-expressible",
+            "reason": "Parquet file schema does not enforce indexes"
+          },
+          {
+            "name": "unique_idx",
+            "path": "/extensions/umf.binding/indexes/6",
+            "outcome": "not-expressible",
+            "reason": "Parquet file schema does not enforce indexes"
+          },
+          {
+            "name": "clustering_idx",
+            "path": "/extensions/umf.binding/indexes/7",
+            "outcome": "not-expressible",
+            "reason": "Parquet file schema does not enforce indexes"
+          }
+        ],
+        "candidate": []
+      },
+      "strict": {
+        "status": "blocked",
+        "source": {
+          "umf": "0.10.0",
+          "id": "parquet-layout",
+          "vocabularies": {
+            "umf.binding": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [],
+          "extensions": {
+            "umf.binding": {
+              "profile": "umf-binding-1",
+              "logical": {
+                "documentId": "parquet-logical",
+                "coreVersion": "0.10.0"
+              },
+              "target": {
+                "system": "parquet",
+                "version": "2.9",
+                "subset": "file-schema"
+              },
+              "elements": [
+                {
+                  "module": "data",
+                  "element": "Order",
+                  "table": "orders",
+                  "partition": "sales"
+                }
+              ],
+              "fields": [
+                {
+                  "module": "data",
+                  "element": "id",
+                  "storage": "column",
+                  "column": "id"
+                },
+                {
+                  "module": "data",
+                  "element": "payload",
+                  "storage": "embedded",
+                  "documentColumn": "document",
+                  "path": [
+                    "order",
+                    "payload"
+                  ]
+                }
+              ],
+              "relationships": [],
+              "indexes": [
+                {
+                  "name": "btree_idx",
+                  "kind": "btree",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "data",
+                        "element": "id"
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "hash_idx",
+                  "kind": "hash",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "data",
+                        "element": "id"
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "gin_idx",
+                  "kind": "gin",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "data",
+                        "element": "id"
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "gist_idx",
+                  "kind": "gist",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "data",
+                        "element": "id"
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "expression_idx",
+                  "kind": "expression",
+                  "on": [
+                    {
+                      "documentPath": {
+                        "field": {
+                          "module": "data",
+                          "element": "payload"
+                        },
+                        "path": [
+                          "order",
+                          "payload"
+                        ]
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "partial_idx",
+                  "kind": "partial",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "data",
+                        "element": "id"
+                      }
+                    }
+                  ],
+                  "unique": false,
+                  "predicate": {
+                    "language": "postgresql",
+                    "version": "17",
+                    "expression": "id > 0"
+                  }
+                },
+                {
+                  "name": "unique_idx",
+                  "kind": "unique",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "data",
+                        "element": "id"
+                      }
+                    }
+                  ],
+                  "unique": true
+                },
+                {
+                  "name": "clustering_idx",
+                  "kind": "clustering",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "data",
+                        "element": "id"
+                      }
+                    }
+                  ],
+                  "unique": false
+                }
+              ]
+            }
+          }
+        },
+        "logical": {
+          "umf": "0.10.0",
+          "id": "parquet-logical",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "data",
+              "namespace": "data",
+              "elements": [
+                {
+                  "id": "Order",
+                  "extensions": {}
+                },
+                {
+                  "id": "id",
+                  "kind": "field",
+                  "extensions": {}
+                },
+                {
+                  "id": "payload",
+                  "kind": "field",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "system": "parquet",
+          "version": "2.9",
+          "subset": "file-schema"
+        },
+        "outcomes": [
+          {
+            "name": "btree_idx",
+            "path": "/extensions/umf.binding/indexes/0",
+            "outcome": "not-expressible",
+            "reason": "Parquet file schema does not enforce indexes"
+          },
+          {
+            "name": "hash_idx",
+            "path": "/extensions/umf.binding/indexes/1",
+            "outcome": "not-expressible",
+            "reason": "Parquet file schema does not enforce indexes"
+          },
+          {
+            "name": "gin_idx",
+            "path": "/extensions/umf.binding/indexes/2",
+            "outcome": "not-expressible",
+            "reason": "Parquet file schema does not enforce indexes"
+          },
+          {
+            "name": "gist_idx",
+            "path": "/extensions/umf.binding/indexes/3",
+            "outcome": "not-expressible",
+            "reason": "Parquet file schema does not enforce indexes"
+          },
+          {
+            "name": "expression_idx",
+            "path": "/extensions/umf.binding/indexes/4",
+            "outcome": "not-expressible",
+            "reason": "Parquet file schema does not enforce indexes"
+          },
+          {
+            "name": "partial_idx",
+            "path": "/extensions/umf.binding/indexes/5",
+            "outcome": "not-expressible",
+            "reason": "Parquet file schema does not enforce indexes"
+          },
+          {
+            "name": "unique_idx",
+            "path": "/extensions/umf.binding/indexes/6",
+            "outcome": "not-expressible",
+            "reason": "Parquet file schema does not enforce indexes"
+          },
+          {
+            "name": "clustering_idx",
+            "path": "/extensions/umf.binding/indexes/7",
+            "outcome": "not-expressible",
+            "reason": "Parquet file schema does not enforce indexes"
+          }
+        ]
+      }
+    },
+    "postgresql": {
+      "report": {
+        "status": "reported",
+        "source": {
+          "umf": "0.10.0",
+          "id": "pg-index-layout",
+          "vocabularies": {
+            "umf.binding": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [],
+          "extensions": {
+            "umf.binding": {
+              "profile": "umf-binding-1",
+              "logical": {
+                "documentId": "pg-index-logical",
+                "coreVersion": "0.10.0"
+              },
+              "target": {
+                "system": "postgresql",
+                "version": "17.4",
+                "subset": "unqualified-create-table-indexes"
+              },
+              "elements": [
+                {
+                  "module": "sales",
+                  "element": "Order",
+                  "table": "orders"
+                }
+              ],
+              "fields": [
+                {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "id",
+                  "storage": "column",
+                  "column": "id"
+                },
+                {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "code",
+                  "storage": "column",
+                  "column": "code"
+                },
+                {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "status",
+                  "storage": "column",
+                  "column": "status"
+                },
+                {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "payload",
+                  "storage": "column",
+                  "column": "payload"
+                },
+                {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "loc",
+                  "storage": "column",
+                  "column": "loc"
+                },
+                {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "details",
+                  "storage": "embedded",
+                  "documentColumn": "payload",
+                  "path": [
+                    "customer",
+                    "region"
+                  ]
+                }
+              ],
+              "relationships": [],
+              "indexes": [
+                {
+                  "name": "orders_btree",
+                  "kind": "btree",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Order",
+                        "field": "id"
+                      }
+                    }
+                  ],
+                  "unique": false,
+                  "include": [
+                    {
+                      "module": "sales",
+                      "element": "Order",
+                      "field": "code"
+                    }
+                  ]
+                },
+                {
+                  "name": "orders_hash",
+                  "kind": "hash",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Order",
+                        "field": "code"
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "orders_gin",
+                  "kind": "gin",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Order",
+                        "field": "payload"
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "orders_gist",
+                  "kind": "gist",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Order",
+                        "field": "loc"
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "orders_expr",
+                  "kind": "expression",
+                  "on": [
+                    {
+                      "documentPath": {
+                        "field": {
+                          "module": "sales",
+                          "element": "Order",
+                          "field": "details"
+                        },
+                        "path": [
+                          "customer",
+                          "region"
+                        ]
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "orders_partial",
+                  "kind": "partial",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Order",
+                        "field": "status"
+                      }
+                    }
+                  ],
+                  "predicate": {
+                    "language": "postgresql",
+                    "version": "17.4",
+                    "expression": "\"status\" = 'paid'"
+                  },
+                  "unique": false
+                },
+                {
+                  "name": "orders_unique",
+                  "kind": "unique",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Order",
+                        "field": "id"
+                      }
+                    }
+                  ],
+                  "unique": true
+                },
+                {
+                  "name": "orders_cluster",
+                  "kind": "clustering",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Order",
+                        "field": "id"
+                      }
+                    }
+                  ],
+                  "unique": false
+                }
+              ]
+            }
+          }
+        },
+        "logical": {
+          "umf": "0.10.0",
+          "id": "pg-index-logical",
+          "vocabularies": {
+            "umf.ddd": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "Order",
+                  "extensions": {
+                    "umf.ddd": {
+                      "kind": "entity",
+                      "fields": {
+                        "id": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "string"
+                          },
+                          "cardinality": "one"
+                        },
+                        "code": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "string"
+                          },
+                          "cardinality": "one"
+                        },
+                        "status": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "string"
+                          },
+                          "cardinality": "one"
+                        },
+                        "payload": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "string"
+                          },
+                          "cardinality": "optional"
+                        },
+                        "loc": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "string"
+                          },
+                          "cardinality": "optional"
+                        },
+                        "details": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "string"
+                          },
+                          "cardinality": "optional"
+                        }
+                      },
+                      "identity": {
+                        "fields": [
+                          "id"
+                        ],
+                        "scope": "context"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "system": "postgresql",
+          "version": "17.4",
+          "subset": "unqualified-create-table-indexes"
+        },
+        "outcomes": [
+          {
+            "name": "orders_btree",
+            "path": "/extensions/umf.binding/indexes/0",
+            "outcome": "exact"
+          },
+          {
+            "name": "orders_hash",
+            "path": "/extensions/umf.binding/indexes/1",
+            "outcome": "exact"
+          },
+          {
+            "name": "orders_gin",
+            "path": "/extensions/umf.binding/indexes/2",
+            "outcome": "exact"
+          },
+          {
+            "name": "orders_gist",
+            "path": "/extensions/umf.binding/indexes/3",
+            "outcome": "exact"
+          },
+          {
+            "name": "orders_expr",
+            "path": "/extensions/umf.binding/indexes/4",
+            "outcome": "exact"
+          },
+          {
+            "name": "orders_partial",
+            "path": "/extensions/umf.binding/indexes/5",
+            "outcome": "exact"
+          },
+          {
+            "name": "orders_unique",
+            "path": "/extensions/umf.binding/indexes/6",
+            "outcome": "exact"
+          },
+          {
+            "name": "orders_cluster",
+            "path": "/extensions/umf.binding/indexes/7",
+            "outcome": "not-expressible",
+            "reason": "PostgreSQL clustering is not a declared index kind"
+          }
+        ],
+        "candidate": [
+          {
+            "name": "orders_btree",
+            "kind": "btree",
+            "on": [
+              {
+                "field": {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "id"
+                }
+              }
+            ],
+            "unique": false,
+            "include": [
+              {
+                "module": "sales",
+                "element": "Order",
+                "field": "code"
+              }
+            ]
+          },
+          {
+            "name": "orders_hash",
+            "kind": "hash",
+            "on": [
+              {
+                "field": {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "code"
+                }
+              }
+            ],
+            "unique": false
+          },
+          {
+            "name": "orders_gin",
+            "kind": "gin",
+            "on": [
+              {
+                "field": {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "payload"
+                }
+              }
+            ],
+            "unique": false
+          },
+          {
+            "name": "orders_gist",
+            "kind": "gist",
+            "on": [
+              {
+                "field": {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "loc"
+                }
+              }
+            ],
+            "unique": false
+          },
+          {
+            "name": "orders_expr",
+            "kind": "expression",
+            "on": [
+              {
+                "documentPath": {
+                  "field": {
+                    "module": "sales",
+                    "element": "Order",
+                    "field": "details"
+                  },
+                  "path": [
+                    "customer",
+                    "region"
+                  ]
+                }
+              }
+            ],
+            "unique": false
+          },
+          {
+            "name": "orders_partial",
+            "kind": "partial",
+            "on": [
+              {
+                "field": {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "status"
+                }
+              }
+            ],
+            "predicate": {
+              "language": "postgresql",
+              "version": "17.4",
+              "expression": "\"status\" = 'paid'"
+            },
+            "unique": false
+          },
+          {
+            "name": "orders_unique",
+            "kind": "unique",
+            "on": [
+              {
+                "field": {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "id"
+                }
+              }
+            ],
+            "unique": true
+          }
+        ]
+      },
+      "strict": {
+        "status": "blocked",
+        "source": {
+          "umf": "0.10.0",
+          "id": "pg-index-layout",
+          "vocabularies": {
+            "umf.binding": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [],
+          "extensions": {
+            "umf.binding": {
+              "profile": "umf-binding-1",
+              "logical": {
+                "documentId": "pg-index-logical",
+                "coreVersion": "0.10.0"
+              },
+              "target": {
+                "system": "postgresql",
+                "version": "17.4",
+                "subset": "unqualified-create-table-indexes"
+              },
+              "elements": [
+                {
+                  "module": "sales",
+                  "element": "Order",
+                  "table": "orders"
+                }
+              ],
+              "fields": [
+                {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "id",
+                  "storage": "column",
+                  "column": "id"
+                },
+                {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "code",
+                  "storage": "column",
+                  "column": "code"
+                },
+                {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "status",
+                  "storage": "column",
+                  "column": "status"
+                },
+                {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "payload",
+                  "storage": "column",
+                  "column": "payload"
+                },
+                {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "loc",
+                  "storage": "column",
+                  "column": "loc"
+                },
+                {
+                  "module": "sales",
+                  "element": "Order",
+                  "field": "details",
+                  "storage": "embedded",
+                  "documentColumn": "payload",
+                  "path": [
+                    "customer",
+                    "region"
+                  ]
+                }
+              ],
+              "relationships": [],
+              "indexes": [
+                {
+                  "name": "orders_btree",
+                  "kind": "btree",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Order",
+                        "field": "id"
+                      }
+                    }
+                  ],
+                  "unique": false,
+                  "include": [
+                    {
+                      "module": "sales",
+                      "element": "Order",
+                      "field": "code"
+                    }
+                  ]
+                },
+                {
+                  "name": "orders_hash",
+                  "kind": "hash",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Order",
+                        "field": "code"
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "orders_gin",
+                  "kind": "gin",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Order",
+                        "field": "payload"
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "orders_gist",
+                  "kind": "gist",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Order",
+                        "field": "loc"
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "orders_expr",
+                  "kind": "expression",
+                  "on": [
+                    {
+                      "documentPath": {
+                        "field": {
+                          "module": "sales",
+                          "element": "Order",
+                          "field": "details"
+                        },
+                        "path": [
+                          "customer",
+                          "region"
+                        ]
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "orders_partial",
+                  "kind": "partial",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Order",
+                        "field": "status"
+                      }
+                    }
+                  ],
+                  "predicate": {
+                    "language": "postgresql",
+                    "version": "17.4",
+                    "expression": "\"status\" = 'paid'"
+                  },
+                  "unique": false
+                },
+                {
+                  "name": "orders_unique",
+                  "kind": "unique",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Order",
+                        "field": "id"
+                      }
+                    }
+                  ],
+                  "unique": true
+                },
+                {
+                  "name": "orders_cluster",
+                  "kind": "clustering",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Order",
+                        "field": "id"
+                      }
+                    }
+                  ],
+                  "unique": false
+                }
+              ]
+            }
+          }
+        },
+        "logical": {
+          "umf": "0.10.0",
+          "id": "pg-index-logical",
+          "vocabularies": {
+            "umf.ddd": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "Order",
+                  "extensions": {
+                    "umf.ddd": {
+                      "kind": "entity",
+                      "fields": {
+                        "id": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "string"
+                          },
+                          "cardinality": "one"
+                        },
+                        "code": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "string"
+                          },
+                          "cardinality": "one"
+                        },
+                        "status": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "string"
+                          },
+                          "cardinality": "one"
+                        },
+                        "payload": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "string"
+                          },
+                          "cardinality": "optional"
+                        },
+                        "loc": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "string"
+                          },
+                          "cardinality": "optional"
+                        },
+                        "details": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "string"
+                          },
+                          "cardinality": "optional"
+                        }
+                      },
+                      "identity": {
+                        "fields": [
+                          "id"
+                        ],
+                        "scope": "context"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "system": "postgresql",
+          "version": "17.4",
+          "subset": "unqualified-create-table-indexes"
+        },
+        "outcomes": [
+          {
+            "name": "orders_btree",
+            "path": "/extensions/umf.binding/indexes/0",
+            "outcome": "exact"
+          },
+          {
+            "name": "orders_hash",
+            "path": "/extensions/umf.binding/indexes/1",
+            "outcome": "exact"
+          },
+          {
+            "name": "orders_gin",
+            "path": "/extensions/umf.binding/indexes/2",
+            "outcome": "exact"
+          },
+          {
+            "name": "orders_gist",
+            "path": "/extensions/umf.binding/indexes/3",
+            "outcome": "exact"
+          },
+          {
+            "name": "orders_expr",
+            "path": "/extensions/umf.binding/indexes/4",
+            "outcome": "exact"
+          },
+          {
+            "name": "orders_partial",
+            "path": "/extensions/umf.binding/indexes/5",
+            "outcome": "exact"
+          },
+          {
+            "name": "orders_unique",
+            "path": "/extensions/umf.binding/indexes/6",
+            "outcome": "exact"
+          },
+          {
+            "name": "orders_cluster",
+            "path": "/extensions/umf.binding/indexes/7",
+            "outcome": "not-expressible",
+            "reason": "PostgreSQL clustering is not a declared index kind"
+          }
+        ]
+      }
+    },
+    "sqlserver": {
+      "report": {
+        "status": "reported",
+        "source": {
+          "umf": "0.10.0",
+          "id": "sqlserver-index-layout",
+          "vocabularies": {
+            "umf.binding": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [],
+          "extensions": {
+            "umf.binding": {
+              "profile": "umf-binding-1",
+              "logical": {
+                "documentId": "sqlserver-index-logical",
+                "coreVersion": "0.10.0"
+              },
+              "target": {
+                "system": "sqlserver",
+                "version": "2022",
+                "subset": "disk-rowstore-indexes"
+              },
+              "elements": [
+                {
+                  "module": "sales",
+                  "element": "Item",
+                  "table": "sales.Items"
+                }
+              ],
+              "fields": [
+                {
+                  "module": "sales",
+                  "element": "Item",
+                  "field": "id",
+                  "storage": "column",
+                  "column": "id"
+                },
+                {
+                  "module": "sales",
+                  "element": "Item",
+                  "field": "email",
+                  "storage": "column",
+                  "column": "email"
+                },
+                {
+                  "module": "sales",
+                  "element": "Item",
+                  "field": "active",
+                  "storage": "column",
+                  "column": "active"
+                },
+                {
+                  "module": "sales",
+                  "element": "Item",
+                  "field": "payload",
+                  "storage": "column",
+                  "column": "payload"
+                },
+                {
+                  "module": "sales",
+                  "element": "Item",
+                  "field": "details",
+                  "storage": "embedded",
+                  "documentColumn": "payload",
+                  "path": [
+                    "customer",
+                    "region"
+                  ]
+                }
+              ],
+              "relationships": [],
+              "indexes": [
+                {
+                  "name": "umf_email_btree",
+                  "kind": "btree",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Item",
+                        "field": "email"
+                      }
+                    }
+                  ],
+                  "include": [
+                    {
+                      "module": "sales",
+                      "element": "Item",
+                      "field": "payload"
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "umf_id_unique",
+                  "kind": "unique",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Item",
+                        "field": "id"
+                      }
+                    }
+                  ],
+                  "unique": true
+                },
+                {
+                  "name": "umf_active_filtered",
+                  "kind": "partial",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Item",
+                        "field": "active"
+                      }
+                    }
+                  ],
+                  "predicate": {
+                    "language": "tsql",
+                    "version": "2022",
+                    "expression": "[active] = 1"
+                  },
+                  "unique": false
+                },
+                {
+                  "name": "umf_gin",
+                  "kind": "gin",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Item",
+                        "field": "email"
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "umf_gist",
+                  "kind": "gist",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Item",
+                        "field": "email"
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "umf_hash",
+                  "kind": "hash",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Item",
+                        "field": "email"
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "umf_expression",
+                  "kind": "expression",
+                  "on": [
+                    {
+                      "documentPath": {
+                        "field": {
+                          "module": "sales",
+                          "element": "Item",
+                          "field": "details"
+                        },
+                        "path": [
+                          "customer",
+                          "region"
+                        ]
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "umf_clustering",
+                  "kind": "clustering",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Item",
+                        "field": "id"
+                      }
+                    }
+                  ],
+                  "unique": false
+                }
+              ]
+            }
+          }
+        },
+        "logical": {
+          "umf": "0.10.0",
+          "id": "sqlserver-index-logical",
+          "vocabularies": {
+            "umf.ddd": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "Item",
+                  "extensions": {
+                    "umf.ddd": {
+                      "kind": "entity",
+                      "fields": {
+                        "id": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "integer"
+                          },
+                          "cardinality": "one"
+                        },
+                        "email": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "string"
+                          },
+                          "cardinality": "optional"
+                        },
+                        "active": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "boolean"
+                          },
+                          "cardinality": "one"
+                        },
+                        "payload": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "string"
+                          },
+                          "cardinality": "optional"
+                        },
+                        "details": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "string"
+                          },
+                          "cardinality": "optional"
+                        }
+                      },
+                      "identity": {
+                        "fields": [
+                          "id"
+                        ],
+                        "scope": "context"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "system": "sqlserver",
+          "version": "2022",
+          "subset": "disk-rowstore-indexes"
+        },
+        "outcomes": [
+          {
+            "name": "umf_email_btree",
+            "path": "/extensions/umf.binding/indexes/0",
+            "outcome": "exact"
+          },
+          {
+            "name": "umf_id_unique",
+            "path": "/extensions/umf.binding/indexes/1",
+            "outcome": "exact"
+          },
+          {
+            "name": "umf_active_filtered",
+            "path": "/extensions/umf.binding/indexes/2",
+            "outcome": "exact"
+          },
+          {
+            "name": "umf_gin",
+            "path": "/extensions/umf.binding/indexes/3",
+            "outcome": "not-expressible",
+            "reason": "No supported SQL Server index carrier for this kind"
+          },
+          {
+            "name": "umf_gist",
+            "path": "/extensions/umf.binding/indexes/4",
+            "outcome": "not-expressible",
+            "reason": "No supported SQL Server index carrier for this kind"
+          },
+          {
+            "name": "umf_hash",
+            "path": "/extensions/umf.binding/indexes/5",
+            "outcome": "not-expressible",
+            "reason": "No supported SQL Server index carrier for this kind"
+          },
+          {
+            "name": "umf_expression",
+            "path": "/extensions/umf.binding/indexes/6",
+            "outcome": "not-expressible",
+            "reason": "No supported SQL Server index carrier for this kind"
+          },
+          {
+            "name": "umf_clustering",
+            "path": "/extensions/umf.binding/indexes/7",
+            "outcome": "not-expressible",
+            "reason": "No supported SQL Server index carrier for this kind"
+          }
+        ],
+        "candidate": [
+          {
+            "name": "umf_email_btree",
+            "kind": "btree",
+            "on": [
+              {
+                "field": {
+                  "module": "sales",
+                  "element": "Item",
+                  "field": "email"
+                }
+              }
+            ],
+            "include": [
+              {
+                "module": "sales",
+                "element": "Item",
+                "field": "payload"
+              }
+            ],
+            "unique": false
+          },
+          {
+            "name": "umf_id_unique",
+            "kind": "unique",
+            "on": [
+              {
+                "field": {
+                  "module": "sales",
+                  "element": "Item",
+                  "field": "id"
+                }
+              }
+            ],
+            "unique": true
+          },
+          {
+            "name": "umf_active_filtered",
+            "kind": "partial",
+            "on": [
+              {
+                "field": {
+                  "module": "sales",
+                  "element": "Item",
+                  "field": "active"
+                }
+              }
+            ],
+            "predicate": {
+              "language": "tsql",
+              "version": "2022",
+              "expression": "[active] = 1"
+            },
+            "unique": false
+          }
+        ]
+      },
+      "strict": {
+        "status": "blocked",
+        "source": {
+          "umf": "0.10.0",
+          "id": "sqlserver-index-layout",
+          "vocabularies": {
+            "umf.binding": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [],
+          "extensions": {
+            "umf.binding": {
+              "profile": "umf-binding-1",
+              "logical": {
+                "documentId": "sqlserver-index-logical",
+                "coreVersion": "0.10.0"
+              },
+              "target": {
+                "system": "sqlserver",
+                "version": "2022",
+                "subset": "disk-rowstore-indexes"
+              },
+              "elements": [
+                {
+                  "module": "sales",
+                  "element": "Item",
+                  "table": "sales.Items"
+                }
+              ],
+              "fields": [
+                {
+                  "module": "sales",
+                  "element": "Item",
+                  "field": "id",
+                  "storage": "column",
+                  "column": "id"
+                },
+                {
+                  "module": "sales",
+                  "element": "Item",
+                  "field": "email",
+                  "storage": "column",
+                  "column": "email"
+                },
+                {
+                  "module": "sales",
+                  "element": "Item",
+                  "field": "active",
+                  "storage": "column",
+                  "column": "active"
+                },
+                {
+                  "module": "sales",
+                  "element": "Item",
+                  "field": "payload",
+                  "storage": "column",
+                  "column": "payload"
+                },
+                {
+                  "module": "sales",
+                  "element": "Item",
+                  "field": "details",
+                  "storage": "embedded",
+                  "documentColumn": "payload",
+                  "path": [
+                    "customer",
+                    "region"
+                  ]
+                }
+              ],
+              "relationships": [],
+              "indexes": [
+                {
+                  "name": "umf_email_btree",
+                  "kind": "btree",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Item",
+                        "field": "email"
+                      }
+                    }
+                  ],
+                  "include": [
+                    {
+                      "module": "sales",
+                      "element": "Item",
+                      "field": "payload"
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "umf_id_unique",
+                  "kind": "unique",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Item",
+                        "field": "id"
+                      }
+                    }
+                  ],
+                  "unique": true
+                },
+                {
+                  "name": "umf_active_filtered",
+                  "kind": "partial",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Item",
+                        "field": "active"
+                      }
+                    }
+                  ],
+                  "predicate": {
+                    "language": "tsql",
+                    "version": "2022",
+                    "expression": "[active] = 1"
+                  },
+                  "unique": false
+                },
+                {
+                  "name": "umf_gin",
+                  "kind": "gin",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Item",
+                        "field": "email"
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "umf_gist",
+                  "kind": "gist",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Item",
+                        "field": "email"
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "umf_hash",
+                  "kind": "hash",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Item",
+                        "field": "email"
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "umf_expression",
+                  "kind": "expression",
+                  "on": [
+                    {
+                      "documentPath": {
+                        "field": {
+                          "module": "sales",
+                          "element": "Item",
+                          "field": "details"
+                        },
+                        "path": [
+                          "customer",
+                          "region"
+                        ]
+                      }
+                    }
+                  ],
+                  "unique": false
+                },
+                {
+                  "name": "umf_clustering",
+                  "kind": "clustering",
+                  "on": [
+                    {
+                      "field": {
+                        "module": "sales",
+                        "element": "Item",
+                        "field": "id"
+                      }
+                    }
+                  ],
+                  "unique": false
+                }
+              ]
+            }
+          }
+        },
+        "logical": {
+          "umf": "0.10.0",
+          "id": "sqlserver-index-logical",
+          "vocabularies": {
+            "umf.ddd": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "sales",
+              "namespace": "sales",
+              "elements": [
+                {
+                  "id": "Item",
+                  "extensions": {
+                    "umf.ddd": {
+                      "kind": "entity",
+                      "fields": {
+                        "id": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "integer"
+                          },
+                          "cardinality": "one"
+                        },
+                        "email": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "string"
+                          },
+                          "cardinality": "optional"
+                        },
+                        "active": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "boolean"
+                          },
+                          "cardinality": "one"
+                        },
+                        "payload": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "string"
+                          },
+                          "cardinality": "optional"
+                        },
+                        "details": {
+                          "type": {
+                            "kind": "scalar",
+                            "name": "string"
+                          },
+                          "cardinality": "optional"
+                        }
+                      },
+                      "identity": {
+                        "fields": [
+                          "id"
+                        ],
+                        "scope": "context"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "target": {
+          "system": "sqlserver",
+          "version": "2022",
+          "subset": "disk-rowstore-indexes"
+        },
+        "outcomes": [
+          {
+            "name": "umf_email_btree",
+            "path": "/extensions/umf.binding/indexes/0",
+            "outcome": "exact"
+          },
+          {
+            "name": "umf_id_unique",
+            "path": "/extensions/umf.binding/indexes/1",
+            "outcome": "exact"
+          },
+          {
+            "name": "umf_active_filtered",
+            "path": "/extensions/umf.binding/indexes/2",
+            "outcome": "exact"
+          },
+          {
+            "name": "umf_gin",
+            "path": "/extensions/umf.binding/indexes/3",
+            "outcome": "not-expressible",
+            "reason": "No supported SQL Server index carrier for this kind"
+          },
+          {
+            "name": "umf_gist",
+            "path": "/extensions/umf.binding/indexes/4",
+            "outcome": "not-expressible",
+            "reason": "No supported SQL Server index carrier for this kind"
+          },
+          {
+            "name": "umf_hash",
+            "path": "/extensions/umf.binding/indexes/5",
+            "outcome": "not-expressible",
+            "reason": "No supported SQL Server index carrier for this kind"
+          },
+          {
+            "name": "umf_expression",
+            "path": "/extensions/umf.binding/indexes/6",
+            "outcome": "not-expressible",
+            "reason": "No supported SQL Server index carrier for this kind"
+          },
+          {
+            "name": "umf_clustering",
+            "path": "/extensions/umf.binding/indexes/7",
+            "outcome": "not-expressible",
+            "reason": "No supported SQL Server index carrier for this kind"
+          }
+        ]
+      }
+    }
+  }
+}
