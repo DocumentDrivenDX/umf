@@ -99,6 +99,16 @@ export function consumeVerifiedG10Deployment(input:TableDeploymentBundle,account
 }
 
 
+/** Metered envelope reuse. Hits return only the frozen bundle, never verifier auxiliaries. */
+export function verifyG10BundleForShape(input:TableDeploymentBundle,accounting:AccountingContext,path:string):TableDeploymentBundle{
+ const owned=ownCanonicalComponent(input,path,BUNDLE_COPY_BYTES,accounting);
+ const inputCanonical=canonicalCharged(owned,accounting,`${path}/shape-input`);
+ const claimedDigest=owned!==null&&typeof owned==='object'&&!Array.isArray(owned)?(owned as Record<string,InventoryComponentJson>).bundleDigest:undefined;
+ const hit=cachedBundle(inputCanonical,accounting,path);
+ if(hit){if(hit.bundleDigest!==claimedDigest)throw new TypeError(`R2_VERIFIED_BUNDLE_DIGEST_MISMATCH:${path}`);return hit;}
+ return verifyAndRememberG10Deployment(owned as unknown as TableDeploymentBundle,accounting);
+}
+
 /** Lineage-only exact-content reuse. Every miss runs the complete source verifier. */
 export function verifyG10BundleForLineage(input:TableDeploymentBundle,accounting:AccountingContext,path:string):TableDeploymentBundle{
  const owned=ownCanonicalComponent(input,path,BUNDLE_COPY_BYTES,accounting);

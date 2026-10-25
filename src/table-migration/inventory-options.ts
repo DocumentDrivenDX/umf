@@ -2,7 +2,7 @@ import {canonical,canonicalCharged,hashCanonical,hashCanonicalCharged,sha256Text
 import {verifyTableDeployment,type TableDeploymentBundle} from '../table-deployment';
 import {verifyTableMigration} from './index';
 import {validateG05SourceSelections} from './inventory-g05-selection';
-import {verifyAndRememberG10Deployment} from './inventory-verified-deployment';
+import {verifyG10BundleForShape} from './inventory-verified-deployment';
 import type {AccountingContext} from '../model/internal/accounting-context';
 import {ownedR2HistoryByteLength,ownR2HistoryExecutionWrapper,R2WorkMeter} from './inventory-r2-context';
 /** Closed G10 request/history admission. Semantic source/prefix validation,
@@ -84,7 +84,7 @@ function validateBundleEnvelope(v:unknown,path:string,accounting?:AccountingCont
  need(exact(v.expectedCatalog,catalogKeys),`${path}/expectedCatalog`,'catalog-envelope-invalid');
  if(Object.hasOwn(v.expectedCatalog,'comments'))need(Array.isArray(v.expectedCatalog.comments),`${path}/expectedCatalog/comments`,'comments-invalid');
  if(!accounting)return verifyTableDeployment(v);
- return verifyAndRememberG10Deployment(v as TableDeploymentBundle,accounting);
+ return verifyG10BundleForShape(v as TableDeploymentBundle,accounting,path);
 }
 export function validateG10RequestShape(request:unknown,verifyG10?:HistoricalG10PlanVerifier,accounting?:AccountingContext):G10ValidatedRequest {
  need(exact(request,['id','predecessor','previous','next','options','history'])&&nonempty(request.id,128),'/','request-shape-invalid');

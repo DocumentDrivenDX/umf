@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {compileTableDeployment} from '../../src/table-deployment';
+import {projectG10BundleWithAccounting} from '../../src/table-migration/inventory-projection';
 import {consumeVerifiedG10Deployment,verifyAndRememberG10Deployment} from '../../src/table-migration/inventory-verified-deployment';
 import {validateG10RequestShape} from '../../src/table-migration/inventory-options';
 import {R2WorkMeter} from '../../src/table-migration/inventory-r2-context';
 import fixture from '../binding/fixtures/table-lifecycle-note.json';
-import {verifyG10BundleForLineage,withVerifiedG10BundleScope} from '../../src/table-migration/inventory-verified-deployment';
+import {verifyG10BundleForLineage,verifyG10BundleForShape,withVerifiedG10BundleScope} from '../../src/table-migration/inventory-verified-deployment';
 
 const configuration={module:'demo',schema:'verified_demo',ownerRole:'verified_owner',personRole:'verified_person',batchRole:'verified_batch',groupRoles:{}};
 function bundle(){
@@ -107,5 +108,66 @@ test('failed lineage verification does not seed a later retry',()=>{
  withVerifiedG10BundleScope(meter,()=>{
   expect(()=>verifyG10BundleForLineage(invalid,meter,'/failed-first')).toThrow();
   expect(()=>verifyG10BundleForLineage(invalid,meter,'/failed-retry')).toThrow();
+ });
+});
+
+
+test('metered shape reuse returns only a cached frozen bundle and does not renew one-shot auxiliaries',()=>{
+ const original=bundle(),meter=new R2WorkMeter();
+ withVerifiedG10BundleScope(meter,()=>{
+  const produced=verifyAndRememberG10Deployment(original,meter);
+  expect(consumeVerifiedG10Deployment(produced,meter,'/producer')).toBeDefined();
+  const hit=verifyG10BundleForShape(structuredClone(original),meter,'/shape-hit');
+  expect(hit).not.toBe(original);
+  expect(Object.isFrozen(hit)).toBe(true);
+  expect(Object.hasOwn(hit,'document')).toBe(false);
+  expect(Object.hasOwn(hit,'operations')).toBe(false);
+  expect(consumeVerifiedG10Deployment(hit,meter,'/shape-hit')).toBeUndefined();
+ });
+});
+
+test('shape miss keeps a genuine complete verifier result available to projection fallback',()=>{
+ const original=bundle(),meter=new R2WorkMeter();
+ withVerifiedG10BundleScope(meter,()=>{
+  const producer=verifyAndRememberG10Deployment(original,meter);
+  expect(consumeVerifiedG10Deployment(producer,meter,'/shape-fallback-producer')).toBeDefined();
+  const hit=verifyG10BundleForShape(structuredClone(original),meter,'/shape-hit-without-auxiliaries');
+  expect(consumeVerifiedG10Deployment(hit,meter,'/shape-hit-without-auxiliaries')).toBeUndefined();
+  const projected=projectG10BundleWithAccounting(hit,'next',meter);
+  expect(projected.document.modules[0]?.id).toBe('demo');
+  expect(projected.projection.rendererOperations.length).toBeGreaterThan(0);
+  expect(projected.bundle.bundleDigest).toBe(hit.bundleDigest);
+  expect(projected.bundle).not.toBe(hit);
+ });
+});
+
+test('shape reuse remains exact, descriptor-safe, and local to its meter and invocation',()=>{
+ const valid=seededBundle(),meter=new R2WorkMeter();
+ let resident:ReturnType<typeof verifyG10BundleForShape>|undefined;
+ withVerifiedG10BundleScope(meter,()=>{
+  verifyAndRememberG10Deployment(valid,meter);
+  resident=verifyG10BundleForShape(structuredClone(valid),meter,'/shape-resident');
+  const changed=[
+   (()=>{const v=structuredClone(valid);v.source.utf8+=' ';return v;})(),
+   (()=>{const v=structuredClone(valid);v.configuration.schema+='x';return v;})(),
+   (()=>{const v=structuredClone(valid);if(v.steps[0])Object.assign(v.steps[0],{sql:`${'sql'in v.steps[0]?String(v.steps[0].sql):''} `});return v;})(),
+   (()=>{const v=structuredClone(valid);if(v.expectedCatalog.columns[0])Object.assign(v.expectedCatalog.columns[0],{nullable:!v.expectedCatalog.columns[0].nullable});return v;})(),
+   (()=>{const v=structuredClone(valid);if(v.seedSets[0])Object.assign(v.seedSets[0],{id:`${v.seedSets[0].id}-changed`});return v;})(),
+  ];
+  for(let index=0;index<changed.length;index++)expect(()=>verifyG10BundleForShape(changed[index]!,meter,`/shape-changed/${index}`)).toThrow();
+  let getterCalls=0;const accessor=structuredClone(valid);
+  Object.defineProperty(accessor.source,'utf8',{get(){getterCalls++;return valid.source.utf8;},enumerable:true,configurable:true});
+  expect(()=>verifyG10BundleForShape(accessor,meter,'/shape-accessor')).toThrow();expect(getterCalls).toBe(0);
+  const foreignMeter=new R2WorkMeter();
+  const foreign=withVerifiedG10BundleScope(foreignMeter,()=>verifyG10BundleForShape(structuredClone(valid),foreignMeter,'/shape-foreign'));
+  expect(foreign).not.toBe(resident);
+ });
+ if(resident===undefined)throw new Error('same-invocation shape result missing');
+ const next=withVerifiedG10BundleScope(meter,()=>verifyG10BundleForShape(structuredClone(valid),meter,'/shape-next-invocation'));
+ expect(next).not.toBe(resident);
+ const invalid=structuredClone(valid);invalid.bundleDigest='0'.repeat(64);const retryMeter=new R2WorkMeter();
+ withVerifiedG10BundleScope(retryMeter,()=>{
+  expect(()=>verifyG10BundleForShape(invalid,retryMeter,'/shape-failed-first')).toThrow();
+  expect(()=>verifyG10BundleForShape(invalid,retryMeter,'/shape-failed-retry')).toThrow();
  });
 });
