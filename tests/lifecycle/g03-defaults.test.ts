@@ -10,6 +10,7 @@ import tablesSchema from '../../spec/extensions/tables/schema.json';
 import migrationSchema from '../../spec/extensions/tables/migration-0.5.schema.json';
 import phasesSchema from '../../spec/extensions/tables/migration-phases-0.4.schema.json';
 import fixture from '../binding/fixtures/table-lifecycle-note.json';
+import {buildG03DefaultsNativeFixture,g03Configuration} from './g03-defaults-native-fixture';
 
 const configuration={module:'demo',schema:'plugin_demo',ownerRole:'plugin_owner',personRole:'plugin_person',batchRole:'plugin_batch',groupRoles:{readers:'plugin_readers'}};
 const source=(defaultValue?:unknown,immutable=false,nullable=false)=>{
@@ -347,4 +348,118 @@ test('G03 reports logical-default errors at the actual module element pointer',(
  const result=compileTableMigration({id:'g03-default-005',predecessor:{id:'g03-default-004',digest:'d'.repeat(64)},previous:fake(source()),next:fake(malformed),options});
  expect(result.status).toBe('blocked');
  expect(result.status==='blocked'&&result.diagnostics[0]?.path).toBe('/next/source/modules/0/elements/1/default');
+});
+
+test('G03 native fixture retains complete sources and admits one exact default phase',()=>{
+ const fixture=buildG03DefaultsNativeFixture();
+ expect(fixture.status).toBe('SOURCE_ONLY_ALL_NATIVE_CASES_UNRUN');
+ const compile=(sourceValue:any)=>{
+  const result=compileTableDeployment({text:sourceValue.utf8,configuration:g03Configuration});
+  expect(result.status).toBe('compiled');
+  if(result.status!=='compiled')throw Error(JSON.stringify(result.diagnostics));
+  return result.bundle;
+ };
+ const before=compile(fixture.variants.absent),set=compile(fixture.variants.set5),drop=compile(fixture.variants.drop);
+ expect(before.source.utf8).toContain('synthetic-table-lifecycle');
+ expect(JSON.parse(before.source.utf8).modules[0].elements.find((item:any)=>item.id==='Note').members).toContainEqual({module:'demo',element:'measure'});
+ expect(JSON.parse(before.source.utf8).modules[0].extensions['umf.tables'].tables[0].columns.at(-1)).toMatchObject({name:'measure',nativeType:{kind:'int4'}});
+ expect(JSON.parse(before.source.utf8).modules[0].extensions['umf.tables'].tables[0].columns.at(-1)).not.toHaveProperty('default');
+ const set9=compile(fixture.variants.set9);
+ for(const complete of [before,set,set9,drop]){
+  expect(JSON.parse(complete.source.utf8).modules[0].extensions['umf.tables'].commands.map((item:any)=>item.id)).toEqual([
+   'read_notes','create_note_omitted','create_note_explicit','update_measure',
+  ]);
+ }
+ const candidates=discoverTableMigrationChanges(before,set,{version:'umf.table-migration-discovery/0.2'}).filter(item=>item.kind==='change-default');
+ expect(candidates).toHaveLength(1);
+ const {oldValue:_old,newValue:_new,...marker}=candidates[0]!;
+ const result=compileTableMigration({id:'g03-fixture-default-001',predecessor:{id:'g03-fixture-base',digest:'a'.repeat(64)},previous:before,next:set,options:{version:'umf.table-migration-options/0.5',backfills:[],concurrentIndexes:[],reviewedChanges:[marker],validations:[]}});
+ expect(result.status).toBe('compiled');
+ if(result.status!=='compiled')throw Error(JSON.stringify(result.diagnostics));
+ expect(result.plan.version).toBe('umf.table-migration/0.5');
+ expect(result.plan.executionProfile.version).toBe('umf.table-migration-execution/0.4');
+ expect(result.plan.phases).toHaveLength(1);
+ expect(result.plan.steps).toHaveLength(1);
+ expect(result.plan.steps[0]).toMatchObject({phaseOperation:'change-default',operation:'set-default',phaseTarget:{table:'notes',field:{module:'demo',element:'measure'}}});
+ expect(()=>verifyTableMigration(result.plan)).not.toThrow();
+ const removed=discoverTableMigrationChanges(set,drop,{version:'umf.table-migration-discovery/0.2'}).filter(item=>item.kind==='change-default');
+ expect(removed).toHaveLength(1);
+ expect(fixture.historicalRows).toEqual([['a','Alice',null],['b','Bob',2],['c','Alice',9]]);
+ expect(fixture.requiredHistoricalRows).toEqual([['ra','Alice',1],['rb','Bob',2],['rc','Alice',9]]);
+ expect(fixture.chains.required).toEqual(['requiredSet5','requiredSet9','requiredDrop']);
+ const decimalFixture=JSON.parse(fixture.variants.decimal.utf8);
+ expect(decimalFixture.modules[0].elements.find((item:any)=>item.id==='measure').facets).toEqual({precision:8,scale:2});
+ for(const name of ['date','text','decimal','uuid','currentTimestamp'] as const){
+  const compiled=compile(fixture.variants[name]);
+  const parsed=JSON.parse(compiled.source.utf8);
+  const mapping=parsed.modules[0].extensions['umf.tables'].tables[0].columns.at(-1);
+  expect(mapping.name).toBe('measure');
+  expect(mapping).toHaveProperty('default');
+ }
+ for(const control of fixture.compileOnlyControls){
+  const refused=compileTableDeployment({text:control.source.utf8,configuration:g03Configuration});
+  expect(refused.status,control.id).toBe('blocked');
+ }
+ expect(fixture.compileOnlyControls.map((control:any)=>control.id)).toEqual([
+  'invalid-gregorian-date','wrong-date-carrier','wrong-date-native-domain',
+  'temporal-logical-default','numeric-capacity-overflow',
+ ]);
+ const logical5=compile(fixture.variants.matchingLogical5);
+ expect(JSON.parse(logical5.source.utf8).modules[0].elements.find((item:any)=>item.id==='measure').default).toEqual({on:'missing',value:{integerToken:'5'}});
+ expect(fixture.caseStatus).toEqual({
+  'G03-N01':'TRANSITIONS_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
+  'G03-N02':'EMPTY_TABLE_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
+  'G03-N03':'REQUIRED_SET_REPLACE_DROP_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
+  'G03-N04':'RETAINED_OMISSION_SOURCE_REFUSAL_AND_READONLY_NATIVE_ABSENCE_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
+  'G03-N05':'NULL_AND_DECIMAL_SPELLING_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
+  'G03-N06':'KNOWN_ABORT_RETRY_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
+  'G03-N07':'COMMIT_AND_PREPUBLICATION_RECOVERY_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
+  'G03-N08':'UNKNOWN_UNCOMMITTED_FENCE_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
+  'G03-N09':'WRITER_BARRIER_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
+  'G03-N10':'DATE_TEXT_DECIMAL_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
+  'G03-N11':'UUID_AND_TRANSACTION_TIMESTAMP_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
+  'G03-N12':'UNQUALIFIED_COMPATIBLE_WEFT_02_COHORT_REQUIRED',
+  'G03-N13':'FULL_PRE_EFFECT_TAMPERING_MATRIX_SOURCE_IMPLEMENTED_NATIVE_UNRUN',
+  'G03-N14':'SERIAL_CLEANUP_CAMPAIGN_SOURCE_IMPLEMENTED_NATIVE_UNRUN_FULL_CASE_OPEN',
+ });
+ expect(fixture.caseStatus['G03-N12']).toBe('UNQUALIFIED_COMPATIBLE_WEFT_02_COHORT_REQUIRED');
+ expect(fixture.campaignExpectedManifestProfile).toBe('umf.g03-native-campaign-expected-data/0.1');
+ expect(fixture.campaignRoster.map((item:any)=>item.caseId)).toEqual(Array.from({length:14},(_,index)=>`G03-N${String(index+1).padStart(2,'0')}`));
+ expect(fixture.campaignRoster[10]?.scenarios).toEqual(['domain-uuid','domain-currentTimestamp']);
+ expect(fixture.campaignRoster[11]?.scenarios).toEqual(['ordinary']);
+ expect(fixture.campaignRoster[13]?.scenarios).toEqual(['campaign-cleanup']);
+});
+
+test('G03 required target keeps explicit-only commands and rejects retained omission',()=>{
+ const fixture=buildG03DefaultsNativeFixture();
+ const compile=(sourceValue:any)=>compileTableDeployment({text:sourceValue.utf8,configuration:g03Configuration});
+ const valid=compile(fixture.variants.requiredSet5);
+ expect(valid.status).toBe('compiled');
+ if(valid.status!=='compiled')throw Error(JSON.stringify(valid.diagnostics));
+ const validCommands=JSON.parse(valid.bundle.source.utf8).modules[0].extensions['umf.tables'].commands;
+ expect(validCommands.map((item:any)=>item.id)).toEqual(['read_notes','create_note_explicit','update_measure']);
+ const invalid=compile(fixture.variants.requiredDropRetainedOmission);
+ expect(invalid.status).toBe('blocked');
+ expect(fixture.variants.requiredDrop.utf8).not.toBe(fixture.variants.requiredDropRetainedOmission.utf8);
+});
+
+test('G03 N04 compares retained-omission sources before any native lifecycle effect',()=>{
+ const fixture=buildG03DefaultsNativeFixture();
+ const good=JSON.parse(fixture.variants.requiredSet5RetainedOmission.utf8);
+ const bad=JSON.parse(fixture.variants.requiredDropRetainedOmission.utf8);
+ const table=(doc:any)=>doc.modules[0].extensions['umf.tables'].tables[0];
+ const field=(doc:any)=>doc.modules[0].elements.find((item:any)=>item.id==='measure');
+ expect(good.modules[0].extensions['umf.tables'].commands).toEqual(bad.modules[0].extensions['umf.tables'].commands);
+ expect(field(good)).toEqual(field(bad));
+ expect(table(good).columns.slice(0,-1)).toEqual(table(bad).columns.slice(0,-1));
+ expect(table(good).columns.at(-1)).toMatchObject({name:'measure',default:{kind:'literal',value:{integerToken:'5'}}});
+ expect(table(bad).columns.at(-1)).not.toHaveProperty('default');
+ const configuration={...g03Configuration};
+ const compile=(sourceValue:any)=>compileTableDeployment({text:sourceValue.utf8,configuration});
+ const accepted=compile(fixture.variants.requiredSet5RetainedOmission);
+ expect(accepted.status).toBe('compiled');
+ if(accepted.status!=='compiled')throw Error(JSON.stringify(accepted.diagnostics));
+ const refused=compile(fixture.variants.requiredDropRetainedOmission);
+ expect(refused.status).toBe('blocked');
+ if(refused.status==='blocked')expect(refused.diagnostics.some((item:any)=>item.code==='TABLES_OPERATION_REQUIRED'&&item.path.endsWith('/body/values'))).toBe(true);
 });
