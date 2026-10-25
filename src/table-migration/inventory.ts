@@ -811,7 +811,7 @@ export function inventoryMarker(candidate:TableInventoryReviewedChangeCandidate)
 export function irreversiblePurgeDisclosure(candidate:TableInventoryReviewedChangeCandidate):{code:'IRREVERSIBLE_TABLE_PURGE';path:string;markerId:string;message:string}{
  if(candidate.kind!=='table-removal-effects')reviewFail('TABLE_MIGRATION_REVIEW',candidate.path);
  const old=candidate.oldValue,newReview=candidate.newValue;
- if(!isTableReview(old)||!isTableReview(newReview))reviewFail('TABLE_MIGRATION_REVIEW',candidate.path);
+ if(!isTableReview(old)||!isTableReview(newReview))return reviewFail('TABLE_MIGRATION_REVIEW',candidate.path);
  if(old.profile!=='umf.table-inventory-review/0.1'||old.side!=='previous'||typeof old.table!=='string'||!old.table||newReview.profile!=='umf.table-inventory-review/0.1'||newReview.side!=='next'||newReview.table!==old.table||old.meaning===null||newReview.meaning!==null||canonical(old.effects)!==canonical(effectsRemove)||canonical(newReview.effects)!==canonical(effectsRemove)||!/^\/options\/tableIntents\/\d+\/disposition$/.test(candidate.path)||typeof candidate.oldPath!=='string'||candidate.newPath!==null||candidate.oldDigest!==hashCanonical(old)||candidate.newDigest!==hashCanonical(newReview)||candidate.id!=='review-'+hashCanonical([candidate.kind,candidate.path,candidate.oldDigest,candidate.newDigest]).slice(0,24))reviewFail('TABLE_MIGRATION_REVIEW',candidate.path);
  return {code:'IRREVERSIBLE_TABLE_PURGE',path:candidate.path,markerId:candidate.id,message:'Irreversible purge of all stored rows and columns for table '+old.table+'. Metadata history is not a data backup; this profile performs immediate physical deletion.'};
 }

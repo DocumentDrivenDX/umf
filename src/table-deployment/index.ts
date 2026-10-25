@@ -64,8 +64,14 @@ function compileDeploymentInternal(input:{text:string;format?:'json'|'yaml';conf
   const configurationDigest=accounting?hashCanonicalCharged(configuration,accounting,'/configuration'):hashCanonical(configuration);
   accounting?.visit('deployment-bundle-body-construction','/bundle/body',12);accounting?.visit('deployment-source-envelope-construction','/bundle/source',2);const body={version,canonicalization:'RFC8785' as const,source:{format,utf8:input.text},sourceDigest,configuration,configurationDigest,module:configuration.module,profile:payload.profile,steps,expectedCatalog,seedSets:payload.seedSets,nativeQualified:false as const};
   const bodyCanonical=accounting?canonicalCharged(body,accounting,'/bundle/body'):canonical(body);
-  if(utf8Length(bodyCanonical)>16_000_000)deploymentError('Deployment bundle exceeds16MB');
-  const bundleDigest=accounting?hashCanonicalCharged(body,accounting,'/bundle/body'):hashCanonical(body);
+  let bundleDigest:string;
+  if(accounting){
+   try{bundleDigest=sha256TextCharged(bodyCanonical,16_000_000,accounting,'/bundle/body');}
+   catch(error){if(error instanceof Error&&error.constructor===Error&&error.message==='LIMIT')deploymentError('Deployment bundle exceeds16MB');throw error;}
+  }else{
+   if(utf8Length(bodyCanonical)>16_000_000)deploymentError('Deployment bundle exceeds16MB');
+   bundleDigest=hashCanonical(body);
+  }
   accounting?.visit('deployment-bundle-digest-envelope','/bundle',1);const bundle=(accounting?copyJsonCharged({...body,bundleDigest},n=>accounting.visit('deployment-bundle-copy','/bundle',n),copyHooks(accounting)):copyJson({...body,bundleDigest})) as unknown as TableDeploymentBundle;
   const copiedOperations=(accounting?copyJsonCharged(operations,n=>accounting.visit('deployment-operation-copy','/operations',n),copyHooks(accounting)):withCatalogResourceProfile(()=>copyJson(operations))) as unknown as InternalTableDeploymentOperationRecord[];
   return {status:'compiled',bundle,document,diagnostics:[],operations:copiedOperations};
