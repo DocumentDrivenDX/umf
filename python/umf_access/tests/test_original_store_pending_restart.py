@@ -101,7 +101,11 @@ class _FakeDatabase:
             self.application_database = (self.next_oid, name, 'C', 'C', owner)
             self.next_oid += 1
             return _Cursor()
-        if 'FROM pg_catalog.pg_roles' in text and 'ANY(%s)' in text:
+        if text.startswith('WITH RECURSIVE reach('):
+            rows = [(self.roles[m][0], self.roles[g][0], admin, inherit, setting)
+                    for m, g, admin, inherit, setting in self.memberships]
+            return _Cursor(rows)
+        if text.startswith('SELECT rolname,oid,rolcanlogin,'):
             names = params[0]
             return _Cursor([(name, self.roles[name][0], *self.roles[name][1:])
                             for name in sorted(names) if name in self.roles])
@@ -112,25 +116,11 @@ class _FakeDatabase:
                             for m, granted, admin, inherit, setting in self.memberships
                             if m == member and member in self.roles
                             and granted in self.roles])
-        if 'FROM pg_catalog.pg_auth_members' in text and 'member.rolname' in text:
+        if text.startswith('SELECT member.rolname,granted.rolname,'):
             member = params[0]
             return _Cursor([(member, granted, admin, inherit, setting)
                             for m, granted, admin, inherit, setting in self.memberships
                             if m == member])
-        if 'FROM pg_catalog.pg_auth_members' in text and 'member.oid' in text:
-            member_oid = next((item[0] for item in self.roles.values()), 0)
-            names = list(self.roles)
-            member_name = next((n for n in names if self.roles[n][0] == member_oid), None)
-            rows = []
-            for member, granted, admin, inherit, setting in self.memberships:
-                if member_name is not None and member == member_name:
-                    rows.append((self.roles[member][0], self.roles[granted][0],
-                                 admin, inherit, setting))
-            return _Cursor(rows)
-        if 'FROM pg_catalog.pg_auth_members' in text and 'reach' in text:
-            rows = [(self.roles[m][0], self.roles[g][0], admin, inherit, setting)
-                    for m, g, admin, inherit, setting in self.memberships]
-            return _Cursor(rows)
         if 'FROM pg_catalog.pg_database d JOIN pg_catalog.pg_roles r' in text:
             name = params[0]
             row = self.application_database
