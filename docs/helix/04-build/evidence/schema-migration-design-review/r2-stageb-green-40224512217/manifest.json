@@ -1,0 +1,92 @@
+{
+  "profile": "umf.r2-stageb-qualification/1",
+  "commit": "a2965ace50ad793120a4b2e9279d355009a52753",
+  "tree": "311f58400cf4cf01e90b38cdcfdd3e48b17f7cb3",
+  "run": 40224512217,
+  "job": 121262927290,
+  "artifact": 12610673444,
+  "zipSHA": "d80e955ba55af7e87d8ae84ebe9bca925175988c448306c680a3a3cf326dfb5a",
+  "strictTypes": "PASS",
+  "tests": {
+    "pass": 38,
+    "fail": 0
+  },
+  "reproductionSHA": "42218d885b7b6c2b1eba85866a9ea4ab2fd7bca6913ed34e53f60153bae5edca",
+  "browser": {
+    "profile": "umf.r2.browser-parity/1",
+    "status": "PASS",
+    "playwrightBrowsersJsonSha256": "545d52f8382c391e605562c330e9c1c534a16045898203037a49bb8bd769a946",
+    "chromiumRevision": "1243",
+    "browser": {
+      "version": "153.0.8010.12",
+      "executable": "/home/runner/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+      "sha256": "8c599d43aec53f2460a31ae2f4af6bd863f8258b34ff519564bc5d4726bfaa1e",
+      "bytes": 293285184
+    },
+    "bundle": {
+      "sha256": "e0da5b437c33d7b6653a05ee08335b959be7ca461d68ff03bff9bdf3eeafe72b",
+      "bytes": 2380831
+    },
+    "expectedCases": 141,
+    "actual": {
+      "count": 141,
+      "failures": [],
+      "work": 2653375
+    },
+    "pageErrors": [],
+    "externalRequests": 0
+  },
+  "commandsAllZero": 7,
+  "truncation": false,
+  "scope": "focused R2 source/context/accounting and structural semantic parity only",
+  "excluded": [
+    "combined portable G11/source integration",
+    "full F2 enablement",
+    "installed native custody",
+    "database execution",
+    "merge/release"
+  ],
+  "files": [
+    {
+      "path": "commands.log",
+      "sha256": "910f2eba1ef9373627bd2ba924ed17436e91b90466069ea60191c8b56cb6bfb4"
+    },
+    {
+      "path": "identity.txt",
+      "sha256": "bcae81eb71fec41ea9351d1ba3a8f6a05de3a2b97fc33b3375c102808854a708"
+    },
+    {
+      "path": "preflight.log",
+      "sha256": "b3c9a4151a3b1fdc8466b432be9b425a096c526692014f986e1cbbb96492c307"
+    },
+    {
+      "path": "source-controls.log",
+      "sha256": "29958e1a5f08adc8658c73f3ed14846de923562e57fc8efcf27c849eb1819f39"
+    },
+    {
+      "path": "typecheck.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "browser.log",
+      "sha256": "4d3bc7e6c5d2687c1de8fb62327b7d7677e4eba0b4acef7ce5a5d5644948629e"
+    },
+    {
+      "path": "reproduction.log",
+      "sha256": "cdabb035be6997d2ea97b3b4efa150c2ba590d9b2e43020df7c52b76402fb432"
+    },
+    {
+      "path": "reproduction.sha256",
+      "sha256": "271cf4262170702dead8c1ae422585e5d9ad03bf708aef83560945292d8b1754"
+    },
+    {
+      "path": "reproduction-compare.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "adoption": "Evidence for exact R2 source commit only; does not qualify containing integration commit.",
+  "semanticPortHandoff": {
+    "path": "semantic-port-handoff.md",
+    "sourceSha256": "fd0208f78f5d094d396160b8b058623f5b592352f987714ba36851ad170a5c38"
+  }
+}
