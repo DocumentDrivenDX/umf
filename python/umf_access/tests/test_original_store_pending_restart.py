@@ -655,7 +655,7 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     self.assertEqual(len([event for event in second_events
                         if event['kind'] == 'originals-store-creation-intent'
                         and event['payload'].get('reservationDigest')
-                            == external_payload['reservationDigest']), 1)
+                            == external_payload['reservationDigest']]), 1)
                     self.assertEqual(len([event for event in second_events
                         if event['kind'] == 'native-effect-intent'
                         and event['payload'].get('scope') == 'native-store-creation'

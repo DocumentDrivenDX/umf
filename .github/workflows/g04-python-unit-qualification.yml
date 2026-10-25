@@ -115,6 +115,7 @@ jobs:
           SOURCE_PYTHONPATH: python/umf_access/src:python/umf_access/tests
         shell: bash
         run: |
+          set +e
           set -u
           bounded="$G04_ROOT/tools/run-bounded"
           venv="$RUNNER_TEMP/g04-python-venv"
