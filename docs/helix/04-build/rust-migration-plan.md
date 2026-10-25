@@ -4795,3 +4795,13 @@ and from the worktree in another fifteen. This receipt qualifies that archive
 only; it cannot retire `parseBits128` in the current default route or serve as
 the release artifact. A fresh integrated-source build and exact route review
 are required.
+
+The [opt-in live capture bridge](evidence/rust-migration/r8-captured-declaration-rust-bridge/README.md)
+now accepts an explicitly supplied Python declaration, uses the existing
+Python `capture()` authority, encodes each captured variant in the frozen
+tagged DTO, and invokes the Rust pre-Weft renderer. Capture, encoding, and
+Rust-render refusals have separate stages; unrepresentable extension values
+refuse without coercion. A fresh local ABI3 extension passed four focused Rust
+tests and fourteen Python tests with eleven packet subcases. The bridge bounds
+encoding traversal and UTF-8/DTO bytes. Default `compile_catalog()`, Weft,
+backend output, installed release qualification, and retirement remain open.
