@@ -1,0 +1,117 @@
+--- sealed-amendment002/amendments.md
++++ proposed-amendment003/amendments.md
+@@ -1,9 +1,12 @@
+-# R2 amendment002 — provisional activation and global admission
+-
+-Proposed source-only correction to sealed proposal001, not adopted. Root's
++# R2 amendment003 — valid immediate-FK initialization and global admission
++
++Proposed source-only correction to sealed proposal001 and amendment002, not adopted. Root's
+ R2-F1 and R2-F2 are valid source contradictions. No SQL was run to establish
+ them. The original packet, failures and external provenance supplements remain
+-immutable. Only the explicit rules below supersede the matching001 rules;
++immutable. Amendment002's active-first generation1 order and claim that no
++immediate active-carrier FK exists are WRONG and withdrawn. Both exact complete
++DDLs contain lineages_active_carrier_fk; it remains intact and immediate here.
++Only the explicit rules below supersede the matching001/002 rules;
+ every other complete record, authority, value codec, limit and obligation stays.
+ provider-ddl.sql and guard-renderer.md here are COMPLETE replacement files.
+ 
+@@ -42,19 +45,84 @@
+ not recursively hash the record that references it. It remains unconfirmed
+ until the real original native/external COMMIT sequence; no cap is returned yet.
+ 
+-Insert immutable lineage record and native active pointer/generation1/count;
+-the pointer names the genuine reserved token. Next insert row_tables, then
+-carrier_generations (its immediate lineage and row_tables FKs now resolve).
+-Next insert the exact initial lineage/per-carrier issued ledger rows from
+-the actual protected assigned UUID set. Provider debit, lineage count and
+-carrier count equal these sets; initial assignment is NOT additionally replayed
+-through the ordinary INSERT guard. An empty initial carrier has zero debit and
+-zero ledger rows. Fresh seed/application INSERTs after initialization DO use
+-the ordinary guard. The active pointer is not declared an immediate native FK
+-in001 DDL; the short construction interval cannot be observed as a complete
+-provider witness. Before any guarded business DML or successful outcome, require
+-all records/FKs, pointer, birth, counts and ledger bijections exact. Rollback
+-removes every new record/object/debit. No committed partial construction.
++Insert immutable lineage record with native state='retired', active_table_token
++NULL, generation_count=1, issued_count=N, revision=1. This is an uncommitted
++construction sentinel, never an acknowledged historical retirement or public
++restore selection; no archive/retirement receipt is fabricated. It satisfies
++the active/null CHECK, the immediate active-carrier FK (NULL), count bounds and
++all other immediate constraints before any carrier exists. Next insert the
++new active row_tables with issued_count=N, then the new active generation1
++carrier_generations with parent fields NULL. Its immediate lineage and
++row_tables FKs now resolve, and generation1 parent checks hold. Carrier state
++active does not bypass the still-retired lineage guard during construction.
++
++Next insert the exact initial lineage/per-carrier issued ledger rows from the
++actual protected assigned UUID set, so both ledger FKs also resolve. Provider
++debit, lineage count and carrier count equal these sets. Only now perform
++the following fixed initialization activation, checking exactly ONE affected
++row; parameters are the actual original prepared lineage and new token:
++
++```sql
++UPDATE originals.lineages
++ SET state='active',active_table_token=$2::pg_catalog.uuid,
++     revision=revision OPERATOR(pg_catalog.+) 1
++ WHERE lineage_id=$1::pg_catalog.uuid AND state='retired'
++   AND active_table_token IS NULL AND generation_count=1 AND revision=1;
++```
++
++The target token already exists in carrier_generations, so the retained
++immediate active-carrier FK resolves. Original native checks additionally
++require that token's SAME lineage, generation1 and complete actual birth,
++row_tables and ledger correspondence; the FK alone does not establish them.
++The first complete active observation is EXACT generation_count1/revision2;
++there is no separate committed revision1/retired observation. Initial activation
++increments revision ONCE and does NOT increment generation_count. Later
++ordinary issuance increments revision as originally specified. This initialization
++operation is distinct from restore's old-generation+1/old-revision+1 operation
++below; neither is a general caller API. Initial assignment is NOT additionally
++replayed through the ordinary INSERT guard. Empty construction has N=0, zero
++provider debit and no ledger rows, but still final lineage revision2. Fresh
++seed/application INSERTs after complete initialization DO use the ordinary guard.
++
++The immutable Lineage record's originalBirthReceiptDigest is the actual original
++physical birth descriptor already specified, not a retirement receipt and not
++a claim that transient state was committed. It never changes at activation.
++The original native enrollment outcome/receipt's first complete lineage
++observation is active, SAME token, generation1/revision2, issuedCount=N and the
++exact immutable recordDigest. Any enrollment receipt claiming retired/null or
++revision1 as a successful final state refuses, including N=0. The candidate
++birth/enrollment observations become confirmed only through actual native
++COMMIT and original external custody confirmation; neither a construction
++sentinel nor SQL row count is a capability. No retirement event, archive or
++removal history is fabricated for this temporary state. Provider admission
++debit is N (zero when empty); all initial carrier/lineage ledgers and exact
++after-native birth/pointer/count bijections must hold at that SAME complete
++boundary. This does not widen any old G04 enrollment receipt profile.
++
++All short construction intervals remain under original native maintenance,
++same-TX exclusion and complete result validation; no incomplete provider witness,
++ordinary DML, receipt, capability or COMMIT is permitted. Before any guarded
++business DML or successful outcome, require all records/FKs, pointer, birth,
++counts and ledger bijections exact. Rollback removes every new record/object/
++debit. No committed partial construction or constraint deferral/removal.
++
++Required source-only sequence-control obligation (NOT executed): walk the
++complete replacement DDL against each step below, reject active-first002,
++and show every immediate FK/CHECK resolves without deferral. This accompanies,
++and does not substitute for, later actual native empty/populated/cut controls.
++
++| Construction boundary | Lineage | Available referenced rows | Immediate constraints |
++| --- | --- | --- | --- |
++| Before metadata | absent | no carrier metadata | no pointer or child FK exists |
++| Insert lineage | retired/null/gen1/rev1/countN | lineage only | active/null CHECK valid; pointer FK NULL; count/cap bounds valid |
++| Insert row_tables | unchanged | row_tables token exists | row_tables keys/count/record checks valid |
++| Insert generation | unchanged | lineage and row_tables both exist | both immediate FKs resolve; generation1 parents NULL |
++| Insert both ledgers | unchanged | lineage, row_tables, generation exist | lineage-issued lineage/first-token FKs and per-carrier FK resolve |
++| Guarded activation | active/token/gen1/rev2/countN | SAME token generation row exists | active/null CHECK and immediate pointer FK valid; native SAME lineage/birth/ledger checks complete |
++
++Every positive boundary also requires the exact source capacities, UUID/record
++identity, unique binding/physical generation and no pre-existing contradictory
++rows; NULL validities do not excuse any other CHECK or native correspondence.
+ 
+ For restore, the acknowledged prior reservation may leave whole_lifecycle in
+ restore-pending, but the committed source lineage is still retired, pointer

@@ -10,7 +10,7 @@ export function inspectColumn(column:TableColumn,field:Element|undefined,ctx:Tab
  if(!nativeFamilies[column.nativeType.kind]?.includes(field.scalarType??''))ctx.add('TABLES_NATIVE_TYPE',path+'/nativeType','Native type and logical scalar family differ');
  if(column.nativeType.kind==='numeric'&&column.nativeType.scale>column.nativeType.precision)ctx.add('TABLES_NUMERIC',path+'/nativeType/scale','Numeric scale exceeds precision');
  if(column.generated&&(!['int2','int4','int8'].includes(column.nativeType.kind)||column.default!==undefined||field.nullability!=='required'))ctx.add('TABLES_IDENTITY',path+'/generated','Identity requires a required integer column without another default');
- for(const [i,value] of (field.allowedValues??[]).entries())inspectStoredLiteral(column,field,value,ctx,path+'/allowedValues/'+i);
+ ctx.visit('table-allowed-values',path+'/allowedValues',(field.allowedValues??[]).length);for(const [i,value] of (field.allowedValues??[]).entries())inspectStoredLiteral(column,field,value,ctx,path+'/allowedValues/'+i);
  if(column.default?.kind==='literal')inspectStoredLiteral(column,field,column.default.value,ctx,path+'/default/value');
  if(field.default){
   let matches=false;try{matches=field.default.on==='missing'&&column.default?.kind==='literal'&&literalIdentity(field,field.default.value)===literalIdentity(field,column.default.value);}catch(error){if(!(error instanceof UmfError))throw error;}
@@ -23,7 +23,7 @@ export function inspectTable(table:TableDeclaration,payload:TableLifecyclePayloa
  ctx.identifier(table.name,path+'/name');
  const record=ctx.element(table.record);
  if(table.record.module!==ctx.module.id||record?.kind!=='record'){ctx.add('TABLES_RECORD',path+'/record','A table must bind an exact Record in its owning module');return;}
- const members=record.members??[];
+ const members=record.members??[];ctx.visit('table-columns',path+'/columns',table.columns.length);ctx.visit('table-record-members',path+'/record/members',members.length);
  ctx.unique(table.columns,c=>refKey(c.field),path+'/columns','mapped Field');ctx.unique(table.columns,c=>c.name,path+'/columns','native column name');
  for(const[i,column]of table.columns.entries()){
   const p=path+'/columns/'+i;
@@ -35,7 +35,7 @@ export function inspectTable(table:TableDeclaration,payload:TableLifecyclePayloa
  for(const column of table.columns)if(column.immutable===false&&keys.some(k=>k.fields.some(f=>refKey(f)===refKey(column.field))))ctx.add('TABLES_KEY_MUTABILITY',path+'/columns','An authored core Key cannot be made mutable by its native mapping');
  if(keys.filter(k=>k.primary).length!==1)ctx.add('TABLES_PRIMARY_KEY',path+'/record','A native lifecycle table requires one explicit primary Key');
  for(const key of keys)for(const ref of key.fields){const field=ctx.field(ref,path+'/record');if(field?.nullability!=='required'||!table.columns.some(c=>refKey(c.field)===refKey(ref)))ctx.add('TABLES_KEY',path+'/record','Native Keys require mapped required singleton fields');}
- const fields=table.columns.map(c=>c.field);
+ ctx.visit('table-key-count',path+'/record/keys',keys.length);ctx.visit('table-index-count',path+'/indexes',table.indexes.length);ctx.visit('table-check-count',path+'/checks',table.checks.length);ctx.visit('table-foreign-key-count',path+'/foreignKeys',table.foreignKeys.length);const fields=table.columns.map(c=>c.field);
  const selected=(refs:readonly TableRef[],location:string)=>{
   ctx.unique(refs,refKey,location,'Field');for(const[i,ref]of refs.entries())if(!fields.some(f=>refKey(f)===refKey(ref)))ctx.add('TABLES_COLUMN_SCOPE',location+'/'+i,'Field is not mapped by this table');
  };

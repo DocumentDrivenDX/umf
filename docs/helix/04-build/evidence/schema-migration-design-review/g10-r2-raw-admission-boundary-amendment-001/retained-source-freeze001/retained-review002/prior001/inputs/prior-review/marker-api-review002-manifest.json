@@ -1,0 +1,527 @@
+{
+  "profile": "umf.independent-design-review-manifest/0.1",
+  "status": "accept-finite-F1-F2-design-resolutions",
+  "memberCount": 104,
+  "members": [
+    {
+      "path": "hash-audit.json",
+      "bytes": 1393,
+      "sha256": "dd3e2f5b545e13c0fdc1cd3b00834c40f84615b4563809ada7961d5d2099113b"
+    },
+    {
+      "path": "input-pins.json",
+      "bytes": 32008,
+      "sha256": "3b64fadd39afee2aa7c9fd8d801650209a31a6d552b3a617595a9a44afd9a3bd"
+    },
+    {
+      "path": "inputs/design/g10-public-api-module-handoff-001.md",
+      "bytes": 10154,
+      "sha256": "f86802cfc1a57f4697bd56506c1b3e1f5cfdf63bf70a251685bb248cbdac1311"
+    },
+    {
+      "path": "inputs/design/g10-review-marker-adoption-addendum-002.md",
+      "bytes": 3876,
+      "sha256": "d7b08f67c4945cbe285e0555ca92fff9acfaec859030b17707d7dc58f09eb278"
+    },
+    {
+      "path": "inputs/design/g10-review-marker-freeze-001.md",
+      "bytes": 15775,
+      "sha256": "24de140f4b4ba1031113594683c062967bf35490e2be30465499cb6477e2437b"
+    },
+    {
+      "path": "inputs/review001/hash-audit.json",
+      "bytes": 1822,
+      "sha256": "6aa12e051ae7d366329b8d72e61d04003a9426e9ae6a03e0fcd0417ad3a88225"
+    },
+    {
+      "path": "inputs/review001/input-pins.json",
+      "bytes": 27343,
+      "sha256": "734872d8a87ec03dab9b7f8e13c007bc8e578ffb1c0f40e55ec3248d7da8df4d"
+    },
+    {
+      "path": "inputs/review001/inputs/design/g10-public-api-module-handoff-001.md",
+      "bytes": 10154,
+      "sha256": "f86802cfc1a57f4697bd56506c1b3e1f5cfdf63bf70a251685bb248cbdac1311"
+    },
+    {
+      "path": "inputs/review001/inputs/design/g10-review-marker-freeze-001.md",
+      "bytes": 15775,
+      "sha256": "24de140f4b4ba1031113594683c062967bf35490e2be30465499cb6477e2437b"
+    },
+    {
+      "path": "inputs/review001/inputs/governing/CONTRACT-081-table-lifecycle.md",
+      "bytes": 564200,
+      "sha256": "db23f053e84ae4cc5f5421e3cfc82ba724cee72a133be0a1c251453c155a6580"
+    },
+    {
+      "path": "inputs/review001/inputs/governing/TD-085-typed-actions-on-raw-tables.md",
+      "bytes": 108600,
+      "sha256": "72953d8c43450aec9106acd29324928f477ebdcc1bda947536fc6bcd71a530d8"
+    },
+    {
+      "path": "inputs/review001/inputs/governing/contract-proposal.md",
+      "bytes": 27146,
+      "sha256": "cee0d04ee72da46062c6814efa1c0235e5c087da82593128f9d766f65c05324a"
+    },
+    {
+      "path": "inputs/review001/inputs/governing/seed-lineage.md",
+      "bytes": 6619,
+      "sha256": "ab3c044cf055b1ced97a388809be440ae1afab4710514edd27e4d05ecfa0c584"
+    },
+    {
+      "path": "inputs/review001/inputs/governing/technical-design.md",
+      "bytes": 23288,
+      "sha256": "ebf07de7179646ab37be3c6e3f9d17525ba958263f2886e1b5804f48f0ad6879"
+    },
+    {
+      "path": "inputs/review001/inputs/legacy/g03-defaults.ts",
+      "bytes": 31472,
+      "sha256": "908f6191e19b2bd57c6a94b2702a0abe030de667d05a8e29778985163a3c9e67"
+    },
+    {
+      "path": "inputs/review001/inputs/legacy/reviewed.ts",
+      "bytes": 17961,
+      "sha256": "add35dcd82f07af0ec6ea94dcf0093b03bd26b1a2875494217b35ebef9bb85da"
+    },
+    {
+      "path": "inputs/review001/inputs/legacy/root-index.ts",
+      "bytes": 31947,
+      "sha256": "c3247a443f66c486f7c7a30bfd5092702f935beceb4e69f4eaccd2085a849281"
+    },
+    {
+      "path": "inputs/review001/inputs/legacy/table-migration-index.ts",
+      "bytes": 110922,
+      "sha256": "cb8a7eecebca98e2cc8f424df6dced747482aba9748699f2b3096194b2dca2da"
+    },
+    {
+      "path": "inputs/review001/inputs/prior-api-review/input-pins.json",
+      "bytes": 3242,
+      "sha256": "0236ecbc09c9821ae16db4703f9f7172c159b164660d71efd80c1e404340e3a0"
+    },
+    {
+      "path": "inputs/review001/inputs/prior-api-review/inputs/governing-and-legacy/CONTRACT-081-table-lifecycle.md",
+      "bytes": 564200,
+      "sha256": "db23f053e84ae4cc5f5421e3cfc82ba724cee72a133be0a1c251453c155a6580"
+    },
+    {
+      "path": "inputs/review001/inputs/prior-api-review/inputs/governing-and-legacy/contract-proposal.md",
+      "bytes": 27146,
+      "sha256": "cee0d04ee72da46062c6814efa1c0235e5c087da82593128f9d766f65c05324a"
+    },
+    {
+      "path": "inputs/review001/inputs/prior-api-review/inputs/governing-and-legacy/reviewed.ts",
+      "bytes": 17961,
+      "sha256": "add35dcd82f07af0ec6ea94dcf0093b03bd26b1a2875494217b35ebef9bb85da"
+    },
+    {
+      "path": "inputs/review001/inputs/prior-api-review/inputs/governing-and-legacy/technical-design.md",
+      "bytes": 23288,
+      "sha256": "ebf07de7179646ab37be3c6e3f9d17525ba958263f2886e1b5804f48f0ad6879"
+    },
+    {
+      "path": "inputs/review001/inputs/prior-api-review/inputs/handoff.md",
+      "bytes": 10154,
+      "sha256": "f86802cfc1a57f4697bd56506c1b3e1f5cfdf63bf70a251685bb248cbdac1311"
+    },
+    {
+      "path": "inputs/review001/inputs/prior-api-review/inputs/source019/manifest.json",
+      "bytes": 11869,
+      "sha256": "f9f053e776cfacdb5af87b6e454c8d2a90cb30238f17c835151abe08dff82774"
+    },
+    {
+      "path": "inputs/review001/inputs/prior-api-review/inputs/source019/scratch-inputs/g10-frontend.ts",
+      "bytes": 18833,
+      "sha256": "c5896ee0cc257a8a4532a7a805c321084244643e230794aeb474d2cc133648a5"
+    },
+    {
+      "path": "inputs/review001/inputs/prior-api-review/inputs/source019/scratch-inputs/g10-plan.ts",
+      "bytes": 17319,
+      "sha256": "6c4feaf077c49ba37024e6377f17d47b85f02c93c91bb0f711d5289c71164494"
+    },
+    {
+      "path": "inputs/review001/inputs/prior-api-review/inputs/source019/scratch-inputs/g10-source-projection.ts",
+      "bytes": 45079,
+      "sha256": "fb1039f69f59bebe06cd803032118cd4c5c6b1ce4db16fe7537c59fab2870ecc"
+    },
+    {
+      "path": "inputs/review001/inputs/prior-api-review/inputs/source019/scratch-inputs/inventory-review.schema.json",
+      "bytes": 12524,
+      "sha256": "b93d11ceb414e57ff43d134dfaf5fc575078e0534f9767d88c68d451cce9a930"
+    },
+    {
+      "path": "inputs/review001/inputs/prior-api-review/manifest.json",
+      "bytes": 2280,
+      "sha256": "ec4bb96a12ae075b55a78407ed2de85857acde246f19eaadb7263b1625a5abb1"
+    },
+    {
+      "path": "inputs/review001/inputs/prior-api-review/review.md",
+      "bytes": 4735,
+      "sha256": "f4a066a016ab9bc9fd7e6f8f46cc0524d1e5b850b2d3685ebaea026594e5b9c3"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/README.md",
+      "bytes": 1436,
+      "sha256": "46ed54ac4c0be4a0a6f7f4c586687a62c6d7e2f6b6f51454bf8ea577232cbf88"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/delta-016-to-017.patch",
+      "bytes": 52480,
+      "sha256": "e0d8ddf4f9f9cf4e16c85a829b07ea24378b2646901dce7739e7d8eba5f5284a"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/delta-017-to-018.patch",
+      "bytes": 26077,
+      "sha256": "220ad5b1f2cf279c69b723530cf4b6e1adbc93cc2bbfeec343f4e6ffef92185b"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/delta-018-to-019.patch",
+      "bytes": 7281,
+      "sha256": "15732a1b018ddd4335aa0fe40eb0b5580837249307c5703c4ccfa7d84007dfe2"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/manifest.json",
+      "bytes": 11869,
+      "sha256": "f9f053e776cfacdb5af87b6e454c8d2a90cb30238f17c835151abe08dff82774"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/predecessor-manifest-017.json",
+      "bytes": 11662,
+      "sha256": "d933a05a3f26ce8bcc0d17fbe0cbd7840cb62f4b4b2cbdb1e6fe7c688edd5ee0"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/predecessor-manifest-018.json",
+      "bytes": 12356,
+      "sha256": "3f9864dc0c2d75deeef43ed96a2317beac52ef8576c6d30644125399e60af0ed"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/repo-overlay.patch",
+      "bytes": 101004,
+      "sha256": "667b4597e80643f9e06b047d9cf4768ac646c74d037b42eb40603c9d28190276"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/repo-overlays/src/index.ts",
+      "bytes": 31947,
+      "sha256": "c3247a443f66c486f7c7a30bfd5092702f935beceb4e69f4eaccd2085a849281"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/repo-overlays/src/table-deployment/ddl.ts",
+      "bytes": 10570,
+      "sha256": "8450c52e326b5b0897395f68697dbe94b008db6c7c96cb2444d1cfe40d7a02c5"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/repo-overlays/src/table-deployment/grants.ts",
+      "bytes": 1441,
+      "sha256": "3ffcf53b8738249c8ce316e904da2199de648d909322b558f8c0d3599be5f622"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/repo-overlays/src/table-deployment/index.ts",
+      "bytes": 7936,
+      "sha256": "e00c765b5ac6175558aaed143014d8fc51119667a2c3406824a16918dca74e03"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/repo-overlays/src/table-deployment/types.ts",
+      "bytes": 3664,
+      "sha256": "624fede062494ba2671c64b92c914112806e0d7fcca63a327e7c475b8dcb091c"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/repo-overlays/src/table-migration/g02-field-effects.ts",
+      "bytes": 3669,
+      "sha256": "3996d41751ff4a0ba5203efc3ecaa440c6606d5983035095ea3c8b9c3fea6223"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/repo-overlays/src/table-migration/index.ts",
+      "bytes": 110852,
+      "sha256": "0777c1c2dd25ff015dd89d5299dce6d42f00c3e3ada488ce0d9c5c72c18fa8bf"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/repo-overlays/src/table-migration/internal-operations.ts",
+      "bytes": 2666,
+      "sha256": "8d10772653b65c93eb67916ed901715db45b61f79a6f2dac2ed301b54dd61336"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/repo-overlays/src/table-migration/internal.ts",
+      "bytes": 13692,
+      "sha256": "d2a211eab03c0e8dfe312f76cbe360a96f4c7728187a404e24bcecd0ba5a4ed1"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/repo-overlays/src/table-migration/options.ts",
+      "bytes": 24347,
+      "sha256": "b27dddde496cb85da62024e1eae58295cb29c8a945718320d6c272a277933286"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/repo-overlays/tests/lifecycle/g02-renderer-operation-sidecar.test.ts",
+      "bytes": 4274,
+      "sha256": "6b88991c3a92e513514bffac3e41cd9f0b3077a4d4a68d8a85eba1981cf7bea6"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/repo-overlays/tests/lifecycle/g03-defaults.test.ts",
+      "bytes": 33304,
+      "sha256": "08af35a365cc40ace3c52e12abb30111110c1b828c8389b93c6a8aeb0c684896"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/repo-overlays/tests/lifecycle/g11-field-replacement.test.ts",
+      "bytes": 51917,
+      "sha256": "313d0f9486bc2954a884b8068490072d9381ac752eb760f2eb3dfeaf0541634f"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/repo-overlays/tests/lifecycle/table-deployment-operations.test.ts",
+      "bytes": 3075,
+      "sha256": "6089702460436089a0fc84150f26f7d8b5e2511cf1acd0850052eaad4c60876d"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/review-017-manifest.json",
+      "bytes": 14587,
+      "sha256": "188304bd8bd4047dc40415e9aab23b4d8b4de65372c6e809bf2e4f7d080c8ee5"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/review-017-receipt.json",
+      "bytes": 2053,
+      "sha256": "6d9b475f588b23b0a14c464437c35f3018495fd01072d4005b95459cecc062fa"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/review-017.md",
+      "bytes": 8679,
+      "sha256": "0c0a955ea9ef1999dec0c72d37fa26431d7aa843e216493d8d7c87227c01e281"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/review-mapping.md",
+      "bytes": 1427,
+      "sha256": "6a842d19783c93d67cc53928d282529ef79c9c692c8907224f5f3180b63a6444"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-012-to-013.patch",
+      "bytes": 64141,
+      "sha256": "281ad06a69d088b9bfd865b5a498da0f49ec5cae15c0d06742b52a840d635054"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/README-004-lineage.md",
+      "bytes": 4474,
+      "sha256": "1a89e5993f1001e0310b2144fba2246d14b3438c83ca026e8ddaa50e930d28a3"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/README.md",
+      "bytes": 1684,
+      "sha256": "11edcc9aa4da547ee0bca32f175ab8308efc8fc35e5741c1c353d14d04730f6f"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/baseline-tsc-diagnostic-002.txt",
+      "bytes": 5265,
+      "sha256": "e1c733ffe52c1d194999500d16b3570df3e7ca69e95e5920f29bffceb5c04fee"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/check-renderer.ts",
+      "bytes": 647,
+      "sha256": "5aaa0af32d3b79872dbdd9de8adc89376a949a3b9b79e562522d435b9e734618"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/g10-frontend.ts",
+      "bytes": 18833,
+      "sha256": "c5896ee0cc257a8a4532a7a805c321084244643e230794aeb474d2cc133648a5"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/g10-g02-source.ts",
+      "bytes": 11644,
+      "sha256": "10994caf5530330c9ae094d5886639170b35a83261114b509d03e68d886cd0fb"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/g10-g05-selection.test.ts",
+      "bytes": 5827,
+      "sha256": "1761902a44de1550dd49465c855bb11954e8d69f77c1f3ac43526354bab25f6d"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/g10-g05-selection.ts",
+      "bytes": 10256,
+      "sha256": "74dcd85a68419085edfbfa370b8e30bf5be877972fe9a9e165820277a30829d9"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/g10-inventory.schema.json",
+      "bytes": 8883,
+      "sha256": "8a4b02355a09af1eba89bf7edb78a0c3a1df3faebbbae51cd3381e70a0266520"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/g10-lineage-scheduler.test.ts",
+      "bytes": 30084,
+      "sha256": "5304482c178f5532918c95493e2d5fc94aced66c646fae3cf8a657462baea975"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/g10-operation-references.test.ts",
+      "bytes": 10298,
+      "sha256": "c46fc3566d902e027675938c473ac937181f337b6d61fa198dd35560ccdda82f"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/g10-operation-references.ts",
+      "bytes": 10597,
+      "sha256": "83bf6d1be18b038be34dafd3bdf7d6b3788c3e9357896b4de3fb118c750bbf31"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/g10-phase-scheduler.ts",
+      "bytes": 44086,
+      "sha256": "70da5e7143c39241be1ebfd10de57eb044d79e0a90cf6a67d0e92cf906e982e3"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/g10-plan-step.schema.json",
+      "bytes": 27742,
+      "sha256": "0397b6201d4d3cb6ffa9ef667f6e67bee22fce16b8b5910f096e69dd4f864371"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/g10-plan.ts",
+      "bytes": 17319,
+      "sha256": "6c4feaf077c49ba37024e6377f17d47b85f02c93c91bb0f711d5289c71164494"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/g10-rendered-effects.test.ts",
+      "bytes": 15198,
+      "sha256": "c94b68c6f7ffa215392bb8d509b07e30360ac47997fac5bd18c94b12461af8b0"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/g10-rendered-effects.ts",
+      "bytes": 25814,
+      "sha256": "dbf4859c1d82b0d304ce057ae275dd6abb99bf117a798c26d85826bdc94ef418"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/g10-request.schema.json",
+      "bytes": 11361,
+      "sha256": "629bbed4e4458b7ae1da4f6e81e1e055cb2139840b5ca5e371d801b3abdb615d"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/g10-seed-lineage.ts",
+      "bytes": 16767,
+      "sha256": "8ca8ed474efc5c547aa01cf648cea874755d3409098e65815f9b99ca64e47c58"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/g10-source-projection.test.ts",
+      "bytes": 51920,
+      "sha256": "1cf43aa5d0568a94c5182950383d70de656ac17bb6519140a3640cf735a18601"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/g10-source-projection.ts",
+      "bytes": 45079,
+      "sha256": "fb1039f69f59bebe06cd803032118cd4c5c6b1ce4db16fe7537c59fab2870ecc"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/inspect-g02.ts",
+      "bytes": 2123,
+      "sha256": "557a0eeb5ef63b2abb5524a0030234b3a1b4282d0cb03978e1e3ba1ca1cbbe2c"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/inventory-review.schema.json",
+      "bytes": 12524,
+      "sha256": "b93d11ceb414e57ff43d134dfaf5fc575078e0534f9767d88c68d451cce9a930"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/legal-fixture-002-manifest.json",
+      "bytes": 6352,
+      "sha256": "b291ca89539287c6bb6d92c5e324cb00eaf9cadc52387e37652db94e8b75ef37"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/legal-g10-fixture.test.ts",
+      "bytes": 5363,
+      "sha256": "5f96d55d9b025390d28b306949c9c3f4356ad036a4270ee6f4b2df661c69a988"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/legal-g10-fixture.ts",
+      "bytes": 11299,
+      "sha256": "fc81f885aceab5b39f17d5d392941cf6788c35af2dcd1caee12c99115b0babda"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/manifest-006.json",
+      "bytes": 104913,
+      "sha256": "f418f53006598b17a34e65d1eafd72c7dc143d950c1e76202f6e08408b9f6199"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/packet-index-004.json",
+      "bytes": 2275,
+      "sha256": "cd0e9295a1e76ceb67c82aa5c6eb2f92a8ac61bce8437ea3b5b9845446ec884b"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/packet-index.json",
+      "bytes": 2750,
+      "sha256": "140fd4b4cec62afba47a154a99d3bcee2d5c3dd06ec6a9f618ea3f37104351e1"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/prefix-catalog.schema.json",
+      "bytes": 7758,
+      "sha256": "d15cb9626cbe0c602dedd6ac421f821fcff79420df38a05ded996f005f34f806"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/prefix-frame.schema.json",
+      "bytes": 10873,
+      "sha256": "2c46284c33fed7792f009faf253aff9490d44e7571b081dd2a1cabc938c8faec"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/resolved-ts-files.txt",
+      "bytes": 38245,
+      "sha256": "a9855e3f8f9dcf8408c295a8505f52f7a1f24fcce4c9ab6238ac071749de59b3"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/show-steps.ts",
+      "bytes": 532,
+      "sha256": "a832952f8829e62775538352596af8ba0d1faab7b7dc4612660dd2799e3bafef"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/source-diff-003-to-004.patch",
+      "bytes": 31749,
+      "sha256": "64b71a3e0334106515f0a45692dcd2745d08966c3a767ed31b8e3d38af4cc83c"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/source-diff-004-to-005.patch",
+      "bytes": 6388,
+      "sha256": "aea572cc8042f9c867860b25c51699984fe94ba4e9330eb357a186bd47a861bb"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/source-diff-005-to-006.patch",
+      "bytes": 71012,
+      "sha256": "f94bf0af0e0aa9b7f5c95b987ab9da85a0095ebd0529fd35440219382f918719"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/source-diff.patch",
+      "bytes": 26834,
+      "sha256": "36c9ebc734adb0b60fa043c711f16640dedee3788d805a8a2a75ebaee324809c"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/test-output.txt",
+      "bytes": 3126,
+      "sha256": "68a00e6866a47ab664cd27d9725001467091cc97ef37899c661d30b85c8806eb"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/scratch-inputs/tsc-output.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "inputs/review001/inputs/source019/source-014-to-015.patch",
+      "bytes": 217840,
+      "sha256": "d1960a7e066f967730e0315d2ec9351b2902e7b191641cf01e482a82f7101a53"
+    },
+    {
+      "path": "inputs/review001/luna-task.md",
+      "bytes": 6311,
+      "sha256": "2c5ec1e99c8d19c4ecefdbc8035e94d4e05025be3bd5b4115837a3df25d26cb7"
+    },
+    {
+      "path": "inputs/review001/manifest.json",
+      "bytes": 18047,
+      "sha256": "a65df8351abce97a3cca8a7055c284b004bffdae32daf2aebe9eea0811e96919"
+    },
+    {
+      "path": "inputs/review001/receipt.json",
+      "bytes": 1128,
+      "sha256": "48f104a8caf518e70fef48e0abe279a26292bbebfa7cd6fa25e5c3ccc56a144f"
+    },
+    {
+      "path": "inputs/review001/review.md",
+      "bytes": 7959,
+      "sha256": "e29ea0d6484e0e6eb340b3828e6dffc4f44937dc8c65e8e08f9131a81d9388b4"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 917,
+      "sha256": "a3b607396ad308c95083b1bb8ae13707e51e353db08e045d5c2e64d0bb2977ce"
+    },
+    {
+      "path": "review.md",
+      "bytes": 5859,
+      "sha256": "a7c09495f0474f85e71e19b634ca798fa3163b616db227c68c903c4de026c060"
+    }
+  ]
+}

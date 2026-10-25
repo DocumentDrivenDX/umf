@@ -8421,3 +8421,121 @@ recompiles the complete source/history request; serialization returns those
 verified canonical plan bytes without a terminal newline. These API statements
 do not mean runtime, browser, schema, native, installed-artifact, or release
 qualification has passed.
+
+## G10 inventory.2 R2 review source adoption001
+
+This subsection adopts the independently source-design accepted R2 source freeze
+[contract cohort](../../04-build/evidence/schema-migration-design-review/g10-r2-review-source-freeze-001/README.md), manifest SHA-256
+`7e0e7cd83ce252bee0782eec7bd68ffbb244f84a8e29fbcc3c846e22a3fc6976`.
+It is a normative design amendment for implementation, not a runtime, native,
+installed, managed or release acceptance. Existing draft status is preserved.
+The independent review seal is
+`381927781b12ec6ba3cfb36d0921189db7c6d364c3ba2da8f7552ef1f9a2b42c`.
+
+The exact [schema contract](../../04-build/evidence/schema-migration-design-review/g10-r2-review-source-freeze-001/schema-contract.md),
+[comparison certificates](../../04-build/evidence/schema-migration-design-review/g10-r2-review-source-freeze-001/comparison-certificates.md) and
+[local constructor boundaries](../../04-build/evidence/schema-migration-design-review/g10-r2-review-source-freeze-001/local-constructors.md) govern together with
+all nine exact `norms/` files listed by that cohort. In particular,
+[Field addendum002](../../04-build/evidence/schema-migration-design-review/g10-r2-review-source-freeze-001/norms/g10-r2-field-archive-companion-addendum-002.md),
+[command context003](../../04-build/evidence/schema-migration-design-review/g10-r2-review-source-freeze-001/norms/g10-r2-operation-context-companion-addendum-003.md),
+[discovery stage004](../../04-build/evidence/schema-migration-design-review/g10-r2-review-source-freeze-001/norms/g10-r2-default-discovery-stage-clarification-004.md)
+and [epoch005](../../04-build/evidence/schema-migration-design-review/g10-r2-review-source-freeze-001/norms/epoch-clarification005.md) supersede earlier clauses
+only in their stated scope. Earlier two-baseline, module-aggregate or no-SHA-only
+context descriptions cannot override these amendments. Unchanged original
+profiles, option/step/receipt forms, old marker values and legacy byte contracts
+remain governing; the new variants do not extend an old closed validator.
+
+### Exact review values, discovery and ownership
+
+The Candidate wrapper retains exactly five marker keys
+`{id,kind,path,oldDigest,newDigest}` plus mandatory `oldValue,newValue` and only
+the specified optional `oldPath,newPath`; all new branches require the paths
+specified by their exact schema contract. Digests bind full values; marker ID
+is `review-` plus the first24 hex characters of the canonical hash of
+`[kind,path,oldDigest,newDigest]`. No conversion qualifier or arbitrary extension
+key is introduced. Table retire/restore primary and effects pairs share their
+full value pair while their kind/path/ID differ. The inline effects ID and the
+recovery request's full five-key effects-marker digest are distinct bindings.
+Exact P2, TableSource, LineageField and FieldSource closed values, subjects,
+side/null/path/effects forms and approval disclosures come from the adopted
+schema contract and norms, not shape casts or diagnostic fields.
+
+Whole-table comparisons retain original complete archived source/configuration/
+meaning and actual desired source. Field companions retain original complete
+FIELD retirement source/configuration/meaning, including old same-carrier G05.
+Neither may synthesize a before deployment, filter source to selected tables,
+assign a target catalog as proof, or ignore affected unknown meaning. Original
+history is explicit, exact and complete. Certificates and coverage are private
+compiler data; neither candidate metadata nor an archive reference proves live
+archive availability, native lineage, clocks, holds or COMMIT.
+
+Default review has disjoint origins: A selected G05 Field archives; B captured
+whole-table Fields excluding A; C retained current Fields excluding A/B. Use the
+actual origin even when another source looks convenient. Marker-free discovery
+has exactly `version,tableIntents,conversions,retiredSeedSets,retirements,
+restorations,archiveSources,tableArchiveSources`, and never accepts defaultChanges
+or reviewedChanges. It discovers every real default delta independently. Compile
+requires every/only actual default selector plus the exact ordered stripped
+candidate list and once-only ownership; missing, extra, stale or wrong-origin
+claims refuse. Future defaults install once in the actual restoration group;
+original NULL values are never backfilled by replaying a default.
+
+Command comparisons cover full original documents. Sort the union of
+`JSON.stringify([module,id])` with default JavaScript UTF16 ordering. Emit changed,
+added or removed raw commands first; then compare full original contexts for
+unchanged commands. Source SHA/configuration-only differences emit context
+candidates; changed commands receive no duplicate context candidate. Neither
+module aggregation nor selected-table filtering is admitted. These are metadata
+reviews, not execution of authored commands.
+
+Whole stored population plus explicit selected retired-Field exceptions is one
+restoration domain. Whole restoration and overlapping G05 additions, population,
+defaults, requiredness and dependencies share one required atomic group. Preserve
+original NULL, deleted-original absence and instance lineage. New-instance fills
+read only the specified current/intermediate baseline, never target or a sibling
+newly restored Field; zero new instances still require type checking. Qualified
+Weft scalar/population lowering and fixed-host/backend custody, transactions,
+clock/hold/fence/recovery observations remain separate responsibilities.
+
+### Additive admission limits and definition custody
+
+Adopt 1,000,000 work units and 99,999 subject slots as additional refusal ceilings.
+Actual deterministic incremental accounting and disclosed profile semantics must
+be frozen and tested before qualification. These numbers promise neither OS heap
+nor elapsed-time bounds. All original count, bytes, depth, nodes, history,
+material, candidate and final complete-plan limits apply conjunctively. Charge
+before iteration/clone/append where applicable; refuse rather than truncate.
+
+The cohort's provider and metadata canonical digests are recorded in the exact
+sealed descriptor digest files. Both definitions bind epoch005 and all accepted
+norm/contract bytes. Original004 descriptors remain historical bytes; fixed
+20-table provider DDL and original application SQL remain unchanged. This is an
+acyclic design-definition cohort, not an implemented issuer or permission to
+enroll an old store. Actual TS/schema/import/package/browser/native cohorts must
+be frozen and independently qualified before authority birth. ROOT/F3, current
+lifecycle, lineage, clock/holds, recovery, installed/old-store/managed, Weft and
+published producer/consumer correspondence remain open gates.
+
+## R2 initial raw own-key admission boundary amendment001
+
+Adopt the exact [normative boundary](../../04-build/evidence/schema-migration-design-review/g10-r2-raw-admission-boundary-amendment-001/normative.md),
+[additive event table](../../04-build/evidence/schema-migration-design-review/g10-r2-raw-admission-boundary-amendment-001/event-table.json) and
+[controls](../../04-build/evidence/schema-migration-design-review/g10-r2-raw-admission-boundary-amendment-001/acceptance.md) only after independent source-design peer
+acceptance and implementation-owner adoption. This is a source design proposal,
+not runtime qualification. The scope is each still-unowned raw object/array
+admission occurrence: one captured Reflect.ownKeys may return its native array
+before the size is known; exact count is charged immediately and overflow refuses
+before descriptor walking or owned copying. Single-property descriptors preserve
+all original rejection rules without a batch descriptor map. The object API,
+1,000,000 root work/99,999 subject ceilings and every earlier limit remain.
+
+This sole boundary supersedes earlier universal before-allocation wording for
+raw key reflection ONLY. An arbitrary invalid hidden/symbol-heavy object may
+already consume native work/result-array memory before refusal; there is no
+strict total-attempt native/OS heap/preallocation claim at that step. Subsequent
+owned-data variable work remains preflighted from exact private shape counts.
+No guessed fee, accepted-count bound on invalid objects, schema/descriptor
+weakening or serialized-input-only replacement is admitted. New source-cohort
+provider/metadata digests bind this exact exception; fixed DDL/application SQL
+and old descriptors remain preserved. All implementation/structural/history/
+native/installed/managed/consumer/release gates remain separate and OPEN.

@@ -1,0 +1,23 @@
+{
+  "profile": "umf.design-amendment-handoff/0.1",
+  "status": "proposed-root-and-external-review-required",
+  "baseManifestSha256": "a42cad1c5b62dccc1cc064bd8a11bb08020d600a0ecfb4ad119ecf30341016b7",
+  "baseUnchanged": true,
+  "sourceFindingsPreserved": [
+    "R2-F1 retired lineage fails active-before-INSERT guard",
+    "R2-F2 per-lineage counters do not enforce provider cap"
+  ],
+  "proposedCorrections": [
+    "same-TX provisional restore activation before permit/INSERT; exact initialization/FK order",
+    "new singleton native provider_admission; provider-first row lock; atomic +1/+N and all ledger/counter effects same TX; restore debit zero"
+  ],
+  "providerFixedTables": 20,
+  "originalAcceptanceObligations": 88,
+  "baseR2AcceptanceObligations": 64,
+  "additionalAcceptanceObligations": 10,
+  "qualifiedResults": [],
+  "actualWork": "source authoring/copy/read/hash/JSON syntax only; no controls/tests/probes/runtime/SQL/native/build/browser under HOLD",
+  "pending": "root+independent external complete interface review, adoption then actual implementation/qualification",
+  "tableDefinitionProvenance": "resolved via exact retained adopted normative a8d3c590f98f12ba64632a868caa05f044b41ac0f2c7f1ad3e89bb46bb4baed9 at073bc44103f28cbdcde573c1737ed77423e5aaf6; base pending note remains historical",
+  "unwaived": "full R2/G02–G11 including old-store/crosscarrier/retention clock/native/installed/mixed/platform/CI/release"
+}

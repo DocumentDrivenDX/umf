@@ -1,0 +1,27 @@
+{
+  "profile": "umf.design-proposal-handoff/0.1",
+  "status": "proposed-root-and-external-review-required",
+  "proposal": "G10 retained whole-table R2 inventory.2",
+  "productEdits": false,
+  "governingEdits": false,
+  "nativeExecution": false,
+  "finalValidation": "source-read/JSON-syntax/metadata-hashing-only-under-HOLD",
+  "earlierControlEvidence": {
+    "stdout": "design-controls.stdout",
+    "scope": "earlier-draft-small-synthetic-design-controls-before-HOLD",
+    "finalRerun": false,
+    "nativeOrProductQualification": false
+  },
+  "acceptance": {
+    "preservedOriginal": 88,
+    "newRequired": 64,
+    "actualQualificationResults": "OPEN"
+  },
+  "pendingExternalInput": "pending-table-definition-direction.md;original-frozen-addendum-path/hash-not-yet-supplied",
+  "reviewGates": [
+    "root-complete-interface-review",
+    "independent-external-Sol-review",
+    "governing-adoption-before-implementation"
+  ],
+  "runtimeGates": "all actual native/ROOT/CAS/session/Weft/clock/old-store/mixed/installed/platform/CI/release gates remain OPEN"
+}

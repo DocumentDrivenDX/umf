@@ -1,0 +1,20 @@
+{
+  "status": "proposed-finite-design-addendum-for-root-and-external-review",
+  "finding": "R2-IR-F2a",
+  "predecessorManifestSha256": "17988fd05d8001426cda7d05fb812919b6feaa28484bc2fc17edca745a86098c",
+  "sourceCommit": "75f85eed0d9f77783274dbc8e0b28b1078806b21",
+  "change": "Mandatory canonical UUID string for PublicationConfirmation.epoch; exact original native/publication/reference/terminal associations; eight UNRUN controls",
+  "unchanged": [
+    "all predecessor packet bytes",
+    "closed record keys and profile literals",
+    "original epoch.1 and native DDL",
+    "signatures, authority scopes and validators",
+    "all original88+64+10+12 acceptance obligations"
+  ],
+  "limits": [
+    "source-only metadata/byte inspection",
+    "no runtime/import/test/probe/schema/SQL/native",
+    "no authority/context/ROOT/clock/provider enablement or governing adoption",
+    "actual .2 issuance/driver/native qualifications remain open"
+  ]
+}

@@ -1,0 +1,191 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
+name: R2 metering generator artifact
+
+on:
+  push:
+    branches:
+      - codex/migration-metering-qualification
+
+permissions:
+  contents: read
+
+jobs:
+  metering-generator:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out the exact pushed source
+        timeout-minutes: 2
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          submodules: false
+
+      - name: Assert trigger, checkout and dependency identity
+        timeout-minutes: 1
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          REF_NAME: ${{ github.ref }}
+          EXPECTED_SHA: ${{ github.sha }}
+          WORKFLOW_REF: ${{ github.workflow_ref }}
+          WORKFLOW_SHA: ${{ github.workflow_sha }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+        run: |
+          set -euo pipefail
+          test "$EVENT_NAME" = push
+          test "$REF_NAME" = refs/heads/codex/migration-metering-qualification
+          actual_sha="$(git rev-parse HEAD)"
+          test "$actual_sha" = "$EXPECTED_SHA"
+          checkout_tree="$(git rev-parse 'HEAD^{tree}')"
+          mkdir -p r2-metering-evidence
+          printf 'preflight_started=1\n' > r2-metering-evidence/preflight.log
+          printf '%s  %s\n' \
+            '031bdb38c663c33804c02de06906c9c4fdd7bbf32728204cd4c8d30959c324ed' package.json \
+            '5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4' bun.lock \
+            'b9fc65eca9014c5179380259d70e76385a6a80788fa9a2df5fb3eaa5554fd2fe' bunfig.toml \
+            '88e4252883b595782c01d6b63fd86e7a5ba8492aa4fec953a628e32a051bbbc4' src/generated/core-validators.ts \
+            '57bdb4a349ccc1d5ab56e5b0700bcf8a11caa91e13b2efc33b29ff27839e76cb' spec/core/schema.json \
+            'ae1585250d493cb119db4d457b13ae3bec1c1ee55f5ca0f3bcb047aeedc5c411' spec/core/semantic-type-reference.schema.json \
+            'eeda9a096c2a277b13335f2f86c14e3400f83f4f9ad1e6fdc4ed73544fd6db32' spec/core/extension-package.schema.json | sha256sum -c -
+          {
+            printf 'profile=umf.r2-metering-stage-a-identity/1\n'
+            printf 'event_name=%s\nref=%s\n' "$EVENT_NAME" "$REF_NAME"
+            printf 'github_sha=%s\ncheckout_sha=%s\ncheckout_tree=%s\n' "$EXPECTED_SHA" "$actual_sha" "$checkout_tree"
+            printf 'workflow_ref=%s\nworkflow_sha=%s\nrun_id=%s\nrun_attempt=%s\n' "$WORKFLOW_REF" "$WORKFLOW_SHA" "$RUN_ID" "$RUN_ATTEMPT"
+            printf 'runner_os=%s\nrunner_arch=%s\nimage_os=%s\nimage_version=%s\n' "$RUNNER_OS" "$RUNNER_ARCH" "$ImageOS" "$ImageVersion"
+            printf 'generator_source_sha256=%s\n' "$(sha256sum scripts/qualification/r2-metering-generate.ts | cut -d ' ' -f 1)"
+            printf 'instrumenter_source_sha256=%s\n' "$(sha256sum scripts/metamodel/structural-accounting.ts | cut -d ' ' -f 1)"
+            printf 'source_control_sha256=%s\n' "$(sha256sum tests/metamodel/structural-accounting-source.test.ts | cut -d ' ' -f 1)"
+            printf 'scoped_tsconfig_sha256=%s\n' "$(sha256sum tsconfig.r2-metering.json | cut -d ' ' -f 1)"
+            sha256sum .github/workflows/*.yml | sort
+          } > r2-metering-evidence/identity.txt
+
+      - name: Set up pinned Bun
+        timeout-minutes: 2
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        with:
+          bun-version: 1.4.3
+
+      - name: Record Bun runtime identity
+        timeout-minutes: 1
+        run: |
+          set -euo pipefail
+          bun_path="$(command -v bun)"
+          test "$(bun --version)" = 1.4.3
+          {
+            printf 'bun_path=%s\n' "$bun_path"
+            printf 'bun_version=%s\n' "$(bun --version)"
+            printf 'bun_sha256=%s\n' "$(sha256sum "$bun_path" | cut -d ' ' -f 1)"
+          } >> r2-metering-evidence/identity.txt
+
+      - name: Install locked dependencies without lifecycle scripts
+        timeout-minutes: 4
+        run: |
+          set -euo pipefail
+          run_bounded() {
+            local started ended started_at ended_at result log_bytes truncated
+            started="$(date +%s)"
+            started_at="$(date --utc +%FT%TZ)"
+            set +e
+            timeout --signal=TERM --kill-after=20s 160s bun install --frozen-lockfile --ignore-scripts > r2-metering-evidence/install.log 2>&1
+            result=$?
+            set -e
+            ended="$(date +%s)"
+            ended_at="$(date --utc +%FT%TZ)"
+            log_bytes="$(wc -c < r2-metering-evidence/install.log)"
+            truncated=no
+            if [ "$log_bytes" -gt 1048576 ]; then truncated=yes; head -c 1048576 r2-metering-evidence/install.log > r2-metering-evidence/install.log.tmp; mv r2-metering-evidence/install.log.tmp r2-metering-evidence/install.log; fi
+            printf 'stage=install\nargv=timeout --signal=TERM --kill-after=20s 160s bun install --frozen-lockfile --ignore-scripts\nstarted_utc=%s\nended_utc=%s\nexit=%s\nduration_seconds=%s\nlog_bytes_before_cap=%s\nlog_truncated=%s\n' "$started_at" "$ended_at" "$result" "$((ended-started))" "$log_bytes" "$truncated" >> r2-metering-evidence/commands.log
+            cat r2-metering-evidence/install.log
+            return "$result"
+          }
+          if run_bounded; then result=0; else result=$?; fi
+          exit "$result"
+
+      - name: Record pinned TypeScript package identities
+        timeout-minutes: 1
+        run: |
+          set -euo pipefail
+          api_package="$(realpath node_modules/typescript-api/package.json)"
+          api_types="$(realpath node_modules/typescript-api/lib/typescript.d.ts)"
+          cli_package="$(realpath node_modules/typescript/package.json)"
+          api_version="$(bun -e 'console.log(JSON.parse(await Bun.file("node_modules/typescript-api/package.json").text()).version)')"
+          cli_version="$(bun -e 'console.log(JSON.parse(await Bun.file("node_modules/typescript/package.json").text()).version)')"
+          test "$api_version" = 5.9.3
+          test "$cli_version" = 7.0.2
+          {
+            printf 'typescript_api_version=%s\ntypescript_api_package=%s\ntypescript_api_package_sha256=%s\n' "$api_version" "$api_package" "$(sha256sum "$api_package" | cut -d ' ' -f 1)"
+            printf 'typescript_api_dts=%s\ntypescript_api_dts_sha256=%s\n' "$api_types" "$(sha256sum "$api_types" | cut -d ' ' -f 1)"
+            printf 'typescript_cli_version=%s\ntypescript_cli_package=%s\ntypescript_cli_package_sha256=%s\n' "$cli_version" "$cli_package" "$(sha256sum "$cli_package" | cut -d ' ' -f 1)"
+          } >> r2-metering-evidence/identity.txt
+
+      - name: Type check the isolated generator and controls
+        timeout-minutes: 4
+        run: |
+          set -euo pipefail
+          started="$(date +%s)"
+          started_at="$(date --utc +%FT%TZ)"
+          set +e
+          timeout --signal=TERM --kill-after=20s 180s bun node_modules/typescript/bin/tsc --noEmit -p tsconfig.r2-metering.json > r2-metering-evidence/typecheck.log 2>&1
+          result=$?
+          set -e
+          ended="$(date +%s)"
+          ended_at="$(date --utc +%FT%TZ)"
+          log_bytes="$(wc -c < r2-metering-evidence/typecheck.log)"
+          truncated=no
+          if [ "$log_bytes" -gt 1048576 ]; then truncated=yes; head -c 1048576 r2-metering-evidence/typecheck.log > r2-metering-evidence/typecheck.log.tmp; mv r2-metering-evidence/typecheck.log.tmp r2-metering-evidence/typecheck.log; fi
+          printf 'stage=typecheck\nargv=timeout --signal=TERM --kill-after=20s 180s bun node_modules/typescript/bin/tsc --noEmit -p tsconfig.r2-metering.json\nstarted_utc=%s\nended_utc=%s\nexit=%s\nduration_seconds=%s\nlog_bytes_before_cap=%s\nlog_truncated=%s\n' "$started_at" "$ended_at" "$result" "$((ended-started))" "$log_bytes" "$truncated" >> r2-metering-evidence/commands.log
+          cat r2-metering-evidence/typecheck.log
+          exit "$result"
+
+      - name: Run scoped generator source controls
+        timeout-minutes: 3
+        run: |
+          set -euo pipefail
+          started="$(date +%s)"
+          started_at="$(date --utc +%FT%TZ)"
+          set +e
+          timeout --signal=TERM --kill-after=20s 120s bun test --timeout 15000 tests/metamodel/structural-accounting-source.test.ts > r2-metering-evidence/source-controls.log 2>&1
+          result=$?
+          set -e
+          ended="$(date +%s)"
+          ended_at="$(date --utc +%FT%TZ)"
+          log_bytes="$(wc -c < r2-metering-evidence/source-controls.log)"
+          truncated=no
+          if [ "$log_bytes" -gt 1048576 ]; then truncated=yes; head -c 1048576 r2-metering-evidence/source-controls.log > r2-metering-evidence/source-controls.log.tmp; mv r2-metering-evidence/source-controls.log.tmp r2-metering-evidence/source-controls.log; fi
+          printf 'stage=source-controls\nargv=timeout --signal=TERM --kill-after=20s 120s bun test --timeout 15000 tests/metamodel/structural-accounting-source.test.ts\nstarted_utc=%s\nended_utc=%s\nexit=%s\nduration_seconds=%s\nlog_bytes_before_cap=%s\nlog_truncated=%s\n' "$started_at" "$ended_at" "$result" "$((ended-started))" "$log_bytes" "$truncated" >> r2-metering-evidence/commands.log
+          cat r2-metering-evidence/source-controls.log
+          exit "$result"
+
+      - name: Generate the private companion artifact
+        timeout-minutes: 3
+        run: |
+          set -euo pipefail
+          started="$(date +%s)"
+          started_at="$(date --utc +%FT%TZ)"
+          set +e
+          timeout --signal=TERM --kill-after=20s 120s bun scripts/qualification/r2-metering-generate.ts > r2-metering-evidence/generation.log 2>&1
+          result=$?
+          set -e
+          ended="$(date +%s)"
+          ended_at="$(date --utc +%FT%TZ)"
+          log_bytes="$(wc -c < r2-metering-evidence/generation.log)"
+          truncated=no
+          if [ "$log_bytes" -gt 1048576 ]; then truncated=yes; head -c 1048576 r2-metering-evidence/generation.log > r2-metering-evidence/generation.log.tmp; mv r2-metering-evidence/generation.log.tmp r2-metering-evidence/generation.log; fi
+          printf 'stage=generation\nargv=timeout --signal=TERM --kill-after=20s 120s bun scripts/qualification/r2-metering-generate.ts\nstarted_utc=%s\nended_utc=%s\nexit=%s\nduration_seconds=%s\nlog_bytes_before_cap=%s\nlog_truncated=%s\n' "$started_at" "$ended_at" "$result" "$((ended-started))" "$log_bytes" "$truncated" >> r2-metering-evidence/commands.log
+          cat r2-metering-evidence/generation.log
+          exit "$result"
+
+      - name: Upload source identity, logs and generated bytes
+        if: always()
+        timeout-minutes: 2
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: r2-metering-generated-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            r2-metering-evidence/
+            ${{ runner.temp }}/r2-metering-generated-${{ github.run_id }}-${{ github.run_attempt }}/
+          if-no-files-found: warn
+          retention-days: 30

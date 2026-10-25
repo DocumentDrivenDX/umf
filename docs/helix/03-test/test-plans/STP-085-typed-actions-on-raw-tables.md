@@ -1270,3 +1270,66 @@ implied.
 | API08 | Complete plan verification/serialization | Verify with required original history replays every source/history check and compares the full canonical plan. Serialize returns those bytes without terminal LF; mutations to review/steps/phases/prefixes/history binding/digest refuse. |
 | API09 | New schema family and legacy schemas | Validate request, marker-free discovery selector, TableReview, SeedReview, Candidate wrapper, plan/step/prefix definitions together; old schemas reject new profiles and remain byte-identical. |
 | API10 | Browser approval example | The application visibly renders all purge disclosures in candidate order before requesting approval; omitted/changed disclosure or native-qualified claim refuses. |
+
+## G10 inventory.2 R2 adoption001 acceptance
+
+CONTRACT-081 R2 adoption001 and TD-085 R2 implementation adoption001 add these
+controls from the exact [source-freeze acceptance](../../04-build/evidence/schema-migration-design-review/g10-r2-review-source-freeze-001/acceptance.md).
+**All16 rows remain UNRUN for this adoption.** Source-design acceptance is not
+execution evidence. Preserve original88+64+10+12+8 and every later obligation;
+this amendment neither deletes a failure nor promotes a source-only result.
+
+| ID | Required observation |
+| --- | --- |
+| R2-RVSF-01 | Kind/subject/side/null/path/effect exact schema/type positives and negatives for P2/TableSource/LineageField/FieldSource; original .1 and SeedReview/component domains unchanged; all schema refs close in actual built assets. |
+| R2-RVSF-02 | Current-before vs whole archive vs Field archive actual original bytes/config/plan/history/source-meaning correspondence; forged/missing/extra/unused/context-mismatched originals refuse. |
+| R2-RVSF-03 | Independent marker-free discovery2 has no defaultChanges; every real A/B/C delta emits before compile; unchanged default emits none. |
+| R2-RVSF-04 | Every/only actual default selector/marker claimed once; overlap/wrong baseline/missing/extra/duplicate/reorder/stale/wrong index or marker kind refuses. |
+| R2-RVSF-05 | Same-carrier G05 and lineage current/same-plan modes preserve full FIELD archive baseline, NULL/presence/default canonical spelling/desired-domain validation. |
+| R2-RVSF-06 | Primary/effects same full values but distinct IDs/path; inline table effects binds actual five-key hash; one joint source group, no duplicated physical default/value effect. |
+| R2-RVSF-07 | Original changed/added/removed commands first; unchanged per-ID full contexts second; SHA/config-only context delta emitted; multi-module IDs and UTF16 order/path scope exact. |
+| R2-RVSF-08 | Full source unknown meaning preserved/refused; no filtered source/fake previous/schema/adopted native identity or missing coverage waiver. |
+| R2-RVSF-09 | Original whole stored set union explicit G05 exceptions only; stable Fields/type/order/typmod/collation/domain transformations refuse; all after constraints/policies validate same required group. |
+| R2-RVSF-10 | Fill reads exact current/intermediate baseline, not target/sibling newly restored Field; originalNULL never default-filled, deleted UUID never resurrected, zero-new population still type-checks. |
+| R2-RVSF-11 | Exact original history bytes/context cache, preceding outcomes only after own plan recompile; changed equal-ID/hash-shaped context cannot reuse cached result. |
+| R2-RVSF-12 | Incremental selector/source/material/candidate/depth/node/work/byte limits, new subject/work ceilings and final complete24MiB plan including digest/review; no final-only unbounded allocation or truncation. |
+| R2-RVSF-13 | Exact retention/restoration/lineage presentation mappings before approval; no private values/proof/checksum/hold reasons/elapsed state in portable result/diagnostics. |
+| R2-RVSF-14 | New provider+metadata descriptors explicitly bind epoch005, every accepted norm and this source contract; unchanged00420-table DDL/original application SQL; no self-digest/future enrollment cycle or old digest relabel. |
+| R2-RVSF-15 | Actual TS exports/imports, generated schemas and package/browser assets match reviewed source; Bun/real Chromium/compiler/serializer/refusal and immutable legacy .4/.5/.7/G02 corpus qualify actual rebuilt candidate. |
+| R2-RVSF-16 | Independent native population/lineage/source/current lifecycle/clock/holds/positive and unknown COMMIT/recovery/installed/old-store/managed/Weft and final published producer/consumer artifact correspondence; no source-only support claim. |
+
+
+Record actual source/definition/profile/version/subset, invocation, result and
+independent owner for each qualified cohort. A source repair invalidates affected
+runtime evidence until rerun against the repaired candidate. Native/installed/
+managed/Weft and release gates require their actual authorized environments;
+pure-compiler success cannot substitute for them. Native phase transitions,
+unknown outcomes and old-store refusal retain all existing gates. Published
+artifacts and release notes must match the final reviewed candidate and explicitly
+state every unclosed G02–G11 limitation; no broad migration-support claim follows
+from this design amendment.
+
+## R2 raw own-key boundary amendment001 controls
+
+CONTRACT-081/TD-085's raw-boundary amendment adds the exact
+[control rows](../../04-build/evidence/schema-migration-design-review/g10-r2-raw-admission-boundary-amendment-001/acceptance.md) below. **ALL12 UNRUN** for this adoption;
+retain every original/R2-RVSF/other control and failed result.
+
+| ID | Required observation |
+| --- | --- |
+| R2-RA-01 | Ordinary object/array and original valid unknown JSON admit with exact primitive/prototype/depth/numeric/property meaning; public object API unchanged. |
+| R2-RA-02 | Getter/accessor, symbol, hidden property, custom prototype, nonindex/sparse array refuse; getter/toJSON/valueOf counters remain zero. |
+| R2-RA-03 | Exact one rawOwnKeysCall per unowned admission occurrence; no batch descriptors/extra symbol/name/key arrays within exception. |
+| R2-RA-04 | Result charge includes all observed slots including symbols/array length. Overflow immediately refuses at container before descriptor walk/owned output, with no partial context. |
+| R2-RA-05 | Moderate hidden/symbol-heavy invalid object with small budget demonstrates atomic native result followed by refusal; evidence explicitly does not assert preallocation/OS bound. |
+| R2-RA-06 | Nested still-unowned nodes each use explicit boundary; exception is not accidentally limited to root or reused as an owned-kernel waiver. |
+| R2-RA-07 | Single-descriptor invocation charged first; descriptor copy/value processing occurs only after data/enumerability/index checks, with original array length exception. |
+| R2-RA-08 | Owner-derived shape/key order/count cannot be forged/rebound across roots or caller mutations; no global/public reader/verified flag. |
+| R2-RA-09 | After ownership, actual key/copy/index/canonical/hash/error/SQL expansions refuse BEFORE variable growth at actual root limits; raw exception cannot waive these. |
+| R2-RA-10 | Joint root/node/depth/byte/subject limits, exact history/source rules and original per-component caps unchanged; no1m override of original100k source value bound. |
+| R2-RA-11 | New provider/metadata records/digests include exact amendment/event/acceptance; all old records/pins/fixed20-table DDL/applicationSQL match and no self-digest cycle. |
+| R2-RA-12 | Actual source/type/schema/compiled-browser/package and safe diagnostics match reviewed candidate; release/profile notes disclose atomic raw reflection limitation and all remaining native/history/managed/release gates. |
+
+A passing refusal cannot be described as a native before-allocation/OS heap bound
+for raw own-key reflection. Actual source/profile/package/release qualification
+must disclose the narrow exception and preserve every still-open gap.

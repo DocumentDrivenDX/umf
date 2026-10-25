@@ -1,0 +1,47 @@
+{
+  "profile": "umf.inventory-metadata-definition/0.3",
+  "originalMetadataDefinitionDigest": "136e0f1626317f4b113659607a85aad1ddfc4a9f4d4e8a4aabeaa49db2abcd63",
+  "unchangedApplicationMetadataSql": {
+    "path": "inputs/g10/definitions/native-metadata.sql",
+    "sha256": "5e8131eda95636d476d0d0c0d3540caff22ff117f133d91a9dd39fe111337109"
+  },
+  "providerDefinitionDigest": "349c6eede26cb1b6b4aaf7498038b279470029a19ed3b4c48bcfe05f55b35f01",
+  "recordFiles": [
+    {
+      "path": "contract.md",
+      "sha256": "b5af51147713a2dd0b749ede547f497fae3805c2a22204099326fb29e9ed4313"
+    },
+    {
+      "path": "provider-and-codec.md",
+      "sha256": "b7f320facdbbef2b14318304df1e5e9bc06fd00e525428976836e2efac18ab12"
+    },
+    {
+      "path": "lifecycle.md",
+      "sha256": "816a263bc8294f67fb0bed51f21c4a7eef806bbbf1338ca1a524c63e03f72ffb"
+    },
+    {
+      "path": "original-registry.md",
+      "sha256": "583d88177410aaa59b98fb6ea5efffeed65e6449047b7706d02228c7b400d39c"
+    },
+    {
+      "path": "cross-carrier.md",
+      "sha256": "ff0673b38b1c5459cb52ff9c1dc4a73ae2d3943bc92138727104cf64acb881a6"
+    },
+    {
+      "path": "wire-adaptations.md",
+      "sha256": "20db4e89c3317ab256c2442be7c460295a7ca06713d5cce5340fa4b3895b0d53"
+    },
+    {
+      "path": "pending-table-definition-direction.md",
+      "sha256": "c47b3fc47ba6af705bf5d904fc4f306ebbd922b74cbbfffd784ecfd7296bae85"
+    },
+    {
+      "path": "wire-types.schema.json",
+      "sha256": "1d899ec8ac6e5acc8c67523a38e3d66b3887249e9d70274e302cf54f79f99697"
+    },
+    {
+      "path": "guard-renderer.md",
+      "sha256": "c92610bd646001c502c2599029d52cc0e9bdcb21a77d202b05365773a965291c"
+    }
+  ]
+}

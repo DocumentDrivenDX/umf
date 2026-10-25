@@ -1,0 +1,458 @@
+{
+  "profile": "umf.table-recovery-provider-definition/0.1",
+  "engine": "PostgreSQL",
+  "version": "18.6",
+  "encoding": "UTF8",
+  "fixedDdlSha256": "0020a9fcd6193def9e185e50233eb1d68dae088bc8cc1b1c99b346e5c7d0c5d9",
+  "recordFiles": [
+    {
+      "path": "retained004/inputs/amendment003/amendments.md",
+      "sha256": "51b8e5cae4b7a252f6e43c1f1b25a070194b956a5a8dd2af929b8756b8f057c9"
+    },
+    {
+      "path": "retained004/inputs/amendment003/acceptance-additions.md",
+      "sha256": "6bc24a9ab1e471e009fc8bf64691fe8fa1b840bb6b2fe43ee63e8b70c5f587ad"
+    },
+    {
+      "path": "retained004/inputs/amendment003/source-history.md",
+      "sha256": "388b062375d46655490c979066ac3d2464f172ae33ed96d3030a02889bc1e01a"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/contract.md",
+      "sha256": "b5af51147713a2dd0b749ede547f497fae3805c2a22204099326fb29e9ed4313"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/provider-and-codec.md",
+      "sha256": "b7f320facdbbef2b14318304df1e5e9bc06fd00e525428976836e2efac18ab12"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/lifecycle.md",
+      "sha256": "816a263bc8294f67fb0bed51f21c4a7eef806bbbf1338ca1a524c63e03f72ffb"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/original-registry.md",
+      "sha256": "583d88177410aaa59b98fb6ea5efffeed65e6449047b7706d02228c7b400d39c"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/cross-carrier.md",
+      "sha256": "ff0673b38b1c5459cb52ff9c1dc4a73ae2d3943bc92138727104cf64acb881a6"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/wire-adaptations.md",
+      "sha256": "20db4e89c3317ab256c2442be7c460295a7ca06713d5cce5340fa4b3895b0d53"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/pending-table-definition-direction.md",
+      "sha256": "c47b3fc47ba6af705bf5d904fc4f306ebbd922b74cbbfffd784ecfd7296bae85"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/wire-types.schema.json",
+      "sha256": "1d899ec8ac6e5acc8c67523a38e3d66b3887249e9d70274e302cf54f79f99697"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/table-definition-provenance001/normative-table-definition.md",
+      "sha256": "a8d3c590f98f12ba64632a868caa05f044b41ac0f2c7f1ad3e89bb46bb4baed9"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/table-definition-provenance001/comparison.md",
+      "sha256": "6aa0941156754c274edd6e996fcff4a3d0425a720f7934401d678f91e3170655"
+    },
+    {
+      "path": "retained004/effect-keys.md",
+      "sha256": "899d5710bba35ec8053114efe2f36a7ed88fe0da880733908be450f5a1d08ca6"
+    },
+    {
+      "path": "retained004/clock-anchor.md",
+      "sha256": "fd54970cec0600bd164cc3be7096f92491d769b3e38e256577568f7cbda6c25b"
+    },
+    {
+      "path": "retained004/clock-registry.md",
+      "sha256": "cda60ede68106bc371d0f78c01b73857f5e5255709cf7238d0d0d207f78d2685"
+    },
+    {
+      "path": "retained004/acceptance-additions004.md",
+      "sha256": "e44e2d64dffc52297e99d67fa19918abb3a613ee0ee52e9ca00f205eb79877ed"
+    },
+    {
+      "path": "retained004/source-history004.md",
+      "sha256": "e900a189e313dcc609ba51967381c30be245d3e2acdabb4711652335a9ff8d94"
+    },
+    {
+      "path": "norms/g10-r2-table-review-marker-freeze-001.md",
+      "sha256": "17541d778acd180c7d1e825340290a23b216995beeed236af6894b3ffce7e27f"
+    },
+    {
+      "path": "norms/g10-r2-restoration-companion-review-freeze-001.md",
+      "sha256": "632475cb7d23ba563c8df91d4fec45acdd4d0e16bfaa39ed39889018fa8817b5"
+    },
+    {
+      "path": "norms/g10-r2-field-archive-companion-addendum-002.md",
+      "sha256": "c7ceb535f08ec6421be580f01a7e20089969d173196df096ad8348f501b93f59"
+    },
+    {
+      "path": "norms/g10-r2-operation-context-companion-addendum-003.md",
+      "sha256": "2067dc13670e3d376f6b8205a7c3d64d75cc1695261d8f19f221a8e784586fbd"
+    },
+    {
+      "path": "norms/g10-r2-default-discovery-stage-clarification-004.md",
+      "sha256": "c7c87f9674c19b4a756e41fa7042a9dee4297305f4fe1734079b3980039f3975"
+    },
+    {
+      "path": "norms/g10-public-api-module-handoff-001.md",
+      "sha256": "f86802cfc1a57f4697bd56506c1b3e1f5cfdf63bf70a251685bb248cbdac1311"
+    },
+    {
+      "path": "norms/g10-review-marker-freeze-001.md",
+      "sha256": "24de140f4b4ba1031113594683c062967bf35490e2be30465499cb6477e2437b"
+    },
+    {
+      "path": "norms/g10-review-marker-adoption-addendum-002.md",
+      "sha256": "d7b08f67c4945cbe285e0555ca92fff9acfaec859030b17707d7dc58f09eb278"
+    },
+    {
+      "path": "norms/epoch-clarification005.md",
+      "sha256": "fc800eadb382e048adb5be34c573a95687c0f90a378cb199ec81a9ed1f48aeba"
+    },
+    {
+      "path": "governing-amendments.md",
+      "sha256": "3a7873b000cf7ecd99e9e9df6a6792329b3bd6661ee4809d96261ca5f8af5a3c"
+    },
+    {
+      "path": "schema-contract.md",
+      "sha256": "76d168062f43ed031acbb7160616f22efb2c7a583c23ee1d58e54dec3ac1932b"
+    },
+    {
+      "path": "comparison-certificates.md",
+      "sha256": "2434f2c5d1001e67645a392696e22f75d93b06a1749bdb895fe23780c58cc167"
+    },
+    {
+      "path": "local-constructors.md",
+      "sha256": "d8919bce0ade2afe47b44dc356cb2ab91ea7a989cd4dec26bb3648522b3594ac"
+    },
+    {
+      "path": "acceptance.md",
+      "sha256": "2ffec8fd0e1e47d2e2b443e792da89e62b8f9079eebba74473694487355dade9"
+    }
+  ],
+  "rendererFiles": [
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/provider-and-codec.md",
+      "sha256": "b7f320facdbbef2b14318304df1e5e9bc06fd00e525428976836e2efac18ab12"
+    },
+    {
+      "path": "retained004/inputs/amendment003/guard-renderer.md",
+      "sha256": "10801a7677341a4fb767ca9ce45a208172806969e3fb667d40eb0819ea81a5d3"
+    }
+  ],
+  "originalPins": [
+    {
+      "path": "retained004/inputs/amendment003/inputs/amendment002-history/README.md",
+      "sha256": "359ba6d11b77c324ebcb235bb2c1055d58011255f078618276600f5806b9151f"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/amendment002-history/acceptance-additions.md",
+      "sha256": "d44af21c6d72816cbb3125d601650a769947c47785ec0b90590de4b532b56d69"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/amendment002-history/amendments.md",
+      "sha256": "aeceadea909923dfd3912585f58493c35342122505f9f33941f5d1dffffa3c38"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/amendment002-history/handoff.json",
+      "sha256": "dea24eac42e0d7e507733973b20037acafac9587178037f3b6e8e5452190c265"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/amendment002-history/metadata-definition-digest.txt",
+      "sha256": "c0bb7cd6d4976ad39a2269081ec45f0100f8f1dd5d24775bc7c82b5d0a30d7cf"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/amendment002-history/metadata-definition.json",
+      "sha256": "bf839060d8fa6153f50031de56590ac8a13d5cec2c631d903ad14141ae656f69"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/amendment002-history/provider-definition-digest.txt",
+      "sha256": "da501d0b01437402a5c210cf78286ac82a8133af3103d2b9ba592b6e29ab9b22"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/amendment002-history/provider-definition.json",
+      "sha256": "91bf75d3d055132b5672e88445bcca38318fde8e4c1f726d29786f41275fdacd"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/amendment002-manifest.json",
+      "sha256": "fd6d8c26b18fbc7c3bd15af6021e608908f15c2a8492373887fb009bbe4962cf"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001-provenance-erratum.json",
+      "sha256": "81d098ce108b6a78c100e271efe213c5d1ce2ad761f409200f037f4ded527d79"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/README.md",
+      "sha256": "ad866bbe2bf3022897ad054ab2e7fe25fc0dc8c16231072e1b0fdb8a99281b65"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/acceptance.md",
+      "sha256": "41001c3906b2718100e62564eacae73797ca8e35fc0707272c6bb4d9be5469c8"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/contract.md",
+      "sha256": "b5af51147713a2dd0b749ede547f497fae3805c2a22204099326fb29e9ed4313"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/cross-carrier.md",
+      "sha256": "ff0673b38b1c5459cb52ff9c1dc4a73ae2d3943bc92138727104cf64acb881a6"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/design-controls.py",
+      "sha256": "a192a4ac083ee61b5ca803f73cd5272086bf70b538dfe45cb7b5ac63b1a76b28"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/design-controls.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/design-controls.stdout",
+      "sha256": "cf7bfc8e1ad8125d89de2af33d9585b1fddd98205c5cb557a233ba498769886e"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/generate-record-schema.py",
+      "sha256": "f202d39c2d5d3a17368e2b9e63224a8887156e1442db124abf2f74a97bcff30d"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/guard-renderer.md",
+      "sha256": "c92610bd646001c502c2599029d52cc0e9bdcb21a77d202b05365773a965291c"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/handoff.json",
+      "sha256": "7c8fff8c967783180f6af5e4ea18b605d7a9458f8942747cbaf67383ecea6fcf"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/CONTRACT-081-table-lifecycle.md",
+      "sha256": "5a645176a98984a1b67c15a692429bc84a35560429ac3326b6729f2b44693892"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/STP-085-typed-actions-on-raw-tables.md",
+      "sha256": "00581d19d24f00f660777aee1c75e5977d751067653f944755b9a86de3035d94"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/TD-085-typed-actions-on-raw-tables.md",
+      "sha256": "c0795718e8c4d07526687a025f60a6212e33a48664a9a503dc31fcbbf3cfd95f"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10-adoption.json",
+      "sha256": "663a6515312603c0f52687b27eaa4050798ffbdb090771cc415796842e7daee3"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10-manifest.json",
+      "sha256": "58a84077940cc313f0a2ceed20b057b8a0f2f9b249db52e6e85d2080e48e54a4"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10-retained-table-recovery-decisions-001.md",
+      "sha256": "94f40ce4db95d9466cb15ab43ed35e7a8e89c3f26001af886dccc3f163431c35"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/acceptance-matrix.md",
+      "sha256": "cb95e725cb8b0b70309c9449c1fbc0c0e4200b15d8d59bff710fa0e9348a306c"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/campaign-grant-accounting.md",
+      "sha256": "a4b3759604c4fb77fe3ebcf70e7fcb5a82a887af1ff4bcd9060d49fd919cee9c"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/carrier-provider-definition-digest.txt",
+      "sha256": "0dae51fd040e774b2e64a527c50b9cbd2f9f9a355e801aff023d912e0d6fda0d"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/carrier-provider-definition.json",
+      "sha256": "a76c88f59106de11d5df37818f8ba3f4f439eabd7e8bbfbd00708235a1c8e56b"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/carrier-retirement-ddl.sql",
+      "sha256": "63e7b41506c74ac38c3c73d1dc116f23c8b5a60d1064982b260522e01c99dc20"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/carrier-retirement.md",
+      "sha256": "2ab552d1bd5a6881ae25fb8f50e27854eb5537a29325b5c0a713d329dfc362c4"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/component-policies.md",
+      "sha256": "a1c12960c43921644cf9ff055b7af306f25a55116c1d4ce26d5aabcbaae778f4"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/contract-proposal.md",
+      "sha256": "cee0d04ee72da46062c6814efa1c0235e5c087da82593128f9d766f65c05324a"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/denied-approval-recovery.md",
+      "sha256": "a8811dce246636fd88b65214e19d291ae4ed8a02cb1fa46106ab0396af3e9128"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/fresh-authority.md",
+      "sha256": "b69024641bf4bdf94a8e92dcc3743570aa1c9dd9ab21d09c95c4120194a88763"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/initial-approval-ordering.md",
+      "sha256": "166585d47845f07fe646163d300134b91bfc6cb380635e96fe27f2c652b878cd"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/metadata-definition-digest.txt",
+      "sha256": "484dd467482c2123502a0524c67cda573b0e0cd31c980ef934ea22d8d8c041c0"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/metadata-definition.json",
+      "sha256": "e263e852cf57a160a49a66c4bcff713babbbe4af95aea3e3523f22b8a4d40e05"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/native-inventory-branches.md",
+      "sha256": "2e1b2de6f378ad8af4b101500e93576bb9ba89209c93947bccc89732cea40782"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/native-metadata.md",
+      "sha256": "ed069da88e3aa319b28f8b5bfb070234b6c9a35c607556a0949e772a4c86df51"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/native-metadata.sql",
+      "sha256": "5e8131eda95636d476d0d0c0d3540caff22ff117f133d91a9dd39fe111337109"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/ordinary-decision-custody.md",
+      "sha256": "4efd6fe87b2b41bf0a6410c76e4ba78c9f4edbb240892d9aa90ba0505674cd4a"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/resolved-open-matrix.md",
+      "sha256": "febfb8f6d6c8cf6439e748c58e42b082f87279835e48afbcfef225926e8c1c03"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/seed-lineage.md",
+      "sha256": "ab3c044cf055b1ced97a388809be440ae1afab4710514edd27e4d05ecfa0c584"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/step-branches.md",
+      "sha256": "63dabcde5a10ff3b18148211c8a24fcd80add264580542cb389fa5b52705c11e"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/g10/definitions/technical-design.md",
+      "sha256": "ebf07de7179646ab37be3c6e3f9d17525ba958263f2886e1b5804f48f0ad6879"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/governing002-pins.json",
+      "sha256": "a3fd4c18cd193eb17ae9db439f62a9ab5aec5c6fcb73fc68edaf3e475d22ce67"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/governing002/CONTRACT-081-table-lifecycle.md",
+      "sha256": "386dd4692f10ccc6c4525f2e8d6297ad20657227485c353b0e8516609dcc94b8"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/governing002/STP-085-typed-actions-on-raw-tables.md",
+      "sha256": "5a1ae70638d451bc55aae65401567f427c4d640f79b1c4fa7fc6e8d8b141d301"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/governing002/TD-085-typed-actions-on-raw-tables.md",
+      "sha256": "0125c11d107c41bd3093d862e8b98726b22d7083329893f954509c6ff65fee83"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/owner_approval_core-0f3.py",
+      "sha256": "b3ced878aff21b4d49620fd2f6c1074815aab4a49cb44ba10a48536f5adea16c"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/row_originals.py",
+      "sha256": "be4d86a55eceb1b44068ccd7a654a8e437a75b8b4ec236908b7af5207eb511d5"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inputs/source-pins.json",
+      "sha256": "2acbfb99044a1c990c4ee2aa3779b699592e053188095b6b22d446b0b2dba2fc"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/inventory001-to-proposed002-contract.diff",
+      "sha256": "a19d190a4214ad2d74270ea31f17303019245ff98bb6d822451d94d42dd92e1d"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/lifecycle.md",
+      "sha256": "816a263bc8294f67fb0bed51f21c4a7eef806bbbf1338ca1a524c63e03f72ffb"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/manifest.json",
+      "sha256": "a42cad1c5b62dccc1cc064bd8a11bb08020d600a0ecfb4ad119ecf30341016b7"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/metadata-definition-digest.txt",
+      "sha256": "00a7ccffe84b21431d39b434de63b7fd10fe06f75de3cb3d080fa2eec21daea7"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/metadata-definition.json",
+      "sha256": "7006bc8a475c0e4b3c9cb68361aafc8226ebd9af576cdffa283195fbe6949338"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/original-registry.md",
+      "sha256": "583d88177410aaa59b98fb6ea5efffeed65e6449047b7706d02228c7b400d39c"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/pending-table-definition-direction.md",
+      "sha256": "c47b3fc47ba6af705bf5d904fc4f306ebbd922b74cbbfffd784ecfd7296bae85"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/provider-and-codec.md",
+      "sha256": "b7f320facdbbef2b14318304df1e5e9bc06fd00e525428976836e2efac18ab12"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/provider-ddl.sql",
+      "sha256": "10ae32f4730bfa9f58ff8dc84caf7f3a8e487c8b2db6c2a0f720a5bf1bdcda95"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/provider-definition-digest.txt",
+      "sha256": "6b15c8f83a905a0b56074493a00781cf86fa3138b8fbd1f0781f564b3d8f7589"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/provider-definition.json",
+      "sha256": "272ef79e27e4af45884a0d1dacf06df21fe05835e8159d1fc604cb88fd7b4d32"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/resolved-open.md",
+      "sha256": "17e20830b7782db533345f53b0ea416017d786778afa140099655b203471d29d"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/supplemental-source-pins.json",
+      "sha256": "85bc2b4745367df6e7767d63fab7d1c5249e787ccd506a16aaacd7bc3505ccb5"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/wire-adaptations.md",
+      "sha256": "20db4e89c3317ab256c2442be7c460295a7ca06713d5cce5340fa4b3895b0d53"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/base001/wire-types.schema.json",
+      "sha256": "1d899ec8ac6e5acc8c67523a38e3d66b3887249e9d70274e302cf54f79f99697"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/table-definition-provenance001/comparison.md",
+      "sha256": "6aa0941156754c274edd6e996fcff4a3d0425a720f7934401d678f91e3170655"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/table-definition-provenance001/manifest.json",
+      "sha256": "73f70d1c3e48feffb45eedc4cbedf03de2d7b0f95e774d76a817a305d8380588"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/table-definition-provenance001/normative-table-definition.md",
+      "sha256": "a8d3c590f98f12ba64632a868caa05f044b41ac0f2c7f1ad3e89bb46bb4baed9"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/table-definition-provenance001/receipt.json",
+      "sha256": "d771c0eb47dcee4c2e7fe965f9c7a93c3ef2330225644f2e1dfb7650e551d8be"
+    },
+    {
+      "path": "retained004/inputs/amendment003/inputs/table-definition-provenance001/sealed-pending-direction.md",
+      "sha256": "c47b3fc47ba6af705bf5d904fc4f306ebbd922b74cbbfffd784ecfd7296bae85"
+    },
+    {
+      "path": "retained004/inputs/amendment003/manifest.json",
+      "sha256": "b544b44abe6cd4366954cd3700b65575f1e5aba27887fcf9d6b6495dfab5e99e"
+    },
+    {
+      "path": "retained004/inputs/external-review003.json",
+      "sha256": "f49f06f6004dd1b269a3be6ee82d47f3d76d70831531fdbb94d6f5d49d8bd196"
+    }
+  ],
+  "limits": {
+    "fixedTables": 20,
+    "liveRowsPerArchive": 10000,
+    "completeNativeValueStreamBytesPerArchive": 8388608
+  }
+}

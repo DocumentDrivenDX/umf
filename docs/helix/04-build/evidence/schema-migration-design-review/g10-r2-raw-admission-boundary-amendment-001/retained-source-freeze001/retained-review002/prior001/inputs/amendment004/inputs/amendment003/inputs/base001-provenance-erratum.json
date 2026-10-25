@@ -1,0 +1,15 @@
+{
+  "profile": "umf.external-source-provenance-erratum/0.1",
+  "packetManifestSha256": "a42cad1c5b62dccc1cc064bd8a11bb08020d600a0ecfb4ad119ecf30341016b7",
+  "frozenPacketUnchanged": true,
+  "affectedFile": "supplemental-source-pins.json",
+  "affectedField": "originalCustodyCore.sourcePath",
+  "incorrect": "python/umf_access/src/umf_access/authority/owner_approval_core.py",
+  "correct": "python/umf_access/src/umf_access/lifecycle/owner_approval_core.py",
+  "repositoryCommit": "0f3a0b4970a9374abd3178269c907763398de262",
+  "retainedCopy": "inputs/owner_approval_core-0f3.py",
+  "retainedCopySha256": "b3ced878aff21b4d49620fd2f6c1074815aab4a49cb44ba10a48536f5adea16c",
+  "sourceCorrespondence": "git show exact commit/correct path SHA256 equals retained copy; source-only metadata operation",
+  "cause": "supplemental provenance pathname transcription error discovered immediately after seal",
+  "scope": "path metadata only; normative definition descriptor/source/member hashes unchanged; no runtime or qualifying result"
+}

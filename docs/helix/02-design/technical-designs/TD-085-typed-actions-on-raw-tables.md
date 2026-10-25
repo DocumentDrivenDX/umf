@@ -1422,3 +1422,66 @@ approval view before collecting approval. No wire key, plan field or compiled
 diagnostic is added for the presentation. All implementation, schema, browser,
 native, installed and release checks remain separate evidence gates; no runtime
 result is asserted by this design amendment.
+
+## G10 inventory.2 R2 implementation adoption001
+
+CONTRACT-081's R2 adoption001 and the exact
+[source-freeze contract](../../04-build/evidence/schema-migration-design-review/g10-r2-review-source-freeze-001/local-constructors.md) now define the following
+implementation work. These are named responsibilities to implement, not claims
+that the modules, schema branches or runtime factories already exist. Preserve
+legacy APIs/profiles/bytes and existing lower-level semantics.
+
+| Order | Private module boundary | Concrete implementation result |
+| --- | --- | --- |
+| 1 | `src/table-migration/inventory-r2-comparison.ts` plus source/history helpers | `createR2ReviewContext`, `resolveWholeArchiveSource`, `resolveFieldArchiveSource`: one immutable full-input context, exact original materials/history, indexed complete correspondence and unknown-meaning coverage; no markerful discovery input or I/O. |
+| 2 | Same comparison boundary | `compareWholeRestore`, `compareFieldRestore`, `compareOriginalCommandSubjects`: private context-owned whole/Field/coverage certificates, explicit stored-set exception, actual per-ID two-pass commands and full contexts. Handles cannot cross contexts or certify filtered/fabricated sources. |
+| 3 | `src/table-migration/inventory-r2-review.ts` | `constructTableReviewPair`, `constructRestoredTableCompanions`, `constructLineageFieldPair`, `constructFieldArchiveCompanions`, `collectR2Review`: exact closed value branches, full paths, deterministic ordered global C and internal once-only claim map. Keep original same-carrier G05 constructors and immutable old review outputs. |
+| 4 | Inventory compiler admission | `bindR2CompilerSelections`: rederive the same C, validate exact markerful options/effects references/every-only A/B/C defaults before lowering. Derive genuine local claims for original G02/G03/G05 validators; never feed global C through a legacy component validator. |
+| 5 | Existing component lowering | `lowerR2ReviewedComponents`: typed effects/DAG/prefixes with the required joint restoration group and one actual default/grant/value effect. Reuse qualified local constructors rather than parsing SQL, accepting public effects or assigning target prefixes. |
+| 6 | Explicit public dispatch and schema assets | Implement exact .2 closed type/schema branches and compiler/discovery/verify/serialize dispatch. Export only agreed public types/functions, never private handles/certificates/claim builders or injection hooks. Verify recompiles exact original sources/history; serialize returns those verified canonical bytes. |
+
+Each stage performs incremental count/byte/node/depth/work admission before
+expansion, with shared-input interning only for exact original bytes and context.
+Use the additive 1,000,000 work/99,999 subject ceilings alongside all original
+limits; freeze concrete charge events and units with actual implementation before
+tests can claim resource qualification. Final complete canonical plan, including
+review and digest, remains bounded at24MiB. No count check only after constructing
+or hashing an unbounded candidate. Public failures preserve useful located safe
+UmfError diagnostics without leaking private material or authority.
+
+The portable import closure stays synchronous and browser compatible; it has no
+Bun/Node/fs/PG/native/Weft runtime dependency, callback verifier, dynamic effect
+registrar or SQL parser. Weft owns qualified scalar/population lowering and
+immutable programs. The fixed host/backend owns native sessions, original live
+values, custody, transactions, outcomes, clocks, holds and fences. Native
+capability is never inferred from a portable certificate or plan flag.
+
+Implementation owner applies this three-document patch and adopts the exact
+289-member source-freeze cohort without rewriting its original bytes. Preserve
+provider/metadata descriptor digest files and historical pins. Then freeze the
+actual source/schema/import closure and package assets as a separate candidate
+for source review, Bun/compiler/schema/browser controls, independent native and
+installed evidence, consumers and release correspondence in that order. Design
+adoption alone passes none of those gates. No product runtime was run by this
+review lane for this adoption.
+
+## R2 raw own-key implementation boundary amendment001
+
+Implement CONTRACT-081's exact raw-boundary proposal and
+[event definitions](../../04-build/evidence/schema-migration-design-review/g10-r2-raw-admission-boundary-amendment-001/event-table.json) after independent source acceptance.
+In actual R2 source admission/copy kernels, replace batch symbols/descriptors/key
+arrays with ONE captured Reflect.ownKeys per raw unowned-node admission, immediate
+checked exact-count charge, then charged one-key getOwnPropertyDescriptor calls.
+Retain original primitive/prototype/depth/number/dense-array/hidden/symbol/accessor
+refusals and all limits. Overflow creates no admitted partial context and avoids
+descriptor/value/owned-copy processing; diagnostics stay safe at the container.
+
+Record exact private shape/key-order/count metadata while owning nodes. Accounted
+JSON/parser/copy/structural/projection/render/history kernels use only that
+root-owned metadata to admit later known extents before growth. No caller-shaped
+owned flag, global identity/digest cache, exported shape/history reader or
+unchecked prepared port. The raw native reflection exception is explicit and
+cannot be reused by an already-owned graph. It grants neither native authority
+nor a total-attempt heap/time bound. Implementation owner supplies actual event
+coverage and safe controls for independent source and later runtime review;
+unintegrated checkCore/history kernels continue located refusal.

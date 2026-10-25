@@ -1,0 +1,30 @@
+--- sealed-amendment002/README.md
++++ proposed-amendment003/README.md
+@@ -1,8 +1,10 @@
+-# R2 finite amendment002 — proposed, not adopted
++# R2 finite amendment003 — proposed, not adopted
+ 
+-This is a SOURCE-ONLY amendment of sealed proposal001, responding to root's
++This is a SOURCE-ONLY successor of sealed amendment002 over proposal001, responding to root's
+ R2-F1 activation-order contradiction and R2-F2 missing global admission gate.
+-Both original defects remain part of the retained source history. The exact
++Both original defects and amendment002's incorrect immediate-FK claim remain
++part of the retained source history. Source-history.md identifies the precise
++correction and the original002 manifest is retained. The exact
+ base packet is copied under inputs/base001 with its original manifest and
+ members; the source packet itself was not reopened. No repository code or
+ governing artifact is changed. No tests/runtime/SQL/native/build/browser ran.
+@@ -50,6 +52,13 @@
+ attempt found copied files still read-only; only the new scratch copies were
+ made writable before authoring. No original/frozen input was modified.
+ 
++Amendment002's generation1 active-first ordering is explicitly withdrawn. The
++complete DDL is byte-identical002→003; the protective immediate FK is retained.
++Initial construction uses retired/null/gen1/rev1, resolves row_tables and
++carrier_generations/ledgers, then activates once to gen1/rev2. Restore increments
++the EXISTING generation and revision once before permit/INSERT. The two fixed
++operations are distinct; no FK removal/deferral or early ordinary authority.
++
+ Root and independent external review of this amendment and the complete R2
+ interfaces remain required before governing adoption/implementation. Source
+ consistency does not prove native atomicity, SQL validity, custody, capabilities,

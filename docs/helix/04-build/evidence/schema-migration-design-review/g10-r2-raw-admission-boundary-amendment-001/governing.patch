@@ -1,0 +1,88 @@
+--- a/docs/helix/02-design/contracts/CONTRACT-081-table-lifecycle.md
++++ b/docs/helix/02-design/contracts/CONTRACT-081-table-lifecycle.md
+@@ -8515,3 +8515,27 @@
+ be frozen and independently qualified before authority birth. ROOT/F3, current
+ lifecycle, lineage, clock/holds, recovery, installed/old-store/managed, Weft and
+ published producer/consumer correspondence remain open gates.
++
++## R2 initial raw own-key admission boundary amendment001
++
++Adopt the exact [normative boundary](../../04-build/evidence/schema-migration-design-review/g10-r2-raw-admission-boundary-amendment-001/normative.md),
++[additive event table](../../04-build/evidence/schema-migration-design-review/g10-r2-raw-admission-boundary-amendment-001/event-table.json) and
++[controls](../../04-build/evidence/schema-migration-design-review/g10-r2-raw-admission-boundary-amendment-001/acceptance.md) only after independent source-design peer
++acceptance and implementation-owner adoption. This is a source design proposal,
++not runtime qualification. The scope is each still-unowned raw object/array
++admission occurrence: one captured Reflect.ownKeys may return its native array
++before the size is known; exact count is charged immediately and overflow refuses
++before descriptor walking or owned copying. Single-property descriptors preserve
++all original rejection rules without a batch descriptor map. The object API,
++1,000,000 root work/99,999 subject ceilings and every earlier limit remain.
++
++This sole boundary supersedes earlier universal before-allocation wording for
++raw key reflection ONLY. An arbitrary invalid hidden/symbol-heavy object may
++already consume native work/result-array memory before refusal; there is no
++strict total-attempt native/OS heap/preallocation claim at that step. Subsequent
++owned-data variable work remains preflighted from exact private shape counts.
++No guessed fee, accepted-count bound on invalid objects, schema/descriptor
++weakening or serialized-input-only replacement is admitted. New source-cohort
++provider/metadata digests bind this exact exception; fixed DDL/application SQL
++and old descriptors remain preserved. All implementation/structural/history/
++native/installed/managed/consumer/release gates remain separate and OPEN.
+--- a/docs/helix/02-design/technical-designs/TD-085-typed-actions-on-raw-tables.md
++++ b/docs/helix/02-design/technical-designs/TD-085-typed-actions-on-raw-tables.md
+@@ -1464,3 +1464,24 @@
+ installed evidence, consumers and release correspondence in that order. Design
+ adoption alone passes none of those gates. No product runtime was run by this
+ review lane for this adoption.
++
++## R2 raw own-key implementation boundary amendment001
++
++Implement CONTRACT-081's exact raw-boundary proposal and
++[event definitions](../../04-build/evidence/schema-migration-design-review/g10-r2-raw-admission-boundary-amendment-001/event-table.json) after independent source acceptance.
++In actual R2 source admission/copy kernels, replace batch symbols/descriptors/key
++arrays with ONE captured Reflect.ownKeys per raw unowned-node admission, immediate
++checked exact-count charge, then charged one-key getOwnPropertyDescriptor calls.
++Retain original primitive/prototype/depth/number/dense-array/hidden/symbol/accessor
++refusals and all limits. Overflow creates no admitted partial context and avoids
++descriptor/value/owned-copy processing; diagnostics stay safe at the container.
++
++Record exact private shape/key-order/count metadata while owning nodes. Accounted
++JSON/parser/copy/structural/projection/render/history kernels use only that
++root-owned metadata to admit later known extents before growth. No caller-shaped
++owned flag, global identity/digest cache, exported shape/history reader or
++unchecked prepared port. The raw native reflection exception is explicit and
++cannot be reused by an already-owned graph. It grants neither native authority
++nor a total-attempt heap/time bound. Implementation owner supplies actual event
++coverage and safe controls for independent source and later runtime review;
++unintegrated checkCore/history kernels continue located refusal.
+--- a/docs/helix/03-test/test-plans/STP-085-typed-actions-on-raw-tables.md
++++ b/docs/helix/03-test/test-plans/STP-085-typed-actions-on-raw-tables.md
+@@ -1308,3 +1308,28 @@
+ artifacts and release notes must match the final reviewed candidate and explicitly
+ state every unclosed G02–G11 limitation; no broad migration-support claim follows
+ from this design amendment.
++
++## R2 raw own-key boundary amendment001 controls
++
++CONTRACT-081/TD-085's raw-boundary amendment adds the exact
++[control rows](../../04-build/evidence/schema-migration-design-review/g10-r2-raw-admission-boundary-amendment-001/acceptance.md) below. **ALL12 UNRUN** for this adoption;
++retain every original/R2-RVSF/other control and failed result.
++
++| ID | Required observation |
++| --- | --- |
++| R2-RA-01 | Ordinary object/array and original valid unknown JSON admit with exact primitive/prototype/depth/numeric/property meaning; public object API unchanged. |
++| R2-RA-02 | Getter/accessor, symbol, hidden property, custom prototype, nonindex/sparse array refuse; getter/toJSON/valueOf counters remain zero. |
++| R2-RA-03 | Exact one rawOwnKeysCall per unowned admission occurrence; no batch descriptors/extra symbol/name/key arrays within exception. |
++| R2-RA-04 | Result charge includes all observed slots including symbols/array length. Overflow immediately refuses at container before descriptor walk/owned output, with no partial context. |
++| R2-RA-05 | Moderate hidden/symbol-heavy invalid object with small budget demonstrates atomic native result followed by refusal; evidence explicitly does not assert preallocation/OS bound. |
++| R2-RA-06 | Nested still-unowned nodes each use explicit boundary; exception is not accidentally limited to root or reused as an owned-kernel waiver. |
++| R2-RA-07 | Single-descriptor invocation charged first; descriptor copy/value processing occurs only after data/enumerability/index checks, with original array length exception. |
++| R2-RA-08 | Owner-derived shape/key order/count cannot be forged/rebound across roots or caller mutations; no global/public reader/verified flag. |
++| R2-RA-09 | After ownership, actual key/copy/index/canonical/hash/error/SQL expansions refuse BEFORE variable growth at actual root limits; raw exception cannot waive these. |
++| R2-RA-10 | Joint root/node/depth/byte/subject limits, exact history/source rules and original per-component caps unchanged; no1m override of original100k source value bound. |
++| R2-RA-11 | New provider/metadata records/digests include exact amendment/event/acceptance; all old records/pins/fixed20-table DDL/applicationSQL match and no self-digest cycle. |
++| R2-RA-12 | Actual source/type/schema/compiled-browser/package and safe diagnostics match reviewed candidate; release/profile notes disclose atomic raw reflection limitation and all remaining native/history/managed/release gates. |
++
++A passing refusal cannot be described as a native before-allocation/OS heap bound
++for raw own-key reflection. Actual source/profile/package/release qualification
++must disclose the narrow exception and preserve every still-open gap.

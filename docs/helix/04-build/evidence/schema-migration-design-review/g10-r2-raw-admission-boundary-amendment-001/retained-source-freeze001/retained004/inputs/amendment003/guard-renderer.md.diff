@@ -1,0 +1,47 @@
+--- sealed-proposal001/guard-renderer.md
++++ amendment002/guard-renderer.md
+@@ -1,6 +1,6 @@
+ # Exact successor identity guard and restore-permit renderer
+ 
+-Proposed fixed new-provider-only renderer, not executed. Retain original G04 identity_function_sql inputs/quoting/native trigger flags/owner/ACL/settings and old functions byte-for-byte for old stores. New function is admitted ONLY through the exact new profile, real original registered supervisor/active core request/reservation and native birth. A data dictionary/template/string is not a renderer capability.
++Amendment002 replacement of proposal001's fixed new-provider-only renderer, not executed. Retain original G04 identity_function_sql inputs/quoting/native trigger flags/owner/ACL/settings and old functions byte-for-byte for old stores. New function is admitted ONLY through the exact new profile, real original registered supervisor/active core request/reservation and native birth. A data dictionary/template/string is not a renderer capability. Read amendments.md for provisional restore ordering, singleton provenance and global lock order.
+ 
+ At construction validate full source/native record; Q quotes trusted identifier as provider-and-codec.md; U is one canonical original UUID literal with explicit pg_catalog.uuid cast; O is decimal positive original OID; S is NUL-free original native name SQL literal with apostrophes doubled. Inputs to rendering are EXACT `{providerSchema,functionName,tableToken,lineageId,tableOid,tableSchema,tableName,idColumn,revisionColumn}` derived by original native creator AFTER birth; no caller-supplied SQL/native type/function name. Table metadata/trigger names remain original `__umf_row_id_<token32>`, `__umf_row_rev_<token32>`, `__umf_row_key_<token32>`, `__umf_row_positive_<token32>`, `__umf_row_guard_<token32>`, with original collision refusal and actual unique/positive constraints. Function/trigger exact names/native shape are born receipts, not prefix admission.
+ 
+@@ -18,6 +18,12 @@
+  IF TG_RELID<>O(TABLE)::pg_catalog.oid OR TG_TABLE_SCHEMA<>S(SCHEMA)
+     OR TG_TABLE_NAME<>S(TABLE) THEN
+   RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='umf lineage target denied';
++ END IF;
++ -- The FIRST private metadata row lock, also for restore and UPDATE.
++ PERFORM 1 FROM Q(P).provider_admission
++  WHERE singleton=true AND max_issued_instances=1000000 FOR UPDATE;
++ IF NOT FOUND THEN
++  RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='umf provider admission missing';
+  END IF;
+  PERFORM 1 FROM Q(P).lineages WHERE lineage_id=U(LINEAGE)
+   AND state='active' AND active_table_token=U(TOKEN) FOR UPDATE;
+@@ -46,6 +52,15 @@
+    END IF;
+    NEW.Q(REV):=rev;
+   ELSE
++   UPDATE Q(P).provider_admission
++    SET issued_count=issued_count OPERATOR(pg_catalog.+) 1,
++        revision=revision OPERATOR(pg_catalog.+) 1
++    WHERE singleton=true AND issued_count<max_issued_instances
++      AND revision<9007199254740991;
++   GET DIAGNOSTICS n=ROW_COUNT;
++   IF n<>1 THEN
++    RAISE EXCEPTION USING ERRCODE='54000',MESSAGE='umf provider capacity exhausted';
++   END IF;
+    rid:=pg_catalog.gen_random_uuid();
+    UPDATE Q(P).lineages SET issued_count=issued_count OPERATOR(pg_catalog.+) 1,
+     revision=revision OPERATOR(pg_catalog.+) 1
+@@ -86,6 +101,6 @@
+ $umf_lineage_identity$
+ ```
+ 
+-Lineage issued_count/revision/state/active pointer/generation_count are solely typed native mutable columns, as provider-and-codec.md's immutable record and LineageObservation specify. There is no hidden native RFC8785/hash primitive. Ordinary new issuance updates native issued_count and revision in the guard atomically; lineage record/digest stay unchanged. row_tables native issued_count is separately checked against its per-carrier ledger; its original G04 record contains NO issuedCount key and is not enlarged by ordinary inserts. Restore attachment changes carrier native count, not lineage-issued count/revision. Native phase lineage activation/retirement/generation changes increment native revision under the same lock and preserve the immutable record. Every current observation verifies full original history/record/scalar correspondence; serialized observation is data, not a source of truth.
++Provider issued_count/revision are solely native mutable columns; immutable provider record/digest never change. The trigger obtains singleton then lineage then carrier/generation locks. Ordinary new issuance updates the global, lineage and carrier counters and both ledgers atomically; any later failure rolls back the statement/transaction's associated increments and rows. A committed speculative reservation remains spent even if no business row survives. Restore attachment locks the singleton but does NOT increment its count or revision, nor reissue lineage IDs; it only reserves the new carrier's ledger/count. Lineage activation itself increments lineage revision once, before restore INSERT, under amendments.md's exact same-TX protocol. There is no hidden native RFC8785/hash primitive. All per-carrier/original lineage caps, integer overflow and exact record/census checks remain conjunctive. Ordinary callers cannot alter provider metadata or invoke this function as a generic issuance API.
+ 
+ Restore permit record EXACT `{profile:"umf.whole-table-restore-permit/0.1",requestId,requestDigest,reservationDigest,archiveId,lineageId,tableToken,physicalGeneration,backendPid,transactionId,expectedCount,populationProofDigest,sourceValuesRelation,targetBusinessRelation}`. It is inserted ONLY by fixed native facade after actual private core pending request/effect/plan/lease/source/policy/registry validation, SAME private connection/TX. Members are native `(request_id,instance_id,captured_revision)` rows copied only from original protected whole values heap; privately verify set/revision equality before INSERT. No values in permit. Before effect outcome/COMMIT delete all original members then permit and verify ZERO global permit/member rows for committed inventory. Unknown COMMIT cannot leave reusable permit. An ordinary INSERT on the same original connection cannot execute author statements while permit exists; only exact prepared restore dispatch is permitted. Full native guard, session scope, exact function binding, after-complete metadata/proof and failure/cancellation tests are mandatory.

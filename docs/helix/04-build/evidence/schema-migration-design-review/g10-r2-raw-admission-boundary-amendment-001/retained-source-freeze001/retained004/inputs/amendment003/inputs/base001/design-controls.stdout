@@ -1,0 +1,40 @@
+{
+  "scope": "finite proposal-only shape/framing/population/resource/document controls; NOT native/code qualification",
+  "closedObjectSchemas": 73,
+  "resolvedLocalSchemaRefs": 149,
+  "closedScalarNegatives": [
+    "unknown-key",
+    "bool-cap",
+    "float-cap",
+    "uppercase-uuid",
+    "missing-custody"
+  ],
+  "syntheticNullAndEmptyFrameBytes": 93,
+  "syntheticFramesDistinct": true,
+  "singleOversizedPayloadIncludingFramingRefusesEnvelope": true,
+  "wholeGroupRowsAndBytesMustNotSplit": true,
+  "syntheticDeletedAndNewInstancePartition": true,
+  "fixedProviderTables": [
+    "row_tables",
+    "archives",
+    "issued_instances",
+    "archive_lifecycle",
+    "carrier_retirements",
+    "lineages",
+    "carrier_generations",
+    "lineage_issued_instances",
+    "whole_archives",
+    "whole_archive_columns",
+    "whole_archive_materials",
+    "whole_archive_proofs",
+    "whole_lifecycle",
+    "whole_dependencies",
+    "whole_requests",
+    "whole_outcomes",
+    "whole_events",
+    "whole_restore_permits",
+    "whole_restore_members"
+  ],
+  "originalAcceptanceRowsPreserved": 88,
+  "newAcceptanceRows": 64
+}

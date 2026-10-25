@@ -1,0 +1,19 @@
+--- sealed-proposal001/provider-ddl.sql
++++ amendment002/provider-ddl.sql
+@@ -1,5 +1,16 @@
+ -- PROPOSED, NOT EXECUTED. Fresh inventory-originals-store0.2 ONLY.
+ -- originals is the one library-quoted originally reserved schema, never caller SQL.
++-- Amendment002: 20 fixed tables; singleton native admission, not a fake lineage.
++CREATE TABLE originals.provider_admission (
++ singleton pg_catalog.bool PRIMARY KEY CHECK (singleton),
++ issued_count pg_catalog.int8 NOT NULL CHECK (issued_count BETWEEN 0 AND 1000000),
++ max_issued_instances pg_catalog.int8 NOT NULL CHECK (max_issued_instances=1000000),
++ revision pg_catalog.int8 NOT NULL CHECK (revision BETWEEN 1 AND 9007199254740991),
++ record pg_catalog.jsonb NOT NULL CHECK (pg_catalog.jsonb_typeof(record)='object' AND pg_catalog.octet_length(record::pg_catalog.text)<=2097152),
++ record_digest pg_catalog.text COLLATE pg_catalog."C" NOT NULL CHECK (record_digest ~ '^[a-f0-9]{64}$'),
++ CHECK (issued_count<=max_issued_instances)
++) USING heap;
++
+ CREATE TABLE originals.row_tables (
+  table_token pg_catalog.uuid PRIMARY KEY,
+  installation_id pg_catalog.text COLLATE pg_catalog."C" NOT NULL CHECK (installation_id <> ''),

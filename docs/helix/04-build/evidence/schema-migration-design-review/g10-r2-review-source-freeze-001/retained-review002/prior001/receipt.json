@@ -1,0 +1,46 @@
+{
+  "actionableFindings": [
+    {
+      "id": "R2-MARKER-F1",
+      "lines": [
+        54,
+        59,
+        65,
+        84,
+        174,
+        179
+      ],
+      "path": "/Users/erik/.codex/worktrees/66aa/umf/docs/helix/04-build/evidence/schema-migration-design-review/g10-r2-restoration-companion-review-freeze-001.md",
+      "priority": 2,
+      "problem": "change-operation has {module,id}, but change-operation-context lists only {module}, while source order is module/command and the original .3 constructor issues per-command context values/paths. For two retained commands in one module, the proposal does not choose per-command subjects versus one module aggregate; complete ownership and exact meaning/path/multiplicity cannot be frozen by implementation guess. Paths can distinguish resulting wrapper IDs, so this is a narrow subject-domain ambiguity, not an asserted collision.",
+      "repair": "Prefer explicit new .2 subject {kind:change-operation-context,module,id} using same stable command identity as change-operation. Define no simultaneous change-operation and context companion for the same command, actual changed referenced semantic closure before wrapper source hashes, and full old/new command-context values/own paths. Alternatively freeze a genuinely module-aggregate shape, exact path/ordering/closure and one-per-module emission explicitly. Preserve legacy .3 values/order/behavior.",
+      "requiredControl": "Two unchanged commands in one module with one changed referenced closure; exact subject/path count/order/once-only claims. Pure source SHA/path move produces no archived companion.",
+      "scope": "restoration companion001",
+      "title": "Close operation-context subject identity and multiplicity"
+    },
+    {
+      "id": "R2-MARKER-F2",
+      "lines": [
+        90,
+        99,
+        125,
+        145,
+        157,
+        167
+      ],
+      "path": "/Users/erik/.codex/worktrees/66aa/umf/docs/helix/04-build/evidence/schema-migration-design-review/g10-r2-restoration-companion-review-freeze-001.md",
+      "priority": 2,
+      "problem": "The defaultChanges admission is stated as the disjoint union of retained current Field or selected whole-table restoration Field. A lineage-restored Field on current-descendant is absent current-before and has no selected table restore; a same-plan lineage Field is absent the whole-table archive. Original G05/cross-carrier allows explicit after-source default/requiredness differences under separate original semantic validation. The new pair binds archived Field/new Field meaning, but the proposal does not say whether that pair alone consumes such default changes without a selector, or which exact archive-Field-baseline selector/companion owns them. Do not silently drop the route, infer fill/default replay, or reuse retained-carrier G03.",
+      "repair": "Choose explicitly: (a) lineage pair owns full default/nullability delta and exact G03 local typed validation/new default installation without defaultChanges, rejecting extra selectors; or (b) extend .2 selector ownership with a third disjoint lineage-restored-Field branch and exact Field-archive-baseline companion/index/path rule. State both current-descendant and same-plan cases, logical/native default presence versus literal NULL, unchanged declaration handling and once-only SQL ownership. Keep .1/G03/G05 standalone scopes unchanged; requiredness never fills original NULL.",
+      "requiredControl": "Current-descendant and same-plan lineage restore each with unchanged, changed, dropped, literal-NULL native/logical defaults; exact admitted or explicitly open located routes, selector/marker consumption and no replay/fill.",
+      "scope": "restoration companion001",
+      "title": "Specify changed-default ownership for lineage-restored Fields"
+    }
+  ],
+  "decision": "TABLE_MARKER_DIRECTION_ACCEPTED; COMPANION_REQUIRES_TWO_FINITE_DECISIONS_BEFORE_SOURCE_FREEZE",
+  "fullR2F3Closed": false,
+  "permission": "NONE",
+  "profile": "umf.independent-r2-marker-design-review/0.1",
+  "runtime": "ALL_UNRUN",
+  "sourceImplementationAuthorizedByThisReview": false
+}

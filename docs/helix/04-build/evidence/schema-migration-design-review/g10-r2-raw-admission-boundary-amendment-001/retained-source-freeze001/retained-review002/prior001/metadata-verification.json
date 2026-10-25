@@ -1,0 +1,30 @@
+{
+  "legacyReviewedCurrentEqualsRetained": true,
+  "mode": "source reads, plain JSON syntax, metadata hashes/copies only",
+  "packetChecks": [
+    {
+      "manifestSha256": "17988fd05d8001426cda7d05fb812919b6feaa28484bc2fc17edca745a86098c",
+      "members": 107,
+      "mismatches": [],
+      "root": "/private/tmp/g10-r2-wire-amendment004"
+    },
+    {
+      "manifestSha256": "8a8ecc8eb11f44a91ff44702ff9be6863947f71cb79df9a0795cf6c131eb4088",
+      "members": 13,
+      "mismatches": [],
+      "root": "/private/tmp/g10-r2-wire-addendum005"
+    }
+  ],
+  "proposalPins": [
+    {
+      "path": "g10-r2-table-review-marker-freeze-001.md",
+      "sha256": "17541d778acd180c7d1e825340290a23b216995beeed236af6894b3ffce7e27f"
+    },
+    {
+      "path": "g10-r2-restoration-companion-review-freeze-001.md",
+      "sha256": "632475cb7d23ba563c8df91d4fec45acdd4d0e16bfaa39ed39889018fa8817b5"
+    }
+  ],
+  "runtime": "ALL_UNRUN; no GO issued/created",
+  "sourceObservations": "Current G03 and frozen portable002 G05 helper are source-domain references only, not old-byte/native qualification. Original normative G03/G04/G05 rules retained inside004 governing CONTRACT081."
+}

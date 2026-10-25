@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Diagnostic,Document,Element} from '../model/types';
 import type {TableDeclaration,TableLifecyclePayload,TableRef} from '../extensions/tables';
+import type {AccountingContext} from '../model/internal/accounting-context';
 export interface TableDeploymentConfiguration {
  module:string;schema:string;ownerRole:string;personRole:string;batchRole:string;
  groupRoles:Record<string,string>;
@@ -47,7 +48,7 @@ export interface TableDeploymentBundle {
 export type TableDeploymentResult={status:'compiled';bundle:TableDeploymentBundle;diagnostics:[]}|{status:'blocked';diagnostics:Diagnostic[]};
 export interface DeploymentContext {
  document:Document;payload:TableLifecyclePayload;configuration:TableDeploymentConfiguration;
- path:string;steps:TableDeploymentStep[];
+ path:string;steps:TableDeploymentStep[];accounting?:AccountingContext;
  field(ref:TableRef):Element;
  column(table:TableDeclaration,ref:TableRef):string;
  table(ref:TableRef):TableDeclaration;

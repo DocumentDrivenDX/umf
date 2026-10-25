@@ -16,7 +16,7 @@ export * from './model/document';
 export * from './model/selection';
 export * from './registry/registry';
 export {createUmfRegistry} from './registry/builtins';
-export * from './validation/document';
+export {validateDocument} from './validation/document';
 export { default as coreSchema } from '../spec/core/schema.json';
 export { default as extensionPackageSchema } from '../spec/core/extension-package.schema.json';
 export * from './adapters/json-schema';
@@ -504,7 +504,9 @@ export {default as coreSemanticTypesOperationSchema} from '../spec/core/semantic
 export {generatePythonClient,type PythonClientRequest,type PythonClientResult} from './access';
 
 // Explicit native table declaration inspection; no native deployment authority.
-export * from './extensions/tables';
+export {TABLES_EXTENSION,tableLifecyclePackage,tableLifecycleRegistry,inspectTableLifecycle} from './extensions/tables';
+export type {TableLifecycleInspection} from './extensions/tables';
+export type {TableRef,TableKeyRef,TableNativeType,TableDefault,TableColumn,TableExpression,TableRelationshipRef,TableRelationshipStep,TableRowRule,TableCommand,TableCommandRules,TablePolicy,TableIndex,TableCheck,TableForeignKey,TableDeclaration,TableFieldValue,TableSeedRow,TableSeedSet,TableLifecyclePayload,TableOperationValue,TableOperationPredicate,TableOperationAssignment,TableOperationBody,TableOperationV1,RowExpression,RowExpressionLiteralValue,RowExpressionPredicate,RowExpressionAssignment,RowExpressionOperation,TableOperation} from './extensions/tables/types';
 // Inert initial deployment compilation; hosts retain native admission authority.
 export {compileTableDeployment,verifyTableDeployment} from './table-deployment';
 export type {TableDeploymentConfiguration,TableDeploymentBundle,TableDeploymentResult,TableDeploymentStep} from './table-deployment';

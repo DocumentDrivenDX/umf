@@ -1,0 +1,60 @@
+{
+  "profile": "umf.independent-design-review/0.1",
+  "packet": "/private/tmp/g10-r2-wire-amendment003/manifest.json",
+  "manifestSha256": "b544b44abe6cd4366954cd3700b65575f1e5aba27887fcf9d6b6495dfab5e99e",
+  "membersVerified": 90,
+  "status": "changes-requested",
+  "runtime": "none; active resource HOLD respected",
+  "acceptedDesign": [
+    "amendment003 generation1 retired/null/rev1 construction followed by immediate-FK-valid active/rev2 initialization",
+    "provisional same-transaction restore activation before permit INSERT without ordinary access",
+    "singleton-first atomic provider-wide committed UUID admission and zero-debit restore",
+    "separate full native typed value heap and private lossless byte proof; data-free public receipts",
+    "whole atomic graph; source/native identities, defaults/seeds not replayed; separate holds/purge and original unknown settlement"
+  ],
+  "findings": [
+    {
+      "id": "R2-IR-F1",
+      "file": "inputs/base001/lifecycle.md",
+      "section": "RecoveryRequest stable effect keys",
+      "issue": "The purge/hold/policy key uses scope and expectedSpecificRevision without a closed derivation. RecoveryRequest has kind, and purge intent has both policyRevision and holdRevision. Different implementations can derive different keys for the same original action, undermining fixed duplicate/conflict dispatch.",
+      "required": "Define exact per-kind kind\u2192scope and final key member derivations/types, including purge elapsed versus override, hold add/remove and policy update; signer/registry/replay/native use one fixed function. Retain existing full intent and revision checks. Add finite legal/conflicting/duplicate derivation cases."
+    },
+    {
+      "id": "R2-IR-F2",
+      "file": "inputs/base001/lifecycle.md",
+      "section": "Original clock certificate and conservative dependency census",
+      "issue": "Lifecycle.publication.clockAnchorDigest, checkpoint.anchorDigest and certificate.anchorDigest refer to an actual original anchor, but no complete closed anchor record/preimage is defined. A checkpoint is specified, not the anchor it links. This leaves the central later-than-both-confirmations retention proof wire and its identity/custody relationship undefined.",
+      "required": "Freeze the complete cycle-free private clock anchor record, actual native/publication confirmation references and source observation/kernel identity/tick/error units, exact anchorDigest preimage and original registry placement/birth. Define checkpoint/certificate association and same-anchor replay/reboot behavior. No caller timestamps, predicted COMMIT, or bare hash authority. Add finite controls as obligations only."
+    },
+    {
+      "id": "R2-IR-F3",
+      "file": "inputs/base001/lifecycle.md",
+      "section": "Trusted policy and context",
+      "issue": "The data configuration contextDigest is specified as prior physical bootstrap0.3 ONLY, while the coordinated new application bootstrap/fresh ROOT path needs owner context0.4. Installed inventory.2 authority is only named as a separately enrolled configured logical policy, with no exact configuration/context/trust/request profile dispatch. The proposal correctly says these are gates, but they are not an implementable admitted authority matrix yet.",
+      "required": "Before full governing adoption, reconcile original physical .3/.4 variants and exact new ROOT/logical/data/clock allowed configuration profile dispatch without widening old tuples/signatures. Explicitly identify which existing-origin and fresh/installed routes are admitted versus still unavailable, retaining the full backlog. Coordinate with independent app/.4 design rather than inventing a generic trust registrar."
+    }
+  ],
+  "remainingGates": [
+    "Weft owner agreement and actual immutable scoped original-lineage fill program/API",
+    "actual provider/registry/clock/ROOT creation and full native/unknown/restart/corruption oracles",
+    "old-store migration and later old portable-plan integration",
+    "installed/browser/client/managed/platform/release and published-byte verification"
+  ],
+  "reviewedNormativeFiles": [
+    "README.md",
+    "amendments.md",
+    "guard-renderer.md",
+    "provider-ddl.sql",
+    "acceptance-additions.md",
+    "inputs/base001/contract.md",
+    "inputs/base001/provider-and-codec.md",
+    "inputs/base001/lifecycle.md",
+    "inputs/base001/cross-carrier.md",
+    "inputs/base001/original-registry.md",
+    "inputs/base001/wire-adaptations.md",
+    "inputs/base001/resolved-open.md",
+    "inputs/base001/acceptance.md"
+  ],
+  "qualification": "All90 member byte hashes verified. This is semantic design review of listed normative files, not execution of design controls, schema completeness, SQL/native success or full90-file semantic re-review."
+}

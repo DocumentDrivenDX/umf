@@ -1,0 +1,24 @@
+{
+  "status": "F1 resolved at source-design level; F2 substantially resolved, one exact field clarification required; F3 authority still open",
+  "manifestSha256": "17988fd05d8001426cda7d05fb812919b6feaa28484bc2fc17edca745a86098c",
+  "membersVerified": 107,
+  "ddlAndGuardByteIdentical003": true,
+  "descriptorFilePinsAndDigestTextsVerified": true,
+  "runtime": "NONE; metadata/byte inspection only, no schema/product/native execution",
+  "resolved": [
+    "R2-IR-F1 exact kind\u2192scope/action key and purge ordered policy/hold revision vector; override/add-remove conflict slots do not evade occupied key",
+    "R2-IR-F2 complete acyclic actual later-than-both-confirmations anchor, private/public hash boundary, same-anchor checkpoint chain/reboot baseline, normalized nanosecond error arithmetic and durable original registry.2 placement"
+  ],
+  "clarificationRequired": {
+    "id": "R2-IR-F2a",
+    "path": "clock-anchor.md",
+    "section": "PublicationConfirmation EXACT",
+    "issue": "PublicationConfirmation lists epoch but does not define whether it is epoch UUID, digest or complete native epoch record. Other source records use both epoch and epochDigest in different explicit contexts. A closed anchor/digest wire must fix that member type and exact original binding; supplied equal-looking values cannot be substituted.",
+    "required": "Specify exact epoch type/profile and native/publication association, including complete source lookup if projection is only UUID. Add finite wrong UUID/digest/record/crosspublication controls as obligations. Preserve original004 bytes with successor/explicit immutable addendum."
+  },
+  "remaining": [
+    "R2-IR-F3 exact data/clock trust/config-vs-issued-context and bootstrap .3/.4/installed .2 routing remains unadmitted; root matrix001 does not close it",
+    "Actual kernel source qualification, original registry/CAS/fsync/native/custody and complete key/source/native observers unimplemented/unqualified",
+    "Original88+64+10+12 acceptance rows remain UNRUN obligations, plus Weft/old-store/installed/browser/managed/release/native full backlog"
+  ]
+}

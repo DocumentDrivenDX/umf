@@ -17,7 +17,7 @@ const rowExpressionDefinitions={...tableSchema.$defs,...rowExpressionOperationSc
 /** Declaration/type admission only. Weft owns lowering; hosts own effects/replay. */
 export function inspectOperations(payload:TableLifecyclePayload,ctx:TableContext):void {
  const admitted:{id:string}[]=[];
- for(const[i,raw]of payload.commands.entries()){
+ ctx.visit('table-operations',ctx.path+'/commands',payload.commands.length);for(const[i,raw]of payload.commands.entries()){
   const path=ctx.path+'/commands/'+i;
   if(raw&&typeof raw==='object'&&!Array.isArray(raw)&&(raw as Record<string,unknown>).version==='umf.table-operation/0.2'){
    const expression=(raw as any).body?.values?.[0]?.value?.expression;
@@ -144,7 +144,7 @@ function inspectOperation(command:TableOperationV1,payload:TableLifecyclePayload
   if(body.kind==='update'||body.kind==='delete')predicate(body.where,path+'/body/where');
   if(body.kind!=='delete'){
    ctx.unique(body.values,a=>refKey(a.field),path+'/body/values','assigned Field');
-   for(const[i,assignment]of body.values.entries()){
+   ctx.visit('table-operation-values',path+'/body/values',body.values.length);for(const[i,assignment]of body.values.entries()){
     const p=path+'/body/values/'+i,selected=field(assignment.field,p+'/field');
     if(selected?.column.generated)ctx.add('TABLES_OPERATION_GENERATED',p,'Ordinary operations cannot assign generated identity columns');
     if(body.kind==='update'&&selected&&!mutable(table,assignment.field,ctx))ctx.add('TABLES_OPERATION_IMMUTABLE',p,'Ordinary updates cannot change Keys, immutable or generated columns');
@@ -187,7 +187,7 @@ function inspectQuery(command:TableOperation,ctx:TableContext,path:string):void 
   if(ref.module!==ctx.module.id)ctx.add('TABLES_QUERY_MODULE',p,'Query domains must belong to the owning module');
   if(field&&(Object.keys(field.extensions).length||field.semanticTypes?.length))ctx.add('TABLES_OPERATION_MEANING',p,'Selected query Field meaning needs a separately qualified interpreter',true);
  };
- for(const[i,p]of command.parameters.entries())inspect(p.field,path+'/parameters/'+i+'/field');
+ ctx.visit('table-operation-parameters',path+'/parameters',command.parameters.length);for(const[i,p]of command.parameters.entries())inspect(p.field,path+'/parameters/'+i+'/field');
  for(const[i,o]of body.outputs.entries()){
   ctx.identifier(o.name,path+'/body/outputs/'+i+'/name');
   inspect(o.field,path+'/body/outputs/'+i+'/field');

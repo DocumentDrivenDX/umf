@@ -1,0 +1,55 @@
+{
+  "profile": "umf.design-amendment-handoff/0.1",
+  "status": "proposed-root-and-external-review-required",
+  "proposal": "G10-R2-wire-amendment003",
+  "baseManifestSha256": "a42cad1c5b62dccc1cc064bd8a11bb08020d600a0ecfb4ad119ecf30341016b7",
+  "previousAmendment": {
+    "path": "/private/tmp/g10-r2-wire-amendment002",
+    "manifestSha256": "fd6d8c26b18fbc7c3bd15af6021e608908f15c2a8492373887fb009bbe4962cf",
+    "allMembersHashSizeCheckedBefore003Seal": 77,
+    "manifestCopy": "inputs/amendment002-manifest.json",
+    "modifiedHistoricalSourceCopies": "inputs/amendment002-history",
+    "disposition": "correction-required: active-first initialization conflicts with retained immediate FK"
+  },
+  "preservedSourceFindings": [
+    "001 R2-F1 guard restore activation contradiction",
+    "001 R2-F2 provider cap not natively enforced",
+    "002 F1 initial immediate active-carrier FK contradiction and false absence claim"
+  ],
+  "proposedInitialConstruction": {
+    "transientLineage": {
+      "state": "retired",
+      "activeTableToken": null,
+      "generationCount": 1,
+      "revision": 1
+    },
+    "order": [
+      "retired/null lineage",
+      "active row_tables",
+      "active generation1 carrier_generations",
+      "both initial ledgers",
+      "guarded initial activation"
+    ],
+    "firstCompleteLineage": {
+      "state": "active",
+      "generationCount": 1,
+      "revision": 2
+    },
+    "initialBirthAndLedgerCorrespondence": "complete actual original before successful outcome, including N=0",
+    "retirementEventFabricated": false,
+    "immediateFkRemovedOrDeferred": false
+  },
+  "restoration": "existing retired lineage provisional active/newtoken/oldgeneration+1/oldrevision+1 before permit/INSERT, SAME effect TX/fence; positive rollback restores retired prefix; unknown original recovery no rerun",
+  "providerAdmission": "unchanged002 atomic singleton +1/+N; native provider-first lock; restore zero new issuance; all original caps/ledgers and monotonic committed nonreuse",
+  "ddlAndGuardByteIdenticalTo002": true,
+  "providerFixedTables": 20,
+  "requiredObligations": {
+    "original": 88,
+    "R2": 64,
+    "amendment": 10
+  },
+  "qualifiedResults": [],
+  "sourceOnlySequenceControl": "explicit required future source walk in amendments.md and R2-A04; NOT executed",
+  "actualWorkUnderHold": "source read/copy/authoring/diffs/JSON syntax/metadata hashes only; no tests/probes/runtime/SQL/native/build/browser",
+  "pending": "root and external review then governing adoption, actual implementation and full native/old-store/crosscarrier/mixed/clock/installed/platform/CI/release qualification"
+}

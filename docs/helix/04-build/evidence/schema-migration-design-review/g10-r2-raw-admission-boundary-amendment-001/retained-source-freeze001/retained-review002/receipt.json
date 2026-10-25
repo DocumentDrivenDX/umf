@@ -1,0 +1,28 @@
+{
+  "decision": "ACCEPT_FINITE_DESIGN_RESOLUTIONS_FOR_EXACT_FUTURE_ADOPTION; NOT_IMPLEMENTATION_OR_RUNTIME_APPROVAL",
+  "findings": [],
+  "fullR2F3Closed": false,
+  "nativeCapability": false,
+  "permission": "NONE",
+  "priorReview001ManifestSha256": "20c48bd194be1e1a835f6b505a31e87bbc6ad814e081167038a43a609f9a96e0",
+  "profile": "umf.independent-r2-marker-design-review/0.2",
+  "resolved": [
+    {
+      "basis": "Exact per-command {kind,module,id}, full original operation/context values and full source SHA/config semantics; sorted JSON.stringify([module,id]) UTF16 identity union, changed-operation first loop and unchanged-command context second loop. Complete original document scope and correct actual archived/desired pointers remain.",
+      "id": "R2-MARKER-F1",
+      "resolvedBy": "operation-context addendum003"
+    },
+    {
+      "basis": "Disjoint A selected G05 restoration Field archive, B whole-table-captured Field excludingA, C retained-current excludingA/B. New Field-archive companion default/requiredness; existing samecarrier G05 and new lineage modes included. Exact local G03 validation, joint once-only installation, retained original NULL behavior.",
+      "id": "R2-MARKER-F2",
+      "resolvedBy": "Field-archive addendum002 + discovery-stage004"
+    },
+    {
+      "basis": "Discovery keys unchanged, no defaultChanges; emit every actual source-derived default delta on selected restored archive baseline. Compile separately demands exact one existing defaultChanges under uniqueA/B/C plus complete ordered C marker/ownership.",
+      "id": "R2-MARKER-STAGE",
+      "resolvedBy": "discovery-stage004"
+    }
+  ],
+  "runtime": "ALL_UNRUN",
+  "supersededPriorGuidance": "Review001 F1 suggested no-source-SHA-only archived command context control / referenced-closure-only equality. Superseded: original context source SHA/config changes are intended semantic deltas for unchanged commands; general blanket no outer-wrapper-only delta remains for other categories. Review001 retained unedited."
+}

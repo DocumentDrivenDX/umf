@@ -1,0 +1,37 @@
+{
+  "addendumPins": [
+    {
+      "name": "g10-r2-field-archive-companion-addendum-002.md",
+      "sha256": "c7ceb535f08ec6421be580f01a7e20089969d173196df096ad8348f501b93f59"
+    },
+    {
+      "name": "g10-r2-operation-context-companion-addendum-003.md",
+      "sha256": "2067dc13670e3d376f6b8205a7c3d64d75cc1695261d8f19f221a8e784586fbd"
+    },
+    {
+      "name": "g10-r2-default-discovery-stage-clarification-004.md",
+      "sha256": "c7c87f9674c19b4a756e41fa7042a9dee4297305f4fe1734079b3980039f3975"
+    }
+  ],
+  "allPriorMembersMatch": true,
+  "mode": "source/read/hash/plain JSON only; no candidate evaluation",
+  "originalPacketChecks": [
+    {
+      "manifestSha256": "17988fd05d8001426cda7d05fb812919b6feaa28484bc2fc17edca745a86098c",
+      "members": 107,
+      "mismatches": [],
+      "root": "/private/tmp/g10-r2-wire-amendment004"
+    },
+    {
+      "manifestSha256": "8a8ecc8eb11f44a91ff44702ff9be6863947f71cb79df9a0795cf6c131eb4088",
+      "members": 13,
+      "mismatches": [],
+      "root": "/private/tmp/g10-r2-wire-addendum005"
+    }
+  ],
+  "originalReviewedSourceSha256": "add35dcd82f07af0ec6ea94dcf0093b03bd26b1a2875494217b35ebef9bb85da",
+  "originalSourceComparison": "Full original reviewed.ts98\u2013134 read in prior review; addendum003 matches exact constructor/identity/sorted two-pass semantics. No import/runtime.",
+  "priorReview001ManifestSha256": "20c48bd194be1e1a835f6b505a31e87bbc6ad814e081167038a43a609f9a96e0",
+  "priorReview001Members": 135,
+  "runtime": "ALL_UNRUN; no GO"
+}

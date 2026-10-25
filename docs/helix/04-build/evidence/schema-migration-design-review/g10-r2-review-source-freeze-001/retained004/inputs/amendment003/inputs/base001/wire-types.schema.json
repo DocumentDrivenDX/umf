@@ -1,0 +1,4788 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:proposed:g10-r2-records:001",
+  "title": "PROPOSED R2 new closed record syntactic layer; NO authority/native verifier",
+  "description": "Relational equality/state/count/UTF8 byte/canonical/signature/custody/receipt/version adaptation invariants in contract/provider/lifecycle/cross-carrier/wire-adaptations are additionally mandatory. This schema neither issues capabilities nor parses old programs/plans as new versions.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/ExecutionPolicy"
+    },
+    {
+      "$ref": "#/$defs/DataConfig"
+    },
+    {
+      "$ref": "#/$defs/DataContext"
+    },
+    {
+      "$ref": "#/$defs/DataApproval"
+    },
+    {
+      "$ref": "#/$defs/ClockContext"
+    },
+    {
+      "$ref": "#/$defs/ClockCheckpoint"
+    },
+    {
+      "$ref": "#/$defs/Dependency"
+    },
+    {
+      "$ref": "#/$defs/TableIntent"
+    },
+    {
+      "$ref": "#/$defs/TableArchiveRef"
+    },
+    {
+      "$ref": "#/$defs/TableArchiveSources"
+    },
+    {
+      "$ref": "#/$defs/Lineage"
+    },
+    {
+      "$ref": "#/$defs/LineageObservation"
+    },
+    {
+      "$ref": "#/$defs/Carrier"
+    },
+    {
+      "$ref": "#/$defs/WholeArchive"
+    },
+    {
+      "$ref": "#/$defs/Header"
+    },
+    {
+      "$ref": "#/$defs/PrivateProof"
+    },
+    {
+      "$ref": "#/$defs/Lifecycle"
+    },
+    {
+      "$ref": "#/$defs/Reservation"
+    },
+    {
+      "$ref": "#/$defs/PublicReceipt"
+    },
+    {
+      "$ref": "#/$defs/Event"
+    },
+    {
+      "$ref": "#/$defs/Outcome"
+    },
+    {
+      "$ref": "#/$defs/Result"
+    },
+    {
+      "$ref": "#/$defs/Permit"
+    },
+    {
+      "$ref": "#/$defs/ClockEnvelope"
+    },
+    {
+      "$ref": "#/$defs/RecoveryRequest"
+    },
+    {
+      "$ref": "#/$defs/ProgramRef"
+    }
+  ],
+  "$defs": {
+    "Ref": {
+      "type": "object",
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        }
+      },
+      "required": [
+        "module",
+        "element"
+      ],
+      "additionalProperties": false
+    },
+    "TargetCustody": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.native-target-custody/0.1"
+        },
+        "custodianId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "registrationId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "resourceId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "incarnation": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "registrationDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "profile",
+        "custodianId",
+        "registrationId",
+        "resourceId",
+        "incarnation",
+        "registrationDigest"
+      ],
+      "additionalProperties": false
+    },
+    "NativeRelation": {
+      "type": "object",
+      "properties": {
+        "schemaOid": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "schemaName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 63,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "tableOid": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "tableName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 63,
+          "pattern": "^[^\\u0000]+$"
+        }
+      },
+      "required": [
+        "schemaOid",
+        "schemaName",
+        "tableOid",
+        "tableName"
+      ],
+      "additionalProperties": false
+    },
+    "NativeTx": {
+      "type": "object",
+      "properties": {
+        "databaseOid": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "transactionId": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]{0,19})$"
+        }
+      },
+      "required": [
+        "databaseOid",
+        "transactionId"
+      ],
+      "additionalProperties": false
+    },
+    "Retention": {
+      "type": "object",
+      "properties": {
+        "policyId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "policyRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "minimumRetentionMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 315360000000
+        }
+      },
+      "required": [
+        "policyId",
+        "policyRevision",
+        "minimumRetentionMs"
+      ],
+      "additionalProperties": false
+    },
+    "TableArchiveRef": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.retained-table-archive-ref/0.1"
+        },
+        "providerId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "storeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "lineageId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "originalTableToken": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "originalPhysicalGeneration": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "targetCustody": {
+          "$ref": "#/$defs/TargetCustody"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "record": {
+          "$ref": "#/$defs/Ref"
+        },
+        "retirementPlanDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "retirementSourceDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "tableMeaningDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "nativeDomainDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "archiveSourceDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "profile",
+        "providerId",
+        "storeId",
+        "archiveId",
+        "lineageId",
+        "originalTableToken",
+        "originalPhysicalGeneration",
+        "targetCustody",
+        "table",
+        "record",
+        "retirementPlanDigest",
+        "retirementSourceDigest",
+        "tableMeaningDigest",
+        "nativeDomainDigest",
+        "archiveSourceDigest"
+      ],
+      "additionalProperties": false
+    },
+    "CreateIntent": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "create"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "record": {
+          "$ref": "#/$defs/Ref"
+        }
+      },
+      "required": [
+        "kind",
+        "table",
+        "record"
+      ],
+      "additionalProperties": false
+    },
+    "RemoveIntent": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "remove"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "record": {
+          "$ref": "#/$defs/Ref"
+        },
+        "disposition": {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "const": "irreversible-purge"
+            },
+            "reviewMarker": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\u0000]+$"
+            }
+          },
+          "required": [
+            "mode",
+            "reviewMarker"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "kind",
+        "table",
+        "record",
+        "disposition"
+      ],
+      "additionalProperties": false
+    },
+    "RetireIntent": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "retire"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "record": {
+          "$ref": "#/$defs/Ref"
+        },
+        "retention": {
+          "$ref": "#/$defs/Retention"
+        },
+        "reviewMarker": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        }
+      },
+      "required": [
+        "kind",
+        "table",
+        "record",
+        "retention",
+        "reviewMarker"
+      ],
+      "additionalProperties": false
+    },
+    "RestoreIntent": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "restore"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "record": {
+          "$ref": "#/$defs/Ref"
+        },
+        "archive": {
+          "$ref": "#/$defs/TableArchiveRef"
+        },
+        "reviewMarker": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        }
+      },
+      "required": [
+        "kind",
+        "table",
+        "record",
+        "archive",
+        "reviewMarker"
+      ],
+      "additionalProperties": false
+    },
+    "TableIntent": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/CreateIntent"
+        },
+        {
+          "$ref": "#/$defs/RemoveIntent"
+        },
+        {
+          "$ref": "#/$defs/RetireIntent"
+        },
+        {
+          "$ref": "#/$defs/RestoreIntent"
+        }
+      ]
+    },
+    "Material": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "source",
+            "configuration",
+            "bundle",
+            "plan",
+            "source-meaning"
+          ]
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "bytes": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]*$"
+        }
+      },
+      "required": [
+        "kind",
+        "sha256",
+        "bytes"
+      ],
+      "additionalProperties": false
+    },
+    "TableArchiveSources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "archive": {
+            "$ref": "#/$defs/TableArchiveRef"
+          },
+          "materials": {
+            "type": "array",
+            "prefixItems": [
+              {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/Material"
+                  },
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "source"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/Material"
+                  },
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "configuration"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/Material"
+                  },
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "bundle"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/Material"
+                  },
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "plan"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/Material"
+                  },
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "source-meaning"
+                      }
+                    }
+                  }
+                ]
+              }
+            ],
+            "items": false,
+            "minItems": 5,
+            "maxItems": 5
+          }
+        },
+        "required": [
+          "archive",
+          "materials"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 64
+    },
+    "NativeColumn": {
+      "type": "object",
+      "properties": {
+        "attnum": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32767
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 63,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "typeOid": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "typeMod": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 2147483647
+        },
+        "collationOid": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        }
+      },
+      "required": [
+        "attnum",
+        "name",
+        "typeOid",
+        "typeMod",
+        "collationOid"
+      ],
+      "additionalProperties": false
+    },
+    "SendFunction": {
+      "type": "object",
+      "properties": {
+        "oid": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "schema": {
+          "const": "pg_catalog"
+        },
+        "name": {
+          "enum": [
+            "int2send",
+            "int4send",
+            "int8send",
+            "uuid_send",
+            "boolsend",
+            "date_send",
+            "timestamptz_send",
+            "numeric_send",
+            "textsend"
+          ]
+        },
+        "argumentTypeOid": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "resultTypeOid": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        }
+      },
+      "required": [
+        "oid",
+        "schema",
+        "name",
+        "argumentTypeOid",
+        "resultTypeOid"
+      ],
+      "additionalProperties": false
+    },
+    "Domain": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "const": "pg_catalog"
+        },
+        "name": {
+          "enum": [
+            "int2",
+            "int4",
+            "int8",
+            "uuid",
+            "bool",
+            "date",
+            "timestamptz",
+            "numeric",
+            "text"
+          ]
+        },
+        "typeOid": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "typeMod": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 2147483647
+        },
+        "collationOid": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "sendFunction": {
+          "$ref": "#/$defs/SendFunction"
+        }
+      },
+      "required": [
+        "schema",
+        "name",
+        "typeOid",
+        "typeMod",
+        "collationOid",
+        "sendFunction"
+      ],
+      "additionalProperties": false
+    },
+    "Column": {
+      "type": "object",
+      "properties": {
+        "order": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1598
+        },
+        "field": {
+          "$ref": "#/$defs/Ref"
+        },
+        "sourceColumn": {
+          "$ref": "#/$defs/NativeColumn"
+        },
+        "valuesColumn": {
+          "$ref": "#/$defs/NativeColumn"
+        },
+        "domain": {
+          "$ref": "#/$defs/Domain"
+        },
+        "sourceMeaningDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "order",
+        "field",
+        "sourceColumn",
+        "valuesColumn",
+        "domain",
+        "sourceMeaningDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Lineage": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-lineage/0.1"
+        },
+        "providerId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "storeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "installationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "targetCustody": {
+          "$ref": "#/$defs/TargetCustody"
+        },
+        "lineageId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "record": {
+          "$ref": "#/$defs/Ref"
+        },
+        "originalSourceDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "originalBirthReceiptDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "maxIssuedInstances": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        }
+      },
+      "required": [
+        "profile",
+        "providerId",
+        "storeId",
+        "installationId",
+        "targetCustody",
+        "lineageId",
+        "table",
+        "record",
+        "originalSourceDigest",
+        "originalBirthReceiptDigest",
+        "maxIssuedInstances"
+      ],
+      "additionalProperties": false
+    },
+    "LineageObservation": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-lineage-observation/0.1"
+        },
+        "recordDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "issuedCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "state": {
+          "enum": [
+            "active",
+            "retired"
+          ]
+        },
+        "activeTableToken": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "generationCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "profile",
+        "recordDigest",
+        "issuedCount",
+        "state",
+        "activeTableToken",
+        "generationCount",
+        "revision"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "active"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "activeTableToken": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "activeTableToken": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Carrier": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-carrier-generation/0.1"
+        },
+        "providerId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "storeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "lineageId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "tableToken": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "physicalGeneration": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "parentTableToken": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "parentArchiveId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "businessRelation": {
+          "$ref": "#/$defs/NativeRelation"
+        },
+        "enrollmentReceiptDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "birthReceiptDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "state": {
+          "enum": [
+            "active",
+            "retired"
+          ]
+        },
+        "retirementReceiptDigest": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "profile",
+        "providerId",
+        "storeId",
+        "lineageId",
+        "tableToken",
+        "generation",
+        "physicalGeneration",
+        "parentTableToken",
+        "parentArchiveId",
+        "businessRelation",
+        "enrollmentReceiptDigest",
+        "birthReceiptDigest",
+        "state",
+        "retirementReceiptDigest"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "generation": {
+                "const": 1
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "parentTableToken": {
+                "type": "null"
+              },
+              "parentArchiveId": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "parentTableToken": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+              },
+              "parentArchiveId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "WholeArchive": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.whole-table-archive/0.1"
+        },
+        "providerId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "storeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "installationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "targetCustody": {
+          "$ref": "#/$defs/TargetCustody"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "lineageId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "tableToken": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "physicalGeneration": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "record": {
+          "$ref": "#/$defs/Ref"
+        },
+        "retirementPlanDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "retirementSourceDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "tableMeaningDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "nativeDomainDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "archiveSourceDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "nativeCatalogDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "fieldDependenciesDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "creationReservationDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "valuesRelation": {
+          "$ref": "#/$defs/NativeRelation"
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Column"
+          },
+          "maxItems": 1598
+        },
+        "rowCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "valueStreamBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8388608
+        },
+        "captureNativeTransaction": {
+          "$ref": "#/$defs/NativeTx"
+        }
+      },
+      "required": [
+        "profile",
+        "providerId",
+        "storeId",
+        "installationId",
+        "targetCustody",
+        "archiveId",
+        "lineageId",
+        "tableToken",
+        "physicalGeneration",
+        "table",
+        "record",
+        "retirementPlanDigest",
+        "retirementSourceDigest",
+        "tableMeaningDigest",
+        "nativeDomainDigest",
+        "archiveSourceDigest",
+        "nativeCatalogDigest",
+        "fieldDependenciesDigest",
+        "creationReservationDigest",
+        "valuesRelation",
+        "columns",
+        "rowCount",
+        "valueStreamBytes",
+        "captureNativeTransaction"
+      ],
+      "additionalProperties": false
+    },
+    "Header": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-native-value-header/0.1"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "lineageId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "tableToken": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "sourceDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "tableMeaningDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "nativeDomainDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Column"
+          },
+          "maxItems": 1598
+        },
+        "rowCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        }
+      },
+      "required": [
+        "profile",
+        "archiveId",
+        "lineageId",
+        "tableToken",
+        "sourceDigest",
+        "tableMeaningDigest",
+        "nativeDomainDigest",
+        "columns",
+        "rowCount"
+      ],
+      "additionalProperties": false
+    },
+    "PrivateProof": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.whole-table-private-value-proof/0.1"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "lineageId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "tableToken": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "valuesRelation": {
+          "$ref": "#/$defs/NativeRelation"
+        },
+        "codec": {
+          "const": "umf.table-native-value-stream/0.1"
+        },
+        "headerDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "streamDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "orderedInstanceDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "rowCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "valueStreamBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8388608
+        },
+        "sourcePopulationObservationDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "archivePopulationObservationDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "nativeTransaction": {
+          "$ref": "#/$defs/NativeTx"
+        }
+      },
+      "required": [
+        "profile",
+        "archiveId",
+        "lineageId",
+        "tableToken",
+        "valuesRelation",
+        "codec",
+        "headerDigest",
+        "streamDigest",
+        "orderedInstanceDigest",
+        "rowCount",
+        "valueStreamBytes",
+        "sourcePopulationObservationDigest",
+        "archivePopulationObservationDigest",
+        "nativeTransaction"
+      ],
+      "additionalProperties": false
+    },
+    "PolicyState": {
+      "type": "object",
+      "properties": {
+        "policyId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "minimumRetentionMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 315360000000
+        },
+        "restoreAllowed": {
+          "type": "boolean"
+        },
+        "retireAllowed": {
+          "type": "boolean"
+        },
+        "authorityConfigDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "statementDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "policyId",
+        "revision",
+        "minimumRetentionMs",
+        "restoreAllowed",
+        "retireAllowed",
+        "authorityConfigDigest",
+        "statementDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Holds": {
+      "type": "object",
+      "properties": {
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "maxItems": 256,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "revision",
+        "ids"
+      ],
+      "additionalProperties": false
+    },
+    "ActiveRequest": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "kind": {
+          "enum": [
+            "restore",
+            "purge"
+          ]
+        },
+        "intentDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "reservationDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "requestId",
+        "kind",
+        "intentDigest",
+        "reservationDigest"
+      ],
+      "additionalProperties": false
+    },
+    "LastOutcome": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "kind": {
+          "enum": [
+            "retire",
+            "restore",
+            "purge",
+            "abandon"
+          ]
+        },
+        "intentDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "outcomeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "status": {
+          "enum": [
+            "confirmed",
+            "aborted"
+          ]
+        }
+      },
+      "required": [
+        "requestId",
+        "kind",
+        "intentDigest",
+        "outcomeId",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "Publication": {
+      "type": "object",
+      "properties": {
+        "nativeOutcomeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "publicationOutcomeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "bundleDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "headDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "epochDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "custodySequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "clockAnchorDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "nativeOutcomeId",
+        "publicationOutcomeId",
+        "bundleDigest",
+        "headDigest",
+        "epochDigest",
+        "custodySequence",
+        "clockAnchorDigest"
+      ],
+      "additionalProperties": false
+    },
+    "RestoredCarrier": {
+      "type": "object",
+      "properties": {
+        "tableToken": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "physicalGeneration": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 4096
+        },
+        "birthReceiptDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "restoreOutcomeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        }
+      },
+      "required": [
+        "tableToken",
+        "physicalGeneration",
+        "generation",
+        "birthReceiptDigest",
+        "restoreOutcomeId"
+      ],
+      "additionalProperties": false
+    },
+    "Lifecycle": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.retained-table-lifecycle/0.1"
+        },
+        "providerId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "storeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "lineageId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "originalTableToken": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "targetCustody": {
+          "$ref": "#/$defs/TargetCustody"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "record": {
+          "$ref": "#/$defs/Ref"
+        },
+        "retirementPlanDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "retirementSourceDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "retirementOutcomeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "publication": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Publication"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "policy": {
+          "$ref": "#/$defs/PolicyState"
+        },
+        "holds": {
+          "$ref": "#/$defs/Holds"
+        },
+        "state": {
+          "enum": [
+            "captured",
+            "retired",
+            "restore-pending",
+            "restored",
+            "purge-pending",
+            "purged",
+            "abandoned"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "activeRequest": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ActiveRequest"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lastOutcome": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LastOutcome"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "restoredCarrier": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RestoredCarrier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "profile",
+        "providerId",
+        "storeId",
+        "archiveId",
+        "lineageId",
+        "originalTableToken",
+        "targetCustody",
+        "table",
+        "record",
+        "retirementPlanDigest",
+        "retirementSourceDigest",
+        "retirementOutcomeId",
+        "publication",
+        "policy",
+        "holds",
+        "state",
+        "revision",
+        "activeRequest",
+        "lastOutcome",
+        "restoredCarrier"
+      ],
+      "additionalProperties": false
+    },
+    "PlanBinding": {
+      "type": "object",
+      "properties": {
+        "migrationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "planDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "fileDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "phaseId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "phaseDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "stepIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\u0000]+$"
+          },
+          "maxItems": 99999
+        },
+        "planApprovalDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "ingressRequestDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "ingressApprovalDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "beforePrefixDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "afterPrefixDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "historyContextDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "migrationId",
+        "planDigest",
+        "fileDigest",
+        "phaseId",
+        "phaseDigest",
+        "stepIds",
+        "planApprovalDigest",
+        "ingressRequestDigest",
+        "ingressApprovalDigest",
+        "beforePrefixDigest",
+        "afterPrefixDigest",
+        "historyContextDigest"
+      ],
+      "additionalProperties": false
+    },
+    "LifecycleBinding": {
+      "type": "object",
+      "properties": {
+        "expectedRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "policyRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "holdRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "dependenciesDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "lineageRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "expectedRevision",
+        "policyRevision",
+        "holdRevision",
+        "dependenciesDigest",
+        "lineageRevision"
+      ],
+      "additionalProperties": false
+    },
+    "Reservation": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-recovery-reservation/0.1"
+        },
+        "reservationId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "requestId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "requestDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "providerId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "storeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "lineageId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "targetCustody": {
+          "$ref": "#/$defs/TargetCustody"
+        },
+        "kind": {
+          "enum": [
+            "retire",
+            "restore",
+            "purge",
+            "hold-add",
+            "hold-remove",
+            "policy-update",
+            "dependency-satisfy",
+            "publication-anchor"
+          ]
+        },
+        "priorState": {
+          "enum": [
+            "absent",
+            "captured",
+            "retired",
+            "restored",
+            "restore-pending",
+            "purge-pending"
+          ]
+        },
+        "priorRevision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "reservedRevision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "policyRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "holdRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "custodySequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "originalCampaignDigest": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attemptGrantDigest": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "profile",
+        "reservationId",
+        "requestId",
+        "requestDigest",
+        "providerId",
+        "storeId",
+        "archiveId",
+        "lineageId",
+        "targetCustody",
+        "kind",
+        "priorState",
+        "priorRevision",
+        "reservedRevision",
+        "policyRevision",
+        "holdRevision",
+        "custodySequence",
+        "originalCampaignDigest",
+        "attemptGrantDigest"
+      ],
+      "additionalProperties": false
+    },
+    "PublicReceipt": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-recovery-effect/0.1"
+        },
+        "requestId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "lineageId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "kind": {
+          "enum": [
+            "retire",
+            "restore",
+            "purge"
+          ]
+        },
+        "providerId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "storeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "targetCustody": {
+          "$ref": "#/$defs/TargetCustody"
+        },
+        "planDigest": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "phaseId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\u0000]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stepIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\u0000]+$"
+          },
+          "maxItems": 99999
+        },
+        "intentDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "reservationDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "sourceTableToken": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "targetTableToken": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sourcePhysicalGeneration": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "targetPhysicalGeneration": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sourceCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "archivedCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "restoredCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "valueStreamBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8388608
+        },
+        "sourceMeaningDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "afterMeaningDigest": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nativeDomainDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "sourceArchiveRef": {
+          "$ref": "#/$defs/TableArchiveRef"
+        },
+        "newCarrierBirthReceiptDigest": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "retiredCarrierReceiptDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "outcomeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "nativeTransaction": {
+          "$ref": "#/$defs/NativeTx"
+        }
+      },
+      "required": [
+        "profile",
+        "requestId",
+        "archiveId",
+        "lineageId",
+        "kind",
+        "providerId",
+        "storeId",
+        "targetCustody",
+        "planDigest",
+        "phaseId",
+        "stepIds",
+        "intentDigest",
+        "reservationDigest",
+        "sourceTableToken",
+        "targetTableToken",
+        "sourcePhysicalGeneration",
+        "targetPhysicalGeneration",
+        "sourceCount",
+        "archivedCount",
+        "restoredCount",
+        "valueStreamBytes",
+        "sourceMeaningDigest",
+        "afterMeaningDigest",
+        "nativeDomainDigest",
+        "sourceArchiveRef",
+        "newCarrierBirthReceiptDigest",
+        "retiredCarrierReceiptDigest",
+        "outcomeId",
+        "nativeTransaction"
+      ],
+      "additionalProperties": false
+    },
+    "Event": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-recovery-event/0.1"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "previousEventDigest": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "requestId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "requestDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "reservationDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "kind": {
+          "enum": [
+            "reserved",
+            "retired",
+            "restore-confirmed",
+            "purge-confirmed",
+            "hold-added",
+            "hold-removed",
+            "policy-updated",
+            "dependency-satisfied",
+            "abort-settled",
+            "publication-anchored",
+            "attempt-noncommit"
+          ]
+        },
+        "beforeRevision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "afterRevision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "nativeTransaction": {
+          "$ref": "#/$defs/NativeTx"
+        },
+        "outcomeId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "publicReceiptDigest": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "profile",
+        "archiveId",
+        "sequence",
+        "previousEventDigest",
+        "requestId",
+        "requestDigest",
+        "reservationDigest",
+        "kind",
+        "beforeRevision",
+        "afterRevision",
+        "nativeTransaction",
+        "outcomeId",
+        "publicReceiptDigest"
+      ],
+      "additionalProperties": false
+    },
+    "StateReceipt": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-retention-state-effect/0.1"
+        },
+        "requestId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "kind": {
+          "enum": [
+            "hold-add",
+            "hold-remove",
+            "policy-update",
+            "dependency-satisfy",
+            "publication-anchored"
+          ]
+        },
+        "beforeRevision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "afterRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "policyRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "holdRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "outcomeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "nativeTransaction": {
+          "$ref": "#/$defs/NativeTx"
+        }
+      },
+      "required": [
+        "profile",
+        "requestId",
+        "archiveId",
+        "kind",
+        "beforeRevision",
+        "afterRevision",
+        "policyRevision",
+        "holdRevision",
+        "outcomeId",
+        "nativeTransaction"
+      ],
+      "additionalProperties": false
+    },
+    "Outcome": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-recovery-native-outcome/0.1"
+        },
+        "outcomeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "requestId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "requestDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "reservationDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "kind": {
+          "enum": [
+            "retire",
+            "restore",
+            "purge",
+            "hold-add",
+            "hold-remove",
+            "policy-update",
+            "dependency-satisfy",
+            "publication-anchor"
+          ]
+        },
+        "status": {
+          "enum": [
+            "confirmed",
+            "aborted"
+          ]
+        },
+        "publicReceipt": {
+          "anyOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/PublicReceipt"
+                },
+                {
+                  "$ref": "#/$defs/StateReceipt"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "privateProofRecordDigest": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nativeTransaction": {
+          "$ref": "#/$defs/NativeTx"
+        },
+        "eventSequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        }
+      },
+      "required": [
+        "profile",
+        "outcomeId",
+        "requestId",
+        "requestDigest",
+        "reservationDigest",
+        "archiveId",
+        "kind",
+        "status",
+        "publicReceipt",
+        "privateProofRecordDigest",
+        "nativeTransaction",
+        "eventSequence"
+      ],
+      "additionalProperties": false
+    },
+    "Result": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.retained-table-action-result/0.1"
+        },
+        "requestId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "targetCustody": {
+          "$ref": "#/$defs/TargetCustody"
+        },
+        "intentDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "status": {
+          "enum": [
+            "confirmed",
+            "aborted",
+            "unknown"
+          ]
+        },
+        "outcomeId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "receipt": {
+          "anyOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/PublicReceipt"
+                },
+                {
+                  "$ref": "#/$defs/StateReceipt"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "profile",
+        "requestId",
+        "archiveId",
+        "targetCustody",
+        "intentDigest",
+        "status",
+        "outcomeId",
+        "receipt"
+      ],
+      "additionalProperties": false
+    },
+    "Permit": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.whole-table-restore-permit/0.1"
+        },
+        "requestId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "requestDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "reservationDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "lineageId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "tableToken": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "physicalGeneration": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "backendPid": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "transactionId": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]{0,19})$"
+        },
+        "expectedCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "populationProofDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "sourceValuesRelation": {
+          "$ref": "#/$defs/NativeRelation"
+        },
+        "targetBusinessRelation": {
+          "$ref": "#/$defs/NativeRelation"
+        }
+      },
+      "required": [
+        "profile",
+        "requestId",
+        "requestDigest",
+        "reservationDigest",
+        "archiveId",
+        "lineageId",
+        "tableToken",
+        "physicalGeneration",
+        "backendPid",
+        "transactionId",
+        "expectedCount",
+        "populationProofDigest",
+        "sourceValuesRelation",
+        "targetBusinessRelation"
+      ],
+      "additionalProperties": false
+    },
+    "ClockPayload": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-retention-elapsed-certificate/0.1"
+        },
+        "authorityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "purpose": {
+          "enum": [
+            "production",
+            "native-acceptance"
+          ]
+        },
+        "providerId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "storeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "lineageId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "targetCustody": {
+          "$ref": "#/$defs/TargetCustody"
+        },
+        "nativeOutcomeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "publicationOutcomeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "anchorDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "policyRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "custodySequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "elapsedLowerBoundMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "profile",
+        "authorityId",
+        "purpose",
+        "providerId",
+        "storeId",
+        "archiveId",
+        "lineageId",
+        "targetCustody",
+        "nativeOutcomeId",
+        "publicationOutcomeId",
+        "anchorDigest",
+        "policyRevision",
+        "custodySequence",
+        "elapsedLowerBoundMs"
+      ],
+      "additionalProperties": false
+    },
+    "ClockEnvelope": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/ClockPayload"
+        },
+        "keyId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "signature": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{86}$"
+        }
+      },
+      "required": [
+        "payload",
+        "keyId",
+        "signature"
+      ],
+      "additionalProperties": false
+    },
+    "Eligibility": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "const": "elapsed"
+            },
+            "certificate": {
+              "$ref": "#/$defs/ClockEnvelope"
+            }
+          },
+          "required": [
+            "mode",
+            "certificate"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "const": "minimum-window-override"
+            },
+            "reasonCode": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[^\\u0000]+$"
+            },
+            "overriddenMinimumRetentionMs": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 315360000000
+            }
+          },
+          "required": [
+            "mode",
+            "reasonCode",
+            "overriddenMinimumRetentionMs"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "PurgeIntent": {
+      "type": "object",
+      "properties": {
+        "archive": {
+          "$ref": "#/$defs/TableArchiveRef"
+        },
+        "expectedLifecycleRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "policyRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "holdRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "dependenciesDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "valuesRelation": {
+          "$ref": "#/$defs/NativeRelation"
+        },
+        "effect": {
+          "const": "drop-one-whole-values-relation-restrict"
+        },
+        "eligibility": {
+          "$ref": "#/$defs/Eligibility"
+        },
+        "irreversibleMarker": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        }
+      },
+      "required": [
+        "archive",
+        "expectedLifecycleRevision",
+        "policyRevision",
+        "holdRevision",
+        "dependenciesDigest",
+        "valuesRelation",
+        "effect",
+        "eligibility",
+        "irreversibleMarker"
+      ],
+      "additionalProperties": false
+    },
+    "HoldIntent": {
+      "type": "object",
+      "properties": {
+        "archive": {
+          "$ref": "#/$defs/TableArchiveRef"
+        },
+        "expectedLifecycleRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "expectedHoldRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "operation": {
+          "enum": [
+            "add",
+            "remove"
+          ]
+        },
+        "holdId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        }
+      },
+      "required": [
+        "archive",
+        "expectedLifecycleRevision",
+        "expectedHoldRevision",
+        "operation",
+        "holdId"
+      ],
+      "additionalProperties": false
+    },
+    "PolicyIntent": {
+      "type": "object",
+      "properties": {
+        "archive": {
+          "$ref": "#/$defs/TableArchiveRef"
+        },
+        "expectedLifecycleRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "expectedPolicyRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "nextPolicy": {
+          "$ref": "#/$defs/PolicyState"
+        }
+      },
+      "required": [
+        "archive",
+        "expectedLifecycleRevision",
+        "expectedPolicyRevision",
+        "nextPolicy"
+      ],
+      "additionalProperties": false
+    },
+    "DependencyIntent": {
+      "type": "object",
+      "properties": {
+        "archive": {
+          "$ref": "#/$defs/TableArchiveRef"
+        },
+        "dependencyId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "expectedLifecycleRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "expectedDependencyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "originalRestoreOutcomeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "continuityProofDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "newCarrierReceiptDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "archive",
+        "dependencyId",
+        "expectedLifecycleRevision",
+        "expectedDependencyDigest",
+        "originalRestoreOutcomeId",
+        "continuityProofDigest",
+        "newCarrierReceiptDigest"
+      ],
+      "additionalProperties": false
+    },
+    "AnchorIntent": {
+      "type": "object",
+      "properties": {
+        "archive": {
+          "$ref": "#/$defs/TableArchiveRef"
+        },
+        "originalRetirementOutcomeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "originalPublicationOutcomeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "publicationRecordDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "clockAuthorityContextDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "clockAnchorDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expectedLifecycleRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "archive",
+        "originalRetirementOutcomeId",
+        "originalPublicationOutcomeId",
+        "publicationRecordDigest",
+        "clockAuthorityContextDigest",
+        "clockAnchorDigest",
+        "expectedLifecycleRevision"
+      ],
+      "additionalProperties": false
+    },
+    "RetirementRequestIntent": {
+      "type": "object",
+      "properties": {
+        "selectionIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 511
+        },
+        "intentDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "retention": {
+          "$ref": "#/$defs/Retention"
+        },
+        "sourceMeaningDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "nativeDomainDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "businessRelation": {
+          "$ref": "#/$defs/NativeRelation"
+        },
+        "originalEnrollmentReceiptDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "currentProviderStateDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "reviewMarkerDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "selectionIndex",
+        "intentDigest",
+        "retention",
+        "sourceMeaningDigest",
+        "nativeDomainDigest",
+        "businessRelation",
+        "originalEnrollmentReceiptDigest",
+        "currentProviderStateDigest",
+        "reviewMarkerDigest"
+      ],
+      "additionalProperties": false
+    },
+    "RestorationRequestIntent": {
+      "type": "object",
+      "properties": {
+        "selectionIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 511
+        },
+        "intentDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "archive": {
+          "$ref": "#/$defs/TableArchiveRef"
+        },
+        "archiveSourceDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "targetAbsenceObservationDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "newTableToken": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "newPhysicalGeneration": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "newGeneration": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 4096
+        },
+        "parentTableToken": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "afterSourceDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "afterBundleDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "afterMeaningDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "dependenciesDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "reviewMarkerDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "selectionIndex",
+        "intentDigest",
+        "archive",
+        "archiveSourceDigest",
+        "targetAbsenceObservationDigest",
+        "newTableToken",
+        "newPhysicalGeneration",
+        "newGeneration",
+        "parentTableToken",
+        "afterSourceDigest",
+        "afterBundleDigest",
+        "afterMeaningDigest",
+        "dependenciesDigest",
+        "reviewMarkerDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Request-retire": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-recovery-request/0.1"
+        },
+        "requestId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "kind": {
+          "const": "retire"
+        },
+        "providerId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "storeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "installationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "targetCustody": {
+          "$ref": "#/$defs/TargetCustody"
+        },
+        "purpose": {
+          "enum": [
+            "production",
+            "native-acceptance"
+          ]
+        },
+        "contextDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "lineageId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "tableToken": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "physicalGeneration": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "record": {
+          "$ref": "#/$defs/Ref"
+        },
+        "planBinding": {
+          "$ref": "#/$defs/PlanBinding"
+        },
+        "lifecycleBinding": {
+          "type": "null"
+        },
+        "intent": {
+          "$ref": "#/$defs/RetirementRequestIntent"
+        },
+        "executionPolicyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "componentPolicyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "providerDefinitionDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "profile",
+        "requestId",
+        "kind",
+        "providerId",
+        "storeId",
+        "installationId",
+        "targetCustody",
+        "purpose",
+        "contextDigest",
+        "archiveId",
+        "lineageId",
+        "tableToken",
+        "physicalGeneration",
+        "table",
+        "record",
+        "planBinding",
+        "lifecycleBinding",
+        "intent",
+        "executionPolicyDigest",
+        "componentPolicyDigest",
+        "providerDefinitionDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Request-restore": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-recovery-request/0.1"
+        },
+        "requestId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "kind": {
+          "const": "restore"
+        },
+        "providerId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "storeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "installationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "targetCustody": {
+          "$ref": "#/$defs/TargetCustody"
+        },
+        "purpose": {
+          "enum": [
+            "production",
+            "native-acceptance"
+          ]
+        },
+        "contextDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "lineageId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "tableToken": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "physicalGeneration": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "record": {
+          "$ref": "#/$defs/Ref"
+        },
+        "planBinding": {
+          "$ref": "#/$defs/PlanBinding"
+        },
+        "lifecycleBinding": {
+          "$ref": "#/$defs/LifecycleBinding"
+        },
+        "intent": {
+          "$ref": "#/$defs/RestorationRequestIntent"
+        },
+        "executionPolicyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "componentPolicyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "providerDefinitionDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "profile",
+        "requestId",
+        "kind",
+        "providerId",
+        "storeId",
+        "installationId",
+        "targetCustody",
+        "purpose",
+        "contextDigest",
+        "archiveId",
+        "lineageId",
+        "tableToken",
+        "physicalGeneration",
+        "table",
+        "record",
+        "planBinding",
+        "lifecycleBinding",
+        "intent",
+        "executionPolicyDigest",
+        "componentPolicyDigest",
+        "providerDefinitionDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Request-purge": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-recovery-request/0.1"
+        },
+        "requestId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "kind": {
+          "const": "purge"
+        },
+        "providerId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "storeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "installationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "targetCustody": {
+          "$ref": "#/$defs/TargetCustody"
+        },
+        "purpose": {
+          "enum": [
+            "production",
+            "native-acceptance"
+          ]
+        },
+        "contextDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "lineageId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "tableToken": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "physicalGeneration": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "record": {
+          "$ref": "#/$defs/Ref"
+        },
+        "planBinding": {
+          "type": "null"
+        },
+        "lifecycleBinding": {
+          "$ref": "#/$defs/LifecycleBinding"
+        },
+        "intent": {
+          "$ref": "#/$defs/PurgeIntent"
+        },
+        "executionPolicyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "componentPolicyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "providerDefinitionDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "profile",
+        "requestId",
+        "kind",
+        "providerId",
+        "storeId",
+        "installationId",
+        "targetCustody",
+        "purpose",
+        "contextDigest",
+        "archiveId",
+        "lineageId",
+        "tableToken",
+        "physicalGeneration",
+        "table",
+        "record",
+        "planBinding",
+        "lifecycleBinding",
+        "intent",
+        "executionPolicyDigest",
+        "componentPolicyDigest",
+        "providerDefinitionDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Request-hold-add": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-recovery-request/0.1"
+        },
+        "requestId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "kind": {
+          "const": "hold-add"
+        },
+        "providerId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "storeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "installationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "targetCustody": {
+          "$ref": "#/$defs/TargetCustody"
+        },
+        "purpose": {
+          "enum": [
+            "production",
+            "native-acceptance"
+          ]
+        },
+        "contextDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "lineageId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "tableToken": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "physicalGeneration": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "record": {
+          "$ref": "#/$defs/Ref"
+        },
+        "planBinding": {
+          "type": "null"
+        },
+        "lifecycleBinding": {
+          "$ref": "#/$defs/LifecycleBinding"
+        },
+        "intent": {
+          "$ref": "#/$defs/HoldIntent"
+        },
+        "executionPolicyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "componentPolicyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "providerDefinitionDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "profile",
+        "requestId",
+        "kind",
+        "providerId",
+        "storeId",
+        "installationId",
+        "targetCustody",
+        "purpose",
+        "contextDigest",
+        "archiveId",
+        "lineageId",
+        "tableToken",
+        "physicalGeneration",
+        "table",
+        "record",
+        "planBinding",
+        "lifecycleBinding",
+        "intent",
+        "executionPolicyDigest",
+        "componentPolicyDigest",
+        "providerDefinitionDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Request-hold-remove": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-recovery-request/0.1"
+        },
+        "requestId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "kind": {
+          "const": "hold-remove"
+        },
+        "providerId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "storeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "installationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "targetCustody": {
+          "$ref": "#/$defs/TargetCustody"
+        },
+        "purpose": {
+          "enum": [
+            "production",
+            "native-acceptance"
+          ]
+        },
+        "contextDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "lineageId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "tableToken": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "physicalGeneration": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "record": {
+          "$ref": "#/$defs/Ref"
+        },
+        "planBinding": {
+          "type": "null"
+        },
+        "lifecycleBinding": {
+          "$ref": "#/$defs/LifecycleBinding"
+        },
+        "intent": {
+          "$ref": "#/$defs/HoldIntent"
+        },
+        "executionPolicyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "componentPolicyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "providerDefinitionDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "profile",
+        "requestId",
+        "kind",
+        "providerId",
+        "storeId",
+        "installationId",
+        "targetCustody",
+        "purpose",
+        "contextDigest",
+        "archiveId",
+        "lineageId",
+        "tableToken",
+        "physicalGeneration",
+        "table",
+        "record",
+        "planBinding",
+        "lifecycleBinding",
+        "intent",
+        "executionPolicyDigest",
+        "componentPolicyDigest",
+        "providerDefinitionDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Request-policy-update": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-recovery-request/0.1"
+        },
+        "requestId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "kind": {
+          "const": "policy-update"
+        },
+        "providerId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "storeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "installationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "targetCustody": {
+          "$ref": "#/$defs/TargetCustody"
+        },
+        "purpose": {
+          "enum": [
+            "production",
+            "native-acceptance"
+          ]
+        },
+        "contextDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "lineageId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "tableToken": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "physicalGeneration": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "record": {
+          "$ref": "#/$defs/Ref"
+        },
+        "planBinding": {
+          "type": "null"
+        },
+        "lifecycleBinding": {
+          "$ref": "#/$defs/LifecycleBinding"
+        },
+        "intent": {
+          "$ref": "#/$defs/PolicyIntent"
+        },
+        "executionPolicyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "componentPolicyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "providerDefinitionDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "profile",
+        "requestId",
+        "kind",
+        "providerId",
+        "storeId",
+        "installationId",
+        "targetCustody",
+        "purpose",
+        "contextDigest",
+        "archiveId",
+        "lineageId",
+        "tableToken",
+        "physicalGeneration",
+        "table",
+        "record",
+        "planBinding",
+        "lifecycleBinding",
+        "intent",
+        "executionPolicyDigest",
+        "componentPolicyDigest",
+        "providerDefinitionDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Request-dependency-satisfy": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-recovery-request/0.1"
+        },
+        "requestId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "kind": {
+          "const": "dependency-satisfy"
+        },
+        "providerId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "storeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "installationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "targetCustody": {
+          "$ref": "#/$defs/TargetCustody"
+        },
+        "purpose": {
+          "enum": [
+            "production",
+            "native-acceptance"
+          ]
+        },
+        "contextDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "lineageId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "tableToken": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "physicalGeneration": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "record": {
+          "$ref": "#/$defs/Ref"
+        },
+        "planBinding": {
+          "type": "null"
+        },
+        "lifecycleBinding": {
+          "$ref": "#/$defs/LifecycleBinding"
+        },
+        "intent": {
+          "$ref": "#/$defs/DependencyIntent"
+        },
+        "executionPolicyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "componentPolicyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "providerDefinitionDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "profile",
+        "requestId",
+        "kind",
+        "providerId",
+        "storeId",
+        "installationId",
+        "targetCustody",
+        "purpose",
+        "contextDigest",
+        "archiveId",
+        "lineageId",
+        "tableToken",
+        "physicalGeneration",
+        "table",
+        "record",
+        "planBinding",
+        "lifecycleBinding",
+        "intent",
+        "executionPolicyDigest",
+        "componentPolicyDigest",
+        "providerDefinitionDigest"
+      ],
+      "additionalProperties": false
+    },
+    "Request-publication-anchor": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-recovery-request/0.1"
+        },
+        "requestId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "kind": {
+          "const": "publication-anchor"
+        },
+        "providerId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "storeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "installationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "targetCustody": {
+          "$ref": "#/$defs/TargetCustody"
+        },
+        "purpose": {
+          "enum": [
+            "production",
+            "native-acceptance"
+          ]
+        },
+        "contextDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "lineageId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "tableToken": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "physicalGeneration": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "table": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "record": {
+          "$ref": "#/$defs/Ref"
+        },
+        "planBinding": {
+          "type": "null"
+        },
+        "lifecycleBinding": {
+          "$ref": "#/$defs/LifecycleBinding"
+        },
+        "intent": {
+          "$ref": "#/$defs/AnchorIntent"
+        },
+        "executionPolicyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "componentPolicyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "providerDefinitionDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "profile",
+        "requestId",
+        "kind",
+        "providerId",
+        "storeId",
+        "installationId",
+        "targetCustody",
+        "purpose",
+        "contextDigest",
+        "archiveId",
+        "lineageId",
+        "tableToken",
+        "physicalGeneration",
+        "table",
+        "record",
+        "planBinding",
+        "lifecycleBinding",
+        "intent",
+        "executionPolicyDigest",
+        "componentPolicyDigest",
+        "providerDefinitionDigest"
+      ],
+      "additionalProperties": false
+    },
+    "RecoveryRequest": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/Request-retire"
+        },
+        {
+          "$ref": "#/$defs/Request-restore"
+        },
+        {
+          "$ref": "#/$defs/Request-purge"
+        },
+        {
+          "$ref": "#/$defs/Request-hold-add"
+        },
+        {
+          "$ref": "#/$defs/Request-hold-remove"
+        },
+        {
+          "$ref": "#/$defs/Request-policy-update"
+        },
+        {
+          "$ref": "#/$defs/Request-dependency-satisfy"
+        },
+        {
+          "$ref": "#/$defs/Request-publication-anchor"
+        }
+      ]
+    },
+    "ProgramRef": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "weft.original-lineage-fill-program-ref/0.1"
+        },
+        "compilerArtifactDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "requestDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "programDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "profile",
+        "compilerArtifactDigest",
+        "requestDigest",
+        "programDigest"
+      ],
+      "additionalProperties": false
+    },
+    "ExecutionPolicy": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-recovery-execution-policy/0.1"
+        },
+        "transactionTimeoutMs": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 300000
+        },
+        "maxTableRows": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "maxTableValueStreamBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8388608
+        },
+        "maxPhaseRetiredRows": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "maxPhaseRestoredRows": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "maxPhaseValueStreamBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8388608
+        },
+        "maxCampaignRetiredRows": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        "maxCampaignRestoredRows": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        "maxCampaignValueStreamBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 67108864
+        },
+        "maxArchives": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "maxArchiveMetadataBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 67108864
+        },
+        "maxProviderMetadataBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 134217728
+        },
+        "maxProviderValueStreamBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1073741824
+        },
+        "maxRequests": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "maxEvents": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "maxIssuedInstances": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "dataAuthorityConfigDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "clockAuthorityConfigDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "providerDefinitionDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "profile",
+        "transactionTimeoutMs",
+        "maxTableRows",
+        "maxTableValueStreamBytes",
+        "maxPhaseRetiredRows",
+        "maxPhaseRestoredRows",
+        "maxPhaseValueStreamBytes",
+        "maxCampaignRetiredRows",
+        "maxCampaignRestoredRows",
+        "maxCampaignValueStreamBytes",
+        "maxArchives",
+        "maxArchiveMetadataBytes",
+        "maxProviderMetadataBytes",
+        "maxProviderValueStreamBytes",
+        "maxRequests",
+        "maxEvents",
+        "maxIssuedInstances",
+        "dataAuthorityConfigDigest",
+        "clockAuthorityConfigDigest",
+        "providerDefinitionDigest"
+      ],
+      "additionalProperties": false
+    },
+    "DataPolicyAdmission": {
+      "type": "object",
+      "properties": {
+        "policyId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "minimumRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "maximumRetentionMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 315360000000
+        },
+        "allowRestore": {
+          "type": "boolean"
+        },
+        "allowWindowOverride": {
+          "type": "boolean"
+        },
+        "reasonCodes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[^\\u0000]+$"
+          },
+          "maxItems": 256,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "policyId",
+        "minimumRevision",
+        "maximumRetentionMs",
+        "allowRestore",
+        "allowWindowOverride",
+        "reasonCodes"
+      ],
+      "additionalProperties": false
+    },
+    "DataKey": {
+      "type": "object",
+      "properties": {
+        "keyId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "publicKey": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{43}$"
+        },
+        "principalId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "purge-retained-table",
+              "mutate-table-retention-hold",
+              "update-table-retention-policy",
+              "override-table-minimum-window"
+            ]
+          },
+          "maxItems": 4,
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "keyId",
+        "publicKey",
+        "principalId",
+        "scopes"
+      ],
+      "additionalProperties": false
+    },
+    "DataConfig": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.configured-table-retention-authority/0.1"
+        },
+        "authorityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "policyRevision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "purpose": {
+          "enum": [
+            "production",
+            "native-acceptance"
+          ]
+        },
+        "providerId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "storeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "installationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "targetCustody": {
+          "$ref": "#/$defs/TargetCustody"
+        },
+        "contextDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "approvedPolicies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DataPolicyAdmission"
+          },
+          "maxItems": 256,
+          "minItems": 1
+        },
+        "keys": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DataKey"
+          },
+          "maxItems": 32,
+          "minItems": 1
+        }
+      },
+      "required": [
+        "profile",
+        "authorityId",
+        "policyRevision",
+        "purpose",
+        "providerId",
+        "storeId",
+        "installationId",
+        "targetCustody",
+        "contextDigest",
+        "approvedPolicies",
+        "keys"
+      ],
+      "additionalProperties": false
+    },
+    "DataContext": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-retention-authority-context/0.1"
+        },
+        "contextId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "configurationDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "ownerBootstrapContextDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "originalSupervisorId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "originalCustodianId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "providerId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "storeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "installationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "targetCustodyDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "purpose": {
+          "enum": [
+            "production",
+            "native-acceptance"
+          ]
+        },
+        "storeCreationReceiptDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "trustEnrollmentDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "profile",
+        "contextId",
+        "configurationDigest",
+        "ownerBootstrapContextDigest",
+        "originalSupervisorId",
+        "originalCustodianId",
+        "providerId",
+        "storeId",
+        "installationId",
+        "targetCustodyDigest",
+        "purpose",
+        "storeCreationReceiptDigest",
+        "trustEnrollmentDigest"
+      ],
+      "additionalProperties": false
+    },
+    "DataApprovalPayload": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "profile": {
+              "const": "umf.table-retention-approval/0.1"
+            },
+            "authorityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\u0000]+$"
+            },
+            "principalId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\u0000]+$"
+            },
+            "requestId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "purpose": {
+              "enum": [
+                "production",
+                "native-acceptance"
+              ]
+            },
+            "scope": {
+              "const": "purge-retained-table"
+            },
+            "targetCustody": {
+              "$ref": "#/$defs/TargetCustody"
+            },
+            "contextDigest": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "policyRevision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "executionPolicyDigest": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "intent": {
+              "$ref": "#/$defs/PurgeIntent"
+            }
+          },
+          "required": [
+            "profile",
+            "authorityId",
+            "principalId",
+            "requestId",
+            "purpose",
+            "scope",
+            "targetCustody",
+            "contextDigest",
+            "policyRevision",
+            "executionPolicyDigest",
+            "intent"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "profile": {
+              "const": "umf.table-retention-approval/0.1"
+            },
+            "authorityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\u0000]+$"
+            },
+            "principalId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\u0000]+$"
+            },
+            "requestId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "purpose": {
+              "enum": [
+                "production",
+                "native-acceptance"
+              ]
+            },
+            "scope": {
+              "const": "mutate-table-retention-hold"
+            },
+            "targetCustody": {
+              "$ref": "#/$defs/TargetCustody"
+            },
+            "contextDigest": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "policyRevision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "executionPolicyDigest": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "intent": {
+              "$ref": "#/$defs/HoldIntent"
+            }
+          },
+          "required": [
+            "profile",
+            "authorityId",
+            "principalId",
+            "requestId",
+            "purpose",
+            "scope",
+            "targetCustody",
+            "contextDigest",
+            "policyRevision",
+            "executionPolicyDigest",
+            "intent"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "profile": {
+              "const": "umf.table-retention-approval/0.1"
+            },
+            "authorityId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\u0000]+$"
+            },
+            "principalId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\u0000]+$"
+            },
+            "requestId": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "purpose": {
+              "enum": [
+                "production",
+                "native-acceptance"
+              ]
+            },
+            "scope": {
+              "const": "update-table-retention-policy"
+            },
+            "targetCustody": {
+              "$ref": "#/$defs/TargetCustody"
+            },
+            "contextDigest": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "policyRevision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "executionPolicyDigest": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "intent": {
+              "$ref": "#/$defs/PolicyIntent"
+            }
+          },
+          "required": [
+            "profile",
+            "authorityId",
+            "principalId",
+            "requestId",
+            "purpose",
+            "scope",
+            "targetCustody",
+            "contextDigest",
+            "policyRevision",
+            "executionPolicyDigest",
+            "intent"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "DataApproval": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "$ref": "#/$defs/DataApprovalPayload"
+        },
+        "keyId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "signature": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{86}$"
+        }
+      },
+      "required": [
+        "payload",
+        "keyId",
+        "signature"
+      ],
+      "additionalProperties": false
+    },
+    "ClockContext": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-retention-clock-context/0.1"
+        },
+        "authorityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "purpose": {
+          "enum": [
+            "production",
+            "native-acceptance"
+          ]
+        },
+        "providerId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "storeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "installationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "targetCustody": {
+          "$ref": "#/$defs/TargetCustody"
+        },
+        "sourceId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "qualificationDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "keys": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "keyId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "pattern": "^[^\\u0000]+$"
+              },
+              "publicKey": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]{43}$"
+              }
+            },
+            "required": [
+              "keyId",
+              "publicKey"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 32,
+          "minItems": 1
+        }
+      },
+      "required": [
+        "profile",
+        "authorityId",
+        "purpose",
+        "providerId",
+        "storeId",
+        "installationId",
+        "targetCustody",
+        "sourceId",
+        "qualificationDigest",
+        "keys"
+      ],
+      "additionalProperties": false
+    },
+    "ClockCheckpoint": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-retention-clock-checkpoint/0.1"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "anchorDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "previousCheckpointDigest": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bootIdentityDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "sampleTicks": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]{0,38})$"
+        },
+        "ticksPerSecond": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,38}$"
+        },
+        "uncertaintyTicks": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]{0,38})$"
+        },
+        "elapsedLowerBoundMs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "custodySequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "profile",
+        "archiveId",
+        "anchorDigest",
+        "previousCheckpointDigest",
+        "bootIdentityDigest",
+        "sampleTicks",
+        "ticksPerSecond",
+        "uncertaintyTicks",
+        "elapsedLowerBoundMs",
+        "custodySequence"
+      ],
+      "additionalProperties": false
+    },
+    "Satisfaction": {
+      "type": "object",
+      "properties": {
+        "originalRestoreOutcomeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "continuityProofDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "newCarrierReceiptDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "custodySequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "originalRestoreOutcomeId",
+        "continuityProofDigest",
+        "newCarrierReceiptDigest",
+        "custodySequence"
+      ],
+      "additionalProperties": false
+    },
+    "Dependency": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "const": "umf.table-recovery-dependency/0.1"
+        },
+        "archiveId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "dependencyId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "kind": {
+          "enum": [
+            "field-archive",
+            "table-archive",
+            "restore-lease",
+            "source-retention"
+          ]
+        },
+        "providerId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "dependentId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "lineageId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "sourceTableToken": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "requiredFor": {
+          "enum": [
+            "values-and-population",
+            "source-and-lineage"
+          ]
+        },
+        "state": {
+          "enum": [
+            "required",
+            "satisfied"
+          ]
+        },
+        "originOutcomeId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "satisfaction": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Satisfaction"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "profile",
+        "archiveId",
+        "dependencyId",
+        "kind",
+        "providerId",
+        "dependentId",
+        "lineageId",
+        "sourceTableToken",
+        "requiredFor",
+        "state",
+        "originOutcomeId",
+        "satisfaction"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

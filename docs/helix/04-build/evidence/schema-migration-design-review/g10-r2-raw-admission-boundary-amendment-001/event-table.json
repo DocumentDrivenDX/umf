@@ -1,0 +1,40 @@
+{
+  "profile": "umf.r2-raw-admission-event-delta/0.1",
+  "status": "design-proposal-requires-independent-peer-acceptance",
+  "scope": "raw-initial-own-key-reflection-only-per-unowned-node-admission-occurrence",
+  "events": [
+    {
+      "name": "rawOwnKeysCall",
+      "units": 1,
+      "chargeAt": "before captured intrinsic Reflect.ownKeys invocation",
+      "extent": "one invocation; native result extent unknown until return"
+    },
+    {
+      "name": "rawOwnKeysResult",
+      "unitsPerReturnedSlot": 1,
+      "chargeAt": "immediately after native return, before descriptor walk or owned output creation",
+      "extent": "exact returned own-key array length including symbols and array length key",
+      "overflow": "located refusal, no partial admitted context"
+    },
+    {
+      "name": "ownPropertyDescriptor",
+      "units": 1,
+      "chargeAt": "before one captured intrinsic getOwnPropertyDescriptor call for one string key",
+      "extent": "one fixed-shape standard descriptor record, maximum six fields"
+    }
+  ],
+  "unchangedCeilings": {
+    "rootWork": 1000000,
+    "retainedSubjectSlots": 99999,
+    "utf8BlockBytes": 4096
+  },
+  "nativeBoundaryLimitation": "No strict preallocation/native-total-work/OS-heap bound for arbitrary rejected raw JS objects during the atomic Reflect.ownKeys call; exact observed result count is checked before subsequent work. All subsequent owned variable allocations remain preflighted.",
+  "forbiddenSubstitutes": [
+    "guessed flat fee",
+    "accepted-property maximum asserted as a bound on invalid objects",
+    "for-in used to prove hidden/symbol absence",
+    "dropping descriptor checks",
+    "global/caller-asserted owned cache",
+    "batch descriptor/symbol/name array exception"
+  ]
+}

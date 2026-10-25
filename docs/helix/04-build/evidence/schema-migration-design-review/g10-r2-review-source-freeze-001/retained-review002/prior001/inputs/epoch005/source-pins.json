@@ -1,0 +1,60 @@
+[
+  {
+    "source": "/private/tmp/g10-r2-wire-amendment004/manifest.json",
+    "copy": "inputs/amendment004-manifest.json",
+    "sha256": "17988fd05d8001426cda7d05fb812919b6feaa28484bc2fc17edca745a86098c",
+    "bytes": 21110
+  },
+  {
+    "source": "/private/tmp/g10-r2-wire-amendment004/clock-anchor.md",
+    "copy": "inputs/clock-anchor004.md",
+    "sha256": "fd54970cec0600bd164cc3be7096f92491d769b3e38e256577568f7cbda6c25b",
+    "bytes": 12112
+  },
+  {
+    "source": "/Users/erik/.codex/worktrees/66aa/umf/docs/helix/04-build/evidence/schema-migration-design-review/g10-r2-004-independent-design-review.json",
+    "copy": "inputs/external-review004.json",
+    "sha256": "a2cfc734a03b8f64b218cecb4bb845424d3f1cbfa616845d425efc1d97b66b8f",
+    "bytes": 2115
+  },
+  {
+    "source": "/private/tmp/g10-r2-wire-proposal001/inputs/g10/definitions/native-metadata.md",
+    "copy": "inputs/native-metadata.md",
+    "sha256": "ed069da88e3aa319b28f8b5bfb070234b6c9a35c607556a0949e772a4c86df51",
+    "bytes": 32361
+  },
+  {
+    "source": "/private/tmp/g10-r2-wire-proposal001/inputs/g10/definitions/native-inventory-branches.md",
+    "copy": "inputs/native-inventory-branches.md",
+    "sha256": "2e1b2de6f378ad8af4b101500e93576bb9ba89209c93947bccc89732cea40782",
+    "bytes": 8493
+  },
+  {
+    "source": "/private/tmp/g10-r2-wire-proposal001/inputs/g10/definitions/fresh-authority.md",
+    "copy": "inputs/fresh-authority.md",
+    "sha256": "b69024641bf4bdf94a8e92dcc3743570aa1c9dd9ab21d09c95c4120194a88763",
+    "bytes": 20195
+  },
+  {
+    "source": "/private/tmp/g10-r2-wire-amendment004/inputs/amendment003/inputs/base001/wire-adaptations.md",
+    "copy": "inputs/wire-adaptations.md",
+    "sha256": "20db4e89c3317ab256c2442be7c460295a7ca06713d5cce5340fa4b3895b0d53",
+    "bytes": 10256
+  },
+  {
+    "repository": "/Users/erik/.codex/worktrees/g11-field-replacement/umf",
+    "commit": "75f85eed0d9f77783274dbc8e0b28b1078806b21",
+    "path": "python/umf_access/src/umf_access/lifecycle/ingress_store.py",
+    "copy": "inputs/ingress_store.py",
+    "sha256": "e6efd94da87d51aac965ad782008ee4664dfd66b649d4407ad7db2e61d7cbb4d",
+    "bytes": 80971
+  },
+  {
+    "repository": "/Users/erik/.codex/worktrees/g11-field-replacement/umf",
+    "commit": "75f85eed0d9f77783274dbc8e0b28b1078806b21",
+    "path": "python/umf_access/src/umf_access/lifecycle/owner_approval_core.py",
+    "copy": "inputs/owner_approval_core.py",
+    "sha256": "7b172353fe61bb777c53d345d9aaece84fa5c384a627f13b59024d2ab8686aeb",
+    "bytes": 91670
+  }
+]

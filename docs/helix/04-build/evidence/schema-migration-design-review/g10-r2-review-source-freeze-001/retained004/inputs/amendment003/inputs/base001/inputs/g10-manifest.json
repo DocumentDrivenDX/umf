@@ -1,0 +1,148 @@
+{
+  "profile": "umf.g10.governing-proposal/1",
+  "status": "full-inventory-reviewed-design-adoption-proposal-native-unqualified",
+  "baseCommit": "00e4f9e43b39afde36e5c8b26a93b03f89d9d6fa",
+  "reviewedProposalManifestSha256": "86ef804046e88edc90021a52d879f0e6bd13a8257322365bc9c9ba0611f9ffc8",
+  "independentReviewSha256": "c04707129131fee777f736c68202a954c419427a7dd7af12b9dfd0bb903adcec",
+  "files": [
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-081-table-lifecycle.md",
+      "baseSha256": "3432f6fd3d1259d81015b403d9b74a4aac21db163964a171fa0d93fe0dc97d29",
+      "baseBytes": 469827,
+      "candidateFile": "CONTRACT-081-table-lifecycle.md",
+      "candidateSha256": "bb5203eb8c624dc643bb6e45775a66f7d5bcabf6e0d2b87c83d98a803bedd039",
+      "candidateBytes": 502395,
+      "appendedSource": "contract-proposal.md",
+      "exactAppendedSourceSha256": "cee0d04ee72da46062c6814efa1c0235e5c087da82593128f9d766f65c05324a"
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-085-typed-actions-on-raw-tables.md",
+      "baseSha256": "ec8871c517e93ae6779abf9166dba478eb81cb8996820967e1e9b3161c64aba7",
+      "baseBytes": 70754,
+      "candidateFile": "TD-085-typed-actions-on-raw-tables.md",
+      "candidateSha256": "845b2eda7d04a7e1dca53c7db277262b3450e54a1ab6503fa252db192350d29e",
+      "candidateBytes": 97307,
+      "appendedSource": "technical-design.md",
+      "exactAppendedSourceSha256": "ebf07de7179646ab37be3c6e3f9d17525ba958263f2886e1b5804f48f0ad6879"
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-085-typed-actions-on-raw-tables.md",
+      "baseSha256": "3422e693bc82c667ace37a20629a4fc4dcb00fa542aa71b875e65b9183cc8eac",
+      "baseBytes": 70507,
+      "candidateFile": "STP-085-typed-actions-on-raw-tables.md",
+      "candidateSha256": "f8005619d3f2e22460fb384cbfe5209eb3e4da7f3132e8a21ccc5e54ccfba060",
+      "candidateBytes": 107429,
+      "appendedSource": "acceptance-matrix.md",
+      "exactAppendedSourceSha256": "cb95e725cb8b0b70309c9449c1fbc0c0e4200b15d8d59bff710fa0e9348a306c"
+    }
+  ],
+  "sourceElaborations": [
+    {
+      "file": "definitions/contract-proposal.md",
+      "sha256": "cee0d04ee72da46062c6814efa1c0235e5c087da82593128f9d766f65c05324a",
+      "bytes": 27146
+    },
+    {
+      "file": "definitions/technical-design.md",
+      "sha256": "ebf07de7179646ab37be3c6e3f9d17525ba958263f2886e1b5804f48f0ad6879",
+      "bytes": 23288
+    },
+    {
+      "file": "definitions/acceptance-matrix.md",
+      "sha256": "cb95e725cb8b0b70309c9449c1fbc0c0e4200b15d8d59bff710fa0e9348a306c",
+      "bytes": 33656
+    },
+    {
+      "file": "definitions/seed-lineage.md",
+      "sha256": "ab3c044cf055b1ced97a388809be440ae1afab4710514edd27e4d05ecfa0c584",
+      "bytes": 6619
+    },
+    {
+      "file": "definitions/fresh-authority.md",
+      "sha256": "b69024641bf4bdf94a8e92dcc3743570aa1c9dd9ab21d09c95c4120194a88763",
+      "bytes": 20195
+    },
+    {
+      "file": "definitions/native-metadata.md",
+      "sha256": "ed069da88e3aa319b28f8b5bfb070234b6c9a35c607556a0949e772a4c86df51",
+      "bytes": 32361
+    },
+    {
+      "file": "definitions/native-metadata.sql",
+      "sha256": "5e8131eda95636d476d0d0c0d3540caff22ff117f133d91a9dd39fe111337109",
+      "bytes": 4901
+    },
+    {
+      "file": "definitions/metadata-definition.json",
+      "sha256": "e263e852cf57a160a49a66c4bcff713babbbe4af95aea3e3523f22b8a4d40e05",
+      "bytes": 2192
+    },
+    {
+      "file": "definitions/metadata-definition-digest.txt",
+      "sha256": "484dd467482c2123502a0524c67cda573b0e0cd31c980ef934ea22d8d8c041c0",
+      "bytes": 65
+    },
+    {
+      "file": "definitions/step-branches.md",
+      "sha256": "63dabcde5a10ff3b18148211c8a24fcd80add264580542cb389fa5b52705c11e",
+      "bytes": 9214
+    },
+    {
+      "file": "definitions/component-policies.md",
+      "sha256": "a1c12960c43921644cf9ff055b7af306f25a55116c1d4ce26d5aabcbaae778f4",
+      "bytes": 22443
+    },
+    {
+      "file": "definitions/native-inventory-branches.md",
+      "sha256": "2e1b2de6f378ad8af4b101500e93576bb9ba89209c93947bccc89732cea40782",
+      "bytes": 8493
+    },
+    {
+      "file": "definitions/initial-approval-ordering.md",
+      "sha256": "166585d47845f07fe646163d300134b91bfc6cb380635e96fe27f2c652b878cd",
+      "bytes": 15234
+    },
+    {
+      "file": "definitions/denied-approval-recovery.md",
+      "sha256": "a8811dce246636fd88b65214e19d291ae4ed8a02cb1fa46106ab0396af3e9128",
+      "bytes": 15174
+    },
+    {
+      "file": "definitions/ordinary-decision-custody.md",
+      "sha256": "4efd6fe87b2b41bf0a6410c76e4ba78c9f4edbb240892d9aa90ba0505674cd4a",
+      "bytes": 25199
+    },
+    {
+      "file": "definitions/campaign-grant-accounting.md",
+      "sha256": "a4b3759604c4fb77fe3ebcf70e7fcb5a82a887af1ff4bcd9060d49fd919cee9c",
+      "bytes": 18408
+    },
+    {
+      "file": "definitions/carrier-retirement.md",
+      "sha256": "2ab552d1bd5a6881ae25fb8f50e27854eb5537a29325b5c0a713d329dfc362c4",
+      "bytes": 15426
+    },
+    {
+      "file": "definitions/carrier-retirement-ddl.sql",
+      "sha256": "63e7b41506c74ac38c3c73d1dc116f23c8b5a60d1064982b260522e01c99dc20",
+      "bytes": 2104
+    },
+    {
+      "file": "definitions/carrier-provider-definition.json",
+      "sha256": "a76c88f59106de11d5df37818f8ba3f4f439eabd7e8bbfbd00708235a1c8e56b",
+      "bytes": 1937
+    },
+    {
+      "file": "definitions/carrier-provider-definition-digest.txt",
+      "sha256": "0dae51fd040e774b2e64a527c50b9cbd2f9f9a355e801aff023d912e0d6fda0d",
+      "bytes": 65
+    },
+    {
+      "file": "definitions/resolved-open-matrix.md",
+      "sha256": "febfb8f6d6c8cf6439e748c58e42b082f87279835e48afbcfef225926e8c1c03",
+      "bytes": 7592
+    }
+  ],
+  "patchSha256": "90b58f003b8349fd123498673f0f105897591410b748acb7a78c2b4eabe600b5",
+  "scope": "Full006 normative inventory closure,88 planned obligations, exact old wires, explicit actual enablement and retained-table/old-store/native/installed/release gaps. Candidate bytes only; original governing docs not edited."
+}

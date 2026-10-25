@@ -1,0 +1,23 @@
+{
+  "profile": "umf.external-design-provenance-supplement/0.1",
+  "status": "provenance-resolved-compatible-incomplete-restatement",
+  "sealedPacketManifestSha256": "a42cad1c5b62dccc1cc064bd8a11bb08020d600a0ecfb4ad119ecf30341016b7",
+  "sealedPacketUnchanged": true,
+  "pendingDirectionSha256": "c47b3fc47ba6af705bf5d904fc4f306ebbd922b74cbbfffd784ecfd7296bae85",
+  "normative": {
+    "source": "/Users/erik/.codex/worktrees/g11-field-replacement/umf/docs/helix/04-build/evidence/schema-migration-design-review/g10-table-state-definition-digest-001.md",
+    "repositoryCommit": "073bc44103f28cbdcde573c1737ed77423e5aaf6",
+    "repositoryPath": "docs/helix/04-build/evidence/schema-migration-design-review/g10-table-state-definition-digest-001.md",
+    "sha256": "a8d3c590f98f12ba64632a868caa05f044b41ac0f2c7f1ad3e89bb46bb4baed9",
+    "exactCommitBlobHashCorrespondence": "verified separately by git show exact commit:path SHA256",
+    "parentSuppliedRootReceiptSha256": "e37097c64352a36322d422f1bec2c99d917b8d13c79fd88322a1756df29e9c7c",
+    "rootReceiptIndependentlyRead": false
+  },
+  "comparison": {
+    "corePreimageAndSharedRules": "same; no contradiction identified",
+    "completeSemanticRestatement": false,
+    "additionalExplicitNormativeObligations": "comparison.md six numbered items",
+    "requiredSuccessorAction": "replace stale provenance-pending status; pin and incorporate complete adopted source after root/external review"
+  },
+  "scope": "source-only; no tests/probes/runtime/native/SQL/build/browser; no R2 adoption"
+}
