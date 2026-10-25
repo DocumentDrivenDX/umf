@@ -11,6 +11,7 @@ declare global {
 
 class BrowserAccountingContext {
  work=0;subjects=0;bytes=0;
+ charge(_event:string,count=1,_path='/'):void{this.work+=count;}
  visit(_category:string,_path:string,count=1):void{this.work+=count;}
  retainSubject(_identity:unknown,_path:string):void{this.subjects++;this.work++;}
  retainBytes(_domain:string,count:number,_path:string):void{this.bytes+=count;this.work+=Math.ceil(count/4096);}

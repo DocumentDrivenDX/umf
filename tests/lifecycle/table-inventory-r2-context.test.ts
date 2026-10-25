@@ -118,11 +118,13 @@ test('R2-RA-12 original numeric and depth ceilings remain in force',()=>{
  expect(()=>snapshotR2Json(value,new R2WorkMeter(),'/depth')).toThrow(/CONTEXT_JSON_LIMIT/);
 });
 
-test('R2 component depth starts at each component root, not the request envelope',()=>{
+test('R2 component depth starts at each component root before bundle-envelope validation',()=>{
  const nested=(levels:number)=>{let value:any=0;for(let i=0;i<levels;i++)value={next:value};return value;};
  const history={profile:'umf.table-inventory-source-history/0.1',plans:[],executions:[]};
  const input={previous:nested(128),next:[],history,selector:emptySelector};
- expect(()=>snapshotR2SourceData(input,new R2WorkMeter())).toThrow('R2_BUNDLE_ENVELOPE:/next');
+ // The depth-128 component is admitted; validation then rejects its non-bundle
+ // envelope at the earlier `previous` component before reaching `next`.
+ expect(()=>snapshotR2SourceData(input,new R2WorkMeter())).toThrow('R2_BUNDLE_ENVELOPE:/previous');
 });
 
 test('R2 component value ceilings are applied per owned component under one meter',()=>{

@@ -41,5 +41,5 @@ test('G02 internal renderer sidecar reports typed source-site effects without ch
  expect(fieldEffects.find(item=>item.role==='backfill')).toMatchObject({sourcePath:'/options/backfills/0',rowOperationId:'derive_summary'});
  expect(fieldEffects.every(item=>internal.result.status==='compiled'&&internal.result.plan.steps.some(step=>step.id===item.stepId&&step.sourcePath===item.sourcePath))).toBe(true);
  const shared=compileG02FieldEffects({previous,next,options:input.options,createdTables:[]}),legacySteps=publicResult.plan.steps.filter(step=>['add-column','target-check','backfill','install-default','tighten-not-null'].includes(step.phaseOperation??'')&&step.phaseTarget?.field.element==='summary');
- expect(shared.map(item=>[item.role,item.sourcePath,item.sql])).toEqual(legacySteps.map(step=>[step.phaseOperation,step.sourcePath,step.sql]));
+ expect(shared.map(item=>{if(typeof item.sql!=='string')throw Error('G02 effect SQL is missing');return [item.role,item.sourcePath,item.sql];})).toEqual(legacySteps.map(step=>{if(typeof step.sql!=='string')throw Error('Legacy G02 SQL is missing');return [step.phaseOperation,step.sourcePath,step.sql];}));
 });

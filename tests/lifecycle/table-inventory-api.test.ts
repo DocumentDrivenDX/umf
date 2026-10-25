@@ -313,11 +313,16 @@ function compiledMixedG02Fixture(){
 
 test('G10 mixed legal fixture builders clone exported definitions into each returned source',()=>{
  const first=legalG10MixedSources();
- first.next.modules[0]!.extensions['umf.tables'].commands.find((command:any)=>command.id==='create_review_team').id='mutated-command';
- first.next.modules[0]!.extensions['umf.tables'].seedSets.find((seed:any)=>seed.id==='selected-review-team-seed').rows[0]!.table='mutated-table';
+ const createCommand=first.next.modules[0]!.extensions['umf.tables'].commands.find((command:any)=>command.id==='create_review_team');
+ const selectedSeed=first.next.modules[0]!.extensions['umf.tables'].seedSets.find((seed:any)=>seed.id==='selected-review-team-seed');
+ if(!createCommand||!selectedSeed||!selectedSeed.rows[0])throw Error('G10 mixed fixture definitions are missing');
+ createCommand.id='mutated-command';selectedSeed.rows[0].table='mutated-table';
  const second=legalG10MixedSources();
- expect(second.next.modules[0]!.extensions['umf.tables'].commands.find((command:any)=>command.id==='create_review_team').id).toBe('create_review_team');
- expect(second.next.modules[0]!.extensions['umf.tables'].seedSets.find((seed:any)=>seed.id==='selected-review-team-seed').rows[0]!.table).toBe('matter_review_teams');
+ const secondCommand=second.next.modules[0]!.extensions['umf.tables'].commands.find((command:any)=>command.id==='create_review_team');
+ const secondSeed=second.next.modules[0]!.extensions['umf.tables'].seedSets.find((seed:any)=>seed.id==='selected-review-team-seed');
+ if(!secondCommand||!secondSeed||!secondSeed.rows[0])throw Error('G10 mixed fixture definitions are missing');
+ expect(secondCommand.id).toBe('create_review_team');
+ expect(secondSeed.rows[0].table).toBe('matter_review_teams');
  expect(mixedCreatedTableSeedCommand.id).toBe('create_review_team');expect(mixedCreatedTableSeedSet.rows[0]!.table).toBe('matter_review_teams');
 });
 

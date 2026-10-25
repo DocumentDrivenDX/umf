@@ -25,7 +25,10 @@ describe('internal table deployment operation sidecar',()=>{
    if(operation.operation==='grant-schema-usage'){
     expect(operation.subject.kind).toBe('schema-grant');
     if(operation.subject.kind==='schema-grant')expect(operation.subject.audiences).toEqual(['person','batch']);
-   }else expect(operation.subject.table).toBeTypeOf('string');
+  }else{
+   expect(operation.subject.kind).not.toBe('schema-grant');
+   if(operation.subject.kind!=='schema-grant')expect(operation.subject.table).toBeTypeOf('string');
+  }
   }
   expect(internalResult.operations.filter(operation=>operation.operation==='create-table')).toHaveLength(2);
   expect(internalResult.operations.filter(operation=>operation.operation==='enable-rls')).toHaveLength(2);

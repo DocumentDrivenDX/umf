@@ -7,7 +7,7 @@ import type {AccountingContext} from '../model/internal/accounting-context';
 import {freezeSourceIndex,ownR2SourceComponents,R2WorkMeter,type R2OwnedSourceComponents,type R2BundleSourceIndex} from './inventory-r2-context';
 import {initialInventoryPrefix,inventoryCatalogIdentity,scheduleTypedInventoryEffects,type CatalogMutation,type EffectNode,type InventorySubject,type ScheduledInventoryEffects,type TypedDependency} from './inventory-graph';
 import type {PrefixFrame} from './inventory-graph';
-import {projectG10Bundle,projectG10BundleWithAccounting,type InventoryProjection,type InventoryChange,type InventoryFieldChange,type InventoryTable,type InventoryDelta,type CatalogProjection,type Identity,type PrefixCatalog} from './inventory-projection';
+import {projectG10Bundle,projectG10BundleWithAccounting,type InventoryProjection,type InventoryChange,type InventoryFieldChange,type InventoryTable,type InventoryDelta,type CatalogProjection,type Identity,type PrefixCatalog,type Subject} from './inventory-projection';
 import {ShapeError,validateG10RequestShape,validateTableInventorySourceHistory,type G10ValidatedRequest,type HistoricalG10PlanVerifier,type TableIntent,type TableInventoryDiscoveryIntent,type TableInventoryReviewedChangeKind,type TableInventoryMigrationMarker} from './inventory-options';
 import {deriveInventorySeedLineage,type InventoryHistory,type SeedLineageEntry} from './inventory-history';
 import {partitionInventoryMarkersForG02,sameSourceExceptG02AndCreates} from './inventory-g02-source';
@@ -25,10 +25,11 @@ import type {Diagnostic,Json as ModelJson} from '../model/types';
 import type {TableInventoryDiscoverySelector,TableInventoryMigrationOptions,TableInventoryMigrationRequest,TableInventorySourceHistory} from './inventory-options';
 
 type Json=null|boolean|number|string|Json[]|{[key:string]:Json};
+type DeepReadonly<T>=T extends readonly (infer V)[]?readonly DeepReadonly<V>[]:T extends object?{readonly [K in keyof T]:DeepReadonly<T[K]>}:T;
 declare const r2SourceContextBrand:unique symbol;
 /** Opaque internal source-context identity; it is not an archive or migration capability. */
 export type R2InventorySourceContext={readonly [r2SourceContextBrand]:true};
-export type R2InventorySourceContextState={readonly owned:Readonly<Omit<R2OwnedSourceComponents,'meter'>>;readonly previous:R2BundleSourceIndex|null;readonly next:R2BundleSourceIndex;readonly history:TableInventorySourceHistory;readonly seedLineage:readonly SeedLineageEntry[];readonly budget:Readonly<{work:number;subjects:number;bytes:number}>};
+export type R2InventorySourceContextState={readonly owned:Readonly<Omit<R2OwnedSourceComponents,'meter'>>;readonly previous:DeepReadonly<R2BundleSourceIndex>|null;readonly next:DeepReadonly<R2BundleSourceIndex>;readonly history:DeepReadonly<TableInventorySourceHistory>;readonly seedLineage:readonly DeepReadonly<SeedLineageEntry>[];readonly budget:Readonly<{work:number;subjects:number;bytes:number}>};
 type R2InternalSourceContext={readonly view:R2InventorySourceContextState;readonly meter:R2WorkMeter;readonly historyVerifier:HistoricalG10PlanVerifier};
 const r2SourceContexts=new WeakMap<object,R2InternalSourceContext>();
 type AccountedBundleProjection=ReturnType<typeof projectG10BundleWithAccounting>;
@@ -228,7 +229,7 @@ export interface SourcePublicationObligation {
  targetCollection:keyof PrefixCatalog;targetIdentity:EffectIdentity;sourcePath:string;reason:string;
 }
 export interface ProjectionDependencyPartition {physicalEdges:CatalogProjection['dependencies'];publicationObligations:SourcePublicationObligation[]}
-const catalogCollectionByKind:Record<string,keyof PrefixCatalog>={table:'tables',column:'columns',key:'keys',check:'checks',foreignKey:'foreignKeys',index:'indexes',policy:'policies',grant:'grants',comment:'comments'};
+const catalogCollectionByKind={table:'tables',column:'columns',key:'keys',check:'checks',foreignKey:'foreignKeys',index:'indexes',policy:'policies',grant:'grants',comment:'comments'} as const satisfies Record<string,keyof PrefixCatalog>;
 const sourceOwnerReason=(kind:string,reason:string,targetKind:string):boolean=>kind==='operation'&&((reason==='operation-requires-table'&&targetKind==='table')||(reason==='operation-requires-field'&&targetKind==='column')||(['operation-requires-cursor-key','operation-requires-conflict-key'].includes(reason)&&targetKind==='key'))||kind==='seed-set'&&reason==='seed-set-requires-table'&&targetKind==='table';
 const physicalReason=(from:string,to:string,reason:string):boolean=>reason==='foreign-key-requires-target-key'&&from==='foreignKey'&&to==='key'||reason==='policy-requires-related-table'&&from==='policy'&&to==='table'||reason==='policy-requires-relationship-foreign-key'&&from==='policy'&&to==='foreignKey'||reason==='typed-field-reference'&&['check','foreignKey','index','policy','grant','comment'].includes(from)&&to==='column'||reason==='owned-by-table'&&['column','key','check','foreignKey','index','policy','grant','comment'].includes(from)&&to==='table'||reason==='grant-requires-column'&&from==='grant'&&to==='column'||reason==='key-requires-column'&&from==='key'&&to==='column'||reason==='comment-requires-column'&&from==='comment'&&to==='column';
 /** Partition the exact complete source graph into renderer dependencies and source-only publication obligations. */
@@ -251,7 +252,7 @@ function partitionRendererDependenciesCore(bundle:TableDeploymentBundle,projecti
   if(owner){const kind=owner.row.identity.kind;if(edge.sourcePath!==owner.path||!sourceOwnerReason(kind,edge.reason,target.row.identity.kind))throw new Error('G10_DEPENDENCY_SOURCE_OWNER_MISMATCH');
    if(kind==='seed-set'){const meaning=owner.row.meaning as any;let seedState:CatalogProjection['seedStates'][number]|undefined;for(const seed of projection.seedStates){accounting?.visit('g10-dependency-seed-owner-search','/seedStates');if(seed.id===owner.row.identity.subject){seedState=seed;break;}}if(!meaning||meaning.id!==owner.row.identity.subject||!seedState||seedState.definitionDigest!==(accounting?hashCanonicalCharged(meaning,accounting,'/operations/seed/meaning'):hashCanonical(meaning))||seedState.sourcePath!==owner.path||seedState.state!=='not-run')throw new Error('G10_DEPENDENCY_SEED_OWNER_MISMATCH');}
    else {const meaning=owner.row.meaning as any;if(!meaning||!meaning.operation||meaning.operation.id!==owner.row.identity.subject||!obj(meaning.operation.body))throw new Error('G10_DEPENDENCY_OPERATION_OWNER_MISMATCH');}
-   publicationObligations.push({ownerKind:kind,ownerId:owner.row.identity.subject as string,ownerSourcePath:owner.path,targetCollection:target.collection,targetIdentity:target.row.identity,sourcePath:edge.sourcePath,reason:edge.reason});claimed++;continue;
+   const ownerKind=kind as 'operation'|'seed-set';publicationObligations.push({ownerKind,ownerId:owner.row.identity.subject as string,ownerSourcePath:owner.path,targetCollection:target.collection,targetIdentity:target.row.identity,sourcePath:edge.sourcePath,reason:edge.reason});claimed++;continue;
   }
   const from=catalog.get(edge.from),ownerPath=projection.sourcePaths.get(edge.from),expectedKeyRecordPath=from?.row.identity.kind==='key'&&from.row.identity.table?tablePaths.get(from.row.identity.table)+'/record':undefined;const sourcePathMatches=ownerPath===edge.sourcePath||edge.reason==='key-requires-column'&&expectedKeyRecordPath===edge.sourcePath;if(!from||!physicalReason(from.row.identity.kind,target.row.identity.kind,edge.reason)||!sourcePathMatches)throw new Error('G10_DEPENDENCY_PHYSICAL_OWNER_MISMATCH');
   physicalEdges.push(edge);claimed++;
@@ -294,8 +295,9 @@ export function deriveG10ProvenanceMutations(previous:CatalogProjection|null,nex
 }
 
 function inventoryCatalogIdentityFromCatalog(value:EffectIdentity):InventorySubject{
- if(value.kind==='table'&&value.table!==null&&obj(value.subject)&&typeof value.subject.module==='string'&&typeof value.subject.element==='string')return {kind:'table',table:value.table,record:{module:value.subject.module,element:value.subject.element}};
- if(value.kind==='column'&&value.table!==null&&obj(value.subject)&&typeof value.subject.module==='string'&&typeof value.subject.element==='string')return {kind:'field',table:value.table,field:{module:value.subject.module,element:value.subject.element}};
+ const subject=value.subject;
+ if(value.kind==='table'&&value.table!==null&&obj(subject)&&typeof subject.module==='string'&&typeof subject.element==='string')return {kind:'table',table:value.table,record:{module:subject.module,element:subject.element}};
+ if(value.kind==='column'&&value.table!==null&&obj(subject)&&typeof subject.module==='string'&&typeof subject.element==='string')return {kind:'field',table:value.table,field:{module:subject.module,element:subject.element}};
  if(value.table!==null){const dependencyKind=value.kind==='foreignKey'?'foreignKey':value.kind==='index'?'index':value.kind==='policy'?'policy':value.kind==='grant'?'grant':value.kind==='check'?'check':value.kind==='key'?'key':value.kind==='comment'?'comment':undefined;if(dependencyKind){const id=['policy','grant','comment'].includes(dependencyKind)?JSON.stringify(value.subject):String(value.subject);return {kind:'dependency',table:value.table,dependencyKind,id,sourcePath:'/',meaningDigest:'0'.repeat(64)};}}
  return {kind:'metadata',profile:'umf.table-inventory-metadata/0.1'};
 }
@@ -335,14 +337,14 @@ export function deriveG02FieldEffects(previous:TableDeploymentBundle,next:TableD
   }
   else if(record.role==='target-check'){
    const domainId=`domain:${field.module}.${field.element}`;
-   const check=nextProjection.catalog.checks.filter(row=>row.identity.table===table&&row.identity.subject===domainId&&obj(row.meaning)&&canonical(row.meaning.field)===canonical(field));
+   const check=nextProjection.catalog.checks.filter(row=>{const meaning=row.meaning;return row.identity.table===table&&row.identity.subject===domainId&&obj(meaning)&&canonical(meaning.field)===canonical(field);});
    if(check.length!==1)throw new Error('G10_G02_TARGET_CHECK_BINDING');
    if(record.operation==='add-not-valid')throw new Error('G10_G02_UNSUPPORTED_DEFERRED_CHECK_VALIDATION');
    effects.push({...common,subject,operation:'target-check',transition:{action:'add',collection:'checks',meaning:{catalogMeaning:effectClone(check[0]!.meaning),validation:check[0]!.validation??null,validity:check[0]!.validity??null}}});
    effectSubjects.push(subject);continue;
   }else if(record.role==='validate-target-check'){
    const domainId=`domain:${field.module}.${field.element}`;
-   const check=nextProjection.catalog.checks.filter(row=>row.identity.table===table&&row.identity.subject===domainId&&obj(row.meaning)&&canonical(row.meaning.field)===canonical(field));
+   const check=nextProjection.catalog.checks.filter(row=>{const meaning=row.meaning;return row.identity.table===table&&row.identity.subject===domainId&&obj(meaning)&&canonical(meaning.field)===canonical(field);});
    if(check.length!==1)throw new Error('G10_G02_TARGET_CHECK_BINDING');
    throw new Error('G10_G02_UNSUPPORTED_DEFERRED_CHECK_VALIDATION');
   }else if(record.role==='install-default')effects.push({...common,operation:'install-default',transition:{action:'update',collection:'columns',meaning:stagedMeaning('defaulted')}});
@@ -607,8 +609,8 @@ function tableDeclarationPath(bundle:TableDeploymentBundle,tableId:string):strin
  const payload=module?.extensions?.['umf.tables'];
  if(!module||!payload||typeof payload!=='object'||Array.isArray(payload))reviewFail('TABLE_MIGRATION_REVIEW','/next/source');
  const tables=(payload as {tables?:unknown}).tables;
- if(!Array.isArray(tables))reviewFail('TABLE_MIGRATION_REVIEW','/next/source');
- const index=tables.findIndex(value=>!!value&&typeof value==='object'&&(value as {id?:unknown}).id===tableId);
+ if(!Array.isArray(tables))return reviewFail('TABLE_MIGRATION_REVIEW','/next/source');
+ const index=(tables as unknown[]).findIndex(value=>!!value&&typeof value==='object'&&(value as {id?:unknown}).id===tableId);
  if(index<0)reviewFail('TABLE_MIGRATION_REVIEW','/next/source');
  return `/modules/${moduleIndex}/extensions/umf.tables/tables/${index}`;
 }
@@ -667,12 +669,12 @@ function discoverInventoryReviewCandidatesCore(previous:TableDeploymentBundle|nu
    const previousComparison=[prior.kind,prior.path,prior.oldDigest,prior.newDigest,prior.oldValue,prior.newValue],nextComparison=[item.kind,item.path,item.oldDigest,item.newDigest,item.oldValue,item.newValue];if((accounting?canonicalCharged(previousComparison,accounting,`/review/${item.path}/prior`):canonical(previousComparison))!==(accounting?canonicalCharged(nextComparison,accounting,`/review/${item.path}/candidate`):canonical(nextComparison)))reviewFail('TABLE_MIGRATION_REVIEW',item.path);
    for(const key of ['oldPath','newPath'] as const)if(prior[key]!==undefined&&item[key]!==undefined&&prior[key]!==item[key])reviewFail('TABLE_MIGRATION_REVIEW',item.path);
    const merged={...prior,...(prior.oldPath===undefined&&item.oldPath!==undefined?{oldPath:item.oldPath}:{}),...(prior.newPath===undefined&&item.newPath!==undefined?{newPath:item.newPath}:{})} as TableInventoryReviewedChangeCandidate;
-   let nextBytes:number,priorBytes:number;try{nextBytes=new TextEncoder().encode(accounting?canonicalCharged(merged,accounting,`/review/${item.path}/merged`):canonical(merged)).byteLength;priorBytes=new TextEncoder().encode(accounting?canonicalCharged(prior,accounting,`/review/${item.path}/retained`):canonical(prior)).byteLength;}catch{reviewFail('TABLE_MIGRATION_REVIEW','/selector');}
+  let nextBytes=0,priorBytes=0;try{nextBytes=new TextEncoder().encode(accounting?canonicalCharged(merged,accounting,`/review/${item.path}/merged`):canonical(merged)).byteLength;priorBytes=new TextEncoder().encode(accounting?canonicalCharged(prior,accounting,`/review/${item.path}/retained`):canonical(prior)).byteLength;}catch{reviewFail('TABLE_MIGRATION_REVIEW','/selector');}
    if(retainedCandidateBytes-priorBytes+nextBytes>25165824)reviewFail('TABLE_MIGRATION_REVIEW','/selector');
    retainedCandidateBytes+=nextBytes-priorBytes;result[at]=merged;return;
   }
   if(result.length>=2048)reviewFail('TABLE_MIGRATION_REVIEW','/selector');
-  let bytes:number;try{bytes=new TextEncoder().encode(accounting?canonicalCharged(item,accounting,`/review/${item.path}`):canonical(item)).byteLength;}catch{reviewFail('TABLE_MIGRATION_REVIEW','/selector');}
+  let bytes=0;try{bytes=new TextEncoder().encode(accounting?canonicalCharged(item,accounting,`/review/${item.path}`):canonical(item)).byteLength;}catch{reviewFail('TABLE_MIGRATION_REVIEW','/selector');}
   if(bytes>25165824||retainedCandidateBytes+bytes>25165824)reviewFail('TABLE_MIGRATION_REVIEW','/selector');
   candidateIndex.set(item.id,result.length);retainedCandidateBytes+=bytes;result.push(item);
  };
@@ -682,14 +684,14 @@ function discoverInventoryReviewCandidatesCore(previous:TableDeploymentBundle|nu
   const old=oldTables.get(intent.table),fresh=newTables.get(intent.table);
   const prior=old!==undefined,post=fresh!==undefined;
   if(intent.kind==='create'){
-   if(prior||!post||JSON.stringify(intent.record)!==JSON.stringify(fresh.record))reviewFail('TABLE_MIGRATION_REVIEW',`/selector/tableIntents/${index}`);
+   if(prior||!post||JSON.stringify(intent.record)!==JSON.stringify(fresh!.record))reviewFail('TABLE_MIGRATION_REVIEW',`/selector/tableIntents/${index}`);
    const value=sideValue(after.reviews.find(row=>row.table===intent.table)!,intent,effectsCreate);
    const path=tableDeclarationPath(after.bundle,intent.table);
    appendCandidate(candidate('create-table',path,previous===null?null:asJson(absentTableReview(before!,intent,effectsCreate)),asJson(value),null,path));
   }else{
-   if(!prior||post||JSON.stringify(intent.record)!==JSON.stringify(old.record))reviewFail('TABLE_MIGRATION_REVIEW',`/selector/tableIntents/${index}`);
+   if(!prior||post||JSON.stringify(intent.record)!==JSON.stringify(old!.record))reviewFail('TABLE_MIGRATION_REVIEW',`/selector/tableIntents/${index}`);
    const sourceRow=before!.reviews.find(row=>row.table===intent.table);if(!sourceRow)reviewFail('TABLE_MIGRATION_REVIEW','/previous/source');
-   const oldValue=sideValue(sourceRow,intent,effectsRemove),newValue=absentFromNext(after,intent,effectsRemove),oldPath=tableDeclarationPath(before!.bundle,intent.table),tablePath=`/options/tableIntents/${index}/disposition`;
+   const oldValue=sideValue(sourceRow!,intent,effectsRemove),newValue=absentFromNext(after,intent,effectsRemove),oldPath=tableDeclarationPath(before!.bundle,intent.table),tablePath=`/options/tableIntents/${index}/disposition`;
    appendCandidate(candidate('remove-table',oldPath,asJson(oldValue),asJson(newValue),oldPath,null));
    appendCandidate(candidate('table-removal-effects',tablePath,asJson(oldValue),asJson(newValue),oldPath,null));
   }
@@ -709,10 +711,11 @@ function discoverInventoryReviewCandidatesCore(previous:TableDeploymentBundle|nu
    const definition=sourcePlan.next?.seedSets?.find(seed=>seed.id===id);
    if(definition){original={definition:asJson(definition),sourceDigest:sourcePlan.next.sourceDigest};break;}
   }
-  if(!original||hashCanonical(original.definition)!==lineage.definitionDigest||original.sourceDigest!==lineage.originalSourceDigest)reviewFail('TABLE_MIGRATION_REVIEW',`/selector/retiredSeedSets/${index}`);
-  const oldReview:TableInventorySeedReview={profile:'umf.table-inventory-seed-retirement-review/0.1',side:'previous',source:{format:'json',sha256:previous.sourceDigest},configuration:asJson(previous.configuration),id,definition:original.definition,definitionDigest:lineage.definitionDigest,originalSourceDigest:lineage.originalSourceDigest,execution:lineage.execution,retired:false,effects:[]};
+  if(!original||hashCanonical(original.definition)!==lineage!.definitionDigest||original.sourceDigest!==lineage!.originalSourceDigest)reviewFail('TABLE_MIGRATION_REVIEW',`/selector/retiredSeedSets/${index}`);
+  const originalValue=original!,lineageValue=lineage!,previousBundle=previous!;
+  const oldReview:TableInventorySeedReview={profile:'umf.table-inventory-seed-retirement-review/0.1',side:'previous',source:{format:'json',sha256:previousBundle.sourceDigest},configuration:asJson(previousBundle.configuration),id,definition:originalValue.definition,definitionDigest:lineageValue.definitionDigest,originalSourceDigest:lineageValue.originalSourceDigest,execution:lineageValue.execution,retired:false,effects:[]};
   const newReview:TableInventorySeedReview={...oldReview,side:'next',source:{format:'json',sha256:next.sourceDigest},configuration:asJson(next.configuration),retired:true,effects:['original-definition-and-execution-retained-in-history','no-data-replay']};
-  const path=`/options/retiredSeedSets/${index}`;const oldPath=seedDefinitionPath(previous,id);
+  const path=`/options/retiredSeedSets/${index}`;const oldPath=seedDefinitionPath(previousBundle,id);
   appendCandidate(candidate('retire-seed-history',path,asJson(oldReview),asJson(newReview),oldPath,null));
  }
  if(result.length>2048)reviewFail('TABLE_MIGRATION_REVIEW','/selector');
@@ -776,8 +779,10 @@ export function inventoryMarker(candidate:TableInventoryReviewedChangeCandidate)
  return {id:candidate.id,kind:candidate.kind,path:candidate.path,oldDigest:candidate.oldDigest,newDigest:candidate.newDigest};
 }
 export function irreversiblePurgeDisclosure(candidate:TableInventoryReviewedChangeCandidate):{code:'IRREVERSIBLE_TABLE_PURGE';path:string;markerId:string;message:string}{
- const old=candidate.oldValue,newValue=candidate.newValue;
- if(candidate.kind!=='table-removal-effects'||!old||typeof old!=='object'||Array.isArray(old)||old.profile!=='umf.table-inventory-review/0.1'||old.side!=='previous'||typeof old.table!=='string'||!old.table||!newValue||typeof newValue!=='object'||Array.isArray(newValue)||newValue.profile!=='umf.table-inventory-review/0.1'||newValue.side!=='next'||newValue.table!==old.table||old.meaning===null||newValue.meaning!==null||canonical(old.effects)!==canonical(effectsRemove)||canonical(newValue.effects)!==canonical(effectsRemove)||!/^\/options\/tableIntents\/\d+\/disposition$/.test(candidate.path)||typeof candidate.oldPath!=='string'||candidate.newPath!==null||candidate.oldDigest!==hashCanonical(old)||candidate.newDigest!==hashCanonical(newValue)||candidate.id!=='review-'+hashCanonical([candidate.kind,candidate.path,candidate.oldDigest,candidate.newDigest]).slice(0,24))reviewFail('TABLE_MIGRATION_REVIEW',candidate.path);
+ const oldValue=candidate.oldValue,newValue=candidate.newValue;
+ if(!obj(oldValue)||!obj(newValue))reviewFail('TABLE_MIGRATION_REVIEW',candidate.path);
+ const old=oldValue,newReview=newValue;
+ if(candidate.kind!=='table-removal-effects'||old.profile!=='umf.table-inventory-review/0.1'||old.side!=='previous'||typeof old.table!=='string'||!old.table||newReview.profile!=='umf.table-inventory-review/0.1'||newReview.side!=='next'||newReview.table!==old.table||old.meaning===null||newReview.meaning!==null||canonical(old.effects)!==canonical(effectsRemove)||canonical(newReview.effects)!==canonical(effectsRemove)||!/^\/options\/tableIntents\/\d+\/disposition$/.test(candidate.path)||typeof candidate.oldPath!=='string'||candidate.newPath!==null||candidate.oldDigest!==hashCanonical(old)||candidate.newDigest!==hashCanonical(newReview)||candidate.id!=='review-'+hashCanonical([candidate.kind,candidate.path,candidate.oldDigest,candidate.newDigest]).slice(0,24))reviewFail('TABLE_MIGRATION_REVIEW',candidate.path);
  return {code:'IRREVERSIBLE_TABLE_PURGE',path:candidate.path,markerId:candidate.id,message:'Irreversible purge of all stored rows and columns for table '+old.table+'. Metadata history is not a data backup; this profile performs immediate physical deletion.'};
 }
 
@@ -855,7 +860,9 @@ function ownRequestHistory(input:unknown,accounting?:AccountingContext):Json{
  const profileDescriptor=Object.getOwnPropertyDescriptor(input,'profile'),planDescriptor=Object.getOwnPropertyDescriptor(input,'plans'),executionDescriptor=Object.getOwnPropertyDescriptor(input,'executions');
  if(!profileDescriptor||!profileDescriptor.enumerable||!('value'in profileDescriptor)||profileDescriptor.value!=='umf.table-inventory-source-history/0.1'||!planDescriptor||!planDescriptor.enumerable||!('value'in planDescriptor)||!executionDescriptor||!executionDescriptor.enumerable||!('value'in executionDescriptor)||!Array.isArray(planDescriptor.value)||!Array.isArray(executionDescriptor.value)||planDescriptor.value.length>128||executionDescriptor.value.length!==planDescriptor.value.length)throw new ShapeError('/history','history-profile-or-count');
  let owned:Json;try{owned=ownCanonicalComponent(input,'/history',25_165_824,accounting);}catch(error){if(error instanceof UmfError&&error.code==='LIMIT')throw new ShapeError('/history','history-too-large');throw error;}
- if(!obj(owned)||!Array.isArray(owned.plans)||!Array.isArray(owned.executions)||owned.plans.length>128||owned.executions.length>128)throw new UmfError('LIMIT','Inventory history exceeds its original entry bound.','/history');
+ if(!obj(owned))throw new UmfError('LIMIT','Inventory history exceeds its original entry bound.','/history');
+ const ownedHistory=owned as Record<string,Json>;
+ if(!Array.isArray(ownedHistory.plans)||!Array.isArray(ownedHistory.executions)||ownedHistory.plans.length>128||ownedHistory.executions.length>128)throw new UmfError('LIMIT','Inventory history exceeds its original entry bound.','/history');
  return owned;
 }
 function preflightOptions(input:unknown):void{
@@ -898,7 +905,7 @@ function ownRequestJson(input:unknown,accounting?:AccountingContext):TableInvent
 }
 function prepareInventoryCompilation(input:unknown,verifyHistoricalG10:HistoricalG10PlanVerifier,accounting?:AccountingContext):PreparedInventoryCompilation{
  const owned=ownRequestJson(input,accounting),request:G10ValidatedRequest=validateG10RequestShape(owned,verifyHistoricalG10,accounting);
- const stableRequest:TableInventoryMigrationRequest={id:request.id,predecessor:request.predecessor,previous:request.previous,next:request.next,options:owned.options,history:owned.history};
+ const stableRequest:TableInventoryMigrationRequest={id:request.id,predecessor:request.predecessor,previous:request.previous,next:request.next,options:owned.options,history:request.history};
  accounting?.visit('g10-preparation-project-next','/next');const next=accounting?projectG10BundleScoped(request.next,'next',accounting):projectG10Bundle(request.next,'next'),accountingPrevious=request.previous===null?null:(accounting?projectG10BundleScoped(request.previous,'previous',accounting):projectG10Bundle(request.previous,'previous'));
  const previous=accountingPrevious;
  const lineage=deriveInventorySeedLineage(request.history,{previous:request.previous,next:request.next,options:{seedSets:request.options.seedSets,retiredSeedSets:request.options.retiredSeedSets}},verifyHistoricalG10,accounting),inventory=compileG10InventoryDeltaFromPrepared(request,next,previous,lineage,accounting),review=exactReviewFromPrepared(stableRequest,verifyHistoricalG10,{history:request.history,before:previous,after:next,seedLineage:lineage},accounting);
@@ -1012,7 +1019,7 @@ function blockedDiagnostic(error:unknown):Diagnostic{
  return {code,path,message:'The table inventory request could not be compiled under the supported source profile.',severity:'error'};
 }
 function withReview(plan:Record<string,Json>,review:TableInventoryReviewedChangeCandidate[]):TableInventoryMigrationPlan{
- const body={...plan,review:review as unknown as Json[]};delete body.digest;body.digest=hashCanonical(body);
+ const body:Record<string,Json>={...plan,review:review as unknown as Json[]};delete body.digest;body.digest=hashCanonical(body);
  if(new TextEncoder().encode(canonical(body)).length>25165824)throw new UmfError('TABLE_INVENTORY_PLAN_SIZE','The complete reviewed inventory plan exceeds the supported size bound.','/review');
  return body as unknown as TableInventoryMigrationPlan;
 }

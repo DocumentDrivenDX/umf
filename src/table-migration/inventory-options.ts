@@ -1,9 +1,8 @@
-import {canonical,hashCanonical,sha256Text} from '../compilation/bundle/hash';
-import {verifyTableDeployment,type TableDeploymentBundle} from '../table-deployment';
+import {canonical,canonicalCharged,hashCanonical,hashCanonicalCharged,sha256Text,sha256TextCharged} from '../compilation/bundle/hash';
+import {verifyTableDeployment,verifyTableDeploymentWithAccounting,type TableDeploymentBundle} from '../table-deployment';
 import {verifyTableMigration} from './index';
 import {validateG05SourceSelections} from './inventory-g05-selection';
 import type {AccountingContext} from '../model/internal/accounting-context';
-import {hashCanonicalCharged,sha256TextCharged} from '../compilation/bundle/hash';
 /** Closed G10 request/history admission. Semantic source/prefix validation,
  * component composition and native authority remain separate compiler gates.
  */
@@ -12,8 +11,9 @@ export type Ref={module:string;element:string};
 export type TableIntent={kind:'create';table:string;record:Ref}|{kind:'remove';table:string;record:Ref;disposition:{mode:'irreversible-purge';reviewMarker:string}};
 export type G10Recovery={mode:'irreversible';reviewMarker:string}|{mode:'retained-originals';policy:{id:string;revision:string}}|{mode:'round-trip';proofProfile:'umf.exact-integer-widening-roundtrip/0.1'};
 export interface G10Conversion {table:string;field:Ref;recipe:{version:'umf.conversion-recipe/0.1';kind:string;parameters:Record<string,unknown>};nulls:'preserve';invalid:'abort';recovery:G10Recovery}
-export interface G10Options {tableIntents:TableIntent[];backfills:unknown[];defaultChanges:unknown[];conversions:G10Conversion[];concurrentIndexes:unknown[];validations:unknown[];reviewedChanges:unknown[];seedSets:string[];retiredSeedSets:string[];retirements:unknown[];restorations:unknown[];archiveSources:unknown[]}
-export interface G10ValidatedRequest {id:string;predecessor:{id:string;digest:string}|null;previous:TableDeploymentBundle|null;next:TableDeploymentBundle;options:G10Options;history:{profile:'umf.table-inventory-source-history/0.1';plans:unknown[];executions:{planDigest:string;entryDigest:string;seedOutcomes:unknown[]}[]}}
+export interface G10Backfill {table:string;column:Ref;operation:string;scopedRows:true}
+export interface G10Options {tableIntents:TableIntent[];backfills:G10Backfill[];defaultChanges:unknown[];conversions:G10Conversion[];concurrentIndexes:unknown[];validations:unknown[];reviewedChanges:unknown[];seedSets:string[];retiredSeedSets:string[];retirements:unknown[];restorations:unknown[];archiveSources:unknown[]}
+export interface G10ValidatedRequest {id:string;predecessor:{id:string;digest:string}|null;previous:TableDeploymentBundle|null;next:TableDeploymentBundle;options:G10Options;history:TableInventorySourceHistory}
 export type HistoricalG10PlanVerifier=(plan:unknown,index:number,priorHistory:G10ValidatedRequest['history'])=>void;
 export class ShapeError extends Error { constructor(readonly path:string,code:string){super(code);} }
 const isObject=(v:unknown):v is Record<string,any>=>!!v&&typeof v==='object'&&!Array.isArray(v)&&(Object.getPrototypeOf(v)===Object.prototype||Object.getPrototypeOf(v)===null);
@@ -55,7 +55,8 @@ function validateOptions(o:unknown,accounting?:AccountingContext):G10Options {
  let archiveBytes=0;const archiveDigests:string[]=[];
  o.archiveSources.forEach((x:any,i:number)=>{const p=`/options/archiveSources/${i}`;accounting?.visit('g10-options-archive-validation',p);need(exact(x,['digest','source'])&&hash(x.digest)&&exact(x.source,['format','utf8'])&&x.source.format==='json'&&typeof x.source.utf8==='string',p,'archive-source-invalid');const bytes=accounting?accounting.scanUtf8(x.source.utf8,p+'/source/utf8'):new TextEncoder().encode(x.source.utf8).byteLength;need(bytes<=1048576,p+'/source/utf8','archive-source-too-large');need((accounting?sha256TextCharged(x.source.utf8,1048576,accounting,p+'/digest'):sha256Text(x.source.utf8,1048576))===x.digest,p+'/digest','archive-source-digest-mismatch');archiveBytes+=bytes;archiveDigests.push(x.digest);});
  unique(archiveDigests,x=>x,'/options/archiveSources',accounting);need(archiveBytes<=4194304,'/options/archiveSources','archive-aggregate-too-large');const optionsCanonical=accounting?canonicalCharged(o,accounting,'/options'):canonical(o);need(new TextEncoder().encode(optionsCanonical).byteLength<=6291456,'/options','options-too-large');
- return {tableIntents,backfills:o.backfills,defaultChanges:o.defaultChanges,conversions:o.conversions as G10Conversion[],concurrentIndexes:o.concurrentIndexes,validations:o.validations,reviewedChanges:o.reviewedChanges,seedSets:o.seedSets as string[],retiredSeedSets:o.retiredSeedSets as string[],retirements:o.retirements,restorations:o.restorations,archiveSources:o.archiveSources};
+ const backfills:G10Backfill[]=o.backfills.map((value:any)=>({table:value.table,column:{module:value.column.module,element:value.column.element},operation:value.operation,scopedRows:true}));
+ return {tableIntents,backfills,defaultChanges:o.defaultChanges,conversions:o.conversions as G10Conversion[],concurrentIndexes:o.concurrentIndexes,validations:o.validations,reviewedChanges:o.reviewedChanges,seedSets:o.seedSets as string[],retiredSeedSets:o.retiredSeedSets as string[],retirements:o.retirements,restorations:o.restorations,archiveSources:o.archiveSources};
 }
 function validateHistory(h:unknown,previous:TableDeploymentBundle|null,predecessor:unknown,verifyG10?:HistoricalG10PlanVerifier,accounting?:AccountingContext):G10ValidatedRequest['history'] {
  need(exact(h,['profile','plans','executions'])&&h.profile==='umf.table-inventory-source-history/0.1'&&Array.isArray(h.plans)&&Array.isArray(h.executions)&&h.plans.length<=128&&h.executions.length===h.plans.length,'/history','history-profile-or-count');
@@ -68,7 +69,7 @@ function validateHistory(h:unknown,previous:TableDeploymentBundle|null,predecess
  });
  if(previous===null){need(predecessor===null&&h.plans.length===0,'/history','initial-history-not-empty');}
  else {need(isObject(predecessor)&&h.plans.length>0,'/history','installed-history-required');const last=h.plans.at(-1);need(last.id===predecessor.id&&last.digest===predecessor.digest&&last.toBundleDigest===previous.bundleDigest,'/history','history-terminal-does-not-match-predecessor');}
- return {profile:h.profile,plans:h.plans,executions:h.executions.map((execution:any)=>({planDigest:execution.planDigest,entryDigest:execution.entryDigest,seedOutcomes:execution.seedOutcomes}))};
+ return {profile:h.profile,plans:h.plans as TableInventoryHistoryPlan[],executions:h.executions.map((execution:any)=>({planDigest:execution.planDigest,entryDigest:execution.entryDigest,seedOutcomes:execution.seedOutcomes as TableInventorySeedOutcome[]}))};
 }
 function validateBundleEnvelope(v:unknown,path:string,accounting?:AccountingContext):TableDeploymentBundle {
  const keys=['version','canonicalization','source','sourceDigest','configuration','configurationDigest','module','profile','steps','expectedCatalog','seedSets','bundleDigest','nativeQualified'];

@@ -188,7 +188,7 @@ export function snapshotR2Json<T extends R2Json>(value:T,meter:R2WorkMeter,path:
  const text=canonicalCharged(owned,meter,path);
  deepFreezeJson(owned,meter,path);return {value:owned as DeepReadonly<T>,canonical:text};
 }
-export type R2FieldMeaningIndex={table:string;field:R2Ref;path:string;meaning:R2Json};
+export type R2FieldMeaningIndex={table:string;field:R2Ref;path:string;meaning:DeepReadonly<R2Json>};
 export type R2BundleSourceIndex={bundle:DeepReadonly<TableDeploymentBundle>;tables:DeepReadonly<InventoryTable[]>;reviews:DeepReadonly<InventoryProjection[]>;projection:DeepReadonly<Omit<CatalogProjection,'sourcePaths'>>;sourcePaths:readonly {identity:string;path:string}[];fieldMeanings:readonly R2FieldMeaningIndex[]};
 export type R2OwnedSourceData={
  readonly previous:DeepReadonly<TableDeploymentBundle>|null;readonly next:DeepReadonly<TableDeploymentBundle>;

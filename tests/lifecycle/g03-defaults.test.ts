@@ -377,6 +377,7 @@ test('G03 native fixture retains complete sources and admits one exact default p
  expect(result.status).toBe('compiled');
  if(result.status!=='compiled')throw Error(JSON.stringify(result.diagnostics));
  expect(result.plan.version).toBe('umf.table-migration/0.5');
+ if(!result.plan.executionProfile)throw Error('G03 execution profile is missing');
  expect(result.plan.executionProfile.version).toBe('umf.table-migration-execution/0.4');
  expect(result.plan.phases).toHaveLength(1);
  expect(result.plan.steps).toHaveLength(1);

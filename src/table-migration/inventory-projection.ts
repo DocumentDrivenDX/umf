@@ -138,7 +138,9 @@ function rendererOperations(bundle:TableDeploymentBundle,source:any,payload:any,
 function catalogProjection(bundle:TableDeploymentBundle,source:any,payload:any,moduleIndex:number,rendererOps:InternalTableDeploymentOperationRecord[],accounting?:AccountingContext):CatalogProjection & {sourcePaths:Map<string,string>} {
  const exp=bundle.expectedCatalog,extension=`/modules/${moduleIndex}/extensions/umf.tables`,tables=payload.tables as TableDeclaration[],sourcePaths=new Map<string,string>();
  const first=<T>(rows:readonly T[],predicate:(row:T)=>boolean,category:string,path:string):T|undefined=>{for(const row of rows){accounting?.visit(category,path);if(predicate(row))return row;}return undefined;};
- const catalogArrays=[exp.tables,exp.columns,exp.keys,exp.checks,exp.foreignKeys,exp.indexes,exp.policies,exp.grants,exp.comments??[]];let catalogRows=0;for(let index=0;index<catalogArrays.length;index++){const rows=catalogArrays[index]!;accounting?.visit('inventory-projection-catalog-input-count',`${extension}/expectedCatalog/${index}`,rows.length);catalogRows+=rows.length;}
+ // Policies and grants are source-derived below; TableDeploymentBundle's
+ // expectedCatalog intentionally contains only rows observed by its renderer.
+ const catalogArrays=[exp.tables,exp.columns,exp.keys,exp.checks,exp.foreignKeys,exp.indexes,exp.comments??[]];let catalogRows=0;for(let index=0;index<catalogArrays.length;index++){const rows=catalogArrays[index]!;accounting?.visit('inventory-projection-catalog-input-count',`${extension}/expectedCatalog/${index}`,rows.length);catalogRows+=rows.length;}
  // Reserve deterministic work for source-derived catalog loops before their
  // indexes and subject carriers are allocated. Complete input traversal and
  // SQL generation have already been charged by the accounted verifier.
