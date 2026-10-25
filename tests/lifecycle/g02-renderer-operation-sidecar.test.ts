@@ -3,6 +3,7 @@ import {expect,test} from 'bun:test';
 import {compileTableDeployment} from '../../src/table-deployment';
 import {compileTableMigration} from '../../src/table-migration';
 import {compileG02FieldEffects,compileTableMigrationWithOperations} from '../../src/table-migration/internal';
+import type {G02FieldEffectRole} from '../../src/table-migration/g02-field-effects';
 import fixture from '../binding/fixtures/table-lifecycle-note.json';
 
 const configuration={module:'demo',schema:'g02_demo',ownerRole:'g02_owner',personRole:'g02_person',batchRole:'g02_batch',groupRoles:{}};
@@ -40,6 +41,6 @@ test('G02 internal renderer sidecar reports typed source-site effects without ch
  expect(fieldEffects.every(item=>item.subject.type==='field'&&item.subject.table==='notes'&&item.subject.field.module==='demo'&&item.subject.field.element==='summary')).toBe(true);
  expect(fieldEffects.find(item=>item.role==='backfill')).toMatchObject({sourcePath:'/options/backfills/0',rowOperationId:'derive_summary'});
  expect(fieldEffects.every(item=>internal.result.status==='compiled'&&internal.result.plan.steps.some(step=>step.id===item.stepId&&step.sourcePath===item.sourcePath))).toBe(true);
- const shared=compileG02FieldEffects({previous,next,options:input.options,createdTables:[]}),legacySteps=publicResult.plan.steps.filter(step=>['add-column','target-check','backfill','install-default','tighten-not-null'].includes(step.phaseOperation??'')&&step.phaseTarget?.field.element==='summary');
+ const shared=compileG02FieldEffects({previous,next,options:input.options,createdTables:[]}),g02Roles=new Set<string>(['add-column','target-check','backfill','install-default','tighten-not-null']),legacySteps=publicResult.plan.steps.filter((step):step is typeof step&{phaseOperation:G02FieldEffectRole}=>typeof step.phaseOperation==='string'&&g02Roles.has(step.phaseOperation)&&step.phaseTarget?.field.element==='summary');
  expect(shared.map(item=>{if(typeof item.sourcePath!=='string'||typeof item.sql!=='string')throw Error('G02 effect source binding or SQL is missing');return [item.role,item.sourcePath,item.sql] as const;})).toEqual(legacySteps.map(step=>{if(typeof step.phaseOperation!=='string'||typeof step.sourcePath!=='string'||typeof step.sql!=='string')throw Error('Legacy G02 source binding or SQL is missing');return [step.phaseOperation,step.sourcePath,step.sql] as const;}));
 });

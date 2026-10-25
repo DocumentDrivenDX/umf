@@ -8,6 +8,7 @@ import type {AccountingContext} from '../model/internal/accounting-context';
 import {buildOwnedSourceFieldIndex,type OwnedSourceFieldIndex} from './inventory-g05-selection';
 import {operationReferences,type FieldBinding} from './inventory-operation-references';
 import type {TableDeclaration,TableOperation,TableRowRule,TableRef} from '../extensions/tables/types';
+import {consumeVerifiedG10Deployment} from './inventory-verified-deployment';
 
 type Json=null|boolean|number|string|Json[]|{[key:string]:Json};
 export type Side='previous'|'next';
@@ -38,9 +39,17 @@ function toJson(value:unknown,path='/',accounting?:AccountingContext):Json {
  }
  throw new Error('G10_NON_JSON_VALUE:'+path);
 }
+function isInventoryProjection(value:unknown,accounting?:AccountingContext,path='/review'):value is InventoryProjection{
+ if(value===null||typeof value!=='object'||Array.isArray(value))return false;
+ const item=value as Record<string,unknown>,source=item.source,record=item.record,effects=item.effects;
+ if(item.profile!=='umf.table-inventory-review/0.1'||(item.side!=='previous'&&item.side!=='next')||!Object.hasOwn(item,'configuration')||typeof item.table!=='string'||!Object.hasOwn(item,'meaning')||!Object.hasOwn(item,'intent')||source===null||typeof source!=='object'||Array.isArray(source)||!('format'in source)||source.format!=='json'||!('sha256'in source)||typeof source.sha256!=='string'||record===null||typeof record!=='object'||Array.isArray(record)||!('module'in record)||typeof record.module!=='string'||!('element'in record)||typeof record.element!=='string'||!Array.isArray(effects))return false;
+ for(let index=0;index<effects.length;index++){accounting?.visit('inventory-projection-review-effects-guard',`${path}/effects/${index}`);if(typeof effects[index]!=='string')return false;}
+ return true;
+}
 /** Copy one detached public review wrapper for a second side of the same private projection core. */
 export function copyInventoryReviewForSide(review:InventoryProjection,side:Side,accounting?:AccountingContext):InventoryProjection{
- const copied=accounting?toJson(review,`/${side}/review`,accounting) as InventoryProjection:structuredClone(review);
+ const copied=accounting?toJson(review,`/${side}/review`,accounting):structuredClone(review);
+ if(!isInventoryProjection(copied,accounting,`/${side}/review`))throw new Error('G10_REVIEW_COPY_INVALID');
  return {...copied,side};
 }
 const refKey=(r:TableRef)=>JSON.stringify([r.module,r.element]);
@@ -242,7 +251,7 @@ export function projectG10Bundle(input:unknown,side:Side):{bundle:TableDeploymen
 }
 /** R2 projection entry: verifier, projection copies, path output and meaning hashes share one request meter. */
 export function projectG10BundleWithAccounting(input:unknown,side:Side,accounting:AccountingContext):{bundle:TableDeploymentBundle;document:import('../model/types').Document;tables:InventoryTable[];reviews:InventoryProjection[];projection:CatalogProjection;sourceIndex:OwnedSourceFieldIndex}{
- const verified=verifyTableDeploymentWithAccounting(input as TableDeploymentBundle,accounting),bundle=verified.bundle,parts=sourcePayload(bundle,verified.document,accounting),{payload}=parts;
+ const bundleInput=input as TableDeploymentBundle,verified=consumeVerifiedG10Deployment(bundleInput,accounting,`/${side}/bundle`)??verifyTableDeploymentWithAccounting(bundleInput,accounting),bundle=verified.bundle,parts=sourcePayload(bundle,verified.document,accounting),{payload}=parts;
  const sourceIndex=buildOwnedSourceFieldIndex(bundle,parts.source,accounting);
  accounting.visit('inventory-projection-path-index','/source');const pathValues=new Map<string,Json>();const walk=(value:Json,path:string):void=>{accounting.visit('inventory-projection-path-index-node',path);pathValues.set(path,value);if(Array.isArray(value)){for(let i=0;i<value.length;i++){accounting.visit('inventory-projection-path-index-array-slot',`${path}/${i}`);walk(value[i]!,`${path}/${i}`);}return;}if(value&&typeof value==='object'){for(const key of Object.keys(value)){accounting.scanUtf8(key,path);walk(value[key]!,`${path}/${ptr(key)}`);}}};walk(parts.source as Json,'');
  const sourceOrder=new Map<string,number>();let ordinal=0;for(const path of pathValues.keys()){accounting.visit('inventory-projection-path-order-index',path);sourceOrder.set(path,ordinal++);}

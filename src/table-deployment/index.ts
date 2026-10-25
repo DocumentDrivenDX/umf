@@ -76,12 +76,14 @@ function compileDeploymentInternal(input:{text:string;format?:'json'|'yaml';conf
  }
 }
 /** Private R2 verifier: all JSON source/configuration/compiler leaves share one meter. */
-export function verifyTableDeploymentWithAccounting(input:TableDeploymentBundle,accounting:AccountingContext):{bundle:TableDeploymentBundle;document:import('../model/types').Document;operations:InternalTableDeploymentOperationRecord[]}{
+export function verifyTableDeploymentWithAccounting(input:TableDeploymentBundle,accounting:AccountingContext):{bundle:TableDeploymentBundle;document:import('../model/types').Document;operations:InternalTableDeploymentOperationRecord[];inputCanonical:string}{
  if(!input||!['umf.table-deployment/0.1','umf.table-deployment/0.2'].includes(input.version)||!input.source)deploymentError('Unknown deployment bundle');
  if(input.source.format!=='json')deploymentError('Metered R2 deployment accepts JSON source only','/source/format');
  const result=compileDeploymentInternal({text:input.source.utf8,format:input.source.format,configuration:input.configuration},input.version==='umf.table-deployment/0.1',accounting);
- if(result.status!=='compiled'||canonicalCharged(input,accounting,'/bundle/input')!==canonicalCharged(result.bundle,accounting,'/bundle/verified'))deploymentError('Deployment differs from exact source recompilation');
- return {bundle:result.bundle,document:result.document,operations:result.operations};
+ if(result.status!=='compiled')deploymentError('Deployment differs from exact source recompilation');
+ const inputCanonical=canonicalCharged(input,accounting,'/bundle/input');
+ if(inputCanonical!==canonicalCharged(result.bundle,accounting,'/bundle/verified'))deploymentError('Deployment differs from exact source recompilation');
+ return {bundle:result.bundle,document:result.document,operations:result.operations,inputCanonical};
 }
 /** Recompile complete source/configuration; self-consistent forged SQL is not authority. */
 export function verifyTableDeployment(input:unknown):TableDeploymentBundle{

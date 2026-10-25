@@ -124,6 +124,7 @@ jobs:
           run_stage r2-controls-and-parity 180 bun test --timeout 15000 \
             tests/metamodel/structural-accounting-source.test.ts \
             tests/lifecycle/table-inventory-r2-context.test.ts \
+            tests/lifecycle/table-inventory-verified-deployment.test.ts \
             tests/lifecycle/table-deployment-r2-accounting.test.ts \
             tests/metamodel/structural-accounting-parity.test.ts || failed=1
           run_stage generate-reviewed-r2-reproduction 120 bun scripts/qualification/r2-metering-generate.ts || failed=1

@@ -61,12 +61,12 @@ function projectG10BundleScoped(bundle:TableDeploymentBundle,side:'previous'|'ne
   accounting?.visit('r2-bundle-projection-core-reuse',`/${side}`);
   const result=sideProjection(core.result,side,accounting);
   const index=accounting&&core.index?freezeSourceIndexSide(result as AccountedBundleProjection,core.index,accounting as R2WorkMeter,`/${side}/index`):undefined;
-  const reused={result,index};sides.set(side,reused);return reused;
+  const reused:ScopedBundleProjection=index===undefined?{result}:{result,index};sides.set(side,reused);return reused;
  }
  accounting?.visit('r2-bundle-projection-cache-miss',`/${side}`);
  const result=accounting?projectG10BundleWithAccounting(bundle,side,accounting):projectG10Bundle(bundle,side);
  const index=accounting?freezeSourceIndex(result as AccountedBundleProjection,accounting as R2WorkMeter,`/${side}/index`):undefined;
- const created={result,index};sides.set(side,created);return created;
+ const created:ScopedBundleProjection=index===undefined?{result}:{result,index};sides.set(side,created);return created;
 }
 /**
  * Prepare an original .2 source context only after complete source projection,
@@ -162,6 +162,7 @@ type EffectIdentity={kind:string;table:string|null;subject:Json};
 type EffectSubject={identity:EffectIdentity;meaning:Json;state:'present'|'absent';validation?:string;validity?:string};
 const effectClone=<T>(value:T):T=>structuredClone(value);
 const obj=(value:unknown):value is Record<string,any>=>!!value&&typeof value==='object'&&!Array.isArray(value);
+const isTableReview=(value:unknown):value is TableInventoryTableReview=>obj(value)&&value.profile==='umf.table-inventory-review/0.1'&&(value.side==='previous'||value.side==='next')&&typeof value.table==='string'&&obj(value.source)&&value.source.format==='json'&&typeof value.source.sha256==='string'&&obj(value.record)&&typeof value.record.module==='string'&&typeof value.record.element==='string'&&Array.isArray(value.effects);
 const hashSubject=(identity:EffectIdentity)=>hashCanonical(identity);
 const catalogRows=(catalog:PrefixCatalog,collection:string):EffectSubject[]=>catalog[collection as keyof PrefixCatalog] as EffectSubject[];
 function sourceBoundPersonUpdateGrant(bundle:TableDeploymentBundle,tableId:string,sourcePath:string,meaning:any,identity:EffectIdentity):TableGrantEffectRow{
@@ -810,7 +811,8 @@ export function inventoryMarker(candidate:TableInventoryReviewedChangeCandidate)
 export function irreversiblePurgeDisclosure(candidate:TableInventoryReviewedChangeCandidate):{code:'IRREVERSIBLE_TABLE_PURGE';path:string;markerId:string;message:string}{
  if(candidate.kind!=='table-removal-effects')reviewFail('TABLE_MIGRATION_REVIEW',candidate.path);
  const old=candidate.oldValue,newReview=candidate.newValue;
- if(!obj(old)||!obj(newReview)||old.profile!=='umf.table-inventory-review/0.1'||old.side!=='previous'||typeof old.table!=='string'||!old.table||newReview.profile!=='umf.table-inventory-review/0.1'||newReview.side!=='next'||newReview.table!==old.table||old.meaning===null||newReview.meaning!==null||canonical(old.effects)!==canonical(effectsRemove)||canonical(newReview.effects)!==canonical(effectsRemove)||!/^\/options\/tableIntents\/\d+\/disposition$/.test(candidate.path)||typeof candidate.oldPath!=='string'||candidate.newPath!==null||candidate.oldDigest!==hashCanonical(old)||candidate.newDigest!==hashCanonical(newReview)||candidate.id!=='review-'+hashCanonical([candidate.kind,candidate.path,candidate.oldDigest,candidate.newDigest]).slice(0,24))reviewFail('TABLE_MIGRATION_REVIEW',candidate.path);
+ if(!isTableReview(old)||!isTableReview(newReview))reviewFail('TABLE_MIGRATION_REVIEW',candidate.path);
+ if(old.profile!=='umf.table-inventory-review/0.1'||old.side!=='previous'||typeof old.table!=='string'||!old.table||newReview.profile!=='umf.table-inventory-review/0.1'||newReview.side!=='next'||newReview.table!==old.table||old.meaning===null||newReview.meaning!==null||canonical(old.effects)!==canonical(effectsRemove)||canonical(newReview.effects)!==canonical(effectsRemove)||!/^\/options\/tableIntents\/\d+\/disposition$/.test(candidate.path)||typeof candidate.oldPath!=='string'||candidate.newPath!==null||candidate.oldDigest!==hashCanonical(old)||candidate.newDigest!==hashCanonical(newReview)||candidate.id!=='review-'+hashCanonical([candidate.kind,candidate.path,candidate.oldDigest,candidate.newDigest]).slice(0,24))reviewFail('TABLE_MIGRATION_REVIEW',candidate.path);
  return {code:'IRREVERSIBLE_TABLE_PURGE',path:candidate.path,markerId:candidate.id,message:'Irreversible purge of all stored rows and columns for table '+old.table+'. Metadata history is not a data backup; this profile performs immediate physical deletion.'};
 }
 

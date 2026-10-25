@@ -1,7 +1,8 @@
 import {canonical,canonicalCharged,hashCanonical,hashCanonicalCharged,sha256Text,sha256TextCharged} from '../compilation/bundle/hash';
-import {verifyTableDeployment,verifyTableDeploymentWithAccounting,type TableDeploymentBundle} from '../table-deployment';
+import {verifyTableDeployment,type TableDeploymentBundle} from '../table-deployment';
 import {verifyTableMigration} from './index';
 import {validateG05SourceSelections} from './inventory-g05-selection';
+import {verifyAndRememberG10Deployment} from './inventory-verified-deployment';
 import type {AccountingContext} from '../model/internal/accounting-context';
 /** Closed G10 request/history admission. Semantic source/prefix validation,
  * component composition and native authority remain separate compiler gates.
@@ -79,7 +80,8 @@ function validateBundleEnvelope(v:unknown,path:string,accounting?:AccountingCont
  const catalogKeys=Object.hasOwn(v.expectedCatalog,'comments')?['comments','tables','columns','keys','checks','foreignKeys','indexes']:['tables','columns','keys','checks','foreignKeys','indexes'];
  need(exact(v.expectedCatalog,catalogKeys),`${path}/expectedCatalog`,'catalog-envelope-invalid');
  if(Object.hasOwn(v.expectedCatalog,'comments'))need(Array.isArray(v.expectedCatalog.comments),`${path}/expectedCatalog/comments`,'comments-invalid');
- return accounting?verifyTableDeploymentWithAccounting(v as TableDeploymentBundle,accounting).bundle:verifyTableDeployment(v);
+ if(!accounting)return verifyTableDeployment(v);
+ return verifyAndRememberG10Deployment(v as TableDeploymentBundle,accounting);
 }
 export function validateG10RequestShape(request:unknown,verifyG10?:HistoricalG10PlanVerifier,accounting?:AccountingContext):G10ValidatedRequest {
  need(exact(request,['id','predecessor','previous','next','options','history'])&&nonempty(request.id,128),'/','request-shape-invalid');
