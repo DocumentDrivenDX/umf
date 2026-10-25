@@ -4,6 +4,7 @@ import {verifyTableMigration} from './index';
 import {validateG05SourceSelections} from './inventory-g05-selection';
 import {verifyAndRememberG10Deployment} from './inventory-verified-deployment';
 import type {AccountingContext} from '../model/internal/accounting-context';
+import {ownedR2HistoryByteLength,ownR2HistoryExecutionWrapper,R2WorkMeter} from './inventory-r2-context';
 /** Closed G10 request/history admission. Semantic source/prefix validation,
  * component composition and native authority remain separate compiler gates.
  */
@@ -61,8 +62,9 @@ function validateOptions(o:unknown,accounting?:AccountingContext):G10Options {
 }
 function validateHistory(h:unknown,previous:TableDeploymentBundle|null,predecessor:unknown,verifyG10?:HistoricalG10PlanVerifier,accounting?:AccountingContext):G10ValidatedRequest['history'] {
  need(exact(h,['profile','plans','executions'])&&h.profile==='umf.table-inventory-source-history/0.1'&&Array.isArray(h.plans)&&Array.isArray(h.executions)&&h.plans.length<=128&&h.executions.length===h.plans.length,'/history','history-profile-or-count');
- const historyCanonical=accounting?canonicalCharged(h,accounting,'/history'):canonical(h);
- need(new TextEncoder().encode(historyCanonical).byteLength<=25165824,'/history','history-too-large');
+ const ownedHistoryBytes=accounting instanceof R2WorkMeter?ownedR2HistoryByteLength(h,accounting,'/history'):undefined;
+ const historyBytes=ownedHistoryBytes??new TextEncoder().encode(accounting?canonicalCharged(h,accounting,'/history'):canonical(h)).byteLength;
+ need(historyBytes<=25165824,'/history','history-too-large');
  const ids=new Set<string>(),digests=new Set<string>(),seenSeeds=new Set<string>();
  h.plans.forEach((p:any,i:number)=>{const path=`/history/plans/${i}`;accounting?.charge('historyMember',1,path);need(isObject(p)&&nonempty(p.id,128)&&hash(p.digest)&&nonempty(p.version,128)&&hash(p.toBundleDigest)&&(p.fromBundleDigest===null||hash(p.fromBundleDigest)),path,'historical-plan-header-invalid');need(!ids.has(p.id)&&!digests.has(p.digest),path,'historical-plan-duplicate');accounting?.visit('g10-history-id-and-digest-set',path,2);ids.add(p.id);digests.add(p.digest);if(i===0)need(p.predecessor===null,path+'/predecessor','history-chain-invalid');else{const prev=h.plans[i-1];need(exact(p.predecessor,['id','digest'])&&p.predecessor.id===prev.id&&p.predecessor.digest===prev.digest,path+'/predecessor','history-chain-invalid');need(hash(p.fromBundleDigest)&&hash(p.toBundleDigest)&&p.fromBundleDigest===prev.toBundleDigest,path+'/fromBundleDigest','history-bundle-chain-invalid');}
  if(p.version==='umf.table-inventory-migration/0.1'){need(typeof verifyG10==='function',path,'historical-g10-context-required');verifyG10(p,i,{profile:h.profile,plans:h.plans.slice(0,i),executions:h.executions.slice(0,i)});}else{if(accounting)throw new ShapeError(path,'r2-unsupported-metered-history-family');const plan=verifyTableMigration(p);need(plan.digest===p.digest,path+'/digest','historical-plan-verification-failed');}const e=h.executions[i],ep=`/history/executions/${i}`;need(exact(e,['planDigest','entryDigest','seedOutcomes'])&&e.planDigest===p.digest&&hash(e.entryDigest)&&Array.isArray(e.seedOutcomes),ep,'history-execution-invalid');
@@ -70,7 +72,8 @@ function validateHistory(h:unknown,previous:TableDeploymentBundle|null,predecess
  });
  if(previous===null){need(predecessor===null&&h.plans.length===0,'/history','initial-history-not-empty');}
  else {need(isObject(predecessor)&&h.plans.length>0,'/history','installed-history-required');const last=h.plans.at(-1);need(last.id===predecessor.id&&last.digest===predecessor.digest&&last.toBundleDigest===previous.bundleDigest,'/history','history-terminal-does-not-match-predecessor');}
- return {profile:h.profile,plans:h.plans as TableInventoryHistoryPlan[],executions:h.executions.map((execution:any)=>({planDigest:execution.planDigest,entryDigest:execution.entryDigest,seedOutcomes:execution.seedOutcomes as TableInventorySeedOutcome[]}))};
+ const executions=h.executions.map((execution:any,index:number)=>accounting instanceof R2WorkMeter?ownR2HistoryExecutionWrapper(execution,accounting,`/history/executions/${index}`) as {planDigest:string;entryDigest:string;seedOutcomes:TableInventorySeedOutcome[]}:({planDigest:execution.planDigest,entryDigest:execution.entryDigest,seedOutcomes:execution.seedOutcomes as TableInventorySeedOutcome[]}));
+ return {profile:h.profile,plans:h.plans as TableInventoryHistoryPlan[],executions};
 }
 function validateBundleEnvelope(v:unknown,path:string,accounting?:AccountingContext):TableDeploymentBundle {
  const keys=['version','canonicalization','source','sourceDigest','configuration','configurationDigest','module','profile','steps','expectedCatalog','seedSets','bundleDigest','nativeQualified'];

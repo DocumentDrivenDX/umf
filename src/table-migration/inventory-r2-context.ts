@@ -4,7 +4,8 @@
  * not validated archive handles or comparison certificates. The module is not
  * re-exported from the table-migration public barrel.
  */
-import {canonicalCharged,sha256Text,sha256TextCharged} from '../compilation/bundle/hash';
+import {canonicalCharged,canonicalChargedHistory,sha256Text,sha256TextCharged,type CanonicalHistoryDocument,type CanonicalHistoryMemberSpan} from '../compilation/bundle/hash';
+import {ownCanonicalComponent} from './inventory-component-copy';
 import type {TableDeploymentBundle} from '../table-deployment';
 import {projectG10BundleWithAccounting,type CatalogProjection,type InventoryProjection,type InventoryTable} from './inventory-projection';
 import {sourceFieldMeaningFromIndex,sourceMappingPathFromIndex} from './inventory-g05-selection';
@@ -52,6 +53,11 @@ export const R2_SUBJECT_LIMIT=99_999;
 export const R2_CONTEXT_BYTE_LIMIT=100_663_296;
 const ownedShapeRegistrationToken=Symbol('r2-owned-shape-registration');
 const registerOwnedShape=Symbol('r2-register-owned-shape');
+const ownedHistoryRegistrationToken=Symbol('r2-owned-history-registration');
+const registerOwnedHistory=Symbol('r2-register-owned-history');
+const lookupOwnedHistory=Symbol('r2-lookup-owned-history');
+const associateOwnedHistoryMember=Symbol('r2-associate-owned-history-member');
+type OwnedHistoryDocument=CanonicalHistoryDocument&{readonly materialized:WeakMap<CanonicalHistoryMemberSpan,string>};
 /**
  * Frozen deterministic work-event table for the D1 admission primitives.
  * Each visited JSON node/array slot/object key costs 1. Each 4096-byte UTF-8
@@ -78,9 +84,26 @@ export class R2WorkLimitError extends Error {
 export class R2WorkMeter implements AccountingContext {
  private work=0;private subjects=0;private bytes=0;
  #ownedShapeMetadata=new WeakMap<object,readonly string[]>();
+ #ownedHistoryMetadata=new WeakMap<object,OwnedHistoryDocument>();
+ #ownedHistoryMembers=new WeakMap<object,{document:OwnedHistoryDocument;span:CanonicalHistoryMemberSpan}>();
  [registerOwnedShape](token:typeof ownedShapeRegistrationToken,owner:object,keys:readonly string[]):void{
   if(token!==ownedShapeRegistrationToken)throw new TypeError('R2_CONTEXT_SHAPE_OWNER');
   this.#ownedShapeMetadata.set(owner,keys);
+ }
+ [registerOwnedHistory](token:typeof ownedHistoryRegistrationToken,owner:object,document:CanonicalHistoryDocument):void{
+  if(token!==ownedHistoryRegistrationToken||!Object.isFrozen(owner))throw new TypeError('R2_CONTEXT_HISTORY_OWNER');
+  // Charge every entry before publishing any association, so an exhausted
+  // meter cannot leave a partially registered history in this context.
+  this.visit('r2-history-root-map-retention','/history');
+  for(const member of document.members)this.visit('r2-history-member-map-retention',`/history/${member.kind}/${member.index}`);
+  const owned=Object.freeze({...document,materialized:new WeakMap<object,string>()});this.#ownedHistoryMetadata.set(owner,owned);
+  for(const member of document.members)this.#ownedHistoryMembers.set(member.value,{document:owned,span:member});
+ }
+ [lookupOwnedHistory](token:typeof ownedHistoryRegistrationToken,value:object):{root:OwnedHistoryDocument|undefined;member:{document:OwnedHistoryDocument;span:CanonicalHistoryMemberSpan}|undefined}{
+  if(token!==ownedHistoryRegistrationToken)throw new TypeError('R2_CONTEXT_HISTORY_OWNER');return {root:this.#ownedHistoryMetadata.get(value),member:this.#ownedHistoryMembers.get(value)};
+ }
+ [associateOwnedHistoryMember](token:typeof ownedHistoryRegistrationToken,source:object,copy:object):void{
+  if(token!==ownedHistoryRegistrationToken||!Object.isFrozen(copy))throw new TypeError('R2_CONTEXT_HISTORY_OWNER');const found=this.#ownedHistoryMembers.get(source);if(found){this.visit('r2-history-normalized-member-map-retention','/history/executions');this.#ownedHistoryMembers.set(copy,found);}
  }
  charge(event:string,count=1,path='/'):void{
   if(!Object.hasOwn(R2_WORK_EVENT_UNITS,event)||!Number.isSafeInteger(count)||count<0)throw new R2WorkLimitError(path,'work');
@@ -102,7 +125,7 @@ export class R2WorkMeter implements AccountingContext {
  visit(_category:string,_path:string,count=1):void{this.charge('jsonNode',count,_path);}
  retainBytes(_domain:string,count:number,path:string):void{this.chargeBytes(count,path);}
  scanUtf8(text:string,path:string):number{const bytes=scalarUtf8Bytes(text);this.chargeBytes(bytes,path);return bytes;}
- appendCanonicalChunk(text:string,path:string):void{this.scanUtf8(text,path);}
+ appendCanonicalChunk(text:string,path:string):number{return this.scanUtf8(text,path);}
  snapshot():Readonly<{work:number;subjects:number;bytes:number}>{
   return Object.freeze({work:this.work,subjects:this.subjects,bytes:this.bytes});
  }
@@ -111,6 +134,29 @@ export class R2WorkMeter implements AccountingContext {
  }
 }
 function scalarUtf8Bytes(text:string):number{let bytes=0;for(let i=0;i<text.length;i++){const c=text.charCodeAt(i);if(c<0x80)bytes++;else if(c<0x800)bytes+=2;else if(c>=0xd800&&c<=0xdbff&&text.charCodeAt(i+1)>=0xdc00&&text.charCodeAt(i+1)<=0xdfff){bytes+=4;i++;}else bytes+=3;}return bytes;}
+
+/** Canonical bytes for an exact, frozen R2-owned history root; not semantic validation. */
+export function ownedR2HistoryByteLength(value:unknown,meter:R2WorkMeter,path='/history'):number|undefined{
+ if(!value||typeof value!=='object')return undefined;meter.visit('r2-history-canonical-root-lookup',path);
+ return meter[lookupOwnedHistory](ownedHistoryRegistrationToken,value).root?.byteLength;
+}
+/** Exact canonical member bytes for a member of a registered frozen history only. */
+export function ownedR2HistoryMember(value:unknown,meter:R2WorkMeter,path='/history/member'):{readonly text:string;readonly byteLength:number}|undefined{
+ if(!value||typeof value!=='object')return undefined;meter.visit('r2-history-canonical-member-lookup',path);
+ const found=meter[lookupOwnedHistory](ownedHistoryRegistrationToken,value).member;if(!found)return undefined;const {document,span}=found;
+ const cached=document.materialized.get(span);if(cached!==undefined)return {text:cached,byteLength:span.byteEnd-span.byteStart};
+ const byteLength=span.byteEnd-span.byteStart;meter.retainBytes('r2-history-member-canonical-copy',byteLength,path);meter.visit('r2-history-member-canonical-map-retention',path);
+ const text=document.text.slice(span.start,span.end);document.materialized.set(span,text);return {text,byteLength};
+}
+
+/** Fixed validator-constructor propagation for normalized execution wrappers. */
+export function ownR2HistoryExecutionWrapper(source:unknown,meter:R2WorkMeter,path:string):{planDigest:unknown;entryDigest:unknown;seedOutcomes:unknown[]} {
+ if(!isPlainRecord(source)||!Object.isFrozen(source)||Object.getOwnPropertySymbols(source).length!==0||Object.getOwnPropertyNames(source).length!==3)throw new TypeError(`R2_HISTORY_EXECUTION_SOURCE:${path}`);
+ const read=(key:'planDigest'|'entryDigest'|'seedOutcomes'):unknown=>{const descriptor=Object.getOwnPropertyDescriptor(source,key);if(!descriptor||!descriptor.enumerable||!Object.hasOwn(descriptor,'value'))throw new TypeError(`R2_HISTORY_EXECUTION_SOURCE:${path}`);return descriptor.value;};
+ const planDigest=read('planDigest'),entryDigest=read('entryDigest'),seedOutcomes=read('seedOutcomes');
+ if(!Array.isArray(seedOutcomes)||!meter[lookupOwnedHistory](ownedHistoryRegistrationToken,source).member)throw new TypeError(`R2_HISTORY_EXECUTION_SOURCE:${path}`);
+ meter.visit('r2-history-normalized-execution-copy',path,3);const copy=Object.freeze({planDigest,entryDigest,seedOutcomes});meter[associateOwnedHistoryMember](ownedHistoryRegistrationToken,source,copy);return copy;
+}
 
 function isPlainRecord(value:unknown):value is Record<string,unknown>{
  if(!value||typeof value!=='object'||Array.isArray(value))return false;
@@ -180,6 +226,7 @@ function copyAdmittedJson(value:unknown,meter:R2WorkMeter,path:string):R2Json{
  return visit(value,path,0);
 }
 type DeepReadonly<T>=T extends readonly (infer V)[]?readonly DeepReadonly<V>[]:T extends object?{readonly [K in keyof T]:DeepReadonly<T[K]>}:T;
+export type R2OwnedHistoryEnvelope={readonly profile:'umf.table-inventory-source-history/0.1';readonly plans:readonly DeepReadonly<R2Json>[];readonly executions:readonly DeepReadonly<R2Json>[]};
 function deepFreezeJson(value:R2Json,meter?:R2WorkMeter,path='/freeze'):void{
  const stack:{value:R2Json;path:string;exit:boolean}[]=[];meter?.charge('jsonNode',1,path);stack.push({value,path,exit:false});while(stack.length){const item=stack.pop()!;if(item.exit){Object.freeze(item.value);continue;}meter?.charge('jsonNode',1,item.path);meter?.charge('jsonArraySlot',1,item.path);stack.push({value:item.value,path:item.path,exit:true});if(Array.isArray(item.value)){for(let i=0;i<item.value.length;i++){meter?.charge('jsonArraySlot',1,`${item.path}/${i}`);stack.push({value:item.value[i]!,path:`${item.path}/${i}`,exit:false});}}else if(item.value!==null&&typeof item.value==='object'){for(const key in item.value){if(!Object.hasOwn(item.value,key))continue;meter?.charge('objectKey',1,`${item.path}/${key}`);stack.push({value:(item.value as {[key:string]:R2Json})[key]!,path:`${item.path}/${key}`,exit:false});}}}
 }
@@ -187,6 +234,23 @@ export function snapshotR2Json<T extends R2Json>(value:T,meter:R2WorkMeter,path:
  const owned=copyAdmittedJson(value,meter,path) as T;
  const text=canonicalCharged(owned,meter,path);
  deepFreezeJson(owned,meter,path);return {value:owned as DeepReadonly<T>,canonical:text};
+}
+/** Own/freeze/canonicalize the fixed R2 history root and retain exact direct-member spans. */
+export function snapshotR2HistoryJson<T extends R2Json>(value:T,meter:R2WorkMeter,path='/history'):{value:DeepReadonly<T>;canonical:string}{
+ const owned=copyAdmittedJson(value,meter,path) as T,document=canonicalChargedHistory(owned,meter,path);
+ deepFreezeJson(owned,meter,path);
+ if(isR2HistoryEnvelope(owned))meter[registerOwnedHistory](ownedHistoryRegistrationToken,owned,document);
+ return {value:owned as DeepReadonly<T>,canonical:document.text};
+}
+/** Copy, canonicalize and freeze the complete history before registering exact member spans. */
+export function ownR2HistoryComponent(value:unknown,meter:R2WorkMeter,path='/history'):{readonly value:R2OwnedHistoryEnvelope;readonly canonical:string;readonly byteLength:number}{
+ const owned=ownCanonicalComponent(value,path,25_165_824,meter) as R2Json;
+ if(!isR2HistoryEnvelope(owned))throw new TypeError(`R2_HISTORY_SHAPE:${path}`);
+ const document=canonicalChargedHistory(owned,meter,path);deepFreezeJson(owned,meter,path);meter[registerOwnedHistory](ownedHistoryRegistrationToken,owned,document);
+ return Object.freeze({value:owned as unknown as R2OwnedHistoryEnvelope,canonical:document.text,byteLength:document.byteLength});
+}
+function isR2HistoryEnvelope(value:unknown):value is Record<string,unknown>&{profile:'umf.table-inventory-source-history/0.1';plans:R2Json[];executions:R2Json[]}{
+ return isPlainRecord(value)&&Object.keys(value).length===3&&Object.hasOwn(value,'profile')&&value.profile==='umf.table-inventory-source-history/0.1'&&Array.isArray(value.plans)&&Array.isArray(value.executions)&&value.plans.length<=128&&value.executions.length===value.plans.length;
 }
 export type R2FieldMeaningIndex={table:string;field:R2Ref;path:string;meaning:DeepReadonly<R2Json>};
 export type R2BundleSourceIndex={bundle:DeepReadonly<TableDeploymentBundle>;tables:DeepReadonly<InventoryTable[]>;reviews:DeepReadonly<InventoryProjection[]>;projection:DeepReadonly<Omit<CatalogProjection,'sourcePaths'>>;sourcePaths:readonly {identity:string;path:string}[];fieldMeanings:readonly R2FieldMeaningIndex[]};
@@ -246,7 +310,7 @@ export function ownR2SourceComponents(input:unknown,meter=new R2WorkMeter()):R2O
  const [previousRaw,nextRaw,historyRaw,selectorRaw]=admitR2RawRequestEnvelope(input,meter);
  const previousSnapshot=previousRaw===null?null:snapshotR2Json(previousRaw as R2Json,meter,'/previous');
  const nextSnapshot=snapshotR2Json(nextRaw as R2Json,meter,'/next');
- const historySnapshot=snapshotR2Json(historyRaw as R2Json,meter,'/history');
+ const historySnapshot=snapshotR2HistoryJson(historyRaw as R2Json,meter,'/history');
  const selectorInputSnapshot=snapshotR2Json(selectorRaw as R2Json,meter,'/selector');
  const selector=parseR2DiscoverySelectorAdmitted(selectorInputSnapshot.value,meter);
  const history=historySnapshot.value as unknown as Record<string,unknown>;

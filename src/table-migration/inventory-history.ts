@@ -1,7 +1,8 @@
-import {hashCanonical,hashCanonicalCharged,sha256Text} from '../compilation/bundle/hash';
+import {hashCanonical,hashCanonicalCharged,sha256Text,sha256TextCharged} from '../compilation/bundle/hash';
 import {verifyTableDeployment,verifyTableDeploymentWithAccounting,type TableDeploymentBundle} from '../table-deployment';
 import {verifyTableMigration} from './index';
 import type {AccountingContext} from '../model/internal/accounting-context';
+import {ownedR2HistoryMember,R2WorkMeter} from './inventory-r2-context';
 
 type Json=null|boolean|number|string|Json[]|{[key:string]:Json};
 type SeedSet=TableDeploymentBundle['seedSets'][number];
@@ -13,6 +14,10 @@ export interface CurrentSeedRequest {previous:TableDeploymentBundle|null;next:Ta
 type State={definition:SeedSet;definitionDigest:string;originalSourceDigest:string;execution:'not-run'|'confirmed';retired:boolean};
 const SHA=/^[a-f0-9]{64}$/;
 function fail(code:string):never{throw new Error('G10_SEED_LINEAGE_'+code);}
+function historyMemberDigest(value:unknown,accounting:AccountingContext|undefined,path:string):string{
+ if(accounting instanceof R2WorkMeter){const owned=ownedR2HistoryMember(value,accounting,path);if(owned)return sha256TextCharged(owned.text,25165824,accounting,path);}
+ return accounting?hashCanonicalCharged(value,accounting,path):hashCanonical(value);
+}
 function isObject(value:unknown):value is Record<string,unknown>{return !!value&&typeof value==='object'&&!Array.isArray(value)&&(Object.getPrototypeOf(value)===Object.prototype||Object.getPrototypeOf(value)===null);}
 function exact(value:unknown,keys:readonly string[]):value is Record<string,unknown>{return isObject(value)&&Object.keys(value).length===keys.length&&keys.every(key=>Object.hasOwn(value,key));}
 function sha(value:unknown):value is string{return typeof value==='string'&&SHA.test(value);}
@@ -130,7 +135,7 @@ export function deriveInventorySeedLineage(history:InventoryHistory,current:Curr
  const states=new Map<string,State>();let priorPlan:Record<string,unknown>|null=null,priorBundle:TableDeploymentBundle|null=null;
  for(let i=0;i<history.plans.length;i++){
   accounting?.charge('historyMember',1,`/history/plans/${i}`);accounting?.charge('historyMember',1,`/history/executions/${i}`);
-  if(accounting){hashCanonicalCharged(history.plans[i],accounting,`/history/plans/${i}`);hashCanonicalCharged(history.executions[i],accounting,`/history/executions/${i}`);}
+  if(accounting){historyMemberDigest(history.plans[i],accounting,`/history/plans/${i}`);historyMemberDigest(history.executions[i],accounting,`/history/executions/${i}`);}
   accounting?.visit('seed-history-prefix-copy',`/history/${i}`,i*2);const plan=assertPlanShape(history.plans[i],i,{profile:history.profile,plans:history.plans.slice(0,i),executions:history.executions.slice(0,i)},verifyG10,accounting),next=verifiedBundle(plan.next,accounting),previous=plan.previous===null?null:verifiedBundle(plan.previous,accounting);
   if(i===0){if(previous!==null||plan.predecessor!==null)return fail('FIRST_PLAN_NOT_INITIAL');}
   else {if(!priorPlan||!priorBundle||!previous||previous.bundleDigest!==priorBundle.bundleDigest||!exact(plan.predecessor,['id','digest'])||plan.predecessor.id!==priorPlan.id||plan.predecessor.digest!==priorPlan.digest)return fail('HISTORY_CHAIN');}

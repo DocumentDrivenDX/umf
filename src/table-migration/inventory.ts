@@ -1,10 +1,11 @@
-import {canonical,canonicalCharged,hashCanonical,hashCanonicalCharged} from '../compilation/bundle/hash';
+import {canonical,canonicalCharged,canonicalChargedMeasured,hashCanonical,hashCanonicalCharged} from '../compilation/bundle/hash';
 import {readDocument} from '../model/document';
 import {verifyTableDeployment,type TableDeploymentBundle} from '../table-deployment';
-import {UmfError,pointer} from '../model/errors';
+import {UmfError} from '../model/errors';
 import {copyJson,copyJsonCharged} from '../model/json';
 import type {AccountingContext} from '../model/internal/accounting-context';
-import {freezeSourceIndex,freezeSourceIndexSide,ownR2SourceComponents,R2WorkMeter,type R2OwnedSourceComponents,type R2BundleSourceIndex} from './inventory-r2-context';
+import {ownCanonicalComponent} from './inventory-component-copy';
+import {freezeSourceIndex,freezeSourceIndexSide,ownR2HistoryComponent,ownR2SourceComponents,ownedR2HistoryMember,R2WorkMeter,type R2OwnedSourceComponents,type R2BundleSourceIndex} from './inventory-r2-context';
 import {initialInventoryPrefix,inventoryCatalogIdentity,scheduleTypedInventoryEffects,type CatalogMutation,type EffectNode,type InventorySubject,type ScheduledInventoryEffects,type TypedDependency} from './inventory-graph';
 import type {PrefixFrame} from './inventory-graph';
 import {copyInventoryReviewForSide,projectG10Bundle,projectG10BundleWithAccounting,type InventoryProjection,type InventoryChange,type InventoryFieldChange,type InventoryTable,type InventoryDelta,type CatalogProjection,type Identity,type PrefixCatalog,type Subject} from './inventory-projection';
@@ -416,6 +417,17 @@ export function deriveG02FieldEffects(previous:TableDeploymentBundle,next:TableD
 }
 
 export interface InventoryPlanInput {id:string;predecessor:{id:string;digest:string}|null;previous:TableDeploymentBundle|null;next:TableDeploymentBundle;options:Json;history:Json;historyBinding:{profile:'umf.table-inventory-source-history/0.1';count:number;digest:string};inventory:InventoryDelta;initialPrefix:Omit<import('./inventory-graph').PrefixFrame,'digest'>;nextCatalog:Record<string,Json[]>;effects:EffectNode[];dependencies:TypedDependency[];publicationObligations:SourcePublicationObligation[];provenanceMutations:CatalogMutation[];seedExecution:'none'|{version:'umf.table-seed-execution/0.1';sets:string[]};review:Json[];}
+type CapturedPlanCanonical=(value:Record<string,Json>,text:string,byteLength:number)=>void;
+function freezeCapturedPlan(value:Json,accounting:AccountingContext):void{
+ const stack:{value:Json;path:string;exit:boolean}[]=[{value,path:'/plan/captured-output',exit:false}];
+ while(stack.length){const frame=stack.pop()!,item=frame.value;if(item===null||typeof item!=='object')continue;
+  if(frame.exit){accounting.visit('r2-historical-plan-freeze',frame.path);Object.freeze(item);continue;}
+  if(Object.isFrozen(item))continue;
+  accounting.visit('r2-historical-plan-freeze-node',frame.path);stack.push({value:item,path:frame.path,exit:true});
+  if(Array.isArray(item)){for(let i=item.length-1;i>=0;i--){accounting.visit('r2-historical-plan-freeze-slot',`${frame.path}/${i}`);stack.push({value:item[i]!,path:`${frame.path}/${i}`,exit:false});}}
+  else for(const key in item)if(Object.hasOwn(item,key)){accounting.visit('r2-historical-plan-freeze-key',frame.path);stack.push({value:item[key]!,path:`${frame.path}/${key}`,exit:false});}
+ }
+}
 function verifySourcePublicationObligations(obligations:readonly SourcePublicationObligation[],schedule:ScheduledInventoryEffects,accounting?:AccountingContext):void{
  const published=schedule.prefixes.at(-1);if(!published||published.metadata.state!=='published')fail('SOURCE_PUBLICATION_PREFIX');
  accounting?.visit('inventory-publication-obligation-check','/publicationObligations',obligations.length);for(const obligation of obligations){
@@ -431,7 +443,7 @@ export function compileInventoryPlan(input:InventoryPlanInput):Record<string,Jso
  try{verifySourcePublicationCoverage(next,input.publicationObligations);}catch{fail('SOURCE_PUBLICATION_SOURCE_COVERAGE');}
  return compileInventoryPlanCore(input);
 }
-function compileInventoryPlanCore(input:InventoryPlanInput,accounting?:AccountingContext):Record<string,Json>{
+function compileInventoryPlanCore(input:InventoryPlanInput,accounting?:AccountingContext,captureCanonical?:CapturedPlanCanonical):Record<string,Json>{
  const previous=input.previous,next=input.next;
  accounting?.visit('inventory-plan-effect-copy','/effects',input.effects.length);const sources=input.effects.map(effect=>({...effect})),metadataIds={prepare:'g10-inventory-prepare',approval:'g10-inventory-approval',publication:'g10-inventory-publication'},schedule=scheduleTypedInventoryEffects(input.initialPrefix,sources,input.dependencies,input.nextCatalog,metadataIds,input.provenanceMutations,accounting);verifySourcePublicationObligations(input.publicationObligations,schedule,accounting);
  if(schedule.prefixes.length!==schedule.phases.length+1||schedule.phases.length<3||schedule.phases[0]?.kind!=='prepare'||schedule.phases[1]?.kind!=='approval'||schedule.phases.at(-1)?.kind!=='publication')fail('PHASE_ENVELOPE');
@@ -439,7 +451,10 @@ function compileInventoryPlanCore(input:InventoryPlanInput,accounting?:Accountin
  const serializedInventory={...input.inventory} as Record<string,unknown>;delete serializedInventory.fieldChanges;
  const history=input.history as any;if(!history||history.profile!=='umf.table-inventory-source-history/0.1'||!Array.isArray(history.plans)||!Array.isArray(history.executions)||input.historyBinding.count!==history.plans.length||input.historyBinding.digest!==(accounting?hashCanonicalCharged(history,accounting,'/history'):hashCanonical(history))||input.historyBinding.profile!==history.profile)fail('HISTORY_BINDING');
  const body:Record<string,Json>={version:'umf.table-inventory-migration/0.1',canonicalization:'RFC8785',id:input.id,predecessor:input.predecessor as unknown as Json,previous:input.previous as unknown as Json,next:input.next as unknown as Json,fromBundleDigest:previous?.bundleDigest??null,toBundleDigest:next.bundleDigest,steps:steps as unknown as Json,seedExecution:input.seedExecution as unknown as Json,phases:phases as unknown as Json,executionProfile,approvalProfile,options:input.options,review:input.review,requiresApproval:true,nativeQualified:false,inventory:serializedInventory as unknown as Json,prefixes:prefixes as unknown as Json,historyBinding:input.historyBinding as unknown as Json};
- body.digest=accounting?hashCanonicalCharged(body,accounting,'/plan'):hashCanonical(body);const bodyCanonical=accounting?canonicalCharged(body,accounting,'/plan'):canonical(body);if(new TextEncoder().encode(bodyCanonical).length>25165824)fail('PLAN_SIZE');return body;
+ body.digest=accounting?hashCanonicalCharged(body,accounting,'/plan'):hashCanonical(body);
+ if(captureCanonical&&accounting)freezeCapturedPlan(body as unknown as Json,accounting);
+ const measured=accounting?canonicalChargedMeasured(body,accounting,'/plan'):undefined,bodyCanonical=measured?.text??canonical(body),bodyBytes=measured?.byteLength??new TextEncoder().encode(bodyCanonical).length;
+ if(bodyBytes>25165824)fail('PLAN_SIZE');if(captureCanonical&&measured)captureCanonical(body,measured.text,measured.byteLength);return body;
 }
 
 export function createHistoricalG10Verifier(accounting?:AccountingContext):HistoricalG10PlanVerifier {
@@ -447,14 +462,24 @@ export function createHistoricalG10Verifier(accounting?:AccountingContext):Histo
  // request. The key binds exact canonical plan and prior-history contents, so
  // this is only a computation cache; it never substitutes an ID/digest lookup
  // for source recompilation or history-chain validation.
- const verified=new Map<number,string>(),planSnapshots=new Map<number,string>(),executionSnapshots=new Map<number,string>(),active=new Set<number>();
+ type CanonicalHistoryValue={bytes:string;byteLength:number};
+ const verified=new Map<number,CanonicalHistoryValue>(),planSnapshots=new Map<number,CanonicalHistoryValue>(),executionSnapshots=new Map<number,CanonicalHistoryValue>(),active=new Set<number>();
  let retainedBytes=0;
- const utf8Bytes=(value:string,path:string):number=>{const size=new TextEncoder().encode(value).byteLength;accounting?.retainBytes('g10-history-verifier-cache',size,path);return size;};
+ const canonicalHistoryValue=(value:unknown,path:string):CanonicalHistoryValue=>{
+  if(accounting instanceof R2WorkMeter){const owned=ownedR2HistoryMember(value,accounting,path);if(owned)return {bytes:owned.text,byteLength:owned.byteLength};
+   const measured=canonicalChargedMeasured(value,accounting,path);return {bytes:measured.text,byteLength:measured.byteLength};}
+  const bytes=accounting?canonicalCharged(value,accounting,path):canonical(value);return {bytes,byteLength:new TextEncoder().encode(bytes).byteLength};
+ };
+ const sameBytes=(left:CanonicalHistoryValue,right:CanonicalHistoryValue,path:string):boolean=>{
+  if(accounting instanceof R2WorkMeter)accounting.chargeWorkBytes(Math.max(left.byteLength,right.byteLength),path);
+  return left.bytes===right.bytes;
+ };
+ const retainVerifierBytes=(value:CanonicalHistoryValue,path:string):number=>{accounting?.retainBytes('g10-history-verifier-cache',value.byteLength,path);return value.byteLength;};
  let verify:HistoricalG10PlanVerifier;
  const verifyCore:HistoricalG10PlanVerifier=(value,index,priorHistory)=>{
   if(!value||typeof value!=='object'||Array.isArray(value))fail('HISTORICAL_G10_SHAPE');
   accounting?.charge('historyMember',1,`/history/plans/${index}`);
-  const plan=value as Record<string,unknown>,planBytes=accounting?canonicalCharged(plan,accounting,`/history/plans/${index}`):canonical(plan),cached=verified.get(index);
+  const plan=value as Record<string,unknown>,planBytes=canonicalHistoryValue(plan,`/history/plans/${index}`),cached=verified.get(index);
   if(!Number.isSafeInteger(index)||index<0||index>128||!priorHistory||typeof priorHistory!=='object'||Array.isArray(priorHistory))fail('HISTORICAL_G10_CONTEXT_CHANGED');
   const prefix=priorHistory;
   if(prefix.profile!=='umf.table-inventory-source-history/0.1'||!Array.isArray(prefix.plans)||!Array.isArray(prefix.executions)||prefix.plans.length!==index||prefix.executions.length!==index)fail('HISTORICAL_G10_CONTEXT_CHANGED');
@@ -464,26 +489,26 @@ export function createHistoricalG10Verifier(accounting?:AccountingContext):Histo
   // every index. Cache hits still compare every supplied member byte-for-byte.
   for(let member=0;member<index;member++){
    accounting?.charge('historyMember',2,`/history/prefix/${member}`);
-   const priorPlanBytes=accounting?canonicalCharged(prefix.plans[member],accounting,`/history/prefix/${member}/plan`):canonical(prefix.plans[member]),priorExecutionBytes=accounting?canonicalCharged(prefix.executions[member],accounting,`/history/prefix/${member}/execution`):canonical(prefix.executions[member]);
+   const priorPlanBytes=canonicalHistoryValue(prefix.plans[member],`/history/prefix/${member}/plan`),priorExecutionBytes=canonicalHistoryValue(prefix.executions[member],`/history/prefix/${member}/execution`);
    accounting?.visit('g10-history-prefix-comparison',`/history/prefix/${member}`,2);
    const knownPlan=planSnapshots.get(member),knownExecution=executionSnapshots.get(member);
-   if((knownPlan!==undefined&&knownPlan!==priorPlanBytes)||(knownExecution!==undefined&&knownExecution!==priorExecutionBytes))fail('HISTORICAL_G10_CONTEXT_CHANGED');
-   if(knownPlan===undefined){const size=utf8Bytes(priorPlanBytes,`/history/prefix/${member}/plan`);if(retainedBytes+size>25165824)fail('HISTORICAL_G10_CONTEXT_SIZE');accounting?.visit('g10-history-plan-map-retention',`/history/prefix/${member}`);planSnapshots.set(member,priorPlanBytes);retainedBytes+=size;}
-   if(knownExecution===undefined){const size=utf8Bytes(priorExecutionBytes,`/history/prefix/${member}/execution`);if(retainedBytes+size>25165824)fail('HISTORICAL_G10_CONTEXT_SIZE');accounting?.visit('g10-history-execution-map-retention',`/history/prefix/${member}`);executionSnapshots.set(member,priorExecutionBytes);retainedBytes+=size;}
+   if((knownPlan!==undefined&&!sameBytes(knownPlan,priorPlanBytes,`/history/prefix/${member}/plan-compare`))||(knownExecution!==undefined&&!sameBytes(knownExecution,priorExecutionBytes,`/history/prefix/${member}/execution-compare`)))fail('HISTORICAL_G10_CONTEXT_CHANGED');
+   if(knownPlan===undefined){const size=retainVerifierBytes(priorPlanBytes,`/history/prefix/${member}/plan`);if(retainedBytes+size>25165824)fail('HISTORICAL_G10_CONTEXT_SIZE');accounting?.visit('g10-history-plan-map-retention',`/history/prefix/${member}`);planSnapshots.set(member,priorPlanBytes);retainedBytes+=size;}
+   if(knownExecution===undefined){const size=retainVerifierBytes(priorExecutionBytes,`/history/prefix/${member}/execution`);if(retainedBytes+size>25165824)fail('HISTORICAL_G10_CONTEXT_SIZE');accounting?.visit('g10-history-execution-map-retention',`/history/prefix/${member}`);executionSnapshots.set(member,priorExecutionBytes);retainedBytes+=size;}
   }
   const knownCurrent=planSnapshots.get(index);
-  if(knownCurrent!==undefined&&knownCurrent!==planBytes)fail('HISTORICAL_G10_CONTEXT_CHANGED');
-  if(cached){if(cached===planBytes)return;fail('HISTORICAL_G10_CONTEXT_CHANGED');}
+  if(knownCurrent!==undefined&&!sameBytes(knownCurrent,planBytes,`/history/plans/${index}/known-compare`))fail('HISTORICAL_G10_CONTEXT_CHANGED');
+  if(cached){if(sameBytes(cached,planBytes,`/history/plans/${index}/cache-compare`))return;fail('HISTORICAL_G10_CONTEXT_CHANGED');}
   accounting?.visit('g10-history-active-index-lookup',`/history/plans/${index}`);if(active.has(index))fail('HISTORICAL_G10_RECURSIVE_CYCLE');
   accounting?.visit('g10-history-active-index-retention',`/history/plans/${index}`);active.add(index);
   try{
-   const request={id:plan.id,predecessor:plan.predecessor,previous:plan.previous,next:plan.next,options:plan.options,history:priorHistory};
-   const rebuilt=compileG10InventoryPlanInternal(request,verify,accounting);
-   const rebuiltBytes=accounting?canonicalCharged(rebuilt,accounting,`/history/rebuilt/${index}`):canonical(rebuilt),expectedBytes=accounting?canonicalCharged(plan,accounting,`/history/plans/${index}/recompiled`):canonical(plan);accounting?.visit('g10-history-recompile-comparison',`/history/plans/${index}`);if(rebuiltBytes!==expectedBytes)fail('HISTORICAL_G10_RECOMPILE:'+index);
+   const request={id:plan.id,predecessor:plan.predecessor,previous:plan.previous,next:plan.next,options:plan.options,history:priorHistory};let produced:{value:Record<string,Json>;bytes:string;byteLength:number}|undefined;
+   const rebuilt=compileG10InventoryPlanInternal(request,verify,accounting,(value,bytes,byteLength)=>{produced={value,bytes,byteLength};});
+   const rebuiltBytes=produced?.value===rebuilt?{bytes:produced.bytes,byteLength:produced.byteLength}:canonicalHistoryValue(rebuilt,`/history/rebuilt/${index}`),expectedBytes=canonicalHistoryValue(plan,`/history/plans/${index}/recompiled`);accounting?.visit('g10-history-recompile-comparison',`/history/plans/${index}`);if(!sameBytes(rebuiltBytes,expectedBytes,`/history/plans/${index}/recompile-compare`))fail('HISTORICAL_G10_RECOMPILE:'+index);
    // Keep at most the admitted original history once (plans and executions),
    // plus one plan snapshot per position; never materialize nested full-prefix
    // cache keys or repeatedly recompile a cached prefix.
-   const planSize=utf8Bytes(planBytes,`/history/plans/${index}`);if(verified.size>=128||retainedBytes+planSize>25165824)fail('HISTORICAL_G10_CONTEXT_SIZE');
+   const planSize=retainVerifierBytes(planBytes,`/history/plans/${index}`);if(verified.size>=128||retainedBytes+planSize>25165824)fail('HISTORICAL_G10_CONTEXT_SIZE');
    accounting?.visit('g10-history-verified-map-retention',`/history/plans/${index}`,3);verified.set(index,planBytes);planSnapshots.set(index,planBytes);retainedBytes+=planSize;
   }finally{active.delete(index);}
  };
@@ -817,79 +842,13 @@ export function irreversiblePurgeDisclosure(candidate:TableInventoryReviewedChan
 }
 
 type PreparedInventoryCompilation={request:G10ValidatedRequest;inventory:InventoryDelta;next:ReturnType<typeof projectG10Bundle>;previous:ReturnType<typeof projectG10Bundle>|null;lineage:ReturnType<typeof deriveInventorySeedLineage>;review:TableInventoryReviewedChangeCandidate[];stableRequest:TableInventoryMigrationRequest};
-function quotedJsonBytes(value:string):number{
- let bytes=2;
- for(let i=0;i<value.length;i++){
-  const unit=value.charCodeAt(i);
-  if(unit===0x22||unit===0x5c||unit===0x08||unit===0x09||unit===0x0a||unit===0x0c||unit===0x0d){bytes+=2;continue;}
-  if(unit<0x20){bytes+=6;continue;}
-  if(unit>=0xd800&&unit<=0xdbff){const low=value.charCodeAt(++i);if(!(low>=0xdc00&&low<=0xdfff))throw new UmfError('NON_JSON','Inventory request contains invalid Unicode.');bytes+=4;continue;}
-  if(unit>=0xdc00&&unit<=0xdfff)throw new UmfError('NON_JSON','Inventory request contains invalid Unicode.');
-  bytes+=unit<0x80?1:unit<0x800?2:3;
- }
- return bytes;
-}
-function ownCanonicalComponent(input:unknown,path:string,maxBytes:number,accounting?:AccountingContext):Json{
- type PathRef={parent:PathRef|null;segment:string};
- type Frame={source:object;target:Json[]|Record<string,Json>;keys:string[]|null;index:number;array:boolean;path:PathRef};
- type Task={kind:'value';value:unknown;path:PathRef;assign:(value:Json)=>void}|{kind:'resume';frame:Frame};
- const rootPath:PathRef={parent:null,segment:path};
- const childPath=(parent:PathRef,segment:string):PathRef=>({parent,segment});
- const displayPath=(ref:PathRef):string=>{const parts:string[]=[];let current:PathRef|null=ref;while(current?.parent){parts.push(pointer(current.segment));current=current.parent;}return (current?.segment??path)+parts.reverse().map(part=>`/${part}`).join('');};
- let bytes=0;const active=new Set<object>(),root:Json[]=[null];
- const add=(amount:number,at:PathRef):void=>{bytes+=amount;if(bytes>maxBytes)throw new UmfError('LIMIT','Inventory request component exceeds its existing byte bound.',displayPath(at));};
- const countString=(value:string,at:PathRef):void=>add(quotedJsonBytes(value),at);
- const tasks:Task[]=[{kind:'value',value:input,path:rootPath,assign:value=>{root[0]=value;}}];
- while(tasks.length){
-  const task=tasks.pop()!;
-  accounting?.visit('inventory-component-copy-task',path);
-  if(task.kind==='resume'){
-   const frame=task.frame,count=frame.array?(frame.source as unknown[]).length:frame.keys!.length;
-   if(frame.index>=count){active.delete(frame.source);continue;}
-   const key=frame.array?frame.index++:frame.keys![frame.index++]!,property=String(key),descriptor=Object.getOwnPropertyDescriptor(frame.source,property);accounting?.visit(frame.array?'inventory-component-array-slot':'inventory-component-object-key',displayPath(frame.path));if(!frame.array)accounting?.scanUtf8(property,displayPath(frame.path));
-   if(!descriptor||!descriptor.enumerable||!('value'in descriptor))throw new UmfError('NON_JSON','Inventory request contains hidden fields or accessors.',displayPath(childPath(frame.path,property)));
-   tasks.push(task);
-   tasks.push({kind:'value',value:descriptor.value,path:childPath(frame.path,property),assign:item=>{if(frame.array)(frame.target as Json[])[key as number]=item;else Object.defineProperty(frame.target,property,{value:item,enumerable:true,writable:true,configurable:true});}});
-   continue;
-  }
-  const {value, path:at, assign}=task;
-  if(value===null){add(4,at);assign(null);continue;}
-  if(typeof value==='boolean'){add(value?4:5,at);assign(value);continue;}
-  if(typeof value==='string'){countString(value,at);accounting?.scanUtf8(value,displayPath(at));assign(value);continue;}
-  if(typeof value==='number'){
-   if(!Number.isFinite(value))throw new UmfError('NUMBER','Inventory request contains a non-finite number.',displayPath(at));
-   add(JSON.stringify(value).length,at);assign(value);continue;
-  }
-  if(typeof value!=='object')throw new UmfError('NON_JSON','Inventory request contains a non-JSON value.',displayPath(at));
-  if(active.has(value))throw new UmfError('CYCLE','Inventory request contains a cycle.',displayPath(at));
-  const array=Array.isArray(value),prototype=Object.getPrototypeOf(value);accounting?.visit('inventory-component-container',displayPath(at));
-  if(array?prototype!==Array.prototype:prototype!==Object.prototype&&prototype!==null)throw new UmfError('NON_JSON','Inventory request contains a custom object.',displayPath(at));
-  if(Object.getOwnPropertySymbols(value).length)throw new UmfError('NON_JSON','Inventory request contains symbol properties.',displayPath(at));
-  if(array&&value.length>maxBytes-bytes-2)throw new UmfError('LIMIT','Inventory request array exceeds its existing byte bound.',displayPath(at));
-  const names=Object.getOwnPropertyNames(value);
-  if(array){
-   if(names.length!==value.length+1||names.some(name=>name!=='length'&&(!/^(0|[1-9][0-9]*)$/.test(name)||Number(name)>=value.length)))throw new UmfError('NON_JSON','Inventory request contains a sparse array or non-index property.',displayPath(at));
-   add(2+(value.length?value.length-1:0),at);
-  }else{
-   if(names.length>Math.floor((maxBytes-bytes)/4))throw new UmfError('LIMIT','Inventory request object exceeds its existing byte bound.',displayPath(at));
-   names.sort();add(2+(names.length?names.length-1:0),at);
-   for(const key of names){add(quotedJsonBytes(key)+1,childPath(at,key));accounting?.visit('inventory-component-key-preflight',displayPath(at));accounting?.scanUtf8(key,displayPath(at));}
-  }
-  active.add(value);
-  const target:Json[]|Record<string,Json>=array?new Array(value.length):Object.create(null);
-  assign(target as Json);
-  const frame:Frame={source:value,target,keys:array?null:names,index:0,array,path:at};
-  tasks.push({kind:'resume',frame});
- }
- return root[0]!;
-}
 function ownRequestHistory(input:unknown,accounting?:AccountingContext):Json{
  if(!obj(input)||Object.getOwnPropertySymbols(input).length)throw new ShapeError('/history','history-profile-or-count');
  const keys=Object.getOwnPropertyNames(input),expected=['profile','plans','executions'];
  if(keys.length!==expected.length||expected.some(key=>!keys.includes(key)))throw new ShapeError('/history','history-profile-or-count');
  const profileDescriptor=Object.getOwnPropertyDescriptor(input,'profile'),planDescriptor=Object.getOwnPropertyDescriptor(input,'plans'),executionDescriptor=Object.getOwnPropertyDescriptor(input,'executions');
  if(!profileDescriptor||!profileDescriptor.enumerable||!('value'in profileDescriptor)||profileDescriptor.value!=='umf.table-inventory-source-history/0.1'||!planDescriptor||!planDescriptor.enumerable||!('value'in planDescriptor)||!executionDescriptor||!executionDescriptor.enumerable||!('value'in executionDescriptor)||!Array.isArray(planDescriptor.value)||!Array.isArray(executionDescriptor.value)||planDescriptor.value.length>128||executionDescriptor.value.length!==planDescriptor.value.length)throw new ShapeError('/history','history-profile-or-count');
- let owned:Json;try{owned=ownCanonicalComponent(input,'/history',25_165_824,accounting);}catch(error){if(error instanceof UmfError&&error.code==='LIMIT')throw new ShapeError('/history','history-too-large');throw error;}
+ let owned:Json;try{owned=accounting instanceof R2WorkMeter?ownR2HistoryComponent(input,accounting,'/history').value as unknown as Json:ownCanonicalComponent(input,'/history',25_165_824,accounting);}catch(error){if(error instanceof UmfError&&error.code==='LIMIT')throw new ShapeError('/history','history-too-large');throw error;}
  if(!obj(owned))throw new UmfError('LIMIT','Inventory history exceeds its original entry bound.','/history');
  const ownedHistory=owned as Record<string,Json>;
  if(!Array.isArray(ownedHistory.plans)||!Array.isArray(ownedHistory.executions)||ownedHistory.plans.length>128||ownedHistory.executions.length>128)throw new UmfError('LIMIT','Inventory history exceeds its original entry bound.','/history');
@@ -941,10 +900,10 @@ function prepareInventoryCompilation(input:unknown,verifyHistoricalG10:Historica
  const lineage=deriveInventorySeedLineage(request.history,{previous:request.previous,next:request.next,options:{seedSets:request.options.seedSets,retiredSeedSets:request.options.retiredSeedSets}},verifyHistoricalG10,accounting),inventory=compileG10InventoryDeltaFromPrepared(request,next,previous,lineage,accounting),review=exactReviewFromPrepared(stableRequest,verifyHistoricalG10,{history:request.history,before:previous,after:next,seedLineage:lineage},accounting);
  return {request,inventory,next,previous,lineage,review,stableRequest};
 }
-function compileG10InventoryPlanInternal(input:unknown,verifyHistoricalG10:HistoricalG10PlanVerifier,accounting?:AccountingContext):Record<string,Json>{
- return compileInventoryPlanFromPrepared(prepareInventoryCompilation(input,verifyHistoricalG10,accounting),accounting);
+function compileG10InventoryPlanInternal(input:unknown,verifyHistoricalG10:HistoricalG10PlanVerifier,accounting?:AccountingContext,captureCanonical?:CapturedPlanCanonical):Record<string,Json>{
+ return compileInventoryPlanFromPrepared(prepareInventoryCompilation(input,verifyHistoricalG10,accounting),accounting,captureCanonical);
 }
-function compileInventoryPlanFromPrepared(prepared:PreparedInventoryCompilation,accounting?:AccountingContext):Record<string,Json>{
+function compileInventoryPlanFromPrepared(prepared:PreparedInventoryCompilation,accounting?:AccountingContext,captureCanonical?:CapturedPlanCanonical):Record<string,Json>{
  const {request,inventory,next,previous,lineage,review}=prepared;
  for(const change of inventory.changes){accounting?.visit('r2-create-change-admission','/inventory/changes');if(change.kind!=='create-table')fail('TABLE_REMOVAL_EFFECTS_NOT_LOWERED');}
  const selected=request.options.tableIntents;for(const intent of selected){accounting?.visit('r2-create-intent-admission','/options/tableIntents');if(intent.kind!=='create')fail('TABLE_REMOVAL_EFFECTS_NOT_LOWERED');}
@@ -978,7 +937,7 @@ function compileInventoryPlanFromPrepared(prepared:PreparedInventoryCompilation,
  const history=prepared.stableRequest.history as unknown as Json,historyBinding={profile:'umf.table-inventory-source-history/0.1' as const,count:request.history.plans.length,digest:accounting?hashCanonicalCharged(prepared.stableRequest.history,accounting,'/history'):hashCanonical(prepared.stableRequest.history)};
  const seedExecution=request.options.seedSets.length?{version:'umf.table-seed-execution/0.1' as const,sets:[...request.options.seedSets]}:'none';
  accounting?.visit('g10-provenance-mutation-derivation','/effects',effects.length);const provenanceMutations=deriveG10ProvenanceMutations(previous?.projection??null,next.projection,effects,accounting);
- return compileInventoryPlanCore({id:request.id,predecessor:request.predecessor,previous:request.previous,next:request.next,options:prepared.stableRequest.options as unknown as Json,history,historyBinding,inventory,initialPrefix,nextCatalog:next.projection.catalog as unknown as Record<string,Json[]>,effects,dependencies,publicationObligations:derived.publicationObligations,provenanceMutations,seedExecution,review:review as unknown as Json[]},accounting);
+ return compileInventoryPlanCore({id:request.id,predecessor:request.predecessor,previous:request.previous,next:request.next,options:prepared.stableRequest.options as unknown as Json,history,historyBinding,inventory,initialPrefix,nextCatalog:next.projection.catalog as unknown as Record<string,Json[]>,effects,dependencies,publicationObligations:derived.publicationObligations,provenanceMutations,seedExecution,review:review as unknown as Json[]},accounting,captureCanonical);
 }
 
 /** Verify only by reconstructing the exact plan from independently verified source and the supplied original history. */

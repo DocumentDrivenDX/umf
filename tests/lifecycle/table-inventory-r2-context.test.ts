@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
+import {canonical,canonicalCharged} from '../../src/compilation/bundle/hash';
 import {compileTableDeployment} from '../../src/table-deployment';
 import {legalSource} from './legal-fixture';
 import {readJsonDocumentWithAccounting} from '../../src/model/document-accounting';
 import {scanJsonFrameCharged} from '../../src/model/internal/scan-json-frame';
 import {inspectR2InventorySourceContext,prepareR2InventorySourceContext} from '../../src/table-migration/inventory';
 import {
- parseR2DiscoverySelectorShape,R2_CONTEXT_BYTE_LIMIT,R2_WORK_EVENT_UNITS,R2_WORK_LIMIT,R2WorkLimitError,R2WorkMeter,snapshotR2Json,snapshotR2SourceData,
+ ownR2HistoryComponent,ownR2HistoryExecutionWrapper,ownedR2HistoryByteLength,ownedR2HistoryMember,parseR2DiscoverySelectorShape,R2_CONTEXT_BYTE_LIMIT,R2_WORK_EVENT_UNITS,R2_WORK_LIMIT,R2WorkLimitError,R2WorkMeter,snapshotR2HistoryJson,snapshotR2Json,snapshotR2SourceData,
 } from '../../src/table-migration/inventory-r2-context';
 
 const emptySelector={
@@ -257,6 +258,60 @@ test('R2 descriptor admission enforces depth and numeric limits while preserving
  for(const number of [-0,Number.MAX_SAFE_INTEGER+1,Infinity])expect(()=>snapshotR2Json(number as any,new R2WorkMeter(),'/number')).toThrow(/CONTEXT_NUMBER/);
  const source={unknownExtension:{unicode:'λ'}};const owned=snapshotR2Json(source,new R2WorkMeter(),'/source');source.unknownExtension.unicode='changed';
  expect(owned.value.unknownExtension.unicode).toBe('λ');expect(owned.canonical).toContain('unknownExtension');
+});
+
+test('R2 owned history canonical spans bind exact frozen roots and members',()=>{
+ const raw={profile:'umf.table-inventory-source-history/0.1',plans:[{id:'p-λ',ratio:1.25,extension:{zero:0,negativeZero:0}}],executions:[{planDigest:'a'.repeat(64),entryDigest:'b'.repeat(64),seedOutcomes:[]}]};
+ const meter=new R2WorkMeter(),owned=snapshotR2HistoryJson(raw,meter);
+ expect(owned.canonical).toBe(canonical(raw));expect(ownedR2HistoryByteLength(owned.value,meter)).toBe(new TextEncoder().encode(canonical(raw)).byteLength);
+ const plan=ownedR2HistoryMember(owned.value.plans[0],meter,'/history/plans/0');expect(plan?.text).toBe(canonical(owned.value.plans[0]));expect(plan?.byteLength).toBe(new TextEncoder().encode(plan!.text).byteLength);
+ expect(ownedR2HistoryMember(raw.plans[0],meter,'/mutable-caller/plans/0')).toBeUndefined();raw.plans[0]!.extension.zero=9;expect((owned.value.plans[0] as any).extension.zero).toBe(0);
+ expect(ownedR2HistoryMember(owned.value.plans[0],new R2WorkMeter(),'/foreign/plans/0')).toBeUndefined();
+ expect(ownedR2HistoryMember(structuredClone(owned.value.plans[0]),meter,'/clone/plans/0')).toBeUndefined();
+ const empty={profile:'umf.table-inventory-source-history/0.1',plans:[],executions:[]},emptyMeter=new R2WorkMeter(),emptyOwned=snapshotR2HistoryJson(empty,emptyMeter);
+ expect(emptyOwned.canonical).toBe(canonical(empty));expect(ownedR2HistoryByteLength(emptyOwned.value,emptyMeter)).toBe(new TextEncoder().encode(canonical(empty)).byteLength);
+ const copy=structuredClone(raw),copyMeter=new R2WorkMeter(),ownedCopy=ownR2HistoryComponent(copy,copyMeter);
+ expect(Object.isFrozen(ownedCopy.value)&&Object.isFrozen(ownedCopy.value.plans)&&Object.isFrozen(ownedCopy.value.plans[0])).toBe(true);
+ expect(ownedR2HistoryMember(ownedCopy.value.plans[0],copyMeter,'/controlled-copy/plans/0')?.text).toBe(canonical(copy.plans[0]));
+ const execution=ownedR2HistoryExecutionWrapper(owned.value.executions[0],meter,'/wrapper-control');
+ expect(ownedR2HistoryMember(execution,meter,'/wrapper-control/member')?.text).toBe(canonical(owned.value.executions[0]));
+ const extra=Object.freeze({...owned.value.executions[0],extension:true});expect(()=>ownR2HistoryExecutionWrapper(extra,meter,'/extra')).toThrow(/R2_HISTORY_EXECUTION_SOURCE/);
+ let getterCalls=0;const accessor=Object.create(null) as Record<string,unknown>;
+ Object.defineProperties(accessor,{planDigest:{enumerable:true,get(){getterCalls++;return 'a'.repeat(64);}},entryDigest:{enumerable:true,value:'b'.repeat(64)},seedOutcomes:{enumerable:true,value:[]}});Object.freeze(accessor);
+ expect(()=>ownR2HistoryExecutionWrapper(accessor,meter,'/accessor')).toThrow(/R2_HISTORY_EXECUTION_SOURCE/);expect(getterCalls).toBe(0);
+ const custom=Object.freeze(Object.assign(Object.create({foreign:true}),{planDigest:'a'.repeat(64),entryDigest:'b'.repeat(64),seedOutcomes:[]}));
+ expect(()=>ownR2HistoryExecutionWrapper(custom,meter,'/custom')).toThrow(/R2_HISTORY_EXECUTION_SOURCE/);
+});
+
+test('R2 history spans are not published when charged source admission fails',()=>{
+ const raw={profile:'umf.table-inventory-source-history/0.1',plans:[{id:'p'}],executions:[{id:'e'}]},meter=new R2WorkMeter();
+ meter.charge('jsonNode',R2_WORK_LIMIT-1,'/near-limit');
+ expect(()=>ownR2HistoryComponent(raw,meter)).toThrow(R2WorkLimitError);
+ expect(()=>ownedR2HistoryByteLength(raw,meter)).toThrow(R2WorkLimitError);
+ expect(ownedR2HistoryByteLength(raw,new R2WorkMeter())).toBeUndefined();expect(ownedR2HistoryMember(raw.plans[0],new R2WorkMeter())).toBeUndefined();
+});
+
+test('R2 history metadata and lazy member spans publish only after their charges',()=>{
+ class RetentionFailureMeter extends R2WorkMeter{
+  failCategory:string|null=null;failDomain:string|null=null;
+  override visit(category:string,path:string,count=1):void{if(category===this.failCategory)throw new Error(`CONTROLLED_RETENTION_FAILURE:${category}`);super.visit(category,path,count);}
+  override retainBytes(domain:string,count:number,path:string):void{if(domain===this.failDomain)throw new Error(`CONTROLLED_RETENTION_FAILURE:${domain}`);super.retainBytes(domain,count,path);}
+ }
+ const raw={profile:'umf.table-inventory-source-history/0.1',plans:[{id:'p'}],executions:[{planDigest:'a'.repeat(64),entryDigest:'b'.repeat(64),seedOutcomes:[]}]},meter=new RetentionFailureMeter();
+ meter.failCategory='r2-history-member-map-retention';expect(()=>ownR2HistoryComponent(raw,meter)).toThrow(/CONTROLLED_RETENTION_FAILURE/);meter.failCategory=null;
+ expect(ownedR2HistoryByteLength(raw,meter)).toBeUndefined();expect(ownedR2HistoryMember(raw.plans[0],meter)).toBeUndefined();
+ const owned=snapshotR2HistoryJson(raw,meter),member=owned.value.plans[0]!,beforeFailure=meter.snapshot().bytes;meter.failDomain='r2-history-member-canonical-copy';expect(()=>ownedR2HistoryMember(member,meter)).toThrow(/CONTROLLED_RETENTION_FAILURE/);
+ expect(meter.snapshot().bytes).toBe(beforeFailure);meter.failDomain=null;const expected=canonical(member),afterRetry=ownedR2HistoryMember(member,meter);expect(afterRetry?.text).toBe(expected);expect(meter.snapshot().bytes-beforeFailure).toBe(new TextEncoder().encode(expected).byteLength);
+ const afterRetryBytes=meter.snapshot().bytes;expect(ownedR2HistoryMember(member,meter)?.text).toBe(expected);expect(meter.snapshot().bytes).toBe(afterRetryBytes);
+});
+
+test('R2 canonical string and key bytes are reserved before token construction',()=>{
+ const string='x'.repeat(1024),stringMeter=new R2WorkMeter();stringMeter.chargeBytes(R2_CONTEXT_BYTE_LIMIT-(string.length+1),'/preloaded');
+ expect(()=>canonicalCharged(string,stringMeter,'/large-string')).toThrow(R2WorkLimitError);
+ expect(stringMeter.snapshot().bytes).toBe(R2_CONTEXT_BYTE_LIMIT-(string.length+1));
+ const key='k'.repeat(1024),keyMeter=new R2WorkMeter();keyMeter.chargeBytes(R2_CONTEXT_BYTE_LIMIT-(key.length+1),'/preloaded');
+ expect(()=>canonicalCharged({[key]:null},keyMeter,'/large-key')).toThrow(R2WorkLimitError);
+ expect(keyMeter.snapshot().bytes).toBe(R2_CONTEXT_BYTE_LIMIT-key.length);
 });
 
 test('R2 exported selector parser admits unknown input before shape reads and owns its result',()=>{

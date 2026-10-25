@@ -5,5 +5,5 @@ export interface AccountingContext {
  retainSubject(identity:unknown,path:string):void;
  retainBytes(domain:string,count:number,path:string):void;
  scanUtf8(text:string,path:string):number;
- appendCanonicalChunk(text:string,path:string):void;
+ appendCanonicalChunk(text:string,path:string):number;
 }

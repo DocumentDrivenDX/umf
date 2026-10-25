@@ -16,7 +16,7 @@ class BrowserAccountingContext {
  retainSubject(_identity:unknown,_path:string):void{this.subjects++;this.work++;}
  retainBytes(_domain:string,count:number,_path:string):void{this.bytes+=count;this.work+=Math.ceil(count/4096);}
  scanUtf8(text:string,path:string):number{const bytes=new TextEncoder().encode(text).byteLength;this.retainBytes('browser-test',bytes,path);return bytes;}
- appendCanonicalChunk(text:string,path:string):void{this.scanUtf8(text,path);}
+ appendCanonicalChunk(text:string,path:string):number{return this.scanUtf8(text,path);}
 }
 
 function assertParity(id:string,document:unknown):number{
