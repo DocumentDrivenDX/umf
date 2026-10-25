@@ -1029,7 +1029,8 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         supervisor = object.__new__(LocalPostgresSupervisor)
         provider_id = str(uuid.uuid4())
         store = _store_descriptor('umf.native-row-originals-store/0.1', provider_id)
-        target, connection = object(), object()
+        target = object()
+        connection = SimpleNamespace(info=SimpleNamespace(transaction_status=0))
         request_bytes = _canonical({'profile': 'umf.owner-store-create-intent/0.1'})
         request = SimpleNamespace(
             _intent_bytes=request_bytes,

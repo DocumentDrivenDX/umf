@@ -376,7 +376,8 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                 argv = [str(postgres), '-D', str(data_dir), '-c', f'config_file={config_path}',
                         '-c', f'hba_file={hba_path}', '-c', f'ident_file={ident_path}']
                 process = {'uid': os.geteuid(), 'gid': os.getegid(), 'pgid': pid,
-                           'pid': pid, 'path': str(postgres), 'argv': argv,
+                           'pid': pid, 'startSec': launch_number, 'startUsec': 0,
+                           'path': str(postgres), 'argv': argv,
                            'startToken': f'fixture-{launch_number}'}
                 observer.process_value = process
                 observer.sockets_value = [{'family': 2, 'address': '127.0.0.1',

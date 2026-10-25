@@ -3263,6 +3263,7 @@ class LocalPostgresSupervisor:
                            other_store.get('schemaName')) == selected_key
                     and payload.get('reservationDigest') != store_state['reservationDigest']):
                 raise LocalPostgresError('local-postgresql-store-recovery-intent-conflict')
+        typed_event = None
         if typed:
             typed_event = typed[0]
             if (typed_event['payload'].get('custodianReservedEventDigest')
