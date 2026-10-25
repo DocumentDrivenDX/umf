@@ -997,7 +997,7 @@ class ExternalCustodyJournal:
         journal._birth_bytes = _canonical(descriptor)
         journal._birth_handle = birth_handle
         journal._context = resolver._context
-        journal._issuer = resolver.issuer
+        journal._issuer = resolver.adapter._bootstrap_issuer
         journal._resolver = resolver
         journal._supervisor = resolver.adapter
         return journal

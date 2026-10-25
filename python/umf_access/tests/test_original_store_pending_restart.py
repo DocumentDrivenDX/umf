@@ -456,6 +456,8 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     registration, self._signed_envelope(
                         authority, private_key, registration_request))
                 self.assertIs(supervisor.custody_handle, public_or_handle)
+                self.assertIs(supervisor._custodian._journal._issuer,
+                              supervisor._bootstrap_issuer)
                 evidence = supervisor.prepare_original_store_evidence(public_or_handle,
                     store_profile=STORE_PROFILE)
                 store_request = evidence.owner_request
