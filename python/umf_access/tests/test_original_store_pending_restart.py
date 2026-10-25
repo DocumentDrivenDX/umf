@@ -24,6 +24,7 @@ from unittest.mock import patch
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from owner_bootstrap_setup_fixture import install_pending_owner_setup
+from umf_access.lifecycle import ingress_custody as custody
 from umf_access.lifecycle import ingress_local_postgres as native
 from umf_access.lifecycle import owner_bootstrap as bootstrap
 from umf_access.lifecycle import supervisor_journal_codec as codec
@@ -431,8 +432,47 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                 session.apply_original_principals(
                     principal, self._signed_envelope(authority, private_key, principal_request))
                 registration, registration_request = session.prepare_target_registration(target)
-                public_or_handle = session.apply_target_registration(
-                    registration, self._signed_envelope(authority, private_key, registration_request))
+                origin_diagnostics = []
+                original_require_control_lease = (
+                    custody._OwnerRegistrationResolver.require_control_lease)
+                original_resolve_target_birth = (
+                    bootstrap._resolve_original_target_custody_journal_birth)
+
+                def diagnostic(label, error):
+                    code = (error.code if isinstance(error, bootstrap.LocalPostgresError)
+                            and type(error.code) is str and len(error.code) <= 256
+                            else 'no-fixed-code')
+                    record = f'{label}:{type(error).__name__}:{code}'
+                    if len(origin_diagnostics) < 2:
+                        origin_diagnostics.append(record)
+                        print('G04 origin diagnostic ' + record)
+
+                def diagnose_lease(resolver, control_lease, *, operation_kind):
+                    try:
+                        return original_require_control_lease(
+                            resolver, control_lease, operation_kind=operation_kind)
+                    except Exception as error:
+                        diagnostic('require-control-lease', error)
+                        raise
+
+                def diagnose_target_birth(birth, *, issuer, context, supervisor,
+                                          control_lease):
+                    try:
+                        return original_resolve_target_birth(
+                            birth, issuer=issuer, context=context,
+                            supervisor=supervisor, control_lease=control_lease)
+                    except Exception as error:
+                        diagnostic('resolve-target-birth', error)
+                        raise
+
+                with (patch.object(custody._OwnerRegistrationResolver,
+                                   'require_control_lease', diagnose_lease),
+                      patch.object(bootstrap,
+                                   '_resolve_original_target_custody_journal_birth',
+                                   diagnose_target_birth)):
+                    public_or_handle = session.apply_target_registration(
+                        registration, self._signed_envelope(
+                            authority, private_key, registration_request))
                 self.assertIs(supervisor.custody_handle, public_or_handle)
                 evidence = supervisor.prepare_original_store_evidence(public_or_handle,
                     store_profile=STORE_PROFILE)
