@@ -171,7 +171,8 @@ test('R2 JSON reader uses the bounded qualified scanner before JSON tree admissi
  const meter=new R2WorkMeter();
  expect(()=>readJsonDocumentWithAccounting('{"umf":"0.10.0","umf":"0.10.0"}',meter)).toThrow(/Duplicate JSON member/);
  expect(()=>readJsonDocumentWithAccounting('{"n":9007199254740993}',new R2WorkMeter())).toThrow(/Noninteroperable JSON number/);
- expect(()=>readJsonDocumentWithAccounting('{"s":"\\u03bb"}',new R2WorkMeter())).toThrow(/INVALID_DOCUMENT|invalid/i);
+ let invalid:unknown;try{readJsonDocumentWithAccounting('{"s":"\\u03bb"}',new R2WorkMeter());}catch(error){invalid=error;}
+ expect(invalid).toMatchObject({name:'UmfError',code:'INVALID_DOCUMENT'});
  expect(meter.snapshot().bytes).toBeGreaterThan(0);
 });
 
@@ -187,7 +188,9 @@ test('R2 scanner reserves exact decoded UTF-8 bytes before decoding strings or r
  expect(decodedLarge).toBe(false);
  const input='{"s":"long"}',meter=new R2WorkMeter();meter.chargeBytes(R2_CONTEXT_BYTE_LIMIT-input.length-3,'/preloaded');
  expect(()=>readJsonDocumentWithAccounting(input,meter)).toThrow(/R2_CONTEXT_BYTES_LIMIT/);
- expect(meter.snapshot().bytes).toBe(R2_CONTEXT_BYTE_LIMIT-2);
+ // Source bytes plus scanner/document key retention fit; the value string
+ // then refuses before its decoded bytes are retained.
+ expect(meter.snapshot().bytes).toBe(R2_CONTEXT_BYTE_LIMIT-1);
 });
 
 test('R2 scanner reserves exact bytes for escaped scalar widths and rejects decoded duplicate keys',()=>{
