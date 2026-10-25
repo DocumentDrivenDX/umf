@@ -189,6 +189,6 @@ export function sameSourceExceptG02AndCreates(previous:TableDeploymentBundle,nex
   newRecord.members.splice(memberIndex,1);
   newElementModule.elements.splice(fieldIndex,1);
  }
- const oldCanonical={document:oldDoc,configuration:clone(previous.configuration)} as Json,newCanonical={document:newDoc,configuration:clone(next.configuration)} as Json;
+ const oldCanonical={document:oldDoc,configuration:clone(previous.configuration)} as unknown as Json,newCanonical={document:newDoc,configuration:clone(next.configuration)} as unknown as Json;
  return same(oldCanonical,newCanonical);
 }
