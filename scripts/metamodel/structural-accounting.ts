@@ -190,10 +190,12 @@ function instrumentExpression(node:ts.Node):ts.VisitResult<ts.Node>{
  return visitEachChild(node,instrumentExpression);
 }
 function escapingReplaceKind(node:ts.CallExpression):'tilde'|'slash'|undefined{
- if(node.arguments.length!==2||!ts.isRegularExpressionLiteral(node.arguments[0]!))return undefined;
- const pattern=node.arguments[0]!.text,replacement=node.arguments[1];
- if(pattern==='/~/g'&&ts.isStringLiteral(replacement)&&replacement.text==='~0')return 'tilde';
- if(pattern==='/\\//g'&&ts.isStringLiteral(replacement)&&replacement.text==='~1')return 'slash';
+ if(node.arguments.length!==2)return undefined;
+ const patternNode=node.arguments[0],replacement=node.arguments[1];
+ if(!patternNode||!replacement||!ts.isRegularExpressionLiteral(patternNode)||!ts.isStringLiteral(replacement))return undefined;
+ const pattern=patternNode.text;
+ if(pattern==='/~/g'&&replacement.text==='~0')return 'tilde';
+ if(pattern==='/\\//g'&&replacement.text==='~1')return 'slash';
  return undefined;
 }
 function isKnownNumericAdd(node:ts.BinaryExpression):boolean{
@@ -269,8 +271,10 @@ export function structuralAccountingSource(generatedSource:string,schemas:readon
   if(ts.isImportDeclaration(statement)){imports.push(statement);continue;}
   if(ts.isVariableStatement(statement)){
    const declarations=statement.declarationList.declarations;
-   if(declarations.length!==1||!ts.isIdentifier(declarations[0]!.name))fail('TOP_LEVEL_VARIABLE',statement.getText(source));
-   const declaration=declarations[0]!,name=declaration.name.text;
+   if(declarations.length!==1)fail('TOP_LEVEL_VARIABLE',statement.getText(source));
+   const declaration=declarations[0];
+   if(!declaration||!ts.isIdentifier(declaration.name))fail('TOP_LEVEL_VARIABLE',statement.getText(source));
+   const name=declaration.name.text;
    if(declaration.initializer)bindings.set(name,declaration.initializer);
    if(/^schema[0-9]+$/.test(name)&&declaration.initializer&&ts.isObjectLiteralExpression(declaration.initializer)){
     const data=literal(declaration.initializer),id=propertyString(data,'$id');if(id)schemaValues.push(data);
@@ -296,6 +300,7 @@ export function structuralAccountingSource(generatedSource:string,schemas:readon
   const initializer=bindings.get(wrapper);
   if(!initializer||!ts.isObjectLiteralExpression(initializer)||initializer.properties.length!==1)fail('WRAPPER_SHAPE',wrapper);
   const property=initializer.properties[0];
+  if(!property)fail('WRAPPER_SHAPE',wrapper);
   if(!ts.isPropertyAssignment(property)||!ts.isIdentifier(property.name)||property.name.text!=='validate'||!ts.isIdentifier(property.initializer)||property.initializer.text!==target)fail('WRAPPER_BINDING',wrapper);
  }
  for(const expected of schemas){const id=propertyString(expected,'$id');if(!id||!schemaValues.some((actual)=>propertyString(actual,'$id')===id&&JSON.stringify(actual)===JSON.stringify(expected)))fail('SCHEMA_BINDING',String(id));}

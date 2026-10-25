@@ -19,7 +19,7 @@ const LOCKED_FILES=[
  {path:'package.json',sha256:'031bdb38c663c33804c02de06906c9c4fdd7bbf32728204cd4c8d30959c324ed'},
  {path:'bun.lock',sha256:'5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4'},
  {path:'bunfig.toml',sha256:'b9fc65eca9014c5179380259d70e76385a6a80788fa9a2df5fb3eaa5554fd2fe'},
- {path:'scripts/metamodel/structural-accounting.ts',sha256:'7c6fd72534594ca44bcfd890aae4691eca42cbb0c81defc821ab0be492dff7a4'},
+ {path:'scripts/metamodel/structural-accounting.ts',sha256:'19fecf24c37428e29b15bcd780421e9f0414cc6b8fa0bf7c87c18b2dbe9e9dbc'},
 ] as const;
 const sha256=(bytes:string|Uint8Array)=>createHash('sha256').update(bytes).digest('hex');
 const root=resolve(fileURLToPath(new URL('../..',import.meta.url)));
