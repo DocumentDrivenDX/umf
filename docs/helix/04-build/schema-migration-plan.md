@@ -230,11 +230,26 @@ umbrella goal stays open after the G02 release until the remaining entries pass
 their own closure gates or a concrete external prerequisite is explicitly tracked.
 Unavailability of a target is not evidence that its gap is closed.
 
-**Plan UMF and Weft Praxis asks** owns implementation, integrated contracts,
-tests, merge and release. **Explain UMF schema migrations** owns design decisions,
-independent review/native verification and published-artifact comparison. Product
-implementation stays in the implementation session; this plan does not authorize
-changes to Praxis. No release version/date or managed target is assumed.
+**UMF/Weft — migration implementation and releases** owns the consolidated
+implementation, integrated contracts, tests, independent Sol review, merge and
+release. **Stack — integration and release coordination** coordinates the other
+surviving **UMF — Rust port and V8 removal** and **Arras — release and Truss
+installer** workstreams. These names supersede the earlier split design and
+implementation chat names. This plan does not authorize changes to Praxis.
+No successor release version/date or managed target is assumed.
+
+The [2026-10-25 combined source evidence](evidence/schema-migration-design-review/combined-integration-source-2026-10-25/manifest.json)
+records actual integrated G02/G03 native fixture sources and the accepted R2
+context/accounting source at `45b41b42db2bea6895ea7adda6afba8b6e91825d`.
+The dedicated hosted qualification at `880f1e53032e7e46752c9767865fb03e246c959c`
+remains pending; its portable/typecheck/Bun/Chromium scope does not qualify native
+campaigns or public inventory 0.2. G04 recovery implementation remains unreviewed
+and unrun. Its owner decisions preserve immutable original signed evidence,
+truthful current read-only observations, a separate 30-second observational
+window with zero DDL, and the original creation window of 30 seconds/two attempts.
+Weft's retained full selected Rust run compiled and recorded 54 passing/four
+failing tests; it supplies no Python/WASM/native acceptance. All release gates
+above remain open until their actual evidence and publication are complete.
 
 ### G02 selected delivery gates
 

@@ -1,0 +1,15 @@
+{
+  "disposition": "SOURCE_ACCEPT_BOUNDED_COMBINED_CONTEXT",
+  "priorReview": "/private/tmp/r2-combined-context-sol-review002.json",
+  "priorReviewSha256": "913dfb460b0d555215ecbad64420dda2fab75813a72e19f2fcd47c8c3144775a",
+  "finalAffectedSources": {
+    "src/table-migration/inventory.ts": "b47798a0572547cf8adef044b249b88156425b0ebe5cc7957c82cc084c3b1c88",
+    "src/table-migration/inventory-history.ts": "568a1bf0e32389b303f5dc910797ddb82ef993217cae7b0ce5c05d185e2a5584"
+  },
+  "closed": "Both reported variable Set retention charges now precede seen.add; history freezer collects object keys once. Prior42-path findings/source conclusions inherited without broader re-audit.",
+  "limitations": [
+    "No imports/runtime/tests/typecheck/schema/native execution",
+    "No fullR2/public.2/history-family/native-provider qualification",
+    "Hosted execution proposal remains separately correction-required"
+  ]
+}

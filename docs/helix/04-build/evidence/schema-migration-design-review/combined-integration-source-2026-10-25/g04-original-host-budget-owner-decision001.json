@@ -1,0 +1,17 @@
+{
+  "profile": "umf.g04-host-budget-owner-decision/1",
+  "decision": "ADOPT_WITH_EXISTING_BOUND_TIGHTENING",
+  "basis": "/private/tmp/g04-original-host-budget-owner-plan001.md",
+  "basisSHA": "7a2afab62f5587960e3b0d4f23df7bd46498ba37d433370d1954790a64c8c7eb",
+  "hostExecutionWindowMs": 30000,
+  "maximumDispatchedTransactions": 2,
+  "rules": [
+    "private fixed-supervisor issuer registry; mint once after genuine approval before reservation write",
+    "same original request/effect/reservation/issuer/PID; no resume reset/refund or caller budget/clock/DTO",
+    "clamp waits to MIN remaining allowance, proposal ceiling, AND every existing qualified lower statement/lock/connection/host bound; never inflate an existing timeout",
+    "restore session settings/transaction ownership on all paths; cooperative deadline not hardwall",
+    "no invented signed approval expiry or public wire/profile field",
+    "missing/restarted/forked budget fences DDL; separately bounded positive-committed observation and same-original settlement remain available",
+    "native qualifications UNRUN; numeric values are new conservative HOST policy not existing contract constants"
+  ]
+}
