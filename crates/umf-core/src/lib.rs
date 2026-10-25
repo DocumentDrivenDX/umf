@@ -5,6 +5,7 @@
 //! filesystem, network, process, clock, or JavaScript runtime.
 pub mod access_constraints;
 pub mod access_catalog_custody;
+pub mod access_logical_render;
 pub mod access_related_keys;
 pub mod access_stream;
 pub mod access_temporal;

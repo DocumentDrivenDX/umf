@@ -4752,3 +4752,18 @@ installed SDK archive bytes remain unqualified. The refreshed ledger check and
 37/37 focused tests pass. The access boundary checker now also applies its
 exact per-file import policy to static re-exports, with a negative control;
 Sol independently reran its four focused controls and full-directory check.
+
+The [opt-in Rust logical-render slice](evidence/rust-migration/r8-captured-logical-render-rust/README.md)
+now accepts only the versioned tagged `CapturedVariant` cohort and emits
+pre-Weft logical request text through a public Python core bridge. It matches
+all four authored-name outputs and four missing-identity refusals, with exact
+shape, profile, unsupported-step, and resource admission. Sol independently
+reviewed the Record-before-Key/step refusal order and reran the new native
+packet together with existing catalog custody/source-join tests: 16 tests and
+16 subtests passed using a fresh local extension. The default catalog builder
+continues to use Python capture and rendering; Weft/backend compilation,
+installed-wheel qualification, and default-route retirement remain open. The
+Python access boundary now names the two opt-in catalog facades and permits
+only their public `umf.rust_access_catalog` bridge. Its full 28-test boundary
+suite and 95-module source scan pass; private `_rust` reach-through still
+refuses.

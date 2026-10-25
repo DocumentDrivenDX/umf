@@ -105,6 +105,15 @@ describe("actual compilation boundary checker", () => {
 });
 
 describe("actual Python boundary checker", () => {
+  test("catalog Rust facades use only the named public core bridge", () => {
+    const prefix = "python/umf_access/src/umf_access/";
+    for (const facade of ["rust_catalog_custody.py", "rust_catalog_render.py"]) {
+      expect(check("py", { [prefix + facade]: "from umf import rust_access_catalog as _core\n" }).exitCode).toBe(0);
+      rejects("py", { [prefix + facade]: "from umf import _rust\n" }, "DEPENDENCY");
+      rejects("py", { [prefix + facade]: "from umf import rust_values\n" }, "DEPENDENCY");
+    }
+    rejects("py", { [prefix + "catalog.py"]: "from umf import rust_access_catalog\n" }, "DEPENDENCY");
+  });
   test("SQL containment separates pure admission from optional pinned parser and host I/O",()=>{
     const prefix="python/umf_access/src/umf_access/lifecycle/";
     expect(check("py",{[prefix+"sql_containment.py"]:"from dataclasses import dataclass\nimport hashlib\nimport json\nfrom typing import Protocol"}).exitCode).toBe(0);

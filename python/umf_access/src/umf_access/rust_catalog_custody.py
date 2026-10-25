@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from umf import _rust
+from umf import rust_access_catalog as _core
 
 _PROFILE = "umf-access-catalog-custody/0.1.0"
 _SOURCE_JOIN_PROFILE = "umf-access-catalog-source-join/0.1.0"
@@ -22,7 +22,7 @@ class CatalogCustodyUnavailable(RuntimeError):
 
 def profile_version() -> str:
     try:
-        version = _rust._rust_core.access_catalog_custody_profile_version()
+        version = _core.catalog_custody_profile_version()
     except (AttributeError, ImportError):
         raise CatalogCustodyUnavailable("Rust catalog custody capability unavailable") from None
     if version != _PROFILE:
@@ -34,7 +34,7 @@ def evaluate(target: Any) -> dict[str, Any]:
     """Return ordered references or a stable refusal without changing target."""
     profile_version()
     try:
-        result = _rust._rust_core.access_native_column_bindings(target)
+        result = _core.native_column_bindings(target)
     except AttributeError:
         raise CatalogCustodyUnavailable("Rust catalog custody capability unavailable") from None
     if type(result) is not dict or result.get("outcome") not in ("returned", "refused"):
@@ -50,13 +50,13 @@ def evaluate(target: Any) -> dict[str, Any]:
 def check_sources(bindings: list[dict[str, str]], sources: Any) -> dict[str, Any]:
     """Opt-in source-inventory membership check after Python file custody."""
     try:
-        version = _rust._rust_core.access_catalog_source_join_profile_version()
+        version = _core.catalog_source_join_profile_version()
     except (AttributeError, ImportError):
         raise CatalogCustodyUnavailable("Rust catalog source-join capability unavailable") from None
     if version != _SOURCE_JOIN_PROFILE:
         raise CatalogCustodyUnavailable("Rust catalog source-join profile mismatch")
     try:
-        result = _rust._rust_core.access_check_native_column_sources(bindings, sources)
+        result = _core.check_native_column_sources(bindings, sources)
     except AttributeError:
         raise CatalogCustodyUnavailable("Rust catalog source-join capability unavailable") from None
     if type(result) is not dict or result.get("outcome") not in ("returned", "refused"):
