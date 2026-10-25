@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {expect,test} from 'bun:test';
+import {beforeAll,describe,expect,test} from 'bun:test';
 import {hashCanonical} from '../../src/compilation/bundle/hash';
 import {UmfError} from '../../src/model/errors';
 import {compileTableDeployment} from '../../src/table-deployment';
@@ -144,9 +144,29 @@ function installedCreateReviewFixture(){
 }
 function compiledInstalledCreateReviewFixture(){
  const fixture=installedCreateReviewFixture(),result=compileTableInventoryMigration(fixture.request);
- if(result.status!=='compiled')throw new Error(JSON.stringify(result.diagnostics));
+ if(result.status!=='compiled'){
+  compileG10InventoryPlan(fixture.request);
+  throw new Error(JSON.stringify(result.diagnostics));
+ }
  return {...fixture,plan:result.plan};
 }
+
+describe('G10 installed-create compiled fixture',()=>{
+ let completed:ReturnType<typeof compiledInstalledCreateReviewFixture>;
+ beforeAll(()=>{completed=compiledInstalledCreateReviewFixture();},15000);
+
+ test('verifies against complete original history',()=>{
+  const {history,plan}=structuredClone(completed);
+  expect(verifyTableInventoryMigration(plan,history)).toEqual(plan);
+ });
+
+ test('refuses empty or changed history',()=>{
+  const {history,plan}=structuredClone(completed);
+  expect(()=>verifyTableInventoryMigration(plan,emptyHistory)).toThrow();
+  const alteredHistory=structuredClone(history);alteredHistory.executions[0]!.entryDigest='d'.repeat(64);
+  expect(()=>verifyTableInventoryMigration(plan,alteredHistory)).toThrow();
+ });
+});
 
 test('G10 installed create review exposes the complete absent-before projection with no old source path',()=>{
  const {intent,candidates,request}=installedCreateReviewFixture();
@@ -155,14 +175,6 @@ test('G10 installed create review exposes the complete absent-before projection 
  expect(createCandidate?.oldValue).toMatchObject({profile:'umf.table-inventory-review/0.1',side:'previous',table:'api_archive',record:intent.record,meaning:null});
  expect(createCandidate?.newPath).toMatch(/^\/modules\/0\/extensions\/umf\.tables\/tables\//);
  const result=compileTableInventoryMigration(request);if(result.status!=='compiled')throw new Error(JSON.stringify(result.diagnostics));expect(result.status).toBe('compiled');
-});
-
-test('G10 installed create plan verifies against complete original history and rejects changed history',()=>{
- const {history,plan}=compiledInstalledCreateReviewFixture();
- expect(verifyTableInventoryMigration(plan,history)).toEqual(plan);
- expect(()=>verifyTableInventoryMigration(plan,emptyHistory)).toThrow();
- const alteredHistory=structuredClone(history);alteredHistory.executions[0]!.entryDigest='d'.repeat(64);
- expect(()=>verifyTableInventoryMigration(plan,alteredHistory)).toThrow();
 });
 
 test('G10 historical verifier retains exact installed-create prefix and cache checks',()=>{
@@ -250,6 +262,15 @@ function mixedG02Request(existing:boolean,foreignSameId=false){
  const opts={...options(tableIntents,reviewedChanges),backfills:fixture.g02Options.backfills,seedSets:[...fixture.selectedG10SourceSelection.seedSets]};
  return {previous,next,history,selector:selectedSelector,candidates,request:{id:existing?'inventory-mixed-existing-g02':'inventory-mixed-appended-g02',predecessor:{id:history.plans.at(-1)!.id,digest:history.plans.at(-1)!.digest},previous,next,options:opts,history}};
 }
+function compiledMixedG02Fixture(){
+ const fixture=mixedG02Request(false),result=compileTableInventoryMigration(fixture.request);
+ if(result.status!=='compiled'){
+  compileG10InventoryPlan(fixture.request);
+  throw new Error(JSON.stringify(result.diagnostics));
+ }
+ expect(result.status).toBe('compiled');
+ return {...fixture,plan:result.plan};
+}
 
 test('G10 mixed legal fixture builders clone exported definitions into each returned source',()=>{
  const first=legalG10MixedSources();
@@ -261,39 +282,50 @@ test('G10 mixed legal fixture builders clone exported definitions into each retu
  expect(mixedCreatedTableSeedCommand.id).toBe('create_review_team');expect(mixedCreatedTableSeedSet.rows[0]!.table).toBe('matter_review_teams');
 });
 
-test('G10 mixed CREATE plus appended G02 uses global source ownership without widening the legacy marker parser',()=>{
- const {history,candidates,request}=mixedG02Request(false);
+describe('G10 appended CREATE plus G02 compiled fixture',()=>{
+ let completed:ReturnType<typeof compiledMixedG02Fixture>;
+ beforeAll(()=>{completed=compiledMixedG02Fixture();},15000);
+
+ test('retains source, marker, grant, field, phase, seed and operation ordering assertions',()=>{
+ const {candidates,request,plan}=structuredClone(completed);
  const originalSeeds=(legalSource() as any).modules[0]!.extensions['umf.tables'].seedSets;
  expect(JSON.parse(request.next.source.utf8).modules[0]!.extensions['umf.tables'].seedSets.slice(0,originalSeeds.length)).toEqual(originalSeeds);
  expect(candidates.some(candidate=>candidate.kind==='create-table'&&(candidate.newValue as any).table==='matter_review_groups')).toBe(true);
  expect(candidates.some(candidate=>candidate.kind==='change-operation'&&(candidate.newValue as any)?.id==='derive_matter_review_date')).toBe(true);
  expect(candidates.some(candidate=>candidate.kind==='change-operation'&&(candidate.newValue as any)?.id==='create_review_team')).toBe(true);
- const result=compileTableInventoryMigration(request);
- if(result.status!=='compiled'){compileG10InventoryPlan(request);}
- expect(result.status).toBe('compiled');if(result.status!=='compiled')throw new Error(JSON.stringify(result.diagnostics));
- expect(result.plan.review).toEqual(candidates);expect(verifyTableInventoryMigration(result.plan,history)).toEqual(result.plan);
- expect(JSON.parse(serializeTableInventoryMigration(result.plan,history))).toEqual(result.plan);
- const grantSteps=result.plan.steps.filter(step=>step.kind==='grant'&&step.sourcePath.endsWith('/policy/person/update'));
+ expect(plan.review).toEqual(candidates);
+ const grantSteps=plan.steps.filter(step=>step.kind==='grant'&&step.sourcePath.endsWith('/policy/person/update'));
  const mutableNames=(bundle:any)=>{const table=bundle.expectedCatalog.tables.find((item:any)=>item.id==='matters'),source=JSON.parse(bundle.source.utf8),record=source.modules.find((module:any)=>module.id===table.record.module).elements.find((element:any)=>element.kind==='record'&&element.id===table.record.element),keyFields=new Set(record.keys.flatMap((key:any)=>key.fields.map((field:any)=>JSON.stringify([field.module,field.element]))));return table.columns.filter((column:any)=>column.immutable!==true&&!column.generated&&!keyFields.has(JSON.stringify([column.field.module,column.field.element]))).map((column:any)=>column.name);};
  const oldGrantColumns=mutableNames(request.previous!),newGrantColumns=mutableNames(request.next),format=(direction:'GRANT'|'REVOKE',columns:string[])=>`${direction} UPDATE (${columns.map((column:string)=>'"'+column.replaceAll('"','""')+'"').join(', ')}) ON TABLE "${request.next.configuration.schema}"."matters" ${direction==='GRANT'?'TO':'FROM'} "${request.next.configuration.personRole}"`;
  expect(grantSteps.map(step=>step.sql)).toEqual([format('REVOKE',oldGrantColumns),format('GRANT',newGrantColumns)]);
- const fieldColumn=request.next.expectedCatalog.columns.find(column=>column.table==='matters'&&column.field.element==='matters__review_date')!,fieldSteps=result.plan.steps.filter(step=>step.sourcePath===fieldColumn.sourcePath||step.sourcePath==='/options/backfills/0'&&step.operation==='apply-backfill');
+ const fieldColumn=request.next.expectedCatalog.columns.find(column=>column.table==='matters'&&column.field.element==='matters__review_date')!,fieldSteps=plan.steps.filter(step=>step.sourcePath===fieldColumn.sourcePath||step.sourcePath==='/options/backfills/0'&&step.operation==='apply-backfill');
  expect(fieldSteps.map(step=>step.operation)).toEqual(['add-column','apply-backfill','install-default','tighten-not-null']);
  const reviewDateColumn=JSON.parse(request.next.source.utf8).modules[0]!.extensions['umf.tables'].tables.find((table:any)=>table.id==='matters').columns.find((column:any)=>column.field.element==='matters__review_date');
  expect(reviewDateColumn.default).toEqual({kind:'literal',value:{date:'2000-02-29'}});
  const backfillOperation=JSON.parse(request.next.source.utf8).modules[0]!.extensions['umf.tables'].commands.find((command:any)=>command.id==='derive_matter_review_date');
  expect(backfillOperation.body.values[0]!.value).toEqual({kind:'rowExpression',expression:{op:'field',field:{module:'legal_lifecycle',element:'matters__open_date'}}});
- const groupPhase=result.plan.phases.find(phase=>grantSteps.every(step=>phase.steps.includes(step.id))&&fieldSteps.every(step=>phase.steps.includes(step.id)));
- expect(groupPhase).toBeDefined();expect(result.plan.steps.indexOf(grantSteps[0]!)<result.plan.steps.indexOf(fieldSteps[0]!)).toBe(true);expect(result.plan.steps.indexOf(fieldSteps.at(-1)!)<result.plan.steps.indexOf(grantSteps[1]!)).toBe(true);
- const seedSteps=result.plan.steps.filter(step=>step.operation==='apply-seeds');expect(seedSteps).toHaveLength(1);expect(seedSteps[0]!.seedSets).toEqual(['selected-review-group-seed','selected-review-team-seed']);
- const groupStep=result.plan.steps.findIndex(step=>step.operation==='create-table'&&(step.inventorySubject as any).table==='matter_review_groups'),teamStep=result.plan.steps.findIndex(step=>step.operation==='create-table'&&(step.inventorySubject as any).table==='matter_review_teams'),seedStep=result.plan.steps.indexOf(seedSteps[0]!);
+ const groupPhase=plan.phases.find(phase=>grantSteps.every(step=>phase.steps.includes(step.id))&&fieldSteps.every(step=>phase.steps.includes(step.id)));
+ expect(groupPhase).toBeDefined();expect(plan.steps.indexOf(grantSteps[0]!)<plan.steps.indexOf(fieldSteps[0]!)).toBe(true);expect(plan.steps.indexOf(fieldSteps.at(-1)!)<plan.steps.indexOf(grantSteps[1]!)).toBe(true);
+ const seedSteps=plan.steps.filter(step=>step.operation==='apply-seeds');expect(seedSteps).toHaveLength(1);expect(seedSteps[0]!.seedSets).toEqual(['selected-review-group-seed','selected-review-team-seed']);
+ const groupStep=plan.steps.findIndex(step=>step.operation==='create-table'&&(step.inventorySubject as any).table==='matter_review_groups'),teamStep=plan.steps.findIndex(step=>step.operation==='create-table'&&(step.inventorySubject as any).table==='matter_review_teams'),seedStep=plan.steps.indexOf(seedSteps[0]!);
  expect(groupStep).toBeGreaterThanOrEqual(0);expect(teamStep).toBeGreaterThanOrEqual(0);expect(groupStep).toBeLessThan(seedStep);expect(teamStep).toBeLessThan(seedStep);
- const finalPrefix=result.plan.prefixes.at(-1)! as any;
+ const finalPrefix=plan.prefixes.at(-1)! as any;
  expect(finalPrefix.seedStates.find((seed:any)=>seed.id==='unselected-review-team-seed')?.execution).toBe('not-run');
+ });
+
+ test('preserves public verification and serialization equality for the admitted plan',()=>{
+  const {history,plan}=structuredClone(completed);
+  expect(verifyTableInventoryMigration(plan,history)).toEqual(plan);
+  expect(JSON.parse(serializeTableInventoryMigration(plan,history))).toEqual(plan);
+ });
+
+ test('public compilation refuses omitted create claims and duplicate operation markers',()=>{
+ const {request}=structuredClone(completed);
  const omittedCreate={...request,options:{...request.options,reviewedChanges:request.options.reviewedChanges.filter((marker:any)=>marker.kind!=='create-table')}};
  expect(compileTableInventoryMigration(omittedCreate).status).toBe('blocked');
  const duplicatedOperation={...request,options:{...request.options,reviewedChanges:[...request.options.reviewedChanges,...request.options.reviewedChanges.filter((marker:any)=>marker.kind==='change-operation'&&(marker as any).path.includes('/commands/'))]}};
  expect(compileTableInventoryMigration(duplicatedOperation).status).toBe('blocked');
+ });
 });
 
 test('G10 mixed CREATE plus existing-target G02 partitions only the exact tightening marker',()=>{
