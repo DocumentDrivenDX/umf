@@ -869,17 +869,40 @@ process/barrier/epoch/installed/browser/platform/CI/release/public-byte gates.
 
 ### G04 original store creation independent confirmation/recovery matrix
 
+Add source controls for fresh enrollment0.5 birth: exact closed descriptor,
+derived paths, event-definition digest and zero-header digest; reject altered
+IDs, caller paths, reordered/extra event kinds and mismatched metadata binding.
+Exercise pending creation of only the zero journal/empty lock and confirm only
+after every primary resource verifies. Confirmed loss, replacement, invalid
+nonzero history, and attempts to use an old0.1 enrollment must refuse without
+recreating or upgrading files. Verify birth-handle issuance and resolution
+require the original issuer/context/supervisor/control lease. For valid0.2
+history, test full event replay and cross-journal linkage; recovery must
+positively reattach the same committed receipt only after exact native
+footprint re-observation. Exercise pending, unknown/aborted, and every
+incomplete journal/core confirmation boundary as fail-closed without repeating
+DDL. Keep these controls source-authored and UNRUN; they do not qualify store
+creation or native recovery.
+
 Verify exact legacy0.1 wire/replay and new0.2 stream birth/profile/caps/state
 guards, per-store complete key/request identity, parent chain, typed intent→
 generic native reservation/owner-core binding and no unowned interleaving. Use
 actual original scope4 signatures and current target/custody/native evidence.
 
-Inject each external/supervisor/core/DDL/COMMENT/COMMIT/return failure. Positive
-original same-request recovery must append/finish only missing confirmations,
-return same receipt/schema/reservation IDs and never repeat committed DDL.
-Exercise known-abort vs unknown, newer conflicting custody/native state, copied
+Inject each external reservation, typed-intent, generic-intent, core-bind,
+DDL, COMMENT, COMMIT, observation, confirmation, and return failure. Recovery
+after external reservation or typed intent but before native dispatch may
+continue only the same signed request and reservation, without DDL. Recovery
+after generic intent/binding must reattach that exact effect. Positive
+same-request recovery must append/finish only missing confirmations, return the
+same receipt/schema/reservation IDs and never repeat committed DDL; in
+particular cover native COMMIT before external observation. Known-abort may
+settle only after same-database/controller full fixed-schema absence proof and
+must not issue a capability or permit terminal request reuse. Exercise unknown,
+newer conflicting custody/native state, copied
 receipt/callback/constructor seal, capacity exhaustion, two creators and epoch/
-transition contention. No terminal owner-abort may be silently reused for retry.
+transition contention. No terminal owner-abort may be silently reused for
+retry, and no absent or malformed receipt may settle unknown COMMIT.
 
 Qualify actual PG18.6 source/actor/session/privileged-DDL exclusion/COMMENT/full
 TOAST/RI/native inventory/ACL/commit/restart and dynamic registered additions.

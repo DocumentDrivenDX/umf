@@ -6967,6 +6967,53 @@ deployment, installed/native/platform/browser/release gates remain mandatory.
 
 #### G04 explicit original store-creation custody and supervisor journals
 
+##### Fresh external-journal birth 0.2
+
+Enrollment0.3 binds only `supervisorJournalBirth`. Admit a separate fresh-only
+`umf.local-owner-bootstrap-enrollment/0.5` for the original six-scope branch;
+it retains every enrollment0.3 member and adds exactly
+`targetCustodyJournalBirth`. Enrollment0.4 remains the separately allocated
+application branch. Existing enrollment variants and their wire bytes remain
+unchanged.
+
+The new birth descriptor is exactly
+`{profile:"umf.original-target-custody-journal-birth/0.1",journalProfile,
+custodianId,supervisorId,path,lockPath,definition,definitionDigest,
+initialHeaderDigest}`. Its journal profile is
+`umf.local-target-custody-journal/0.2`; IDs equal the original enrollment
+context. Derive `path` as `nativeProfile.controlHome + "/target-custody.json"`
+and `lockPath` as that path plus `.lock`; no caller path is accepted. The exact
+definition is
+`{profile:"umf.target-custody-journal-definition/0.1",journalProfile,
+eventKinds:[registration-intent,registration-observation,
+registration-confirmed,epoch-provision-reserved,epoch-provision-observation,
+epoch-provision-confirmed,transition-reserved,transition-observation,
+transition-confirmed,originals-store-reserved,originals-store-observation,
+originals-store-confirmed]}` in that order. Hash the complete canonical
+definition and exact initial header `{profile:journalProfile,custodianId,
+sequence:0,headDigest:ZERO64,events:[]}`; neither digest includes itself or
+future context.
+
+The primary context0.3 wire stays exact; its enrollment record digest binds
+the complete enrollment0.5. Private context-metadata0.2 is the exact metadata0.1
+record plus `targetCustodyJournal:{birthDigest,journalProfile,
+definitionDigest}`, where `birthDigest` hashes the complete birth descriptor.
+Under the original pending setup mutex, validate all resources, create and
+fsync only the exact empty lock and zero journal, then confirm the primary only
+after all resources verify. Once confirmed, missing, replaced, rewound or
+noncanonical resources refuse; never recreate or adopt an existing0.1 journal.
+Only the registered original bootstrap issuer may mint the opaque birth handle
+after full verification; resolution requires the same issuer, context,
+supervisor and original control lease. A DTO or digest grants no authority.
+The 0.2 stream has strict event replay and cross-journal linkage validation.
+Restart recovery reattaches a committed receipt only after its exact native
+footprint is re-observed. It may record a known-aborted outcome only after
+positive same-database/controller proof that the fixed schema is absent; this
+does not issue a capability or permit reusing the terminal owner request.
+Unknown, conflicting, or incomplete cross-journal states remain fenced. The
+fresh store-mutation route remains closed until every durable crash boundary
+has an implemented same-request recovery path.
+
 The following exact internal protocol implements the previously adopted external
 store reservation/native COMMENT receipt without inferring state from unused
 supervisor booleans. It adds no physical signature scope or SQL callback. New

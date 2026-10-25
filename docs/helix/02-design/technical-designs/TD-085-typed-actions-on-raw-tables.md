@@ -1027,6 +1027,25 @@ root entry issuance; naming a fail-closed future hook is insufficient.
 
 ### G04 original store creation journal integration
 
+Fresh external journal selection is gated by original enrollment0.5, which
+retains the exact enrollment0.3 members and adds only the derived
+`targetCustodyJournalBirth`. The fixed birth descriptor binds
+`umf.local-target-custody-journal/0.2`, both original context IDs, the
+`controlHome/target-custody.json` path and adjacent `.lock`, the exact ordered
+event definition, its canonical digest and the genesis-header digest. The
+pending setup lease creates and fsyncs only that exact zero journal and empty
+0600 lock before confirming the primary. The private metadata0.2 record binds
+the full descriptor while preserving the prior metadata0.1 wire. The issuer
+issues an opaque selector only after the confirmed resources verify; all
+resolution stays under the same original context/control lease. Old enrollments
+and journal0.1 remain unchanged. The 0.2 stream has closed replay and
+cross-journal validation; restart recovery reattaches a committed receipt only
+after re-observing its native footprint. A known-aborted outcome requires
+positive same-database/controller proof that the fixed schema is absent and
+does not issue a capability or permit request reuse. Unknown or incomplete
+crash-boundary states refuse, and fresh store mutations stay gated until
+same-request recovery covers those states.
+
 Implement the exact external/supervisor journal0.2 kinds, closed payloads,
 per-store original state and cross-journal parent/sequence/receipt binding from
 the G04 original store journal contract. New original target profiles only;

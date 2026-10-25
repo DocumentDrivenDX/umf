@@ -65,6 +65,8 @@ _MAX_EVENTS = 16_384
 _MAX_SAFE = 9_007_199_254_740_991
 _NATIVE_EFFECT_RESERVATION_SEAL = object()
 _NATIVE_EFFECT_OUTCOME_SEAL = object()
+_ORIGINAL_STORE_RESERVATION_SEAL = object()
+_ORIGINAL_STORE_CAPABILITY_SEAL = object()
 _ROLE = re.compile(r'^[a-z][a-z0-9_]{0,62}$')
 _HEX = re.compile(r'^[a-f0-9]{64}$')
 _STORE_SCHEMA_PREFIXES = {
@@ -787,9 +789,13 @@ def _issue_local_owner_bootstrap_issuer(
         enrollment_id=record['enrollmentId'], enrollment_path=record_path,
         enrollment_digest=_digest_bytes(raw), configuration_bytes=config_bytes,
         context_material=material, context_bytes=context_bytes)
-    if record['profile'] == 'umf.local-owner-bootstrap-enrollment/0.3':
+    if record['profile'] in ('umf.local-owner-bootstrap-enrollment/0.3',
+                             'umf.local-owner-bootstrap-enrollment/0.5'):
         from .owner_bootstrap import _issue_original_supervisor_journal_birth
         _issue_original_supervisor_journal_birth(issuer)
+    if record['profile'] == 'umf.local-owner-bootstrap-enrollment/0.5':
+        from .owner_bootstrap import _issue_original_target_custody_journal_birth
+        _issue_original_target_custody_journal_birth(issuer)
     return issuer
 
 
@@ -1297,6 +1303,68 @@ class _VerifiedNativeStorePreparation:
         raise TypeError('verified native preparation cannot be serialized')
 
 
+class _OriginalStoreCreationReservation:
+    """Opaque source-bound reservation retained across the native DDL attempt."""
+
+    __slots__ = ('_approval', '_custodian', '_evidence', '_issuer',
+                 '_connection', '_effect_handle', '_native_effect',
+                 '_record_bytes', '_store', '_target',
+                 'record_bytes')
+
+    def __init__(self, seal: object, issuer: object, *, evidence: object,
+                 approval: object, custodian: object, target: object,
+                 connection: object, effect_handle: object,
+                 native_effect: object, record_bytes: bytes, store: dict[str, Any]):
+        if seal is not _ORIGINAL_STORE_RESERVATION_SEAL:
+            raise TypeError('original store reservation is supervisor-issued')
+        if type(record_bytes) is not bytes or len(record_bytes) > 65_536:
+            raise LocalPostgresError('local-postgresql-store-reservation-capacity')
+        self._issuer = issuer
+        self._evidence = evidence
+        self._approval = approval
+        self._custodian = custodian
+        self._target = target
+        self._connection = connection
+        self._effect_handle = effect_handle
+        self._native_effect = native_effect
+        self._record_bytes = bytes(record_bytes)
+        self.record_bytes = bytes(record_bytes)
+        self._store = _canonical(store)
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        if hasattr(self, name):
+            raise AttributeError('original store reservation is immutable')
+        object.__setattr__(self, name, value)
+
+    def __reduce_ex__(self, _protocol: int):
+        raise TypeError('original store reservation cannot be serialized')
+
+
+class _OriginalStoreCreationCapability:
+    """Opaque capability issued after all original journals and the core finish."""
+
+    __slots__ = ('_issuer', '_reservation', '_receipt_digest', '_kind')
+
+    def __init__(self, seal: object, issuer: object, reservation: object,
+                 receipt_digest: str):
+        if seal is not _ORIGINAL_STORE_CAPABILITY_SEAL:
+            raise TypeError('original store capability is supervisor-issued')
+        if type(receipt_digest) is not str or not _HEX.fullmatch(receipt_digest):
+            raise LocalPostgresError('local-postgresql-store-capability-invalid')
+        self._issuer = issuer
+        self._reservation = reservation
+        self._receipt_digest = receipt_digest
+        self._kind = 'umf.original-row-store-creation-capability/0.1'
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        if hasattr(self, name):
+            raise AttributeError('original store capability is immutable')
+        object.__setattr__(self, name, value)
+
+    def __reduce_ex__(self, _protocol: int):
+        raise TypeError('original store capability cannot be serialized')
+
+
 _TARGET_LEASE_SEAL = object()
 
 
@@ -1356,6 +1424,8 @@ class LocalPostgresSupervisor:
         '_native_effect_outcomes',
         '_native_effect_reservations',
         '_native_targets',
+        '_original_store_reservations',
+        '_original_store_capabilities',
         '_observer',
         '_owner_core',
         '_owner_payloads',
@@ -1375,6 +1445,7 @@ class LocalPostgresSupervisor:
         '_store_preparations',
         '_supervisor_id',
         '_target_leases',
+        '_target_custody_journal_birth',
         '_target_paths',
     )
 
@@ -1409,6 +1480,14 @@ class LocalPostgresSupervisor:
         self._owner_core = owner_core
         self._authority_context = context
         self._bootstrap_issuer = issuer
+        enrollment, _enrollment_raw = _read_bootstrap_enrollment(issuer._enrollment_path)
+        if enrollment['profile'] == 'umf.local-owner-bootstrap-enrollment/0.5':
+            from .owner_bootstrap import _target_custody_journal_birth_for_issuer
+            self._target_custody_journal_birth = _target_custody_journal_birth_for_issuer(issuer)
+            if self._target_custody_journal_birth is None:
+                raise LocalPostgresError('target-custody-journal-birth-unverified')
+        else:
+            self._target_custody_journal_birth = None
         self._bound_installation_id = profile.installation_id
         self._observer = _DarwinProcessObserver(profile.process_observer,
                                                  profile.process_observer_sha256)
@@ -1434,6 +1513,8 @@ class LocalPostgresSupervisor:
         ] = {}
         self._native_effect_reservations: dict[int, _NativeEffectReservation] = {}
         self._native_effect_outcomes: dict[int, _VerifiedNativeEffectOutcome] = {}
+        self._original_store_reservations: dict[int, tuple[object, dict[str, Any], dict[str, Any]]] = {}
+        self._original_store_capabilities: dict[int, tuple[object, object]] = {}
         self._pending_creations: dict[int, _PendingTargetCreation] = {}
         self._pending_creation_values: dict[int, tuple[_PendingTargetCreation, dict[str, Any]]] = {}
         self._reserved_creation_values: dict[
@@ -2055,6 +2136,7 @@ class LocalPostgresSupervisor:
             'local-target-creation': 'target-recover',
             'native-principal-preparation': 'principals-recover',
             'local-target-registration': 'registration-recover',
+            'native-store-creation': 'store',
         }.get(scope)
         if operation_kind is None:
             raise LocalPostgresError('local-postgresql-original-effect-scope-invalid')
@@ -2110,6 +2192,52 @@ class LocalPostgresSupervisor:
                                and event['payload'].get('approvalId') == approval_id
                                and event['payload'].get('requestDigest')
                                    == prepared['requestDigest'] for event in events)):
+                raise LocalPostgresError('local-postgresql-original-effect-mismatch')
+        elif scope == 'native-store-creation':
+            if (self._custodian is None or self._custody_handle is None
+                    or target is not self._custody_handle):
+                raise LocalPostgresError('local-postgresql-original-target-unverified')
+            try:
+                from .ingress_custody import JOURNAL_PROFILE_02, _replay
+                external_doc = self._custodian._journal._load()
+                external_state = _replay(
+                    external_doc['events'], profile=JOURNAL_PROFILE_02)
+            except Exception:  # noqa: BLE001 -- durable custody must validate before recovery
+                raise LocalPostgresError('local-postgresql-store-recovery-unavailable') from None
+            candidates = [item for item in external_state['stores'].values()
+                          if item['reservation']['creationRequestDigest']
+                             == effect['requestDigest']]
+            if len(candidates) != 1:
+                raise LocalPostgresError('local-postgresql-original-request-unavailable')
+            store_state = candidates[0]
+            reservation_record = store_state['reservation']
+            reserved_event = next((event for event in external_doc['events']
+                                   if event['kind'] == 'originals-store-reserved'
+                                   and event['payload']['reservation']['reservationId']
+                                       == reservation_record['reservationId']), None)
+            typed_event = next((event for event in events
+                                if event['kind'] == 'originals-store-creation-intent'
+                                and event['payload'].get('reservationDigest')
+                                    == store_state['reservationDigest']), None)
+            if (reserved_event is None or typed_event is None
+                    or typed_event['payload'].get('custodianReservedEventDigest')
+                        != reserved_event['recordDigest']
+                    or typed_event['sequence'] + 1 != effect_event['sequence']
+                    or effect_event['previousDigest'] != typed_event['recordDigest']
+                    or reservation_record['creationRequestDigest'] != effect['requestDigest']
+                    or reservation_record['creationApprovalDigest']
+                        != store_state['approvalDigest']):
+                raise LocalPostgresError('local-postgresql-original-effect-mismatch')
+            request_value = reserved_event['payload']['request']
+            intent_bytes = _canonical(request_value)
+            approval_id = effect['approvalId']
+            store = reservation_record['store']
+            effect_key = ('native-store-creation', reservation_record['providerId'],
+                          store['profile'], store['storeId'])
+            if (request_value.get('profile') != 'umf.owner-store-create-intent/0.1'
+                    or request_value.get('store') != store
+                    or request_value['evidence'].get('nativeAuthorityObservationDigest')
+                        != reservation_record['nativeAuthorityEvidenceDigest']):
                 raise LocalPostgresError('local-postgresql-original-effect-mismatch')
         else:
             raise LocalPostgresError('local-postgresql-original-effect-scope-invalid')
@@ -2181,6 +2309,116 @@ class LocalPostgresSupervisor:
               and owner_state.effect_receipt_digest != outcome.receipt_digest):
             raise LocalPostgresError('local-postgresql-original-outcome-mismatch')
         return reservation, outcome, request
+
+    def _recover_original_store_effect(
+            self, target: object, external_doc: dict[str, Any],
+            store_state: dict[str, Any], reserved_event: dict[str, Any]
+            ) -> tuple[_NativeEffectReservation, _VerifiedNativeEffectOutcome | None,
+                       object]:
+        """Finish only the original journal intent chain before any DDL recovery."""
+        if (self._journal is None or target is not self._custody_handle
+                or type(external_doc) is not dict
+                or not any(event is reserved_event
+                           or event == reserved_event
+                           for event in external_doc.get('events', []))
+                or reserved_event['payload']['reservationDigest']
+                    != store_state['reservationDigest']):
+            raise LocalPostgresError('local-postgresql-store-recovery-intent-mismatch')
+        reservation_record = store_state['reservation']
+        events = self._journal.read()['events']
+        effects = [event for event in events
+                   if event['kind'] == 'native-effect-intent'
+                   and event['payload'].get('scope') == 'native-store-creation']
+        typed = [event for event in events
+                 if event['kind'] == 'originals-store-creation-intent'
+                 and event['payload'].get('reservationDigest')
+                    == store_state['reservationDigest']]
+        if len(effects) > 1 or len(typed) > 1:
+            raise LocalPostgresError('local-postgresql-store-recovery-intent-conflict')
+        if any(event['kind'] == 'originals-store-creation-intent'
+               for event in events) and not typed:
+            raise LocalPostgresError('local-postgresql-store-recovery-intent-conflict')
+        if typed:
+            typed_event = typed[0]
+            if (typed_event['payload'].get('custodianReservedEventDigest')
+                    != reserved_event['recordDigest']
+                    or typed_event['payload'].get('creationRequestDigest')
+                        != reservation_record['creationRequestDigest']
+                    or typed_event['payload'].get('creationApprovalDigest')
+                        != reservation_record['creationApprovalDigest']):
+                raise LocalPostgresError('local-postgresql-store-recovery-intent-mismatch')
+        else:
+            if any(event['kind'] == 'native-effect-intent'
+                   and event['payload'].get('scope') == 'native-store-creation'
+                   for event in events):
+                raise LocalPostgresError('local-postgresql-store-recovery-intent-conflict')
+            typed_event = self._append_supervisor_journal(
+                'originals-store-creation-intent', {
+                    'purpose': store_state['purpose'],
+                    'reservation': reservation_record,
+                    'reservationDigest': store_state['reservationDigest'],
+                    'custodianReservedEventDigest': reserved_event['recordDigest'],
+                    'creationRequestDigest': reservation_record['creationRequestDigest'],
+                    'creationApprovalDigest': reservation_record['creationApprovalDigest'],
+                    'nativeAuthorityEvidenceDigest':
+                        reservation_record['nativeAuthorityEvidenceDigest'],
+                })
+        request_value = reserved_event['payload']['request']
+        intent_bytes = _canonical(request_value)
+        effect_key = ('native-store-creation', reservation_record['providerId'],
+                      reservation_record['store']['profile'],
+                      reservation_record['store']['storeId'])
+        target_fields = {
+            'supervisorId': self._supervisor_id, 'custodianId': self._custodian_id,
+            'providerId': self._provider_id, 'installationId': self._bound_installation_id,
+        }
+        try:
+            saved = self._owner_core._ledger.find_original_request(
+                scope='native-store-creation',
+                intent_digest=reservation_record['creationRequestDigest'],
+                target=target_fields, intent=request_value, intent_bytes=intent_bytes,
+                effect_key=effect_key, context=self._authority_context)
+            approval_id = saved['approvalId']
+            request = self._owner_core._recover_original_request(
+                'native-store-creation', intent_bytes, context=self._authority_context,
+                expected_approval_id=approval_id)
+            approval = self._owner_core._recover_verified_approval(request)
+            self._owner_core._resolve_verified_approval(
+                approval, original_request=request, scope='native-store-creation',
+                intent_digest=reservation_record['creationRequestDigest'])
+        except Exception:  # noqa: BLE001 -- only the exact original signed request may resume
+            raise LocalPostgresError('local-postgresql-store-recovery-approval-unavailable') from None
+        if (request.effect_key != effect_key
+                or approval.approval_digest != reservation_record['creationApprovalDigest']):
+            raise LocalPostgresError('local-postgresql-store-recovery-approval-mismatch')
+        if effects:
+            effect = effects[0]
+            if (effect['payload'].get('requestDigest')
+                    != reservation_record['creationRequestDigest']
+                    or effect['payload'].get('approvalId') != approval.approval_id
+                    or effect['payload'].get('approvalDigest') != approval.approval_digest
+                    or effect['payload'].get('effectKey') != list(effect_key)
+                    or effect['sequence'] != typed_event['sequence'] + 1
+                    or effect['previousDigest'] != typed_event['recordDigest']):
+                raise LocalPostgresError('local-postgresql-store-recovery-intent-mismatch')
+            try:
+                self._owner_core._bind_effect_digest(
+                    approval, effect['recordDigest'])
+            except Exception:  # noqa: BLE001 -- restore only the original exact binding
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-binding-unresolved') from None
+            return self._recover_original_native_effect(
+                'native-store-creation', target=target)
+        self._make_native_effect_reservation(
+            request, approval, 'native-store-creation', effect_key,
+            self._profile.purpose, target, typed_event, intent_bytes)
+        try:
+            self._owner_core._bind_effect_digest(
+                approval, _digest(self._journal.read()['events'][-1]['recordDigest']))
+        except Exception:  # noqa: BLE001 -- preserve the original intent without DDL
+            raise LocalPostgresError('local-postgresql-store-recovery-binding-unresolved') from None
+        return self._recover_original_native_effect(
+            'native-store-creation', target=target)
 
     def prepare_original_registration_reattachment(
             self, target: object) -> _NativeEffectReservation:
@@ -2272,15 +2510,24 @@ class LocalPostgresSupervisor:
         from .ingress_custody import (
             ExternalCustodyJournal,
             _bind_owner_registration_resolver,
+            _bootstrap_original_02_target_custodian,
             _bootstrap_local_target_custodian,
         )
         control = self._target_paths['control']
         resolver = _bind_owner_registration_resolver(
             self, self, self._authority_context)
-        custody_journal = ExternalCustodyJournal(
-            control / 'target-custody.json', self._custodian_id)
-        custodian = _bootstrap_local_target_custodian(
-            custody_journal, self._custodian_id, self._provider_id, resolver)
+        if self._target_custody_journal_birth is not None:
+            custodian = _bootstrap_original_02_target_custodian(
+                self._target_custody_journal_birth, custodian_id=self._custodian_id,
+                provider_id=self._provider_id, resolver=resolver,
+                control_lease=self._require_original_control_lease(
+                    operation_kind='registration-recover'),
+                operation_kind='registration-recover')
+        else:
+            custody_journal = ExternalCustodyJournal(
+                control / 'target-custody.json', self._custodian_id)
+            custodian = _bootstrap_local_target_custodian(
+                custody_journal, self._custodian_id, self._provider_id, resolver)
         owner_request = OwnerEnrollmentRequest(
             _owner_capability_seal(), self, _OWNER_KIND)
         self._owner_payloads[registration['registrationId']] = payload
@@ -3311,6 +3558,7 @@ class LocalPostgresSupervisor:
         from .ingress_custody import (
             ExternalCustodyJournal,
             _bind_owner_registration_resolver,
+            _bootstrap_original_02_target_custodian,
             _bootstrap_local_target_custodian,
         )
         owner_request = OwnerEnrollmentRequest(
@@ -3321,10 +3569,18 @@ class LocalPostgresSupervisor:
         self._resolver = _bind_owner_registration_resolver(
             self, self, self._authority_context)
         control = self._target_paths['control']
-        custody_journal = ExternalCustodyJournal(
-            control / 'target-custody.json', self._custodian_id)
-        self._custodian = _bootstrap_local_target_custodian(
-            custody_journal, self._custodian_id, self._provider_id, self._resolver)
+        if self._target_custody_journal_birth is not None:
+            self._custodian = _bootstrap_original_02_target_custodian(
+                self._target_custody_journal_birth, custodian_id=self._custodian_id,
+                provider_id=self._provider_id, resolver=self._resolver,
+                control_lease=self._require_original_control_lease(
+                    operation_kind='registration-apply'),
+                operation_kind='registration-apply')
+        else:
+            custody_journal = ExternalCustodyJournal(
+                control / 'target-custody.json', self._custodian_id)
+            self._custodian = _bootstrap_local_target_custodian(
+                custody_journal, self._custodian_id, self._provider_id, self._resolver)
         try:
             handle = self._custodian.register_target(
                 owner_request, control_lease=self._require_original_control_lease())
@@ -4247,6 +4503,12 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
                                         ) -> _VerifiedNativeStorePreparation:
         """Observe the original target for one exact, admitted scope-4 store profile."""
         self._require_control_operation('store')
+        if (store_profile == 'umf.native-row-originals-store/0.1'
+                and self._target_custody_journal_birth is not None):
+            # Replay exists, but restart settlement does not cover every
+            # durable crash boundary yet. Keep new scope-4 mutations closed
+            # rather than enter a state this issuer cannot recover exactly.
+            raise LocalPostgresError('target-custody-journal-replay-unavailable')
         if target_custody is not self._custody_handle:
             raise LocalPostgresError('local-postgresql-original-target-unverified')
         store = _store_descriptor(store_profile, self._provider_id)
@@ -4328,6 +4590,17 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             'approvalReceiptDigest': creation_receipt['principalPreparationReceiptDigest'],
         }
         return registration, authority
+
+    def _resolve_original_target_custody_journal_birth(
+            self, *, operation_kind: str | None = None) -> dict[str, Any]:
+        """Resolve the opaque fresh-enrollment selector under the original lease."""
+        if self._target_custody_journal_birth is None:
+            raise LocalPostgresError('target-custody-journal-birth-unavailable')
+        from .owner_bootstrap import _resolve_original_target_custody_journal_birth
+        lease = self._require_original_control_lease(operation_kind=operation_kind)
+        return _resolve_original_target_custody_journal_birth(
+            self._target_custody_journal_birth, issuer=self._bootstrap_issuer,
+            context=self._authority_context, supervisor=self, control_lease=lease)
 
     def export_original_store_signing_request(
             self, evidence: object) -> dict[str, Any]:
@@ -4523,6 +4796,630 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
         if actual != settings:
             raise LocalPostgresError('local-postgresql-store-settings-mismatch')
         return settings
+
+    def reserve_originals_store_creation(
+            self, evidence: object, approval: object, *, custodian: object,
+            target: object, store: dict[str, Any],
+            connection: object) -> _OriginalStoreCreationReservation:
+        """Write the original custodian reservation and adjacent owner effects."""
+        self._require_original_control_lease(operation_kind='store')
+        if (type(store) is not dict
+                or set(store) != {'profile', 'storeId', 'schemaName'}
+                or store != _store_descriptor(store.get('profile'), self._provider_id)
+                or self._journal is None or self._custodian is not custodian):
+            raise LocalPostgresError('local-postgresql-store-reservation-invalid')
+        resolved = self._resolve_original_store_preparation(
+            evidence, approval, custodian=custodian, target=target)
+        if resolved['store'] != store:
+            raise LocalPostgresError('local-postgresql-store-preparation-stale')
+        if (self._target_custody_journal_birth is None
+                or getattr(custodian._journal, '_profile', None)
+                    != 'umf.local-target-custody-journal/0.2'):
+            raise LocalPostgresError('target-custody-journal-birth-unavailable')
+        request = evidence.owner_request
+        if (request._scope != 'native-store-creation'
+                or hashlib.sha256(request._intent_bytes).hexdigest()
+                    != request._intent_digest):
+            raise LocalPostgresError('local-postgresql-store-request-unverified')
+        try:
+            request_value = json.loads(request._intent_bytes, object_pairs_hook=_no_duplicates)
+        except (json.JSONDecodeError, UnicodeDecodeError, TypeError, ValueError):
+            raise LocalPostgresError('local-postgresql-store-request-unverified') from None
+        reservation = {
+            'profile': 'umf.row-originals-store-reservation/0.1',
+            'reservationId': str(uuid.uuid4()), 'providerId': self._provider_id,
+            'installationId': self._bound_installation_id,
+            'targetCustody': custodian._public_reference(target), 'store': dict(store),
+            'creationRequestDigest': request._intent_digest,
+            'creationApprovalDigest': approval.approval_digest,
+            'nativeAuthorityEvidenceDigest': resolved['payload']['nativeAuthorityObservationDigest'],
+            'configurationDigest': self._owner_core.configuration_digest,
+            'custodySequence': 0,
+        }
+        try:
+            external = custodian._journal._reserve_originals_store(
+                purpose=self._profile.purpose, request=request_value,
+                approval_digest=approval.approval_digest, reservation=reservation)
+            external_record = next(
+                event for event in custodian._journal._load()['events']
+                if event['recordDigest'] == external['recordDigest'])
+        except Exception:  # noqa: BLE001 -- preserve durable ambiguity, redact authority
+            raise LocalPostgresError('local-postgresql-store-reservation-outcome-unresolved') from None
+        reservation = external_record['payload']['reservation']
+        reservation_digest = external_record['payload']['reservationDigest']
+        typed = self._append_supervisor_journal('originals-store-creation-intent', {
+            'purpose': self._profile.purpose, 'reservation': reservation,
+            'reservationDigest': reservation_digest,
+            'custodianReservedEventDigest': external['recordDigest'],
+            'creationRequestDigest': request._intent_digest,
+            'creationApprovalDigest': approval.approval_digest,
+            'nativeAuthorityEvidenceDigest': resolved['payload']['nativeAuthorityObservationDigest'],
+        })
+        native_effect = self._make_native_effect_reservation(
+            request, approval, 'native-store-creation',
+            ('native-store-creation', self._provider_id, store['profile'], store['storeId']),
+            self._profile.purpose, target, typed, request._intent_bytes)
+        try:
+            effect_handle = self._owner_core._bind_effect_digest(
+                approval, _digest(native_effect._journal_record_digest))
+        except Exception:  # noqa: BLE001 -- pending binding must precede DDL
+            raise LocalPostgresError('local-postgresql-owner-effect-binding-required') from None
+        result = _OriginalStoreCreationReservation(
+            _ORIGINAL_STORE_RESERVATION_SEAL, self, evidence=evidence,
+            approval=approval, custodian=custodian, target=target,
+            connection=connection, effect_handle=effect_handle,
+            native_effect=native_effect, record_bytes=_canonical(reservation), store=store)
+        self._original_store_reservations[id(result)] = (
+            result, {'externalEventDigest': external['recordDigest'],
+                     'reservationDigest': reservation_digest,
+                     'supervisorIntentDigest': native_effect._journal_record_digest},
+            resolved)
+        return result
+
+    def recover_originals_store_creation(
+            self, target: object, connection: object, *,
+            store: dict[str, Any]) -> tuple[_OriginalStoreCreationReservation,
+                                             _OriginalStoreCreationCapability,
+                                             dict[str, Any]]:
+        """Reattach only a committed original store from its durable receipt chain.
+
+        This path performs no DDL.  A pending or ambiguous native outcome stays
+        fenced for a separate scope-specific recovery decision.
+        """
+        self._require_original_control_lease(operation_kind='store')
+        if (target is not self._custody_handle or self._journal is None
+                or self._custodian is None or self._target_custody_journal_birth is None
+                or type(store) is not dict
+                or store != _store_descriptor(store.get('profile'), self._provider_id)):
+            raise LocalPostgresError('local-postgresql-store-recovery-unverified')
+        try:
+            if int(connection.info.transaction_status) != 0:
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-transaction-active')
+        except LocalPostgresError:
+            raise
+        except Exception:  # noqa: BLE001 -- do not observe/settle through an unknown transaction
+            raise LocalPostgresError('local-postgresql-store-recovery-transaction-unknown') from None
+        try:
+            from .ingress_custody import JOURNAL_PROFILE_02, _replay
+            external_doc = self._custodian._journal._load()
+            external_state = _replay(external_doc['events'], profile=JOURNAL_PROFILE_02)
+            target_reference = self._custodian._public_reference(target)
+        except Exception:  # noqa: BLE001 -- no recovery authority from malformed state
+            raise LocalPostgresError('local-postgresql-store-recovery-unavailable') from None
+        key = (target_reference['registrationId'], self._provider_id,
+               self._bound_installation_id, store['profile'], store['storeId'],
+               store['schemaName'])
+        store_state = external_state['stores'].get(key)
+        if store_state is None:
+            raise LocalPostgresError('local-postgresql-store-recovery-outcome-unresolved')
+        reserved_event = next((event for event in external_doc['events']
+                               if event['kind'] == 'originals-store-reserved'
+                               and event['payload']['reservation']['reservationId']
+                                   == store_state['id']), None)
+        observations = store_state['observations']
+        committed = next((item for item in reversed(observations)
+                          if item['payload']['outcome'] == 'committed'), None)
+        known_aborted = next((item for item in reversed(observations)
+                              if item['payload']['outcome'] == 'known-aborted'), None)
+        if reserved_event is None:
+            raise LocalPostgresError('local-postgresql-store-recovery-receipt-unavailable')
+        if (store_state['status'] not in ('reserved', 'observed-committed', 'confirmed')
+                or (store_state['status'] in ('observed-committed', 'confirmed')
+                    and committed is None)):
+            raise LocalPostgresError('local-postgresql-store-recovery-outcome-unresolved')
+        reservation_record = store_state['reservation']
+        observation = committed['payload'] if committed is not None else None
+        receipt = observation['nativeReceipt'] if observation is not None else None
+        if observation is not None and (
+                observation['reservationDigest'] != store_state['reservationDigest']
+                or observation['supervisorIntentDigest']
+                    != store_state.get('observedSupervisorIntentDigest')
+                or observation['nativeReceiptDigest'] != _digest(receipt)
+                or observation['schemaOid'] != receipt['schemaOid']
+                or observation['transactionOutcomeDigest'] != _digest({
+                    'profile': 'umf.original-store-committed-observation/0.1',
+                    'reservationDigest': store_state['reservationDigest'],
+                    'receiptDigest': observation['nativeReceiptDigest'],
+                    'schemaOid': observation['schemaOid'],
+                    'nativeObservationDigest': observation['nativeObservationDigest'],
+                })):
+            raise LocalPostgresError('local-postgresql-store-recovery-receipt-invalid')
+        absence_proof = None
+        try:
+            native_effect, native_outcome, request = self._recover_original_store_effect(
+                target, external_doc, store_state, reserved_event)
+            request_value = json.loads(request._intent_bytes, object_pairs_hook=_no_duplicates)
+            if (request_value != reserved_event['payload']['request']
+                    or request._intent_digest != reservation_record['creationRequestDigest']):
+                raise LocalPostgresError('local-postgresql-store-recovery-request-mismatch')
+            intent_payload = request_value
+            registration, authority = self._original_registration_and_principal_authority()
+            origin = self._owner_payloads.get(registration['registrationId'], {}).get('origin')
+            if type(origin) is not dict:
+                raise LocalPostgresError('local-postgresql-store-recovery-origin-unverified')
+            verified_target = self._custodian._resolve_target_custody(target)
+            native_now = self._observe_native(
+                self._profile.database_name,
+                current_role=intent_payload['evidence']['controller']['name'])
+            evidence_payload, native_observation = self._native_store_preparation_payload(
+                target_reference, verified_target, registration, authority, native_now)
+            if (evidence_payload != intent_payload['evidence']
+                    or not self._native_origin_matches(
+                        origin, self._launch.get('nativeAttestation')
+                        if self._launch is not None else None)):
+                raise LocalPostgresError('local-postgresql-store-recovery-authority-stale')
+            if receipt is None:
+                from .row_originals_creation import (
+                    observe_absent_creation_schema, recover_creation_receipt)
+                absence_proof = observe_absent_creation_schema(
+                    connection, store['schemaName'], native_now,
+                    intent_payload['evidence']['controller']['oid'])
+                if absence_proof is None:
+                    receipt = recover_creation_receipt(connection, store['schemaName'], {
+                        'profile': 'umf.originals-creation-receipt/0.1',
+                        'providerId': reservation_record['providerId'],
+                        'installationId': reservation_record['installationId'],
+                        'storeProfile': store['profile'], 'storeId': store['storeId'],
+                        'reservationDigest': store_state['reservationDigest'],
+                        'creationRequestDigest': reservation_record['creationRequestDigest'],
+                        'creationApprovalDigest': reservation_record['creationApprovalDigest'],
+                        'targetCustodyDigest': _digest(reservation_record['targetCustody']),
+                        'state': 'created'},
+                        intent_payload['evidence']['controller']['oid'])
+            if (absence_proof is None
+                    and (type(receipt) is not dict or receipt['schemaOid'] <= 0
+                         or receipt['reservationDigest'] != store_state['reservationDigest'])):
+                raise LocalPostgresError('local-postgresql-store-recovery-receipt-invalid')
+            approval = self._owner_core._recover_verified_approval(request)
+            self._owner_core._resolve_verified_approval(
+                approval, original_request=request, scope='native-store-creation',
+                intent_digest=request._intent_digest)
+            evidence = _VerifiedNativeStorePreparation(
+                _VERIFIED_STORE_PREPARATION_SEAL, self._store_issuer, self,
+                self._custodian, target, verified_target, request,
+                bytes(request._intent_bytes), _canonical(native_observation))
+            self._store_preparations[id(evidence)] = (
+                evidence, evidence, _canonical(origin), _canonical(registration),
+                _canonical(authority))
+            self._resolve_original_store_preparation(
+                evidence, approval, custodian=self._custodian, target=target)
+            effect_handle = self._owner_core._bind_effect_digest(
+                approval, _digest(native_effect._journal_record_digest))
+            reservation = _OriginalStoreCreationReservation(
+                _ORIGINAL_STORE_RESERVATION_SEAL, self, evidence=evidence,
+                approval=approval, custodian=self._custodian, target=target,
+                connection=connection, effect_handle=effect_handle,
+                native_effect=native_effect, record_bytes=_canonical(reservation_record),
+                store=store)
+            typed_event = next((event for event in self._journal.read()['events']
+                                if event['kind'] == 'originals-store-creation-intent'
+                                and event['payload'].get('reservationDigest')
+                                    == store_state['reservationDigest']), None)
+            if (typed_event is None
+                    or (observation is not None
+                        and typed_event['recordDigest']
+                            != observation['supervisorIntentDigest'])):
+                raise LocalPostgresError('local-postgresql-store-recovery-intent-mismatch')
+            registry_entry = {
+                'externalEventDigest': reserved_event['recordDigest'],
+                'reservationDigest': store_state['reservationDigest'],
+                'supervisorIntentDigest': typed_event['recordDigest'],
+            }
+            self._original_store_reservations[id(reservation)] = (
+                reservation, registry_entry,
+                self._resolve_original_store_preparation(
+                    evidence, approval, custodian=self._custodian, target=target))
+            self._resolve_originals_store_creation_reservation(
+                reservation, evidence=evidence, approval=approval,
+                custodian=self._custodian, target=target, store=store, mode='recover')
+            if int(connection.info.transaction_status) != 0:
+                raise LocalPostgresError('local-postgresql-store-recovery-transaction-active')
+            if absence_proof is None:
+                from .row_originals_creation import verify_creation_receipt
+                verified_receipt = verify_creation_receipt(
+                    connection, store['schemaName'], receipt,
+                    intent_payload['evidence']['controller']['oid'])
+                if verified_receipt != receipt:
+                    raise LocalPostgresError(
+                        'local-postgresql-store-recovery-footprint-mismatch')
+        except LocalPostgresError:
+            raise
+        except Exception:  # noqa: BLE001 -- durable/native recovery is fail-closed
+            raise LocalPostgresError('local-postgresql-store-recovery-unverified') from None
+
+        if absence_proof is not None:
+            absence_digest = _digest(absence_proof)
+            if native_outcome is None:
+                native_outcome = self._record_native_effect_outcome(
+                    native_effect, 'known-aborted', absence_proof, effect_handle)
+            elif (native_outcome.status != 'known-aborted'
+                  or native_outcome.receipt_digest != absence_digest):
+                raise LocalPostgresError('local-postgresql-store-recovery-outcome-conflict')
+            try:
+                native_observation_digest = _digest(native_now)
+                transaction_digest = _digest({
+                    'profile': 'umf.original-store-known-aborted-observation/0.1',
+                    'reservationDigest': store_state['reservationDigest'],
+                    'absenceProofDigest': absence_digest,
+                    'nativeObservationDigest': native_observation_digest,
+                })
+                if known_aborted is not None:
+                    aborted_payload = known_aborted['payload']
+                    if (aborted_payload['reservationDigest']
+                            != store_state['reservationDigest']
+                            or aborted_payload['supervisorIntentDigest']
+                                != self._original_store_reservations[
+                                    id(reservation)][1]['supervisorIntentDigest']
+                            or aborted_payload['nativeObservationDigest']
+                                != native_observation_digest
+                            or aborted_payload['transactionOutcomeDigest']
+                                != transaction_digest):
+                        raise LocalPostgresError(
+                            'local-postgresql-store-recovery-abort-mismatch')
+                else:
+                    self._custodian._journal._observe_originals_store(
+                        purpose=store_state['purpose'], reservation_id=store_state['id'],
+                        reservation_digest=store_state['reservationDigest'],
+                        supervisor_intent_digest=self._original_store_reservations[
+                            id(reservation)][1]['supervisorIntentDigest'],
+                        outcome='known-aborted', native_receipt=None,
+                        native_receipt_digest=None, schema_oid=None,
+                        native_observation_digest=native_observation_digest,
+                        transaction_outcome_digest=transaction_digest)
+                owner_state = self._owner_core.observe_original_request(
+                    self._authority_context, request.effect_key)
+                if owner_state.effect_status == 'effect-pending':
+                    self._owner_core._finish_effect_digest(
+                        request, _digest(native_effect._journal_record_digest),
+                        status='aborted', receipt_digest=absence_digest)
+                elif (owner_state.effect_status != 'aborted'
+                      or owner_state.effect_receipt_digest != absence_digest):
+                    raise LocalPostgresError(
+                        'local-postgresql-store-recovery-core-mismatch')
+            except LocalPostgresError:
+                raise
+            except Exception:  # noqa: BLE001 -- retain a fenced original on any partial failure
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-abort-unresolved') from None
+            raise LocalPostgresError('local-postgresql-store-recovery-known-aborted')
+
+        receipt_digest = _digest(receipt)
+        if (native_outcome is not None
+                and (native_outcome.status != 'confirmed'
+                     or native_outcome.receipt_digest != receipt_digest)):
+            raise LocalPostgresError('local-postgresql-store-recovery-outcome-conflict')
+        if observation is None:
+            try:
+                native = self._observe_native(
+                    self._profile.database_name,
+                    current_role=intent_payload['evidence']['controller']['name'])
+                native_observation_digest = _digest(native)
+                transaction_digest = _digest({
+                    'profile': 'umf.original-store-committed-observation/0.1',
+                    'reservationDigest': store_state['reservationDigest'],
+                    'receiptDigest': receipt_digest, 'schemaOid': receipt['schemaOid'],
+                    'nativeObservationDigest': native_observation_digest,
+                })
+                observed = self._custodian._journal._observe_originals_store(
+                    purpose=store_state['purpose'], reservation_id=store_state['id'],
+                    reservation_digest=store_state['reservationDigest'],
+                    supervisor_intent_digest=self._original_store_reservations[
+                        id(reservation)][1]['supervisorIntentDigest'],
+                    outcome='committed', native_receipt=receipt,
+                    native_receipt_digest=receipt_digest, schema_oid=receipt['schemaOid'],
+                    native_observation_digest=native_observation_digest,
+                    transaction_outcome_digest=transaction_digest)
+                committed = {'eventDigest': observed['recordDigest']}
+                store_state['status'] = 'observed-committed'
+                store_state['observedSupervisorIntentDigest'] = \
+                    self._original_store_reservations[id(reservation)][1][
+                        'supervisorIntentDigest']
+                store_state['nativeReceiptDigest'] = receipt_digest
+                store_state['schemaOid'] = receipt['schemaOid']
+                observation = {
+                    'supervisorIntentDigest': self._original_store_reservations[
+                        id(reservation)][1]['supervisorIntentDigest'],
+                    'nativeReceiptDigest': receipt_digest, 'schemaOid': receipt['schemaOid'],
+                }
+            except Exception:  # noqa: BLE001 -- no positive observation, no settlement
+                raise LocalPostgresError('local-postgresql-store-recovery-observation-unresolved') from None
+
+        receipt_digest = observation['nativeReceiptDigest']
+        if store_state['status'] == 'observed-committed':
+            confirmation = self._custodian._journal._confirm_originals_store(
+                purpose=store_state['purpose'], reservation_id=store_state['id'],
+                reservation_digest=store_state['reservationDigest'],
+                supervisor_intent_digest=observation['supervisorIntentDigest'],
+                observation_event_digest=committed['eventDigest'],
+                native_receipt_digest=receipt_digest, schema_oid=observation['schemaOid'])
+        else:
+            confirmation = next((event for event in external_doc['events']
+                                 if event['kind'] == 'originals-store-confirmed'
+                                 and event['payload']['reservationId'] == store_state['id']), None)
+            if (confirmation is None
+                    or confirmation['payload']['observationEventDigest']
+                        != committed['eventDigest']):
+                raise LocalPostgresError('local-postgresql-store-recovery-confirmation-mismatch')
+            confirmation = {'recordDigest': confirmation['recordDigest']}
+        supervisor_confirmation = next((event for event in self._journal.read()['events']
+                                        if event['kind'] == 'originals-store-creation-confirmed'
+                                        and event['payload'].get('reservationDigest')
+                                            == store_state['reservationDigest']), None)
+        if supervisor_confirmation is None:
+            self._append_supervisor_journal('originals-store-creation-confirmed', {
+                'purpose': store_state['purpose'],
+                'reservationDigest': store_state['reservationDigest'],
+                'supervisorIntentDigest': observation['supervisorIntentDigest'],
+                'custodianConfirmationDigest': confirmation['recordDigest'],
+                'nativeReceiptDigest': receipt_digest, 'schemaOid': observation['schemaOid'],
+            })
+        elif (supervisor_confirmation['payload'].get('custodianConfirmationDigest')
+              != confirmation['recordDigest']):
+            raise LocalPostgresError('local-postgresql-store-recovery-confirmation-mismatch')
+        if native_outcome is None:
+            native_outcome = self._record_native_effect_outcome(
+                native_effect, 'confirmed', receipt, effect_handle)
+        elif (native_outcome.status != 'confirmed'
+              or native_outcome.receipt_digest != receipt_digest):
+            raise LocalPostgresError('local-postgresql-store-recovery-outcome-mismatch')
+        owner_state = self._owner_core.observe_original_request(
+            self._authority_context, request.effect_key)
+        if owner_state.effect_status == 'effect-pending':
+            self._owner_core._finish_effect_digest(
+                request, _digest(native_effect._journal_record_digest),
+                status='confirmed', receipt_digest=native_outcome.receipt_digest)
+        elif (owner_state.effect_status != 'confirmed'
+              or owner_state.effect_receipt_digest != receipt_digest):
+            raise LocalPostgresError('local-postgresql-store-recovery-core-mismatch')
+        capability = _OriginalStoreCreationCapability(
+            _ORIGINAL_STORE_CAPABILITY_SEAL, self, reservation, receipt_digest)
+        self._original_store_capabilities[id(capability)] = (capability, reservation)
+        self._resolve_original_store_capability(
+            capability, original_reservation=reservation)
+        return reservation, capability, json.loads(_canonical(receipt))
+
+    def _resolve_originals_store_creation_reservation(
+            self, value: object, *, evidence: object, approval: object,
+            custodian: object, target: object, store: dict[str, Any],
+            mode: str = 'execute'
+            ) -> _OriginalStoreCreationReservation:
+        if (type(value) is not _OriginalStoreCreationReservation
+                or value._issuer is not self or value._evidence is not evidence
+                or value._approval is not approval or value._custodian is not custodian
+                or value._target is not target or value._store != _canonical(store)):
+            raise LocalPostgresError('local-postgresql-store-reservation-unverified')
+        entry = self._original_store_reservations.get(id(value))
+        if entry is None or entry[0] is not value:
+            raise LocalPostgresError('local-postgresql-store-reservation-unverified')
+        resolved = self._resolve_original_store_preparation(
+            evidence, approval, custodian=custodian, target=target)
+        reservation = json.loads(value._record_bytes, object_pairs_hook=_no_duplicates)
+        if (resolved['store'] != store or reservation['store'] != store
+                or _canonical(resolved) != _canonical(entry[2])):
+            raise LocalPostgresError('local-postgresql-store-reservation-stale')
+        try:
+            from .ingress_custody import JOURNAL_PROFILE_02, _replay
+            doc = custodian._journal._load()
+            external_state = _replay(doc['events'], profile=JOURNAL_PROFILE_02)
+        except Exception:  # noqa: BLE001
+            raise LocalPostgresError('local-postgresql-store-reservation-stale') from None
+        store_state = next((item for item in external_state['stores'].values()
+                            if item['id'] == reservation['reservationId']), None)
+        if (store_state is None or store_state['reservation'] != reservation
+                or store_state['reservationDigest'] != entry[1]['reservationDigest']):
+            raise LocalPostgresError('local-postgresql-store-reservation-stale')
+        external_event = next((event for event in doc['events']
+                               if event['kind'] == 'originals-store-reserved'
+                               and event['payload']['reservation']['reservationId']
+                                   == reservation['reservationId']), None)
+        supervisor_events = self._journal.read()['events']
+        typed_event = next((event for event in supervisor_events
+                            if event['kind'] == 'originals-store-creation-intent'
+                            and event['payload']['reservationDigest']
+                                == entry[1]['reservationDigest']), None)
+        if (external_event is None
+                or external_event['recordDigest'] != entry[1]['externalEventDigest']
+                or typed_event is None
+                or typed_event['payload']['custodianReservedEventDigest']
+                    != external_event['recordDigest']):
+            raise LocalPostgresError('local-postgresql-store-reservation-stale')
+        self._resolve_native_effect_reservation(value._native_effect, approval)
+        self._require_bound_pending_effect(
+            value._native_effect, value._effect_handle, mode=mode)
+        return value
+
+    def confirm_originals_store_creation(
+            self, reservation: object, *, receipt: dict[str, Any]) -> _OriginalStoreCreationCapability:
+        """Confirm only the exact committed receipt on the reserved original store."""
+        self._require_original_control_lease(operation_kind='store')
+        entry = self._original_store_reservations.get(id(reservation))
+        if (type(reservation) is not _OriginalStoreCreationReservation
+                or entry is None or entry[0] is not reservation
+                or type(receipt) is not dict or self._journal is None):
+            raise LocalPostgresError('local-postgresql-store-confirmation-unverified')
+        self._resolve_originals_store_creation_reservation(
+            reservation, evidence=reservation._evidence,
+            approval=reservation._approval, custodian=reservation._custodian,
+            target=reservation._target, store=json.loads(reservation._store))
+        connection = reservation._connection
+        try:
+            if int(connection.info.transaction_status) != 0:
+                raise LocalPostgresError('local-postgresql-store-transaction-not-committed')
+            reserved = json.loads(reservation._record_bytes, object_pairs_hook=_no_duplicates)
+            expected_fields = {
+                'profile': 'umf.originals-creation-receipt/0.1',
+                'providerId': reserved['providerId'],
+                'installationId': reserved['installationId'],
+                'storeProfile': reserved['store']['profile'],
+                'storeId': reserved['store']['storeId'],
+                'reservationDigest': _digest(reserved),
+                'creationRequestDigest': reserved['creationRequestDigest'],
+                'creationApprovalDigest': reserved['creationApprovalDigest'],
+                'targetCustodyDigest': _digest(reserved['targetCustody']),
+                'state': 'created',
+            }
+            from .row_originals_creation import verify_creation_receipt
+            if (type(receipt) is not dict or any(receipt.get(key) != value
+                                                 for key, value in expected_fields.items())):
+                raise LocalPostgresError('local-postgresql-store-receipt-mismatch')
+            verified_receipt = verify_creation_receipt(
+                connection, reserved['store']['schemaName'], receipt,
+                json.loads(reservation._evidence._payload_bytes)['evidence']['controller']['oid'])
+            if verified_receipt != receipt:
+                raise LocalPostgresError('local-postgresql-store-receipt-mismatch')
+            if int(connection.info.transaction_status) != 0:
+                connection.rollback()
+            if int(connection.info.transaction_status) != 0:
+                raise LocalPostgresError('local-postgresql-store-observation-unsettled')
+        except LocalPostgresError:
+            raise
+        except Exception:  # noqa: BLE001 -- native/catalog details remain private
+            raise LocalPostgresError('local-postgresql-store-footprint-unverified') from None
+        receipt_digest = _digest(receipt)
+        native = self._observe_native(self._profile.database_name,
+                                      current_role=json.loads(
+                                          reservation._evidence._payload_bytes)
+                                      ['evidence']['controller']['name'])
+        if (self._launch is None
+                or not self._native_origin_matches(
+                    self._owner_payloads.get(
+                        reserved['targetCustody']['registrationId'], {}).get('origin', {}),
+                    self._launch.get('nativeAttestation'))):
+            raise LocalPostgresError('local-postgresql-store-origin-unverified')
+        native_observation_digest = _digest(native)
+        transaction_digest = _digest({
+            'profile': 'umf.original-store-committed-observation/0.1',
+            'reservationDigest': entry[1]['reservationDigest'],
+            'receiptDigest': receipt_digest,
+            'schemaOid': receipt['schemaOid'],
+            'nativeObservationDigest': native_observation_digest,
+        })
+        try:
+            observed = reservation._custodian._journal._observe_originals_store(
+                purpose=self._profile.purpose,
+                reservation_id=reserved['reservationId'],
+                reservation_digest=entry[1]['reservationDigest'],
+                supervisor_intent_digest=entry[1]['supervisorIntentDigest'],
+                outcome='committed', native_receipt=receipt,
+                native_receipt_digest=receipt_digest, schema_oid=receipt['schemaOid'],
+                native_observation_digest=native_observation_digest,
+                transaction_outcome_digest=transaction_digest)
+            confirmed = reservation._custodian._journal._confirm_originals_store(
+                purpose=self._profile.purpose,
+                reservation_id=reserved['reservationId'],
+                reservation_digest=entry[1]['reservationDigest'],
+                supervisor_intent_digest=entry[1]['supervisorIntentDigest'],
+                observation_event_digest=observed['recordDigest'],
+                native_receipt_digest=receipt_digest, schema_oid=receipt['schemaOid'])
+        except Exception:  # noqa: BLE001 -- retain original pending state for recovery
+            raise LocalPostgresError('local-postgresql-store-custody-confirmation-unresolved') from None
+        self._append_supervisor_journal('originals-store-creation-confirmed', {
+            'purpose': self._profile.purpose,
+            'reservationDigest': entry[1]['reservationDigest'],
+            'supervisorIntentDigest': entry[1]['supervisorIntentDigest'],
+            'custodianConfirmationDigest': confirmed['recordDigest'],
+            'nativeReceiptDigest': receipt_digest, 'schemaOid': receipt['schemaOid'],
+        })
+        outcome = self._record_native_effect_outcome(
+            reservation._native_effect, 'confirmed', receipt,
+            reservation._effect_handle)
+        try:
+            self._owner_core._finish_effect_digest(
+                reservation._native_effect._request,
+                _digest(reservation._native_effect._journal_record_digest),
+                status='confirmed', receipt_digest=outcome.receipt_digest)
+        except Exception:  # noqa: BLE001 -- no capability without core completion
+            raise LocalPostgresError('local-postgresql-store-owner-completion-unresolved') from None
+        capability = _OriginalStoreCreationCapability(
+            _ORIGINAL_STORE_CAPABILITY_SEAL, self, reservation, receipt_digest)
+        self._original_store_capabilities[id(capability)] = (capability, reservation)
+        return capability
+
+    def _resolve_original_store_capability(
+            self, value: object, *, original_reservation: object
+            ) -> _OriginalStoreCreationCapability:
+        if (type(value) is not _OriginalStoreCreationCapability
+                or value._issuer is not self or value._reservation is not original_reservation
+                or self._original_store_capabilities.get(id(value))
+                    != (value, original_reservation)):
+            raise LocalPostgresError('local-postgresql-store-capability-unverified')
+        self._resolve_originals_store_creation_reservation(
+            original_reservation, evidence=original_reservation._evidence,
+            approval=original_reservation._approval,
+            custodian=original_reservation._custodian,
+            target=original_reservation._target,
+            store=json.loads(original_reservation._store), mode='recover')
+        try:
+            from .ingress_custody import JOURNAL_PROFILE_02, _replay
+            external_doc = original_reservation._custodian._journal._load()
+            external_state = _replay(external_doc['events'], profile=JOURNAL_PROFILE_02)
+            record = json.loads(original_reservation._record_bytes,
+                                 object_pairs_hook=_no_duplicates)
+            store_state = next((item for item in external_state['stores'].values()
+                                if item['id'] == record['reservationId']), None)
+            reservation_entry = self._original_store_reservations.get(
+                id(original_reservation))
+            if reservation_entry is None or reservation_entry[0] is not original_reservation:
+                raise LocalPostgresError('local-postgresql-store-capability-unverified')
+            supervisor_events = self._journal.read()['events']
+            typed = next((event for event in supervisor_events
+                          if event['kind'] == 'originals-store-creation-intent'
+                          and event['payload']['reservationDigest']
+                              == reservation_entry[1]['reservationDigest']), None)
+            typed_confirmation = next((event for event in supervisor_events
+                                       if event['kind'] == 'originals-store-creation-confirmed'
+                                       and event['payload']['reservationDigest']
+                                           == _digest(record)), None)
+            native_outcome_event = next((event for event in supervisor_events
+                                         if event['kind'] == 'native-effect-confirmed'
+                                         and event['payload']['reservationId']
+                                             == original_reservation._native_effect._reservation_id), None)
+            core_pending, core_outcome = self._owner_core._ledger.observe_effect(
+                original_reservation._native_effect._request._approval_id)
+            outcomes = [outcome for outcome in self._native_effect_outcomes.values()
+                        if outcome._reservation is original_reservation._native_effect]
+            if (store_state is None or store_state['status'] != 'confirmed'
+                    or store_state['nativeReceiptDigest'] != value._receipt_digest
+                    or typed is None or typed_confirmation is None
+                    or typed_confirmation['payload']['nativeReceiptDigest']
+                        != value._receipt_digest
+                    or native_outcome_event is None
+                    or native_outcome_event['payload']['receiptDigest'] != value._receipt_digest
+                    or core_pending is None or core_outcome is None
+                    or core_outcome.get('status') != 'confirmed'
+                    or core_outcome.get('reservationDigest')
+                        != _digest(original_reservation._native_effect._journal_record_digest)
+                    or core_outcome.get('receiptDigest') != value._receipt_digest
+                    or not any(item.status == 'confirmed'
+                               and item.receipt_digest == value._receipt_digest
+                               for item in outcomes)):
+                raise LocalPostgresError('local-postgresql-store-capability-unverified')
+        except LocalPostgresError:
+            raise
+        except Exception:  # noqa: BLE001 -- any incomplete cross-chain evidence refuses
+            raise LocalPostgresError('local-postgresql-store-capability-unverified') from None
+        return value
 
     def _resolve_original_store_preparation(self, evidence: object, approval: object, *,
                                             custodian: object, target: object):

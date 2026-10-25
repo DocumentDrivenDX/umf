@@ -68,6 +68,8 @@ def check(root: Path) -> int:
                     "owner_wire": "lifecycle",
                     "owner_authority": "lifecycle", "ingress_custody": "lifecycle",
                     "ingress_local_postgres": "lifecycle", "ingress_store": "lifecycle",
+                    "conversion_policy": "lifecycle", "row_originals": "lifecycle",
+                    "row_originals_creation": "lifecycle",
                     "generation_enrollment_authority": "lifecycle",
                     "generation_authority_bootstrap": "lifecycle",
                     "supervisor_journal_codec": "lifecycle",

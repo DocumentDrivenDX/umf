@@ -22,6 +22,7 @@ from pathlib import Path
 from typing import Any
 
 JOURNAL_PROFILE = 'umf.local-target-custody-journal/0.1'
+JOURNAL_PROFILE_02 = 'umf.local-target-custody-journal/0.2'
 _MAX_BYTES = 8 * 1024 * 1024
 _MAX_EVENTS = 4096
 _MAX_SAFE = 9_007_199_254_740_991
@@ -32,6 +33,10 @@ _KINDS = frozenset({
     'registration-intent', 'registration-observation', 'registration-confirmed',
     'epoch-provision-reserved', 'epoch-provision-observation', 'epoch-provision-confirmed',
     'transition-reserved', 'transition-observation', 'transition-confirmed',
+})
+_KINDS_02 = _KINDS | frozenset({
+    'originals-store-reserved', 'originals-store-observation',
+    'originals-store-confirmed',
 })
 
 
@@ -270,6 +275,12 @@ def _text(value: Any, maximum: int = 4096) -> str:
     return value
 
 
+def _safe_uint32(value: Any) -> int:
+    if type(value) is not int or not 1 <= value <= 2**32 - 1:
+        raise CustodyJournalError('journal-invalid')
+    return value
+
+
 def _uuid(value: Any) -> str:
     if type(value) is not str or not _UUID.fullmatch(value):
         raise CustodyJournalError('journal-invalid')
@@ -355,7 +366,7 @@ def _canonical_path(value: Any) -> str:
     return path
 
 
-def _validate_event_payload(kind: str, payload: Any) -> dict[str, Any]:
+def _validate_event_payload(kind: str, payload: Any, *, profile: str = JOURNAL_PROFILE) -> dict[str, Any]:
     """Validate the fixed journal event envelopes and their exact references."""
     if kind == 'registration-intent':
         _closed(payload, {'registrationId', 'registrationDigest', 'ownerPayload', 'ownerApproval'})
@@ -516,29 +527,291 @@ def _validate_event_payload(kind: str, payload: Any) -> dict[str, Any]:
     elif kind == 'transition-confirmed':
         _closed(payload, {'reservationId', 'nativeReceiptDigest'})
         _uuid(payload['reservationId']); _hex(payload['nativeReceiptDigest'])
+    elif profile == JOURNAL_PROFILE_02 and kind == 'originals-store-reserved':
+        _closed(payload, {'purpose', 'request', 'approvalDigest', 'reservation',
+                          'reservationDigest', 'parent'})
+        if payload['purpose'] not in ('production', 'native-acceptance'):
+            raise CustodyJournalError('journal-invalid')
+        request = payload['request']
+        _closed(request, {'profile', 'store', 'evidence'})
+        if request['profile'] != 'umf.owner-store-create-intent/0.1':
+            raise CustodyJournalError('journal-invalid')
+        store = request['store']
+        _closed(store, {'profile', 'storeId', 'schemaName'})
+        if (store['profile'] != 'umf.native-row-originals-store/0.1'
+                or store['schemaName'] != 'umf_originals_' + _uuid(store['storeId']).replace('-', '')):
+            raise CustodyJournalError('journal-invalid')
+        evidence = request['evidence']
+        _closed(evidence, {'profile', 'supervisorId', 'custodianId', 'providerId',
+                           'installationId', 'ownerAuthorityId', 'ownerPolicyRevision',
+                           'registrationDigest', 'targetCustodyDigest',
+                           'authorityPreparationReceiptDigest', 'maintenance',
+                           'controller', 'businessOwner', 'requiredMemberships',
+                           'requiredSettings', 'nativeAuthorityObservationDigest'})
+        if evidence['profile'] != 'umf.pg18.original-store-authority-evidence/0.1':
+            raise CustodyJournalError('journal-invalid')
+        for key in ('supervisorId', 'custodianId', 'providerId', 'ownerAuthorityId'):
+            _uuid(evidence[key])
+        for key in ('registrationDigest', 'targetCustodyDigest',
+                    'authorityPreparationReceiptDigest', 'nativeAuthorityObservationDigest'):
+            _hex(evidence[key])
+        _text(evidence['installationId'], 256)
+        _text(evidence['ownerPolicyRevision'], 128)
+        role_names: list[str] = []
+        role_oids: list[int] = []
+        role_flags: list[dict[str, bool]] = []
+        for role_name in ('maintenance', 'controller', 'businessOwner'):
+            role = evidence[role_name]
+            _closed(role, {'oid', 'name', 'flags'})
+            role_names.append(_text(role['name'], 63))
+            role_oids.append(_safe_uint32(role['oid']))
+            flags = role['flags']
+            _closed(flags, {'canLogin', 'superuser', 'createDatabase',
+                            'createRole', 'replication', 'bypassRls', 'inherit'})
+            if any(type(flag) is not bool for flag in flags.values()):
+                raise CustodyJournalError('journal-invalid')
+            role_flags.append(flags)
+        if len(set(role_names)) != 3 or len(set(role_oids)) != 3:
+            raise CustodyJournalError('journal-invalid')
+        expected_flags = [
+            {'canLogin': True, 'superuser': True, 'createDatabase': False,
+             'createRole': False, 'replication': False, 'bypassRls': False,
+             'inherit': False},
+            {'canLogin': False, 'superuser': True, 'createDatabase': False,
+             'createRole': False, 'replication': False, 'bypassRls': False,
+             'inherit': False},
+            {'canLogin': False, 'superuser': False, 'createDatabase': False,
+             'createRole': False, 'replication': False, 'bypassRls': False,
+             'inherit': False},
+        ]
+        if role_flags != expected_flags:
+            raise CustodyJournalError('journal-invalid')
+        memberships = evidence['requiredMemberships']
+        if type(memberships) is not list or len(memberships) != 2:
+            raise CustodyJournalError('journal-invalid')
+        expected_memberships = [
+            {'memberOid': role_oids[0], 'roleOid': role_oids[1],
+             'inherit': False, 'set': True, 'admin': False},
+            {'memberOid': role_oids[0], 'roleOid': role_oids[2],
+             'inherit': False, 'set': True, 'admin': False},
+        ]
+        for membership in memberships:
+            _closed(membership, {'memberOid', 'roleOid', 'inherit', 'set', 'admin'})
+        if memberships != expected_memberships:
+            raise CustodyJournalError('journal-invalid')
+        settings = evidence['requiredSettings']
+        _closed(settings, {'searchPath', 'timeZone', 'rowSecurity',
+                           'sessionReplicationRole', 'transactionReadOnly',
+                           'transactionIsolation'})
+        if settings != {'searchPath': 'pg_catalog', 'timeZone': 'UTC',
+                        'rowSecurity': 'on', 'sessionReplicationRole': 'origin',
+                        'transactionReadOnly': 'off',
+                        'transactionIsolation': 'read committed'}:
+            raise CustodyJournalError('journal-invalid')
+        reservation = payload['reservation']
+        _closed(reservation, {'profile', 'reservationId', 'providerId', 'installationId',
+                              'targetCustody', 'store', 'creationRequestDigest',
+                              'creationApprovalDigest', 'nativeAuthorityEvidenceDigest',
+                              'configurationDigest', 'custodySequence'})
+        if reservation['profile'] != 'umf.row-originals-store-reservation/0.1':
+            raise CustodyJournalError('journal-invalid')
+        _uuid(reservation['reservationId']); _uuid(reservation['providerId'])
+        _text(reservation['installationId'], 256)
+        custody = reservation['targetCustody']
+        _closed(custody, {'profile', 'custodianId', 'registrationId', 'resourceId',
+                          'incarnation', 'registrationDigest'})
+        if custody['profile'] != 'umf.native-target-custody/0.1':
+            raise CustodyJournalError('journal-invalid')
+        for key in ('custodianId', 'registrationId', 'resourceId', 'incarnation'):
+            _text(custody[key], 256)
+        _hex(custody['registrationDigest'])
+        _closed(reservation['store'], {'profile', 'storeId', 'schemaName'})
+        for key in ('creationRequestDigest', 'creationApprovalDigest',
+                    'nativeAuthorityEvidenceDigest', 'configurationDigest'):
+            _hex(reservation[key])
+        if (type(reservation['custodySequence']) is not int
+                or not 1 <= reservation['custodySequence'] <= _MAX_SAFE
+                or reservation['providerId'] != store['storeId']
+                or reservation['store'] != store
+                or reservation['creationRequestDigest'] != _digest(request)
+                or reservation['creationApprovalDigest'] != payload['approvalDigest']
+                or reservation['nativeAuthorityEvidenceDigest'] != evidence['nativeAuthorityObservationDigest']
+                or reservation['installationId'] != evidence['installationId']
+                or reservation['providerId'] != evidence['providerId']
+                or custody['custodianId'] != evidence['custodianId']
+                or reservation['targetCustody'] != custody
+                or evidence['targetCustodyDigest'] != _digest(custody)):
+            raise CustodyJournalError('journal-invalid')
+        _hex(payload['approvalDigest']); _hex(payload['reservationDigest'])
+        if payload['reservationDigest'] != _digest(reservation):
+            raise CustodyJournalError('journal-invalid')
+        parent = payload['parent']
+        _closed(parent, {'sequence', 'headDigest'})
+        if (type(parent['sequence']) is not int or parent['sequence'] < 0
+                or parent['sequence'] > _MAX_SAFE):
+            raise CustodyJournalError('journal-invalid')
+        _hex(parent['headDigest'])
+    elif profile == JOURNAL_PROFILE_02 and kind == 'originals-store-observation':
+        _closed(payload, {'purpose', 'reservationId', 'reservationDigest',
+                          'supervisorIntentDigest', 'outcome', 'nativeReceipt',
+                          'nativeReceiptDigest', 'schemaOid', 'nativeObservationDigest',
+                          'transactionOutcomeDigest', 'parent'})
+        if payload['purpose'] not in ('production', 'native-acceptance'):
+            raise CustodyJournalError('journal-invalid')
+        _uuid(payload['reservationId'])
+        for key in ('reservationDigest', 'supervisorIntentDigest',
+                    'nativeObservationDigest', 'transactionOutcomeDigest'):
+            _hex(payload[key])
+        if payload['outcome'] not in ('committed', 'known-aborted', 'unknown'):
+            raise CustodyJournalError('journal-invalid')
+        if payload['outcome'] == 'committed':
+            if (type(payload['nativeReceipt']) is not dict
+                    or type(payload['nativeReceiptDigest']) is not str
+                    or type(payload['schemaOid']) is not int
+                    or not 1 <= payload['schemaOid'] <= 2**32 - 1):
+                raise CustodyJournalError('journal-invalid')
+            from .row_originals_creation import canonical_bytes, validate_receipt
+            receipt = validate_receipt(payload['nativeReceipt'])
+            if (canonical_bytes(receipt) != canonical_bytes(payload['nativeReceipt'])
+                    or payload['nativeReceiptDigest'] != _digest(receipt)
+                    or receipt['schemaOid'] != payload['schemaOid']):
+                raise CustodyJournalError('journal-invalid')
+        elif any(payload[key] is not None for key in
+                 ('nativeReceipt', 'nativeReceiptDigest', 'schemaOid')):
+            raise CustodyJournalError('journal-invalid')
+        parent = payload['parent']
+        _closed(parent, {'sequence', 'headDigest'})
+        if type(parent['sequence']) is not int or parent['sequence'] < 0:
+            raise CustodyJournalError('journal-invalid')
+        _hex(parent['headDigest'])
+    elif profile == JOURNAL_PROFILE_02 and kind == 'originals-store-confirmed':
+        _closed(payload, {'purpose', 'reservationId', 'reservationDigest',
+                          'supervisorIntentDigest', 'observationEventDigest',
+                          'nativeReceiptDigest', 'schemaOid'})
+        if payload['purpose'] not in ('production', 'native-acceptance'):
+            raise CustodyJournalError('journal-invalid')
+        _uuid(payload['reservationId'])
+        for key in ('reservationDigest', 'supervisorIntentDigest',
+                    'observationEventDigest', 'nativeReceiptDigest'):
+            _hex(payload[key])
+        if type(payload['schemaOid']) is not int or not 1 <= payload['schemaOid'] <= 2**32 - 1:
+            raise CustodyJournalError('journal-invalid')
     else:
         raise CustodyJournalError('journal-invalid')
     _canonical(payload)
     return payload
 
 
-def _replay(events: list[dict[str, Any]]) -> dict[str, Any]:
+def _replay(events: list[dict[str, Any]], *, profile: str = JOURNAL_PROFILE) -> dict[str, Any]:
     """Validate append ordering and return state; pending intents are retained."""
     state: dict[str, Any] = {'registration': None, 'provision': None, 'transition': None}
+    if profile == JOURNAL_PROFILE_02:
+        state['stores'] = {}
     operation_ids: set[tuple[str, str]] = set()
     for event in events:
         kind, payload = event['kind'], event['payload']
         category = ('registration' if kind.startswith('registration-') else
-                    'provision' if kind.startswith('epoch-provision-') else 'transition')
+                    'provision' if kind.startswith('epoch-provision-') else
+                    'store' if kind.startswith('originals-store-') else 'transition')
+        if category == 'store' and profile != JOURNAL_PROFILE_02:
+            raise CustodyJournalError('journal-invalid')
         operation_id = payload.get('registrationId' if category == 'registration' else
                                    'reservationId')
         if category == 'provision' and kind == 'epoch-provision-reserved':
             operation_id = payload['reservation']['id']
+        if category == 'store' and kind == 'originals-store-reserved':
+            operation_id = payload['reservation']['reservationId']
         if kind.endswith(('intent', 'reserved')):
             marker = (category, operation_id)
             if marker in operation_ids:
                 raise CustodyJournalError('journal-order-invalid')
             operation_ids.add(marker)
+        if category == 'store':
+            parent = payload.get('parent')
+            if (parent is not None
+                    and (parent.get('sequence') != event['sequence'] - 1
+                         or parent.get('headDigest') != event['previousDigest'])):
+                raise CustodyJournalError('journal-order-invalid')
+            if kind == 'originals-store-reserved':
+                if (state['registration'] is None
+                        or state['registration']['status'] != 'confirmed'
+                        or state['provision'] is not None
+                        and state['provision']['status'] != 'confirmed'
+                        or state['transition'] is not None
+                        and state['transition']['status'] != 'confirmed'):
+                    raise CustodyJournalError('journal-order-invalid')
+                key = tuple(payload['reservation']['targetCustody'][field]
+                            for field in ('registrationId',)) + (
+                    payload['reservation']['providerId'],
+                    payload['reservation']['installationId'],
+                    payload['reservation']['store']['profile'],
+                    payload['reservation']['store']['storeId'],
+                    payload['reservation']['store']['schemaName'])
+                if (payload['reservation']['targetCustody'] != state['registration']['custody']
+                        or key in state['stores'] or len(state['stores']) >= 256
+                        or any(item['status'] != 'confirmed'
+                               for item in state['stores'].values())):
+                    raise CustodyJournalError('journal-order-invalid')
+                state['stores'][key] = {
+                    'id': payload['reservation']['reservationId'], 'key': key,
+                    'status': 'reserved', 'purpose': payload['purpose'],
+                    'request': payload['request'], 'reservation': payload['reservation'],
+                    'reservationDigest': payload['reservationDigest'],
+                    'approvalDigest': payload['approvalDigest'], 'observations': [],
+                }
+            elif kind == 'originals-store-observation':
+                current = next((item for item in state['stores'].values()
+                                if item['id'] == payload['reservationId']), None)
+                prior_intent_digest = (current.get('observedSupervisorIntentDigest')
+                                       if current is not None else None)
+                if (current is None or current['status'] not in ('reserved', 'observed-committed')
+                        or current['purpose'] != payload['purpose']
+                        or current['reservationDigest'] != payload['reservationDigest']
+                        or prior_intent_digest is not None
+                        and prior_intent_digest != payload['supervisorIntentDigest']):
+                    raise CustodyJournalError('journal-order-invalid')
+                if current['status'] == 'observed-committed':
+                    raise CustodyJournalError('journal-order-invalid')
+                current['observedSupervisorIntentDigest'] = payload['supervisorIntentDigest']
+                current['observations'].append({
+                    'eventDigest': event['recordDigest'], 'payload': payload})
+                if payload['outcome'] == 'committed':
+                    receipt = payload['nativeReceipt']
+                    reservation = current['reservation']
+                    if (receipt['profile'] != 'umf.originals-creation-receipt/0.1'
+                            or receipt['providerId'] != reservation['providerId']
+                            or receipt['installationId'] != reservation['installationId']
+                            or receipt['storeProfile'] != reservation['store']['profile']
+                            or receipt['storeId'] != reservation['store']['storeId']
+                            or receipt['reservationDigest'] != current['reservationDigest']
+                            or receipt['creationRequestDigest']
+                                != reservation['creationRequestDigest']
+                            or receipt['creationApprovalDigest']
+                                != reservation['creationApprovalDigest']
+                            or receipt['targetCustodyDigest']
+                                != _digest(reservation['targetCustody'])
+                            or receipt['schemaOid'] != payload['schemaOid']
+                            or receipt['state'] != 'created'):
+                        raise CustodyJournalError('journal-order-invalid')
+                    current.update(status='observed-committed',
+                                   observedSupervisorIntentDigest=payload['supervisorIntentDigest'],
+                                   nativeReceiptDigest=payload['nativeReceiptDigest'],
+                                   schemaOid=payload['schemaOid'])
+            elif kind == 'originals-store-confirmed':
+                current = next((item for item in state['stores'].values()
+                                if item['id'] == payload['reservationId']), None)
+                if (current is None or current['status'] != 'observed-committed'
+                        or current['purpose'] != payload['purpose']
+                        or current['reservationDigest'] != payload['reservationDigest']
+                        or current['observedSupervisorIntentDigest']
+                            != payload['supervisorIntentDigest']
+                        or current['observations'][-1]['eventDigest']
+                            != payload['observationEventDigest']
+                        or current['nativeReceiptDigest'] != payload['nativeReceiptDigest']
+                        or current['schemaOid'] != payload['schemaOid']):
+                    raise CustodyJournalError('journal-order-invalid')
+                current['status'] = 'confirmed'
+            continue
         if kind == 'registration-intent':
             if state['registration'] is not None:
                 raise CustodyJournalError('journal-order-invalid')
@@ -562,7 +835,10 @@ def _replay(events: list[dict[str, Any]]) -> dict[str, Any]:
             current.update(status='confirmed', custody=payload['targetCustody'])
         elif kind == 'epoch-provision-reserved':
             current = state['provision']
-            if state['registration'] is None or state['registration']['status'] != 'confirmed' or current and current['status'] != 'confirmed':
+            if (state['registration'] is None or state['registration']['status'] != 'confirmed'
+                    or current and current['status'] != 'confirmed'
+                    or profile == JOURNAL_PROFILE_02
+                    and any(item['status'] != 'confirmed' for item in state['stores'].values())):
                 raise CustodyJournalError('journal-order-invalid')
             if payload['request']['targetCustody'] != state['registration']['custody']:
                 raise CustodyJournalError('journal-order-invalid')
@@ -587,7 +863,9 @@ def _replay(events: list[dict[str, Any]]) -> dict[str, Any]:
         elif kind == 'transition-reserved':
             current = state['transition']
             if (state['provision'] is None or state['provision']['status'] != 'confirmed'
-                    or current and current['status'] != 'confirmed'):
+                    or current and current['status'] != 'confirmed'
+                    or profile == JOURNAL_PROFILE_02
+                    and any(item['status'] != 'confirmed' for item in state['stores'].values())):
                 raise CustodyJournalError('journal-order-invalid')
             if payload['request']['targetCustody'] != state['registration']['custody']:
                 raise CustodyJournalError('journal-order-invalid')
@@ -612,6 +890,43 @@ def _replay(events: list[dict[str, Any]]) -> dict[str, Any]:
             current['status'] = 'confirmed'
     return state
 
+
+def validate_original_target_custody_record(raw: bytes,
+                                           birth: dict[str, Any]) -> dict[str, Any]:
+    """Validate a 0.2 chain against an already resolved original birth."""
+    if type(raw) is not bytes or not 1 <= len(raw) <= _MAX_BYTES:
+        raise CustodyJournalError('journal-corrupt')
+    doc = _read_json(raw)
+    _closed(doc, {'profile', 'custodianId', 'sequence', 'headDigest', 'events'})
+    if (doc['profile'] != JOURNAL_PROFILE_02
+            or doc['custodianId'] != birth.get('custodianId')
+            or type(doc['events']) is not list or len(doc['events']) > _MAX_EVENTS
+            or type(doc['sequence']) is not int
+            or doc['sequence'] != len(doc['events'])):
+        raise CustodyJournalError('journal-corrupt')
+    initial = {'profile': JOURNAL_PROFILE_02,
+               'custodianId': birth['custodianId'], 'sequence': 0,
+               'headDigest': '0' * 64, 'events': []}
+    if hashlib.sha256(_canonical(initial)).hexdigest() != birth.get('initialHeaderDigest'):
+        raise CustodyJournalError('journal-origin-unverified')
+    previous = '0' * 64
+    for index, event in enumerate(doc['events'], 1):
+        _closed(event, {'sequence', 'kind', 'payload', 'previousDigest', 'recordDigest'})
+        if (type(event['sequence']) is not int or event['sequence'] != index
+                or event['previousDigest'] != previous
+                or event['kind'] not in _KINDS_02):
+            raise CustodyJournalError('journal-corrupt')
+        _validate_event_payload(event['kind'], event['payload'], profile=JOURNAL_PROFILE_02)
+        unhashed = {key: event[key] for key in
+                    ('sequence', 'kind', 'payload', 'previousDigest')}
+        if event['recordDigest'] != _digest(unhashed):
+            raise CustodyJournalError('journal-corrupt')
+        previous = event['recordDigest']
+    if doc['headDigest'] != previous or raw != _canonical(doc):
+        raise CustodyJournalError('journal-corrupt')
+    _replay(doc['events'], profile=JOURNAL_PROFILE_02)
+    return doc
+
 class ExternalCustodyJournal:
     """Private append journal; it cannot detect replacement by an older copy alone.
 
@@ -619,12 +934,21 @@ class ExternalCustodyJournal:
     independently retained original custody chain before issuing capabilities.
     """
 
-    __slots__ = ('_custodian_id', '_lock_path', '_path')
+    __slots__ = ('_birth_bytes', '_birth_handle', '_context', '_custodian_id',
+                 '_issuer', '_lock_path', '_path', '_profile', '_resolver',
+                 '_supervisor')
 
     def __init__(self, path: str | os.PathLike[str], custodian_id: str):
         self._path = Path(path)
         self._lock_path = self._path.with_name(self._path.name + '.lock')
         self._custodian_id = _text(custodian_id, 256)
+        self._profile = JOURNAL_PROFILE
+        self._birth_bytes = None
+        self._birth_handle = None
+        self._context = None
+        self._issuer = None
+        self._resolver = None
+        self._supervisor = None
         parent = self._path.parent
         if not parent.is_absolute() or os.path.normpath(str(parent)) != str(parent):
             raise CustodyJournalError('journal-directory-unsafe')
@@ -637,10 +961,69 @@ class ExternalCustodyJournal:
                 or any(part.is_symlink() for part in (parent, *parent.parents))):
             raise CustodyJournalError('journal-directory-unsafe')
 
+    @classmethod
+    def _open_original_02(cls, birth_handle: object, *, resolver: _OwnerRegistrationResolver,
+                          control_lease: object,
+                          operation_kind: str) -> ExternalCustodyJournal:
+        """Open only the bootstrap-selected original 0.2 journal under its lease."""
+        from .owner_bootstrap import _resolve_original_target_custody_journal_birth
+        if type(resolver) is not _OwnerRegistrationResolver:
+            raise CustodyJournalError('journal-origin-unverified')
+        try:
+            if operation_kind not in ('registration-apply', 'registration-recover', 'store'):
+                raise CustodyJournalError('journal-origin-unverified')
+            resolver.require_control_lease(control_lease, operation_kind=operation_kind)
+            descriptor = _resolve_original_target_custody_journal_birth(
+                birth_handle, issuer=resolver.issuer, context=resolver._context,
+                supervisor=resolver.adapter, control_lease=control_lease)
+        except Exception:  # noqa: BLE001 - redact bootstrap details at journal boundary
+            raise CustodyJournalError('journal-origin-unverified') from None
+        path = Path(descriptor['path'])
+        parent = path.parent
+        try:
+            st = os.lstat(parent)
+        except OSError:
+            raise CustodyJournalError('journal-directory-unavailable') from None
+        if (not stat.S_ISDIR(st.st_mode) or stat.S_ISLNK(st.st_mode)
+                or st.st_uid != os.geteuid() or stat.S_IMODE(st.st_mode) & 0o077
+                or any(part.is_symlink() for part in (parent, *parent.parents))):
+            raise CustodyJournalError('journal-directory-unsafe')
+        journal = object.__new__(cls)
+        journal._path = path
+        journal._lock_path = Path(descriptor['lockPath'])
+        journal._custodian_id = _uuid(descriptor['custodianId'])
+        journal._profile = JOURNAL_PROFILE_02
+        journal._birth_bytes = _canonical(descriptor)
+        journal._birth_handle = birth_handle
+        journal._context = resolver._context
+        journal._issuer = resolver.issuer
+        journal._resolver = resolver
+        journal._supervisor = resolver.adapter
+        return journal
+
+    def _verify_original_birth(self) -> dict[str, Any]:
+        if self._profile != JOURNAL_PROFILE_02:
+            raise CustodyJournalError('journal-origin-unverified')
+        from .owner_bootstrap import _resolve_original_target_custody_journal_birth
+        try:
+            lease = self._supervisor._require_original_control_lease()
+            descriptor = _resolve_original_target_custody_journal_birth(
+                self._birth_handle, issuer=self._issuer, context=self._context,
+                supervisor=self._supervisor, control_lease=lease)
+        except Exception:  # noqa: BLE001 - every missing/changed binding refuses
+            raise CustodyJournalError('journal-origin-unverified') from None
+        if _canonical(descriptor) != self._birth_bytes:
+            raise CustodyJournalError('journal-origin-unverified')
+        return descriptor
+
     def _read(self) -> dict[str, Any]:
+        if self._profile == JOURNAL_PROFILE_02:
+            self._verify_original_birth()
         try:
             fd = os.open(self._path, os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0))
         except FileNotFoundError:
+            if self._profile == JOURNAL_PROFILE_02:
+                raise CustodyJournalError('journal-unavailable') from None
             return {'profile': JOURNAL_PROFILE, 'custodianId': self._custodian_id,
                     'sequence': 0, 'headDigest': '0' * 64, 'events': []}
         except OSError:
@@ -650,6 +1033,13 @@ class ExternalCustodyJournal:
             if (not stat.S_ISREG(st.st_mode) or st.st_nlink != 1 or st.st_uid != os.geteuid()
                     or stat.S_IMODE(st.st_mode) & 0o077 or st.st_size > _MAX_BYTES):
                 raise CustodyJournalError('journal-unsafe')
+            if self._profile == JOURNAL_PROFILE_02:
+                path_st = os.lstat(self._path)
+                if (not stat.S_ISREG(path_st.st_mode) or stat.S_ISLNK(path_st.st_mode)
+                        or path_st.st_uid != os.geteuid() or path_st.st_nlink != 1
+                        or stat.S_IMODE(path_st.st_mode) != 0o600
+                        or (path_st.st_dev, path_st.st_ino) != (st.st_dev, st.st_ino)):
+                    raise CustodyJournalError('journal-unsafe')
             chunks = bytearray()
             while len(chunks) <= _MAX_BYTES:
                 chunk = os.read(fd, min(65536, _MAX_BYTES + 1 - len(chunks)))
@@ -675,16 +1065,17 @@ class ExternalCustodyJournal:
             raise CustodyJournalError('journal-durability-unverified') from None
         doc = _read_json(bytes(chunks))
         _closed(doc, {'profile', 'custodianId', 'sequence', 'headDigest', 'events'})
-        if (doc['profile'] != JOURNAL_PROFILE or doc['custodianId'] != self._custodian_id
+        if (doc['profile'] != self._profile or doc['custodianId'] != self._custodian_id
                 or type(doc['events']) is not list or len(doc['events']) > _MAX_EVENTS):
             raise CustodyJournalError('journal-corrupt')
+        allowed_kinds = _KINDS_02 if self._profile == JOURNAL_PROFILE_02 else _KINDS
         previous = '0' * 64
         for index, event in enumerate(doc['events'], 1):
             _closed(event, {'sequence', 'kind', 'payload', 'previousDigest', 'recordDigest'})
             if (type(event['sequence']) is not int or event['sequence'] != index
-                    or event['previousDigest'] != previous or event['kind'] not in _KINDS):
+                    or event['previousDigest'] != previous or event['kind'] not in allowed_kinds):
                 raise CustodyJournalError('journal-corrupt')
-            _validate_event_payload(event['kind'], event['payload'])
+            _validate_event_payload(event['kind'], event['payload'], profile=self._profile)
             unhashed = {key: event[key] for key in ('sequence', 'kind', 'payload', 'previousDigest')}
             if event['recordDigest'] != _digest(unhashed):
                 raise CustodyJournalError('journal-corrupt')
@@ -692,18 +1083,28 @@ class ExternalCustodyJournal:
         if (type(doc['sequence']) is not int or doc['sequence'] != len(doc['events'])
                 or doc['headDigest'] != previous):
             raise CustodyJournalError('journal-corrupt')
-        _replay(doc['events'])
+        _replay(doc['events'], profile=self._profile)
         return doc
 
     @contextmanager
     def _locked(self) -> Iterator[int]:
-        flags = os.O_CREAT | os.O_RDWR | getattr(os, 'O_NOFOLLOW', 0)
+        flags = os.O_RDWR | getattr(os, 'O_NOFOLLOW', 0)
+        if self._profile == JOURNAL_PROFILE:
+            flags |= os.O_CREAT
         try:
             fd = os.open(self._lock_path, flags, 0o600)
-            os.fchmod(fd, 0o600)
+            if self._profile == JOURNAL_PROFILE:
+                os.fchmod(fd, 0o600)
             st = os.fstat(fd)
             if not stat.S_ISREG(st.st_mode) or st.st_nlink != 1 or st.st_uid != os.geteuid():
                 raise CustodyJournalError('journal-lock-unsafe')
+            if self._profile == JOURNAL_PROFILE_02:
+                path_st = os.lstat(self._lock_path)
+                if (not stat.S_ISREG(path_st.st_mode) or stat.S_ISLNK(path_st.st_mode)
+                        or path_st.st_uid != os.geteuid() or path_st.st_nlink != 1
+                        or stat.S_IMODE(path_st.st_mode) != 0o600
+                        or (path_st.st_dev, path_st.st_ino) != (st.st_dev, st.st_ino)):
+                    raise CustodyJournalError('journal-lock-unsafe')
             fcntl.flock(fd, fcntl.LOCK_EX)
         except CustodyJournalError:
             if 'fd' in locals():
@@ -721,13 +1122,23 @@ class ExternalCustodyJournal:
 
     def _append(self, kind: str, payload: dict[str, Any]) -> dict[str, Any]:
         """Internal trusted-adapter seam; never accept a caller authorization here."""
-        if kind not in _KINDS:
+        allowed_kinds = _KINDS_02 if self._profile == JOURNAL_PROFILE_02 else _KINDS
+        if kind not in allowed_kinds:
             raise CustodyJournalError('journal-invalid')
-        payload = _validate_event_payload(kind, payload)
+        payload = _validate_event_payload(kind, payload, profile=self._profile)
         with self._locked():
             doc = self._read()
             if len(doc['events']) >= _MAX_EVENTS:
                 raise CustodyJournalError('journal-capacity')
+            if kind == 'originals-store-reserved':
+                if (payload['parent'] != {'sequence': doc['sequence'],
+                                          'headDigest': doc['headDigest']}
+                        or payload['reservation']['custodySequence'] != doc['sequence'] + 1):
+                    raise CustodyJournalError('journal-state-mismatch')
+            elif kind == 'originals-store-observation':
+                if payload['parent'] != {'sequence': doc['sequence'],
+                                         'headDigest': doc['headDigest']}:
+                    raise CustodyJournalError('journal-state-mismatch')
             if kind in ('epoch-provision-reserved', 'transition-reserved'):
                 reservation_key = 'reservation'
                 reservation = payload[reservation_key]
@@ -738,14 +1149,65 @@ class ExternalCustodyJournal:
                      'previousDigest': doc['headDigest']}
             event['recordDigest'] = _digest(event)
             events = [*doc['events'], event]
-            _replay(events)
-            updated = {'profile': JOURNAL_PROFILE, 'custodianId': self._custodian_id,
+            _replay(events, profile=self._profile)
+            updated = {'profile': self._profile, 'custodianId': self._custodian_id,
                        'sequence': event['sequence'], 'headDigest': event['recordDigest'],
                        'events': events}
             data = _canonical(updated)
             self._replace(data)
             return {'sequence': event['sequence'], 'recordDigest': event['recordDigest'],
                     'headDigest': event['recordDigest']}
+
+    def _reserve_originals_store(self, *, purpose: str, request: dict[str, Any],
+                                 approval_digest: str,
+                                 reservation: dict[str, Any]) -> dict[str, Any]:
+        if self._profile != JOURNAL_PROFILE_02:
+            raise CustodyJournalError('journal-profile-mismatch')
+        parent_doc = self._load()
+        original = dict(reservation)
+        original['custodySequence'] = parent_doc['sequence'] + 1
+        payload = {'purpose': purpose, 'request': request,
+                   'approvalDigest': approval_digest, 'reservation': original,
+                   'reservationDigest': _digest(original),
+                   'parent': {'sequence': parent_doc['sequence'],
+                              'headDigest': parent_doc['headDigest']}}
+        return self._append('originals-store-reserved', payload)
+
+    def _observe_originals_store(self, *, purpose: str, reservation_id: str,
+                                 reservation_digest: str, supervisor_intent_digest: str,
+                                 outcome: str, native_receipt: dict[str, Any] | None,
+                                 native_receipt_digest: str | None, schema_oid: int | None,
+                                 native_observation_digest: str,
+                                 transaction_outcome_digest: str) -> dict[str, Any]:
+        if self._profile != JOURNAL_PROFILE_02:
+            raise CustodyJournalError('journal-profile-mismatch')
+        parent_doc = self._load()
+        payload = {
+            'purpose': purpose, 'reservationId': reservation_id,
+            'reservationDigest': reservation_digest,
+            'supervisorIntentDigest': supervisor_intent_digest,
+            'outcome': outcome, 'nativeReceipt': native_receipt,
+            'nativeReceiptDigest': native_receipt_digest, 'schemaOid': schema_oid,
+            'nativeObservationDigest': native_observation_digest,
+            'transactionOutcomeDigest': transaction_outcome_digest,
+            'parent': {'sequence': parent_doc['sequence'],
+                       'headDigest': parent_doc['headDigest']},
+        }
+        return self._append('originals-store-observation', payload)
+
+    def _confirm_originals_store(self, *, purpose: str, reservation_id: str,
+                                 reservation_digest: str, supervisor_intent_digest: str,
+                                 observation_event_digest: str,
+                                 native_receipt_digest: str, schema_oid: int) -> dict[str, Any]:
+        if self._profile != JOURNAL_PROFILE_02:
+            raise CustodyJournalError('journal-profile-mismatch')
+        return self._append('originals-store-confirmed', {
+            'purpose': purpose, 'reservationId': reservation_id,
+            'reservationDigest': reservation_digest,
+            'supervisorIntentDigest': supervisor_intent_digest,
+            'observationEventDigest': observation_event_digest,
+            'nativeReceiptDigest': native_receipt_digest, 'schemaOid': schema_oid,
+        })
 
     def _replace(self, data: bytes) -> None:
         parent = self._path.parent
@@ -780,11 +1242,17 @@ class ExternalCustodyJournal:
     def snapshot(self) -> dict[str, Any]:
         """Return only non-secret journal state for diagnostics; payloads stay private."""
         doc = self._load()
-        state = _replay(doc['events'])
-        return {'profile': JOURNAL_PROFILE, 'custodianId': self._custodian_id,
+        state = _replay(doc['events'], profile=self._profile)
+        pending = {key: value['id'] for key, value in state.items()
+                   if key != 'stores' and value is not None
+                   and value['status'] != 'confirmed'}
+        if self._profile == JOURNAL_PROFILE_02:
+            pending['stores'] = sorted(
+                value['id'] for value in state['stores'].values()
+                if value['status'] != 'confirmed')
+        return {'profile': self._profile, 'custodianId': self._custodian_id,
                 'sequence': doc['sequence'], 'headDigest': doc['headDigest'],
-                'pending': {key: value['id'] for key, value in state.items()
-                            if value is not None and value['status'] != 'confirmed'}}
+                'pending': pending}
 
     def _load(self) -> dict[str, Any]:
         with self._locked():
@@ -1011,6 +1479,18 @@ def _bootstrap_local_target_custodian(journal: ExternalCustodyJournal,
                                       resolver: _OwnerRegistrationResolver) -> LocalTargetCustodian:
     """Private trusted-bootstrap entry; not a user-selected resolver API."""
     return LocalTargetCustodian(_CUSTODY_SEAL, journal, custodian_id, provider_id, resolver)
+
+
+def _bootstrap_original_02_target_custodian(
+        birth_handle: object, *, custodian_id: str, provider_id: str,
+        resolver: _OwnerRegistrationResolver, control_lease: object,
+        operation_kind: str) -> LocalTargetCustodian:
+    """Select the fresh external 0.2 journal only through original birth custody."""
+    journal = ExternalCustodyJournal._open_original_02(
+        birth_handle, resolver=resolver, control_lease=control_lease,
+        operation_kind=operation_kind)
+    return LocalTargetCustodian(_CUSTODY_SEAL, journal, custodian_id,
+                                provider_id, resolver)
 
 
 def _target_capability_seal() -> object:

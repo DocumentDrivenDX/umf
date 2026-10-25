@@ -1,0 +1,43 @@
+{
+  "profile": "umf.independent-sol-source-review/0.1",
+  "decision": "accept-bounded-source-only-catalog-projection-corrections",
+  "reviewedPacket": "/private/tmp/umf-g04-provider-005",
+  "packetManifestSha256": "0d67c30f116e6ab4c91f9b0e9484f5cc0b535a4a0f404f698c94106ffef5fa9c",
+  "verification": {
+    "manifestSha256": "0d67c30f116e6ab4c91f9b0e9484f5cc0b535a4a0f404f698c94106ffef5fa9c",
+    "members": 138,
+    "status": "all member hashes/sizes pass",
+    "previous003and004": "unchanged"
+  },
+  "sourceDelta": {
+    "004to005ChangedRuntimeFiles": [
+      "umf_access/lifecycle/row_originals_creation.py"
+    ],
+    "rowOriginalsAndAllOtherRuntimeSources": "byte-identical to004",
+    "strictClosure": "Only finite NOT NULL field and RI-set source corrections; no authority/capability/session/native enablement"
+  },
+  "remainingFindingsInScope": [],
+  "actualResults": {
+    "suppliedFocusedTests": "25 pass",
+    "suppliedSuccessorControls": "9 pass",
+    "distinctIndependentRIMatrix": "5 tests/90 concrete cases pass, actual frozen observer-loop execution plus exact helper probes",
+    "ruffFourFrozenFiles": "pass",
+    "exact003to005Patches": "4/4 exactbyte outputs",
+    "literal004nine": "8 pass,1 superseded diagnostic error: wrong NUL fixture now correctly refuses; original log retained"
+  },
+  "sourceEvidence": "Official PG18 branch constructor/catalog facts retained and hashed; synthetic tuples/source controls, not actual installed18.6 execution",
+  "primarySourceFactsSha256": "df3f9b27f0f34dce95854d1af86b4848d832bcda6d3dd8dd250b8e4bf83187f3",
+  "limitations": [
+    "Acceptance applies to bounded004\u2192005 catalog corrections, not exhaustive unchanged provider/native semantics",
+    "Original upstream supervisor reservation/confirmation/capability is absent; creation fails closed before DDL",
+    "No positive native COMMIT/custody/registered capability or restart/reopen proof",
+    "No full G04 enrollment/capture/baseline/restore, installed/browser/release qualification"
+  ],
+  "preservedReviews": {
+    "003ReceiptSha256": "7a9743f5cf5853f24a415dc033fab408ee95caf860b00248904f73fd4a90eb4e",
+    "004ReceiptSha256": "ca8be75cc991f4f8ae264e3d333e713b6ce6e45ff4e9be18734951607da023c2"
+  },
+  "authorSourceChanges": "none",
+  "resourceGO": "not requested",
+  "nativeDatabaseBuildBrowserGlobalInventoryCampaign": "none"
+}

@@ -1,0 +1,48 @@
+{
+  "profile": "umf.g04.native-store-source-readiness/0.1",
+  "status": "source implementation and bounded catalog corrections; runtime enablement remains incomplete",
+  "source": [
+    {
+      "path": "python/umf_access/src/umf_access/lifecycle/row_originals.py",
+      "sha256": "be4d86a55eceb1b44068ccd7a654a8e437a75b8b4ec236908b7af5207eb511d5",
+      "bytes": 73910
+    },
+    {
+      "path": "python/umf_access/src/umf_access/lifecycle/row_originals_creation.py",
+      "sha256": "718f06e8b7b289eb5c27687ceb2de16da76b111d7fc8d13e72869fdc10e0364e",
+      "bytes": 62773
+    },
+    {
+      "path": "python/umf_access/tests/test_row_originals_creation.py",
+      "sha256": "90c809dea1b0587bb5bd9e4ff1abaf2fc23a2ae93c251798253c41b26eea64ed",
+      "bytes": 16477
+    },
+    {
+      "path": "python/umf_access/tests/test_row_originals_profile.py",
+      "sha256": "dfc6b311d15877ad6a6f2fed72787c2a8e4f94e64c606d0bd28f9ba7131a8a78",
+      "bytes": 13744
+    }
+  ],
+  "governingCommit": "235a149bd17472f0e03527aa930c7aec61ca1b59",
+  "reviewPacketManifestSha256": "0d67c30f116e6ab4c91f9b0e9484f5cc0b535a4a0f404f698c94106ffef5fa9c",
+  "independentReviewSha256": "0ddb39bc7314f9396eb96a518a690ec8209e24280cccb07d7a90657a6ab3b132",
+  "results": {
+    "focusedTests": 25,
+    "successorControls": 9,
+    "independentTriggerMatrixCases": 90,
+    "ruff": "pass",
+    "allFour003to005Patches": "exact byte reproduction"
+  },
+  "preservedFailures": [
+    "001 runtime NameErrors",
+    "002 column address catalog class mismatch",
+    "003 NOT NULL/RI argument/ACL mismatches",
+    "004 NOT NULL SPACE/complete RI-set validation and stale test patch"
+  ],
+  "limitations": [
+    "Synthetic native catalog tuples and source projections are not actual PostgreSQL18.6 behavior",
+    "Original supervisor reservation/confirmation/capability integration absent; creation fails closed before DDL",
+    "Positive COMMIT, restart/reopen, enrollment/capture/baseline/restore remain open",
+    "Installed/platform/browser, full G04 review and release/public-byte qualification remain open"
+  ]
+}

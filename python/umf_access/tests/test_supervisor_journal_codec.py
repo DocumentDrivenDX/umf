@@ -110,6 +110,60 @@ def _record(events: list[dict[str, object]], birth: dict[str, object]) -> bytes:
 
 
 class SupervisorJournalCodecTests(unittest.TestCase):
+    def test_fresh_external_custody_birth_is_closed_and_metadata_bound(self) -> None:
+        value = _birth()
+        enrollment = value['enrollment']
+        enrollment['profile'] = codec.ENROLLMENT_05
+        enrollment['nativeProfile']['custodianId'] = enrollment['context']['custodianId']
+        definition = {
+            'profile': codec.TARGET_CUSTODY_DEFINITION_PROFILE,
+            'journalProfile': codec.TARGET_CUSTODY_JOURNAL_PROFILE_02,
+            'eventKinds': list(codec.TARGET_CUSTODY_EVENT_KINDS),
+        }
+        header = {
+            'profile': codec.TARGET_CUSTODY_JOURNAL_PROFILE_02,
+            'custodianId': enrollment['context']['custodianId'],
+            'sequence': 0, 'headDigest': '0' * 64, 'events': [],
+        }
+        birth = {
+            'profile': codec.TARGET_CUSTODY_BIRTH_PROFILE,
+            'journalProfile': codec.TARGET_CUSTODY_JOURNAL_PROFILE_02,
+            'custodianId': enrollment['context']['custodianId'],
+            'supervisorId': enrollment['context']['supervisorId'],
+            'path': '/private/control/target-custody.json',
+            'lockPath': '/private/control/target-custody.json.lock',
+            'definition': definition,
+            'definitionDigest': hashlib.sha256(codec.canonical(definition)).hexdigest(),
+            'initialHeaderDigest': hashlib.sha256(codec.canonical(header)).hexdigest(),
+        }
+        enrollment['targetCustodyJournalBirth'] = birth
+        self.assertEqual(codec.validate_target_custody_birth(
+            birth, enrollment=enrollment), birth)
+        metadata = {
+            'profile': codec.TARGET_CUSTODY_METADATA_PROFILE_02,
+            'enrollmentProfile': codec.ENROLLMENT_05,
+            'ownerContextProfile': 'umf.local-owner-bootstrap-context/0.3',
+            'ownerBootstrapContextDigest': 'a' * 64,
+            'supervisorJournal': {
+                'birthDigest': 'b' * 64,
+                'journalProfile': codec.JOURNAL_PROFILE_02,
+                'journalId': '56565656-5656-4565-8565-565656565656',
+                'definitionDigest': 'c' * 64,
+            },
+            'targetCustodyJournal': {
+                'birthDigest': hashlib.sha256(codec.canonical(birth)).hexdigest(),
+                'journalProfile': codec.TARGET_CUSTODY_JOURNAL_PROFILE_02,
+                'definitionDigest': birth['definitionDigest'],
+            },
+        }
+        self.assertEqual(codec.validate_metadata(metadata), metadata)
+        wrong_path = {**birth, 'path': '/private/control/other.json'}
+        with self.assertRaises(codec.SupervisorJournalCodecError):
+            codec.validate_target_custody_birth(wrong_path, enrollment=enrollment)
+        wrong_definition = {**birth, 'definition': {**definition, 'eventKinds': []}}
+        with self.assertRaises(codec.SupervisorJournalCodecError):
+            codec.validate_target_custody_birth(wrong_definition, enrollment=enrollment)
+
     def test_legacy_01_native_store_effect_keeps_original_scope4_replay(self) -> None:
         supervisor = '12121212-1212-4212-8212-121212121212'
         cluster = '23232323-2323-4232-8232-232323232323'

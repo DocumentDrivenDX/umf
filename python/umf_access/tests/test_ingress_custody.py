@@ -173,6 +173,132 @@ class _SourceControlOwnerAdapter:
 
 
 class ExternalCustodyJournalTests(unittest.TestCase):
+    def test_originals_store_reservation_is_closed_and_only_admitted_in_02(self) -> None:
+        store = {'profile': 'umf.native-row-originals-store/0.1',
+                 'storeId': '10000000-0000-4000-8000-000000000003',
+                 'schemaName': 'umf_originals_10000000000040008000000000000003'}
+        evidence = {
+            'profile': 'umf.pg18.original-store-authority-evidence/0.1',
+            'supervisorId': '10000000-0000-4000-8000-000000000005',
+            'custodianId': '10000000-0000-4000-8000-000000000002',
+            'providerId': store['storeId'], 'installationId': 'installation-a',
+            'ownerAuthorityId': '10000000-0000-4000-8000-000000000008',
+            'ownerPolicyRevision': 'policy-a', 'registrationDigest': _hex('a'),
+            'targetCustodyDigest': _hex('b'),
+            'authorityPreparationReceiptDigest': _hex('c'),
+            'maintenance': {'oid': 20, 'name': 'maint', 'flags': {
+                'canLogin': True, 'superuser': True, 'createDatabase': False,
+                'createRole': False, 'replication': False, 'bypassRls': False,
+                'inherit': False}},
+            'controller': {'oid': 21, 'name': 'controller', 'flags': {
+                'canLogin': False, 'superuser': True, 'createDatabase': False,
+                'createRole': False, 'replication': False, 'bypassRls': False,
+                'inherit': False}},
+            'businessOwner': {'oid': 22, 'name': 'business_owner', 'flags': {
+                'canLogin': False, 'superuser': False, 'createDatabase': False,
+                'createRole': False, 'replication': False, 'bypassRls': False,
+                'inherit': False}},
+            'requiredMemberships': [
+                {'memberOid': 20, 'roleOid': 21, 'inherit': False, 'set': True, 'admin': False},
+                {'memberOid': 20, 'roleOid': 22, 'inherit': False, 'set': True, 'admin': False},
+            ],
+            'requiredSettings': {'searchPath': 'pg_catalog', 'timeZone': 'UTC',
+                'rowSecurity': 'on', 'sessionReplicationRole': 'origin',
+                'transactionReadOnly': 'off', 'transactionIsolation': 'read committed'},
+            'nativeAuthorityObservationDigest': _hex('d'),
+        }
+        request = {'profile': 'umf.owner-store-create-intent/0.1',
+                   'store': store, 'evidence': evidence}
+        custody = {
+            'profile': 'umf.native-target-custody/0.1',
+            'custodianId': '10000000-0000-4000-8000-000000000002',
+            'registrationId': '10000000-0000-4000-8000-000000000009',
+            'resourceId': '10000000-0000-4000-8000-000000000010',
+            'incarnation': '10000000-0000-4000-8000-000000000011',
+            'registrationDigest': _hex('e'),
+        }
+        reservation = {
+            'profile': 'umf.row-originals-store-reservation/0.1',
+            'reservationId': '10000000-0000-4000-8000-000000000012',
+            'providerId': store['storeId'], 'installationId': 'installation-a',
+            'targetCustody': custody, 'store': store,
+            'creationRequestDigest': _digest(request),
+            'creationApprovalDigest': _hex('f'),
+            'nativeAuthorityEvidenceDigest': evidence['nativeAuthorityObservationDigest'],
+            'configurationDigest': _hex('1'), 'custodySequence': 1,
+        }
+        payload = {
+            'purpose': 'native-acceptance', 'request': request,
+            'approvalDigest': reservation['creationApprovalDigest'],
+            'reservation': reservation, 'reservationDigest': _digest(reservation),
+            'parent': {'sequence': 0, 'headDigest': '0' * 64},
+        }
+        self.assertEqual(journal._validate_event_payload(
+            'originals-store-reserved', payload, profile=journal.JOURNAL_PROFILE_02),
+            payload)
+        with self.assertRaises(CustodyJournalError):
+            journal._validate_event_payload('originals-store-reserved', payload)
+        mismatched = {**payload, 'reservationDigest': _hex('2')}
+        with self.assertRaises(CustodyJournalError):
+            journal._validate_event_payload(
+                'originals-store-reserved', mismatched, profile=journal.JOURNAL_PROFILE_02)
+
+        events: list[dict[str, object]] = []
+        head = '0' * 64
+
+        def append(kind: str, event_payload: dict[str, object]) -> None:
+            nonlocal head
+            event: dict[str, object] = {
+                'sequence': len(events) + 1, 'previousDigest': head,
+                'kind': kind, 'payload': event_payload,
+            }
+            event['recordDigest'] = _digest(event)
+            head = event['recordDigest']
+            events.append(event)
+
+        append('registration-intent', {'registrationId': custody['registrationId']})
+        append('registration-observation', {
+            'registrationId': custody['registrationId'],
+            'observation': {'custodianSequence': 1},
+        })
+        append('registration-confirmed', {'targetCustody': custody})
+        reserved = {**reservation, 'custodySequence': len(events) + 1}
+        reserved_payload = {
+            **payload, 'reservation': reserved,
+            'reservationDigest': _digest(reserved),
+            'parent': {'sequence': len(events), 'headDigest': head},
+        }
+        append('originals-store-reserved', reserved_payload)
+        unknown = {
+            'purpose': 'native-acceptance', 'reservationId': reserved['reservationId'],
+            'reservationDigest': reserved_payload['reservationDigest'],
+            'supervisorIntentDigest': _hex('3'), 'outcome': 'unknown',
+            'nativeReceipt': None, 'nativeReceiptDigest': None, 'schemaOid': None,
+            'nativeObservationDigest': _hex('4'),
+            'transactionOutcomeDigest': _hex('5'),
+            'parent': {'sequence': len(events), 'headDigest': head},
+        }
+        append('originals-store-observation', unknown)
+        replayed = journal._replay(events, profile=journal.JOURNAL_PROFILE_02)
+        self.assertEqual(next(iter(replayed['stores'].values()))['status'], 'reserved')
+        self.assertEqual(len(next(iter(replayed['stores'].values()))['observations']), 1)
+        competing = dict(reserved_payload)
+        competing_reservation = {**reserved, 'reservationId':
+                                 '10000000-0000-4000-8000-000000000013',
+                                 'custodySequence': len(events) + 1}
+        competing.update({
+            'reservation': competing_reservation,
+            'reservationDigest': _digest(competing_reservation),
+            'parent': {'sequence': len(events), 'headDigest': head},
+        })
+        competing_event = {
+            'sequence': len(events) + 1, 'previousDigest': head,
+            'kind': 'originals-store-reserved', 'payload': competing,
+        }
+        competing_event['recordDigest'] = _digest(competing_event)
+        with self.assertRaises(CustodyJournalError):
+            journal._replay([*events, competing_event], profile=journal.JOURNAL_PROFILE_02)
+
     def setUp(self) -> None:
         self.temp = tempfile.TemporaryDirectory()
         os.chmod(self.temp.name, 0o700)

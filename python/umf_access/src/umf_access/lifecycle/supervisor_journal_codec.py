@@ -5,6 +5,7 @@ from __future__ import annotations
 import base64
 import hashlib
 import json
+import os
 import re
 from typing import Any
 
@@ -17,6 +18,17 @@ BIRTH_PROFILE = 'umf.original-supervisor-journal-birth/0.1'
 ANCHOR_PROFILE = 'umf.original-supervisor-journal-anchor/0.1'
 CONTEXT_METADATA_PROFILE = 'umf.owner-context-journal-metadata/0.1'
 ENROLLMENT_03 = 'umf.local-owner-bootstrap-enrollment/0.3'
+ENROLLMENT_05 = 'umf.local-owner-bootstrap-enrollment/0.5'
+TARGET_CUSTODY_JOURNAL_PROFILE_02 = 'umf.local-target-custody-journal/0.2'
+TARGET_CUSTODY_BIRTH_PROFILE = 'umf.original-target-custody-journal-birth/0.1'
+TARGET_CUSTODY_DEFINITION_PROFILE = 'umf.target-custody-journal-definition/0.1'
+TARGET_CUSTODY_METADATA_PROFILE_02 = 'umf.owner-context-journal-metadata/0.2'
+TARGET_CUSTODY_EVENT_KINDS = (
+    'registration-intent', 'registration-observation', 'registration-confirmed',
+    'epoch-provision-reserved', 'epoch-provision-observation', 'epoch-provision-confirmed',
+    'transition-reserved', 'transition-observation', 'transition-confirmed',
+    'originals-store-reserved', 'originals-store-observation', 'originals-store-confirmed',
+)
 _HEX = re.compile(r'^[a-f0-9]{64}$')
 _UUID = re.compile(r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$')
 
@@ -111,7 +123,12 @@ def validate_definition(value: object) -> dict[str, Any]:
 
 def validate_metadata(value: object) -> dict[str, Any]:
     keys = {'profile', 'enrollmentProfile', 'ownerContextProfile', 'ownerBootstrapContextDigest', 'supervisorJournal'}
-    if type(value) is not dict or set(value) != keys or value.get('profile') != CONTEXT_METADATA_PROFILE:
+    fresh_keys = keys | {'targetCustodyJournal'}
+    if (type(value) is not dict or set(value) not in (keys, fresh_keys)
+            or value.get('profile') not in (CONTEXT_METADATA_PROFILE, TARGET_CUSTODY_METADATA_PROFILE_02)):
+        raise SupervisorJournalCodecError('supervisor-journal-context-metadata-invalid')
+    fresh = value['profile'] == TARGET_CUSTODY_METADATA_PROFILE_02
+    if fresh != (set(value) == fresh_keys) or (fresh and value.get('enrollmentProfile') != ENROLLMENT_05):
         raise SupervisorJournalCodecError('supervisor-journal-context-metadata-invalid')
     if value['ownerContextProfile'] != 'umf.local-owner-bootstrap-context/0.3' or type(value['ownerBootstrapContextDigest']) is not str or not _HEX.fullmatch(value['ownerBootstrapContextDigest']):
         raise SupervisorJournalCodecError('supervisor-journal-context-metadata-invalid')
@@ -119,12 +136,62 @@ def validate_metadata(value: object) -> dict[str, Any]:
     if value['enrollmentProfile'] in ('umf.local-owner-bootstrap-enrollment/0.1', 'umf.local-owner-bootstrap-enrollment/0.2'):
         if descriptor is not None:
             raise SupervisorJournalCodecError('supervisor-journal-context-metadata-invalid')
-    elif value['enrollmentProfile'] == ENROLLMENT_03:
+    elif value['enrollmentProfile'] in (ENROLLMENT_03, ENROLLMENT_05):
         names = {'birthDigest', 'journalProfile', 'journalId', 'definitionDigest'}
         if (type(descriptor) is not dict or set(descriptor) != names or descriptor.get('journalProfile') != JOURNAL_PROFILE_02 or type(descriptor.get('journalId')) is not str or not _UUID.fullmatch(descriptor['journalId']) or any(type(descriptor.get(k)) is not str or not _HEX.fullmatch(descriptor[k]) for k in ('birthDigest', 'definitionDigest'))):
             raise SupervisorJournalCodecError('supervisor-journal-context-metadata-invalid')
     else:
         raise SupervisorJournalCodecError('supervisor-journal-context-metadata-invalid')
+    if fresh:
+        descriptor = value['targetCustodyJournal']
+        names = {'birthDigest', 'journalProfile', 'definitionDigest'}
+        if (type(descriptor) is not dict or set(descriptor) != names
+                or descriptor.get('journalProfile') != TARGET_CUSTODY_JOURNAL_PROFILE_02
+                or any(type(descriptor.get(k)) is not str or not _HEX.fullmatch(descriptor[k])
+                       for k in ('birthDigest', 'definitionDigest'))):
+            raise SupervisorJournalCodecError('supervisor-journal-context-metadata-invalid')
+    return json.loads(canonical(value))
+
+
+def validate_target_custody_birth(value: object, *, enrollment: dict[str, Any]) -> dict[str, Any]:
+    """Validate the fixed fresh external-journal birth bound by enrollment 0.5."""
+    keys = {'profile', 'journalProfile', 'custodianId', 'supervisorId', 'path',
+            'lockPath', 'definition', 'definitionDigest', 'initialHeaderDigest'}
+    if (type(value) is not dict or set(value) != keys
+            or value.get('profile') != TARGET_CUSTODY_BIRTH_PROFILE
+            or value.get('journalProfile') != TARGET_CUSTODY_JOURNAL_PROFILE_02
+            or type(enrollment) is not dict or enrollment.get('profile') != ENROLLMENT_05):
+        raise SupervisorJournalCodecError('target-custody-journal-birth-invalid')
+    context = enrollment.get('context')
+    native = enrollment.get('nativeProfile')
+    if (type(context) is not dict or type(native) is not dict
+            or value.get('custodianId') != context.get('custodianId')
+            or value.get('supervisorId') != context.get('supervisorId')
+            or value.get('custodianId') != native.get('custodianId')
+            or value.get('supervisorId') != native.get('supervisorId')):
+        raise SupervisorJournalCodecError('target-custody-journal-birth-invalid')
+    control_home = native.get('controlHome')
+    if (type(control_home) is not str or not control_home.startswith('/')
+            or '\x00' in control_home or control_home.rstrip('/') != control_home
+            or os.path.normpath(control_home) != control_home):
+        raise SupervisorJournalCodecError('target-custody-journal-birth-invalid')
+    path = control_home + '/target-custody.json'
+    if (value.get('path') != path
+            or value.get('lockPath') != path + '.lock'):
+        raise SupervisorJournalCodecError('target-custody-journal-birth-invalid')
+    definition = {'profile': TARGET_CUSTODY_DEFINITION_PROFILE,
+                  'journalProfile': TARGET_CUSTODY_JOURNAL_PROFILE_02,
+                  'eventKinds': list(TARGET_CUSTODY_EVENT_KINDS)}
+    if value.get('definition') != definition:
+        raise SupervisorJournalCodecError('target-custody-journal-birth-invalid')
+    definition_digest = hashlib.sha256(canonical(definition)).hexdigest()
+    initial = {'profile': TARGET_CUSTODY_JOURNAL_PROFILE_02,
+               'custodianId': value['custodianId'], 'sequence': 0,
+               'headDigest': '0' * 64, 'events': []}
+    initial_digest = hashlib.sha256(canonical(initial)).hexdigest()
+    if (value.get('definitionDigest') != definition_digest
+            or value.get('initialHeaderDigest') != initial_digest):
+        raise SupervisorJournalCodecError('target-custody-journal-birth-invalid')
     return json.loads(canonical(value))
 
 def expected_paths(control_home: object, supervisor_id: object) -> tuple[str, str]:
@@ -152,10 +219,13 @@ def validate_birth(value: object, *, enrollment: dict[str, Any],
     expected_enrollment = {'profile', 'enrollmentId', 'purpose', 'context',
                            'ownerConfiguration', 'nativeProfile',
                            'generationAuthorityRoots', 'supervisorJournalBirth'}
+    if (type(enrollment) is dict
+            and enrollment.get('profile') == ENROLLMENT_05):
+        expected_enrollment.add('targetCustodyJournalBirth')
     context, native = enrollment.get('context'), enrollment.get('nativeProfile')
     if (type(context) is not dict or type(native) is not dict
             or set(enrollment) != expected_enrollment
-            or enrollment.get('profile') != ENROLLMENT_03
+            or enrollment.get('profile') not in (ENROLLMENT_03, ENROLLMENT_05)
             or type(enrollment.get('enrollmentId')) is not str
             or not _UUID.fullmatch(enrollment['enrollmentId'])
             or enrollment.get('purpose') not in ('production', 'native-acceptance')
@@ -167,6 +237,9 @@ def validate_birth(value: object, *, enrollment: dict[str, Any],
             or supervisor_id != context.get('supervisorId')
             or supervisor_id != native.get('supervisorId')):
         raise SupervisorJournalCodecError('supervisor-journal-birth-invalid')
+    if enrollment.get('profile') == ENROLLMENT_05:
+        validate_target_custody_birth(
+            enrollment.get('targetCustodyJournalBirth'), enrollment=enrollment)
     if hashlib.sha256(canonical(enrollment['ownerConfiguration'])).hexdigest() != configuration_digest:
         raise SupervisorJournalCodecError('supervisor-journal-birth-invalid')
     paths = expected_paths(native.get('controlHome'), supervisor_id)
