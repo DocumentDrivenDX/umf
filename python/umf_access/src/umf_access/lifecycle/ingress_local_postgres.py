@@ -3511,36 +3511,59 @@ class LocalPostgresSupervisor:
         control = self._target_paths['control']
         resolver = _bind_owner_registration_resolver(
             self, self, self._authority_context)
-        if self._target_custody_journal_birth is not None:
-            custodian = _bootstrap_original_02_target_custodian(
-                self._target_custody_journal_birth, custodian_id=self._custodian_id,
-                provider_id=self._provider_id, resolver=resolver,
-                control_lease=self._require_original_control_lease(
-                    operation_kind='registration-recover'),
-                operation_kind='registration-recover')
-        else:
-            custody_journal = ExternalCustodyJournal(
-                control / 'target-custody.json', self._custodian_id)
-            custodian = _bootstrap_local_target_custodian(
-                custody_journal, self._custodian_id, self._provider_id, resolver)
-        owner_request = OwnerEnrollmentRequest(
-            _owner_capability_seal(), self, _OWNER_KIND)
-        self._owner_payloads[registration['registrationId']] = payload
-        self._handles[id(owner_request)] = (
-            owner_request, payload, self._launch['nativeAttestation'])
+        # Resolver callbacks issue evidence through the supervisor's active
+        # resolver binding, so establish it before reattachment observes the
+        # original registration.
+        previous_resolver = getattr(self, '_resolver', None)
+        self._resolver = resolver
+        registration_id = registration['registrationId']
+        had_owner_payload = registration_id in self._owner_payloads
+        previous_owner_payload = self._owner_payloads.get(registration_id)
+        owner_request = None
         try:
-            if outcome is not None:
-                if outcome.status != 'confirmed':
-                    raise LocalPostgresError('local-postgresql-registration-outcome-mismatch')
-                handle = custodian.reattach_confirmed_target(
-                    owner_request, control_lease=self._require_original_control_lease())
+            if self._target_custody_journal_birth is not None:
+                custodian = _bootstrap_original_02_target_custodian(
+                    self._target_custody_journal_birth, custodian_id=self._custodian_id,
+                    provider_id=self._provider_id, resolver=resolver,
+                    control_lease=self._require_original_control_lease(
+                        operation_kind='registration-recover'),
+                    operation_kind='registration-recover')
             else:
-                handle = custodian.register_target(
-                    owner_request, control_lease=self._require_original_control_lease())
-            reference = custodian._public_reference(handle)
-        except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
-            raise LocalPostgresError(
-                'local-postgresql-registration-outcome-unresolved') from None
+                custody_journal = ExternalCustodyJournal(
+                    control / 'target-custody.json', self._custodian_id)
+                custodian = _bootstrap_local_target_custodian(
+                    custody_journal, self._custodian_id, self._provider_id, resolver)
+            owner_request = OwnerEnrollmentRequest(
+                _owner_capability_seal(), self, _OWNER_KIND)
+            self._owner_payloads[registration_id] = payload
+            self._handles[id(owner_request)] = (
+                owner_request, payload, self._launch['nativeAttestation'])
+            try:
+                if outcome is not None:
+                    if outcome.status != 'confirmed':
+                        raise LocalPostgresError(
+                            'local-postgresql-registration-outcome-mismatch')
+                    handle = custodian.reattach_confirmed_target(
+                        owner_request, control_lease=self._require_original_control_lease())
+                else:
+                    handle = custodian.register_target(
+                        owner_request, control_lease=self._require_original_control_lease())
+                reference = custodian._public_reference(handle)
+            except Exception:  # noqa: BLE001 - redact private authority or driver details.
+                raise LocalPostgresError(
+                    'local-postgresql-registration-outcome-unresolved') from None
+        except Exception:
+            if owner_request is not None:
+                handle_entry = self._handles.get(id(owner_request))
+                if handle_entry is not None and handle_entry[0] is owner_request:
+                    self._handles.pop(id(owner_request), None)
+            if self._owner_payloads.get(registration_id) is payload:
+                if had_owner_payload:
+                    self._owner_payloads[registration_id] = previous_owner_payload
+                else:
+                    self._owner_payloads.pop(registration_id, None)
+            self._resolver = previous_resolver
+            raise
         self._resolver = resolver
         self._custodian = custodian
         self._custody_handle = handle

@@ -24,6 +24,7 @@ from unittest.mock import patch
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from owner_bootstrap_setup_fixture import install_pending_owner_setup
+from umf_access.lifecycle import ingress_custody as custody
 from umf_access.lifecycle import ingress_local_postgres as native
 from umf_access.lifecycle import owner_bootstrap as bootstrap
 from umf_access.lifecycle import supervisor_journal_codec as codec
@@ -515,20 +516,89 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                      patch.object(native.LocalPostgresSupervisor, '_observe_native', native_observation), \
                      patch.object(native.LocalPostgresSupervisor, '_connect_maintenance', connect_maintenance):
                     restarted_target = restarted.reattach_original_target()
-                    custodian_type = type(supervisor._custodian)
-                    original_reattach = custodian_type.reattach_confirmed_target
-                    def capture_reattach_failure(issuer, *args, **kwargs):
-                        try:
-                            return original_reattach(issuer, *args, **kwargs)
-                        except Exception as error:
-                            diagnostic = ' '.join(str(error).split())[:256]
-                            print(
-                                f'G04 reattach_confirmed_target: {type(error).__name__}: {diagnostic}',
-                                file=sys.stderr,
-                            )
-                            raise
-                    with patch.object(custodian_type, 'reattach_confirmed_target', capture_reattach_failure):
-                        public_reference = restarted.reattach_original_registration(restarted_target)
+                    registration_id = reference['registrationId']
+                    handles_before_failure = dict(restarted_supervisor._handles)
+                    payloads_before_failure = dict(restarted_supervisor._owner_payloads)
+                    dispatches_before_failure = dict(
+                        restarted_supervisor._registration_recovery_dispatches)
+                    with patch.object(
+                            custody, '_bootstrap_original_02_target_custodian',
+                            side_effect=RuntimeError('fixture-bootstrap-cut')):
+                        with self.assertRaisesRegex(RuntimeError, 'fixture-bootstrap-cut'):
+                            restarted.reattach_original_registration(restarted_target)
+                    self.assertIsNone(restarted_supervisor._resolver)
+                    self.assertIsNone(restarted_supervisor.custody_handle)
+                    self.assertEqual(restarted_supervisor._handles, handles_before_failure)
+                    self.assertEqual(restarted_supervisor._owner_payloads,
+                                     payloads_before_failure)
+                    self.assertNotIn(registration_id,
+                                     restarted_supervisor._owner_payloads)
+                    self.assertTrue(set(dispatches_before_failure).issubset(
+                        restarted_supervisor._registration_recovery_dispatches))
+                    self.assertEqual(
+                        len(restarted_supervisor._registration_recovery_dispatches),
+                        len(dispatches_before_failure) + 1)
+                    recovery_key = next(
+                        key for key in restarted_supervisor._registration_recovery_dispatches
+                        if key not in dispatches_before_failure)
+                    recovery_dispatch = (
+                        restarted_supervisor._registration_recovery_dispatches[recovery_key])
+                    reservation = recovery_dispatch[0]
+                    self.assertIs(recovery_dispatch[1], restarted_target)
+                    binding = next(
+                        item for item in restarted._effect_bindings.values()
+                        if item._reservation is reservation)
+                    effect_handle = restarted._pending_effect_handle(
+                        binding, mode='recover')
+
+                    callback_failure = [True]
+                    def fail_registration_observation_once(
+                            _self, database_name, *, current_role=None,
+                            budget_reservation=None, readonly_budget=None):
+                        if callback_failure[0]:
+                            callback_failure[0] = False
+                            raise native.LocalPostgresError(
+                                'fixture-registration-observation-cut')
+                        return native_observation(
+                            _self, database_name, current_role=current_role,
+                            budget_reservation=budget_reservation,
+                            readonly_budget=readonly_budget)
+                    with patch.object(
+                            native.LocalPostgresSupervisor, '_observe_native',
+                            fail_registration_observation_once):
+                        with self.assertRaisesRegex(
+                                native.LocalPostgresError,
+                                'local-postgresql-registration-outcome-unresolved'):
+                            with restarted_supervisor._original_control_lease(
+                                    operation_kind='registration-recover'):
+                                restarted_supervisor.execute_original_registration_reattachment(
+                                    reservation, effect_handle)
+                    self.assertFalse(callback_failure[0])
+                    self.assertIsNone(restarted_supervisor._resolver)
+                    self.assertIsNone(restarted_supervisor.custody_handle)
+                    self.assertEqual(restarted_supervisor._handles, handles_before_failure)
+                    self.assertEqual(restarted_supervisor._owner_payloads,
+                                     payloads_before_failure)
+                    self.assertNotIn(registration_id,
+                                     restarted_supervisor._owner_payloads)
+                    self.assertTrue(set(dispatches_before_failure).issubset(
+                        restarted_supervisor._registration_recovery_dispatches))
+                    self.assertEqual(
+                        len(restarted_supervisor._registration_recovery_dispatches),
+                        len(dispatches_before_failure) + 1)
+                    self.assertIs(
+                        restarted_supervisor._registration_recovery_dispatches[recovery_key],
+                        recovery_dispatch)
+
+                    with restarted_supervisor._original_control_lease(
+                            operation_kind='registration-recover'):
+                        public_reference = (
+                            restarted_supervisor.execute_original_registration_reattachment(
+                                reservation, effect_handle))
+                        recovered_outcome = next(
+                            item for item in restarted_supervisor._native_effect_outcomes.values()
+                            if item._reservation is reservation)
+                        restarted.record_native_outcome(binding, recovered_outcome)
                     self.assertEqual(public_reference, reference)
                     self.assertIsNone(restarted_supervisor.custody_handle)
                     caller_connection = _FakeConnection(db)
