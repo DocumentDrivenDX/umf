@@ -592,9 +592,24 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
 
                     with restarted_supervisor._original_control_lease(
                             operation_kind='registration-recover'):
-                        public_reference = (
-                            restarted_supervisor.execute_original_registration_reattachment(
-                                reservation, effect_handle))
+                        original_reattach = custody.LocalTargetCustodian.reattach_confirmed_target
+                        def capture_reattach_failure(issuer, *args, **kwargs):
+                            try:
+                                return original_reattach(issuer, *args, **kwargs)
+                            except Exception as error:
+                                diagnostic = ' '.join(str(error).split())[:256]
+                                print(
+                                    'G04 reattach_confirmed_target: '
+                                    f'{type(error).__name__}: {diagnostic}',
+                                    file=sys.stderr,
+                                )
+                                raise
+                        with patch.object(
+                                custody.LocalTargetCustodian,
+                                'reattach_confirmed_target', capture_reattach_failure):
+                            public_reference = (
+                                restarted_supervisor.execute_original_registration_reattachment(
+                                    reservation, effect_handle))
                         recovered_outcome = next(
                             item for item in restarted_supervisor._native_effect_outcomes.values()
                             if item._reservation is reservation)
