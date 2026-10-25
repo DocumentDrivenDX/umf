@@ -264,7 +264,7 @@ test('R2 restoration parser preserves old exact branch and admits both closed li
  expect(()=>parseR2DiscoverySelectorShape({...emptySelector,tableIntents:[{...intents[0]!,table:'other'}],restorations:[field({profile:'umf.lineage-field-restoration/0.1',lineage:{...samePlan,target:{kind:'same-plan-restored-descendant',tableRestoreIntentIndex:0}}})]})).toThrow(/FIELD_ARCHIVE_TARGET_BINDING/);
  expect(()=>parseR2DiscoverySelectorShape({...emptySelector,restorations:[field({archive:{...archive,extra:true}})]})).toThrow(/FIELD_ARCHIVE_REF/);
  expect(()=>parseR2DiscoverySelectorShape({...emptySelector,restorations:[field({newInstances:{mode:'fill',expression:{op:'unknown'}}})]})).toThrow();
- expect(parseR2DiscoverySelectorShape({...emptySelector,restorations:[field({newInstances:{mode:'fill',expression:{op:'literal',value:{string:'ok'}}})}]}).restorations).toHaveLength(1);
+ expect(parseR2DiscoverySelectorShape({...emptySelector,restorations:[field({newInstances:{mode:'fill',expression:{op:'literal',value:{string:'ok'}}}})]}).restorations).toHaveLength(1);
 });
 
 test('R2 parser preserves ordinary u/0 identifiers and rejects actual NUL plus open recipe controls',()=>{
