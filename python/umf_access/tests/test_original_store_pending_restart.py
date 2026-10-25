@@ -105,6 +105,13 @@ class _FakeDatabase:
             names = params[0]
             return _Cursor([(name, self.roles[name][0], *self.roles[name][1:])
                             for name in sorted(names) if name in self.roles])
+        if text.startswith('SELECT member.oid,granted.oid,'):
+            member = params[0]
+            return _Cursor([(self.roles[member][0], self.roles[granted][0],
+                             admin, inherit, setting)
+                            for m, granted, admin, inherit, setting in self.memberships
+                            if m == member and member in self.roles
+                            and granted in self.roles])
         if 'FROM pg_catalog.pg_auth_members' in text and 'member.rolname' in text:
             member = params[0]
             return _Cursor([(member, granted, admin, inherit, setting)
