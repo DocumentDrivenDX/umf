@@ -76,33 +76,25 @@ def _receipt(objects: list[dict[str, object]]) -> dict[str, object]:
 class RowOriginalsCreationTests(unittest.TestCase):
     def test_provider_verify_uses_issuer_original_store_capability_method(self):
         capability, reservation = object(), object()
-        calls = []
         supervisor = object.__new__(LocalPostgresSupervisor)
-        supervisor._resolve_original_store_capability = (
-            lambda value, *, original_reservation: calls.append(
-                (value, original_reservation)) or value)
         store = object.__new__(originals.PgRowOriginalsStore)
         store._supervisor = supervisor
         store._creation_capability = capability
         store._creation_reservation = reservation
-        with (patch.object(originals.PgRowOriginalsStore, '_refresh_authority'),
+        with (patch.object(LocalPostgresSupervisor,
+                           '_resolve_original_store_capability',
+                           return_value=capability) as resolve,
+              patch.object(originals.PgRowOriginalsStore, '_refresh_authority'),
               patch.object(originals.PgRowOriginalsStore, '_require_tx'),
               patch.object(originals.PgRowOriginalsStore, '_verify_controller_session'),
               patch.object(originals.PgRowOriginalsStore, '_verify_store')):
             store.verify()
-        self.assertEqual(calls, [(capability, reservation)])
+        resolve.assert_called_once_with(capability, original_reservation=reservation)
         self.assertTrue(callable(LocalPostgresSupervisor._resolve_original_store_capability))
 
     def test_provider_confirm_creation_resolves_actual_issuer_capability(self):
         capability, reservation = object(), object()
-        calls = []
         supervisor = object.__new__(LocalPostgresSupervisor)
-        supervisor.confirm_originals_store_creation = (
-            lambda value, *, receipt: capability if value is reservation
-            and receipt == {'schemaOid': SCHEMA_OID} else None)
-        supervisor._resolve_original_store_capability = (
-            lambda value, *, original_reservation: calls.append(
-                (value, original_reservation)) or value)
         store = object.__new__(originals.PgRowOriginalsStore)
         store._supervisor = supervisor
         store._connection = Mock()
@@ -110,9 +102,16 @@ class RowOriginalsCreationTests(unittest.TestCase):
         store._creation_reservation = reservation
         store._creation_receipt = {'schemaOid': SCHEMA_OID}
         store._creation_capability = None
-        with patch.object(originals.PgRowOriginalsStore, '_refresh_authority'):
+        with (patch.object(LocalPostgresSupervisor,
+                           'confirm_originals_store_creation',
+                           return_value=capability) as confirm,
+              patch.object(LocalPostgresSupervisor,
+                           '_resolve_original_store_capability',
+                           return_value=capability) as resolve,
+              patch.object(originals.PgRowOriginalsStore, '_refresh_authority')):
             self.assertIs(store.confirm_creation(), capability)
-        self.assertEqual(calls, [(capability, reservation)])
+        confirm.assert_called_once_with(reservation, receipt={'schemaOid': SCHEMA_OID})
+        resolve.assert_called_once_with(capability, original_reservation=reservation)
         self.assertIs(store._creation_capability, capability)
 
     def test_creation_attempt_handle_is_issuer_sealed_immutable_and_nonserializable(self):
@@ -151,6 +150,7 @@ class RowOriginalsCreationTests(unittest.TestCase):
         store._creation_capability = None
         store._creation_receipt = {'stale': 'rolled-back'}
         store._schema_oid = 19000
+        store._recovery_only = False
         with (patch.object(originals.PgRowOriginalsStore, '_refresh_authority'),
               patch.object(originals.PgRowOriginalsStore, '_require_tx'),
               patch.object(originals.PgRowOriginalsStore, '_verify_controller_session'),
@@ -367,7 +367,8 @@ class RowOriginalsCreationTests(unittest.TestCase):
             'transactionReadOnly': identity[10], 'transactionIsolation': identity[11],
             'sessionUserOid': identity[12], 'currentUserOid': identity[13],
         }
-        connection = object()
+        connection = Mock()
+        connection.transaction.side_effect = lambda: nullcontext()
         with patch.object(creation, '_one', side_effect=[identity, None]) as query:
             proof = creation.observe_absent_creation_schema(
                 connection, SCHEMA, expected, controller_oid=42)

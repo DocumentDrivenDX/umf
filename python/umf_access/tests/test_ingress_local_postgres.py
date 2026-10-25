@@ -13,9 +13,10 @@ import uuid
 from contextlib import contextmanager
 from pathlib import Path
 from types import SimpleNamespace
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from umf_access.lifecycle import ingress_local_postgres as native
+from umf_access.lifecycle import owner_bootstrap as bootstrap
 from umf_access.lifecycle.catalog import CatalogError
 from umf_access.lifecycle.ingress_local_postgres import (
     _NATIVE_EFFECT_OUTCOME_SEAL,
@@ -57,6 +58,11 @@ from umf_access.lifecycle.ingress_local_postgres import (
     _write_private,
 )
 from umf_access.lifecycle.owner_authority import OwnerApprovalRequest
+
+
+def _patch_supervisor_method(method, **kwargs):
+    """Patch a slotted supervisor method with normal descriptor binding."""
+    return patch.object(LocalPostgresSupervisor, method, autospec=True, **kwargs)
 
 
 @contextmanager
@@ -111,7 +117,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         supervisor._custody_handle = None
         supervisor._authority_context = object()
         supervisor._journal = object()
-        with patch.object(supervisor, '_require_original_control_lease') as lease:
+        with _patch_supervisor_method('_require_original_control_lease') as lease:
             with self.assertRaisesRegex(
                     LocalPostgresError,
                     'local-postgresql-store-readonly-transaction-active'):
@@ -119,7 +125,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                     target, connection, store={
                         'profile': 'umf.native-row-originals-store/0.1',
                         'storeId': 'provider', 'schemaName': 'umf_originals_provider'})
-        lease.assert_called_once_with(operation_kind='store')
+        lease.assert_called_once_with(supervisor, operation_kind='store')
 
     def test_public_recovery_facade_selects_only_the_exact_six_part_store_key(self):
         from umf_access.lifecycle.row_originals import (
@@ -231,8 +237,8 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         supervisor._journal = SimpleNamespace(read=lambda: {'events': [
             {'kind': 'creation-intent', 'payload': {'controllerName': 'controller'}}]})
         with (patch.dict(sys.modules, {'psycopg': SimpleNamespace(Connection=Connection)}),
-              patch.object(supervisor, '_original_control_lease',
-                            side_effect=lambda *, operation_kind:
+              _patch_supervisor_method('_original_control_lease',
+                            side_effect=lambda _supervisor, *, operation_kind:
                                 _synthetic_control_lease(supervisor, operation_kind))):
             provider = supervisor.open_originals_store_recovery(
                 connection, provider_id=provider_id)
@@ -256,14 +262,14 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         capability = object()
         receipt = {'schemaOid': 91}
         current = {'payload': {'controller': {'name': 'controller', 'oid': 901}}}
-        with (patch.object(supervisor, 'recover_originals_store_creation',
+        with (_patch_supervisor_method('recover_originals_store_creation',
                            return_value=(reservation, capability, receipt)),
-              patch.object(supervisor, '_resolve_original_store_capability',
+              _patch_supervisor_method('_resolve_original_store_capability',
                            return_value=capability),
-              patch.object(supervisor, '_resolve_recovered_original_store_current_authority',
+              _patch_supervisor_method('_resolve_recovered_original_store_current_authority',
                            return_value=current),
-              patch.object(supervisor, '_original_control_lease',
-                           side_effect=lambda *, operation_kind:
+              _patch_supervisor_method('_original_control_lease',
+                           side_effect=lambda _supervisor, *, operation_kind:
                                _synthetic_control_lease(supervisor, operation_kind)),
               patch.object(PgRowOriginalsStore, '_verify_controller_session'),
               patch.object(PgRowOriginalsStore, '_verify_store')):
@@ -275,8 +281,8 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         self.assertEqual(provider._controller_role, 'controller')
         self.assertEqual(provider._controller_oid, 901)
         connection.info.transaction_status = 0
-        with (patch.object(supervisor, '_original_control_lease',
-                           side_effect=lambda *, operation_kind:
+        with (_patch_supervisor_method('_original_control_lease',
+                           side_effect=lambda _supervisor, *, operation_kind:
                                _synthetic_control_lease(supervisor, operation_kind))):
             supervisor._custodian._journal._load = lambda: {
                 'events': only_other_store_events}
@@ -443,7 +449,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             _recover_original_request=lambda *_a, **_k:
                 self.fail('registration must not rehydrate the owner Core'))
         supervisor._pending_original_store_recovery = None
-        with patch.object(supervisor, '_require_original_control_lease'):
+        with _patch_supervisor_method('_require_original_control_lease'):
             self.assertTrue(supervisor._validate_original_store_custody_history(target))
         self.assertEqual(len(events), 4)
         self.assertIs(supervisor._custody_handle, target)
@@ -459,8 +465,8 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         connection = Connection()
         supervisor._custody_handle = None  # registration reattach exposes only the reference
         with (patch.dict(sys.modules, {'psycopg': SimpleNamespace(Connection=Connection)}),
-              patch.object(supervisor, '_original_control_lease',
-                           side_effect=lambda *, operation_kind:
+              _patch_supervisor_method('_original_control_lease',
+                           side_effect=lambda _supervisor, *, operation_kind:
                                _synthetic_control_lease(supervisor, operation_kind))):
             provider = supervisor.open_originals_store_recovery(
                 connection, provider_id=provider_id)
@@ -503,7 +509,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                              and event['payload'].get('scope') == 'native-store-creation'
                              for event in supervisor._journal.read()['events']))
         supervisor._custody_handle = target
-        with patch.object(supervisor, '_require_original_control_lease'):
+        with _patch_supervisor_method('_require_original_control_lease'):
             with self.assertRaisesRegex(
                     LocalPostgresError,
                     'local-postgresql-store-history-supervisor-mismatch'):
@@ -525,8 +531,8 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         supervisor._journal = object()
         supervisor._pending_original_store_recovery = (
             target, custodian, 'custodian', context, os.getpid(), reference)
-        with patch.object(supervisor, '_require_original_control_lease',
-                          side_effect=lambda *, operation_kind:
+        with _patch_supervisor_method('_require_original_control_lease',
+                          side_effect=lambda _supervisor, *, operation_kind:
                               self.assertEqual(operation_kind, 'store')):
             supervisor._require_original_store_recovery_target(target)
             with self.assertRaisesRegex(
@@ -546,8 +552,8 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         supervisor._journal = object()
         supervisor._custodian = object()
         supervisor._custody_handle = object()
-        with patch.object(supervisor, '_original_control_lease',
-                          side_effect=lambda *, operation_kind:
+        with _patch_supervisor_method('_original_control_lease',
+                          side_effect=lambda _supervisor, *, operation_kind:
                               _synthetic_control_lease(supervisor, operation_kind)):
             with self.assertRaisesRegex(
                     LocalPostgresError, 'local-postgresql-store-recovery-unavailable'):
@@ -564,7 +570,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
 
         connection = Connection()
         budget = object()
-        with patch.object(supervisor, '_require_original_store_readonly_budget',
+        with _patch_supervisor_method('_require_original_store_readonly_budget',
                           return_value=1_000):
             with self.assertRaisesRegex(
                     LocalPostgresError,
@@ -587,7 +593,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             'startupLockTimeoutMs': 5_000,
         })
         calls = []
-        with patch.object(supervisor, '_require_original_store_readonly_budget',
+        with _patch_supervisor_method('_require_original_store_readonly_budget',
                           return_value=1_200), \
              patch('umf_access.lifecycle.ingress_local_postgres._execute_original_store_sql',
                    side_effect=lambda _issuer, _budget, _connection, query, *args, **kwargs:
@@ -664,7 +670,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                   'psycopg': SimpleNamespace(
                       Connection=Connection, Cursor=Cursor, __path__=[]),
                   'psycopg._enums': SimpleNamespace(Ready=Ready, Wait=Wait)}),
-              patch.object(supervisor, '_require_original_store_budget', return_value=900),
+              _patch_supervisor_method('_require_original_store_budget', return_value=900),
               patch('umf_access.lifecycle.ingress_local_postgres.select.select',
                     side_effect=lambda *_args: next(results))):
             cursor = native._execute_original_store_sql(
@@ -729,7 +735,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                   'psycopg._enums': SimpleNamespace(
                       Ready=IntEnum('Ready', {'NONE': 0, 'R': 1, 'W': 2, 'RW': 3}),
                       Wait=Wait)}),
-              patch.object(supervisor, '_require_original_store_budget', return_value=1_000),
+              _patch_supervisor_method('_require_original_store_budget', return_value=1_000),
               patch('umf_access.lifecycle.ingress_local_postgres.select.select',
                     return_value=([], [], []))):
             with self.assertRaisesRegex(
@@ -747,7 +753,6 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         supervisor = object.__new__(LocalPostgresSupervisor)
         supervisor._maintenance_password = b'private\n'
         supervisor._profile = SimpleNamespace(port=55439)
-        supervisor._maintenance_name = lambda: 'maintenance'
         budget = SimpleNamespace(_timeout_state={})
         captured = {}
 
@@ -755,19 +760,21 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             captured.update(kwargs)
             return object()
 
-        with patch.dict(sys.modules, {'psycopg': SimpleNamespace(connect=connect)}), \
-             patch.object(supervisor, '_require_original_store_readonly_budget',
-                          return_value=30_000):
+        with (patch.dict(sys.modules, {'psycopg': SimpleNamespace(connect=connect)}),
+              _patch_supervisor_method('_maintenance_name', return_value='maintenance'),
+              _patch_supervisor_method('_require_original_store_readonly_budget',
+                                       return_value=30_000)):
             supervisor._connect_maintenance('postgres', readonly_budget=budget)
         self.assertEqual(budget._timeout_state['startupStatementTimeoutMs'], 30_000)
         self.assertEqual(budget._timeout_state['startupLockTimeoutMs'], 5_000)
         self.assertIn('-c statement_timeout=30000ms', captured['options'])
         self.assertIn('-c lock_timeout=5000ms', captured['options'])
 
-        with patch.dict(sys.modules, {'psycopg': SimpleNamespace(connect=connect)}), \
-             patch.object(supervisor, '_require_original_store_readonly_budget',
-                          side_effect=LocalPostgresError(
-                              'local-postgresql-store-readonly-exhausted')):
+        with (patch.dict(sys.modules, {'psycopg': SimpleNamespace(connect=connect)}),
+              _patch_supervisor_method('_maintenance_name', return_value='maintenance'),
+              _patch_supervisor_method('_require_original_store_readonly_budget',
+                                       side_effect=LocalPostgresError(
+                                           'local-postgresql-store-readonly-exhausted'))):
             with self.assertRaisesRegex(
                     LocalPostgresError, 'local-postgresql-store-readonly-exhausted'):
                 supervisor._connect_maintenance('postgres', readonly_budget=budget)
@@ -781,11 +788,11 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         ]
 
         @contextmanager
-        def owned_scope(_connection, _budget):
+        def owned_scope(_issuer, _connection, _budget):
             yield SimpleNamespace(
                 execute=lambda _query: SimpleNamespace(fetchall=lambda: actual_rows))
 
-        with patch.object(supervisor, '_original_store_readonly_transaction',
+        with _patch_supervisor_method('_original_store_readonly_transaction',
                           side_effect=owned_scope):
             rows = supervisor._fetch_original_store_readonly(
                 object(), budget,
@@ -849,7 +856,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         budget = SimpleNamespace(_request=request, _reservation_digest='9' * 64)
         actual = {**original, 'requiredSettings': actual_settings,
                   'nativeAuthorityObservationDigest': _digest(observation)}
-        with patch.object(supervisor, '_require_original_store_readonly_budget',
+        with _patch_supervisor_method('_require_original_store_readonly_budget',
                           return_value=1_000):
             resolved = supervisor._resolve_original_store_recovery_observation(
                 original, actual, observation, authority=authority,
@@ -860,7 +867,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                          ['transactionReadOnly'], 'on')
         bad_membership = {**observation, 'membershipObservations': [[11, 99, False, False, True]]}
         bad_actual = {**actual, 'nativeAuthorityObservationDigest': _digest(bad_membership)}
-        with patch.object(supervisor, '_require_original_store_readonly_budget',
+        with _patch_supervisor_method('_require_original_store_readonly_budget',
                           return_value=1_000):
             with self.assertRaisesRegex(
                     LocalPostgresError,
@@ -869,7 +876,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                     original, bad_actual, bad_membership, authority=authority,
                     readonly_budget=budget)
         drifted = {**actual, 'targetCustodyDigest': '0' * 64}
-        with patch.object(supervisor, '_require_original_store_readonly_budget',
+        with _patch_supervisor_method('_require_original_store_readonly_budget',
                           return_value=1_000):
             with self.assertRaisesRegex(
                     LocalPostgresError,
@@ -939,7 +946,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         object.__setattr__(supervisor, '_bound_installation_id', 'installation')
         object.__setattr__(supervisor, '_profile', SimpleNamespace(purpose='production'))
         store_state = {**state, 'reservation': record}
-        with patch.object(supervisor, '_append_supervisor_journal',
+        with _patch_supervisor_method('_append_supervisor_journal',
                           side_effect=AssertionError('append preceded live proof')):
             effect, outcome, recovered = supervisor._recover_original_store_effect(
                 target, {'events': [reserved]}, store_state, reserved)
@@ -967,17 +974,17 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         }
         effect_handle = SimpleNamespace(_journal_record_digest='e' * 64)
 
-        def append_typed(_kind, payload):
+        def append_typed(_issuer, _kind, payload):
             typed['payload'] = payload
             journal.events.append(typed)
             return typed
 
-        with (patch.object(supervisor, '_require_original_store_readonly_budget',
+        with (_patch_supervisor_method('_require_original_store_readonly_budget',
                            return_value=1_000),
-              patch.object(supervisor, '_append_supervisor_journal',
+              _patch_supervisor_method('_append_supervisor_journal',
                            side_effect=append_typed) as append,
-              patch.object(supervisor, '_make_native_effect_reservation'),
-              patch.object(supervisor, '_recover_original_native_effect',
+              _patch_supervisor_method('_make_native_effect_reservation'),
+              _patch_supervisor_method('_recover_original_native_effect',
                            return_value=(effect_handle, None, request)) as recover):
             recovered_effect, recovered_outcome, recovered_request = \
                 supervisor._recover_original_store_effect(
@@ -987,7 +994,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                     absence_authorization=absence)
         append.assert_called_once()
         recover.assert_called_once_with(
-            'native-store-creation', target=target,
+            supervisor, 'native-store-creation', target=target,
             expected_request_digest=request_digest,
             expected_effect_key=('native-store-creation', 'provider',
                                  store['profile'], 'provider'))
@@ -1007,6 +1014,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         record_bytes = _canonical({'reservationId': str(uuid.uuid4()), 'store': store})
         object.__setattr__(supervisor, '_provider_id', provider_id)
         object.__setattr__(supervisor, '_custody_handle', target)
+        object.__setattr__(supervisor, '_custodian', object())
         object.__setattr__(supervisor, '_original_store_issuer_pid', os.getpid())
         object.__setattr__(supervisor, '_original_store_readonly_budgets', {})
         started = time.monotonic_ns()
@@ -1062,7 +1070,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             events.append(('controller-query', observed_budget))
             raise LocalPostgresError('local-postgresql-store-budget-exhausted')
 
-        with (patch.object(PgRowOriginalsStore, '_refresh_authority',
+        with (patch.object(PgRowOriginalsStore, '_refresh_authority', autospec=True,
                            side_effect=lambda _self, *, budget=None:
                                events.append(('refresh', budget))),
               patch('umf_access.lifecycle.ingress_local_postgres._execute_original_store_sql',
@@ -1085,6 +1093,8 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         supervisor = SimpleNamespace(
             _require_original_store_budget=lambda observed: events.append(('require', observed))
                 or 1_000,
+            resume_originals_store_creation_attempt=Mock(
+                side_effect=AssertionError('no retry after stalled preflight')),
         )
         provider = object.__new__(PgRowOriginalsStore)
         provider._recovery_only = False
@@ -1100,19 +1110,18 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             events.append(('controller-query', observed_budget))
             raise LocalPostgresError('local-postgresql-store-budget-exhausted')
 
-        with (patch.object(PgRowOriginalsStore, '_refresh_authority',
+        with (patch.object(PgRowOriginalsStore, '_refresh_authority', autospec=True,
                            side_effect=lambda _self, *, budget=None:
                                events.append(('refresh', budget))),
               patch('umf_access.lifecycle.ingress_local_postgres._execute_original_store_sql',
-                    side_effect=stalled_first_query),
-              patch.object(supervisor, 'resume_originals_store_creation_attempt',
-                           side_effect=AssertionError('no retry after stalled preflight'))):
+                    side_effect=stalled_first_query)):
             with self.assertRaisesRegex(
                     LocalPostgresError, 'local-postgresql-store-budget-exhausted'):
                 provider.resume_creation()
         self.assertIn(('require', reservation), events)
         self.assertIn(('refresh', budget), events)
         self.assertIn(('controller-query', budget), events)
+        supervisor.resume_originals_store_creation_attempt.assert_not_called()
 
     def test_public_authority_refresh_forwards_the_same_creation_allowance(self):
         from umf_access.lifecycle import row_originals
@@ -1201,14 +1210,11 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                 self.info = SimpleNamespace(transaction_status=2)
 
 
-        supervisor, reservation, _budget = self._creation_budget_fixture()
+        supervisor, reservation, budget = self._creation_budget_fixture()
         connection = Connection()
+        object.__setattr__(budget, '_connection', connection)
         object.__setattr__(reservation, '_connection', connection)
-        bounded = _BudgetedOriginalStoreConnection.__new__(
-            _BudgetedOriginalStoreConnection)
-        object.__setattr__(bounded, '_issuer', supervisor)
-        object.__setattr__(bounded, '_reservation', reservation)
-        object.__setattr__(bounded, '_connection', connection)
+        bounded = _BudgetedOriginalStoreConnection(supervisor, reservation)
         object.__setattr__(bounded, '_lower_ms', {
             'statement_timeout': 25_000, 'lock_timeout': 4_000})
         with patch.object(LocalPostgresSupervisor, '_require_original_store_budget',
@@ -1233,6 +1239,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         object.__setattr__(budget, '_caller_timeout_lower_ms', (
             ('lock_timeout', 700), ('statement_timeout', 2_300)))
         connection = Connection()
+        object.__setattr__(budget, '_connection', connection)
         object.__setattr__(reservation, '_connection', connection)
         bounded = _BudgetedOriginalStoreConnection(
             supervisor, reservation)
@@ -1259,12 +1266,10 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
 
         supervisor, reservation, budget = self._creation_budget_fixture()
         connection = Connection()
+        object.__setattr__(budget, '_connection', connection)
         object.__setattr__(reservation, '_connection', connection)
-        bounded = _BudgetedOriginalStoreConnection.__new__(
-            _BudgetedOriginalStoreConnection)
-        object.__setattr__(bounded, '_issuer', supervisor)
-        object.__setattr__(bounded, '_reservation', reservation)
-        object.__setattr__(bounded, '_connection', connection)
+        bounded = _BudgetedOriginalStoreConnection(
+            supervisor, reservation)
         with patch('umf_access.lifecycle.ingress_local_postgres._execute_original_store_sql') as execute:
             bounded.restore_caller_timeouts()
         execute.assert_not_called()
@@ -1495,7 +1500,8 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         from test_owner_authority import OwnerAuthorityTests
 
         fixture = OwnerAuthorityTests()
-        fixture.setUp()
+        with patch.object(bootstrap, 'sys_platform_darwin', return_value=True):
+            fixture.setUp()
         try:
             raw = _canonical(fixture._scope_intents()['local-target-registration'])
             request = fixture.authority.prepare_request(
@@ -1515,7 +1521,8 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         )
 
         fixture = OwnerAuthorityTests()
-        fixture.setUp()
+        with patch.object(bootstrap, 'sys_platform_darwin', return_value=True):
+            fixture.setUp()
         try:
             registration = fixture._scope_intents()['local-target-registration']['registration']
             owner_payload = {**registration, 'ownerApproval': {
@@ -2215,9 +2222,14 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
 
     def test_endpoint_and_owned_group_reject_external_listener_or_process(self) -> None:
         supervisor = object.__new__(LocalPostgresSupervisor)
+        temporary = tempfile.TemporaryDirectory(prefix='umf-owned-process-fixture-')
+        self.addCleanup(temporary.cleanup)
+        postgres_binary = Path(temporary.name) / 'postgres'
+        postgres_binary.write_bytes(b'fixture executable')
+        postgres_binary.chmod(0o700)
         object.__setattr__(supervisor, '_profile',
                            SimpleNamespace(port=55439,
-                                           postgres_binary=Path(sys.executable)))
+                                           postgres_binary=postgres_binary))
         loopback_listener = {'pid': 123, 'fd': 4, 'family': 2, 'kind': 1,
             'type': 1, 'protocol': 6, 'state': 10, 'listening': True,
             'address': '127.0.0.1', 'port': 55439, 'peerAddress': '0.0.0.0'}
@@ -2242,7 +2254,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             def group(self, _pgid): return self.members
 
         member = {'pid': 123, 'pgid': 123, 'uid': os.geteuid(), 'gid': os.getegid(),
-                  'path': str(Path(sys.executable).resolve())}
+                  'path': str(postgres_binary.resolve())}
         object.__setattr__(supervisor, '_observer', Observer([member]))
         self.assertEqual(supervisor._verify_owned_process_group(123), [member])
         object.__setattr__(supervisor, '_observer', Observer([{**member, 'uid': -1}]))

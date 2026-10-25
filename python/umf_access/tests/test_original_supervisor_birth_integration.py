@@ -73,14 +73,15 @@ class OriginalSupervisorBirthIntegrationTests(unittest.TestCase):
                 'custodianId': custodian_id, 'supervisorId': supervisor_id,
                 'providerId': provider_id, 'installationId': 'installed-test',
             }
-            profile = native.LocalPostgresProfile(
-                control_home=control_home, data_home=data_home,
-                postgres_binary=root / 'postgres', initdb_binary=root / 'initdb',
-                process_observer=root / 'observer', process_observer_sha256='a' * 64,
-                port=55439, database_name='umf_test', business_owner='umf_owner',
-                custodian_id=custodian_id, supervisor_id=supervisor_id,
-                provider_id=provider_id, installation_id='installed-test',
-                purpose='native-acceptance')
+            with patch.object(bootstrap, 'sys_platform_darwin', return_value=True):
+                profile = native.LocalPostgresProfile(
+                    control_home=control_home, data_home=data_home,
+                    postgres_binary=root / 'postgres', initdb_binary=root / 'initdb',
+                    process_observer=root / 'observer', process_observer_sha256='a' * 64,
+                    port=55439, database_name='umf_test', business_owner='umf_owner',
+                    custodian_id=custodian_id, supervisor_id=supervisor_id,
+                    provider_id=provider_id, installation_id='installed-test',
+                    purpose='native-acceptance')
             enrollment_native_profile = native._profile_to_enrollment(profile)
             if fresh_target_custody:
                 enrollment_native_profile['custodianId'] = custodian_id

@@ -217,6 +217,7 @@ class ExternalCustodyJournalTests(unittest.TestCase):
             'incarnation': '10000000-0000-4000-8000-000000000011',
             'registrationDigest': _hex('e'),
         }
+        evidence['targetCustodyDigest'] = _digest(custody)
         reservation = {
             'profile': 'umf.row-originals-store-reservation/0.1',
             'reservationId': '10000000-0000-4000-8000-000000000012',

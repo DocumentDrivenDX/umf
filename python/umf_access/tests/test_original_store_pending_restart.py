@@ -250,7 +250,7 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                                'logicalAuthorityIds': [config['authorityId']],
                                'configurationProfiles': [
                                    'umf.configured-generation-enrollment-authority/0.1']}]}
-            with patch.object(native, 'sys_platform_darwin', return_value=True):
+            with patch.object(bootstrap, 'sys_platform_darwin', return_value=True):
                 profile = native.LocalPostgresProfile(
                     control_home=control, data_home=data, postgres_binary=root / 'postgres',
                     initdb_binary=root / 'initdb', process_observer=root / 'observer',
@@ -413,7 +413,8 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     'endpointReceiptDigest': endpoint_digest})
             supervisor._observer = observer
             create_patches = (
-                patch.object(supervisor, '_validate_installation_binaries',
+                patch.object(native.LocalPostgresSupervisor,
+                             '_validate_installation_binaries', autospec=True,
                              return_value=(profile.postgres_binary, profile.initdb_binary)),
                 patch.object(native, '_sha_file', return_value='b' * 64),
                 patch.object(native.LocalPostgresSupervisor, '_run_bounded_child', run_child),
@@ -677,8 +678,8 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     self.assertIsNone(pending_provider._creation_reservation)
                     self.assertIsNone(pending_provider._creation_capability)
                     self.assertIsNone(pending_provider._schema_oid)
-                    with patch.object(after_pending_supervisor,
-                                      '_validate_installation_binaries',
+                    with patch.object(native.LocalPostgresSupervisor,
+                                      '_validate_installation_binaries', autospec=True,
                                       return_value=(profile.postgres_binary,
                                                     profile.initdb_binary)), \
                          patch.object(native, '_sha_file', return_value='b' * 64):
