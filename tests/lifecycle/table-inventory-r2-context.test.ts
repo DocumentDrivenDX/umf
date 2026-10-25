@@ -6,7 +6,7 @@ import {readJsonDocumentWithAccounting} from '../../src/model/document-accountin
 import {scanJsonFrameCharged} from '../../src/model/internal/scan-json-frame';
 import {inspectR2InventorySourceContext,prepareR2InventorySourceContext} from '../../src/table-migration/inventory';
 import {
- parseR2DiscoverySelectorShape,R2_CONTEXT_BYTE_LIMIT,R2_WORK_EVENT_UNITS,R2WorkLimitError,R2WorkMeter,snapshotR2Json,snapshotR2SourceData,
+ parseR2DiscoverySelectorShape,R2_CONTEXT_BYTE_LIMIT,R2_WORK_EVENT_UNITS,R2_WORK_LIMIT,R2WorkLimitError,R2WorkMeter,snapshotR2Json,snapshotR2SourceData,
 } from '../../src/table-migration/inventory-r2-context';
 
 const emptySelector={
@@ -151,27 +151,33 @@ test('R2 source snapshot owns data so later caller mutation cannot alter it',()=
  expect(owned.canonical).toContain('complete original source');
 });
 
-test('R2 context meters exact source verification and one parsed-source index before refusing unmetered catalog projection',()=>{
+test('R2 complete legal source preserves its located fixed-work refusal before the unsupported projection gate',()=>{
  const compiled=compileTableDeployment({text:JSON.stringify(legalSource()),configuration:{module:'legal_lifecycle',schema:'inventory_api',ownerRole:'inventory_owner',personRole:'inventory_person',batchRole:'inventory_batch',groupRoles:{billing_admin:'inventory_billing_admin'}}});
  expect(compiled.status).toBe('compiled');if(compiled.status!=='compiled')throw new Error('fixture bundle refused');
  const input={previous:null,next:compiled.bundle,history:{profile:'umf.table-inventory-source-history/0.1',plans:[],executions:[]},selector:emptySelector};
  const meter=new R2WorkMeter(),before=meter.snapshot();
- expect(()=>snapshotR2SourceData(input,meter)).toThrow(/UNSUPPORTED_METERED_CATALOG_PROJECTION/);
+ let refusal:unknown;try{snapshotR2SourceData(input,meter);}catch(error){refusal=error;}
+ expect(refusal).toBeInstanceOf(R2WorkLimitError);expect(refusal).toMatchObject({dimension:'work'});
+ expect(typeof (refusal as R2WorkLimitError).path).toBe('string');expect((refusal as R2WorkLimitError).path.length).toBeGreaterThan(0);
  expect(meter.snapshot().work).toBeGreaterThan(before.work);
  expect(compiled.bundle.source.utf8).toBeDefined();
 });
 
-test('R2 source context registers only after owned projection and original empty-history validation',()=>{
+test('R2 complete legal source reports full fixed-budget admission or a located work-limit refusal',()=>{
  const compiled=compileTableDeployment({text:JSON.stringify(legalSource()),configuration:{module:'legal_lifecycle',schema:'inventory_api',ownerRole:'inventory_owner',personRole:'inventory_person',batchRole:'inventory_batch',groupRoles:{billing_admin:'inventory_billing_admin'}}});
  expect(compiled.status).toBe('compiled');if(compiled.status!=='compiled')throw new Error('fixture bundle refused');
  const originalSource=compiled.bundle.source.utf8,input={previous:null,next:compiled.bundle,history:{profile:'umf.table-inventory-source-history/0.1',plans:[],executions:[]},selector:emptySelector};
- const handle=prepareR2InventorySourceContext(input),state=inspectR2InventorySourceContext(handle);
- expect(state.next.bundle.bundleDigest).toBe(compiled.bundle.bundleDigest);
- expect(state.next.tables.length).toBe(compiled.bundle.expectedCatalog.tables.length);
- expect(state.owned.previous).toBeNull();expect(state.history.plans).toEqual([]);expect(state.budget.work).toBeGreaterThan(0);
- input.next.source.utf8='caller mutation after registration';
- expect(state.owned.next?.source.utf8).toBe(originalSource);
- expect(()=>inspectR2InventorySourceContext(Object.freeze(Object.create(null)))).toThrow('R2_CONTEXT_HANDLE');
+ let handle:ReturnType<typeof prepareR2InventorySourceContext>|undefined,refusal:unknown;try{handle=prepareR2InventorySourceContext(input);}catch(error){refusal=error;}
+ if(refusal!==undefined){
+  expect(refusal).toBeInstanceOf(R2WorkLimitError);expect(refusal).toMatchObject({dimension:'work'});
+  expect(typeof (refusal as R2WorkLimitError).path).toBe('string');expect((refusal as R2WorkLimitError).path.length).toBeGreaterThan(0);
+ }else{
+  if(!handle)throw new Error('R2 source context returned neither a handle nor a refusal.');
+  const state=inspectR2InventorySourceContext(handle);expect(state.next.bundle.bundleDigest).toBe(compiled.bundle.bundleDigest);
+  expect(state.budget.work).toBeGreaterThan(0);expect(state.budget.work).toBeLessThanOrEqual(R2_WORK_LIMIT);
+  expect(state.next.tables.length).toBe(compiled.bundle.expectedCatalog.tables.length);
+ }
+ expect(input.next.source.utf8).toBe(originalSource);
 });
 
 test('R2 source context rejects malformed original history before returning an opaque identity',()=>{

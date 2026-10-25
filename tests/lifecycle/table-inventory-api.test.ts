@@ -13,12 +13,16 @@ import {projectG10Bundle} from '../../src/table-migration/inventory-source';
 import {partitionInventoryMarkersForG02,sameSourceExceptG02AndCreates} from '../../src/table-migration/inventory-g02-source';
 import {consumeTableMigrationChangesBounded} from '../../src/table-migration/reviewed';
 import {legalSource} from './legal-fixture';
+import noteFixture from '../binding/fixtures/table-lifecycle-note.json';
 import {legalG10MixedSources,mixedCreatedTableSeedCommand,mixedCreatedTableSeedSet} from './g10-mixed-create-g02-fixture';
 import type {TableInventoryMigrationOptions,TableInventorySourceHistory} from '../../src/table-migration';
 
 const config={module:'legal_lifecycle',schema:'inventory_api',ownerRole:'inventory_owner',personRole:'inventory_person',batchRole:'inventory_batch',groupRoles:{billing_admin:'inventory_billing_admin'}};
 const deploy=(document:unknown)=>{
- const result=compileTableDeployment({text:JSON.stringify(document),configuration:config});
+ return deployWithConfiguration(document,config);
+};
+const deployWithConfiguration=(document:unknown,configuration:typeof config)=>{
+ const result=compileTableDeployment({text:JSON.stringify(document),configuration});
  if(result.status!=='compiled')throw new Error('Original deployment source refused: '+JSON.stringify(result.diagnostics));
  return result.bundle;
 };
@@ -54,6 +58,20 @@ function seedExecution(plan:any,bundle:ReturnType<typeof deploy>,entryDigest:str
  const seedOutcomes=sets.map((id:string)=>{const definition=bundle.seedSets.find(item=>item.id===id);if(!definition)throw new Error('G10 seed history selected an unknown source definition.');return {id,definitionDigest:hashCanonical(definition),originalSourceDigest:bundle.sourceDigest,execution:'confirmed' as const,proof:{kind:'phase' as const,phaseId:phase.id,phaseDigest,phaseReceiptDigest:'d'.repeat(64),entryDigest}};});
  return {planDigest:plan.digest,entryDigest,seedOutcomes};
 }
+function historicalCacheFixture(){
+ const next=deploy(legalSource()),tableIntents=next.expectedCatalog.tables.map(table=>({kind:'create' as const,table:table.id,record:{...table.record}}));
+ const firstCandidates=discoverTableInventoryMigrationChanges(null,next,selector(tableIntents),emptyHistory);
+ const firstRequest={id:'inventory-cache-first',predecessor:null,previous:null,next,options:options(tableIntents,firstCandidates.map(({oldValue:_old,newValue:_new,oldPath:_oldPath,newPath:_newPath,...marker})=>marker)),history:emptyHistory};
+ const first=compileTableInventoryMigration(firstRequest);
+ if(first.status!=='compiled')throw new Error('Initial historical-cache fixture refused: '+JSON.stringify(first.diagnostics));
+ const history:TableInventorySourceHistory={profile:'umf.table-inventory-source-history/0.1',plans:[first.plan],executions:[{planDigest:first.plan.digest,entryDigest:'c'.repeat(64),seedOutcomes:[]}]};
+ const secondDocument=legalSource() as any,created=appendArchiveTable(secondDocument),secondNext=deploy(secondDocument),secondIntent={kind:'create' as const,table:created.table,record:created.record};
+ const secondCandidates=discoverTableInventoryMigrationChanges(next,secondNext,selector([secondIntent]),history);
+ const secondRequest={id:'inventory-cache-second',predecessor:{id:first.plan.id,digest:first.plan.digest},previous:next,next:secondNext,options:options([secondIntent],secondCandidates.map(({oldValue:_old,newValue:_new,oldPath:_oldPath,newPath:_newPath,...marker})=>marker)),history};
+ const second=compileTableInventoryMigration(secondRequest);
+ if(second.status!=='compiled')throw new Error('Second historical-cache fixture refused: '+JSON.stringify(second.diagnostics));
+ return {first:first.plan,second:second.plan,history};
+}
 function initialG10History(bundle:ReturnType<typeof deploy>,id='inventory-g10-history-initial',seedSets:string[]=[]):TableInventorySourceHistory{
  const tableIntents=bundle.expectedCatalog.tables.map(table=>({kind:'create' as const,table:table.id,record:{...table.record}}));
  const candidates=discoverTableInventoryMigrationChanges(null,bundle,selector(tableIntents),emptyHistory);
@@ -72,6 +90,28 @@ function appendArchiveTable(source:any,id='api_archive'){
  module.elements.push({id,kind:'record',members:[field],keys:[{id:'primary',name:'primary',primary:true,fields:[field]}],extensions:{}});
  payload.tables.push({id,record,name:id,columns:[{field,name:'id',nativeType:{kind:'int4'}}],indexes:[],checks:[],foreignKeys:[],policy:{mode:'native-rls',person:{select:{kind:'deny'},insert:{kind:'deny'},update:{kind:'deny'},delete:{kind:'deny'}},batch:{select:{kind:'deny'},insert:{kind:'deny'},update:{kind:'deny'},delete:{kind:'deny'}}}});
  return {table:id,record};
+}
+function smallNoteMixedG02Source(){
+ const configuration={module:'demo',schema:'note_inventory',ownerRole:'note_owner',personRole:'note_person',batchRole:'note_batch',groupRoles:{billing_admin:'note_billing_admin'}};
+ const previousSource=structuredClone(noteFixture) as any,payload=previousSource.modules[0]!.extensions['umf.tables'];
+ payload.seedSets.push({id:'initial-note-seed',conflict:'error',rows:[{table:'notes',values:[{field:{module:'demo',element:'id'},value:{string:'note-1'}},{field:{module:'demo',element:'owner'},value:{string:'person-1'}}]}]});
+ const previous=deployWithConfiguration(previousSource,configuration),history=initialG10History(previous,'r2-note-initial',['initial-note-seed']);
+ const nextSource=structuredClone(previousSource),nextPayload=nextSource.modules[0]!.extensions['umf.tables'];
+ const summary={module:'demo',element:'summary'};
+ nextSource.modules[0]!.elements.push({id:'summary',kind:'field',scalarType:'string',cardinality:'one',nullability:'required',facets:{length:{min:1,max:100,unit:'unicode-scalar'}},extensions:{}});
+ nextSource.modules[0]!.elements.find((item:any)=>item.id==='Note')!.members.push(summary);
+ nextPayload.tables[0]!.columns.push({field:summary,name:'summary',nativeType:{kind:'text'},default:{kind:'literal',value:{string:'future summary'}}});
+ nextPayload.commands.push({version:'umf.table-operation/0.2',id:'derive_summary',parameters:[],consistency:'transaction',replay:'caller-key-required',body:{kind:'update',table:'notes',where:{op:'isNull',field:summary},values:[{field:summary,value:{kind:'rowExpression',expression:{op:'concat',args:[{op:'field',field:{module:'demo',element:'owner'}},{op:'literal',value:{string:' / '}},{op:'field',field:{module:'demo',element:'id'}}]}}}],returning:[],maxRows:100}});
+ const archiveField={module:'demo',element:'archive_id'},archiveRecord={module:'demo',element:'note_archive'};
+ nextSource.modules[0]!.elements.push({id:archiveField.element,kind:'field',scalarType:'integer',cardinality:'one',nullability:'required',extensions:{}});
+ nextSource.modules[0]!.elements.push({id:archiveRecord.element,kind:'record',members:[archiveField],keys:[{id:'primary',name:'primary',primary:true,fields:[archiveField]}],extensions:{}});
+ const deny={kind:'deny'},rules={select:deny,insert:deny,update:deny,delete:deny};
+ nextPayload.tables.push({id:'note_archive',record:archiveRecord,name:'note_archive',columns:[{field:archiveField,name:'id',nativeType:{kind:'int4'}}],indexes:[],checks:[],foreignKeys:[],policy:{mode:'native-rls',person:structuredClone(rules),batch:structuredClone(rules)}});
+ const next=deployWithConfiguration(nextSource,configuration),intent={kind:'create' as const,table:'note_archive',record:archiveRecord},selectedSelector=selector([intent]);
+ const candidates=discoverTableInventoryMigrationChanges(previous,next,selectedSelector,history),reviewedChanges=candidates.map(({oldValue:_old,newValue:_new,oldPath:_oldPath,newPath:_newPath,...marker})=>marker);
+ const migrationOptions={...options([intent],reviewedChanges),seedSets:[],backfills:[{table:'notes',column:summary,operation:'derive_summary',scopedRows:true as const}]};
+ const request={id:'r2-note-mixed-g02',predecessor:{id:history.plans[0]!.id,digest:history.plans[0]!.digest},previous,next,options:migrationOptions,history};
+ return {configuration,previous,next,history,intent,selectedSelector,candidates,request};
 }
 
 test('G10 public initial compile, full verification and serialization retain the exact marker wrapper',()=>{
@@ -133,44 +173,57 @@ test('legacy seed history requires exact source-derived reported outcomes and re
  const wrongEntry=structuredClone(history);wrongEntry.executions[0]!.seedOutcomes[0]!.proof.entryDigest='f'.repeat(64);expect(()=>deriveInventorySeedLineage(wrongEntry,request)).toThrow();
 });
 
-test('G10 historical recompile cache reuses only exact G10 plans and exact prior-history members',()=>{
- const next=deploy(legalSource()),tableIntents=next.expectedCatalog.tables.map(table=>({kind:'create' as const,table:table.id,record:{...table.record}}));
- const firstCandidates=discoverTableInventoryMigrationChanges(null,next,selector(tableIntents),emptyHistory);
- const firstRequest={id:'inventory-cache-first',predecessor:null,previous:null,next,options:options(tableIntents,firstCandidates.map(({oldValue:_old,newValue:_new,oldPath:_oldPath,newPath:_newPath,...marker})=>marker)),history:emptyHistory};
- const first=compileTableInventoryMigration(firstRequest);expect(first.status).toBe('compiled');if(first.status!=='compiled')throw new Error(JSON.stringify(first.diagnostics));
- const history:TableInventorySourceHistory={profile:'umf.table-inventory-source-history/0.1',plans:[first.plan],executions:[{planDigest:first.plan.digest,entryDigest:'c'.repeat(64),seedOutcomes:[]}]};
- const secondDocument=legalSource() as any,created=appendArchiveTable(secondDocument),secondNext=deploy(secondDocument),secondIntent={kind:'create' as const,table:created.table,record:created.record};
- const secondCandidates=discoverTableInventoryMigrationChanges(next,secondNext,selector([secondIntent]),history);
- const secondRequest={id:'inventory-cache-second',predecessor:{id:first.plan.id,digest:first.plan.digest},previous:next,next:secondNext,options:options([secondIntent],secondCandidates.map(({oldValue:_old,newValue:_new,oldPath:_oldPath,newPath:_newPath,...marker})=>marker)),history};
- const second=compileTableInventoryMigration(secondRequest);expect(second.status).toBe('compiled');if(second.status!=='compiled')throw new Error(JSON.stringify(second.diagnostics));
- const verify=createHistoricalG10Verifier();verify(first.plan,0,emptyHistory);verify(second.plan,1,history);expect(()=>verify(second.plan,1,history)).not.toThrow();
- const changedPlan=structuredClone(history);(changedPlan.plans[0] as any).id='mutated-plan';
- expect(()=>verify(second.plan,1,changedPlan)).toThrow();
- const changedExecution=structuredClone(history);changedExecution.executions[0]!.entryDigest='e'.repeat(64);
- expect(()=>verify(second.plan,1,changedExecution)).toThrow();
+describe('G10 historical recompile exact-content cache',()=>{
+ let completed:ReturnType<typeof historicalCacheFixture>;
+ beforeAll(()=>{completed=historicalCacheFixture();},15000);
+ test('initial and second G10 plans compile through their original public requests',()=>{
+  const fixture=structuredClone(completed);expect(fixture.first.version).toBe('umf.table-inventory-migration/0.1');expect(fixture.second.version).toBe('umf.table-inventory-migration/0.1');
+ },15000);
+ test('reuses only exact plans and exact prior-history members',()=>{
+  const {first,second,history}=structuredClone(completed),verify=createHistoricalG10Verifier();verify(first,0,emptyHistory);verify(second,1,history);expect(()=>verify(second,1,history)).not.toThrow();
+ },15000);
+ test('rejects a changed cached plan under the same history position',()=>{
+  const {second,history}=structuredClone(completed),verify=createHistoricalG10Verifier();verify(history.plans[0]!,0,emptyHistory);verify(second,1,history);
+  const changedPlan=structuredClone(history);(changedPlan.plans[0] as any).id='mutated-plan';expect(()=>verify(second,1,changedPlan)).toThrow();
+ },15000);
+ test('rejects changed prior execution bytes on a cache hit',()=>{
+  const {second,history}=structuredClone(completed),verify=createHistoricalG10Verifier();verify(history.plans[0]!,0,emptyHistory);verify(second,1,history);
+  const changedExecution=structuredClone(history);changedExecution.executions[0]!.entryDigest='e'.repeat(64);expect(()=>verify(second,1,changedExecution)).toThrow();
+ },15000);
 });
 
-test('R2 metered source context recompiles a nonempty seeded G10 history and mixed G02 source',()=>{
- const fixture=mixedG02Request(false),seedIds=fixture.previous.seedSets.map(seed=>seed.id),initial=initialG10History(fixture.previous,'r2-metered-initial',seedIds);
- const first=initial.plans[0]!;
- const request={...fixture.request,predecessor:{id:first.id,digest:first.digest},history:initial};
- const compiled=compileTableInventoryMigration(request);expect(compiled.status).toBe('compiled');if(compiled.status!=='compiled')throw new Error(JSON.stringify(compiled.diagnostics));
- const history:TableInventorySourceHistory={profile:'umf.table-inventory-source-history/0.1',plans:[...initial.plans,compiled.plan],executions:[...initial.executions,seedExecution(compiled.plan,fixture.next,'e'.repeat(64))]};
- const current={previous:fixture.next,next:fixture.next,options:{seedSets:[],retiredSeedSets:[]}},meter=new R2WorkMeter();
- expect(deriveInventorySeedLineage(history,current,createHistoricalG10Verifier(meter),meter).every(item=>item.execution==='confirmed')).toBe(true);
- expect(meter.snapshot().work).toBeGreaterThan(0);
- const changedPlan=structuredClone(history),changedPlanValue=changedPlan.plans[1] as any;changedPlanValue.steps[0]!.sql+=' ';delete changedPlanValue.digest;changedPlanValue.digest=hashCanonical(changedPlanValue);changedPlan.executions[1]!.planDigest=changedPlanValue.digest;
- const changedPlanMeter=new R2WorkMeter();expect(()=>deriveInventorySeedLineage(changedPlan,current,createHistoricalG10Verifier(changedPlanMeter),changedPlanMeter)).toThrow();
- const changedPrefix=structuredClone(history);changedPrefix.executions[0]!.entryDigest='f'.repeat(64);
- const changedPrefixMeter=new R2WorkMeter();expect(()=>deriveInventorySeedLineage(changedPrefix,current,createHistoricalG10Verifier(changedPrefixMeter),changedPrefixMeter)).toThrow();
- const changedPhase=structuredClone(history);(changedPhase.executions[0]!.seedOutcomes[0]!.proof as any).phaseDigest='0'.repeat(64);
- const changedPhaseMeter=new R2WorkMeter();expect(()=>deriveInventorySeedLineage(changedPhase,current,createHistoricalG10Verifier(changedPhaseMeter),changedPhaseMeter)).toThrow();
- expect(()=>deriveInventorySeedLineage(originalHistory(fixture.previous),current,undefined,new R2WorkMeter())).toThrow(/UNSUPPORTED_METERED_LEGACY_HISTORY/);
- const selector02={version:'umf.table-inventory-discovery/0.2',tableIntents:[],conversions:[],retiredSeedSets:[],retirements:[],restorations:[],archiveSources:[],tableArchiveSources:[]};
- const handle=prepareR2InventorySourceContext({previous:fixture.next,next:fixture.next,history,selector:selector02}),state=inspectR2InventorySourceContext(handle);
- expect(state.owned.previous?.bundleDigest).toBe(fixture.next.bundleDigest);expect(state.history).toBeDefined();
+test('R2 metered context reuses exact source cores for a seeded Note history and mixed G02 plus CREATE',()=>{
+ const fixture=smallNoteMixedG02Source(),compiled=compileTableInventoryMigration(fixture.request);
+ expect(compiled.status).toBe('compiled');if(compiled.status!=='compiled'){compileG10InventoryPlan(fixture.request);throw new Error(JSON.stringify(compiled.diagnostics));}
+ expect(fixture.previous.seedSets).toEqual(fixture.next.seedSets);expect(fixture.history.executions[0]!.seedOutcomes).toHaveLength(1);
+ expect(fixture.history.executions[0]!.seedOutcomes[0]).toMatchObject({id:'initial-note-seed',execution:'confirmed'});
+ expect(compiled.plan.seedExecution).toBe('none');expect(compiled.plan.steps.some(step=>step.sourcePath.includes('backfills/0'))).toBe(true);
+ const nextSource=JSON.parse(fixture.next.source.utf8);expect(nextSource.modules[0].extensions['umf.tables'].tables[0].columns.find((column:any)=>column.name==='summary').default).toEqual({kind:'literal',value:{string:'future summary'}});
+ const summaryColumn=fixture.next.expectedCatalog.columns.find((column:any)=>column.table==='notes'&&column.field.element==='summary')!,summarySteps=compiled.plan.steps.filter(step=>step.sourcePath===summaryColumn.sourcePath||step.sourcePath==='/options/backfills/0'&&step.operation==='apply-backfill');
+ expect(summarySteps.map(step=>step.operation)).toEqual(['add-column','apply-backfill','install-default','tighten-not-null']);
+ expect(compiled.plan.review).toEqual(fixture.candidates);expect(compiled.plan.inventory.changes.some(change=>change.kind==='create-table'&&change.table==='note_archive')).toBe(true);
+ const selector02={version:'umf.table-inventory-discovery/0.2' as const,tableIntents:[],conversions:[],retiredSeedSets:[],retirements:[],restorations:[],archiveSources:[],tableArchiveSources:[]};
+ const mixedHistory:TableInventorySourceHistory={profile:'umf.table-inventory-source-history/0.1',plans:[...fixture.history.plans,compiled.plan],executions:[...fixture.history.executions,seedExecution(compiled.plan,fixture.next,'e'.repeat(64))]};
+ const handle=prepareR2InventorySourceContext({previous:fixture.next,next:fixture.next,history:mixedHistory,selector:selector02}),state=inspectR2InventorySourceContext(handle);
+ expect(state.history.plans).toHaveLength(2);expect(state.history.plans[1]).toEqual(compiled.plan);expect(state.history.executions[1]).toEqual(seedExecution(compiled.plan,fixture.next,'e'.repeat(64)));expect(state.seedLineage).toMatchObject([{id:'initial-note-seed',execution:'confirmed'}]);
+ const current={previous:fixture.next,next:fixture.next,options:{seedSets:[],retiredSeedSets:[]}},recoveryMeter=new R2WorkMeter();expect(()=>deriveInventorySeedLineage(mixedHistory,current,createHistoricalG10Verifier(recoveryMeter),recoveryMeter)).not.toThrow();
+ expect(state.projectionCoreReuses).toBeGreaterThan(0);
+ const snapshots=[state.phaseBudgets.owned,state.phaseBudgets.history,state.phaseBudgets.projection,state.phaseBudgets.lineage];
+ expect(snapshots.every((item,index)=>index===0||item.work>=snapshots[index-1]!.work)).toBe(true);
+ expect(snapshots.every((item,index)=>index===0||item.subjects>=snapshots[index-1]!.subjects)).toBe(true);
+ expect(snapshots.every((item,index)=>index===0||item.bytes>=snapshots[index-1]!.bytes)).toBe(true);
+ expect(state.phaseBudgets.lineage).toEqual(state.budget);
  expect(Object.isFrozen(state.history)).toBe(true);expect(Object.isFrozen(state.history.executions)).toBe(true);expect(Object.isFrozen(state.history.executions[0]!.seedOutcomes[0]!.proof)).toBe(true);
  expect(()=>{(state.history.executions[0]!.seedOutcomes[0]!.proof as any).phaseDigest='1'.repeat(64);}).toThrow();
+ expect(()=>inspectR2InventorySourceContext(Object.freeze(Object.create(null)))).toThrow('R2_CONTEXT_HANDLE');
+ const changedPlan=structuredClone(mixedHistory);(changedPlan.plans[1] as any).steps[0]!.sql+=' ';delete (changedPlan.plans[1] as any).digest;(changedPlan.plans[1] as any).digest=hashCanonical(changedPlan.plans[1]);changedPlan.executions[1]!.planDigest=(changedPlan.plans[1] as any).digest;
+ const changedPlanMeter=new R2WorkMeter();expect(()=>deriveInventorySeedLineage(changedPlan,current,createHistoricalG10Verifier(changedPlanMeter),changedPlanMeter)).toThrow();
+ const changedPrefix=structuredClone(mixedHistory);changedPrefix.executions[0]!.entryDigest='f'.repeat(64);
+ const changedPrefixMeter=new R2WorkMeter();expect(()=>deriveInventorySeedLineage(changedPrefix,current,createHistoricalG10Verifier(changedPrefixMeter),changedPrefixMeter)).toThrow();
+ const changedPhase=structuredClone(mixedHistory);(changedPhase.executions[0]!.seedOutcomes[0]!.proof as any).phaseDigest='0'.repeat(64);
+ const changedPhaseMeter=new R2WorkMeter();expect(()=>deriveInventorySeedLineage(changedPhase,current,createHistoricalG10Verifier(changedPhaseMeter),changedPhaseMeter)).toThrow();
+ expect(()=>deriveInventorySeedLineage(originalHistory(fixture.next),current,undefined,new R2WorkMeter())).toThrow(/UNSUPPORTED_METERED_LEGACY_HISTORY/);
+ const originalNextSource=fixture.next.source.utf8;fixture.next.source.utf8='caller mutation after registration';expect(state.owned.next?.source.utf8).toBe(originalNextSource);
 });
 
 function installedCreateReviewFixture(){
@@ -205,6 +258,11 @@ describe('G10 installed-create compiled fixture',()=>{
   const alteredHistory=structuredClone(history);alteredHistory.executions[0]!.entryDigest='d'.repeat(64);
   expect(()=>verifyTableInventoryMigration(plan,alteredHistory)).toThrow();
  });
+ test('historical verifier reuses the installed-create prefix only for exact history members',()=>{
+  const {history,plan}=structuredClone(completed),exactVerifier=createHistoricalG10Verifier();
+  exactVerifier(history.plans[0]!,0,emptyHistory);exactVerifier(plan,1,history);expect(()=>exactVerifier(plan,1,history)).not.toThrow();
+  const alteredPrefix=structuredClone(history);alteredPrefix.executions[0]!.entryDigest='e'.repeat(64);expect(()=>exactVerifier(plan,1,alteredPrefix)).toThrow();
+ });
 });
 
 test('G10 installed create review exposes the complete absent-before projection with no old source path',()=>{
@@ -214,13 +272,6 @@ test('G10 installed create review exposes the complete absent-before projection 
  expect(createCandidate?.oldValue).toMatchObject({profile:'umf.table-inventory-review/0.1',side:'previous',table:'api_archive',record:intent.record,meaning:null});
  expect(createCandidate?.newPath).toMatch(/^\/modules\/0\/extensions\/umf\.tables\/tables\//);
  const result=compileTableInventoryMigration(request);if(result.status!=='compiled')throw new Error(JSON.stringify(result.diagnostics));expect(result.status).toBe('compiled');
-});
-
-test('G10 historical verifier retains exact installed-create prefix and cache checks',()=>{
- const {history,plan}=compiledInstalledCreateReviewFixture();
- const exactVerifier=createHistoricalG10Verifier();exactVerifier(history.plans[0],0,emptyHistory);exactVerifier(plan,1,history);expect(()=>exactVerifier(plan,1,history)).not.toThrow();
- const alteredPrefix=structuredClone(history);alteredPrefix.executions[0]!.entryDigest='e'.repeat(64);
- expect(()=>exactVerifier(plan,1,alteredPrefix)).toThrow();
 });
 
 test('G10 legacy component review values and optional source paths remain unchanged',()=>{

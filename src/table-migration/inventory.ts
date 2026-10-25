@@ -4,10 +4,10 @@ import {verifyTableDeployment,type TableDeploymentBundle} from '../table-deploym
 import {UmfError,pointer} from '../model/errors';
 import {copyJson,copyJsonCharged} from '../model/json';
 import type {AccountingContext} from '../model/internal/accounting-context';
-import {freezeSourceIndex,ownR2SourceComponents,R2WorkMeter,type R2OwnedSourceComponents,type R2BundleSourceIndex} from './inventory-r2-context';
+import {freezeSourceIndex,freezeSourceIndexSide,ownR2SourceComponents,R2WorkMeter,type R2OwnedSourceComponents,type R2BundleSourceIndex} from './inventory-r2-context';
 import {initialInventoryPrefix,inventoryCatalogIdentity,scheduleTypedInventoryEffects,type CatalogMutation,type EffectNode,type InventorySubject,type ScheduledInventoryEffects,type TypedDependency} from './inventory-graph';
 import type {PrefixFrame} from './inventory-graph';
-import {projectG10Bundle,projectG10BundleWithAccounting,type InventoryProjection,type InventoryChange,type InventoryFieldChange,type InventoryTable,type InventoryDelta,type CatalogProjection,type Identity,type PrefixCatalog,type Subject} from './inventory-projection';
+import {copyInventoryReviewForSide,projectG10Bundle,projectG10BundleWithAccounting,type InventoryProjection,type InventoryChange,type InventoryFieldChange,type InventoryTable,type InventoryDelta,type CatalogProjection,type Identity,type PrefixCatalog,type Subject} from './inventory-projection';
 import {ShapeError,validateG10RequestShape,validateTableInventorySourceHistory,type G10ValidatedRequest,type HistoricalG10PlanVerifier,type TableIntent,type TableInventoryDiscoveryIntent,type TableInventoryReviewedChangeKind,type TableInventoryMigrationMarker} from './inventory-options';
 import {deriveInventorySeedLineage,type InventoryHistory,type SeedLineageEntry} from './inventory-history';
 import {partitionInventoryMarkersForG02,sameSourceExceptG02AndCreates} from './inventory-g02-source';
@@ -29,24 +29,44 @@ type DeepReadonly<T>=T extends readonly (infer V)[]?readonly DeepReadonly<V>[]:T
 declare const r2SourceContextBrand:unique symbol;
 /** Opaque internal source-context identity; it is not an archive or migration capability. */
 export type R2InventorySourceContext={readonly [r2SourceContextBrand]:true};
-export type R2InventorySourceContextState={readonly owned:Readonly<Omit<R2OwnedSourceComponents,'meter'>>;readonly previous:DeepReadonly<R2BundleSourceIndex>|null;readonly next:DeepReadonly<R2BundleSourceIndex>;readonly history:DeepReadonly<TableInventorySourceHistory>;readonly seedLineage:readonly DeepReadonly<SeedLineageEntry>[];readonly budget:Readonly<{work:number;subjects:number;bytes:number}>};
+export type R2InventorySourceContextState={readonly owned:Readonly<Omit<R2OwnedSourceComponents,'meter'>>;readonly previous:DeepReadonly<R2BundleSourceIndex>|null;readonly next:DeepReadonly<R2BundleSourceIndex>;readonly history:DeepReadonly<TableInventorySourceHistory>;readonly seedLineage:readonly DeepReadonly<SeedLineageEntry>[];readonly projectionCoreReuses:number;readonly phaseBudgets:Readonly<{owned:Readonly<{work:number;subjects:number;bytes:number}>;history:Readonly<{work:number;subjects:number;bytes:number}>;projection:Readonly<{work:number;subjects:number;bytes:number}>;lineage:Readonly<{work:number;subjects:number;bytes:number}>}>;readonly budget:Readonly<{work:number;subjects:number;bytes:number}>};
 type R2InternalSourceContext={readonly view:R2InventorySourceContextState;readonly meter:R2WorkMeter;readonly historyVerifier:HistoricalG10PlanVerifier};
 const r2SourceContexts=new WeakMap<object,R2InternalSourceContext>();
 type AccountedBundleProjection=ReturnType<typeof projectG10BundleWithAccounting>;
-const scopedProjectionCache=new WeakMap<AccountingContext,Map<string,Map<'previous'|'next',AccountedBundleProjection>>>();
+type ScopedBundleProjection={result:ReturnType<typeof projectG10Bundle>;index?:DeepReadonly<R2BundleSourceIndex>};
+type ProjectionScope={entries:Map<string,Map<'previous'|'next',ScopedBundleProjection>>;coreReuses:number};
+const meteredProjectionCaches=new WeakMap<AccountingContext,ProjectionScope>();
+const ordinaryProjectionCaches=new WeakMap<HistoricalG10PlanVerifier,ProjectionScope>();
+function withOrdinaryProjectionScope<T>(verifier:HistoricalG10PlanVerifier,body:()=>T):T{
+ ordinaryProjectionCaches.set(verifier,{entries:new Map(),coreReuses:0});
+ try{return body();}finally{ordinaryProjectionCaches.delete(verifier);}
+}
 /** Exact-content, request-local projection reuse; full canonical bytes are the cache key. */
-function projectG10BundleScoped(bundle:TableDeploymentBundle,side:'previous'|'next',accounting?:AccountingContext):ReturnType<typeof projectG10Bundle>{
- if(!accounting)return projectG10Bundle(bundle,side);
- accounting.visit('r2-bundle-projection-cache-lookup',`/${side}`);
- const key=canonicalCharged(bundle,accounting,`/${side}/bundle-cache-key`);let cache=scopedProjectionCache.get(accounting);
- if(!cache){cache=new Map();scopedProjectionCache.set(accounting,cache);}
- let sides=cache.get(key);if(!sides){accounting.retainBytes('r2-bundle-cache-key',new TextEncoder().encode(key).byteLength,`/${side}/bundle-cache-key`);sides=new Map();cache.set(key,sides);}
- const present=sides.get(side);if(present){accounting.visit('r2-bundle-projection-cache-hit',`/${side}`);return present;}
- accounting.visit('r2-bundle-projection-cache-miss',`/${side}`);const result=projectG10BundleWithAccounting(bundle,side,accounting);
- // Freeze all values reachable through the cached result. The exact meter is
- // the one that paid for projection and will remain active for later history.
- freezeSourceIndex(result,accounting as R2WorkMeter,`/${side}/frozen-index`);
- sides.set(side,result);return result;
+function sideProjection(base:ReturnType<typeof projectG10Bundle>,side:'previous'|'next',accounting?:AccountingContext):ReturnType<typeof projectG10Bundle>{
+ let sameSide=true;for(let index=0;index<base.reviews.length;index++){accounting?.visit('r2-projection-side-review-side-check',`/${side}/reviews/${index}`);if(base.reviews[index]!.side!==side)sameSide=false;}if(sameSide)return base;
+ accounting?.visit('r2-projection-side-review-array','/'+side+'/reviews');accounting?.charge('jsonArraySlot',base.reviews.length,`/${side}/reviews`);
+ const reviews=base.reviews.map(review=>copyInventoryReviewForSide(review,side,accounting));
+ return {...base,reviews};
+}
+function projectG10BundleScoped(bundle:TableDeploymentBundle,side:'previous'|'next',accounting:AccountingContext|undefined,verifier:HistoricalG10PlanVerifier):ScopedBundleProjection{
+ const scope=accounting?(meteredProjectionCaches.get(accounting)??{entries:new Map<string,Map<'previous'|'next',ScopedBundleProjection>>(),coreReuses:0}):ordinaryProjectionCaches.get(verifier)??{entries:new Map<string,Map<'previous'|'next',ScopedBundleProjection>>(),coreReuses:0};
+ if(accounting)meteredProjectionCaches.set(accounting,scope);
+ accounting?.visit('r2-bundle-projection-cache-lookup',`/${side}`);
+ const key=accounting?canonicalCharged(bundle,accounting,`/${side}/bundle-cache-key`):canonical(bundle);
+ let sides=scope.entries.get(key);if(!sides){if(accounting)accounting.retainBytes('r2-bundle-cache-key',new TextEncoder().encode(key).byteLength,`/${side}/bundle-cache-key`);sides=new Map();scope.entries.set(key,sides);}
+ const present=sides.get(side);if(present){accounting?.visit('r2-bundle-projection-cache-hit',`/${side}`);return present;}
+ const core=[...sides.values()][0];
+ if(core){
+  scope.coreReuses++;
+  accounting?.visit('r2-bundle-projection-core-reuse',`/${side}`);
+  const result=sideProjection(core.result,side,accounting);
+  const index=accounting&&core.index?freezeSourceIndexSide(result as AccountedBundleProjection,core.index,accounting as R2WorkMeter,`/${side}/index`):undefined;
+  const reused={result,index};sides.set(side,reused);return reused;
+ }
+ accounting?.visit('r2-bundle-projection-cache-miss',`/${side}`);
+ const result=accounting?projectG10BundleWithAccounting(bundle,side,accounting):projectG10Bundle(bundle,side);
+ const index=accounting?freezeSourceIndex(result as AccountedBundleProjection,accounting as R2WorkMeter,`/${side}/index`):undefined;
+ const created={result,index};sides.set(side,created);return created;
 }
 /**
  * Prepare an original .2 source context only after complete source projection,
@@ -56,12 +76,15 @@ function projectG10BundleScoped(bundle:TableDeploymentBundle,side:'previous'|'ne
  */
 export function prepareR2InventorySourceContext(input:unknown):R2InventorySourceContext{
  const meter=new R2WorkMeter(),owned=ownR2SourceComponents(input,meter),verifier=createHistoricalG10Verifier(meter);
+ const ownedBudget=meter.snapshot();
  const history=freezeOwnedHistory(validateTableInventorySourceHistory(owned.history as unknown as TableInventorySourceHistory,owned.previous as TableDeploymentBundle|null,verifier,meter),meter);
- const previousResult=owned.previous===null?null:projectG10BundleScoped(owned.previous as TableDeploymentBundle,'previous',meter) as AccountedBundleProjection,nextResult=projectG10BundleScoped(owned.next as TableDeploymentBundle,'next',meter) as AccountedBundleProjection;
- const previous=previousResult===null?null:freezeSourceIndex(previousResult,meter,'/previous/index'),next=freezeSourceIndex(nextResult,meter,'/next/index');
+ const historyBudget=meter.snapshot();
+ const previousResult=owned.previous===null?null:projectG10BundleScoped(owned.previous as TableDeploymentBundle,'previous',meter,verifier),nextResult=projectG10BundleScoped(owned.next as TableDeploymentBundle,'next',meter,verifier);
+ const previous=previousResult?.index??null,next=nextResult.index;if(!next)throw new TypeError('R2_INDEX_MISSING:/next');
+ const projectionBudget=meter.snapshot();
  const seedLineage=deriveInventorySeedLineage(history as unknown as InventoryHistory,{previous:owned.previous as TableDeploymentBundle|null,next:owned.next as TableDeploymentBundle,options:{seedSets:[],retiredSeedSets:[...owned.selector.retiredSeedSets]}},verifier,meter);
  const handle=Object.freeze(Object.create(null)) as R2InventorySourceContext;
- const ownedView=Object.freeze({previous:owned.previous,next:owned.next,history:owned.history,selector:owned.selector,canonicalInputs:owned.canonicalInputs});const state:R2InventorySourceContextState=Object.freeze({owned:ownedView,previous,next,history,seedLineage:Object.freeze(seedLineage.map(entry=>Object.freeze({...entry}))),budget:meter.snapshot()});
+ const ownedView=Object.freeze({previous:owned.previous,next:owned.next,history:owned.history,selector:owned.selector,canonicalInputs:owned.canonicalInputs});const state:R2InventorySourceContextState=Object.freeze({owned:ownedView,previous,next,history,seedLineage:Object.freeze(seedLineage.map(entry=>Object.freeze({...entry}))),projectionCoreReuses:meteredProjectionCaches.get(meter)?.coreReuses??0,phaseBudgets:Object.freeze({owned:ownedBudget,history:historyBudget,projection:projectionBudget,lineage:meter.snapshot()}),budget:meter.snapshot()});
  r2SourceContexts.set(handle,Object.freeze({view:state,meter,historyVerifier:verifier}));return handle;
 }
 function freezeOwnedHistory(history:TableInventorySourceHistory,meter:R2WorkMeter):TableInventorySourceHistory{
@@ -295,9 +318,9 @@ export function deriveG10ProvenanceMutations(previous:CatalogProjection|null,nex
 }
 
 function inventoryCatalogIdentityFromCatalog(value:EffectIdentity):InventorySubject{
- const subject=value.subject;
- if(value.kind==='table'&&value.table!==null&&obj(subject)&&typeof subject.module==='string'&&typeof subject.element==='string')return {kind:'table',table:value.table,record:{module:subject.module,element:subject.element}};
- if(value.kind==='column'&&value.table!==null&&obj(subject)&&typeof subject.module==='string'&&typeof subject.element==='string')return {kind:'field',table:value.table,field:{module:subject.module,element:subject.element}};
+ const subject=value.subject,subjectRecord=subject!==null&&typeof subject==='object'&&!Array.isArray(subject)?subject:undefined;
+ if(value.kind==='table'&&value.table!==null&&subjectRecord&&typeof subjectRecord.module==='string'&&typeof subjectRecord.element==='string')return {kind:'table',table:value.table,record:{module:subjectRecord.module,element:subjectRecord.element}};
+ if(value.kind==='column'&&value.table!==null&&subjectRecord&&typeof subjectRecord.module==='string'&&typeof subjectRecord.element==='string')return {kind:'field',table:value.table,field:{module:subjectRecord.module,element:subjectRecord.element}};
  if(value.table!==null){const dependencyKind=value.kind==='foreignKey'?'foreignKey':value.kind==='index'?'index':value.kind==='policy'?'policy':value.kind==='grant'?'grant':value.kind==='check'?'check':value.kind==='key'?'key':value.kind==='comment'?'comment':undefined;if(dependencyKind){const id=['policy','grant','comment'].includes(dependencyKind)?JSON.stringify(value.subject):String(value.subject);return {kind:'dependency',table:value.table,dependencyKind,id,sourcePath:'/',meaningDigest:'0'.repeat(64)};}}
  return {kind:'metadata',profile:'umf.table-inventory-metadata/0.1'};
 }
@@ -337,14 +360,14 @@ export function deriveG02FieldEffects(previous:TableDeploymentBundle,next:TableD
   }
   else if(record.role==='target-check'){
    const domainId=`domain:${field.module}.${field.element}`;
-   const check=nextProjection.catalog.checks.filter(row=>{const meaning=row.meaning;return row.identity.table===table&&row.identity.subject===domainId&&obj(meaning)&&canonical(meaning.field)===canonical(field);});
+   const check=nextProjection.catalog.checks.filter(row=>{const meaning=row.meaning,meaningRecord=meaning!==null&&typeof meaning==='object'&&!Array.isArray(meaning)?meaning:undefined;return row.identity.table===table&&row.identity.subject===domainId&&meaningRecord!==undefined&&canonical(meaningRecord.field)===canonical(field);});
    if(check.length!==1)throw new Error('G10_G02_TARGET_CHECK_BINDING');
    if(record.operation==='add-not-valid')throw new Error('G10_G02_UNSUPPORTED_DEFERRED_CHECK_VALIDATION');
    effects.push({...common,subject,operation:'target-check',transition:{action:'add',collection:'checks',meaning:{catalogMeaning:effectClone(check[0]!.meaning),validation:check[0]!.validation??null,validity:check[0]!.validity??null}}});
    effectSubjects.push(subject);continue;
   }else if(record.role==='validate-target-check'){
    const domainId=`domain:${field.module}.${field.element}`;
-   const check=nextProjection.catalog.checks.filter(row=>{const meaning=row.meaning;return row.identity.table===table&&row.identity.subject===domainId&&obj(meaning)&&canonical(meaning.field)===canonical(field);});
+   const check=nextProjection.catalog.checks.filter(row=>{const meaning=row.meaning,meaningRecord=meaning!==null&&typeof meaning==='object'&&!Array.isArray(meaning)?meaning:undefined;return row.identity.table===table&&row.identity.subject===domainId&&meaningRecord!==undefined&&canonical(meaningRecord.field)===canonical(field);});
    if(check.length!==1)throw new Error('G10_G02_TARGET_CHECK_BINDING');
    throw new Error('G10_G02_UNSUPPORTED_DEFERRED_CHECK_VALIDATION');
   }else if(record.role==='install-default')effects.push({...common,operation:'install-default',transition:{action:'update',collection:'columns',meaning:stagedMeaning('defaulted')}});
@@ -426,12 +449,13 @@ export function createHistoricalG10Verifier(accounting?:AccountingContext):Histo
  const verified=new Map<number,string>(),planSnapshots=new Map<number,string>(),executionSnapshots=new Map<number,string>(),active=new Set<number>();
  let retainedBytes=0;
  const utf8Bytes=(value:string,path:string):number=>{const size=new TextEncoder().encode(value).byteLength;accounting?.retainBytes('g10-history-verifier-cache',size,path);return size;};
- const verify:HistoricalG10PlanVerifier=(value,index,priorHistory)=>{
+ let verify:HistoricalG10PlanVerifier;
+ const verifyCore:HistoricalG10PlanVerifier=(value,index,priorHistory)=>{
   if(!value||typeof value!=='object'||Array.isArray(value))fail('HISTORICAL_G10_SHAPE');
   accounting?.charge('historyMember',1,`/history/plans/${index}`);
   const plan=value as Record<string,unknown>,planBytes=accounting?canonicalCharged(plan,accounting,`/history/plans/${index}`):canonical(plan),cached=verified.get(index);
   if(!Number.isSafeInteger(index)||index<0||index>128||!priorHistory||typeof priorHistory!=='object'||Array.isArray(priorHistory))fail('HISTORICAL_G10_CONTEXT_CHANGED');
-  const prefix=priorHistory as Record<string,unknown>;
+  const prefix=priorHistory;
   if(prefix.profile!=='umf.table-inventory-source-history/0.1'||!Array.isArray(prefix.plans)||!Array.isArray(prefix.executions)||prefix.plans.length!==index||prefix.executions.length!==index)fail('HISTORICAL_G10_CONTEXT_CHANGED');
   // The caller reaches this verifier in chronological history validation: each
   // preceding execution has already been checked against its preceding plan.
@@ -462,11 +486,16 @@ export function createHistoricalG10Verifier(accounting?:AccountingContext):Histo
    accounting?.visit('g10-history-verified-map-retention',`/history/plans/${index}`,3);verified.set(index,planBytes);planSnapshots.set(index,planBytes);retainedBytes+=planSize;
   }finally{active.delete(index);}
  };
+ verify=(value,index,priorHistory)=>{
+  if(accounting||ordinaryProjectionCaches.has(verify))return verifyCore(value,index,priorHistory);
+  ordinaryProjectionCaches.set(verify,{entries:new Map(),coreReuses:0});
+  try{return verifyCore(value,index,priorHistory);}finally{ordinaryProjectionCaches.delete(verify);}
+ };
  return verify;
 }
 /** Source-driven compiler/recompiler for the currently representable table-install and mixed-create subset. */
 export function compileG10InventoryPlan(input:unknown):Record<string,Json>{
- return compileInventoryPlanFromPrepared(prepareInventoryCompilation(input,createHistoricalG10Verifier()));
+ const verifier=createHistoricalG10Verifier();return withOrdinaryProjectionScope(verifier,()=>compileInventoryPlanFromPrepared(prepareInventoryCompilation(input,verifier)));
 }
 export function compileG10InventoryDelta(input:unknown,verifyHistoricalG10?:HistoricalG10PlanVerifier):InventoryDelta {
  const request=validateG10RequestShape(input,verifyHistoricalG10),next=projectG10Bundle(request.next,'next'),previous=request.previous===null?null:projectG10Bundle(request.previous,'previous');
@@ -779,10 +808,9 @@ export function inventoryMarker(candidate:TableInventoryReviewedChangeCandidate)
  return {id:candidate.id,kind:candidate.kind,path:candidate.path,oldDigest:candidate.oldDigest,newDigest:candidate.newDigest};
 }
 export function irreversiblePurgeDisclosure(candidate:TableInventoryReviewedChangeCandidate):{code:'IRREVERSIBLE_TABLE_PURGE';path:string;markerId:string;message:string}{
- const oldValue=candidate.oldValue,newValue=candidate.newValue;
- if(!obj(oldValue)||!obj(newValue))reviewFail('TABLE_MIGRATION_REVIEW',candidate.path);
- const old=oldValue,newReview=newValue;
- if(candidate.kind!=='table-removal-effects'||old.profile!=='umf.table-inventory-review/0.1'||old.side!=='previous'||typeof old.table!=='string'||!old.table||newReview.profile!=='umf.table-inventory-review/0.1'||newReview.side!=='next'||newReview.table!==old.table||old.meaning===null||newReview.meaning!==null||canonical(old.effects)!==canonical(effectsRemove)||canonical(newReview.effects)!==canonical(effectsRemove)||!/^\/options\/tableIntents\/\d+\/disposition$/.test(candidate.path)||typeof candidate.oldPath!=='string'||candidate.newPath!==null||candidate.oldDigest!==hashCanonical(old)||candidate.newDigest!==hashCanonical(newReview)||candidate.id!=='review-'+hashCanonical([candidate.kind,candidate.path,candidate.oldDigest,candidate.newDigest]).slice(0,24))reviewFail('TABLE_MIGRATION_REVIEW',candidate.path);
+ if(candidate.kind!=='table-removal-effects')reviewFail('TABLE_MIGRATION_REVIEW',candidate.path);
+ const old=candidate.oldValue,newReview=candidate.newValue;
+ if(!obj(old)||!obj(newReview)||old.profile!=='umf.table-inventory-review/0.1'||old.side!=='previous'||typeof old.table!=='string'||!old.table||newReview.profile!=='umf.table-inventory-review/0.1'||newReview.side!=='next'||newReview.table!==old.table||old.meaning===null||newReview.meaning!==null||canonical(old.effects)!==canonical(effectsRemove)||canonical(newReview.effects)!==canonical(effectsRemove)||!/^\/options\/tableIntents\/\d+\/disposition$/.test(candidate.path)||typeof candidate.oldPath!=='string'||candidate.newPath!==null||candidate.oldDigest!==hashCanonical(old)||candidate.newDigest!==hashCanonical(newReview)||candidate.id!=='review-'+hashCanonical([candidate.kind,candidate.path,candidate.oldDigest,candidate.newDigest]).slice(0,24))reviewFail('TABLE_MIGRATION_REVIEW',candidate.path);
  return {code:'IRREVERSIBLE_TABLE_PURGE',path:candidate.path,markerId:candidate.id,message:'Irreversible purge of all stored rows and columns for table '+old.table+'. Metadata history is not a data backup; this profile performs immediate physical deletion.'};
 }
 
@@ -906,7 +934,7 @@ function ownRequestJson(input:unknown,accounting?:AccountingContext):TableInvent
 function prepareInventoryCompilation(input:unknown,verifyHistoricalG10:HistoricalG10PlanVerifier,accounting?:AccountingContext):PreparedInventoryCompilation{
  const owned=ownRequestJson(input,accounting),request:G10ValidatedRequest=validateG10RequestShape(owned,verifyHistoricalG10,accounting);
  const stableRequest:TableInventoryMigrationRequest={id:request.id,predecessor:request.predecessor,previous:request.previous,next:request.next,options:owned.options,history:request.history};
- accounting?.visit('g10-preparation-project-next','/next');const next=accounting?projectG10BundleScoped(request.next,'next',accounting):projectG10Bundle(request.next,'next'),accountingPrevious=request.previous===null?null:(accounting?projectG10BundleScoped(request.previous,'previous',accounting):projectG10Bundle(request.previous,'previous'));
+ accounting?.visit('g10-preparation-project-next','/next');const next=projectG10BundleScoped(request.next,'next',accounting,verifyHistoricalG10).result,accountingPrevious=request.previous===null?null:projectG10BundleScoped(request.previous,'previous',accounting,verifyHistoricalG10).result;
  const previous=accountingPrevious;
  const lineage=deriveInventorySeedLineage(request.history,{previous:request.previous,next:request.next,options:{seedSets:request.options.seedSets,retiredSeedSets:request.options.retiredSeedSets}},verifyHistoricalG10,accounting),inventory=compileG10InventoryDeltaFromPrepared(request,next,previous,lineage,accounting),review=exactReviewFromPrepared(stableRequest,verifyHistoricalG10,{history:request.history,before:previous,after:next,seedLineage:lineage},accounting);
  return {request,inventory,next,previous,lineage,review,stableRequest};
@@ -1026,12 +1054,11 @@ function withReview(plan:Record<string,Json>,review:TableInventoryReviewedChange
 
 /** Compile from complete independently verified bundles and their explicit original history. */
 export function compileTableInventoryMigration(request:TableInventoryMigrationRequest):TableInventoryMigrationResult{
- try{
-  const verifier=createHistoricalG10Verifier();
+ const verifier=createHistoricalG10Verifier();try{return withOrdinaryProjectionScope(verifier,()=>{
   const prepared=prepareInventoryCompilation(request,verifier);
   const plan=compileInventoryPlanFromPrepared(prepared);
   return {status:'compiled',plan:withReview(plan,prepared.review),diagnostics:[]};
- }catch(error){return {status:'blocked',diagnostics:[blockedDiagnostic(error)]};}
+ });}catch(error){return {status:'blocked',diagnostics:[blockedDiagnostic(error)]};}
 }
 
 /** Discover all source-derived review candidates without accepting marker strings. */

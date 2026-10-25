@@ -302,6 +302,14 @@ export function freezeSourceIndex(result:ReturnType<typeof projectG10BundleWithA
  canonicalCharged(owned,meter,path);
  deepFreezeJson(owned,meter,path);return owned as unknown as DeepReadonly<R2BundleSourceIndex>;
 }
+/** Build a side-specific index wrapper while borrowing an already frozen exact-content core. */
+export function freezeSourceIndexSide(result:ReturnType<typeof projectG10BundleWithAccounting>,core:DeepReadonly<R2BundleSourceIndex>,meter:R2WorkMeter,path:string):DeepReadonly<R2BundleSourceIndex>{
+ meter.charge('jsonNode',1,path);meter.charge('objectKey',6,path);
+ for(const key of ['bundle','tables','reviews','projection','sourcePaths','fieldMeanings'])meter.scanUtf8(key,`${path}/@key`);
+ canonicalCharged(result.reviews as unknown as R2Json,meter,`${path}/reviews`);
+ deepFreezeJson(result.reviews as unknown as R2Json,meter,`${path}/reviews`);
+ const value=Object.freeze({...core,reviews:result.reviews});return value as unknown as DeepReadonly<R2BundleSourceIndex>;
+}
 function deepFreezeBundle(bundle:TableDeploymentBundle,meter:R2WorkMeter,path:string):DeepReadonly<TableDeploymentBundle>{
  deepFreezeJson(bundle as unknown as R2Json,meter,path);return bundle as DeepReadonly<TableDeploymentBundle>;
 }

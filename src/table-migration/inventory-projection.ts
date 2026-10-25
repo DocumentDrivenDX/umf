@@ -38,6 +38,11 @@ function toJson(value:unknown,path='/',accounting?:AccountingContext):Json {
  }
  throw new Error('G10_NON_JSON_VALUE:'+path);
 }
+/** Copy one detached public review wrapper for a second side of the same private projection core. */
+export function copyInventoryReviewForSide(review:InventoryProjection,side:Side,accounting?:AccountingContext):InventoryProjection{
+ const copied=accounting?toJson(review,`/${side}/review`,accounting) as InventoryProjection:structuredClone(review);
+ return {...copied,side};
+}
 const refKey=(r:TableRef)=>JSON.stringify([r.module,r.element]);
 const sameRef=(a:TableRef,b:TableRef)=>a.module===b.module&&a.element===b.element;
 const ptr=(s:string)=>s.replace(/~/g,'~0').replace(/\//g,'~1');
