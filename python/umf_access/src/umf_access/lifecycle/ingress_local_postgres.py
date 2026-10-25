@@ -16,13 +16,14 @@ import json
 import os
 import re
 import secrets
+import select
 import signal
 import stat
 import subprocess
 import tempfile
 import time
 import uuid
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -58,6 +59,8 @@ _ORIGIN_PROFILE = 'postgresql18-local-supervised-origin/0.1'
 _ENDPOINT_PROFILE = 'umf.local-postgresql-endpoint-controller/0.1'
 _OWNER_APPROVAL_SCOPE = 'enroll-owned-local-postgresql-target'
 _VERIFIED_STORE_PREPARATION_SEAL = object()
+_VERIFIED_STORE_RECOVERY_OBSERVATION_SEAL = object()
+_VERIFIED_STORE_ABSENCE_SEAL = object()
 _VERSION = '18.6'
 _VERSION_NUM = 180006
 _MAX_JOURNAL = 8 * 1024 * 1024
@@ -67,6 +70,12 @@ _NATIVE_EFFECT_RESERVATION_SEAL = object()
 _NATIVE_EFFECT_OUTCOME_SEAL = object()
 _ORIGINAL_STORE_RESERVATION_SEAL = object()
 _ORIGINAL_STORE_CAPABILITY_SEAL = object()
+_ORIGINAL_STORE_ATTEMPT_SEAL = object()
+_ORIGINAL_STORE_BUDGET_SEAL = object()
+_ORIGINAL_STORE_READONLY_BUDGET_SEAL = object()
+_ORIGINAL_STORE_HOST_WINDOW_NS = 30_000_000_000
+_ORIGINAL_STORE_READONLY_WINDOW_NS = 30_000_000_000
+_ORIGINAL_STORE_MAX_ATTEMPTS = 2
 _ROLE = re.compile(r'^[a-z][a-z0-9_]{0,62}$')
 _HEX = re.compile(r'^[a-f0-9]{64}$')
 _STORE_SCHEMA_PREFIXES = {
@@ -1303,18 +1312,73 @@ class _VerifiedNativeStorePreparation:
         raise TypeError('verified native preparation cannot be serialized')
 
 
+class _VerifiedOriginalStoreRecoveryObservation:
+    """Private checked comparison of immutable creation evidence and live RO facts."""
+
+    __slots__ = ('_issuer', '_budget', '_request', '_reservation_digest',
+                 '_original_payload_bytes', '_actual_payload_bytes',
+                 '_actual_observation_bytes')
+
+    def __init__(self, seal: object, issuer: object,
+                 budget: _OriginalStoreReadonlyBudget, request: object,
+                 reservation_digest: str, original_payload: dict[str, Any],
+                 actual_payload: dict[str, Any], actual_observation: dict[str, Any]):
+        if seal is not _VERIFIED_STORE_RECOVERY_OBSERVATION_SEAL:
+            raise TypeError('original store recovery observation is supervisor-issued')
+        self._issuer = issuer
+        self._budget = budget
+        self._request = request
+        self._reservation_digest = reservation_digest
+        self._original_payload_bytes = _canonical(original_payload)
+        self._actual_payload_bytes = _canonical(actual_payload)
+        self._actual_observation_bytes = _canonical(actual_observation)
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        if hasattr(self, name):
+            raise AttributeError('original store recovery observation is immutable')
+        object.__setattr__(self, name, value)
+
+    def __reduce_ex__(self, _protocol: int):
+        raise TypeError('original store recovery observation cannot be serialized')
+
+
+class _VerifiedOriginalStoreAbsence:
+    """In-process proof that this invocation observed the exact schema absent."""
+
+    __slots__ = ('_issuer', '_budget', '_reservation_digest', '_schema_name', '_proof_bytes')
+
+    def __init__(self, seal: object, issuer: object,
+                 budget: _OriginalStoreReadonlyBudget, reservation_digest: str,
+                 schema_name: str, proof: dict[str, Any]):
+        if (seal is not _VERIFIED_STORE_ABSENCE_SEAL
+                or type(proof) is not dict
+                or proof.get('profile') != 'umf.original-store-absence-proof/0.1'
+                or proof.get('schemaName') != schema_name
+                or proof.get('state') != 'absent'):
+            raise TypeError('verified original store absence is supervisor-issued')
+        self._issuer = issuer
+        self._budget = budget
+        self._reservation_digest = reservation_digest
+        self._schema_name = schema_name
+        self._proof_bytes = _canonical(proof)
+
+    def __reduce_ex__(self, _protocol: int):
+        raise TypeError('verified original store absence cannot be serialized')
+
+
 class _OriginalStoreCreationReservation:
     """Opaque source-bound reservation retained across the native DDL attempt."""
 
     __slots__ = ('_approval', '_custodian', '_evidence', '_issuer',
                  '_connection', '_effect_handle', '_native_effect',
-                 '_record_bytes', '_store', '_target',
+                 '_record_bytes', '_store', '_target', '_budget',
                  'record_bytes')
 
     def __init__(self, seal: object, issuer: object, *, evidence: object,
                  approval: object, custodian: object, target: object,
                  connection: object, effect_handle: object,
-                 native_effect: object, record_bytes: bytes, store: dict[str, Any]):
+                 native_effect: object, record_bytes: bytes, store: dict[str, Any],
+                 budget: object | None):
         if seal is not _ORIGINAL_STORE_RESERVATION_SEAL:
             raise TypeError('original store reservation is supervisor-issued')
         if type(record_bytes) is not bytes or len(record_bytes) > 65_536:
@@ -1330,6 +1394,7 @@ class _OriginalStoreCreationReservation:
         self._record_bytes = bytes(record_bytes)
         self.record_bytes = bytes(record_bytes)
         self._store = _canonical(store)
+        self._budget = budget
 
     def __setattr__(self, name: str, value: Any) -> None:
         if hasattr(self, name):
@@ -1338,6 +1403,588 @@ class _OriginalStoreCreationReservation:
 
     def __reduce_ex__(self, _protocol: int):
         raise TypeError('original store reservation cannot be serialized')
+
+
+class _OriginalStoreCreationAttempt:
+    """Volatile issuer handle for one actual native transaction attempt."""
+
+    __slots__ = ('_issuer', '_reservation', '_connection', '_xid',
+                 '_database_name', '_database_oid', '_system_identifier',
+                 '_backend_pid', '_backend_start', '_budget')
+
+    def __init__(self, seal: object, issuer: object, reservation: object,
+                 connection: object, *, xid: str, database_name: str,
+                 database_oid: int, system_identifier: str,
+                 backend_pid: int, backend_start: str, budget: object):
+        if seal is not _ORIGINAL_STORE_ATTEMPT_SEAL:
+            raise TypeError('original store attempt is supervisor-issued')
+        self._issuer = issuer
+        self._reservation = reservation
+        self._connection = connection
+        self._xid = xid
+        self._database_name = database_name
+        self._database_oid = database_oid
+        self._system_identifier = system_identifier
+        self._backend_pid = backend_pid
+        self._backend_start = backend_start
+        self._budget = budget
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        if hasattr(self, name):
+            raise AttributeError('original store attempt is immutable')
+        object.__setattr__(self, name, value)
+
+    def __reduce_ex__(self, _protocol: int):
+        raise TypeError('original store attempt cannot be serialized')
+
+
+class _OriginalStoreCreationBudget:
+    """Private, process-bound allowance for one exact original creation effect."""
+
+    __slots__ = ('_issuer', '_creator_pid', '_request', '_effect_key', '_evidence',
+                 '_approval', '_custodian', '_target', '_connection', '_store_bytes',
+                 '_request_digest', '_approval_digest', '_configuration_digest',
+                 '_started_ns', '_deadline_ns', '_attempts', '_reservation_digest',
+                 '_reservation', '_caller_timeout_lower_ms', '_timeout_state', '_fenced',
+                 '_timeout_discovery_complete')
+
+    def __init__(self, seal: object, issuer: object, *, request: object,
+                 evidence: object, approval: object, custodian: object,
+                 target: object, connection: object, store: dict[str, Any],
+                 started_ns: int,
+                 caller_timeout_lower_ms: tuple[tuple[str, int], ...] | None = None):
+        if seal is not _ORIGINAL_STORE_BUDGET_SEAL:
+            raise TypeError('original store budget is supervisor-issued')
+        self._issuer = issuer
+        self._creator_pid = os.getpid()
+        self._request = request
+        self._effect_key = request.effect_key
+        self._evidence = evidence
+        self._approval = approval
+        self._custodian = custodian
+        self._target = target
+        self._connection = connection
+        self._store_bytes = _canonical(store)
+        self._request_digest = request._intent_digest
+        self._approval_digest = approval.approval_digest
+        self._configuration_digest = issuer._owner_core.configuration_digest
+        if (caller_timeout_lower_ms is not None
+                and (type(caller_timeout_lower_ms) is not tuple or len(caller_timeout_lower_ms) != 2
+                or tuple(name for name, _value in caller_timeout_lower_ms)
+                    != ('lock_timeout', 'statement_timeout')
+                or any(type(value) is not int or value < 0
+                       for _name, value in caller_timeout_lower_ms))):
+            raise TypeError('original store budget timeout evidence is invalid')
+        self._started_ns = started_ns
+        self._deadline_ns = started_ns + _ORIGINAL_STORE_HOST_WINDOW_NS
+        self._attempts = 0
+        self._reservation_digest = None
+        self._reservation = None
+        self._caller_timeout_lower_ms = caller_timeout_lower_ms
+        self._timeout_state = {}
+        self._fenced = False
+        self._timeout_discovery_complete = caller_timeout_lower_ms is not None
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        if hasattr(self, name):
+            raise AttributeError('original store budget is supervisor-issued')
+        object.__setattr__(self, name, value)
+
+    def __reduce_ex__(self, _protocol: int):
+        raise TypeError('original store budget cannot be serialized')
+
+
+def _execute_original_store_sql(issuer: Any, budget: Any, connection: Any,
+                                query: Any, params: Any = None, *,
+                                prepare: bool | None = None,
+                                binary: bool | None = None,
+                                cursor: Any = None):
+    """Drive one fixed original-store psycopg query with finite socket waits.
+
+    Psycopg 3.2.13's synchronous Cursor.execute() uses the same private
+    ``_execute_gen`` but delegates waiting to an unbounded connection wait.
+    This narrow adapter drives that generator using the pinned Wait/Ready
+    protocol and the invocation's existing absolute deadline. It never owns,
+    commits, rolls back, or closes the caller's connection.
+    """
+    try:
+        from psycopg import Connection, Cursor
+        from psycopg._enums import Ready, Wait
+    except Exception:  # noqa: BLE001 -- exact driver contract unavailable
+        raise LocalPostgresError(
+            'local-postgresql-store-budget-driver-unavailable') from None
+    if type(connection) is not Connection:
+        raise LocalPostgresError('local-postgresql-store-budget-driver-unsupported')
+    if cursor is None:
+        cursor = connection.cursor()
+    if type(cursor) is not Cursor or cursor.connection is not connection:
+        raise LocalPostgresError('local-postgresql-store-budget-cursor-unsupported')
+
+    def require_budget() -> int:
+        if type(budget) is _OriginalStoreCreationBudget:
+            if budget._issuer is not issuer:
+                raise LocalPostgresError('local-postgresql-store-budget-unavailable')
+            if budget._reservation is None:
+                return issuer._require_original_store_budget_pre_reservation(budget)
+            return issuer._require_original_store_budget(budget._reservation)
+        readonly_type = globals().get('_OriginalStoreReadonlyBudget')
+        if readonly_type is not None and type(budget) is readonly_type:
+            return issuer._require_original_store_readonly_budget(budget)
+        raise LocalPostgresError('local-postgresql-store-budget-unavailable')
+
+    lock = connection.lock
+    try:
+        acquired = lock.acquire(blocking=False)
+    except Exception:  # noqa: BLE001 -- do not operate through unknown lock
+        acquired = False
+    if not acquired:
+        raise LocalPostgresError('local-postgresql-store-budget-connection-busy')
+
+    pgconn = connection.pgconn
+    old_nonblocking = None
+    complete = False
+    operation_started = False
+    keep_locked = False
+    try:
+        require_budget()
+        readonly_type = globals().get('_OriginalStoreReadonlyBudget')
+        starting_readonly_transaction = (
+            readonly_type is not None and type(budget) is readonly_type
+            and query == 'BEGIN READ ONLY')
+        allowed_transaction_states = (
+            (0,) if starting_readonly_transaction
+            else (0, 2) if connection.autocommit else (2,))
+        if (connection.closed or pgconn.status != 0
+                or pgconn.transaction_status not in allowed_transaction_states
+                or pgconn.pipeline_status != 0):
+            raise LocalPostgresError(
+                'local-postgresql-store-budget-connection-state-invalid')
+        old_nonblocking = pgconn.nonblocking
+        if type(old_nonblocking) is not int or old_nonblocking not in (0, 1):
+            raise LocalPostgresError(
+                'local-postgresql-store-budget-connection-state-invalid')
+        socket_fd = pgconn.socket
+        if type(socket_fd) is not int or socket_fd < 0:
+            raise LocalPostgresError(
+                'local-postgresql-store-budget-connection-state-invalid')
+        pgconn.nonblocking = 1
+        require_budget()
+        generator = cursor._execute_gen(
+            query, params, prepare=prepare, binary=binary)
+        operation_started = True
+        try:
+            wait_mask = next(generator)
+        except StopIteration:
+            wait_mask = None
+            complete = True
+        while not complete:
+            require_budget()
+            if (type(wait_mask) not in (int, Wait)
+                    or int(wait_mask) not in (1, 2, 3)):
+                raise LocalPostgresError(
+                    'local-postgresql-store-budget-query-protocol-invalid')
+            remaining_ns = budget._deadline_ns - time.monotonic_ns()
+            if remaining_ns <= 0:
+                raise LocalPostgresError('local-postgresql-store-budget-exhausted')
+            timeout = min(0.025, remaining_ns / 1_000_000_000)
+            mask = int(wait_mask)
+            readable = bool(mask & 1)
+            writable = bool(mask & 2)
+            ready_read, ready_write, _exceptional = select.select(
+                [socket_fd] if readable else [],
+                [socket_fd] if writable else [], [], timeout)
+            require_budget()
+            ready = (Ready.R if ready_read else Ready.NONE)
+            if ready_write:
+                ready = Ready(int(ready) | int(Ready.W))
+            try:
+                wait_mask = generator.send(ready)
+            except StopIteration:
+                complete = True
+        require_budget()
+        pgconn.nonblocking = old_nonblocking
+        old_nonblocking = None
+        require_budget()
+        return cursor
+    except BaseException as exc:  # noqa: BLE001 -- interrupts also quarantine uncertain I/O
+        keep_locked = operation_started
+        if not operation_started and old_nonblocking is not None:
+            try:
+                pgconn.nonblocking = old_nonblocking
+                old_nonblocking = None
+            except Exception:  # noqa: BLE001 -- preserve lock if driver state is uncertain
+                keep_locked = True
+        if keep_locked:
+            if type(budget) is _OriginalStoreCreationBudget:
+                object.__setattr__(budget, '_fenced', True)
+                issuer._original_store_connection_fences[id(connection)] = connection
+            else:
+                object.__setattr__(budget, '_fenced', True)
+                issuer._original_store_readonly_connection_fences[
+                    id(connection)] = connection
+        if isinstance(exc, LocalPostgresError):
+            raise
+        if isinstance(exc, (KeyboardInterrupt, SystemExit, GeneratorExit)):
+            raise
+        raise LocalPostgresError(
+            'local-postgresql-store-budget-query-unresolved') from None
+    finally:
+        if not keep_locked:
+            lock.release()
+
+
+class _BudgetedOriginalStoreConnection:
+    """Bound each fixed creation SQL call to the same live host allowance."""
+
+    __slots__ = ('_issuer', '_reservation', '_budget', '_connection', '_lower_ms')
+
+    def __init__(self, issuer: object,
+                 reservation: _OriginalStoreCreationReservation | _OriginalStoreCreationBudget,
+                 *, connection: object | None = None):
+        self._issuer = issuer
+        self._reservation = reservation if type(reservation) is _OriginalStoreCreationReservation else None
+        self._budget = reservation._budget if self._reservation is not None else reservation
+        self._connection = self._budget._connection if connection is None else connection
+        if self._connection is self._budget._connection:
+            self._lower_ms = dict(self._budget._caller_timeout_lower_ms or ())
+        else:
+            issuer._require_original_store_budget(reservation)
+            # This connection was created by the supervisor with those exact
+            # startup options; do not perform an unbounded discovery query.
+            self._lower_ms = dict(self._budget._caller_timeout_lower_ms or ())
+
+    def _install_timeout(self, name: str, proposal_ms: int) -> None:
+        # The value is a supervisor-derived positive integer, never caller SQL.
+        remaining_ms = self._issuer._require_original_store_budget(self._budget)
+        caps = [remaining_ms, proposal_ms]
+        existing = self._lower_ms[name]
+        if existing > 0:
+            caps.append(existing)
+        timeout_ms = min(caps)
+        # SET LOCAL is required whenever this connection is already inside a
+        # transaction, including explicit transactions on autocommit=True
+        # connections.  Otherwise the supervisor's temporary cap would become
+        # session state owned by the caller.
+        transaction_status = self._connection.info.transaction_status
+        scope = 'SET LOCAL' if int(transaction_status) == 2 else 'SET'
+        _execute_original_store_sql(
+            self._issuer, self._budget, self._connection,
+            f"{scope} {name} = '{timeout_ms}ms'")
+        self._budget._timeout_state[name] = timeout_ms
+        self._issuer._require_original_store_budget(self._budget)
+
+    def execute(self, query: Any, *args: Any, **kwargs: Any):
+        self._install_timeout('lock_timeout', 5_000)
+        # Install the statement cap last so it reflects the closest pre-query
+        # sample of the same absolute deadline.
+        self._install_timeout('statement_timeout', 30_000)
+        self._issuer._require_original_store_budget(self._budget)
+        if len(args) > 1 or (args and 'params' in kwargs):
+            raise TypeError('execute accepts one parameter sequence')
+        params = args[0] if args else kwargs.pop('params', None)
+        prepare = kwargs.pop('prepare', None)
+        binary = kwargs.pop('binary', None)
+        if kwargs:
+            raise TypeError('unsupported bounded execute option')
+        cursor = _execute_original_store_sql(
+            self._issuer, self._budget, self._connection,
+            query, params, prepare=prepare, binary=binary)
+        self._issuer._require_original_store_budget(self._budget)
+        return _BudgetedOriginalStoreCursor(
+            self._issuer, self._reservation, cursor, self._connection,
+            budget=self._budget)
+
+    def restore_caller_timeouts(self) -> None:
+        """Restore the exact observed caller settings without owning its txn."""
+        budget = self._budget
+        if (self._reservation is None
+                or self._connection is not self._reservation._connection
+                or budget._caller_timeout_lower_ms is None):
+            return
+        try:
+            status = int(self._connection.info.transaction_status)
+            # An aborted transaction will roll back SET LOCAL itself.  Never
+            # issue recovery SQL into that transaction, and never end it.
+            if status != 2:
+                return
+            self._issuer._require_original_store_budget(self._budget)
+            for name, value in self._reservation._budget._caller_timeout_lower_ms:
+                self._issuer._require_original_store_budget(self._budget)
+                _execute_original_store_sql(
+                    self._issuer, budget, self._connection,
+                    f"SET LOCAL {name} = '{value}ms'")
+            self._issuer._require_original_store_budget(self._budget)
+        except BaseException:
+            # Settings restoration is part of preserving caller ownership.
+            # If it cannot be proven, quarantine this connection and make the
+            # original creation budget unavailable for any further DDL.
+            object.__setattr__(budget, '_fenced', True)
+            self._issuer._original_store_connection_fences[id(self._connection)] = (
+                self._connection)
+            raise LocalPostgresError(
+                'local-postgresql-store-timeout-restore-unresolved') from None
+
+    def __getattr__(self, name: str) -> Any:
+        if name == 'cursor':
+            return self.cursor
+        if name in {'executemany', 'transaction', 'commit', 'rollback', 'close',
+                    'pipeline', 'copy', 'cancel'}:
+            raise AttributeError(name)
+        return getattr(self._connection, name)
+
+    def cursor(self, *args: Any, **kwargs: Any):
+        self._issuer._require_original_store_budget(self._budget)
+        cursor = self._connection.cursor(*args, **kwargs)
+        return _BudgetedOriginalStoreCursor(
+            self._issuer, self._reservation, cursor, self._connection,
+            budget=self._budget)
+
+
+class _BudgetedOriginalStoreCursor:
+    """Check the same absolute limit around fetches on an original-store query."""
+
+    __slots__ = ('_issuer', '_reservation', '_budget', '_cursor', '_connection')
+
+    def __init__(self, issuer: Any,
+                 reservation: _OriginalStoreCreationReservation | None,
+                 cursor: Any, connection: Any | None = None,
+                 *, budget: _OriginalStoreCreationBudget | None = None):
+        self._issuer = issuer
+        self._reservation = reservation
+        self._budget = (reservation._budget if reservation is not None else budget)
+        self._cursor = cursor
+        self._connection = self._budget._connection if connection is None else connection
+
+    def execute(self, query: Any, params: Any = None, *,
+                prepare: bool | None = None, binary: bool | None = None):
+        self._issuer._require_original_store_budget(self._budget)
+        bounded = _BudgetedOriginalStoreConnection(
+            self._issuer, self._reservation or self._budget,
+            connection=self._connection)
+        bounded._install_timeout('lock_timeout', 5_000)
+        bounded._install_timeout('statement_timeout', 30_000)
+        self._cursor = _execute_original_store_sql(
+            self._issuer, self._budget,
+            self._connection, query, params,
+            prepare=prepare, binary=binary, cursor=self._cursor)
+        self._issuer._require_original_store_budget(self._budget)
+        return self
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type: Any, exc: Any, traceback: Any) -> None:
+        self._cursor.close()
+
+    def close(self) -> None:
+        self._cursor.close()
+
+    def __getattr__(self, name: str) -> Any:
+        if name in {'executemany', 'stream', 'copy', 'close'}:
+            raise AttributeError(name)
+        return getattr(self._cursor, name)
+
+    def fetchone(self):
+        self._issuer._require_original_store_budget(self._budget)
+        result = self._cursor.fetchone()
+        self._issuer._require_original_store_budget(self._budget)
+        return result
+
+    def fetchall(self):
+        self._issuer._require_original_store_budget(self._budget)
+        result = self._cursor.fetchall()
+        self._issuer._require_original_store_budget(self._budget)
+        return result
+
+    def fetchmany(self, size: int | None = None):
+        self._issuer._require_original_store_budget(self._budget)
+        result = (self._cursor.fetchmany() if size is None
+                  else self._cursor.fetchmany(size))
+        self._issuer._require_original_store_budget(self._budget)
+        return result
+
+    def __iter__(self):
+        return iter(self.fetchall())
+
+
+class _OriginalStoreReadonlyBudget:
+    """One supervisor-issued read-only invocation; independent of DDL allowance."""
+
+    __slots__ = ('_issuer', '_pid', '_reservation', '_request', '_effect',
+                 '_reservation_digest', '_reservation_record_bytes',
+                 '_target', '_connection', '_store_bytes',
+                 '_operation', '_started_ns', '_deadline_ns', '_fenced',
+                 '_timeout_state')
+
+    def __init__(self, seal: object, issuer: object, reservation: object,
+                 request: object, effect: object, reservation_digest: str,
+                 reservation_record_bytes: bytes,
+                 target: object, connection: object, store: dict[str, Any], operation: str,
+                 started_ns: int):
+        if seal is not _ORIGINAL_STORE_READONLY_BUDGET_SEAL:
+            raise TypeError('original store read-only budget is supervisor-issued')
+        self._issuer = issuer
+        self._pid = os.getpid()
+        self._reservation = reservation
+        self._request = request
+        self._effect = effect
+        self._reservation_digest = reservation_digest
+        self._reservation_record_bytes = bytes(reservation_record_bytes)
+        self._target = target
+        self._connection = connection
+        self._store_bytes = _canonical(store)
+        self._operation = operation
+        self._started_ns = started_ns
+        self._deadline_ns = started_ns + _ORIGINAL_STORE_READONLY_WINDOW_NS
+        self._fenced = False
+        # Mutable only inside this private invocation to bind timeout evidence
+        # to the values actually installed on its supervisor-owned connection.
+        self._timeout_state = {}
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        if hasattr(self, name):
+            raise AttributeError('original store read-only budget is immutable')
+        object.__setattr__(self, name, value)
+
+    def __reduce_ex__(self, _protocol: int):
+        raise TypeError('original store read-only budget cannot be serialized')
+
+
+class _BudgetedOriginalStoreReadonlyConnection:
+    """Clamp SQL and fetch work to one separately owned read-only window."""
+
+    __slots__ = ('_issuer', '_budget', '_connection', '_lower_ms')
+
+    def __init__(self, issuer: object, budget: _OriginalStoreReadonlyBudget,
+                 connection: object):
+        self._issuer = issuer
+        self._budget = budget
+        self._connection = connection
+        issuer._require_original_store_readonly_budget(budget)
+        try:
+            cursor = _execute_original_store_sql(
+                issuer, budget, connection,
+                "SELECT name, setting::pg_catalog.int8 FROM pg_catalog.pg_settings "
+                "WHERE name IN ('statement_timeout','lock_timeout')")
+            rows = cursor.fetchall()
+        except Exception:  # noqa: BLE001 -- no blocking fallback
+            raise LocalPostgresError('local-postgresql-store-readonly-timeout-unavailable') from None
+        if (type(rows) is not list or len(rows) != 2
+                or {row[0] for row in rows} != {'statement_timeout', 'lock_timeout'}
+                or any(type(row[1]) is not int or row[1] <= 0 for row in rows)):
+            raise LocalPostgresError('local-postgresql-store-readonly-timeout-invalid')
+        issuer._require_original_store_readonly_budget(budget)
+        self._lower_ms = {row[0]: row[1] for row in rows}
+        startup = budget._timeout_state
+        if (self._lower_ms['statement_timeout']
+                != startup.get('startupStatementTimeoutMs')
+                or self._lower_ms['lock_timeout'] != startup.get('startupLockTimeoutMs')):
+            raise LocalPostgresError('local-postgresql-store-readonly-timeout-invalid')
+
+    def _install_timeout(self, name: str, proposal_ms: int) -> None:
+        remaining_ms = self._issuer._require_original_store_readonly_budget(self._budget)
+        caps = [remaining_ms, proposal_ms]
+        if self._lower_ms[name] > 0:
+            caps.append(self._lower_ms[name])
+        timeout_ms = min(caps)
+        if timeout_ms <= 0:
+            raise LocalPostgresError('local-postgresql-store-readonly-exhausted')
+        _execute_original_store_sql(
+            self._issuer, self._budget, self._connection,
+            f"SET LOCAL {name} = '{timeout_ms}ms'")
+        self._budget._timeout_state[name] = timeout_ms
+        self._issuer._require_original_store_readonly_budget(self._budget)
+
+    def execute(self, query: Any, *args: Any, **kwargs: Any):
+        self._issuer._require_original_store_readonly_budget(self._budget)
+        self._install_timeout('lock_timeout', 5_000)
+        self._install_timeout('statement_timeout', 30_000)
+        if len(args) > 1 or (args and 'params' in kwargs):
+            raise TypeError('execute accepts one parameter sequence')
+        params = args[0] if args else kwargs.pop('params', None)
+        prepare = kwargs.pop('prepare', None)
+        binary = kwargs.pop('binary', None)
+        if kwargs:
+            raise TypeError('unsupported bounded execute option')
+        cursor = _execute_original_store_sql(
+            self._issuer, self._budget, self._connection, query, params,
+            prepare=prepare, binary=binary)
+        self._issuer._require_original_store_readonly_budget(self._budget)
+        return _BudgetedOriginalStoreReadonlyCursor(self._issuer, self._budget, cursor)
+
+    def __getattr__(self, name: str) -> Any:
+        if name == 'cursor':
+            return self.cursor
+        if name in {'executemany', 'transaction', 'commit', 'rollback', 'close',
+                    'pipeline', 'copy', 'cancel'}:
+            raise AttributeError(name)
+        return getattr(self._connection, name)
+
+    def cursor(self, *args: Any, **kwargs: Any):
+        self._issuer._require_original_store_readonly_budget(self._budget)
+        cursor = self._connection.cursor(*args, **kwargs)
+        return _BudgetedOriginalStoreReadonlyCursor(
+            self._issuer, self._budget, cursor, self._connection)
+
+
+class _BudgetedOriginalStoreReadonlyCursor:
+    __slots__ = ('_issuer', '_budget', '_cursor', '_connection')
+
+    def __init__(self, issuer: object, budget: _OriginalStoreReadonlyBudget,
+                 cursor: object, connection: object | None = None):
+        self._issuer = issuer
+        self._budget = budget
+        self._cursor = cursor
+        self._connection = budget._connection if connection is None else connection
+
+    def execute(self, query: Any, params: Any = None, *,
+                prepare: bool | None = None, binary: bool | None = None):
+        self._issuer._require_original_store_readonly_budget(self._budget)
+        bounded = _BudgetedOriginalStoreReadonlyConnection(
+            self._issuer, self._budget, self._connection)
+        bounded._install_timeout('lock_timeout', 5_000)
+        bounded._install_timeout('statement_timeout', 30_000)
+        self._cursor = _execute_original_store_sql(
+            self._issuer, self._budget, self._connection,
+            query, params, prepare=prepare, binary=binary, cursor=self._cursor)
+        self._issuer._require_original_store_readonly_budget(self._budget)
+        return self
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type: Any, exc: Any, traceback: Any) -> None:
+        self._cursor.close()
+
+    def close(self) -> None:
+        self._cursor.close()
+
+    def fetchone(self):
+        self._issuer._require_original_store_readonly_budget(self._budget)
+        value = self._cursor.fetchone()
+        self._issuer._require_original_store_readonly_budget(self._budget)
+        return value
+
+    def fetchall(self):
+        self._issuer._require_original_store_readonly_budget(self._budget)
+        value = self._cursor.fetchall()
+        self._issuer._require_original_store_readonly_budget(self._budget)
+        return value
+
+    def fetchmany(self, size: int | None = None):
+        self._issuer._require_original_store_readonly_budget(self._budget)
+        value = (self._cursor.fetchmany() if size is None
+                 else self._cursor.fetchmany(size))
+        self._issuer._require_original_store_readonly_budget(self._budget)
+        return value
+
+    def __iter__(self):
+        return iter(self.fetchall())
+
+    def __getattr__(self, name: str) -> Any:
+        if name in {'executemany', 'stream', 'copy', 'close'}:
+            raise AttributeError(name)
+        return getattr(self._cursor, name)
 
 
 class _OriginalStoreCreationCapability:
@@ -1425,6 +2072,13 @@ class LocalPostgresSupervisor:
         '_native_effect_reservations',
         '_native_targets',
         '_original_store_reservations',
+        '_original_store_attempts',
+        '_original_store_budgets',
+        '_original_store_readonly_budgets',
+        '_original_store_readonly_connection_fences',
+        '_original_store_issuer_pid',
+        '_pending_original_store_recovery',
+        '_original_store_connection_fences',
         '_original_store_capabilities',
         '_observer',
         '_owner_core',
@@ -1514,6 +2168,13 @@ class LocalPostgresSupervisor:
         self._native_effect_reservations: dict[int, _NativeEffectReservation] = {}
         self._native_effect_outcomes: dict[int, _VerifiedNativeEffectOutcome] = {}
         self._original_store_reservations: dict[int, tuple[object, dict[str, Any], dict[str, Any]]] = {}
+        self._original_store_attempts: dict[int, tuple[object, object, str]] = {}
+        self._original_store_budgets: dict[int, _OriginalStoreCreationBudget] = {}
+        self._original_store_readonly_budgets: dict[int, _OriginalStoreReadonlyBudget] = {}
+        self._original_store_readonly_connection_fences: dict[int, object] = {}
+        self._original_store_issuer_pid = os.getpid()
+        self._pending_original_store_recovery = None
+        self._original_store_connection_fences: dict[int, object] = {}
         self._original_store_capabilities: dict[int, tuple[object, object]] = {}
         self._pending_creations: dict[int, _PendingTargetCreation] = {}
         self._pending_creation_values: dict[int, tuple[_PendingTargetCreation, dict[str, Any]]] = {}
@@ -2121,8 +2782,11 @@ class LocalPostgresSupervisor:
         self._record_native_effect_outcome(
             reservation, 'confirmed', receipt, effect_handle)
 
-    def _recover_original_native_effect(self, scope: str, *, target: object = None
-                                        ) -> tuple[_NativeEffectReservation,
+    def _recover_original_native_effect(
+            self, scope: str, *, target: object = None,
+            expected_request_digest: str | None = None,
+            expected_effect_key: tuple[Any, ...] | None = None
+            ) -> tuple[_NativeEffectReservation,
                                                    _VerifiedNativeEffectOutcome | None,
                                                    object]:
         """Rehydrate the exact journaled reservation; never allocate a new ID.
@@ -2145,7 +2809,12 @@ class LocalPostgresSupervisor:
         events = self._journal.read()['events']
         matches = [event for event in events
                    if event['kind'] == 'native-effect-intent'
-                   and event['payload'].get('scope') == scope]
+                   and event['payload'].get('scope') == scope
+                   and (expected_request_digest is None
+                        or event['payload'].get('requestDigest')
+                            == expected_request_digest)
+                   and (expected_effect_key is None
+                        or event['payload'].get('effectKey') == list(expected_effect_key))]
         if len(matches) != 1:
             raise LocalPostgresError('local-postgresql-original-effect-unavailable')
         effect_event = matches[0]
@@ -2194,9 +2863,10 @@ class LocalPostgresSupervisor:
                                    == prepared['requestDigest'] for event in events)):
                 raise LocalPostgresError('local-postgresql-original-effect-mismatch')
         elif scope == 'native-store-creation':
-            if (self._custodian is None or self._custody_handle is None
-                    or target is not self._custody_handle):
-                raise LocalPostgresError('local-postgresql-original-target-unverified')
+            # Rehydration is allowed for the issuer-held pending target only
+            # under the store lease. Normal effect/DDL dispatch still requires
+            # the fully promoted custody handle.
+            self._require_original_store_recovery_target(target)
             try:
                 from .ingress_custody import JOURNAL_PROFILE_02, _replay
                 external_doc = self._custodian._journal._load()
@@ -2310,13 +2980,241 @@ class LocalPostgresSupervisor:
             raise LocalPostgresError('local-postgresql-original-outcome-mismatch')
         return reservation, outcome, request
 
+    def _validate_original_store_custody_history(self, target: object) -> bool:
+        """Validate original store chains; return true for a strict pending prefix."""
+        self._require_original_control_lease()
+        if target is not self._custody_handle or self._custodian is None or self._journal is None:
+            raise LocalPostgresError('local-postgresql-store-history-unavailable')
+        try:
+            from .ingress_custody import JOURNAL_PROFILE_02, _replay
+            if self._custodian._journal._profile != JOURNAL_PROFILE_02:
+                self._pending_original_store_recovery = None
+                return False
+            external_doc = self._custodian._journal._load()
+            state = _replay(external_doc['events'], profile=JOURNAL_PROFILE_02)
+            stores = state['stores']
+            if type(stores) is not dict:
+                raise LocalPostgresError('local-postgresql-store-history-invalid')
+            supervisor_events = self._journal.read()['events']
+            target_reference = self._custodian._public_reference(target)
+            has_pending_prefix = False
+            for key, store_state in stores.items():
+                if (type(key) is not tuple or len(key) != 6
+                        or store_state.get('key') != key
+                        or store_state.get('status') not in
+                            ('reserved', 'observed-committed', 'confirmed')):
+                    raise LocalPostgresError(
+                        'local-postgresql-store-history-incomplete')
+                record = store_state['reservation']
+                store_descriptor = record['store']
+                expected_external_key = (
+                    target_reference['registrationId'], self._provider_id,
+                    self._bound_installation_id, store_descriptor['profile'],
+                    store_descriptor['storeId'], store_descriptor['schemaName'])
+                if (key != expected_external_key
+                        or record['targetCustody'] != target_reference):
+                    raise LocalPostgresError(
+                        'local-postgresql-store-history-identity-mismatch')
+                reserved = next((event for event in external_doc['events']
+                                 if event['kind'] == 'originals-store-reserved'
+                                 and event['payload']['reservation']['reservationId']
+                                     == store_state['id']), None)
+                typed = [event for event in supervisor_events
+                         if event['kind'] == 'originals-store-creation-intent'
+                         and event['payload'].get('reservationDigest')
+                             == store_state['reservationDigest']]
+                typed_confirmation = [event for event in supervisor_events
+                                      if event['kind']
+                                          == 'originals-store-creation-confirmed'
+                                      and event['payload'].get('reservationDigest')
+                                          == store_state['reservationDigest']]
+                if reserved is None:
+                    raise LocalPostgresError(
+                        'local-postgresql-store-history-supervisor-mismatch')
+                effect_key = ['native-store-creation', record['providerId'],
+                              record['store']['profile'], record['store']['storeId']]
+                effects = [event for event in supervisor_events
+                           if event['kind'] == 'native-effect-intent'
+                           and event['payload'].get('scope') == 'native-store-creation'
+                           and event['payload'].get('requestDigest')
+                               == record['creationRequestDigest']
+                           and event['payload'].get('effectKey') == effect_key]
+                if store_state.get('status') != 'confirmed':
+                    # Registration classifies prefixes without Core rehydration
+                    # or journal writes. Those actions belong to the bounded
+                    # store-lease continuation after native absence/authority
+                    # has been observed.
+                    matching_typed = [event for event in typed
+                                      if event['payload'].get(
+                                          'custodianReservedEventDigest')
+                                          == reserved['recordDigest']
+                                      and event['payload'].get('creationRequestDigest')
+                                          == record['creationRequestDigest']
+                                      and event['payload'].get('creationApprovalDigest')
+                                          == record['creationApprovalDigest']]
+                    same_key_effects = [event for event in supervisor_events
+                                        if event['kind'] == 'native-effect-intent'
+                                        and event['payload'].get('scope')
+                                            == 'native-store-creation'
+                                        and event['payload'].get('effectKey')
+                                            == effect_key]
+                    same_key_typed = []
+                    for event in supervisor_events:
+                        if event['kind'] != 'originals-store-creation-intent':
+                            continue
+                        other = event['payload'].get('reservation')
+                        if (type(other) is dict and type(other.get('store')) is dict
+                                and type(other.get('targetCustody')) is dict
+                                and (other['targetCustody'].get('registrationId'),
+                                     other.get('providerId'),
+                                     other.get('installationId'),
+                                     other['store'].get('profile'),
+                                     other['store'].get('storeId'),
+                                     other['store'].get('schemaName'))
+                                    == key
+                                and event['payload'].get('reservationDigest')
+                                    != store_state['reservationDigest']):
+                            same_key_typed.append(event)
+                    if (len(typed) > 1 or len(effects) > 1
+                            or typed_confirmation
+                            or (typed and len(matching_typed) != 1)
+                            or len(same_key_typed) != 0
+                            or (not typed and bool(effects))
+                            or (same_key_effects and len(effects) != 1)):
+                        raise LocalPostgresError(
+                            'local-postgresql-store-history-supervisor-mismatch')
+                    if typed:
+                        pending_typed = typed[0]
+                        matching_effects = [event for event in effects
+                                            if event['sequence']
+                                                == pending_typed['sequence'] + 1
+                                            and event['previousDigest']
+                                                == pending_typed['recordDigest']
+                                            and event['payload'].get('approvalDigest')
+                                                == record['creationApprovalDigest']
+                                            and event['payload'].get('requestDigest')
+                                                == record['creationRequestDigest']]
+                        if effects and len(matching_effects) != 1:
+                            raise LocalPostgresError(
+                                'local-postgresql-store-history-supervisor-mismatch')
+                    if (store_state.get('status') == 'observed-committed'
+                            and (len(typed) != 1 or len(effects) != 1
+                                 or len(matching_typed) != 1
+                                 or len(matching_effects) != 1
+                                 or store_state.get('observedSupervisorIntentDigest')
+                                    != effects[0]['recordDigest']
+                                 or store_state.get('nativeReceiptDigest')
+                                    != store_state['observations'][-1]['payload'].get(
+                                        'nativeReceiptDigest'))):
+                        raise LocalPostgresError(
+                            'local-postgresql-store-history-supervisor-mismatch')
+                    has_pending_prefix = True
+                    continue
+                if (reserved is None or len(typed) != 1 or len(effects) != 1
+                        or len(typed_confirmation) != 1):
+                    raise LocalPostgresError(
+                        'local-postgresql-store-history-supervisor-mismatch')
+                typed_event, effect_event = typed[0], effects[0]
+                typed_payload = typed_event['payload']
+                effect = effect_event['payload']
+                if (typed_payload.get('custodianReservedEventDigest')
+                        != reserved['recordDigest']
+                        or typed_payload.get('creationRequestDigest')
+                            != record['creationRequestDigest']
+                        or typed_payload.get('creationApprovalDigest')
+                            != record['creationApprovalDigest']
+                        or typed_event['sequence'] + 1 != effect_event['sequence']
+                        or effect_event['previousDigest'] != typed_event['recordDigest']
+                        or effect.get('approvalDigest')
+                            != record['creationApprovalDigest']
+                        or effect.get('requestDigest')
+                            != record['creationRequestDigest']):
+                    raise LocalPostgresError(
+                        'local-postgresql-store-history-supervisor-mismatch')
+                receipt_digest = store_state.get('nativeReceiptDigest')
+                typed_confirmation_payload = typed_confirmation[0]['payload']
+                native_confirmation = next((event for event in supervisor_events
+                                            if event['kind'] == 'native-effect-confirmed'
+                                            and event['payload'].get('reservationId')
+                                                == effect.get('reservationId')), None)
+                if (typed_confirmation_payload.get('nativeReceiptDigest') != receipt_digest
+                        or native_confirmation is None
+                        or native_confirmation['payload'].get('receiptDigest') != receipt_digest):
+                    raise LocalPostgresError(
+                        'local-postgresql-store-history-native-mismatch')
+                request_value = reserved['payload']['request']
+                intent_bytes = _canonical(request_value)
+                if (hashlib.sha256(intent_bytes).hexdigest()
+                        != record['creationRequestDigest']):
+                    raise LocalPostgresError(
+                        'local-postgresql-store-history-request-mismatch')
+                target_fields = {
+                    'supervisorId': self._supervisor_id,
+                    'custodianId': self._custodian_id,
+                    'providerId': self._provider_id,
+                    'installationId': self._bound_installation_id,
+                }
+                saved = self._owner_core._ledger.find_original_request(
+                    scope='native-store-creation',
+                    intent_digest=record['creationRequestDigest'],
+                    target=target_fields, intent=request_value, intent_bytes=intent_bytes,
+                    effect_key=('native-store-creation', record['providerId'],
+                                record['store']['profile'], record['store']['storeId']),
+                    context=self._authority_context)
+                if saved.get('approvalId') != effect['approvalId']:
+                    raise LocalPostgresError(
+                        'local-postgresql-store-history-approval-mismatch')
+                request = self._owner_core._recover_original_request(
+                    'native-store-creation', intent_bytes,
+                    context=self._authority_context,
+                    expected_approval_id=effect['approvalId'])
+                approval = self._owner_core._recover_verified_approval(request)
+                self._owner_core._resolve_verified_approval(
+                    approval, original_request=request, scope='native-store-creation',
+                    intent_digest=record['creationRequestDigest'])
+                expected_key = ('native-store-creation', record['providerId'],
+                                record['store']['profile'], record['store']['storeId'])
+                if (request.effect_key != expected_key
+                        or approval.approval_digest != record['creationApprovalDigest']
+                        or approval.approval_id != effect['approvalId']):
+                    raise LocalPostgresError(
+                        'local-postgresql-store-history-approval-mismatch')
+                owner_state = self._owner_core.observe_original_request(
+                    self._authority_context, request.effect_key)
+                _core_pending, core_outcome = self._owner_core._ledger.observe_effect(
+                    approval.approval_id)
+                if (owner_state.effect_status != 'confirmed'
+                        or owner_state.effect_receipt_digest != receipt_digest
+                        or core_outcome is None or core_outcome.get('status') != 'confirmed'
+                        or core_outcome.get('reservationDigest')
+                            != _digest(effect_event['recordDigest'])
+                        or core_outcome.get('receiptDigest') != receipt_digest):
+                    raise LocalPostgresError(
+                        'local-postgresql-store-history-core-mismatch')
+                self._require_original_control_lease()
+            if has_pending_prefix:
+                self._pending_original_store_recovery = (
+                    target, self._custodian, self._custodian_id,
+                    self._authority_context, os.getpid(), target_reference)
+            else:
+                self._pending_original_store_recovery = None
+            return has_pending_prefix
+        except LocalPostgresError:
+            raise
+        except Exception:  # noqa: BLE001 -- no custodian from incomplete cross-chain state
+            raise LocalPostgresError(
+                'local-postgresql-store-history-unavailable') from None
+
     def _recover_original_store_effect(
             self, target: object, external_doc: dict[str, Any],
-            store_state: dict[str, Any], reserved_event: dict[str, Any]
-            ) -> tuple[_NativeEffectReservation, _VerifiedNativeEffectOutcome | None,
-                       object]:
-        """Finish only the original journal intent chain before any DDL recovery."""
-        if (self._journal is None or target is not self._custody_handle
+            store_state: dict[str, Any], reserved_event: dict[str, Any], *,
+            readonly_budget: _OriginalStoreReadonlyBudget | None = None,
+            recovery_observation: _VerifiedOriginalStoreRecoveryObservation | None = None,
+            absence_authorization: _VerifiedOriginalStoreAbsence | None = None
+            ) -> tuple[_NativeEffectReservation | None,
+                       _VerifiedNativeEffectOutcome | None, object]:
+        """Reconstruct original authority; create missing intents only after proof."""
+        if (self._journal is None or not self._is_original_store_recovery_target(target)
                 or type(external_doc) is not dict
                 or not any(event is reserved_event
                            or event == reserved_event
@@ -2324,20 +3222,46 @@ class LocalPostgresSupervisor:
                 or reserved_event['payload']['reservationDigest']
                     != store_state['reservationDigest']):
             raise LocalPostgresError('local-postgresql-store-recovery-intent-mismatch')
-        reservation_record = store_state['reservation']
         events = self._journal.read()['events']
-        effects = [event for event in events
-                   if event['kind'] == 'native-effect-intent'
-                   and event['payload'].get('scope') == 'native-store-creation']
+        reservation_record = store_state['reservation']
+        store = reservation_record['store']
+        selected_effect_key = ['native-store-creation', reservation_record['providerId'],
+                               store['profile'], store['storeId']]
+        same_store_effects = [event for event in events
+                              if event['kind'] == 'native-effect-intent'
+                              and event['payload'].get('scope') == 'native-store-creation'
+                              and event['payload'].get('effectKey') == selected_effect_key]
+        effects = [event for event in same_store_effects
+                   if event['payload'].get('requestDigest')
+                      == reservation_record['creationRequestDigest']]
         typed = [event for event in events
                  if event['kind'] == 'originals-store-creation-intent'
                  and event['payload'].get('reservationDigest')
                     == store_state['reservationDigest']]
-        if len(effects) > 1 or len(typed) > 1:
+        if len(effects) > 1 or len(typed) > 1 or (same_store_effects and not effects):
             raise LocalPostgresError('local-postgresql-store-recovery-intent-conflict')
-        if any(event['kind'] == 'originals-store-creation-intent'
-               for event in events) and not typed:
-            raise LocalPostgresError('local-postgresql-store-recovery-intent-conflict')
+        # Another store's typed intent is legal. A duplicate/conflicting intent
+        # for this exact six-part external key is not.
+        selected_key = tuple(reservation_record['targetCustody'][field]
+                             for field in ('registrationId',)) + (
+            reservation_record['providerId'], reservation_record['installationId'],
+            store['profile'], store['storeId'], store['schemaName'])
+        for event in events:
+            if event['kind'] != 'originals-store-creation-intent':
+                continue
+            payload = event['payload']
+            other = payload.get('reservation')
+            if type(other) is not dict:
+                continue
+            other_store = other.get('store')
+            other_target = other.get('targetCustody')
+            if (type(other_store) is dict and type(other_target) is dict
+                    and tuple(other_target.get(field) for field in ('registrationId',))
+                        + (other.get('providerId'), other.get('installationId'),
+                           other_store.get('profile'), other_store.get('storeId'),
+                           other_store.get('schemaName')) == selected_key
+                    and payload.get('reservationDigest') != store_state['reservationDigest']):
+                raise LocalPostgresError('local-postgresql-store-recovery-intent-conflict')
         if typed:
             typed_event = typed[0]
             if (typed_event['payload'].get('custodianReservedEventDigest')
@@ -2347,22 +3271,30 @@ class LocalPostgresSupervisor:
                     or typed_event['payload'].get('creationApprovalDigest')
                         != reservation_record['creationApprovalDigest']):
                 raise LocalPostgresError('local-postgresql-store-recovery-intent-mismatch')
-        else:
-            if any(event['kind'] == 'native-effect-intent'
-                   and event['payload'].get('scope') == 'native-store-creation'
-                   for event in events):
+        elif absence_authorization is not None:
+            if (type(absence_authorization) is not _VerifiedOriginalStoreAbsence
+                    or absence_authorization._issuer is not self
+                    or absence_authorization._budget is not readonly_budget):
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-absence-unverified')
+            self._require_original_store_readonly_budget(absence_authorization._budget)
+            if (absence_authorization._budget._issuer is not self
+                    or absence_authorization._reservation_digest
+                        != store_state['reservationDigest']
+                    or absence_authorization._schema_name
+                        != reservation_record['store']['schemaName']
+                    or type(recovery_observation)
+                        is not _VerifiedOriginalStoreRecoveryObservation
+                    or recovery_observation._issuer is not self
+                    or recovery_observation._budget is not readonly_budget
+                    or recovery_observation._request
+                        is not absence_authorization._budget._request
+                    or recovery_observation._reservation_digest
+                        != store_state['reservationDigest']):
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-absence-unverified')
+            if same_store_effects:
                 raise LocalPostgresError('local-postgresql-store-recovery-intent-conflict')
-            typed_event = self._append_supervisor_journal(
-                'originals-store-creation-intent', {
-                    'purpose': store_state['purpose'],
-                    'reservation': reservation_record,
-                    'reservationDigest': store_state['reservationDigest'],
-                    'custodianReservedEventDigest': reserved_event['recordDigest'],
-                    'creationRequestDigest': reservation_record['creationRequestDigest'],
-                    'creationApprovalDigest': reservation_record['creationApprovalDigest'],
-                    'nativeAuthorityEvidenceDigest':
-                        reservation_record['nativeAuthorityEvidenceDigest'],
-                })
         request_value = reserved_event['payload']['request']
         intent_bytes = _canonical(request_value)
         effect_key = ('native-store-creation', reservation_record['providerId'],
@@ -2391,6 +3323,34 @@ class LocalPostgresSupervisor:
         if (request.effect_key != effect_key
                 or approval.approval_digest != reservation_record['creationApprovalDigest']):
             raise LocalPostgresError('local-postgresql-store-recovery-approval-mismatch')
+        if (absence_authorization is not None
+                and (absence_authorization._budget._request._intent_bytes != intent_bytes
+                     or absence_authorization._budget._target is not target
+                     or absence_authorization._proof_bytes
+                        != _canonical(json.loads(absence_authorization._proof_bytes)))):
+            raise LocalPostgresError(
+                'local-postgresql-store-recovery-absence-unverified')
+        if not typed and absence_authorization is None:
+            # The external reservation is durable, but no supervisor intent is
+            # inferred from it.  The caller must first finish its bounded live
+            # authority and complete-absence observation before any append.
+            if effects:
+                raise LocalPostgresError('local-postgresql-store-recovery-intent-mismatch')
+            return None, None, request
+        if not typed and typed_event is None:
+            if absence_authorization is None:
+                raise LocalPostgresError('local-postgresql-store-recovery-absence-unverified')
+            typed_event = self._append_supervisor_journal(
+                'originals-store-creation-intent', {
+                    'purpose': store_state['purpose'],
+                    'reservation': reservation_record,
+                    'reservationDigest': store_state['reservationDigest'],
+                    'custodianReservedEventDigest': reserved_event['recordDigest'],
+                    'creationRequestDigest': reservation_record['creationRequestDigest'],
+                    'creationApprovalDigest': reservation_record['creationApprovalDigest'],
+                    'nativeAuthorityEvidenceDigest':
+                        reservation_record['nativeAuthorityEvidenceDigest'],
+                })
         if effects:
             effect = effects[0]
             if (effect['payload'].get('requestDigest')
@@ -2408,7 +3368,11 @@ class LocalPostgresSupervisor:
                 raise LocalPostgresError(
                     'local-postgresql-store-recovery-binding-unresolved') from None
             return self._recover_original_native_effect(
-                'native-store-creation', target=target)
+                'native-store-creation', target=target,
+                expected_request_digest=reservation_record['creationRequestDigest'],
+                expected_effect_key=effect_key)
+        if absence_authorization is None:
+            return None, None, request
         self._make_native_effect_reservation(
             request, approval, 'native-store-creation', effect_key,
             self._profile.purpose, target, typed_event, intent_bytes)
@@ -2418,7 +3382,36 @@ class LocalPostgresSupervisor:
         except Exception:  # noqa: BLE001 -- preserve the original intent without DDL
             raise LocalPostgresError('local-postgresql-store-recovery-binding-unresolved') from None
         return self._recover_original_native_effect(
-            'native-store-creation', target=target)
+            'native-store-creation', target=target,
+            expected_request_digest=reservation_record['creationRequestDigest'],
+            expected_effect_key=effect_key)
+
+    def _is_original_store_recovery_target(self, target: object) -> bool:
+        if target is self._custody_handle and self._custodian is not None:
+            return True
+        pending = getattr(self, '_pending_original_store_recovery', None)
+        return (type(pending) is tuple and len(pending) == 6
+                and pending[0] is target and pending[1] is self._custodian
+                and pending[2] == self._custodian_id
+                and pending[3] is self._authority_context
+                and pending[4] == os.getpid()
+                and type(pending[5]) is dict
+                and self._custodian is not None and self._journal is not None)
+
+    def _require_original_store_recovery_target(self, target: object) -> None:
+        self._require_original_control_lease(operation_kind='store')
+        if not self._is_original_store_recovery_target(target):
+            raise LocalPostgresError('local-postgresql-store-recovery-unverified')
+        pending = self._pending_original_store_recovery
+        if pending is not None and pending[0] is target:
+            try:
+                reference = self._custodian._public_reference(target)
+                verified = self._custodian._resolve_target_custody(target)
+            except Exception:  # noqa: BLE001 -- private pending handle is revalidated
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-unverified') from None
+            if reference != pending[5] or verified.reference != pending[5]:
+                raise LocalPostgresError('local-postgresql-store-recovery-unverified')
 
     def prepare_original_registration_reattachment(
             self, target: object) -> _NativeEffectReservation:
@@ -2549,6 +3542,16 @@ class LocalPostgresSupervisor:
         self._resolver = resolver
         self._custodian = custodian
         self._custody_handle = handle
+        try:
+            pending_store_recovery = self._validate_original_store_custody_history(handle)
+        except Exception:
+            self._custodian = None
+            self._custody_handle = None
+            self._pending_original_store_recovery = None
+            self._resolver = None
+            raise
+        if pending_store_recovery:
+            self._custody_handle = None
         if owner_approved is None and outcome is None:
             self._append_supervisor_journal('owner-registration-approved', {
                 'registrationId': registration['registrationId'],
@@ -2580,7 +3583,9 @@ class LocalPostgresSupervisor:
                       and owner_state.effect_receipt_digest != outcome.receipt_digest)):
                 raise LocalPostgresError('local-postgresql-registration-outcome-mismatch')
         self._registration_recovery_dispatches.pop(id(reservation), None)
-        return handle
+        # A valid incomplete original-store prefix grants only the private
+        # recovery route; do not return its TargetCustody capability.
+        return reference if pending_store_recovery else handle
 
     def prepare_target_creation(self) -> tuple[_PendingTargetCreation, object]:
         """Reserve the original target identity and signed request without native effects."""
@@ -3606,8 +4611,18 @@ class LocalPostgresSupervisor:
         self._record_native_effect_outcome(
             reservation, 'confirmed', receipt, effect_handle)
         self._custody_handle = handle
+        try:
+            pending_store_recovery = self._validate_original_store_custody_history(handle)
+        except Exception:
+            self._custodian = None
+            self._custody_handle = None
+            self._pending_original_store_recovery = None
+            self._resolver = None
+            raise
+        if pending_store_recovery:
+            self._custody_handle = None
         self._registration_preparations.pop(id(prepared), None)
-        return handle
+        return reference if pending_store_recovery else handle
 
     def _apply_principal_role_transaction(
             self, prepared: _PreparedOriginalPrincipals,
@@ -4126,31 +5141,115 @@ class LocalPostgresSupervisor:
             raise LocalPostgresError('local-postgresql-not-created')
         return intent['maintenanceName']
 
-    def _connect_maintenance(self, database_name: str):
+    def _connect_maintenance(self, database_name: str, *,
+                             budget_reservation: _OriginalStoreCreationReservation | _OriginalStoreCreationBudget | None = None,
+                             readonly_budget: _OriginalStoreReadonlyBudget | None = None):
         if self._maintenance_password is None:
             raise LocalPostgresError('local-postgresql-credential-unavailable')
+        connection = None
         try:
             from psycopg import connect
-
-            return connect(host='127.0.0.1', port=self._profile.port,
+            connect_timeout = 3
+            if budget_reservation is not None:
+                remaining_ms = self._require_original_store_budget(budget_reservation)
+                connect_timeout = min(3, remaining_ms // 1000)
+                if connect_timeout <= 0:
+                    raise LocalPostgresError('local-postgresql-store-budget-exhausted')
+            if readonly_budget is not None:
+                remaining_ms = self._require_original_store_readonly_budget(readonly_budget)
+                connect_timeout = min(connect_timeout, remaining_ms // 1000)
+                if connect_timeout <= 0:
+                    raise LocalPostgresError('local-postgresql-store-readonly-exhausted')
+                # The private connection starts with finite server-side waits
+                # before the first query that discovers the installed values.
+                # The discovery query is therefore bounded from connection
+                # startup rather than relying on a Python deadline check alone.
+                statement_startup_ms = min(remaining_ms, 30_000)
+                lock_startup_ms = min(remaining_ms, 5_000)
+                if statement_startup_ms <= 0 or lock_startup_ms <= 0:
+                    raise LocalPostgresError('local-postgresql-store-readonly-exhausted')
+                readonly_budget._timeout_state['startupStatementTimeoutMs'] = \
+                    statement_startup_ms
+                readonly_budget._timeout_state['startupLockTimeoutMs'] = lock_startup_ms
+                self._require_original_store_readonly_budget(readonly_budget)
+            options = ("-c search_path=pg_catalog -c row_security=on "
+                       "-c session_replication_role=origin "
+                       "-c default_transaction_read_only=off "
+                       "-c 'default_transaction_isolation=read committed'")
+            if budget_reservation is not None:
+                statement_startup_ms = min(remaining_ms, 30_000)
+                lock_startup_ms = min(remaining_ms, 5_000)
+                creation_budget = (budget_reservation._budget
+                                   if type(budget_reservation)
+                                   is _OriginalStoreCreationReservation
+                                   else budget_reservation)
+                lower = dict(creation_budget._caller_timeout_lower_ms or ())
+                if lower.get('statement_timeout', 0) > 0:
+                    statement_startup_ms = min(
+                        statement_startup_ms, lower['statement_timeout'])
+                if lower.get('lock_timeout', 0) > 0:
+                    lock_startup_ms = min(lock_startup_ms, lower['lock_timeout'])
+                if statement_startup_ms <= 0 or lock_startup_ms <= 0:
+                    raise LocalPostgresError('local-postgresql-store-budget-exhausted')
+            if readonly_budget is not None:
+                options += (f" -c statement_timeout={statement_startup_ms}ms"
+                            f" -c lock_timeout={lock_startup_ms}ms")
+            elif budget_reservation is not None:
+                options += (f" -c statement_timeout={statement_startup_ms}ms"
+                            f" -c lock_timeout={lock_startup_ms}ms")
+            connection = connect(host='127.0.0.1', port=self._profile.port,
                            dbname=database_name, user=self._maintenance_name(),
                            password=self._maintenance_password.decode('ascii').rstrip('\n'),
-                           sslmode='disable', connect_timeout=3,
+                           sslmode='disable', connect_timeout=connect_timeout,
                            application_name='umf_g11_local_owner',
-                           options="-c search_path=pg_catalog -c row_security=on "
-                                   "-c session_replication_role=origin "
-                                   "-c default_transaction_read_only=off "
-                                   "-c 'default_transaction_isolation=read committed'")
+                           options=options)
+            if budget_reservation is not None:
+                self._require_original_store_budget(budget_reservation)
+            if readonly_budget is not None:
+                self._require_original_store_readonly_budget(readonly_budget)
+            return connection
+        except LocalPostgresError:
+            if connection is not None:
+                try:
+                    connection.close()
+                except Exception:  # noqa: BLE001 -- preserve the original fail-closed error
+                    pass
+            raise
         except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
+            if connection is not None:
+                try:
+                    connection.close()
+                except Exception:  # noqa: BLE001 -- preserve the original fail-closed error
+                    pass
             raise LocalPostgresError('local-postgresql-maintenance-authentication-failed') from None
 
-    def _observe_native(self, database_name: str, *, current_role: str | None = None) -> dict[str, Any]:
+    def _observe_native(self, database_name: str, *, current_role: str | None = None,
+                        budget_reservation: _OriginalStoreCreationReservation | _OriginalStoreCreationBudget | None = None,
+                        readonly_budget: _OriginalStoreReadonlyBudget | None = None
+                        ) -> dict[str, Any]:
         try:
-            with self._connect_maintenance(database_name) as connection:
-                connection.autocommit = True
-                if current_role is not None:
+            with self._connect_maintenance(
+                    database_name, budget_reservation=budget_reservation,
+                    readonly_budget=readonly_budget) as raw_connection:
+                raw_connection.autocommit = True
+                connection = (self._budgeted_original_store_connection(
+                    budget_reservation, connection=raw_connection)
+                    if budget_reservation is not None else raw_connection)
+                if current_role is not None and readonly_budget is None:
+                    if budget_reservation is not None:
+                        self._require_original_store_budget(budget_reservation)
+                    if readonly_budget is not None:
+                        self._require_original_store_readonly_budget(readonly_budget)
                     connection.execute(f'SET ROLE {_quote_identifier(current_role)}')
-                row = connection.execute("""SELECT current_setting('server_version_num'),
+                    if budget_reservation is not None:
+                        self._require_original_store_budget(budget_reservation)
+                    if readonly_budget is not None:
+                        self._require_original_store_readonly_budget(readonly_budget)
+                if budget_reservation is not None:
+                    self._require_original_store_budget(budget_reservation)
+                if readonly_budget is not None:
+                    self._require_original_store_readonly_budget(readonly_budget)
+                query_native = """SELECT current_setting('server_version_num'),
 current_setting('listen_addresses'),current_setting('unix_socket_directories'),
 current_setting('port'),current_setting('data_directory'),current_setting('config_file'),
 current_setting('hba_file'),current_setting('ident_file'),current_setting('ssl'),
@@ -4166,7 +5265,16 @@ current_database(),(SELECT oid FROM pg_catalog.pg_database WHERE datname=current
 (SELECT system_identifier::pg_catalog.text FROM pg_catalog.pg_control_system()),
 session_user,current_user,current_setting('role'),
 (SELECT oid FROM pg_catalog.pg_roles WHERE rolname=session_user),
-(SELECT oid FROM pg_catalog.pg_roles WHERE rolname=current_user),pg_catalog.version()""").fetchone()
+(SELECT oid FROM pg_catalog.pg_roles WHERE rolname=current_user),pg_catalog.version()"""
+                row = (self._fetch_original_store_readonly(
+                    connection, readonly_budget, query_native,
+                    current_role=current_role, many=False)
+                    if readonly_budget is not None
+                    else connection.execute(query_native).fetchone())
+                if budget_reservation is not None:
+                    self._require_original_store_budget(budget_reservation)
+                if readonly_budget is not None:
+                    self._require_original_store_readonly_budget(readonly_budget)
                 names = ('serverVersionNum', 'listenAddresses', 'unixSocketDirectories',
                          'port', 'dataDirectory', 'configFile', 'hbaFile', 'identFile', 'ssl',
                          'passwordEncryption', 'timeZone', 'dateStyle', 'maxPreparedTransactions',
@@ -4179,11 +5287,33 @@ session_user,current_user,current_setting('role'),
                          'roleSetting',
                          'sessionUserOid', 'currentUserOid', 'serverVersion')
                 native = dict(zip(names, row, strict=True))
-                rules = connection.execute("""SELECT type,database,user_name,address,netmask,
-auth_method,options,error FROM pg_catalog.pg_hba_file_rules ORDER BY line_number""").fetchall()
+                if budget_reservation is not None:
+                    self._require_original_store_budget(budget_reservation)
+                if readonly_budget is not None:
+                    self._require_original_store_readonly_budget(readonly_budget)
+                query_rules = """SELECT type,database,user_name,address,netmask,
+auth_method,options,error FROM pg_catalog.pg_hba_file_rules ORDER BY line_number"""
+                rules = (self._fetch_original_store_readonly(
+                    connection, readonly_budget, query_rules,
+                    current_role=current_role, many=True)
+                    if readonly_budget is not None
+                    else connection.execute(query_rules).fetchall())
                 native['hbaRules'] = [list(item) for item in rules]
-                setting_rows = connection.execute("""SELECT name,setting,source,sourcefile,
-pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
+                if budget_reservation is not None:
+                    self._require_original_store_budget(budget_reservation)
+                if readonly_budget is not None:
+                    self._require_original_store_readonly_budget(readonly_budget)
+                query_settings = """SELECT name,setting,source,sourcefile,
+pending_restart FROM pg_catalog.pg_settings ORDER BY name"""
+                setting_rows = (self._fetch_original_store_readonly(
+                    connection, readonly_budget, query_settings,
+                    current_role=current_role, many=True)
+                    if readonly_budget is not None
+                    else connection.execute(query_settings).fetchall())
+                if budget_reservation is not None:
+                    self._require_original_store_budget(budget_reservation)
+                if readonly_budget is not None:
+                    self._require_original_store_readonly_budget(readonly_budget)
                 native['settingsDigest'] = _digest([list(item) for item in setting_rows])
                 native['settingsCount'] = len(setting_rows)
         except LocalPostgresError:
@@ -4203,7 +5333,8 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             'currentUser': expected_role,
             'roleSetting': current_role or 'none',
             'searchPath': 'pg_catalog', 'rowSecurity': 'on',
-            'sessionReplicationRole': 'origin', 'transactionReadOnly': 'off',
+            'sessionReplicationRole': 'origin',
+            'transactionReadOnly': 'on' if readonly_budget is not None else 'off',
             'transactionIsolation': 'read committed',
             'databaseName': database_name,
         }
@@ -4217,12 +5348,16 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
                                    or Path(native['hbaFile']) != self._target_paths['control'] / 'pg_hba.conf'
                                    or Path(native['identFile']) != self._target_paths['control'] / 'pg_ident.conf'):
             raise LocalPostgresError('local-postgresql-effective-path-mismatch')
-        self._verify_effective_settings(setting_rows, native)
+        self._verify_effective_settings(
+            setting_rows, native, budget_reservation=budget_reservation,
+            readonly_budget=readonly_budget)
         self._verify_hba_rules(native['hbaRules'])
         return native
 
-    def _verify_effective_settings(self, rows: list[tuple[Any, ...]],
-                                   native: dict[str, Any]) -> None:
+    def _verify_effective_settings(
+            self, rows: list[tuple[Any, ...]], native: dict[str, Any], *,
+            budget_reservation: _OriginalStoreCreationReservation | _OriginalStoreCreationBudget | None = None,
+            readonly_budget: _OriginalStoreReadonlyBudget | None = None) -> None:
         expected_file = {
             'listen_addresses': '127.0.0.1', 'unix_socket_directories': '',
             'port': str(self._profile.port), 'ssl': 'off',
@@ -4247,6 +5382,8 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
         seen_file: set[str] = set()
         seen_command: set[str] = set()
         seen_client: set[str] = set()
+        seen_readonly_waits: set[str] = set()
+        seen_creation_waits: set[str] = set()
         for name, setting, source, sourcefile, pending_restart in rows:
             key = str(name).lower()
             if pending_restart is not False:
@@ -4267,6 +5404,32 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             elif key == 'role' and source == 'session':
                 if setting != native['roleSetting'] or sourcefile is not None:
                     raise LocalPostgresError('local-postgresql-effective-settings-mismatch')
+            elif (key == 'transaction_read_only' and source == 'session'
+                  and native['transactionReadOnly'] == 'on' and setting == 'on'
+                  and sourcefile is None):
+                pass
+            elif (budget_reservation is not None
+                  and key in {'statement_timeout', 'lock_timeout'}
+                  and source == 'session' and sourcefile is None
+                  and type(setting) is str and setting.isdecimal()
+                  and setting == str((budget_reservation._budget
+                                      if type(budget_reservation)
+                                      is _OriginalStoreCreationReservation
+                                      else budget_reservation)._timeout_state.get(key))
+                  and int(setting) > 0
+                  and int(setting) <= (30_000 if key == 'statement_timeout' else 5_000)):
+                seen_creation_waits.add(key)
+            elif (readonly_budget is not None
+                  and key in {'statement_timeout', 'lock_timeout'}
+                  and source == 'session' and sourcefile is None
+                  and type(setting) is str and setting.isdecimal()
+                  and setting == str(readonly_budget._timeout_state.get(key))
+                  and int(setting) > 0
+                  and int(setting) <= (30_000 if key == 'statement_timeout' else 5_000)):
+                # This is the exact actual value installed for the query by the
+                # same invocation wrapper; the raw settings rows/digest remain
+                # unmodified in the observation.
+                seen_readonly_waits.add(key)
             elif source == 'default':
                 if sourcefile is not None:
                     raise LocalPostgresError('local-postgresql-effective-settings-mismatch')
@@ -4276,6 +5439,12 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
                 raise LocalPostgresError('local-postgresql-effective-settings-mismatch')
         if (seen_file != set(expected_file) or seen_command != set(expected_command)
                 or seen_client != set(expected_client)):
+            raise LocalPostgresError('local-postgresql-effective-settings-mismatch')
+        if (readonly_budget is not None
+                and seen_readonly_waits != {'statement_timeout', 'lock_timeout'}):
+            raise LocalPostgresError('local-postgresql-effective-settings-mismatch')
+        if (budget_reservation is not None
+                and seen_creation_waits != {'statement_timeout', 'lock_timeout'}):
             raise LocalPostgresError('local-postgresql-effective-settings-mismatch')
 
     def _verify_hba_rules(self, rules: list[list[Any]]) -> None:
@@ -4365,15 +5534,42 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             'custodianSequence': sequence,
         }
 
-    def _native_origin_matches(self, origin: dict[str, Any], attestation: object) -> bool:
+    def _native_origin_matches(
+            self, origin: dict[str, Any], attestation: object, *,
+            budget_reservation: _OriginalStoreCreationReservation | _OriginalStoreCreationBudget | None = None,
+            readonly_budget: _OriginalStoreReadonlyBudget | None = None) -> bool:
         if type(attestation) is not _NativeAttestation or attestation.supervisor is not self:
             return False
         try:
+            if budget_reservation is not None:
+                self._require_original_store_budget(budget_reservation)
+            if readonly_budget is not None:
+                self._require_original_store_readonly_budget(readonly_budget)
             process = self._verify_live_process()
-            native = self._observe_native(origin['database']['name'])
+            if budget_reservation is not None:
+                self._require_original_store_budget(budget_reservation)
+            if readonly_budget is not None:
+                self._require_original_store_readonly_budget(readonly_budget)
+            native = self._observe_native(
+                origin['database']['name'], budget_reservation=budget_reservation,
+                readonly_budget=readonly_budget)
+            if budget_reservation is not None:
+                self._require_original_store_budget(budget_reservation)
+            if readonly_budget is not None:
+                self._require_original_store_readonly_budget(readonly_budget)
+            if budget_reservation is not None:
+                self._require_original_store_budget(budget_reservation)
             members = self._verify_owned_process_group(process['pgid'])
+            if budget_reservation is not None:
+                self._require_original_store_budget(budget_reservation)
+            if readonly_budget is not None:
+                self._require_original_store_readonly_budget(readonly_budget)
             sockets = self._verify_endpoint_sockets(
                 self._observer.sockets(process['pgid']), {item['pid'] for item in members})
+            if budget_reservation is not None:
+                self._require_original_store_budget(budget_reservation)
+            if readonly_budget is not None:
+                self._require_original_store_readonly_budget(readonly_budget)
             assert self._journal is not None
             events = self._journal.read()['events']
             launch_tokens = [event['payload']['process']['startToken'] for event in events
@@ -4503,12 +5699,6 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
                                         ) -> _VerifiedNativeStorePreparation:
         """Observe the original target for one exact, admitted scope-4 store profile."""
         self._require_control_operation('store')
-        if (store_profile == 'umf.native-row-originals-store/0.1'
-                and self._target_custody_journal_birth is not None):
-            # Replay exists, but restart settlement does not cover every
-            # durable crash boundary yet. Keep new scope-4 mutations closed
-            # rather than enter a state this issuer cannot recover exactly.
-            raise LocalPostgresError('target-custody-journal-replay-unavailable')
         if target_custody is not self._custody_handle:
             raise LocalPostgresError('local-postgresql-original-target-unverified')
         store = _store_descriptor(store_profile, self._provider_id)
@@ -4638,7 +5828,9 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
 
     def _native_store_preparation_payload(self, reference: dict[str, Any], verified: object,
                                           registration: dict[str, Any], authority: dict[str, Any],
-                                          native: dict[str, Any]
+                                          native: dict[str, Any], *,
+                                          budget_reservation: _OriginalStoreCreationReservation | _OriginalStoreCreationBudget | None = None,
+                                          readonly_budget: _OriginalStoreReadonlyBudget | None = None
                                           ) -> tuple[dict[str, Any], dict[str, Any]]:
         """Capture the closed, actually observed principal authority profile."""
         if self._journal is None:
@@ -4651,30 +5843,46 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
         expected_role_names = (self._maintenance_name(), controller,
                                self._profile.business_owner)
         self._assert_store_session(native, expected_role_names[0], controller)
+        if budget_reservation is not None and readonly_budget is not None:
+            raise LocalPostgresError('local-postgresql-store-observation-budget-ambiguous')
         try:
-            with self._connect_maintenance(self._profile.database_name) as connection:
-                connection.execute(f'SET ROLE {_quote_identifier(controller)}')
-                rows = connection.execute(
-                    "SELECT rolname,oid,rolcanlogin,rolsuper,rolcreatedb,rolcreaterole,"
-                    "rolreplication,rolbypassrls,rolinherit FROM pg_catalog.pg_roles "
-                    "WHERE rolname = ANY(%s) ORDER BY rolname", (list(expected_role_names),)
-                ).fetchall()
-                memberships = connection.execute(
-                    "SELECT member.oid,granted.oid,m.admin_option,m.inherit_option,m.set_option "
-                    "FROM pg_catalog.pg_auth_members m JOIN pg_catalog.pg_roles member "
-                    "ON member.oid=m.member JOIN pg_catalog.pg_roles granted ON granted.oid=m.roleid "
-                    "WHERE member.rolname=%s ORDER BY granted.oid", (expected_role_names[0],)
-                ).fetchall()
-                membership_closure = connection.execute(
-                    "WITH RECURSIVE reach(member,roleid,admin_option,inherit_option,set_option,path) AS ("
-                    "SELECT m.member,m.roleid,m.admin_option,m.inherit_option,m.set_option,"
-                    "ARRAY[m.member,m.roleid]::oid[] FROM pg_catalog.pg_auth_members m "
-                    "WHERE m.member IN (SELECT oid FROM pg_catalog.pg_roles WHERE rolname = ANY(%s)) "
-                    "UNION ALL SELECT r.member,m.roleid,m.admin_option,m.inherit_option,m.set_option,"
-                    "r.path||m.roleid FROM reach r JOIN pg_catalog.pg_auth_members m "
-                    "ON m.member=r.roleid WHERE NOT m.roleid=ANY(r.path)) "
-                    "SELECT member,roleid,admin_option,inherit_option,set_option FROM reach "
-                    "ORDER BY member,roleid", (list(expected_role_names),)).fetchall()
+            with self._connect_maintenance(
+                    self._profile.database_name,
+                    budget_reservation=budget_reservation,
+                    readonly_budget=readonly_budget) as raw_connection:
+                transaction = (self._original_store_readonly_transaction(
+                    raw_connection, readonly_budget) if readonly_budget is not None
+                    else nullcontext(raw_connection))
+                with transaction as observed_connection:
+                    if readonly_budget is not None:
+                        connection = observed_connection
+                    elif budget_reservation is not None:
+                        connection = self._budgeted_original_store_connection(
+                            budget_reservation, connection=raw_connection)
+                    else:
+                        connection = raw_connection
+                    connection.execute(f'SET ROLE {_quote_identifier(controller)}')
+                    rows = connection.execute(
+                        "SELECT rolname,oid,rolcanlogin,rolsuper,rolcreatedb,rolcreaterole,"
+                        "rolreplication,rolbypassrls,rolinherit FROM pg_catalog.pg_roles "
+                        "WHERE rolname = ANY(%s) ORDER BY rolname", (list(expected_role_names),)
+                    ).fetchall()
+                    memberships = connection.execute(
+                        "SELECT member.oid,granted.oid,m.admin_option,m.inherit_option,m.set_option "
+                        "FROM pg_catalog.pg_auth_members m JOIN pg_catalog.pg_roles member "
+                        "ON m.member=member.oid JOIN pg_catalog.pg_roles granted ON granted.oid=m.roleid "
+                        "WHERE member.rolname=%s ORDER BY granted.oid", (expected_role_names[0],)
+                    ).fetchall()
+                    membership_closure = connection.execute(
+                        "WITH RECURSIVE reach(member,roleid,admin_option,inherit_option,set_option,path) AS ("
+                        "SELECT m.member,m.roleid,m.admin_option,m.inherit_option,m.set_option,"
+                        "ARRAY[m.member,m.roleid]::oid[] FROM pg_catalog.pg_auth_members m "
+                        "WHERE m.member IN (SELECT oid FROM pg_catalog.pg_roles WHERE rolname = ANY(%s)) "
+                        "UNION ALL SELECT r.member,m.roleid,m.admin_option,m.inherit_option,m.set_option,"
+                        "r.path||m.roleid FROM reach r JOIN pg_catalog.pg_auth_members m "
+                        "ON m.member=r.roleid WHERE NOT m.roleid=ANY(r.path)) "
+                        "SELECT member,roleid,admin_option,inherit_option,set_option FROM reach "
+                        "ORDER BY member,roleid", (list(expected_role_names),)).fetchall()
         except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
             raise LocalPostgresError('local-postgresql-authority-observation-failed') from None
         if (len(rows) != 3 or tuple(row[0] for row in rows) != tuple(sorted(expected_role_names))
@@ -4715,7 +5923,8 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
         actual_closure = sorted([list(row) for row in membership_closure])
         if actual_closure != expected_closure:
             raise LocalPostgresError('local-postgresql-membership-closure-mismatch')
-        settings = self._store_settings_from_observation(native)
+        settings = self._store_settings_from_observation(
+            native, readonly_budget=readonly_budget)
         authority_observation = {
             'profile': 'umf.pg18.native-session-authority-observation/0.1',
             'authorityScopeDigest': authority['approvalIntentDigest'],
@@ -4754,17 +5963,96 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
         return evidence, authority_observation
 
     @classmethod
-    def _store_settings_from_observation(cls, native: dict[str, Any]) -> dict[str, str]:
+    def _store_settings_from_observation(
+            cls, native: dict[str, Any], *,
+            readonly_budget: _OriginalStoreReadonlyBudget | None = None
+            ) -> dict[str, str]:
         if type(native) is not dict:
             raise LocalPostgresError('local-postgresql-store-settings-mismatch')
-        return cls._store_required_settings({
+        observed = {
             'searchPath': native.get('searchPath'),
             'timeZone': native.get('timeZone'),
             'rowSecurity': native.get('rowSecurity'),
             'sessionReplicationRole': native.get('sessionReplicationRole'),
             'transactionReadOnly': native.get('transactionReadOnly'),
             'transactionIsolation': native.get('transactionIsolation'),
-        })
+        }
+        if readonly_budget is None:
+            return cls._store_required_settings(observed)
+        expected = dict(observed)
+        expected['transactionReadOnly'] = 'on'
+        if observed != expected:
+            raise LocalPostgresError('local-postgresql-store-settings-mismatch')
+        return expected
+
+    def _resolve_original_store_recovery_observation(
+            self, original_evidence: object, actual_evidence: object,
+            actual_observation: object, *, authority: dict[str, Any],
+            readonly_budget: _OriginalStoreReadonlyBudget
+            ) -> _VerifiedOriginalStoreRecoveryObservation:
+        """Compare immutable signed facts with the truthful current RO session."""
+        self._require_original_store_readonly_budget(readonly_budget)
+        try:
+            original_request = json.loads(readonly_budget._request._intent_bytes,
+                                          object_pairs_hook=_no_duplicates)
+        except Exception:  # noqa: BLE001 -- original signed request is the authority
+            raise LocalPostgresError('local-postgresql-store-recovery-request-mismatch') from None
+        if (type(original_request) is not dict
+                or type(original_request.get('evidence')) is not dict
+                or original_request['evidence'] != original_evidence
+                or type(original_evidence) is not dict
+                or type(actual_evidence) is not dict
+                or type(actual_observation) is not dict
+                or set(actual_evidence) != set(original_evidence)):
+            raise LocalPostgresError('local-postgresql-store-recovery-evidence-invalid')
+        varying = {'requiredSettings', 'nativeAuthorityObservationDigest'}
+        if any(original_evidence[key] != actual_evidence[key]
+               for key in original_evidence if key not in varying):
+            raise LocalPostgresError('local-postgresql-store-recovery-authority-stale')
+        original_settings = original_evidence['requiredSettings']
+        actual_settings = actual_evidence['requiredSettings']
+        if (type(original_settings) is not dict or type(actual_settings) is not dict
+                or set(original_settings) != set(actual_settings)
+                or original_settings.get('transactionReadOnly') != 'off'
+                or actual_settings.get('transactionReadOnly') != 'on'
+                or any(original_settings[key] != actual_settings[key]
+                       for key in original_settings if key != 'transactionReadOnly')
+                or actual_observation.get('settings') != actual_settings
+                or actual_observation.get('profile')
+                    != 'umf.pg18.native-session-authority-observation/0.1'
+                or actual_observation.get('authorityScopeDigest')
+                    != authority.get('approvalIntentDigest')
+                or actual_evidence.get('authorityPreparationReceiptDigest')
+                    != authority.get('approvalReceiptDigest')
+                or actual_observation.get('registrationDigest')
+                    != original_evidence.get('registrationDigest')
+                or actual_observation.get('targetCustodyDigest')
+                    != original_evidence.get('targetCustodyDigest')
+                or actual_evidence.get('nativeAuthorityObservationDigest')
+                    != _digest(actual_observation)):
+            raise LocalPostgresError('local-postgresql-store-recovery-session-mismatch')
+        expected_principals = [original_evidence.get('maintenance'),
+                               original_evidence.get('controller'),
+                               original_evidence.get('businessOwner')]
+        if (actual_observation.get('principalObservations') != expected_principals
+                or type(original_evidence.get('requiredMemberships')) is not list):
+            raise LocalPostgresError('local-postgresql-store-recovery-principal-mismatch')
+        expected_edges = sorted([
+            [edge.get('memberOid'), edge.get('roleOid'), edge.get('admin'),
+             edge.get('inherit'), edge.get('set')]
+            for edge in original_evidence['requiredMemberships']
+            if type(edge) is dict and set(edge) == {
+                'memberOid', 'roleOid', 'admin', 'inherit', 'set'}])
+        actual_edges = actual_observation.get('membershipObservations')
+        if (len(expected_edges) != len(original_evidence['requiredMemberships'])
+                or type(actual_edges) is not list
+                or sorted(actual_edges) != expected_edges):
+            raise LocalPostgresError('local-postgresql-store-recovery-membership-mismatch')
+        self._require_original_store_readonly_budget(readonly_budget)
+        return _VerifiedOriginalStoreRecoveryObservation(
+            _VERIFIED_STORE_RECOVERY_OBSERVATION_SEAL, self, readonly_budget,
+            readonly_budget._request, readonly_budget._reservation_digest,
+            original_evidence, actual_evidence, actual_observation)
 
     @staticmethod
     def _assert_store_session(native: dict[str, Any], maintenance: str,
@@ -4797,10 +6085,424 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             raise LocalPostgresError('local-postgresql-store-settings-mismatch')
         return settings
 
+    def _mint_original_store_readonly_budget(
+            self, reservation: object, request: object, effect: object,
+            reservation_digest: str, reservation_record_bytes: bytes,
+            operation: str, target: object, connection: object,
+            store: dict[str, Any], started_ns: int
+            ) -> _OriginalStoreReadonlyBudget:
+        """Mint an observational window without touching creation attempts or expiry."""
+        if (operation not in {'confirm', 'recover'}
+                or os.getpid() != self._original_store_issuer_pid
+                or not self._is_original_store_recovery_target(target)
+                or type(store) is not dict
+                or store != _store_descriptor(store.get('profile'), self._provider_id)
+                or (effect is not None and (
+                    type(effect) is not _NativeEffectReservation
+                    or effect._request is not request))
+                or (effect is None and (reservation is not None
+                    or operation != 'recover'))
+                or request._intent_digest != hashlib.sha256(request._intent_bytes).hexdigest()
+                or type(reservation_digest) is not str
+                or not _HEX.fullmatch(reservation_digest)
+                or type(reservation_record_bytes) is not bytes
+                or _canonical(json.loads(reservation_record_bytes,
+                                         object_pairs_hook=_no_duplicates))
+                    != reservation_record_bytes
+                or _digest(json.loads(reservation_record_bytes,
+                                      object_pairs_hook=_no_duplicates))
+                    != reservation_digest
+                or (reservation is not None and (
+                    type(reservation) is not _OriginalStoreCreationReservation
+                    or self._original_store_reservations.get(
+                        id(reservation), (None,))[0] is not reservation
+                    or reservation._target is not target
+                    or reservation._connection is not connection))
+                or (reservation is None and operation != 'recover')
+                or (type(started_ns) is not int or started_ns <= 0
+                    or started_ns > time.monotonic_ns())):
+            raise LocalPostgresError('local-postgresql-store-readonly-unavailable')
+        budget = _OriginalStoreReadonlyBudget(
+            _ORIGINAL_STORE_READONLY_BUDGET_SEAL, self, reservation, request,
+            effect, reservation_digest, reservation_record_bytes, target,
+            connection, store, operation, started_ns)
+        self._original_store_readonly_budgets[id(budget)] = budget
+        return budget
+
+    def _require_original_store_readonly_budget(
+            self, budget: _OriginalStoreReadonlyBudget) -> int:
+        reservation = budget._reservation
+        if (type(budget) is not _OriginalStoreReadonlyBudget
+                or budget._issuer is not self
+                or self._original_store_readonly_budgets.get(id(budget)) is not budget
+                or budget._pid != os.getpid()
+                or budget._pid != self._original_store_issuer_pid
+                or self._original_store_readonly_connection_fences.get(
+                    id(budget._connection)) is budget._connection
+                or budget._operation not in {'confirm', 'recover'}
+                or not self._is_original_store_recovery_target(budget._target)
+                or (budget._effect is not None
+                    and (type(budget._effect) is not _NativeEffectReservation
+                         or budget._effect._request is not budget._request))
+                or (budget._effect is None
+                    and (reservation is not None or budget._operation != 'recover'))
+                or budget._request._intent_digest
+                    != hashlib.sha256(budget._request._intent_bytes).hexdigest()
+                or _canonical(json.loads(
+                    budget._reservation_record_bytes, object_pairs_hook=_no_duplicates))
+                    != budget._reservation_record_bytes
+                or _digest(json.loads(
+                    budget._reservation_record_bytes, object_pairs_hook=_no_duplicates))
+                    != budget._reservation_digest
+                or (reservation is not None
+                    and budget._store_bytes != reservation._store)
+                or json.loads(budget._store_bytes) != _store_descriptor(
+                    json.loads(budget._store_bytes).get('profile'), self._provider_id)
+                or (reservation is not None and (
+                    self._original_store_reservations.get(
+                        id(reservation), (None,))[0] is not reservation
+                    or reservation._issuer is not self
+                    or reservation._target is not budget._target
+                    or reservation._connection is not budget._connection
+                    or reservation._native_effect is not budget._effect
+                    or reservation._evidence.owner_request is not budget._request
+                    or hashlib.sha256(reservation._record_bytes).hexdigest()
+                        != budget._reservation_digest))
+                or (reservation is None and budget._operation != 'recover')):
+            raise LocalPostgresError('local-postgresql-store-readonly-unavailable')
+        try:
+            if (budget._operation == 'recover'
+                    and int(budget._connection.info.transaction_status) != 0):
+                raise LocalPostgresError(
+                    'local-postgresql-store-readonly-transaction-active')
+        except LocalPostgresError:
+            raise
+        except Exception:  # noqa: BLE001 -- caller transaction ownership is unprovable
+            raise LocalPostgresError(
+                'local-postgresql-store-readonly-transaction-unavailable') from None
+        now_ns = time.monotonic_ns()
+        if (type(now_ns) is not int or now_ns < budget._started_ns
+                or now_ns >= budget._deadline_ns or budget._fenced):
+            object.__setattr__(budget, '_fenced', True)
+            raise LocalPostgresError('local-postgresql-store-readonly-exhausted')
+        remaining_ms = (budget._deadline_ns - now_ns) // 1_000_000
+        if remaining_ms <= 0:
+            object.__setattr__(budget, '_fenced', True)
+            raise LocalPostgresError('local-postgresql-store-readonly-exhausted')
+        return min(remaining_ms, _ORIGINAL_STORE_READONLY_WINDOW_NS // 1_000_000)
+
+    @contextmanager
+    def _original_store_readonly_transaction(self, connection: object,
+                                             budget: _OriginalStoreReadonlyBudget):
+        """Own one read-only transaction; never adopt or settle a caller transaction."""
+        self._require_original_store_readonly_budget(budget)
+        try:
+            if int(connection.info.transaction_status) != 0:
+                raise LocalPostgresError(
+                    'local-postgresql-store-readonly-transaction-active')
+        except LocalPostgresError:
+            raise
+        except Exception:  # noqa: BLE001 -- ownership cannot be established
+            raise LocalPostgresError(
+                'local-postgresql-store-readonly-transaction-unknown') from None
+        _execute_original_store_sql(self, budget, connection, 'BEGIN READ ONLY')
+        completed = False
+        try:
+            yield _BudgetedOriginalStoreReadonlyConnection(self, budget, connection)
+            self._require_original_store_readonly_budget(budget)
+            _execute_original_store_sql(self, budget, connection, 'COMMIT')
+            completed = True
+        except LocalPostgresError:
+            raise
+        except Exception:  # noqa: BLE001 -- no unbounded native fallback
+            raise LocalPostgresError('local-postgresql-store-readonly-unresolved') from None
+        finally:
+            if not completed and not budget._fenced:
+                try:
+                    self._require_original_store_readonly_budget(budget)
+                    _execute_original_store_sql(self, budget, connection, 'ROLLBACK')
+                except Exception:  # noqa: BLE001 -- failed bounded cleanup stays fenced
+                    object.__setattr__(budget, '_fenced', True)
+                    self._original_store_readonly_connection_fences[id(connection)] = connection
+
+    def _fetch_original_store_readonly(self, connection: object,
+                                      budget: _OriginalStoreReadonlyBudget,
+                                      query: str, *, current_role: str | None,
+                                      many: bool) -> Any:
+        with self._original_store_readonly_transaction(connection, budget) as bounded:
+            if current_role is not None:
+                bounded.execute(f'SET LOCAL ROLE {_quote_identifier(current_role)}')
+            cursor = bounded.execute(query)
+            result = cursor.fetchall() if many else cursor.fetchone()
+            return result
+
+    def _capture_original_store_timeout_lower_bounds(
+            self, connection: object, budget: _OriginalStoreCreationBudget
+            ) -> tuple[tuple[str, int], ...]:
+        """Read the caller's two lower waits through bounded same-PGconn I/O.
+
+        Psycopg 3.2.13's public PGconn protocol exposes the nonblocking libpq
+        send/flush/consume/result calls. The caller's Connection.lock is held
+        for the whole operation so normal Psycopg calls cannot interleave.
+        Any uncertain/incomplete operation leaves that lock held and fences
+        this exact caller connection; it is never returned to the caller as
+        quiescent and no legacy blocking execute/fetch path is attempted.
+        """
+        try:
+            from psycopg import Connection
+        except Exception:  # noqa: BLE001 -- exact driver is unavailable
+            raise LocalPostgresError(
+                'local-postgresql-store-budget-driver-unavailable') from None
+        if type(connection) is not Connection:
+            raise LocalPostgresError(
+                'local-postgresql-store-budget-driver-unsupported')
+        if (self._original_store_connection_fences.get(id(connection)) is connection
+                or budget._connection is not connection
+                or budget._issuer is not self
+                or budget._creator_pid != os.getpid()):
+            raise LocalPostgresError('local-postgresql-store-budget-connection-fenced')
+
+        lock = connection.lock
+        try:
+            acquired = lock.acquire(blocking=False)
+        except Exception:  # noqa: BLE001 -- do not duck-type another driver lock
+            acquired = False
+        if not acquired:
+            raise LocalPostgresError(
+                'local-postgresql-store-budget-connection-busy')
+
+        pgconn = connection.pgconn
+        locked_until_drain = False
+        safely_restored = False
+        old_nonblocking = None
+        collected: tuple[tuple[str, int], ...] | None = None
+        saw_final = False
+        try:
+            self._require_original_store_budget_pre_reservation(budget)
+            if (connection.closed or pgconn.status != 0
+                    or pgconn.transaction_status != 2
+                    or pgconn.pipeline_status != 0):
+                raise LocalPostgresError(
+                    'local-postgresql-store-budget-connection-state-invalid')
+            old_nonblocking = pgconn.nonblocking
+            if type(old_nonblocking) is not int or old_nonblocking not in (0, 1):
+                raise LocalPostgresError(
+                    'local-postgresql-store-budget-connection-state-invalid')
+            socket_fd = pgconn.socket
+            if type(socket_fd) is not int or socket_fd < 0:
+                raise LocalPostgresError(
+                    'local-postgresql-store-budget-connection-state-invalid')
+            pgconn.nonblocking = 1
+            self._require_original_store_budget_pre_reservation(budget)
+            query = (b"SELECT name, setting::pg_catalog.int8 FROM pg_catalog.pg_settings "
+                     b"WHERE name IN ('statement_timeout','lock_timeout')")
+            pgconn.send_query_params(query, None)
+
+            def wait_ready(*, readable: bool = False, writable: bool = False) -> None:
+                self._require_original_store_budget_pre_reservation(budget)
+                remaining_ns = budget._deadline_ns - time.monotonic_ns()
+                if remaining_ns <= 0:
+                    raise LocalPostgresError(
+                        'local-postgresql-store-budget-exhausted')
+                timeout = min(0.025, remaining_ns / 1_000_000_000)
+                ready_read, ready_write, _exceptional = select.select(
+                    [socket_fd] if readable else [],
+                    [socket_fd] if writable else [], [], timeout)
+                self._require_original_store_budget_pre_reservation(budget)
+                if not ready_read and not ready_write:
+                    return
+
+            while True:
+                flush_status = pgconn.flush()
+                if flush_status == 0:
+                    break
+                if type(flush_status) is not int or flush_status != 1:
+                    raise LocalPostgresError(
+                        'local-postgresql-store-budget-timeout-unavailable')
+                wait_ready(writable=True)
+
+            result_count = 0
+            malformed = False
+            while not saw_final:
+                self._require_original_store_budget_pre_reservation(budget)
+                if pgconn.is_busy():
+                    wait_ready(readable=True)
+                    pgconn.consume_input()
+                    continue
+                result = pgconn.get_result()
+                if result is None:
+                    saw_final = True
+                    break
+                result_count += 1
+                try:
+                    if (result_count != 1 or result.status != 2
+                            or result.nfields != 2 or result.fname(0) != b'name'
+                            or result.fname(1) != b'setting'
+                            or result.ntuples != 2):
+                        malformed = True
+                    else:
+                        names = []
+                        values = []
+                        for row in range(2):
+                            name_bytes = result.get_value(row, 0)
+                            setting_bytes = result.get_value(row, 1)
+                            if (type(name_bytes) is not bytes
+                                    or type(setting_bytes) is not bytes):
+                                malformed = True
+                                continue
+                            try:
+                                name = name_bytes.decode('ascii')
+                                setting_text = setting_bytes.decode('ascii')
+                            except UnicodeDecodeError:
+                                malformed = True
+                                continue
+                            if (name not in ('statement_timeout', 'lock_timeout')
+                                    or not setting_text.isascii()
+                                    or not setting_text.isdigit()):
+                                malformed = True
+                                continue
+                            names.append(name)
+                            values.append((name, int(setting_text)))
+                        if (len(names) != 2 or len(set(names)) != 2
+                                or set(names) != {'statement_timeout', 'lock_timeout'}):
+                            malformed = True
+                        else:
+                            collected = tuple(sorted(values))
+                finally:
+                    result.clear()
+
+            pgconn.nonblocking = old_nonblocking
+            safely_restored = True
+            if (malformed or collected is None
+                    or pgconn.transaction_status != 2
+                    or pgconn.pipeline_status != 0):
+                raise LocalPostgresError(
+                    'local-postgresql-store-budget-timeout-invalid')
+            self._require_original_store_budget_pre_reservation(budget)
+            object.__setattr__(budget, '_caller_timeout_lower_ms', collected)
+            object.__setattr__(budget, '_timeout_discovery_complete', True)
+            return collected
+        except BaseException as exc:  # noqa: BLE001 -- interrupts fence in-flight query state
+            if not saw_final or not safely_restored:
+                locked_until_drain = True
+                object.__setattr__(budget, '_fenced', True)
+                self._original_store_connection_fences[id(connection)] = connection
+            if isinstance(exc, LocalPostgresError):
+                raise
+            if isinstance(exc, (KeyboardInterrupt, SystemExit, GeneratorExit)):
+                raise
+            raise LocalPostgresError(
+                'local-postgresql-store-budget-timeout-unavailable') from None
+        finally:
+            if not locked_until_drain:
+                lock.release()
+
+    def _mint_original_store_creation_budget(
+            self, *, evidence: object, approval: object, custodian: object,
+            target: object, connection: object, store: dict[str, Any],
+            caller_timeout_lower_ms: tuple[tuple[str, int], ...] | None = None
+            ) -> _OriginalStoreCreationBudget:
+        """Mint once, after final approval and before the first reservation write."""
+        request = evidence.owner_request
+        key = id(request)
+        if os.getpid() != self._original_store_issuer_pid:
+            raise LocalPostgresError('local-postgresql-store-budget-unavailable')
+        if key in self._original_store_budgets:
+            raise LocalPostgresError('local-postgresql-store-budget-already-minted')
+        started_ns = time.monotonic_ns()
+        budget = _OriginalStoreCreationBudget(
+            _ORIGINAL_STORE_BUDGET_SEAL, self, request=request,
+            evidence=evidence, approval=approval, custodian=custodian,
+            target=target, connection=connection, store=store,
+            caller_timeout_lower_ms=caller_timeout_lower_ms, started_ns=started_ns)
+        self._original_store_budgets[key] = budget
+        return budget
+
+    def _require_original_store_budget(
+            self, reservation: _OriginalStoreCreationReservation | _OriginalStoreCreationBudget) -> int:
+        """Return remaining whole milliseconds for the exact live original effect."""
+        if type(reservation) is _OriginalStoreCreationBudget:
+            budget = reservation
+            if (budget._issuer is not self
+                    or self._original_store_budgets.get(id(budget._request)) is not budget
+                    or budget._creator_pid != os.getpid()
+                    or budget._creator_pid != self._original_store_issuer_pid
+                    or budget._request is not budget._evidence.owner_request
+                    or budget._effect_key != budget._request.effect_key
+                    or budget._request_digest != budget._request._intent_digest
+                    or budget._approval_digest != budget._approval.approval_digest
+                    or budget._configuration_digest != self._owner_core.configuration_digest
+                    or budget._fenced):
+                raise LocalPostgresError('local-postgresql-store-budget-unavailable')
+            if budget._reservation is None:
+                return self._require_original_store_budget_pre_reservation(budget)
+            reservation = budget._reservation
+        else:
+            budget = reservation._budget
+        entry = self._original_store_reservations.get(id(reservation))
+        if (type(budget) is not _OriginalStoreCreationBudget
+                or budget._issuer is not self
+                or self._original_store_budgets.get(id(budget._request)) is not budget
+                or budget._creator_pid != os.getpid()
+                or budget._creator_pid != self._original_store_issuer_pid
+                or budget._reservation is not reservation
+                or budget._reservation_digest is None
+                or budget._request is not reservation._evidence.owner_request
+                or budget._effect_key != budget._request.effect_key
+                or budget._evidence is not reservation._evidence
+                or budget._approval is not reservation._approval
+                or budget._custodian is not reservation._custodian
+                or budget._target is not reservation._target
+                or budget._connection is not reservation._connection
+                or budget._store_bytes != reservation._store
+                or reservation._native_effect._request is not budget._request
+                or reservation._native_effect._request.effect_key != budget._effect_key
+                or budget._request_digest != budget._request._intent_digest
+                or budget._approval_digest != reservation._approval.approval_digest
+                or budget._configuration_digest != self._owner_core.configuration_digest
+                or not budget._timeout_discovery_complete
+                or entry is None or entry[0] is not reservation
+                or entry[1]['reservationDigest'] != budget._reservation_digest
+                or entry[1]['supervisorIntentDigest']
+                    != reservation._native_effect._journal_record_digest
+                or hashlib.sha256(reservation._record_bytes).hexdigest()
+                    != budget._reservation_digest):
+            raise LocalPostgresError('local-postgresql-store-budget-unavailable')
+        now_ns = time.monotonic_ns()
+        if (type(now_ns) is not int or now_ns < budget._started_ns
+                or now_ns >= budget._deadline_ns or budget._fenced):
+            object.__setattr__(budget, '_fenced', True)
+            raise LocalPostgresError('local-postgresql-store-budget-exhausted')
+        remaining_ms = (budget._deadline_ns - now_ns) // 1_000_000
+        if remaining_ms <= 0:
+            object.__setattr__(budget, '_fenced', True)
+            raise LocalPostgresError('local-postgresql-store-budget-exhausted')
+        return min(remaining_ms, _ORIGINAL_STORE_HOST_WINDOW_NS // 1_000_000)
+
+    def _consume_original_store_creation_attempt(
+            self, reservation: _OriginalStoreCreationReservation) -> _OriginalStoreCreationBudget:
+        budget = reservation._budget
+        self._require_original_store_budget(reservation)
+        if budget._attempts >= _ORIGINAL_STORE_MAX_ATTEMPTS:
+            raise LocalPostgresError('local-postgresql-store-attempt-capacity')
+        object.__setattr__(budget, '_attempts', budget._attempts + 1)
+        return budget
+
+    def _budgeted_original_store_connection(
+            self, reservation: object, *, connection: object | None = None
+            ) -> _BudgetedOriginalStoreConnection:
+        if type(reservation) not in (_OriginalStoreCreationReservation,
+                                     _OriginalStoreCreationBudget):
+            raise LocalPostgresError('local-postgresql-store-budget-unavailable')
+        self._require_original_store_budget(reservation)
+        return _BudgetedOriginalStoreConnection(
+            self, reservation, connection=connection)
+
     def reserve_originals_store_creation(
             self, evidence: object, approval: object, *, custodian: object,
             target: object, store: dict[str, Any],
-            connection: object) -> _OriginalStoreCreationReservation:
+            connection: object, creation_budget: object | None = None
+            ) -> _OriginalStoreCreationReservation:
         """Write the original custodian reservation and adjacent owner effects."""
         self._require_original_control_lease(operation_kind='store')
         if (type(store) is not dict
@@ -4808,8 +6510,20 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
                 or store != _store_descriptor(store.get('profile'), self._provider_id)
                 or self._journal is None or self._custodian is not custodian):
             raise LocalPostgresError('local-postgresql-store-reservation-invalid')
+        budget = creation_budget
+        if (type(budget) is not _OriginalStoreCreationBudget
+                or budget._issuer is not self
+                or budget._request is not evidence.owner_request
+                or budget._evidence is not evidence or budget._approval is not approval
+                or budget._custodian is not custodian or budget._target is not target
+                or budget._connection is not connection
+                or budget._store_bytes != _canonical(store)
+                or budget._timeout_discovery_complete is not True):
+            raise LocalPostgresError('local-postgresql-store-budget-unavailable')
+        self._require_original_store_budget(budget)
         resolved = self._resolve_original_store_preparation(
-            evidence, approval, custodian=custodian, target=target)
+            evidence, approval, custodian=custodian, target=target,
+            budget_reservation=budget)
         if resolved['store'] != store:
             raise LocalPostgresError('local-postgresql-store-preparation-stale')
         if (self._target_custody_journal_birth is None
@@ -4836,17 +6550,27 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             'configurationDigest': self._owner_core.configuration_digest,
             'custodySequence': 0,
         }
+        if self._original_store_connection_fences.get(id(connection)) is connection:
+            raise LocalPostgresError(
+                'local-postgresql-store-budget-connection-fenced')
+        if not budget._timeout_discovery_complete:
+            raise LocalPostgresError(
+                'local-postgresql-store-budget-timeout-unavailable')
+        self._require_original_store_budget_pre_reservation(budget)
         try:
             external = custodian._journal._reserve_originals_store(
                 purpose=self._profile.purpose, request=request_value,
                 approval_digest=approval.approval_digest, reservation=reservation)
+            self._require_original_store_budget_pre_reservation(budget)
             external_record = next(
                 event for event in custodian._journal._load()['events']
                 if event['recordDigest'] == external['recordDigest'])
         except Exception:  # noqa: BLE001 -- preserve durable ambiguity, redact authority
             raise LocalPostgresError('local-postgresql-store-reservation-outcome-unresolved') from None
+        self._require_original_store_budget_pre_reservation(budget)
         reservation = external_record['payload']['reservation']
         reservation_digest = external_record['payload']['reservationDigest']
+        self._require_original_store_budget_pre_reservation(budget)
         typed = self._append_supervisor_journal('originals-store-creation-intent', {
             'purpose': self._profile.purpose, 'reservation': reservation,
             'reservationDigest': reservation_digest,
@@ -4855,11 +6579,13 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             'creationApprovalDigest': approval.approval_digest,
             'nativeAuthorityEvidenceDigest': resolved['payload']['nativeAuthorityObservationDigest'],
         })
+        self._require_original_store_budget_pre_reservation(budget)
         native_effect = self._make_native_effect_reservation(
             request, approval, 'native-store-creation',
             ('native-store-creation', self._provider_id, store['profile'], store['storeId']),
             self._profile.purpose, target, typed, request._intent_bytes)
         try:
+            self._require_original_store_budget_pre_reservation(budget)
             effect_handle = self._owner_core._bind_effect_digest(
                 approval, _digest(native_effect._journal_record_digest))
         except Exception:  # noqa: BLE001 -- pending binding must precede DDL
@@ -4868,38 +6594,433 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             _ORIGINAL_STORE_RESERVATION_SEAL, self, evidence=evidence,
             approval=approval, custodian=custodian, target=target,
             connection=connection, effect_handle=effect_handle,
-            native_effect=native_effect, record_bytes=_canonical(reservation), store=store)
+            native_effect=native_effect, record_bytes=_canonical(reservation), store=store,
+            budget=budget)
+        object.__setattr__(budget, '_reservation_digest', reservation_digest)
+        object.__setattr__(budget, '_reservation', result)
         self._original_store_reservations[id(result)] = (
             result, {'externalEventDigest': external['recordDigest'],
                      'reservationDigest': reservation_digest,
                      'supervisorIntentDigest': native_effect._journal_record_digest},
             resolved)
+        self._require_original_store_budget(result)
         return result
+
+    @staticmethod
+    def _require_original_store_budget_pre_reservation(
+            budget: _OriginalStoreCreationBudget) -> int:
+        now_ns = time.monotonic_ns()
+        if (budget._creator_pid != os.getpid()
+                or budget._creator_pid != budget._issuer._original_store_issuer_pid
+                or type(now_ns) is not int
+                or now_ns < budget._started_ns or now_ns >= budget._deadline_ns
+                or budget._fenced):
+            object.__setattr__(budget, '_fenced', True)
+            raise LocalPostgresError('local-postgresql-store-budget-exhausted')
+        remaining = (budget._deadline_ns - now_ns) // 1_000_000
+        if remaining <= 0:
+            object.__setattr__(budget, '_fenced', True)
+            raise LocalPostgresError('local-postgresql-store-budget-exhausted')
+        return min(remaining, _ORIGINAL_STORE_HOST_WINDOW_NS // 1_000_000)
+
+    def begin_originals_store_creation_attempt(
+            self, reservation: object) -> _OriginalStoreCreationAttempt:
+        """Charge once, then bind the exact active transaction to its original budget."""
+        self._require_original_control_lease(operation_kind='store')
+        entry = self._original_store_reservations.get(id(reservation))
+        if (type(reservation) is not _OriginalStoreCreationReservation
+                or entry is None or entry[0] is not reservation):
+            raise LocalPostgresError('local-postgresql-store-attempt-unverified')
+        if any(existing_reservation is reservation and state == 'open'
+               for _existing, existing_reservation, state
+               in self._original_store_attempts.values()):
+            raise LocalPostgresError('local-postgresql-store-attempt-already-open')
+        budget = self._consume_original_store_creation_attempt(reservation)
+        return self._bind_original_store_creation_attempt(reservation, budget)
+
+    def _bind_original_store_creation_attempt(
+            self, reservation: _OriginalStoreCreationReservation,
+            budget: _OriginalStoreCreationBudget) -> _OriginalStoreCreationAttempt:
+        self._require_original_control_lease(operation_kind='store')
+        self._require_original_store_budget(reservation)
+        if budget is not reservation._budget:
+            raise LocalPostgresError('local-postgresql-store-budget-unavailable')
+        self._require_original_store_budget(reservation)
+        self._resolve_originals_store_creation_reservation(
+            reservation, evidence=reservation._evidence,
+            approval=reservation._approval, custodian=reservation._custodian,
+            target=reservation._target, store=json.loads(reservation._store),
+            budget_reservation=reservation)
+        self._require_original_store_budget(reservation)
+        connection = reservation._connection
+        try:
+            if int(connection.info.transaction_status) != 2:
+                raise LocalPostgresError('local-postgresql-store-attempt-transaction-required')
+            bounded = self._budgeted_original_store_connection(reservation)
+            row = _one(bounded, '''SELECT pg_catalog.current_database(), d.oid,
+ pg_catalog.pg_control_system().system_identifier::pg_catalog.text,
+ pg_catalog.pg_current_xact_id()::pg_catalog.text, pg_catalog.pg_backend_pid(),
+ (SELECT a.backend_start::pg_catalog.text FROM pg_catalog.pg_stat_activity a
+  WHERE a.pid=pg_catalog.pg_backend_pid())
+ FROM pg_catalog.pg_database d WHERE d.datname=pg_catalog.current_database()''')
+        except LocalPostgresError:
+            raise
+        except Exception:  # noqa: BLE001 -- transaction identity is native evidence
+            raise LocalPostgresError('local-postgresql-store-attempt-identity-unavailable') from None
+        if (row is None or type(row[0]) is not str or type(row[1]) is not int
+                or type(row[2]) is not str or type(row[3]) is not str
+                or not row[3].isdecimal()
+                or not 1 <= int(row[3]) <= 2**64 - 1
+                or type(row[4]) is not int or row[4] <= 0
+                or type(row[5]) is not str or not row[5]):
+            raise LocalPostgresError('local-postgresql-store-attempt-identity-invalid')
+        attempt = _OriginalStoreCreationAttempt(
+            _ORIGINAL_STORE_ATTEMPT_SEAL, self, reservation, connection,
+            xid=row[3], database_name=row[0], database_oid=row[1],
+            system_identifier=row[2], backend_pid=row[4], backend_start=row[5],
+            budget=budget)
+        self._original_store_attempts[id(attempt)] = (attempt, reservation, 'open')
+        return attempt
+
+    def resume_originals_store_creation_attempt(
+            self, reservation: object, attempt: object) -> _OriginalStoreCreationAttempt:
+        """Consume actual original-abort evidence, then bind the current retry txn."""
+        self._require_original_control_lease(operation_kind='store')
+        entry = self._original_store_attempts.get(id(attempt))
+        if (type(attempt) is not _OriginalStoreCreationAttempt
+                or entry != (attempt, reservation, 'open')
+                or attempt._issuer is not self or attempt._reservation is not reservation
+                or type(reservation) is not _OriginalStoreCreationReservation
+                or attempt._connection is not reservation._connection):
+            raise LocalPostgresError('local-postgresql-store-attempt-unverified')
+        budget = self._consume_original_store_creation_attempt(reservation)
+        if attempt._budget is not budget:
+            raise LocalPostgresError('local-postgresql-store-budget-unavailable')
+        self._resolve_originals_store_creation_reservation(
+            reservation, evidence=reservation._evidence,
+            approval=reservation._approval, custodian=reservation._custodian,
+            target=reservation._target, store=json.loads(reservation._store),
+            budget_reservation=reservation)
+        self._require_original_store_budget(reservation)
+        connection = reservation._connection
+        try:
+            if int(connection.info.transaction_status) != 2:
+                raise LocalPostgresError('local-postgresql-store-retry-transaction-required')
+            bounded = self._budgeted_original_store_connection(reservation)
+            row = _one(bounded, '''SELECT pg_catalog.current_database(), d.oid,
+ pg_catalog.pg_control_system().system_identifier::pg_catalog.text,
+ pg_catalog.pg_backend_pid(),
+ (SELECT a.backend_start::pg_catalog.text FROM pg_catalog.pg_stat_activity a
+  WHERE a.pid=pg_catalog.pg_backend_pid()),
+ pg_catalog.pg_xact_status(%s::pg_catalog.xid8)
+ FROM pg_catalog.pg_database d WHERE d.datname=pg_catalog.current_database()''',
+                        (attempt._xid,))
+        except LocalPostgresError:
+            raise
+        except Exception:  # noqa: BLE001 -- unavailable status cannot authorize retry
+            raise LocalPostgresError('local-postgresql-store-attempt-outcome-unresolved') from None
+        self._require_original_store_attempt_aborted(attempt, row)
+        try:
+            from .row_originals_creation import observe_absent_creation_schema
+            request = reservation._native_effect._request
+            request_value = json.loads(request._intent_bytes, object_pairs_hook=_no_duplicates)
+            registration, authority = self._original_registration_and_principal_authority()
+            origin = self._owner_payloads.get(registration['registrationId'], {}).get('origin')
+            self._require_original_store_budget(reservation)
+            verified_target = reservation._custodian._resolve_target_custody(
+                reservation._target)
+            self._require_original_store_budget(reservation)
+            native_now = self._observe_native(
+                self._profile.database_name,
+                current_role=request_value['evidence']['controller']['name'],
+                budget_reservation=reservation)
+            self._require_original_store_budget(reservation)
+            evidence_payload, _native_observation = self._native_store_preparation_payload(
+                reservation._custodian._public_reference(reservation._target),
+                verified_target, registration, authority, native_now,
+                budget_reservation=reservation)
+            if (evidence_payload != request_value['evidence'] or type(origin) is not dict
+                    or not self._native_origin_matches(
+                        origin, self._launch.get('nativeAttestation')
+                        if self._launch is not None else None,
+                        budget_reservation=reservation)):
+                raise LocalPostgresError('local-postgresql-store-retry-authority-stale')
+            reservation_record = json.loads(
+                reservation._record_bytes, object_pairs_hook=_no_duplicates)
+            absence = observe_absent_creation_schema(
+                bounded, reservation_record['store']['schemaName'], native_now,
+                request_value['evidence']['controller']['oid'])
+            if absence is None:
+                raise LocalPostgresError('local-postgresql-store-retry-schema-present')
+            owner_state = self._owner_core.observe_original_request(
+                self._authority_context, request.effect_key)
+            if owner_state.effect_status != 'effect-pending':
+                raise LocalPostgresError('local-postgresql-store-retry-core-not-pending')
+            external_doc = reservation._custodian._journal._load()
+            from .ingress_custody import JOURNAL_PROFILE_02, _replay
+            external_state = _replay(external_doc['events'], profile=JOURNAL_PROFILE_02)
+            store_state = next((item for item in external_state['stores'].values()
+                                if item['id'] == reservation_record['reservationId']), None)
+            reservation_entry = self._original_store_reservations[id(reservation)]
+            if (store_state is None or store_state['status'] != 'reserved'
+                    or store_state['reservationDigest']
+                        != reservation_entry[1]['reservationDigest']):
+                raise LocalPostgresError('local-postgresql-store-retry-custody-stale')
+            attempt_proof = {
+                'profile': 'umf.original-store-transaction-attempt-abort/0.1',
+                'xid': attempt._xid,
+                'database': {'name': attempt._database_name,
+                             'oid': attempt._database_oid,
+                             'systemIdentifier': attempt._system_identifier},
+                'state': 'aborted',
+            }
+            native_observation_digest = _digest(native_now)
+            transaction_digest = _digest({
+                'profile': 'umf.original-store-known-aborted-observation/0.1',
+                'reservationDigest': reservation_entry[1]['reservationDigest'],
+                'attemptProofDigest': _digest(attempt_proof),
+                'absenceProofDigest': _digest(absence),
+                'nativeObservationDigest': native_observation_digest,
+            })
+            # Consume before the durable observation append. If the append
+            # outcome is lost, its presence cannot reconstruct this live token.
+            self._original_store_attempts[id(attempt)] = (
+                attempt, reservation, 'consumed')
+            self._require_original_store_budget(reservation)
+            reservation._custodian._journal._observe_originals_store(
+                purpose=self._profile.purpose,
+                reservation_id=reservation_record['reservationId'],
+                reservation_digest=reservation_entry[1]['reservationDigest'],
+                supervisor_intent_digest=reservation_entry[1]['supervisorIntentDigest'],
+                outcome='known-aborted', native_receipt=None,
+                native_receipt_digest=None, schema_oid=None,
+                native_observation_digest=native_observation_digest,
+                transaction_outcome_digest=transaction_digest)
+            self._require_original_store_budget(reservation)
+        except LocalPostgresError:
+            raise
+        except Exception:  # noqa: BLE001 -- uncertainty never becomes retry authority
+            raise LocalPostgresError('local-postgresql-store-retry-settlement-unresolved') from None
+        # Consume before dispatch. Lost process memory cannot reconstruct this
+        # authorization from the durable attempt observation.
+        return self._bind_original_store_creation_attempt(reservation, budget)
+
+    @staticmethod
+    def _require_original_store_attempt_aborted(
+            attempt: _OriginalStoreCreationAttempt, row: object) -> None:
+        """Accept only PostgreSQL's exact aborted result for the captured database/XID."""
+        if (type(row) is not tuple or len(row) != 6
+                or row[0] != attempt._database_name
+                or type(row[1]) is not int or row[1] != attempt._database_oid
+                or row[2] != attempt._system_identifier
+                or type(row[3]) is not int or row[3] != attempt._backend_pid
+                or row[4] != attempt._backend_start or row[5] != 'aborted'):
+            raise LocalPostgresError('local-postgresql-store-attempt-noncommit-unproven')
+
+    def open_originals_store_recovery(
+            self, connection: object, *, provider_id: str) -> object:
+        """Issue a restricted provider for one exact original store journal key."""
+        with self._original_control_lease(operation_kind='store'):
+            self._require_original_control_lease(operation_kind='store')
+            if (type(provider_id) is not str
+                    or provider_id != self._provider_id
+                    or self._journal is None or self._custodian is None
+                    or (self._custody_handle is None
+                        and self._pending_original_store_recovery is None)):
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-unavailable')
+            target = (self._custody_handle if self._custody_handle is not None
+                      else self._pending_original_store_recovery[0])
+            self._require_original_store_recovery_target(target)
+            try:
+                from psycopg import Connection
+                if type(connection) is not Connection or connection.closed:
+                    raise LocalPostgresError(
+                        'local-postgresql-store-recovery-connection-invalid')
+                if int(connection.info.transaction_status) != 0:
+                    raise LocalPostgresError(
+                        'local-postgresql-store-readonly-transaction-active')
+                from .ingress_custody import JOURNAL_PROFILE_02, _replay
+                from .row_originals import (
+                    PgRowOriginalsStore, STORE_PROFILE,
+                    _RECOVERY_PROVIDER_SEAL,
+                )
+                target_reference = self._custodian._public_reference(
+                    target)
+                verified_target = self._custodian._resolve_target_custody(
+                    target)
+                if (verified_target.reference != target_reference
+                        or target_reference.get('custodianId') != self._custodian_id
+                        or target_reference.get('resourceId') is None
+                        or target_reference.get('incarnation') is None):
+                    raise LocalPostgresError(
+                        'local-postgresql-store-recovery-target-invalid')
+                store = _store_descriptor(STORE_PROFILE, provider_id)
+                external_doc = self._custodian._journal._load()
+                external = _replay(
+                    external_doc['events'], profile=JOURNAL_PROFILE_02)
+                key = (target_reference['registrationId'], self._provider_id,
+                       self._bound_installation_id, store['profile'],
+                       store['storeId'], store['schemaName'])
+                matches = [(candidate, state) for candidate, state
+                           in external['stores'].items() if candidate == key]
+                if len(matches) != 1:
+                    raise LocalPostgresError(
+                        'local-postgresql-store-recovery-outcome-unresolved')
+                _selected_key, state = matches[0]
+                reserved_events = [event for event in external_doc['events']
+                                   if event['kind'] == 'originals-store-reserved'
+                                   and event['payload']['reservation']['reservationId']
+                                       == state.get('id')]
+                if (state.get('status') not in {
+                        'reserved', 'observed-committed', 'confirmed'}
+                        or len(reserved_events) != 1
+                        or reserved_events[0]['payload']['reservation'].get('store') != store
+                        or reserved_events[0]['payload']['reservation'].get(
+                            'targetCustody') != target_reference):
+                    raise LocalPostgresError(
+                        'local-postgresql-store-recovery-prefix-invalid')
+                supervisor_intent = next((event['payload']
+                    for event in self._journal.read()['events']
+                    if event['kind'] == 'creation-intent'), None)
+                if type(supervisor_intent) is not dict:
+                    raise LocalPostgresError(
+                        'local-postgresql-store-recovery-unavailable')
+                return PgRowOriginalsStore._from_recovery(
+                    _RECOVERY_PROVIDER_SEAL, supervisor=self,
+                    connection=connection, provider_id=provider_id,
+                    installation_id=self._bound_installation_id,
+                    controller_role=supervisor_intent['controllerName'],
+                    custodian=self._custodian, target=target)
+            except LocalPostgresError:
+                raise
+            except Exception:  # noqa: BLE001 -- no authority from malformed prefix
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-unavailable') from None
 
     def recover_originals_store_creation(
             self, target: object, connection: object, *,
             store: dict[str, Any]) -> tuple[_OriginalStoreCreationReservation,
                                              _OriginalStoreCreationCapability,
                                              dict[str, Any]]:
+        """Recover a committed receipt within a fresh, owned read-only window."""
+        readonly_started_ns = time.monotonic_ns()
+        self._require_original_control_lease(operation_kind='store')
+        try:
+            if int(connection.info.transaction_status) != 0:
+                raise LocalPostgresError(
+                    'local-postgresql-store-readonly-transaction-active')
+        except LocalPostgresError:
+            raise
+        except Exception:  # noqa: BLE001 -- caller transaction ownership is unprovable
+            raise LocalPostgresError(
+                'local-postgresql-store-readonly-transaction-unavailable') from None
+        if not self._is_original_store_recovery_target(target) or self._journal is None:
+            raise LocalPostgresError('local-postgresql-store-recovery-unverified')
+        # Reuse the exact original reservation when one exists.  After a
+        # process-local reservation has been lost, reconstruct only signed
+        # request and journal identities here; intent creation is deferred
+        # until the bounded observer has proved current authority and absence.
+        reservation = next((entry[0] for entry in self._original_store_reservations.values()
+                            if entry[0]._connection is connection), None)
+        if reservation is None:
+            try:
+                from .ingress_custody import JOURNAL_PROFILE_02, _replay
+                external_doc = self._custodian._journal._load()
+                external_state = _replay(
+                    external_doc['events'], profile=JOURNAL_PROFILE_02)
+                target_reference = self._custodian._public_reference(target)
+                key = (target_reference['registrationId'], self._provider_id,
+                       self._bound_installation_id, store['profile'],
+                       store['storeId'], store['schemaName'])
+                store_state = external_state['stores'].get(key)
+                reserved_event = next((event for event in external_doc['events']
+                                       if event['kind'] == 'originals-store-reserved'
+                                       and event['payload']['reservation']['reservationId']
+                                           == (store_state['id'] if store_state else None)), None)
+                if store_state is None or reserved_event is None:
+                    raise LocalPostgresError(
+                        'local-postgresql-store-readonly-unavailable')
+                verified_target = self._custodian._resolve_target_custody(target)
+                registration, authority = \
+                    self._original_registration_and_principal_authority()
+                if (reserved_event['payload']['reservation']['targetCustody']
+                        != target_reference
+                        or verified_target.reference.get('custodianId')
+                            != self._custodian_id
+                        or registration.get('registrationId')
+                            != target_reference['registrationId']
+                        or authority.get('approvalReceiptDigest')
+                            != reserved_event['payload']['request']['evidence'].get(
+                                'authorityPreparationReceiptDigest')):
+                    raise LocalPostgresError(
+                        'local-postgresql-store-recovery-authority-stale')
+                effect, _outcome, request = self._recover_original_store_effect(
+                    target, external_doc, store_state, reserved_event)
+                record = store_state['reservation']
+                record_bytes = _canonical(record)
+                reservation_digest = store_state['reservationDigest']
+            except LocalPostgresError:
+                raise
+            except Exception:  # noqa: BLE001 -- journal reconstruction is authority-sensitive
+                raise LocalPostgresError(
+                    'local-postgresql-store-readonly-unavailable') from None
+            reservation_digest_for_budget = reservation_digest
+            effect_for_budget = effect
+            record_bytes_for_budget = record_bytes
+            request_for_budget = request
+        else:
+            registry_entry = self._original_store_reservations[id(reservation)][1]
+            reservation_digest_for_budget = registry_entry['reservationDigest']
+            effect_for_budget = reservation._native_effect
+            record_bytes_for_budget = reservation._record_bytes
+            request_for_budget = reservation._evidence.owner_request
+        budget = self._mint_original_store_readonly_budget(
+            reservation, request_for_budget, effect_for_budget,
+            reservation_digest_for_budget, record_bytes_for_budget,
+            'recover', target, connection, store, readonly_started_ns)
+        try:
+            with self._connect_maintenance(
+                    self._profile.database_name,
+                    readonly_budget=budget) as recovery_connection:
+                with self._original_store_readonly_transaction(
+                        recovery_connection, budget) as bounded:
+                    recovered = self._recover_originals_store_creation_readonly(
+                        target, bounded, store=store, readonly_budget=budget)
+                if (self._pending_original_store_recovery is not None
+                        and self._pending_original_store_recovery[0] is target):
+                    self._custody_handle = target
+                    try:
+                        if self._validate_original_store_custody_history(target):
+                            raise LocalPostgresError(
+                                'local-postgresql-store-history-incomplete')
+                    except Exception:
+                        self._custody_handle = None
+                        raise
+                    self._pending_original_store_recovery = None
+                return recovered
+        except LocalPostgresError:
+            raise
+        except Exception:  # noqa: BLE001 -- no ambient transaction recovery
+            raise LocalPostgresError('local-postgresql-store-recovery-unverified') from None
+
+    def _recover_originals_store_creation_readonly(
+            self, target: object, connection: object, *, store: dict[str, Any],
+            readonly_budget: _OriginalStoreReadonlyBudget
+            ) -> tuple[_OriginalStoreCreationReservation,
+                       _OriginalStoreCreationCapability, dict[str, Any]]:
         """Reattach only a committed original store from its durable receipt chain.
 
         This path performs no DDL.  A pending or ambiguous native outcome stays
         fenced for a separate scope-specific recovery decision.
         """
         self._require_original_control_lease(operation_kind='store')
-        if (target is not self._custody_handle or self._journal is None
+        if (not self._is_original_store_recovery_target(target) or self._journal is None
                 or self._custodian is None or self._target_custody_journal_birth is None
                 or type(store) is not dict
                 or store != _store_descriptor(store.get('profile'), self._provider_id)):
             raise LocalPostgresError('local-postgresql-store-recovery-unverified')
-        try:
-            if int(connection.info.transaction_status) != 0:
-                raise LocalPostgresError(
-                    'local-postgresql-store-recovery-transaction-active')
-        except LocalPostgresError:
-            raise
-        except Exception:  # noqa: BLE001 -- do not observe/settle through an unknown transaction
-            raise LocalPostgresError('local-postgresql-store-recovery-transaction-unknown') from None
+        self._require_original_store_readonly_budget(readonly_budget)
         try:
             from .ingress_custody import JOURNAL_PROFILE_02, _replay
             external_doc = self._custodian._journal._load()
@@ -4920,8 +7041,6 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
         observations = store_state['observations']
         committed = next((item for item in reversed(observations)
                           if item['payload']['outcome'] == 'committed'), None)
-        known_aborted = next((item for item in reversed(observations)
-                              if item['payload']['outcome'] == 'known-aborted'), None)
         if reserved_event is None:
             raise LocalPostgresError('local-postgresql-store-recovery-receipt-unavailable')
         if (store_state['status'] not in ('reserved', 'observed-committed', 'confirmed')
@@ -4946,9 +7065,13 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
                 })):
             raise LocalPostgresError('local-postgresql-store-recovery-receipt-invalid')
         absence_proof = None
+        absence_authorization = None
         try:
             native_effect, native_outcome, request = self._recover_original_store_effect(
                 target, external_doc, store_state, reserved_event)
+            if receipt is not None and native_effect is None:
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-intent-mismatch')
             request_value = json.loads(request._intent_bytes, object_pairs_hook=_no_duplicates)
             if (request_value != reserved_event['payload']['request']
                     or request._intent_digest != reservation_record['creationRequestDigest']):
@@ -4959,23 +7082,38 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             if type(origin) is not dict:
                 raise LocalPostgresError('local-postgresql-store-recovery-origin-unverified')
             verified_target = self._custodian._resolve_target_custody(target)
+            self._require_original_store_readonly_budget(readonly_budget)
             native_now = self._observe_native(
                 self._profile.database_name,
-                current_role=intent_payload['evidence']['controller']['name'])
+                current_role=intent_payload['evidence']['controller']['name'],
+                readonly_budget=readonly_budget)
+            self._require_original_store_readonly_budget(readonly_budget)
             evidence_payload, native_observation = self._native_store_preparation_payload(
-                target_reference, verified_target, registration, authority, native_now)
-            if (evidence_payload != intent_payload['evidence']
-                    or not self._native_origin_matches(
-                        origin, self._launch.get('nativeAttestation')
-                        if self._launch is not None else None)):
+                target_reference, verified_target, registration, authority, native_now,
+                readonly_budget=readonly_budget)
+            recovery_observation = self._resolve_original_store_recovery_observation(
+                intent_payload['evidence'], evidence_payload, native_observation,
+                authority=authority,
+                readonly_budget=readonly_budget)
+            if not self._native_origin_matches(
+                    origin, self._launch.get('nativeAttestation')
+                    if self._launch is not None else None,
+                    readonly_budget=readonly_budget):
                 raise LocalPostgresError('local-postgresql-store-recovery-authority-stale')
             if receipt is None:
                 from .row_originals_creation import (
                     observe_absent_creation_schema, recover_creation_receipt)
                 absence_proof = observe_absent_creation_schema(
                     connection, store['schemaName'], native_now,
-                    intent_payload['evidence']['controller']['oid'])
+                    intent_payload['evidence']['controller']['oid'],
+                    readonly=True)
+                if absence_proof is not None:
+                    absence_authorization = _VerifiedOriginalStoreAbsence(
+                        _VERIFIED_STORE_ABSENCE_SEAL, self, readonly_budget,
+                        store_state['reservationDigest'], store['schemaName'],
+                        absence_proof)
                 if absence_proof is None:
+                    self._require_original_store_readonly_budget(readonly_budget)
                     receipt = recover_creation_receipt(connection, store['schemaName'], {
                         'profile': 'umf.originals-creation-receipt/0.1',
                         'providerId': reservation_record['providerId'],
@@ -4987,6 +7125,23 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
                         'targetCustodyDigest': _digest(reservation_record['targetCustody']),
                         'state': 'created'},
                         intent_payload['evidence']['controller']['oid'])
+                    self._require_original_store_readonly_budget(readonly_budget)
+                elif native_effect is None:
+                    # A reserved-only or typed-intent-only cut cannot acquire
+                    # an owner effect merely from absence.  Recheck all live
+                    # authority/absence facts above, then append only the
+                    # matching original intent chain; this path still performs
+                    # no DDL and cannot restore a lost creation budget.
+                    native_effect, native_outcome, request = \
+                        self._recover_original_store_effect(
+                            target, external_doc, store_state, reserved_event,
+                            readonly_budget=readonly_budget,
+                            recovery_observation=recovery_observation,
+                            absence_authorization=absence_authorization)
+                    if native_effect is None:
+                        raise LocalPostgresError(
+                            'local-postgresql-store-recovery-intent-unresolved')
+                    object.__setattr__(readonly_budget, '_effect', native_effect)
             if (absence_proof is None
                     and (type(receipt) is not dict or receipt['schemaOid'] <= 0
                          or receipt['reservationDigest'] != store_state['reservationDigest'])):
@@ -5002,16 +7157,16 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             self._store_preparations[id(evidence)] = (
                 evidence, evidence, _canonical(origin), _canonical(registration),
                 _canonical(authority))
-            self._resolve_original_store_preparation(
-                evidence, approval, custodian=self._custodian, target=target)
             effect_handle = self._owner_core._bind_effect_digest(
                 approval, _digest(native_effect._journal_record_digest))
             reservation = _OriginalStoreCreationReservation(
                 _ORIGINAL_STORE_RESERVATION_SEAL, self, evidence=evidence,
                 approval=approval, custodian=self._custodian, target=target,
-                connection=connection, effect_handle=effect_handle,
+                connection=readonly_budget._connection,
+                effect_handle=effect_handle,
                 native_effect=native_effect, record_bytes=_canonical(reservation_record),
-                store=store)
+                store=store, budget=None)
+            object.__setattr__(readonly_budget, '_reservation', reservation)
             typed_event = next((event for event in self._journal.read()['events']
                                 if event['kind'] == 'originals-store-creation-intent'
                                 and event['payload'].get('reservationDigest')
@@ -5027,14 +7182,12 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
                 'supervisorIntentDigest': typed_event['recordDigest'],
             }
             self._original_store_reservations[id(reservation)] = (
-                reservation, registry_entry,
-                self._resolve_original_store_preparation(
-                    evidence, approval, custodian=self._custodian, target=target))
+                reservation, registry_entry, recovery_observation)
             self._resolve_originals_store_creation_reservation(
                 reservation, evidence=evidence, approval=approval,
-                custodian=self._custodian, target=target, store=store, mode='recover')
-            if int(connection.info.transaction_status) != 0:
-                raise LocalPostgresError('local-postgresql-store-recovery-transaction-active')
+                custodian=self._custodian, target=target, store=store, mode='recover',
+                readonly_budget=readonly_budget)
+            self._require_original_store_readonly_budget(readonly_budget)
             if absence_proof is None:
                 from .row_originals_creation import verify_creation_receipt
                 verified_receipt = verify_creation_receipt(
@@ -5049,60 +7202,11 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             raise LocalPostgresError('local-postgresql-store-recovery-unverified') from None
 
         if absence_proof is not None:
-            absence_digest = _digest(absence_proof)
-            if native_outcome is None:
-                native_outcome = self._record_native_effect_outcome(
-                    native_effect, 'known-aborted', absence_proof, effect_handle)
-            elif (native_outcome.status != 'known-aborted'
-                  or native_outcome.receipt_digest != absence_digest):
-                raise LocalPostgresError('local-postgresql-store-recovery-outcome-conflict')
-            try:
-                native_observation_digest = _digest(native_now)
-                transaction_digest = _digest({
-                    'profile': 'umf.original-store-known-aborted-observation/0.1',
-                    'reservationDigest': store_state['reservationDigest'],
-                    'absenceProofDigest': absence_digest,
-                    'nativeObservationDigest': native_observation_digest,
-                })
-                if known_aborted is not None:
-                    aborted_payload = known_aborted['payload']
-                    if (aborted_payload['reservationDigest']
-                            != store_state['reservationDigest']
-                            or aborted_payload['supervisorIntentDigest']
-                                != self._original_store_reservations[
-                                    id(reservation)][1]['supervisorIntentDigest']
-                            or aborted_payload['nativeObservationDigest']
-                                != native_observation_digest
-                            or aborted_payload['transactionOutcomeDigest']
-                                != transaction_digest):
-                        raise LocalPostgresError(
-                            'local-postgresql-store-recovery-abort-mismatch')
-                else:
-                    self._custodian._journal._observe_originals_store(
-                        purpose=store_state['purpose'], reservation_id=store_state['id'],
-                        reservation_digest=store_state['reservationDigest'],
-                        supervisor_intent_digest=self._original_store_reservations[
-                            id(reservation)][1]['supervisorIntentDigest'],
-                        outcome='known-aborted', native_receipt=None,
-                        native_receipt_digest=None, schema_oid=None,
-                        native_observation_digest=native_observation_digest,
-                        transaction_outcome_digest=transaction_digest)
-                owner_state = self._owner_core.observe_original_request(
-                    self._authority_context, request.effect_key)
-                if owner_state.effect_status == 'effect-pending':
-                    self._owner_core._finish_effect_digest(
-                        request, _digest(native_effect._journal_record_digest),
-                        status='aborted', receipt_digest=absence_digest)
-                elif (owner_state.effect_status != 'aborted'
-                      or owner_state.effect_receipt_digest != absence_digest):
-                    raise LocalPostgresError(
-                        'local-postgresql-store-recovery-core-mismatch')
-            except LocalPostgresError:
-                raise
-            except Exception:  # noqa: BLE001 -- retain a fenced original on any partial failure
-                raise LocalPostgresError(
-                    'local-postgresql-store-recovery-abort-unresolved') from None
-            raise LocalPostgresError('local-postgresql-store-recovery-known-aborted')
+            # Catalog absence alone cannot establish transaction noncommit.
+            # Recovery has no original live attempt handle, so it must remain
+            # fenced and cannot terminalize either native or owner state.
+            raise LocalPostgresError(
+                'local-postgresql-store-recovery-noncommit-unproven')
 
         receipt_digest = _digest(receipt)
         if (native_outcome is not None
@@ -5111,9 +7215,12 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             raise LocalPostgresError('local-postgresql-store-recovery-outcome-conflict')
         if observation is None:
             try:
+                self._require_original_store_readonly_budget(readonly_budget)
                 native = self._observe_native(
                     self._profile.database_name,
-                    current_role=intent_payload['evidence']['controller']['name'])
+                    current_role=intent_payload['evidence']['controller']['name'],
+                    readonly_budget=readonly_budget)
+                self._require_original_store_readonly_budget(readonly_budget)
                 native_observation_digest = _digest(native)
                 transaction_digest = _digest({
                     'profile': 'umf.original-store-committed-observation/0.1',
@@ -5130,6 +7237,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
                     native_receipt_digest=receipt_digest, schema_oid=receipt['schemaOid'],
                     native_observation_digest=native_observation_digest,
                     transaction_outcome_digest=transaction_digest)
+                self._require_original_store_readonly_budget(readonly_budget)
                 committed = {'eventDigest': observed['recordDigest']}
                 store_state['status'] = 'observed-committed'
                 store_state['observedSupervisorIntentDigest'] = \
@@ -5147,6 +7255,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
 
         receipt_digest = observation['nativeReceiptDigest']
         if store_state['status'] == 'observed-committed':
+            self._require_original_store_readonly_budget(readonly_budget)
             confirmation = self._custodian._journal._confirm_originals_store(
                 purpose=store_state['purpose'], reservation_id=store_state['id'],
                 reservation_digest=store_state['reservationDigest'],
@@ -5167,6 +7276,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
                                         and event['payload'].get('reservationDigest')
                                             == store_state['reservationDigest']), None)
         if supervisor_confirmation is None:
+            self._require_original_store_readonly_budget(readonly_budget)
             self._append_supervisor_journal('originals-store-creation-confirmed', {
                 'purpose': store_state['purpose'],
                 'reservationDigest': store_state['reservationDigest'],
@@ -5178,6 +7288,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
               != confirmation['recordDigest']):
             raise LocalPostgresError('local-postgresql-store-recovery-confirmation-mismatch')
         if native_outcome is None:
+            self._require_original_store_readonly_budget(readonly_budget)
             native_outcome = self._record_native_effect_outcome(
                 native_effect, 'confirmed', receipt, effect_handle)
         elif (native_outcome.status != 'confirmed'
@@ -5186,6 +7297,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
         owner_state = self._owner_core.observe_original_request(
             self._authority_context, request.effect_key)
         if owner_state.effect_status == 'effect-pending':
+            self._require_original_store_readonly_budget(readonly_budget)
             self._owner_core._finish_effect_digest(
                 request, _digest(native_effect._journal_record_digest),
                 status='confirmed', receipt_digest=native_outcome.receipt_digest)
@@ -5196,13 +7308,16 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             _ORIGINAL_STORE_CAPABILITY_SEAL, self, reservation, receipt_digest)
         self._original_store_capabilities[id(capability)] = (capability, reservation)
         self._resolve_original_store_capability(
-            capability, original_reservation=reservation)
+            capability, original_reservation=reservation,
+            readonly_budget=readonly_budget)
         return reservation, capability, json.loads(_canonical(receipt))
 
     def _resolve_originals_store_creation_reservation(
             self, value: object, *, evidence: object, approval: object,
             custodian: object, target: object, store: dict[str, Any],
-            mode: str = 'execute'
+            mode: str = 'execute',
+            budget_reservation: _OriginalStoreCreationReservation | None = None,
+            readonly_budget: _OriginalStoreReadonlyBudget | None = None
             ) -> _OriginalStoreCreationReservation:
         if (type(value) is not _OriginalStoreCreationReservation
                 or value._issuer is not self or value._evidence is not evidence
@@ -5212,16 +7327,60 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
         entry = self._original_store_reservations.get(id(value))
         if entry is None or entry[0] is not value:
             raise LocalPostgresError('local-postgresql-store-reservation-unverified')
-        resolved = self._resolve_original_store_preparation(
-            evidence, approval, custodian=custodian, target=target)
+        if budget_reservation is not None:
+            if budget_reservation is not value:
+                raise LocalPostgresError('local-postgresql-store-budget-unavailable')
+            self._require_original_store_budget(value)
         reservation = json.loads(value._record_bytes, object_pairs_hook=_no_duplicates)
-        if (resolved['store'] != store or reservation['store'] != store
-                or _canonical(resolved) != _canonical(entry[2])):
+        if mode == 'recover' and readonly_budget is not None:
+            self._require_original_store_readonly_budget(readonly_budget)
+            recovery_observation = entry[2]
+            try:
+                original_request_payload = json.loads(
+                    value._native_effect._request._intent_bytes,
+                    object_pairs_hook=_no_duplicates)
+            except Exception:  # noqa: BLE001 -- only the original signed bytes are authority
+                raise LocalPostgresError(
+                    'local-postgresql-store-reservation-stale') from None
+            if (type(recovery_observation) is not _VerifiedOriginalStoreRecoveryObservation
+                    or recovery_observation._issuer is not self
+                    or recovery_observation._budget is not readonly_budget
+                    or recovery_observation._request is not value._native_effect._request
+                    or recovery_observation._reservation_digest
+                        != entry[1]['reservationDigest']
+                    or readonly_budget._reservation is not value
+                    or readonly_budget._effect is not value._native_effect
+                    or readonly_budget._connection is not value._connection
+                    or recovery_observation._original_payload_bytes
+                        != _canonical(original_request_payload.get('evidence'))
+                    or value._evidence._payload_bytes
+                        != value._native_effect._request._intent_bytes
+                    or recovery_observation._actual_observation_bytes
+                        != value._evidence.native_observation_bytes
+                    or reservation['store'] != store):
+                raise LocalPostgresError('local-postgresql-store-reservation-stale')
+            resolved = recovery_observation
+        else:
+            if readonly_budget is not None:
+                self._require_original_store_readonly_budget(readonly_budget)
+            resolved = self._resolve_original_store_preparation(
+                evidence, approval, custodian=custodian, target=target,
+                budget_reservation=budget_reservation)
+            if budget_reservation is not None:
+                self._require_original_store_budget(value)
+            if (resolved['store'] != store or reservation['store'] != store
+                    or _canonical(resolved) != _canonical(entry[2])):
+                raise LocalPostgresError('local-postgresql-store-reservation-stale')
+        if reservation['store'] != store:
             raise LocalPostgresError('local-postgresql-store-reservation-stale')
         try:
             from .ingress_custody import JOURNAL_PROFILE_02, _replay
+            if budget_reservation is not None:
+                self._require_original_store_budget(value)
             doc = custodian._journal._load()
             external_state = _replay(doc['events'], profile=JOURNAL_PROFILE_02)
+            if budget_reservation is not None:
+                self._require_original_store_budget(value)
         except Exception:  # noqa: BLE001
             raise LocalPostgresError('local-postgresql-store-reservation-stale') from None
         store_state = next((item for item in external_state['stores'].values()
@@ -5233,7 +7392,11 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
                                if event['kind'] == 'originals-store-reserved'
                                and event['payload']['reservation']['reservationId']
                                    == reservation['reservationId']), None)
+        if budget_reservation is not None:
+            self._require_original_store_budget(value)
         supervisor_events = self._journal.read()['events']
+        if budget_reservation is not None:
+            self._require_original_store_budget(value)
         typed_event = next((event for event in supervisor_events
                             if event['kind'] == 'originals-store-creation-intent'
                             and event['payload']['reservationDigest']
@@ -5244,28 +7407,66 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
                 or typed_event['payload']['custodianReservedEventDigest']
                     != external_event['recordDigest']):
             raise LocalPostgresError('local-postgresql-store-reservation-stale')
+        if budget_reservation is not None:
+            self._require_original_store_budget(value)
         self._resolve_native_effect_reservation(value._native_effect, approval)
+        if budget_reservation is not None:
+            self._require_original_store_budget(value)
         self._require_bound_pending_effect(
             value._native_effect, value._effect_handle, mode=mode)
+        if budget_reservation is not None:
+            self._require_original_store_budget(value)
         return value
 
     def confirm_originals_store_creation(
             self, reservation: object, *, receipt: dict[str, Any]) -> _OriginalStoreCreationCapability:
         """Confirm only the exact committed receipt on the reserved original store."""
+        readonly_started_ns = time.monotonic_ns()
         self._require_original_control_lease(operation_kind='store')
         entry = self._original_store_reservations.get(id(reservation))
         if (type(reservation) is not _OriginalStoreCreationReservation
                 or entry is None or entry[0] is not reservation
                 or type(receipt) is not dict or self._journal is None):
             raise LocalPostgresError('local-postgresql-store-confirmation-unverified')
-        self._resolve_originals_store_creation_reservation(
-            reservation, evidence=reservation._evidence,
-            approval=reservation._approval, custodian=reservation._custodian,
-            target=reservation._target, store=json.loads(reservation._store))
         connection = reservation._connection
+        registry_entry = self._original_store_reservations[id(reservation)][1]
+        readonly_budget = self._mint_original_store_readonly_budget(
+            reservation, reservation._evidence.owner_request,
+            reservation._native_effect, registry_entry['reservationDigest'],
+            reservation._record_bytes, 'confirm', reservation._target, connection,
+            json.loads(reservation._store), readonly_started_ns)
         try:
-            if int(connection.info.transaction_status) != 0:
-                raise LocalPostgresError('local-postgresql-store-transaction-not-committed')
+            self._require_original_store_readonly_budget(readonly_budget)
+            original_payload = json.loads(reservation._evidence._payload_bytes,
+                                          object_pairs_hook=_no_duplicates)
+            evidence = original_payload.get('evidence')
+            registration, authority = self._original_registration_and_principal_authority()
+            verified_target = reservation._custodian._resolve_target_custody(
+                reservation._target)
+            reference = reservation._custodian._public_reference(reservation._target)
+            current_native = self._observe_native(
+                self._profile.database_name,
+                current_role=evidence['controller']['name'],
+                readonly_budget=readonly_budget)
+            actual_evidence, actual_observation = self._native_store_preparation_payload(
+                reference, verified_target, registration, authority, current_native,
+                readonly_budget=readonly_budget)
+            recovery_observation = self._resolve_original_store_recovery_observation(
+                evidence, actual_evidence, actual_observation, authority=authority,
+                readonly_budget=readonly_budget)
+            origin = self._owner_payloads.get(
+                registration['registrationId'], {}).get('origin', {})
+            if (self._launch is None or not self._native_origin_matches(
+                    origin, self._launch.get('nativeAttestation'),
+                    readonly_budget=readonly_budget)):
+                raise LocalPostgresError('local-postgresql-store-origin-unverified')
+            self._original_store_reservations[id(reservation)] = (
+                reservation, registry_entry, recovery_observation)
+            self._resolve_originals_store_creation_reservation(
+                reservation, evidence=reservation._evidence,
+                approval=reservation._approval, custodian=reservation._custodian,
+                target=reservation._target, store=json.loads(reservation._store),
+                mode='recover', readonly_budget=readonly_budget)
             reserved = json.loads(reservation._record_bytes, object_pairs_hook=_no_duplicates)
             expected_fields = {
                 'profile': 'umf.originals-creation-receipt/0.1',
@@ -5283,29 +7484,35 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             if (type(receipt) is not dict or any(receipt.get(key) != value
                                                  for key, value in expected_fields.items())):
                 raise LocalPostgresError('local-postgresql-store-receipt-mismatch')
-            verified_receipt = verify_creation_receipt(
-                connection, reserved['store']['schemaName'], receipt,
-                json.loads(reservation._evidence._payload_bytes)['evidence']['controller']['oid'])
+            with self._connect_maintenance(
+                    self._profile.database_name,
+                    readonly_budget=readonly_budget) as recovery_connection:
+                with self._original_store_readonly_transaction(
+                        recovery_connection, readonly_budget) as readonly_connection:
+                    verified_receipt = verify_creation_receipt(
+                        readonly_connection, reserved['store']['schemaName'], receipt,
+                        evidence['controller']['oid'])
+            self._require_original_store_readonly_budget(readonly_budget)
             if verified_receipt != receipt:
                 raise LocalPostgresError('local-postgresql-store-receipt-mismatch')
-            if int(connection.info.transaction_status) != 0:
-                connection.rollback()
-            if int(connection.info.transaction_status) != 0:
-                raise LocalPostgresError('local-postgresql-store-observation-unsettled')
         except LocalPostgresError:
             raise
         except Exception:  # noqa: BLE001 -- native/catalog details remain private
             raise LocalPostgresError('local-postgresql-store-footprint-unverified') from None
         receipt_digest = _digest(receipt)
+        self._require_original_store_readonly_budget(readonly_budget)
         native = self._observe_native(self._profile.database_name,
                                       current_role=json.loads(
                                           reservation._evidence._payload_bytes)
-                                      ['evidence']['controller']['name'])
+                                      ['evidence']['controller']['name'],
+                                      readonly_budget=readonly_budget)
+        self._require_original_store_readonly_budget(readonly_budget)
         if (self._launch is None
                 or not self._native_origin_matches(
                     self._owner_payloads.get(
                         reserved['targetCustody']['registrationId'], {}).get('origin', {}),
-                    self._launch.get('nativeAttestation'))):
+                    self._launch.get('nativeAttestation'),
+                    readonly_budget=readonly_budget)):
             raise LocalPostgresError('local-postgresql-store-origin-unverified')
         native_observation_digest = _digest(native)
         transaction_digest = _digest({
@@ -5316,6 +7523,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             'nativeObservationDigest': native_observation_digest,
         })
         try:
+            self._require_original_store_readonly_budget(readonly_budget)
             observed = reservation._custodian._journal._observe_originals_store(
                 purpose=self._profile.purpose,
                 reservation_id=reserved['reservationId'],
@@ -5325,6 +7533,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
                 native_receipt_digest=receipt_digest, schema_oid=receipt['schemaOid'],
                 native_observation_digest=native_observation_digest,
                 transaction_outcome_digest=transaction_digest)
+            self._require_original_store_readonly_budget(readonly_budget)
             confirmed = reservation._custodian._journal._confirm_originals_store(
                 purpose=self._profile.purpose,
                 reservation_id=reserved['reservationId'],
@@ -5334,6 +7543,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
                 native_receipt_digest=receipt_digest, schema_oid=receipt['schemaOid'])
         except Exception:  # noqa: BLE001 -- retain original pending state for recovery
             raise LocalPostgresError('local-postgresql-store-custody-confirmation-unresolved') from None
+        self._require_original_store_readonly_budget(readonly_budget)
         self._append_supervisor_journal('originals-store-creation-confirmed', {
             'purpose': self._profile.purpose,
             'reservationDigest': entry[1]['reservationDigest'],
@@ -5341,10 +7551,12 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             'custodianConfirmationDigest': confirmed['recordDigest'],
             'nativeReceiptDigest': receipt_digest, 'schemaOid': receipt['schemaOid'],
         })
+        self._require_original_store_readonly_budget(readonly_budget)
         outcome = self._record_native_effect_outcome(
             reservation._native_effect, 'confirmed', receipt,
             reservation._effect_handle)
         try:
+            self._require_original_store_readonly_budget(readonly_budget)
             self._owner_core._finish_effect_digest(
                 reservation._native_effect._request,
                 _digest(reservation._native_effect._journal_record_digest),
@@ -5357,19 +7569,47 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
         return capability
 
     def _resolve_original_store_capability(
-            self, value: object, *, original_reservation: object
+            self, value: object, *, original_reservation: object,
+            readonly_budget: _OriginalStoreReadonlyBudget | None = None
             ) -> _OriginalStoreCreationCapability:
         if (type(value) is not _OriginalStoreCreationCapability
                 or value._issuer is not self or value._reservation is not original_reservation
                 or self._original_store_capabilities.get(id(value))
                     != (value, original_reservation)):
             raise LocalPostgresError('local-postgresql-store-capability-unverified')
-        self._resolve_originals_store_creation_reservation(
-            original_reservation, evidence=original_reservation._evidence,
-            approval=original_reservation._approval,
-            custodian=original_reservation._custodian,
-            target=original_reservation._target,
-            store=json.loads(original_reservation._store), mode='recover')
+        registry_entry = self._original_store_reservations.get(id(original_reservation))
+        if registry_entry is None or registry_entry[0] is not original_reservation:
+            raise LocalPostgresError('local-postgresql-store-capability-unverified')
+        recovery_authority = registry_entry[2]
+        try:
+            original_request_payload = json.loads(
+                original_reservation._native_effect._request._intent_bytes,
+                object_pairs_hook=_no_duplicates)
+        except Exception:  # noqa: BLE001 -- only original request bytes are authority
+            raise LocalPostgresError(
+                'local-postgresql-store-capability-unverified') from None
+        if (type(recovery_authority) is _VerifiedOriginalStoreRecoveryObservation
+                and recovery_authority._issuer is self
+                and recovery_authority._request
+                    is original_reservation._native_effect._request
+                and recovery_authority._reservation_digest
+                    == registry_entry[1]['reservationDigest']
+                and recovery_authority._original_payload_bytes
+                    == _canonical(original_request_payload.get('evidence'))
+                and recovery_authority._actual_observation_bytes
+                    == original_reservation._evidence.native_observation_bytes):
+            # The full readonly observation already validated the exact original
+            # evidence against live authority. Do not reinterpret it as creation/off.
+            if readonly_budget is not None:
+                self._require_original_store_readonly_budget(readonly_budget)
+        else:
+            self._resolve_originals_store_creation_reservation(
+                original_reservation, evidence=original_reservation._evidence,
+                approval=original_reservation._approval,
+                custodian=original_reservation._custodian,
+                target=original_reservation._target,
+                store=json.loads(original_reservation._store), mode='recover',
+                readonly_budget=readonly_budget)
         try:
             from .ingress_custody import JOURNAL_PROFILE_02, _replay
             external_doc = original_reservation._custodian._journal._load()
@@ -5422,7 +7662,9 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
         return value
 
     def _resolve_original_store_preparation(self, evidence: object, approval: object, *,
-                                            custodian: object, target: object):
+                                            custodian: object, target: object,
+                                            budget_reservation: _OriginalStoreCreationReservation | _OriginalStoreCreationBudget | None = None,
+                                            readonly_budget: _OriginalStoreReadonlyBudget | None = None):
         from .ingress_custody import CustodyJournalError
         from .owner_approval_core import OwnerAuthorityError, VerifiedOwnerApproval
         if (type(evidence) is not _VerifiedNativeStorePreparation
@@ -5431,6 +7673,10 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
                 or evidence.custodian is not custodian
                 or evidence.target_handle is not target):
             raise LocalPostgresError('local-postgresql-store-preparation-unverified')
+        if budget_reservation is not None and readonly_budget is not None:
+            raise LocalPostgresError('local-postgresql-store-observation-budget-ambiguous')
+        if readonly_budget is not None:
+            self._require_original_store_readonly_budget(readonly_budget)
         entry = self._store_preparations.get(id(evidence))
         if (entry is None or entry[0] is not evidence or entry[1] is not evidence):
             raise LocalPostgresError('local-postgresql-store-preparation-unverified')
@@ -5470,7 +7716,15 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
                     requested_store.get('profile'), self._provider_id)):
             raise LocalPostgresError('local-postgresql-store-preparation-unverified')
         controller = intent['controllerName']
-        native = self._observe_native(self._profile.database_name, current_role=controller)
+        if budget_reservation is not None:
+            self._require_original_store_budget(budget_reservation)
+        native = self._observe_native(
+            self._profile.database_name, current_role=controller,
+            budget_reservation=budget_reservation, readonly_budget=readonly_budget)
+        if budget_reservation is not None:
+            self._require_original_store_budget(budget_reservation)
+        if readonly_budget is not None:
+            self._require_original_store_readonly_budget(readonly_budget)
         attestation = self._launch.get('nativeAttestation')
         origin = self._owner_payloads.get(registration['registrationId'], {}).get('origin', {})
         if (_canonical(registration) != entry[3]
@@ -5480,8 +7734,15 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             raise LocalPostgresError('local-postgresql-store-preparation-stale')
         fresh_payload, fresh_observation = self._native_store_preparation_payload(
             self._custodian._public_reference(target), verified, registration,
-            authority, native)
-        if (not self._native_origin_matches(origin, attestation)
+            authority, native, budget_reservation=budget_reservation,
+            readonly_budget=readonly_budget)
+        if budget_reservation is not None:
+            self._require_original_store_budget(budget_reservation)
+        if readonly_budget is not None:
+            self._require_original_store_readonly_budget(readonly_budget)
+        if (not self._native_origin_matches(
+                    origin, attestation, budget_reservation=budget_reservation,
+                    readonly_budget=readonly_budget)
                 or payload.get('providerId') != self._provider_id
                 or payload.get('installationId') != intent['installationId']
                 or approval.intent_digest != evidence.owner_request._intent_digest
@@ -5492,7 +7753,138 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
         return {'profile': payload['profile'], 'payload': payload,
                 'store': dict(requested_store),
                 'verifiedTarget': verified, 'approval': approval,
-                'nativeObservation': json.loads(evidence.native_observation_bytes)}
+                'nativeObservation': fresh_observation}
+
+    def _resolve_recovered_original_store_current_authority(
+            self, reservation: _OriginalStoreCreationReservation,
+            capability: _OriginalStoreCreationCapability,
+            connection: object) -> dict[str, Any]:
+        """Refresh current authority for a fully settled recovered store.
+
+        This is deliberately separate from the original creation/OFF resolver:
+        the signed request and approval remain the immutable authority, while
+        every current native fact is observed truthfully through a distinct
+        bounded read-only invocation.
+        """
+        if (type(reservation) is not _OriginalStoreCreationReservation
+                or type(capability) is not _OriginalStoreCreationCapability
+                or reservation._issuer is not self
+                or reservation._budget is not None
+                or reservation._evidence.owner_request is not capability._reservation._evidence.owner_request
+                or capability._issuer is not self
+                or capability._reservation is not reservation
+                or self._original_store_capabilities.get(id(capability))
+                    != (capability, reservation)):
+            raise LocalPostgresError(
+                'local-postgresql-store-recovery-authority-unverified')
+        started_ns = time.monotonic_ns()
+        budget = self._mint_original_store_readonly_budget(
+            reservation, reservation._evidence.owner_request,
+            reservation._native_effect,
+            self._original_store_reservations[id(reservation)][1]['reservationDigest'],
+            reservation._record_bytes, 'confirm', self._custody_handle,
+            connection, json.loads(reservation._store), started_ns)
+        try:
+            if self._resolve_original_store_capability(
+                    capability, original_reservation=reservation,
+                    readonly_budget=budget) is not capability:
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-authority-unverified')
+            evidence = reservation._evidence
+            approval = reservation._approval
+            entry = self._store_preparations.get(id(evidence))
+            if (type(evidence) is not _VerifiedNativeStorePreparation
+                    or evidence._issuer is not self._store_issuer
+                    or evidence.supervisor is not self
+                    or evidence.custodian is not reservation._custodian
+                    or evidence.target_handle is not reservation._target
+                    or entry is None or entry[0] is not evidence or entry[1] is not evidence
+                    or self._journal is None or self._launch is None):
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-authority-unverified')
+            self._owner_core._resolve_verified_approval(
+                approval, original_request=evidence.owner_request,
+                scope='native-store-creation',
+                intent_digest=evidence.owner_request._intent_digest)
+            verified_target = reservation._custodian._resolve_target_custody(
+                reservation._target)
+            if verified_target is not evidence.verified_target:
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-target-mismatch')
+            try:
+                request_payload = json.loads(
+                    evidence.owner_request._intent_bytes,
+                    object_pairs_hook=_no_duplicates)
+                retained_payload = json.loads(
+                    evidence._payload_bytes, object_pairs_hook=_no_duplicates)
+            except Exception:  # noqa: BLE001 -- exact signed bytes are the authority
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-request-mismatch') from None
+            if (type(request_payload) is not dict
+                    or retained_payload != request_payload
+                    or type(retained_payload.get('evidence')) is not dict
+                    or retained_payload.get('profile')
+                        != 'umf.owner-store-create-intent/0.1'
+                    or retained_payload.get('store') != json.loads(reservation._store)):
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-request-mismatch')
+            intent = next((event['payload'] for event in self._journal.read()['events']
+                           if event['kind'] == 'creation-intent'), None)
+            if type(intent) is not dict:
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-authority-unverified')
+            registration, authority = self._original_registration_and_principal_authority()
+            registration_event = _owner_registration_approval_payload(
+                self._journal.read()['events'])
+            origin = self._owner_payloads.get(
+                registration['registrationId'], {}).get('origin', {})
+            if (_canonical(registration) != entry[3]
+                    or _canonical(authority) != entry[4]
+                    or _canonical(origin) != entry[2]
+                    or registration_event['payloadDigest']
+                        != registration['payloadDigest']):
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-authority-stale')
+            payload = retained_payload['evidence']
+            store = retained_payload['store']
+            if store != _store_descriptor(store.get('profile'), self._provider_id):
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-request-mismatch')
+            self._require_original_store_readonly_budget(budget)
+            native_now = self._observe_native(
+                self._profile.database_name, current_role=intent['controllerName'],
+                readonly_budget=budget)
+            self._require_original_store_readonly_budget(budget)
+            reference = reservation._custodian._public_reference(reservation._target)
+            actual_payload, actual_observation = self._native_store_preparation_payload(
+                reference, verified_target, registration, authority, native_now,
+                readonly_budget=budget)
+            current_observation = self._resolve_original_store_recovery_observation(
+                payload, actual_payload, actual_observation,
+                authority=authority, readonly_budget=budget)
+            if not self._native_origin_matches(
+                    origin, self._launch.get('nativeAttestation'),
+                    readonly_budget=budget):
+                raise LocalPostgresError(
+                    'local-postgresql-store-recovery-authority-stale')
+            self._require_original_store_readonly_budget(budget)
+            return {
+                'profile': payload['profile'], 'payload': payload,
+                'store': dict(store), 'verifiedTarget': verified_target,
+                'approval': approval,
+                # Keep the truthful live readonly observation. The payload
+                # remains the immutable signed authority used for caller-session
+                # checks; no readonly facts are normalized to OFF.
+                'nativeObservation': actual_observation,
+                'targetCustody': reference,
+                'creationReservationDigest': budget._reservation_digest,
+            }
+        except LocalPostgresError:
+            raise
+        except Exception:  # noqa: BLE001 -- current-authority observation is fail-closed
+            object.__setattr__(budget, '_fenced', True)
+            raise LocalPostgresError(
+                'local-postgresql-store-recovery-authority-unverified') from None
 
     def stop(self) -> None:
         """Stop only this adapter's verified server process group."""

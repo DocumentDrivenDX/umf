@@ -2,9 +2,12 @@
 from __future__ import annotations
 
 import copy
+from enum import IntEnum
+import hashlib
 import os
 import sys
 import tempfile
+import time
 import unittest
 import uuid
 from contextlib import contextmanager
@@ -13,13 +16,23 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from umf_access.lifecycle import ingress_local_postgres as native
+from umf_access.lifecycle.catalog import CatalogError
 from umf_access.lifecycle.ingress_local_postgres import (
     _NATIVE_EFFECT_OUTCOME_SEAL,
+    _ORIGINAL_STORE_ATTEMPT_SEAL,
+    _ORIGINAL_STORE_BUDGET_SEAL,
+    _ORIGINAL_STORE_RESERVATION_SEAL,
+    _OriginalStoreCreationAttempt,
+    _OriginalStoreCreationBudget,
+    _OriginalStoreCreationReservation,
+    _BudgetedOriginalStoreConnection,
+    _BudgetedOriginalStoreReadonlyConnection,
     _VERIFIED_STORE_PREPARATION_SEAL,
     LocalPostgresError,
     LocalPostgresSupervisor,
     _AttachedPostmaster,
     _canonical,
+    _digest,
     _membership_grant_statements,
     _NativeAttestation,
     _NativeEffectReservation,
@@ -59,6 +72,1341 @@ def _synthetic_control_lease(supervisor, operation_kind):
 
 
 class LocalPostgresSupervisorSourceTests(unittest.TestCase):
+    def _creation_budget_fixture(self):
+        request = SimpleNamespace(effect_key=('native-store-creation', 'store'),
+                                  _intent_digest='a' * 64)
+        evidence = SimpleNamespace(owner_request=request)
+        approval = SimpleNamespace(approval_digest='b' * 64)
+        custodian, target, connection = object(), object(), object()
+        store = {'profile': 'umf.native-row-originals-store/0.1', 'storeId': 'store'}
+        supervisor = object.__new__(LocalPostgresSupervisor)
+        supervisor._owner_core = SimpleNamespace(configuration_digest='c' * 64)
+        supervisor._original_store_issuer_pid = os.getpid()
+        budget = _OriginalStoreCreationBudget(
+            _ORIGINAL_STORE_BUDGET_SEAL, supervisor, request=request,
+            evidence=evidence, approval=approval, custodian=custodian,
+            target=target, connection=connection, store=store,
+            started_ns=1_000_000_000,
+            caller_timeout_lower_ms=(('lock_timeout', 0), ('statement_timeout', 0)))
+        reservation = _OriginalStoreCreationReservation(
+            _ORIGINAL_STORE_RESERVATION_SEAL, supervisor, evidence=evidence,
+            approval=approval, custodian=custodian, target=target,
+            connection=connection, effect_handle=object(),
+            native_effect=SimpleNamespace(_request=request),
+            record_bytes=b'{}', store=store, budget=budget)
+        object.__setattr__(budget, '_reservation', reservation)
+        reservation_digest = hashlib.sha256(b'{}').hexdigest()
+        object.__setattr__(budget, '_reservation_digest', reservation_digest)
+        supervisor._original_store_budgets = {id(request): budget}
+        supervisor._original_store_reservations = {id(reservation): (
+            reservation, {'reservationDigest': reservation_digest,
+                          'supervisorIntentDigest': 'e' * 64}, {})}
+        reservation._native_effect._journal_record_digest = 'e' * 64
+        return supervisor, reservation, budget
+
+    def test_store_recovery_rejects_active_original_connection_before_journal_reads(self):
+        supervisor = object.__new__(LocalPostgresSupervisor)
+        target = object()
+        connection = SimpleNamespace(info=SimpleNamespace(transaction_status=2))
+        supervisor._custody_handle = None
+        supervisor._authority_context = object()
+        supervisor._journal = object()
+        with patch.object(supervisor, '_require_original_control_lease') as lease:
+            with self.assertRaisesRegex(
+                    LocalPostgresError,
+                    'local-postgresql-store-readonly-transaction-active'):
+                supervisor.recover_originals_store_creation(
+                    target, connection, store={
+                        'profile': 'umf.native-row-originals-store/0.1',
+                        'storeId': 'provider', 'schemaName': 'umf_originals_provider'})
+        lease.assert_called_once_with(operation_kind='store')
+
+    def test_public_recovery_facade_selects_only_the_exact_six_part_store_key(self):
+        from umf_access.lifecycle.row_originals import (
+            CatalogError, PgRowOriginalsStore, STORE_PROFILE,
+        )
+
+        provider_id = '33333333-3333-4333-8333-333333333333'
+        registration_id = 'registration-a'
+        target = object()
+        reference = {'registrationId': registration_id, 'custodianId': 'custodian',
+                     'resourceId': 'resource', 'incarnation': 'incarnation'}
+        store = _store_descriptor(STORE_PROFILE, provider_id)
+        wanted_key = (registration_id, provider_id, 'installation',
+                      STORE_PROFILE, provider_id, store['schemaName'])
+        other_provider_id = '55555555-5555-4555-8555-555555555555'
+        other_store = _store_descriptor(STORE_PROFILE, other_provider_id)
+        other_key = (registration_id, other_provider_id, 'installation',
+                     STORE_PROFILE, other_provider_id, other_store['schemaName'])
+        events = []
+        head = '0' * 64
+
+        def append(kind, payload):
+            nonlocal head
+            event = {'sequence': len(events) + 1, 'previousDigest': head,
+                     'kind': kind, 'payload': payload}
+            event['recordDigest'] = _digest(event)
+            head = event['recordDigest']
+            events.append(event)
+
+        append('registration-intent', {'registrationId': registration_id})
+        append('registration-observation', {
+            'registrationId': registration_id,
+            'observation': {'custodianSequence': 1},
+        })
+        append('registration-confirmed', {
+            'registrationId': registration_id, 'targetCustody': reference,
+        })
+
+        def append_completed_store(store_id, descriptor, key):
+            reservation_id = 'reservation-' + store_id
+            record = {
+                'profile': 'umf.row-originals-store-reservation/0.1',
+                'reservationId': reservation_id, 'providerId': store_id,
+                'installationId': 'installation', 'targetCustody': reference,
+                'store': descriptor, 'creationRequestDigest': 'a' * 64,
+                'creationApprovalDigest': 'b' * 64,
+            }
+            reservation_digest = _digest(record)
+            append('originals-store-reserved', {
+                'purpose': 'native-acceptance', 'request': {},
+                'approvalDigest': record['creationApprovalDigest'],
+                'reservation': record, 'reservationDigest': reservation_digest,
+                'parent': {'sequence': len(events), 'headDigest': head},
+            })
+            receipt = {
+                'profile': 'umf.originals-creation-receipt/0.1',
+                'providerId': store_id, 'installationId': 'installation',
+                'storeProfile': descriptor['profile'], 'storeId': store_id,
+                'reservationDigest': reservation_digest,
+                'creationRequestDigest': record['creationRequestDigest'],
+                'creationApprovalDigest': record['creationApprovalDigest'],
+                'targetCustodyDigest': _digest(reference),
+                'schemaOid': 91 if key == wanted_key else 92, 'state': 'created',
+            }
+            observation_payload = {
+                'purpose': 'native-acceptance', 'reservationId': reservation_id,
+                'reservationDigest': reservation_digest,
+                'supervisorIntentDigest': 'c' * 64, 'outcome': 'committed',
+                'nativeReceipt': receipt, 'nativeReceiptDigest': _digest(receipt),
+                'schemaOid': receipt['schemaOid'], 'nativeObservationDigest': 'd' * 64,
+                'transactionOutcomeDigest': 'e' * 64,
+                'parent': {'sequence': len(events), 'headDigest': head},
+            }
+            append('originals-store-observation', observation_payload)
+            append('originals-store-confirmed', {
+                'purpose': 'native-acceptance', 'reservationId': reservation_id,
+                'reservationDigest': reservation_digest,
+                'supervisorIntentDigest': 'c' * 64,
+                'observationEventDigest': events[-1]['recordDigest'],
+                'nativeReceiptDigest': _digest(receipt),
+                'schemaOid': receipt['schemaOid'],
+                'parent': {'sequence': len(events), 'headDigest': head},
+            })
+
+        append_completed_store(other_provider_id, other_store, other_key)
+        only_other_store_events = list(events)
+        append_completed_store(provider_id, store, wanted_key)
+
+        class Connection:
+            closed = False
+
+            def __init__(self):
+                self.info = SimpleNamespace(transaction_status=0)
+
+        connection = Connection()
+        supervisor = object.__new__(LocalPostgresSupervisor)
+        supervisor._provider_id = provider_id
+        supervisor._bound_installation_id = 'installation'
+        supervisor._custodian_id = 'custodian'
+        supervisor._custody_handle = None
+        supervisor._authority_context = object()
+        supervisor._custodian = SimpleNamespace(
+            _public_reference=lambda _target: reference,
+            _resolve_target_custody=lambda _target: SimpleNamespace(reference=reference),
+            _journal=SimpleNamespace(_load=lambda: {'events': events}))
+        supervisor._pending_original_store_recovery = (
+            target, supervisor._custodian, supervisor._custodian_id,
+            supervisor._authority_context, os.getpid(), reference)
+        supervisor._journal = SimpleNamespace(read=lambda: {'events': [
+            {'kind': 'creation-intent', 'payload': {'controllerName': 'controller'}}]})
+        with (patch.dict(sys.modules, {'psycopg': SimpleNamespace(Connection=Connection)}),
+              patch.object(supervisor, '_original_control_lease',
+                            side_effect=lambda *, operation_kind:
+                                _synthetic_control_lease(supervisor, operation_kind))):
+            provider = supervisor.open_originals_store_recovery(
+                connection, provider_id=provider_id)
+        self.assertIs(type(provider), PgRowOriginalsStore)
+        self.assertTrue(provider._recovery_only)
+        self.assertIs(provider._target, target)
+        self.assertIsNone(supervisor._custody_handle)
+        self.assertEqual(provider._provider_id, provider_id)
+        self.assertIsNone(provider._creation_reservation)
+        with self.assertRaisesRegex(CatalogError, 'row-originals-store-recovery-required'):
+            provider.verify()
+        with self.assertRaisesRegex(CatalogError, 'row-originals-store-recovery-only'):
+            provider.create()
+
+        request = SimpleNamespace()
+        evidence = SimpleNamespace(owner_request=request)
+        approval = object()
+        reservation = SimpleNamespace(
+            _evidence=evidence, _approval=approval,
+            _custodian=supervisor._custodian, _target=target)
+        capability = object()
+        receipt = {'schemaOid': 91}
+        current = {'payload': {'controller': {'name': 'controller', 'oid': 901}}}
+        with (patch.object(supervisor, 'recover_originals_store_creation',
+                           return_value=(reservation, capability, receipt)),
+              patch.object(supervisor, '_resolve_original_store_capability',
+                           return_value=capability),
+              patch.object(supervisor, '_resolve_recovered_original_store_current_authority',
+                           return_value=current),
+              patch.object(supervisor, '_original_control_lease',
+                           side_effect=lambda *, operation_kind:
+                               _synthetic_control_lease(supervisor, operation_kind)),
+              patch.object(PgRowOriginalsStore, '_verify_controller_session'),
+              patch.object(PgRowOriginalsStore, '_verify_store')):
+            self.assertEqual(provider.recover_creation(), 91)
+            connection.info.transaction_status = 2
+            provider.verify()
+        self.assertIs(provider._creation_reservation, reservation)
+        self.assertIs(provider._creation_capability, capability)
+        self.assertEqual(provider._controller_role, 'controller')
+        self.assertEqual(provider._controller_oid, 901)
+        connection.info.transaction_status = 0
+        with (patch.object(supervisor, '_original_control_lease',
+                           side_effect=lambda *, operation_kind:
+                               _synthetic_control_lease(supervisor, operation_kind))):
+            supervisor._custodian._journal._load = lambda: {
+                'events': only_other_store_events}
+            with self.assertRaisesRegex(
+                    LocalPostgresError,
+                    'local-postgresql-store-recovery-outcome-unresolved'):
+                supervisor.open_originals_store_recovery(
+                    connection, provider_id=provider_id)
+
+    def test_registration_classifies_reserved_no_intent_without_core_rehydration(self):
+        from umf_access.lifecycle.ingress_custody import (
+            JOURNAL_PROFILE_02, _replay,
+        )
+
+        provider_id = '10000000-0000-4000-8000-000000000003'
+        registration_id = '10000000-0000-4000-8000-000000000009'
+        owner_payload = {
+            'profile': 'umf.local-owner-target-registration/0.1',
+            'registrationId': registration_id,
+            'custodianId': '10000000-0000-4000-8000-000000000002',
+            'providerId': provider_id, 'installationId': 'installation-a',
+            'ownerApproval': {
+                'authorityId': 'owner-approval-authority',
+                'approvalId': '10000000-0000-4000-8000-000000000004',
+                'approvalDigest': 'b' * 64,
+                'scope': 'enroll-owned-local-postgresql-target',
+            },
+            'origin': {
+                'profile': 'postgresql18-local-supervised-origin/0.1',
+                'supervisorId': '10000000-0000-4000-8000-000000000005',
+                'clusterId': '10000000-0000-4000-8000-000000000006',
+                'incarnationId': '10000000-0000-4000-8000-000000000007',
+                'creationReceiptDigest': 'c' * 64,
+                'nativeBinary': {'path': '/opt/pg/bin/postgres',
+                                 'sha256': 'd' * 64, 'version': '18.6'},
+                'dataDirectory': {'path': '/var/lib/pg/data', 'device': '1',
+                                  'inode': '2', 'ownerUid': 501},
+                'initialPostmaster': {'pid': 42, 'startToken': 'boot-token',
+                                      'launchReceiptDigest': 'e' * 64},
+                'database': {'name': 'postgres', 'oid': 5,
+                             'systemIdentifier': '123456'},
+                'endpoint': {'host': '127.0.0.1', 'port': 55439},
+            },
+            'endpointControl': {
+                'controllerId': '10000000-0000-4000-8000-000000000008',
+                'profile': 'umf.local-postgresql-endpoint-controller/0.1',
+                'authorityReceiptDigest': 'f' * 64,
+            },
+        }
+        registration_digest = '1' * 64
+        reference = {
+            'profile': 'umf.native-target-custody/0.1',
+            'custodianId': '10000000-0000-4000-8000-000000000002',
+            'registrationId': registration_id,
+            'resourceId': '10000000-0000-4000-8000-000000000010',
+            'incarnation': '10000000-0000-4000-8000-000000000011',
+            'registrationDigest': registration_digest,
+        }
+        store = _store_descriptor('umf.native-row-originals-store/0.1', provider_id)
+        evidence = {
+            'profile': 'umf.pg18.original-store-authority-evidence/0.1',
+            'supervisorId': '10000000-0000-4000-8000-000000000005',
+            'custodianId': reference['custodianId'], 'providerId': provider_id,
+            'installationId': 'installation-a',
+            'ownerAuthorityId': '10000000-0000-4000-8000-000000000008',
+            'ownerPolicyRevision': 'policy-a', 'registrationDigest': registration_digest,
+            'targetCustodyDigest': _digest(reference),
+            'authorityPreparationReceiptDigest': 'c' * 64,
+            'maintenance': {'oid': 20, 'name': 'maint', 'flags': {
+                'canLogin': True, 'superuser': True, 'createDatabase': False,
+                'createRole': False, 'replication': False, 'bypassRls': False,
+                'inherit': False}},
+            'controller': {'oid': 21, 'name': 'controller', 'flags': {
+                'canLogin': False, 'superuser': True, 'createDatabase': False,
+                'createRole': False, 'replication': False, 'bypassRls': False,
+                'inherit': False}},
+            'businessOwner': {'oid': 22, 'name': 'business_owner', 'flags': {
+                'canLogin': False, 'superuser': False, 'createDatabase': False,
+                'createRole': False, 'replication': False, 'bypassRls': False,
+                'inherit': False}},
+            'requiredMemberships': [
+                {'memberOid': 20, 'roleOid': 21, 'inherit': False, 'set': True,
+                 'admin': False},
+                {'memberOid': 20, 'roleOid': 22, 'inherit': False, 'set': True,
+                 'admin': False}],
+            'requiredSettings': {'searchPath': 'pg_catalog', 'timeZone': 'UTC',
+                'rowSecurity': 'on', 'sessionReplicationRole': 'origin',
+                'transactionReadOnly': 'off', 'transactionIsolation': 'read committed'},
+            'nativeAuthorityObservationDigest': 'd' * 64,
+        }
+        request = {'profile': 'umf.owner-store-create-intent/0.1',
+                   'store': store, 'evidence': evidence}
+        reservation = {
+            'profile': 'umf.row-originals-store-reservation/0.1',
+            'reservationId': '10000000-0000-4000-8000-000000000012',
+            'providerId': provider_id, 'installationId': 'installation-a',
+            'targetCustody': reference, 'store': store,
+            'creationRequestDigest': _digest(request),
+            'creationApprovalDigest': 'f' * 64,
+            'nativeAuthorityEvidenceDigest': 'd' * 64,
+            'configurationDigest': '1' * 64, 'custodySequence': 4,
+        }
+        events = []
+        head = '0' * 64
+
+        def append(kind, payload):
+            nonlocal head
+            event = {'sequence': len(events) + 1, 'previousDigest': head,
+                     'kind': kind, 'payload': payload}
+            event['recordDigest'] = _digest(event)
+            events.append(event)
+            head = event['recordDigest']
+
+        append('registration-intent', {
+            'registrationId': registration_id,
+            'registrationDigest': registration_digest,
+            'ownerPayload': owner_payload,
+            'ownerApproval': {
+                'approvalId': owner_payload['ownerApproval']['approvalId'],
+                'approvalDigest': owner_payload['ownerApproval']['approvalDigest'],
+            },
+        })
+        append('registration-observation', {
+            'registrationId': registration_id,
+            'observation': {
+                'profile': 'umf.local-target-registration-observation/0.1',
+                'registrationDigest': registration_digest,
+                'originReceiptDigest': 'c' * 64,
+                'currentLaunchReceiptDigest': '2' * 64,
+                'continuityChainDigest': '3' * 64,
+                'endpointGateReceiptDigest': 'f' * 64,
+                'nativeObservationDigest': '4' * 64,
+                'custodianSequence': 1,
+            },
+        })
+        append('registration-confirmed', {
+            'registrationId': registration_id, 'targetCustody': reference,
+        })
+        append('originals-store-reserved', {
+            'purpose': 'native-acceptance', 'request': request,
+            'approvalDigest': reservation['creationApprovalDigest'],
+            'reservation': reservation, 'reservationDigest': _digest(reservation),
+            'parent': {'sequence': len(events), 'headDigest': head},
+        })
+        replayed = _replay(events, profile=JOURNAL_PROFILE_02)
+        target = object()
+        supervisor = object.__new__(LocalPostgresSupervisor)
+        supervisor._provider_id = provider_id
+        supervisor._bound_installation_id = 'installation-a'
+        supervisor._supervisor_id = evidence['supervisorId']
+        supervisor._custodian_id = reference['custodianId']
+        supervisor._authority_context = object()
+        supervisor._custody_handle = target
+        supervisor._journal = SimpleNamespace(read=lambda: {'events': [
+            {'kind': 'creation-intent', 'payload': {'controllerName': 'controller'}}]})
+        verified_target = SimpleNamespace(reference=reference)
+        supervisor._custodian = SimpleNamespace(
+            _public_reference=lambda observed: reference if observed is target else None,
+            _resolve_target_custody=lambda observed:
+                verified_target if observed is target else None,
+            _journal=SimpleNamespace(_profile=JOURNAL_PROFILE_02,
+                                     _load=lambda: {'events': events}))
+        supervisor._owner_core = SimpleNamespace(
+            _recover_original_request=lambda *_a, **_k:
+                self.fail('registration must not rehydrate the owner Core'))
+        supervisor._pending_original_store_recovery = None
+        with patch.object(supervisor, '_require_original_control_lease'):
+            self.assertTrue(supervisor._validate_original_store_custody_history(target))
+        self.assertEqual(len(events), 4)
+        self.assertIs(supervisor._custody_handle, target)
+        self.assertIs(supervisor._pending_original_store_recovery[0], target)
+        self.assertEqual(next(iter(replayed['stores'].values()))['status'], 'reserved')
+
+        class Connection:
+            closed = False
+
+            def __init__(self):
+                self.info = SimpleNamespace(transaction_status=0)
+
+        connection = Connection()
+        supervisor._custody_handle = None  # registration reattach exposes only the reference
+        with (patch.dict(sys.modules, {'psycopg': SimpleNamespace(Connection=Connection)}),
+              patch.object(supervisor, '_original_control_lease',
+                           side_effect=lambda *, operation_kind:
+                               _synthetic_control_lease(supervisor, operation_kind))):
+            provider = supervisor.open_originals_store_recovery(
+                connection, provider_id=provider_id)
+        self.assertTrue(provider._recovery_only)
+        self.assertIs(provider._target, target)
+        self.assertIsNone(provider._creation_reservation)
+        self.assertIsNone(supervisor._custody_handle)
+
+        reservation_digest = _digest(reservation)
+        receipt = {
+            'profile': 'umf.originals-creation-receipt/0.1',
+            'providerId': provider_id, 'installationId': 'installation-a',
+            'storeProfile': store['profile'], 'storeId': store['storeId'],
+            'reservationDigest': reservation_digest,
+            'creationRequestDigest': reservation['creationRequestDigest'],
+            'creationApprovalDigest': reservation['creationApprovalDigest'],
+            'targetCustodyDigest': _digest(reference),
+            'schemaOid': 91, 'state': 'created',
+        }
+        append('originals-store-observation', {
+            'purpose': 'native-acceptance',
+            'reservationId': reservation['reservationId'],
+            'reservationDigest': reservation_digest,
+            'supervisorIntentDigest': '2' * 64, 'outcome': 'committed',
+            'nativeReceipt': receipt, 'nativeReceiptDigest': _digest(receipt),
+            'schemaOid': 91, 'nativeObservationDigest': '3' * 64,
+            'transactionOutcomeDigest': '4' * 64,
+            'parent': {'sequence': len(events) - 1,
+                       'headDigest': events[-2]['recordDigest']},
+        })
+        observed = _replay(events, profile=JOURNAL_PROFILE_02)
+        self.assertEqual(next(iter(observed['stores'].values()))['status'],
+                         'observed-committed')
+        # An external committed observation is not a predecessor for either
+        # supervisor journal event. Registration must not accept this prefix
+        # just because the store journal contains a receipt-shaped payload.
+        self.assertFalse(any(event['kind'] == 'originals-store-creation-intent'
+                             for event in supervisor._journal.read()['events']))
+        self.assertFalse(any(event['kind'] == 'native-effect-intent'
+                             and event['payload'].get('scope') == 'native-store-creation'
+                             for event in supervisor._journal.read()['events']))
+        supervisor._custody_handle = target
+        with patch.object(supervisor, '_require_original_control_lease'):
+            with self.assertRaisesRegex(
+                    LocalPostgresError,
+                    'local-postgresql-store-history-supervisor-mismatch'):
+                supervisor._validate_original_store_custody_history(target)
+        supervisor._custody_handle = None
+
+    def test_store_lease_accepts_only_the_issuer_bound_pending_target_for_rehydration(self):
+        target, context, reference = object(), object(), {'registrationId': 'registration'}
+        custodian = SimpleNamespace(
+            _public_reference=lambda observed: reference if observed is target else None,
+            _resolve_target_custody=lambda observed: SimpleNamespace(reference=reference)
+                if observed is target else None,
+        )
+        supervisor = object.__new__(LocalPostgresSupervisor)
+        supervisor._custody_handle = None
+        supervisor._custodian = custodian
+        supervisor._custodian_id = 'custodian'
+        supervisor._authority_context = context
+        supervisor._journal = object()
+        supervisor._pending_original_store_recovery = (
+            target, custodian, 'custodian', context, os.getpid(), reference)
+        with patch.object(supervisor, '_require_original_control_lease',
+                          side_effect=lambda *, operation_kind:
+                              self.assertEqual(operation_kind, 'store')):
+            supervisor._require_original_store_recovery_target(target)
+            with self.assertRaisesRegex(
+                    LocalPostgresError, 'local-postgresql-store-recovery-unverified'):
+                supervisor._require_original_store_recovery_target(object())
+        self.assertIsNone(supervisor._custody_handle)
+
+    def test_public_recovery_facade_rejects_an_unselected_provider_before_reading(self):
+        class Connection:
+            closed = False
+
+            def __init__(self):
+                self.info = SimpleNamespace(transaction_status=0)
+
+        supervisor = object.__new__(LocalPostgresSupervisor)
+        supervisor._provider_id = '33333333-3333-4333-8333-333333333333'
+        supervisor._journal = object()
+        supervisor._custodian = object()
+        supervisor._custody_handle = object()
+        with patch.object(supervisor, '_original_control_lease',
+                          side_effect=lambda *, operation_kind:
+                              _synthetic_control_lease(supervisor, operation_kind)):
+            with self.assertRaisesRegex(
+                    LocalPostgresError, 'local-postgresql-store-recovery-unavailable'):
+                supervisor.open_originals_store_recovery(
+                    Connection(), provider_id='44444444-4444-4444-8444-444444444444')
+
+    def test_original_store_readonly_transaction_refuses_active_caller_transaction(self):
+        supervisor = object.__new__(LocalPostgresSupervisor)
+        class Connection:
+            info = SimpleNamespace(transaction_status=2)
+
+            def transaction(self):
+                raise AssertionError('must not enter caller transaction')
+
+        connection = Connection()
+        budget = object()
+        with patch.object(supervisor, '_require_original_store_readonly_budget',
+                          return_value=1_000):
+            with self.assertRaisesRegex(
+                    LocalPostgresError,
+                    'local-postgresql-store-readonly-transaction-active'):
+                with supervisor._original_store_readonly_transaction(connection, budget):
+                    self.fail('active caller transaction must not be adopted')
+
+    def test_original_store_readonly_sql_clamps_to_remaining_and_lower_timeouts(self):
+        supervisor = object.__new__(LocalPostgresSupervisor)
+        class Cursor:
+            def fetchall(self):
+                return [('statement_timeout', 800), ('lock_timeout', 5_000)]
+
+        class Connection:
+            pass
+
+        connection = Connection()
+        budget = SimpleNamespace(_timeout_state={
+            'startupStatementTimeoutMs': 800,
+            'startupLockTimeoutMs': 5_000,
+        })
+        calls = []
+        with patch.object(supervisor, '_require_original_store_readonly_budget',
+                          return_value=1_200), \
+             patch('umf_access.lifecycle.ingress_local_postgres._execute_original_store_sql',
+                   side_effect=lambda _issuer, _budget, _connection, query, *args, **kwargs:
+                       (calls.append(query) or Cursor())):
+            bounded = _BudgetedOriginalStoreReadonlyConnection(
+                supervisor, budget, connection)
+            bounded.execute('SELECT 1')
+        self.assertEqual(calls, [
+            "SELECT name, setting::pg_catalog.int8 FROM pg_catalog.pg_settings "
+            "WHERE name IN ('statement_timeout','lock_timeout')",
+            "SET LOCAL lock_timeout = '1200ms'",
+            "SET LOCAL statement_timeout = '800ms'",
+            'SELECT 1',
+        ])
+
+    def test_bounded_psycopg_generator_uses_finite_read_write_readiness_and_releases(self):
+        class Ready(IntEnum):
+            NONE = 0
+            R = 1
+            W = 2
+            RW = 3
+
+        class Wait(IntEnum):
+            R = 1
+            W = 2
+            RW = 3
+
+        class Lock:
+            def __init__(self):
+                self.held = False
+
+            def acquire(self, *, blocking):
+                if self.held:
+                    return False
+                self.held = True
+                return True
+
+            def release(self):
+                self.held = False
+
+        class Pgconn:
+            status = 0
+            transaction_status = 2
+            pipeline_status = 0
+            nonblocking = 0
+            socket = 73
+
+        class Cursor:
+            def __init__(self, connection):
+                self.connection = connection
+                self.ready = []
+
+            def _execute_gen(self, _query, _params, *, prepare, binary):
+                self.options = (prepare, binary)
+                self.ready.append((yield Wait.W))
+                self.ready.append((yield Wait.RW))
+                self.ready.append((yield Wait.R))
+
+        class Connection:
+            def __init__(self):
+                self.closed = False
+                self.autocommit = False
+                self.lock = Lock()
+                self.pgconn = Pgconn()
+
+            def cursor(self):
+                return Cursor(self)
+
+        connection = Connection()
+        supervisor, _reservation, budget = self._creation_budget_fixture()
+        object.__setattr__(budget, '_deadline_ns', time.monotonic_ns() + 1_000_000_000)
+        results = iter((([], [73], []), ([73], [], []), ([73], [], [])))
+        with (patch.dict(sys.modules, {
+                  'psycopg': SimpleNamespace(
+                      Connection=Connection, Cursor=Cursor, __path__=[]),
+                  'psycopg._enums': SimpleNamespace(Ready=Ready, Wait=Wait)}),
+              patch.object(supervisor, '_require_original_store_budget', return_value=900),
+              patch('umf_access.lifecycle.ingress_local_postgres.select.select',
+                    side_effect=lambda *_args: next(results))):
+            cursor = native._execute_original_store_sql(
+                supervisor, budget, connection, 'SELECT 1', prepare=False, binary=False)
+        self.assertEqual(cursor.ready, [Ready.W, Ready.R, Ready.R])
+        self.assertEqual(cursor.options, (False, False))
+        self.assertEqual(connection.pgconn.nonblocking, 0)
+        self.assertFalse(connection.lock.held)
+
+    def test_bounded_psycopg_first_read_stall_fences_without_blocking_fallback(self):
+        class Wait(IntEnum):
+            R = 1
+
+        class Lock:
+            def __init__(self):
+                self.held = False
+
+            def acquire(self, *, blocking):
+                if self.held:
+                    return False
+                self.held = True
+                return True
+
+            def release(self):
+                self.held = False
+
+        class Pgconn:
+            status = 0
+            transaction_status = 2
+            pipeline_status = 0
+            nonblocking = 0
+            socket = 73
+
+        class Cursor:
+            def __init__(self, connection):
+                self.connection = connection
+                self.completed = False
+
+            def _execute_gen(self, _query, _params, *, prepare, binary):
+                yield Wait.R
+                self.completed = True
+
+        class Connection:
+            def __init__(self):
+                self.closed = False
+                self.autocommit = False
+                self.lock = Lock()
+                self.pgconn = Pgconn()
+
+            def cursor(self):
+                return Cursor(self)
+
+        connection = Connection()
+        supervisor, reservation, budget = self._creation_budget_fixture()
+        object.__setattr__(budget, '_connection', connection)
+        object.__setattr__(reservation, '_connection', connection)
+        object.__setattr__(budget, '_deadline_ns', time.monotonic_ns() + 2_000_000)
+        supervisor._original_store_connection_fences = {}
+        with (patch.dict(sys.modules, {
+                  'psycopg': SimpleNamespace(
+                      Connection=Connection, Cursor=Cursor, __path__=[]),
+                  'psycopg._enums': SimpleNamespace(
+                      Ready=IntEnum('Ready', {'NONE': 0, 'R': 1, 'W': 2, 'RW': 3}),
+                      Wait=Wait)}),
+              patch.object(supervisor, '_require_original_store_budget', return_value=1_000),
+              patch('umf_access.lifecycle.ingress_local_postgres.select.select',
+                    return_value=([], [], []))):
+            with self.assertRaisesRegex(
+                    LocalPostgresError,
+                    'local-postgresql-store-budget-exhausted'):
+                native._execute_original_store_sql(
+                    supervisor, budget, connection, 'SELECT 1')
+        self.assertTrue(budget._fenced)
+        self.assertIs(supervisor._original_store_connection_fences[id(connection)],
+                      connection)
+        self.assertTrue(connection.lock.held)
+        self.assertEqual(connection.pgconn.nonblocking, 1)
+
+    def test_original_store_readonly_connector_starts_with_finite_server_waits(self):
+        supervisor = object.__new__(LocalPostgresSupervisor)
+        supervisor._maintenance_password = b'private\n'
+        supervisor._profile = SimpleNamespace(port=55439)
+        supervisor._maintenance_name = lambda: 'maintenance'
+        budget = SimpleNamespace(_timeout_state={})
+        captured = {}
+
+        def connect(**kwargs):
+            captured.update(kwargs)
+            return object()
+
+        with patch.dict(sys.modules, {'psycopg': SimpleNamespace(connect=connect)}), \
+             patch.object(supervisor, '_require_original_store_readonly_budget',
+                          return_value=30_000):
+            supervisor._connect_maintenance('postgres', readonly_budget=budget)
+        self.assertEqual(budget._timeout_state['startupStatementTimeoutMs'], 30_000)
+        self.assertEqual(budget._timeout_state['startupLockTimeoutMs'], 5_000)
+        self.assertIn('-c statement_timeout=30000ms', captured['options'])
+        self.assertIn('-c lock_timeout=5000ms', captured['options'])
+
+        with patch.dict(sys.modules, {'psycopg': SimpleNamespace(connect=connect)}), \
+             patch.object(supervisor, '_require_original_store_readonly_budget',
+                          side_effect=LocalPostgresError(
+                              'local-postgresql-store-readonly-exhausted')):
+            with self.assertRaisesRegex(
+                    LocalPostgresError, 'local-postgresql-store-readonly-exhausted'):
+                supervisor._connect_maintenance('postgres', readonly_budget=budget)
+
+    def test_original_store_readonly_settings_rows_are_never_rewritten(self):
+        supervisor = object.__new__(LocalPostgresSupervisor)
+        budget = object()
+        actual_rows = [
+            ('statement_timeout', '17', 'session', None, False),
+            ('lock_timeout', '5', 'session', None, False),
+        ]
+
+        @contextmanager
+        def owned_scope(_connection, _budget):
+            yield SimpleNamespace(
+                execute=lambda _query: SimpleNamespace(fetchall=lambda: actual_rows))
+
+        with patch.object(supervisor, '_original_store_readonly_transaction',
+                          side_effect=owned_scope):
+            rows = supervisor._fetch_original_store_readonly(
+                object(), budget,
+                'SELECT name,setting,source,sourcefile,pending_restart '
+                'FROM pg_catalog.pg_settings ORDER BY name',
+                current_role=None, many=True)
+        self.assertIs(rows, actual_rows)
+        self.assertEqual(rows[0][1], '17')
+        self.assertEqual(rows[1][1], '5')
+
+    def test_original_store_recovery_compares_stable_evidence_and_actual_readonly_mode(self):
+        supervisor = object.__new__(LocalPostgresSupervisor)
+        role_rows = [
+            {'oid': 11, 'name': 'maintenance', 'flags': {'canLogin': True}},
+            {'oid': 12, 'name': 'controller', 'flags': {'canLogin': False}},
+            {'oid': 13, 'name': 'owner', 'flags': {'canLogin': False}},
+        ]
+        required_memberships = [
+            {'memberOid': 11, 'roleOid': 12, 'inherit': False, 'set': True, 'admin': False},
+            {'memberOid': 11, 'roleOid': 13, 'inherit': False, 'set': True, 'admin': False},
+        ]
+        original_settings = {
+            'searchPath': 'pg_catalog', 'timeZone': 'UTC', 'rowSecurity': 'on',
+            'sessionReplicationRole': 'origin', 'transactionReadOnly': 'off',
+            'transactionIsolation': 'read committed',
+        }
+        actual_settings = {**original_settings, 'transactionReadOnly': 'on'}
+        authority = {
+            'approvalIntentDigest': 'a' * 64,
+            'approvalReceiptDigest': 'b' * 64,
+        }
+        observation = {
+            'profile': 'umf.pg18.native-session-authority-observation/0.1',
+            'authorityScopeDigest': authority['approvalIntentDigest'],
+            'registrationDigest': 'c' * 64, 'targetCustodyDigest': 'd' * 64,
+            'nativeServerVersionNum': 180006,
+            'database': {'name': 'postgres', 'oid': 1, 'systemIdentifier': 's'},
+            'sessionUser': 'maintenance', 'currentUser': 'controller',
+            'roleSetting': 'controller', 'settings': actual_settings,
+            'principalObservations': role_rows,
+            'membershipObservations': sorted([
+                [11, 12, False, False, True], [11, 13, False, False, True]]),
+            'privilegeClosureDigest': 'e' * 64,
+        }
+        original = {
+            'profile': 'umf.pg18.original-store-authority-evidence/0.1',
+            'supervisorId': 'supervisor', 'custodianId': 'custodian',
+            'providerId': 'provider', 'installationId': 'installation',
+            'ownerAuthorityId': 'authority', 'ownerPolicyRevision': 'revision',
+            'registrationDigest': 'c' * 64, 'targetCustodyDigest': 'd' * 64,
+            'authorityPreparationReceiptDigest': authority['approvalReceiptDigest'],
+            'maintenance': role_rows[0], 'controller': role_rows[1],
+            'businessOwner': role_rows[2], 'requiredMemberships': required_memberships,
+            'requiredSettings': original_settings,
+            'nativeAuthorityObservationDigest': 'f' * 64,
+        }
+        request_value = {'profile': 'umf.owner-store-create-intent/0.1',
+                         'store': {'profile': 'umf.pg-generation-ingress-store/0.1',
+                                   'storeId': 'store'}, 'evidence': original}
+        request = SimpleNamespace(_intent_bytes=_canonical(request_value))
+        budget = SimpleNamespace(_request=request, _reservation_digest='9' * 64)
+        actual = {**original, 'requiredSettings': actual_settings,
+                  'nativeAuthorityObservationDigest': _digest(observation)}
+        with patch.object(supervisor, '_require_original_store_readonly_budget',
+                          return_value=1_000):
+            resolved = supervisor._resolve_original_store_recovery_observation(
+                original, actual, observation, authority=authority,
+                readonly_budget=budget)
+        self.assertEqual(json.loads(resolved._actual_payload_bytes)['requiredSettings']
+                         ['transactionReadOnly'], 'on')
+        self.assertEqual(json.loads(resolved._actual_observation_bytes)['settings']
+                         ['transactionReadOnly'], 'on')
+        bad_membership = {**observation, 'membershipObservations': [[11, 99, False, False, True]]}
+        bad_actual = {**actual, 'nativeAuthorityObservationDigest': _digest(bad_membership)}
+        with patch.object(supervisor, '_require_original_store_readonly_budget',
+                          return_value=1_000):
+            with self.assertRaisesRegex(
+                    LocalPostgresError,
+                    'local-postgresql-store-recovery-membership-mismatch'):
+                supervisor._resolve_original_store_recovery_observation(
+                    original, bad_actual, bad_membership, authority=authority,
+                    readonly_budget=budget)
+        drifted = {**actual, 'targetCustodyDigest': '0' * 64}
+        with patch.object(supervisor, '_require_original_store_readonly_budget',
+                          return_value=1_000):
+            with self.assertRaisesRegex(
+                    LocalPostgresError,
+                    'local-postgresql-store-recovery-authority-stale'):
+                supervisor._resolve_original_store_recovery_observation(
+                    original, drifted, observation, authority=authority,
+                    readonly_budget=budget)
+
+    def test_store_recovery_does_not_append_before_authority_and_absence_proof(self):
+        supervisor = object.__new__(LocalPostgresSupervisor)
+        target = object()
+        store = {'profile': 'umf.native-row-originals-store/0.1',
+                 'storeId': 'provider', 'schemaName': 'umf_originals_provider'}
+        request_value = {
+            'profile': 'umf.owner-store-create-intent/0.1', 'store': store,
+            'evidence': {'nativeAuthorityObservationDigest': 'a' * 64},
+        }
+        intent_bytes = _canonical(request_value)
+        request_digest = hashlib.sha256(intent_bytes).hexdigest()
+        record = {
+            'creationRequestDigest': request_digest,
+            'creationApprovalDigest': 'b' * 64,
+            'nativeAuthorityEvidenceDigest': 'a' * 64,
+            'providerId': 'provider', 'installationId': 'installation',
+            'targetCustody': {'registrationId': 'registration'}, 'store': store,
+        }
+        reserved = {
+            'kind': 'originals-store-reserved', 'recordDigest': 'c' * 64,
+            'payload': {'reservationDigest': 'd' * 64, 'request': request_value},
+        }
+        state = {'reservation': record, 'reservationDigest': 'd' * 64,
+                 'purpose': 'production'}
+        request = SimpleNamespace(
+            effect_key=('native-store-creation', 'provider', store['profile'], 'provider'),
+            _intent_bytes=intent_bytes, _intent_digest=request_digest)
+        approval = SimpleNamespace(approval_id='approval', approval_digest='b' * 64)
+        core = SimpleNamespace(
+            _ledger=SimpleNamespace(find_original_request=lambda **_kwargs:
+                                    {'approvalId': 'approval'}),
+            _recover_original_request=lambda *_args, **_kwargs: request,
+            _recover_verified_approval=lambda _request: approval,
+            _resolve_verified_approval=lambda *_args, **_kwargs: None,
+            _bind_effect_digest=lambda *_args, **_kwargs: object())
+        object.__setattr__(supervisor, '_custody_handle', target)
+        unrelated_store = {**store, 'storeId': 'another-provider',
+                           'schemaName': 'umf_originals_another'}
+        journal = SimpleNamespace(events=[
+            {'kind': 'native-effect-intent', 'payload': {
+                'scope': 'native-store-creation', 'effectKey': [
+                    'native-store-creation', 'another-provider',
+                    unrelated_store['profile'], unrelated_store['storeId']],
+                'requestDigest': 'f' * 64}},
+            {'kind': 'originals-store-creation-intent', 'payload': {
+                'reservationDigest': 'f' * 64,
+                'reservation': {'targetCustody': {'registrationId': 'registration'},
+                               'providerId': 'another-provider',
+                               'installationId': 'installation',
+                               'store': unrelated_store}}},
+        ])
+        journal.read = lambda: {'events': list(journal.events)}
+        object.__setattr__(supervisor, '_journal', journal)
+        object.__setattr__(supervisor, '_owner_core', core)
+        object.__setattr__(supervisor, '_authority_context', object())
+        object.__setattr__(supervisor, '_supervisor_id', 'supervisor')
+        object.__setattr__(supervisor, '_custodian_id', 'custodian')
+        object.__setattr__(supervisor, '_provider_id', 'provider')
+        object.__setattr__(supervisor, '_bound_installation_id', 'installation')
+        object.__setattr__(supervisor, '_profile', SimpleNamespace(purpose='production'))
+        store_state = {**state, 'reservation': record}
+        with patch.object(supervisor, '_append_supervisor_journal',
+                          side_effect=AssertionError('append preceded live proof')):
+            effect, outcome, recovered = supervisor._recover_original_store_effect(
+                target, {'events': [reserved]}, store_state, reserved)
+        self.assertIsNone(effect)
+        self.assertIsNone(outcome)
+        self.assertIs(recovered, request)
+
+        proof_budget = SimpleNamespace(
+            _issuer=supervisor, _request=request, _target=target,
+            _reservation_digest='d' * 64)
+        recovery_observation = native._VerifiedOriginalStoreRecoveryObservation(
+            native._VERIFIED_STORE_RECOVERY_OBSERVATION_SEAL, supervisor,
+            proof_budget, request, 'd' * 64, request_value['evidence'],
+            request_value['evidence'], {'profile': 'observed'})
+        absence = native._VerifiedOriginalStoreAbsence(
+            native._VERIFIED_STORE_ABSENCE_SEAL, supervisor, proof_budget,
+            'd' * 64, store['schemaName'], {
+                'profile': 'umf.original-store-absence-proof/0.1',
+                'schemaName': store['schemaName'], 'state': 'absent',
+            })
+        typed = {
+            'kind': 'originals-store-creation-intent', 'sequence': 1,
+            'recordDigest': 'e' * 64, 'previousDigest': '0' * 64,
+            'payload': {},
+        }
+        effect_handle = SimpleNamespace(_journal_record_digest='e' * 64)
+
+        def append_typed(_kind, payload):
+            typed['payload'] = payload
+            journal.events.append(typed)
+            return typed
+
+        with (patch.object(supervisor, '_require_original_store_readonly_budget',
+                           return_value=1_000),
+              patch.object(supervisor, '_append_supervisor_journal',
+                           side_effect=append_typed) as append,
+              patch.object(supervisor, '_make_native_effect_reservation'),
+              patch.object(supervisor, '_recover_original_native_effect',
+                           return_value=(effect_handle, None, request)) as recover):
+            recovered_effect, recovered_outcome, recovered_request = \
+                supervisor._recover_original_store_effect(
+                    target, {'events': [reserved]}, store_state, reserved,
+                    readonly_budget=proof_budget,
+                    recovery_observation=recovery_observation,
+                    absence_authorization=absence)
+        append.assert_called_once()
+        recover.assert_called_once_with(
+            'native-store-creation', target=target,
+            expected_request_digest=request_digest,
+            expected_effect_key=('native-store-creation', 'provider',
+                                 store['profile'], 'provider'))
+        self.assertIs(recovered_effect, effect_handle)
+        self.assertIsNone(recovered_outcome)
+        self.assertIs(recovered_request, request)
+
+    def test_store_readonly_window_can_precede_reconstructed_effect_handle(self):
+        supervisor = object.__new__(LocalPostgresSupervisor)
+        provider_id = str(uuid.uuid4())
+        store = _store_descriptor('umf.native-row-originals-store/0.1', provider_id)
+        target, connection = object(), object()
+        request_bytes = _canonical({'profile': 'umf.owner-store-create-intent/0.1'})
+        request = SimpleNamespace(
+            _intent_bytes=request_bytes,
+            _intent_digest=hashlib.sha256(request_bytes).hexdigest())
+        record_bytes = _canonical({'reservationId': str(uuid.uuid4()), 'store': store})
+        object.__setattr__(supervisor, '_provider_id', provider_id)
+        object.__setattr__(supervisor, '_custody_handle', target)
+        object.__setattr__(supervisor, '_original_store_issuer_pid', os.getpid())
+        object.__setattr__(supervisor, '_original_store_readonly_budgets', {})
+        started = time.monotonic_ns()
+        budget = supervisor._mint_original_store_readonly_budget(
+            None, request, None, hashlib.sha256(record_bytes).hexdigest(),
+            record_bytes, 'recover', target, connection, store, started)
+        self.assertIsNone(budget._reservation)
+        self.assertIsNone(budget._effect)
+        self.assertIs(budget._request, request)
+        self.assertGreater(supervisor._require_original_store_readonly_budget(budget), 0)
+
+    def test_original_creation_budget_is_one_two_attempt_same_request_allowance(self):
+        supervisor, reservation, budget = self._creation_budget_fixture()
+        with patch('umf_access.lifecycle.ingress_local_postgres.time.monotonic_ns',
+                   return_value=budget._started_ns + 1):
+            self.assertEqual(supervisor._consume_original_store_creation_attempt(reservation),
+                             budget)
+            self.assertEqual(supervisor._consume_original_store_creation_attempt(reservation),
+                             budget)
+            self.assertEqual(budget._attempts, 2)
+            with self.assertRaisesRegex(LocalPostgresError,
+                                        'local-postgresql-store-attempt-capacity'):
+                supervisor._consume_original_store_creation_attempt(reservation)
+        self.assertEqual(budget._attempts, 2)
+
+    def test_public_original_store_create_budgets_the_first_controller_query(self):
+        from umf_access.lifecycle.row_originals import PgRowOriginalsStore
+
+        events = []
+        budget = object()
+        connection = SimpleNamespace(info=SimpleNamespace(transaction_status=2))
+        supervisor = SimpleNamespace(
+            _mint_original_store_creation_budget=lambda **_kwargs:
+                events.append('mint') or budget,
+            _capture_original_store_timeout_lower_bounds=lambda _connection, _budget:
+                events.append('timeout-discovery'),
+        )
+        provider = object.__new__(PgRowOriginalsStore)
+        provider._recovery_only = False
+        provider._schema_oid = None
+        provider._creation_reservation = None
+        provider._connection = connection
+        provider._supervisor = supervisor
+        provider._evidence = object()
+        provider._approval = object()
+        provider._custodian = object()
+        provider._target = object()
+        provider._provider_id = '33333333-3333-4333-8333-333333333333'
+        provider._schema = 'umf_originals_33333333'
+        provider._authority = {'nativeObservation': {}}
+
+        def stalled_first_query(_issuer, observed_budget, _connection, _query, **_kwargs):
+            events.append(('controller-query', observed_budget))
+            raise LocalPostgresError('local-postgresql-store-budget-exhausted')
+
+        with (patch.object(PgRowOriginalsStore, '_refresh_authority',
+                           side_effect=lambda _self, *, budget=None:
+                               events.append(('refresh', budget))),
+              patch('umf_access.lifecycle.ingress_local_postgres._execute_original_store_sql',
+                    side_effect=stalled_first_query),
+              patch('umf_access.lifecycle.row_originals_creation.reserve_originals_store_creation',
+                    side_effect=AssertionError('reservation must follow controller query'))):
+            with self.assertRaisesRegex(
+                    LocalPostgresError, 'local-postgresql-store-budget-exhausted'):
+                provider.create()
+        self.assertEqual(events[:3], ['mint', 'timeout-discovery', ('refresh', budget)])
+        self.assertEqual(events[3], ('controller-query', budget))
+
+    def test_public_original_store_resume_budgets_controller_check_with_original_allowance(self):
+        from umf_access.lifecycle.row_originals import PgRowOriginalsStore
+
+        events = []
+        budget = object()
+        reservation = SimpleNamespace(_budget=budget)
+        connection = SimpleNamespace(info=SimpleNamespace(transaction_status=2))
+        supervisor = SimpleNamespace(
+            _require_original_store_budget=lambda observed: events.append(('require', observed))
+                or 1_000,
+        )
+        provider = object.__new__(PgRowOriginalsStore)
+        provider._recovery_only = False
+        provider._connection = connection
+        provider._supervisor = supervisor
+        provider._creation_reservation = reservation
+        provider._creation_attempt = object()
+        provider._creation_receipt_fields = {}
+        provider._creation_capability = None
+        provider._authority = {'nativeObservation': {}}
+
+        def stalled_first_query(_issuer, observed_budget, _connection, _query, **_kwargs):
+            events.append(('controller-query', observed_budget))
+            raise LocalPostgresError('local-postgresql-store-budget-exhausted')
+
+        with (patch.object(PgRowOriginalsStore, '_refresh_authority',
+                           side_effect=lambda _self, *, budget=None:
+                               events.append(('refresh', budget))),
+              patch('umf_access.lifecycle.ingress_local_postgres._execute_original_store_sql',
+                    side_effect=stalled_first_query),
+              patch.object(supervisor, 'resume_originals_store_creation_attempt',
+                           side_effect=AssertionError('no retry after stalled preflight'))):
+            with self.assertRaisesRegex(
+                    LocalPostgresError, 'local-postgresql-store-budget-exhausted'):
+                provider.resume_creation()
+        self.assertIn(('require', reservation), events)
+        self.assertIn(('refresh', budget), events)
+        self.assertIn(('controller-query', budget), events)
+
+    def test_public_authority_refresh_forwards_the_same_creation_allowance(self):
+        from umf_access.lifecycle import row_originals
+        from umf_access.lifecycle.row_originals import PgRowOriginalsStore
+
+        budget = object()
+        supervisor = object()
+        evidence, approval, custodian, target = (object(), object(), object(), object())
+        provider = object.__new__(PgRowOriginalsStore)
+        provider._recovery_only = False
+        provider._supervisor = supervisor
+        provider._evidence = evidence
+        provider._approval = approval
+        provider._custodian = custodian
+        provider._target = target
+        expected = {'payload': {'controller': {'name': 'controller', 'oid': 901}}}
+        with patch.object(row_originals, '_authority_context',
+                          return_value=expected) as resolve:
+            provider._refresh_authority(budget=budget)
+        resolve.assert_called_once_with(
+            supervisor, evidence, approval, custodian, target,
+            budget_reservation=budget)
+        self.assertIs(provider._authority, expected)
+
+    def test_original_creation_budget_is_not_reminted_for_same_request(self):
+        supervisor = object.__new__(LocalPostgresSupervisor)
+        supervisor._owner_core = SimpleNamespace(configuration_digest='c' * 64)
+        supervisor._original_store_budgets = {}
+        supervisor._original_store_issuer_pid = os.getpid()
+        request = SimpleNamespace(effect_key=('native-store-creation', 'store'),
+                                  _intent_digest='a' * 64)
+        args = {
+            'evidence': SimpleNamespace(owner_request=request),
+            'approval': SimpleNamespace(approval_digest='b' * 64),
+            'custodian': object(), 'target': object(), 'connection': object(),
+            'store': {'profile': 'umf.native-row-originals-store/0.1'},
+        }
+        budget = supervisor._mint_original_store_creation_budget(**args)
+        self.assertIs(supervisor._original_store_budgets[id(request)], budget)
+        with self.assertRaisesRegex(LocalPostgresError,
+                                    'local-postgresql-store-budget-already-minted'):
+            supervisor._mint_original_store_creation_budget(**args)
+
+    def test_original_creation_budget_expiry_fork_and_missing_registry_fence(self):
+        supervisor, reservation, budget = self._creation_budget_fixture()
+        with patch('umf_access.lifecycle.ingress_local_postgres.time.monotonic_ns',
+                   return_value=budget._deadline_ns):
+            with self.assertRaisesRegex(LocalPostgresError,
+                                        'local-postgresql-store-budget-exhausted'):
+                supervisor._require_original_store_budget(reservation)
+        self.assertTrue(budget._fenced)
+        supervisor, reservation, _budget = self._creation_budget_fixture()
+        with patch('umf_access.lifecycle.ingress_local_postgres.os.getpid',
+                   return_value=os.getpid() + 1):
+            with self.assertRaisesRegex(LocalPostgresError,
+                                        'local-postgresql-store-budget-unavailable'):
+                supervisor._require_original_store_budget(reservation)
+        supervisor, reservation, budget = self._creation_budget_fixture()
+        supervisor._original_store_budgets.clear()
+        with self.assertRaisesRegex(LocalPostgresError,
+                                    'local-postgresql-store-budget-unavailable'):
+            supervisor._require_original_store_budget(reservation)
+        self.assertEqual(budget._attempts, 0)
+
+    def test_original_store_budget_rejects_rebound_reservation_digest(self):
+        supervisor, reservation, _budget = self._creation_budget_fixture()
+        supervisor._original_store_reservations[id(reservation)][1][
+            'reservationDigest'] = 'f' * 64
+        with patch('umf_access.lifecycle.ingress_local_postgres.time.monotonic_ns',
+                   return_value=1_000_000_001):
+            with self.assertRaisesRegex(LocalPostgresError,
+                                        'local-postgresql-store-budget-unavailable'):
+                supervisor._require_original_store_budget(reservation)
+
+    def test_original_store_sql_clamps_each_timeout_to_remaining_and_existing_lower(self):
+        class Cursor:
+            def __init__(self, rows=()):
+                self._rows = list(rows)
+
+            def fetchall(self):
+                return self._rows
+
+        class Connection:
+            def __init__(self):
+                self.calls = []
+                self.info = SimpleNamespace(transaction_status=2)
+
+
+        supervisor, reservation, _budget = self._creation_budget_fixture()
+        connection = Connection()
+        object.__setattr__(reservation, '_connection', connection)
+        bounded = _BudgetedOriginalStoreConnection.__new__(
+            _BudgetedOriginalStoreConnection)
+        object.__setattr__(bounded, '_issuer', supervisor)
+        object.__setattr__(bounded, '_reservation', reservation)
+        object.__setattr__(bounded, '_connection', connection)
+        object.__setattr__(bounded, '_lower_ms', {
+            'statement_timeout': 25_000, 'lock_timeout': 4_000})
+        with patch.object(LocalPostgresSupervisor, '_require_original_store_budget',
+                          return_value=12_500), \
+             patch('umf_access.lifecycle.ingress_local_postgres._execute_original_store_sql',
+                   side_effect=lambda _issuer, _budget, _connection, query, *args, **kwargs:
+                       (connection.calls.append(query) or Cursor())):
+            bounded.execute('SELECT 1')
+        self.assertEqual(connection.calls, [
+            "SET LOCAL lock_timeout = '4000ms'",
+            "SET LOCAL statement_timeout = '12500ms'", 'SELECT 1'])
+
+    def test_original_store_sql_restores_caller_local_timeouts_without_owning_transaction(self):
+        class Connection:
+            autocommit = True
+
+            def __init__(self):
+                self.info = SimpleNamespace(transaction_status=2)
+                self.calls = []
+
+        supervisor, reservation, budget = self._creation_budget_fixture()
+        object.__setattr__(budget, '_caller_timeout_lower_ms', (
+            ('lock_timeout', 700), ('statement_timeout', 2_300)))
+        connection = Connection()
+        object.__setattr__(reservation, '_connection', connection)
+        bounded = _BudgetedOriginalStoreConnection(
+            supervisor, reservation)
+        with patch.object(LocalPostgresSupervisor, '_require_original_store_budget',
+                          return_value=1_200), \
+             patch('umf_access.lifecycle.ingress_local_postgres._execute_original_store_sql',
+                   side_effect=lambda _issuer, _budget, _connection, query, *args, **kwargs:
+                       (connection.calls.append(query) or object())):
+            bounded.execute('SELECT 1')
+            bounded.restore_caller_timeouts()
+        self.assertEqual(connection.info.transaction_status, 2)
+        self.assertEqual(connection.calls, [
+            "SET LOCAL lock_timeout = '700ms'",
+            "SET LOCAL statement_timeout = '1200ms'",
+            'SELECT 1',
+            "SET LOCAL lock_timeout = '700ms'",
+            "SET LOCAL statement_timeout = '2300ms'",
+        ])
+
+    def test_original_store_timeout_restore_leaves_aborted_caller_transaction_alone(self):
+        class Connection:
+            def __init__(self):
+                self.info = SimpleNamespace(transaction_status=3)
+
+        supervisor, reservation, budget = self._creation_budget_fixture()
+        connection = Connection()
+        object.__setattr__(reservation, '_connection', connection)
+        bounded = _BudgetedOriginalStoreConnection.__new__(
+            _BudgetedOriginalStoreConnection)
+        object.__setattr__(bounded, '_issuer', supervisor)
+        object.__setattr__(bounded, '_reservation', reservation)
+        object.__setattr__(bounded, '_connection', connection)
+        with patch('umf_access.lifecycle.ingress_local_postgres._execute_original_store_sql') as execute:
+            bounded.restore_caller_timeouts()
+        execute.assert_not_called()
+
+    def test_positive_original_abort_is_attempt_only_and_keeps_core_pending(self) -> None:
+        connection = SimpleNamespace(info=SimpleNamespace(transaction_status=2))
+        custodian_journal = SimpleNamespace(
+            _load=Mock(return_value={'events': []}),
+            _observe_originals_store=Mock(return_value={'recordDigest': 'f' * 64}))
+        custodian = SimpleNamespace(
+            _journal=custodian_journal,
+            _resolve_target_custody=Mock(return_value=object()),
+            _public_reference=Mock(return_value={'registrationId': 'registration'}))
+        request_value = {'evidence': {'controller': {'name': 'controller', 'oid': 42}}}
+        request = SimpleNamespace(
+            _intent_bytes=_canonical(request_value), effect_key=('native-store-creation', 'p'))
+        native_effect = SimpleNamespace(_request=request)
+        budget = object()
+        record = {
+            'reservationId': '00000000-0000-4000-8000-000000000001',
+            'store': {'schemaName': 'umf_originals_test'},
+        }
+        reservation = _OriginalStoreCreationReservation(
+            _ORIGINAL_STORE_RESERVATION_SEAL, object(), evidence=object(),
+            approval=object(), custodian=custodian, target=object(),
+            connection=connection, effect_handle=object(), native_effect=native_effect,
+            record_bytes=_canonical(record), store={'profile': 'profile'}, budget=budget)
+        supervisor = object.__new__(LocalPostgresSupervisor)
+        attempt = _OriginalStoreCreationAttempt(
+            _ORIGINAL_STORE_ATTEMPT_SEAL, supervisor, reservation, connection,
+            xid='123', database_name='db', database_oid=42,
+            system_identifier='12345678901234567', backend_pid=99,
+            backend_start='2026-01-01 00:00:00+00', budget=budget)
+        next_attempt = object()
+        supervisor._original_store_attempts = {id(attempt): (attempt, reservation, 'open')}
+        supervisor._original_store_reservations = {
+            id(reservation): (reservation, {
+                'reservationDigest': 'a' * 64,
+                'supervisorIntentDigest': 'b' * 64,
+            }, {})}
+        supervisor._profile = SimpleNamespace(purpose='production', database_name='db')
+        supervisor._custodian = custodian
+        supervisor._owner_payloads = {'registration': {'origin': {'origin': 'fixed'}}}
+        supervisor._launch = {'nativeAttestation': object()}
+        core = SimpleNamespace(observe_original_request=Mock(
+            return_value=SimpleNamespace(effect_status='effect-pending')),
+            _finish_effect_digest=Mock())
+        supervisor._owner_core = core
+        supervisor._authority_context = object()
+        doc = {'events': []}
+        external_state = {'stores': {'original': {
+            'id': record['reservationId'], 'status': 'reserved',
+            'reservationDigest': 'a' * 64,
+        }}}
+        with (patch.object(LocalPostgresSupervisor, '_require_original_control_lease'),
+              patch.object(LocalPostgresSupervisor,
+                           '_resolve_originals_store_creation_reservation'),
+              patch.object(LocalPostgresSupervisor,
+                           '_original_registration_and_principal_authority',
+                           return_value=({'registrationId': 'registration'}, {'authority': 1})),
+              patch.object(LocalPostgresSupervisor, '_observe_native', return_value={'native': 1}),
+              patch.object(LocalPostgresSupervisor, '_native_store_preparation_payload',
+                           return_value=(request_value['evidence'], {})),
+              patch.object(LocalPostgresSupervisor, '_native_origin_matches', return_value=True),
+              patch.object(LocalPostgresSupervisor,
+                           '_consume_original_store_creation_attempt',
+                           return_value=budget) as charge,
+              patch.object(LocalPostgresSupervisor, '_require_original_store_budget'),
+              patch.object(LocalPostgresSupervisor,
+                           '_budgeted_original_store_connection',
+                           return_value=connection),
+              patch.object(LocalPostgresSupervisor,
+                           '_bind_original_store_creation_attempt',
+                           return_value=next_attempt) as bind,
+              patch('umf_access.lifecycle.row_originals_creation.observe_absent_creation_schema',
+                    return_value={'state': 'absent'}),
+              patch('umf_access.lifecycle.ingress_custody._replay',
+                    return_value=external_state),
+              patch.object(native, '_one', return_value=(
+                  'db', 42, '12345678901234567', 99,
+                  '2026-01-01 00:00:00+00', 'aborted')),
+              patch.object(LocalPostgresSupervisor, '_record_native_effect_outcome') as terminal):
+            result = supervisor.resume_originals_store_creation_attempt(reservation, attempt)
+        self.assertIs(result, next_attempt)
+        charge.assert_called_once_with(reservation)
+        bind.assert_called_once_with(reservation, budget)
+        custodian_journal._observe_originals_store.assert_called_once()
+        self.assertEqual(custodian_journal._observe_originals_store.call_args.kwargs['outcome'],
+                         'known-aborted')
+        terminal.assert_not_called()
+        core._finish_effect_digest.assert_not_called()
+        self.assertEqual(supervisor._original_store_attempts[id(attempt)],
+                         (attempt, reservation, 'consumed'))
+
+    def test_store_retry_requires_exact_native_aborted_attempt_identity(self) -> None:
+        attempt = _OriginalStoreCreationAttempt(
+            _ORIGINAL_STORE_ATTEMPT_SEAL, object(), object(), object(),
+            xid='123', database_name='umf', database_oid=42,
+            system_identifier='12345678901234567', backend_pid=99,
+            backend_start='2026-01-01 00:00:00+00', budget=None)
+        validate = LocalPostgresSupervisor._require_original_store_attempt_aborted
+        self.assertIsNone(validate(attempt, (
+            'umf', 42, '12345678901234567', 99,
+            '2026-01-01 00:00:00+00', 'aborted')))
+        for row in (
+                ('umf', 42, '12345678901234567', 99,
+                 '2026-01-01 00:00:00+00', 'committed'),
+                ('umf', 42, '12345678901234567', 99,
+                 '2026-01-01 00:00:00+00', 'in progress'),
+                ('umf', 42, '12345678901234568', 99,
+                 '2026-01-01 00:00:00+00', 'aborted'),
+                ('other', 42, '12345678901234567', 99,
+                 '2026-01-01 00:00:00+00', 'aborted'),
+                ('umf', True, '12345678901234567', 99,
+                 '2026-01-01 00:00:00+00', 'aborted'),
+                ('umf', 42, '12345678901234567', 100,
+                 '2026-01-01 00:00:00+00', 'aborted'),
+                None):
+            with self.subTest(row=row), self.assertRaisesRegex(
+                    LocalPostgresError,
+                    'local-postgresql-store-attempt-noncommit-unproven'):
+                validate(attempt, row)
+
+    def test_store_retry_token_is_not_reconstructed_or_reused(self) -> None:
+        reservation = object()
+        connection = object()
+        attempt = _OriginalStoreCreationAttempt(
+            _ORIGINAL_STORE_ATTEMPT_SEAL, object(), reservation, connection,
+            xid='123', database_name='umf', database_oid=42,
+            system_identifier='12345678901234567', backend_pid=99,
+            backend_start='2026-01-01 00:00:00+00', budget=None)
+        for registry in (
+                {},
+                {id(attempt): (attempt, reservation, 'consumed')}):
+            supervisor = object.__new__(LocalPostgresSupervisor)
+            supervisor._original_store_attempts = registry
+            with (patch.object(LocalPostgresSupervisor, '_require_original_control_lease'),
+                  self.assertRaisesRegex(
+                      LocalPostgresError,
+                      'local-postgresql-store-attempt-unverified')):
+                supervisor.resume_originals_store_creation_attempt(reservation, attempt)
+
     def test_registration_observation_consumes_flat_native_database_fields(self) -> None:
         supervisor = object.__new__(LocalPostgresSupervisor)
         request, attestation = object(), object()

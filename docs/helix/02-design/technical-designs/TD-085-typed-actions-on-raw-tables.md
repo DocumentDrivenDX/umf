@@ -1040,11 +1040,45 @@ issues an opaque selector only after the confirmed resources verify; all
 resolution stays under the same original context/control lease. Old enrollments
 and journal0.1 remain unchanged. The 0.2 stream has closed replay and
 cross-journal validation; restart recovery reattaches a committed receipt only
-after re-observing its native footprint. A known-aborted outcome requires
-positive same-database/controller proof that the fixed schema is absent and
-does not issue a capability or permit request reuse. Unknown or incomplete
-crash-boundary states refuse, and fresh store mutations stay gated until
-same-request recovery covers those states.
+after re-observing its native footprint. A known-aborted attempt requires
+positive noncommit evidence for the exact original native transaction,
+retained by the live issuer and consumed once with fresh complete absence and
+authority checks. Absence alone does not prove abort. The observation keeps the
+same original reservation, request, pending owner binding and identifiers; it
+must not terminalize native or owner state. If the volatile original witness is
+lost, recovery remains fenced. Unknown or incomplete crash-boundary states
+refuse, and fresh store mutations stay gated until same-request recovery covers
+those states.
+
+The host adapter's adopted execution restriction is a single private 30,000 ms
+monotonic window and at most two transaction attempts for the exact original
+request/effect/reservation. The issuer mints it once after genuine approval and
+before the first external reservation write, binds the complete original
+authority and process identity, and never resets or refunds it on resume,
+rollback, timeout, lost response, or fork. A missing volatile budget disables
+DDL. The shared dispatch helper charges before work begins; retry cannot charge
+again through nested begin logic. Before each host-controlled blocking call and
+DDL, statement and lock limits are clamped to the remaining time, the fixed
+30,000/5,000 ms ceilings, and every existing qualified lower bound. Connection
+waits remain within both remaining time and their existing connection bound.
+Transaction-local timeout settings restore when the original transaction ends.
+This is a cooperative host restriction, not an OS wall or native evidence. It
+does not create an approval expiry or caller-supplied time/budget field. Once
+the execution allowance expires, only separately bounded positive committed
+read-only settlement may continue, without replenishing DDL authority.
+
+Confirmation and recovery also use separate supervisor-issued 30,000 ms
+monotonic read-only invocation budgets, measured from method entry and bound to
+the exact original request/effect/reservation (when present), target,
+connection, store, and operation. These budgets allow no DDL and do not extend
+creation authority. Each invocation refuses an active caller transaction, owns
+its read-only transaction, clamps connection/statement/lock bounds to remaining
+time and all existing lower limits, and checks PID/deadline around each query,
+fetch, and settlement append. Immutable original preparation evidence remains
+distinct from actual fresh read-only transaction/session observations; retain
+both without normalizing observed values. Expiry, fork, incomplete identity, or
+unknown transaction ownership fences the operation. These are cooperative
+host bounds, not OS walls or native evidence.
 
 Implement the exact external/supervisor journal0.2 kinds, closed payloads,
 per-store original state and cross-journal parent/sequence/receipt binding from
@@ -1061,9 +1095,12 @@ generic native-effect confirmation and SAME owner-ledger finish precede issuing
 the opaque store creation capability. Reconcile every partial confirmation by
 original IDs/state without DDL replay. No cross-file/DB atomicity is promised.
 
-Known-abort attempt remains original operation pending; repeat only with actual
-positive noncommit proof/fresh authority/absence under remaining original bounds.
-Unknown never allocates another request/reservation or retries speculatively.
+Known-abort attempt remains the original operation pending; an explicit retry
+requires a live supervisor-issued witness for the exact original transaction,
+positive native noncommit status, and fresh full authority/absence under the
+remaining original bounds. The one-use witness is not reconstructed from an
+external observation after restart. Unknown never allocates another
+request/reservation or retries speculatively.
 Use fixed actual original native resolver/type/registry paths, not callbacks or
 custodian-to-native back-import; freeze exact source map before code adoption.
 Global original lease precedes either journal append lock; release append locks

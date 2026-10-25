@@ -22,7 +22,7 @@ from umf_access.lifecycle.owner_approval_core import OwnerApprovalCore
 
 
 class OriginalSupervisorBirthIntegrationTests(unittest.TestCase):
-    def test_confirmed_03_enrollment_selects_signed_creation_02_without_native_effects(self):
+    def _exercise_confirmed_enrollment_birth(self, *, fresh_target_custody: bool):
         with tempfile.TemporaryDirectory(prefix='umf-owner-journal-03-') as temporary:
             root = Path(temporary).resolve()
             control_home = root / 'control'
@@ -81,6 +81,9 @@ class OriginalSupervisorBirthIntegrationTests(unittest.TestCase):
                 custodian_id=custodian_id, supervisor_id=supervisor_id,
                 provider_id=provider_id, installation_id='installed-test',
                 purpose='native-acceptance')
+            enrollment_native_profile = native._profile_to_enrollment(profile)
+            if fresh_target_custody:
+                enrollment_native_profile['custodianId'] = custodian_id
             definition = {
                 'profile': codec.DEFINITION_PROFILE,
                 'journalProfile': codec.JOURNAL_PROFILE_02,
@@ -100,7 +103,7 @@ class OriginalSupervisorBirthIntegrationTests(unittest.TestCase):
                 'authorityConfigurationDigest': hashlib.sha256(
                     codec.canonical(configuration)).hexdigest(),
                 'nativeProfileDigest': hashlib.sha256(codec.canonical(
-                    native._profile_to_enrollment(profile))).hexdigest(),
+                    enrollment_native_profile)).hexdigest(),
                 'generationRootPolicyDigest': root_policy_digest,
                 'journalId': journal_id, 'path': journal_path,
                 'lockPath': lock_path, 'definitionDigest': definition_digest,
@@ -119,14 +122,48 @@ class OriginalSupervisorBirthIntegrationTests(unittest.TestCase):
                 'anchorDigest': anchor_digest,
                 'initialHeaderDigest': hashlib.sha256(initial).hexdigest(),
             }
+            target_birth = None
+            if fresh_target_custody:
+                target_definition = {
+                    'profile': codec.TARGET_CUSTODY_DEFINITION_PROFILE,
+                    'journalProfile': codec.TARGET_CUSTODY_JOURNAL_PROFILE_02,
+                    'eventKinds': list(codec.TARGET_CUSTODY_EVENT_KINDS),
+                }
+                target_header = {
+                    'profile': codec.TARGET_CUSTODY_JOURNAL_PROFILE_02,
+                    'custodianId': custodian_id, 'sequence': 0,
+                    'headDigest': '0' * 64, 'events': [],
+                }
+                target_path = str(control_home / 'target-custody.json')
+                target_birth = {
+                    'profile': codec.TARGET_CUSTODY_BIRTH_PROFILE,
+                    'journalProfile': codec.TARGET_CUSTODY_JOURNAL_PROFILE_02,
+                    'custodianId': custodian_id, 'supervisorId': supervisor_id,
+                    'path': target_path, 'lockPath': target_path + '.lock',
+                    'definition': target_definition,
+                    'definitionDigest': hashlib.sha256(
+                        codec.canonical(target_definition)).hexdigest(),
+                    'initialHeaderDigest': hashlib.sha256(
+                        codec.canonical(target_header)).hexdigest(),
+                }
+                codec.validate_target_custody_birth(
+                    target_birth, enrollment={
+                        'profile': codec.ENROLLMENT_05,
+                        'context': context,
+                        'nativeProfile': enrollment_native_profile,
+                    })
             enrollment = {
-                'profile': codec.ENROLLMENT_03, 'enrollmentId': enrollment_id,
+                'profile': (codec.ENROLLMENT_05 if fresh_target_custody
+                            else codec.ENROLLMENT_03),
+                'enrollmentId': enrollment_id,
                 'purpose': 'native-acceptance', 'context': context,
                 'ownerConfiguration': configuration,
-                'nativeProfile': native._profile_to_enrollment(profile),
+                'nativeProfile': enrollment_native_profile,
                 'generationAuthorityRoots': roots,
                 'supervisorJournalBirth': birth,
             }
+            if target_birth is not None:
+                enrollment['targetCustodyJournalBirth'] = target_birth
             enrollment_path = control_home / 'owner-bootstrap-enrollment.json'
             enrollment_raw = bootstrap._canonical(enrollment)
             bootstrap._write_private(enrollment_path, enrollment_raw)
@@ -137,6 +174,12 @@ class OriginalSupervisorBirthIntegrationTests(unittest.TestCase):
             with patch.object(native, 'sys_platform_darwin', return_value=True):
                 bootstrap._settle_original_owner_setup(profile, owner_ledger)
                 issuer = native._issue_local_owner_bootstrap_issuer(profile)
+                if target_birth is not None:
+                    target_birth_handle = bootstrap._target_custody_journal_birth_for_issuer(
+                        issuer)
+                    self.assertIsNotNone(target_birth_handle)
+                    self.assertEqual(Path(target_birth['path']).read_bytes(),
+                                     codec.canonical(target_header))
                 authority_context = bootstrap._issue_owner_authority_context(
                     issuer, hashlib.sha256(codec.canonical(configuration)).hexdigest())
                 self.addCleanup(native._BOOTSTRAP_ISSUERS.pop, id(issuer), None)
@@ -236,6 +279,10 @@ class OriginalSupervisorBirthIntegrationTests(unittest.TestCase):
                         profile, owner_core=reattached_core,
                         authority_context=reattached_context,
                         bootstrap_issuer=reattached_issuer)
+                if target_birth is not None:
+                    self.assertIsNotNone(
+                        bootstrap._target_custody_journal_birth_for_issuer(
+                            reattached_issuer))
                 self.addCleanup(native._NATIVE_SUPERVISORS.pop, id(reattached), None)
                 with reattached._original_control_lease(operation_kind='target-recover'):
                     outcome = reattached.observe_original_owner_request(
@@ -247,6 +294,12 @@ class OriginalSupervisorBirthIntegrationTests(unittest.TestCase):
                     self.assertEqual(outcome.effect_status, 'prepared')
             native._NATIVE_SUPERVISORS.pop(id(supervisor), None)
             self.addCleanup(native._NATIVE_SUPERVISORS.pop, id(supervisor), None)
+
+    def test_confirmed_03_enrollment_selects_signed_creation_02_without_native_effects(self):
+        self._exercise_confirmed_enrollment_birth(fresh_target_custody=False)
+
+    def test_confirmed_05_enrollment_binds_fresh_target_custody_birth(self):
+        self._exercise_confirmed_enrollment_birth(fresh_target_custody=True)
 
 
 if __name__ == '__main__':

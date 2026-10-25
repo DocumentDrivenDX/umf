@@ -6,6 +6,7 @@ on:
     branches-ignore:
       - codex/migration-portable-qualification
       - codex/migration-integrated-qualification
+      - codex/g04-python-unit-qualification
     tags:
       - '**'
   pull_request:

@@ -8,6 +8,9 @@ from contextlib import nullcontext
 from unittest.mock import Mock, patch
 
 from umf_access.lifecycle import row_originals_creation as creation
+from umf_access.lifecycle import row_originals as originals
+from umf_access.lifecycle import ingress_local_postgres as postgres_supervisor
+from umf_access.lifecycle.ingress_local_postgres import LocalPostgresSupervisor
 from umf_access.lifecycle.catalog import CatalogError
 
 PROVIDER = '00000000-0000-4000-8000-000000000001'
@@ -71,6 +74,108 @@ def _receipt(objects: list[dict[str, object]]) -> dict[str, object]:
 
 
 class RowOriginalsCreationTests(unittest.TestCase):
+    def test_provider_verify_uses_issuer_original_store_capability_method(self):
+        capability, reservation = object(), object()
+        calls = []
+        supervisor = object.__new__(LocalPostgresSupervisor)
+        supervisor._resolve_original_store_capability = (
+            lambda value, *, original_reservation: calls.append(
+                (value, original_reservation)) or value)
+        store = object.__new__(originals.PgRowOriginalsStore)
+        store._supervisor = supervisor
+        store._creation_capability = capability
+        store._creation_reservation = reservation
+        with (patch.object(originals.PgRowOriginalsStore, '_refresh_authority'),
+              patch.object(originals.PgRowOriginalsStore, '_require_tx'),
+              patch.object(originals.PgRowOriginalsStore, '_verify_controller_session'),
+              patch.object(originals.PgRowOriginalsStore, '_verify_store')):
+            store.verify()
+        self.assertEqual(calls, [(capability, reservation)])
+        self.assertTrue(callable(LocalPostgresSupervisor._resolve_original_store_capability))
+
+    def test_provider_confirm_creation_resolves_actual_issuer_capability(self):
+        capability, reservation = object(), object()
+        calls = []
+        supervisor = object.__new__(LocalPostgresSupervisor)
+        supervisor.confirm_originals_store_creation = (
+            lambda value, *, receipt: capability if value is reservation
+            and receipt == {'schemaOid': SCHEMA_OID} else None)
+        supervisor._resolve_original_store_capability = (
+            lambda value, *, original_reservation: calls.append(
+                (value, original_reservation)) or value)
+        store = object.__new__(originals.PgRowOriginalsStore)
+        store._supervisor = supervisor
+        store._connection = Mock()
+        store._connection.info.transaction_status = 0
+        store._creation_reservation = reservation
+        store._creation_receipt = {'schemaOid': SCHEMA_OID}
+        store._creation_capability = None
+        with patch.object(originals.PgRowOriginalsStore, '_refresh_authority'):
+            self.assertIs(store.confirm_creation(), capability)
+        self.assertEqual(calls, [(capability, reservation)])
+        self.assertIs(store._creation_capability, capability)
+
+    def test_creation_attempt_handle_is_issuer_sealed_immutable_and_nonserializable(self):
+        reservation = object()
+        connection = object()
+        attempt_type = postgres_supervisor._OriginalStoreCreationAttempt
+        with self.assertRaisesRegex(TypeError, 'supervisor-issued'):
+            attempt_type(object(), object(), reservation, connection, xid='12',
+                         database_name='db', database_oid=42,
+                         system_identifier='12345678901234567', backend_pid=99,
+                         backend_start='2026-01-01 00:00:00+00', budget=None)
+        attempt = attempt_type(
+            postgres_supervisor._ORIGINAL_STORE_ATTEMPT_SEAL,
+            object(), reservation, connection, xid='12', database_name='db',
+            database_oid=42, system_identifier='12345678901234567', backend_pid=99,
+            backend_start='2026-01-01 00:00:00+00', budget=None)
+        with self.assertRaisesRegex(AttributeError, 'immutable'):
+            attempt._xid = '13'
+        with self.assertRaisesRegex(TypeError, 'cannot be serialized'):
+            attempt.__reduce_ex__(4)
+
+    def test_explicit_resume_uses_same_reservation_and_live_attempt(self):
+        connection = Mock()
+        connection.info.transaction_status = 2
+        supervisor = object.__new__(LocalPostgresSupervisor)
+        reservation, old_attempt, next_attempt = object(), object(), object()
+        store = object.__new__(originals.PgRowOriginalsStore)
+        store._supervisor = supervisor
+        store._connection = connection
+        store._schema = SCHEMA
+        store._controller_role = 'controller'
+        store._controller_oid = 42
+        store._creation_reservation = reservation
+        store._creation_attempt = old_attempt
+        store._creation_receipt_fields = {'profile': 'receipt-fields'}
+        store._creation_capability = None
+        store._creation_receipt = {'stale': 'rolled-back'}
+        store._schema_oid = 19000
+        with (patch.object(originals.PgRowOriginalsStore, '_refresh_authority'),
+              patch.object(originals.PgRowOriginalsStore, '_require_tx'),
+              patch.object(originals.PgRowOriginalsStore, '_verify_controller_session'),
+              patch.object(originals.PgRowOriginalsStore, '_verify_store'),
+              patch.object(LocalPostgresSupervisor,
+                           'resume_originals_store_creation_attempt',
+                           return_value=next_attempt) as settle,
+              patch.object(LocalPostgresSupervisor,
+                           'reserve_originals_store_creation',
+                           side_effect=AssertionError('must not reserve again')),
+              patch.object(LocalPostgresSupervisor,
+                           '_budgeted_original_store_connection',
+                           return_value=connection),
+              patch.object(originals, '_create_store_schema', return_value=SCHEMA_OID) as ddl,
+              patch.object(creation, 'observe_and_write_receipt', return_value={'schemaOid': SCHEMA_OID}) as receipt):
+            result = store.resume_creation()
+        self.assertEqual(result, SCHEMA_OID)
+        settle.assert_called_once_with(reservation, old_attempt)
+        ddl.assert_called_once_with(connection, SCHEMA, 'controller')
+        receipt.assert_called_once_with(
+            connection, SCHEMA, SCHEMA_OID, 42, {'profile': 'receipt-fields'})
+        self.assertIs(store._creation_reservation, reservation)
+        self.assertIs(store._creation_attempt, next_attempt)
+        self.assertIsNone(store._creation_receipt.get('stale'))
+
     def test_column_address_and_pg_depend_lookup_use_relation_subid(self):
         address = creation._column_address({'pg_class': 1259}, 16385, 7)
         self.assertEqual(address, {'classId': 1259, 'objectId': 16385, 'subId': 7})
@@ -270,6 +375,19 @@ class RowOriginalsCreationTests(unittest.TestCase):
         self.assertEqual(proof['database']['systemIdentifier'], identity[2])
         self.assertEqual(proof['state'], 'absent')
         self.assertEqual(query.call_count, 2)
+
+        readonly_identity = identity[:10] + ('on',) + identity[11:]
+        readonly_expected = dict(expected, transactionReadOnly='on')
+        with patch.object(creation, '_one', side_effect=[readonly_identity, None]):
+            readonly_proof = creation.observe_absent_creation_schema(
+                connection, SCHEMA, readonly_expected, controller_oid=42, readonly=True)
+        self.assertEqual(readonly_proof['state'], 'absent')
+        self.assertEqual(readonly_proof['session']['roleSetting'], 'controller')
+        with (patch.object(creation, '_one', return_value=readonly_identity),
+              self.assertRaisesRegex(CatalogError,
+                                     'row-originals-creation-absence-unverified')):
+            creation.observe_absent_creation_schema(
+                connection, SCHEMA, readonly_expected, controller_oid=42)
 
         wrong_identity = identity[:4] + ('other-controller',) + identity[5:]
         with (patch.object(creation, '_one', return_value=wrong_identity) as query,

@@ -898,11 +898,49 @@ same-request recovery must append/finish only missing confirmations, return the
 same receipt/schema/reservation IDs and never repeat committed DDL; in
 particular cover native COMMIT before external observation. Known-abort may
 settle only after same-database/controller full fixed-schema absence proof and
-must not issue a capability or permit terminal request reuse. Exercise unknown,
-newer conflicting custody/native state, copied
+must be backed by positive noncommit evidence for the exact original native
+transaction on the live original connection, followed by fresh full absence and
+authority checks. Consume the supervisor-issued witness once; keep the same
+request, reservation, pending Core binding, and IDs, with no terminal native or
+Core abort. Absence-only, forged, reused, or lost/restarted witness controls
+remain fenced. Exercise one successful same-original retry, exhausted original
+approval/budget refusal, unknown and committed-then-missing refusal, newer
+conflicting custody/native state, copied
 receipt/callback/constructor seal, capacity exhaustion, two creators and epoch/
 transition contention. No terminal owner-abort may be silently reused for
 retry, and no absent or malformed receipt may settle unknown COMMIT.
+
+For the adopted host allowance, prove exactly one issuer/PID-bound 30,000 ms
+budget is minted after final approval and before the first external reservation
+write, bound to the exact original request/effect/configuration/approval and
+then reservation. Initial dispatch plus one positively proved-abort retry may
+consume the two attempt slots; third dispatch, duplicate begin, refund, fresh
+budget on resume, and reconstructed/forked/missing registry state must refuse.
+Expire the absolute monotonic window during validation and prove refusal before
+DDL. Verify each statement timeout is the minimum of remaining time, 30,000 ms,
+and its existing lower bound; each lock timeout is also bounded by 5,000 ms,
+and each connection wait by its existing lower connection bound. Lower qualified
+limits must never be raised. Verify transaction-local changes restore on both
+commit and rollback; timeout or transport error remains unknown absent positive
+noncommit evidence. After the execution budget expires, independently test that
+only bounded positive committed read-only settlement can finish the same
+original confirmations and can never dispatch DDL. Approval validation must
+remain unchanged and no caller-supplied clock, budget, expiry, or profile field
+may influence the host allowance. These source controls are UNRUN and are not
+native qualification evidence.
+
+For every confirmation and recovery invocation, separately test the
+supervisor-issued 30,000 ms read-only budget from method entry: exact request,
+effect, original reservation bytes/digest, target, connection, store, operation,
+and issuer/PID binding; no reset/refund or DDL on resume/fork; active caller
+transaction refusal without commit/rollback; and deadline checks before and
+after connection, query, fetch, append, and return. Exercise lower existing
+connection/statement/lock bounds and verify transaction-local settings restore
+on success, refusal, and exception. Compare immutable original preparation
+evidence and fresh actual read-only session/transaction observations in their
+separate ownership contexts; assert actual observed values are preserved, and
+mismatched stable authority or identity remains fenced. These controls are
+source-only until run under a separately authorized ticket.
 
 Qualify actual PG18.6 source/actor/session/privileged-DDL exclusion/COMMENT/full
 TOAST/RI/native inventory/ACL/commit/restart and dynamic registered additions.

@@ -1103,8 +1103,9 @@ def recover_creation_receipt(connection: Any, schema: str,
 
 def observe_absent_creation_schema(connection: Any, schema: str,
                                    expected_native: dict[str, Any],
-                                   controller_oid: int) -> dict[str, Any] | None:
-    """Prove absence only on the original controller session and database."""
+                                   controller_oid: int, *,
+                                   readonly: bool = False) -> dict[str, Any] | None:
+    """Prove absence on the original controller session without changing mode."""
     if (type(schema) is not str or type(expected_native) is not dict
             or type(controller_oid) is not int or controller_oid <= 0):
         _fail('row-originals-creation-absence-unverified')
@@ -1132,7 +1133,7 @@ def observe_absent_creation_schema(connection: Any, schema: str,
         }
         if (any(expected_native.get(key) != value for key, value in actual.items())
                 or actual['currentUserOid'] != controller_oid
-                or actual['transactionReadOnly'] != 'off'
+                or actual['transactionReadOnly'] != ('on' if readonly else 'off')
                 or actual['transactionIsolation'] != 'read committed'):
             _fail('row-originals-creation-absence-unverified')
         namespace = _one(connection, '''SELECT n.oid,n.nspowner
@@ -1156,6 +1157,7 @@ def reserve_originals_store_creation(supervisor: object, evidence: object,
                                      approval: object, custodian: object,
                                      target: object, store: dict[str, Any],
                                      connection: Any,
+                                     *, creation_budget: object | None = None,
                                      ) -> tuple[object, dict[str, Any]]:
     """Resolve the exact supervisor-issued original reservation before DDL."""
     try:
@@ -1183,10 +1185,11 @@ def reserve_originals_store_creation(supervisor: object, evidence: object,
     try:
         reservation = supervisor.reserve_originals_store_creation(
             evidence, approval, custodian=custodian, target=target, store=store,
-            connection=connection)
+            connection=connection, creation_budget=creation_budget)
         verified = supervisor._resolve_originals_store_creation_reservation(
             reservation, evidence=evidence, approval=approval,
-            custodian=custodian, target=target, store=store)
+            custodian=custodian, target=target, store=store,
+            budget_reservation=reservation)
     except CatalogError:
         raise
     except Exception:  # noqa: BLE001 -- authority implementation details stay private

@@ -21,6 +21,7 @@ IDENTITY_PROFILE = 'umf.native-row-identity/0.1'
 ROW_RECORD_PROFILE = 'umf.native-row-identity/0.1'
 ARCHIVE_RECORD_PROFILE = 'umf.native-row-originals/0.1'
 AUTHORITY_PROFILE = 'umf.pg18.original-store-authority-evidence/0.1'
+_RECOVERY_PROVIDER_SEAL = object()
 _HEX = re.compile(r'^[a-f0-9]{64}$')
 _MAX_RECORD_BYTES = 1_048_576
 _MAX_TABLES = 4096
@@ -237,7 +238,8 @@ def validate_archive_record(value: Any) -> dict[str, Any]:
 
 
 def _authority_context(supervisor: object, evidence: object, approval: object,
-                       custodian: object, target: object) -> dict[str, Any]:
+                       custodian: object, target: object, *,
+                       budget_reservation: object | None = None) -> dict[str, Any]:
     """Resolve only the exact supervisor capability; missing G04 adapter refuses."""
     try:
         from .ingress_local_postgres import (
@@ -267,7 +269,8 @@ def _authority_context(supervisor: object, evidence: object, approval: object,
         _fail('row-originals-authority-invalid')
     try:
         verified = supervisor._resolve_original_store_preparation(
-            evidence, approval, custodian=custodian, target=target)
+            evidence, approval, custodian=custodian, target=target,
+            budget_reservation=budget_reservation)
     except TypeError:
         # An earlier adapter signature cannot silently authorize the G04 store.
         _fail('row-originals-authority-unavailable')
@@ -464,9 +467,10 @@ class PgRowOriginalsStore:
     __slots__ = (
         '_approval', '_archives', '_authority', '_connection', '_controller_oid',
         '_controller_role', '_creation_capability', '_creation_receipt',
-        '_creation_reservation', '_custodian', '_evidence', '_installation_id',
+        '_creation_attempt', '_creation_receipt_fields', '_creation_reservation',
+        '_custodian', '_evidence', '_installation_id',
         '_issuer', '_provider_id', '_schema', '_schema_oid', '_supervisor',
-        '_tables', '_target',
+        '_tables', '_target', '_recovery_only',
     )
 
     def __init__(self, connection: Any, *, supervisor: object, evidence: object,
@@ -487,11 +491,14 @@ class PgRowOriginalsStore:
         self._schema = originals_schema_name(provider_id)
         self._schema_oid: int | None = None
         self._creation_reservation: object | None = None
+        self._creation_attempt: object | None = None
+        self._creation_receipt_fields: dict[str, Any] | None = None
         self._creation_receipt: dict[str, Any] | None = None
         self._creation_capability: object | None = None
         self._issuer = object()
         self._tables: dict[int, tuple[EnrolledTable, dict[str, Any]]] = {}
         self._archives: dict[int, tuple[OriginalArchive, dict[str, Any]]] = {}
+        self._recovery_only = False
         payload = self._authority['payload']
         if (payload.get('providerId') != self._provider_id
                 or payload.get('installationId') != installation_id
@@ -499,9 +506,60 @@ class PgRowOriginalsStore:
                 or payload.get('controller', {}).get('oid') != controller_oid):
             _fail('row-originals-authority-invalid')
 
-    def _refresh_authority(self) -> None:
+    def _refresh_authority(self, *, budget: object | None = None) -> None:
+        if self._recovery_only:
+            if (self._creation_reservation is None
+                    or self._creation_capability is None):
+                _fail('row-originals-store-recovery-required')
+            try:
+                with self._supervisor._original_control_lease(operation_kind='store'):
+                    self._authority = (
+                        self._supervisor._resolve_recovered_original_store_current_authority(
+                            self._creation_reservation, self._creation_capability,
+                            self._connection))
+            except CatalogError:
+                raise
+            except Exception:  # noqa: BLE001 -- fresh current authority is required
+                _fail('row-originals-store-recovery-authority-invalid')
+            payload = self._authority['payload']
+            self._controller_role = payload['controller']['name']
+            self._controller_oid = payload['controller']['oid']
+            return
         self._authority = _authority_context(
-            self._supervisor, self._evidence, self._approval, self._custodian, self._target)
+            self._supervisor, self._evidence, self._approval, self._custodian,
+            self._target, budget_reservation=budget)
+
+    @classmethod
+    def _from_recovery(cls, seal: object, *, supervisor: object,
+                       connection: Any, provider_id: str, installation_id: str,
+                       controller_role: str, custodian: object, target: object):
+        """Construct the supervisor's restricted recovery-only provider."""
+        if seal is not _RECOVERY_PROVIDER_SEAL:
+            _fail('row-originals-store-recovery-invalid')
+        instance = object.__new__(cls)
+        instance._approval = None
+        instance._archives = {}
+        instance._authority = None
+        instance._connection = connection
+        instance._controller_oid = 0
+        instance._controller_role = controller_role
+        instance._creation_capability = None
+        instance._creation_receipt = None
+        instance._creation_attempt = None
+        instance._creation_receipt_fields = None
+        instance._creation_reservation = None
+        instance._custodian = custodian
+        instance._evidence = None
+        instance._installation_id = installation_id
+        instance._issuer = object()
+        instance._provider_id = _uuid(provider_id)
+        instance._schema = originals_schema_name(provider_id)
+        instance._schema_oid = None
+        instance._supervisor = supervisor
+        instance._tables = {}
+        instance._target = target
+        instance._recovery_only = True
+        return instance
 
     def _require_tx(self) -> None:
         # A transaction may be active before PostgreSQL assigns an XID (e.g.
@@ -512,9 +570,9 @@ class PgRowOriginalsStore:
             _fail('row-originals-transaction-required')
 
     def create(self) -> int:
-        self._refresh_authority()
+        if self._recovery_only:
+            _fail('row-originals-store-recovery-only')
         self._require_tx()
-        self._verify_controller_session()
         if self._schema_oid is not None or self._creation_reservation is not None:
             _fail('row-originals-store-already-created')
         from .row_originals_creation import (
@@ -523,21 +581,86 @@ class PgRowOriginalsStore:
         )
         store = {'profile': STORE_PROFILE, 'storeId': self._provider_id,
                  'schemaName': self._schema}
+        budget = self._supervisor._mint_original_store_creation_budget(
+            evidence=self._evidence, approval=self._approval,
+            custodian=self._custodian, target=self._target,
+            connection=self._connection, store=store)
+        self._supervisor._capture_original_store_timeout_lower_bounds(
+            self._connection, budget)
+        self._refresh_authority(budget=budget)
+        self._verify_controller_session(budget=budget)
         reservation, receipt_fields = reserve_originals_store_creation(
             self._supervisor, self._evidence, self._approval, self._custodian,
-            self._target, store, self._connection)
+            self._target, store, self._connection, creation_budget=budget)
         self._creation_reservation = reservation
-        self._schema_oid = _create_store_schema(
-            self._connection, self._schema, self._controller_role)
-        self._connection.execute('REVOKE ALL ON SCHEMA ' + _q(self._schema) + ' FROM PUBLIC')
-        self._creation_receipt = observe_and_write_receipt(
-            self._connection, self._schema, self._schema_oid,
-            self._controller_oid, receipt_fields)
-        self._verify_store()
-        return self._schema_oid
+        self._creation_receipt_fields = receipt_fields
+        bounded = self._supervisor._budgeted_original_store_connection(reservation)
+        try:
+            self._creation_attempt = (
+                self._supervisor.begin_originals_store_creation_attempt(reservation))
+            self._schema_oid = _create_store_schema(
+                bounded, self._schema, self._controller_role)
+            bounded.execute('REVOKE ALL ON SCHEMA ' + _q(self._schema) + ' FROM PUBLIC')
+            self._creation_receipt = observe_and_write_receipt(
+                bounded, self._schema, self._schema_oid,
+                self._controller_oid, receipt_fields)
+            self._verify_store(connection=bounded)
+            self._supervisor._require_original_store_budget(reservation)
+            return self._schema_oid
+        finally:
+            bounded.restore_caller_timeouts()
+
+    def resume_creation(self) -> int:
+        """Resume the same pending creation only after its live abort witness settles."""
+        if self._recovery_only:
+            _fail('row-originals-store-recovery-only')
+        self._require_tx()
+        reservation = self._creation_reservation
+        receipt_fields = self._creation_receipt_fields
+        if (reservation is None or self._creation_attempt is None
+                or receipt_fields is None
+                or self._creation_capability is not None):
+            _fail('row-originals-creation-resume-required')
+        budget = reservation._budget
+        self._supervisor._require_original_store_budget(reservation)
+        self._refresh_authority(budget=budget)
+        self._verify_controller_session(budget=budget)
+        bounded = self._supervisor._budgeted_original_store_connection(
+            reservation)
+        try:
+            try:
+                from .ingress_local_postgres import LocalPostgresSupervisor
+                if type(self._supervisor) is not LocalPostgresSupervisor:
+                    _fail('row-originals-creation-resume-invalid')
+                attempt = self._supervisor.resume_originals_store_creation_attempt(
+                    reservation, self._creation_attempt)
+            except CatalogError:
+                raise
+            except Exception:  # noqa: BLE001 -- retain the original authority fence
+                _fail('row-originals-creation-resume-invalid')
+            self._creation_attempt = attempt
+            # A positive native aborted status proves the prior transaction's
+            # partial catalogue/receipt values were rolled back. Discard only the
+            # in-memory values produced by that transaction before fixed replay.
+            self._schema_oid = None
+            self._creation_receipt = None
+            self._schema_oid = _create_store_schema(
+                bounded, self._schema, self._controller_role)
+            bounded.execute('REVOKE ALL ON SCHEMA ' + _q(self._schema) + ' FROM PUBLIC')
+            from .row_originals_creation import observe_and_write_receipt
+            self._creation_receipt = observe_and_write_receipt(
+                bounded, self._schema, self._schema_oid,
+                self._controller_oid, receipt_fields)
+            self._verify_store(connection=bounded)
+            self._supervisor._require_original_store_budget(reservation)
+            return self._schema_oid
+        finally:
+            bounded.restore_caller_timeouts()
 
     def confirm_creation(self) -> object:
         """Confirm only the original reservation after its DDL transaction committed."""
+        if self._recovery_only:
+            _fail('row-originals-store-recovery-only')
         self._refresh_authority()
         if (self._creation_reservation is None or self._creation_receipt is None
                 or int(self._connection.info.transaction_status) != 0):
@@ -548,7 +671,7 @@ class PgRowOriginalsStore:
                 _fail('row-originals-creation-confirmation-invalid')
             capability = self._supervisor.confirm_originals_store_creation(
                 self._creation_reservation, receipt=self._creation_receipt)
-            resolved = self._supervisor._resolve_originals_store_capability(
+            resolved = self._supervisor._resolve_original_store_capability(
                 capability, original_reservation=self._creation_reservation)
         except CatalogError:
             raise
@@ -561,20 +684,32 @@ class PgRowOriginalsStore:
 
     def recover_creation(self) -> int:
         """Reattach only a previously committed original store; never issue DDL."""
-        self._refresh_authority()
+        if not self._recovery_only:
+            self._refresh_authority()
         if self._creation_reservation is not None or self._creation_capability is not None:
             _fail('row-originals-store-recovery-already-attached')
         try:
             from .ingress_local_postgres import LocalPostgresSupervisor
             if type(self._supervisor) is not LocalPostgresSupervisor:
                 _fail('row-originals-store-recovery-invalid')
-            reservation, capability, receipt = (
-                self._supervisor.recover_originals_store_creation(
-                    self._target, self._connection,
-                    store={'profile': STORE_PROFILE, 'storeId': self._provider_id,
-                           'schemaName': self._schema}))
-            resolved = self._supervisor._resolve_original_store_capability(
-                capability, original_reservation=reservation)
+            with self._supervisor._original_control_lease(operation_kind='store'):
+                reservation, capability, receipt = (
+                    self._supervisor.recover_originals_store_creation(
+                        self._target, self._connection,
+                        store={'profile': STORE_PROFILE, 'storeId': self._provider_id,
+                               'schemaName': self._schema}))
+                resolved = self._supervisor._resolve_original_store_capability(
+                    capability, original_reservation=reservation)
+                if self._recovery_only:
+                    self._evidence = reservation._evidence
+                    self._approval = reservation._approval
+                    self._custodian = reservation._custodian
+                    self._target = reservation._target
+                    self._authority = (
+                        self._supervisor._resolve_recovered_original_store_current_authority(
+                            reservation, capability, self._connection))
+                    self._controller_role = self._authority['payload']['controller']['name']
+                    self._controller_oid = self._authority['payload']['controller']['oid']
         except CatalogError:
             raise
         except Exception:  # noqa: BLE001 -- keep recovery authority failures private
@@ -598,7 +733,7 @@ class PgRowOriginalsStore:
         if self._creation_capability is None or self._creation_reservation is None:
             _fail('row-originals-creation-confirmation-required')
         try:
-            resolved = self._supervisor._resolve_originals_store_capability(
+            resolved = self._supervisor._resolve_original_store_capability(
                 self._creation_capability,
                 original_reservation=self._creation_reservation)
         except Exception:  # noqa: BLE001 -- capability resolution is an authority boundary
@@ -606,11 +741,11 @@ class PgRowOriginalsStore:
         if resolved is not self._creation_capability:
             _fail('row-originals-creation-confirmation-invalid')
 
-    def _verify_controller_session(self) -> None:
+    def _verify_controller_session(self, *, budget: object | None = None) -> None:
         observation = self._authority.get('nativeObservation')
         if type(observation) is not dict:
             _fail('row-originals-authority-invalid')
-        actual = _one(self._connection, '''SELECT current_user,
+        query = '''SELECT current_user,
  (SELECT oid FROM pg_catalog.pg_roles WHERE rolname=current_user),session_user,
  pg_catalog.current_setting('role'),pg_catalog.current_setting('search_path'),
  pg_catalog.current_setting('TimeZone'),pg_catalog.current_setting('row_security'),
@@ -619,7 +754,23 @@ class PgRowOriginalsStore:
  pg_catalog.current_setting('transaction_read_only'),
  pg_catalog.current_setting('transaction_isolation'),
  pg_catalog.current_setting('server_version_num')::pg_catalog.int4,
- (SELECT system_identifier::pg_catalog.text FROM pg_catalog.pg_control_system())''')
+ (SELECT system_identifier::pg_catalog.text FROM pg_catalog.pg_control_system())'''
+        if budget is None:
+            actual = _one(self._connection, query)
+        else:
+            try:
+                from .ingress_local_postgres import (
+                    LocalPostgresError, _execute_original_store_sql,
+                )
+                cursor = _execute_original_store_sql(
+                    self._supervisor, budget, self._connection, query)
+                self._supervisor._require_original_store_budget(budget)
+                actual = cursor.fetchone()
+                self._supervisor._require_original_store_budget(budget)
+            except (CatalogError, LocalPostgresError):
+                raise
+            except Exception:  # noqa: BLE001 -- no blocking fallback for creation
+                _fail('row-originals-controller-session-observation-unresolved')
         expected = self._authority['payload']
         controller = expected['controller']
         maintenance = expected['maintenance']
@@ -634,15 +785,16 @@ class PgRowOriginalsStore:
                 or actual[12] != observation.get('database', {}).get('systemIdentifier')):
             _fail('row-originals-controller-session-required')
 
-    def _verify_store(self) -> None:
+    def _verify_store(self, *, connection: Any | None = None) -> None:
+        connection = self._connection if connection is None else connection
         if self._schema_oid is None:
-            row = _one(self._connection,
+            row = _one(connection,
                        'SELECT oid FROM pg_catalog.pg_namespace WHERE nspname=%s',
                        (self._schema,))
             if row is None:
                 _fail('row-originals-store-unavailable')
             self._schema_oid = int(row[0])
-        schema = _one(self._connection, '''SELECT n.oid,n.nspowner,r.rolname,
+        schema = _one(connection, '''SELECT n.oid,n.nspowner,r.rolname,
  pg_catalog.obj_description(n.oid,'pg_namespace')
  FROM pg_catalog.pg_namespace n JOIN pg_catalog.pg_roles r ON r.oid=n.nspowner
  WHERE n.nspname=%s''', (self._schema,))
@@ -652,9 +804,9 @@ class PgRowOriginalsStore:
         if self._creation_receipt is None:
             _fail('row-originals-creation-receipt-unavailable')
         from .row_originals_creation import verify_creation_receipt
-        verify_creation_receipt(self._connection, self._schema,
+        verify_creation_receipt(connection, self._schema,
                                 self._creation_receipt, self._controller_oid)
-        archive_rows = _all(self._connection, '''SELECT archive_id,table_token,state,
+        archive_rows = _all(connection, '''SELECT archive_id,table_token,state,
  values_relation_oid,row_count,logical_bytes,record,record_digest FROM '''
                             + _q(self._schema) + '."archives" ORDER BY archive_id')
         if len(archive_rows) > _MAX_ARCHIVES:
@@ -677,7 +829,7 @@ class PgRowOriginalsStore:
                        != 'values_' + native_archive_id.replace('-', '')):
                 _fail('row-originals-archive-corrupt')
             values_records.append(record)
-        relations = _all(self._connection, '''SELECT c.relname,c.relkind,c.relpersistence,
+        relations = _all(connection, '''SELECT c.relname,c.relkind,c.relpersistence,
  c.relowner,c.relrowsecurity,c.relforcerowsecurity,c.relispartition,c.relhassubclass,
  c.relhasrules
  FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
@@ -707,7 +859,7 @@ class PgRowOriginalsStore:
             'issued_instances': (('table_token', 2950), ('instance_id', 2950)),
         }
         for table_name, columns in expected_columns.items():
-            rows = _all(self._connection, '''SELECT a.attname,a.attnum,a.attisdropped,
+            rows = _all(connection, '''SELECT a.attname,a.attnum,a.attisdropped,
  a.atttypid::pg_catalog.oid,a.atttypmod,a.attnotnull
  FROM pg_catalog.pg_attribute a JOIN pg_catalog.pg_class c ON c.oid=a.attrelid
  JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
@@ -719,7 +871,7 @@ class PgRowOriginalsStore:
                         zip(columns, rows, strict=True), 1))):
                 _fail('row-originals-store-catalog-mismatch')
         for archive_row, record in zip(archive_rows, values_records, strict=True):
-            values_relation = _one(self._connection, '''SELECT c.oid,c.relkind,c.relpersistence,
+            values_relation = _one(connection, '''SELECT c.oid,c.relkind,c.relpersistence,
  c.relowner,c.relrowsecurity,c.relforcerowsecurity,c.relispartition,c.relhassubclass,
  c.relhasrules FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
  WHERE n.nspname=%s AND c.relname=%s''',
@@ -729,7 +881,7 @@ class PgRowOriginalsStore:
                     or values_relation[3] != self._controller_oid
                     or values_relation[4:] != (False, False, False, False, False)):
                 _fail('row-originals-archive-catalog-mismatch')
-            columns = _all(self._connection, '''SELECT attname,attnum,attisdropped,
+            columns = _all(connection, '''SELECT attname,attnum,attisdropped,
  atttypid::pg_catalog.oid,atttypmod,attnotnull FROM pg_catalog.pg_attribute
  WHERE attrelid=%s AND attnum>0 ORDER BY attnum''', (archive_row[3],))
             domain = record['sourceNativeDomain']
@@ -745,12 +897,15 @@ class PgRowOriginalsStore:
                         zip(expected_value_columns, columns, strict=True), 1)):
                 _fail('row-originals-archive-catalog-mismatch')
         self._verify_store_acl(tuple(
-            record['valuesRelation']['name'] for record in values_records))
+            record['valuesRelation']['name'] for record in values_records),
+            connection=connection)
 
-    def _verify_store_acl(self, values_names: tuple[str, ...] = ()) -> None:
+    def _verify_store_acl(self, values_names: tuple[str, ...] = (), *,
+                          connection: Any | None = None) -> None:
+        connection = self._connection if connection is None else connection
         # Default ACL NULL means only the owner controls the private relation;
         # explicit PUBLIC grants or extra grantees are rejected.
-        grants = _all(self._connection, '''SELECT c.relname,acl.grantee,acl.grantor,
+        grants = _all(connection, '''SELECT c.relname,acl.grantee,acl.grantor,
  acl.privilege_type,acl.is_grantable
  FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
  CROSS JOIN LATERAL pg_catalog.aclexplode(COALESCE(c.relacl,
@@ -768,7 +923,7 @@ class PgRowOriginalsStore:
                               privilege, False))
         if set(grants) != expected:
             _fail('row-originals-store-acl-mismatch')
-        schema_grants = _all(self._connection, '''SELECT acl.grantee,acl.grantor,
+        schema_grants = _all(connection, '''SELECT acl.grantee,acl.grantor,
  acl.privilege_type,acl.is_grantable FROM pg_catalog.pg_namespace n
  CROSS JOIN LATERAL pg_catalog.aclexplode(COALESCE(n.nspacl,
  pg_catalog.acldefault('n',n.nspowner))) acl WHERE n.nspname=%s''', (self._schema,))

@@ -7007,12 +7007,57 @@ after full verification; resolution requires the same issuer, context,
 supervisor and original control lease. A DTO or digest grants no authority.
 The 0.2 stream has strict event replay and cross-journal linkage validation.
 Restart recovery reattaches a committed receipt only after its exact native
-footprint is re-observed. It may record a known-aborted outcome only after
-positive same-database/controller proof that the fixed schema is absent; this
-does not issue a capability or permit reusing the terminal owner request.
+footprint is re-observed. Fixed-schema absence alone is not a known-aborted
+transaction attempt and cannot authorize retry. A retryable known-aborted
+observation requires positive noncommit evidence for the exact original native
+transaction, retained by the live issuer and consumed once with fresh complete
+absence and authority checks. It keeps the same original reservation, request,
+pending owner binding, and identifiers; it does not terminalize the native or
+owner effect. If that volatile original witness is lost, recovery stays fenced.
 Unknown, conflicting, or incomplete cross-journal states remain fenced. The
 fresh store-mutation route remains closed until every durable crash boundary
 has an implemented same-request recovery path.
+
+The host implementation adopts a separate conservative execution allowance
+for this original store creation: one supervisor-issued, process/PID-bound
+30,000 ms window and at most two dispatched transaction attempts (the initial
+attempt and one retry after positively proved abort). Mint it exactly once
+after final approval and before the first external reservation write. Bind it
+to the same request, effect, configuration, approval, issuer, and reservation.
+Resume, rollback, timeout, lost response, and process fork never reset or refund
+it; missing volatile budget state fences DDL. Consume the transaction allowance
+before each dispatch, without a second charge in shared begin logic. Check the
+absolute monotonic deadline before each host-controlled blocking call and
+immediately before DDL. Clamp statement and lock timeouts to the minimum of the
+remaining allowance, the fixed 30,000/5,000 ms proposal ceiling, and any
+existing qualified lower bound; clamp connection waits to the minimum of the
+remaining allowance and their existing qualified bound. Never enlarge an
+existing bound. Transaction-local timeout changes restore prior session
+settings when the original transaction ends. These are cooperative source
+policy limits, not an OS hard wall or native qualification claim. They add no
+approval expiry, wire field, profile field, or caller clock. After expiry or
+loss of volatile budget state, separately bounded positive committed read-only
+recovery/settlement may finish the same original confirmations but cannot
+authorize DDL or mint a replacement budget.
+
+Each `confirm_originals_store_creation` and `recover_originals_store_creation`
+invocation also receives a distinct supervisor-issued, process-bound 30,000 ms
+monotonic read-only allowance, measured from method entry. It is observational
+and settlement-only: it has zero DDL attempts and never resets, refunds, or
+extends the original creation allowance. Bind it to the exact original request,
+effect, reservation bytes/digest when present, target, connection, store, and
+operation. Before each owned connection, query, fetch, journal settlement
+append, and return, recheck its PID and absolute deadline. Refuse an already
+active caller transaction; do not commit or roll back a caller-owned
+transaction. Own a fresh read-only transaction for native inspection, clamp
+connection, statement, and lock waits to the minimum of remaining invocation
+time, the adopted proposal ceiling, and every existing qualified lower bound,
+and restore transaction-local settings on every exit. A read-only observation
+must retain its actual transaction/session facts separately from the immutable
+original preparation evidence; never normalize or overwrite either. Expiry,
+fork, unknown transaction ownership, or incomplete original identity fences the
+operation. These are cooperative host limits, not a native hard wall or
+qualification claim.
 
 The following exact internal protocol implements the previously adopted external
 store reservation/native COMMENT receipt without inferring state from unused
@@ -7022,7 +7067,7 @@ fresh journal0.2 profiles preserve old0.1 bytes/replay and refuse implicit upgra
 ##### Version and original custody
 
 Use NEW `umf.local-target-custody-journal/0.2` and
-`umf.local-postgresql-supervisor-journal/0.2` for ORIGINAL newly enrolled targets
+`umf.local-postgresql-owner-journal/0.2` for ORIGINAL newly enrolled targets
 that admit this store-creation capability. Keep original0.1 serialized bytes,
 event meanings and readonly legacy replay exact. No implicit active0.1 upgrade,
 copy/name adoption or new store effects through old unused boolean store tags.
