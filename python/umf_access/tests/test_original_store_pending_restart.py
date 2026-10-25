@@ -484,7 +484,7 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                         approval_digest=store_approval.approval_digest,
                         reservation=external_reservation)
                     external_event = next(
-                        event for event in supervisor._custodian._journal.read()['events']
+                        event for event in supervisor._custodian._journal._read()['events']
                         if event['recordDigest'] == external_append['recordDigest'])
                     external_payload = external_event['payload']
                     external_reservation = external_payload['reservation']
