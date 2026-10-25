@@ -5,6 +5,7 @@ import {compileG02FieldEffects} from './internal';
 import {deriveTableGrantEffectRow} from '../table-deployment/grants';
 import type {TableMigrationOptions} from './options';
 import {canonical,canonicalCharged,hashCanonical,hashCanonicalCharged} from '../compilation/bundle/hash';
+import {copyJsonCharged} from '../model/json';
 import type {AccountingContext} from '../model/internal/accounting-context';
 import {validateG10RequestShape,type G10ValidatedRequest,type TableIntent} from './inventory-options';
 import {buildOwnedSourceFieldIndex,sourceElementFromIndex,sourceHasPathInIndex,sourcePathOrdinalFromIndex,sourceValueAtPathFromIndex,sourceChildPathFromIndex,sameSourceExceptG05SelectedFields,sourceFieldMeaning,sourceMappingPath,type OwnedSourceFieldIndex} from './inventory-g05-selection';
@@ -17,6 +18,7 @@ type Side='previous'|'next';
 type Identity={kind:string;table:string|null;subject:Json};
 type PathValue={path:string;value:Json};
 type Subject={identity:Identity;meaning:Json;state:'present'|'absent';validation?:'not-applicable'|'not-validated'|'validated';validity?:'not-applicable'|'pending'|'valid'|'invalid'};
+type ProjectedGrant={table:string|null;role:string;privilege:string;columns:string[]|null;grantOption:boolean;sourcePath:string;state:'present';effect:string;rule?:Json};
 type Edge={from:string;to:string;reason:string;sourcePath:string;state:'present'|'absent'};
 export interface PrefixCatalog {
  tables:Subject[];columns:Subject[];keys:Subject[];checks:Subject[];foreignKeys:Subject[];indexes:Subject[];policies:Subject[];grants:Subject[];comments:Subject[];
@@ -91,8 +93,8 @@ function sourcePayload(bundle:TableDeploymentBundle,ownedDocument?:unknown,accou
  if(!payload||payloadKeys!==4||!['profile','tables','seedSets','commands'].every(key=>Object.hasOwn(payload,key))||payload.profile!=='postgresql18/0.1'||!Array.isArray(payload.tables)||!Array.isArray(payload.seedSets)||!Array.isArray(payload.commands))throw new Error('G10_SOURCE_INVALID:/modules/'+moduleIndex+'/extensions/umf.tables');
  return {source,module,payload,moduleIndex,extensionPath:`/modules/${moduleIndex}/extensions/umf.tables`};
 }
-function grantProjection(bundle:TableDeploymentBundle,source:any,payload:any,moduleIndex:number,accounting?:AccountingContext,sourceIndex?:OwnedSourceFieldIndex):Json[] {
- const cfg=bundle.configuration as any,out:Json[]=[];
+function grantProjection(bundle:TableDeploymentBundle,source:any,payload:any,moduleIndex:number,accounting?:AccountingContext,sourceIndex?:OwnedSourceFieldIndex):ProjectedGrant[] {
+ const cfg=bundle.configuration as any,out:ProjectedGrant[]=[];
  for(const [ti,table]of (payload.tables as TableDeclaration[]).entries()){accounting?.visit('grant-projection-table','/projection/grants');const base=`/modules/${moduleIndex}/extensions/umf.tables/tables/${ti}`;
   accounting?.retainSubject(`${base}/@public-revoke`,`${base}/@public-revoke`);accounting?.visit('grant-projection-row-construction',base,8);accounting?.visit('grant-projection-retention',base);out.push({table:table.id,role:'PUBLIC',privilege:'all',columns:null,grantOption:false,sourcePath:base,state:'present',effect:'revoke-all'});
   const record=findElement(source,table.record,base+'/record',sourceIndex).value;
@@ -200,7 +202,7 @@ function catalogProjection(bundle:TableDeploymentBundle,source:any,payload:any,m
 function projectOne(verified:TableDeploymentBundle,side:Side,tableId:string,rendererOps:InternalTableDeploymentOperationRecord[],parts:ReturnType<typeof sourcePayload>,projection:CatalogProjection,sourceIndex:OwnedSourceFieldIndex,accounting?:AccountingContext):{review:InventoryProjection;table:InventoryTable;projection:CatalogProjection} {
  const {source,module,payload,moduleIndex,extensionPath}=parts;let i=-1;for(let candidate=0;candidate<payload.tables.length;candidate++){accounting?.visit('review-table-id-predicate',`${extensionPath}/tables/${candidate}`);if((payload.tables[candidate] as any).id===tableId){i=candidate;break;}}if(i<0)throw new Error('G10_TABLE_MISSING:'+tableId);
  const declaration=payload.tables[i] as TableDeclaration,record=findElement(source,declaration.record,extensionPath+'/tables/'+i+'/record',sourceIndex);
- accounting?.visit('review-closure-start-carrier',`/projection/${tableId}`,3);const startIdentity:Identity={kind:'table',table:tableId,subject:projectionCopy(declaration.record,accounting,`/projection/${tableId}/start`)};accounting?.visit('review-closure-start-retention',`/projection/${tableId}`);const start=accounting?hashCanonicalCharged(startIdentity as unknown as Json,accounting,`/projection/${tableId}/start`):ik(startIdentity);accounting?.visit('review-closure-seed-set',`/projection/${tableId}`);const included=new Set([start]);let changed=true;
+ accounting?.visit('review-closure-start-carrier',`/projection/${tableId}`,3);const startIdentity:Identity={kind:'table',table:tableId,subject:projectionCopy(declaration.record,accounting,`/projection/${tableId}/start`) as unknown as Json};accounting?.visit('review-closure-start-retention',`/projection/${tableId}`);const start=accounting?hashCanonicalCharged(startIdentity as unknown as Json,accounting,`/projection/${tableId}/start`):ik(startIdentity);accounting?.visit('review-closure-seed-set',`/projection/${tableId}`);const included=new Set([start]);let changed=true;
  // Dependency closure follows typed compiler-derived edges in both directions:
  // inbound FKs/policies/operations/seeds and outbound key/field requirements all remain visible.
  while(changed){changed=false;for(const edge of projection.dependencies){accounting?.visit('review-dependency-closure-edge',`/projection/${tableId}/dependencies`);if(included.has(edge.from)&&!included.has(edge.to)){accounting?.visit('review-dependency-closure-retention',`/projection/${tableId}`);included.add(edge.to);changed=true;}if(included.has(edge.to)&&!included.has(edge.from)){accounting?.visit('review-dependency-closure-retention',`/projection/${tableId}`);included.add(edge.from);changed=true;}}}
@@ -231,7 +233,7 @@ function projectOne(verified:TableDeploymentBundle,side:Side,tableId:string,rend
  accounting?.visit('review-meaning-construction',`/projection/${tableId}`,8);const meaning={physicalTable:{path:`${extensionPath}/tables/${i}`,value:projectionCopy(declaration,accounting,`${extensionPath}/tables/${i}`)},recordDefinition:{path:record.path,value:projectionCopy(record.value,accounting,record.path)},fieldDefinitions,sourceClosure,catalog:meaningCatalog,dependencies:selectedEdges,operationIds:selectedOperationIds,seedDefinitions};
  accounting?.visit('review-object-construction',`/projection/${tableId}`,9);const review:InventoryProjection={profile:'umf.table-inventory-review/0.1',side,source:{format:'json',sha256:verified.sourceDigest},configuration:toJson(verified.configuration,'/configuration',accounting),table:tableId,record:projectionCopy(declaration.record,accounting,`/projection/${tableId}/record`),meaning:toJson(meaning,'/meaning',accounting),intent:null,effects:[]};
  accounting?.retainSubject(`/projection/${tableId}/review`,`/projection/${tableId}/review`);
- const meaningDigest=accounting?hashCanonicalCharged(meaning as Json,accounting,`/projection/${tableId}/meaning`):hashCanonical(meaning);
+ const meaningDigest=accounting?hashCanonicalCharged(meaning as unknown as Json,accounting,`/projection/${tableId}/meaning`):hashCanonical(meaning);
  accounting?.visit('inventory-table-result-retention',`/projection/${tableId}`);
  accounting?.visit('inventory-table-object-construction',`/projection/${tableId}`,5);
  return {review,table:{table:tableId,record:projectionCopy(declaration.record,accounting,`/projection/${tableId}/record`),schema:verified.configuration.schema,name:declaration.name,meaningDigest},projection};

@@ -37,11 +37,11 @@ const asJson=(value:unknown):import('../model/types').Json=>value as import('../
 function tableDeclarationPath(bundle:TableDeploymentBundle,tableId:string):string{
  const document=readDocument(bundle.source.utf8,bundle.source.format),moduleIndex=document.modules.findIndex(module=>module.id===bundle.module),module=document.modules[moduleIndex];
  const payload=module?.extensions?.['umf.tables'];
- if(!module||!payload||typeof payload!=='object'||Array.isArray(payload))fail('TABLE_MIGRATION_REVIEW','/next/source');
+ if(!module||!payload||typeof payload!=='object'||Array.isArray(payload))return fail('TABLE_MIGRATION_REVIEW','/next/source');
  const tables=(payload as {tables?:unknown}).tables;
- if(!Array.isArray(tables))fail('TABLE_MIGRATION_REVIEW','/next/source');
- const index=tables.findIndex(value=>!!value&&typeof value==='object'&&(value as {id?:unknown}).id===tableId);
- if(index<0)fail('TABLE_MIGRATION_REVIEW','/next/source');
+ if(!Array.isArray(tables))return fail('TABLE_MIGRATION_REVIEW','/next/source');
+ const index=tables.findIndex((value:unknown)=>!!value&&typeof value==='object'&&(value as {id?:unknown}).id===tableId);
+ if(index<0)return fail('TABLE_MIGRATION_REVIEW','/next/source');
  return `/modules/${moduleIndex}/extensions/umf.tables/tables/${index}`;
 }
 function tableIntentValue(intent:TableInventoryDiscoveryIntent):TableInventoryDiscoveryIntent{
@@ -95,12 +95,12 @@ export function discoverInventoryReviewCandidatesWithVerifier(previous:TableDepl
    if(canonical([prior.kind,prior.path,prior.oldDigest,prior.newDigest,prior.oldValue,prior.newValue])!==canonical([item.kind,item.path,item.oldDigest,item.newDigest,item.oldValue,item.newValue]))fail('TABLE_MIGRATION_REVIEW',item.path);
    for(const key of ['oldPath','newPath'] as const)if(prior[key]!==undefined&&item[key]!==undefined&&prior[key]!==item[key])fail('TABLE_MIGRATION_REVIEW',item.path);
    const merged={...prior,...(prior.oldPath===undefined&&item.oldPath!==undefined?{oldPath:item.oldPath}:{}),...(prior.newPath===undefined&&item.newPath!==undefined?{newPath:item.newPath}:{})} as TableInventoryReviewedChangeCandidate;
-   let nextBytes:number,priorBytes:number;try{nextBytes=new TextEncoder().encode(canonical(merged)).byteLength;priorBytes=new TextEncoder().encode(canonical(prior)).byteLength;}catch{fail('TABLE_MIGRATION_REVIEW','/selector');}
+   let nextBytes=0,priorBytes=0;try{nextBytes=new TextEncoder().encode(canonical(merged)).byteLength;priorBytes=new TextEncoder().encode(canonical(prior)).byteLength;}catch{return fail('TABLE_MIGRATION_REVIEW','/selector');}
    if(retainedCandidateBytes-priorBytes+nextBytes>25165824)fail('TABLE_MIGRATION_REVIEW','/selector');
    retainedCandidateBytes+=nextBytes-priorBytes;result[at]=merged;return;
   }
   if(result.length>=2048)fail('TABLE_MIGRATION_REVIEW','/selector');
-  let bytes:number;try{bytes=new TextEncoder().encode(canonical(item)).byteLength;}catch{fail('TABLE_MIGRATION_REVIEW','/selector');}
+  let bytes=0;try{bytes=new TextEncoder().encode(canonical(item)).byteLength;}catch{return fail('TABLE_MIGRATION_REVIEW','/selector');}
   if(bytes>25165824||retainedCandidateBytes+bytes>25165824)fail('TABLE_MIGRATION_REVIEW','/selector');
   candidateIndex.set(item.id,result.length);retainedCandidateBytes+=bytes;result.push(item);
  };
@@ -109,13 +109,13 @@ export function discoverInventoryReviewCandidatesWithVerifier(previous:TableDepl
   const old=oldTables.get(intent.table),fresh=newTables.get(intent.table);
   const prior=old!==undefined,post=fresh!==undefined;
   if(intent.kind==='create'){
-   if(prior||!post||JSON.stringify(intent.record)!==JSON.stringify(fresh.record))fail('TABLE_MIGRATION_REVIEW',`/selector/tableIntents/${index}`);
+   if(prior||!post||JSON.stringify(intent.record)!==JSON.stringify(fresh!.record))fail('TABLE_MIGRATION_REVIEW',`/selector/tableIntents/${index}`);
    const value=sideValue(after.reviews.find(row=>row.table===intent.table)!,intent,effectsCreate);
    const path=tableDeclarationPath(after.bundle,intent.table);
    appendCandidate(candidate('create-table',path,previous===null?null:asJson(absentTableReview(before!,intent,effectsCreate)),asJson(value),null,path));
   }else{
-   if(!prior||post||JSON.stringify(intent.record)!==JSON.stringify(old.record))fail('TABLE_MIGRATION_REVIEW',`/selector/tableIntents/${index}`);
-   const sourceRow=before!.reviews.find(row=>row.table===intent.table);if(!sourceRow)fail('TABLE_MIGRATION_REVIEW','/previous/source');
+   if(!prior||post||JSON.stringify(intent.record)!==JSON.stringify(old!.record))fail('TABLE_MIGRATION_REVIEW',`/selector/tableIntents/${index}`);
+   const sourceRow=before!.reviews.find(row=>row.table===intent.table);if(!sourceRow)return fail('TABLE_MIGRATION_REVIEW','/previous/source');
    const oldValue=sideValue(sourceRow,intent,effectsRemove),newValue=absentFromNext(after,intent,effectsRemove),oldPath=tableDeclarationPath(before!.bundle,intent.table),tablePath=`/options/tableIntents/${index}/disposition`;
    appendCandidate(candidate('remove-table',oldPath,asJson(oldValue),asJson(newValue),oldPath,null));
    appendCandidate(candidate('table-removal-effects',tablePath,asJson(oldValue),asJson(newValue),oldPath,null));
@@ -128,17 +128,17 @@ export function discoverInventoryReviewCandidatesWithVerifier(previous:TableDepl
   const lineage=seedLineage.find(entry=>entry.id===id);
   const priorSeed=previous?.seedSets.find(seed=>seed.id===id);
   const nextSeed=next.seedSets.find(seed=>seed.id===id);
-  if(!lineage||lineage.disposition!=='retire-definition'||!priorSeed||nextSeed)fail('TABLE_MIGRATION_REVIEW',`/selector/retiredSeedSets/${index}`);
+  if(!lineage||lineage.disposition!=='retire-definition'||!priorSeed||nextSeed)return fail('TABLE_MIGRATION_REVIEW',`/selector/retiredSeedSets/${index}`);
   let original:{definition:import('../model/types').Json;sourceDigest:string}|undefined;
   for(const plan of originalHistory.plans){
    const sourcePlan=plan as unknown as {next:TableDeploymentBundle};
    const definition=sourcePlan.next?.seedSets?.find(seed=>seed.id===id);
    if(definition){original={definition:asJson(definition),sourceDigest:sourcePlan.next.sourceDigest};break;}
   }
-  if(!original||hashCanonical(original.definition)!==lineage.definitionDigest||original.sourceDigest!==lineage.originalSourceDigest)fail('TABLE_MIGRATION_REVIEW',`/selector/retiredSeedSets/${index}`);
-  const oldReview:TableInventorySeedReview={profile:'umf.table-inventory-seed-retirement-review/0.1',side:'previous',source:{format:'json',sha256:previous.sourceDigest},configuration:asJson(previous.configuration),id,definition:original.definition,definitionDigest:lineage.definitionDigest,originalSourceDigest:lineage.originalSourceDigest,execution:lineage.execution,retired:false,effects:[]};
+  if(!original||hashCanonical(original.definition)!==lineage.definitionDigest||original.sourceDigest!==lineage.originalSourceDigest)return fail('TABLE_MIGRATION_REVIEW',`/selector/retiredSeedSets/${index}`);
+  const oldReview:TableInventorySeedReview={profile:'umf.table-inventory-seed-retirement-review/0.1',side:'previous',source:{format:'json',sha256:previous!.sourceDigest},configuration:asJson(previous!.configuration),id,definition:original.definition,definitionDigest:lineage.definitionDigest,originalSourceDigest:lineage.originalSourceDigest,execution:lineage.execution,retired:false,effects:[]};
   const newReview:TableInventorySeedReview={...oldReview,side:'next',source:{format:'json',sha256:next.sourceDigest},configuration:asJson(next.configuration),retired:true,effects:['original-definition-and-execution-retained-in-history','no-data-replay']};
-  const path=`/options/retiredSeedSets/${index}`;const oldPath=seedDefinitionPath(previous,id);
+  const path=`/options/retiredSeedSets/${index}`;const oldPath=seedDefinitionPath(previous!,id);
   appendCandidate(candidate('retire-seed-history',path,asJson(oldReview),asJson(newReview),oldPath,null));
  }
  if(result.length>2048)fail('TABLE_MIGRATION_REVIEW','/selector');
@@ -200,6 +200,8 @@ export function inventoryMarker(candidate:TableInventoryReviewedChangeCandidate)
 }
 export function irreversiblePurgeDisclosure(candidate:TableInventoryReviewedChangeCandidate):{code:'IRREVERSIBLE_TABLE_PURGE';path:string;markerId:string;message:string}{
  const old=candidate.oldValue,newValue=candidate.newValue;
- if(candidate.kind!=='table-removal-effects'||!old||typeof old!=='object'||Array.isArray(old)||old.profile!=='umf.table-inventory-review/0.1'||old.side!=='previous'||typeof old.table!=='string'||!old.table||!newValue||typeof newValue!=='object'||Array.isArray(newValue)||newValue.profile!=='umf.table-inventory-review/0.1'||newValue.side!=='next'||newValue.table!==old.table||old.meaning===null||newValue.meaning!==null||canonical(old.effects)!==canonical(effectsRemove)||canonical(newValue.effects)!==canonical(effectsRemove)||!/^\/options\/tableIntents\/\d+\/disposition$/.test(candidate.path)||typeof candidate.oldPath!=='string'||candidate.newPath!==null||candidate.oldDigest!==hashCanonical(old)||candidate.newDigest!==hashCanonical(newValue)||candidate.id!=='review-'+hashCanonical([candidate.kind,candidate.path,candidate.oldDigest,candidate.newDigest]).slice(0,24))fail('TABLE_MIGRATION_REVIEW',candidate.path);
- return {code:'IRREVERSIBLE_TABLE_PURGE',path:candidate.path,markerId:candidate.id,message:'Irreversible purge of all stored rows and columns for table '+old.table+'. Metadata history is not a data backup; this profile performs immediate physical deletion.'};
+ if(candidate.kind!=='table-removal-effects'||!old||typeof old!=='object'||Array.isArray(old)||!newValue||typeof newValue!=='object'||Array.isArray(newValue))return fail('TABLE_MIGRATION_REVIEW',candidate.path);
+ const oldReview=old as Record<string,import('../model/types').Json>,newReview=newValue as Record<string,import('../model/types').Json>;
+ if(oldReview.profile!=='umf.table-inventory-review/0.1'||oldReview.side!=='previous'||typeof oldReview.table!=='string'||!oldReview.table||newReview.profile!=='umf.table-inventory-review/0.1'||newReview.side!=='next'||newReview.table!==oldReview.table||oldReview.meaning===null||newReview.meaning!==null||canonical(oldReview.effects)!==canonical(effectsRemove)||canonical(newReview.effects)!==canonical(effectsRemove)||!/^\/options\/tableIntents\/\d+\/disposition$/.test(candidate.path)||typeof candidate.oldPath!=='string'||candidate.newPath!==null||candidate.oldDigest!==hashCanonical(old)||candidate.newDigest!==hashCanonical(newValue)||candidate.id!=='review-'+hashCanonical([candidate.kind,candidate.path,candidate.oldDigest,candidate.newDigest]).slice(0,24))return fail('TABLE_MIGRATION_REVIEW',candidate.path);
+ return {code:'IRREVERSIBLE_TABLE_PURGE',path:candidate.path,markerId:candidate.id,message:'Irreversible purge of all stored rows and columns for table '+oldReview.table+'. Metadata history is not a data backup; this profile performs immediate physical deletion.'};
 }

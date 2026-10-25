@@ -215,7 +215,7 @@ test('R2 descriptor admission rejects hostile JSON shape without invoking getter
  expect(()=>snapshotR2Json(hidden as any,new R2WorkMeter(),'/hidden')).toThrow(/CONTEXT_DESCRIPTOR/);
  const symbol={visible:1,[Symbol('extension')]:2};expect(()=>snapshotR2Json(symbol as any,new R2WorkMeter(),'/symbol')).toThrow(/CONTEXT_SYMBOL/);
  const sparse:any[]=[];sparse.length=2;sparse[1]='x';expect(()=>snapshotR2Json(sparse as any,new R2WorkMeter(),'/sparse')).toThrow(/CONTEXT_SPARSE_ARRAY/);
- const extra:any[]=[1];extra.note='retained?';expect(()=>snapshotR2Json(extra as any,new R2WorkMeter(),'/array-property')).toThrow(/CONTEXT_ARRAY_PROPERTY/);
+ const extra=Object.assign([1],{note:'retained?'});expect(()=>snapshotR2Json(extra as any,new R2WorkMeter(),'/array-property')).toThrow(/CONTEXT_ARRAY_PROPERTY/);
 });
 
 test('R2 descriptor admission enforces depth and numeric limits while preserving JSON extensions',()=>{

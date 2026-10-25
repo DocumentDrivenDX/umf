@@ -123,8 +123,9 @@ export function deriveG10ProvenanceMutations(previous:CatalogProjection|null,nex
 }
 
 function inventoryCatalogIdentityFromCatalog(value:Identity):InventorySubject{
- if(value.kind==='table'&&value.table!==null&&obj(value.subject)&&typeof value.subject.module==='string'&&typeof value.subject.element==='string')return {kind:'table',table:value.table,record:{module:value.subject.module,element:value.subject.element}};
- if(value.kind==='column'&&value.table!==null&&obj(value.subject)&&typeof value.subject.module==='string'&&typeof value.subject.element==='string')return {kind:'field',table:value.table,field:{module:value.subject.module,element:value.subject.element}};
+ const subject=value.subject;
+ if(value.kind==='table'&&value.table!==null&&obj(subject)&&typeof subject.module==='string'&&typeof subject.element==='string')return {kind:'table',table:value.table,record:{module:subject.module,element:subject.element}};
+ if(value.kind==='column'&&value.table!==null&&obj(subject)&&typeof subject.module==='string'&&typeof subject.element==='string')return {kind:'field',table:value.table,field:{module:subject.module,element:subject.element}};
  if(value.table!==null){const dependencyKind=value.kind==='foreignKey'?'foreignKey':value.kind==='index'?'index':value.kind==='policy'?'policy':value.kind==='grant'?'grant':value.kind==='check'?'check':value.kind==='key'?'key':value.kind==='comment'?'comment':undefined;if(dependencyKind){const id=['policy','grant','comment'].includes(dependencyKind)?JSON.stringify(value.subject):String(value.subject);return {kind:'dependency',table:value.table,dependencyKind,id,sourcePath:'/',meaningDigest:'0'.repeat(64)};}}
  return {kind:'metadata',profile:'umf.table-inventory-metadata/0.1'};
 }
@@ -163,14 +164,14 @@ export function deriveG02FieldEffects(previous:TableDeploymentBundle,next:TableD
   }
   else if(record.role==='target-check'){
    const domainId=`domain:${field.module}.${field.element}`;
-   const check=nextProjection.catalog.checks.filter(row=>row.identity.table===table&&row.identity.subject===domainId&&obj(row.meaning)&&canonical(row.meaning.field)===canonical(field));
+   const check=nextProjection.catalog.checks.filter(row=>{const meaning=row.meaning;return row.identity.table===table&&row.identity.subject===domainId&&obj(meaning)&&canonical(meaning.field)===canonical(field);});
    if(check.length!==1)throw new Error('G10_G02_TARGET_CHECK_BINDING');
    if(record.operation==='add-not-valid')throw new Error('G10_G02_UNSUPPORTED_DEFERRED_CHECK_VALIDATION');
    effects.push({...common,subject,operation:'target-check',transition:{action:'add',collection:'checks',meaning:{catalogMeaning:clone(check[0]!.meaning),validation:check[0]!.validation??null,validity:check[0]!.validity??null}}});
    effectSubjects.push(subject);continue;
   }else if(record.role==='validate-target-check'){
    const domainId=`domain:${field.module}.${field.element}`;
-   const check=nextProjection.catalog.checks.filter(row=>row.identity.table===table&&row.identity.subject===domainId&&obj(row.meaning)&&canonical(row.meaning.field)===canonical(field));
+   const check=nextProjection.catalog.checks.filter(row=>{const meaning=row.meaning;return row.identity.table===table&&row.identity.subject===domainId&&obj(meaning)&&canonical(meaning.field)===canonical(field);});
    if(check.length!==1)throw new Error('G10_G02_TARGET_CHECK_BINDING');
    throw new Error('G10_G02_UNSUPPORTED_DEFERRED_CHECK_VALIDATION');
   }else if(record.role==='install-default')effects.push({...common,operation:'install-default',transition:{action:'update',collection:'columns',meaning:stagedMeaning('defaulted')}});
@@ -211,8 +212,8 @@ export function deriveG02FieldEffects(previous:TableDeploymentBundle,next:TableD
   // grant (or the selected Field is absent from one side's grant columns).
   edges.push({dependent:fieldIdentity,prerequisite:revokeIdentity,sourcePath:revoke.sourcePath,reason:'g02-grant-revoke-before-field',state:'present'});
   edges.push({dependent:addIdentity,prerequisite:fieldIdentity,sourcePath:add.sourcePath,reason:'g02-grant-add-after-field-group',state:'present'});
-  for(const columnIdentity of grantColumnIdentities(oldGrant[0]!,priorDeclaration.columns))edges.push({dependent:columnIdentity,prerequisite:revokeIdentity,sourcePath:revoke.sourcePath,reason:'g02-grant-revoke-before-field',state:'present'});
-  for(const columnIdentity of grantColumnIdentities(newGrant[0]!,declaration.columns))edges.push({dependent:addIdentity,prerequisite:columnIdentity,sourcePath:add.sourcePath,reason:'g02-grant-add-after-field-group',state:'present'});
+  for(const columnIdentity of grantColumnIdentities(oldGrant[0]!,priorDeclaration))edges.push({dependent:columnIdentity,prerequisite:revokeIdentity,sourcePath:revoke.sourcePath,reason:'g02-grant-revoke-before-field',state:'present'});
+  for(const columnIdentity of grantColumnIdentities(newGrant[0]!,declaration))edges.push({dependent:addIdentity,prerequisite:columnIdentity,sourcePath:add.sourcePath,reason:'g02-grant-add-after-field-group',state:'present'});
  }
  return {effects,edges};
 }

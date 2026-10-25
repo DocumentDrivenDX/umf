@@ -210,7 +210,7 @@ function blockedDiagnostic(error:unknown):Diagnostic{
  return {code,path,message:'The table inventory request could not be compiled under the supported source profile.',severity:'error'};
 }
 function withReview(plan:Record<string,Json>,review:TableInventoryReviewedChangeCandidate[]):TableInventoryMigrationPlan{
- const body={...plan,review:review as unknown as Json[]};delete body.digest;body.digest=hashCanonical(body);
+ const body:Record<string,Json>={...plan,review:review as unknown as Json[]};delete body.digest;body.digest=hashCanonical(body);
  if(new TextEncoder().encode(canonical(body)).length>25165824)throw new UmfError('TABLE_INVENTORY_PLAN_SIZE','The complete reviewed inventory plan exceeds the supported size bound.','/review');
  return body as unknown as TableInventoryMigrationPlan;
 }

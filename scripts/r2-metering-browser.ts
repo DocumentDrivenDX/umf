@@ -19,7 +19,7 @@ const corpusBytes=await Bun.file('fixtures/metamodel/current-conformance.json').
 if(sha256(corpusBytes)!==CURRENT_CONFORMANCE_SHA256)throw new Error('R2_BROWSER_CORPUS_PIN');
 const corpus=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(corpusBytes)) as {cases:unknown[]};
 const expectedCases=corpus.cases.length+2;
-const built=await Bun.build({entrypoints:['tests/metamodel/r2-metering-browser-entry.ts'],target:'browser',write:false,sourcemap:'none'});
+const built=await Bun.build({entrypoints:['tests/metamodel/r2-metering-browser-entry.ts'],target:'browser',sourcemap:'none'});
 if(!built.success)throw new Error(`R2_BROWSER_BUNDLE:${built.logs.map((item)=>item.message).join('\n')}`);
 if(built.outputs.length!==1)throw new Error(`R2_BROWSER_BUNDLE_OUTPUT_COUNT:${built.outputs.length}`);
 const bundleBytes=new Uint8Array(await built.outputs[0]!.arrayBuffer());

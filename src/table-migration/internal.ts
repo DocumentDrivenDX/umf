@@ -97,7 +97,7 @@ export function compileG02FieldEffects(input:{previous:TableDeploymentBundle;nex
  const column=columns[0]!,subjectField={module:selected.column.module,element:selected.column.element};
  const oldDocument=readDocument(previous.source.utf8,previous.source.format),nextDocument=readDocument(next.source.utf8,next.source.format),nextModule=nextDocument.modules.find(module=>module.id===selected.column.module),nextField=nextModule?.elements.find(element=>element.id===selected.column.element);
  const oldField=oldDocument.modules.find(module=>module.id===selected.column.module)?.elements.find(element=>element.id===selected.column.element);
- const fieldMap=(nextModule?.extensions?.['umf.tables'] as {tables?:{id:string;columns?:{field:{module:string;element:string}}[]}[]}|undefined)?.tables?.find(table=>table.id===selected.table);
+ const fieldMap=(nextModule?.extensions?.['umf.tables'] as {tables?:{id:string;columns?:{field:{module:string;element:string};default?:unknown}[]}[]}|undefined)?.tables?.find(table=>table.id===selected.table);
  if(!fieldMap?.columns?.some(mapping=>refKey(mapping.field)===targetRef)||nextField?.kind!=='field'||nextField.nullability!=='required')throw new Error('table-migration-internal-g02-source-target');
  const declaration=next.expectedCatalog.tables.find(value=>value.id===selected.table),mapping=declaration?.columns.find(value=>refKey(value.field)===targetRef);
  const tableName=next.expectedCatalog.tables.find(value=>value.id===selected.table)?.name;
@@ -123,7 +123,7 @@ export function compileG02FieldEffects(input:{previous:TableDeploymentBundle;nex
   if(validate)result.push(renderG02FieldEffect({role:'validate-target-check',schema:next.configuration.schema,table:selected.table,tableName,column:mapping,sourcePath:check.sourcePath,field:subjectField,operation:'validate',constraintName:check.name}));
  }
  result.push(make('backfill','/options/backfills/0',selected.operation));
- if(!oldColumn&&column.default)result.push(make('install-default',column.sourcePath));
+ if(!oldColumn&&fieldMap?.columns?.find(item=>refKey(item.field)===targetRef)?.default)result.push(make('install-default',column.sourcePath));
  result.push(make('tighten-not-null',column.sourcePath));
  return result;
 }
