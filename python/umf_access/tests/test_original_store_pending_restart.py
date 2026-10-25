@@ -234,8 +234,8 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                 'keys': [{'keyId': 'owner-key',
                           'publicKey': base64.urlsafe_b64encode(public_key).decode('ascii').rstrip('='),
                           'principalId': 'g04-owner',
-                          'scopes': ['local-target-creation', 'native-principal-preparation',
-                                     'local-target-registration', 'native-store-creation'],
+                          'scopes': ['local-target-creation', 'local-target-registration',
+                                     'native-principal-preparation', 'native-store-creation'],
                           'supervisorIds': [supervisor_id], 'providerIds': [provider_id],
                           'installationIds': [installation_id]}],
             }

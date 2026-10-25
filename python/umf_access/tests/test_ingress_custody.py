@@ -262,7 +262,10 @@ class ExternalCustodyJournalTests(unittest.TestCase):
             'registrationId': custody['registrationId'],
             'observation': {'custodianSequence': 1},
         })
-        append('registration-confirmed', {'targetCustody': custody})
+        append('registration-confirmed', {
+            'registrationId': custody['registrationId'],
+            'targetCustody': custody,
+        })
         reserved = {**reservation, 'custodySequence': len(events) + 1}
         reserved_payload = {
             **payload, 'reservation': reserved,

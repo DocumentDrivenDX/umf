@@ -5,6 +5,7 @@ import copy
 import hashlib
 import unittest
 from contextlib import nullcontext
+from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
 from umf_access.lifecycle import row_originals_creation as creation
@@ -102,6 +103,7 @@ class RowOriginalsCreationTests(unittest.TestCase):
         store._creation_reservation = reservation
         store._creation_receipt = {'schemaOid': SCHEMA_OID}
         store._creation_capability = None
+        store._recovery_only = False
         with (patch.object(LocalPostgresSupervisor,
                            'confirm_originals_store_creation',
                            return_value=capability) as confirm,
@@ -137,7 +139,8 @@ class RowOriginalsCreationTests(unittest.TestCase):
         connection = Mock()
         connection.info.transaction_status = 2
         supervisor = object.__new__(LocalPostgresSupervisor)
-        reservation, old_attempt, next_attempt = object(), object(), object()
+        reservation, old_attempt, next_attempt = (
+            SimpleNamespace(_budget=object()), object(), object())
         store = object.__new__(originals.PgRowOriginalsStore)
         store._supervisor = supervisor
         store._connection = connection
@@ -155,6 +158,8 @@ class RowOriginalsCreationTests(unittest.TestCase):
               patch.object(originals.PgRowOriginalsStore, '_require_tx'),
               patch.object(originals.PgRowOriginalsStore, '_verify_controller_session'),
               patch.object(originals.PgRowOriginalsStore, '_verify_store'),
+              patch.object(LocalPostgresSupervisor,
+                           '_require_original_store_budget'),
               patch.object(LocalPostgresSupervisor,
                            'resume_originals_store_creation_attempt',
                            return_value=next_attempt) as settle,

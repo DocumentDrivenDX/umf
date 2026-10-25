@@ -28,6 +28,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from .catalog import _one
 from .generation_ingress import OwnerEnrollmentRequest
 from .owner_bootstrap import (
     _BOOTSTRAP_ISSUER_SEAL,

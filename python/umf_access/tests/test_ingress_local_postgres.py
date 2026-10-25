@@ -4,6 +4,7 @@ from __future__ import annotations
 import copy
 from enum import IntEnum
 import hashlib
+import json
 import os
 import sys
 import tempfile
@@ -281,15 +282,36 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         self.assertEqual(provider._controller_role, 'controller')
         self.assertEqual(provider._controller_oid, 901)
         connection.info.transaction_status = 0
-        with (_patch_supervisor_method('_original_control_lease',
+        # Exercise the missing-key refusal on an independent, freshly reattached
+        # pending target. The preceding successful recovery mutates the provider
+        # and owner state, which is outside this selector assertion.
+        unselected = object.__new__(LocalPostgresSupervisor)
+        unselected._provider_id = provider_id
+        unselected._bound_installation_id = 'installation'
+        unselected._custodian_id = 'custodian'
+        unselected._custody_handle = None
+        unselected._authority_context = object()
+        unselected._journal = object()
+        unselected_custodian = SimpleNamespace(
+            _public_reference=lambda observed: reference if observed is target else None,
+            _resolve_target_custody=lambda observed: SimpleNamespace(reference=reference)
+                if observed is target else None,
+            _journal=SimpleNamespace(
+                _profile='umf.local-target-custody-journal/0.2',
+                _load=lambda: {'events': only_other_store_events}),
+        )
+        unselected._custodian = unselected_custodian
+        unselected._pending_original_store_recovery = (
+            target, unselected_custodian, 'custodian', unselected._authority_context,
+            os.getpid(), reference)
+        with (patch.dict(sys.modules, {'psycopg': SimpleNamespace(Connection=Connection)}),
+              _patch_supervisor_method('_original_control_lease',
                            side_effect=lambda _supervisor, *, operation_kind:
-                               _synthetic_control_lease(supervisor, operation_kind))):
-            supervisor._custodian._journal._load = lambda: {
-                'events': only_other_store_events}
+                               _synthetic_control_lease(unselected, operation_kind))):
             with self.assertRaisesRegex(
                     LocalPostgresError,
                     'local-postgresql-store-recovery-outcome-unresolved'):
-                supervisor.open_originals_store_recovery(
+                unselected.open_originals_store_recovery(
                     connection, provider_id=provider_id)
 
     def test_registration_classifies_reserved_no_intent_without_core_rehydration(self):
@@ -494,8 +516,8 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             'nativeReceipt': receipt, 'nativeReceiptDigest': _digest(receipt),
             'schemaOid': 91, 'nativeObservationDigest': '3' * 64,
             'transactionOutcomeDigest': '4' * 64,
-            'parent': {'sequence': len(events) - 1,
-                       'headDigest': events[-2]['recordDigest']},
+            'parent': {'sequence': len(events),
+                       'headDigest': events[-1]['recordDigest']},
         })
         observed = _replay(events, profile=JOURNAL_PROFILE_02)
         self.assertEqual(next(iter(observed['stores'].values()))['status'],
@@ -588,7 +610,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             pass
 
         connection = Connection()
-        budget = SimpleNamespace(_timeout_state={
+        budget = SimpleNamespace(_connection=connection, _timeout_state={
             'startupStatementTimeoutMs': 800,
             'startupLockTimeoutMs': 5_000,
         })
@@ -710,8 +732,8 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                 self.completed = False
 
             def _execute_gen(self, _query, _params, *, prepare, binary):
-                yield Wait.R
-                self.completed = True
+                while True:
+                    yield Wait.R
 
         class Connection:
             def __init__(self):
@@ -942,6 +964,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         object.__setattr__(supervisor, '_authority_context', object())
         object.__setattr__(supervisor, '_supervisor_id', 'supervisor')
         object.__setattr__(supervisor, '_custodian_id', 'custodian')
+        object.__setattr__(supervisor, '_custodian', object())
         object.__setattr__(supervisor, '_provider_id', 'provider')
         object.__setattr__(supervisor, '_bound_installation_id', 'installation')
         object.__setattr__(supervisor, '_profile', SimpleNamespace(purpose='production'))
@@ -1014,6 +1037,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         record_bytes = _canonical({'reservationId': str(uuid.uuid4()), 'store': store})
         object.__setattr__(supervisor, '_provider_id', provider_id)
         object.__setattr__(supervisor, '_custody_handle', target)
+        object.__setattr__(supervisor, '_original_store_readonly_connection_fences', {})
         object.__setattr__(supervisor, '_custodian', object())
         object.__setattr__(supervisor, '_original_store_issuer_pid', os.getpid())
         object.__setattr__(supervisor, '_original_store_readonly_budgets', {})
