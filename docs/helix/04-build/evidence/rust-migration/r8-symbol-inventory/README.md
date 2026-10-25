@@ -769,3 +769,20 @@ proven current-cohort default binding routes. Resource authority remains 39
 generated-known, 36 authored-known, 88 candidate-generated and 35 unresolved
 files. The inventory and ledger `--check` modes and the 38-test focused ledger
 suite pass; installed package closure and release qualification remain open.
+
+## Serialization profile recapture (2026-10-25)
+
+The opt-in [JSON-compatible value serialization profile](../r8-json-value-serialization/README.md)
+repairs Node/WASM alias format selection and a bounded Rust parser/writer
+subset without changing generic value operations or the default TypeScript
+roots. Its refreshed 24-case predecessor packet changes six generated
+source-closure hashes but no case input or outcome. Node, Bun, WASM and real
+Chromium each match 22 cases; duplicate-key and multiple-document YAML
+diagnostics remain explicit mismatches, so neither export is accepted as a
+full Rust mapping. The condition-aware inventory SHA-256 is now
+`0ed368b556c3abbb4dd7534ed18ec68fef9738da0124fca2612293a371e0a56c`;
+the matching ledger SHA-256 is
+`5f55f338943c1a9bfb082a668d4fa6342d97787dafd3e7a99a14e66e6bdf32df`.
+The ledger still records 58 accepted opt-in mappings, 864 unmapped executable
+names, 922 logical default-route retirement gaps, zero proven current-cohort
+default binding routes, and the same 39/36/88/35 resource authority counts.

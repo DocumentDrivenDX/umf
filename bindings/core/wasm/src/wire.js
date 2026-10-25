@@ -214,6 +214,7 @@ function units(text) {
 
 export function toWire(value, limits = {}) {
   const maxDepth = limits.maxDepth ?? 128;
+  const active = limits.detectCycles ? new Set() : undefined;
   let values = 0;
   function visit(item, path, depth) {
     limits.work?.(1);
@@ -224,8 +225,18 @@ export function toWire(value, limits = {}) {
     if (typeof item === 'boolean') return {kind: 'boolean', value: item};
     if (typeof item === 'number') return {kind: 'number', bits: numberBits(item)};
     if (typeof item === 'string') { limits.work?.(item.length); return {kind: 'string', units: units(item)}; }
-    if (Array.isArray(item)) return {kind: 'array', items: arrayItems(item, path, limits.work).map((entry, index) => visit(entry, `${path}/${index}`, depth + 1))};
-    if (typeof item === 'object') return {kind: 'object', members: objectKeys(item, path, limits.work).map(([key, entry]) => ({key: units(key), value: visit(entry, `${path}/${escapePointer(key)}`, depth + 1)}))};
+    if (Array.isArray(item)) {
+      if (active?.has(item)) fail('CYCLE', 'Cyclic value', path);
+      active?.add(item);
+      try { return {kind: 'array', items: arrayItems(item, path, limits.work).map((entry, index) => visit(entry, `${path}/${index}`, depth + 1))}; }
+      finally { active?.delete(item); }
+    }
+    if (typeof item === 'object') {
+      if (active?.has(item)) fail('CYCLE', 'Cyclic value', path);
+      active?.add(item);
+      try { return {kind: 'object', members: objectKeys(item, path, limits.work).map(([key, entry]) => ({key: units(key), value: visit(entry, `${path}/${escapePointer(key)}`, depth + 1)}))}; }
+      finally { active?.delete(item); }
+    }
     fail('UNSUPPORTED_VALUE', `Unsupported JavaScript value type: ${typeof item}`, path);
   }
   return visit(value, '', 0);

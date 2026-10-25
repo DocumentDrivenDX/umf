@@ -10,15 +10,15 @@ use umf_core::{
     SemanticContext, Severity, Utf16, Value,
 };
 
-mod host_json;
 mod core_key_tuple;
 mod core_key_verification;
 mod core_record_type_verification;
-mod record_members_inspection;
+mod host_json;
+mod javascript_numeric_runtime;
 mod json_schema_runtime;
 mod protobuf_document;
 mod protobuf_source;
-mod javascript_numeric_runtime;
+mod record_members_inspection;
 
 const HOST_READ_FRAME_EVENT: &str = "__umf_host_read_v3_frame__";
 const HOST_READ_ARRAY_ITEM_EVENT: &str = "__umf_host_read_v3_array_item__";
@@ -59,13 +59,13 @@ pub fn execute_json_number_wire(
     if let Some(dispatcher) = control_dispatcher {
         let mut control = NodeControl { env, dispatcher };
         let mut hook = |amount| control.check(amount);
-        Ok(umf_core_wire::json_number_binding::execute_json_number_wire_with_control(
-            &wire_json, &mut hook,
-        ))
+        Ok(
+            umf_core_wire::json_number_binding::execute_json_number_wire_with_control(
+                &wire_json, &mut hook,
+            ),
+        )
     } else {
-        Ok(umf_core_wire::json_number_binding::execute_json_number_wire(
-            &wire_json,
-        ))
+        Ok(umf_core_wire::json_number_binding::execute_json_number_wire(&wire_json))
     }
 }
 
@@ -142,6 +142,48 @@ pub fn read_value_wire(
         ))
     } else {
         Ok(umf_core_wire::read_value_wire(&wire_json, &format))
+    }
+}
+
+#[napi(js_name = "readTypescriptJsonValueWire")]
+pub fn read_typescript_json_value_wire(
+    env: Env,
+    wire_json: String,
+    format: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::read_typescript_json_value_wire_with_control(
+            &wire_json, &format, &mut hook,
+        ))
+    } else {
+        Ok(umf_core_wire::read_typescript_json_value_wire(
+            &wire_json, &format,
+        ))
+    }
+}
+
+#[napi(js_name = "writeTypescriptJsonValueWire")]
+pub fn write_typescript_json_value_wire(
+    env: Env,
+    wire_json: String,
+    format: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(
+            umf_core_wire::write_typescript_json_value_wire_with_control(
+                &wire_json, &format, &mut hook,
+            ),
+        )
+    } else {
+        Ok(umf_core_wire::write_typescript_json_value_wire(
+            &wire_json, &format,
+        ))
     }
 }
 
@@ -550,9 +592,7 @@ pub fn execute_record_type_wire(
     if let Some(dispatcher) = control_dispatcher {
         let mut control = NodeControl { env, dispatcher };
         let mut hook = |amount| control.check(amount);
-        Ok(umf_core_wire::record_type_binding::execute_wire_with_control(
-            &wire_json, &mut hook,
-        ))
+        Ok(umf_core_wire::record_type_binding::execute_wire_with_control(&wire_json, &mut hook))
     } else {
         Ok(umf_core_wire::record_type_binding::execute_wire(&wire_json))
     }
@@ -594,13 +634,13 @@ pub fn execute_security_logic_wire(
     if let Some(dispatcher) = control_dispatcher {
         let mut control = NodeControl { env, dispatcher };
         let mut hook = |amount| control.check(amount);
-        Ok(umf_core_wire::security_logic_binding::execute_security_logic_wire_with_control(
-            &wire_json, &mut hook,
-        ))
+        Ok(
+            umf_core_wire::security_logic_binding::execute_security_logic_wire_with_control(
+                &wire_json, &mut hook,
+            ),
+        )
     } else {
-        Ok(umf_core_wire::security_logic_binding::execute_security_logic_wire(
-            &wire_json,
-        ))
+        Ok(umf_core_wire::security_logic_binding::execute_security_logic_wire(&wire_json))
     }
 }
 
@@ -698,10 +738,7 @@ impl RetainedCodegenResourcesRuntime {
             umf_core_wire::CodegenResourcesHandle::new_with_control(&setup_wire, &mut hook)
         } else {
             let mut no_control = |_amount| Ok(());
-            umf_core_wire::CodegenResourcesHandle::new_with_control(
-                &setup_wire,
-                &mut no_control,
-            )
+            umf_core_wire::CodegenResourcesHandle::new_with_control(&setup_wire, &mut no_control)
         }
         .map_err(|error| Error::from_reason(umf_core_wire::error_envelope(error)))?;
         Ok(Self { inner: Some(inner) })
@@ -755,13 +792,19 @@ impl RetainedCodegenResourcesRuntime {
         if let Some(control) = control {
             let mut hook = |amount| control.borrow_mut().check(amount);
             match &self.inner {
-                Some(inner) => inner.execute_host_read_v3_with_control(&request_wire, &mut host, &mut hook),
+                Some(inner) => {
+                    inner.execute_host_read_v3_with_control(&request_wire, &mut host, &mut hook)
+                }
                 None => umf_core_wire::error_envelope(retained_codegen_disposed()),
             }
         } else {
             let mut no_control = |_amount| Ok(());
             match &self.inner {
-                Some(inner) => inner.execute_host_read_v3_with_control(&request_wire, &mut host, &mut no_control),
+                Some(inner) => inner.execute_host_read_v3_with_control(
+                    &request_wire,
+                    &mut host,
+                    &mut no_control,
+                ),
                 None => umf_core_wire::error_envelope(retained_codegen_disposed()),
             }
         }

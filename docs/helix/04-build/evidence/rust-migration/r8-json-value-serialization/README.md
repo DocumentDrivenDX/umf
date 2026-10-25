@@ -19,15 +19,15 @@ ddx:
 
 The TypeScript exports `readJsonValue` and `writeJsonValue` in
 `src/model/serialization.ts` are still unmapped default-root operations. The
-Rust core already exposes JSON and YAML parsing/writing through the unprofiled
+Rust core exposes JSON and YAML parsing/writing through the unprofiled
 `read_value_wire` and `write_value_wire` operations, and the Node/WASM engines
-forward those operations with per-call host controls. Their `readJsonValue` and
-`writeJsonValue` aliases hard-code JSON, however, while the TypeScript functions
-default to YAML. The generic `readValue`/`writeValue` methods accept a format,
-but their existing default is JSON. No wrapper/default route was changed here.
+forward those operations with per-call host controls. The initial audit found
+that their `readJsonValue` and `writeJsonValue` aliases hard-coded JSON while
+the TypeScript functions defaulted to YAML. The opt-in profile below repairs
+those aliases; generic `readValue`/`writeValue` keep their JSON default.
 
 The direct TypeScript predecessor is frozen in [predecessor.json](predecessor.json),
-SHA-256 `b7088c57d3b59b3a81c7de9ebd59ac34fc98642d95fccaf33791b0d3ab1ef833`.
+SHA-256 `45e4ffeae7898419a077dee4a4e43d3a5191fc1cbc35659857a94bd41d64334f`.
 Its capture script is
 [`serialization-predecessor.ts`](../../../../../../scripts/rust-migration/r8/serialization-predecessor.ts),
 SHA-256 `7cb755fcbedac15b38cc9335d3d284db117a0e89c00349a0043c9ce679c63df3`.
@@ -43,56 +43,101 @@ local dependencies, generated schemas and type definitions; package and Bun
 lock hashes are embedded in the packet. In particular,
 `src/model/serialization.ts` is pinned at
 `027360ffd8bf77905f7d14a3d4d933035fe11d9f52ae28d54691cc607cb43586`.
+The packet was recaptured after six generated schema/model inputs changed and
+again after regenerating the metamodel fixed point for the settled Rust source
+cohort. All 24 case inputs and outcomes remain byte-for-byte unchanged. The
+current capture script's `--check` passes.
 
-## Parity blockers
+## Scoped profile and remaining mismatches
 
-The generic Rust wire tests establish successful explicit JSON/YAML reads and
-writes, plus control interruption. They also preserve a Rust-specific error
-taxonomy. The frozen TypeScript cases report `ALIAS`, `TAG`, and `SYNTAX` for
-the tested YAML refusals; the Rust core reports `YAML_ALIAS`, `YAML_TAG`, and
-`YAML_SYNTAX`/`YAML_DOCUMENTS`. TypeScript throws `UmfError`; the Node/WASM
-wire wrappers project the Rust envelope as `UmfCoreError`. The complete YAML
-parser messages and malformed-source ordering have not been shown equivalent.
-The frozen packet also records source-limit-before-syntax, structural depth and
-value-limit locations, and write refusal messages, but the current wire test
-does not claim byte-for-byte parity for those envelopes. Rust YAML output quotes
-plain mapping keys where the current TypeScript writer does not; CONTRACT-001
-does not make YAML formatting or property order a fidelity promise.
+An opt-in Rust profile now backs public Node and WASM `readJsonValue` and
+`writeJsonValue` calls. Omitted format selects YAML; explicit `json` and `yaml`
+are admitted, while other format spellings fail with `FORMAT`. Generic
+`readValue` and `writeValue` retain their previous behavior. Missing profile
+bindings fail closed. Host controls are passed into both operations. The
+TypeScript default routes remain unchanged, and this evidence does not accept
+the export pair as a full migration mapping or claim default-route retirement.
 
-These differences prevent an accepted `readJsonValue`/`writeJsonValue` mapping
-or versioned facade claim at this checkpoint. A format-default correction
-alone would misrepresent public-boundary parity. The generic Rust wire path
-remains a candidate; classify it as partial pending packet-driven Node/Bun and
-WASM differential tests, exact error-code/message/path and precedence
-reconciliation, and a versioned wrapper whose omitted format matches the
-TypeScript YAML default. Default exports remain unchanged.
+The 24-case frozen packet was replayed through the public facades. Node and Bun
+each returned 22 exact matches and two known YAML diagnostic mismatches, with
+zero unexpected mismatches. Actual Chromium 153.0.8010.12 exercised the
+generated WASM artifact and public facade with the same 22/24 result. The two
+known differences are `read.syntax.yaml-duplicate-key` and
+`read.syntax.yaml-multiple-documents`. For the duplicate case, TypeScript
+expects `SYNTAX`, empty path, and `Map keys must be unique at line 2, column
+1:\n\nx: 1\nx: 2\n^\n`; Rust returns `DUPLICATE_KEY`, empty path, and
+`Duplicate mapping key`. For the multi-document case, TypeScript expects
+`SYNTAX`, empty path, and `Source contains multiple documents; please use
+YAML.parseAllDocuments() at line 3, column 1:\n\nx: 1\n---\n^\n`; Rust
+returns `YAML_DOCUMENTS`, empty path, and `Exactly one YAML document is
+required`. A precise translation is not included: the bounded event parser
+currently drops duplicate-key spans when assembling map members, and its
+document-count refusal does not retain the source excerpt/location needed for
+the TypeScript diagnostic. Reconstructing locations with a second raw YAML
+scan risks changing behavior for quoted/escaped keys, transformed private
+views, or control precedence. The packet checks YAML/JSON output for its one structured value, negative-zero and
+non-finite refusals, a cycle path, and the text limit. The YAML writer profile
+uses a conservative scalar subset; broader YAML plain-scalar quoting rules,
+arbitrary writer values, and the two parser diagnostic envelopes remain
+unqualified. No `instanceof` or broader error-identity claim is made.
 
-## Scoped checks
+The browser replay also checked YAML-default profile reads, explicit format
+refusal, measured work and host-budget interruption, generic YAML alias
+behavior, generic YAML writer output, and absence of Node globals. Focused
+Node/WASM facade tests passed 5/5. The Rust profile tests passed 2/2;
+`umf-core-wire` focused tests passed 7/7. Rust 1.90.0 formatting and
+`git diff --check` passed. The frozen predecessor packet remains pinned at
+`45e4ffeae7898419a077dee4a4e43d3a5191fc1cbc35659857a94bd41d64334f` and the
+selected TypeScript source file remains pinned at
+`027360ffd8bf77905f7d14a3d4d933035fe11d9f52ae28d54691cc607cb43586`. The
+packet's source closure is a selected input closure, not an entire crate or
+application closure. Sol reviewed the six changed closure hashes and verified
+that the recaptures changed no case inputs or outcomes; `--check` now passes.
 
-The Rust core serialization unit suite passed 17/17 with:
+Fresh native addon build command:
 
 ```sh
 PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH \
-  cargo test --locked --offline -p umf-core --lib serialization::tests --no-fail-fast
+  CARGO_TARGET_DIR=/private/tmp/umf-json-value-node-target \
+  cargo build --locked --offline --release --manifest-path bindings/core/node/Cargo.toml
 ```
 
-The tagged-wire test is
-`crates/umf-core-wire/tests/r8_json_value_serialization_wire.rs`. It checks
-explicit successful JSON/YAML operation, the Rust alias-refusal envelope, and
-host-control propagation. `cargo test --locked --offline -p umf-core-wire --test
-r8_json_value_serialization_wire` passed 3/3; `bun
-scripts/rust-migration/r8/serialization-predecessor.ts --check` passed; and
-Rust 1.90.0 `rustfmt --edition 2021 --check
-crates/umf-core-wire/tests/r8_json_value_serialization_wire.rs` passed. These
-tests establish current wire behavior, not source compatibility or Node/WASM
-artifact qualification. The focused test source SHA-256 is
-`d98281475727826281b969f67cbaa54a596d9311bf80085bf0969c713a430b93`.
+Fresh release WASM build and bindgen commands:
 
-Relevant source pins at this checkpoint:
+```sh
+PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH \
+  CARGO_TARGET_DIR=/private/tmp/umf-json-value-wasm-target \
+  cargo build --locked --offline --release --target wasm32-unknown-unknown \
+  --manifest-path bindings/core/wasm/Cargo.toml
+/private/tmp/umf-sdk-v4-wasm-bindgen/bin/wasm-bindgen --target web \
+  --out-dir /private/tmp/umf-json-value-wasm-package --out-name umf_core_wasm \
+  /private/tmp/umf-json-value-wasm-target/wasm32-unknown-unknown/release/umf_core_wasm.wasm
+bun build bindings/core/wasm/index.js --target browser \
+  --outfile /private/tmp/umf-json-value-wasm-package/facade.mjs
+```
 
-| Source | SHA-256 |
+Public Node and Bun packet commands were `node`/`bun
+scripts/rust-migration/r8/json-value-serialization-binding-node.mjs` and
+`node`/`bun scripts/rust-migration/r8/json-value-serialization-wasm-node.mjs`.
+The real-browser command was
+`PATH=... bun scripts/rust-migration/r8/json-value-serialization-browser.mjs`
+with the temporary local asset server; it required the approved escalated
+execution environment. `bun scripts/rust-migration/r7/wasm-package-sources.ts
+--check` passed after regenerating the shared WASM helper copy.
+
+Source and built-artifact SHA-256 pins for this replay:
+
+| Artifact | SHA-256 |
 | --- | --- |
-| `crates/umf-core/src/serialization.rs` | `85d69d44d22b7d77877203f8c48b58c596218a82cde2a990bc194341dda218aa` |
-| `crates/umf-core-wire/src/lib.rs` | `c6f9b8f3caf888bce8602825cd9b3b0679f560bd0a7606c516fa522dbe1f18e0` |
-| `bindings/core/node/index.js` | `99d06632abee1d16b256ab43766d8f8f1a61e2c883467470db5d7e3015eb9a22` |
-| `bindings/core/wasm/index.js` | `9816b1fefc4460820722055e2c1bfbac8de432dfa1a66434beb5b4210a95e731` |
+| `crates/umf-core/src/serialization.rs` | `38dea0c3e5853d25ee80758f35cd7726f2017e32bc7cb1d752b35e088b15d44d` |
+| `crates/umf-core-wire/src/lib.rs` | `353b06139b6d0e221d4022a265a74afffb7041ba1678237199eab5ebc3bea667` |
+| `crates/umf-core-wire/tests/r8_json_value_serialization_wire.rs` | `364a47de3725120b20e1f5d5de1958973112a60d3391b11cc3b7f492cc4caccd` |
+| `bindings/core/node/index.js` | `73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b` |
+| `bindings/core/node/src/lib.rs` | `70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f` |
+| `bindings/core/node/src/wire.js` | `d7687bae10505fea1295d841a73c174ddcda22ec49c534b2165033631fadfa1f` |
+| `bindings/core/wasm/index.js` | `675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d` |
+| `bindings/core/wasm/src/lib.rs` | `3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc` |
+| `bindings/core/wasm/src/shared-sources.json` | `5173e6860f5783523333309e2201c6af993bacdfad47c8d3fd86bf59e1f8949c` |
+| Node addon `/private/tmp/umf-json-value-node-target/release/libumf_core_node.dylib` | `3a87eaccfae4f3dec3d2baae45befbe4138f2d8feb5b5659a047b54d757e784b` |
+| WASM `/private/tmp/umf-json-value-wasm-package/umf_core_wasm_bg.wasm` | `26478e393a594556cd478aecb6ef35678080f22aac09e1ff65f083ce6ba68129` |
+| Browser facade `/private/tmp/umf-json-value-wasm-package/facade.mjs` | `a44cc9d6940087059492b8a01b4e23369c421ff82d51493ccd0e356217a61b0a` |

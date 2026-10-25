@@ -4805,3 +4805,19 @@ refuse without coercion. A fresh local ABI3 extension passed four focused Rust
 tests and fourteen Python tests with eleven packet subcases. The bridge bounds
 encoding traversal and UTF-8/DTO bytes. Default `compile_catalog()`, Weft,
 backend output, installed release qualification, and retirement remain open.
+
+The [JSON-compatible value serialization profile](evidence/rust-migration/r8-json-value-serialization/README.md)
+now gives opt-in Node/WASM `readJsonValue` and `writeJsonValue` the TypeScript
+YAML default while preserving generic Rust and wrapper `readValue`/`writeValue`
+behavior. The refreshed 24-case predecessor packet is source-current after six
+generated closure hash changes; its case inputs/outcomes are unchanged. Fresh
+Node, Bun, WASM and real Chromium replays each match 22/24 with zero
+unexpected mismatches. Duplicate YAML keys and multiple documents still have
+different parser codes and source-location messages, which the current native
+event representation cannot translate faithfully. Neither export is accepted
+as a full Rust mapping or retired from TypeScript defaults. The coordinated
+inventory SHA-256 is
+`0ed368b556c3abbb4dd7534ed18ec68fef9738da0124fca2612293a371e0a56c`
+and ledger SHA-256 is
+`5f55f338943c1a9bfb082a668d4fa6342d97787dafd3e7a99a14e66e6bdf32df`;
+all 922 logical default-route gaps remain.

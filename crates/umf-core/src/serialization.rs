@@ -106,6 +106,35 @@ pub fn read_json_value(
     format: Format,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
+    read_json_value_inner(source, format, ctx, false)
+}
+
+/// Read a JSON-compatible value with the TypeScript JSON preflight ordering.
+/// This is intended for the explicitly selected Node/WASM serialization alias;
+/// generic Rust callers retain `read_json_value` behavior.
+pub fn read_json_value_typescript_order(
+    source: &[u16],
+    format: Format,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    read_json_value_inner(source, format, ctx, true)
+}
+
+/// Read the TypeScript `readJsonValue` profile with its YAML default.
+pub fn read_typescript_json_value(
+    source: &[u16],
+    format: Option<Format>,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    read_json_value_typescript_order(source, format.unwrap_or(Format::Yaml), ctx)
+}
+
+fn read_json_value_inner(
+    source: &[u16],
+    format: Format,
+    ctx: &mut Context<'_>,
+    typescript_json_order: bool,
+) -> Result<Value, EngineError> {
     if ctx.profile() == crate::ResourceProfile::HardIsolated {
         return Err(EngineError::new(
             "RESOURCE_PROFILE_UNAVAILABLE",
@@ -114,12 +143,47 @@ pub fn read_json_value(
         ));
     }
     if source.len() > ctx.limits().max_text_units {
-        return Err(fail("LIMIT", "Source text limit exceeded"));
+        return Err(if typescript_json_order {
+            fail("LIMIT", "Source text exceeds limit")
+        } else {
+            fail("LIMIT", "Source text limit exceeded")
+        });
     }
     ctx.charge_text(source.len(), Utf16::default())?;
     let value = match format {
-        Format::Yaml => parse_yaml_utf16(source, ctx)?,
-        Format::Json => JsonParser::<_, CoreJsonBuilder>::new(source, ctx).parse()?,
+        Format::Yaml => parse_yaml_utf16(source, ctx, typescript_json_order)?,
+        Format::Json => {
+            // The TypeScript predecessor runs JSON.parse before YAML's unique-key
+            // admission. Preflight syntax without acting on the duplicate result,
+            // then let the bounded UMF parser report duplicate keys.
+            if typescript_json_order {
+                preflight_native_json(source, ctx).map_err(|error| {
+                    if matches!(error.code.as_str(), "SYNTAX" | "DUPLICATE_KEY") {
+                        fail("SYNTAX", "Invalid JSON syntax")
+                    } else {
+                        error
+                    }
+                })?;
+            }
+            let parsed = JsonParser::<_, CoreJsonBuilder>::new(source, ctx).parse();
+            if typescript_json_order {
+                parsed.map_err(|error| {
+                    let message = error.message.to_utf8().unwrap_or_default();
+                    if error.code == "LIMIT"
+                        && matches!(
+                            message.as_str(),
+                            "Nesting depth exceeded" | "JSON structural value limit exceeded"
+                        )
+                    {
+                        EngineError::new("LIMIT", error.path, "Source structural limit exceeded")
+                    } else {
+                        error
+                    }
+                })?
+            } else {
+                parsed?
+            }
+        }
     };
     crate::copy_json(&value, ctx)
 }
@@ -1336,6 +1400,40 @@ pub fn write_json_value(
     Ok(Utf16::from(out))
 }
 
+/// Write through the TypeScript `writeJsonValue` profile. This keeps the
+/// legacy generic writer unchanged while matching the predecessor's YAML
+/// defaults and its conservative plain-key spelling.
+pub fn write_typescript_json_value(
+    value: &Value,
+    format: Option<Format>,
+    ctx: &mut Context<'_>,
+) -> Result<Utf16, EngineError> {
+    let format = format.unwrap_or(Format::Yaml);
+    let value = crate::copy_json(value, ctx)?;
+    let mut count = CountSink::default();
+    match format {
+        Format::Json => {
+            write_json_pretty(OutputValue::Core(&value), Format::Json, &mut count, 0, ctx)?
+        }
+        Format::Yaml => write_yaml_typescript(&value, &mut count, 0, ctx)?,
+    }
+    count.push_char('\n');
+    if count.units > ctx.limits().max_text_units {
+        return Err(fail("LIMIT", "Serialized text exceeds limit"));
+    }
+    ctx.charge_text(count.units, Utf16::default())?;
+    let mut out = String::with_capacity(count.bytes);
+    match format {
+        Format::Json => {
+            write_json_pretty(OutputValue::Core(&value), Format::Json, &mut out, 0, ctx)?
+        }
+        Format::Yaml => write_yaml_typescript(&value, &mut out, 0, ctx)?,
+    }
+    out.push('\n');
+    debug_assert_eq!(out.len(), count.bytes);
+    Ok(Utf16::from(out))
+}
+
 fn poll_output(ctx: &mut Context<'_>) -> Result<(), EngineError> {
     ctx.check_cancelled(Utf16::default())?;
     ctx.check_deadline(Utf16::default())
@@ -1676,6 +1774,118 @@ fn write_yaml<S: OutputSink>(
     Ok(())
 }
 
+fn write_typescript_yaml_string<S: OutputSink>(
+    value: &Utf16,
+    out: &mut S,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    ctx.charge_work(value.len(), Utf16::default())?;
+    let text =
+        String::from_utf16(value.units()).map_err(|_| fail("SOURCE_ENCODING", "Invalid UTF-16"))?;
+    if typescript_yaml_plain_string(&text) {
+        out.push_str(&text);
+    } else {
+        write_yaml_string(value, out, ctx)?;
+    }
+    Ok(())
+}
+
+fn typescript_yaml_plain_string(value: &str) -> bool {
+    if value.is_empty()
+        || value.trim() != value
+        || !value
+            .bytes()
+            .all(|byte| byte.is_ascii_alphanumeric() || matches!(byte, b'_' | b'-' | b'.'))
+        || !value.as_bytes()[0].is_ascii_alphabetic() && !value.starts_with('_')
+    {
+        return false;
+    }
+    !matches!(
+        value.to_ascii_lowercase().as_str(),
+        "null" | "true" | "false" | ".nan" | ".inf" | "-.inf" | "+.inf"
+    )
+}
+
+fn write_typescript_yaml_scalar<S: OutputSink>(
+    value: &Value,
+    out: &mut S,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    match value {
+        Value::Null => out.push_str("null"),
+        Value::Bool(value) => out.push_str(if *value { "true" } else { "false" }),
+        Value::Number(value) => out.push_str(&crate::ecma_number_to_string(*value)),
+        Value::String(value) => write_typescript_yaml_string(value, out, ctx)?,
+        Value::Array(_) | Value::Object(_) => write_yaml_typescript(value, out, 0, ctx)?,
+    }
+    Ok(())
+}
+
+fn write_yaml_typescript<S: OutputSink>(
+    value: &Value,
+    out: &mut S,
+    indent: usize,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    poll_output(ctx)?;
+    match value {
+        Value::Object(items) if items.is_empty() => out.push_str("{}"),
+        Value::Array(items) if items.is_empty() => out.push_str("[]"),
+        Value::Object(items) => {
+            for (index, member) in enumerable_order_metered(items, ctx)?
+                .into_iter()
+                .enumerate()
+            {
+                let (key, value) = &items[member];
+                if index > 0 {
+                    out.push_char('\n');
+                }
+                pad(out, indent, ' ');
+                write_typescript_yaml_string(key, out, ctx)?;
+                match value {
+                    Value::Array(children) if !children.is_empty() => {
+                        out.push_str(":\n");
+                        write_yaml_typescript(value, out, indent + 2, ctx)?;
+                    }
+                    Value::Object(children) if !children.is_empty() => {
+                        out.push_str(":\n");
+                        write_yaml_typescript(value, out, indent + 2, ctx)?;
+                    }
+                    _ => {
+                        out.push_str(": ");
+                        write_typescript_yaml_scalar(value, out, ctx)?;
+                    }
+                }
+            }
+        }
+        Value::Array(items) => {
+            for (index, value) in items.iter().enumerate() {
+                if index > 0 {
+                    out.push_char('\n');
+                }
+                pad(out, indent, ' ');
+                out.push_char('-');
+                match value {
+                    Value::Array(children) if !children.is_empty() => {
+                        out.push_char('\n');
+                        write_yaml_typescript(value, out, indent + 2, ctx)?;
+                    }
+                    Value::Object(children) if !children.is_empty() => {
+                        out.push_char('\n');
+                        write_yaml_typescript(value, out, indent + 2, ctx)?;
+                    }
+                    _ => {
+                        out.push_char(' ');
+                        write_typescript_yaml_scalar(value, out, ctx)?;
+                    }
+                }
+            }
+        }
+        _ => write_typescript_yaml_scalar(value, out, ctx)?,
+    }
+    Ok(())
+}
+
 fn fail(code: &str, message: &str) -> EngineError {
     EngineError::new(code, Utf16::default(), message)
 }
@@ -1737,9 +1947,14 @@ fn yaml_events_with_profile(
     Ok(events.0)
 }
 
-fn parse_yaml_utf16(source: &[u16], ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+fn parse_yaml_utf16(
+    source: &[u16],
+    ctx: &mut Context<'_>,
+    typescript_profile: bool,
+) -> Result<Value, EngineError> {
     let (events, prefix) = prepare_yaml_events(source, ScanProfile::Yaml12, ctx)?;
-    let mut value = parse_yaml_events::<CoreYamlBuilder>(events, ctx, CoreYamlBuilder)?;
+    let builder = CoreYamlBuilder { typescript_profile };
+    let mut value = parse_yaml_events::<CoreYamlBuilder>(events, ctx, builder)?;
     decode_private_value(&mut value, prefix)?;
     Ok(value)
 }
@@ -2159,8 +2374,15 @@ trait YamlBuilder {
         raw: &str,
         style: ScalarStyle,
         tagged: bool,
+        path: &Utf16,
         ctx: &mut Context<'_>,
     ) -> Result<Self::Value, EngineError>;
+    fn error_path(&self, stack: &[YamlFrame<Self::Text, Self::Value>]) -> Utf16;
+    fn alias_error(&self, path: &Utf16) -> EngineError;
+    fn tag_error(&self, path: &Utf16) -> EngineError;
+    fn depth_error(&self, path: &Utf16) -> EngineError;
+    fn value_limit_error(&self, path: &Utf16) -> EngineError;
+    fn typescript_profile(&self) -> bool;
     fn validate_key_scalar(
         &self,
         _raw: &str,
@@ -2176,8 +2398,9 @@ trait YamlBuilder {
     fn object(&self, items: Vec<(Self::Text, Self::Value)>) -> Self::Value;
     fn null(&self) -> Self::Value;
 }
-#[derive(Default)]
-struct CoreYamlBuilder;
+struct CoreYamlBuilder {
+    typescript_profile: bool,
+}
 #[derive(Default)]
 struct PythonYamlBuilder;
 impl YamlBuilder for CoreYamlBuilder {
@@ -2188,9 +2411,66 @@ impl YamlBuilder for CoreYamlBuilder {
         raw: &str,
         style: ScalarStyle,
         tagged: bool,
+        path: &Utf16,
         ctx: &mut Context<'_>,
     ) -> Result<Value, EngineError> {
-        resolve_scalar(raw, style, tagged, ctx)
+        resolve_scalar(raw, style, tagged, path, self.typescript_profile, ctx)
+    }
+    fn error_path(&self, stack: &[YamlFrame<Utf16, Value>]) -> Utf16 {
+        if !self.typescript_profile {
+            return Utf16::default();
+        }
+        let mut path = Utf16::default();
+        for frame in stack {
+            let segment = match frame {
+                YamlFrame::Seq(values) => Some(Utf16::from(values.len().to_string())),
+                YamlFrame::Map { key: Some(key), .. } => Some(key.clone()),
+                YamlFrame::Map { key: None, .. } => None,
+            };
+            if let Some(segment) = segment {
+                path = append_path(&path, &segment);
+            }
+        }
+        path
+    }
+    fn alias_error(&self, path: &Utf16) -> EngineError {
+        if self.typescript_profile {
+            EngineError::new(
+                "ALIAS",
+                path.clone(),
+                "YAML aliases are outside the JSON-compatible profile",
+            )
+        } else {
+            fail("YAML_ALIAS", "YAML aliases are not allowed")
+        }
+    }
+    fn tag_error(&self, path: &Utf16) -> EngineError {
+        if self.typescript_profile {
+            EngineError::new(
+                "TAG",
+                path.clone(),
+                "Explicit YAML tags are outside the profile",
+            )
+        } else {
+            fail("YAML_TAG", "Explicit YAML tags are not allowed")
+        }
+    }
+    fn depth_error(&self, path: &Utf16) -> EngineError {
+        if self.typescript_profile {
+            EngineError::new("LIMIT", path.clone(), "Source structural limit exceeded")
+        } else {
+            fail("LIMIT", "Nesting depth exceeded")
+        }
+    }
+    fn value_limit_error(&self, path: &Utf16) -> EngineError {
+        if self.typescript_profile {
+            EngineError::new("LIMIT", path.clone(), "Source structural limit exceeded")
+        } else {
+            fail("LIMIT", "JSON structural value limit exceeded")
+        }
+    }
+    fn typescript_profile(&self) -> bool {
+        self.typescript_profile
     }
     fn into_key(&self, value: Value) -> Result<Utf16, EngineError> {
         let Value::String(key) = value else {
@@ -2219,9 +2499,28 @@ impl YamlBuilder for PythonYamlBuilder {
         raw: &str,
         style: ScalarStyle,
         tagged: bool,
+        _path: &Utf16,
         ctx: &mut Context<'_>,
     ) -> Result<Self::Value, EngineError> {
         resolve_python_scalar(raw, style, tagged, ctx)
+    }
+    fn error_path(&self, _stack: &[YamlFrame<PyText, PythonConsumerValue>]) -> Utf16 {
+        Utf16::default()
+    }
+    fn alias_error(&self, _path: &Utf16) -> EngineError {
+        fail("YAML_ALIAS", "YAML aliases are not allowed")
+    }
+    fn tag_error(&self, _path: &Utf16) -> EngineError {
+        fail("YAML_TAG", "Explicit YAML tags are not allowed")
+    }
+    fn depth_error(&self, _path: &Utf16) -> EngineError {
+        fail("LIMIT", "Nesting depth exceeded")
+    }
+    fn value_limit_error(&self, _path: &Utf16) -> EngineError {
+        fail("LIMIT", "JSON structural value limit exceeded")
+    }
+    fn typescript_profile(&self) -> bool {
+        false
     }
     fn validate_key_scalar(
         &self,
@@ -2277,40 +2576,46 @@ fn parse_yaml_events<B: YamlBuilder>(
                     ));
                 }
             }
-            Event::Alias(_) => return Err(fail("YAML_ALIAS", "YAML aliases are not allowed")),
+            Event::Alias(_) => return Err(builder.alias_error(&builder.error_path(&stack))),
             Event::Scalar(raw, style, anchor, tag) => {
                 let _ = anchor;
                 let is_key = matches!(stack.last(), Some(YamlFrame::Map { key: None, .. }));
+                let path = builder.error_path(&stack);
                 if is_key {
                     builder.validate_key_scalar(&raw, style, tag.is_some(), ctx)?;
                 }
                 if !is_key {
                     if stack.len() > ctx.limits().max_depth {
-                        return Err(fail("LIMIT", "Nesting depth exceeded"));
+                        return Err(builder.depth_error(&path));
                     }
                     values += 1;
-                    ctx.check_tree_value_count(values, Utf16::default())?;
+                    if builder.typescript_profile() && values > ctx.limits().max_values {
+                        return Err(builder.value_limit_error(&path));
+                    }
+                    if !builder.typescript_profile() {
+                        ctx.check_tree_value_count(values, Utf16::default())?;
+                    }
                 }
-                let scalar = builder.scalar(&raw, style, tag.is_some(), ctx)?;
+                let scalar = builder.scalar(&raw, style, tag.is_some(), &path, ctx)?;
                 add_yaml_value(scalar, &mut stack, &mut root, &builder)?;
             }
             Event::SequenceStart(anchor, tag) => {
                 let _ = anchor;
                 if tag.is_some() {
-                    return Err(fail("YAML_TAG", "Explicit YAML tags are not allowed"));
+                    return Err(builder.tag_error(&builder.error_path(&stack)));
                 }
                 if stack.len() > ctx.limits().max_depth {
-                    return Err(fail("LIMIT", "Nesting depth exceeded"));
+                    return Err(builder.depth_error(&builder.error_path(&stack)));
                 }
                 stack.push(YamlFrame::Seq(Vec::new()));
             }
             Event::MappingStart(anchor, tag) => {
                 let _ = anchor;
                 if tag.is_some() {
-                    return Err(fail("YAML_TAG", "Explicit YAML tags are not allowed"));
+                    return Err(builder.tag_error(&builder.error_path(&stack)));
                 }
                 if stack.len() > ctx.limits().max_depth {
-                    return Err(fail("LIMIT", "Nesting depth exceeded"));
+                    return Err(builder.depth_error(&builder.error_path(&stack)));
                 }
                 stack.push(YamlFrame::Map {
                     values: Vec::new(),
@@ -2323,7 +2628,7 @@ fn parse_yaml_events<B: YamlBuilder>(
                 };
                 add_yaml_value(builder.array(items), &mut stack, &mut root, &builder)?;
                 values += 1;
-                ctx.check_tree_value_count(values, Utf16::default())?;
+                check_yaml_value_count(values, &builder, &stack, ctx)?;
             }
             Event::MappingEnd => {
                 let Some(YamlFrame::Map {
@@ -2347,7 +2652,7 @@ fn parse_yaml_events<B: YamlBuilder>(
                 }
                 add_yaml_value(builder.object(members), &mut stack, &mut root, &builder)?;
                 values += 1;
-                ctx.check_tree_value_count(values, Utf16::default())?;
+                check_yaml_value_count(values, &builder, &stack, ctx)?;
             }
             Event::StreamStart | Event::StreamEnd | Event::DocumentEnd | Event::Nothing => {}
         }
@@ -2356,6 +2661,21 @@ fn parse_yaml_events<B: YamlBuilder>(
         return Err(fail("YAML_SYNTAX", "Unclosed YAML collection"));
     }
     Ok(root.unwrap_or_else(|| builder.null()))
+}
+
+fn check_yaml_value_count<B: YamlBuilder>(
+    values: usize,
+    builder: &B,
+    stack: &[YamlFrame<B::Text, B::Value>],
+    ctx: &Context<'_>,
+) -> Result<(), EngineError> {
+    if values > ctx.limits().max_values {
+        if builder.typescript_profile() {
+            return Err(builder.value_limit_error(&builder.error_path(stack)));
+        }
+        ctx.check_tree_value_count(values, Utf16::default())?;
+    }
+    Ok(())
 }
 fn add_yaml_value<B: YamlBuilder>(
     value: B::Value,
@@ -2914,10 +3234,20 @@ fn resolve_scalar(
     value: &str,
     style: ScalarStyle,
     tagged: bool,
+    path: &Utf16,
+    typescript_profile: bool,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     if tagged {
-        return Err(fail("YAML_TAG", "Explicit YAML tags are not allowed"));
+        return Err(if typescript_profile {
+            EngineError::new(
+                "TAG",
+                path.clone(),
+                "Explicit YAML tags are outside the profile",
+            )
+        } else {
+            fail("YAML_TAG", "Explicit YAML tags are not allowed")
+        });
     }
     if style != ScalarStyle::Plain {
         return Ok(Value::string_utf8(value));
@@ -2936,32 +3266,79 @@ fn resolve_scalar(
     let Some(numeric) = yaml_number_token(value) else {
         return Ok(Value::string_utf8(value));
     };
+    if typescript_profile
+        && matches!(&numeric, YamlNumber::Decimal)
+        && value.starts_with('-')
+        && decimal_canonical(value).is_some_and(|(_, digits, _)| digits == "0")
+    {
+        return Err(EngineError::new(
+            "NUMBER",
+            path.clone(),
+            "Negative zero is outside the numeric profile",
+        ));
+    }
     ctx.charge_work(value.len().saturating_mul(3), Utf16::default())?;
     let number = match &numeric {
         YamlNumber::Decimal => value.parse::<f64>().ok(),
         YamlNumber::Radix { digits, radix } => {
             ctx.charge_work(digits.len(), Utf16::default())?;
             let magnitude = parse_safe_magnitude(digits, *radix).ok_or_else(|| {
-                fail(
+                if !typescript_profile {
+                    return fail(
+                        "NUMBER",
+                        "Radix number is outside the supported numeric range",
+                    );
+                }
+                EngineError::new(
                     "NUMBER",
-                    "Radix number is outside the supported numeric range",
+                    path.clone(),
+                    "Integer exceeds exact JavaScript range",
                 )
             })?;
             Some(magnitude as f64)
         }
     };
-    let number = number.ok_or_else(|| fail("NUMBER", "Invalid numeric scalar"))?;
+    let number = number
+        .ok_or_else(|| yaml_number_error(typescript_profile, path, "Invalid numeric scalar"))?;
     if matches!(&numeric, YamlNumber::Decimal) {
-        let source = decimal_canonical(value)
-            .ok_or_else(|| fail("NUMBER", "Malformed decimal source token"))?;
+        let source = decimal_canonical(value).ok_or_else(|| {
+            yaml_number_error(typescript_profile, path, "Malformed decimal source token")
+        })?;
         let rendered = crate::ecma_number_to_string(number);
-        let converted = decimal_canonical(&rendered)
-            .ok_or_else(|| fail("NUMBER", "Malformed converted number"))?;
+        let converted = decimal_canonical(&rendered).ok_or_else(|| {
+            yaml_number_error(typescript_profile, path, "Malformed converted number")
+        })?;
         if source != converted {
-            return Err(fail("NUMBER", "Parsing would change the decimal value"));
+            return Err(yaml_number_error(
+                typescript_profile,
+                path,
+                "Parsing would change the decimal value",
+            ));
         }
     }
-    Value::number(number, Utf16::default())
+    if typescript_profile && number.fract() == 0.0 && number.abs() > 9_007_199_254_740_991.0 {
+        return Err(yaml_number_error(
+            true,
+            path,
+            "Integer exceeds exact JavaScript range",
+        ));
+    }
+    if typescript_profile {
+        Value::number(number, path.clone()).map_err(|mut error| {
+            error.path = path.clone();
+            error
+        })
+    } else {
+        Value::number(number, Utf16::default())
+    }
+}
+
+fn yaml_number_error(profile: bool, path: &Utf16, message: &str) -> EngineError {
+    if profile {
+        EngineError::new("NUMBER", path.clone(), message)
+    } else {
+        fail("NUMBER", message)
+    }
 }
 
 #[derive(Clone)]
@@ -3251,6 +3628,140 @@ mod tests {
 
     fn parse_units(source: &[u16], format: Format) -> Result<Value, EngineError> {
         read_json_value(source, format, &mut Context::ordinary())
+    }
+
+    #[test]
+    fn r8_frozen_json_value_read_error_inventory() {
+        let packet: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../docs/helix/04-build/evidence/rust-migration/r8-json-value-serialization/predecessor.json"
+        ))
+        .unwrap();
+        for case in packet["cases"].as_array().unwrap() {
+            let id = case["id"].as_str().unwrap();
+            if !id.starts_with("read.") {
+                continue;
+            }
+            let input = &case["input"];
+            let source = if let Some(source) = input["source"].as_str() {
+                source.to_owned()
+            } else if let Some(depth) = input["depth"].as_u64() {
+                format!(
+                    "{}0{}",
+                    "[".repeat(depth as usize),
+                    "]".repeat(depth as usize)
+                )
+            } else if let Some(count) = input["arrayItems"].as_u64() {
+                format!("[{}]", vec!["null"; count as usize].join(","))
+            } else {
+                panic!("unhandled frozen read input {id}");
+            };
+            let format = match input["format"].as_str().unwrap_or("yaml") {
+                "json" => Format::Json,
+                "yaml" => Format::Yaml,
+                other => panic!("unhandled format {other}"),
+            };
+            let actual = read_json_value_typescript_order(
+                &source.encode_utf16().collect::<Vec<_>>(),
+                format,
+                &mut Context::ordinary(),
+            );
+            let expected = &case["outcome"];
+            if expected["status"] == "returned" {
+                let value = actual.unwrap_or_else(|error| panic!("{id}: {error}"));
+                let mut context = Context::ordinary();
+                let rendered = write_json_value(&value, Format::Json, &mut context).unwrap();
+                let rendered =
+                    serde_json::from_str::<serde_json::Value>(&rendered.to_utf8().unwrap())
+                        .unwrap();
+                assert_eq!(rendered, expected["value"], "{id}");
+            } else {
+                let error = actual.expect_err(id);
+                let code = error.code.as_str();
+                let path = error.path.to_utf8().unwrap();
+                let message = error.message.to_utf8().unwrap();
+                if matches!(
+                    id,
+                    "read.syntax.yaml-duplicate-key" | "read.syntax.yaml-multiple-documents"
+                ) {
+                    // The bounded native parser preserves its detailed YAML
+                    // diagnostic shape; the JS `yaml` package message remains
+                    // a documented public-boundary mismatch.
+                    assert!(
+                        code.starts_with("YAML_") || code == "DUPLICATE_KEY",
+                        "{id}: {code}"
+                    );
+                    continue;
+                }
+                assert_eq!(code, expected["code"], "{id}");
+                assert_eq!(path, expected["path"], "{id}");
+                assert_eq!(message, expected["message"], "{id}");
+            }
+        }
+    }
+
+    #[test]
+    fn r8_json_value_profile_preserves_generic_reader_and_host_controls() {
+        let source = "{\"x\":1,\"x\":2,}";
+        assert_eq!(
+            parse(source, Format::Json).unwrap_err().code,
+            "DUPLICATE_KEY"
+        );
+        assert_eq!(
+            read_json_value_typescript_order(
+                &source.encode_utf16().collect::<Vec<_>>(),
+                Format::Json,
+                &mut Context::ordinary(),
+            )
+            .unwrap_err()
+            .message
+            .to_utf8()
+            .unwrap(),
+            "Invalid JSON syntax"
+        );
+
+        let generic_alias = parse("é/~x: &a value\nnext: *a\n", Format::Yaml).unwrap_err();
+        assert_eq!(generic_alias.code, "YAML_ALIAS");
+        assert_eq!(generic_alias.path.to_utf8().unwrap(), "");
+
+        let alias = read_typescript_json_value(
+            &"é/~x: &a value\nnext: *a\n"
+                .encode_utf16()
+                .collect::<Vec<_>>(),
+            None,
+            &mut Context::ordinary(),
+        )
+        .unwrap_err();
+        assert_eq!(alias.code, "ALIAS");
+        assert_eq!(alias.path.to_utf8().unwrap(), "/next");
+        let escaped = read_typescript_json_value(
+            &"anchor: &a value\n\"é/~x\": *a\n"
+                .encode_utf16()
+                .collect::<Vec<_>>(),
+            None,
+            &mut Context::ordinary(),
+        )
+        .unwrap_err();
+        assert_eq!(escaped.path.to_utf8().unwrap(), "/é~1~0x");
+
+        let mut control = |_amount: usize| {
+            Err(EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Host work budget exceeded",
+            ))
+        };
+        let mut ctx = Context::ordinary().with_host_control(&mut control);
+        let error = read_json_value_typescript_order(
+            &"{bad".encode_utf16().collect::<Vec<_>>(),
+            Format::Json,
+            &mut ctx,
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "RESOURCE_LIMIT");
+        assert_eq!(
+            error.message.to_utf8().unwrap(),
+            "Host work budget exceeded"
+        );
     }
 
     #[test]
@@ -3611,13 +4122,11 @@ mod tests {
             "YAML_VERSION"
         );
         assert!(parse("%YAML 1.2\n---\nx: yes", Format::Yaml).is_ok());
-        assert!(
-            parse(
-                "%TAG !e! tag:example.com,2020:\n---\nx: value",
-                Format::Yaml
-            )
-            .is_ok()
-        );
+        assert!(parse(
+            "%TAG !e! tag:example.com,2020:\n---\nx: value",
+            Format::Yaml
+        )
+        .is_ok());
         assert!(parse("x: &unused value", Format::Yaml).is_ok());
         assert!(parse("x: &unused {y: 1}", Format::Yaml).is_ok());
         assert!(parse("x: &unused [1, 2]", Format::Yaml).is_ok());

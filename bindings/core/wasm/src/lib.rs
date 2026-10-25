@@ -1,21 +1,23 @@
 use js_sys::Function;
 use umf_core::{
+    context::TransportUsage,
+    copy_json,
     gregorian_date::{parse_gregorian_date, truncate_gregorian_date},
     rfc3339_exact_instant::parse_rfc3339_exact_instant,
-    copy_json, context::TransportUsage, Capabilities, CapabilityError, Context, Diagnostic,
-    EngineError, ResourceProfile, SemanticContext, Severity, Utf16, Value,
+    Capabilities, CapabilityError, Context, Diagnostic, EngineError, ResourceProfile,
+    SemanticContext, Severity, Utf16, Value,
 };
 use wasm_bindgen::prelude::*;
 
-mod host_json;
 mod core_key_tuple;
 mod core_key_verification;
 mod core_record_type_verification;
-mod record_members_inspection;
+mod host_json;
+mod javascript_numeric_runtime;
 mod json_schema_runtime;
 mod protobuf_document;
 mod protobuf_source;
-mod javascript_numeric_runtime;
+mod record_members_inspection;
 
 const HOST_READ_FRAME_EVENT: &str = "__umf_host_read_v3_frame__";
 const HOST_READ_ARRAY_ITEM_EVENT: &str = "__umf_host_read_v3_array_item__";
@@ -145,7 +147,11 @@ pub fn copy_json_wire(wire_json: &str) -> Result<String, JsValue> {
 }
 
 #[wasm_bindgen(js_name = executeSemanticValueWire)]
-pub fn execute_semantic_value_wire(wire_json: &str, dispatcher: Function, control_dispatcher: Option<Function>) -> String {
+pub fn execute_semantic_value_wire(
+    wire_json: &str,
+    dispatcher: Function,
+    control_dispatcher: Option<Function>,
+) -> String {
     let mut validator = WasmSemanticTypeValidator { dispatcher };
     if let Some(dispatcher) = control_dispatcher {
         let mut control = WasmControl { dispatcher };
@@ -157,27 +163,82 @@ pub fn execute_semantic_value_wire(wire_json: &str, dispatcher: Function, contro
     }
 }
 
-struct WasmSemanticTypeValidator { dispatcher: Function }
+struct WasmSemanticTypeValidator {
+    dispatcher: Function,
+}
 impl umf_core::core_semantic_types::SemanticTypeValidator for WasmSemanticTypeValidator {
-    fn validate(&mut self, token: u64, value: &Value, definition: &Value, ctx: &mut Context<'_>) -> Result<Value, CapabilityError> {
-        let wire = umf_core_wire::encode_semantic_validator_request(value, definition, ctx).map_err(CapabilityError::Engine)?;
-        let output = self.dispatcher.call2(&JsValue::NULL, &JsValue::from_f64(token as f64), &JsValue::from_str(&wire)).map_err(|_| CapabilityError::Host(Utf16::default()))?;
-        let output = output.as_string().ok_or_else(|| CapabilityError::Host(Utf16::default()))?;
+    fn validate(
+        &mut self,
+        token: u64,
+        value: &Value,
+        definition: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, CapabilityError> {
+        let wire = umf_core_wire::encode_semantic_validator_request(value, definition, ctx)
+            .map_err(CapabilityError::Engine)?;
+        let output = self
+            .dispatcher
+            .call2(
+                &JsValue::NULL,
+                &JsValue::from_f64(token as f64),
+                &JsValue::from_str(&wire),
+            )
+            .map_err(|_| CapabilityError::Host(Utf16::default()))?;
+        let output = output
+            .as_string()
+            .ok_or_else(|| CapabilityError::Host(Utf16::default()))?;
         let response = umf_core_wire::decode(&output, ctx).map_err(CapabilityError::Engine)?;
         let reported_work: u64 = match value_field(&response, "reportedWork") {
-            Some(Value::Number(n)) if n.is_finite() && *n >= 0.0 && n.fract() == 0.0 && *n <= 9_007_199_254_740_991.0 => *n as u64,
-            _ => return Err(CapabilityError::Engine(EngineError::new("HOST_CONTROL", Utf16::default(), "Invalid semantic validator reported work"))),
-        };
-        ctx.charge_work_u64(reported_work, Utf16::default()).map_err(CapabilityError::Engine)?;
-        match value_field(&response, "status").and_then(value_text).and_then(|s| s.to_utf8().ok()).as_deref() {
-            Some("returned") => value_field(&response, "result").cloned().ok_or_else(|| CapabilityError::Host(Utf16::from("Value is not JSON-compatible"))),
-            Some("threw") => Err(CapabilityError::Host(value_field(&response, "message").and_then(value_text).cloned().unwrap_or_default())),
-            Some("resource") => {
-                let code = value_field(&response, "code").and_then(value_text).and_then(|s| s.to_utf8().ok()).unwrap_or_else(|| "RESOURCE_LIMIT".to_owned());
-                let message = value_field(&response, "message").and_then(value_text).cloned().unwrap_or_default();
-                Err(CapabilityError::Engine(EngineError::new(code, Utf16::default(), message.to_utf8().unwrap_or_default())))
+            Some(Value::Number(n))
+                if n.is_finite()
+                    && *n >= 0.0
+                    && n.fract() == 0.0
+                    && *n <= 9_007_199_254_740_991.0 =>
+            {
+                *n as u64
             }
-            _ => Err(CapabilityError::Host(Utf16::from("Malformed semantic validator response"))),
+            _ => {
+                return Err(CapabilityError::Engine(EngineError::new(
+                    "HOST_CONTROL",
+                    Utf16::default(),
+                    "Invalid semantic validator reported work",
+                )))
+            }
+        };
+        ctx.charge_work_u64(reported_work, Utf16::default())
+            .map_err(CapabilityError::Engine)?;
+        match value_field(&response, "status")
+            .and_then(value_text)
+            .and_then(|s| s.to_utf8().ok())
+            .as_deref()
+        {
+            Some("returned") => value_field(&response, "result")
+                .cloned()
+                .ok_or_else(|| CapabilityError::Host(Utf16::from("Value is not JSON-compatible"))),
+            Some("threw") => Err(CapabilityError::Host(
+                value_field(&response, "message")
+                    .and_then(value_text)
+                    .cloned()
+                    .unwrap_or_default(),
+            )),
+            Some("resource") => {
+                let code = value_field(&response, "code")
+                    .and_then(value_text)
+                    .and_then(|s| s.to_utf8().ok())
+                    .unwrap_or_else(|| "RESOURCE_LIMIT".to_owned());
+                let message = value_field(&response, "message")
+                    .and_then(value_text)
+                    .cloned()
+                    .unwrap_or_default();
+                Err(CapabilityError::Engine(EngineError::new(
+                    code,
+                    Utf16::default(),
+                    message.to_utf8().unwrap_or_default(),
+                )))
+            }
+            _ => Err(CapabilityError::Host(Utf16::from(
+                "Malformed semantic validator response",
+            ))),
         }
     }
 }
@@ -275,6 +336,36 @@ pub fn read_value_wire(
         umf_core_wire::read_value_wire_with_control(wire_json, format, &mut hook)
     } else {
         umf_core_wire::read_value_wire(wire_json, format)
+    }
+}
+
+#[wasm_bindgen(js_name = readTypescriptJsonValueWire)]
+pub fn read_typescript_json_value_wire(
+    wire_json: &str,
+    format: &str,
+    control_dispatcher: Option<Function>,
+) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::read_typescript_json_value_wire_with_control(wire_json, format, &mut hook)
+    } else {
+        umf_core_wire::read_typescript_json_value_wire(wire_json, format)
+    }
+}
+
+#[wasm_bindgen(js_name = writeTypescriptJsonValueWire)]
+pub fn write_typescript_json_value_wire(
+    wire_json: &str,
+    format: &str,
+    control_dispatcher: Option<Function>,
+) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::write_typescript_json_value_wire_with_control(wire_json, format, &mut hook)
+    } else {
+        umf_core_wire::write_typescript_json_value_wire(wire_json, format)
     }
 }
 
@@ -415,10 +506,7 @@ pub fn execute_avro_fields_wire(wire_json: &str, control_dispatcher: Option<Func
 }
 
 #[wasm_bindgen(js_name = executeRecordTypeWire)]
-pub fn execute_record_type_wire(
-    wire_json: &str,
-    control_dispatcher: Option<Function>,
-) -> String {
+pub fn execute_record_type_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
     if let Some(dispatcher) = control_dispatcher {
         let mut control = WasmControl { dispatcher };
         let mut hook = |amount| control.check(amount);
@@ -533,7 +621,9 @@ impl umf_core_wire::PythonClientHostReadV3 for WasmHostRead {
         let descriptor = umf_core_wire::host_response_frames::HostReadResponseDescriptor::parse(
             &descriptor_text,
         )
-        .map_err(|_| host_read_frame_error("WASM host-read dispatcher returned invalid descriptor"))?;
+        .map_err(|_| {
+            host_read_frame_error("WASM host-read dispatcher returned invalid descriptor")
+        })?;
         let tokens = descriptor
             .tagged_wire_token_count()
             .map_err(|_| host_read_frame_error("WASM host-read response accounting overflowed"))?;
@@ -549,8 +639,14 @@ impl umf_core_wire::PythonClientHostReadV3 for WasmHostRead {
                     Value::String(Utf16::from("umf.host-abort/3")),
                 )])
             }
-            umf_core_wire::host_response_frames::HostReadResponseDescriptor::ResourceLimit { path } => {
-                return Err(EngineError::new("RESOURCE_LIMIT", Utf16::from(path), "V4 host-read resource limit exceeded"));
+            umf_core_wire::host_response_frames::HostReadResponseDescriptor::ResourceLimit {
+                path,
+            } => {
+                return Err(EngineError::new(
+                    "RESOURCE_LIMIT",
+                    Utf16::from(path),
+                    "V4 host-read resource limit exceeded",
+                ));
             }
             umf_core_wire::host_response_frames::HostReadResponseDescriptor::String {
                 token,
@@ -562,31 +658,49 @@ impl umf_core_wire::PythonClientHostReadV3 for WasmHostRead {
                 units,
             } => {
                 let mut values = Vec::new();
-                values.try_reserve(items).map_err(|_| {
-                    host_read_frame_error("WASM host-read array allocation failed")
-                })?;
+                values
+                    .try_reserve(items)
+                    .map_err(|_| host_read_frame_error("WASM host-read array allocation failed"))?;
                 let mut observed_units = 0usize;
                 for index in 0..items {
                     let argument = format!("{token}:{index}");
-                    let item = self.call_host_dispatcher(
-                        HOST_READ_ARRAY_ITEM_EVENT,
-                        Some(&argument),
-                    )?;
-                    let descriptor = umf_core_wire::host_response_frames::HostReadResponseDescriptor::parse(&item)
-                        .map_err(|_| host_read_frame_error("WASM host-read array descriptor was invalid"))?;
-                    let umf_core_wire::host_response_frames::HostReadResponseDescriptor::String { token, units: item_units } = descriptor else {
-                        return Err(host_read_frame_error("WASM host-read array item was not a string"));
+                    let item =
+                        self.call_host_dispatcher(HOST_READ_ARRAY_ITEM_EVENT, Some(&argument))?;
+                    let descriptor =
+                        umf_core_wire::host_response_frames::HostReadResponseDescriptor::parse(
+                            &item,
+                        )
+                        .map_err(|_| {
+                            host_read_frame_error("WASM host-read array descriptor was invalid")
+                        })?;
+                    let umf_core_wire::host_response_frames::HostReadResponseDescriptor::String {
+                        token,
+                        units: item_units,
+                    } = descriptor
+                    else {
+                        return Err(host_read_frame_error(
+                            "WASM host-read array item was not a string",
+                        ));
                     };
                     observed_units = observed_units.checked_add(item_units).ok_or_else(|| {
                         host_read_frame_error("WASM host-read array length overflowed")
                     })?;
                     if observed_units > units {
-                        return Err(host_read_frame_error("WASM host-read array exceeded declared unit count"));
+                        return Err(host_read_frame_error(
+                            "WASM host-read array exceeded declared unit count",
+                        ));
                     }
                     values.push(Value::String(self.read_host_string(token, item_units)?));
                 }
-                if umf_core_wire::host_response_frames::verify_string_array_units(units, observed_units).is_err() {
-                    return Err(host_read_frame_error("WASM host-read array length did not match descriptor"));
+                if umf_core_wire::host_response_frames::verify_string_array_units(
+                    units,
+                    observed_units,
+                )
+                .is_err()
+                {
+                    return Err(host_read_frame_error(
+                        "WASM host-read array length did not match descriptor",
+                    ));
                 }
                 Value::Array(values)
             }
@@ -827,28 +941,41 @@ impl RetainedCodegenResourcesRuntime {
             umf_core_wire::CodegenResourcesHandle::new_with_control(&setup_wire, &mut hook)
         } else {
             let mut no_control = |_amount| Ok(());
-            umf_core_wire::CodegenResourcesHandle::new_with_control(
-                &setup_wire,
-                &mut no_control,
-            )
+            umf_core_wire::CodegenResourcesHandle::new_with_control(&setup_wire, &mut no_control)
         }
         .map_err(|error| JsValue::from_str(&umf_core_wire::error_envelope(error)))?;
         Ok(Self { inner: Some(inner) })
     }
 
     #[wasm_bindgen(js_name = executeWire)]
-    pub fn execute_wire(&self, request_wire: String, control_dispatcher: Option<Function>) -> String {
+    pub fn execute_wire(
+        &self,
+        request_wire: String,
+        control_dispatcher: Option<Function>,
+    ) -> String {
         if let Some(dispatcher) = control_dispatcher {
             let mut control = WasmControl { dispatcher };
             let mut hook = |amount| control.check(amount);
             self.inner.as_ref().map_or_else(
-                || umf_core_wire::error_envelope(EngineError::new("RUST_CODEGEN_HANDLE_DISPOSED", Utf16::default(), "Retained codegen resources have been disposed")),
+                || {
+                    umf_core_wire::error_envelope(EngineError::new(
+                        "RUST_CODEGEN_HANDLE_DISPOSED",
+                        Utf16::default(),
+                        "Retained codegen resources have been disposed",
+                    ))
+                },
                 |inner| inner.execute_with_control(&request_wire, &mut hook),
             )
         } else {
             let mut no_control = |_amount| Ok(());
             self.inner.as_ref().map_or_else(
-                || umf_core_wire::error_envelope(EngineError::new("RUST_CODEGEN_HANDLE_DISPOSED", Utf16::default(), "Retained codegen resources have been disposed")),
+                || {
+                    umf_core_wire::error_envelope(EngineError::new(
+                        "RUST_CODEGEN_HANDLE_DISPOSED",
+                        Utf16::default(),
+                        "Retained codegen resources have been disposed",
+                    ))
+                },
                 |inner| inner.execute_with_control(&request_wire, &mut no_control),
             )
         }
@@ -870,14 +997,34 @@ impl RetainedCodegenResourcesRuntime {
             let mut control = WasmControl { dispatcher };
             let mut hook = |amount| control.check(amount);
             self.inner.as_ref().map_or_else(
-                || umf_core_wire::error_envelope(EngineError::new("RUST_CODEGEN_HANDLE_DISPOSED", Utf16::default(), "Retained codegen resources have been disposed")),
-                |inner| inner.execute_host_read_v3_with_control(&request_wire, &mut host, &mut hook),
+                || {
+                    umf_core_wire::error_envelope(EngineError::new(
+                        "RUST_CODEGEN_HANDLE_DISPOSED",
+                        Utf16::default(),
+                        "Retained codegen resources have been disposed",
+                    ))
+                },
+                |inner| {
+                    inner.execute_host_read_v3_with_control(&request_wire, &mut host, &mut hook)
+                },
             )
         } else {
             let mut no_control = |_amount| Ok(());
             self.inner.as_ref().map_or_else(
-                || umf_core_wire::error_envelope(EngineError::new("RUST_CODEGEN_HANDLE_DISPOSED", Utf16::default(), "Retained codegen resources have been disposed")),
-                |inner| inner.execute_host_read_v3_with_control(&request_wire, &mut host, &mut no_control),
+                || {
+                    umf_core_wire::error_envelope(EngineError::new(
+                        "RUST_CODEGEN_HANDLE_DISPOSED",
+                        Utf16::default(),
+                        "Retained codegen resources have been disposed",
+                    ))
+                },
+                |inner| {
+                    inner.execute_host_read_v3_with_control(
+                        &request_wire,
+                        &mut host,
+                        &mut no_control,
+                    )
+                },
             )
         }
     }

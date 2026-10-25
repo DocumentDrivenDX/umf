@@ -106,8 +106,8 @@ use std::collections::BTreeSet;
 
 use umf_core::serialization::Format;
 use umf_core::{
-    Capabilities, Context, Diagnostic, Engine, EngineError, Limits, Registry, ResourceProfile,
-    ResourceSet, Severity, Utf16, Value, copy_json,
+    copy_json, Capabilities, Context, Diagnostic, Engine, EngineError, Limits, Registry,
+    ResourceProfile, ResourceSet, Severity, Utf16, Value,
 };
 
 #[derive(Debug)]
@@ -726,6 +726,85 @@ pub fn read_value_wire_with_control(
     run_value_wire(wire_json, format, false, Some(control))
 }
 
+/// Read the TypeScript `readJsonValue` profile through an explicit opt-in
+/// operation. Generic `readValueWire` keeps its Rust YAML/JSON semantics.
+pub fn read_typescript_json_value_wire(wire_json: &str, format: &str) -> String {
+    run_typescript_json_value_wire(wire_json, format, None)
+}
+
+pub fn read_typescript_json_value_wire_with_control(
+    wire_json: &str,
+    format: &str,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+) -> String {
+    run_typescript_json_value_wire(wire_json, format, Some(control))
+}
+
+pub fn write_typescript_json_value_wire(wire_json: &str, format: &str) -> String {
+    run_typescript_json_value_writer_wire(wire_json, format, None)
+}
+
+pub fn write_typescript_json_value_wire_with_control(
+    wire_json: &str,
+    format: &str,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+) -> String {
+    run_typescript_json_value_writer_wire(wire_json, format, Some(control))
+}
+
+fn run_typescript_json_value_wire(
+    wire_json: &str,
+    format: &str,
+    control: Option<&mut dyn FnMut(usize) -> Result<(), EngineError>>,
+) -> String {
+    let result = (|| {
+        let format = match format {
+            "json" => Some(Format::Json),
+            "yaml" => Some(Format::Yaml),
+            _ => return Err(fail("FORMAT", "Format must be json or yaml")),
+        };
+        let ctx = Context::ordinary();
+        let mut ctx = if let Some(control) = control {
+            ctx.with_host_control(control)
+        } else {
+            ctx
+        };
+        let value = decode(wire_json, &mut ctx)?;
+        let Value::String(source) = value else {
+            return Err(fail("SOURCE", "Source text must be a string"));
+        };
+        let result =
+            umf_core::serialization::read_typescript_json_value(source.units(), format, &mut ctx)?;
+        encode(&result, &mut ctx)
+    })();
+    result_envelope(result)
+}
+
+fn run_typescript_json_value_writer_wire(
+    wire_json: &str,
+    format: &str,
+    control: Option<&mut dyn FnMut(usize) -> Result<(), EngineError>>,
+) -> String {
+    let result = (|| {
+        let format = match format {
+            "json" => Some(Format::Json),
+            "yaml" => Some(Format::Yaml),
+            _ => return Err(fail("FORMAT", "Format must be json or yaml")),
+        };
+        let ctx = Context::ordinary();
+        let mut ctx = if let Some(control) = control {
+            ctx.with_host_control(control)
+        } else {
+            ctx
+        };
+        let value = decode(wire_json, &mut ctx)?;
+        let source =
+            umf_core::serialization::write_typescript_json_value(&value, format, &mut ctx)?;
+        encode(&Value::String(source), &mut ctx)
+    })();
+    result_envelope(result)
+}
+
 /// Write an arbitrary admitted core value as JSON/YAML using Rust's writer.
 pub fn write_value_wire(wire_json: &str, format: &str) -> String {
     run_value_wire(wire_json, format, true, None)
@@ -1167,8 +1246,8 @@ pub fn execute_iceberg_wire_with_control(
 ) -> String {
     let result = (|| {
         use umf_core::iceberg_schema::{
-            IcebergSchemaResources, export_iceberg_schema, get_iceberg_node, import_iceberg_schema,
-            inspect_iceberg, propose_iceberg_node_edit,
+            export_iceberg_schema, get_iceberg_node, import_iceberg_schema, inspect_iceberg,
+            propose_iceberg_node_edit, IcebergSchemaResources,
         };
 
         let mut ctx = Context::ordinary().with_host_control(control);
@@ -1258,7 +1337,7 @@ pub fn execute_avro_fields_wire_with_control(
 ) -> String {
     let result = (|| {
         use umf_core::{
-            avro_fields::{AvroDependency, derive_avro_fields},
+            avro_fields::{derive_avro_fields, AvroDependency},
             native_json::NativeJsonTree,
         };
         let mut ctx = Context::ordinary().with_host_control(control);
@@ -1352,7 +1431,7 @@ pub fn execute_avro_record_type_candidate_wire_with_control(
     let result = (|| {
         use umf_core::{
             avro_fields::AvroDependency,
-            avro_record_type_candidate::{Resolution, resolve_candidate},
+            avro_record_type_candidate::{resolve_candidate, Resolution},
             native_json::NativeJsonTree,
         };
         let mut ctx = Context::ordinary().with_host_control(control);
@@ -1472,7 +1551,7 @@ pub fn execute_avro_inspect_wire_with_control(
 ) -> String {
     let result = (|| {
         use umf_core::{
-            avro_semantics::{Dependency, inspect_schema},
+            avro_semantics::{inspect_schema, Dependency},
             native_json::NativeJsonTree,
         };
         let mut ctx = Context::ordinary().with_host_control(control);
@@ -3406,11 +3485,9 @@ mod tests {
         assert_eq!(envelope["code"], "REQUEST");
         assert_eq!(
             envelope["messageUnits"],
-            serde_json::json!(
-                "umf.schema-comparison/1 profile is required"
-                    .encode_utf16()
-                    .collect::<Vec<_>>()
-            )
+            serde_json::json!("umf.schema-comparison/1 profile is required"
+                .encode_utf16()
+                .collect::<Vec<_>>())
         );
 
         let profile = Value::string_utf8(DOCUMENT_COMPARISON_PROFILE);
@@ -3419,11 +3496,9 @@ mod tests {
             serde_json::from_str(&execute_document_comparison_wire(&missing_both)).unwrap();
         assert_eq!(
             envelope["messageUnits"],
-            serde_json::json!(
-                "Before value is required"
-                    .encode_utf16()
-                    .collect::<Vec<_>>()
-            )
+            serde_json::json!("Before value is required"
+                .encode_utf16()
+                .collect::<Vec<_>>())
         );
         let missing_after = comparison_request(vec![("profile", profile), ("before", Value::Null)]);
         let envelope: serde_json::Value =

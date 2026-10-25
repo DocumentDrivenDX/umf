@@ -106,8 +106,8 @@ export interface UmfCoreEngine {
   writeDocument(document: unknown, format?: 'json' | 'yaml', registry?: UmfCoreRegistration[]): string;
   readValue(source: string, format?: 'json' | 'yaml'): unknown;
   writeValue(value: unknown, format?: 'json' | 'yaml'): string;
-  readJsonValue(source: string): unknown;
-  writeJsonValue(value: unknown): string;
+  readJsonValue(source: string, format?: 'json' | 'yaml'): unknown;
+  writeJsonValue(value: unknown, format?: 'json' | 'yaml'): string;
 }
 export interface UmfCoreValidation { valid: boolean; complete: boolean; diagnostics: {code: string; path: string; message: string; severity: 'error' | 'warning'}[] }
 export type UmfCoreDefaultInput = {state: 'missing'} | {state: 'present'; value: unknown};

@@ -6,8 +6,8 @@ export interface UmfCoreEngine {
   copyJson(value: unknown, limits?: {maxDepth?: number; maxValues?: number}): unknown;
   readValue(source: string, format?: 'json' | 'yaml'): unknown;
   writeValue(value: unknown, format?: 'json' | 'yaml'): string;
-  readJsonValue(source: string): unknown;
-  writeJsonValue(value: unknown): string;
+  readJsonValue(source: string, format?: 'json' | 'yaml'): unknown;
+  writeJsonValue(value: unknown, format?: 'json' | 'yaml'): string;
   validateDocument?(document: unknown, registry?: UmfCoreRegistration[]): UmfCoreValidation;
   readDocument?(source: string, format?: 'json' | 'yaml', registry?: UmfCoreRegistration[]): unknown;
   writeDocument?(document: unknown, format?: 'json' | 'yaml', registry?: UmfCoreRegistration[]): string;
