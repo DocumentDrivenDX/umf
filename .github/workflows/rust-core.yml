@@ -4,6 +4,7 @@ on:
   push:
     branches-ignore:
       - codex/migration-portable-qualification
+      - codex/migration-integrated-qualification
     tags:
       - '**'
   pull_request:
