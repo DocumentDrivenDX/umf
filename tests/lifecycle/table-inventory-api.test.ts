@@ -7,7 +7,7 @@ import {compileTableMigration,compileTableInventoryMigration,discoverTableInvent
 import {compileG10InventoryPlan,createHistoricalG10Verifier} from '../../src/table-migration/inventory';
 import {partitionRendererDependencies,verifySourcePublicationCoverage} from '../../src/table-migration/inventory-effects';
 import {deriveInventorySeedLineage} from '../../src/table-migration/inventory-history';
-import {R2WorkMeter} from '../../src/table-migration/inventory-r2-context';
+import {R2WorkLimitError,R2WorkMeter,R2_WORK_EVENT_UNITS} from '../../src/table-migration/inventory-r2-context';
 import {inspectR2InventorySourceContext,prepareR2InventorySourceContext} from '../../src/table-migration/inventory';
 import {projectG10Bundle} from '../../src/table-migration/inventory-source';
 import {partitionInventoryMarkersForG02,sameSourceExceptG02AndCreates} from '../../src/table-migration/inventory-g02-source';
@@ -192,6 +192,71 @@ describe('G10 historical recompile exact-content cache',()=>{
  },15000);
 });
 
+const R2_DIAGNOSTIC_PHASES=['owned','history','projection','lineage'] as const;
+const R2_DIAGNOSTIC_CATEGORIES=['raw-owning','request-recopy','canonical/hash','deployment/renderer','projection-JSON','projection-other','index/freeze','history-validation','cache','other'] as const;
+const R2_DIAGNOSTIC_PATHS=['previous','next','history-plan','history-prefix','history-other','options','source/document','meaning-catalog','meaning-other','index','plan/operations','other'] as const;
+function installOneFixtureR2MeterDiagnostic(){
+ const proto=R2WorkMeter.prototype as any,leaves=['charge','chargeBytes','chargeWorkBytes','retainSubject','snapshot','visit'] as const;
+ const saved=new Map<string,PropertyDescriptor>(),phases=R2_DIAGNOSTIC_PHASES,categories=R2_DIAGNOSTIC_CATEGORIES,paths=R2_DIAGNOSTIC_PATHS;
+ type Total={calls:number;work:number;bytes:number;subjects:number};
+ const zero=():Total=>({calls:0,work:0,bytes:0,subjects:0});
+ const byPhase=(labels:readonly string[])=>Object.fromEntries(phases.map(phase=>[phase,Object.fromEntries(labels.map(label=>[label,zero()]))])) as Record<(typeof phases)[number],Record<string,Total>>;
+ const phaseTotals=Object.fromEntries(phases.map(phase=>[phase,zero()])) as Record<(typeof phases)[number],Total>,categoryTotals=byPhase(categories),pathTotals=byPhase(paths);
+ const checkpoints:{work:number;subjects:number;bytes:number}[]=[];let meter:R2WorkMeter|undefined,activeCategory:string|undefined,unexpectedMeters=0,incomplete=false;
+ const cache={hit:0,miss:0,reuse:0};let rejection:{leaf:string;dimension:string;path:string}|undefined;
+ const dimension=(error:unknown,fallback:string)=>error instanceof R2WorkLimitError?error.dimension:fallback;
+ const observe=(candidate:unknown)=>{if(!candidate||typeof candidate!=='object')return;const value=candidate as R2WorkMeter;if(!meter){meter=value;return;}if(value!==meter){unexpectedMeters++;incomplete=true;}};
+ const categoryOf=(label:string|undefined,event:string|undefined,pathBucket:string):string=>{
+  const tags=`${label??''} ${event??''}`;
+  if(/cache-(?:hit|miss)|core-reuse/.test(tags))return 'cache';
+  if(/history|seed-lineage|seed-history/.test(tags)||pathBucket.startsWith('history-'))return 'history-validation';
+  if(/rawOwnKeys|ownPropertyDescriptor|r2-raw|component-container|snapshot/.test(tags))return 'raw-owning';
+  if(/inventory-(?:bundle|component|operation)-copy|request-recopy/.test(tags))return 'request-recopy';
+  if(/canonical|hash/.test(tags))return 'canonical/hash';
+  if(/deployment|renderer/.test(tags))return 'deployment/renderer';
+  if(/projection-json|meaning/.test(tags)||pathBucket.startsWith('meaning-'))return 'projection-JSON';
+  if(/projection/.test(tags))return 'projection-other';
+  if(/index|freeze/.test(tags))return 'index/freeze';
+  return 'other';
+ };
+ const pathOf=(path:unknown):string=>{
+  if(typeof path!=='string')return 'other';
+  if(path.startsWith('/previous'))return 'previous';if(path.startsWith('/next'))return 'next';
+  if(path.startsWith('/history/plans'))return 'history-plan';if(path.startsWith('/history/prefix'))return 'history-prefix';if(path.startsWith('/history'))return 'history-other';
+  if(path.startsWith('/options'))return 'options';if(path.startsWith('/source')||path.startsWith('/document'))return 'source/document';
+  if(path.startsWith('/meaning/catalog'))return 'meaning-catalog';if(path.startsWith('/meaning'))return 'meaning-other';
+  if(path.startsWith('/index'))return 'index';if(path.startsWith('/plan')||path.startsWith('/operations'))return 'plan/operations';return 'other';
+ };
+ const add=(event:string|undefined,path:unknown,work:number,bytes:number,subjects:number)=>{
+  const phase=phases[Math.min(checkpoints.length,phases.length-1)]!,pathBucket=pathOf(path),category=categoryOf(activeCategory,event,pathBucket);
+  for(const target of [phaseTotals[phase],categoryTotals[phase]![category]!,pathTotals[phase]![pathBucket]!]){target.calls++;target.work+=work;target.bytes+=bytes;target.subjects+=subjects;}
+ };
+ const reject=(leaf:string,dimension:string,path:unknown)=>{if(rejection)return;rejection={leaf,dimension,path:typeof path==='string'?path.slice(0,256):''};};
+ const original=(name:string)=>{const descriptor=Object.getOwnPropertyDescriptor(proto,name);if(!descriptor||typeof descriptor.value!=='function')throw new Error(`R2 diagnostic expected prototype method ${name}`);saved.set(name,descriptor);return descriptor.value as (...args:any[])=>any;};
+ const originals=Object.fromEntries(leaves.map(name=>[name,original(name)])) as Record<(typeof leaves)[number],(...args:any[])=>any>;
+ const wrappers:Record<string,Function>={
+  charge:function(this:R2WorkMeter,event:string,count=1,path='/'){observe(this);try{const result=Reflect.apply(originals.charge,this,[event,count,path]);add(event,path,R2_WORK_EVENT_UNITS[event as keyof typeof R2_WORK_EVENT_UNITS]*count,0,0);return result;}catch(error){reject('charge',dimension(error,'work'),path);throw error;}},
+  chargeBytes:function(this:R2WorkMeter,count:number,path:string){observe(this);try{const result=Reflect.apply(originals.chargeBytes,this,[count,path]);add(undefined,path,Math.ceil(count/4096),count,0);return result;}catch(error){reject('chargeBytes',dimension(error,'bytes-or-work'),path);throw error;}},
+  chargeWorkBytes:function(this:R2WorkMeter,count:number,path:string){observe(this);try{const result=Reflect.apply(originals.chargeWorkBytes,this,[count,path]);add(undefined,path,Math.ceil(count/4096),0,0);return result;}catch(error){reject('chargeWorkBytes',dimension(error,'work'),path);throw error;}},
+  retainSubject:function(this:R2WorkMeter,identityOrPath:unknown,path?:string){observe(this);try{const result=Reflect.apply(originals.retainSubject,this,[identityOrPath,path]);add(undefined,path,1,0,1);return result;}catch(error){reject('retainSubject',dimension(error,'subjects-or-work'),path);throw error;}},
+  snapshot:function(this:R2WorkMeter){observe(this);const result=Reflect.apply(originals.snapshot,this,[]);if(checkpoints.length<5)checkpoints.push(result);else{unexpectedMeters++;incomplete=true;}return result;},
+  visit:function(this:R2WorkMeter,label:string,path:string,count=1){observe(this);if(label.endsWith('cache-hit'))cache.hit++;else if(label.endsWith('cache-miss'))cache.miss++;else if(label.endsWith('core-reuse'))cache.reuse++;const previous=activeCategory;activeCategory=label;try{return Reflect.apply(originals.visit,this,[label,path,count]);}finally{activeCategory=previous;}},
+ };
+ const installed:string[]=[];
+ try{for(const name of leaves){Object.defineProperty(proto,name,{...saved.get(name)!,value:wrappers[name]});installed.push(name);}}
+ catch(error){for(const name of installed)Object.defineProperty(proto,name,saved.get(name)!);throw error;}
+ let restored=false;
+ return {
+  restore(){if(restored)return;restored=true;for(const name of leaves)Object.defineProperty(proto,name,saved.get(name)!);},
+  report(){
+   const consumed={work:0,bytes:0,subjects:0,calls:0};for(const phase of phases){const value=phaseTotals[phase];consumed.work+=value.work;consumed.bytes+=value.bytes;consumed.subjects+=value.subjects;consumed.calls+=value.calls;}
+   const final=meter?Reflect.apply(originals.snapshot,meter,[]) as {work:number;subjects:number;bytes:number}:undefined,reconciliation={complete:checkpoints.length===5&&unexpectedMeters===0,expectedSnapshot:final?{work:final.work,bytes:final.bytes,subjects:final.subjects}:null,observed:consumed,matches:!!final&&final.work===consumed.work&&final.bytes===consumed.bytes&&final.subjects===consumed.subjects};
+   if(!reconciliation.complete||!reconciliation.matches)incomplete=true;
+   return {profile:'r2-one-fixture-meter-diagnostic/0.1',incomplete,checkpoints:checkpoints.map(value=>({work:value.work,bytes:value.bytes,subjects:value.subjects})),consumed,phases:phaseTotals,categories:categoryTotals,paths:pathTotals,cache,unexpectedMeters,rejection:rejection??null,reconciliation};
+  },
+ };
+}
+
 test('R2 metered context reuses exact source cores for a seeded Note history and mixed G02 plus CREATE',()=>{
  const fixture=smallNoteMixedG02Source(),compiled=compileTableInventoryMigration(fixture.request);
  expect(compiled.status).toBe('compiled');if(compiled.status!=='compiled'){compileG10InventoryPlan(fixture.request);throw new Error(JSON.stringify(compiled.diagnostics));}
@@ -204,7 +269,10 @@ test('R2 metered context reuses exact source cores for a seeded Note history and
  expect(compiled.plan.review).toEqual(fixture.candidates);expect(compiled.plan.inventory.changes.some(change=>change.kind==='create-table'&&change.table==='note_archive')).toBe(true);
  const selector02={version:'umf.table-inventory-discovery/0.2' as const,tableIntents:[],conversions:[],retiredSeedSets:[],retirements:[],restorations:[],archiveSources:[],tableArchiveSources:[]};
  const mixedHistory:TableInventorySourceHistory={profile:'umf.table-inventory-source-history/0.1',plans:[...fixture.history.plans,compiled.plan],executions:[...fixture.history.executions,seedExecution(compiled.plan,fixture.next,'e'.repeat(64))]};
- const handle=prepareR2InventorySourceContext({previous:fixture.next,next:fixture.next,history:mixedHistory,selector:selector02}),state=inspectR2InventorySourceContext(handle);
+ const diagnostic=installOneFixtureR2MeterDiagnostic();let handle:ReturnType<typeof prepareR2InventorySourceContext>|undefined;let originalFailure:unknown;let failed=false;
+ try{handle=prepareR2InventorySourceContext({previous:fixture.next,next:fixture.next,history:mixedHistory,selector:selector02});}catch(error){failed=true;originalFailure=error;}finally{diagnostic.restore();}
+ if(failed){try{const report=diagnostic.report(),text=JSON.stringify(report);if(text.length<=16_384)console.error('[R2_ONE_FIXTURE_METER_DIAGNOSTIC] '+text);else console.error('[R2_ONE_FIXTURE_METER_DIAGNOSTIC] '+JSON.stringify({profile:report.profile,incomplete:report.incomplete,checkpointNames:['owned','history','projection','lineage','lineage-final'],checkpoints:report.checkpoints,consumed:report.consumed,phaseNames:R2_DIAGNOSTIC_PHASES,phases:R2_DIAGNOSTIC_PHASES.map(name=>report.phases[name]),categoryNames:R2_DIAGNOSTIC_CATEGORIES,categories:R2_DIAGNOSTIC_PHASES.map(name=>R2_DIAGNOSTIC_CATEGORIES.map(category=>report.categories[name][category]!)),pathNames:R2_DIAGNOSTIC_PATHS,paths:R2_DIAGNOSTIC_PHASES.map(name=>R2_DIAGNOSTIC_PATHS.map(path=>report.paths[name][path]!)),cache:report.cache,unexpectedMeters:report.unexpectedMeters,rejection:report.rejection,reconciliation:report.reconciliation}));}catch{/* diagnostics must not replace the original failure */}throw originalFailure;}
+ if(!handle)throw new Error('R2 context preparation returned no handle.');const state=inspectR2InventorySourceContext(handle);
  expect(state.history.plans).toHaveLength(2);expect(state.history.plans[1]).toEqual(compiled.plan);expect(state.history.executions[1]).toEqual(seedExecution(compiled.plan,fixture.next,'e'.repeat(64)));expect(state.seedLineage).toMatchObject([{id:'initial-note-seed',execution:'confirmed'}]);
  const current={previous:fixture.next,next:fixture.next,options:{seedSets:[],retiredSeedSets:[]}},recoveryMeter=new R2WorkMeter();expect(()=>deriveInventorySeedLineage(mixedHistory,current,createHistoricalG10Verifier(recoveryMeter),recoveryMeter)).not.toThrow();
  expect(state.projectionCoreReuses).toBeGreaterThan(0);
