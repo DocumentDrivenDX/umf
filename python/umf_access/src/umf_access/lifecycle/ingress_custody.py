@@ -974,7 +974,8 @@ class ExternalCustodyJournal:
                 raise CustodyJournalError('journal-origin-unverified')
             resolver.require_control_lease(control_lease, operation_kind=operation_kind)
             descriptor = _resolve_original_target_custody_journal_birth(
-                birth_handle, issuer=resolver.issuer, context=resolver._context,
+                birth_handle, issuer=resolver.adapter._bootstrap_issuer,
+                context=resolver._context,
                 supervisor=resolver.adapter, control_lease=control_lease)
         except Exception:  # noqa: BLE001 - redact bootstrap details at journal boundary
             raise CustodyJournalError('journal-origin-unverified') from None
