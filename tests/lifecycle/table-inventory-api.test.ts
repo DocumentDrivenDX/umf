@@ -7,6 +7,8 @@ import {compileTableMigration,compileTableInventoryMigration,discoverTableInvent
 import {compileG10InventoryPlan,createHistoricalG10Verifier} from '../../src/table-migration/inventory';
 import {partitionRendererDependencies,verifySourcePublicationCoverage} from '../../src/table-migration/inventory-effects';
 import {deriveInventorySeedLineage} from '../../src/table-migration/inventory-history';
+import {R2WorkMeter} from '../../src/table-migration/inventory-r2-context';
+import {inspectR2InventorySourceContext,prepareR2InventorySourceContext} from '../../src/table-migration/inventory';
 import {projectG10Bundle} from '../../src/table-migration/inventory-source';
 import {partitionInventoryMarkersForG02,sameSourceExceptG02AndCreates} from '../../src/table-migration/inventory-g02-source';
 import {consumeTableMigrationChangesBounded} from '../../src/table-migration/reviewed';
@@ -39,15 +41,29 @@ function originalHistory(bundle:ReturnType<typeof deploy>):TableInventorySourceH
  const seedOutcomes=selected.map(id=>{const definition=bundle.seedSets.find(seed=>seed.id===id);if(!definition)throw new Error('Legacy initial plan selected an unknown seed set.');return {id,definitionDigest:hashCanonical(definition),originalSourceDigest:bundle.sourceDigest,execution:'confirmed' as const,proof:{kind:'atomic-publication' as const,entryDigest}};});
  return {profile:'umf.table-inventory-source-history/0.1',plans:[result.plan],executions:[{planDigest:result.plan.digest,entryDigest,seedOutcomes}]};
 }
-function initialG10History(bundle:ReturnType<typeof deploy>,id='inventory-g10-history-initial'):TableInventorySourceHistory{
+function seedExecution(plan:any,bundle:ReturnType<typeof deploy>,entryDigest:string){
+ const sets=plan.seedExecution==='none'?[]:plan.seedExecution.sets;
+ if(!sets.length)return {planDigest:plan.digest,entryDigest,seedOutcomes:[]};
+ const seedStep=plan.steps.find((step:any)=>step.operation==='apply-seeds');
+ if(!seedStep)throw new Error('Selected G10 seed history lacks its source-derived seed step.');
+ const phase=plan.phases.find((item:any)=>item.steps.includes(seedStep.id));
+ if(!phase)throw new Error('Selected G10 seed history lacks its source-derived phase.');
+ const phaseSteps=phase.steps.map((id:string)=>plan.steps.find((step:any)=>step.id===id));
+ if(phaseSteps.some((step:any)=>!step))throw new Error('Selected G10 seed phase references an unknown step.');
+ const phaseDigest=hashCanonical({phase,steps:phaseSteps});
+ const seedOutcomes=sets.map((id:string)=>{const definition=bundle.seedSets.find(item=>item.id===id);if(!definition)throw new Error('G10 seed history selected an unknown source definition.');return {id,definitionDigest:hashCanonical(definition),originalSourceDigest:bundle.sourceDigest,execution:'confirmed' as const,proof:{kind:'phase' as const,phaseId:phase.id,phaseDigest,phaseReceiptDigest:'d'.repeat(64),entryDigest}};});
+ return {planDigest:plan.digest,entryDigest,seedOutcomes};
+}
+function initialG10History(bundle:ReturnType<typeof deploy>,id='inventory-g10-history-initial',seedSets:string[]=[]):TableInventorySourceHistory{
  const tableIntents=bundle.expectedCatalog.tables.map(table=>({kind:'create' as const,table:table.id,record:{...table.record}}));
  const candidates=discoverTableInventoryMigrationChanges(null,bundle,selector(tableIntents),emptyHistory);
- const result=compileTableInventoryMigration({id,predecessor:null,previous:null,next:bundle,options:options(tableIntents,candidates.map(({oldValue:_old,newValue:_new,oldPath:_oldPath,newPath:_newPath,...marker})=>marker)),history:emptyHistory});
+ const planOptions=options(tableIntents,candidates.map(({oldValue:_old,newValue:_new,oldPath:_oldPath,newPath:_newPath,...marker})=>marker));planOptions.seedSets=[...seedSets];
+ const result=compileTableInventoryMigration({id,predecessor:null,previous:null,next:bundle,options:planOptions,history:emptyHistory});
  if(result.status!=='compiled'){
-  compileG10InventoryPlan({id,predecessor:null,previous:null,next:bundle,options:options(tableIntents,candidates.map(({oldValue:_old,newValue:_new,oldPath:_oldPath,newPath:_newPath,...marker})=>marker)),history:emptyHistory});
+  compileG10InventoryPlan({id,predecessor:null,previous:null,next:bundle,options:planOptions,history:emptyHistory});
   throw new Error('Original G10 initial plan refused: '+JSON.stringify(result.diagnostics));
  }
- return {profile:'umf.table-inventory-source-history/0.1',plans:[result.plan],executions:[{planDigest:result.plan.digest,entryDigest:'c'.repeat(64),seedOutcomes:[]}]};
+ return {profile:'umf.table-inventory-source-history/0.1',plans:[result.plan],executions:[seedExecution(result.plan,bundle,'c'.repeat(64))]};
 }
 function appendArchiveTable(source:any,id='api_archive'){
  const module=source.modules[0]!,payload=module.extensions['umf.tables'];
@@ -132,6 +148,29 @@ test('G10 historical recompile cache reuses only exact G10 plans and exact prior
  expect(()=>verify(second.plan,1,changedPlan)).toThrow();
  const changedExecution=structuredClone(history);changedExecution.executions[0]!.entryDigest='e'.repeat(64);
  expect(()=>verify(second.plan,1,changedExecution)).toThrow();
+});
+
+test('R2 metered source context recompiles a nonempty seeded G10 history and mixed G02 source',()=>{
+ const fixture=mixedG02Request(false),seedIds=fixture.previous.seedSets.map(seed=>seed.id),initial=initialG10History(fixture.previous,'r2-metered-initial',seedIds);
+ const first=initial.plans[0]!;
+ const request={...fixture.request,predecessor:{id:first.id,digest:first.digest},history:initial};
+ const compiled=compileTableInventoryMigration(request);expect(compiled.status).toBe('compiled');if(compiled.status!=='compiled')throw new Error(JSON.stringify(compiled.diagnostics));
+ const history:TableInventorySourceHistory={profile:'umf.table-inventory-source-history/0.1',plans:[...initial.plans,compiled.plan],executions:[...initial.executions,seedExecution(compiled.plan,fixture.next,'e'.repeat(64))]};
+ const current={previous:fixture.next,next:fixture.next,options:{seedSets:[],retiredSeedSets:[]}},meter=new R2WorkMeter();
+ expect(deriveInventorySeedLineage(history,current,createHistoricalG10Verifier(meter),meter).every(item=>item.execution==='confirmed')).toBe(true);
+ expect(meter.snapshot().work).toBeGreaterThan(0);
+ const changedPlan=structuredClone(history),changedPlanValue=changedPlan.plans[1] as any;changedPlanValue.steps[0]!.sql+=' ';delete changedPlanValue.digest;changedPlanValue.digest=hashCanonical(changedPlanValue);changedPlan.executions[1]!.planDigest=changedPlanValue.digest;
+ const changedPlanMeter=new R2WorkMeter();expect(()=>deriveInventorySeedLineage(changedPlan,current,createHistoricalG10Verifier(changedPlanMeter),changedPlanMeter)).toThrow();
+ const changedPrefix=structuredClone(history);changedPrefix.executions[0]!.entryDigest='f'.repeat(64);
+ const changedPrefixMeter=new R2WorkMeter();expect(()=>deriveInventorySeedLineage(changedPrefix,current,createHistoricalG10Verifier(changedPrefixMeter),changedPrefixMeter)).toThrow();
+ const changedPhase=structuredClone(history);(changedPhase.executions[0]!.seedOutcomes[0]!.proof as any).phaseDigest='0'.repeat(64);
+ const changedPhaseMeter=new R2WorkMeter();expect(()=>deriveInventorySeedLineage(changedPhase,current,createHistoricalG10Verifier(changedPhaseMeter),changedPhaseMeter)).toThrow();
+ expect(()=>deriveInventorySeedLineage(originalHistory(fixture.previous),current,undefined,new R2WorkMeter())).toThrow(/UNSUPPORTED_METERED_LEGACY_HISTORY/);
+ const selector02={version:'umf.table-inventory-discovery/0.2',tableIntents:[],conversions:[],retiredSeedSets:[],retirements:[],restorations:[],archiveSources:[],tableArchiveSources:[]};
+ const handle=prepareR2InventorySourceContext({previous:fixture.next,next:fixture.next,history,selector:selector02}),state=inspectR2InventorySourceContext(handle);
+ expect(state.owned.previous?.bundleDigest).toBe(fixture.next.bundleDigest);expect(state.history).toBeDefined();
+ expect(Object.isFrozen(state.history)).toBe(true);expect(Object.isFrozen(state.history.executions)).toBe(true);expect(Object.isFrozen(state.history.executions[0]!.seedOutcomes[0]!.proof)).toBe(true);
+ expect(()=>{(state.history.executions[0]!.seedOutcomes[0]!.proof as any).phaseDigest='1'.repeat(64);}).toThrow();
 });
 
 function installedCreateReviewFixture(){

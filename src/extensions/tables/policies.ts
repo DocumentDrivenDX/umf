@@ -3,11 +3,11 @@ import {refKey,TableContext} from './context';
 import type {TableLifecyclePayload,TableRef,TableRowRule} from './types';
 const commands=['select','insert','update','delete'] as const;
 export function inspectPolicies(payload:TableLifecyclePayload,ctx:TableContext):void{
- const edges=new Map<string,Set<string>>();
+ const edges=new Map<string,Set<string>>();ctx.visit('table-policy-tables',ctx.path+'/tables',payload.tables.length);
  for(const[i,table]of payload.tables.entries()){
   const id=refKey(table.record);edges.set(id,new Set());
   const inspect=(rule:TableRowRule,record:TableRef,path:string,depth=0):void=>{
-   if(!ctx.charge(path,depth))return;
+   ctx.visit('table-policy-node',path);if(!ctx.charge(path,depth))return;
    if(rule.kind==='owner'||rule.kind==='memberOf'){
     const field=ctx.field(rule.field,path+'/field'),target=ctx.element(record);
     if(!target?.members?.some(m=>refKey(m)===refKey(rule.field))||field?.scalarType!=='string')ctx.add('TABLES_POLICY_FIELD',path+'/field','Owner/group rule requires a text Field of the current policy Record');
@@ -27,7 +27,7 @@ export function inspectPolicies(payload:TableLifecyclePayload,ctx:TableContext):
    }
    else if(rule.kind==='via'){
     let current=record;let valid=true;
-    for(const[j,step]of rule.path.entries()){
+    ctx.visit('table-policy-path-steps',path+'/path',rule.path.length);for(const[j,step]of rule.path.entries()){
      const location=path+'/path/'+j;
      if(step.module!==ctx.module.id){ctx.add('TABLES_POLICY_MODULE',location,'Via paths cannot access another plugin module');valid=false;break;}
      const relation=ctx.module.relationships?.find(r=>r.id===step.id);
@@ -45,7 +45,7 @@ export function inspectPolicies(payload:TableLifecyclePayload,ctx:TableContext):
     if(valid)inspect(rule.rule,current,path+'/rule',depth+1);
    }
   };
-  for(const audience of ['person','batch'] as const){
+  for(const audience of ['person','batch'] as const){ctx.visit('table-policy-commands',ctx.path+'/tables/'+i+'/policy/'+audience,commands.length);
    for(const command of commands)inspect(table.policy[audience][command],table.record,ctx.path+'/tables/'+i+'/policy/'+audience+'/'+command);
    const rules=table.policy[audience];
    if((rules.update.kind!=='deny'||rules.delete.kind!=='deny')&&rules.select.kind==='deny')ctx.add('TABLES_POLICY_SELECT',ctx.path+'/tables/'+i+'/policy/'+audience,'UPDATE/DELETE require explicit native SELECT policy/grants; the compiler cannot broaden them');

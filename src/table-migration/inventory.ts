@@ -1,13 +1,15 @@
-import {canonical,hashCanonical} from '../compilation/bundle/hash';
+import {canonical,canonicalCharged,hashCanonical,hashCanonicalCharged} from '../compilation/bundle/hash';
 import {readDocument} from '../model/document';
 import {verifyTableDeployment,type TableDeploymentBundle} from '../table-deployment';
 import {UmfError,pointer} from '../model/errors';
-import {copyJson} from '../model/json';
+import {copyJson,copyJsonCharged} from '../model/json';
+import type {AccountingContext} from '../model/internal/accounting-context';
+import {freezeSourceIndex,ownR2SourceComponents,R2WorkMeter,type R2OwnedSourceComponents,type R2BundleSourceIndex} from './inventory-r2-context';
 import {initialInventoryPrefix,inventoryCatalogIdentity,scheduleTypedInventoryEffects,type CatalogMutation,type EffectNode,type InventorySubject,type ScheduledInventoryEffects,type TypedDependency} from './inventory-graph';
 import type {PrefixFrame} from './inventory-graph';
-import {projectG10Bundle,type InventoryProjection,type InventoryChange,type InventoryFieldChange,type InventoryTable,type InventoryDelta,type CatalogProjection,type Identity,type PrefixCatalog} from './inventory-projection';
+import {projectG10Bundle,projectG10BundleWithAccounting,type InventoryProjection,type InventoryChange,type InventoryFieldChange,type InventoryTable,type InventoryDelta,type CatalogProjection,type Identity,type PrefixCatalog} from './inventory-projection';
 import {ShapeError,validateG10RequestShape,validateTableInventorySourceHistory,type G10ValidatedRequest,type HistoricalG10PlanVerifier,type TableIntent,type TableInventoryDiscoveryIntent,type TableInventoryReviewedChangeKind,type TableInventoryMigrationMarker} from './inventory-options';
-import {deriveInventorySeedLineage,type InventoryHistory} from './inventory-history';
+import {deriveInventorySeedLineage,type InventoryHistory,type SeedLineageEntry} from './inventory-history';
 import {partitionInventoryMarkersForG02,sameSourceExceptG02AndCreates} from './inventory-g02-source';
 import {sameSourceExceptG05SelectedFields,sourceFieldMeaning,sourceMappingPath} from './inventory-g05-selection';
 import {compileG02FieldEffects} from './internal';
@@ -23,6 +25,65 @@ import type {Diagnostic,Json as ModelJson} from '../model/types';
 import type {TableInventoryDiscoverySelector,TableInventoryMigrationOptions,TableInventoryMigrationRequest,TableInventorySourceHistory} from './inventory-options';
 
 type Json=null|boolean|number|string|Json[]|{[key:string]:Json};
+declare const r2SourceContextBrand:unique symbol;
+/** Opaque internal source-context identity; it is not an archive or migration capability. */
+export type R2InventorySourceContext={readonly [r2SourceContextBrand]:true};
+export type R2InventorySourceContextState={readonly owned:Readonly<Omit<R2OwnedSourceComponents,'meter'>>;readonly previous:R2BundleSourceIndex|null;readonly next:R2BundleSourceIndex;readonly history:TableInventorySourceHistory;readonly seedLineage:readonly SeedLineageEntry[];readonly budget:Readonly<{work:number;subjects:number;bytes:number}>};
+type R2InternalSourceContext={readonly view:R2InventorySourceContextState;readonly meter:R2WorkMeter;readonly historyVerifier:HistoricalG10PlanVerifier};
+const r2SourceContexts=new WeakMap<object,R2InternalSourceContext>();
+type AccountedBundleProjection=ReturnType<typeof projectG10BundleWithAccounting>;
+const scopedProjectionCache=new WeakMap<AccountingContext,Map<string,Map<'previous'|'next',AccountedBundleProjection>>>();
+/** Exact-content, request-local projection reuse; full canonical bytes are the cache key. */
+function projectG10BundleScoped(bundle:TableDeploymentBundle,side:'previous'|'next',accounting?:AccountingContext):ReturnType<typeof projectG10Bundle>{
+ if(!accounting)return projectG10Bundle(bundle,side);
+ accounting.visit('r2-bundle-projection-cache-lookup',`/${side}`);
+ const key=canonicalCharged(bundle,accounting,`/${side}/bundle-cache-key`);let cache=scopedProjectionCache.get(accounting);
+ if(!cache){cache=new Map();scopedProjectionCache.set(accounting,cache);}
+ let sides=cache.get(key);if(!sides){accounting.retainBytes('r2-bundle-cache-key',new TextEncoder().encode(key).byteLength,`/${side}/bundle-cache-key`);sides=new Map();cache.set(key,sides);}
+ const present=sides.get(side);if(present){accounting.visit('r2-bundle-projection-cache-hit',`/${side}`);return present;}
+ accounting.visit('r2-bundle-projection-cache-miss',`/${side}`);const result=projectG10BundleWithAccounting(bundle,side,accounting);
+ // Freeze all values reachable through the cached result. The exact meter is
+ // the one that paid for projection and will remain active for later history.
+ freezeSourceIndex(result,accounting as R2WorkMeter,`/${side}/frozen-index`);
+ sides.set(side,result);return result;
+}
+/**
+ * Prepare an original .2 source context only after complete source projection,
+ * retained-history recompilation and seed-lineage validation all consume the
+ * same fresh meter. The returned object is an opaque identity, not authority
+ * to resolve archives, alter schema or issue native capabilities.
+ */
+export function prepareR2InventorySourceContext(input:unknown):R2InventorySourceContext{
+ const meter=new R2WorkMeter(),owned=ownR2SourceComponents(input,meter),verifier=createHistoricalG10Verifier(meter);
+ const history=freezeOwnedHistory(validateTableInventorySourceHistory(owned.history as unknown as TableInventorySourceHistory,owned.previous as TableDeploymentBundle|null,verifier,meter),meter);
+ const previousResult=owned.previous===null?null:projectG10BundleScoped(owned.previous as TableDeploymentBundle,'previous',meter) as AccountedBundleProjection,nextResult=projectG10BundleScoped(owned.next as TableDeploymentBundle,'next',meter) as AccountedBundleProjection;
+ const previous=previousResult===null?null:freezeSourceIndex(previousResult,meter,'/previous/index'),next=freezeSourceIndex(nextResult,meter,'/next/index');
+ const seedLineage=deriveInventorySeedLineage(history as unknown as InventoryHistory,{previous:owned.previous as TableDeploymentBundle|null,next:owned.next as TableDeploymentBundle,options:{seedSets:[],retiredSeedSets:[...owned.selector.retiredSeedSets]}},verifier,meter);
+ const handle=Object.freeze(Object.create(null)) as R2InventorySourceContext;
+ const ownedView=Object.freeze({previous:owned.previous,next:owned.next,history:owned.history,selector:owned.selector,canonicalInputs:owned.canonicalInputs});const state:R2InventorySourceContextState=Object.freeze({owned:ownedView,previous,next,history,seedLineage:Object.freeze(seedLineage.map(entry=>Object.freeze({...entry}))),budget:meter.snapshot()});
+ r2SourceContexts.set(handle,Object.freeze({view:state,meter,historyVerifier:verifier}));return handle;
+}
+function freezeOwnedHistory(history:TableInventorySourceHistory,meter:R2WorkMeter):TableInventorySourceHistory{
+ const seen=new Set<object>();
+ const freeze=(value:unknown,path:string):void=>{
+  if(value===null||typeof value!=='object')return;
+  if(seen.has(value))throw new TypeError(`R2_HISTORY_CYCLE:${path}`);
+  const array=Array.isArray(value),keys=array?null:Object.keys(value);
+  meter.visit(array?'r2-history-freeze-array':'r2-history-freeze-object',path,array?(value as unknown[]).length:(keys as string[]).length+1);
+  seen.add(value);
+  if(array){
+   for(let index=0;index<value.length;index++)freeze(value[index],`${path}/${index}`);
+  }else{
+   for(const key of keys as string[]){meter.scanUtf8(key,`${path}/@key`);freeze((value as Record<string,unknown>)[key],`${path}/${key}`);}
+  }
+  Object.freeze(value);
+ };
+ freeze(history,'/history');return history;
+}
+/** Resolve only a handle issued after this module's original verification path. */
+export function inspectR2InventorySourceContext(handle:unknown):R2InventorySourceContextState{
+ if(handle===null||typeof handle!=='object')throw new TypeError('R2_CONTEXT_HANDLE');const state=r2SourceContexts.get(handle);if(!state)throw new TypeError('R2_CONTEXT_HANDLE');return state.view;
+}
 const sameRef=(a:TableRef,b:TableRef)=>a.module===b.module&&a.element===b.element;
 const ik=(value:Identity)=>hashCanonical(value);
 type MetadataPaths={prepare:'/inventory/metadata/prepare';approval:'/inventory/metadata/approval';publication:'/inventory/metadata/publication'};
@@ -48,10 +109,12 @@ function inventorySubject(subject:InventorySubject):Json {
  return {kind:'metadata',profile:subject.profile};
 }
 function serializedStep(effect:EffectNode,id:string,pre:string,post:string):Record<string,Json>{return {id,kind:effect.kind,sourcePath:effect.sourcePath,transaction:effect.transaction,sql:effect.sql,operation:effect.operation,inventorySubject:inventorySubject(effect.subject),preconditions:{kind:'inventory-prefix',prefixDigest:pre},expectedOutcome:{kind:'inventory-prefix',prefixDigest:post},verification:'native-catalog-privileges-and-role-scope',recovery:effect.recovery,...(effect.operation==='apply-seeds'&&effect.subject.kind==='seed'?{seedSets:effect.subject.sets}:{}),...(effect.operation==='apply-backfill'&&effect.dataBinding?{dataBinding:effect.dataBinding}:{})};}
-function serialize(schedule:ScheduledInventoryEffects,rawEffects:EffectNode[],metadataIds:{prepare:string;approval:string;publication:string}):{steps:Record<string,Json>[];phases:Record<string,Json>[];prefixes:Json[]} {
+function serialize(schedule:ScheduledInventoryEffects,rawEffects:EffectNode[],metadataIds:{prepare:string;approval:string;publication:string},accounting?:AccountingContext):{steps:Record<string,Json>[];phases:Record<string,Json>[];prefixes:Json[]} {
+ accounting?.visit('inventory-plan-serialize-effects','/effects',rawEffects.length);accounting?.visit('inventory-plan-serialize-prefixes','/prefixes',schedule.prefixes.length);
  const effectById=new Map(rawEffects.map(effect=>[effect.id,effect])),idByOld=new Map<string,string>();let sequence=1;for(const id of [metadataIds.prepare,metadataIds.approval,...schedule.steps.map(step=>step.id),metadataIds.publication])idByOld.set(id,`step-${String(sequence++).padStart(5,'0')}`);
- const prefixes=schedule.prefixes.map(frame=>({...frame,completedSteps:frame.completedSteps.map(id=>idByOld.get(id)??fail('UNBOUND_COMPLETED_STEP'))}));
- for(const prefix of prefixes){
+ const prefixes=schedule.prefixes.map((frame,index)=>{accounting?.visit('inventory-plan-serialize-prefix-steps',`/prefixes/${index}`,frame.completedSteps.length);return {...frame,completedSteps:frame.completedSteps.map(id=>idByOld.get(id)??fail('UNBOUND_COMPLETED_STEP'))};});
+ for(const [prefixIndex,prefix] of prefixes.entries()){
+  accounting?.visit('inventory-plan-serialize-table-states',`/prefixes/${prefixIndex}/tableStates`,prefix.tableStates.length);
   for(const [index,raw]of prefix.tableStates.entries()){
    if(!raw||typeof raw!=='object'||Array.isArray(raw))fail('TABLE_STATE_SHAPE');
    const tableState=raw as Record<string,Json>;
@@ -61,13 +124,13 @@ function serialize(schedule:ScheduledInventoryEffects,rawEffects:EffectNode[],me
     const newId=idByOld.get(oldId);if(!newId)fail('UNBOUND_TABLE_STATE_STEP:'+index+':'+key);tableState[key]=newId;
    }
   }
-  const body={...prefix} as Record<string,Json>;delete body.digest;(prefix as Record<string,Json>).digest=hashCanonical(body);
+   const body={...prefix} as Record<string,Json>;delete body.digest;(prefix as Record<string,Json>).digest=accounting?hashCanonicalCharged(body,accounting,`/prefixes/${prefixIndex}`):hashCanonical(body);
  }
- const steps:Record<string,Json>[]=[];for(let phaseIndex=0;phaseIndex<schedule.phases.length;phaseIndex++){
+ const steps:Record<string,Json>[]=[];accounting?.visit('inventory-plan-serialize-phases','/phases',schedule.phases.length);for(let phaseIndex=0;phaseIndex<schedule.phases.length;phaseIndex++){
   const phase=schedule.phases[phaseIndex]!,before=prefixes[phaseIndex]?.digest,after=prefixes[phaseIndex+1]?.digest;if(!before||!after)fail('PHASE_PREFIX_PAIR');
-  for(const oldId of phase.steps){const id=idByOld.get(oldId);if(!id)fail('UNBOUND_PHASE_STEP');const metadata=oldId===metadataIds.prepare?metadataStep(id,'prepare-inventory-metadata',metadataPaths.prepare):oldId===metadataIds.approval?metadataStep(id,'record-inventory-approval',metadataPaths.approval):oldId===metadataIds.publication?metadataStep(id,'publish-inventory',metadataPaths.publication):effectById.get(oldId);if(!metadata)fail('UNBOUND_EFFECT');steps.push(serializedStep(metadata,id,before,after));}
+  accounting?.visit('inventory-plan-serialize-phase-steps',`/phases/${phaseIndex}`,phase.steps.length);for(const oldId of phase.steps){const id=idByOld.get(oldId);if(!id)fail('UNBOUND_PHASE_STEP');const metadata=oldId===metadataIds.prepare?metadataStep(id,'prepare-inventory-metadata',metadataPaths.prepare):oldId===metadataIds.approval?metadataStep(id,'record-inventory-approval',metadataPaths.approval):oldId===metadataIds.publication?metadataStep(id,'publish-inventory',metadataPaths.publication):effectById.get(oldId);if(!metadata)fail('UNBOUND_EFFECT');steps.push(serializedStep(metadata,id,before,after));}
  }
- const phases=schedule.phases.map(phase=>({id:phase.id,kind:phase.kind,transaction:phase.transaction,steps:phase.steps.map(id=>idByOld.get(id)??fail('UNBOUND_PHASE_ID'))}));
+ const phases=schedule.phases.map((phase,index)=>{accounting?.visit('inventory-plan-serialize-phase-ids',`/phases/${index}`,phase.steps.length);return {id:phase.id,kind:phase.kind,transaction:phase.transaction,steps:phase.steps.map(id=>idByOld.get(id)??fail('UNBOUND_PHASE_ID'))};});
  return {steps,phases,prefixes};
 }
 
@@ -115,9 +178,10 @@ function node(operation:InternalTableDeploymentOperationRecord,sourceOrder:numbe
  return {id:operation.stepId,kind,operation:operation.operation==='create-table'?'create-table':operation.operation==='enable-rls'?'enable-rls':operation.operation==='force-rls'?'force-rls':operation.operation==='set-comment'?'set-comment':'dependency-add',subject,sourcePath:operation.sourcePath,sql:operation.sql,transaction:operation.transaction,recovery:'rollback-transaction',sourceOrder,atomicGroup,transition};
 }
 /** Translate exact typed renderer tags into prefix effects. It never inspects SQL text. */
-function deriveInitialRendererEffectsCore(bundle:TableDeploymentBundle,projection:CatalogProjection,previous:CatalogProjection|null=null,prepared=false):{effects:EffectNode[];edges:TypedDependency[];publicationObligations:SourcePublicationObligation[]}{
- const effects:EffectNode[]=[],creationGroup='initial-table-install',existingTables=new Set(previous?.catalog.tables.map(row=>row.identity.table).filter((x):x is string=>x!==null)??[]),createdTables=new Set(projection.catalog.tables.map(row=>row.identity.table).filter((x):x is string=>x!==null).filter(table=>!existingTables.has(table))),grantOperation=previous===null?projection.rendererOperations.find(item=>item.operation==='grant-schema-usage'):undefined;
+function deriveInitialRendererEffectsCore(bundle:TableDeploymentBundle,projection:CatalogProjection,previous:CatalogProjection|null=null,prepared=false,accounting?:AccountingContext):{effects:EffectNode[];edges:TypedDependency[];publicationObligations:SourcePublicationObligation[]}{
+ accounting?.visit('g10-renderer-previous-tables','/previous/catalog/tables',previous?.catalog.tables.length??0);accounting?.visit('g10-renderer-next-tables','/next/catalog/tables',projection.catalog.tables.length);const effects:EffectNode[]=[],creationGroup='initial-table-install',existingTables=new Set(previous?.catalog.tables.map(row=>row.identity.table).filter((x):x is string=>x!==null)??[]),createdTables=new Set(projection.catalog.tables.map(row=>row.identity.table).filter((x):x is string=>x!==null).filter(table=>!existingTables.has(table))),grantOperation=previous===null?projection.rendererOperations.find(item=>item.operation==='grant-schema-usage'):undefined;
  for(const [sourceOrder,operation] of projection.rendererOperations.entries()){
+  accounting?.visit('g10-renderer-effect-construction',`/operations/${operation.stepId}`);
   if(operation.operation==='grant-schema-usage')continue;
   const operationTable=operation.subject.kind==='schema-grant'?null:'table' in operation.subject?operation.subject.table:null;
   if(operationTable!==null&&!createdTables.has(operationTable))continue;
@@ -126,7 +190,7 @@ function deriveInitialRendererEffectsCore(bundle:TableDeploymentBundle,projectio
    if(operation.subject.kind!=='table')throw new Error('G10_RENDERED_CREATE_SUBJECT');
    const tableId=operation.subject.table,tableRecord=operation.subject.record;
    const table=findSubject(projection.catalog,'tables',{kind:'table',table:tableId,subject:tableRecord as unknown as Json});
-   const embedded={columns:projection.catalog.columns.filter(row=>row.identity.table===tableId),keys:projection.catalog.keys.filter(row=>row.identity.table===tableId),checks:projection.catalog.checks.filter(row=>row.identity.table===tableId)};
+   const embedded={columns:projection.catalog.columns.filter(row=>{accounting?.visit('g10-renderer-create-column-scan',`/catalog/columns/${tableId}`);return row.identity.table===tableId;}),keys:projection.catalog.keys.filter(row=>{accounting?.visit('g10-renderer-create-key-scan',`/catalog/keys/${tableId}`);return row.identity.table===tableId;}),checks:projection.catalog.checks.filter(row=>{accounting?.visit('g10-renderer-create-check-scan',`/catalog/checks/${tableId}`);return row.identity.table===tableId;})};
    const meaning={tableMeaning:effectClone(table.meaning),embeddedCatalog:effectClone(embedded)} as unknown as Json;
    effects.push(node(operation,sourceOrder,creationGroup,'table',{kind:'table',table:tableId,record:effectClone(tableRecord)},{action:'add',collection:'tables',meaning}));
    continue;
@@ -140,16 +204,16 @@ function deriveInitialRendererEffectsCore(bundle:TableDeploymentBundle,projectio
   }
   const {collection,identity}=dependencyIdentity(operation),subject=findSubject(projection.catalog,collection,identity);
   const effectKind=operation.kind;
-  const dependencyKind=collection==='foreignKeys'?'foreignKey':collection==='indexes'?'index':collection==='policies'?'policy':collection==='comments'?'comment':'grant';const effectId=['policy','comment','grant'].includes(dependencyKind)?JSON.stringify(identity.subject):String(identity.subject);const effectSubject:EffectNode['subject']={kind:'dependency',table:identity.table!,dependencyKind,id:effectId,sourcePath:operation.sourcePath,meaningDigest:hashCanonical(subject.meaning)};
+  const dependencyKind=collection==='foreignKeys'?'foreignKey':collection==='indexes'?'index':collection==='policies'?'policy':collection==='comments'?'comment':'grant';const effectId=['policy','comment','grant'].includes(dependencyKind)?JSON.stringify(identity.subject):String(identity.subject);const effectSubject:EffectNode['subject']={kind:'dependency',table:identity.table!,dependencyKind,id:effectId,sourcePath:operation.sourcePath,meaningDigest:accounting?hashCanonicalCharged(subject.meaning,accounting,`/operations/${operation.stepId}/meaning`):hashCanonical(subject.meaning)};
   effects.push(node(operation,sourceOrder,creationGroup,effectKind,effectSubject,{action:'add',collection:collection as EffectNode['transition']['collection'],meaning:{catalogMeaning:effectClone(subject.meaning),validation:subject.validation??null,validity:subject.validity??null} as unknown as Json}));
  }
  if(grantOperation){
   if(grantOperation.subject.kind!=='schema-grant'||grantOperation.subject.schema!==bundle.configuration.schema||grantOperation.subject.privilege!=='USAGE'||JSON.stringify(grantOperation.subject.audiences)!==JSON.stringify(['person','batch']))throw new Error('G10_RENDERED_SCHEMA_GRANT_SUBJECT');
-  const schemaGrants=projection.catalog.grants.filter(row=>row.identity.table===null&&((row.meaning as any).effect==='grant-schema-usage'));
+  const schemaGrants=projection.catalog.grants.filter(row=>{accounting?.visit('g10-renderer-schema-grant-scan','/catalog/grants');return row.identity.table===null&&((row.meaning as any).effect==='grant-schema-usage');});
   if(schemaGrants.length!==2||new Set(schemaGrants.map(row=>(row.meaning as any).role)).size!==2)throw new Error('G10_RENDERED_SCHEMA_GRANT_ROWS');
   effects.push(node(grantOperation,projection.rendererOperations.length,null,'grant',{kind:'schema-grant',schema:grantOperation.subject.schema,audiences:['person','batch'],privilege:'USAGE'},{action:'add',collection:'grants',meaning:{grants:schemaGrants.map(row=>({identity:effectClone(row.identity),meaning:effectClone(row.meaning)}))} as unknown as Json}));
  }
- const partition=partitionRendererDependenciesCore(bundle,projection,prepared),edges:TypedDependency[]=partition.physicalEdges.filter(edge=>{const touchesCreated=(identityDigest:string)=>{for(const table of createdTables){const tableHash=hashCanonical({kind:'table',table,subject:projection.catalog.tables.find(row=>row.identity.table===table)?.identity.subject});if(identityDigest===tableHash)return true;for(const collection of Object.values(projection.catalog))for(const row of collection)if(row.identity.table===table&&hashCanonical(row.identity)===identityDigest)return true;}return false;};return touchesCreated(edge.from)||touchesCreated(edge.to);}).map(edge=>({dependent:edge.from,prerequisite:edge.to,sourcePath:edge.sourcePath,reason:edge.reason,state:edge.state}));
+ const partition=partitionRendererDependenciesCore(bundle,projection,prepared,accounting),edges:TypedDependency[]=partition.physicalEdges.filter(edge=>{accounting?.visit('g10-renderer-created-edge-filter',`/dependencies/${edge.sourcePath}`);const touchesCreated=(identityDigest:string)=>{for(const table of createdTables){accounting?.visit('g10-renderer-created-table-scan',`/tables/${table}`);const tableIdentity={kind:'table',table,subject:projection.catalog.tables.find(row=>row.identity.table===table)?.identity.subject};const tableHash=accounting?hashCanonicalCharged(tableIdentity,accounting,`/tables/${table}`):hashCanonical(tableIdentity);if(identityDigest===tableHash)return true;for(const [collection,rows]of Object.entries(projection.catalog))for(const row of rows){accounting?.visit('g10-renderer-created-catalog-scan',`/catalog/${collection}`);if(row.identity.table===table&&(accounting?hashCanonicalCharged(row.identity,accounting,`/catalog/${collection}/identity`):hashCanonical(row.identity))===identityDigest)return true;}}return false;};return touchesCreated(edge.from)||touchesCreated(edge.to);}).map(edge=>({dependent:edge.from,prerequisite:edge.to,sourcePath:edge.sourcePath,reason:edge.reason,state:edge.state}));
  if(grantOperation){
   const grant=effects.at(-1)!;for(const prior of effects.slice(0,-1))edges.push({dependent:hashSubject(inventoryCatalogIdentity(grant.subject)),prerequisite:hashSubject(inventoryCatalogIdentity(prior.subject)),sourcePath:grant.sourcePath,reason:'schema-grant-after-required-effects',state:'present'});
  }
@@ -172,19 +236,20 @@ function sameProjection(left:CatalogProjection,right:CatalogProjection):boolean{
  const paths=(value:CatalogProjection)=>[...value.sourcePaths.entries()].sort(([a],[b])=>a.localeCompare(b));
  return canonical({catalog:left.catalog,dependencies:left.dependencies,operations:left.operations,rendererOperations:left.rendererOperations,seedStates:left.seedStates,sourcePaths:paths(left)})===canonical({catalog:right.catalog,dependencies:right.dependencies,operations:right.operations,rendererOperations:right.rendererOperations,seedStates:right.seedStates,sourcePaths:paths(right)});
 }
-function partitionRendererDependenciesCore(bundle:TableDeploymentBundle,projection:CatalogProjection,prepared=false):ProjectionDependencyPartition{
+function partitionRendererDependenciesCore(bundle:TableDeploymentBundle,projection:CatalogProjection,prepared=false,accounting?:AccountingContext):ProjectionDependencyPartition{
  if(!prepared&&!sameProjection(projection,projectG10Bundle(bundle,'next').projection))throw new Error('G10_DEPENDENCY_PROJECTION_NOT_SOURCE_DERIVED');
  const catalog=new Map<string,{collection:keyof PrefixCatalog;row:EffectSubject}>(),owners=new Map<string,{row:EffectSubject;path:string}>(),tablePaths=new Map<string,string>();
  for(const collection of Object.keys(catalogCollectionByKind) as (keyof typeof catalogCollectionByKind)[]){
-  const target=catalogCollectionByKind[collection];for(const row of projection.catalog[target]){const digest=hashCanonical(row.identity);if(catalog.has(digest))throw new Error('G10_DEPENDENCY_DUPLICATE_CATALOG_IDENTITY');catalog.set(digest,{collection:target,row});if(target==='tables'&&row.identity.table){const path=projection.sourcePaths.get(digest);if(!path)throw new Error('G10_DEPENDENCY_TABLE_PATH');tablePaths.set(row.identity.table,path);}}
+  const target=catalogCollectionByKind[collection];for(const row of projection.catalog[target]){accounting?.visit('g10-dependency-catalog-index',`/catalog/${target}`);const digest=accounting?hashCanonicalCharged(row.identity,accounting,`/catalog/${target}/identity`):hashCanonical(row.identity);if(catalog.has(digest))throw new Error('G10_DEPENDENCY_DUPLICATE_CATALOG_IDENTITY');catalog.set(digest,{collection:target,row});if(target==='tables'&&row.identity.table){const path=projection.sourcePaths.get(digest);if(!path)throw new Error('G10_DEPENDENCY_TABLE_PATH');tablePaths.set(row.identity.table,path);}}
  }
- for(const row of projection.operations){const kind=row.identity.kind;if(kind!=='operation'&&kind!=='seed-set')throw new Error('G10_DEPENDENCY_UNKNOWN_SOURCE_OWNER');if(row.identity.table!==null||typeof row.identity.subject!=='string'||!row.identity.subject)throw new Error('G10_DEPENDENCY_SOURCE_OWNER_ID');const digest=hashCanonical(row.identity),path=projection.sourcePaths.get(digest);if(!path||!path.startsWith('/'))throw new Error('G10_DEPENDENCY_SOURCE_OWNER_PATH');if(owners.has(digest))throw new Error('G10_DEPENDENCY_DUPLICATE_SOURCE_OWNER');owners.set(digest,{row,path});}
+ for(const row of projection.operations){accounting?.visit('g10-dependency-owner-index','/operations');const kind=row.identity.kind;if(kind!=='operation'&&kind!=='seed-set')throw new Error('G10_DEPENDENCY_UNKNOWN_SOURCE_OWNER');if(row.identity.table!==null||typeof row.identity.subject!=='string'||!row.identity.subject)throw new Error('G10_DEPENDENCY_SOURCE_OWNER_ID');const digest=accounting?hashCanonicalCharged(row.identity,accounting,'/operations/identity'):hashCanonical(row.identity),path=projection.sourcePaths.get(digest);if(!path||!path.startsWith('/'))throw new Error('G10_DEPENDENCY_SOURCE_OWNER_PATH');if(owners.has(digest))throw new Error('G10_DEPENDENCY_DUPLICATE_SOURCE_OWNER');owners.set(digest,{row,path});}
  const physicalEdges:CatalogProjection['dependencies']=[],publicationObligations:SourcePublicationObligation[]=[];let claimed=0;
- for(const edge of projection.dependencies){
+ accounting?.visit('g10-dependency-edges','/dependencies',projection.dependencies.length);for(const edge of projection.dependencies){
+  if(accounting)hashCanonicalCharged(edge,accounting,`/dependencies/${claimed}`);
   if(!edge||typeof edge.from!=='string'||typeof edge.to!=='string'||typeof edge.reason!=='string'||typeof edge.sourcePath!=='string'||!edge.sourcePath.startsWith('/')||edge.state!=='present')throw new Error('G10_DEPENDENCY_EDGE_SHAPE');
   const owner=owners.get(edge.from),target=catalog.get(edge.to);if(!target)throw new Error('G10_DEPENDENCY_TARGET_UNBOUND');
   if(owner){const kind=owner.row.identity.kind;if(edge.sourcePath!==owner.path||!sourceOwnerReason(kind,edge.reason,target.row.identity.kind))throw new Error('G10_DEPENDENCY_SOURCE_OWNER_MISMATCH');
-   if(kind==='seed-set'){const meaning=owner.row.meaning as any,seedState=projection.seedStates.find(seed=>seed.id===owner.row.identity.subject);if(!meaning||meaning.id!==owner.row.identity.subject||!seedState||seedState.definitionDigest!==hashCanonical(meaning)||seedState.sourcePath!==owner.path||seedState.state!=='not-run')throw new Error('G10_DEPENDENCY_SEED_OWNER_MISMATCH');}
+   if(kind==='seed-set'){const meaning=owner.row.meaning as any;let seedState:CatalogProjection['seedStates'][number]|undefined;for(const seed of projection.seedStates){accounting?.visit('g10-dependency-seed-owner-search','/seedStates');if(seed.id===owner.row.identity.subject){seedState=seed;break;}}if(!meaning||meaning.id!==owner.row.identity.subject||!seedState||seedState.definitionDigest!==(accounting?hashCanonicalCharged(meaning,accounting,'/operations/seed/meaning'):hashCanonical(meaning))||seedState.sourcePath!==owner.path||seedState.state!=='not-run')throw new Error('G10_DEPENDENCY_SEED_OWNER_MISMATCH');}
    else {const meaning=owner.row.meaning as any;if(!meaning||!meaning.operation||meaning.operation.id!==owner.row.identity.subject||!obj(meaning.operation.body))throw new Error('G10_DEPENDENCY_OPERATION_OWNER_MISMATCH');}
    publicationObligations.push({ownerKind:kind,ownerId:owner.row.identity.subject as string,ownerSourcePath:owner.path,targetCollection:target.collection,targetIdentity:target.row.identity,sourcePath:edge.sourcePath,reason:edge.reason});claimed++;continue;
   }
@@ -204,10 +269,10 @@ export function verifySourcePublicationCoverage(bundle:TableDeploymentBundle,obl
 }
 
 /** Rebind only compiler-owned diagnostic coordinates on otherwise identical retained rows. */
-export function deriveG10ProvenanceMutations(previous:CatalogProjection|null,next:CatalogProjection,effects:readonly EffectNode[]):CatalogMutation[]{
+export function deriveG10ProvenanceMutations(previous:CatalogProjection|null,next:CatalogProjection,effects:readonly EffectNode[],accounting?:AccountingContext):CatalogMutation[]{
  if(!previous)return [];
  const touched=new Set<string>();
- for(const effect of effects){touched.add(hashCanonical(inventoryCatalogIdentity(effect.subject)));for(const mutation of effect.catalogMutations??[])touched.add(hashCanonical(mutation.identity));}
+ for(const effect of effects){accounting?.visit('r2-provenance-touched-effect','/effects');touched.add(accounting?hashCanonicalCharged(inventoryCatalogIdentity(effect.subject),accounting,'/effects/subject'):hashCanonical(inventoryCatalogIdentity(effect.subject)));for(const mutation of effect.catalogMutations??[]){accounting?.visit('r2-provenance-touched-mutation','/effects/catalogMutations');touched.add(accounting?hashCanonicalCharged(mutation.identity,accounting,'/effects/catalogMutations/identity'):hashCanonical(mutation.identity));}}
  const out:CatalogMutation[]=[];
  const pathSlot=(collection:string,row:EffectSubject):{container:Record<string,any>;key:string}|null=>{
   const meaning=row.meaning as any;
@@ -218,10 +283,10 @@ export function deriveG10ProvenanceMutations(previous:CatalogProjection|null,nex
  const rowJson=(row:EffectSubject):Json=>({identity:effectClone(row.identity) as unknown as Json,meaning:effectClone(row.meaning),state:row.state,...(row.validation===undefined?{}:{validation:row.validation}),...(row.validity===undefined?{}:{validity:row.validity})});
  for(const collection of ['columns','keys','checks','foreignKeys','indexes','policies','grants','comments'] as const){
   const oldRows=previous.catalog[collection],newRows=next.catalog[collection];
-  for(const oldRow of oldRows){if(oldRow.identity.table===null||touched.has(hashCanonical(oldRow.identity)))continue;const candidates=newRows.filter(row=>canonical(row.identity)===canonical(oldRow.identity));if(candidates.length!==1)continue;const fresh=candidates[0]!,oldSlot=pathSlot(collection,oldRow),newSlot=pathSlot(collection,fresh);if(!oldSlot||!newSlot)continue;const beforePath=oldSlot.container[oldSlot.key],afterPath=newSlot.container[newSlot.key];if(typeof beforePath!=='string'||typeof afterPath!=='string'||beforePath===afterPath)continue;
-   const before=rowJson(oldRow),after=rowJson(fresh),beforeMeaning=(before as any).meaning,newMeaning=(after as any).meaning;
+  for(const oldRow of oldRows){accounting?.visit('r2-provenance-old-row','/previous/catalog/'+collection);const oldIdentity=accounting?canonicalCharged(oldRow.identity,accounting,'/previous/catalog/'+collection+'/identity'):canonical(oldRow.identity);if(oldRow.identity.table===null||touched.has(accounting?hashCanonicalCharged(oldRow.identity,accounting,'/previous/catalog/'+collection+'/identity'):hashCanonical(oldRow.identity)))continue;const candidates:EffectSubject[]=[];for(const row of newRows){accounting?.visit('r2-provenance-next-row','/next/catalog/'+collection);if((accounting?canonicalCharged(row.identity,accounting,'/next/catalog/'+collection+'/identity'):canonical(row.identity))===oldIdentity)candidates.push(row);}if(candidates.length!==1)continue;const fresh=candidates[0]!,oldSlot=pathSlot(collection,oldRow),newSlot=pathSlot(collection,fresh);if(!oldSlot||!newSlot)continue;const beforePath=oldSlot.container[oldSlot.key],afterPath=newSlot.container[newSlot.key];if(typeof beforePath!=='string'||typeof afterPath!=='string'||beforePath===afterPath)continue;
+   const before=rowJson(oldRow),after=rowJson(fresh);if(accounting){hashCanonicalCharged(before,accounting,'/previous/catalog/'+collection+'/row-copy');hashCanonicalCharged(after,accounting,'/next/catalog/'+collection+'/row-copy');}const beforeMeaning=(before as any).meaning,newMeaning=(after as any).meaning;
    if(['columns','keys','checks','foreignKeys','indexes','comments'].includes(collection)){delete beforeMeaning.expectation.sourcePath;delete newMeaning.expectation.sourcePath;}else{delete beforeMeaning.sourcePath;delete newMeaning.sourcePath;}
-   if(canonical(before)!==canonical(after))throw new Error('G10_PROVENANCE_NONPATH_CHANGE:'+collection);
+   if((accounting?canonicalCharged(before,accounting,'/provenance/before'):canonical(before))!==(accounting?canonicalCharged(after,accounting,'/provenance/after'):canonical(after)))throw new Error('G10_PROVENANCE_NONPATH_CHANGE:'+collection);
    const mutation:CatalogMutation={collection,action:'replace',identity:effectClone(oldRow.identity) as unknown as Json,before:rowJson(oldRow),after:rowJson(fresh)};out.push(mutation);
   }
  }
@@ -238,13 +303,13 @@ function inventoryCatalogIdentityFromCatalog(value:EffectIdentity):InventorySubj
 /** Lower only G02 .4 fills on retained carriers; no legacy migration plan is
  * synthesized. The internal constructor verifies exact effects against both
  * complete original bundles and the selected new-table bindings. */
-export function deriveG02FieldEffects(previous:TableDeploymentBundle,next:TableDeploymentBundle,previousProjection:CatalogProjection,nextProjection:CatalogProjection,options:TableMigrationOptions,sourceOrder:number):{effects:EffectNode[];edges:TypedDependency[]}{
- const records=compileG02FieldEffects({previous,next,options,createdTables:nextProjection.catalog.tables.map(row=>row.identity.table).filter((table):table is string=>table!==null&&!previousProjection.catalog.tables.some(old=>old.identity.table===table))});
+export function deriveG02FieldEffects(previous:TableDeploymentBundle,next:TableDeploymentBundle,previousProjection:CatalogProjection,nextProjection:CatalogProjection,options:TableMigrationOptions,sourceOrder:number,accounting?:AccountingContext):{effects:EffectNode[];edges:TypedDependency[]}{
+ accounting?.visit('g10-g02-created-table-discovery','/g02/createdTables',nextProjection.catalog.tables.length+previousProjection.catalog.tables.length);const createdTables=nextProjection.catalog.tables.map(row=>row.identity.table).filter((table):table is string=>table!==null&&!previousProjection.catalog.tables.some(old=>old.identity.table===table));const records=compileG02FieldEffects({previous,next,options,createdTables,...(accounting?{accounting}:{})});accounting?.visit('g10-g02-rendered-effect-records','/g02/effects',records.length);
  if(!records.length||records.some(record=>record.field.module!==records[0]!.field.module||record.field.element!==records[0]!.field.element||record.table!==records[0]!.table))throw new Error('G10_G02_TYPED_EFFECT_SHAPE');
  const field=records[0]!.field,table=records[0]!.table,fill=records.find(record=>record.role==='backfill');
  if(!fill?.rowOperationId)throw new Error('G10_G02_EFFECT_BINDING');
- const target=nextProjection.catalog.columns.filter(row=>row.identity.table===table&&canonical(row.identity.subject)===canonical(field));
- const old=previousProjection.catalog.columns.filter(row=>row.identity.table===table&&canonical(row.identity.subject)===canonical(field));
+ const target=nextProjection.catalog.columns.filter(row=>{accounting?.visit('g10-g02-target-column-scan','/next/catalog/columns');return row.identity.table===table&&(accounting?hashCanonicalCharged(row.identity.subject,accounting,'/g02/target/identity')===hashCanonicalCharged(field,accounting,'/g02/field'):canonical(row.identity.subject)===canonical(field));});
+ const old=previousProjection.catalog.columns.filter(row=>{accounting?.visit('g10-g02-prior-column-scan','/previous/catalog/columns');return row.identity.table===table&&(accounting?hashCanonicalCharged(row.identity.subject,accounting,'/g02/prior/identity')===hashCanonicalCharged(field,accounting,'/g02/field'):canonical(row.identity.subject)===canonical(field));});
  if(target.length!==1||!target[0]!.meaning||old.length>1||old.length===1&&!old[0]!.meaning)throw new Error('G10_G02_COLUMN_PREFIX_BINDING');
  const oldColumn=old.length===1;
  const tableBindings=next.expectedCatalog.tables.filter(candidate=>candidate.id===table),columns=tableBindings[0]?.columns.filter(column=>canonical(column.field)===canonical(field))??[];
@@ -260,6 +325,7 @@ export function deriveG02FieldEffects(previous:TableDeploymentBundle,next:TableD
   return meaning as Json;
  };
  for(const [offset,record] of records.entries()){
+  accounting?.visit('g10-g02-effect-emission',`/g02/effects/${offset}`);accounting?.scanUtf8(record.sql,`/g02/effects/${offset}/sql`);accounting?.scanUtf8(record.sourcePath,`/g02/effects/${offset}/sourcePath`);
   const common={id:`g02-${bindingKey}-${record.role}-${offset}`,kind:'table',subject,sourcePath:record.sourcePath,sql:record.sql,transaction:'required' as const,recovery:'rollback-transaction' as const,sourceOrder:sourceOrder+offset+1,atomicGroup:group};
   if(record.role==='backfill')effects.push({...common,kind:'backfill',operation:'apply-backfill',sql:'',dataBinding:{profile:'umf.table-inventory-backfill/0.1',selectionIndex:0,operationId:record.rowOperationId!,previousSourceDigest:previous.sourceDigest,nextSourceDigest:next.sourceDigest},transition:{action:'update',collection:'columns',meaning:{}}});
   else if(record.role==='add-column'){
@@ -324,13 +390,13 @@ export function deriveG02FieldEffects(previous:TableDeploymentBundle,next:TableD
 }
 
 export interface InventoryPlanInput {id:string;predecessor:{id:string;digest:string}|null;previous:TableDeploymentBundle|null;next:TableDeploymentBundle;options:Json;history:Json;historyBinding:{profile:'umf.table-inventory-source-history/0.1';count:number;digest:string};inventory:InventoryDelta;initialPrefix:Omit<import('./inventory-graph').PrefixFrame,'digest'>;nextCatalog:Record<string,Json[]>;effects:EffectNode[];dependencies:TypedDependency[];publicationObligations:SourcePublicationObligation[];provenanceMutations:CatalogMutation[];seedExecution:'none'|{version:'umf.table-seed-execution/0.1';sets:string[]};review:Json[];}
-function verifySourcePublicationObligations(obligations:readonly SourcePublicationObligation[],schedule:ScheduledInventoryEffects):void{
+function verifySourcePublicationObligations(obligations:readonly SourcePublicationObligation[],schedule:ScheduledInventoryEffects,accounting?:AccountingContext):void{
  const published=schedule.prefixes.at(-1);if(!published||published.metadata.state!=='published')fail('SOURCE_PUBLICATION_PREFIX');
- for(const obligation of obligations){
+ accounting?.visit('inventory-publication-obligation-check','/publicationObligations',obligations.length);for(const obligation of obligations){
   if(!obligation||!['operation','seed-set'].includes(obligation.ownerKind)||!obligation.ownerId||!obligation.ownerSourcePath.startsWith('/')||obligation.sourcePath!==obligation.ownerSourcePath||!['operation-requires-table','operation-requires-field','operation-requires-cursor-key','operation-requires-conflict-key','seed-set-requires-table'].includes(obligation.reason))fail('SOURCE_PUBLICATION_OBLIGATION_SHAPE');
   if(obligation.ownerKind==='operation'&&!obligation.reason.startsWith('operation-requires-')||obligation.ownerKind==='seed-set'&&obligation.reason!=='seed-set-requires-table')fail('SOURCE_PUBLICATION_OWNER_REASON');
   const targetKind=obligation.targetIdentity?.kind,targetCollection=targetKind==='table'?'tables':targetKind==='column'?'columns':targetKind==='key'?'keys':undefined;if(!targetCollection||obligation.targetCollection!==targetCollection||obligation.ownerKind==='operation'&&((obligation.reason==='operation-requires-table'&&targetKind!=='table')||(obligation.reason==='operation-requires-field'&&targetKind!=='column')||(['operation-requires-cursor-key','operation-requires-conflict-key'].includes(obligation.reason)&&targetKind!=='key'))||obligation.ownerKind==='seed-set'&&targetKind!=='table')fail('SOURCE_PUBLICATION_TARGET_KIND');
-  const rows=published.catalog[obligation.targetCollection];if(!Array.isArray(rows)||rows.filter(row=>row&&typeof row==='object'&&!Array.isArray(row)&&hashCanonical((row as Record<string,Json>).identity)===hashCanonical(obligation.targetIdentity)&&(row as Record<string,Json>).state==='present').length!==1)fail('SOURCE_PUBLICATION_TARGET_MISSING:'+obligation.ownerKind+':'+obligation.ownerId);
+  const rows=published.catalog[obligation.targetCollection];if(!Array.isArray(rows))fail('SOURCE_PUBLICATION_TARGET_MISSING:'+obligation.ownerKind+':'+obligation.ownerId);let found=0;for(const row of rows){accounting?.visit('inventory-publication-target-row',`/publicationObligations/${obligation.ownerId}`);if(row&&typeof row==='object'&&!Array.isArray(row)&&(accounting?hashCanonicalCharged((row as Record<string,Json>).identity,accounting,'/publicationObligations/identity'):hashCanonical((row as Record<string,Json>).identity))===(accounting?hashCanonicalCharged(obligation.targetIdentity,accounting,'/publicationObligations/target'):hashCanonical(obligation.targetIdentity))&&(row as Record<string,Json>).state==='present')found++;}if(found!==1)fail('SOURCE_PUBLICATION_TARGET_MISSING:'+obligation.ownerKind+':'+obligation.ownerId);
  }
 }
 /** Construct the closed unpublished G10 plan from already verified source projections and typed renderer effects. */
@@ -339,28 +405,29 @@ export function compileInventoryPlan(input:InventoryPlanInput):Record<string,Jso
  try{verifySourcePublicationCoverage(next,input.publicationObligations);}catch{fail('SOURCE_PUBLICATION_SOURCE_COVERAGE');}
  return compileInventoryPlanCore(input);
 }
-function compileInventoryPlanCore(input:InventoryPlanInput):Record<string,Json>{
+function compileInventoryPlanCore(input:InventoryPlanInput,accounting?:AccountingContext):Record<string,Json>{
  const previous=input.previous,next=input.next;
- const sources=input.effects.map(effect=>({...effect})),metadataIds={prepare:'g10-inventory-prepare',approval:'g10-inventory-approval',publication:'g10-inventory-publication'},schedule=scheduleTypedInventoryEffects(input.initialPrefix,sources,input.dependencies,input.nextCatalog,metadataIds,input.provenanceMutations);verifySourcePublicationObligations(input.publicationObligations,schedule);
+ accounting?.visit('inventory-plan-effect-copy','/effects',input.effects.length);const sources=input.effects.map(effect=>({...effect})),metadataIds={prepare:'g10-inventory-prepare',approval:'g10-inventory-approval',publication:'g10-inventory-publication'},schedule=scheduleTypedInventoryEffects(input.initialPrefix,sources,input.dependencies,input.nextCatalog,metadataIds,input.provenanceMutations,accounting);verifySourcePublicationObligations(input.publicationObligations,schedule,accounting);
  if(schedule.prefixes.length!==schedule.phases.length+1||schedule.phases.length<3||schedule.phases[0]?.kind!=='prepare'||schedule.phases[1]?.kind!=='approval'||schedule.phases.at(-1)?.kind!=='publication')fail('PHASE_ENVELOPE');
- const {steps,phases,prefixes}=serialize(schedule,sources,metadataIds),executionProfile={version:'umf.table-inventory-execution/0.1',progressRelation:'umf_lifecycle_inventory_progress',ownerOnly:true,ingressProfile:'umf.table-inventory-generation-ingress/0.1',inventoryProfile:'umf.table-inventory-prefix/0.1',initial:previous===null,conversionProfile:null,originalsProfile:null,retirementProfile:null,retiredStoreProfile:null},approvalProfile={version:'umf.table-migration-approval/0.1',relation:'umf_lifecycle_approvals',ownerOnly:true};
+ const {steps,phases,prefixes}=serialize(schedule,sources,metadataIds,accounting),executionProfile={version:'umf.table-inventory-execution/0.1',progressRelation:'umf_lifecycle_inventory_progress',ownerOnly:true,ingressProfile:'umf.table-inventory-generation-ingress/0.1',inventoryProfile:'umf.table-inventory-prefix/0.1',initial:previous===null,conversionProfile:null,originalsProfile:null,retirementProfile:null,retiredStoreProfile:null},approvalProfile={version:'umf.table-migration-approval/0.1',relation:'umf_lifecycle_approvals',ownerOnly:true};
  const serializedInventory={...input.inventory} as Record<string,unknown>;delete serializedInventory.fieldChanges;
- const history=input.history as any;if(!history||history.profile!=='umf.table-inventory-source-history/0.1'||!Array.isArray(history.plans)||!Array.isArray(history.executions)||input.historyBinding.count!==history.plans.length||input.historyBinding.digest!==hashCanonical(history)||input.historyBinding.profile!==history.profile)fail('HISTORY_BINDING');
+ const history=input.history as any;if(!history||history.profile!=='umf.table-inventory-source-history/0.1'||!Array.isArray(history.plans)||!Array.isArray(history.executions)||input.historyBinding.count!==history.plans.length||input.historyBinding.digest!==(accounting?hashCanonicalCharged(history,accounting,'/history'):hashCanonical(history))||input.historyBinding.profile!==history.profile)fail('HISTORY_BINDING');
  const body:Record<string,Json>={version:'umf.table-inventory-migration/0.1',canonicalization:'RFC8785',id:input.id,predecessor:input.predecessor as unknown as Json,previous:input.previous as unknown as Json,next:input.next as unknown as Json,fromBundleDigest:previous?.bundleDigest??null,toBundleDigest:next.bundleDigest,steps:steps as unknown as Json,seedExecution:input.seedExecution as unknown as Json,phases:phases as unknown as Json,executionProfile,approvalProfile,options:input.options,review:input.review,requiresApproval:true,nativeQualified:false,inventory:serializedInventory as unknown as Json,prefixes:prefixes as unknown as Json,historyBinding:input.historyBinding as unknown as Json};
- body.digest=hashCanonical(body);if(new TextEncoder().encode(canonical(body)).length>25165824)fail('PLAN_SIZE');return body;
+ body.digest=accounting?hashCanonicalCharged(body,accounting,'/plan'):hashCanonical(body);const bodyCanonical=accounting?canonicalCharged(body,accounting,'/plan'):canonical(body);if(new TextEncoder().encode(bodyCanonical).length>25165824)fail('PLAN_SIZE');return body;
 }
 
-export function createHistoricalG10Verifier():HistoricalG10PlanVerifier {
+export function createHistoricalG10Verifier(accounting?:AccountingContext):HistoricalG10PlanVerifier {
  // One verifier instance is shared by every validation/recompile below a root
  // request. The key binds exact canonical plan and prior-history contents, so
  // this is only a computation cache; it never substitutes an ID/digest lookup
  // for source recompilation or history-chain validation.
  const verified=new Map<number,string>(),planSnapshots=new Map<number,string>(),executionSnapshots=new Map<number,string>(),active=new Set<number>();
  let retainedBytes=0;
- const utf8Bytes=(value:string):number=>new TextEncoder().encode(value).byteLength;
+ const utf8Bytes=(value:string,path:string):number=>{const size=new TextEncoder().encode(value).byteLength;accounting?.retainBytes('g10-history-verifier-cache',size,path);return size;};
  const verify:HistoricalG10PlanVerifier=(value,index,priorHistory)=>{
   if(!value||typeof value!=='object'||Array.isArray(value))fail('HISTORICAL_G10_SHAPE');
-  const plan=value as Record<string,unknown>,planBytes=canonical(plan),cached=verified.get(index);
+  accounting?.charge('historyMember',1,`/history/plans/${index}`);
+  const plan=value as Record<string,unknown>,planBytes=accounting?canonicalCharged(plan,accounting,`/history/plans/${index}`):canonical(plan),cached=verified.get(index);
   if(!Number.isSafeInteger(index)||index<0||index>128||!priorHistory||typeof priorHistory!=='object'||Array.isArray(priorHistory))fail('HISTORICAL_G10_CONTEXT_CHANGED');
   const prefix=priorHistory as Record<string,unknown>;
   if(prefix.profile!=='umf.table-inventory-source-history/0.1'||!Array.isArray(prefix.plans)||!Array.isArray(prefix.executions)||prefix.plans.length!==index||prefix.executions.length!==index)fail('HISTORICAL_G10_CONTEXT_CHANGED');
@@ -369,26 +436,28 @@ export function createHistoricalG10Verifier():HistoricalG10PlanVerifier {
   // Intern each exact member once instead of retaining a full copied prefix at
   // every index. Cache hits still compare every supplied member byte-for-byte.
   for(let member=0;member<index;member++){
-   const priorPlanBytes=canonical(prefix.plans[member]),priorExecutionBytes=canonical(prefix.executions[member]);
+   accounting?.charge('historyMember',2,`/history/prefix/${member}`);
+   const priorPlanBytes=accounting?canonicalCharged(prefix.plans[member],accounting,`/history/prefix/${member}/plan`):canonical(prefix.plans[member]),priorExecutionBytes=accounting?canonicalCharged(prefix.executions[member],accounting,`/history/prefix/${member}/execution`):canonical(prefix.executions[member]);
+   accounting?.visit('g10-history-prefix-comparison',`/history/prefix/${member}`,2);
    const knownPlan=planSnapshots.get(member),knownExecution=executionSnapshots.get(member);
    if((knownPlan!==undefined&&knownPlan!==priorPlanBytes)||(knownExecution!==undefined&&knownExecution!==priorExecutionBytes))fail('HISTORICAL_G10_CONTEXT_CHANGED');
-   if(knownPlan===undefined){const size=utf8Bytes(priorPlanBytes);if(retainedBytes+size>25165824)fail('HISTORICAL_G10_CONTEXT_SIZE');planSnapshots.set(member,priorPlanBytes);retainedBytes+=size;}
-   if(knownExecution===undefined){const size=utf8Bytes(priorExecutionBytes);if(retainedBytes+size>25165824)fail('HISTORICAL_G10_CONTEXT_SIZE');executionSnapshots.set(member,priorExecutionBytes);retainedBytes+=size;}
+   if(knownPlan===undefined){const size=utf8Bytes(priorPlanBytes,`/history/prefix/${member}/plan`);if(retainedBytes+size>25165824)fail('HISTORICAL_G10_CONTEXT_SIZE');accounting?.visit('g10-history-plan-map-retention',`/history/prefix/${member}`);planSnapshots.set(member,priorPlanBytes);retainedBytes+=size;}
+   if(knownExecution===undefined){const size=utf8Bytes(priorExecutionBytes,`/history/prefix/${member}/execution`);if(retainedBytes+size>25165824)fail('HISTORICAL_G10_CONTEXT_SIZE');accounting?.visit('g10-history-execution-map-retention',`/history/prefix/${member}`);executionSnapshots.set(member,priorExecutionBytes);retainedBytes+=size;}
   }
   const knownCurrent=planSnapshots.get(index);
   if(knownCurrent!==undefined&&knownCurrent!==planBytes)fail('HISTORICAL_G10_CONTEXT_CHANGED');
   if(cached){if(cached===planBytes)return;fail('HISTORICAL_G10_CONTEXT_CHANGED');}
-  if(active.has(index))fail('HISTORICAL_G10_RECURSIVE_CYCLE');
-  active.add(index);
+  accounting?.visit('g10-history-active-index-lookup',`/history/plans/${index}`);if(active.has(index))fail('HISTORICAL_G10_RECURSIVE_CYCLE');
+  accounting?.visit('g10-history-active-index-retention',`/history/plans/${index}`);active.add(index);
   try{
    const request={id:plan.id,predecessor:plan.predecessor,previous:plan.previous,next:plan.next,options:plan.options,history:priorHistory};
-   const rebuilt=compileG10InventoryPlanInternal(request,verify);
-   if(canonical(rebuilt)!==canonical(plan))fail('HISTORICAL_G10_RECOMPILE:'+index);
+   const rebuilt=compileG10InventoryPlanInternal(request,verify,accounting);
+   const rebuiltBytes=accounting?canonicalCharged(rebuilt,accounting,`/history/rebuilt/${index}`):canonical(rebuilt),expectedBytes=accounting?canonicalCharged(plan,accounting,`/history/plans/${index}/recompiled`):canonical(plan);accounting?.visit('g10-history-recompile-comparison',`/history/plans/${index}`);if(rebuiltBytes!==expectedBytes)fail('HISTORICAL_G10_RECOMPILE:'+index);
    // Keep at most the admitted original history once (plans and executions),
    // plus one plan snapshot per position; never materialize nested full-prefix
    // cache keys or repeatedly recompile a cached prefix.
-   const planSize=utf8Bytes(planBytes);if(verified.size>=128||retainedBytes+planSize>25165824)fail('HISTORICAL_G10_CONTEXT_SIZE');
-   verified.set(index,planBytes);planSnapshots.set(index,planBytes);retainedBytes+=planSize;
+   const planSize=utf8Bytes(planBytes,`/history/plans/${index}`);if(verified.size>=128||retainedBytes+planSize>25165824)fail('HISTORICAL_G10_CONTEXT_SIZE');
+   accounting?.visit('g10-history-verified-map-retention',`/history/plans/${index}`,3);verified.set(index,planBytes);planSnapshots.set(index,planBytes);retainedBytes+=planSize;
   }finally{active.delete(index);}
  };
  return verify;
@@ -402,28 +471,30 @@ export function compileG10InventoryDelta(input:unknown,verifyHistoricalG10?:Hist
  const seedLineage=deriveInventorySeedLineage(request.history,{previous:request.previous,next:request.next,options:{seedSets:request.options.seedSets,retiredSeedSets:request.options.retiredSeedSets}},verifyHistoricalG10);
  return compileG10InventoryDeltaFromPrepared(request,next,previous,seedLineage);
 }
-function compileG10InventoryDeltaFromPrepared(request:G10ValidatedRequest,next:ReturnType<typeof projectG10Bundle>,previous:ReturnType<typeof projectG10Bundle>|null,seedLineage:ReturnType<typeof deriveInventorySeedLineage>):InventoryDelta {
+function compileG10InventoryDeltaFromPrepared(request:G10ValidatedRequest,next:ReturnType<typeof projectG10Bundle>,previous:ReturnType<typeof projectG10Bundle>|null,seedLineage:ReturnType<typeof deriveInventorySeedLineage>,accounting?:AccountingContext):InventoryDelta {
  const options=request.options;
+ accounting?.visit('g10-delta-table-intents','/options/tableIntents',options.tableIntents.length);accounting?.visit('g10-delta-next-review-rows','/next/tables',next.tables.length);accounting?.visit('g10-delta-history-lineage','/history/seedLineage',seedLineage.length);
  const notImplemented:(keyof G10ValidatedRequest['options'])[]=['defaultChanges','conversions','concurrentIndexes','validations','retiredSeedSets'];
- for(const key of notImplemented)if(options[key].length)throw new Error('G10_COMPOSITION_NOT_IMPLEMENTED:/options/'+key);
- const g02Tables=options.tableIntents.filter((intent):intent is Extract<TableIntent,{kind:'create'}>=>intent.kind==='create').map(intent=>intent.table);
+ for(const key of notImplemented){accounting?.visit('g10-delta-composition-gate','/options/'+key);if(options[key].length)throw new Error('G10_COMPOSITION_NOT_IMPLEMENTED:/options/'+key);}
+ const g02Tables:string[]=[];for(const intent of options.tableIntents){accounting?.visit('g10-delta-create-table-intent','/options/tableIntents');if(intent.kind==='create')g02Tables.push(intent.table);}
  if(options.backfills.length){
   if(!previous||options.backfills.length!==1)throw new Error('G10_G02_SELECTION_CLOSED');
   const ownedMarkers=partitionInventoryMarkersForG02(options.reviewedChanges as any,previous.bundle,next.bundle,g02Tables,options.backfills[0]!);
-  compileG02FieldEffects({previous:previous.bundle,next:next.bundle,options:{version:'umf.table-migration-options/0.4',backfills:options.backfills,concurrentIndexes:[],reviewedChanges:ownedMarkers,validations:[]} as unknown as TableMigrationOptions,createdTables:g02Tables});
+  accounting?.visit('g10-delta-g02-validation','/options/backfills');compileG02FieldEffects({previous:previous.bundle,next:next.bundle,options:{version:'umf.table-migration-options/0.4',backfills:options.backfills,concurrentIndexes:[],reviewedChanges:ownedMarkers,validations:[]} as unknown as TableMigrationOptions,createdTables:g02Tables,...(accounting?{accounting}:{})});
  }
- if(previous&&hashCanonical(previous.bundle.configuration)!==hashCanonical(next.bundle.configuration))throw new Error('G10_CONFIGURATION_CHANGE_UNSUPPORTED');
- validateExactTableIntentCoverage(previous,next,options);
- const g02SourceExact=options.backfills.length===1&&!!previous&&sameSourceExceptG02AndCreates(previous.bundle,next.bundle,options,g02Tables);
+ if(previous&&(accounting?hashCanonicalCharged(previous.bundle.configuration,accounting,'/previous/configuration'):hashCanonical(previous.bundle.configuration))!==(accounting?hashCanonicalCharged(next.bundle.configuration,accounting,'/next/configuration'):hashCanonical(next.bundle.configuration)))throw new Error('G10_CONFIGURATION_CHANGE_UNSUPPORTED');
+ accounting?.visit('g10-delta-intent-coverage','/options/tableIntents',options.tableIntents.length);validateExactTableIntentCoverage(previous,next,options);
+ accounting?.visit('g10-delta-g02-source-certificate','/options/backfills');if(accounting&&previous){hashCanonicalCharged(previous.bundle,accounting,'/previous/g02-certificate');hashCanonicalCharged(next.bundle,accounting,'/next/g02-certificate');hashCanonicalCharged(options,accounting,'/options/g02-certificate');}const g02SourceExact=options.backfills.length===1&&!!previous&&sameSourceExceptG02AndCreates(previous.bundle,next.bundle,options,g02Tables);
  if(options.backfills.length&&!g02SourceExact)throw new Error('G10_G02_SOURCE_DELTA_UNRELATED');
  // backfills stays unknown[] at the public options boundary; prior closed
  // admission and the unchanged G02 constructor have already validated it here.
  const selectedBackfill=options.backfills.length===1?options.backfills[0]:undefined;
  const g02Target=selectedBackfill!==undefined&&selectedBackfill!==null&&typeof selectedBackfill==='object'&&!Array.isArray(selectedBackfill)&&'table' in selectedBackfill&&typeof selectedBackfill.table==='string'?selectedBackfill.table:undefined;
  const priorOwned=g02SourceExact?ownedNativeTableMeanings(previous!.projection):null,freshOwned=g02SourceExact?ownedNativeTableMeanings(next.projection):null;
- const selected=new Map<string,TableIntent>();for(const [i,intent]of options.tableIntents.entries()){const k=JSON.stringify([intent.kind,intent.table]);if(selected.has(k))throw new Error('G10_INTENT_DUPLICATE:'+i);selected.set(k,intent);}
+ const selected=new Map<string,TableIntent>();for(const [i,intent]of options.tableIntents.entries()){accounting?.visit('g10-delta-intent-index',`/options/tableIntents/${i}`);const k=JSON.stringify([intent.kind,intent.table]);if(selected.has(k))throw new Error('G10_INTENT_DUPLICATE:'+i);selected.set(k,intent);}
  const oldMap=new Map((previous?.tables??[]).map(t=>[t.table,t])),newMap=new Map(next.tables.map(t=>[t.table,t])),zero=hashCanonical(null),changes:InventoryChange[]=[],fieldChanges:InventoryFieldChange[]=[];
- for(const old of previous?.tables??[]){const fresh=newMap.get(old.table);if(fresh){if(!sameRef(old.record,fresh.record)||old.schema!==fresh.schema||old.name!==fresh.name)throw new Error('G10_RETAINED_TABLE_BINDING_CHANGED:'+old.table);if(g02SourceExact&&old.table!==g02Target&&canonical(priorOwned!.get(old.table)??[])!==canonical(freshOwned!.get(old.table)??[]))throw new Error('G10_G02_RETAINED_NATIVE_MEANING_CHANGED:'+old.table);const oldMeaning=previous!.reviews.find(r=>r.table===old.table)!.meaning,nextMeaning=next.reviews.find(r=>r.table===old.table)!.meaning;if(stableMeaningDigest(oldMeaning)!==stableMeaningDigest(nextMeaning)&&!sameSourceExceptG05SelectedFields(previous!.bundle,next.bundle,options,old.table)&&!g02SourceExact)throw new Error('G10_RETAINED_SEMANTIC_CHANGE_UNIMPLEMENTED:'+old.table);continue;}const key=JSON.stringify(['remove',old.table]),intent=selected.get(key);if(!intent||!sameRef(intent.record,old.record))throw new Error('G10_REMOVE_INTENT_MISSING:'+old.table);selected.delete(key);changes.push({kind:'remove-table',table:old.table,record:clone(intent.record),beforePath:String((previous!.reviews.find(r=>r.table===old.table)!.meaning as any).physicalTable.path),afterPath:null,beforeMeaningDigest:old.meaningDigest,afterMeaningDigest:zero});}
+ const findReview=(rows:readonly InventoryProjection[],table:string,side:string):InventoryProjection|undefined=>{for(const row of rows){accounting?.visit('g10-delta-review-lookup',`/${side}/reviews`);if(row.table===table)return row;}return undefined;};
+ for(const old of previous?.tables??[]){accounting?.visit('g10-delta-prior-table','/previous/tables');const fresh=newMap.get(old.table);if(fresh){if(!sameRef(old.record,fresh.record)||old.schema!==fresh.schema||old.name!==fresh.name)throw new Error('G10_RETAINED_TABLE_BINDING_CHANGED:'+old.table);if(g02SourceExact&&old.table!==g02Target&&(accounting?canonicalCharged(priorOwned!.get(old.table)??[],accounting,`/previous/${old.table}/nativeMeaning`):canonical(priorOwned!.get(old.table)??[]))!==(accounting?canonicalCharged(freshOwned!.get(old.table)??[],accounting,`/next/${old.table}/nativeMeaning`):canonical(freshOwned!.get(old.table)??[])))throw new Error('G10_G02_RETAINED_NATIVE_MEANING_CHANGED:'+old.table);const oldReview=findReview(previous!.reviews,old.table,'previous'),nextReview=findReview(next.reviews,old.table,'next');if(!oldReview||!nextReview)throw new Error('G10_RETAINED_REVIEW_MISSING');const oldMeaningDigest=accounting?hashCanonicalCharged(stableMeaningValue(oldReview.meaning),accounting,`/previous/${old.table}/stableMeaning`):stableMeaningDigest(oldReview.meaning),nextMeaningDigest=accounting?hashCanonicalCharged(stableMeaningValue(nextReview.meaning),accounting,`/next/${old.table}/stableMeaning`):stableMeaningDigest(nextReview.meaning);if(oldMeaningDigest!==nextMeaningDigest&&!sameSourceExceptG05SelectedFields(previous!.bundle,next.bundle,options,old.table)&&!g02SourceExact)throw new Error('G10_RETAINED_SEMANTIC_CHANGE_UNIMPLEMENTED:'+old.table);continue;}const key=JSON.stringify(['remove',old.table]),intent=selected.get(key);if(!intent||!sameRef(intent.record,old.record))throw new Error('G10_REMOVE_INTENT_MISSING:'+old.table);selected.delete(key);const oldReview=findReview(previous!.reviews,old.table,'previous');if(!oldReview)throw new Error('G10_REVIEW_PREVIOUS_MISSING');changes.push({kind:'remove-table',table:old.table,record:clone(intent.record),beforePath:String((oldReview.meaning as any).physicalTable.path),afterPath:null,beforeMeaningDigest:old.meaningDigest,afterMeaningDigest:zero});}
  for(const fresh of next.tables){if(oldMap.has(fresh.table))continue;const key=JSON.stringify(['create',fresh.table]),intent=selected.get(key);if(!intent||!sameRef(intent.record,fresh.record))throw new Error('G10_CREATE_INTENT_MISSING:'+fresh.table);selected.delete(key);changes.push({kind:'create-table',table:fresh.table,record:clone(fresh.record),beforePath:null,afterPath:String((next.reviews.find(r=>r.table===fresh.table)!.meaning as any).physicalTable.path),beforeMeaningDigest:zero,afterMeaningDigest:fresh.meaningDigest});}
  if(selected.size)throw new Error('G10_INTENT_UNUSED');
  for(const item of [...options.retirements as any[],...options.restorations as any[]]){
@@ -551,10 +622,12 @@ function candidate(kind:TableInventoryReviewedChangeKind,path:string,oldValue:im
  const oldDigest=hashCanonical(oldValue),newDigest=hashCanonical(newValue),id='review-'+hashCanonical([kind,path,oldDigest,newDigest]).slice(0,24);
  return {id,kind,path,oldDigest,newDigest,oldValue,newValue,...(oldPath!==undefined?{oldPath}:{}),...(newPath!==undefined?{newPath}:{})} as unknown as TableInventoryReviewedChangeCandidate;
 }
-function legacyCandidates(previous:TableDeploymentBundle|null,next:TableDeploymentBundle,accept:(candidate:TableInventoryReviewedChangeCandidate)=>void,maxCandidates:number,maxBytes:number,alreadyVerified=false):void{
+function legacyCandidates(previous:TableDeploymentBundle|null,next:TableDeploymentBundle,accept:(candidate:TableInventoryReviewedChangeCandidate)=>void,maxCandidates:number,maxBytes:number,alreadyVerified=false,accounting?:AccountingContext):void{
  if(previous===null)return;
  try{
+  if(accounting){hashCanonicalCharged(previous,accounting,'/previous/legacy-review-source');hashCanonicalCharged(next,accounting,'/next/legacy-review-source');}
   consumeTableMigrationChangesBounded(alreadyVerified?previous:verifyTableDeployment(previous),alreadyVerified?next:verifyTableDeployment(next),{version:'umf.table-migration-discovery/0.3'},maxCandidates,maxBytes,item=>{
+   accounting?.visit('g10-review-legacy-candidate','/review',1);
    const candidate={id:item.id,kind:item.kind,path:item.path,oldDigest:item.oldDigest,newDigest:item.newDigest,oldValue:asJson(item.oldValue),newValue:asJson(item.newValue),...(item.oldPath!==undefined?{oldPath:item.oldPath}:{}),...(item.newPath!==undefined?{newPath:item.newPath}:{})} as TableInventoryReviewedChangeCandidate;
    accept(candidate);
   });
@@ -563,14 +636,14 @@ function legacyCandidates(previous:TableDeploymentBundle|null,next:TableDeployme
 }
 /** Build the independent, marker-free table inventory review from complete original sources. */
 type PreparedReviewInputs={history:TableInventorySourceHistory;before:ReturnType<typeof projectG10Bundle>|null;after:ReturnType<typeof projectG10Bundle>;seedLineage:ReturnType<typeof deriveInventorySeedLineage>};
-function discoverInventoryReviewCandidatesCore(previous:TableDeploymentBundle|null,next:TableDeploymentBundle,selector:TableInventoryDiscoverySelector,originalHistory:TableInventorySourceHistory,verifier:ReturnType<typeof createHistoricalG10Verifier>,prepared?:PreparedReviewInputs):TableInventoryReviewedChangeCandidate[]{
+function discoverInventoryReviewCandidatesCore(previous:TableDeploymentBundle|null,next:TableDeploymentBundle,selector:TableInventoryDiscoverySelector,originalHistory:TableInventorySourceHistory,verifier:ReturnType<typeof createHistoricalG10Verifier>,prepared?:PreparedReviewInputs,accounting?:AccountingContext):TableInventoryReviewedChangeCandidate[]{
  const selectorKeys=['version','tableIntents','conversions','retiredSeedSets','retirements','restorations','archiveSources'];
  if(!exact(selector,selectorKeys)||selector.version!=='umf.table-inventory-discovery/0.1')reviewFail('TABLE_MIGRATION_REVIEW','/selector');
  if(previous&&previous.source.format!=='json'||next.source.format!=='json')reviewFail('TABLE_MIGRATION_REVIEW','/source/format');
  if(!Array.isArray(selector.tableIntents)||!Array.isArray(selector.conversions)||!Array.isArray(selector.retiredSeedSets)||!Array.isArray(selector.retirements)||!Array.isArray(selector.restorations)||!Array.isArray(selector.archiveSources))reviewFail('TABLE_MIGRATION_REVIEW','/selector');
  validateDiscoveryBounds(selector);
  if(selector.conversions.length||selector.retirements.length||selector.restorations.length||selector.archiveSources.length)reviewFail('TABLE_MIGRATION_REVIEW','/selector');
- const history=prepared?.history??validateTableInventorySourceHistory(originalHistory,previous,verifier);
+ const history=prepared?.history??validateTableInventorySourceHistory(originalHistory,previous,verifier,accounting);
  const before=prepared?prepared.before:previous===null?null:projectG10Bundle(verifyTableDeployment(previous),'previous'),after=prepared?.after??projectG10Bundle(verifyTableDeployment(next),'next');
  const oldTables=new Map((before?.tables??[]).map(table=>[table.table,table])),newTables=new Map(after.tables.map(table=>[table.table,table]));
  const intentByIdentity=new Map<string,{intent:TableInventoryDiscoveryIntent;index:number}>();
@@ -587,23 +660,25 @@ function discoverInventoryReviewCandidatesCore(previous:TableDeploymentBundle|nu
  const result:TableInventoryReviewedChangeCandidate[]=[];let retainedCandidateBytes=0;
  const candidateIndex=new Map<string,number>();
  const appendCandidate=(item:TableInventoryReviewedChangeCandidate):void=>{
+  accounting?.retainSubject(item.id,`/review/${item.path}`);
   const at=candidateIndex.get(item.id);
   if(at!==undefined){
    const prior=result[at]!;
-   if(canonical([prior.kind,prior.path,prior.oldDigest,prior.newDigest,prior.oldValue,prior.newValue])!==canonical([item.kind,item.path,item.oldDigest,item.newDigest,item.oldValue,item.newValue]))reviewFail('TABLE_MIGRATION_REVIEW',item.path);
+   const previousComparison=[prior.kind,prior.path,prior.oldDigest,prior.newDigest,prior.oldValue,prior.newValue],nextComparison=[item.kind,item.path,item.oldDigest,item.newDigest,item.oldValue,item.newValue];if((accounting?canonicalCharged(previousComparison,accounting,`/review/${item.path}/prior`):canonical(previousComparison))!==(accounting?canonicalCharged(nextComparison,accounting,`/review/${item.path}/candidate`):canonical(nextComparison)))reviewFail('TABLE_MIGRATION_REVIEW',item.path);
    for(const key of ['oldPath','newPath'] as const)if(prior[key]!==undefined&&item[key]!==undefined&&prior[key]!==item[key])reviewFail('TABLE_MIGRATION_REVIEW',item.path);
    const merged={...prior,...(prior.oldPath===undefined&&item.oldPath!==undefined?{oldPath:item.oldPath}:{}),...(prior.newPath===undefined&&item.newPath!==undefined?{newPath:item.newPath}:{})} as TableInventoryReviewedChangeCandidate;
-   let nextBytes:number,priorBytes:number;try{nextBytes=new TextEncoder().encode(canonical(merged)).byteLength;priorBytes=new TextEncoder().encode(canonical(prior)).byteLength;}catch{reviewFail('TABLE_MIGRATION_REVIEW','/selector');}
+   let nextBytes:number,priorBytes:number;try{nextBytes=new TextEncoder().encode(accounting?canonicalCharged(merged,accounting,`/review/${item.path}/merged`):canonical(merged)).byteLength;priorBytes=new TextEncoder().encode(accounting?canonicalCharged(prior,accounting,`/review/${item.path}/retained`):canonical(prior)).byteLength;}catch{reviewFail('TABLE_MIGRATION_REVIEW','/selector');}
    if(retainedCandidateBytes-priorBytes+nextBytes>25165824)reviewFail('TABLE_MIGRATION_REVIEW','/selector');
    retainedCandidateBytes+=nextBytes-priorBytes;result[at]=merged;return;
   }
   if(result.length>=2048)reviewFail('TABLE_MIGRATION_REVIEW','/selector');
-  let bytes:number;try{bytes=new TextEncoder().encode(canonical(item)).byteLength;}catch{reviewFail('TABLE_MIGRATION_REVIEW','/selector');}
+  let bytes:number;try{bytes=new TextEncoder().encode(accounting?canonicalCharged(item,accounting,`/review/${item.path}`):canonical(item)).byteLength;}catch{reviewFail('TABLE_MIGRATION_REVIEW','/selector');}
   if(bytes>25165824||retainedCandidateBytes+bytes>25165824)reviewFail('TABLE_MIGRATION_REVIEW','/selector');
   candidateIndex.set(item.id,result.length);retainedCandidateBytes+=bytes;result.push(item);
  };
- legacyCandidates(previous,next,appendCandidate,2048-result.length,25165824-retainedCandidateBytes,prepared!==undefined);
+ legacyCandidates(previous,next,appendCandidate,2048-result.length,25165824-retainedCandidateBytes,prepared!==undefined,accounting);
  for(const {intent,index} of intentByIdentity.values()){
+  accounting?.visit('g10-review-intent-coverage',`/selector/tableIntents/${index}`);
   const old=oldTables.get(intent.table),fresh=newTables.get(intent.table);
   const prior=old!==undefined,post=fresh!==undefined;
   if(intent.kind==='create'){
@@ -621,8 +696,9 @@ function discoverInventoryReviewCandidatesCore(previous:TableDeploymentBundle|nu
  }
  const expectedChanges=[...(before?.tables??[]).filter(item=>!newTables.has(item.table)).map(item=>['remove',item.table] as const),...after.tables.filter(item=>!oldTables.has(item.table)).map(item=>['create',item.table] as const)];
  for(const [kind,table] of expectedChanges)if(!intentByIdentity.has(JSON.stringify([kind,table])))reviewFail('TABLE_MIGRATION_REVIEW','/selector/tableIntents');
- const seedLineage=prepared?.seedLineage??deriveInventorySeedLineage(history as unknown as InventoryHistory,{previous,next,options:{seedSets:[],retiredSeedSets:[...selector.retiredSeedSets]}},verifier);
+ const seedLineage=prepared?.seedLineage??deriveInventorySeedLineage(history as unknown as InventoryHistory,{previous,next,options:{seedSets:[],retiredSeedSets:[...selector.retiredSeedSets]}},verifier,accounting);
  for(const [index,id] of selector.retiredSeedSets.entries()){
+  accounting?.charge('historyMember',1,`/selector/retiredSeedSets/${index}`);
   const lineage=seedLineage.find(entry=>entry.id===id);
   const priorSeed=previous?.seedSets.find(seed=>seed.id===id);
   const nextSeed=next.seedSets.find(seed=>seed.id===id);
@@ -718,7 +794,7 @@ function quotedJsonBytes(value:string):number{
  }
  return bytes;
 }
-function ownCanonicalComponent(input:unknown,path:string,maxBytes:number):Json{
+function ownCanonicalComponent(input:unknown,path:string,maxBytes:number,accounting?:AccountingContext):Json{
  type PathRef={parent:PathRef|null;segment:string};
  type Frame={source:object;target:Json[]|Record<string,Json>;keys:string[]|null;index:number;array:boolean;path:PathRef};
  type Task={kind:'value';value:unknown;path:PathRef;assign:(value:Json)=>void}|{kind:'resume';frame:Frame};
@@ -731,10 +807,11 @@ function ownCanonicalComponent(input:unknown,path:string,maxBytes:number):Json{
  const tasks:Task[]=[{kind:'value',value:input,path:rootPath,assign:value=>{root[0]=value;}}];
  while(tasks.length){
   const task=tasks.pop()!;
+  accounting?.visit('inventory-component-copy-task',path);
   if(task.kind==='resume'){
    const frame=task.frame,count=frame.array?(frame.source as unknown[]).length:frame.keys!.length;
    if(frame.index>=count){active.delete(frame.source);continue;}
-   const key=frame.array?frame.index++:frame.keys![frame.index++]!,property=String(key),descriptor=Object.getOwnPropertyDescriptor(frame.source,property);
+   const key=frame.array?frame.index++:frame.keys![frame.index++]!,property=String(key),descriptor=Object.getOwnPropertyDescriptor(frame.source,property);accounting?.visit(frame.array?'inventory-component-array-slot':'inventory-component-object-key',displayPath(frame.path));if(!frame.array)accounting?.scanUtf8(property,displayPath(frame.path));
    if(!descriptor||!descriptor.enumerable||!('value'in descriptor))throw new UmfError('NON_JSON','Inventory request contains hidden fields or accessors.',displayPath(childPath(frame.path,property)));
    tasks.push(task);
    tasks.push({kind:'value',value:descriptor.value,path:childPath(frame.path,property),assign:item=>{if(frame.array)(frame.target as Json[])[key as number]=item;else Object.defineProperty(frame.target,property,{value:item,enumerable:true,writable:true,configurable:true});}});
@@ -743,14 +820,14 @@ function ownCanonicalComponent(input:unknown,path:string,maxBytes:number):Json{
   const {value, path:at, assign}=task;
   if(value===null){add(4,at);assign(null);continue;}
   if(typeof value==='boolean'){add(value?4:5,at);assign(value);continue;}
-  if(typeof value==='string'){countString(value,at);assign(value);continue;}
+  if(typeof value==='string'){countString(value,at);accounting?.scanUtf8(value,displayPath(at));assign(value);continue;}
   if(typeof value==='number'){
    if(!Number.isFinite(value))throw new UmfError('NUMBER','Inventory request contains a non-finite number.',displayPath(at));
    add(JSON.stringify(value).length,at);assign(value);continue;
   }
   if(typeof value!=='object')throw new UmfError('NON_JSON','Inventory request contains a non-JSON value.',displayPath(at));
   if(active.has(value))throw new UmfError('CYCLE','Inventory request contains a cycle.',displayPath(at));
-  const array=Array.isArray(value),prototype=Object.getPrototypeOf(value);
+  const array=Array.isArray(value),prototype=Object.getPrototypeOf(value);accounting?.visit('inventory-component-container',displayPath(at));
   if(array?prototype!==Array.prototype:prototype!==Object.prototype&&prototype!==null)throw new UmfError('NON_JSON','Inventory request contains a custom object.',displayPath(at));
   if(Object.getOwnPropertySymbols(value).length)throw new UmfError('NON_JSON','Inventory request contains symbol properties.',displayPath(at));
   if(array&&value.length>maxBytes-bytes-2)throw new UmfError('LIMIT','Inventory request array exceeds its existing byte bound.',displayPath(at));
@@ -761,7 +838,7 @@ function ownCanonicalComponent(input:unknown,path:string,maxBytes:number):Json{
   }else{
    if(names.length>Math.floor((maxBytes-bytes)/4))throw new UmfError('LIMIT','Inventory request object exceeds its existing byte bound.',displayPath(at));
    names.sort();add(2+(names.length?names.length-1:0),at);
-   for(const key of names)add(quotedJsonBytes(key)+1,childPath(at,key));
+   for(const key of names){add(quotedJsonBytes(key)+1,childPath(at,key));accounting?.visit('inventory-component-key-preflight',displayPath(at));accounting?.scanUtf8(key,displayPath(at));}
   }
   active.add(value);
   const target:Json[]|Record<string,Json>=array?new Array(value.length):Object.create(null);
@@ -771,13 +848,13 @@ function ownCanonicalComponent(input:unknown,path:string,maxBytes:number):Json{
  }
  return root[0]!;
 }
-function ownRequestHistory(input:unknown):Json{
+function ownRequestHistory(input:unknown,accounting?:AccountingContext):Json{
  if(!obj(input)||Object.getOwnPropertySymbols(input).length)throw new ShapeError('/history','history-profile-or-count');
  const keys=Object.getOwnPropertyNames(input),expected=['profile','plans','executions'];
  if(keys.length!==expected.length||expected.some(key=>!keys.includes(key)))throw new ShapeError('/history','history-profile-or-count');
  const profileDescriptor=Object.getOwnPropertyDescriptor(input,'profile'),planDescriptor=Object.getOwnPropertyDescriptor(input,'plans'),executionDescriptor=Object.getOwnPropertyDescriptor(input,'executions');
  if(!profileDescriptor||!profileDescriptor.enumerable||!('value'in profileDescriptor)||profileDescriptor.value!=='umf.table-inventory-source-history/0.1'||!planDescriptor||!planDescriptor.enumerable||!('value'in planDescriptor)||!executionDescriptor||!executionDescriptor.enumerable||!('value'in executionDescriptor)||!Array.isArray(planDescriptor.value)||!Array.isArray(executionDescriptor.value)||planDescriptor.value.length>128||executionDescriptor.value.length!==planDescriptor.value.length)throw new ShapeError('/history','history-profile-or-count');
- let owned:Json;try{owned=ownCanonicalComponent(input,'/history',25_165_824);}catch(error){if(error instanceof UmfError&&error.code==='LIMIT')throw new ShapeError('/history','history-too-large');throw error;}
+ let owned:Json;try{owned=ownCanonicalComponent(input,'/history',25_165_824,accounting);}catch(error){if(error instanceof UmfError&&error.code==='LIMIT')throw new ShapeError('/history','history-too-large');throw error;}
  if(!obj(owned)||!Array.isArray(owned.plans)||!Array.isArray(owned.executions)||owned.plans.length>128||owned.executions.length>128)throw new UmfError('LIMIT','Inventory history exceeds its original entry bound.','/history');
  return owned;
 }
@@ -802,7 +879,7 @@ function ownPredecessor(input:unknown,previous:unknown):unknown{
  if(!id||!id.enumerable||!('value'in id)||!digest||!digest.enumerable||!('value'in digest))throw new ShapeError('/predecessor','predecessor-invalid');
  return {id:id.value,digest:digest.value};
 }
-function ownRequestJson(input:unknown):TableInventoryMigrationRequest{
+function ownRequestJson(input:unknown,accounting?:AccountingContext):TableInventoryMigrationRequest{
  if(!obj(input))throw new ShapeError('/','request-shape-invalid');
  const prototype=Object.getPrototypeOf(input);if(prototype!==Object.prototype&&prototype!==null)throw new ShapeError('/','request-shape-invalid');
  const envelopeKeys=['id','predecessor','previous','next','options','history'],enumerableKeys=Object.keys(input);
@@ -813,55 +890,58 @@ function ownRequestJson(input:unknown):TableInventoryMigrationRequest{
  const raw=Object.fromEntries(envelopeKeys.map(key=>[key,descriptors[key]!.value])) as Record<string,unknown>;
  if(typeof raw.id!=='string'||raw.id.length===0||raw.id.includes('\0')||new TextEncoder().encode(raw.id).byteLength>128)throw new ShapeError('/','request-shape-invalid');
  preflightOptions(raw.options);
- let options:Json;try{options=ownCanonicalComponent(raw.options,'/options',6_291_456);}catch(error){if(error instanceof UmfError&&error.code==='LIMIT')throw new ShapeError('/options','options-too-large');throw error;}
- const owned={id:raw.id,predecessor:ownPredecessor(raw.predecessor,raw.previous),previous:raw.previous===null?null:copyJson(raw.previous),next:copyJson(raw.next),options,history:ownRequestHistory(raw.history)};
+ let options:Json;try{options=ownCanonicalComponent(raw.options,'/options',6_291_456,accounting);}catch(error){if(error instanceof UmfError&&error.code==='LIMIT')throw new ShapeError('/options','options-too-large');throw error;}
+ const copyHooks=accounting?{beforeProperty:(key:string,path:string,isArray:boolean)=>{accounting.visit('inventory-bundle-copy-preflight',path);if(!isArray)accounting.scanUtf8(key,path);},retainText:(text:string,path:string)=>{accounting.scanUtf8(text,path);}}:undefined;
+ const chargedCopy=<T>(value:T,path:string):T=>accounting?copyJsonCharged(value,count=>accounting.visit('inventory-bundle-copy',path,count),copyHooks) as T:copyJson(value) as T;
+ const owned={id:raw.id,predecessor:ownPredecessor(raw.predecessor,raw.previous),previous:raw.previous===null?null:chargedCopy(raw.previous,'/previous'),next:chargedCopy(raw.next,'/next'),options,history:ownRequestHistory(raw.history,accounting)};
  return owned as unknown as TableInventoryMigrationRequest;
 }
-function prepareInventoryCompilation(input:unknown,verifyHistoricalG10:HistoricalG10PlanVerifier):PreparedInventoryCompilation{
- const owned=ownRequestJson(input),request:G10ValidatedRequest=validateG10RequestShape(owned,verifyHistoricalG10);
+function prepareInventoryCompilation(input:unknown,verifyHistoricalG10:HistoricalG10PlanVerifier,accounting?:AccountingContext):PreparedInventoryCompilation{
+ const owned=ownRequestJson(input,accounting),request:G10ValidatedRequest=validateG10RequestShape(owned,verifyHistoricalG10,accounting);
  const stableRequest:TableInventoryMigrationRequest={id:request.id,predecessor:request.predecessor,previous:request.previous,next:request.next,options:owned.options,history:owned.history};
- const next=projectG10Bundle(request.next,'next'),previous=request.previous===null?null:projectG10Bundle(request.previous,'previous');
- const lineage=deriveInventorySeedLineage(request.history,{previous:request.previous,next:request.next,options:{seedSets:request.options.seedSets,retiredSeedSets:request.options.retiredSeedSets}},verifyHistoricalG10),inventory=compileG10InventoryDeltaFromPrepared(request,next,previous,lineage),review=exactReviewFromPrepared(stableRequest,verifyHistoricalG10,{history:request.history,before:previous,after:next,seedLineage:lineage});
+ accounting?.visit('g10-preparation-project-next','/next');const next=accounting?projectG10BundleScoped(request.next,'next',accounting):projectG10Bundle(request.next,'next'),accountingPrevious=request.previous===null?null:(accounting?projectG10BundleScoped(request.previous,'previous',accounting):projectG10Bundle(request.previous,'previous'));
+ const previous=accountingPrevious;
+ const lineage=deriveInventorySeedLineage(request.history,{previous:request.previous,next:request.next,options:{seedSets:request.options.seedSets,retiredSeedSets:request.options.retiredSeedSets}},verifyHistoricalG10,accounting),inventory=compileG10InventoryDeltaFromPrepared(request,next,previous,lineage,accounting),review=exactReviewFromPrepared(stableRequest,verifyHistoricalG10,{history:request.history,before:previous,after:next,seedLineage:lineage},accounting);
  return {request,inventory,next,previous,lineage,review,stableRequest};
 }
-function compileG10InventoryPlanInternal(input:unknown,verifyHistoricalG10:HistoricalG10PlanVerifier):Record<string,Json>{
- return compileInventoryPlanFromPrepared(prepareInventoryCompilation(input,verifyHistoricalG10));
+function compileG10InventoryPlanInternal(input:unknown,verifyHistoricalG10:HistoricalG10PlanVerifier,accounting?:AccountingContext):Record<string,Json>{
+ return compileInventoryPlanFromPrepared(prepareInventoryCompilation(input,verifyHistoricalG10,accounting),accounting);
 }
-function compileInventoryPlanFromPrepared(prepared:PreparedInventoryCompilation):Record<string,Json>{
+function compileInventoryPlanFromPrepared(prepared:PreparedInventoryCompilation,accounting?:AccountingContext):Record<string,Json>{
  const {request,inventory,next,previous,lineage,review}=prepared;
- if(inventory.changes.some(change=>change.kind!=='create-table'))fail('TABLE_REMOVAL_EFFECTS_NOT_LOWERED');
- const selected=request.options.tableIntents;if(selected.some(intent=>intent.kind!=='create'))fail('TABLE_REMOVAL_EFFECTS_NOT_LOWERED');
- const unsupported=(['defaultChanges','conversions','concurrentIndexes','validations','retiredSeedSets','retirements','restorations','archiveSources'] as const).find(key=>request.options[key].length!==0);if(unsupported)fail('COMPOSITION_NOT_LOWERED:'+unsupported);
+ for(const change of inventory.changes){accounting?.visit('r2-create-change-admission','/inventory/changes');if(change.kind!=='create-table')fail('TABLE_REMOVAL_EFFECTS_NOT_LOWERED');}
+ const selected=request.options.tableIntents;for(const intent of selected){accounting?.visit('r2-create-intent-admission','/options/tableIntents');if(intent.kind!=='create')fail('TABLE_REMOVAL_EFFECTS_NOT_LOWERED');}
+ let unsupported:string|undefined;for(const key of ['defaultChanges','conversions','concurrentIndexes','validations','retiredSeedSets','retirements','restorations','archiveSources'] as const){accounting?.visit('r2-composition-gate','/options/'+key);if(request.options[key].length!==0){unsupported=key;break;}}if(unsupported)fail('COMPOSITION_NOT_LOWERED:'+unsupported);
  if(request.options.backfills.length&&request.options.backfills.length!==1)fail('G02_COMPOSITION_SELECTION_NOT_LOWERED');
- const derived=deriveInitialRendererEffectsCore(next.bundle,next.projection,previous?.projection??null,true);
- if(inventory.changes.length!==derived.effects.filter(effect=>effect.operation==='create-table').length)fail('CREATE_EFFECT_COVERAGE');
+ accounting?.visit('r2-initial-renderer-effects','/effects',next.projection.rendererOperations.length);const derived=deriveInitialRendererEffectsCore(next.bundle,next.projection,previous?.projection??null,true,accounting);
+ let createEffects=0;for(const effect of derived.effects){accounting?.visit('r2-create-effect-coverage','/effects');if(effect.operation==='create-table')createEffects++;}if(inventory.changes.length!==createEffects)fail('CREATE_EFFECT_COVERAGE');
  const dependencies:TypedDependency[]=[...derived.edges];let effects=[...derived.effects];
  if(request.options.backfills.length){
   if(!previous)fail('G02_INITIAL_PLAN_UNSUPPORTED');
-  const ownedMarkers=partitionInventoryMarkersForG02(request.options.reviewedChanges as any,previous.bundle,next.bundle,next.tables.map(table=>table.table).filter(table=>!previous!.tables.some(old=>old.table===table)),request.options.backfills[0]!);
-  const lowered=deriveG02FieldEffects(previous.bundle,next.bundle,previous.projection,next.projection,{version:'umf.table-migration-options/0.4',backfills:request.options.backfills,concurrentIndexes:[],reviewedChanges:ownedMarkers,validations:[]} as any,effects.length);
+  accounting?.visit('g10-g02-marker-partition','/options/reviewedChanges',request.options.reviewedChanges.length);const ownedMarkers=partitionInventoryMarkersForG02(request.options.reviewedChanges as any,previous.bundle,next.bundle,next.tables.map(table=>table.table).filter(table=>!previous!.tables.some(old=>old.table===table)),request.options.backfills[0]!);
+  accounting?.visit('g10-g02-effect-lowering','/options/backfills');const lowered=deriveG02FieldEffects(previous.bundle,next.bundle,previous.projection,next.projection,{version:'umf.table-migration-options/0.4',backfills:request.options.backfills,concurrentIndexes:[],reviewedChanges:ownedMarkers,validations:[]} as any,effects.length,accounting);
   effects.push(...lowered.effects);dependencies.push(...lowered.edges);
  }
- if(request.options.seedSets.length){const seedStates=new Map(next.projection.seedStates.map(seed=>[seed.id,seed]));for(const selected of request.options.seedSets){if(!seedStates.has(selected))fail('SEED_SOURCE_BINDING');}
+ if(request.options.seedSets.length){const seedStates=new Map<string,(typeof next.projection.seedStates)[number]>();for(const seed of next.projection.seedStates){accounting?.visit('r2-seed-state-index','/next/seedStates');seedStates.set(seed.id,seed);}for(const selected of request.options.seedSets){accounting?.visit('r2-selected-seed-binding','/options/seedSets');if(!seedStates.has(selected))fail('SEED_SOURCE_BINDING');}
   const subject:InventorySubject={kind:'seed',sets:[...request.options.seedSets]},seedEffect:EffectNode={id:'g10-apply-selected-seeds',kind:'seed',operation:'apply-seeds',subject,sourcePath:'/options/seedSets',sql:'',transaction:'required',recovery:'rollback-transaction',sourceOrder:effects.length+1,atomicGroup:null,transition:{action:'update',collection:'tables',meaning:{}}};
-  effects.push(seedEffect);for(const selected of request.options.seedSets){for(const obligation of derived.publicationObligations.filter(candidate=>candidate.ownerKind==='seed-set'&&candidate.ownerId===selected)){dependencies.push({dependent:hashCanonical({kind:'seed-set',table:null,subject:selected}),prerequisite:hashCanonical(obligation.targetIdentity),sourcePath:obligation.sourcePath,reason:'selected-seed-requires-source-table',state:'present'});}}
+  effects.push(seedEffect);for(const selected of request.options.seedSets){accounting?.visit('r2-selected-seed-publication-search','/publicationObligations',derived.publicationObligations.length);for(const obligation of derived.publicationObligations){accounting?.visit('r2-selected-seed-publication-row',`/publicationObligations/${obligation.ownerId}`);if(obligation.ownerKind==='seed-set'&&obligation.ownerId===selected){dependencies.push({dependent:accounting?hashCanonicalCharged({kind:'seed-set',table:null,subject:selected},accounting,'/options/seedSets/dependent'):hashCanonical({kind:'seed-set',table:null,subject:selected}),prerequisite:accounting?hashCanonicalCharged(obligation.targetIdentity,accounting,'/publicationObligations/target'):hashCanonical(obligation.targetIdentity),sourcePath:obligation.ownerSourcePath,reason:'selected-seed-requires-source-table',state:'present'});}}}
  }
  // The renderer discovers the combined schema grant before compiler-selected
  // seeds are appended. Bind that final grant only after every selected business
  // and seed effect in the complete composition DAG.
- const schemaGrants=effects.filter(effect=>effect.subject.kind==='schema-grant');
+ const schemaGrants:EffectNode[]=[];for(const effect of effects){accounting?.visit('r2-schema-grant-effect-scan','/effects');if(effect.subject.kind==='schema-grant')schemaGrants.push(effect);}
  for(const grant of schemaGrants){
-  const dependent=hashCanonical(inventoryCatalogIdentity(grant.subject));
+  accounting?.visit('r2-schema-grant-dependencies','/effects',effects.length);const dependent=accounting?hashCanonicalCharged(inventoryCatalogIdentity(grant.subject),accounting,'/effects/schema-grant'):hashCanonical(inventoryCatalogIdentity(grant.subject));
   for(const prior of effects){
    if(prior===grant||prior.subject.kind==='metadata')continue;
-   dependencies.push({dependent,prerequisite:hashCanonical(inventoryCatalogIdentity(prior.subject)),sourcePath:grant.sourcePath,reason:'schema-grant-after-required-effects',state:'present'});
+   accounting?.visit('r2-schema-grant-prior-effect','/effects');dependencies.push({dependent,prerequisite:accounting?hashCanonicalCharged(inventoryCatalogIdentity(prior.subject),accounting,'/effects/prior-subject'):hashCanonical(inventoryCatalogIdentity(prior.subject)),sourcePath:grant.sourcePath,reason:'schema-grant-after-required-effects',state:'present'});
   }
  }
- const initialPrefix=initialInventoryPrefix(previous?{catalog:previous.projection.catalog as unknown as Record<string,Json[]>,tables:previous.tables}:null,lineage as unknown as Json[]);
- const history=prepared.stableRequest.history as unknown as Json,historyBinding={profile:'umf.table-inventory-source-history/0.1' as const,count:request.history.plans.length,digest:hashCanonical(prepared.stableRequest.history)};
+ accounting?.visit('g10-plan-initial-prefix-seeds','/seedLineage',lineage.length);const initialPrefix=initialInventoryPrefix(previous?{catalog:previous.projection.catalog as unknown as Record<string,Json[]>,tables:previous.tables}:null,lineage as unknown as Json[],accounting);
+ const history=prepared.stableRequest.history as unknown as Json,historyBinding={profile:'umf.table-inventory-source-history/0.1' as const,count:request.history.plans.length,digest:accounting?hashCanonicalCharged(prepared.stableRequest.history,accounting,'/history'):hashCanonical(prepared.stableRequest.history)};
  const seedExecution=request.options.seedSets.length?{version:'umf.table-seed-execution/0.1' as const,sets:[...request.options.seedSets]}:'none';
- const provenanceMutations=deriveG10ProvenanceMutations(previous?.projection??null,next.projection,effects);
- return compileInventoryPlanCore({id:request.id,predecessor:request.predecessor,previous:request.previous,next:request.next,options:prepared.stableRequest.options as unknown as Json,history,historyBinding,inventory,initialPrefix,nextCatalog:next.projection.catalog as unknown as Record<string,Json[]>,effects,dependencies,publicationObligations:derived.publicationObligations,provenanceMutations,seedExecution,review:review as unknown as Json[]});
+ accounting?.visit('g10-provenance-mutation-derivation','/effects',effects.length);const provenanceMutations=deriveG10ProvenanceMutations(previous?.projection??null,next.projection,effects,accounting);
+ return compileInventoryPlanCore({id:request.id,predecessor:request.predecessor,previous:request.previous,next:request.next,options:prepared.stableRequest.options as unknown as Json,history,historyBinding,inventory,initialPrefix,nextCatalog:next.projection.catalog as unknown as Record<string,Json[]>,effects,dependencies,publicationObligations:derived.publicationObligations,provenanceMutations,seedExecution,review:review as unknown as Json[]},accounting);
 }
 
 /** Verify only by reconstructing the exact plan from independently verified source and the supplied original history. */
@@ -911,8 +991,9 @@ function exactReview(request:TableInventoryMigrationRequest,verifier:HistoricalG
  const candidates=discoverInventoryReviewCandidatesWithVerifier(request.previous,request.next,discoverySelector(request.options),request.history,verifier);
  return validateExactReviewCandidates(request,candidates);
 }
-function exactReviewFromPrepared(request:TableInventoryMigrationRequest,verifier:HistoricalG10PlanVerifier,prepared:PreparedReviewInputs):TableInventoryReviewedChangeCandidate[]{
- const candidates=discoverInventoryReviewCandidatesCore(request.previous,request.next,discoverySelector(request.options),request.history,verifier,prepared);
+function exactReviewFromPrepared(request:TableInventoryMigrationRequest,verifier:HistoricalG10PlanVerifier,prepared:PreparedReviewInputs,accounting?:AccountingContext):TableInventoryReviewedChangeCandidate[]{
+ if(accounting){hashCanonicalCharged(request.options,accounting,'/options/reviewedChanges');hashCanonicalCharged(prepared.history,accounting,'/history/review');}
+ const candidates=discoverInventoryReviewCandidatesCore(request.previous,request.next,discoverySelector(request.options),request.history,verifier,prepared,accounting);
  return validateExactReviewCandidates(request,candidates);
 }
 function validateExactReviewCandidates(request:TableInventoryMigrationRequest,candidates:TableInventoryReviewedChangeCandidate[]):TableInventoryReviewedChangeCandidate[]{

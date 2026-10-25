@@ -3,9 +3,9 @@ import {inspectStoredLiteral} from './columns';
 import {refKey,TableContext} from './context';
 import type {TableLifecyclePayload} from './types';
 export function inspectSeeds(payload:TableLifecyclePayload,ctx:TableContext):void{
- ctx.unique(payload.seedSets,s=>s.id,ctx.path+'/seedSets','seed-set ID');
+ ctx.visit('table-seed-sets',ctx.path+'/seedSets',payload.seedSets.length);ctx.unique(payload.seedSets,s=>s.id,ctx.path+'/seedSets','seed-set ID');
  for(const[i,set]of payload.seedSets.entries())for(const[j,row]of set.rows.entries()){
-  const path=ctx.path+'/seedSets/'+i+'/rows/'+j,table=payload.tables.find(t=>t.id===row.table);
+  ctx.visit('table-seed-values',ctx.path+'/seedSets/'+i+'/rows/'+j+'/values',row.values.length);const path=ctx.path+'/seedSets/'+i+'/rows/'+j,table=payload.tables.find(t=>t.id===row.table);
   if(!table){ctx.add('TABLES_SEED_TABLE',path+'/table','Seed table is not declared by this module');continue;}
   ctx.unique(row.values,v=>refKey(v.field),path+'/values','seed Field');
   for(const[k,entry]of row.values.entries()){

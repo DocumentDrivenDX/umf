@@ -1,9 +1,87 @@
 import {compileTableDeployment,type TableDeploymentBundle} from '../table-deployment';
 import {hashCanonical,sha256Text} from '../compilation/bundle/hash';
+import {copyJsonCharged} from '../model/json';
+import type {AccountingContext} from '../model/internal/accounting-context';
 import type {G10Options} from './inventory-options';
 
 type Ref={module:string;element:string};
 type Json=null|boolean|number|string|Json[]|{[key:string]:Json};
+
+/** Opaque parsed-source maps; no caller-owned Map escapes the WeakMap. */
+export type OwnedSourceFieldIndex=object;
+interface OwnedSourceFieldIndexState{
+ readonly bundle:TableDeploymentBundle;readonly source:any;
+ readonly moduleById:Map<string,any>;readonly elementByRef:Map<string,any>;readonly elementPathByRef:Map<string,string>;
+ readonly tableById:Map<string,any>;readonly mappingByRef:Map<string,any>;
+ readonly physicalByRef:Map<string,any>;readonly pathByRef:Map<string,string>;
+ readonly sourcePathValues:Map<string,Json>;readonly sourcePathOrder:Map<string,number>;
+ readonly accounting?:AccountingContext;
+}
+const ownedSourceFieldIndexes=new WeakMap<object,OwnedSourceFieldIndexState>();
+function jsonStringBytes(value:string):number{let bytes=2;for(let i=0;i<value.length;i++){const unit=value.charCodeAt(i);if(unit===34||unit===92){bytes+=2;continue;}if(unit<0x20){bytes+=unit===8||unit===9||unit===10||unit===12||unit===13?2:6;continue;}if(unit>=0xd800&&unit<=0xdbff&&value.charCodeAt(i+1)>=0xdc00&&value.charCodeAt(i+1)<=0xdfff){bytes+=4;i++;continue;}if(unit>=0xd800&&unit<=0xdfff){bytes+=6;continue;}bytes+=unit<0x80?1:unit<0x800?2:3;}return bytes;}
+function tupleKey(accounting:AccountingContext|undefined,path:string,...parts:string[]):string{
+ if(accounting){accounting.visit('source-index-tuple-carrier',path,parts.length);let codeUnits=0;for(const part of parts)codeUnits+=part.length;accounting.visit('source-index-tuple-scan',path,codeUnits);let bytes=2+(parts.length-1);for(const part of parts)bytes+=jsonStringBytes(part);accounting.retainBytes('source-index-tuple-key',bytes,path);accounting.visit('source-index-tuple-serialize',path,codeUnits);}
+ return JSON.stringify(parts);
+}
+function retainIndexKey(key:string,accounting:AccountingContext|undefined,path:string):void{if(accounting){const bytes=accounting.scanUtf8(key,path);accounting.retainBytes('source-index-retained-map-key',bytes,path);}}
+const pointerPart=(value:string)=>value.replace(/~/g,'~0').replace(/\//g,'~1');
+function sourceIndexChildPath(parent:string,segment:string,accounting:AccountingContext|undefined,where:string):string{
+ if(!accounting)return `${parent}/${pointerPart(segment)}`;
+ const segmentBytes=accounting.scanUtf8(segment,where);accounting.visit('source-index-path-escape-scan',where,segment.length);
+ let tildes=0,slashes=0;for(let index=0;index<segment.length;index++){const unit=segment.charCodeAt(index);if(unit===126)tildes++;else if(unit===47)slashes++;}
+ const onceBytes=segmentBytes+tildes;accounting.retainBytes('source-index-path-tilde-escape',onceBytes,where);
+ const once=segment.replace(/~/g,'~0');accounting.retainBytes('source-index-path-slash-escape',onceBytes+slashes,where);
+ const escaped=once.replace(/\//g,'~1'),parentBytes=accounting.scanUtf8(parent,where);
+ accounting.retainBytes('source-index-path-retained-key',parentBytes+1+onceBytes+slashes,where);
+ return `${parent}/${escaped}`;
+}
+export function sourceChildPathFromIndex(index:OwnedSourceFieldIndex,parent:string,segment:string,where:string):string{
+ return sourceIndexChildPath(parent,segment,sourceIndexState(index).accounting,where);
+}
+/** Build once from the same compiler-owned parsed source used by projection. */
+export function buildOwnedSourceFieldIndex(bundle:TableDeploymentBundle,source:any,accounting?:AccountingContext):OwnedSourceFieldIndex{
+ accounting?.visit('source-index-map-carriers','/source/index',9);
+ const moduleById=new Map<string,any>(),elementByRef=new Map<string,any>(),elementPathByRef=new Map<string,string>(),tableById=new Map<string,any>(),mappingByRef=new Map<string,any>(),physicalByRef=new Map<string,any>(),pathByRef=new Map<string,string>(),sourcePathValues=new Map<string,Json>(),sourcePathOrder=new Map<string,number>();
+ const moduleCount=Array.isArray(source.modules)?source.modules.length:0;accounting?.visit('source-index-modules','/source/modules',moduleCount);
+ for(const[moduleIndex,module]of (source.modules??[]).entries()){
+  if(typeof module?.id==='string'){const path=`/source/modules/${moduleIndex}`;accounting?.visit('source-index-module-map-retention',path);retainIndexKey(module.id,accounting,path);moduleById.set(module.id,module);}
+  const elements=Array.isArray(module?.elements)?module.elements:[];accounting?.visit('source-index-elements',`/modules/${moduleIndex}/elements`,elements.length);
+  for(const[elementIndex,element]of elements.entries())if(typeof module?.id==='string'&&typeof element?.id==='string'){const path=`/modules/${moduleIndex}/elements/${elementIndex}`,key=tupleKey(accounting,path,module.id,element.id);accounting?.visit('source-index-element-map-retention',path,2);retainIndexKey(key,accounting,path);retainIndexKey(key,accounting,path);retainIndexKey(path,accounting,path);elementByRef.set(key,element);elementPathByRef.set(key,path);}
+ }
+ let moduleIndex=-1;for(let index=0;index<(source.modules??[]).length;index++){accounting?.visit('source-index-module-lookup',`/source/modules/${index}`);if(source.modules[index]?.id===bundle.module){moduleIndex=index;break;}}
+ const payload=moduleIndex<0?null:source.modules[moduleIndex]?.extensions?.['umf.tables'];
+ if(Array.isArray(payload?.tables))for(const[tableIndex,table]of payload.tables.entries()){
+  if(typeof table?.id!=='string')continue;const tablePath=`/modules/${moduleIndex}/extensions/umf.tables/tables/${tableIndex}`;accounting?.visit('source-index-table-map-retention',tablePath);retainIndexKey(table.id,accounting,tablePath);tableById.set(table.id,table);
+  const columns=Array.isArray(table.columns)?table.columns:[];accounting?.visit('source-index-mappings',`/modules/${moduleIndex}/extensions/umf.tables/tables/${tableIndex}/columns`,columns.length);
+  for(const[columnIndex,column]of columns.entries())if(typeof column?.field?.module==='string'&&typeof column.field.element==='string'){
+   const path=`/modules/${moduleIndex}/extensions/umf.tables/tables/${tableIndex}/columns/${columnIndex}`,key=tupleKey(accounting,path,table.id,column.field.module,column.field.element);accounting?.visit('source-index-mapping-map-retention',path,2);retainIndexKey(key,accounting,path);retainIndexKey(key,accounting,path);retainIndexKey(path,accounting,path);mappingByRef.set(key,column);pathByRef.set(key,path);
+  }
+ }
+ const physical=Array.isArray(bundle.expectedCatalog?.columns)?bundle.expectedCatalog.columns:[];accounting?.visit('source-index-physical-columns','/expectedCatalog/columns',physical.length);
+ for(let index=0;index<physical.length;index++){const column=physical[index]!;if(typeof column?.table==='string'&&typeof column.field?.module==='string'&&typeof column.field.element==='string'){const path=`/expectedCatalog/columns/${index}`;const key=tupleKey(accounting,path,column.table,column.field.module,column.field.element);accounting?.visit('source-index-physical-map-retention',path);retainIndexKey(key,accounting,path);physicalByRef.set(key,column);}}
+ accounting?.visit('source-path-index-stack-carrier','/source',1);const stack:{value:Json;path:string}[]=[{value:source as Json,path:''}];
+ let sourceOrdinal=0;while(stack.length){const current=stack.pop()!;const currentPath=current.path||'/source';accounting?.visit('source-path-index-node',currentPath);accounting?.visit('source-path-index-map-retention',currentPath,2);retainIndexKey(current.path,accounting,currentPath);retainIndexKey(current.path,accounting,currentPath);sourcePathValues.set(current.path,current.value);sourcePathOrder.set(current.path,sourceOrdinal++);if(Array.isArray(current.value)){accounting?.visit('source-path-array-slots',currentPath,current.value.length);for(let i=current.value.length-1;i>=0;i--){accounting?.visit('source-path-stack-retention',currentPath);const path=sourceIndexChildPath(current.path,String(i),accounting,currentPath);stack.push({value:current.value[i]!,path});}}else if(current.value!==null&&typeof current.value==='object'){const keys:string[]=[];for(const key in current.value){if(!Object.hasOwn(current.value,key))continue;accounting?.visit('source-path-object-member-enumeration',currentPath);accounting?.visit('source-path-object-key-retention',currentPath);keys.push(key);}for(let i=keys.length-1;i>=0;i--){const key=keys[i]!;accounting?.visit('source-path-stack-retention',currentPath);const path=sourceIndexChildPath(current.path,key,accounting,currentPath);stack.push({value:(current.value as Record<string,Json>)[key]!,path});}}}
+ accounting?.visit('source-index-state-construction','/source/index',12);const state={bundle,source,moduleById,elementByRef,elementPathByRef,tableById,mappingByRef,physicalByRef,pathByRef,sourcePathValues,sourcePathOrder,...(accounting?{accounting}:{})};accounting?.visit('source-index-handle-construction','/source/index');const handle=Object.freeze({});accounting?.visit('source-index-weakmap-retention','/source/index');ownedSourceFieldIndexes.set(handle,state);return handle;
+}
+function sourceIndexState(index:OwnedSourceFieldIndex):OwnedSourceFieldIndexState{
+ const state=ownedSourceFieldIndexes.get(index);if(!state)throw new TypeError('G05_SOURCE_INDEX_NOT_OWNED');return state;
+}
+export function sourceElementFromIndex(index:OwnedSourceFieldIndex,ref:Ref):{value:any;path:string}|null{const state=sourceIndexState(index),key=tupleKey(state.accounting,'/source/index/field-lookup',ref.module,ref.element),value=state.elementByRef.get(key),path=state.elementPathByRef.get(key);return value===undefined||path===undefined?null:{value,path};}
+export function sourceFieldMeaningFromIndex(index:OwnedSourceFieldIndex,table:string,ref:Ref,accounting?:AccountingContext):Json|null{
+ const state=sourceIndexState(index),meter=accounting??state.accounting,key=tupleKey(meter,'/source/index/field-meaning',table,ref.module,ref.element),logical=state.elementByRef.get(tupleKey(meter,'/source/index/field-meaning',ref.module,ref.element)),physical=state.physicalByRef.get(key),mapped=state.mappingByRef.get(key);
+ if(logical?.kind!=='field'||physical===undefined||mapped===undefined)return null;
+ meter?.visit('source-field-meaning-clones',`/field/${table}/${ref.module}/${ref.element}`,3);
+ const hooks=meter?{beforeProperty:(name:string,path:string,array:boolean)=>{meter.visit('source-field-copy-property-preflight',path);if(!array)meter.scanUtf8(name,path);},retainText:(text:string,path:string)=>{meter.scanUtf8(text,path);}}:undefined;
+ return {physical:meter?copyJsonCharged(physical,n=>meter.visit('source-field-physical-copy','/field/physical',n),hooks) as unknown as Json:structuredClone(physical) as Json,logical:meter?copyJsonCharged(logical,n=>meter.visit('source-field-logical-copy','/field/logical',n),hooks) as unknown as Json:structuredClone(logical) as Json,mapping:meter?copyJsonCharged(mapped,n=>meter.visit('source-field-mapping-copy','/field/mapping',n),hooks) as unknown as Json:structuredClone(mapped) as Json};
+}
+export function sourceMappingPathFromIndex(index:OwnedSourceFieldIndex,table:string,ref:Ref):string|null{
+	const state=sourceIndexState(index);return state.pathByRef.get(tupleKey(state.accounting,'/source/index/mapping-path',table,ref.module,ref.element))??null;
+}
+export function sourceValueAtPathFromIndex(index:OwnedSourceFieldIndex,path:string):Json|undefined{
+ return sourceIndexState(index).sourcePathValues.get(path);
+}
+export function sourceHasPathInIndex(index:OwnedSourceFieldIndex,path:string):boolean{return sourceIndexState(index).sourcePathValues.has(path);}
+export function sourcePathOrdinalFromIndex(index:OwnedSourceFieldIndex,path:string):number|undefined{return sourceIndexState(index).sourcePathOrder.get(path);}
 const obj=(v:unknown):v is Record<string,any>=>!!v&&typeof v==='object'&&!Array.isArray(v)&&(Object.getPrototypeOf(v)===Object.prototype||Object.getPrototypeOf(v)===null);
 const exact=(v:unknown,keys:string[]):v is Record<string,any>=>obj(v)&&Object.keys(v).length===keys.length&&keys.every(key=>Object.hasOwn(v,key));
 const refKey=(ref:Ref)=>JSON.stringify([ref.module,ref.element]);

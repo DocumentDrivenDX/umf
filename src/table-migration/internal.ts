@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {compileTableMigration,type TableMigrationRequest,type TableMigrationResult,type TableMigrationStep} from './index';
 import {requestTableMigrationOperationCapture,TABLE_MIGRATION_OPERATION,type TableMigrationOperationRecord,type TableMigrationOperationTag} from './internal-operations';
-import {hashCanonical} from '../compilation/bundle/hash';
+import {hashCanonical,hashCanonicalCharged} from '../compilation/bundle/hash';
+import type {AccountingContext} from '../model/internal/accounting-context';
+import {copyJsonCharged} from '../model/json';
+import {readJsonDocumentWithAccounting} from '../model/document-accounting';
 import {migrationOptionsForInventoryComposition,refKey,type TableMigrationOptions} from './options';
-import {verifyTableDeployment,type TableDeploymentBundle} from '../table-deployment';
+import {verifyTableDeployment,verifyTableDeploymentWithAccounting,type TableDeploymentBundle} from '../table-deployment';
 import {readDocument} from '../model/document';
 import {tableMigrationFieldOperationTag} from './internal-operations';
 import {renderG02FieldEffect,type G02FieldEffect,type G02FieldEffectRole} from './g02-field-effects';
@@ -17,7 +20,7 @@ function exactKeys(value:object,keys:readonly string[]):boolean{
  const actual=Object.keys(value).sort(),expected=[...keys].sort();return actual.length===expected.length&&actual.every((key,index)=>key===expected[index]);
 }
 function without(value:object,keys:readonly string[]):Record<string,unknown>{return Object.fromEntries(Object.entries(value).filter(([key])=>!keys.includes(key)));}
-function same(left:unknown,right:unknown):boolean{return hashCanonical(left)===hashCanonical(right);}
+function same(left:unknown,right:unknown,accounting?:AccountingContext,path='/g02'):boolean{return (accounting?hashCanonicalCharged(left,accounting,`${path}/left`):hashCanonical(left))===(accounting?hashCanonicalCharged(right,accounting,`${path}/right`):hashCanonical(right));}
 
 function validateTag(step:TableMigrationStep,tag:TableMigrationOperationTag,optionsVersion:string):void{
  if(!exactKeys(tag,Object.hasOwn(tag,'rowOperationId')?['profile','role','sourcePath','subject','rowOperationId']:['profile','role','sourcePath','subject'])||tag.profile!=='umf.table-migration-renderer-operation/0.1'||tag.sourcePath!==step.sourcePath||!step.id)throw new Error('table-migration-internal-operation-binding');
@@ -86,8 +89,9 @@ export function compileTableMigrationWithOperations(input:TableMigrationRequest)
  * the complete source bundles and exact create intents; this function validates
  * the unchanged G02 .4 contract against those same original bundles.
  */
-export function compileG02FieldEffects(input:{previous:TableDeploymentBundle;next:TableDeploymentBundle;options:TableMigrationOptions;createdTables:readonly string[]}):G02FieldEffect[]{
- const previous=verifyTableDeployment(input.previous),next=verifyTableDeployment(input.next),options=structuredClone(input.options);
+export function compileG02FieldEffects(input:{previous:TableDeploymentBundle;next:TableDeploymentBundle;options:TableMigrationOptions;createdTables:readonly string[];accounting?:AccountingContext}):G02FieldEffect[]{
+ const accounting=input.accounting;accounting?.visit('g02-field-effects-inputs','/g02',4);if(accounting){hashCanonicalCharged(input.previous,accounting,'/g02/previous');hashCanonicalCharged(input.next,accounting,'/g02/next');hashCanonicalCharged(input.options,accounting,'/g02/options');hashCanonicalCharged(input.createdTables,accounting,'/g02/createdTables');}
+ const previous=accounting?verifyTableDeploymentWithAccounting(input.previous,accounting).bundle:verifyTableDeployment(input.previous),next=accounting?verifyTableDeploymentWithAccounting(input.next,accounting).bundle:verifyTableDeployment(input.next),options=accounting?copyJsonCharged(input.options,n=>accounting.visit('g02-options-copy','/g02/options',n),{beforeProperty:(key,path,isArray)=>{accounting.visit('g02-options-copy-property',path);if(!isArray)accounting.scanUtf8(key,path);},retainText:(text,path)=>accounting.scanUtf8(text,path)}):structuredClone(input.options);
  if(options.version!=='umf.table-migration-options/0.4'||input.createdTables.length>256)throw new Error('table-migration-internal-g02-profile');
  migrationOptionsForInventoryComposition(options,next,previous,input.createdTables);
  if(options.backfills.length!==1)throw new Error('table-migration-internal-g02-selection');
@@ -95,7 +99,7 @@ export function compileG02FieldEffects(input:{previous:TableDeploymentBundle;nex
  const targetRef=refKey(selected.column),oldColumn=previous.expectedCatalog.columns.find(value=>value.table===selected.table&&refKey(value.field)===targetRef),columns=next.expectedCatalog.columns.filter(value=>value.table===selected.table&&refKey(value.field)===targetRef);
  if(columns.length!==1)throw new Error('table-migration-internal-g02-target-column');
  const column=columns[0]!,subjectField={module:selected.column.module,element:selected.column.element};
- const oldDocument=readDocument(previous.source.utf8,previous.source.format),nextDocument=readDocument(next.source.utf8,next.source.format),nextModule=nextDocument.modules.find(module=>module.id===selected.column.module),nextField=nextModule?.elements.find(element=>element.id===selected.column.element);
+ const oldDocument=accounting?readJsonDocumentWithAccounting(previous.source.utf8,accounting):readDocument(previous.source.utf8,previous.source.format),nextDocument=accounting?readJsonDocumentWithAccounting(next.source.utf8,accounting):readDocument(next.source.utf8,next.source.format),nextModule=nextDocument.modules.find(module=>module.id===selected.column.module),nextField=nextModule?.elements.find(element=>element.id===selected.column.element);
  const oldField=oldDocument.modules.find(module=>module.id===selected.column.module)?.elements.find(element=>element.id===selected.column.element);
  const fieldMap=(nextModule?.extensions?.['umf.tables'] as {tables?:{id:string;columns?:{field:{module:string;element:string}}[]}[]}|undefined)?.tables?.find(table=>table.id===selected.table);
  if(!fieldMap?.columns?.some(mapping=>refKey(mapping.field)===targetRef)||nextField?.kind!=='field'||nextField.nullability!=='required')throw new Error('table-migration-internal-g02-source-target');
@@ -112,7 +116,7 @@ export function compileG02FieldEffects(input:{previous:TableDeploymentBundle;nex
   if(checks.length>1)throw new Error('table-migration-internal-g02-duplicate-domain-check');
   for(const check of checks)targetChecks.push({definitionSql:check.definitionSql,name:check.name,sourcePath:column.sourcePath+'/domain'});
  }else{
-  if(!oldField||oldField.kind!=='field'||oldField.nullability!=='absent-allowed'||!same(without(oldField,['nullability']),without(nextField,['nullability'])))throw new Error('table-migration-internal-g02-retained-field-source');
+  if(!oldField||oldField.kind!=='field'||oldField.nullability!=='absent-allowed'||!same(without(oldField,['nullability']),without(nextField,['nullability']),accounting,'/g02/retained-field'))throw new Error('table-migration-internal-g02-retained-field-source');
  }
  // Match the source compiler's G02 phased plan: nullable ADD, target checks,
  // backfill, optional default, then NOT NULL tightening. The whole group is
