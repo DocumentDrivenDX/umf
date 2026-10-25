@@ -20,7 +20,7 @@ export function withVerifiedG10BundleScope<T>(accounting:AccountingContext,body:
  const scope:VerificationScope={byIndex:new Map(),slots:0};scopes.set(accounting as object,scope);
  try{return body();}finally{scopes.delete(accounting as object);}
 }
-function freezeBundle(value:InventoryComponentJson,accounting:AccountingContext,path:string):FrozenBundle{
+function freezeBundle(value:InventoryComponentJson,accounting:AccountingContext,path:string):InventoryComponentJson{
  const active=new Set<object>();
  const freeze=(item:InventoryComponentJson,at:string):void=>{
   if(item===null||typeof item!=='object')return;
@@ -44,7 +44,7 @@ function freezeBundle(value:InventoryComponentJson,accounting:AccountingContext,
   }
   Object.freeze(item);active.delete(item);
  };
- freeze(value,path);return value as FrozenBundle;
+ freeze(value,path);return value;
 }
 function sameCanonical(left:string,right:string,accounting:AccountingContext,path:string):boolean{
  if(left.length!==right.length)return false;
@@ -57,9 +57,10 @@ function storeVerifiedBundle(canonical:string,bundle:TableDeploymentBundle,accou
  const index=sha256TextCharged(canonical,BUNDLE_COPY_BYTES,accounting,`${path}/cache-index`);
  const bucket=scope.byIndex.get(index);if(bucket){for(const entry of bucket)if(sameCanonical(canonical,entry.canonical,accounting,`${path}/existing-canonical-compare`))return;}
  const copied=alreadyOwned?bundle as unknown as InventoryComponentJson:ownCanonicalComponent(bundle,path,BUNDLE_COPY_BYTES,accounting);
- const frozen=freezeBundle(copied,accounting,path);
- const copiedCanonical=canonicalCharged(frozen,accounting,`${path}/frozen-canonical`);
+ const frozenCopy=freezeBundle(copied,accounting,path);
+ const copiedCanonical=canonicalCharged(frozenCopy,accounting,`${path}/frozen-canonical`);
  if(!sameCanonical(canonical,copiedCanonical,accounting,`${path}/frozen-canonical-compare`))throw new TypeError(`R2_VERIFIED_BUNDLE_COPY_MISMATCH:${path}`);
+ const frozen=frozenCopy as unknown as FrozenBundle;
  const bytes=accounting.scanUtf8(canonical,`${path}/cache-key`);accounting.retainBytes('r2-verified-bundle-cache-key',bytes,`${path}/cache-key`);
  accounting.visit('r2-verified-bundle-cache-entry',path);
  const indexBytes=accounting.scanUtf8(index,`${path}/cache-index`);accounting.retainBytes('r2-verified-bundle-cache-index',indexBytes,`${path}/cache-index`);
