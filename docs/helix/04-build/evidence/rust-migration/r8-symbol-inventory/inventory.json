@@ -195,7 +195,7 @@
     "spec/projections/typespec-json-schema.schema.json": "1d8ec354b4832c38a03e75acdd75dc778fae6911345fb76517ddf5dfe5f1a2cc",
     "src/access/index.ts": "77256da4a67a6437607dabc78109080e75018dbef5df40d052ad966d761b4d0c",
     "src/access/rust-host-reads-v3.ts": "f3ab136e5666d6d60d1afbf35d42feff6a591153facbfdd3bb0562fe2ea13a90",
-    "src/access/rust-host-reads-v4.ts": "c933bbd60a7cdf9557692198ce103b1debe068d884c51a1aac9c7794e408088b",
+    "src/access/rust-host-reads-v4.ts": "fda06a76c94ff109693b9a15cc05c18ca696c4082a586f0a03104199d56bf17f",
     "src/adapters/access-temporal.ts": "aecc4b45d5ce53b5cc9d0bca6f3897b42aea0eb4cdedbf3ae6c0dbcaf1bc10f2",
     "src/adapters/arrow/capture.ts": "d8b75f23a0d2637eac6c18e7826c6c75a3c217b1c5933120e4174812934d79f9",
     "src/adapters/arrow/flatbuffer-decode.ts": "298e672b594ebeef62f2af697dce855773b94a13fbff4ddc27e7edd754a672db",
@@ -529,7 +529,7 @@
     "authorityClosure": [
       {
         "path": "bindings/core/node/index.js",
-        "sha256": "094741afa50d48f7b3f6ca27a91f6ad3e475d34904d0609216e0c5ec36c22f2e"
+        "sha256": "327519a2cfbd5560c88a1b993fdfcac01e07c01250f9c2fddd8a26d8e2c49a6f"
       },
       {
         "path": "bindings/core/node/src/bit128.js",
@@ -541,7 +541,7 @@
       },
       {
         "path": "bindings/core/wasm/index.js",
-        "sha256": "0f68d3048f0ac353bd05f4dec6aa77677f9f3ae802e857525ed00a6f4e29f4c4"
+        "sha256": "8deeb18c0f50e803bb732ac795a622056a7e60f25fcd9c9733f4bfe57d938ba6"
       },
       {
         "path": "crates/umf-core-wire/src/lib.rs",
@@ -973,7 +973,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/access/rust-host-reads-v4.ts",
       "line": 5,
-      "sourceSha256": "c933bbd60a7cdf9557692198ce103b1debe068d884c51a1aac9c7794e408088b",
+      "sourceSha256": "fda06a76c94ff109693b9a15cc05c18ca696c4082a586f0a03104199d56bf17f",
       "ownerKind": "rust-candidate",
       "candidateOwner": "Rust codegen engine (R3) plus binding/cutover track (R4/R7)",
       "disposition": "map symbol to exact Rust operation and installed route; duplicate TS retirement remains unresolved until parity and default-route evidence"
@@ -1011,7 +1011,7 @@
       "migrationDisposition": "unreviewed",
       "source": "src/access/rust-host-reads-v4.ts",
       "line": 5,
-      "sourceSha256": "c933bbd60a7cdf9557692198ce103b1debe068d884c51a1aac9c7794e408088b",
+      "sourceSha256": "fda06a76c94ff109693b9a15cc05c18ca696c4082a586f0a03104199d56bf17f",
       "ownerKind": "rust-candidate",
       "candidateOwner": "Rust codegen engine (R3) plus binding/cutover track (R4/R7)",
       "disposition": "map symbol to exact Rust operation and installed route; duplicate TS retirement remains unresolved until parity and default-route evidence"

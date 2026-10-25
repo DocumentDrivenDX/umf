@@ -585,6 +585,25 @@ pub fn execute_javascript_numeric_wire(
     }
 }
 
+#[napi(js_name = "executeSecurityLogicWire")]
+pub fn execute_security_logic_wire(
+    env: Env,
+    wire_json: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::security_logic_binding::execute_security_logic_wire_with_control(
+            &wire_json, &mut hook,
+        ))
+    } else {
+        Ok(umf_core_wire::security_logic_binding::execute_security_logic_wire(
+            &wire_json,
+        ))
+    }
+}
+
 struct NodeControl {
     env: Env,
     dispatcher: JsFunction,

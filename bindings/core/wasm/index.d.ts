@@ -63,6 +63,19 @@ export interface UmfJavascriptNumericEngine {
   numericToNumberLossless(literal: JavascriptNumericLiteral, context?: JavascriptNumericContext): number;
 }
 export declare function createJavascriptNumericEngine(module: any, resources?: UmfCoreResources, options?: {controls?: UmfCoreControls; setupControls?: UmfCoreControls}): UmfJavascriptNumericEngine;
+export declare const SECURITY_LOGIC_PROFILE: 'umf.security-logic/1.0.0';
+export type SecurityTruth = 'T'|'F'|'U';
+export type SecurityDecision = 'permit'|'deny'|'indeterminate'|'conflict';
+export type SecurityDisposition = {kind:'original'}|{kind:'withheld'}|{kind:'transformed';type:'string';value:string}|{kind:'transformed';type:'boolean';value:boolean};
+export interface EvaluatedSecurityRule {effect:'permit'|'require'|'forbid';truth:SecurityTruth;disclosure?:Record<string,SecurityDisposition>}
+export interface SecurityComposition {decision:SecurityDecision;disclosure:Record<string,SecurityDisposition>}
+export interface UmfSecurityLogicEngine {
+  securityNot(value: SecurityTruth): SecurityTruth;
+  securityAnd(values: readonly SecurityTruth[]): SecurityTruth;
+  securityOr(values: readonly SecurityTruth[]): SecurityTruth;
+  composeSecurityRules(rules: readonly EvaluatedSecurityRule[], protectedFields?: readonly string[]): SecurityComposition;
+}
+export declare function createSecurityLogicEngine(module: any, options?: {controls?: UmfCoreControls}): UmfSecurityLogicEngine;
 export type GregorianDateUnit = 'year' | 'quarter' | 'month' | 'day';
 export interface GregorianDate { readonly profile: typeof GREGORIAN_DATE_PROFILE; readonly originalText: string; readonly year: number; readonly month: number; readonly day: number }
 export interface Rfc3339ExactInstant { readonly profile: typeof RFC3339_EXACT_INSTANT_PROFILE; readonly originalText: string; readonly utcSeconds: string; readonly fractionalDigits: string; readonly originalOffset: string; readonly localOffsetKnown: boolean }

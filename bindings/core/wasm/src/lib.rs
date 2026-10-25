@@ -452,6 +452,22 @@ pub fn execute_javascript_numeric_wire(
     }
 }
 
+#[wasm_bindgen(js_name = executeSecurityLogicWire)]
+pub fn execute_security_logic_wire(
+    wire_json: &str,
+    control_dispatcher: Option<Function>,
+) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::security_logic_binding::execute_security_logic_wire_with_control(
+            wire_json, &mut hook,
+        )
+    } else {
+        umf_core_wire::security_logic_binding::execute_security_logic_wire(wire_json)
+    }
+}
+
 struct WasmControl {
     dispatcher: Function,
 }

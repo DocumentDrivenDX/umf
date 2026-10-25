@@ -123,6 +123,20 @@ accept('src/model/relationship-selection.ts', [['selectCoreRelationships', 'sele
   'scripts/rust-migration/r8/relationship-selection-binding-node.mjs',
   'scripts/rust-migration/r8/relationship-selection-binding-browser.mjs',
 ]);
+accept('src/extensions/security/logic.ts', [
+  ['securityNot', 'security_not'],
+  ['securityAnd', 'security_and'],
+  ['securityOr', 'security_or'],
+  ['composeSecurityRules', 'compose_security_rules'],
+], 'umf_core::security_logic', 'crates/umf-core/src/security_logic.rs', [
+  'docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md',
+  'r8-security-truth-logic/frozen-typescript.json',
+  'r8-security-truth-logic/compose-cases.json',
+  'r8-security-truth-logic-binding/README.md',
+], [
+  'crates/umf-core-wire/tests/security_logic_wire.rs',
+  'bindings/core/node/tests/security-logic.test.js',
+]);
 accept('src/model/native-json.ts', [['parseNativeJson', 'NativeJsonTree::parse_json']], 'umf_core::native_json', 'crates/umf-core/src/native_json.rs', [
   'docs/helix/04-build/evidence/rust-migration/r8-native-json-parser/README.md',
   'docs/helix/04-build/evidence/rust-migration/r5-json-schema-tree-operations/predecessor.json',
@@ -219,6 +233,8 @@ function acceptedOperationEvidence(mapping, routeStatus = 'legacy-fixture') {
     focusedTestClosure: closure(mapping.focusedTestPaths),
     scopeRule: mapping.evidencePaths.some(file => file.includes('/r8-json-number-predecessor/'))
       ? 'Source/evidence hashes pin identity only; the linked R8 JSON-number packet defines string-input parity and its remaining host/default-route gates.'
+      : mapping.evidencePaths.some(file => file.includes('/r8-security-truth-logic-binding/'))
+        ? 'Source/evidence hashes pin identity only; the linked CONTRACT-062 truth/composition packet defines admitted JSON parity for already-evaluated rules, excluding Registry, backend authorization, and default-route retirement.'
       : mapping.evidencePaths.some(file => file.includes('/r8-core-relationship-selection-binding/'))
         ? 'Source/evidence hashes pin identity only; the linked relationship-selection packet defines 16-case opt-in host parity, excluding Registry callbacks and JavaScript error class identity.'
       : 'Source/evidence hashes pin identity only; the linked R5 packet defines the bounded operation subset and its remaining gates.',

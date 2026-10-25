@@ -4767,3 +4767,31 @@ Python access boundary now names the two opt-in catalog facades and permits
 only their public `umf.rust_access_catalog` bridge. Its full 28-test boundary
 suite and 95-module source scan pass; private `_rust` reach-through still
 refuses.
+
+The [security truth/composition binding](evidence/rust-migration/r8-security-truth-logic-binding/README.md)
+adds an opt-in public Node/WASM factory for the four previously frozen
+CONTRACT-062 operations. Strict tagged-wire admission rejects unknown,
+missing, duplicate, and wrong-profile request members before Rust dispatch.
+Sol reviewed the public path and focused receipts: Rust wire 8/8, Node 4/4,
+Bun 4/4, and real Chromium 153 truth/refusal/composition replay (9 truth rows,
+3 refusals, 22 composition cases). The browser harness bundles the public
+wrapper but uses temporary no-modules glue; the receipt does not qualify an
+installed archive, policy selection, backend authorization, arbitrary Proxy
+behavior, or a default-route switch. The coordinated inventory is now SHA-256
+`f517fd3e58950f1feffe2bfdf0d13bb3ab08cea607b17a1ad79bccfb42f95201`
+and ledger SHA-256
+`f7081e0f94ff93a3e2a54e8e85f37e46ebea6016963beab3d0977c4446960408`.
+The ledger has 58 accepted opt-in mappings and 864 unmapped executable names;
+all 922 logical default-route retirement gaps and zero proven current-cohort
+default binding routes remain. Its 38 focused tests pass.
+
+The installed SDK Bit128 replay passed 11 frozen functions through Node
+26.12.1, Bun 1.4.3, and Chromium 153 in a private archive, including
+`UmfError` identity and missing/corrupt native-module refusal. The archive
+SHA-256 is
+`6bae9840193c6fd3c110029a7550ff60785e2dcdefb66717f00ea2ca11c518ee`.
+Its fixed-point source cohort differs from current HEAD in four pinned inputs
+and from the worktree in another fifteen. This receipt qualifies that archive
+only; it cannot retire `parseBits128` in the current default route or serve as
+the release artifact. A fresh integrated-source build and exact route review
+are required.

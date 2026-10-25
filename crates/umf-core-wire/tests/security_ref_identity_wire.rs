@@ -43,6 +43,7 @@ fn get<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
 
 fn invoke(reference: Value) -> (serde_json::Value, Option<Value>) {
     let request = object(vec![
+        ("profile", string("umf.security-logic/1.0.0")),
         ("op", string("securityRefIdentity")),
         ("args", object(vec![("ref", reference)])),
     ]);
@@ -85,6 +86,7 @@ fn tagged_reference_identity_matches_frozen_bun_predecessor() {
 #[test]
 fn tagged_reference_identity_requires_the_argument() {
     let request = object(vec![
+        ("profile", string("umf.security-logic/1.0.0")),
         ("op", string("securityRefIdentity")),
         ("args", object(vec![])),
     ]);

@@ -8,6 +8,7 @@ const root = resolve(import.meta.dir, '../../..');
 const pairs = [
   ['bindings/core/node/src/wire.js', 'bindings/core/wasm/src/wire.js'],
   ['bindings/core/node/src/javascript-numeric.js', 'bindings/core/wasm/src/javascript-numeric.js'],
+  ['bindings/core/node/src/security-logic.js', 'bindings/core/wasm/src/security-logic.js'],
   ['bindings/core/node/src/bit128.js', 'bindings/core/wasm/src/bit128.js'],
   ['bindings/core/node/src/json-number.js', 'bindings/core/wasm/src/json-number.js'],
   ['bindings/core/node/src/json-schema.js', 'bindings/core/wasm/src/json-schema.js'],
@@ -46,6 +47,10 @@ if (check) {
   console.log(JSON.stringify({status: 'current', files: generated.size, sources: manifest.sources}));
 } else {
   await mkdir(resolve(root, 'bindings/core/wasm/src'), {recursive: true});
-  for (const [path, bytes] of generated) await writeFile(resolve(root, path), bytes);
+  for (const [path, bytes] of generated) {
+    let current: Uint8Array | undefined;
+    try { current = await readFile(resolve(root, path)); } catch { /* created below */ }
+    if (!current || hash(current) !== hash(bytes)) await writeFile(resolve(root, path), bytes);
+  }
   console.log(JSON.stringify({status: 'generated', files: generated.size, sources: manifest.sources}));
 }

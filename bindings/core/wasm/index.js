@@ -1,5 +1,6 @@
 import {createHostReadResponseFrames, encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './src/wire.js';
 import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
+import {createSecurityLogicEngine as createSecurityLogicEngineWithWire, SECURITY_LOGIC_PROFILE} from './src/security-logic.js';
 import {createCoreModelOperations} from './src/core-model.js';
 import {createCoreKeyTupleOperations} from './src/core-key-tuple.js';
 import {createCoreKeysOperations} from './src/core-keys.js';
@@ -15,6 +16,7 @@ import {createDocumentComparisonOperations, DOCUMENT_COMPARISON_PROFILE} from '.
 import {validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse} from './src/host-json.js';
 import {createSemanticTypeRegistry as createSemanticTypeRegistryWithWire} from './src/semantic-value.js';
 export {JAVASCRIPT_NUMERIC_PROFILE};
+export {SECURITY_LOGIC_PROFILE};
 export {BIT128_PROFILE};
 export {JSON_NUMBER_PROFILE};
 export const GREGORIAN_DATE_PROFILE = 'umf-gregorian-date/1.0.0';
@@ -1205,6 +1207,12 @@ export function createJavascriptNumericEngine(module, resources, options = {}) {
   if (typeof module?.executeJavascriptNumericWire !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
   if (resources !== undefined && typeof module.JavascriptNumericRuntime !== 'function') throw new Error('RUST_NUMERIC_PREPARED_RUNTIME_MISSING');
   return createNumericEngine(module, resources, options);
+}
+
+/** Create the opt-in Rust engine for bounded CONTRACT-062 truth/composition operations. */
+export function createSecurityLogicEngine(module, options = {}) {
+  if (typeof module?.executeSecurityLogicWire !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  return createSecurityLogicEngineWithWire((wire, control) => module.executeSecurityLogicWire(wire, control), options, UmfCoreError);
 }
 
 function codegenOptions(options) {

@@ -1,6 +1,7 @@
 import {createRequire} from 'node:module';
 import {createHostReadResponseFrames, encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './src/wire.js';
 import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
+import {createSecurityLogicEngine as createSecurityLogicEngineWithWire, SECURITY_LOGIC_PROFILE} from './src/security-logic.js';
 import {createCoreModelOperations} from './src/core-model.js';
 import {createCoreKeyTupleOperations} from './src/core-key-tuple.js';
 import {createCoreKeysOperations} from './src/core-keys.js';
@@ -51,6 +52,7 @@ export function copyJson(value, limits) {
 export const engineVersion = addon.engineVersion();
 
 export {JAVASCRIPT_NUMERIC_PROFILE};
+export {SECURITY_LOGIC_PROFILE};
 export {BIT128_PROFILE};
 export {JSON_NUMBER_PROFILE};
 export function createBit128Engine(options = {}) {
@@ -68,6 +70,12 @@ export function createJavascriptNumericEngine(resources, options = {}) {
   if (typeof addon.executeJavascriptNumericWire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
   if (resources !== undefined && typeof addon.JavascriptNumericRuntime !== 'function') throw new Error('RUST_NUMERIC_PREPARED_RUNTIME_MISSING');
   return createNumericEngine(addon, resources, options);
+}
+
+/** Create the opt-in Rust engine for bounded CONTRACT-062 truth/composition operations. */
+export function createSecurityLogicEngine(options = {}) {
+  if (typeof addon.executeSecurityLogicWire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  return createSecurityLogicEngineWithWire((wire, control) => addon.executeSecurityLogicWire(wire, control), options, UmfCoreError);
 }
 
 export const GREGORIAN_DATE_PROFILE = 'umf-gregorian-date/1.0.0';

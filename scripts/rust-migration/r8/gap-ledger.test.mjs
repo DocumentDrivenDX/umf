@@ -1374,6 +1374,37 @@ test('relationship selection maps a bounded opt-in Rust operation without replac
   }
 });
 
+test('security truth and composition map only their four reviewed opt-in operations', () => {
+  const operations = [
+    ['securityNot', 'security_not'],
+    ['securityAnd', 'security_and'],
+    ['securityOr', 'security_or'],
+    ['composeSecurityRules', 'compose_security_rules'],
+  ];
+  const symbols = operations.flatMap(([exportName], index) =>
+    ['package-root-node', 'package-root-browser', 'package-reference'].map((routeId, routeIndex) => ({
+      routeId, exportName, declarationName: exportName,
+      declarationKind: 'FunctionDeclaration', source: 'src/extensions/security/logic.ts',
+      line: index * 3 + routeIndex + 1, sourceSha256: 'c'.repeat(64),
+    })));
+  const ledger = buildLedger({ ...args, inventory: { symbols } });
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 4);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 4);
+  assert.equal(ledger.counts.bindingRoutesProven, 0);
+  for (const row of ledger.rows) {
+    const rustSymbol = operations.find(([name]) => name === row.exportName)[1];
+    assert.equal(row.acceptedRustOperation, `umf_core::security_logic::${rustSymbol}`);
+    assert.equal(row.bindingRouteStatus, 'unproven');
+    assert.equal(row.bindingRoute, null);
+    const pin = row.acceptedOperationEvidence;
+    assert.match(pin.scopeRule, /already-evaluated rules/);
+    assert.ok(pin.evidenceClosure.some(item => item.path === 'docs/helix/04-build/evidence/rust-migration/r8-security-truth-logic-binding/README.md'));
+    assert.ok(pin.rustSourceClosure.some(item => item.path === 'crates/umf-core/src/security_logic.rs'));
+    assert.ok(pin.focusedTestClosure.some(item => item.path === 'bindings/core/node/tests/security-logic.test.js'));
+    if (row.routeId === 'package-reference') assert.equal(row.sourceSelectedImplementation, null);
+  }
+});
+
 test('all eleven Bit128/UUID operations carry source-selected-only status and authority closure', () => {
   const operations = [
     ['parseBits128', 'src/model/bit128.ts', 'parse_bits128'],

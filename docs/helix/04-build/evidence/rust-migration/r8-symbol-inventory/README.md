@@ -751,3 +751,21 @@ shared-source map, Rust-boundary gate (695 checked modules, zero V8 debt),
 Python sdist/artifact custody (16 tests), and `git diff --check` also passed
 at this source cut. These source checks do not qualify a publishable archive,
 the six-host Python release matrix, or default-route retirement.
+
+## Security binding recapture (2026-10-25)
+
+The reviewed [security truth/composition binding](../r8-security-truth-logic-binding/README.md)
+adds four exact opt-in Rust mappings and leaves the TypeScript default roots
+and explicit `./reference` route in place. A condition-aware inventory
+recapture also refreshed the source pin for `rust-host-reads-v4.ts` and the
+additive Node/WASM binding entrypoints. The inventory now has 3,375
+route-specific declarations across 506 source files, SHA-256
+`f517fd3e58950f1feffe2bfdf0d13bb3ab08cea607b17a1ad79bccfb42f95201`.
+The matching ledger SHA-256 is
+`f7081e0f94ff93a3e2a54e8e85f37e46ebea6016963beab3d0977c4446960408`.
+It records 58 accepted opt-in mappings, 864 executable names without an
+accepted mapping, all 922 logical default-route retirement gaps, and zero
+proven current-cohort default binding routes. Resource authority remains 39
+generated-known, 36 authored-known, 88 candidate-generated and 35 unresolved
+files. The inventory and ledger `--check` modes and the 38-test focused ledger
+suite pass; installed package closure and release qualification remain open.

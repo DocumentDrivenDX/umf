@@ -44,6 +44,19 @@ export interface UmfJavascriptNumericEngine {
   numericToNumberLossless(literal: JavascriptNumericLiteral, context?: JavascriptNumericContext): number;
 }
 export declare function createJavascriptNumericEngine(resources?: UmfCoreResources, options?: {controls?: UmfCoreControls; setupControls?: UmfCoreControls}): UmfJavascriptNumericEngine;
+export declare const SECURITY_LOGIC_PROFILE: 'umf.security-logic/1.0.0';
+export type SecurityTruth = 'T'|'F'|'U';
+export type SecurityDecision = 'permit'|'deny'|'indeterminate'|'conflict';
+export type SecurityDisposition = {kind:'original'}|{kind:'withheld'}|{kind:'transformed';type:'string';value:string}|{kind:'transformed';type:'boolean';value:boolean};
+export interface EvaluatedSecurityRule {effect:'permit'|'require'|'forbid';truth:SecurityTruth;disclosure?:Record<string,SecurityDisposition>}
+export interface SecurityComposition {decision:SecurityDecision;disclosure:Record<string,SecurityDisposition>}
+export interface UmfSecurityLogicEngine {
+  securityNot(value: SecurityTruth): SecurityTruth;
+  securityAnd(values: readonly SecurityTruth[]): SecurityTruth;
+  securityOr(values: readonly SecurityTruth[]): SecurityTruth;
+  composeSecurityRules(rules: readonly EvaluatedSecurityRule[], protectedFields?: readonly string[]): SecurityComposition;
+}
+export declare function createSecurityLogicEngine(options?: {controls?: UmfCoreControls}): UmfSecurityLogicEngine;
 export declare const GREGORIAN_DATE_PROFILE: 'umf-gregorian-date/1.0.0';
 export declare const RFC3339_EXACT_INSTANT_PROFILE: 'umf-rfc3339-exact-instant/1.0.0';
 export declare const RFC3339_EXACT_INSTANT_MAXIMUM_BYTES: 1048576;

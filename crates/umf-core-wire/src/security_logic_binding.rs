@@ -1,9 +1,37 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Opt-in wire boundary for the bounded shared security truth operators.
 
-use umf_core::{Context, EngineError, Value, security_logic};
+use umf_core::{Context, EngineError, Utf16, Value, security_logic};
 
 use crate::{decode, encode, fail, field, result_envelope};
+
+pub const SECURITY_LOGIC_PROFILE: &str = "umf.security-logic/1.0.0";
+
+fn exact_members(value: &Value, required: &[&str], allowed: &[&str]) -> Result<(), EngineError> {
+    let Value::Object(fields) = value else {
+        return Err(fail(
+            "REQUEST",
+            "Security request members must be an object",
+        ));
+    };
+    for (index, (key, _)) in fields.iter().enumerate() {
+        if !allowed.iter().any(|name| key == &Utf16::from(*name))
+            || fields[..index].iter().any(|(prior, _)| prior == key)
+        {
+            return Err(fail(
+                "REQUEST",
+                "Unknown or duplicate security request member",
+            ));
+        }
+    }
+    if required.iter().any(|name| field(value, name).is_none()) {
+        return Err(fail(
+            "REQUEST",
+            "Required security request member is missing",
+        ));
+    }
+    Ok(())
+}
 
 /// Execute one security truth operation using `umf.core-wire/1` tagged values.
 /// This operation performs no policy selection or host authorization.
@@ -20,6 +48,14 @@ pub fn execute_security_logic_wire_with_control(
     let result = (|| {
         let mut context = Context::ordinary().with_host_control(control);
         let request = decode(wire_json, &mut context)?;
+        exact_members(
+            &request,
+            &["profile", "op", "args"],
+            &["profile", "op", "args"],
+        )?;
+        if field(&request, "profile") != Some(&Value::string_utf8(SECURITY_LOGIC_PROFILE)) {
+            return Err(fail("REQUEST", "Unsupported security logic profile"));
+        }
         let operation = match field(&request, "op") {
             Some(Value::String(text)) => text
                 .to_utf8()
@@ -28,6 +64,14 @@ pub fn execute_security_logic_wire_with_control(
         };
         let args = field(&request, "args")
             .ok_or_else(|| fail("REQUEST", "Security arguments are required"))?;
+        let (required, allowed): (&[&str], &[&str]) = match operation.as_str() {
+            "securityNot" => (&["value"], &["value"]),
+            "securityRefIdentity" => (&["ref"], &["ref"]),
+            "securityAnd" | "securityOr" => (&["values"], &["values"]),
+            "composeSecurityRules" => (&["rules"], &["rules", "protectedFields"]),
+            _ => return Err(fail("REQUEST", "Unknown security truth operation")),
+        };
+        exact_members(args, required, allowed)?;
         let result = match operation.as_str() {
             "securityNot" => security_logic::security_not(
                 field(args, "value").ok_or_else(|| fail("REQUEST", "value is required"))?,

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 use umf_core::{
-    serialization::{read_json_value, Format},
     Context, Utf16, Value,
+    serialization::{Format, read_json_value},
 };
 use umf_core_wire::{
     decode, encode, security_logic_binding::execute_security_logic_wire, transport_context,
@@ -32,7 +32,11 @@ fn object(fields: Vec<(&str, Value)>) -> Value {
 }
 
 fn invoke(operation: &str, args: Value) -> (serde_json::Value, Option<Value>) {
-    let request = object(vec![("op", string(operation)), ("args", args)]);
+    let request = object(vec![
+        ("profile", string("umf.security-logic/1.0.0")),
+        ("op", string(operation)),
+        ("args", args),
+    ]);
     let wire = encode(&request, &mut transport_context()).unwrap();
     let envelope: serde_json::Value =
         serde_json::from_str(&execute_security_logic_wire(&wire)).unwrap();
@@ -62,7 +66,9 @@ fn truth_rank(value: &str) -> u8 {
 
 #[test]
 fn wire_truth_operators_match_frozen_predecessor_and_hand_enumerated_oracle() {
-    let packet = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r8-security-truth-logic/frozen-typescript.json"));
+    let packet = parse(include_str!(
+        "../../../docs/helix/04-build/evidence/rust-migration/r8-security-truth-logic/frozen-typescript.json"
+    ));
     let truths = match get(&packet, "truths").unwrap() {
         Value::Array(values) => values,
         _ => panic!("truths"),
@@ -138,7 +144,9 @@ fn wire_truth_operators_match_frozen_predecessor_and_hand_enumerated_oracle() {
 
 #[test]
 fn wire_truth_operators_preserve_predecessor_boundary_refusals() {
-    let packet = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r8-security-truth-logic/frozen-typescript.json"));
+    let packet = parse(include_str!(
+        "../../../docs/helix/04-build/evidence/rust-migration/r8-security-truth-logic/frozen-typescript.json"
+    ));
     let Value::Array(cases) = get(&packet, "refusals").unwrap() else {
         panic!("refusal packet")
     };
@@ -235,8 +243,45 @@ fn wire_truth_operations_reject_missing_arguments_and_unknown_ops() {
 }
 
 #[test]
+fn wire_security_logic_admission_rejects_unknown_or_missing_members() {
+    for request in [
+        object(vec![
+            ("profile", string("umf.security-logic/1.0.0")),
+            ("op", string("securityNot")),
+            ("args", object(vec![("value", string("T"))])),
+            ("future", string("ignored")),
+        ]),
+        object(vec![
+            ("op", string("securityNot")),
+            ("args", object(vec![("value", string("T"))])),
+        ]),
+        object(vec![
+            ("profile", string("umf.security-logic/2.0.0")),
+            ("op", string("securityNot")),
+            ("args", object(vec![("value", string("T"))])),
+        ]),
+        object(vec![
+            ("profile", string("umf.security-logic/1.0.0")),
+            ("op", string("securityNot")),
+            (
+                "args",
+                object(vec![("value", string("T")), ("future", string("ignored"))]),
+            ),
+        ]),
+    ] {
+        let wire = encode(&request, &mut transport_context()).unwrap();
+        let envelope: serde_json::Value =
+            serde_json::from_str(&execute_security_logic_wire(&wire)).unwrap();
+        assert_eq!(envelope["status"], "error");
+        assert_eq!(envelope["code"], "REQUEST");
+    }
+}
+
+#[test]
 fn wire_composition_matches_frozen_predecessor_and_hand_oracle() {
-    let packet = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r8-security-truth-logic/compose-cases.json"));
+    let packet = parse(include_str!(
+        "../../../docs/helix/04-build/evidence/rust-migration/r8-security-truth-logic/compose-cases.json"
+    ));
     let Value::Array(cases) = get(&packet, "cases").unwrap() else {
         panic!("composition cases")
     };
