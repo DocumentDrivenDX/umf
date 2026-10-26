@@ -7227,7 +7227,12 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name"""
                     if native_effect is None:
                         raise LocalPostgresError(
                             'local-postgresql-store-recovery-intent-unresolved')
-                    object.__setattr__(readonly_budget, '_effect', native_effect)
+            if native_effect is not None:
+                # The outer recovery pass may already have rehydrated this same
+                # journal effect.  The readonly pass rehydrates it again into a
+                # distinct issuer-held handle, so keep the budget bound to the
+                # exact handle that its reservation will retain.
+                object.__setattr__(readonly_budget, '_effect', native_effect)
             if (absence_proof is None
                     and (type(receipt) is not dict or receipt['schemaOid'] <= 0
                          or receipt['reservationDigest'] != store_state['reservationDigest'])):

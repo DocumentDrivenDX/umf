@@ -961,6 +961,14 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     self.assertEqual(len(typed_events), 1)
                     self.assertEqual(len(effect_events), 1)
                     typed_event, effect_event = typed_events[0], effect_events[0]
+                    self.assertIs(first_readonly_budget._effect,
+                                  first_readonly_budget._reservation._native_effect)
+                    self.assertEqual(
+                        first_readonly_budget._effect._journal_record_digest,
+                        effect_event['recordDigest'])
+                    self.assertEqual(
+                        first_readonly_budget._effect._request._intent_digest,
+                        store_request._intent_digest)
                     self.assertEqual(len(recovery_effect_bindings), 2)
                     for bound_digest, handle in recovery_effect_bindings:
                         self.assertEqual(bound_digest, effect_event['recordDigest'])
@@ -1148,6 +1156,14 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                         and event['payload'].get('scope') == 'native-store-creation'
                         and event['payload'].get('requestDigest')
                             == store_request._intent_digest)
+                    self.assertIs(second_readonly_budget._effect,
+                                  second_readonly_budget._reservation._native_effect)
+                    self.assertEqual(
+                        second_readonly_budget._effect._journal_record_digest,
+                        second_effect_event['recordDigest'])
+                    self.assertEqual(
+                        second_readonly_budget._effect._request._intent_digest,
+                        store_request._intent_digest)
                     self.assertEqual(len(second_effect_bindings), 2)
                     for bound_digest, handle in second_effect_bindings:
                         self.assertEqual(bound_digest, second_effect_event['recordDigest'])
