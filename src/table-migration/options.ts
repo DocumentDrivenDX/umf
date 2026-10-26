@@ -8,15 +8,17 @@ import {rowExpressionInputRefs} from '../extensions/tables/row-expressions';
 import {validateReviewedChangeMarkers,type ReviewedChangeMarker} from './reviewed';
 import {validateG03DefaultChange} from './g03-defaults';
 import {validateG11SourceCorrespondence} from './g11-source';
+import {normalizeG04MigrationOptions,type G04MigrationOptions} from './g04-conversion';
 export type {ReviewedChangeMarker,ReviewedChangeKind,ReviewedChangeCandidate} from './reviewed';
-export interface TableMigrationOptions {
+export interface LegacyTableMigrationOptions {
  version:'umf.table-migration-options/0.1'|'umf.table-migration-options/0.2'|'umf.table-migration-options/0.3'|'umf.table-migration-options/0.4'|'umf.table-migration-options/0.5'|'umf.table-migration-options/0.6';
  backfills:{table:string;column:TableRef;operation:string;scopedRows:true}[];
  concurrentIndexes:{table:string;index:string}[];
  reviewedChanges?:ReviewedChangeMarker[];
  validations?:{table:string;constraint:string;kind:'check'|'foreignKey'}[];
 }
-export interface MigrationReview {code:'SCOPED_BACKFILL'|'POLICY_CHANGE_REVIEW'|'IRREVERSIBLE_COLUMN_PURGE';path:string;message:string}
+export type TableMigrationOptions=LegacyTableMigrationOptions|G04MigrationOptions;
+export interface MigrationReview {code:'SCOPED_BACKFILL'|'POLICY_CHANGE_REVIEW'|'IRREVERSIBLE_COLUMN_PURGE'|'IRREVERSIBLE_FIELD_CONVERSION';path:string;message:string}
 const fail=(message:string,path='/options'):never=>{throw new UmfError('TABLE_MIGRATION_OPTIONS',message,path);};
 const exact=(value:unknown,keys:string[]):boolean=>!!value&&typeof value==='object'&&!Array.isArray(value)&&Object.keys(value).length===keys.length&&keys.every(k=>Object.hasOwn(value,k));
 const same=(a:unknown,b:unknown):boolean=>canonical(a)===canonical(b);
@@ -40,14 +42,16 @@ export function migrationOptions(value:TableMigrationOptions|undefined,next:Tabl
 }
 /** G10 has already verified the complete source pair and selected create bindings.
  * This validates only the G02 option semantics against those untouched bundles. */
-export function migrationOptionsForInventoryComposition(value:TableMigrationOptions|undefined,next:TableDeploymentBundle,previous:TableDeploymentBundle,createdTables:readonly string[]):TableMigrationOptions|undefined{
+export function migrationOptionsForInventoryComposition(value:TableMigrationOptions|undefined,next:TableDeploymentBundle,previous:TableDeploymentBundle,createdTables:readonly string[]):LegacyTableMigrationOptions|undefined{
+ if(value?.version==='umf.table-migration-options/0.7')fail('G04 conversion is not implicitly composed into table inventory migrations','/options/version');
  if(!Array.isArray(createdTables)||createdTables.some(id=>typeof id!=='string'||!id)||new Set(createdTables).size!==createdTables.length)fail('Invalid selected G10 table identity set');
  const oldIds=previous.expectedCatalog.tables.map(table=>table.id),nextIds=next.expectedCatalog.tables.map(table=>table.id),additions=nextIds.filter(id=>!oldIds.includes(id));
  if(!same([...additions].sort(),[...createdTables].sort())||oldIds.some(id=>!nextIds.includes(id)))fail('G10 create identities must exactly bind the complete before/after source pair');
- return migrationOptionsInternal(value,next,previous,true);
+ return migrationOptionsInternal(value,next,previous,true) as LegacyTableMigrationOptions|undefined;
 }
 function migrationOptionsInternal(value:TableMigrationOptions|undefined,next:TableDeploymentBundle,previous:TableDeploymentBundle|null,inventoryComposition:boolean):TableMigrationOptions|undefined{
  if(value===undefined)return;
+ if(value.version==='umf.table-migration-options/0.7')return normalizeG04MigrationOptions(value,previous,next);
  const v1=value.version==='umf.table-migration-options/0.1',v2=value.version==='umf.table-migration-options/0.2';
  const v3=value.version==='umf.table-migration-options/0.3';
  const v4=value.version==='umf.table-migration-options/0.4';

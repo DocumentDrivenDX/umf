@@ -15,7 +15,7 @@ import {withVerifiedG10BundleScope} from './inventory-verified-deployment';
 import {partitionInventoryMarkersForG02,sameSourceExceptG02AndCreates} from './inventory-g02-source';
 import {sameSourceExceptG05SelectedFields,sourceFieldMeaning,sourceMappingPath} from './inventory-g05-selection';
 import {compileG02FieldEffects} from './internal';
-import type {TableMigrationOptions} from './options';
+import type {LegacyTableMigrationOptions} from './options';
 import {consumeTableMigrationChangesBounded} from './reviewed';
 import {renderG02GrantEffect} from './g02-field-effects';
 import {deriveTableGrantEffectRow,type TableGrantEffectRow} from '../table-deployment/grants';
@@ -339,7 +339,7 @@ function inventoryCatalogIdentityFromCatalog(value:EffectIdentity):InventorySubj
 /** Lower only G02 .4 fills on retained carriers; no legacy migration plan is
  * synthesized. The internal constructor verifies exact effects against both
  * complete original bundles and the selected new-table bindings. */
-export function deriveG02FieldEffects(previous:TableDeploymentBundle,next:TableDeploymentBundle,previousProjection:CatalogProjection,nextProjection:CatalogProjection,options:TableMigrationOptions,sourceOrder:number,accounting?:AccountingContext):{effects:EffectNode[];edges:TypedDependency[]}{
+export function deriveG02FieldEffects(previous:TableDeploymentBundle,next:TableDeploymentBundle,previousProjection:CatalogProjection,nextProjection:CatalogProjection,options:LegacyTableMigrationOptions,sourceOrder:number,accounting?:AccountingContext):{effects:EffectNode[];edges:TypedDependency[]}{
  accounting?.visit('g10-g02-created-table-discovery','/g02/createdTables',nextProjection.catalog.tables.length+previousProjection.catalog.tables.length);const createdTables=nextProjection.catalog.tables.map(row=>row.identity.table).filter((table):table is string=>table!==null&&!previousProjection.catalog.tables.some(old=>old.identity.table===table));const records=compileG02FieldEffects({previous,next,options,createdTables,...(accounting?{accounting}:{})});accounting?.visit('g10-g02-rendered-effect-records','/g02/effects',records.length);
  if(!records.length||records.some(record=>record.field.module!==records[0]!.field.module||record.field.element!==records[0]!.field.element||record.table!==records[0]!.table))throw new Error('G10_G02_TYPED_EFFECT_SHAPE');
  const field=records[0]!.field,table=records[0]!.table,fill=records.find(record=>record.role==='backfill');
@@ -546,7 +546,7 @@ function compileG10InventoryDeltaFromPrepared(request:G10ValidatedRequest,next:R
  if(options.backfills.length){
   if(!previous||options.backfills.length!==1)throw new Error('G10_G02_SELECTION_CLOSED');
   const ownedMarkers=partitionInventoryMarkersForG02(options.reviewedChanges as any,previous.bundle,next.bundle,g02Tables,options.backfills[0]!);
-  accounting?.visit('g10-delta-g02-validation','/options/backfills');compileG02FieldEffects({previous:previous.bundle,next:next.bundle,options:{version:'umf.table-migration-options/0.4',backfills:options.backfills,concurrentIndexes:[],reviewedChanges:ownedMarkers,validations:[]} as unknown as TableMigrationOptions,createdTables:g02Tables,...(accounting?{accounting}:{})});
+  accounting?.visit('g10-delta-g02-validation','/options/backfills');compileG02FieldEffects({previous:previous.bundle,next:next.bundle,options:{version:'umf.table-migration-options/0.4',backfills:options.backfills,concurrentIndexes:[],reviewedChanges:ownedMarkers,validations:[]} as unknown as LegacyTableMigrationOptions,createdTables:g02Tables,...(accounting?{accounting}:{})});
  }
  if(previous&&(accounting?hashCanonicalCharged(previous.bundle.configuration,accounting,'/previous/configuration'):hashCanonical(previous.bundle.configuration))!==(accounting?hashCanonicalCharged(next.bundle.configuration,accounting,'/next/configuration'):hashCanonical(next.bundle.configuration)))throw new Error('G10_CONFIGURATION_CHANGE_UNSUPPORTED');
  accounting?.visit('g10-delta-intent-coverage','/options/tableIntents',options.tableIntents.length);validateExactTableIntentCoverage(previous,next,options);

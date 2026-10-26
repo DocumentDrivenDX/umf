@@ -5,7 +5,7 @@ import {hashCanonical,hashCanonicalCharged} from '../compilation/bundle/hash';
 import type {AccountingContext} from '../model/internal/accounting-context';
 import {copyJsonCharged} from '../model/json';
 import {readJsonDocumentWithAccounting} from '../model/document-accounting';
-import {migrationOptionsForInventoryComposition,refKey,type TableMigrationOptions} from './options';
+import {migrationOptionsForInventoryComposition,refKey,type LegacyTableMigrationOptions} from './options';
 import {verifyTableDeployment,type TableDeploymentBundle} from '../table-deployment';
 import {readDocument} from '../model/document';
 import {tableMigrationFieldOperationTag} from './internal-operations';
@@ -90,12 +90,12 @@ export function compileTableMigrationWithOperations(input:TableMigrationRequest)
  * the complete source bundles and exact create intents; this function validates
  * the unchanged G02 .4 contract against those same original bundles.
  */
-export function compileG02FieldEffects(input:{previous:TableDeploymentBundle;next:TableDeploymentBundle;options:TableMigrationOptions;createdTables:readonly string[];accounting?:AccountingContext}):G02FieldEffect[]{
+export function compileG02FieldEffects(input:{previous:TableDeploymentBundle;next:TableDeploymentBundle;options:LegacyTableMigrationOptions;createdTables:readonly string[];accounting?:AccountingContext}):G02FieldEffect[]{
  const accounting=input.accounting;accounting?.visit('g02-field-effects-inputs','/g02',4);if(accounting){hashCanonicalCharged(input.previous,accounting,'/g02/previous');hashCanonicalCharged(input.next,accounting,'/g02/next');hashCanonicalCharged(input.options,accounting,'/g02/options');hashCanonicalCharged(input.createdTables,accounting,'/g02/createdTables');}
  const previous=accounting?verifyScopedG10SourceBundle(input.previous,accounting,'/g02/previous'):verifyTableDeployment(input.previous),next=accounting?verifyScopedG10SourceBundle(input.next,accounting,'/g02/next'):verifyTableDeployment(input.next);
  const copiedOptions:unknown=accounting?copyJsonCharged(input.options,n=>accounting.visit('g02-options-copy','/g02/options',n),{beforeProperty:(key,path,isArray)=>{accounting.visit('g02-options-copy-property',path);if(!isArray)accounting.scanUtf8(key,path);},retainText:(text,path)=>accounting.scanUtf8(text,path)}):structuredClone(input.options);
  if(!copiedOptions||typeof copiedOptions!=='object'||Array.isArray(copiedOptions))throw new Error('table-migration-internal-g02-options');
- const options=copiedOptions as TableMigrationOptions;
+ const options=copiedOptions as LegacyTableMigrationOptions;
  if(options.version!=='umf.table-migration-options/0.4'||input.createdTables.length>256)throw new Error('table-migration-internal-g02-profile');
  migrationOptionsForInventoryComposition(options,next,previous,input.createdTables);
  if(options.backfills.length!==1)throw new Error('table-migration-internal-g02-selection');

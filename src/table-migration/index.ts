@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {migrationOptions,refKey,type TableMigrationOptions,type MigrationReview} from './options';
-export type {TableMigrationOptions} from './options';
+import {migrationOptions,refKey,type LegacyTableMigrationOptions,type TableMigrationOptions,type MigrationReview} from './options';
+export type {LegacyTableMigrationOptions,TableMigrationOptions} from './options';
 import {copyJson} from '../model/json';
 import {readDocument} from '../model/document';
 import {UmfError,type Diagnostic} from '../model/types';
 import {canonical,hashCanonical} from '../compilation/bundle/hash';
 import {columnDefinitionSql,nativeType,typedDefaultExpressionSql} from '../table-deployment/sql';
 import {verifyTableDeployment,type TableDeploymentBundle,type TableDeploymentStep} from '../table-deployment';
-import {discoverTableMigrationChanges,type ReviewedChangeCandidate,type ReviewedChangeKind} from './reviewed';
+import {discoverTableMigrationChanges as discoverLegacyTableMigrationChanges,type ReviewedChangeCandidate,type ReviewedChangeKind} from './reviewed';
+import {compileG04ConversionPlan,discoverG04TableMigrationChanges,type G04DiscoverySelector,type G04MigrationOptions,type G04ReviewedCandidate} from './g04-conversion';
 import {phaseTableMigrationSteps,type TableMigrationPhase} from './phases';
 import {preflightG03DefaultLiteral,validateG03DefaultChange} from './g03-defaults';
 import {policySql} from '../table-deployment/policies';
@@ -17,23 +18,30 @@ import type {TableDeclaration,TableRef} from '../extensions/tables';
 import {hasTableMigrationOperationCapture,TABLE_MIGRATION_OPERATION,tableMigrationFieldOperationTag,withTableMigrationOperation,type TableMigrationGrantRow,type TableMigrationOperationRole,type TableMigrationOperationTag} from './internal-operations';
 import {renderG02FieldEffect} from './g02-field-effects';
 import {deriveTableGrantEffectRow,renderTableGrantSql,type GrantBoundRecord} from '../table-deployment/grants';
-export {discoverTableMigrationChanges,reviewedValueDigest} from './reviewed';
+export {reviewedValueDigest} from './reviewed';
+export function discoverTableMigrationChanges(previous:TableDeploymentBundle,next:TableDeploymentBundle,selector:G04DiscoverySelector):G04ReviewedCandidate[];
+export function discoverTableMigrationChanges(previous:TableDeploymentBundle,next:TableDeploymentBundle,selector?:{version:'umf.table-migration-discovery/0.2'|'umf.table-migration-discovery/0.3'}):ReviewedChangeCandidate[];
+export function discoverTableMigrationChanges(previous:TableDeploymentBundle,next:TableDeploymentBundle,selector?:{version:'umf.table-migration-discovery/0.2'|'umf.table-migration-discovery/0.3'}|G04DiscoverySelector):ReviewedChangeCandidate[]|G04ReviewedCandidate[]{
+ if(selector?.version==='umf.table-migration-discovery/0.4')return discoverG04TableMigrationChanges(previous,next,selector);
+ return discoverLegacyTableMigrationChanges(previous,next,selector);
+}
 export type {ReviewedChangeCandidate,ReviewedChangeKind,ReviewedChangeMarker} from './reviewed';
+export type {G04ConversionSelection,G04Recipe,G04RecipeKind,G04Recovery,G04MigrationOptions,G04DiscoverySelector,G04ReviewedCandidate,G04ReviewMarker} from './g04-conversion';
 
 export interface TableMigrationRequest {
  id:string;predecessor:{id:string;digest:string}|null;
  previous:TableDeploymentBundle|null;next:TableDeploymentBundle;options?:TableMigrationOptions;
 }
 export interface TableMigrationStep extends Omit<TableDeploymentStep,'transaction'|'kind'> {
- kind:TableDeploymentStep['kind']|'backfill'|'seed';transaction:'required'|'forbidden';operation?:string;constraintKind?:'check'|'foreignKey';seedSets?:string[];
- phaseOperation?:'backfill'|'tighten-not-null'|'add-column'|'target-check'|'install-default'|'change-default'|'drop-column'|'dependency-drop'|'dependency-add';phaseTarget?:{table:string;field:{module:string;element:string}};phaseDependency?:{table:string;kind:'check'|'foreignKey'|'index'|'key'|'policy'|'grant';id:string;sourcePath:string;meaningDigest:string};
+ kind:TableDeploymentStep['kind']|'backfill'|'seed'|'conversion';transaction:'required'|'forbidden';operation?:string;constraintKind?:'check'|'foreignKey';seedSets?:string[];
+ phaseOperation?:'backfill'|'tighten-not-null'|'add-column'|'target-check'|'install-default'|'change-default'|'drop-column'|'dependency-drop'|'dependency-add'|'capture-originals'|'convert-field'|'validate-conversion';phaseTarget?:{table:string;field:{module:string;element:string}};phaseDependency?:{table:string;kind:'check'|'foreignKey'|'index'|'key'|'policy'|'grant';id:string;sourcePath:string;meaningDigest:string};conversionBinding?:{profile:'umf.field-conversion-step/0.1';selectionIndex:number;intentDigest:string;beforeDomainDigest:string;afterDomainDigest:string};
  preconditions:{phase:'before-plan';kind:'empty-private-schema'|'installed-source-cohort';bundleDigest:string|null};
  expectedOutcome:{phase:'before-commit';kind:'complete-next-source-catalog';bundleDigest:string};
  verification:'native-catalog-privileges-and-role-scope';recovery:'rollback-transaction'|'inspect-index';
 }
 type TableMigrationStepDraft=Omit<TableMigrationStep,'preconditions'|'expectedOutcome'|'verification'|'recovery'> & Partial<Pick<TableMigrationStep,'preconditions'|'expectedOutcome'|'verification'|'recovery'>>;
 export interface TableMigrationPlan extends TableMigrationRequest {
- version:'umf.table-migration/0.1'|'umf.table-migration/0.2'|'umf.table-migration/0.3'|'umf.table-migration/0.4'|'umf.table-migration/0.5'|'umf.table-migration/0.6';canonicalization:'RFC8785';
+ version:'umf.table-migration/0.1'|'umf.table-migration/0.2'|'umf.table-migration/0.3'|'umf.table-migration/0.4'|'umf.table-migration/0.5'|'umf.table-migration/0.6'|'umf.table-migration/0.7';canonicalization:'RFC8785';
  fromBundleDigest:string|null;toBundleDigest:string;
  steps:TableMigrationStep[];
  phases?:TableMigrationPhase[];executionProfile?:TableMigrationExecutionProfile;
@@ -215,7 +223,7 @@ type IndexEvolution={drops:TableDeploymentBundle['expectedCatalog']['indexes'];r
 type KeyEvolution={drops:TableDeploymentBundle['expectedCatalog']['keys'];adds:TableDeploymentBundle['expectedCatalog']['keys']};
 type ForeignKeyEvolution={drops:TableDeploymentBundle['expectedCatalog']['foreignKeys'];replacements:Set<string>};
 type MigrationChanges={policyChanges:Set<string>;columnChanges:Map<number,TableDeploymentBundle['expectedCatalog']['columns']>;droppedColumns:Map<number,TableDeploymentBundle['expectedCatalog']['columns']>;renamedColumns:Map<number,ColumnPair[]>;notNullColumns:Map<number,TableDeploymentBundle['expectedCatalog']['columns']>;relaxNullColumns:Map<number,TableDeploymentBundle['expectedCatalog']['columns']>;typeChanges:Map<number,ColumnPair[]>;indexChanges:Map<number,IndexEvolution>;keyChanges:Map<number,KeyEvolution>;foreignKeyChanges:Map<number,ForeignKeyEvolution>;checkChanges:Map<number,TableDeploymentBundle['expectedCatalog']['checks']>;droppedChecks:Map<number,TableDeploymentBundle['expectedCatalog']['checks']>;checkPaths:Map<number,Map<string,string>>;grantChanges:Map<string,GrantChange>};
-function reviewedMatch(markers:NonNullable<TableMigrationOptions['reviewedChanges']>,previous:TableDeploymentBundle,next:TableDeploymentBundle,kind:string,path:string,conversion?:string,discoveryVersion?:'umf.table-migration-discovery/0.3'):boolean{
+function reviewedMatch(markers:NonNullable<LegacyTableMigrationOptions['reviewedChanges']>,previous:TableDeploymentBundle,next:TableDeploymentBundle,kind:string,path:string,conversion?:string,discoveryVersion?:'umf.table-migration-discovery/0.3'):boolean{
  const marker=markers.find(item=>item.path===path&&(item as any).kind===kind&&(conversion===undefined||(item as any).conversion===conversion));
  if(!marker)return false;
  const candidate=discoverTableMigrationChanges(previous,next,discoveryVersion?{version:discoveryVersion}:undefined).find(item=>item.kind===kind&&item.path===path);
@@ -261,7 +269,7 @@ function g11ForeignKeyTarget(bundle:TableDeploymentBundle,tableId:string,foreign
 function g11KeyChangeHasMarker(bundle:TableDeploymentBundle,tableId:string,keyId:string,candidates:readonly ReviewedChangeCandidate[]):boolean{
  const sourcePath=g11DependencyPath(bundle,tableId,'key',keyId);return candidates.some(candidate=>candidate.kind==='replace-primary-key'&&candidate.oldPath===sourcePath);
 }
-function g11PhaseSteps(steps:TableMigrationStep[],previous:TableDeploymentBundle,next:TableDeploymentBundle,options:TableMigrationOptions):TableMigrationStep[]{
+function g11PhaseSteps(steps:TableMigrationStep[],previous:TableDeploymentBundle,next:TableDeploymentBundle,options:LegacyTableMigrationOptions):TableMigrationStep[]{
  void options;
  const ordered=[...steps];
  for(const step of ordered){
@@ -306,7 +314,7 @@ function g11PhaseSteps(steps:TableMigrationStep[],previous:TableDeploymentBundle
 function groupBy<T>(values:readonly T[],key:(value:T)=>string):Map<string,T[]>{
  const result=new Map<string,T[]>();for(const value of values){const id=key(value),group=result.get(id);if(group)group.push(value);else result.set(id,[value]);}return result;
 }
-function appendOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle,options?:TableMigrationOptions,allowLegacyUnreviewedPolicy=false):MigrationChanges{
+function appendOnly(previous:TableDeploymentBundle,next:TableDeploymentBundle,options?:LegacyTableMigrationOptions,allowLegacyUnreviewedPolicy=false):MigrationChanges{
  if(!same(previous.configuration,next.configuration))fail('Changing module, namespace or trusted role configuration requires a separately qualified migration','/next/configuration');
  const a=readDocument(previous.source.utf8,previous.source.format),b=readDocument(next.source.utf8,next.source.format);
  if(!same({...a,modules:[]},{...b,modules:[]}))fail('Root metadata/vocabulary changes require a separately qualified migration','/next/source');
@@ -546,6 +554,10 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
   const previous=request.previous===null?null:verifyTableDeployment(request.previous),next=verifyTableDeployment(request.next);
  if((previous===null)!==(request.predecessor===null))fail('Only initial deployment has a null predecessor','/predecessor');
   const options=migrationOptions(request.options,next,previous);
+  if(options?.version==='umf.table-migration-options/0.7'){
+   if(!previous)fail('G04 conversion requires an installed predecessor','/previous');
+   return {status:'compiled',plan:compileG04ConversionPlan(request as TableMigrationRequest&{previous:TableDeploymentBundle},options as G04MigrationOptions),diagnostics:[]};
+  }
   if(options?.version==='umf.table-migration-options/0.5')return compileG03DefaultChangePlan(request,previous!,next,options,captureInternalOperations);
   if((options?.version==='umf.table-migration-options/0.2'||options?.version==='umf.table-migration-options/0.3'||options?.version==='umf.table-migration-options/0.4')&&!previous)fail('Phased plans require an installed predecessor; initial publication is not supported','/previous');
   if(previous&&(options?.version==='umf.table-migration-options/0.2'||options?.version==='umf.table-migration-options/0.3'||options?.version==='umf.table-migration-options/0.4')&&!same(previous.expectedCatalog.tables.map(t=>t.id).sort(),next.expectedCatalog.tables.map(t=>t.id).sort()))fail('Phased plans cannot add or remove tables until the runtime models absent and newly created table identities explicitly','/next/expectedCatalog/tables');
@@ -816,7 +828,7 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
  }
 }
 
-function compileG03DefaultChangePlan(request:TableMigrationRequest,previous:TableDeploymentBundle,next:TableDeploymentBundle,options:TableMigrationOptions,captureInternalOperations=false):TableMigrationResult{
+function compileG03DefaultChangePlan(request:TableMigrationRequest,previous:TableDeploymentBundle,next:TableDeploymentBundle,options:LegacyTableMigrationOptions,captureInternalOperations=false):TableMigrationResult{
  const candidate=validateG03DefaultChange(previous,next,options.reviewedChanges),match=/^\/modules\/(\d+)\/extensions\/umf\.tables\/tables\/(\d+)\/columns\/(\d+)\/default$/.exec(candidate.path);
  if(!match)fail('G03 marker path is not a selected native default','/options/reviewedChanges/0/path');
  const doc=readDocument(next.source.utf8,'json'),module=doc.modules[Number(match![1])]!,table=(module.extensions!['umf.tables'] as any).tables[Number(match![2])]!,column=table.columns[Number(match![3])]!;
@@ -852,7 +864,7 @@ export function compileTableMigration(input:TableMigrationRequest):TableMigratio
 /** Source recompilation verifies complete plans, even after untrusted rehashing. */
 export function verifyTableMigration(input:unknown):TableMigrationPlan{
  const value=copyJson(input) as unknown as TableMigrationPlan;
- if(!value||!['umf.table-migration/0.1','umf.table-migration/0.2','umf.table-migration/0.3','umf.table-migration/0.4','umf.table-migration/0.5','umf.table-migration/0.6'].includes(value.version))fail('Unknown migration plan');
+ if(!value||!['umf.table-migration/0.1','umf.table-migration/0.2','umf.table-migration/0.3','umf.table-migration/0.4','umf.table-migration/0.5','umf.table-migration/0.6','umf.table-migration/0.7'].includes(value.version))fail('Unknown migration plan');
  const result=compileTableMigrationInternal({id:value.id,predecessor:value.predecessor,previous:value.previous,next:value.next,...(value.options?{options:value.options}:{})},value.version==='umf.table-migration/0.1');
  if(result.status!=='compiled')return fail('Migration differs from exact source recompilation');
  if(!same(value,result.plan))fail('Migration differs from exact source recompilation');

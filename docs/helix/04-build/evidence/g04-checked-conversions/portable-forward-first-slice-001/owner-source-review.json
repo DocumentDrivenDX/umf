@@ -1,0 +1,23 @@
+{
+  "profile": "umf.g04-portable-first-slice-owner-source-review/1",
+  "status": "SOURCE_REVIEW_ACCEPTED_WITH_EXACT_TWO_CORRECTIONS_RUNTIME_UNRUN",
+  "sourcePins": {
+    "src/table-migration/g04-conversion.ts": "ed83fd0eea7c22ea7a87e491d3b5d0b75279246e6873494fb5dfffed1b93ad7d",
+    "src/table-migration/index.ts": "53374e7395a34f2b861f94e97878f9fc314fbfa901d5357bfc141c72659a73ed",
+    "src/table-migration/options.ts": "90762c75fd26a240cd7cb020a000018db0b35d47978ada590a2bb2ba5d90bc8e",
+    "src/table-migration/phases-options.ts": "84839c49132de1d8f639df3ed8b9730d5b2c5d2596fb0dcbe398f2e86c133915",
+    "src/table-migration/internal.ts": "84be6258dc632f74f560ba9aa2e6c801cda66d62647f4d62486010fe0dbaf519",
+    "src/table-migration/inventory.ts": "8c6d52141a3da380f763d2e81299537fc6246d8b6a06c8027e78afee992a035c",
+    "spec/extensions/tables/migration-discovery-0.4.schema.json": "857fe9f0499c300ff3dd4cf73758905cc9deff9c4269a51826ec362d7eed824e",
+    "spec/extensions/tables/migration-options-0.7.schema.json": "0c6d45aa516cff85c92cad288c8a0ff61358d0003ad873fb982f8ff20ec95f0b",
+    "spec/extensions/tables/migration-0.7.schema.json": "362520f079270260111633b7d7b3950ba9346e3e22a765ed875ae7201141c272",
+    "spec/extensions/tables/migration-phases-0.6.schema.json": "5921e57c46ec674d5af00eadcb7b9646697f13aee0c4c86f7c89c94821f2a433",
+    "tests/lifecycle/g04-checked-conversion.test.ts": "abe49a468c552ad7c8889e9d95ded1ce8309ec80315f5ff1cc531c7a3c04ddc0"
+  },
+  "planSha256": "ffb93f41ccb0fcc9504c0e61a49ab8d45dffc2d5a2fc950392af98ac935d33ca",
+  "solReviewSha256": "b7ce95bf6c147e9e87347b2fd5bae7e39d2cf13ff5f74983f9e19db514f19d98",
+  "rootReview": "Read complete producer, entrypoints, option/phase types, schemas, fixture and governing G04 source/effect/step sections. Verified exact two Sol corrections: definedness guard for required G04 review; three same-literal operation/phaseOperation schema branches and crossed-pair controls using genuine compiled plans. Nine unchanged files match full Sol receipt hashes (not transcribed abbreviated agent hashes). Closed request fixture, discriminated legacy types, overloads, phase/review typing and unsupported closure refusal preserved.",
+  "implemented": "Portable plan/options.7, discovery.4 and execution.6 source compiler/recompiler. Retained-originals and irreversible intents on dependency-free Fields; complete original JSON/physical/logical/mapping meaning and ordered effects bound. No executable conversion SQL, Weft invocation or native enablement; nativeQualified:false.",
+  "remaining": "Round-trip write-domain CHECK/witness; supported companion default/dependency/operation DAG; genuine host phase bridge; enrollment/capture/baseline/restore; native/platform/installed/release qualification OPEN. Unsupported affected closure refuses rather than disappearing.",
+  "qualification": "UNRUN. Add focused source/schema fixture to the existing finite portable gate with next R2 delta. No local runtime, imports, AST evaluation or tests."
+}
