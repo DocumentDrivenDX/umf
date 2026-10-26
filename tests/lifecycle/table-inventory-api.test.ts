@@ -6,7 +6,7 @@ import {compileTableDeployment} from '../../src/table-deployment';
 import {compileTableMigration,compileTableInventoryMigration,discoverTableInventoryMigrationChanges,irreversiblePurgeDisclosure,serializeTableInventoryMigration,verifyTableInventoryMigration} from '../../src/table-migration';
 import {compileG10InventoryPlan,createHistoricalG10Verifier} from '../../src/table-migration/inventory';
 import {partitionRendererDependencies,verifySourcePublicationCoverage} from '../../src/table-migration/inventory-effects';
-import {scheduleTypedInventoryEffects,type EffectNode,type PrefixFrame} from '../../src/table-migration/inventory-graph';
+import {scheduleTypedInventoryEffects,type CatalogMutation,type EffectNode,type PrefixFrame} from '../../src/table-migration/inventory-graph';
 import {deriveInventorySeedLineage} from '../../src/table-migration/inventory-history';
 import {R2WorkLimitError,R2WorkMeter,R2_WORK_EVENT_UNITS} from '../../src/table-migration/inventory-r2-context';
 import {inspectR2InventorySourceContext,prepareR2InventorySourceContext} from '../../src/table-migration/inventory';
@@ -31,6 +31,23 @@ const emptyHistory:TableInventorySourceHistory={profile:'umf.table-inventory-sou
 type GraphTestJson=null|boolean|number|string|GraphTestJson[]|{[key:string]:GraphTestJson};
 type GraphTableIdentity={kind:'table';table:string;subject:{module:string;element:string}};
 const emptyPrefixCatalog=():Record<string,GraphTestJson[]>=>({tables:[],columns:[],keys:[],checks:[],foreignKeys:[],indexes:[],policies:[],grants:[],comments:[]});
+const definitionDigestCollections=['tables','columns','keys','checks','foreignKeys','indexes','policies','grants','comments'] as const;
+function assertNormativeTableDefinitionDigests(frame:PrefixFrame):void{
+ for(const raw of frame.tableStates){if(!raw||typeof raw!=='object'||Array.isArray(raw))throw new Error('Frame table state is malformed.');const state=raw as Record<string,GraphTestJson>,table=state.table;
+  if(typeof table!=='string'||!table||!('record'in state)||!('state'in state)||!('definitionDigest'in state))throw new Error('Frame table state lacks its digest domain.');
+  const localCatalog=Object.fromEntries(definitionDigestCollections.map(collection=>[collection,(frame.catalog[collection]??[]).filter(row=>{if(!row||typeof row!=='object'||Array.isArray(row))return false;const identity=(row as Record<string,GraphTestJson>).identity;return !!identity&&typeof identity==='object'&&!Array.isArray(identity)&&(identity as Record<string,GraphTestJson>).table===table;})])) as Record<(typeof definitionDigestCollections)[number],GraphTestJson[]>;
+  let expected:string;
+  if(state.state==='absent'){for(const rows of Object.values(localCatalog))expect(rows).toHaveLength(0);expected=hashCanonical(null);}
+  else if(state.state==='present'){const tableRows=localCatalog.tables;if(tableRows.length!==1)throw new Error(`Expected one present table row for ${table}.`);const tableRow=tableRows[0];if(!tableRow||typeof tableRow!=='object'||Array.isArray(tableRow)||(tableRow as Record<string,GraphTestJson>).state!=='present')throw new Error('Present table catalog row is malformed.');const identity=(tableRow as Record<string,GraphTestJson>).identity;if(!identity||typeof identity!=='object'||Array.isArray(identity)||!('subject'in identity)||!('record'in state))throw new Error('Present table identity is malformed.');expect(hashCanonical((identity as Record<string,GraphTestJson>).subject)).toBe(hashCanonical(state.record));expected=hashCanonical({profile:'umf.table-inventory-table-definition/0.1',table,record:state.record,catalog:localCatalog});}
+  else throw new Error(`Unknown table state ${String(state.state)}.`);
+  expect(state.definitionDigest).toBe(expected);
+ }
+}
+function graphTableIdentity(row:GraphTestJson|undefined):GraphTableIdentity{
+ if(!row||typeof row!=='object'||Array.isArray(row)||!('identity'in row))throw new Error('Scheduled table row has no identity.');const identity=row.identity;
+ if(!identity||typeof identity!=='object'||Array.isArray(identity)||identity.kind!=='table'||typeof identity.table!=='string'||!identity.subject||typeof identity.subject!=='object'||Array.isArray(identity.subject)||typeof identity.subject.module!=='string'||typeof identity.subject.element!=='string')throw new Error('Scheduled table identity is malformed.');
+ return {kind:'table',table:identity.table,subject:{module:identity.subject.module,element:identity.subject.element}};
+}
 const options=(tableIntents:TableInventoryMigrationOptions['tableIntents'],reviewedChanges:TableInventoryMigrationOptions['reviewedChanges'],retiredSeedSets:string[]=[]):TableInventoryMigrationOptions=>({
  version:'umf.table-inventory-migration-options/0.1',tableIntents,backfills:[],defaultChanges:[],conversions:[],concurrentIndexes:[],validations:[],reviewedChanges,seedSets:[],retiredSeedSets,retirements:[],restorations:[],archiveSources:[],
 });
@@ -183,6 +200,7 @@ test('scheduler prefixes preserve final frames for zero and multiple groups with
    expect(frame.index).toBe(index);
    expect(frame.completedSteps).toEqual(result.phases.slice(0,index).flatMap(phase=>phase.steps));
    expect(digest).toBe(hashCanonical(body));
+   assertNormativeTableDefinitionDigests(frame);
   }
   expect(result.prefixes.at(-1)!.metadata.state).toBe('published');
   if(metadata){expect(result.prefixes[1]!.completedSteps).toEqual(['prepare']);expect(result.prefixes[2]!.completedSteps).toEqual(['prepare','approval']);expect(result.prefixes.at(-1)!.completedSteps.at(-1)).toBe('publication');}
@@ -205,25 +223,37 @@ test('scheduler prefixes preserve final frames for zero and multiple groups with
   const firstBefore=structuredClone(firstGroup);secondTables.push({extra:true});secondGroup.tableStates.push({extra:true});secondGroup.seedStates.push({extra:true});secondGroup.completedSteps.push('later-only');
   expect(firstGroup).toEqual(firstBefore);
  }
- const oldTable=makeCreate('old',2),keptTable=makeCreate('kept',1),initialCatalog=emptyPrefixCatalog();
- const oldMeaning:GraphTestJson={},keptBeforeMeaning:GraphTestJson={rls:{enabled:false,forced:false}},keptAfterMeaning:GraphTestJson={rls:{enabled:true,forced:false}};
- const oldRow:GraphTestJson={identity:oldTable.identity,meaning:oldMeaning,state:'present'},keptRow:GraphTestJson={identity:keptTable.identity,meaning:keptBeforeMeaning,state:'present'};
- const targetRow:GraphTestJson={identity:keptTable.identity,meaning:keptAfterMeaning,state:'present'};
- initialCatalog.tables!.push(oldRow,keptRow);
- const oldRecord=oldTable.identity.subject,keptRecord=keptTable.identity.subject;
- const populated:Omit<PrefixFrame,'digest'>={...initial(),metadata:{profile:'umf.table-inventory-metadata/0.1',state:'published'},catalog:initialCatalog,tableStates:[{table:'old',record:oldRecord,state:'present',definitionDigest:'',creationStep:null,removalStep:null},{table:'kept',record:keptRecord,state:'present',definitionDigest:'',creationStep:null,removalStep:null}]};
+ const oldTable=makeCreate('old',3),keptTable=makeCreate('kept',1),changedTable=makeCreate('changed',2),stableTable=makeCreate('stable',4),initialCatalog=emptyPrefixCatalog();
+ const oldMeaning:GraphTestJson={},keptBeforeMeaning:GraphTestJson={rls:{enabled:false,forced:false}},keptAfterMeaning:GraphTestJson={rls:{enabled:true,forced:false}},changedBeforeMeaning:GraphTestJson={rls:{enabled:false,forced:false}},changedAfterMeaning:GraphTestJson={rls:{enabled:true,forced:false}};
+ const oldRow:GraphTestJson={identity:oldTable.identity,meaning:oldMeaning,state:'present'},keptRow:GraphTestJson={identity:keptTable.identity,meaning:keptBeforeMeaning,state:'present'},changedRow:GraphTestJson={identity:changedTable.identity,meaning:changedBeforeMeaning,state:'present'},stableRow:GraphTestJson={identity:stableTable.identity,meaning:{},state:'present'};
+ const targetKeptRow:GraphTestJson={identity:keptTable.identity,meaning:keptAfterMeaning,state:'present'},targetChangedRow:GraphTestJson={identity:changedTable.identity,meaning:changedAfterMeaning,state:'present'},targetStableRow:GraphTestJson={identity:stableTable.identity,meaning:{},state:'present'};
+ const oldCheckIdentity:GraphTestJson={kind:'check',table:'old',subject:'old-check'},oldCheckBefore:GraphTestJson={identity:oldCheckIdentity,meaning:{check:'before'},state:'present'},oldCheckAfter:GraphTestJson={identity:oldCheckIdentity,meaning:{check:'after'},state:'present'};
+ const oldCommentIdentity:GraphTestJson={kind:'comment',table:'old',subject:'old-comment'},oldComment:GraphTestJson={identity:oldCommentIdentity,meaning:{text:'old'},state:'present'},oldCommentAfter:GraphTestJson={identity:oldCommentIdentity,meaning:{text:'updated'},state:'present'};
+ const stableColumnA:GraphTestJson={identity:{kind:'column',table:'stable',subject:{module:'graph_snapshot',element:'stable_a'}},meaning:{name:'a'},state:'present'},stableColumnB:GraphTestJson={identity:{kind:'column',table:'stable',subject:{module:'graph_snapshot',element:'stable_b'}},meaning:{name:'b'},state:'present'};
+ const globalGrant:GraphTestJson={identity:{kind:'grant',table:null,subject:['public','usage',null]},meaning:{role:'public',privilege:'usage',table:null},state:'present'},stableGrantA:GraphTestJson={identity:{kind:'grant',table:'stable',subject:['reader','select','a']},meaning:{role:'reader',privilege:'select',table:'stable'},state:'present'},stableGrantB:GraphTestJson={identity:{kind:'grant',table:'stable',subject:['reader','select','b']},meaning:{role:'reader',privilege:'select',table:'stable'},state:'present'};
+ initialCatalog.tables!.push(oldRow,keptRow,changedRow,stableRow);initialCatalog.checks!.push(oldCheckBefore);initialCatalog.comments!.push(oldComment);initialCatalog.columns!.push(stableColumnA,stableColumnB);initialCatalog.grants!.push(globalGrant,stableGrantA,stableGrantB);
+ const oldRecord=oldTable.identity.subject,keptRecord=keptTable.identity.subject,changedRecord=changedTable.identity.subject,stableRecord=stableTable.identity.subject;
+ const populated:Omit<PrefixFrame,'digest'>={...initial(),metadata:{profile:'umf.table-inventory-metadata/0.1',state:'published'},catalog:initialCatalog,tableStates:[{table:'old',record:oldRecord,state:'present',definitionDigest:'wrong-incoming-digest',creationStep:null,removalStep:null},{table:'kept',record:keptRecord,state:'present',definitionDigest:'',creationStep:null,removalStep:null},{table:'changed',record:changedRecord,state:'present',definitionDigest:'',creationStep:null,removalStep:null},{table:'stable',record:stableRecord,state:'present',definitionDigest:'',creationStep:null,removalStep:null}]};
  const enableKept:EffectNode={...keptTable.effect,id:'enable-kept',operation:'enable-rls',sql:'ALTER TABLE kept ENABLE ROW LEVEL SECURITY',transition:{action:'update',collection:'tables',meaning:keptAfterMeaning}};
- const removeOld:EffectNode={...oldTable.effect,id:'remove-old',operation:'remove-table',sql:'DROP TABLE old',transition:{action:'remove',collection:'tables',meaning:{}}};
- const target=emptyPrefixCatalog();target.tables!.push(targetRow);
- const ordered=scheduleTypedInventoryEffects(populated,[enableKept,removeOld],[{dependent:hashCanonical(oldTable.identity),prerequisite:hashCanonical(keptTable.identity),sourcePath:'/tests/remove-after-update',reason:'source-update-order',state:'present'}],target);
- expect(ordered.prefixes[3]!.catalog.tables!.map(row=>(row as {identity:{table:string}}).identity.table)).toEqual(['kept','old']);
- const firstOrderedRow=ordered.prefixes[3]!.catalog.tables![0];
- if(!firstOrderedRow||typeof firstOrderedRow!=='object'||Array.isArray(firstOrderedRow)||!('identity'in firstOrderedRow))throw new Error('Scheduled table row has no identity.');
- const firstOrderedIdentity=firstOrderedRow.identity;
- if(!firstOrderedIdentity||typeof firstOrderedIdentity!=='object'||Array.isArray(firstOrderedIdentity)||firstOrderedIdentity.kind!=='table'||typeof firstOrderedIdentity.table!=='string'||!firstOrderedIdentity.subject||typeof firstOrderedIdentity.subject!=='object'||Array.isArray(firstOrderedIdentity.subject)||typeof firstOrderedIdentity.subject.module!=='string'||typeof firstOrderedIdentity.subject.element!=='string')throw new Error('Scheduled table identity is malformed.');
- expect(firstOrderedIdentity).toEqual(keptTable.identity);
- const {digest:orderedDigest,...orderedFrame}=ordered.prefixes[3]!;expect(orderedDigest).toBe(hashCanonical(orderedFrame));
- const duplicateTarget=emptyPrefixCatalog();duplicateTarget.tables!.push(targetRow,structuredClone(targetRow));
+ const changeOldCheck:EffectNode={...changedTable.effect,id:'enable-changed',operation:'enable-rls',sql:'ALTER TABLE changed ENABLE ROW LEVEL SECURITY',transition:{action:'update',collection:'tables',meaning:changedAfterMeaning},catalogMutations:[{collection:'comments',action:'replace',identity:oldCommentIdentity,before:oldComment,after:oldCommentAfter}]};
+ const removeOld:EffectNode={...oldTable.effect,id:'remove-old',operation:'remove-table',sql:'DROP TABLE old',transition:{action:'remove',collection:'tables',meaning:{}},catalogMutations:[{collection:'checks',action:'remove',identity:oldCheckIdentity,before:oldCheckAfter,after:null},{collection:'comments',action:'remove',identity:oldCommentIdentity,before:oldCommentAfter,after:null}]};
+ const target=emptyPrefixCatalog();target.tables!.push(targetKeptRow,targetChangedRow,targetStableRow);target.columns!.push(stableColumnB,stableColumnA);target.grants!.push(stableGrantA,globalGrant,stableGrantB);
+ const provenance:CatalogMutation[]=[{collection:'checks',action:'replace',identity:oldCheckIdentity,before:oldCheckBefore,after:oldCheckAfter}];
+ const ordered=scheduleTypedInventoryEffects(populated,[enableKept,changeOldCheck,removeOld],[{dependent:hashCanonical(changedTable.identity),prerequisite:hashCanonical(keptTable.identity),sourcePath:'/tests/change-after-kept',reason:'source-update-order',state:'present'},{dependent:hashCanonical(oldTable.identity),prerequisite:hashCanonical(changedTable.identity),sourcePath:'/tests/remove-after-change',reason:'source-remove-order',state:'present'}],target,undefined,provenance);
+ expect(ordered.prefixes[3]!.catalog.tables!.map(row=>graphTableIdentity(row).table)).toEqual(['kept','changed','stable','old']);
+ const incomingOldState=ordered.prefixes[0]!.tableStates.find(state=>!!state&&typeof state==='object'&&!Array.isArray(state)&&(state as Record<string,GraphTestJson>).table==='old') as Record<string,GraphTestJson>|undefined;
+ const refreshedOldState=ordered.prefixes[3]!.tableStates.find(state=>!!state&&typeof state==='object'&&!Array.isArray(state)&&(state as Record<string,GraphTestJson>).table==='old') as Record<string,GraphTestJson>|undefined;
+ expect(incomingOldState?.definitionDigest).toBe('wrong-incoming-digest');expect(refreshedOldState?.definitionDigest).not.toBe('wrong-incoming-digest');
+ expect(graphTableIdentity(ordered.prefixes[3]!.catalog.tables![0])).toEqual(keptTable.identity);
+ for(const frame of ordered.prefixes){const {digest,...body}=frame;expect(digest).toBe(hashCanonical(body));}
+ for(const frame of ordered.prefixes.slice(3))assertNormativeTableDefinitionDigests(frame);
+ expect((ordered.prefixes[3]!.catalog.checks![0] as {meaning:GraphTestJson}).meaning).toEqual({check:'after'});
+ expect(ordered.prefixes[3]!.catalog.columns!.map(row=>(row as {identity:{subject:{element:string}}}).identity.subject.element)).toEqual(['stable_b','stable_a']);
+ expect(populated.catalog.columns!.map(row=>(row as {identity:{subject:{element:string}}}).identity.subject.element)).toEqual(['stable_a','stable_b']);
+ expect(ordered.prefixes[3]!.catalog.grants!.map(row=>(row as {identity:{table:string|null}}).identity.table)).toEqual(['stable',null,'stable']);
+ expect(ordered.prefixes[4]!.catalog.comments!.some(row=>(row as {identity:{table:string|null}}).identity.table==='old')).toBe(true);
+ expect(ordered.prefixes[5]!.tableStates.find(state=>!!state&&typeof state==='object'&&!Array.isArray(state)&&(state as Record<string,GraphTestJson>).table==='old')).toMatchObject({state:'absent',definitionDigest:hashCanonical(null)});
+ const duplicateTarget=emptyPrefixCatalog();duplicateTarget.tables!.push(targetKeptRow,structuredClone(targetKeptRow));
  expect(()=>scheduleTypedInventoryEffects(populated,[enableKept],[],duplicateTarget)).toThrow('G10_SCHEDULE_TARGET_CATALOG_DUPLICATE');
  const unknownIdentity:GraphTestJson={kind:'check',table:'ghost',subject:'unowned-check'},unknownRow:GraphTestJson={identity:unknownIdentity,meaning:{},state:'present'};
  const injectUnknown:EffectNode={...enableKept,catalogMutations:[{collection:'checks',action:'add',identity:unknownIdentity,before:null,after:unknownRow}]};
@@ -524,6 +554,7 @@ describe('G10 appended CREATE plus G02 compiled fixture',()=>{
   expect(prefix.index).toBe(index);
   expect(prefix.completedSteps).toEqual(plan.phases.slice(0,index).flatMap(phase=>phase.steps));
   expect(digest).toBe(hashCanonical(body));
+  assertNormativeTableDefinitionDigests(prefix);
  }
  const originalSeeds=(legalSource() as any).modules[0]!.extensions['umf.tables'].seedSets;
  expect(JSON.parse(request.next.source.utf8).modules[0]!.extensions['umf.tables'].seedSets.slice(0,originalSeeds.length)).toEqual(originalSeeds);
