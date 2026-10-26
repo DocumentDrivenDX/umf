@@ -1,0 +1,75 @@
+{
+  "cell": {
+    "architecture": "x86_64",
+    "libc": "glibc >= 2.27",
+    "os": "ubuntu-24.04",
+    "python": "3.11.17",
+    "runnerIdentity": {
+      "architecture": "x86_64",
+      "distribution": {
+        "BUG_REPORT_URL": "https://bugs.launchpad.net/ubuntu/",
+        "HOME_URL": "https://www.ubuntu.com/",
+        "ID": "ubuntu",
+        "ID_LIKE": "debian",
+        "LOGO": "ubuntu-logo",
+        "NAME": "Ubuntu",
+        "PRETTY_NAME": "Ubuntu 24.04.5 LTS",
+        "PRIVACY_POLICY_URL": "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy",
+        "SUPPORT_URL": "https://help.ubuntu.com/",
+        "UBUNTU_CODENAME": "noble",
+        "VERSION": "24.04.5 LTS (Noble Numbat)",
+        "VERSION_CODENAME": "noble",
+        "VERSION_ID": "24.04"
+      },
+      "libc": [
+        "glibc",
+        "2.39"
+      ],
+      "system": "Linux"
+    }
+  },
+  "install": {
+    "cache": "disabled",
+    "dependencyCheck": "passed",
+    "indexScheme": "file",
+    "networkIsolation": "Linux network namespace (unshare --net)",
+    "pipIsolated": true,
+    "requireHashes": true,
+    "sourceBuilds": "forbidden"
+  },
+  "installedVersions": {
+    "annotated-types": "0.8.0",
+    "attrs": "26.1.0",
+    "jsonschema": "4.26.0",
+    "jsonschema-specifications": "2025.9.1",
+    "mini-racer": "0.14.1",
+    "psycopg": "3.2.13",
+    "psycopg-binary": "3.2.13",
+    "pydantic": "2.14.1",
+    "pydantic-core": "2.50.1",
+    "referencing": "0.37.0",
+    "rpds-py": "2026.9.1",
+    "ruamel-yaml": "0.19.1",
+    "typing-extensions": "4.16.0",
+    "typing-inspection": "0.4.4",
+    "umf-access": "0.1.0.dev8",
+    "umf-codegen": "0.1.0a5",
+    "umf-core": "0.10.0",
+    "weft-sql": "0.4.53"
+  },
+  "lockSha256": "1c5898b6ac9c9035e28569c67ff1a4af49333dbb2e448021ef5e919c18c32147",
+  "mirrorManifestSha256": "e968061b73cd09bde7e646b80e169e52a18af58355757c40bf829012a5eed270",
+  "probes": {
+    "missing-wheel": "refused under OS network denial",
+    "tampered-wheel": "refused under OS network denial",
+    "umf-codegen-check": "passed",
+    "umf-codegen-generate": "passed",
+    "umf-table-apply": "approval-required before connection",
+    "umf-table-check": "passed",
+    "umf-table-new": "passed"
+  },
+  "profile": "umf-offline-mirror-installed/1",
+  "status": "passed",
+  "wheelCount": 18,
+  "wheelInventorySha256": "316b797c62eebd3b127f2d5739cf20e8811a5e5ff422025bde992fa668cc6b5b"
+}

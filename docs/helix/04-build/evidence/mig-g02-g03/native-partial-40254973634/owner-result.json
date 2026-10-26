@@ -1,0 +1,46 @@
+{
+  "profile": "umf.g02-g03-native-partial-owner-result/1",
+  "status": "PARTIAL_EVIDENCE_OVERALL_RUN_FAILED",
+  "sourceCommit": "6f3acadaaa03e4833631064fe415b4b6a9d20f17",
+  "runId": 40254973634,
+  "artifactId": 12622202923,
+  "artifactZipSha256": "cd257cdc667c9a0c03c6f662504f627201a707e4be90176e750805df868ea5ed",
+  "g02": {
+    "status": "PASS_G02_TEMPORAL_FIVE_CASES",
+    "cases": 5,
+    "checks": 78,
+    "durationMs": 66600,
+    "maxWorkers": 2,
+    "databaseAndRoleCleanup": "VERIFIED",
+    "packages": {
+      "umf-access": "0.1.0.dev8",
+      "umf-codegen": "0.1.0a5",
+      "weft-sql": "0.4.53",
+      "umf-core": "0.10.0"
+    },
+    "reportSha256": "1d0a9cd429851c6c912f7895dff12ab6382fdedc87e575d78df22393980fef2c"
+  },
+  "g03PassingSelectedSubcases": [
+    {
+      "scenario": "transitions",
+      "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+      "sha256": "2f0760320c82c6237e42ca927585cfae0ac963b58eebb7993c1949333a395c96"
+    },
+    {
+      "scenario": "empty",
+      "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+      "sha256": "a1b48fab3664b2eac742354d20574d86abb12b6c96ed5ddd1692129e281e2480"
+    },
+    {
+      "scenario": "required",
+      "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+      "sha256": "a5f658fd147a17c83eefb169c9a6a7a04f8ea2fffb3d41a70d97ab8ced9bee60"
+    }
+  ],
+  "g03Failure": {
+    "scenario": "admission-refusal",
+    "status": "FAIL_OR_UNKNOWN",
+    "cause": "Short current_setting(server_version) compared against full PostgreSQL18.6 version prefix; guard precedes source compilation/native effects."
+  },
+  "scope": "Exact source and installed cohort only. No transfer to changed source/wheels. G03remaining scenarios, N12compatibleWeft.2, N14fullcampaign, G04native, main integration and release qualification OPEN."
+}
