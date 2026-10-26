@@ -4,6 +4,8 @@ on:
   push:
     branches-ignore:
       - codex/core-0102-inventory-generation
+      - codex/core-python314-generation
+      - codex/core-python314-public-install-proof
     tags:
       - '**'
   pull_request:

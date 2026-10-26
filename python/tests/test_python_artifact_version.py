@@ -26,36 +26,36 @@ class ExpectedVersionTests(unittest.TestCase):
 
     def test_verify_defaults_to_historical_profile_and_explicit_version_is_propagated(self):
         with tempfile.TemporaryDirectory() as directory:
-            repo=Path(directory);self.make_repo(repo,'0.10.2')
+            repo=Path(directory);self.make_repo(repo,'0.10.3')
             with patch.object(verifier,'_source_payloads',return_value=({'umf/a.py':b'x'},{'resources':{}})), \
-                 patch.object(verifier,'_validate_wheel',return_value={'version':'0.10.2'}) as validate:
+                 patch.object(verifier,'_validate_wheel',return_value={'version':'0.10.3'}) as validate:
                 with self.assertRaisesRegex(ValueError,'expected version'):
                     verifier.verify(Path('wheel.whl'),repo,'auto',None)
-                receipt=verifier.verify(Path('wheel.whl'),repo,'auto',None,expected_version='0.10.2')
-            self.assertEqual(receipt['distribution_version'],'0.10.2')
-            self.assertEqual(validate.call_args.args[3],'0.10.2')
+                receipt=verifier.verify(Path('wheel.whl'),repo,'auto',None,expected_version='0.10.3')
+            self.assertEqual(receipt['distribution_version'],'0.10.3')
+            self.assertEqual(validate.call_args.args[3],'0.10.3')
 
     def make_wheel(self, path, version):
         with zipfile.ZipFile(path,'w') as archive:
             archive.writestr(f'umf_core-{version}.dist-info/METADATA',f'Name: umf-core\nVersion: {version}\n')
 
     def test_cli_source_mode_forwards_selected_version(self):
-        with patch.object(verifier,'verify',return_value={'distribution_version':'0.10.2'}) as verify, \
-             patch.object(sys,'argv',['verify_python_artifacts.py','--wheel','chosen.whl','--expected-version','0.10.2']), \
+        with patch.object(verifier,'verify',return_value={'distribution_version':'0.10.3'}) as verify, \
+             patch.object(sys,'argv',['verify_python_artifacts.py','--wheel','chosen.whl','--expected-version','0.10.3']), \
              contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(verifier.main(),0)
-        self.assertEqual(verify.call_args.args[-1],'0.10.2')
+        self.assertEqual(verify.call_args.args[-1],'0.10.3')
 
     def test_installed_mode_enforces_explicit_version_before_payload_check(self):
         with tempfile.TemporaryDirectory() as directory:
-            wheel=Path(directory)/'fixture.whl';self.make_wheel(wheel,'0.10.2')
+            wheel=Path(directory)/'fixture.whl';self.make_wheel(wheel,'0.10.3')
             with (
                 patch.object(verifier,'_validate_installed_wheel',return_value={'status':'passed'}) as installed,
-                patch.object(sys,'argv',['verify_python_artifacts.py','--wheel',str(wheel),'--verify-installed-wheel','--expected-version','0.10.2']),
+                patch.object(sys,'argv',['verify_python_artifacts.py','--wheel',str(wheel),'--verify-installed-wheel','--expected-version','0.10.3']),
                 contextlib.redirect_stdout(io.StringIO()),
             ):
                 self.assertEqual(verifier.main(),0)
-            self.assertEqual(installed.call_args.args[2],'0.10.2')
+            self.assertEqual(installed.call_args.args[2],'0.10.3')
             with (
                 patch.object(verifier,'_validate_installed_wheel') as installed,
                 patch.object(sys,'argv',['verify_python_artifacts.py','--wheel',str(wheel),'--verify-installed-wheel','--expected-version','0.10.1']),

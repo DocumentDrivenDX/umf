@@ -1,0 +1,72 @@
+{
+  "profile": "umf.core-python314-generation-inputs/1",
+  "status": "source-pinned-hosted-generation-required",
+  "phase": "regex-artifacts",
+  "sourceCommit": "d5022e37840329d351bcd6c27fe7d7aad4758544",
+  "mainPreimages": {
+    "crates/umf-core/src/python_re_tables.rs": "84f931263193ce41a1459640f1a20182f61a9fe14bfd02c319f3609237248d2c",
+    "crates/umf-core/src/python_re_names.dat": "1a7d63f9371ecc8111ca04efad730a8afa700316eee1974912669a74c8ef0071"
+  },
+  "inputs": {
+    "crates/umf-core/tools/generate_python_re_tables.py": "895f68c37e6ab63c51421e62ec4c380c3b59be037faf811dea51c05cc07467f4",
+    "crates/umf-core/tools/extend_python_re_314.py": "2063a74ae8e825c4cb7cc9fdde730f01eda3dc0f44d4ec5ae8a1384873c8c4b4",
+    "crates/umf-core/tools/generate_independent_python_re_boundaries.py": "14fd8e77bfeb91a05a222ae87337156569cd82a2c375f99e7e260098d2f35504",
+    "crates/umf-core/tools/generate_independent_python_re_hex.py": "cfe76557ac8996fd0ab95b17d21852d9f59d50f820f981120b1022700dbebcb6",
+    "crates/umf-core/tools/generate_independent_python_re_info.py": "283c07014258892177758643e24ba5e9e3a49c6b355e821790d87fd102c49b9b",
+    "crates/umf-core/tools/unicode/NameAliases-16.0.0.txt": "bc5e89e5a6f2cf21b1d3976af13432bab3f0b406907d7c7ba9c0f4faf3fc5b44",
+    "crates/umf-core/src/python_re_tables.LICENSE": "bfb121a2aaa8fa3d77f3429ae2aaed879cc53cacad6fbe42a2513043b80fcb9a",
+    "crates/umf-core/tests/fixtures/cpython-re/re_tests.py": "33033dc23d20a6924391819395e7bdd3c16d11cf3bb79eedb6298e79f65bb4e8",
+    "crates/umf-core/tests/fixtures/cpython-re/test_re-3.11.14.py": "9be409343610e901008fc37236669d0288b2ff2c2a3d2c83928463c155f04b62",
+    "crates/umf-core/tests/fixtures/cpython-re/PSF-LICENSE.txt": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf"
+  },
+  "regexPreimages": {
+    "crates/umf-core/tests/fixtures/cpython-re/independent-boundaries.json": "1ec5fb81302aae40f455f6ce2e6008d1ab0fce54fa62c0990e50c53faf800281",
+    "crates/umf-core/tests/fixtures/cpython-re/independent-outcomes.tsv": "c4955285b999eb4c2abd119b986b33bb39ec464da02fa61601ac99fb1021ea77",
+    "crates/umf-core/tests/fixtures/cpython-re/independent-hex-boundaries.json": "f6f442149ae3b045229d2cfc722c9f6031b870789911019a97d48b38c8966ee1",
+    "crates/umf-core/tests/fixtures/cpython-re/independent-hex-outcomes.tsv": "d25eac01934ff4124bde931121e5d2af73d6f87644e2564b1257cda6aa5c8e97d",
+    "crates/umf-core/tests/fixtures/cpython-re/independent-info-boundaries.json": "a744855957ce7c89d04ae9b7b754049401cd04b4f611d7a8c5412d05b08a3b55",
+    "crates/umf-core/tests/fixtures/cpython-re/independent-info-outcomes.tsv": "299ca3f80fcef799c58e9e159839b053751d023bd5c05e11427627212b26e463"
+  },
+  "adoptedRegexOutputs": null,
+  "adoption": null,
+  "adoptedMetamodelOutputs": null,
+  "metamodelAdoption": null,
+  "cpython": {
+    "implementation": "CPython",
+    "version": "3.14.8",
+    "unicodeVersion": "16.0.0",
+    "releaseTag": "3.14.8-36806082737",
+    "releaseId": 400609475,
+    "releaseApiSha256": "d7d8d41851a6a6489a9fc5b6b51e601e708cca26f1b0fe1791751371dc7cf0a0",
+    "assetApiUrl": "https://api.github.com/repos/actions/python-versions/releases/assets/602296995",
+    "assetApiSha256": "bd1ade7f0c55dc6f8ac8ecc3af88d6d66646e8c09841dede5b0d73922ede7d00",
+    "downloadUrl": "https://github.com/actions/python-versions/releases/download/3.14.8-36806082737/python-3.14.8-linux-24.04-x64.tar.gz",
+    "archiveName": "python-3.14.8-linux-24.04-x64.tar.gz",
+    "archiveBytes": 110382248,
+    "archiveSha256": "fa74abc70a55c10f6631967784878704eef81bbde9b8ec27469534f6ba997cb3",
+    "executableMember": "./bin/python3.14",
+    "executableBytes": 17752,
+    "executableSha256": "a5230d8adbd26c2185d77fb003597c4ee9c44c2369fc179122ff7c3a3a58ae59",
+    "installationPrefix": "/opt/hostedtoolcache/Python/3.14.8/x64",
+    "libpythonRelativePath": "lib/libpython3.14.so.1.0",
+    "stdlibRelativePath": "lib/python3.14",
+    "extensionModulesRelativePath": "lib/python3.14/lib-dynload"
+  },
+  "bounds": {
+    "aggregateDeadlineSeconds": 1800,
+    "commandMaximumSeconds": 180,
+    "cleanupReserveSeconds": 60,
+    "aggregateLogLimitBytes": 1048576,
+    "aggregateArtifactLimitBytes": 16777216,
+    "rawCommandLogsTruncated": false,
+    "failureOnlyReceiptOnAnyLimitOrMismatch": true
+  },
+  "outputs": {
+    "regexProfile": "3.14 additive; frozen 3.11-3.13 oracle records and TSV rows retained",
+    "metamodelOutputs": 11,
+    "actionPlanIdentity": "src/extensions/actions/plan-identity.ts",
+    "codegen": "python/umf_codegen/src/umf_codegen/_assets plus _release.py",
+    "rustInventory": "docs/helix/04-build/evidence/rust-migration/r3/inventory.json",
+    "qualificationClaim": false
+  }
+}

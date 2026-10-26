@@ -1,0 +1,462 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
+name: Core Python 3.14 generated-source qualification
+
+on:
+  push:
+    branches:
+      - codex/core-python314-generation
+
+permissions:
+  contents: read
+
+jobs:
+  generate:
+    name: Bounded Python 3.14 and dependent source generation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - name: Seed fresh failure evidence and original monotonic deadline
+        if: always()
+        timeout-minutes: 1
+        env:
+          EVIDENCE_DIR: ${{ runner.temp }}/core-python314-generation
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_RUN_ATTEMPT: ${{ github.run_attempt }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_WORKFLOW: ${{ github.workflow }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR/logs" "$RUNNER_TEMP/core-python314-upload"
+          START_MS="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+          printf '%s\n' "$START_MS" > "$EVIDENCE_DIR/monotonic-start-ms"
+          printf '%s\n' "$((START_MS + 1800000))" > "$EVIDENCE_DIR/monotonic-deadline-ms"
+          cat > "$EVIDENCE_DIR/receipt.json" <<JSON
+          {
+            "profile": "umf.core-python314-generation/1",
+            "status": "FAIL_OR_UNKNOWN",
+            "reason": "Generation did not reach the passing finalizer.",
+            "sourceCommit": "$GITHUB_SHA",
+            "runId": "$GITHUB_RUN_ID",
+            "runAttempt": "$GITHUB_RUN_ATTEMPT",
+            "ref": "$GITHUB_REF",
+            "workflow": "$GITHUB_WORKFLOW",
+            "scope": "Hosted artifact-only generation; no installed-wheel, release, or support claim.",
+            "aggregateDeadlineSeconds": 1800,
+            "childMaximumSeconds": 180,
+            "timeoutKillGraceSeconds": 10,
+            "cleanupReserveSeconds": 60,
+            "aggregateLogLimitBytes": 1048576,
+            "aggregateArtifactLimitBytes": 16777216,
+            "failureOnlyReceiptOnLimitOrMismatch": true,
+            "qualificationClaim": false
+          }
+          JSON
+          cp "$EVIDENCE_DIR/receipt.json" "$RUNNER_TEMP/core-python314-upload/receipt.json"
+
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        timeout-minutes: 2
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        timeout-minutes: 2
+        with:
+          bun-version: 1.4.3
+
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        timeout-minutes: 2
+        with:
+          python-version: '3.12.15'
+
+      - uses: dtolnay/rust-toolchain@stable
+        timeout-minutes: 2
+        with:
+          toolchain: 1.90.0
+
+      - name: Run the original-deadline-bounded generation and checks
+        id: generate
+        timeout-minutes: 30
+        env:
+          EVIDENCE_DIR: ${{ runner.temp }}/core-python314-generation
+          UPLOAD_DIR: ${{ runner.temp }}/core-python314-upload
+          WORK_OUTPUT_DIR: ${{ runner.temp }}/core-python314-success
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          EVIDENCE="$EVIDENCE_DIR"
+          DEADLINE_MS="$(cat "$EVIDENCE/monotonic-deadline-ms")"
+          : > "$EVIDENCE/command-records.jsonl"
+          cat > "$RUNNER_TEMP/core-python314-work.sh" <<'WORK'
+          set -euo pipefail
+          EVIDENCE="$EVIDENCE_DIR"
+          DEADLINE_MS="$(cat "$EVIDENCE/monotonic-deadline-ms")"
+
+          run_bounded() {
+            local name="$1" maximum="$2" now_ms remaining limit status capture_status log started_ms ended_ms started_utc ended_utc prior_log_bytes available_log_bytes
+            local -a pipeline_status
+            shift 2
+            now_ms="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+            remaining="$(((DEADLINE_MS - now_ms - 72000) / 1000))"
+            if (( remaining <= 0 )); then echo "Original deadline exhausted before $name" >&2; return 124; fi
+            limit="$maximum"
+            if (( remaining < limit )); then limit="$remaining"; fi
+            log="$EVIDENCE/logs/$name.log"
+            prior_log_bytes="$(find "$EVIDENCE/logs" -type f -name '*.log' -exec wc -c {} + | awk 'END {print $1+0}')"
+            available_log_bytes=$((1048576 - prior_log_bytes))
+            if (( available_log_bytes < 0 )); then available_log_bytes=0; fi
+            started_ms="$now_ms"
+            started_utc="$(date -u +'%Y-%m-%dT%H:%M:%S.%NZ')"
+            : > "$log"
+            set +e
+            timeout --signal=TERM --kill-after=10s "${limit}s" "$@" 2>&1 | python -I -c '
+          import sys
+          path, cap = sys.argv[1], int(sys.argv[2])
+          marker = b"\n[LOG TRUNCATED: output exceeded aggregate capture cap]\n"
+          stored = 0; truncated = False; failed = False
+          try: output = open(path, "wb", buffering=0)
+          except OSError: output = None; failed = True
+          while True:
+              chunk = sys.stdin.buffer.read(65536)
+              if not chunk: break
+              if output is None: continue
+              available = max(0, cap - stored)
+              piece = chunk[:available]
+              if piece:
+                  try: output.write(piece); stored += len(piece)
+                  except OSError:
+                      failed = True
+                      try: output.close()
+                      except OSError: pass
+                      output = None
+              if len(chunk) > available: truncated = True
+          if output is not None:
+              try:
+                  if truncated:
+                      marker = marker[:cap]; output.seek(max(0, cap - len(marker))); output.truncate(); output.write(marker)
+                  output.close()
+              except OSError: failed = True
+          sys.exit(74 if failed else 75 if truncated else 0)
+          ' "$log" "$available_log_bytes"
+            pipeline_status=("${PIPESTATUS[@]}")
+            set -e
+            status="${pipeline_status[0]}"
+            capture_status="${pipeline_status[1]}"
+            ended_ms="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+            ended_utc="$(date -u +'%Y-%m-%dT%H:%M:%S.%NZ')"
+            python -I - "$EVIDENCE/command-records.jsonl" "$log" "$name" "$status" "$capture_status" "$started_ms" "$ended_ms" "$started_utc" "$ended_utc" "$limit" "$@" <<'PY'
+          import hashlib, json, pathlib, sys
+          records, log_path, name, raw_exit, capture_exit, started_ms, ended_ms, started_utc, ended_utc, limit_seconds, *argv = sys.argv[1:]
+          payload = pathlib.Path(log_path).read_bytes()
+          record = {"name": name, "stage": name, "argv": argv, "rawExit": int(raw_exit),
+                    "captureExit": int(capture_exit), "monotonicStartMs": int(started_ms),
+                    "monotonicEndMs": int(ended_ms), "monotonicDurationMs": int(ended_ms)-int(started_ms),
+                    "startedAtUtc": started_utc, "endedAtUtc": ended_utc,
+                    "limitSeconds": int(limit_seconds), "logBytes": len(payload),
+                    "logSha256": hashlib.sha256(payload).hexdigest(), "truncated": int(capture_exit) == 75}
+          with pathlib.Path(records).open("a", encoding="utf-8") as stream: stream.write(json.dumps(record, sort_keys=True) + "\n")
+          PY
+            if (( status != 0 || capture_status != 0 )); then
+              echo "Command $name failed: raw exit $status, capture exit $capture_status" >&2
+              return 1
+            fi
+          }
+
+          run_bounded source-preflight 180 python -I - "$GITHUB_SHA" "$GITHUB_REF" "$GITHUB_EVENT_NAME" <<'PY'
+          import hashlib, json, os, pathlib, shutil, subprocess, sys
+          commit, ref, event = sys.argv[1:]
+          if event != "push" or ref != "refs/heads/codex/core-python314-generation": raise SystemExit("unexpected event/ref")
+          if subprocess.run(["git", "rev-parse", "HEAD"], check=True, text=True, capture_output=True).stdout.strip() != commit: raise SystemExit("checkout/source commit mismatch")
+          if subprocess.run(["git", "status", "--porcelain"], check=True, text=True, capture_output=True).stdout: raise SystemExit("generation checkout is not clean")
+          lock=json.loads(pathlib.Path("qualification-inputs/core-python314-generation.json").read_text())
+          phase=lock.get("phase")
+          if phase not in {"regex-artifacts","metamodel-artifacts","dependent-artifacts"}: raise SystemExit("unknown generation phase")
+          for name, expected in lock["inputs"].items():
+              path=pathlib.Path(name)
+              if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=expected: raise SystemExit("source input hash mismatch: "+name)
+          for name, expected in lock["mainPreimages"].items():
+              raw=subprocess.run(["git","show",lock["sourceCommit"]+":"+name],check=True,capture_output=True).stdout
+              if hashlib.sha256(raw).hexdigest()!=expected: raise SystemExit("MAIN preimage hash mismatch: "+name)
+          regex_paths={"crates/umf-core/src/python_re_tables.rs","crates/umf-core/src/python_re_names.dat","crates/umf-core/tests/fixtures/cpython-re/outcomes-3.14.tsv","crates/umf-core/tests/fixtures/cpython-re/independent-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-outcomes.tsv","crates/umf-core/tests/fixtures/cpython-re/independent-hex-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-hex-outcomes.tsv","crates/umf-core/tests/fixtures/cpython-re/independent-info-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-info-outcomes.tsv"}
+          metamodel_paths={"spec/core/schema.json","spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json","spec/metamodel/package.json","spec/metamodel/generated/core-constraints.json","spec/metamodel/generated/domain-policy.json","spec/metamodel/generated/python-shapes.json","python/umf_access/src/umf_access/generated_core.py","src/generated/core-model.ts","src/generated/core-validators.ts","spec/metamodel/generated/manifest.json"}
+          def require_adoption(outputs, adoption, expected_paths, status, label):
+              if not isinstance(outputs,dict) or set(outputs)!=expected_paths or not isinstance(adoption,dict) or adoption.get("status")!=status: raise SystemExit(label+" lacks reviewed artifact adoption custody")
+              for name, expected in outputs.items():
+                  path=pathlib.Path(name)
+                  if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=expected: raise SystemExit(label+" bytes do not match current source: "+name)
+              for name in ("sourceCommit","runId","runAttempt","artifactSha256","receiptSha256"):
+                  if not isinstance(adoption.get(name),str) or not adoption[name]: raise SystemExit("incomplete "+label+" provenance: "+name)
+          if phase=="regex-artifacts":
+              if lock.get("adoptedRegexOutputs") is not None or lock.get("adoption") is not None: raise SystemExit("regex phase cannot consume adoption claims")
+              if lock.get("adoptedMetamodelOutputs") is not None or lock.get("metamodelAdoption") is not None: raise SystemExit("regex phase cannot consume metamodel adoption claims")
+              for name, expected in lock["regexPreimages"].items():
+                  path=pathlib.Path(name)
+                  if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=expected: raise SystemExit("frozen regex preimage mismatch: "+name)
+                  raw=subprocess.run(["git","show",lock["sourceCommit"]+":"+name],check=True,capture_output=True).stdout
+                  if hashlib.sha256(raw).hexdigest()!=expected: raise SystemExit("MAIN independent baseline mismatch: "+name)
+          else:
+              require_adoption(lock.get("adoptedRegexOutputs"),lock.get("adoption"),regex_paths,"PASS_REGEX_GENERATION_ARTIFACTS_ONLY","regex generation")
+              if phase=="metamodel-artifacts":
+                  if lock.get("adoptedMetamodelOutputs") is not None or lock.get("metamodelAdoption") is not None: raise SystemExit("metamodel phase cannot consume metamodel adoption claims")
+              else:
+                  require_adoption(lock.get("adoptedMetamodelOutputs"),lock.get("metamodelAdoption"),metamodel_paths,"PASS_METAMODEL_GENERATION_ARTIFACTS_ONLY","metamodel generation")
+          if lock["cpython"]["archiveSha256"]!="fa74abc70a55c10f6631967784878704eef81bbde9b8ec27469534f6ba997cb3": raise SystemExit("CPython acquisition lock mismatch")
+          expected_cpython={"implementation":"CPython","version":"3.14.8","unicodeVersion":"16.0.0","releaseTag":"3.14.8-36806082737","releaseId":400609475,"releaseApiSha256":"d7d8d41851a6a6489a9fc5b6b51e601e708cca26f1b0fe1791751371dc7cf0a0","assetApiUrl":"https://api.github.com/repos/actions/python-versions/releases/assets/602296995","assetApiSha256":"bd1ade7f0c55dc6f8ac8ecc3af88d6d66646e8c09841dede5b0d73922ede7d00","downloadUrl":"https://github.com/actions/python-versions/releases/download/3.14.8-36806082737/python-3.14.8-linux-24.04-x64.tar.gz","archiveName":"python-3.14.8-linux-24.04-x64.tar.gz","archiveBytes":110382248,"archiveSha256":"fa74abc70a55c10f6631967784878704eef81bbde9b8ec27469534f6ba997cb3","executableMember":"./bin/python3.14","executableBytes":17752,"executableSha256":"a5230d8adbd26c2185d77fb003597c4ee9c44c2369fc179122ff7c3a3a58ae59","installationPrefix":"/opt/hostedtoolcache/Python/3.14.8/x64","libpythonRelativePath":"lib/libpython3.14.so.1.0","stdlibRelativePath":"lib/python3.14","extensionModulesRelativePath":"lib/python3.14/lib-dynload"}
+          if lock["cpython"]!=expected_cpython: raise SystemExit("CPython acquisition identity differs from frozen primary metadata")
+          if pathlib.Path("python/pyproject.toml").read_text().find('version = "0.10.3"')<0: raise SystemExit("distribution version is not 0.10.3")
+          tools={}
+          for name in ("bun","python","cargo","rustc","curl","timeout"):
+              binary=pathlib.Path(shutil.which(name)).resolve(strict=True)
+              result=subprocess.run([str(binary),"--version"],check=True,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=10)
+              with binary.open("rb") as stream: binary_sha=hashlib.file_digest(stream,"sha256").hexdigest()
+              tools[name]={"path":str(binary),"version":result.stdout.strip(),"binarySha256":binary_sha}
+          if not tools["bun"]["version"].endswith("1.4.3") or not tools["python"]["version"].endswith("3.12.15") or not tools["rustc"]["version"].startswith("rustc 1.90.0"):
+              raise SystemExit("unexpected Bun, Python, or Rust tool version")
+          pathlib.Path(os.environ["EVIDENCE_DIR"],"tools.json").write_text(json.dumps(tools,indent=2,sort_keys=True)+"\n")
+          pathlib.Path(os.environ["EVIDENCE_DIR"],"phase").write_text(phase+"\n")
+          PY
+
+          run_bounded install-locked-bun-dependencies 180 bun install --frozen-lockfile --ignore-scripts
+          PHASE="$(cat "$EVIDENCE/phase")"
+          if [[ "$PHASE" == "regex-artifacts" ]]; then
+          RUNTIME_ROOT="$RUNNER_TOOL_CACHE/Python/3.14.8/x64"
+          run_bounded download-cpython314 180 curl --proto '=https' --tlsv1.2 --fail --location --max-filesize 110382248 --output "$RUNNER_TEMP/python-3.14.8-linux-24.04-x64.tar.gz" https://github.com/actions/python-versions/releases/download/3.14.8-36806082737/python-3.14.8-linux-24.04-x64.tar.gz
+          run_bounded inspect-extract-cpython314 180 python -I - "$RUNNER_TEMP/python-3.14.8-linux-24.04-x64.tar.gz" "$RUNTIME_ROOT" <<'PY'
+          import hashlib, pathlib, stat, tarfile, sys
+          archive=pathlib.Path(sys.argv[1]); destination=pathlib.Path(sys.argv[2])
+          expected_size=110382248; expected_sha="fa74abc70a55c10f6631967784878704eef81bbde9b8ec27469534f6ba997cb3"; member_name="./bin/python3.14"
+          if str(destination)!="/opt/hostedtoolcache/Python/3.14.8/x64": raise SystemExit("CPython installation prefix differs from the verified ELF RUNPATH")
+          if archive.stat().st_size!=expected_size: raise SystemExit("CPython archive size mismatch")
+          with archive.open("rb") as stream: archive_sha=hashlib.file_digest(stream,"sha256").hexdigest()
+          if archive_sha!=expected_sha: raise SystemExit("CPython archive SHA mismatch")
+          if destination.exists(): raise SystemExit("CPython extraction directory already exists")
+          destination.mkdir(parents=True)
+          with tarfile.open(archive,"r:gz") as tar:
+              members=[item for item in tar.getmembers() if item.name==member_name]
+              if len(members)!=1 or not members[0].isfile() or members[0].size!=17752 or members[0].mode&0o777!=0o755: raise SystemExit("CPython executable archive member mismatch")
+              source=tar.extractfile(members[0])
+              if source is None: raise SystemExit("CPython executable is not readable")
+              digest=hashlib.sha256(); count=0
+              while chunk:=source.read(65536): digest.update(chunk); count+=len(chunk)
+              if count!=17752 or digest.hexdigest()!="a5230d8adbd26c2185d77fb003597c4ee9c44c2369fc179122ff7c3a3a58ae59": raise SystemExit("CPython executable member SHA mismatch")
+              tar.extractall(path=destination,filter="data")
+          executable=destination/"bin/python3.14"
+          if executable.is_symlink() or not executable.is_file() or executable.stat().st_size!=17752 or stat.S_IMODE(executable.stat().st_mode)!=0o755: raise SystemExit("extracted CPython executable mismatch")
+          with executable.open("rb") as stream: extracted_sha=hashlib.file_digest(stream,"sha256").hexdigest()
+          if extracted_sha!="a5230d8adbd26c2185d77fb003597c4ee9c44c2369fc179122ff7c3a3a58ae59": raise SystemExit("extracted CPython executable SHA mismatch")
+          PY
+          run_bounded verify-cpython314-runtime 30 env LD_LIBRARY_PATH="$RUNTIME_ROOT/lib" "$RUNTIME_ROOT/bin/python3.14" -I - "$RUNTIME_ROOT" "$EVIDENCE/cpython-runtime.json" <<'PY'
+          import json, os, pathlib, platform, sys, sysconfig, unicodedata
+          root=pathlib.Path(sys.argv[1]).resolve(strict=True); receipt=pathlib.Path(sys.argv[2])
+          executable=(root/"bin/python3.14").resolve(strict=True); libpython=(root/"lib/libpython3.14.so.1.0").resolve(strict=True)
+          stdlib=(root/"lib/python3.14").resolve(strict=True); extensions=(root/"lib/python3.14/lib-dynload").resolve(strict=True)
+          if pathlib.Path(sys.executable).resolve(strict=True)!=executable: raise SystemExit("CPython executable path is outside the verified runtime tree")
+          if pathlib.Path(sys.prefix).resolve(strict=True)!=root or pathlib.Path(sys.base_prefix).resolve(strict=True)!=root: raise SystemExit("CPython prefix is outside the verified runtime tree")
+          if pathlib.Path(sysconfig.get_path("stdlib")).resolve(strict=True)!=stdlib: raise SystemExit("CPython standard library path is outside the verified runtime tree")
+          if pathlib.Path(sysconfig.get_config_var("DESTSHARED")).resolve(strict=True)!=extensions: raise SystemExit("CPython extension module path is outside the verified runtime tree")
+          if pathlib.Path(unicodedata.__file__).resolve(strict=True).parent!=extensions: raise SystemExit("Unicode extension was not loaded from the verified runtime tree")
+          mapped=set()
+          for line in pathlib.Path("/proc/self/maps").read_text().splitlines():
+              parts=line.split(maxsplit=5)
+              if len(parts)==6 and pathlib.Path(parts[5].removesuffix(" (deleted)")).name==libpython.name: mapped.add(str(pathlib.Path(parts[5].removesuffix(" (deleted)")).resolve(strict=True)))
+          if mapped!={str(libpython)}: raise SystemExit("loaded libpython path differs from the verified runtime tree")
+          if platform.python_implementation()!="CPython" or sys.version_info[:3]!=(3,14,8) or unicodedata.unidata_version!="16.0.0": raise SystemExit("unexpected CPython version or Unicode database")
+          record={"implementation":"CPython","version":"3.14.8","unicodeVersion":"16.0.0","executable":str(executable),"libpython":str(libpython),"stdlib":str(stdlib),"extensionModules":str(extensions),"unicodeDataExtension":str(pathlib.Path(unicodedata.__file__).resolve(strict=True)),"loaderEnvironment":{"LD_LIBRARY_PATH":os.environ.get("LD_LIBRARY_PATH")}}
+          receipt.write_text(json.dumps(record,indent=2,sort_keys=True)+"\n")
+          print(json.dumps(record,sort_keys=True))
+          PY
+
+          run_bounded generate-regex-table-profile 180 bash -euo pipefail -c '
+          stage="$RUNNER_TEMP/core-python314-stage"
+          mkdir -p "$stage/src" "$stage/tests/fixtures/cpython-re"
+          git show d5022e37840329d351bcd6c27fe7d7aad4758544:crates/umf-core/src/python_re_tables.rs > "$stage/src/python_re_tables.rs"
+          git show d5022e37840329d351bcd6c27fe7d7aad4758544:crates/umf-core/src/python_re_names.dat > "$stage/src/python_re_names.dat"
+          cp crates/umf-core/tests/fixtures/cpython-re/re_tests.py crates/umf-core/tests/fixtures/cpython-re/PSF-LICENSE.txt "$stage/tests/fixtures/cpython-re/"
+          env LD_LIBRARY_PATH="$RUNNER_TOOL_CACHE/Python/3.14.8/x64/lib" "$RUNNER_TOOL_CACHE/Python/3.14.8/x64/bin/python3.14" -I crates/umf-core/tools/extend_python_re_314.py "$RUNNER_TOOL_CACHE/Python/3.14.8/x64/bin/python3.14" "$stage"
+          cp "$stage/src/python_re_tables.rs" crates/umf-core/src/python_re_tables.rs
+          cp "$stage/src/python_re_names.dat" crates/umf-core/src/python_re_names.dat
+          cp "$stage/tests/fixtures/cpython-re/outcomes-3.14.tsv" crates/umf-core/tests/fixtures/cpython-re/outcomes-3.14.tsv
+          '
+          run_bounded generate-independent-boundaries-314 180 env LD_LIBRARY_PATH="$RUNTIME_ROOT/lib" python -I crates/umf-core/tools/generate_independent_python_re_boundaries.py --python314 "$RUNTIME_ROOT/bin/python3.14"
+          run_bounded generate-independent-hex-314 180 env LD_LIBRARY_PATH="$RUNTIME_ROOT/lib" python -I crates/umf-core/tools/generate_independent_python_re_hex.py --python314 "$RUNTIME_ROOT/bin/python3.14"
+          run_bounded generate-independent-info-314 180 env LD_LIBRARY_PATH="$RUNTIME_ROOT/lib" python -I crates/umf-core/tools/generate_independent_python_re_info.py --python314 "$RUNTIME_ROOT/bin/python3.14"
+          fi
+
+          if [[ "$PHASE" == "metamodel-artifacts" ]]; then
+          run_bounded generate-metamodel-11-outputs 180 bun scripts/metamodel/build.ts --output-root "$RUNNER_TEMP/core-python314-metamodel-stage"
+          fi
+
+          if [[ "$PHASE" == "dependent-artifacts" ]]; then
+          run_bounded check-metamodel-self-and-root 180 bun run check:metamodel
+          run_bounded regenerate-action-plan-identity 180 bash -euo pipefail -c 'bun scripts/actions-plan-identity.ts && bun scripts/actions-plan-identity.ts --check'
+          run_bounded regenerate-codegen-and-check 180 bash -euo pipefail -c 'bun scripts/build-codegen.ts && bun scripts/build-codegen.ts --check'
+          run_bounded regenerate-r3-inventory-and-boundaries 180 bash -euo pipefail -c 'python scripts/rust-inventory.py && bun run check:rust-boundaries'
+          fi
+
+          run_bounded prepare-output-archive 180 python -I - "$RUNNER_TEMP/core-python314-success" "$EVIDENCE" "$RUNNER_TEMP/core-python314-metamodel-stage" <<'PY'
+          import hashlib, json, os, pathlib, tarfile, sys
+          root=pathlib.Path.cwd().resolve(); output=pathlib.Path(sys.argv[1]); output.mkdir(parents=True,exist_ok=False); evidence=pathlib.Path(os.environ["EVIDENCE_DIR"]); phase=(evidence/"phase").read_text().strip(); metamodel_root=pathlib.Path(sys.argv[3]).resolve(); max_bytes=16777216; log_limit=1048576
+          regex_paths=["crates/umf-core/src/python_re_tables.rs","crates/umf-core/src/python_re_names.dat","crates/umf-core/tests/fixtures/cpython-re/outcomes-3.14.tsv","crates/umf-core/tests/fixtures/cpython-re/independent-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-outcomes.tsv","crates/umf-core/tests/fixtures/cpython-re/independent-hex-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-hex-outcomes.tsv","crates/umf-core/tests/fixtures/cpython-re/independent-info-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-info-outcomes.tsv"]
+          metamodel_paths=["spec/core/schema.json","spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json","spec/metamodel/package.json","spec/metamodel/generated/core-constraints.json","spec/metamodel/generated/domain-policy.json","spec/metamodel/generated/python-shapes.json","python/umf_access/src/umf_access/generated_core.py","src/generated/core-model.ts","src/generated/core-validators.ts","spec/metamodel/generated/manifest.json"]
+          def regular_file(path, base):
+              if path.is_symlink() or not path.is_file(): raise SystemExit("missing or non-regular source file: "+str(path))
+              resolved=path.resolve(strict=True)
+              if not resolved.is_relative_to(base.resolve(strict=True)): raise SystemExit("source file escaped its declared root: "+str(path))
+              return path.stat().st_size
+          if phase=="regex-artifacts": paths=regex_paths
+          elif phase=="metamodel-artifacts": paths=metamodel_paths
+          elif phase=="dependent-artifacts":
+              paths=["src/extensions/actions/plan-identity.ts","docs/helix/04-build/evidence/rust-migration/r3/inventory.json"]
+              codegen_manifest=root/"python/umf_codegen/src/umf_codegen/_assets/manifest.json"
+              if regular_file(codegen_manifest,root)>65536: raise SystemExit("Codegen output manifest exceeds metadata reserve")
+              manifest=json.loads(codegen_manifest.read_text())
+              if not isinstance(manifest,dict) or not isinstance(manifest.get("files"),list): raise SystemExit("invalid Codegen output manifest")
+              for name in manifest["files"]:
+                  if not isinstance(name,str): raise SystemExit("invalid Codegen manifest member")
+                  relative=pathlib.PurePosixPath(name)
+                  if relative.is_absolute() or ".." in relative.parts or not relative.parts: raise SystemExit("invalid Codegen manifest member path")
+                  paths.append("python/umf_codegen/src/umf_codegen/_assets/"+name)
+              paths += ["python/umf_codegen/src/umf_codegen/_assets/manifest.json","python/umf_codegen/src/umf_codegen/_release.py"]
+          else: raise SystemExit("unknown generation phase")
+          if len(paths)!=len(set(paths)): raise SystemExit("duplicate output path")
+          records_path=evidence/"command-records.jsonl"; record_bytes=regular_file(records_path,evidence)
+          logs=evidence/"logs"
+          if logs.is_symlink() or not logs.is_dir(): raise SystemExit("missing or unsafe command log directory")
+          log_paths=sorted(logs.iterdir()); log_bytes=0
+          for path in log_paths: log_bytes+=regular_file(path,logs)
+          if log_bytes>log_limit: raise SystemExit("aggregate command logs exceed 1 MiB")
+          base=metamodel_root if phase=="metamodel-artifacts" else root
+          stats=[]
+          for name in paths:
+              path=base/name
+              size=regular_file(path,base)
+              stats.append({"path":name,"bytes":size})
+          records=[]
+          for item in stats:
+              digest=hashlib.sha256(); source_path=base/item["path"]
+              with source_path.open("rb") as stream:
+                  for chunk in iter(lambda:stream.read(65536),b""): digest.update(chunk)
+              records.append({**item,"sha256":digest.hexdigest()})
+          output_manifest={"profile":"umf.core-python314-generated-output-manifest/1","phase":phase,"sourceCommit":os.environ["GITHUB_SHA"],"outputs":records}
+          manifest_bytes=(json.dumps(output_manifest,sort_keys=True,separators=(",",":"))+"\n").encode(); output_manifest["outputsSha256"]=hashlib.sha256(manifest_bytes).hexdigest()
+          manifest_path=output/"outputs.json"; manifest_path.write_text(json.dumps(output_manifest,indent=2,sort_keys=True)+"\n")
+          statuses={"regex-artifacts":"PASS_REGEX_GENERATION_ARTIFACTS_ONLY","metamodel-artifacts":"PASS_METAMODEL_GENERATION_ARTIFACTS_ONLY","dependent-artifacts":"PASS_DEPENDENT_GENERATION_ARTIFACTS_ONLY"}
+          cp_python={"version":"3.14.8","unicodeVersion":"16.0.0","executableSha256":"a5230d8adbd26c2185d77fb003597c4ee9c44c2369fc179122ff7c3a3a58ae59","runtime":json.loads((evidence/"cpython-runtime.json").read_text())} if phase=="regex-artifacts" else None
+          receipt={"profile":"umf.core-python314-generation/1","status":statuses[phase],"phase":phase,"sourceCommit":os.environ["GITHUB_SHA"],"runId":os.environ["GITHUB_RUN_ID"],"runAttempt":os.environ["GITHUB_RUN_ATTEMPT"],"ref":os.environ["GITHUB_REF"],"event":os.environ["GITHUB_EVENT_NAME"],"sourceInputsSha256":hashlib.sha256(pathlib.Path("qualification-inputs/core-python314-generation.json").read_bytes()).hexdigest(),"outputManifestSha256":hashlib.sha256(manifest_path.read_bytes()).hexdigest(),"archiveSha256":"0"*64,"archiveBytes":0,"uncompressedOutputBytes":sum(item["bytes"] for item in records),"outputCount":len(records),"tools":json.loads((evidence/"tools.json").read_text()),"cpPython":cp_python,"claims":{"generatedArtifacts":True,"adoption":False,"metamodelCheck":phase=="dependent-artifacts","actionIdentityAndCodegenCheck":phase=="dependent-artifacts","rustInventoryCheck":phase=="dependent-artifacts","installedWheelQualification":False,"release":False}}
+          receipt_path=output/"receipt.json"; receipt_path.write_text(json.dumps(receipt,indent=2,sort_keys=True)+"\n")
+          metadata_bytes=manifest_path.stat().st_size+receipt_path.stat().st_size
+          if metadata_bytes>65536: raise SystemExit("artifact metadata exceeds reserved 64 KiB")
+          archive_budget=max_bytes-record_bytes-log_bytes-metadata_bytes-128
+          if archive_budget<=0: raise SystemExit("no remaining artifact budget for compressed generated outputs")
+          archive_path=output/"generated-source.tar.gz"
+          class CappedWriter:
+              def __init__(self,path,limit): self.file=path.open("xb"); self.limit=limit; self.written=0
+              def write(self,data):
+                  if self.written+len(data)>self.limit: raise OSError("compressed output exceeded reserved artifact budget")
+                  count=self.file.write(data); self.written+=count; return count
+              def tell(self): return self.written
+              def flush(self): self.file.flush()
+              def close(self): self.file.close()
+          writer=CappedWriter(archive_path,archive_budget)
+          try:
+              with tarfile.open(fileobj=writer,mode="w|gz",compresslevel=6) as tar:
+                  for item in records:
+                      source=base/item["path"]; info=tarfile.TarInfo(item["path"]); info.size=item["bytes"]; info.mode=0o644
+                      with source.open("rb") as stream: tar.addfile(info,stream)
+          finally: writer.close()
+          archive_size=archive_path.stat().st_size
+          if archive_size>archive_budget: raise SystemExit("compressed output exceeded reserved artifact budget")
+          with archive_path.open("rb") as stream: archive_sha=hashlib.file_digest(stream,"sha256").hexdigest()
+          receipt["archiveSha256"]=archive_sha; receipt["archiveBytes"]=archive_size
+          receipt_path.write_text(json.dumps(receipt,indent=2,sort_keys=True)+"\n")
+          if receipt_path.stat().st_size>metadata_bytes+128: raise SystemExit("final receipt exceeded its reserved metadata allowance")
+          family_bytes=archive_size+manifest_path.stat().st_size+receipt_path.stat().st_size+record_bytes+log_bytes
+          if family_bytes>max_bytes: raise SystemExit("complete compressed artifact family exceeds 16 MiB")
+          PY
+          WORK
+          NOW_MS="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+          REMAINING_SECONDS="$(((DEADLINE_MS - NOW_MS - 72000) / 1000))"
+          if (( REMAINING_SECONDS <= 0 )); then echo 'Original aggregate deadline expired before generation.' >&2; exit 124; fi
+          timeout --signal=TERM --kill-after=10s "${REMAINING_SECONDS}s" bash -euo pipefail "$RUNNER_TEMP/core-python314-work.sh"
+
+      - name: Stage bounded success evidence or a fresh failure-only receipt
+        if: always()
+        timeout-minutes: 1
+        env:
+          EVIDENCE_DIR: ${{ runner.temp }}/core-python314-generation
+          UPLOAD_DIR: ${{ runner.temp }}/core-python314-upload
+          WORK_OUTPUT_DIR: ${{ runner.temp }}/core-python314-success
+          SOURCE_COMMIT: ${{ github.sha }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+          SOURCE_REF: ${{ github.ref }}
+          EVENT_NAME: ${{ github.event_name }}
+          GENERATION_OUTCOME: ${{ steps.generate.outcome }}
+        run: |
+          set -euo pipefail
+          python -I - <<'PY'
+          import hashlib, json, os, pathlib, shutil
+          evidence=pathlib.Path(os.environ["EVIDENCE_DIR"]); upload=pathlib.Path(os.environ["UPLOAD_DIR"]); success_output=pathlib.Path(os.environ["WORK_OUTPUT_DIR"]); max_bytes=16777216; log_limit=1048576
+          shutil.rmtree(upload,ignore_errors=True); upload.mkdir(parents=True)
+          last_command=None; command_records=evidence/"command-records.jsonl"
+          if not command_records.is_symlink() and command_records.is_file() and command_records.stat().st_size<=65536:
+              try:
+                  rows=[line for line in command_records.read_text().splitlines() if line]
+                  if rows:
+                      row=json.loads(rows[-1]); keys=("name","rawExit","captureExit","monotonicStartMs","monotonicEndMs","monotonicDurationMs","startedAtUtc","endedAtUtc","limitSeconds","logBytes","logSha256","truncated")
+                      last_command={key:row[key] for key in keys if key in row}
+              except (OSError,UnicodeDecodeError,json.JSONDecodeError): last_command=None
+          def fail(reason_code):
+              shutil.rmtree(upload,ignore_errors=True); upload.mkdir(parents=True)
+              fail_receipt={"profile":"umf.core-python314-generation/1","status":"FAIL_OR_UNKNOWN","reasonCode":reason_code,"sourceCommit":os.environ["SOURCE_COMMIT"],"runId":os.environ["RUN_ID"],"runAttempt":os.environ["RUN_ATTEMPT"],"ref":os.environ["SOURCE_REF"],"event":os.environ["EVENT_NAME"],"generationStepOutcome":os.environ.get("GENERATION_OUTCOME"),"lastCommand":last_command,"aggregateDeadlineSeconds":1800,"childMaximumSeconds":180,"timeoutKillGraceSeconds":10,"cleanupReserveSeconds":60,"aggregateLogLimitBytes":1048576,"aggregateArtifactLimitBytes":16777216,"failureOnlyReceipt":True,"rawLogsUploaded":False,"qualificationClaim":False}
+              (upload/"receipt.json").write_text(json.dumps(fail_receipt,indent=2,sort_keys=True)+"\n")
+              (evidence/"finalizer.status").write_text("failed\n")
+          if os.environ.get("GENERATION_OUTCOME")!="success":
+              fail("generation_step_failed"); raise SystemExit(1)
+          try:
+              if success_output.is_symlink() or not success_output.is_dir(): raise ValueError("success output directory missing")
+              allowed={"generated-source.tar.gz","outputs.json","receipt.json"}
+              children=list(success_output.iterdir())
+              if {path.name for path in children}!=allowed or any(path.is_symlink() or not path.is_file() for path in children): raise ValueError("success output family is incomplete or unsafe")
+              records=command_records; logs=evidence/"logs"
+              if records.is_symlink() or not records.is_file() or logs.is_symlink() or not logs.is_dir(): raise ValueError("command evidence is incomplete or unsafe")
+              record_size=records.stat().st_size
+              log_paths=sorted(logs.iterdir()); log_size=0
+              for path in log_paths:
+                  if path.is_symlink() or not path.is_file(): raise ValueError("command log family contains a non-regular file")
+                  log_size+=path.stat().st_size
+              if log_size>log_limit or record_size>65536: raise ValueError("command evidence exceeds its reserved cap")
+              source_sizes={path.name:path.stat().st_size for path in children}
+              total=sum(source_sizes.values())+record_size+log_size
+              if total>max_bytes: raise ValueError("complete artifact family exceeds 16 MiB")
+              if source_sizes["outputs.json"]>65536 or source_sizes["receipt.json"]>65536: raise ValueError("artifact metadata exceeds its reserved cap")
+              receipt_path=success_output/"receipt.json"; manifest_path=success_output/"outputs.json"; archive=success_output/"generated-source.tar.gz"
+              receipt=json.loads(receipt_path.read_text()); manifest=json.loads(manifest_path.read_text())
+              if receipt.get("sourceCommit")!=os.environ["SOURCE_COMMIT"] or receipt.get("runId")!=os.environ["RUN_ID"] or receipt.get("runAttempt")!=os.environ["RUN_ATTEMPT"] or receipt.get("ref")!=os.environ["SOURCE_REF"] or receipt.get("event")!=os.environ["EVENT_NAME"]: raise ValueError("generation receipt identity mismatch")
+              phase=receipt.get("phase"); statuses={"regex-artifacts":"PASS_REGEX_GENERATION_ARTIFACTS_ONLY","metamodel-artifacts":"PASS_METAMODEL_GENERATION_ARTIFACTS_ONLY","dependent-artifacts":"PASS_DEPENDENT_GENERATION_ARTIFACTS_ONLY"}
+              if phase not in statuses or receipt.get("status")!=statuses[phase] or receipt.get("outputManifestSha256")!=hashlib.sha256(manifest_path.read_bytes()).hexdigest(): raise ValueError("generation receipt or manifest mismatch")
+              if manifest.get("sourceCommit")!=receipt["sourceCommit"] or manifest.get("phase")!=phase or type(manifest.get("outputs")) is not list or receipt.get("outputCount")!=len(manifest["outputs"]): raise ValueError("output manifest identity or roster mismatch")
+              with archive.open("rb") as stream: archive_sha=hashlib.file_digest(stream,"sha256").hexdigest()
+              if receipt.get("archiveSha256")!=archive_sha or receipt.get("archiveBytes")!=source_sizes["generated-source.tar.gz"]: raise ValueError("compressed archive identity mismatch")
+              shutil.copyfile(archive,upload/archive.name); shutil.copyfile(manifest_path,upload/manifest_path.name); shutil.copyfile(receipt_path,upload/receipt_path.name)
+              shutil.copyfile(records,upload/"command-records.jsonl"); shutil.copytree(logs,upload/"logs")
+              uploaded=[path for path in upload.rglob("*") if path.is_file()]
+              if any(path.is_symlink() for path in upload.rglob("*")) or sum(path.stat().st_size for path in uploaded)>max_bytes: raise ValueError("copied artifact family exceeds 16 MiB")
+              if sum(path.stat().st_size for path in (upload/"logs").iterdir())>log_limit: raise ValueError("copied command logs exceed 1 MiB")
+              (evidence/"finalizer.status").write_text("success\n")
+          except (OSError,ValueError,KeyError,TypeError,json.JSONDecodeError):
+              fail("artifact_assembly_failed"); raise SystemExit(1)
+          PY
+          test "$(cat "$EVIDENCE_DIR/finalizer.status")" = success
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        timeout-minutes: 1
+        with:
+          name: core-python314-generated-source-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/core-python314-upload
+          if-no-files-found: error
+          retention-days: 7

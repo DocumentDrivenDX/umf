@@ -24,6 +24,7 @@ fn independent_cpython_311_literal_corpus_all_profiles() {
             "11" => ("3.11", PythonReVersion::V3_11),
             "12" => ("3.12", PythonReVersion::V3_12),
             "13" => ("3.13", PythonReVersion::V3_13),
+            "14" => ("3.14", PythonReVersion::V3_14),
             other => panic!("unknown Python minor {other}"),
         };
         let case_id = fields[1];
@@ -60,7 +61,7 @@ fn independent_cpython_311_literal_corpus_all_profiles() {
             }
         }
     }
-    assert_eq!(rows, 6_372 * 3, "independent outcome row count");
+    assert_eq!(rows, 6_372 * 4, "independent outcome row count");
     if !failures.is_empty() {
         panic!(
             "{} independent CPython mismatches; first 80:\n{}",
