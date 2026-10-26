@@ -1106,6 +1106,65 @@ export function createJsonSchemaEngine(module, options = {}) {
   return createJsonSchemaOperations(call, preflight);
 }
 
+/** Private staged import profile; callers opt in and inputs are string-only. */
+export const JSON_SCHEMA_STAGED_IMPORT_PROFILE = 'umf-r8-json-schema-staged-wasm-private/0.1.0';
+
+function stagedImportUri(uri) {
+  try {
+    const url = new URL(uri);
+    if (url.hash || uri.includes('#')) throw new Error();
+  } catch {
+    throw new JsonSchemaUmfError('JSON_SCHEMA_URI', 'Retrieval URI must be absolute and fragment-free');
+  }
+}
+
+/** Create a private staged import facade. This does not change the default route. */
+export function createJsonSchemaStagedImportEngine(module) {
+  if (typeof module?.JsonSchemaImportSessionHandle !== 'function' ||
+      module.jsonSchemaImportSessionProfileVersion?.() !== JSON_SCHEMA_STAGED_IMPORT_PROFILE) {
+    throw new Error('RUST_WASM_BINDING_MISSING');
+  }
+  return Object.freeze({
+    importJsonSchema(source, options) {
+      const session = new module.JsonSchemaImportSessionHandle();
+      const dispatch = (stage, fields = {}) => {
+        const response = JSON.parse(session.executeStage(encodeWire({stage, ...fields})));
+        const failure = resultError(response);
+        if (failure) throw jsonSchemaFailureError(failure, JsonSchemaUmfError);
+        return fromWire(JSON.parse(response.wire));
+      };
+
+      const firstBaseUri = options.baseUri;
+      stagedImportUri(firstBaseUri);
+      if (typeof firstBaseUri !== 'string') throw new TypeError('Staged JSON Schema import accepts string URI inputs only');
+      dispatch('begin', {firstBaseUri});
+
+      const entries = Object.entries(options.resources || {});
+      for (const [uri, resourceSource] of entries) {
+        stagedImportUri(uri);
+        if (typeof resourceSource !== 'string') throw new TypeError('Staged JSON Schema import accepts string resource sources only');
+        dispatch('resource', {uri, source: resourceSource});
+      }
+
+      const payloadBaseUri = options.baseUri;
+      if (typeof payloadBaseUri !== 'string') throw new TypeError('Staged JSON Schema import accepts a string baseUri');
+      dispatch('payloadBaseUri', {baseUri: payloadBaseUri});
+
+      if (typeof source !== 'string') throw new TypeError('Staged JSON Schema import accepts a string root source');
+      dispatch('root', {source});
+
+      const id = options.id;
+      if (typeof id !== 'string') throw new TypeError('Staged JSON Schema import accepts a string id');
+      dispatch('id', {id});
+
+      const namespace = options.baseUri;
+      if (typeof namespace !== 'string') throw new TypeError('Staged JSON Schema import accepts a string namespace');
+      dispatch('namespace', {baseUri: namespace});
+      return dispatch('finish');
+    },
+  });
+}
+
 /** Create the prepared opt-in JSON Schema adapter with a retained immutable Rust resource runtime. */
 export function createPreparedJsonSchemaEngine(module, options = {}) {
   if (typeof module?.PreparedJsonSchemaRuntimeHandle !== 'function' || typeof module?.jsonSchemaProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');

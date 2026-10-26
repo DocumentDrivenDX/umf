@@ -1,0 +1,129 @@
+{
+  "format": "umf.r8-json-schema-staged-import-browser/1",
+  "status": "pass",
+  "qualification": "Focused private staged-import JS host-order and Rust stage endpoint checks in freshly built WASM and real Chromium. String inputs only. This is not a parity matrix against direct TypeScript or Node and does not justify changing the default route.",
+  "profile": "umf-r8-json-schema-staged-wasm-private/0.1.0",
+  "tools": {
+    "bun": "1.4.3",
+    "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
+    "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+    "wasmBindgen": "wasm-bindgen 0.2.100",
+    "chromium": "153.0.8010.12"
+  },
+  "controls": {
+    "orderedGetterStages": true,
+    "threeBaseUriReadsRemainDistinct": true,
+    "baseGetterThrowsBeforeDispatch": true,
+    "resourceGetterAndProxyThrowsPreserveIdentity": true,
+    "resourceParseStopsLaterStages": true,
+    "rootParseStopsIdAndThirdUriRead": true,
+    "wasmExecutedInChromium": true,
+    "pageErrors": 0
+  },
+  "cases": [
+    {
+      "id": "success-preserves-three-uri-reads-and-resource-getter-order",
+      "stages": [
+        "begin",
+        "resource",
+        "payloadBaseUri",
+        "root",
+        "id",
+        "namespace",
+        "finish"
+      ],
+      "events": [
+        "baseUri#1",
+        "resources",
+        "resource:get",
+        "baseUri#2",
+        "id",
+        "baseUri#3"
+      ],
+      "outcome": {
+        "kind": "return",
+        "id": "staged-doc",
+        "namespace": "https://example.test/read-3",
+        "baseUri": "https://example.test/read-2"
+      }
+    },
+    {
+      "id": "base-uri-getter-throw-stops-before-wasm-dispatch",
+      "stages": [],
+      "events": [],
+      "outcome": {
+        "kind": "throw",
+        "name": "Error",
+        "message": "host getter sentinel",
+        "code": "HOST_SENTINEL",
+        "sameObject": true
+      }
+    },
+    {
+      "id": "resources-getter-throw-stops-before-root-stage",
+      "stages": [
+        "begin"
+      ],
+      "events": [],
+      "outcome": {
+        "kind": "throw",
+        "name": "Error",
+        "message": "host getter sentinel",
+        "code": "HOST_SENTINEL",
+        "sameObject": true
+      }
+    },
+    {
+      "id": "resource-ownKeys-proxy-throw-stops-before-resource-root-stages",
+      "stages": [
+        "begin"
+      ],
+      "events": [],
+      "outcome": {
+        "kind": "throw",
+        "name": "Error",
+        "message": "host getter sentinel",
+        "code": "HOST_SENTINEL",
+        "sameObject": true
+      }
+    },
+    {
+      "id": "resource-parse-refusal-precedes-payload-and-root-stages",
+      "stages": [
+        "begin",
+        "resource"
+      ],
+      "events": [],
+      "outcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "message": "Invalid native JSON",
+        "code": "JSON_SCHEMA_SYNTAX"
+      }
+    },
+    {
+      "id": "root-parse-refusal-precedes-id-and-third-uri-read",
+      "stages": [
+        "begin",
+        "payloadBaseUri",
+        "root"
+      ],
+      "events": [],
+      "outcome": {
+        "kind": "throw",
+        "name": "UmfError",
+        "message": "Invalid native JSON",
+        "code": "JSON_SCHEMA_SYNTAX"
+      }
+    }
+  ],
+  "artifacts": {
+    "wasmSha256": "06b770a752f2517f974a0644748f543d821be5a1b145339b67c870943f1651d8",
+    "wasmGlueSha256": "3de6c711b7d81be6e755f00514f89d084845ec3e4f8f69c5bd4c90e52813e4f4",
+    "browserEntrySha256": "ff91bea191e7daebd2c7b2afa65a22152d06fbc6081cf54aa8779c095bcd985a",
+    "runnerSha256": "eaeed3b9e18e0131be57b2eead4feaf926dd670496178ef2ee5112a9eeeb8fbd",
+    "hostFacadeSha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534",
+    "sessionBindingSha256": "2f57bf5577b1dac03025e6d89b11fc80561ab743d13623f81078cf190a340454",
+    "wasmFacadeEntrySha256": "b7186f1a62f7b6b7872186d2994b6e5bf7f628646dc8f353e034e6d67e209b43"
+  }
+}

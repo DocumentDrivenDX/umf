@@ -15,6 +15,7 @@ mod core_record_type_verification;
 mod host_json;
 mod javascript_numeric_runtime;
 mod json_schema_runtime;
+mod json_schema_import_session;
 mod protobuf_document;
 mod protobuf_source;
 mod record_members_inspection;
