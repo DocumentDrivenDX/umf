@@ -48,7 +48,7 @@ async function freshDirectory():Promise<string>{
 async function main():Promise<void>{
  const {GITHUB_EVENT_NAME:eventName,GITHUB_REF:ref,GITHUB_SHA:sha,GITHUB_WORKFLOW_REF:workflowRef,GITHUB_WORKFLOW_SHA:workflowSha}=process.env;
  const purpose=outputPurpose();
- const acceptedRef=ref==='refs/heads/codex/migration-metering-qualification'||(purpose==='stage-b-reproduction'&&ref==='refs/heads/codex/migration-integrated-qualification');
+ const acceptedRef=ref==='refs/heads/codex/migration-metering-qualification'||(purpose==='stage-a'&&ref==='refs/heads/codex/migration-main-metering-generation')||(purpose==='stage-b-reproduction'&&ref==='refs/heads/codex/migration-integrated-qualification');
  if(eventName!=='push'||!acceptedRef||!sha||!workflowRef||!workflowSha)throw new Error('R2_METERING_EVENT_IDENTITY');
  const readInputs=[] as {path:string;kind:string;sha256:string;bytes:number;contents:Uint8Array}[];
  for(const input of INPUTS){

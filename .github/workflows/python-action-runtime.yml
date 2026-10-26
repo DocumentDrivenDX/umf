@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   qualify-installed-artifact:
-    if: github.event_name != 'push' || (github.ref != 'refs/heads/codex/migration-metering-qualification' && github.ref != 'refs/heads/codex/migration-integrated-qualification' && github.ref != 'refs/heads/codex/migration-merged-generation')
+    if: github.event_name != 'push' || (github.ref != 'refs/heads/codex/migration-metering-qualification' && github.ref != 'refs/heads/codex/migration-main-metering-generation' && github.ref != 'refs/heads/codex/migration-integrated-qualification' && github.ref != 'refs/heads/codex/migration-merged-generation')
     strategy:
       fail-fast: false
       matrix:

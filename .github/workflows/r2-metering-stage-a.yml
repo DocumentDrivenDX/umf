@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - codex/migration-metering-qualification
+      - codex/migration-main-metering-generation
 
 permissions:
   contents: read
@@ -108,10 +109,13 @@ jobs:
           evidence="$RUNNER_TEMP/umf-r2-stage-a-evidence"
           mkdir -p "$evidence"
           test "$EVENT_NAME" = push
-          test "$REF_NAME" = refs/heads/codex/migration-metering-qualification
+          case "$REF_NAME" in
+            refs/heads/codex/migration-metering-qualification|refs/heads/codex/migration-main-metering-generation) ;;
+            *) exit 1 ;;
+          esac
           test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
           pin_sha="$(sha256sum qualification-inputs/r2-metering-stage-a.sha256 | cut -d ' ' -f 1)"
-          test "$pin_sha" = 61ed1cfe559713aacaf142668f3849a252bd86c9a1b50a628d44b14d101fd3b5
+          test "$pin_sha" = ffeb22448d5f941ca67e7d9746728141c07a7e211314cf9efda35d9bda0103e1
           sha256sum -c qualification-inputs/r2-metering-stage-a.sha256
           bun_version="$(bun --version)"
           test "$bun_version" = 1.4.3
