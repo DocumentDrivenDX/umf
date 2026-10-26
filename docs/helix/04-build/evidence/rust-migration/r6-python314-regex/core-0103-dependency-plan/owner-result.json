@@ -1,5 +1,5 @@
 {
-  "status": "ELEVEN_METAMODEL_OUTPUTS_ADOPTED_AWAITING_ORIGINAL_SELF_CHECK_AND_DEPENDENT_GENERATION",
+  "status": "DEPENDENT_R3_TIMEOUT_AWAITING_BOUNDED_DIAGNOSIS",
   "baseCommit": "d5022e37840329d351bcd6c27fe7d7aad4758544",
   "donorCommit": "f4a410c0522135065a0b20e8d2b69705fddcbac4",
   "extractionCommit": "ad5e59591",
@@ -120,5 +120,19 @@
       "reviewSha256": "5d1831535c0cd4b50a05e870ba64cebbdd0c68fed690e9617acbacf8e5bed51f"
     }
   },
-  "dependentGenerationLockSha256": "47432fe6fc9329e36573ef08126d055c96ee522f60424bdc5083c81b17213e7d"
+  "dependentGenerationLockSha256": "47432fe6fc9329e36573ef08126d055c96ee522f60424bdc5083c81b17213e7d",
+  "dependentTimeout": {
+    "evidence": "dependent-timeout-40418623063",
+    "custodySha256": "6dcc7fcd9af3cf0042d89c097b17e36ec5468bd5ed42ea7ce9714a339ef1af31",
+    "locatedSubcommand": null,
+    "outputAdoption": null,
+    "plan": "sol-r3-timeout-diagnostic-plan001.md",
+    "planSha256": "ac4fa74d2982cdef08a58b7535015722c89bb5077a082af10cdef327fbd385fb",
+    "diagnosticSource": {
+      "status": "SOURCE_ACCEPTED_AWAITING_ONE_HOSTED_DIAGNOSTIC",
+      "workflowSha256": "bf68f1036a74c234a452ead3a1836863147a978e8fde4c8609a99867cefc757f",
+      "closure": "sol-r3-diagnostic-closure002.md",
+      "closureSha256": "c8890d615be989c296e3362c7bceb63fd533f8420f98f70215bb42174d8e0cdb"
+    }
+  }
 }
