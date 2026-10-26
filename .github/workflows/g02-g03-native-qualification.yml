@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
-name: G03 tampering native diagnostic (intermediate)
+name: G02 and G03 selected native qualification
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   selected-native:
-    name: Bounded G03 tampering PostgreSQL 18.6 diagnostic (intermediate)
+    name: Bounded UMF and Weft PostgreSQL 18.6 qualification
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     services:
@@ -349,11 +349,13 @@ jobs:
                  "g03DefaultsCaseIds": list(defaults_fixture["caseStatus"])})
           PY
 
-          # Tampering diagnostic phase only. The complete selected roster remains
-          # pinned; historical scopes are separate evidence and are not
-          # requalified at this changed runner/cohort.
-          G03_TAMPERING_DIAGNOSTIC_PHASE=(tampering)
-          for scenario in "${G03_TAMPERING_DIAGNOSTIC_PHASE[@]}"; do
+          run_bounded g02-temporal-native 180 "$WORK/installed/bin/python" -I tests/lifecycle/g02-temporal-native.py \
+            --dsn "$PG_DSN" --fixture /tmp/g02-g03-temporal-fixture.json \
+            --report "$EVIDENCE/reports/g02-temporal-native.json"
+
+          for scenario in transitions empty required admission-refusal semantics rollback \
+            commit-observation finalize-observation finalize-before-publication unknown-no-commit \
+            writer-barrier domains tampering; do
             run_bounded "g03-$scenario" 180 "$WORK/installed/bin/python" tests/lifecycle/g03-defaults-native.py \
               --dsn "$PG_DSN" --fixture /tmp/g02-g03-defaults-fixture.json \
               --scenario "$scenario" --report "$EVIDENCE/reports/g03-$scenario.json"
@@ -369,91 +371,232 @@ jobs:
           evidence = pathlib.Path(os.environ["QUALIFICATION_DIR"])
           pins = json.loads(pathlib.Path("docs/helix/04-build/evidence/mig-g02-g03/native-qualification-source-pins.json").read_text())
           reports = evidence / "reports"
-          diagnostic_scenarios = ("tampering",)
-          assert diagnostic_scenarios == ("tampering",)
-          fixture = json.loads((evidence / "g03-defaults-fixture.json").read_text())
-          n13 = next(entry for entry in fixture["campaignRoster"] if entry["caseId"] == "G03-N13")
-          assert n13["scenarios"] == ["tampering"]
-          item = json.loads((reports / "g03-tampering.json").read_text())
-          assert item["scenario"] == "tampering"
-          assert item["status"] == "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN", item["status"]
-          tampering_result = item["result"]
-          assert tampering_result["scenario"] == "tampering"
-          assert tampering_result["status"] == "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
-          assert tampering_result["tamperingRefusals"] == [
-              "wrong-approval", "wrong-head", "wrong-file", "wrong-source",
-              "wrong-default-target", "wrong-default-value", "wrong-phase", "wrong-marker"]
-          assert item["caseStatus"]["G03-N13"] == "PARTIAL_SUBCASE_PASS_FULL_CASE_OPEN"
-          assert tampering_result["cleanup"]["status"] == "PASS"
-          assert tampering_result["cleanupVerification"]["ownedDatabaseAbsent"] is True
-          assert tampering_result["cleanupVerification"]["ownedRolesAbsent"] is True
-          assert tampering_result["cleanupVerification"]["targetIdentityUnchanged"] is True
+          source_commit = os.environ["GITHUB_SHA"]
+          run_id = os.environ["GITHUB_RUN_ID"]
+          run_attempt = os.environ["GITHUB_RUN_ATTEMPT"]
+          ref = os.environ["GITHUB_REF"]
+          workflow = os.environ["GITHUB_WORKFLOW"]
+          assert source_commit and run_id and run_attempt and ref and workflow
+
+          def sha(path):
+              return hashlib.sha256(path.read_bytes()).hexdigest()
+
+          temporal_path = evidence / "g02-temporal-fixture.json"
+          defaults_path = evidence / "g03-defaults-fixture.json"
+          temporal_fixture = json.loads(temporal_path.read_text())
+          defaults_fixture = json.loads(defaults_path.read_text())
+          expected_g02_ids = pins["generatedInputPins"]["g02TemporalFixture"]["caseIds"]
+          assert temporal_fixture["version"] == pins["generatedInputPins"]["g02TemporalFixture"]["version"]
+          assert [case["id"] for case in temporal_fixture["cases"]] == expected_g02_ids
+          assert sha(temporal_path) == pins["generatedInputPins"]["g02TemporalFixture"]["reviewedArtifactSha256"]
+          assert defaults_fixture["version"] == pins["generatedInputPins"]["g03DefaultsFixture"]["version"]
+          assert defaults_fixture["status"] == pins["generatedInputPins"]["g03DefaultsFixture"]["statusMustRemain"]
+          for case_id, expected in pins["generatedInputPins"]["g03DefaultsFixture"]["caseStatusMustRemain"].items():
+              assert defaults_fixture["caseStatus"][case_id] == expected, case_id
+
+          g02 = json.loads((reports / "g02-temporal-native.json").read_text())
+          expected_g02_passes = ("PASS_AND_CLEANED", "PASS_EXPECTED_ROLLBACK_AND_CLEANED")
+          assert g02["status"] == "PASS_G02_TEMPORAL_FIVE_CASES"
+          assert g02["serverVersionNum"] == "180006" and g02["cases"] == 5 and g02["checks"]
+          assert g02["caseIds"] == expected_g02_ids
+          assert g02["maxWorkers"] == pins["target"]["executionConcurrency"]["g02TemporalMaximumWorkers"] == 2
+          assert g02["cleanupUnknown"] is False
+          assert g02["sharedRolesCleanup"] == "VERIFIED"
+          assert g02["peakOverlappingCodegenVmHardMemoryBytes"] == pins["target"]["executionConcurrency"]["peakOverlappingCodegenVmHardMemoryBytes"]
+          assert g02["githubRunnerEnvironmentCapUnchanged"] is True
+          assert len(g02["caseResults"]) == 5
+          assert [case["caseId"] for case in g02["caseResults"]] == expected_g02_ids
+          assert all(case["status"] in expected_g02_passes and case["databaseCleanup"] == "VERIFIED"
+                     for case in g02["caseResults"])
+          assert g02["runnerSha256"] == pins["sourcePins"]["tests/lifecycle/g02-temporal-native.py"]["sha256"]
+          assert g02["fixtureSha256"] == sha(temporal_path)
+
+          lock_path = evidence / "cohort.lock.json"
+          mirror_path = evidence / "cohort-mirror-manifest.json"
+          offline_path = reports / "offline-cohort.json"
+          cohort = json.loads(lock_path.read_text())
+          mirror = json.loads(mirror_path.read_text())
+          offline = json.loads(offline_path.read_text())
+          lock_sha = sha(lock_path)
+          mirror_sha = sha(mirror_path)
+          assert cohort["status"] == "locked" and cohort["profile"] == "umf.embedder-wheel-lock/1"
+          assert mirror["profile"] == "local-wheel-mirror/2" and mirror["networkUsed"] is False
+          assert mirror["lockSha256"] == lock_sha
+          assert offline["profile"] == "umf-offline-mirror-installed/1" and offline["status"] == "passed"
+          assert offline["lockSha256"] == lock_sha and offline["mirrorManifestSha256"] == mirror_sha
+          packages = {package["distribution"]: package for package in cohort["packages"]}
+          for distribution in ("umf-access", "umf-codegen"):
+              assert packages[distribution]["source"]["commit"] == source_commit
+          weft_pin = pins["dependencyPins"]["weft"]
+          assert packages["weft-sql"]["version"] == weft_pin["version"]
+          assert packages["weft-sql"]["source"]["sha256"] == weft_pin["sha256"]
+          core_pin = pins["dependencyPins"]["core"]
+          assert packages["umf-core"]["version"] == core_pin["version"]
+          assert packages["umf-core"]["source"]["sha256"] == core_pin["sha256"]
+          runtime_distributions = ("umf-access", "umf-codegen", "weft-sql", "umf-core")
+          runtime_versions = {name: packages[name]["version"] for name in runtime_distributions}
+          assert g02["packages"] == runtime_versions
+
+          scenarios = pins["selectedNativeScope"]["g03ScenarioArguments"]
+          expected_scenarios = ["transitions", "empty", "required", "admission-refusal", "semantics",
+                                "rollback", "commit-observation", "finalize-observation",
+                                "finalize-before-publication", "unknown-no-commit", "writer-barrier",
+                                "domains", "tampering"]
+          assert scenarios == expected_scenarios
+          partial = "PARTIAL_SUBCASE_PASS_FULL_CASE_OPEN"
+          case_ids_by_scenario = {
+              "transitions": ("G03-N01", "G03-N14"),
+              "empty": ("G03-N02", "G03-N14"),
+              "required": ("G03-N03", "G03-N14"),
+              "admission-refusal": ("G03-N04",),
+              "semantics": ("G03-N05", "G03-N14"),
+              "rollback": ("G03-N06", "G03-N14"),
+              "commit-observation": ("G03-N07", "G03-N14"),
+              "finalize-observation": ("G03-N07", "G03-N14"),
+              "finalize-before-publication": ("G03-N07", "G03-N14"),
+              "unknown-no-commit": ("G03-N08", "G03-N14"),
+              "writer-barrier": ("G03-N09", "G03-N14"),
+              "domains": ("G03-N10", "G03-N11", "G03-N14"),
+              "tampering": ("G03-N13", "G03-N14"),
+          }
+          statuses = {}
+          native_target_identity = None
+          for scenario in scenarios:
+              item = json.loads((reports / f"g03-{scenario}.json").read_text())
+              assert item["scenario"] == scenario
+              assert item["runnerSha256"] == pins["sourcePins"]["tests/lifecycle/g03-defaults-native.py"]["sha256"]
+              assert item["fixtureSha256"] == sha(defaults_path)
+              assert item["packages"] == runtime_versions
+              expected_case_status = dict(defaults_fixture["caseStatus"])
+              if scenario == "admission-refusal":
+                  assert item["status"] == "PASS_SOURCE_REFUSAL_AND_NATIVE_NO_EFFECTS"
+                  result = item["result"]
+                  assert result["scenario"] == scenario and result["status"] == item["status"]
+                  assert result["nativeEffects"] == "none; compilation refusal only"
+                  assert result["targetBefore"] == result["targetAfter"]
+                  target = result["targetBefore"]["target"]
+                  observer = result["targetBefore"]["observer"]
+                  admission_target_identity = (target["database"], target["serverVersion"],
+                                               observer["sessionUser"], observer["currentUser"],
+                                               target["serverPort"], target["postmasterStart"],
+                                               target["systemIdentifier"])
+                  if native_target_identity is None:
+                      native_target_identity = admission_target_identity
+                  else:
+                      assert admission_target_identity == native_target_identity
+                  assert "PostgreSQL 18.6" in target["serverVersion"]
+                  expected_case_status["G03-N04"] = item["status"]
+              else:
+                  if scenario == "domains":
+                      assert item["status"] == "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN"
+                      cases = item["domainResults"]
+                      expected_subscenarios = ("domain-date", "domain-text", "domain-decimal", "domain-uuid",
+                                               "domain-currentTimestamp")
+                  elif scenario == "semantics":
+                      assert item["status"] == "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN"
+                      cases = item["semanticResults"]
+                      expected_subscenarios = ("semantic-null", "semantic-decimal")
+                  else:
+                      case = item["result"]
+                      cases = [case]
+                      expected_subscenarios = (scenario,)
+                      if scenario == "unknown-no-commit":
+                          assert item["status"] == "PASS_EXPECTED_FENCED_SUBCASE_FULL_CASE_OPEN"
+                      else:
+                          assert item["status"] == "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
+                  assert tuple(case["scenario"] for case in cases) == expected_subscenarios
+                  for case in cases:
+                      assert case["status"] == ("PASS_EXPECTED_FENCED_SUBCASE_FULL_CASE_OPEN"
+                                                 if case["scenario"] == "unknown-no-commit"
+                                                 else "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN")
+                      assert case["cleanup"]["status"] == "PASS"
+                      verification = case["cleanupVerification"]
+                      assert verification["ownedDatabaseAbsent"] is True
+                      assert verification["ownedRolesAbsent"] is True
+                      assert verification["targetIdentityUnchanged"] is True
+                      assert verification["schemaAndTableAbsentByOwnedDatabaseRemoval"] is True
+                      assert "PostgreSQL 18.6" in case["targetIdentity"]["serverVersion"]
+                      assert case["targetIdentity"]["currentUser"] == case["targetIdentity"]["sessionUser"]
+                      case_target_identity = case["targetIdentity"]
+                      identity_tuple = (case_target_identity["maintenanceDatabase"],
+                                        case_target_identity["serverVersion"],
+                                        case_target_identity["sessionUser"],
+                                        case_target_identity["currentUser"],
+                                        case_target_identity["serverPort"],
+                                        case_target_identity["postmasterStart"],
+                                        case_target_identity["systemIdentifier"])
+                      if native_target_identity is None:
+                          native_target_identity = identity_tuple
+                      else:
+                          assert identity_tuple == native_target_identity
+                      if scenario == "tampering":
+                          assert case["tamperingRefusals"] == [
+                              "wrong-approval", "wrong-head", "wrong-file", "wrong-source",
+                              "wrong-default-target", "wrong-default-value", "wrong-phase", "wrong-marker"]
+                  if scenario == "domains":
+                      expected_case_status.update({"G03-N10": partial, "G03-N11": partial, "G03-N14": partial})
+                  elif scenario == "semantics":
+                      expected_case_status.update({"G03-N05": partial, "G03-N14": partial})
+                  else:
+                      for case_id in case_ids_by_scenario[scenario]:
+                          expected_case_status[case_id] = partial
+              assert item["caseStatus"] == expected_case_status, scenario
+              if scenario == "domains":
+                  statuses[scenario] = item["status"]
+              else:
+                  statuses[scenario] = item["status"]
+
           artifact_files = [path for path in evidence.rglob("*") if path.is_file()]
           total_bytes = sum(path.stat().st_size for path in artifact_files)
           log_bytes = sum(path.stat().st_size for path in (evidence / "logs").glob("*.log"))
           assert total_bytes <= pins["evidenceLimits"]["capturedRunArtifactsMaximumBytes"], total_bytes
           assert log_bytes <= pins["evidenceLimits"]["capturedCommandLogsMaximumBytes"], log_bytes
-          prior_uuid_run = {
-              "runId": "40258467059",
-              "sourceCommit": "82cb660b28737ac185b589974a0c6590e8f35ae1",
-              "artifactSha256": "245a17a1499d6c1df17f6641577c5946c50e17f2243710b55bc81e6b9679a0bf",
-              "reportSha256": "48802d4b107fa0c5c1c1798cae72a40a8137d428657fc284635ace3695ac3313",
-              "scenario": "domain-uuid",
-              "nativeSubcaseStatus": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
-              "cleanupStatus": "PASS",
-              "workflowReceiptStatus": "FAIL_OR_UNKNOWN; finalizer raised NameError on lowercase Python true",
-              "evidenceRelationship": "separate historical evidence only; no source or cohort trust inheritance",
-              "otherSelectedScopesWereHistoricalOnly": True
-          }
-          current_case_ids = ["G03-N13"]
-          assert "G03-N13" in pins["selectedNativeScope"]["g03CaseIds"]
-          target_version = tampering_result["targetIdentity"]["serverVersion"]
-          current_case_status = {
-              case_id: ("TAMPERING_DIAGNOSTIC_SUBCASE_ONLY; broader G03-N13 remains OPEN"
-                        if case_id == "G03-N13" else "NOT_REQUALIFIED_AT_THIS_SOURCE_OR_COHORT")
-              for case_id in pins["selectedNativeScope"]["g03CaseIds"]
-          }
+          workflow_path = pathlib.Path(".github/workflows/g02-g03-native-qualification.yml")
+          manifest_path = pathlib.Path("docs/helix/04-build/evidence/mig-g02-g03/native-qualification-source-pins.json")
           outputs = {
               "profile": "umf.g02-g03-selected-native-qualification/1",
-              "status": "PASS_G03_N13_TAMPERING_DIAGNOSTIC_SUBCASE_ONLY_FINAL_COMBINED_GATE_OPEN",
-              "qualificationPhase": "g03-n13-tampering-diagnostic-only/1",
-              "sourceCommit": os.environ["GITHUB_SHA"],
-              "runId": os.environ["GITHUB_RUN_ID"],
-              "runAttempt": os.environ["GITHUB_RUN_ATTEMPT"],
-              "ref": os.environ["GITHUB_REF"],
-              "workflow": os.environ["GITHUB_WORKFLOW"],
-              "postgresqlServerVersion": target_version,
-              "g02CurrentSourceQualification": "NOT_REQUALIFIED_AT_THIS_SOURCE_OR_COHORT",
-              "g03CaseCurrentSourceQualification": current_case_status,
-              "g03TamperingDiagnostic": item["status"],
-              "priorUuid008Evidence": prior_uuid_run,
-              "g03SelectedCaseIds": current_case_ids,
+              "status": "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN",
+              "qualificationPhase": "final-stable-five-G02-thirteen-selected-G03/1",
+              "sourceCommit": source_commit,
+              "runId": run_id,
+              "runAttempt": run_attempt,
+              "ref": ref,
+              "workflow": workflow,
+              "workflowSha256": sha(workflow_path),
+              "manifestSha256": sha(manifest_path),
+              "postgresqlServerVersionNum": g02["serverVersionNum"],
+              "g02Temporal": {"cases": g02["cases"], "checks": len(g02["checks"]),
+                              "maxWorkers": g02["maxWorkers"], "sharedRolesCleanup": g02["sharedRolesCleanup"],
+                              "fixtureSha256": g02["fixtureSha256"], "runnerSha256": g02["runnerSha256"]},
+              "g03SelectedScenarios": statuses,
+              "g03SelectedCaseIds": pins["selectedNativeScope"]["g03CaseIds"],
               "g03N12": "UNQUALIFIED pending compatible Weft .2 cohort",
               "g03N14AndFullCampaign": "OPEN; campaign selector was not invoked",
-              "cohortLockSha256": hashlib.sha256((evidence / "cohort.lock.json").read_bytes()).hexdigest(),
+              "cohortLockSha256": lock_sha,
+              "cohortMirrorManifestSha256": mirror_sha,
               "sourcePins": pins["sourcePins"],
-              "reportHashes": {path.name: hashlib.sha256(path.read_bytes()).hexdigest()
-                               for path in sorted(reports.glob("*.json"))},
+              "reportHashes": {path.name: sha(path) for path in sorted(reports.glob("*.json"))},
               "generatedCodegenOutputs": json.loads((reports / "codegen-generated-outputs.json").read_text()),
               "capturedCommandLogBytes": log_bytes,
               "capturedArtifactBytes": total_bytes,
               "limits": pins["target"]["dsnBounds"],
-              "nativeQualification": "G03-N13 tampering diagnostic subcase only; the prior G03-N11 UUID result is separate historical evidence; final combined all-five-G02 plus all-thirteen-selected-G03 gate remains OPEN"
+              "nativeQualification": "all five G02 cases and all thirteen selected G03 scenarios passed at this source and cohort; G03-N12 remains unqualified and G03-N14/full campaign remains open"
           }
           (evidence / "run-manifest.json").write_text(json.dumps(outputs, indent=2, sort_keys=True) + "\n")
           (evidence / "receipt.json").write_text(json.dumps({
               "profile": outputs["profile"], "status": outputs["status"],
+              "qualificationPhase": outputs["qualificationPhase"],
               "sourceCommit": outputs["sourceCommit"],
               "runId": outputs["runId"], "runAttempt": outputs["runAttempt"],
               "ref": outputs["ref"], "workflow": outputs["workflow"],
-              "g02CurrentSourceQualification": outputs["g02CurrentSourceQualification"],
-              "g03CaseCurrentSourceQualification": outputs["g03CaseCurrentSourceQualification"],
-              "g03TamperingDiagnostic": outputs["g03TamperingDiagnostic"],
-              "priorUuid008Evidence": prior_uuid_run,
-              "diagnosticScenarioCount": len(diagnostic_scenarios),
-              "finalCombinedGate": "OPEN; requires all five G02 cases and all thirteen selected G03 scenarios at one final stable source and cohort",
+              "workflowSha256": outputs["workflowSha256"],
+              "manifestSha256": outputs["manifestSha256"],
+              "selectedG02CaseCount": g02["cases"],
+              "selectedG03ScenarioCount": len(statuses),
+              "cohortLockSha256": lock_sha,
               "g03N12": outputs["g03N12"],
-              "g03N14AndFullCampaign": outputs["g03N14AndFullCampaign"]
+              "g03N14AndFullCampaign": outputs["g03N14AndFullCampaign"],
+              "finalCombinedGate": "OPEN; this result covers selected subcases only, not full G03 or campaign"
           }, indent=2, sort_keys=True) + "\n")
           PY
           BOUNDED_NATIVE_WORK

@@ -1,0 +1,20 @@
+{
+  "profile": "umf.g03-tampering-native-owner-result/1",
+  "status": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
+  "sourceCommit": "eac335e2e52a4b0b1ce644712134a5d77946d763",
+  "runId": 40258988901,
+  "artifactId": 12623711753,
+  "artifactZipSha256": "818f9bd9978aa8fc8c265b4d2673d3bf2bc214c9a3b11e2f249f38ed8a953109",
+  "refusals": [
+    "wrong-approval",
+    "wrong-head",
+    "wrong-file",
+    "wrong-source",
+    "wrong-default-target",
+    "wrong-default-value",
+    "wrong-phase",
+    "wrong-marker"
+  ],
+  "cleanup": "Owned DB and roles absent; originaltargetunchanged.",
+  "scope": "Currentselectedtamperingonly. All5G02+13G03stablecohortgatepreparedUNRUN, N12/N14/G04native/main/releaseOPEN."
+}
