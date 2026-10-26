@@ -1,0 +1,140 @@
+installed-consumer	Set up job	﻿2026-10-26T18:17:52.5702307Z Current runner version: '2.338.0'
+installed-consumer	Set up job	2026-10-26T18:17:52.5728619Z ##[group]Runner Image Provisioner
+installed-consumer	Set up job	2026-10-26T18:17:52.5729653Z Hosted Compute Agent
+installed-consumer	Set up job	2026-10-26T18:17:52.5730332Z Version: 20261021.618
+installed-consumer	Set up job	2026-10-26T18:17:52.5731066Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+installed-consumer	Set up job	2026-10-26T18:17:52.5731823Z Build Date: 2026-10-21T00:45:21Z
+installed-consumer	Set up job	2026-10-26T18:17:52.5732538Z Worker ID: {27ba5382-5a59-4b80-9b19-1d940999de0d}
+installed-consumer	Set up job	2026-10-26T18:17:52.5733301Z Region: westus
+installed-consumer	Set up job	2026-10-26T18:17:52.5733859Z Cloud: Azure
+installed-consumer	Set up job	2026-10-26T18:17:52.5734426Z ##[endgroup]
+installed-consumer	Set up job	2026-10-26T18:17:52.5735973Z ##[group]Operating System
+installed-consumer	Set up job	2026-10-26T18:17:52.5736627Z Ubuntu
+installed-consumer	Set up job	2026-10-26T18:17:52.5737568Z 24.04.5
+installed-consumer	Set up job	2026-10-26T18:17:52.5738174Z LTS
+installed-consumer	Set up job	2026-10-26T18:17:52.5738737Z ##[endgroup]
+installed-consumer	Set up job	2026-10-26T18:17:52.5739402Z ##[group]Runner Image
+installed-consumer	Set up job	2026-10-26T18:17:52.5740026Z Image: ubuntu-24.04
+installed-consumer	Set up job	2026-10-26T18:17:52.5740667Z Version: 20261012.334.1
+installed-consumer	Set up job	2026-10-26T18:17:52.5741773Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+installed-consumer	Set up job	2026-10-26T18:17:52.5743606Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+installed-consumer	Set up job	2026-10-26T18:17:52.5744612Z ##[endgroup]
+installed-consumer	Set up job	2026-10-26T18:17:52.5745899Z ##[group]GITHUB_TOKEN Permissions
+installed-consumer	Set up job	2026-10-26T18:17:52.5748142Z Actions: read
+installed-consumer	Set up job	2026-10-26T18:17:52.5749205Z Contents: read
+installed-consumer	Set up job	2026-10-26T18:17:52.5749888Z Metadata: read
+installed-consumer	Set up job	2026-10-26T18:17:52.5750509Z ##[endgroup]
+installed-consumer	Set up job	2026-10-26T18:17:52.5752660Z Secret source: Actions
+installed-consumer	Set up job	2026-10-26T18:17:52.5753595Z Cache mode: write
+installed-consumer	Set up job	2026-10-26T18:17:52.5754369Z Prepare workflow directory
+installed-consumer	Set up job	2026-10-26T18:17:52.6086349Z Prepare all required actions
+installed-consumer	Set up job	2026-10-26T18:17:52.6137454Z Getting action download info
+installed-consumer	Set up job	2026-10-26T18:17:52.9748166Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+installed-consumer	Set up job	2026-10-26T18:17:53.1213262Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+installed-consumer	Set up job	2026-10-26T18:17:53.3239568Z Complete job name: installed-consumer
+installed-consumer	Run actions/setup-python@v5	﻿2026-10-26T18:17:53.4078247Z ##[group]Run actions/setup-python@v5
+installed-consumer	Run actions/setup-python@v5	2026-10-26T18:17:53.4079215Z with:
+installed-consumer	Run actions/setup-python@v5	2026-10-26T18:17:53.4079688Z   python-version: 3.11
+installed-consumer	Run actions/setup-python@v5	2026-10-26T18:17:53.4080181Z   check-latest: false
+installed-consumer	Run actions/setup-python@v5	2026-10-26T18:17:53.4084157Z   token: ***
+installed-consumer	Run actions/setup-python@v5	2026-10-26T18:17:53.4084622Z   update-environment: true
+installed-consumer	Run actions/setup-python@v5	2026-10-26T18:17:53.4085147Z   allow-prereleases: false
+installed-consumer	Run actions/setup-python@v5	2026-10-26T18:17:53.4085650Z   freethreaded: false
+installed-consumer	Run actions/setup-python@v5	2026-10-26T18:17:53.4086318Z ##[endgroup]
+installed-consumer	Run actions/setup-python@v5	2026-10-26T18:17:53.5480917Z ##[group]Installed versions
+installed-consumer	Run actions/setup-python@v5	2026-10-26T18:17:53.5554787Z (node:2156) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+installed-consumer	Run actions/setup-python@v5	2026-10-26T18:17:53.5556279Z (Use `node --trace-deprecation ...` to show where the warning was created)
+installed-consumer	Run actions/setup-python@v5	2026-10-26T18:17:53.5557804Z Successfully set up CPython (3.11.17)
+installed-consumer	Run actions/setup-python@v5	2026-10-26T18:17:53.5558845Z ##[endgroup]
+installed-consumer	Install released UMF core from public PyPI in a clean environment	﻿2026-10-26T18:17:53.5841602Z ##[group]Run set -euo pipefail
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.5842645Z ^[[36;1mset -euo pipefail^[[0m
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.5843613Z ^[[36;1mpython -m venv "$RUNNER_TEMP/pypi-consumer"^[[0m
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.5845611Z ^[[36;1m"$RUNNER_TEMP/pypi-consumer/bin/python" -m pip --isolated install --disable-pip-version-check --no-cache-dir --only-binary=umf-core \^[[0m
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.5848073Z ^[[36;1m  --index-url https://pypi.org/simple "umf-core==$VERSION"^[[0m
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.5849348Z ^[[36;1m"$RUNNER_TEMP/pypi-consumer/bin/python" -m pip --isolated check^[[0m
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.5850251Z ^[[36;1mcd "$RUNNER_TEMP"^[[0m
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.5851060Z ^[[36;1m"$RUNNER_TEMP/pypi-consumer/bin/python" -I - <<'PYTHON'^[[0m
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.5851889Z ^[[36;1mimport importlib.metadata, json, os, pathlib, sysconfig^[[0m
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.5852583Z ^[[36;1mimport umf^[[0m
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.5853218Z ^[[36;1mdist = importlib.metadata.distribution("umf-core")^[[0m
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.5853947Z ^[[36;1massert dist.version == os.environ["VERSION"]^[[0m
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.5854900Z ^[[36;1massert pathlib.Path(umf.__file__).is_relative_to(sysconfig.get_path("purelib"))^[[0m
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.5856292Z ^[[36;1massert dist.read_text("direct_url.json") is None^[[0m
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.5857764Z ^[[36;1mrecord = {"schema": "pypi-consumer-receipt.v1", "status": "passed",^[[0m
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.5858933Z ^[[36;1m          "index": "https://pypi.org/simple", "umf_core_version": dist.version}^[[0m
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.5860042Z ^[[36;1mpathlib.Path("consumer-receipt.json").write_text(json.dumps(record, indent=2) + "\n")^[[0m
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.5860914Z ^[[36;1mPYTHON^[[0m
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.6226116Z shell: /usr/bin/bash -e {0}
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.6227321Z env:
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.6228053Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.6229192Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.6230315Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.6231324Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.6232357Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.6233175Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.6233873Z   VERSION: 0.10.2
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.6234346Z   PIP_CONFIG_FILE: /dev/null
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:53.6234867Z ##[endgroup]
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:59.6176096Z Collecting umf-core==0.10.2
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:17:59.8569610Z   Downloading umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (5.5 kB)
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:00.0226035Z Collecting pydantic<3,>=2.11 (from umf-core==0.10.2)
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:00.0442951Z   Downloading pydantic-2.14.1-py3-none-any.whl.metadata (133 kB)
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:00.0833242Z      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.0/133.0 kB 3.7 MB/s eta 0:00:00
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:00.1179154Z Collecting annotated-types>=0.6.0 (from pydantic<3,>=2.11->umf-core==0.10.2)
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:00.1408249Z   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:01.0269538Z Collecting pydantic-core==2.50.1 (from pydantic<3,>=2.11->umf-core==0.10.2)
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:01.0482393Z   Downloading pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.5 kB)
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:01.0716942Z Collecting typing-extensions>=4.16.0 (from pydantic<3,>=2.11->umf-core==0.10.2)
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:01.0934497Z   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:01.1053883Z Collecting typing-inspection>=0.4.4 (from pydantic<3,>=2.11->umf-core==0.10.2)
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:01.1265572Z   Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:01.1622647Z Downloading umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl (3.6 MB)
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:01.2988812Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.6/3.6 MB 26.6 MB/s eta 0:00:00
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:01.3201043Z Downloading pydantic-2.14.1-py3-none-any.whl (488 kB)
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:01.3235801Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 488.1/488.1 kB 337.2 MB/s eta 0:00:00
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:01.3444528Z Downloading pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.2 MB)
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:01.3645793Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 119.2 MB/s eta 0:00:00
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:01.3874155Z Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:01.4083337Z Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:01.4105758Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.6/45.6 kB 150.0 MB/s eta 0:00:00
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:01.4314412Z Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:01.4921258Z Installing collected packages: typing-extensions, annotated-types, typing-inspection, pydantic-core, pydantic, umf-core
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:01.9066816Z Successfully installed annotated-types-0.8.0 pydantic-2.14.1 pydantic-core-2.50.1 typing-extensions-4.16.0 typing-inspection-0.4.4 umf-core-0.10.2
+installed-consumer	Install released UMF core from public PyPI in a clean environment	2026-10-26T18:18:02.3744291Z No broken requirements found.
+installed-consumer	Run actions/upload-artifact@v4	﻿2026-10-26T18:18:02.6277810Z ##[group]Run actions/upload-artifact@v4
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.6278436Z with:
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.6278676Z   name: umf-core-pypi-consumer-0.10.2
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.6279046Z   path: /home/runner/work/_temp/consumer-receipt.json
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.6279487Z   if-no-files-found: error
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.6279733Z   retention-days: 365
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.6279957Z   compression-level: 6
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.6280185Z   overwrite: false
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.6280415Z   include-hidden-files: false
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.6280656Z env:
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.6280919Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.17/x64
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.6281368Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib/pkgconfig
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.6281818Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.6282212Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.6282608Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.17/x64
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.6282998Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.17/x64/lib
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.6283371Z ##[endgroup]
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.7885925Z (node:2221) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.7886954Z (Use `node --trace-deprecation ...` to show where the warning was created)
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.7932749Z With the provided path, there will be 1 file uploaded
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.7947513Z Artifact name is valid!
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.7948277Z Root directory input is valid!
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:02.8007647Z ##[warning]Retention days cannot be greater than the maximum allowed retention set within the repository. Using 90 instead.
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:03.1680786Z Beginning upload of artifact content to blob storage
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:03.1865427Z (node:2221) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:03.4433166Z Uploaded bytes 265
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:03.5164326Z Finished uploading artifact content to blob storage!
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:03.5166124Z SHA256 digest of uploaded artifact zip is e10648e829afc95a2d6137ff17d6590558e8060ce1448875770f8ce18e26d917
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:03.5167956Z Finalizing artifact upload
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:03.9758557Z Artifact umf-core-pypi-consumer-0.10.2.zip successfully finalized. Artifact ID 12674513377
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:03.9789780Z Artifact umf-core-pypi-consumer-0.10.2 has been successfully uploaded! Final size is 265 bytes. Artifact ID is 12674513377
+installed-consumer	Run actions/upload-artifact@v4	2026-10-26T18:18:03.9791219Z Artifact download URL: https://github.com/DocumentDrivenDX/umf/actions/runs/40371078894/artifacts/12674513377
+installed-consumer	Post Run actions/setup-python@v5	﻿2026-10-26T18:18:04.0033199Z Post job cleanup.
+installed-consumer	Post Run actions/setup-python@v5	2026-10-26T18:18:04.1211575Z (node:2235) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+installed-consumer	Post Run actions/setup-python@v5	2026-10-26T18:18:04.1212604Z (Use `node --trace-deprecation ...` to show where the warning was created)
+installed-consumer	Complete job	﻿2026-10-26T18:18:04.1335407Z Cleaning up orphan processes
+installed-consumer	Complete job	2026-10-26T18:18:04.1774571Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
