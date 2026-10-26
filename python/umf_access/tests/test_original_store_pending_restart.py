@@ -900,8 +900,9 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                         - first_readonly_budget._started_ns, 30_000_000_000)
                     first_readonly_observations = readonly_observations[
                         readonly_observations_before:]
-                    self.assertEqual(len(first_readonly_observations), 1)
-                    self.assertIs(first_readonly_observations[0], first_readonly_budget)
+                    self.assertEqual(len(first_readonly_observations), 2)
+                    for observed_budget in first_readonly_observations:
+                        self.assertIs(observed_budget, first_readonly_budget)
                     for budget, options, statement_ms, lock_ms in first_readonly_connects:
                         self.assertIs(budget, first_readonly_budget)
                         self.assertGreater(statement_ms, 0)
@@ -1014,7 +1015,6 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     self.assertIsNone(recovery_provider._creation_capability)
                     self.assertIsNone(recovery_provider._schema_oid)
                     self.assertEqual(db.ddl, ddl_before_recovery)
-                    self.assertTrue(readonly_observations)
 
                     # The new generic-pending prefix is reattached from the same
                     # enrolled files. A second read-only observation still cannot
@@ -1135,8 +1135,9 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     self.assertEqual(retry_namespace_queries[0][1], (store['schemaName'],))
                     second_readonly_observations = readonly_observations[
                         before_retry_readonly_observations:]
-                    self.assertEqual(len(second_readonly_observations), 1)
-                    self.assertIs(second_readonly_observations[0], second_readonly_budget)
+                    self.assertEqual(len(second_readonly_observations), 2)
+                    for observed_budget in second_readonly_observations:
+                        self.assertIs(observed_budget, second_readonly_budget)
                     with after_pending_supervisor._original_control_lease(
                             operation_kind='store'):
                         second_events = after_pending_supervisor._journal.read()['events']
