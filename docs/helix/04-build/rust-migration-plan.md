@@ -6229,6 +6229,15 @@ read and preflight decode are outside the cooperative work/deadline meter.
 This does not select a Node/Bun, browser, Python or V4 default route and does
 not qualify Protobuf source operations.
 
+The [Protobuf document export CLI](evidence/rust-migration/r8-protobuf-document-export-cli/README.md)
+adds a second opt-in pure Rust binary-output route for exactly
+`protobuf.document.export`. A direct frozen TypeScript import/export vector
+matches 83,233 descriptor bytes by SHA-256. Sol independently reran the full
+offline Rust CLI suite with 54 passing tests, including the three focused
+export tests. The route caps stdin at 32 MiB and binary output at 4 MB; stdin
+read and preflight decode remain outside cooperative work/deadline metering.
+No package default or binding route selects this CLI operation.
+
 The [`umf_access` local installed-artifact gate](evidence/rust-migration/r8-umf-access-installed-qualification/README.md)
 now compares every access package wheel member with the selected clean Git
 source checkout, binds the verifier and profile to that revision, and rejects
