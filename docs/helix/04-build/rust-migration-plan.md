@@ -5683,3 +5683,79 @@ with Rust retaining schema and document semantics. It needs a governed
 interface, frozen trace tests and Node/Bun/Chromium evidence before any default
 route selection; preserving the TypeScript semantic route permanently would
 not complete the shared-engine goal.
+
+### R8 staged JSON Schema import and Python resource continuation — 2026-10-26
+
+The direct TypeScript `importJsonSchema` host-observation capture now records
+nine source-bound cases in Bun 1.4.3, Node 26.12.1, and real Chromium
+153.0.8010.12. All three hosts have identical canonical case arrays for this
+capture. The cases cover the three distinct `baseUri` reads, resource
+enumeration/getter and Proxy effects, original thrown-object identity, and
+refusal order through root parsing. The capture hashes the direct adapter
+source, not its transitive closure; it is an observation baseline, not a
+binding-parity or default-route claim.
+
+The private Rust `JsonSchemaImportSession` now accepts short-lived per-stage
+contexts and owns the first validated URI, ordered resources, payload URI,
+parsed root, ID, and namespace observations. It refuses out-of-order calls and
+closes after stage failures. The private tagged-wire session owns cumulative
+transport work across calls and preserves UTF-16 units; a future binding must
+reattach cancellation and deadline controls on every call. The focused core
+session suite passes 8/8 and the focused wire suite passes 4/4 with Rust 1.90.
+The full `cargo test -p umf-core --locked --offline` Rust 1.90 run passed
+before the focused diagnostic correction; a full rerun remains required.
+That earlier full run included
+including existing JSON Schema adapter, edit, inspection, and operation suites.
+The existing JSON Schema wire regression suite passes 8/8. The private Node
+facade now passes eight focused Bun controls against a fresh native addon,
+including the control-error envelope, plus an independent Node 26.12.1
+success/syntax-refusal probe.
+The [private WASM browser receipt](evidence/rust-migration/r8-json-schema-eight-operations/staged-import-browser.json)
+passes six focused cases in Chromium 153.0.8010.12 against freshly built
+Rust 1.90/WASM and wasm-bindgen 0.2.100 glue. It confirms host getter order,
+three distinct URI reads, original thrown-object identity, and resource/root
+parse stage stops, with zero page errors. The subsequent
+[18-case staged matrix](evidence/rust-migration/r8-json-schema-eight-operations/import-host-parity-matrix.json)
+matches direct TypeScript host effects and outcomes across fresh Node 26 native
+and real Chromium WASM builds; Node/WASM stage sequences also match. A bounded
+Rust diagnostic correction now preserves the three ordered Ajv details for an
+unsupported string `type`. Non-string coercion, full stage/control coverage,
+installed-package parity and default-route admission remain open.
+The TypeScript default route and all 922 retirement gaps
+remain unchanged. String-only opt-in handling does not qualify the direct
+source API's non-string coercion and parser edges.
+
+The authored `umf-codegen` resource sync gate exposed five stale canonical
+resource copies and its manifest/release pin. Running the existing sync writer
+and checker refreshed those bytes without changing the proposed `0.2.0`
+package version or Rust protocol. The resource gate and CPython 3.13.16
+codegen source tests pass (21/21); fresh `umf-core` and `umf-codegen` wheels and
+sdists build from the refreshed isolated source snapshot. After obtaining and
+hashing the exact macOS arm64 CPython 3.13 `pydantic-core==2.33.2` wheel, a
+[clean installed smoke](evidence/rust-migration/r8-python-v8-closure-audit/cpython-3.13-installed-smoke-20261026.md)
+passes on CPython 3.13.16 with Node, Bun, Cargo, and rustc absent from `PATH`.
+It covers core read/validate/write, one codegen generation fixture, compiler
+dispatch/refusal, and CLI help. Successful deployment/migration verification,
+the broader Python API, source-cleanliness proof and release matrix remain
+open; no release claim follows from this smoke.
+
+The R8 ledger now accepts three additional exact opt-in mappings: the existing
+`inspectCoreRecordMembers` Rust core/wire/Node/WASM operation, plus
+`readJsonValue` and `writeJsonValue` under their bounded serialization profile.
+Record Members retains its 11-case frozen/host receipts, and the serialization
+packet has a source-pinned 24-case Node/Bun native and WASM cohort with an
+earlier Chromium receipt. The current ledger has 67 accepted opt-in Rust
+operations, 855 executable names without an accepted mapping, and **all 922
+default-route retirement gaps** still open. The `./reference` route remains
+TypeScript. Current installed-package parity and the broader serialization
+YAML/Proxy surface are not established by these mapping additions.
+
+The [private Selection Chromium receipt](evidence/rust-migration/r8-selection-private-host-route/chromium.json)
+now runs the source-frozen seven-query cohort against fresh Rust 1.90 WASM in
+Chromium 153.0.8010.12. It matches the frozen JSON values and Registry thrown
+object identity. A Selection-only result projection closes the observed
+null-prototype mismatch for the captured nested object/array shapes, and an
+own `__proto__` data key survives without prototype pollution. Node 26 and Bun
+focused probes pass. Semantic callbacks, successful host-warning diagnostics,
+complete event/resource-control parity, installed package qualification and
+public/default Selection remain open.
