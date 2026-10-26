@@ -151,6 +151,95 @@ def test_live_rust_validator_matches_python_capture_for_join_and_many_navigation
         ) == capture(declaration)
 
 
+def test_live_rust_validator_matches_two_hop_aliased_join_owner_order():
+    root = RecordRef("demo", "Owner", (FieldRef("demo", "Owner", "id"),))
+    middle_alias = "demo:test:middle"
+    middle = RecordRef(
+        "demo",
+        "Middle",
+        (FieldRef("demo", "Middle", "id", alias=middle_alias),),
+        alias=middle_alias,
+    )
+    leaf = RecordRef("demo", "Leaf", (FieldRef("demo", "Leaf", "id"),))
+    first = RequiredJoin(
+        FieldRef("demo", "Owner", "middle_id"), middle, key_target=middle
+    )
+    second = RequiredJoin(
+        FieldRef("demo", "Middle", "leaf_id", alias=middle_alias), leaf
+    )
+    leaf_field = FieldRef("demo", "Leaf", "name")
+
+    @query
+    def two_hop(status: Param[str]):
+        return Terminal(
+            Node(
+                "all",
+                (
+                    root,
+                    (
+                        Node("join", (first,)),
+                        Node("join", (second,)),
+                        Node(
+                            "filter",
+                            (
+                                Node(
+                                    "=",
+                                    (Node("column", (leaf_field,)), Node("param", ("status",))),
+                                ),
+                            ),
+                        ),
+                        Node("limit", (1,)),
+                    ),
+                ),
+            )
+        )
+
+    assert rust_catalog_render.capture_with_rust_graph_validator(two_hop) == capture(
+        two_hop
+    )
+
+    absent_source = RequiredJoin(
+        FieldRef("demo", "Middle", "leaf_id"), leaf
+    )
+
+    @query
+    def crossed_fault(status: Param[str]):
+        return Terminal(
+            Node(
+                "all",
+                (
+                    root,
+                    (
+                        Node("join", (first,)),
+                        Node("join", (absent_source,)),
+                        Node(
+                            "filter",
+                            (
+                                Node(
+                                    "=",
+                                    (
+                                        Node("column", (FieldRef("other", "Foreign", "x"),)),
+                                        Node("param", ("status",)),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            )
+        )
+
+    errors = []
+    for capture_fn in (capture, rust_catalog_render.capture_with_rust_graph_validator):
+        with pytest.raises(CaptureError) as caught:
+            capture_fn(crossed_fault)
+        errors.append((caught.value.code, str(caught.value)))
+    assert errors[0] == errors[1] == (
+        "CAPTURE_UNSUPPORTED",
+        "CAPTURE_UNSUPPORTED: join source is absent",
+    )
+
+
 def test_live_rust_validator_matches_python_search_leg_capture_and_refusals():
     source = GeneratedSource(
         "search-graph-test", "0.10.0", "c" * 64, "d" * 64, "umf-access-runtime/0.1"

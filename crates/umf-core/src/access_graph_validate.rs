@@ -1915,6 +1915,38 @@ mod tests {
     }
 
     #[test]
+    fn two_hop_join_owners_include_prior_alias_targets_in_order() {
+        let buyer = record("crm", "Customer", Some("buyer"));
+        let leaf = record("crm", "Address", None);
+        let valid = owner_graph(
+            vec![
+                join(field("commerce", "Order", None), buyer.clone()),
+                join(field("crm", "Customer", Some("buyer")), leaf.clone()),
+                owner_filter(field("crm", "Address", None)),
+            ],
+            vec![],
+        );
+        assert_eq!(validate_captured_variant(&valid), Ok(()));
+
+        let wrong_alias_source = owner_graph(
+            vec![
+                join(field("commerce", "Order", None), buyer),
+                join(field("crm", "Customer", None), leaf),
+                owner_filter(field("other", "Foreign", None)),
+            ],
+            vec![],
+        );
+        assert_eq!(
+            validate_captured_variant(&wrong_alias_source),
+            Err(Refusal {
+                kind: "capture-error",
+                code: "CAPTURE_UNSUPPORTED",
+                rule: "join source is absent",
+            })
+        );
+    }
+
+    #[test]
     fn malformed_known_owner_tags_are_refused_as_dto_invalid() {
         let malformed_field = tagged(
             "umf_access.dsl._nodes.FieldRef",

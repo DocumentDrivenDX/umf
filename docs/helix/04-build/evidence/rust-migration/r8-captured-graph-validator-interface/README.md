@@ -471,3 +471,14 @@ suites. This confirms the exercised opt-in DTO cases only. Python still owns
 public `capture()`, constructor behavior, arbitrary subclass accessor effects,
 full graph ownership, and installed-package qualification; no public/default
 route changed.
+
+## Two-hop aliased Join control — 2026-10-26
+
+A focused Rust control and live Python comparison now cover a second Join whose
+source is the aliased target of the first. Both accept the valid two-hop graph.
+When the second Join drops that alias and a later filter also refers to a
+foreign record, both refuse first with `CAPTURE_UNSUPPORTED: join source is
+absent`. Sol independently reran 36 focused Rust graph-validator tests and 13
+Python graph-validator tests with a native extension overlay on CPython 3.11.
+This extends opt-in ordering evidence only; public `capture()` still uses its
+Python validator.
