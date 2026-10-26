@@ -256,6 +256,48 @@ jobs:
             --wheelhouse "$WORK/mini-racer" \
             --pins docs/helix/04-build/evidence/praxis-embedder/mini-racer-wheel-pins.json \
             --expected-platform linux-x86_64-glibc-2.27+
+          run_bounded codegen-refresh 180 bun scripts/build-codegen.ts
+          run_bounded codegen-refresh-hash-check 180 bun scripts/build-codegen.ts --check
+          run_bounded codegen-refresh-output-hashes 180 python -I - <<'PY'
+          import hashlib, json, os, pathlib
+
+          def sha(path):
+              return hashlib.sha256(path.read_bytes()).hexdigest()
+
+          root = pathlib.Path.cwd()
+          assets = root / "python/umf_codegen/src/umf_codegen/_assets"
+          release_path = root / "python/umf_codegen/src/umf_codegen/_release.py"
+          manifest_path = assets / "manifest.json"
+          generator_manifest = json.loads(manifest_path.read_text())
+          expected_inputs = ("scripts/build-codegen.ts", "scripts/codegen/gzip.ts")
+          for name in expected_inputs:
+              assert generator_manifest["inputs"][name] == sha(root / name), name
+          generated = {name: digest for name, digest in generator_manifest["files"].items()}
+          for name, digest in generated.items():
+              assert sha(assets / name) == digest, name
+          manifest_sha = sha(manifest_path)
+          release_text = release_path.read_text()
+          assert "MANIFEST_SHA256 = " + json.dumps(manifest_sha) in release_text
+          pins = json.loads(pathlib.Path("docs/helix/04-build/evidence/mig-g02-g03/native-qualification-source-pins.json").read_text())
+          output_prefixes = ("python/umf_codegen/src/umf_codegen/_release.py",
+                             "python/umf_codegen/src/umf_codegen/_assets/")
+          reviewed_prebuild = {name: item["sha256"] for name, item in pins["sourcePins"].items()
+                               if name.startswith(output_prefixes)}
+          report = {
+              "profile": "umf.g02-g03-codegen-refresh/1",
+              "status": "BUILT_THEN_HASH_CHECKED",
+              "buildScriptSha256": sha(root / "scripts/build-codegen.ts"),
+              "generatorManifestSha256": manifest_sha,
+              "releaseModuleSha256": sha(release_path),
+              "reviewedPrebuildOutputPins": reviewed_prebuild,
+              "postBuildAssetHashes": generated,
+              "postBuildInputHashes": generator_manifest["inputs"],
+          }
+          pathlib.Path(os.environ["QUALIFICATION_DIR"], "reports", "codegen-generated-outputs.json").write_text(
+              json.dumps(report, indent=2, sort_keys=True) + "\n")
+          print(json.dumps({"status": report["status"], "generatedAssets": len(generated),
+                            "generatorManifestSha256": manifest_sha}, sort_keys=True))
+          PY
           run_bounded cohort-build 480 "$WORK/builder/bin/python" tests/codegen/acquire_offline_cohort.py \
             --output-dir "$WORK/cohort" \
             --source-commit "$GITHUB_SHA" \
@@ -365,6 +407,7 @@ jobs:
               "sourcePins": pins["sourcePins"],
               "reportHashes": {path.name: hashlib.sha256(path.read_bytes()).hexdigest()
                                for path in sorted(reports.glob("*.json"))},
+              "generatedCodegenOutputs": json.loads((reports / "codegen-generated-outputs.json").read_text()),
               "capturedCommandLogBytes": log_bytes,
               "capturedArtifactBytes": total_bytes,
               "limits": pins["target"]["dsnBounds"],
