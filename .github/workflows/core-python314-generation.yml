@@ -366,15 +366,14 @@ jobs:
           RUNTIME_ROOT="$RUNNER_TOOL_CACHE/Python/3.14.8/x64"
           run_bounded download-cpython314 180 curl --proto '=https' --tlsv1.2 --fail --location --max-filesize 110382248 --output "$RUNNER_TEMP/python-3.14.8-linux-24.04-x64.tar.gz" https://github.com/actions/python-versions/releases/download/3.14.8-36806082737/python-3.14.8-linux-24.04-x64.tar.gz
           run_bounded inspect-extract-cpython314 180 python -I - "$RUNNER_TEMP/python-3.14.8-linux-24.04-x64.tar.gz" "$RUNTIME_ROOT" <<'PY'
-          import hashlib, pathlib, stat, tarfile, sys
+          import hashlib, json, os, pathlib, stat, tarfile, sys
           archive=pathlib.Path(sys.argv[1]); destination=pathlib.Path(sys.argv[2])
           expected_size=110382248; expected_sha="fa74abc70a55c10f6631967784878704eef81bbde9b8ec27469534f6ba997cb3"; member_name="./bin/python3.14"
-          if str(destination)!="/opt/hostedtoolcache/Python/3.14.8/x64": raise SystemExit("CPython installation prefix differs from the verified ELF RUNPATH")
+          canonical=pathlib.Path("/opt/hostedtoolcache/Python/3.14.8/x64")
+          if str(destination)!=str(canonical): raise SystemExit("CPython installation prefix differs from the verified ELF RUNPATH")
           if archive.stat().st_size!=expected_size: raise SystemExit("CPython archive size mismatch")
           with archive.open("rb") as stream: archive_sha=hashlib.file_digest(stream,"sha256").hexdigest()
           if archive_sha!=expected_sha: raise SystemExit("CPython archive SHA mismatch")
-          if destination.exists(): raise SystemExit("CPython extraction directory already exists")
-          destination.mkdir(parents=True)
           with tarfile.open(archive,"r:gz") as tar:
               members=[item for item in tar.getmembers() if item.name==member_name]
               if len(members)!=1 or not members[0].isfile() or members[0].size!=17752 or members[0].mode&0o777!=0o755: raise SystemExit("CPython executable archive member mismatch")
@@ -383,15 +382,56 @@ jobs:
               digest=hashlib.sha256(); count=0
               while chunk:=source.read(65536): digest.update(chunk); count+=len(chunk)
               if count!=17752 or digest.hexdigest()!="a5230d8adbd26c2185d77fb003597c4ee9c44c2369fc179122ff7c3a3a58ae59": raise SystemExit("CPython executable member SHA mismatch")
-              tar.extractall(path=destination,filter="data")
+          source_commit=os.environ["GITHUB_SHA"]; run_id=os.environ["GITHUB_RUN_ID"]; attempt=os.environ["GITHUB_RUN_ATTEMPT"]
+          if len(source_commit)!=40 or any(char not in "0123456789abcdef" for char in source_commit) or not run_id.isascii() or not run_id.isdigit() or len(run_id)>20 or int(run_id)<1 or not attempt.isascii() or not attempt.isdigit() or len(attempt)>10 or int(attempt)<1: raise SystemExit("CPython installation run identity is invalid")
+          parent=canonical.parent
+          fact_path=pathlib.Path(os.environ["EVIDENCE_DIR"])/"cpython-installation.json"
+          fact={"profile":"umf.core-python314-installation/1","sourceCommit":source_commit,"runId":run_id,"runAttempt":attempt,"archiveSha256":archive_sha,"prefix":str(canonical),"mode":"fresh-verified-extraction","status":"ARCHIVE_VERIFIED","quarantinedOriginal":False,"quarantinePath":None,"failureCode":None}
+          def write_fact():
+              encoded=(json.dumps(fact,sort_keys=True,separators=(",",":"))+"\n").encode()
+              if len(encoded)>4096: raise SystemExit("CPython installation fact exceeds its bound")
+              fact_path.write_bytes(encoded)
+          def stop(code,message):
+              fact["status"]="FAILED"; fact["failureCode"]=code; write_fact(); raise SystemExit(message)
+          write_fact()
+          quarantine=parent/("x64.codex-quarantine-"+run_id+"-"+attempt+"-"+source_commit)
+          try:
+              parent_info=parent.lstat()
+              if stat.S_ISLNK(parent_info.st_mode) or not stat.S_ISDIR(parent_info.st_mode) or parent.resolve(strict=True)!=parent: stop("PREFIX_PARENT_INVALID","CPython installation parent is not the canonical directory")
+          except OSError: stop("PREFIX_PARENT_INVALID","CPython installation parent is unavailable")
+          try: parent_real=parent.resolve(strict=True)
+          except OSError: stop("PREFIX_PARENT_INVALID","CPython installation parent is unavailable")
+          if str(parent_real)!="/opt/hostedtoolcache/Python/3.14.8": stop("PREFIX_PARENT_INVALID","CPython installation parent is not canonical")
+          destination_exists=os.path.lexists(canonical)
+          if os.path.lexists(quarantine): stop("PREFIX_QUARANTINE_COLLISION","CPython quarantine destination already exists")
+          if destination_exists:
+              try: destination_info=canonical.lstat()
+              except OSError: stop("PREFIX_DESTINATION_INVALID","CPython extraction prefix cannot be inspected")
+              if stat.S_ISLNK(destination_info.st_mode) or not stat.S_ISDIR(destination_info.st_mode): stop("PREFIX_DESTINATION_INVALID","CPython extraction prefix is not a real directory")
+              try: os.rename(canonical,quarantine)
+              except OSError: stop("PREFIX_QUARANTINE_MOVE_FAILED","CPython existing prefix could not be quarantined")
+              fact["quarantinedOriginal"]=True; fact["quarantinePath"]=str(quarantine); fact["status"]="QUARANTINED"
+              write_fact()
+          fact["status"]="FRESH_EXTRACTION_STARTED"; write_fact()
+          try: canonical.mkdir(mode=0o755,parents=False,exist_ok=False)
+          except FileExistsError: stop("PREFIX_DESTINATION_COLLISION","CPython extraction destination appeared before exclusive creation")
+          except OSError: stop("FRESH_DESTINATION_CREATE_FAILED","CPython fresh extraction directory could not be created")
+          try:
+              with tarfile.open(archive,"r:gz") as tar: tar.extractall(path=canonical,filter="data")
+          except (OSError,tarfile.TarError,EOFError): stop("EXTRACTION_FAILED","CPython archive extraction failed")
           executable=destination/"bin/python3.14"
-          if executable.is_symlink() or not executable.is_file() or executable.stat().st_size!=17752 or stat.S_IMODE(executable.stat().st_mode)!=0o755: raise SystemExit("extracted CPython executable mismatch")
+          if executable.is_symlink() or not executable.is_file() or executable.stat().st_size!=17752 or stat.S_IMODE(executable.stat().st_mode)!=0o755: stop("EXTRACTED_EXECUTABLE_MISMATCH","extracted CPython executable mismatch")
           with executable.open("rb") as stream: extracted_sha=hashlib.file_digest(stream,"sha256").hexdigest()
-          if extracted_sha!="a5230d8adbd26c2185d77fb003597c4ee9c44c2369fc179122ff7c3a3a58ae59": raise SystemExit("extracted CPython executable SHA mismatch")
+          if extracted_sha!="a5230d8adbd26c2185d77fb003597c4ee9c44c2369fc179122ff7c3a3a58ae59": stop("EXTRACTED_EXECUTABLE_MISMATCH","extracted CPython executable SHA mismatch")
+          fact["status"]="FRESH_EXTRACTION_COMPLETE"; write_fact()
           PY
           run_bounded verify-cpython314-runtime 30 env LD_LIBRARY_PATH="$RUNTIME_ROOT/lib" "$RUNTIME_ROOT/bin/python3.14" -I - "$RUNTIME_ROOT" "$EVIDENCE/cpython-runtime.json" <<'PY'
           import json, os, pathlib, platform, sys, sysconfig, unicodedata
           root=pathlib.Path(sys.argv[1]).resolve(strict=True); receipt=pathlib.Path(sys.argv[2])
+          install_path=receipt.parent/"cpython-installation.json"
+          if install_path.is_symlink() or not install_path.is_file() or install_path.stat().st_size>4096: raise SystemExit("CPython installation fact is unavailable or oversized")
+          installation=json.loads(install_path.read_text())
+          if set(installation)!={"profile","sourceCommit","runId","runAttempt","archiveSha256","prefix","mode","status","quarantinedOriginal","quarantinePath","failureCode"} or installation["profile"]!="umf.core-python314-installation/1" or installation["sourceCommit"]!=os.environ["GITHUB_SHA"] or installation["runId"]!=os.environ["GITHUB_RUN_ID"] or installation["runAttempt"]!=os.environ["GITHUB_RUN_ATTEMPT"] or installation["archiveSha256"]!="fa74abc70a55c10f6631967784878704eef81bbde9b8ec27469534f6ba997cb3" or installation["prefix"]!="/opt/hostedtoolcache/Python/3.14.8/x64" or installation["mode"]!="fresh-verified-extraction" or installation["status"]!="FRESH_EXTRACTION_COMPLETE" or type(installation["quarantinedOriginal"]) is not bool or (installation["quarantinedOriginal"] and installation["quarantinePath"]!="/opt/hostedtoolcache/Python/3.14.8/x64.codex-quarantine-"+os.environ["GITHUB_RUN_ID"]+"-"+os.environ["GITHUB_RUN_ATTEMPT"]+"-"+os.environ["GITHUB_SHA"]) or (not installation["quarantinedOriginal"] and installation["quarantinePath"] is not None) or installation["failureCode"] is not None: raise SystemExit("CPython installation fact identity or status mismatch")
           executable=(root/"bin/python3.14").resolve(strict=True); libpython=(root/"lib/libpython3.14.so.1.0").resolve(strict=True)
           stdlib=(root/"lib/python3.14").resolve(strict=True); extensions=(root/"lib/python3.14/lib-dynload").resolve(strict=True)
           if pathlib.Path(sys.executable).resolve(strict=True)!=executable: raise SystemExit("CPython executable path is outside the verified runtime tree")
@@ -405,7 +445,7 @@ jobs:
               if len(parts)==6 and pathlib.Path(parts[5].removesuffix(" (deleted)")).name==libpython.name: mapped.add(str(pathlib.Path(parts[5].removesuffix(" (deleted)")).resolve(strict=True)))
           if mapped!={str(libpython)}: raise SystemExit("loaded libpython path differs from the verified runtime tree")
           if platform.python_implementation()!="CPython" or sys.version_info[:3]!=(3,14,8) or unicodedata.unidata_version!="16.0.0": raise SystemExit("unexpected CPython version or Unicode database")
-          record={"implementation":"CPython","version":"3.14.8","unicodeVersion":"16.0.0","executable":str(executable),"libpython":str(libpython),"stdlib":str(stdlib),"extensionModules":str(extensions),"unicodeDataExtension":str(pathlib.Path(unicodedata.__file__).resolve(strict=True)),"loaderEnvironment":{"LD_LIBRARY_PATH":os.environ.get("LD_LIBRARY_PATH")}}
+          record={"implementation":"CPython","version":"3.14.8","unicodeVersion":"16.0.0","executable":str(executable),"libpython":str(libpython),"stdlib":str(stdlib),"extensionModules":str(extensions),"unicodeDataExtension":str(pathlib.Path(unicodedata.__file__).resolve(strict=True)),"loaderEnvironment":{"LD_LIBRARY_PATH":os.environ.get("LD_LIBRARY_PATH")},"installation":installation}
           receipt.write_text(json.dumps(record,indent=2,sort_keys=True)+"\n")
           print(json.dumps(record,sort_keys=True))
           PY
@@ -594,13 +634,36 @@ jobs:
                   except (OSError,UnicodeDecodeError,json.JSONDecodeError,TypeError,KeyError): tool_observation_error="TOOL_OBSERVATION_INVALID"
           if tool_observation_error is not None and preflight_diagnostic is None:
               preflight_diagnostic={"profile":"umf.core-python314-preflight-diagnostic/1","reasonCode":tool_observation_error,"component":"tool-summary","pinnedCommit":"d5022e37840329d351bcd6c27fe7d7aad4758544","actualStatus":1}
+          cpython_installation=None; cpython_installation_error=None; install_path=evidence/"cpython-installation.json"
+          if install_path.exists() or install_path.is_symlink():
+              if install_path.is_symlink() or not install_path.is_file(): cpython_installation_error="CPYTHON_INSTALLATION_FACT_INVALID"
+              elif install_path.stat().st_size>4096: cpython_installation_error="CPYTHON_INSTALLATION_FACT_OVERSIZED"
+              else:
+                  try:
+                      installation=json.loads(install_path.read_text())
+                      install_keys={"profile","sourceCommit","runId","runAttempt","archiveSha256","prefix","mode","status","quarantinedOriginal","quarantinePath","failureCode"}
+                      install_statuses={"ARCHIVE_VERIFIED","QUARANTINED","FRESH_EXTRACTION_STARTED","FRESH_EXTRACTION_COMPLETE","FAILED"}
+                      install_failures={"PREFIX_PARENT_INVALID","PREFIX_DESTINATION_INVALID","PREFIX_QUARANTINE_COLLISION","PREFIX_DESTINATION_COLLISION","PREFIX_QUARANTINE_MOVE_FAILED","FRESH_DESTINATION_CREATE_FAILED","EXTRACTION_FAILED","EXTRACTED_EXECUTABLE_MISMATCH"}
+                      install_valid=isinstance(installation,dict) and set(installation)==install_keys and installation.get("profile")=="umf.core-python314-installation/1" and installation.get("sourceCommit")==os.environ["SOURCE_COMMIT"] and installation.get("runId")==os.environ["RUN_ID"] and installation.get("runAttempt")==os.environ["RUN_ATTEMPT"] and installation.get("archiveSha256")=="fa74abc70a55c10f6631967784878704eef81bbde9b8ec27469534f6ba997cb3" and installation.get("prefix")=="/opt/hostedtoolcache/Python/3.14.8/x64" and installation.get("mode")=="fresh-verified-extraction" and installation.get("status") in install_statuses and type(installation.get("quarantinedOriginal")) is bool
+                      if install_valid:
+                          expected_quarantine="/opt/hostedtoolcache/Python/3.14.8/x64.codex-quarantine-"+os.environ["RUN_ID"]+"-"+os.environ["RUN_ATTEMPT"]+"-"+os.environ["SOURCE_COMMIT"]
+                          quarantined=installation["quarantinedOriginal"]; quarantine_path=installation.get("quarantinePath"); failure_code=installation.get("failureCode")
+                          install_valid=(quarantine_path==expected_quarantine if quarantined else quarantine_path is None) and (failure_code is None if installation["status"]!="FAILED" else failure_code in install_failures)
+                          if installation["status"]=="ARCHIVE_VERIFIED" and (quarantined or quarantine_path is not None or failure_code is not None): install_valid=False
+                          if installation["status"]=="QUARANTINED" and (not quarantined or failure_code is not None): install_valid=False
+                          if installation["status"]=="FRESH_EXTRACTION_COMPLETE" and failure_code is not None: install_valid=False
+                      if install_valid: cpython_installation=installation
+                      else: cpython_installation_error="CPYTHON_INSTALLATION_FACT_INVALID"
+                  except (OSError,UnicodeDecodeError,json.JSONDecodeError,TypeError,KeyError): cpython_installation_error="CPYTHON_INSTALLATION_FACT_INVALID"
           def fail(reason_code):
               shutil.rmtree(upload,ignore_errors=True); upload.mkdir(parents=True)
-              fail_receipt={"profile":"umf.core-python314-generation/1","status":"FAIL_OR_UNKNOWN","reasonCode":reason_code,"sourceCommit":os.environ["SOURCE_COMMIT"],"runId":os.environ["RUN_ID"],"runAttempt":os.environ["RUN_ATTEMPT"],"ref":os.environ["SOURCE_REF"],"event":os.environ["EVENT_NAME"],"generationStepOutcome":os.environ.get("GENERATION_OUTCOME"),"lastCommand":last_command,"preflightDiagnostic":preflight_diagnostic,"toolObservation":tool_observation,"toolObservationError":tool_observation_error,"aggregateDeadlineSeconds":1800,"childMaximumSeconds":180,"timeoutKillGraceSeconds":10,"cleanupReserveSeconds":60,"aggregateLogLimitBytes":1048576,"aggregateArtifactLimitBytes":16777216,"failureOnlyReceipt":True,"rawLogsUploaded":False,"qualificationClaim":False}
+              fail_receipt={"profile":"umf.core-python314-generation/1","status":"FAIL_OR_UNKNOWN","reasonCode":reason_code,"sourceCommit":os.environ["SOURCE_COMMIT"],"runId":os.environ["RUN_ID"],"runAttempt":os.environ["RUN_ATTEMPT"],"ref":os.environ["SOURCE_REF"],"event":os.environ["EVENT_NAME"],"generationStepOutcome":os.environ.get("GENERATION_OUTCOME"),"lastCommand":last_command,"preflightDiagnostic":preflight_diagnostic,"toolObservation":tool_observation,"toolObservationError":tool_observation_error,"cpythonInstallation":cpython_installation,"cpythonInstallationError":cpython_installation_error,"aggregateDeadlineSeconds":1800,"childMaximumSeconds":180,"timeoutKillGraceSeconds":10,"cleanupReserveSeconds":60,"aggregateLogLimitBytes":1048576,"aggregateArtifactLimitBytes":16777216,"failureOnlyReceipt":True,"rawLogsUploaded":False,"qualificationClaim":False}
               (upload/"receipt.json").write_text(json.dumps(fail_receipt,indent=2,sort_keys=True)+"\n")
               (evidence/"finalizer.status").write_text("failed\n")
           if tool_observation_error is not None:
               fail("tool_observation_invalid"); raise SystemExit(1)
+          if cpython_installation_error is not None:
+              fail("cpython_installation_fact_invalid"); raise SystemExit(1)
           if os.environ.get("GENERATION_OUTCOME")!="success":
               fail("generation_step_failed"); raise SystemExit(1)
           if tool_observation is None or tool_observation.get("status")!="VERSION_GUARDS_PASS":
@@ -628,6 +691,7 @@ jobs:
               if receipt.get("tools")!=tool_observation: raise ValueError("generation receipt tool identity mismatch")
               phase=receipt.get("phase"); statuses={"regex-artifacts":"PASS_REGEX_GENERATION_ARTIFACTS_ONLY","metamodel-artifacts":"PASS_METAMODEL_GENERATION_ARTIFACTS_ONLY","dependent-artifacts":"PASS_DEPENDENT_GENERATION_ARTIFACTS_ONLY"}
               if phase not in statuses or receipt.get("status")!=statuses[phase] or receipt.get("outputManifestSha256")!=hashlib.sha256(manifest_path.read_bytes()).hexdigest(): raise ValueError("generation receipt or manifest mismatch")
+              if phase=="regex-artifacts" and (cpython_installation is None or cpython_installation.get("status")!="FRESH_EXTRACTION_COMPLETE" or receipt.get("cpPython",{}).get("runtime",{}).get("installation")!=cpython_installation): raise ValueError("CPython installation fact is absent from verified runtime evidence")
               if manifest.get("sourceCommit")!=receipt["sourceCommit"] or manifest.get("phase")!=phase or type(manifest.get("outputs")) is not list or receipt.get("outputCount")!=len(manifest["outputs"]): raise ValueError("output manifest identity or roster mismatch")
               with archive.open("rb") as stream: archive_sha=hashlib.file_digest(stream,"sha256").hexdigest()
               if receipt.get("archiveSha256")!=archive_sha or receipt.get("archiveBytes")!=source_sizes["generated-source.tar.gz"]: raise ValueError("compressed archive identity mismatch")
