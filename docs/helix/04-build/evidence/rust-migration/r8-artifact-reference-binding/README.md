@@ -11,6 +11,8 @@ ddx:
       kind: evidence_for
     - id: umf.evidence.rust-migration.r8-artifact-reference-core
       kind: informed_by
+    - id: CONTRACT-061
+      kind: informed_by
 ---
 
 # Opt-in artifact-reference binding
@@ -36,8 +38,8 @@ tests. The Node differential structurally validates its pack first, then
 matches TypeScript diagnostic order, duplicate handling and a lone-surrogate
 source key. Negative controls cover a missing pack, host work refusal and
 profile-cap refusal. The Node addon builds, and the WASM crate checks for
-`wasm32-unknown-unknown`; Chromium/WASM runtime parity and installed-package
-qualification have not been run for this binding. No default route changes.
+`wasm32-unknown-unknown`; installed-package qualification and default-route
+selection remain out of scope.
 
 | Source | SHA-256 |
 | --- | --- |
@@ -51,3 +53,17 @@ qualification have not been run for this binding. No default route changes.
 | `bindings/core/wasm/index.d.ts` | `812d7bc75f6a5293acfb11e5613e31bef2069a3b295102376254fac432a4eb0e` |
 | `bindings/core/wasm/src/lib.rs` | `1afd5f9c15be80c9f26d78d1a8db13ad8196abba42a4f2aa9bad1d4b2d19495f` |
 | `bindings/core/node/tests/artifact-references.test.js` | `897b0f9fc897ac038fb074e29129132d1e0934d0a91513794573941a7564d493` |
+
+## Chromium WASM replay
+
+The [Chromium receipt](chromium.json) records a fresh Rust 1.90 WASM build,
+`wasm-bindgen 0.2.100`, and real Chromium 153.0.8010.12 execution. A
+structurally validated fixture matched the TypeScript ordered diagnostic pass
+by exact UTF-16 code units, including an unresolved lone-surrogate schema
+reference. Host-control, profile-cap and missing-pack refusals also passed;
+Chromium reported no page errors or external requests.
+
+Replay with `bun scripts/rust-migration/r8/artifact-references-binding-browser.mjs`.
+The script uses isolated Cargo and browser output roots under `/private/tmp`.
+This evidence does not qualify arbitrary JavaScript objects, retrieval,
+default-route selection or broader domain-pack inspection.

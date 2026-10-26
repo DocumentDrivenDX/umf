@@ -26,12 +26,14 @@ Rust 1.90.0 and an isolated target directory on macOS arm64: 2 tests passed.
 The tests cover three duplicate identities, diagnostic ordering and a lone
 surrogate source key. `rustfmt --check` also passed on the changed module.
 
-This is a Rust core implementation only. It has no Node, Bun, WASM, Python or
-CLI binding, no installed-package differential replay, and no default-route
-selection. `generateArtifactCollectionSchema` and the other domain-pack
-operations remain separate executable gaps. The input precondition is a
-structurally validated pack; behavior on arbitrary JavaScript host objects is
-not qualified.
+This core checkpoint was followed by a bounded
+[opt-in Node/WASM binding](../r8-artifact-reference-binding/README.md). That
+binding has no installed-package differential replay or default-route
+selection; Python, CLI and Chromium runtime routes remain unqualified.
+`generateArtifactCollectionSchema` and the other domain-pack operations
+remain separate executable gaps. The input precondition is a structurally
+validated pack; behavior on arbitrary JavaScript host objects is not
+qualified.
 
 | Source | SHA-256 |
 | --- | --- |
