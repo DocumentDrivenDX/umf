@@ -235,7 +235,7 @@ test('scheduler prefixes preserve final frames for zero and multiple groups with
   const record={module:'graph_snapshot',element:`${table}_record`},identity:GraphTableIdentity={kind:'table',table,subject:record},meaning:GraphTestJson={tableMeaning:{},embeddedCatalog:{columns:[],keys:[],checks:[]}};
   return {identity,effect:{id:`create-${table}`,kind:'table',operation:'create-table',subject:{kind:'table',table,record},sourcePath:`/tables/${table}`,sql:`CREATE TABLE ${table} ()`,transaction:'required',recovery:'rollback-transaction',sourceOrder,atomicGroup:null,transition:{action:'add',collection:'tables',meaning}}};
  };
- const initial=()=>({profile:'umf.table-inventory-prefix/0.1' as const,index:0,completedSteps:[],tableStates:[],catalog:emptyPrefixCatalog(),metadata:{profile:'umf.table-inventory-metadata/0.1' as const,state:'pristine' as const},seedStates:[]});
+ const initial=():Omit<PrefixFrame,'digest'>=>({profile:'umf.table-inventory-prefix/0.1',index:0,completedSteps:[],tableStates:[],catalog:emptyPrefixCatalog(),metadata:{profile:'umf.table-inventory-metadata/0.1',state:'pristine'},seedStates:[]});
  const compilerMetadataIds={prepare:'g10-inventory-prepare',approval:'g10-inventory-approval',publication:'g10-inventory-publication'};
  const assertFrames=(result:ReturnType<typeof scheduleTypedInventoryEffects>,groupCount:number,metadata:boolean)=>{
   expect(result.prefixes).toHaveLength(groupCount+4);

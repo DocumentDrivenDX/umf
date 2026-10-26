@@ -37,7 +37,8 @@ export function g04DiscoveryIntent(selection:G04ConversionSelection):Record<stri
  const {recovery,...rest}=selection;
  return {...rest,recovery:recovery.mode==='irreversible'?{mode:'irreversible'}:recovery};
 }
-function conversionMeaning(bundle:TableDeploymentBundle,tableId:string,field:{module:string;element:string},side:'previous'|'next',intent:unknown):Record<string,unknown>{
+type ConversionMeaning=Record<string,unknown>&{meaning:{physical:TableDeploymentBundle['expectedCatalog']['columns'][number];logical:any;mapping:any}};
+function conversionMeaning(bundle:TableDeploymentBundle,tableId:string,field:{module:string;element:string},side:'previous'|'next',intent:unknown):ConversionMeaning{
  const table=bundle.expectedCatalog.tables.find(item=>item.id===tableId),physical=bundle.expectedCatalog.columns.find(item=>item.table===tableId&&refKey(item.field)===refKey(field));
  const mapping=table?.columns.find(item=>refKey(item.field)===refKey(field));
  const document=readDocument(bundle.source.utf8,bundle.source.format),logical=document.modules.find(module=>module.id===field.module)?.elements.find(element=>element.id===field.element);
@@ -172,7 +173,7 @@ export function discoverG04TableMigrationChanges(previous:TableDeploymentBundle,
   const oldDomain=domainKind(previous,item.table,item.field),newDomain=domainKind(next,item.table,item.field);validateRecipe(item,oldDomain,newDomain,path);
   if(same({typeSchema:oldDomain.physical.typeSchema,typeName:oldDomain.physical.typeName,typeMod:oldDomain.physical.typeMod},{typeSchema:newDomain.physical.typeSchema,typeName:newDomain.physical.typeName,typeMod:newDomain.physical.typeMod}))fail('A conversion intent must select an actual native type change',path);
   const old=conversionMeaning(previous,item.table,item.field,'previous',intent),fresh=conversionMeaning(next,item.table,item.field,'next',intent);
-  const effects=effectsFor(item,old,fresh),oldValue={...old,effects},newValue={...fresh,effects},oldDigest=hashCanonical(oldValue),newDigest=hashCanonical(newValue),markerPath=(fresh as any).meaning.mapping.sourcePath;
+  const effects=effectsFor(item,old,fresh),oldValue={...old,effects},newValue={...fresh,effects},oldDigest=hashCanonical(oldValue),newDigest=hashCanonical(newValue),markerPath=fresh.meaning.physical.sourcePath;
   const kind='conversion-effects',id='review-'+hashCanonical([kind,markerPath,oldDigest,newDigest]).slice(0,24);
   result.push({id,kind,path:markerPath,oldDigest,newDigest,oldValue,newValue});
  }
@@ -183,8 +184,8 @@ export function discoverG04TableMigrationChanges(previous:TableDeploymentBundle,
 export function normalizeG04MigrationOptions(value:unknown,previous:TableDeploymentBundle|null,next:TableDeploymentBundle):G04MigrationOptions{
  if(!exact(value,['version','backfills','concurrentIndexes','reviewedChanges','validations','conversions'])||(value as any).version!=='umf.table-migration-options/0.7')fail('Unknown G04 options profile or members');
  const options=value as G04MigrationOptions;
- if(!previous)fail('G04 conversion requires an installed source cohort','/previous');
- if(previous.source.format!=='json'||next.source.format!=='json')fail('G04 conversion requires exact JSON source bytes','/previous/source/format');
+ const installed=previous??fail('G04 conversion requires an installed source cohort','/previous');
+ if(installed.source.format!=='json'||next.source.format!=='json')fail('G04 conversion requires exact JSON source bytes','/previous/source/format');
  if(!Array.isArray(options.backfills)||options.backfills.length||!Array.isArray(options.concurrentIndexes)||options.concurrentIndexes.length||!Array.isArray(options.validations)||options.validations.length||!Array.isArray(options.reviewedChanges)||!Array.isArray(options.conversions)||options.conversions.length<1||options.conversions.length>256)fail('G04 selects one or more conversions and no backfills, indexes or deferred validations');
  const normalized=options.conversions.map((item,index)=>{
   const path='/options/conversions/'+index;
@@ -195,12 +196,12 @@ export function normalizeG04MigrationOptions(value:unknown,previous:TableDeploym
   else if(r.mode==='round-trip'){if(!exact(r,['mode','proofProfile'])||r.proofProfile!=='umf.exact-integer-widening-roundtrip/0.1')fail('Unknown round-trip proof profile',path+'/recovery');}
   else fail('Unknown conversion recovery mode',path+'/recovery');
   if(!['preserve'].includes(item.nulls)||item.invalid!=='abort')fail('G04 requires preserve-null and abort-invalid policies',path);
-  const old=domainKind(previous,item.table,item.field),fresh=domainKind(next,item.table,item.field);validateRecipe(item,old,fresh,path);
+  const old=domainKind(installed,item.table,item.field),fresh=domainKind(next,item.table,item.field);validateRecipe(item,old,fresh,path);
   return item;
  });
  if(!same(normalized,options.conversions))fail('G04 conversion entries are not canonical closed records');
  const selector={version:'umf.table-migration-discovery/0.4' as const,conversionIntents:normalized.map(g04DiscoveryIntent)};
- const candidates=discoverG04TableMigrationChanges(previous,next,selector),typeChanges=candidates.filter(candidate=>candidate.kind==='change-column-type'),effects=candidates.filter(candidate=>candidate.kind==='conversion-effects');
+ const candidates=discoverG04TableMigrationChanges(installed,next,selector),typeChanges=candidates.filter(candidate=>candidate.kind==='change-column-type'),effects=candidates.filter(candidate=>candidate.kind==='conversion-effects');
  if(candidates.some(candidate=>!['change-column-type','change-operation-context','conversion-effects'].includes(candidate.kind)))fail('G04 first profile refuses unimplemented changed dependencies or unselected source meaning','/next/source');
  if(typeChanges.length!==normalized.length||effects.length!==normalized.length)fail('Each and only each selected conversion must bind one existing type change and one effects marker');
  const selected=new Set(normalized.map(item=>JSON.stringify([item.table,refKey(item.field)])));
@@ -211,12 +212,15 @@ export function normalizeG04MigrationOptions(value:unknown,previous:TableDeploym
  }
  const markers=candidates.map(({oldValue:_old,newValue:_new,oldPath:_oldPath,newPath:_newPath,...marker})=>marker);
  if(options.reviewedChanges.some(marker=>(marker as any).conversion!==undefined)||!same(options.reviewedChanges,markers))fail('G04 review markers must be the exact ordered source discovery, without legacy conversion qualifiers','/options/reviewedChanges');
- for(const [index,item] of normalized.entries())if(item.recovery.mode==='irreversible'){
-  const exactMarker=effects.find(candidate=>candidate.id===item.recovery.reviewMarker);
+ for(const [index,item] of normalized.entries()){
+  const recovery=item.recovery;
+  if(recovery.mode==='irreversible'){
+  const exactMarker=effects.find(candidate=>candidate.id===recovery.reviewMarker);
   const intent=(exactMarker?.oldValue as any)?.conversionIntent;
   if(!exactMarker||exactMarker.path!==domainKind(next,item.table,item.field).physical.sourcePath||intent?.table!==item.table||!intent?.field||refKey(intent.field)!==refKey(item.field))fail('Irreversible recovery must reference this conversion’s exact effects marker','/options/conversions/'+index+'/recovery/reviewMarker');
+  }
  }
- validateG04SourceDelta(previous,next,normalized);
+ validateG04SourceDelta(installed,next,normalized);
  return options;
 }
 

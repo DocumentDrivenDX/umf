@@ -39,7 +39,9 @@ export interface TableMigrationStep extends Omit<TableDeploymentStep,'transactio
  expectedOutcome:{phase:'before-commit';kind:'complete-next-source-catalog';bundleDigest:string};
  verification:'native-catalog-privileges-and-role-scope';recovery:'rollback-transaction'|'inspect-index';
 }
-type TableMigrationStepDraft=Omit<TableMigrationStep,'preconditions'|'expectedOutcome'|'verification'|'recovery'> & Partial<Pick<TableMigrationStep,'preconditions'|'expectedOutcome'|'verification'|'recovery'>>;
+type LegacyPhaseOperation=Exclude<NonNullable<TableMigrationStep['phaseOperation']>,'capture-originals'|'convert-field'|'validate-conversion'>;
+export type LegacyTableMigrationStep=Omit<TableMigrationStep,'kind'|'phaseOperation'> & {kind:Exclude<TableMigrationStep['kind'],'conversion'>;phaseOperation?:LegacyPhaseOperation};
+type TableMigrationStepDraft=Omit<LegacyTableMigrationStep,'preconditions'|'expectedOutcome'|'verification'|'recovery'> & Partial<Pick<LegacyTableMigrationStep,'preconditions'|'expectedOutcome'|'verification'|'recovery'>>;
 export interface TableMigrationPlan extends TableMigrationRequest {
  version:'umf.table-migration/0.1'|'umf.table-migration/0.2'|'umf.table-migration/0.3'|'umf.table-migration/0.4'|'umf.table-migration/0.5'|'umf.table-migration/0.6'|'umf.table-migration/0.7';canonicalization:'RFC8785';
  fromBundleDigest:string|null;toBundleDigest:string;
@@ -50,6 +52,11 @@ export interface TableMigrationPlan extends TableMigrationRequest {
  requiresApproval:true;nativeQualified:false;digest:string;review?:MigrationReview[];
 }
 export type TableMigrationResult={status:'compiled';plan:TableMigrationPlan;diagnostics:[]}|{status:'blocked';diagnostics:Diagnostic[]};
+type LegacyMigrationVersion=Exclude<TableMigrationPlan['version'],'umf.table-migration/0.7'>;
+export type LegacyTableMigrationPlan=Omit<TableMigrationPlan,'version'|'options'> & {version:LegacyMigrationVersion;options?:LegacyTableMigrationOptions};
+export type G04TableMigrationPlan=Omit<TableMigrationPlan,'version'|'options'> & {version:'umf.table-migration/0.7';options:G04MigrationOptions};
+export type LegacyTableMigrationResult={status:'compiled';plan:LegacyTableMigrationPlan;diagnostics:[]}|{status:'blocked';diagnostics:Diagnostic[]};
+export type G04TableMigrationResult={status:'compiled';plan:G04TableMigrationPlan;diagnostics:[]}|{status:'blocked';diagnostics:Diagnostic[]};
 const fail=(message:string,path=''):never=>{throw new UmfError('TABLE_MIGRATION_UNSUPPORTED',message,path);};
 const same=(a:unknown,b:unknown):boolean=>canonical(a)===canonical(b);
 function internalFieldEffect(step:TableMigrationStepDraft,role:TableMigrationOperationRole,target:NonNullable<TableMigrationStep['phaseTarget']>,rowOperationId?:string):TableMigrationStepDraft{
@@ -269,7 +276,7 @@ function g11ForeignKeyTarget(bundle:TableDeploymentBundle,tableId:string,foreign
 function g11KeyChangeHasMarker(bundle:TableDeploymentBundle,tableId:string,keyId:string,candidates:readonly ReviewedChangeCandidate[]):boolean{
  const sourcePath=g11DependencyPath(bundle,tableId,'key',keyId);return candidates.some(candidate=>candidate.kind==='replace-primary-key'&&candidate.oldPath===sourcePath);
 }
-function g11PhaseSteps(steps:TableMigrationStep[],previous:TableDeploymentBundle,next:TableDeploymentBundle,options:LegacyTableMigrationOptions):TableMigrationStep[]{
+function g11PhaseSteps(steps:LegacyTableMigrationStep[],previous:TableDeploymentBundle,next:TableDeploymentBundle,options:LegacyTableMigrationOptions):LegacyTableMigrationStep[]{
  void options;
  const ordered=[...steps];
  for(const step of ordered){
@@ -282,9 +289,9 @@ function g11PhaseSteps(steps:TableMigrationStep[],previous:TableDeploymentBundle
  // order; display names and broad role ranks never determine execution order.
  const edges=ordered.map(()=>new Set<number>()),indegree=ordered.map(()=>0);
  const addEdge=(before:number,after:number)=>{if(before!==after&&!edges[before]!.has(after)){edges[before]!.add(after);indegree[after]!++;}};
- const sameTarget=(a:TableMigrationStep,b:TableMigrationStep)=>!!a.phaseTarget&&!!b.phaseTarget&&a.phaseTarget.table===b.phaseTarget.table&&refKey(a.phaseTarget.field)===refKey(b.phaseTarget.field);
- const depDrop=(step:TableMigrationStep)=>step.phaseOperation==='dependency-drop';
- const depAdd=(step:TableMigrationStep)=>step.phaseOperation==='dependency-add';
+ const sameTarget=(a:LegacyTableMigrationStep,b:LegacyTableMigrationStep)=>!!a.phaseTarget&&!!b.phaseTarget&&a.phaseTarget.table===b.phaseTarget.table&&refKey(a.phaseTarget.field)===refKey(b.phaseTarget.field);
+ const depDrop=(step:LegacyTableMigrationStep)=>step.phaseOperation==='dependency-drop';
+ const depAdd=(step:LegacyTableMigrationStep)=>step.phaseOperation==='dependency-add';
  const references=ordered.map(step=>step.phaseDependency?g11DependencyRefs(step.phaseOperation==='dependency-drop'?previous:next,step.phaseDependency):[]);
  for(let i=0;i<ordered.length;i++)for(let j=0;j<ordered.length;j++){
   const a=ordered[i]!,b=ordered[j]!;
@@ -306,7 +313,7 @@ function g11PhaseSteps(steps:TableMigrationStep[],previous:TableDeploymentBundle
   if(depAdd(b)&&a.phaseTarget&&references[j]!.some(ref=>ref.table===a.phaseTarget!.table&&refKey(ref.field)===refKey(a.phaseTarget!.field))&&['add-column','backfill','install-default','target-check','tighten-not-null'].includes(a.phaseOperation??''))addEdge(i,j);
  }
  const ready:number[]=[];for(let i=0;i<indegree.length;i++)if(indegree[i]===0)ready.push(i);
- const result:TableMigrationStep[]=[];
+ const result:LegacyTableMigrationStep[]=[];
  while(ready.length){const index=ready.shift()!;result.push(ordered[index]!);for(const target of edges[index]!){indegree[target]!--;if(indegree[target]===0){const at=ready.findIndex(item=>item>target);if(at<0)ready.push(target);else ready.splice(at,0,target);}}}
  if(result.length!==ordered.length)fail('G11 typed dependency schedule contains a cycle','/steps');
  return result;
@@ -792,7 +799,7 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
    }
   }
   const review:MigrationReview[]=options?[...options.backfills.map((_,i)=>({code:'SCOPED_BACKFILL' as const,path:'/options/backfills/'+i,message:'Administrative UPDATE may touch protected rows; exact source and effect bound require approval'})),...Array.from(changes.policyChanges,path=>({code:'POLICY_CHANGE_REVIEW' as const,path,message:'Changed row predicate may widen access; review old and new command policy'})),...Array.from(changes.droppedColumns.values()).flat().map(column=>({code:'IRREVERSIBLE_COLUMN_PURGE' as const,path:column.sourcePath,message:'Irreversible purge of stored values for Field '+column.field.module+'.'+column.field.element+' at table '+column.table+'.'+column.name+'. Metadata history is not a data backup; this profile performs immediate physical deletion.'}))]:[];
-  let migrationSteps:TableMigrationStep[]=steps.map(step=>({...step,
+  let migrationSteps:LegacyTableMigrationStep[]=steps.map(step=>({...step,
    preconditions:{phase:'before-plan',kind:previous?'installed-source-cohort':'empty-private-schema',bundleDigest:previous?.bundleDigest??null},
    expectedOutcome:{phase:'before-commit',kind:'complete-next-source-catalog',bundleDigest:next.bundleDigest},
    verification:'native-catalog-privileges-and-role-scope',recovery:step.transaction==='forbidden'?'inspect-index':'rollback-transaction'}));
@@ -803,7 +810,7 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
   }
   const migrationVersion=options?.version==='umf.table-migration-options/0.6'?'umf.table-migration/0.6' as const:options?.version==='umf.table-migration-options/0.4'?'umf.table-migration/0.4' as const:options?.version==='umf.table-migration-options/0.3'?'umf.table-migration/0.3' as const:options?.version==='umf.table-migration-options/0.2'?'umf.table-migration/0.2' as const:'umf.table-migration/0.1' as const;
   const phased=migrationVersion==='umf.table-migration/0.1'?undefined:phaseTableMigrationSteps(migrationSteps,previous,next,options,seedExecution);
-  if(phased)migrationSteps=phased.steps as TableMigrationStep[];
+  if(phased)migrationSteps=phased.steps as LegacyTableMigrationStep[];
   const internalOperationTags=new Map<string,TableMigrationOperationTag>();
   for(const step of migrationSteps){
    const tagged=step as TableMigrationStep&{[TABLE_MIGRATION_OPERATION]?:TableMigrationOperationTag},tag=tagged[TABLE_MIGRATION_OPERATION];
@@ -840,7 +847,7 @@ function compileG03DefaultChangePlan(request:TableMigrationRequest,previous:Tabl
   ?'ALTER TABLE '+relation+' ALTER COLUMN '+target+' SET DEFAULT '+defaultExpression
   :'ALTER TABLE '+relation+' ALTER COLUMN '+target+' DROP DEFAULT';
  if(new TextEncoder().encode(sql).length>1_049_600)fail('G03 ALTER statement exceeds 1,049,600 UTF-8 bytes',candidate.path);
- const step:TableMigrationStep={id:'step-00001',kind:'table',sourcePath:candidate.path,transaction:'required',sql,operation:Object.hasOwn(column,'default')?'set-default':'drop-default',phaseOperation:'change-default',phaseTarget,
+ const step:LegacyTableMigrationStep={id:'step-00001',kind:'table',sourcePath:candidate.path,transaction:'required',sql,operation:Object.hasOwn(column,'default')?'set-default':'drop-default',phaseOperation:'change-default',phaseTarget,
   preconditions:{phase:'before-plan',kind:'installed-source-cohort',bundleDigest:previous.bundleDigest},
   expectedOutcome:{phase:'before-commit',kind:'complete-next-source-catalog',bundleDigest:next.bundleDigest},
   verification:'native-catalog-privileges-and-role-scope',recovery:'rollback-transaction'};
@@ -857,6 +864,9 @@ function compileG03DefaultChangePlan(request:TableMigrationRequest,previous:Tabl
  return {status:'compiled',plan,diagnostics:[]};
 }
 
+export function compileTableMigration(input:Omit<TableMigrationRequest,'options'>&{options:G04MigrationOptions}):G04TableMigrationResult;
+export function compileTableMigration(input:Omit<TableMigrationRequest,'options'>&{options?:LegacyTableMigrationOptions}):LegacyTableMigrationResult;
+export function compileTableMigration(input:TableMigrationRequest):TableMigrationResult;
 export function compileTableMigration(input:TableMigrationRequest):TableMigrationResult{
  return compileTableMigrationInternal(input,false,hasTableMigrationOperationCapture(input));
 }

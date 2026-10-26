@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-import {compileTableMigration,type TableMigrationRequest,type TableMigrationResult,type TableMigrationStep} from './index';
+import {compileTableMigration,type TableMigrationRequest,type TableMigrationResult,type LegacyTableMigrationStep,type TableMigrationStep} from './index';
 import {requestTableMigrationOperationCapture,TABLE_MIGRATION_OPERATION,type TableMigrationOperationRecord,type TableMigrationOperationTag} from './internal-operations';
 import {hashCanonical,hashCanonicalCharged} from '../compilation/bundle/hash';
 import type {AccountingContext} from '../model/internal/accounting-context';
@@ -23,7 +23,7 @@ function exactKeys(value:object,keys:readonly string[]):boolean{
 function without(value:object,keys:readonly string[]):Record<string,unknown>{return Object.fromEntries(Object.entries(value).filter(([key])=>!keys.includes(key)));}
 function same(left:unknown,right:unknown,accounting?:AccountingContext,path='/g02'):boolean{return (accounting?hashCanonicalCharged(left,accounting,`${path}/left`):hashCanonical(left))===(accounting?hashCanonicalCharged(right,accounting,`${path}/right`):hashCanonical(right));}
 
-function validateTag(step:TableMigrationStep,tag:TableMigrationOperationTag,optionsVersion:string):void{
+function validateTag(step:LegacyTableMigrationStep,tag:TableMigrationOperationTag,optionsVersion:string):void{
  if(!exactKeys(tag,Object.hasOwn(tag,'rowOperationId')?['profile','role','sourcePath','subject','rowOperationId']:['profile','role','sourcePath','subject'])||tag.profile!=='umf.table-migration-renderer-operation/0.1'||tag.sourcePath!==step.sourcePath||!step.id)throw new Error('table-migration-internal-operation-binding');
  if(tag.subject.type==='field'){
   if(!exactKeys(tag.subject,['type','table','field'])||!exactKeys(tag.subject.field,['module','element']))throw new Error('table-migration-internal-field-shape');
@@ -73,7 +73,7 @@ export function compileTableMigrationWithOperations(input:TableMigrationRequest)
    if(((optionsVersion==='umf.table-migration-options/0.5'||optionsVersion==='umf.table-migration-options/0.6')&&step.phaseOperation)||(optionsVersion==='umf.table-migration-options/0.4'&&request.previous!==null))throw new Error('table-migration-internal-missing-effect-tag');
    continue;
   }
-  validateTag(step,tag,optionsVersion);
+  validateTag(step as LegacyTableMigrationStep,tag,optionsVersion);
   if(seen.has(step.id))throw new Error('table-migration-internal-duplicate-effect-tag');
   seen.add(step.id);
   operations.push({...tag,stepId:step.id});
