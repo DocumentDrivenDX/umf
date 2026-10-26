@@ -1,0 +1,3 @@
+tests/lifecycle/table-inventory-api.test.ts(475,35): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    The type 'readonly { readonly id: string; readonly definitionDigest: string; readonly originalSourceDigest: string; readonly disposition: "apply-once" | "retain-definition" | "retire-definition"; readonly execution: "confirmed" | "not-run"; }[]' is 'readonly' and cannot be assigned to the mutable type 'SeedLineageEntry[]'.

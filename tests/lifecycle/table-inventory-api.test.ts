@@ -472,7 +472,7 @@ test('R2 metered context reuses exact source cores for a seeded Note history and
  expect(state.history.plans).toHaveLength(2);expect(state.history.plans[1]).toEqual(compiled.plan);expect(state.history.executions[1]).toEqual(seedExecution(compiled.plan,fixture.next,'e'.repeat(64)));expect(state.seedLineage).toMatchObject([{id:'initial-note-seed',execution:'confirmed'}]);
  const current={previous:fixture.next,next:fixture.next,options:{seedSets:[],retiredSeedSets:[]}},recoveryMeter=new R2WorkMeter(),recoveryOwned=ownR2SourceComponents({previous:fixture.next,next:fixture.next,history:mixedHistory,selector:selector02},recoveryMeter);
  const recoveredLineage=deriveInventorySeedLineage(recoveryOwned.history as unknown as TableInventorySourceHistory,{previous:recoveryOwned.previous as unknown as TableDeploymentBundle|null,next:recoveryOwned.next as unknown as TableDeploymentBundle,options:current.options},createHistoricalG10Verifier(recoveryMeter),recoveryMeter);
- expect(recoveredLineage).toEqual(state.seedLineage);
+ expect(recoveredLineage).toEqual([...state.seedLineage]);
  expect(state.projectionCoreReuses).toBeGreaterThan(0);
  const snapshots=[state.phaseBudgets.owned,state.phaseBudgets.history,state.phaseBudgets.projection,state.phaseBudgets.lineage];
  expect(snapshots.every((item,index)=>index===0||item.work>=snapshots[index-1]!.work)).toBe(true);
