@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Private `umf.core-wire/1` transport shared by native language bindings.
 pub mod access_temporal_binding;
+pub mod artifact_references_binding;
 #[cfg(feature = "codegen")]
 mod codegen;
 pub mod core_key_tuple_binding;

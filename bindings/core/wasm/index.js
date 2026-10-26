@@ -19,6 +19,12 @@ const CORE_KIND_NULLABILITY_RUNTIME = Symbol('core-kind-nullability-runtime');
 const CORE_KIND_NULLABILITY_PREPARED = Symbol('core-kind-nullability-prepared');
 export {isWireAdmissionError} from './src/wire.js';
 export {isBit128EngineError};
+
+/** Invoke the opt-in Rust reference pass over tagged wire. The caller must have structurally validated pack first. */
+export function executeArtifactReferencesBindingWire(module, wireJson, controlDispatcher) {
+  if (typeof module?.executeArtifactReferencesWire !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  return module.executeArtifactReferencesWire(wireJson, controlDispatcher);
+}
 const nativeUmfCoreErrors = new WeakSet();
 const weakSetHas = Function.call.bind(WeakSet.prototype.has);
 const weakSetAdd = Function.call.bind(WeakSet.prototype.add);

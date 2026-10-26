@@ -35,6 +35,6 @@ not qualified.
 
 | Source | SHA-256 |
 | --- | --- |
-| `crates/umf-core/src/artifact_references.rs` | `763ee057042f592d366585f58ea1194d39a09a6a5a8e3fe5c7ae7347478518e0` |
+| `crates/umf-core/src/artifact_references.rs` | `1472213c2c6cd3448d2a9da840b54e1e7f64dc2a538cc3f0a3c2e8ace8851d65` |
 | `crates/umf-core/src/full_modules.rs` | `7fa6d86bd4dd14b3acefe677421a0e95ea84d644736bf9435a4d7a2b941983af` |
 | `src/domain-packs/artifacts.ts` | `de28494b466f7e28851aca0fe39f4ed47080ffa0b0012fee6d3795e3a48372b0` |

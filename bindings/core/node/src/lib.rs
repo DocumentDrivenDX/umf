@@ -476,6 +476,23 @@ pub fn execute_protobuf_inspect_wire(
     }
 }
 
+#[napi(js_name = "executeArtifactReferencesWire")]
+pub fn execute_artifact_references_wire(
+    env: Env,
+    wire_json: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::artifact_references_binding::execute_wire_with_control(
+            &wire_json, &mut hook,
+        ))
+    } else {
+        Ok(umf_core_wire::artifact_references_binding::execute_wire(&wire_json))
+    }
+}
+
 #[napi(js_name = "protobufInspectProfileVersion")]
 pub fn protobuf_inspect_profile_version() -> &'static str {
     umf_core_wire::PROTOBUF_INSPECT_PROFILE

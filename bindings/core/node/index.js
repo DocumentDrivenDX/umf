@@ -61,6 +61,11 @@ export function copyJson(value, limits) {
 
 export const engineVersion = addon.engineVersion();
 
+/** Invoke the opt-in Rust reference pass over tagged wire. The caller must have structurally validated pack first. */
+export function executeArtifactReferencesBindingWire(wireJson, controlDispatcher) {
+  return addon.executeArtifactReferencesWire(wireJson, controlDispatcher);
+}
+
 export {JAVASCRIPT_NUMERIC_PROFILE};
 export {SECURITY_LOGIC_PROFILE};
 export {BIT128_PROFILE};

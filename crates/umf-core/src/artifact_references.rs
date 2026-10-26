@@ -108,13 +108,13 @@ pub fn inspect_artifact_references(pack: &Value) -> Vec<Utf16> {
     diagnostics
 }
 
-fn string(value: &str) -> Value {
-    Value::String(Utf16::from(value))
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn string(value: &str) -> Value {
+        Value::String(Utf16::from(value))
+    }
 
     fn obj(fields: Vec<(&str, Value)>) -> Value {
         Value::Object(

@@ -14,6 +14,8 @@ export declare function createSemanticTypeRegistry(options?: {profile?: 'coopera
 /** Semantic refusals from the opt-in JSON Schema adapter retain the TypeScript UmfError name. */
 export declare class UmfError extends Error { readonly code: string; readonly path: string }
 export declare function copyJson(value: unknown, limits?: {maxDepth?: number; maxValues?: number}): unknown;
+/** Run artifactReferences/inspect over umf.core-wire/1. The pack must be structurally validated before this call. */
+export declare function executeArtifactReferencesBindingWire(wireJson: string, controlDispatcher?: (work: number) => string): string;
 export declare const engineVersion: string;
 export declare const JAVASCRIPT_NUMERIC_PROFILE: 'umf.javascript-numeric/1.0.0';
 export declare const BIT128_PROFILE: 'umf-128/1';
