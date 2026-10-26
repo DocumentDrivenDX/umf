@@ -187,11 +187,14 @@ class InputSnapshotTests(unittest.IsolatedAsyncioTestCase):
                 capture = _CompilerCapture(self)
                 original_to_thread = asyncio.to_thread
 
-                async def mutate_after_snapshot(function, *args, **kwargs):
-                    _mutate(caller)
-                    return await original_to_thread(function, *args, **kwargs)
+                async def mutate_after_snapshot(
+                    function, *args, _caller=caller,
+                    _original_to_thread=original_to_thread, **kwargs
+                ):
+                    _mutate(_caller)
+                    return await _original_to_thread(function, *args, **kwargs)
 
-                with capture.patches(lambda *_args, **_kwargs: probe), patch.object(
+                with capture.patches(lambda *_args, _probe=probe, **_kwargs: _probe), patch.object(
                     asyncio, "to_thread", side_effect=mutate_after_snapshot
                 ), self.assertRaisesRegex(SessionError, "stop after compiler input capture"):
                     await reader.read(identity, "operation", caller)
@@ -230,11 +233,14 @@ class InputSnapshotTests(unittest.IsolatedAsyncioTestCase):
                 capture = _CompilerCapture(self)
                 original_to_thread = asyncio.to_thread
 
-                async def mutate_after_snapshot(function, *args, **kwargs):
-                    _mutate(caller)
-                    return await original_to_thread(function, *args, **kwargs)
+                async def mutate_after_snapshot(
+                    function, *args, _caller=caller,
+                    _original_to_thread=original_to_thread, **kwargs
+                ):
+                    _mutate(_caller)
+                    return await _original_to_thread(function, *args, **kwargs)
 
-                with capture.patches(lambda *_args, **_kwargs: probe), patch.object(
+                with capture.patches(lambda *_args, _probe=probe, **_kwargs: _probe), patch.object(
                     asyncio, "to_thread", side_effect=mutate_after_snapshot
                 ), self.assertRaisesRegex(SessionError, "stop after compiler input capture"):
                     await writer.write_batch(identity, "operation", caller)

@@ -14,9 +14,9 @@ import json
 import os
 import sys
 import tempfile
+import traceback
 import unittest
 import uuid
-import traceback
 from contextlib import contextmanager
 from pathlib import Path
 from types import SimpleNamespace
@@ -27,11 +27,13 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from owner_bootstrap_setup_fixture import install_pending_owner_setup
 from umf_access.lifecycle import ingress_custody as custody
 from umf_access.lifecycle import ingress_local_postgres as native
-from umf_access.lifecycle import owner_bootstrap as bootstrap
 from umf_access.lifecycle import owner_approval_core as approval_core
+from umf_access.lifecycle import owner_bootstrap as bootstrap
 from umf_access.lifecycle import supervisor_journal_codec as codec
 from umf_access.lifecycle.owner_authority import (
-    _SIGNATURE_DOMAIN, _canonical_bytes, create_owner_authority_session,
+    _SIGNATURE_DOMAIN,
+    _canonical_bytes,
+    create_owner_authority_session,
 )
 from umf_access.lifecycle.row_originals import STORE_PROFILE
 
@@ -183,7 +185,7 @@ class _FakeConnection:
         if text in ('COMMIT', 'ROLLBACK'):
             self.info.transaction_status = 0
             return _Cursor()
-        if text.startswith('SET ') or text.startswith('RESET '):
+        if text.startswith(('SET ', 'RESET ')):
             return _Cursor()
         return self.db.execute(sql, params)
 
@@ -351,7 +353,6 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                 if readonly_budget is not None:
                     readonly_observations.append(readonly_budget)
                 maintenance = 'umf_m_' + supervisor_id.replace('-', '')
-                controller = 'umf_c_' + supervisor_id.replace('-', '')
                 role = current_role or maintenance
                 readonly = readonly_budget is not None
                 return {
@@ -566,11 +567,11 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     payloads_before_failure = dict(restarted_supervisor._owner_payloads)
                     dispatches_before_failure = dict(
                         restarted_supervisor._registration_recovery_dispatches)
-                    with patch.object(
-                            custody, '_bootstrap_original_02_target_custodian',
-                            side_effect=RuntimeError('fixture-bootstrap-cut')):
-                        with self.assertRaisesRegex(RuntimeError, 'fixture-bootstrap-cut'):
-                            restarted.reattach_original_registration(restarted_target)
+                    with (patch.object(
+                              custody, '_bootstrap_original_02_target_custodian',
+                              side_effect=RuntimeError('fixture-bootstrap-cut')),
+                          self.assertRaisesRegex(RuntimeError, 'fixture-bootstrap-cut')):
+                        restarted.reattach_original_registration(restarted_target)
                     self.assertIsNone(restarted_supervisor._resolver)
                     self.assertIsNone(restarted_supervisor.custody_handle)
                     self.assertEqual(restarted_supervisor._handles, handles_before_failure)
@@ -608,16 +609,16 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                             _self, database_name, current_role=current_role,
                             budget_reservation=budget_reservation,
                             readonly_budget=readonly_budget)
-                    with patch.object(
-                            native.LocalPostgresSupervisor, '_observe_native',
-                            fail_registration_observation_once):
-                        with self.assertRaisesRegex(
-                                native.LocalPostgresError,
-                                'local-postgresql-registration-outcome-unresolved'):
-                            with restarted_supervisor._original_control_lease(
-                                    operation_kind='registration-recover'):
-                                restarted_supervisor.execute_original_registration_reattachment(
-                                    reservation, effect_handle)
+                    with (patch.object(
+                              native.LocalPostgresSupervisor, '_observe_native',
+                              fail_registration_observation_once),
+                          self.assertRaisesRegex(
+                              native.LocalPostgresError,
+                              'local-postgresql-registration-outcome-unresolved'),
+                          restarted_supervisor._original_control_lease(
+                              operation_kind='registration-recover')):
+                        restarted_supervisor.execute_original_registration_reattachment(
+                            reservation, effect_handle)
                     self.assertFalse(callback_failure[0])
                     self.assertIsNone(restarted_supervisor._resolver)
                     self.assertIsNone(restarted_supervisor.custody_handle)
@@ -885,11 +886,11 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                                        capture_recovery_code),
                           patch.object(native.LocalPostgresSupervisor,
                                        '_recover_originals_store_creation_readonly',
-                                       capture_readonly_recovery_failure)):
-                        with self.assertRaisesRegex(
-                                Exception,
-                                r'^row-originals-store-recovery-invalid$'):
-                            recovery_provider.recover_creation()
+                                       capture_readonly_recovery_failure),
+                          self.assertRaisesRegex(
+                              Exception,
+                              r'^row-originals-store-recovery-invalid$')):
+                        recovery_provider.recover_creation()
                     self.assertEqual(recovery_codes, [
                         'local-postgresql-store-recovery-noncommit-unproven'])
                     first_readonly_connects = db.readonly_connect_options[readonly_connects_before:]
@@ -1085,11 +1086,11 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                                        capture_second_recovery_code),
                           patch.object(native.LocalPostgresSupervisor,
                                        '_recover_originals_store_creation_readonly',
-                                       capture_readonly_recovery_failure)):
-                        with self.assertRaisesRegex(
-                                Exception,
-                                r'^row-originals-store-recovery-invalid$'):
-                            pending_provider.recover_creation()
+                                       capture_readonly_recovery_failure),
+                          self.assertRaisesRegex(
+                              Exception,
+                              r'^row-originals-store-recovery-invalid$')):
+                        pending_provider.recover_creation()
                     self.assertEqual(second_recovery_codes, [
                         'local-postgresql-store-recovery-noncommit-unproven'])
                     second_readonly_connects = db.readonly_connect_options[
@@ -1204,15 +1205,15 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     native_targets_before_refusal = dict(
                         after_pending_supervisor._native_targets)
                     handles_before_refusal = dict(after_pending_supervisor._handles)
-                    with patch.object(native.LocalPostgresSupervisor,
-                                      '_validate_installation_binaries',
-                                      return_value=(profile.postgres_binary,
-                                                    profile.initdb_binary)), \
-                         patch.object(native, '_sha_file', return_value='b' * 64):
-                        with self.assertRaisesRegex(
-                                native.LocalPostgresError,
-                                'target-path-already-exists'):
-                            after_pending.prepare_target_creation()
+                    with (patch.object(native.LocalPostgresSupervisor,
+                                       '_validate_installation_binaries',
+                                       return_value=(profile.postgres_binary,
+                                                     profile.initdb_binary)),
+                          patch.object(native, '_sha_file', return_value='b' * 64),
+                          self.assertRaisesRegex(
+                              native.LocalPostgresError,
+                              'target-path-already-exists')):
+                        after_pending.prepare_target_creation()
                     with after_pending_supervisor._original_control_lease(
                             operation_kind='store'):
                         self.assertEqual(

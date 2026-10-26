@@ -5,8 +5,6 @@ from typing import ClassVar
 from unittest.mock import patch
 
 from umf_access.unified import SessionError, SessionIdentity
-from umf_access.unified.table_reads import _operation_scope
-from umf_access.unified.table_writes import SyncTableWriter
 from umf_access.unified.outcome_values import (
     digest,
     outcome_from_record,
@@ -14,6 +12,8 @@ from umf_access.unified.outcome_values import (
     outcome_record,
     outcome_slot,
 )
+from umf_access.unified.table_reads import _operation_scope
+from umf_access.unified.table_writes import SyncTableWriter
 
 
 class TableOutcomes(unittest.TestCase):
@@ -130,8 +130,9 @@ class TableOutcomes(unittest.TestCase):
                 self.assertEqual(calls,['lock','read'])
         for current,stored in (('weft.table-operation-module/0.1','weft.table-operation-module/0.2'),
                                ('weft.table-operation-module/0.2','weft.table-operation-module/0.1')):
-            with self.subTest(current=current,stored=stored):
-                with self.assertRaises(SessionError):run(current,stored)
+            with (self.subTest(current=current, stored=stored),
+                  self.assertRaises(SessionError)):
+                run(current, stored)
 
 
 if __name__=='__main__':unittest.main()

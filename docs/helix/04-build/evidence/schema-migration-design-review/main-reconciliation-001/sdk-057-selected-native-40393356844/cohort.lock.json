@@ -1,0 +1,1205 @@
+{
+  "cohort": "default",
+  "coreSemanticVersion": "0.10.0",
+  "dependencyResolution": {
+    "checkedRequirements": [
+      {
+        "active": true,
+        "from": "jsonschema",
+        "requirement": "attrs>=22.2.0"
+      },
+      {
+        "active": false,
+        "from": "jsonschema",
+        "requirement": "fqdn; extra == 'format'"
+      },
+      {
+        "active": false,
+        "from": "jsonschema",
+        "requirement": "fqdn; extra == 'format-nongpl'"
+      },
+      {
+        "active": false,
+        "from": "jsonschema",
+        "requirement": "idna; extra == 'format'"
+      },
+      {
+        "active": false,
+        "from": "jsonschema",
+        "requirement": "idna; extra == 'format-nongpl'"
+      },
+      {
+        "active": false,
+        "from": "jsonschema",
+        "requirement": "isoduration; extra == 'format'"
+      },
+      {
+        "active": false,
+        "from": "jsonschema",
+        "requirement": "isoduration; extra == 'format-nongpl'"
+      },
+      {
+        "active": false,
+        "from": "jsonschema",
+        "requirement": "jsonpointer>1.13; extra == 'format'"
+      },
+      {
+        "active": false,
+        "from": "jsonschema",
+        "requirement": "jsonpointer>1.13; extra == 'format-nongpl'"
+      },
+      {
+        "active": true,
+        "from": "jsonschema",
+        "requirement": "jsonschema-specifications>=2023.03.6"
+      },
+      {
+        "active": true,
+        "from": "jsonschema",
+        "requirement": "referencing>=0.28.4"
+      },
+      {
+        "active": false,
+        "from": "jsonschema",
+        "requirement": "rfc3339-validator; extra == 'format'"
+      },
+      {
+        "active": false,
+        "from": "jsonschema",
+        "requirement": "rfc3339-validator; extra == 'format-nongpl'"
+      },
+      {
+        "active": false,
+        "from": "jsonschema",
+        "requirement": "rfc3986-validator>0.1.0; extra == 'format-nongpl'"
+      },
+      {
+        "active": false,
+        "from": "jsonschema",
+        "requirement": "rfc3987-syntax>=1.1.0; extra == 'format-nongpl'"
+      },
+      {
+        "active": false,
+        "from": "jsonschema",
+        "requirement": "rfc3987; extra == 'format'"
+      },
+      {
+        "active": true,
+        "from": "jsonschema",
+        "requirement": "rpds-py>=0.25.0"
+      },
+      {
+        "active": false,
+        "from": "jsonschema",
+        "requirement": "uri-template; extra == 'format'"
+      },
+      {
+        "active": false,
+        "from": "jsonschema",
+        "requirement": "uri-template; extra == 'format-nongpl'"
+      },
+      {
+        "active": false,
+        "from": "jsonschema",
+        "requirement": "webcolors>=1.11; extra == 'format'"
+      },
+      {
+        "active": false,
+        "from": "jsonschema",
+        "requirement": "webcolors>=24.6.0; extra == 'format-nongpl'"
+      },
+      {
+        "active": true,
+        "from": "jsonschema-specifications",
+        "requirement": "referencing>=0.31.0"
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "Sphinx>=5.0; extra == \"docs\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "anyio>=4.0; extra == \"test\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "ast-comments>=1.1.2; extra == \"dev\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "backports.zoneinfo>=0.2.0; python_version < \"3.9\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "black>=24.1.0; extra == \"dev\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "codespell>=2.2; extra == \"dev\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "dnspython>=2.1; extra == \"dev\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "flake8>=4.0; extra == \"dev\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "furo==2022.6.21; extra == \"docs\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "isort-psycopg; extra == \"dev\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "isort[colors]>=6.0; extra == \"dev\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "mypy>=1.14; extra == \"dev\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "mypy>=1.14; extra == \"test\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "pproxy>=2.7; extra == \"test\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "pre-commit>=4.0.1; extra == \"dev\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "psycopg-binary==3.2.13; implementation_name != \"pypy\" and extra == \"binary\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "psycopg-c==3.2.13; implementation_name != \"pypy\" and extra == \"c\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "psycopg-pool; extra == \"pool\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "pytest-cov>=3.0; extra == \"test\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "pytest-randomly>=3.5; extra == \"test\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "pytest>=6.2.5; extra == \"test\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "sphinx-autobuild>=2021.3.14; extra == \"docs\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "sphinx-autodoc-typehints>=1.12; extra == \"docs\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "types-setuptools>=57.4; extra == \"dev\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "types-shapely>=2.0; extra == \"dev\""
+      },
+      {
+        "active": true,
+        "from": "psycopg",
+        "requirement": "typing-extensions>=4.6; python_version < \"3.13\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "tzdata; sys_platform == \"win32\""
+      },
+      {
+        "active": false,
+        "from": "psycopg",
+        "requirement": "wheel>=0.37; extra == \"dev\""
+      },
+      {
+        "active": true,
+        "from": "pydantic",
+        "requirement": "annotated-types>=0.6.0"
+      },
+      {
+        "active": false,
+        "from": "pydantic",
+        "requirement": "email-validator>=2.0.0; extra == 'email'"
+      },
+      {
+        "active": true,
+        "from": "pydantic",
+        "requirement": "pydantic-core==2.50.1"
+      },
+      {
+        "active": true,
+        "from": "pydantic",
+        "requirement": "typing-extensions>=4.16.0"
+      },
+      {
+        "active": true,
+        "from": "pydantic",
+        "requirement": "typing-inspection>=0.4.4"
+      },
+      {
+        "active": false,
+        "from": "pydantic",
+        "requirement": "tzdata; (platform_system == 'Windows') and extra == 'timezone'"
+      },
+      {
+        "active": true,
+        "from": "pydantic-core",
+        "requirement": "typing-extensions>=4.16.0"
+      },
+      {
+        "active": true,
+        "from": "referencing",
+        "requirement": "attrs>=22.2.0"
+      },
+      {
+        "active": true,
+        "from": "referencing",
+        "requirement": "rpds-py>=0.7.0"
+      },
+      {
+        "active": true,
+        "from": "referencing",
+        "requirement": "typing-extensions>=4.4.0; python_version < '3.13'"
+      },
+      {
+        "active": false,
+        "from": "ruamel-yaml",
+        "requirement": "mercurial>5.7; extra == \"docs\""
+      },
+      {
+        "active": false,
+        "from": "ruamel-yaml",
+        "requirement": "ruamel.yaml.clib; platform_python_implementation == \"CPython\" and extra == \"oldlibyaml\""
+      },
+      {
+        "active": false,
+        "from": "ruamel-yaml",
+        "requirement": "ruamel.yaml.clibz>=0.3.7; platform_python_implementation == \"CPython\" and extra == \"libyaml\""
+      },
+      {
+        "active": false,
+        "from": "ruamel-yaml",
+        "requirement": "ruamel.yaml.jinja2>=0.2; extra == \"jinja2\""
+      },
+      {
+        "active": false,
+        "from": "ruamel-yaml",
+        "requirement": "ryd; extra == \"docs\""
+      },
+      {
+        "active": true,
+        "from": "typing-inspection",
+        "requirement": "typing-extensions>=4.15.0"
+      },
+      {
+        "active": false,
+        "from": "umf-access",
+        "requirement": "cryptography==50.0.2; extra == 'owner-authority'"
+      },
+      {
+        "active": false,
+        "from": "umf-access",
+        "requirement": "pglast==7.20; extra == 'sql-containment'"
+      },
+      {
+        "active": true,
+        "from": "umf-access",
+        "requirement": "pydantic<3,>=2.13"
+      },
+      {
+        "active": true,
+        "from": "umf-access",
+        "requirement": "typing-extensions<5,>=4.16"
+      },
+      {
+        "active": true,
+        "from": "umf-codegen",
+        "requirement": "mini-racer==0.14.1"
+      },
+      {
+        "active": true,
+        "from": "umf-core",
+        "requirement": "pydantic<3,>=2.11"
+      }
+    ],
+    "markerEnvironment": {
+      "implementation_name": "cpython",
+      "implementation_version": "3.11.17",
+      "os_name": "posix",
+      "platform_machine": "x86_64",
+      "platform_python_implementation": "CPython",
+      "platform_release": "6.17.0-1022-azure",
+      "platform_system": "Linux",
+      "platform_version": "#22-Ubuntu SMP Mon Jul 27 17:24:03 UTC 2026",
+      "python_full_version": "3.11.17",
+      "python_version": "3.11",
+      "sys_platform": "linux"
+    },
+    "method": "active Requires-Dist closure from exact selected wheel METADATA",
+    "productionRoots": [
+      "umf-core",
+      "umf-access",
+      "umf-codegen",
+      "weft-sql"
+    ],
+    "qualificationDriverRoots": [
+      "psycopg",
+      "psycopg-binary",
+      "jsonschema",
+      "ruamel-yaml"
+    ],
+    "selectedNormalizedDistributions": [
+      "annotated-types",
+      "attrs",
+      "jsonschema",
+      "jsonschema-specifications",
+      "mini-racer",
+      "psycopg",
+      "psycopg-binary",
+      "pydantic",
+      "pydantic-core",
+      "referencing",
+      "rpds-py",
+      "ruamel-yaml",
+      "typing-extensions",
+      "typing-inspection",
+      "umf-access",
+      "umf-codegen",
+      "umf-core",
+      "weft-sql"
+    ]
+  },
+  "intendedCells": [
+    {
+      "architecture": "x86_64",
+      "libc": "glibc >= 2.34",
+      "os": "ubuntu-24.04",
+      "python": "3.11"
+    }
+  ],
+  "optionalProfiles": {
+    "admin-sql-containment": {
+      "distribution": "pglast",
+      "includedInDefaultMirror": false,
+      "license": "GPL-3.0-or-later",
+      "lockTemplate": "python/packaging/pglast-optional-wheel-lock.template.json",
+      "note": "Optional containment cohort; four wheel hashes and source/license notices are in the separate lock. Keep outside the default runtime mirror.",
+      "pypiAttestation": "not provided for this release",
+      "sdistSha256": "6dd32bfd848e0f35de448ef23d819c8de5bb55087b160f488918d97779116a92",
+      "sdistUrl": "https://files.pythonhosted.org/packages/source/p/pglast/pglast-7.20.tar.gz",
+      "sourceCatalog": "docs/helix/04-build/evidence/praxis-embedder/pglast-optional-wheel-lock.json",
+      "version": "7.20",
+      "wheelLicenseFiles": []
+    }
+  },
+  "packageRoots": {
+    "production": [
+      "umf-core",
+      "umf-access",
+      "umf-codegen",
+      "weft-sql"
+    ],
+    "qualificationDrivers": [
+      "psycopg",
+      "psycopg-binary",
+      "jsonschema",
+      "ruamel-yaml"
+    ]
+  },
+  "packages": [
+    {
+      "distribution": "annotated-types",
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/annotated-types/0.8.0/json",
+        "url": "https://pypi.org/project/annotated-types/0.8.0/"
+      },
+      "version": "0.8.0"
+    },
+    {
+      "distribution": "attrs",
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/attrs/26.1.0/json",
+        "url": "https://pypi.org/project/attrs/26.1.0/"
+      },
+      "version": "26.1.0"
+    },
+    {
+      "distribution": "jsonschema",
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/jsonschema/4.26.0/json",
+        "url": "https://pypi.org/project/jsonschema/4.26.0/"
+      },
+      "version": "4.26.0"
+    },
+    {
+      "distribution": "jsonschema-specifications",
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/jsonschema-specifications/2025.9.1/json",
+        "url": "https://pypi.org/project/jsonschema-specifications/2025.9.1/"
+      },
+      "version": "2025.9.1"
+    },
+    {
+      "distribution": "mini-racer",
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "cdf3a088e1363f16a695288f882abf76b3705b8e1df21418208b87ed010037a4",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/mini-racer/0.14.1/json",
+        "url": "https://pypi.org/project/mini-racer/0.14.1/"
+      },
+      "version": "0.14.1"
+    },
+    {
+      "distribution": "psycopg",
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "a481374514f2da627157f767a9336705ebefe93ea7a0522a6cbacba165da179a",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/psycopg/3.2.13/json",
+        "url": "https://pypi.org/project/psycopg/3.2.13/"
+      },
+      "version": "3.2.13"
+    },
+    {
+      "distribution": "psycopg-binary",
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "27150515de5f709e4142429db6fd36a1d01f0b8b17d915b5f7bb095364465398",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/psycopg-binary/3.2.13/json",
+        "url": "https://pypi.org/project/psycopg-binary/3.2.13/"
+      },
+      "version": "3.2.13"
+    },
+    {
+      "distribution": "pydantic",
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "9195d967ec791692a04438115466764fb8b9a27b31f14a760437694f40d6b454",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/pydantic/2.14.1/json",
+        "url": "https://pypi.org/project/pydantic/2.14.1/"
+      },
+      "version": "2.14.1"
+    },
+    {
+      "distribution": "pydantic-core",
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "8812592c85d0edf423f10eadcef42716d71e8219085ad9e85b775057b7306133",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/pydantic-core/2.50.1/json",
+        "url": "https://pypi.org/project/pydantic-core/2.50.1/"
+      },
+      "version": "2.50.1"
+    },
+    {
+      "distribution": "referencing",
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/referencing/0.37.0/json",
+        "url": "https://pypi.org/project/referencing/0.37.0/"
+      },
+      "version": "0.37.0"
+    },
+    {
+      "distribution": "rpds-py",
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "136a1c3fe4402b7008bc81cb62ee538481795b61a7e83df88dff3b3f02b726ff",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/rpds-py/2026.9.1/json",
+        "url": "https://pypi.org/project/rpds-py/2026.9.1/"
+      },
+      "version": "2026.9.1"
+    },
+    {
+      "distribution": "ruamel-yaml",
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "27592957fedf6e0b62f281e96effd28043345e0e66001f97683aa9a40c667c93",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/ruamel.yaml/0.19.1/json",
+        "url": "https://pypi.org/project/ruamel.yaml/0.19.1/"
+      },
+      "version": "0.19.1"
+    },
+    {
+      "distribution": "typing-extensions",
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/typing-extensions/4.16.0/json",
+        "url": "https://pypi.org/project/typing-extensions/4.16.0/"
+      },
+      "version": "4.16.0"
+    },
+    {
+      "distribution": "typing-inspection",
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/typing-inspection/0.4.4/json",
+        "url": "https://pypi.org/project/typing-inspection/0.4.4/"
+      },
+      "version": "0.4.4"
+    },
+    {
+      "distribution": "umf-access",
+      "source": {
+        "commit": "71b5f87805324c0e0d12c279a4898c8a44f625a9",
+        "kind": "repository-wheel",
+        "path": "python/umf_access"
+      },
+      "version": "0.1.0.dev8"
+    },
+    {
+      "distribution": "umf-codegen",
+      "source": {
+        "commit": "71b5f87805324c0e0d12c279a4898c8a44f625a9",
+        "kind": "repository-wheel",
+        "path": "python/umf_codegen"
+      },
+      "version": "0.1.0a5"
+    },
+    {
+      "distribution": "umf-core",
+      "source": {
+        "filename": "umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl",
+        "kind": "immutable-release-wheel",
+        "nativeSha256": "78dd1542f723b4f4d8c336c137caa478974a981ed759ada171a5877d7e0368a8",
+        "release": "python-v0.10.2",
+        "releaseTag": "python-v0.10.2",
+        "repository": "https://github.com/DocumentDrivenDX/umf",
+        "sdistFilename": "umf_core-0.10.2.tar.gz",
+        "sdistSha256": "90a107aaa507930e1d71c0cf208b77182d06c0bf2a1b13681fd5f7b6ed74cb9d",
+        "sdistUrl": "https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.2/umf_core-0.10.2.tar.gz",
+        "sha256": "708f967747b0539b9ca7b6a5f39d1017eea8ddb1d07cd62f4f46592e088f6f39",
+        "sourceCommit": "6337b4b5f65144387ce5c0bbf9cbad955a921c8f",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.2/umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl"
+      },
+      "version": "0.10.2"
+    },
+    {
+      "distribution": "weft-sql",
+      "source": {
+        "kind": "immutable-release-wheel",
+        "release": "weft v0.4.53",
+        "sha256": "db01c4cf6357d674f1591609a2b9c83a9322ad8f8937c345e5950cc1582b83d2",
+        "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.53/weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+      },
+      "version": "0.4.53"
+    }
+  ],
+  "profile": "umf.embedder-wheel-lock/1",
+  "status": "locked",
+  "templateSha256": "1b80afbe4a10e13f7e06a0b5665090ec76d3c59ef423ae498786b60f51e76f8f",
+  "wheels": [
+    {
+      "distribution": "annotated-types",
+      "filename": "annotated_types-0.8.0-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "annotated_types-0.8.0.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [],
+      "sha256": "f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0",
+      "size": 13427,
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/annotated-types/0.8.0/json",
+        "url": "https://pypi.org/project/annotated-types/0.8.0/"
+      },
+      "version": "0.8.0"
+    },
+    {
+      "distribution": "attrs",
+      "filename": "attrs-26.1.0-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "attrs-26.1.0.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [],
+      "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
+      "size": 67548,
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/attrs/26.1.0/json",
+        "url": "https://pypi.org/project/attrs/26.1.0/"
+      },
+      "version": "26.1.0"
+    },
+    {
+      "distribution": "jsonschema",
+      "filename": "jsonschema-4.26.0-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "jsonschema-4.26.0.dist-info/licenses/COPYING"
+      ],
+      "licenseFiles": [
+        "COPYING"
+      ],
+      "requiresDist": [
+        "attrs>=22.2.0",
+        "jsonschema-specifications>=2023.03.6",
+        "referencing>=0.28.4",
+        "rpds-py>=0.25.0",
+        "fqdn; extra == 'format'",
+        "idna; extra == 'format'",
+        "isoduration; extra == 'format'",
+        "jsonpointer>1.13; extra == 'format'",
+        "rfc3339-validator; extra == 'format'",
+        "rfc3987; extra == 'format'",
+        "uri-template; extra == 'format'",
+        "webcolors>=1.11; extra == 'format'",
+        "fqdn; extra == 'format-nongpl'",
+        "idna; extra == 'format-nongpl'",
+        "isoduration; extra == 'format-nongpl'",
+        "jsonpointer>1.13; extra == 'format-nongpl'",
+        "rfc3339-validator; extra == 'format-nongpl'",
+        "rfc3986-validator>0.1.0; extra == 'format-nongpl'",
+        "rfc3987-syntax>=1.1.0; extra == 'format-nongpl'",
+        "uri-template; extra == 'format-nongpl'",
+        "webcolors>=24.6.0; extra == 'format-nongpl'"
+      ],
+      "sha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
+      "size": 90630,
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/jsonschema/4.26.0/json",
+        "url": "https://pypi.org/project/jsonschema/4.26.0/"
+      },
+      "version": "4.26.0"
+    },
+    {
+      "distribution": "jsonschema-specifications",
+      "filename": "jsonschema_specifications-2025.9.1-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "jsonschema_specifications-2025.9.1.dist-info/licenses/COPYING"
+      ],
+      "licenseFiles": [
+        "COPYING"
+      ],
+      "requiresDist": [
+        "referencing>=0.31.0"
+      ],
+      "sha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
+      "size": 18437,
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/jsonschema-specifications/2025.9.1/json",
+        "url": "https://pypi.org/project/jsonschema-specifications/2025.9.1/"
+      },
+      "version": "2025.9.1"
+    },
+    {
+      "distribution": "mini-racer",
+      "filename": "mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl",
+      "license": null,
+      "licenseExpression": "ISC",
+      "licenseFilePaths": [
+        "mini_racer-0.14.1.dist-info/licenses/LICENSE",
+        "mini_racer-0.14.1.dist-info/licenses/AUTHORS.md"
+      ],
+      "licenseFiles": [
+        "LICENSE",
+        "AUTHORS.md"
+      ],
+      "requiresDist": [],
+      "sha256": "cdf3a088e1363f16a695288f882abf76b3705b8e1df21418208b87ed010037a4",
+      "size": 22178205,
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "cdf3a088e1363f16a695288f882abf76b3705b8e1df21418208b87ed010037a4",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/mini-racer/0.14.1/json",
+        "url": "https://pypi.org/project/mini-racer/0.14.1/"
+      },
+      "version": "0.14.1"
+    },
+    {
+      "distribution": "psycopg",
+      "filename": "psycopg-3.2.13-py3-none-any.whl",
+      "license": "LGPL-3.0-only",
+      "licenseExpression": null,
+      "licenseFilePaths": [
+        "psycopg-3.2.13.dist-info/licenses/LICENSE.txt"
+      ],
+      "licenseFiles": [
+        "LICENSE.txt"
+      ],
+      "requiresDist": [
+        "backports.zoneinfo>=0.2.0; python_version < \"3.9\"",
+        "typing-extensions>=4.6; python_version < \"3.13\"",
+        "tzdata; sys_platform == \"win32\"",
+        "psycopg-c==3.2.13; implementation_name != \"pypy\" and extra == \"c\"",
+        "psycopg-binary==3.2.13; implementation_name != \"pypy\" and extra == \"binary\"",
+        "psycopg-pool; extra == \"pool\"",
+        "anyio>=4.0; extra == \"test\"",
+        "mypy>=1.14; extra == \"test\"",
+        "pproxy>=2.7; extra == \"test\"",
+        "pytest>=6.2.5; extra == \"test\"",
+        "pytest-cov>=3.0; extra == \"test\"",
+        "pytest-randomly>=3.5; extra == \"test\"",
+        "ast-comments>=1.1.2; extra == \"dev\"",
+        "black>=24.1.0; extra == \"dev\"",
+        "codespell>=2.2; extra == \"dev\"",
+        "dnspython>=2.1; extra == \"dev\"",
+        "flake8>=4.0; extra == \"dev\"",
+        "isort[colors]>=6.0; extra == \"dev\"",
+        "isort-psycopg; extra == \"dev\"",
+        "mypy>=1.14; extra == \"dev\"",
+        "pre-commit>=4.0.1; extra == \"dev\"",
+        "types-setuptools>=57.4; extra == \"dev\"",
+        "types-shapely>=2.0; extra == \"dev\"",
+        "wheel>=0.37; extra == \"dev\"",
+        "Sphinx>=5.0; extra == \"docs\"",
+        "furo==2022.6.21; extra == \"docs\"",
+        "sphinx-autobuild>=2021.3.14; extra == \"docs\"",
+        "sphinx-autodoc-typehints>=1.12; extra == \"docs\""
+      ],
+      "sha256": "a481374514f2da627157f767a9336705ebefe93ea7a0522a6cbacba165da179a",
+      "size": 206797,
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "a481374514f2da627157f767a9336705ebefe93ea7a0522a6cbacba165da179a",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/psycopg/3.2.13/json",
+        "url": "https://pypi.org/project/psycopg/3.2.13/"
+      },
+      "version": "3.2.13"
+    },
+    {
+      "distribution": "psycopg-binary",
+      "filename": "psycopg_binary-3.2.13-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "license": "LGPL-3.0-only",
+      "licenseExpression": null,
+      "licenseFilePaths": [
+        "psycopg_binary-3.2.13.dist-info/licenses/LICENSE.txt"
+      ],
+      "licenseFiles": [
+        "LICENSE.txt"
+      ],
+      "requiresDist": [],
+      "sha256": "27150515de5f709e4142429db6fd36a1d01f0b8b17d915b5f7bb095364465398",
+      "size": 4421537,
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "27150515de5f709e4142429db6fd36a1d01f0b8b17d915b5f7bb095364465398",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/psycopg-binary/3.2.13/json",
+        "url": "https://pypi.org/project/psycopg-binary/3.2.13/"
+      },
+      "version": "3.2.13"
+    },
+    {
+      "distribution": "pydantic",
+      "filename": "pydantic-2.14.1-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "pydantic-2.14.1.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [
+        "annotated-types>=0.6.0",
+        "pydantic-core==2.50.1",
+        "typing-extensions>=4.16.0",
+        "typing-inspection>=0.4.4",
+        "email-validator>=2.0.0; extra == 'email'",
+        "tzdata; (platform_system == 'Windows') and extra == 'timezone'"
+      ],
+      "sha256": "9195d967ec791692a04438115466764fb8b9a27b31f14a760437694f40d6b454",
+      "size": 488106,
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "9195d967ec791692a04438115466764fb8b9a27b31f14a760437694f40d6b454",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/pydantic/2.14.1/json",
+        "url": "https://pypi.org/project/pydantic/2.14.1/"
+      },
+      "version": "2.14.1"
+    },
+    {
+      "distribution": "pydantic-core",
+      "filename": "pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "pydantic_core-2.50.1.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [
+        "typing-extensions>=4.16.0"
+      ],
+      "sha256": "8812592c85d0edf423f10eadcef42716d71e8219085ad9e85b775057b7306133",
+      "size": 2157623,
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "8812592c85d0edf423f10eadcef42716d71e8219085ad9e85b775057b7306133",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/pydantic-core/2.50.1/json",
+        "url": "https://pypi.org/project/pydantic-core/2.50.1/"
+      },
+      "version": "2.50.1"
+    },
+    {
+      "distribution": "referencing",
+      "filename": "referencing-0.37.0-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "referencing-0.37.0.dist-info/licenses/COPYING"
+      ],
+      "licenseFiles": [
+        "COPYING"
+      ],
+      "requiresDist": [
+        "attrs>=22.2.0",
+        "rpds-py>=0.7.0",
+        "typing-extensions>=4.4.0; python_version < '3.13'"
+      ],
+      "sha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
+      "size": 26766,
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/referencing/0.37.0/json",
+        "url": "https://pypi.org/project/referencing/0.37.0/"
+      },
+      "version": "0.37.0"
+    },
+    {
+      "distribution": "rpds-py",
+      "filename": "rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "rpds_py-2026.9.1.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [],
+      "sha256": "136a1c3fe4402b7008bc81cb62ee538481795b61a7e83df88dff3b3f02b726ff",
+      "size": 375426,
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "136a1c3fe4402b7008bc81cb62ee538481795b61a7e83df88dff3b3f02b726ff",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/rpds-py/2026.9.1/json",
+        "url": "https://pypi.org/project/rpds-py/2026.9.1/"
+      },
+      "version": "2026.9.1"
+    },
+    {
+      "distribution": "ruamel-yaml",
+      "filename": "ruamel_yaml-0.19.1-py3-none-any.whl",
+      "license": "MIT",
+      "licenseExpression": null,
+      "licenseFilePaths": [
+        "ruamel_yaml-0.19.1.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [
+        "ruamel.yaml.clib; platform_python_implementation == \"CPython\" and extra == \"oldlibyaml\"",
+        "ruamel.yaml.clibz>=0.3.7; platform_python_implementation == \"CPython\" and extra == \"libyaml\"",
+        "ruamel.yaml.jinja2>=0.2; extra == \"jinja2\"",
+        "ryd; extra == \"docs\"",
+        "mercurial>5.7; extra == \"docs\""
+      ],
+      "sha256": "27592957fedf6e0b62f281e96effd28043345e0e66001f97683aa9a40c667c93",
+      "size": 118102,
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "27592957fedf6e0b62f281e96effd28043345e0e66001f97683aa9a40c667c93",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/ruamel.yaml/0.19.1/json",
+        "url": "https://pypi.org/project/ruamel.yaml/0.19.1/"
+      },
+      "version": "0.19.1"
+    },
+    {
+      "distribution": "typing-extensions",
+      "filename": "typing_extensions-4.16.0-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "PSF-2.0",
+      "licenseFilePaths": [
+        "typing_extensions-4.16.0.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [],
+      "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+      "size": 45571,
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/typing-extensions/4.16.0/json",
+        "url": "https://pypi.org/project/typing-extensions/4.16.0/"
+      },
+      "version": "4.16.0"
+    },
+    {
+      "distribution": "typing-inspection",
+      "filename": "typing_inspection-0.4.4-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "typing_inspection-0.4.4.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [
+        "typing-extensions>=4.15.0"
+      ],
+      "sha256": "65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147",
+      "size": 14750,
+      "source": {
+        "index": "https://pypi.org/simple",
+        "kind": "pypi-wheel",
+        "publisherArtifactSha256": "65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147",
+        "publisherHashSource": "PyPI JSON release metadata",
+        "releaseMetadata": "https://pypi.org/pypi/typing-inspection/0.4.4/json",
+        "url": "https://pypi.org/project/typing-inspection/0.4.4/"
+      },
+      "version": "0.4.4"
+    },
+    {
+      "distribution": "umf-access",
+      "filename": "umf_access-0.1.0.dev8-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "MIT OR Apache-2.0",
+      "licenseFilePaths": [
+        "umf_access-0.1.0.dev8.dist-info/licenses/LICENSE-APACHE",
+        "umf_access-0.1.0.dev8.dist-info/licenses/LICENSE-MIT",
+        "umf_access-0.1.0.dev8.dist-info/licenses/LICENSE.md"
+      ],
+      "licenseFiles": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT",
+        "LICENSE.md"
+      ],
+      "requiresDist": [
+        "pydantic<3,>=2.13",
+        "typing-extensions<5,>=4.16",
+        "cryptography==50.0.2; extra == 'owner-authority'",
+        "pglast==7.20; extra == 'sql-containment'"
+      ],
+      "sha256": "f1883d4b137d0101b51bf3ce30226d10fa1821ec95df22b479ac7c9317dd1a93",
+      "size": 578631,
+      "source": {
+        "commit": "71b5f87805324c0e0d12c279a4898c8a44f625a9",
+        "kind": "repository-wheel",
+        "path": "python/umf_access"
+      },
+      "version": "0.1.0.dev8"
+    },
+    {
+      "distribution": "umf-codegen",
+      "filename": "umf_codegen-0.1.0a5-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "MIT OR Apache-2.0",
+      "licenseFilePaths": [
+        "umf_codegen-0.1.0a5.dist-info/licenses/LICENSE-APACHE",
+        "umf_codegen-0.1.0a5.dist-info/licenses/LICENSE-MIT",
+        "umf_codegen-0.1.0a5.dist-info/licenses/LICENSE.md"
+      ],
+      "licenseFiles": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT",
+        "LICENSE.md"
+      ],
+      "requiresDist": [
+        "mini-racer==0.14.1"
+      ],
+      "sha256": "74be7e50a41229ec353de6c9321328b40e132aae9b813d5c89746af12169d9e3",
+      "size": 261287,
+      "source": {
+        "commit": "71b5f87805324c0e0d12c279a4898c8a44f625a9",
+        "kind": "repository-wheel",
+        "path": "python/umf_codegen"
+      },
+      "version": "0.1.0a5"
+    },
+    {
+      "distribution": "umf-core",
+      "filename": "umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl",
+      "license": null,
+      "licenseExpression": "MIT OR Apache-2.0",
+      "licenseFilePaths": [
+        "umf_core-0.10.2.dist-info/licenses/LICENSE-APACHE",
+        "umf_core-0.10.2.dist-info/licenses/LICENSE-MIT",
+        "umf_core-0.10.2.dist-info/licenses/LICENSE.md"
+      ],
+      "licenseFiles": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT",
+        "LICENSE.md"
+      ],
+      "requiresDist": [
+        "pydantic<3,>=2.11"
+      ],
+      "sha256": "708f967747b0539b9ca7b6a5f39d1017eea8ddb1d07cd62f4f46592e088f6f39",
+      "size": 3582082,
+      "source": {
+        "filename": "umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl",
+        "kind": "immutable-release-wheel",
+        "nativeSha256": "78dd1542f723b4f4d8c336c137caa478974a981ed759ada171a5877d7e0368a8",
+        "release": "python-v0.10.2",
+        "releaseTag": "python-v0.10.2",
+        "repository": "https://github.com/DocumentDrivenDX/umf",
+        "sdistFilename": "umf_core-0.10.2.tar.gz",
+        "sdistSha256": "90a107aaa507930e1d71c0cf208b77182d06c0bf2a1b13681fd5f7b6ed74cb9d",
+        "sdistUrl": "https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.2/umf_core-0.10.2.tar.gz",
+        "sha256": "708f967747b0539b9ca7b6a5f39d1017eea8ddb1d07cd62f4f46592e088f6f39",
+        "sourceCommit": "6337b4b5f65144387ce5c0bbf9cbad955a921c8f",
+        "url": "https://github.com/DocumentDrivenDX/umf/releases/download/python-v0.10.2/umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl"
+      },
+      "version": "0.10.2"
+    },
+    {
+      "distribution": "weft-sql",
+      "filename": "weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "license": null,
+      "licenseExpression": "MIT OR Apache-2.0",
+      "licenseFilePaths": [
+        "weft_sql-0.4.53.dist-info/licenses/LICENSE.md",
+        "weft_sql-0.4.53.dist-info/licenses/LICENSE-MIT",
+        "weft_sql-0.4.53.dist-info/licenses/LICENSE-APACHE",
+        "weft_sql-0.4.53.dist-info/licenses/THIRD-PARTY-LICENSES.txt"
+      ],
+      "licenseFiles": [
+        "LICENSE.md",
+        "LICENSE-MIT",
+        "LICENSE-APACHE",
+        "THIRD-PARTY-LICENSES.txt"
+      ],
+      "requiresDist": [],
+      "sha256": "db01c4cf6357d674f1591609a2b9c83a9322ad8f8937c345e5950cc1582b83d2",
+      "size": 13987313,
+      "source": {
+        "kind": "immutable-release-wheel",
+        "release": "weft v0.4.53",
+        "sha256": "db01c4cf6357d674f1591609a2b9c83a9322ad8f8937c345e5950cc1582b83d2",
+        "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.53/weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+      },
+      "version": "0.4.53"
+    }
+  ]
+}

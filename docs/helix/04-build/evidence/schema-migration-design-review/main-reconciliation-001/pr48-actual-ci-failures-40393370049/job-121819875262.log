@@ -1,0 +1,329 @@
+﻿2026-10-26T20:14:01.2975023Z Current runner version: '2.338.0'
+2026-10-26T20:14:01.2999846Z ##[group]Runner Image Provisioner
+2026-10-26T20:14:01.3000820Z Hosted Compute Agent
+2026-10-26T20:14:01.3001510Z Version: 20261021.618
+2026-10-26T20:14:01.3002155Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-26T20:14:01.3002865Z Build Date: 2026-10-21T00:45:21Z
+2026-10-26T20:14:01.3003658Z Worker ID: {e85b63ab-3580-41ff-bbbf-6d576c505ee6}
+2026-10-26T20:14:01.3004389Z Region: eastus
+2026-10-26T20:14:01.3005059Z Cloud: Azure
+2026-10-26T20:14:01.3005607Z ##[endgroup]
+2026-10-26T20:14:01.3007767Z ##[group]Operating System
+2026-10-26T20:14:01.3008562Z Ubuntu
+2026-10-26T20:14:01.3009146Z 26.04.1
+2026-10-26T20:14:01.3009706Z LTS
+2026-10-26T20:14:01.3010294Z ##[endgroup]
+2026-10-26T20:14:01.3010860Z ##[group]Runner Image
+2026-10-26T20:14:01.3011520Z Image: ubuntu-26.04
+2026-10-26T20:14:01.3012129Z Version: 20261012.163.1
+2026-10-26T20:14:01.3013454Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261012.163/images/ubuntu/Ubuntu2604-Readme.md
+2026-10-26T20:14:01.3015009Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261012.163
+2026-10-26T20:14:01.3016015Z ##[endgroup]
+2026-10-26T20:14:01.3017653Z ##[group]GITHUB_TOKEN Permissions
+2026-10-26T20:14:01.3020587Z Contents: read
+2026-10-26T20:14:01.3021225Z Metadata: read
+2026-10-26T20:14:01.3021894Z ##[endgroup]
+2026-10-26T20:14:01.3024003Z Secret source: Actions
+2026-10-26T20:14:01.3025004Z Cache mode: write
+2026-10-26T20:14:01.3026924Z Prepare workflow directory
+2026-10-26T20:14:01.3377415Z Prepare all required actions
+2026-10-26T20:14:01.3425451Z Getting action download info
+2026-10-26T20:14:01.5558795Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-26T20:14:01.6463497Z Download action repository 'oven-sh/setup-bun@v2' (SHA:0c5077e51419868618aeaa5fe8019c62421857d6)
+2026-10-26T20:14:01.8111522Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-26T20:14:01.9911745Z Complete job name: table-declarations
+2026-10-26T20:14:02.0832691Z ##[group]Run actions/checkout@v4
+2026-10-26T20:14:02.0833581Z with:
+2026-10-26T20:14:02.0834050Z   repository: DocumentDrivenDX/umf
+2026-10-26T20:14:02.0837977Z   token: ***
+2026-10-26T20:14:02.0838433Z   ssh-strict: true
+2026-10-26T20:14:02.0838873Z   ssh-user: git
+2026-10-26T20:14:02.0839321Z   persist-credentials: true
+2026-10-26T20:14:02.0839822Z   clean: true
+2026-10-26T20:14:02.0840277Z   sparse-checkout-cone-mode: true
+2026-10-26T20:14:02.0840801Z   fetch-depth: 1
+2026-10-26T20:14:02.0841236Z   fetch-tags: false
+2026-10-26T20:14:02.0841690Z   show-progress: true
+2026-10-26T20:14:02.0842149Z   lfs: false
+2026-10-26T20:14:02.0842568Z   submodules: false
+2026-10-26T20:14:02.0843032Z   set-safe-directory: true
+2026-10-26T20:14:02.0843549Z   allow-unsafe-pr-checkout: false
+2026-10-26T20:14:02.0844364Z ##[endgroup]
+2026-10-26T20:14:02.1836510Z Syncing repository: DocumentDrivenDX/umf
+2026-10-26T20:14:02.1839147Z ##[group]Getting Git version info
+2026-10-26T20:14:02.1840271Z Working directory is '/home/runner/work/umf/umf'
+2026-10-26T20:14:02.1841825Z [command]/usr/bin/git version
+2026-10-26T20:14:02.1852763Z git version 2.55.0
+2026-10-26T20:14:02.1877993Z ##[endgroup]
+2026-10-26T20:14:02.1893141Z Temporarily overriding HOME='/home/runner/work/_temp/2fb56668-5b9d-403f-9622-8e4f47ff6a1e' before making global git config changes
+2026-10-26T20:14:02.1895590Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-26T20:14:02.1899113Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-26T20:14:02.1959153Z Deleting the contents of '/home/runner/work/umf/umf'
+2026-10-26T20:14:02.1962661Z ##[group]Initializing the repository
+2026-10-26T20:14:02.1967941Z [command]/usr/bin/git init /home/runner/work/umf/umf
+2026-10-26T20:14:02.2093212Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-26T20:14:02.2095297Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-26T20:14:02.2097084Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-26T20:14:02.2098100Z hint: call:
+2026-10-26T20:14:02.2098841Z hint:
+2026-10-26T20:14:02.2099488Z hint: 	git config --global init.defaultBranch <name>
+2026-10-26T20:14:02.2100445Z hint:
+2026-10-26T20:14:02.2101195Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-26T20:14:02.2102365Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-26T20:14:02.2103288Z hint:
+2026-10-26T20:14:02.2103804Z hint: 	git branch -m <name>
+2026-10-26T20:14:02.2104318Z hint:
+2026-10-26T20:14:02.2104995Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-26T20:14:02.2111868Z Initialized empty Git repository in /home/runner/work/umf/umf/.git/
+2026-10-26T20:14:02.2123051Z [command]/usr/bin/git remote add origin https://github.com/DocumentDrivenDX/umf
+2026-10-26T20:14:02.2174117Z ##[endgroup]
+2026-10-26T20:14:02.2175613Z ##[group]Disabling automatic garbage collection
+2026-10-26T20:14:02.2178555Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-26T20:14:02.2213539Z ##[endgroup]
+2026-10-26T20:14:02.2214614Z ##[group]Setting up auth
+2026-10-26T20:14:02.2222681Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-26T20:14:02.2259302Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-26T20:14:02.2740347Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-26T20:14:02.2777490Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-26T20:14:02.3074683Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-26T20:14:02.3118509Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-26T20:14:02.3419232Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-26T20:14:02.3462168Z ##[endgroup]
+2026-10-26T20:14:02.3463596Z ##[group]Fetching the repository
+2026-10-26T20:14:02.3477388Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +88871ad55a1ac348b2070a5ae00714e2299cb646:refs/remotes/pull/48/merge
+2026-10-26T20:14:21.3648924Z From https://github.com/DocumentDrivenDX/umf
+2026-10-26T20:14:21.3651399Z  * [new ref]           88871ad55a1ac348b2070a5ae00714e2299cb646 -> pull/48/merge
+2026-10-26T20:14:21.3657198Z ##[endgroup]
+2026-10-26T20:14:21.3659575Z ##[group]Determining the checkout info
+2026-10-26T20:14:21.3662040Z ##[endgroup]
+2026-10-26T20:14:21.3664894Z [command]/usr/bin/git sparse-checkout disable
+2026-10-26T20:14:21.3722740Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-26T20:14:21.3763243Z ##[group]Checking out the ref
+2026-10-26T20:14:21.3766593Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/48/merge
+2026-10-26T20:14:22.5375563Z Updating files:   5% (3635/62870)
+2026-10-26T20:14:22.6577645Z Updating files:   6% (3773/62870)
+2026-10-26T20:14:22.9991969Z Updating files:   7% (4401/62870)
+2026-10-26T20:14:23.0627869Z Updating files:   8% (5030/62870)
+2026-10-26T20:14:23.1116307Z Updating files:   9% (5659/62870)
+2026-10-26T20:14:23.2499504Z Updating files:  10% (6287/62870)
+2026-10-26T20:14:23.3726302Z Updating files:  11% (6916/62870)
+2026-10-26T20:14:23.4474545Z Updating files:  12% (7545/62870)
+2026-10-26T20:14:23.6581248Z Updating files:  12% (8051/62870)
+2026-10-26T20:14:24.4150883Z Updating files:  13% (8174/62870)
+2026-10-26T20:14:24.4288187Z Updating files:  14% (8802/62870)
+2026-10-26T20:14:24.8359819Z Updating files:  14% (8943/62870)
+2026-10-26T20:14:24.8781541Z Updating files:  15% (9431/62870)
+2026-10-26T20:14:24.9485756Z Updating files:  16% (10060/62870)
+2026-10-26T20:14:25.3867006Z Updating files:  17% (10688/62870)
+2026-10-26T20:14:25.4344055Z Updating files:  18% (11317/62870)
+2026-10-26T20:14:25.5717645Z Updating files:  18% (11483/62870)
+2026-10-26T20:14:25.9270679Z Updating files:  19% (11946/62870)
+2026-10-26T20:14:26.0083749Z Updating files:  20% (12574/62870)
+2026-10-26T20:14:26.0418139Z Updating files:  21% (13203/62870)
+2026-10-26T20:14:26.0793978Z Updating files:  22% (13832/62870)
+2026-10-26T20:14:26.1118396Z Updating files:  23% (14461/62870)
+2026-10-26T20:14:26.1416741Z Updating files:  24% (15089/62870)
+2026-10-26T20:14:26.1774331Z Updating files:  25% (15718/62870)
+2026-10-26T20:14:26.2062850Z Updating files:  26% (16347/62870)
+2026-10-26T20:14:26.2371196Z Updating files:  27% (16975/62870)
+2026-10-26T20:14:26.2665380Z Updating files:  28% (17604/62870)
+2026-10-26T20:14:26.3155101Z Updating files:  29% (18233/62870)
+2026-10-26T20:14:26.3579207Z Updating files:  30% (18861/62870)
+2026-10-26T20:14:26.3867250Z Updating files:  31% (19490/62870)
+2026-10-26T20:14:26.4317322Z Updating files:  32% (20119/62870)
+2026-10-26T20:14:27.4977226Z Updating files:  32% (20616/62870)
+2026-10-26T20:14:27.6702165Z Updating files:  32% (20736/62870)
+2026-10-26T20:14:28.4292467Z Updating files:  33% (20748/62870)
+2026-10-26T20:14:29.4430955Z Updating files:  33% (20806/62870)
+2026-10-26T20:14:30.1769716Z Updating files:  33% (20894/62870)
+2026-10-26T20:14:30.3369634Z Updating files:  34% (21376/62870)
+2026-10-26T20:14:30.4289436Z Updating files:  35% (22005/62870)
+2026-10-26T20:14:30.6231418Z Updating files:  35% (22198/62870)
+2026-10-26T20:14:30.6665031Z Updating files:  36% (22634/62870)
+2026-10-26T20:14:30.6994265Z Updating files:  37% (23262/62870)
+2026-10-26T20:14:30.7329807Z Updating files:  38% (23891/62870)
+2026-10-26T20:14:30.7624439Z Updating files:  39% (24520/62870)
+2026-10-26T20:14:30.7912465Z Updating files:  40% (25148/62870)
+2026-10-26T20:14:30.8199096Z Updating files:  41% (25777/62870)
+2026-10-26T20:14:30.8472364Z Updating files:  42% (26406/62870)
+2026-10-26T20:14:31.0585215Z Updating files:  43% (27035/62870)
+2026-10-26T20:14:31.3807182Z Updating files:  44% (27663/62870)
+2026-10-26T20:14:31.4238464Z Updating files:  45% (28292/62870)
+2026-10-26T20:14:31.4287011Z Updating files:  46% (28921/62870)
+2026-10-26T20:14:31.5359327Z Updating files:  46% (28940/62870)
+2026-10-26T20:14:31.5765284Z Updating files:  47% (29549/62870)
+2026-10-26T20:14:31.6115814Z Updating files:  48% (30178/62870)
+2026-10-26T20:14:31.8073276Z Updating files:  49% (30807/62870)
+2026-10-26T20:14:31.8864393Z Updating files:  50% (31435/62870)
+2026-10-26T20:14:31.9215409Z Updating files:  51% (32064/62870)
+2026-10-26T20:14:31.9623468Z Updating files:  52% (32693/62870)
+2026-10-26T20:14:32.0137682Z Updating files:  53% (33322/62870)
+2026-10-26T20:14:32.0375610Z Updating files:  54% (33950/62870)
+2026-10-26T20:14:32.0609055Z Updating files:  55% (34579/62870)
+2026-10-26T20:14:32.1239835Z Updating files:  56% (35208/62870)
+2026-10-26T20:14:32.1720809Z Updating files:  57% (35836/62870)
+2026-10-26T20:14:32.2049425Z Updating files:  58% (36465/62870)
+2026-10-26T20:14:32.2536779Z Updating files:  59% (37094/62870)
+2026-10-26T20:14:32.3021908Z Updating files:  60% (37722/62870)
+2026-10-26T20:14:32.3566299Z Updating files:  61% (38351/62870)
+2026-10-26T20:14:32.3835796Z Updating files:  62% (38980/62870)
+2026-10-26T20:14:32.4083160Z Updating files:  63% (39609/62870)
+2026-10-26T20:14:32.4286329Z Updating files:  64% (40237/62870)
+2026-10-26T20:14:32.4324427Z Updating files:  64% (40780/62870)
+2026-10-26T20:14:32.4562162Z Updating files:  65% (40866/62870)
+2026-10-26T20:14:32.4808744Z Updating files:  66% (41495/62870)
+2026-10-26T20:14:32.5242536Z Updating files:  67% (42123/62870)
+2026-10-26T20:14:32.5502563Z Updating files:  68% (42752/62870)
+2026-10-26T20:14:32.5995234Z Updating files:  69% (43381/62870)
+2026-10-26T20:14:32.6450415Z Updating files:  70% (44009/62870)
+2026-10-26T20:14:32.6732639Z Updating files:  71% (44638/62870)
+2026-10-26T20:14:32.6961522Z Updating files:  72% (45267/62870)
+2026-10-26T20:14:32.7196972Z Updating files:  73% (45896/62870)
+2026-10-26T20:14:32.7413780Z Updating files:  74% (46524/62870)
+2026-10-26T20:14:32.7624020Z Updating files:  75% (47153/62870)
+2026-10-26T20:14:32.7845447Z Updating files:  76% (47782/62870)
+2026-10-26T20:14:32.8109897Z Updating files:  77% (48410/62870)
+2026-10-26T20:14:32.8325400Z Updating files:  78% (49039/62870)
+2026-10-26T20:14:32.8560094Z Updating files:  79% (49668/62870)
+2026-10-26T20:14:32.8935690Z Updating files:  80% (50296/62870)
+2026-10-26T20:14:32.9625268Z Updating files:  81% (50925/62870)
+2026-10-26T20:14:33.0432163Z Updating files:  82% (51554/62870)
+2026-10-26T20:14:33.0956681Z Updating files:  83% (52183/62870)
+2026-10-26T20:14:33.1461606Z Updating files:  84% (52811/62870)
+2026-10-26T20:14:33.1715147Z Updating files:  85% (53440/62870)
+2026-10-26T20:14:33.1974420Z Updating files:  86% (54069/62870)
+2026-10-26T20:14:33.2684126Z Updating files:  87% (54697/62870)
+2026-10-26T20:14:33.2942440Z Updating files:  88% (55326/62870)
+2026-10-26T20:14:33.3263346Z Updating files:  89% (55955/62870)
+2026-10-26T20:14:33.3501308Z Updating files:  90% (56583/62870)
+2026-10-26T20:14:33.3789355Z Updating files:  91% (57212/62870)
+2026-10-26T20:14:33.4287466Z Updating files:  92% (57841/62870)
+2026-10-26T20:14:33.4290610Z Updating files:  92% (58463/62870)
+2026-10-26T20:14:33.4617167Z Updating files:  93% (58470/62870)
+2026-10-26T20:14:33.4973769Z Updating files:  94% (59098/62870)
+2026-10-26T20:14:33.6278438Z Updating files:  95% (59727/62870)
+2026-10-26T20:14:33.6741106Z Updating files:  96% (60356/62870)
+2026-10-26T20:14:33.7188847Z Updating files:  97% (60984/62870)
+2026-10-26T20:14:33.7543307Z Updating files:  98% (61613/62870)
+2026-10-26T20:14:33.8058346Z Updating files:  99% (62242/62870)
+2026-10-26T20:14:33.8059144Z Updating files: 100% (62870/62870)
+2026-10-26T20:14:33.8060185Z Updating files: 100% (62870/62870), done.
+2026-10-26T20:14:33.8738083Z Note: switching to 'refs/remotes/pull/48/merge'.
+2026-10-26T20:14:33.8738557Z 
+2026-10-26T20:14:33.8738957Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-26T20:14:33.8739902Z changes and commit them, and you can discard any commits you make in this
+2026-10-26T20:14:33.8740777Z state without impacting any branches by switching back to a branch.
+2026-10-26T20:14:33.8741274Z 
+2026-10-26T20:14:33.8741599Z If you want to create a new branch to retain commits you create, you may
+2026-10-26T20:14:33.8742372Z do so (now or later) by using -c with the switch command. Example:
+2026-10-26T20:14:33.8742815Z 
+2026-10-26T20:14:33.8743000Z   git switch -c <new-branch-name>
+2026-10-26T20:14:33.8743301Z 
+2026-10-26T20:14:33.8743467Z Or undo this operation with:
+2026-10-26T20:14:33.8743745Z 
+2026-10-26T20:14:33.8743889Z   git switch -
+2026-10-26T20:14:33.8744095Z 
+2026-10-26T20:14:33.8744655Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-26T20:14:33.8745356Z 
+2026-10-26T20:14:33.8746423Z HEAD is now at 88871ad5 Merge 71b5f87805324c0e0d12c279a4898c8a44f625a9 into d5022e37840329d351bcd6c27fe7d7aad4758544
+2026-10-26T20:14:33.8971202Z ##[endgroup]
+2026-10-26T20:14:33.9017686Z [command]/usr/bin/git log -1 --format=%H
+2026-10-26T20:14:33.9049958Z 88871ad55a1ac348b2070a5ae00714e2299cb646
+2026-10-26T20:14:33.9324422Z ##[group]Run oven-sh/setup-bun@v2
+2026-10-26T20:14:33.9324934Z with:
+2026-10-26T20:14:33.9325153Z   bun-version: 1.4.3
+2026-10-26T20:14:33.9325394Z   no-cache: false
+2026-10-26T20:14:33.9327991Z   token: ***
+2026-10-26T20:14:33.9328224Z ##[endgroup]
+2026-10-26T20:14:34.1917729Z Cache hit for: bun-+NUKu9E/U4apAe78eSCZvQ/GSdc=
+2026-10-26T20:14:34.5372070Z Received 41001437 of 41001437 (100.0%), 143.8 MBs/sec
+2026-10-26T20:14:34.5377340Z Cache Size: ~39 MB (41001437 B)
+2026-10-26T20:14:34.5408145Z [command]/usr/bin/tar -xf /home/runner/work/_temp/de9ac3a1-7105-49a4-afc2-a54431a36670/cache.tzst -P -C /home/runner/work/umf/umf --use-compress-program unzstd
+2026-10-26T20:14:35.0202980Z Cache restored successfully
+2026-10-26T20:14:35.0229740Z [command]/home/runner/.bun/bin/bun --revision
+2026-10-26T20:14:35.0300822Z 1.4.3+c6da4a4d3
+2026-10-26T20:14:35.0327545Z Using a cached version of Bun: 1.4.3+c6da4a4d3
+2026-10-26T20:14:35.1796383Z ##[group]Run bun install --frozen-lockfile
+2026-10-26T20:14:35.1797083Z [36;1mbun install --frozen-lockfile[0m
+2026-10-26T20:14:35.3203209Z shell: /usr/bin/bash -e {0}
+2026-10-26T20:14:35.3203608Z ##[endgroup]
+2026-10-26T20:14:35.3666966Z bun install v1.4.3 (c6da4a4d3)
+2026-10-26T20:14:35.3688498Z Resolving dependencies
+2026-10-26T20:14:35.3699062Z Resolved, downloaded and extracted [1]
+2026-10-26T20:14:37.6695907Z 
+2026-10-26T20:14:37.6696648Z + @dagrejs/dagre@3.1.1
+2026-10-26T20:14:37.6697200Z + @documentdrivendx/umf-schema-browser@2.0.0
+2026-10-26T20:14:37.6697700Z + @launchql/protobufjs@7.2.6
+2026-10-26T20:14:37.6698029Z + @types/bun@1.4.2
+2026-10-26T20:14:37.6698289Z + @types/n3@1.26.4
+2026-10-26T20:14:37.6698538Z + hyparquet@1.31.1
+2026-10-26T20:14:37.6698794Z + playwright@1.63.0
+2026-10-26T20:14:37.6699074Z + rdfxml-streaming-parser@3.3.0
+2026-10-26T20:14:37.6699376Z + typescript@7.0.2
+2026-10-26T20:14:37.6699627Z + typescript-api@5.9.3
+2026-10-26T20:14:37.6699977Z + @bufbuild/protobuf@2.15.0
+2026-10-26T20:14:37.6700270Z + @libpg-query/parser@17.6.10
+2026-10-26T20:14:37.6700562Z + @typespec/compiler@1.16.0
+2026-10-26T20:14:37.6700867Z + @typespec/emitter-framework@0.21.0
+2026-10-26T20:14:37.6701189Z + @typespec/events@0.86.0
+2026-10-26T20:14:37.6701466Z + @typespec/graphql@0.3.0
+2026-10-26T20:14:37.6701741Z + @typespec/http@1.16.0
+2026-10-26T20:14:37.6702014Z + @typespec/json-schema@1.16.0
+2026-10-26T20:14:37.6702331Z + @typespec/mutator-framework@0.17.1
+2026-10-26T20:14:37.6702649Z + @typespec/openapi@1.16.0
+2026-10-26T20:14:37.6702944Z + @typespec/openapi3@1.16.0
+2026-10-26T20:14:37.6703231Z + @typespec/protobuf@0.86.0
+2026-10-26T20:14:37.6703514Z + @typespec/rest@0.86.0
+2026-10-26T20:14:37.6703777Z + @typespec/sse@0.86.0
+2026-10-26T20:14:37.6704044Z + @typespec/streams@0.86.0
+2026-10-26T20:14:37.6704324Z + @typespec/versioning@0.86.0
+2026-10-26T20:14:37.6704615Z + ajv@8.20.0
+2026-10-26T20:14:37.6704852Z + ajv-draft-04@1.0.0
+2026-10-26T20:14:37.6705114Z + apache-arrow@21.2.0
+2026-10-26T20:14:37.6705365Z + avsc@5.7.9
+2026-10-26T20:14:37.6705602Z + buffer@6.0.3
+2026-10-26T20:14:37.6705845Z + flatbuffers@25.9.23
+2026-10-26T20:14:37.6706351Z + graphql@17.0.2
+2026-10-26T20:14:37.6706659Z + jsonld@9.0.0
+2026-10-26T20:14:37.6706883Z + n3@2.7.12
+2026-10-26T20:14:37.6707112Z + rdf-literal@2.0.0
+2026-10-26T20:14:37.6707366Z + rdf-validate-shacl@0.6.5
+2026-10-26T20:14:37.6707634Z + util@0.12.5
+2026-10-26T20:14:37.6707854Z + yaml@2.9.1
+2026-10-26T20:14:37.6707986Z 
+2026-10-26T20:14:37.6708103Z 234 packages installed [2.30s]
+2026-10-26T20:14:37.6811450Z ##[group]Run bun scripts/check-table-lifecycle-boundaries.ts
+2026-10-26T20:14:37.6811992Z [36;1mbun scripts/check-table-lifecycle-boundaries.ts[0m
+2026-10-26T20:14:37.6876696Z shell: /usr/bin/bash -e {0}
+2026-10-26T20:14:37.6877017Z ##[endgroup]
+2026-10-26T20:14:38.1897882Z index.ts: unapproved dependency ../../model/internal/accounting-context
+2026-10-26T20:14:38.1898928Z context.ts: unapproved dependency ../../model/internal/accounting-context
+2026-10-26T20:14:38.1976567Z ##[error]Process completed with exit code 1.
+2026-10-26T20:14:38.2109429Z ##[group]Run actions/upload-artifact@v4
+2026-10-26T20:14:38.2109774Z with:
+2026-10-26T20:14:38.2110011Z   name: table-declaration-browser
+2026-10-26T20:14:38.2110316Z   path: /tmp/umf-table-browser.json
+2026-10-26T20:14:38.2110607Z   if-no-files-found: warn
+2026-10-26T20:14:38.2110858Z   compression-level: 6
+2026-10-26T20:14:38.2111093Z   overwrite: false
+2026-10-26T20:14:38.2111315Z   include-hidden-files: false
+2026-10-26T20:14:38.2111563Z ##[endgroup]
+2026-10-26T20:14:38.3780802Z (node:2403) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-26T20:14:38.3782191Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-26T20:14:38.3815831Z ##[warning]No files were found with the provided path: /tmp/umf-table-browser.json. No artifacts will be uploaded.
+2026-10-26T20:14:38.4107831Z Post job cleanup.
+2026-10-26T20:14:38.5002718Z [command]/usr/bin/git version
+2026-10-26T20:14:38.5048370Z git version 2.55.0
+2026-10-26T20:14:38.5089840Z Temporarily overriding HOME='/home/runner/work/_temp/c80d255e-7a0d-41d7-98d8-9fe16b270630' before making global git config changes
+2026-10-26T20:14:38.5091380Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-26T20:14:38.5095982Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-26T20:14:38.5138123Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-26T20:14:38.5181567Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-26T20:14:38.5624881Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-26T20:14:38.5672950Z http.https://github.com/.extraheader
+2026-10-26T20:14:38.5684671Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-26T20:14:38.5723629Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-26T20:14:38.6179576Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-26T20:14:38.6227701Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-26T20:14:38.6804844Z Cleaning up orphan processes
+2026-10-26T20:14:38.7285600Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

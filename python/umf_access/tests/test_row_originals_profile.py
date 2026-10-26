@@ -204,11 +204,11 @@ class RowOriginalsProfileTests(unittest.TestCase):
                     id_column=bad, revision_column='row_revision')
 
     def test_missing_exact_native_adapter_fails_closed(self):
-        with patch.dict('sys.modules', {
-                'umf_access.lifecycle.ingress_local_postgres': None}):
-            with self.assertRaisesRegex(CatalogError,
-                                       'row-originals-authority-unavailable'):
-                originals._authority_context(object(), object(), object(), object(), object())
+        with (patch.dict('sys.modules', {
+                  'umf_access.lifecycle.ingress_local_postgres': None}),
+              self.assertRaisesRegex(
+                  CatalogError, 'row-originals-authority-unavailable')):
+            originals._authority_context(object(), object(), object(), object(), object())
 
     def test_purge_is_not_admitted_by_profile_01(self):
         store = object.__new__(originals.PgRowOriginalsStore)

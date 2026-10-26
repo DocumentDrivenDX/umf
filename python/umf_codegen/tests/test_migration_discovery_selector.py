@@ -51,10 +51,10 @@ class DiscoverySelector(unittest.TestCase):
 
     def test_invalid_selector_refusal_is_propagated(self):
         selector = {"version": "umf.table-migration-discovery/0.1"}
-        with patch("umf_codegen.execute", side_effect=GenerationError(
-                "MIGRATION_CHANGES_FAILED", "Unknown table-migration discovery selector")):
-            with self.assertRaisesRegex(GenerationError, "Unknown table-migration discovery selector"):
-                discover_table_migration_changes(self.previous, self.next, options=selector)  # type: ignore[arg-type]
+        with (patch("umf_codegen.execute", side_effect=GenerationError(
+                  "MIGRATION_CHANGES_FAILED", "Unknown table-migration discovery selector")),
+              self.assertRaisesRegex(GenerationError, "Unknown table-migration discovery selector")):
+            discover_table_migration_changes(self.previous, self.next, options=selector)  # type: ignore[arg-type]
 
 
 if __name__ == "__main__":

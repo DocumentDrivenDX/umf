@@ -2,10 +2,9 @@
 """G03 host custody admission and required-phase recovery controls."""
 from __future__ import annotations
 
-from contextlib import contextmanager
-from dataclasses import replace
-from datetime import datetime, timezone
 import unittest
+from contextlib import contextmanager
+from datetime import UTC, datetime
 from unittest.mock import patch
 
 from umf_access.lifecycle.approval import (
@@ -118,7 +117,7 @@ class FakeLease:
         self._binding = binding
         digest = "0" * 64 if self.bad_approval else binding.digest
         return ApprovalReceipt("approval-1", digest, "approved", "reviewer",
-            datetime.now(timezone.utc).isoformat(), binding.qualification_profile,
+            datetime.now(UTC).isoformat(), binding.qualification_profile,
             binding.evidence_digest)
 
     def verify_predecessor(self, request):
@@ -175,7 +174,7 @@ class G03HostTests(unittest.TestCase):
     def test_catalog_equal_witness_still_dispatches_one_ddl_phase(self):
         plan = g03_plan()
         lease = FakeLease()
-        host, result = run(plan, lease)
+        _host, result = run(plan, lease)
         self.assertEqual(_verified_phases(plan), plan["phases"])
         self.assertEqual(lease.statements, [plan["steps"][0]["sql"]])
         self.assertEqual(lease.witness, {"native": "same-before-and-after"})
@@ -188,7 +187,7 @@ class G03HostTests(unittest.TestCase):
         receipt = PhaseReceipt(1, _phase_digest(phase, plan["steps"]),
                                ("step-00001",), {"native": "same-before-and-after"})
         lease = FakeLease(prior=receipt)
-        host, result = run(plan, lease)
+        _host, result = run(plan, lease)
         self.assertEqual(lease.statements, [])
         self.assertEqual(lease.fenced, 1)
         self.assertEqual(lease.finalized, 1)
@@ -197,7 +196,7 @@ class G03HostTests(unittest.TestCase):
     def test_lost_phase_commit_is_observed_and_not_redispatched(self):
         plan = g03_plan()
         lease = FakeLease(lose_commit=True)
-        host, result = run(plan, lease)
+        _host, result = run(plan, lease)
         self.assertEqual(len(lease.statements), 1)
         self.assertEqual(lease.stored.phase_index, 1)
         self.assertEqual(lease.stored.completed_steps, ("step-00001",))
@@ -226,9 +225,8 @@ class G03HostTests(unittest.TestCase):
         for mutate in mutations:
             value = g03_plan()
             mutate(value)
-            with self.subTest(mutation=mutate):
-                with self.assertRaises(CatalogError):
-                    _verified_phases(value)
+            with (self.subTest(mutation=mutate), self.assertRaises(CatalogError)):
+                _verified_phases(value)
 
     def test_bad_approval_and_progress_refuse_before_ddl(self):
         plan = g03_plan()
@@ -263,10 +261,10 @@ class G03HostTests(unittest.TestCase):
             _require_host_profile(crossed)
 
         candidate = g03_plan()
-        with patch("umf_access.lifecycle.mixed._verified_plan", side_effect=lambda value: value):
-            with self.assertRaisesRegex(CatalogError, "mixed-phase-profile"):
-                apply_mixed_migration(object(), candidate, approved_digest=candidate["digest"],
-                                      expected_head="1" * 64, person_roles=())
+        with (patch("umf_access.lifecycle.mixed._verified_plan", side_effect=lambda value: value),
+              self.assertRaisesRegex(CatalogError, "mixed-phase-profile")):
+            apply_mixed_migration(object(), candidate, approved_digest=candidate["digest"],
+                                  expected_head="1" * 64, person_roles=())
 
     def test_wrong_target_and_crossed_profiles_refuse_before_acquire(self):
         plan = g03_plan()
@@ -296,11 +294,11 @@ class G03HostTests(unittest.TestCase):
             'progressRelation': 'umf_lifecycle_progress', 'ownerOnly': True}
         lease = FakeLease()
         host = FakeHost(lease)
-        with patch("umf_access.lifecycle.ledger._verified_plan", side_effect=lambda value: value):
-            with self.assertRaisesRegex(CatalogError, 'host-migration-profile'):
-                apply_migration_on_host(host, candidate, expected_head='1' * 64,
-                    file_digest='2' * 64, qualification_profile='local-g11',
-                    evidence_digest='3' * 64)
+        with (patch("umf_access.lifecycle.ledger._verified_plan", side_effect=lambda value: value),
+              self.assertRaisesRegex(CatalogError, 'host-migration-profile')):
+            apply_migration_on_host(host, candidate, expected_head='1' * 64,
+                file_digest='2' * 64, qualification_profile='local-g11',
+                evidence_digest='3' * 64)
         self.assertEqual(lease.acquired, 0)
         from umf_access.lifecycle.cli import _require_host_profile
         with self.assertRaisesRegex(CatalogError, 'host-migration-profile'):

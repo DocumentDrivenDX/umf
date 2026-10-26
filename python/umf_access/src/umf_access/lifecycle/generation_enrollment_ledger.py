@@ -15,7 +15,6 @@ import json
 import os
 import re
 import stat
-import threading
 import uuid
 from contextlib import contextmanager
 from pathlib import Path
@@ -429,79 +428,6 @@ def _validate_principals(value: object, prepared: dict[str, Any]) -> list[dict[s
                        'issuerReceiptDigest': issuer_receipt,
                        'ownershipReceiptDigest': ownership, 'memberships': memberships})
     return result
-
-
-def _validate_intent(scope: str, raw: dict[str, Any], config: dict[str, Any],
-                     identity: InitialEnrollmentIdentity | None,
-                     prepared: dict[str, Any] | None
-                     ) -> tuple[dict[str, Any], tuple[str, str, str]]:
-    policy = config['sourcePolicy']
-    if scope == PREPARE_SCOPE:
-        fields = {'profile', 'providerId', 'enrollmentId', 'installationId', 'targetCustody',
-                  'storeId', 'source', 'bundleDigest', 'expectedHead', 'sourceCohortDigest',
-                  'executionPolicyDigest', 'issuerProfile', 'initialEpoch', 'subjects',
-                  'maximumRoles'}
-        item = _closed(raw, fields, 'generation-authority-intent-invalid')
-        if item['profile'] != PREPARE_INTENT_PROFILE:
-            _fail('generation-authority-intent-invalid')
-        if identity is None or type(identity._context) is not GenerationEnrollmentAuthorityContext:
-            _fail('generation-authority-identity-required')
-        if (item['providerId'] != config['providerId'] or item['storeId'] != config['storeId']
-                or item['installationId'] != config['installationId']
-                or item['enrollmentId'] != identity.enrollment_id
-                or item['initialEpoch'] != identity.initial_epoch
-                or _target_custody(item['targetCustody']) != config['targetCustody']):
-            _fail('generation-authority-target-mismatch')
-        source = _closed(item['source'], {'format', 'sha256'}, 'generation-authority-intent-invalid')
-        if source['format'] != 'json':
-            _fail('generation-authority-intent-invalid')
-        _digest(source['sha256'])
-        for key in ('bundleDigest', 'expectedHead', 'sourceCohortDigest', 'executionPolicyDigest'):
-            _digest(item[key])
-        _text(item['issuerProfile'], 256)
-        if item['issuerProfile'] != policy['issuerProfile']:
-            _fail('generation-authority-policy-mismatch')
-        cohort = {'sourceDigest': source['sha256'], 'bundleDigest': item['bundleDigest'],
-                  'sourceCohortDigest': item['sourceCohortDigest'],
-                  'executionPolicyDigest': item['executionPolicyDigest']}
-        if not any(_canonical(cohort) == _canonical(approved)
-                   for approved in policy['approvedCohorts']):
-            _fail('generation-authority-cohort-not-approved')
-        subjects = _validate_subjects(item['subjects'], policy)
-        if (type(item['maximumRoles']) is not int or item['maximumRoles'] != len(subjects)
-                or item['maximumRoles'] > 256):
-            _fail('generation-authority-intent-invalid')
-        return {**item, 'source': source, 'subjects': subjects}, (scope, item['providerId'], item['enrollmentId'])
-
-    fields = {'profile', 'providerId', 'enrollmentId', 'installationId', 'targetCustody',
-              'storeId', 'prepareRequestDigest', 'prepareApprovalDigest',
-              'preparationReceiptDigest', 'source', 'bundleDigest', 'expectedHead',
-              'sourceCohortDigest', 'executionPolicyDigest', 'initialEpoch', 'principals',
-              'principalsDigest', 'fenceReceiptDigest', 'externalReservationDigest'}
-    item = _closed(raw, fields, 'generation-authority-intent-invalid')
-    if item['profile'] != ACTIVATE_INTENT_PROFILE or prepared is None:
-        _fail('generation-authority-activation-preparation-required')
-    original = prepared['intent']
-    for key, source_key in (('providerId', 'providerId'), ('enrollmentId', 'enrollmentId'),
-                            ('installationId', 'installationId'), ('targetCustody', 'targetCustody'),
-                            ('storeId', 'storeId'), ('source', 'source'), ('bundleDigest', 'bundleDigest'),
-                            ('expectedHead', 'expectedHead'), ('sourceCohortDigest', 'sourceCohortDigest'),
-                            ('executionPolicyDigest', 'executionPolicyDigest'), ('initialEpoch', 'initialEpoch')):
-        if item[key] != original[source_key]:
-            _fail('generation-authority-activation-binding-mismatch')
-    _digest(item['prepareRequestDigest']); _digest(item['prepareApprovalDigest'])
-    _digest(item['preparationReceiptDigest']); _digest(item['principalsDigest'])
-    _digest(item['fenceReceiptDigest']); _digest(item['externalReservationDigest'])
-    principals = _validate_principals(item['principals'], original)
-    if _sha(_canonical(principals)) != item['principalsDigest']:
-        _fail('generation-authority-principals-digest-mismatch')
-    # The receipt digest is asserted by the native provider.  The logical
-    # authority binds the activation request to the exact earlier signed
-    # preparation, but cannot manufacture or authenticate that provider receipt.
-    if (item['prepareRequestDigest'] != prepared['intentDigest']
-            or item['prepareApprovalDigest'] != prepared['approvalDigest']):
-        _fail('generation-authority-activation-binding-mismatch')
-    return {**item, 'principals': principals}, (scope, item['providerId'], item['enrollmentId'])
 
 
 class _Ledger:

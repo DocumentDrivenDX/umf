@@ -466,11 +466,11 @@ class PgRowOriginalsStore:
 
     __slots__ = (
         '_approval', '_archives', '_authority', '_connection', '_controller_oid',
-        '_controller_role', '_creation_capability', '_creation_receipt',
-        '_creation_attempt', '_creation_receipt_fields', '_creation_reservation',
-        '_custodian', '_evidence', '_installation_id',
-        '_issuer', '_provider_id', '_schema', '_schema_oid', '_supervisor',
-        '_tables', '_target', '_recovery_only',
+        '_controller_role', '_creation_attempt', '_creation_capability',
+        '_creation_receipt', '_creation_receipt_fields', '_creation_reservation',
+        '_custodian', '_evidence', '_installation_id', '_issuer',
+        '_provider_id', '_recovery_only', '_schema', '_schema_oid',
+        '_supervisor', '_tables', '_target',
     )
 
     def __init__(self, connection: Any, *, supervisor: object, evidence: object,
@@ -760,7 +760,8 @@ class PgRowOriginalsStore:
         else:
             try:
                 from .ingress_local_postgres import (
-                    LocalPostgresError, _execute_original_store_sql,
+                    LocalPostgresError,
+                    _execute_original_store_sql,
                 )
                 cursor = _execute_original_store_sql(
                     self._supervisor, budget, self._connection, query)

@@ -1136,10 +1136,10 @@ class ExternalCustodyJournal:
                                           'headDigest': doc['headDigest']}
                         or payload['reservation']['custodySequence'] != doc['sequence'] + 1):
                     raise CustodyJournalError('journal-state-mismatch')
-            elif kind == 'originals-store-observation':
-                if payload['parent'] != {'sequence': doc['sequence'],
-                                         'headDigest': doc['headDigest']}:
-                    raise CustodyJournalError('journal-state-mismatch')
+            elif (kind == 'originals-store-observation'
+                  and payload['parent'] != {'sequence': doc['sequence'],
+                                            'headDigest': doc['headDigest']}):
+                raise CustodyJournalError('journal-state-mismatch')
             if kind in ('epoch-provision-reserved', 'transition-reserved'):
                 reservation_key = 'reservation'
                 reservation = payload[reservation_key]

@@ -366,9 +366,11 @@ class AggregateCohortTests(unittest.TestCase):
 
     def test_physical_missing_wheel_refuses(self):
         self._assemble()
-        wheel = next((self.output / "wheelhouse").glob("*.whl"))
+        wheel = next((self.output / "wheelhouse").glob("umf_core-*.whl"))
         wheel.unlink()
-        with self.assertRaisesRegex(ValueError, "Not a regular wheel"):
+        with self.assertRaisesRegex(
+            ValueError, "Child Core wheel is not a regular file in its exact wheelhouse"
+        ):
             AGGREGATE.validate_aggregate(
                 self.output / "aggregate.json", "linux-x86_64-py311", self.output / "mirror"
             )

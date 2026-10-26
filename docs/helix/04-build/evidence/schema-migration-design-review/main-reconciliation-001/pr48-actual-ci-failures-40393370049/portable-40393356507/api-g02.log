@@ -1,0 +1,30 @@
+bun test v1.4.3 (c6da4a4d3)
+
+::group::tests/lifecycle/table-inventory-api.test.ts:
+(pass) charged chunk hashing preserves UTF-8 bytes and refuses before later chunks on budget exhaustion [1.61ms]
+(pass) bounded canonical members account exact UTF-8 output and stop before oversized token/key emission [1.26ms]
+::error title=error: Test "G10 public initial compile%2C full verification and serialization retain the exact marker wrapper" timed out after 15000ms::
+(fail) G10 public initial compile, full verification and serialization retain the exact marker wrapper [17292.90ms]
+  ^ this test timed out after 15000ms.
+(pass) G10 dependency projection claims every raw edge as physical work or a complete-source publication obligation [9610.92ms]
+(pass) scheduler prefixes preserve final frames for zero and multiple groups with or without metadata IDs [223.46ms]
+(pass) compiler final IDs preserve complete plan serialization bytes against the legacy remap-and-hash path [4390.73ms]
+(pass) legacy seed history requires exact source-derived reported outcomes and remains explicitly non-native [3217.60ms]
+(pass) G10 historical recompile exact-content cache > initial and second G10 plans compile through their original public requests [21.97ms]
+(pass) G10 historical recompile exact-content cache > reuses only exact plans and exact prior-history members [5938.75ms]
+(pass) G10 historical recompile exact-content cache > rejects a changed cached plan under the same history position [5846.91ms]
+(pass) G10 historical recompile exact-content cache > rejects changed prior execution bytes on a cache hit [6088.38ms]
+(pass) R2 metered context reuses exact source cores for a seeded Note history and mixed G02 plus CREATE [8309.03ms]
+(pass) R2 current-root canonical reuse requires the exact same-meter source-owner association [2558.02ms]
+(pass) R2 final-plan retention failure returns no history context and a fresh invocation succeeds [5375.65ms]
+(pass) G10 installed-create compiled fixture > verifies against complete original history [5586.34ms]
+(pass) G10 installed-create compiled fixture > refuses empty or changed history [5984.58ms]
+(pass) G10 installed-create compiled fixture > historical verifier reuses the installed-create prefix only for exact history members [6249.25ms]
+(pass) G10 installed create review exposes the complete absent-before projection with no old source path [14451.12ms]
+(pass) G10 legacy component review values and optional source paths remain unchanged [4029.69ms]
+(pass) G10 seed retirement review retains the original definition and never claims data replay [9111.16ms]
+(pass) G10 removal candidates expose the exact irreversible purge disclosure before approval [3754.25ms]
+(pass) G10 mixed legal fixture builders clone exported definitions into each returned source [1214.20ms]
+(pass) G10 appended CREATE plus G02 compiled fixture > retains source, marker, grant, field, phase, seed and operation ordering assertions [930.47ms]
+(pass) G10 appended CREATE plus G02 compiled fixture > preserves public verification and serialization equality for the admitted plan [12324.92ms]
+(pass) G10 appended CREATE plus G02 compiled fixture > public compilation refuses omitted create claims and duplicate operation markers [4010.44ms]

@@ -714,8 +714,11 @@ class _PsycopgRequiredPhase:
 
     def verify_boundary(self, plan: dict[str, Any], phase: dict[str, Any],
                         prior: PhaseReceipt) -> None:
-        from .mixed import _verify_backfill_add_target, _verify_backfill_tighten_target
-        from .mixed import _source_at_phase_prefix
+        from .mixed import (
+            _source_at_phase_prefix,
+            _verify_backfill_add_target,
+            _verify_backfill_tighten_target,
+        )
         from .witness import _capture_witness
 
         if phase["kind"] == "backfill-tighten":

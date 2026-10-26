@@ -26,6 +26,7 @@ import uuid
 from contextlib import contextmanager, nullcontext
 from dataclasses import dataclass
 from pathlib import Path
+from types import TracebackType
 from typing import Any
 
 from .catalog import _one
@@ -1316,9 +1317,15 @@ class _VerifiedNativeStorePreparation:
 class _VerifiedOriginalStoreRecoveryObservation:
     """Private checked comparison of immutable creation evidence and live RO facts."""
 
-    __slots__ = ('_issuer', '_budget', '_request', '_reservation_digest',
-                 '_original_payload_bytes', '_actual_payload_bytes',
-                 '_actual_observation_bytes')
+    __slots__ = (
+        '_actual_observation_bytes',
+        '_actual_payload_bytes',
+        '_budget',
+        '_issuer',
+        '_original_payload_bytes',
+        '_request',
+        '_reservation_digest',
+    )
 
     def __init__(self, seal: object, issuer: object,
                  budget: _OriginalStoreReadonlyBudget, request: object,
@@ -1346,7 +1353,7 @@ class _VerifiedOriginalStoreRecoveryObservation:
 class _VerifiedOriginalStoreAbsence:
     """In-process proof that this invocation observed the exact schema absent."""
 
-    __slots__ = ('_issuer', '_budget', '_reservation_digest', '_schema_name', '_proof_bytes')
+    __slots__ = ('_budget', '_issuer', '_proof_bytes', '_reservation_digest', '_schema_name')
 
     def __init__(self, seal: object, issuer: object,
                  budget: _OriginalStoreReadonlyBudget, reservation_digest: str,
@@ -1370,10 +1377,20 @@ class _VerifiedOriginalStoreAbsence:
 class _OriginalStoreCreationReservation:
     """Opaque source-bound reservation retained across the native DDL attempt."""
 
-    __slots__ = ('_approval', '_custodian', '_evidence', '_issuer',
-                 '_connection', '_effect_handle', '_native_effect',
-                 '_record_bytes', '_store', '_target', '_budget',
-                 'record_bytes')
+    __slots__ = (
+        '_approval',
+        '_budget',
+        '_connection',
+        '_custodian',
+        '_effect_handle',
+        '_evidence',
+        '_issuer',
+        '_native_effect',
+        '_record_bytes',
+        '_store',
+        '_target',
+        'record_bytes',
+    )
 
     def __init__(self, seal: object, issuer: object, *, evidence: object,
                  approval: object, custodian: object, target: object,
@@ -1409,9 +1426,18 @@ class _OriginalStoreCreationReservation:
 class _OriginalStoreCreationAttempt:
     """Volatile issuer handle for one actual native transaction attempt."""
 
-    __slots__ = ('_issuer', '_reservation', '_connection', '_xid',
-                 '_database_name', '_database_oid', '_system_identifier',
-                 '_backend_pid', '_backend_start', '_budget')
+    __slots__ = (
+        '_backend_pid',
+        '_backend_start',
+        '_budget',
+        '_connection',
+        '_database_name',
+        '_database_oid',
+        '_issuer',
+        '_reservation',
+        '_system_identifier',
+        '_xid',
+    )
 
     def __init__(self, seal: object, issuer: object, reservation: object,
                  connection: object, *, xid: str, database_name: str,
@@ -1442,12 +1468,30 @@ class _OriginalStoreCreationAttempt:
 class _OriginalStoreCreationBudget:
     """Private, process-bound allowance for one exact original creation effect."""
 
-    __slots__ = ('_issuer', '_creator_pid', '_request', '_effect_key', '_evidence',
-                 '_approval', '_custodian', '_target', '_connection', '_store_bytes',
-                 '_request_digest', '_approval_digest', '_configuration_digest',
-                 '_started_ns', '_deadline_ns', '_attempts', '_reservation_digest',
-                 '_reservation', '_caller_timeout_lower_ms', '_timeout_state', '_fenced',
-                 '_timeout_discovery_complete')
+    __slots__ = (
+        '_approval',
+        '_approval_digest',
+        '_attempts',
+        '_caller_timeout_lower_ms',
+        '_configuration_digest',
+        '_connection',
+        '_creator_pid',
+        '_custodian',
+        '_deadline_ns',
+        '_effect_key',
+        '_evidence',
+        '_fenced',
+        '_issuer',
+        '_request',
+        '_request_digest',
+        '_reservation',
+        '_reservation_digest',
+        '_started_ns',
+        '_store_bytes',
+        '_target',
+        '_timeout_discovery_complete',
+        '_timeout_state',
+    )
 
     def __init__(self, seal: object, issuer: object, *, request: object,
                  evidence: object, approval: object, custodian: object,
@@ -1607,7 +1651,7 @@ def _execute_original_store_sql(issuer: Any, budget: Any, connection: Any,
         old_nonblocking = None
         require_budget()
         return cursor
-    except BaseException as exc:  # noqa: BLE001 -- interrupts also quarantine uncertain I/O
+    except BaseException as exc:
         keep_locked = operation_started
         if not operation_started and old_nonblocking is not None:
             try:
@@ -1637,7 +1681,7 @@ def _execute_original_store_sql(issuer: Any, budget: Any, connection: Any,
 class _BudgetedOriginalStoreConnection:
     """Bound each fixed creation SQL call to the same live host allowance."""
 
-    __slots__ = ('_issuer', '_reservation', '_budget', '_connection', '_lower_ms')
+    __slots__ = ('_budget', '_connection', '_issuer', '_lower_ms', '_reservation')
 
     def __init__(self, issuer: object,
                  reservation: _OriginalStoreCreationReservation | _OriginalStoreCreationBudget,
@@ -1715,7 +1759,7 @@ class _BudgetedOriginalStoreConnection:
                     self._issuer, budget, self._connection,
                     f"SET LOCAL {name} = '{value}ms'")
             self._issuer._require_original_store_budget(self._budget)
-        except BaseException:
+        except BaseException:  # noqa: BLE001 -- interrupts quarantine uncertain timeout restoration
             # Settings restoration is part of preserving caller ownership.
             # If it cannot be proven, quarantine this connection and make the
             # original creation budget unavailable for any further DDL.
@@ -1771,7 +1815,7 @@ class _BudgetedOriginalStoreConnection:
 class _BudgetedOriginalStoreCursor:
     """Check the same absolute limit around fetches on an original-store query."""
 
-    __slots__ = ('_issuer', '_reservation', '_budget', '_cursor', '_connection')
+    __slots__ = ('_budget', '_connection', '_cursor', '_issuer', '_reservation')
 
     def __init__(self, issuer: Any,
                  reservation: _OriginalStoreCreationReservation | None,
@@ -1801,7 +1845,8 @@ class _BudgetedOriginalStoreCursor:
     def __enter__(self):
         return self
 
-    def __exit__(self, exc_type: Any, exc: Any, traceback: Any) -> None:
+    def __exit__(self, exc_type: type[BaseException] | None,
+                 exc: BaseException | None, traceback: TracebackType | None) -> None:
         self._cursor.close()
 
     def close(self) -> None:
@@ -1838,11 +1883,23 @@ class _BudgetedOriginalStoreCursor:
 class _OriginalStoreReadonlyBudget:
     """One supervisor-issued read-only invocation; independent of DDL allowance."""
 
-    __slots__ = ('_issuer', '_pid', '_reservation', '_request', '_effect',
-                 '_reservation_digest', '_reservation_record_bytes',
-                 '_target', '_connection', '_store_bytes',
-                 '_operation', '_started_ns', '_deadline_ns', '_fenced',
-                 '_timeout_state')
+    __slots__ = (
+        '_connection',
+        '_deadline_ns',
+        '_effect',
+        '_fenced',
+        '_issuer',
+        '_operation',
+        '_pid',
+        '_request',
+        '_reservation',
+        '_reservation_digest',
+        '_reservation_record_bytes',
+        '_started_ns',
+        '_store_bytes',
+        '_target',
+        '_timeout_state',
+    )
 
     def __init__(self, seal: object, issuer: object, reservation: object,
                  request: object, effect: object, reservation_digest: str,
@@ -1881,7 +1938,7 @@ class _OriginalStoreReadonlyBudget:
 class _BudgetedOriginalStoreReadonlyConnection:
     """Clamp SQL and fetch work to one separately owned read-only window."""
 
-    __slots__ = ('_issuer', '_budget', '_connection', '_lower_ms')
+    __slots__ = ('_budget', '_connection', '_issuer', '_lower_ms')
 
     def __init__(self, issuer: object, budget: _OriginalStoreReadonlyBudget,
                  connection: object):
@@ -1983,7 +2040,7 @@ class _BudgetedOriginalStoreReadonlyConnection:
 
 
 class _BudgetedOriginalStoreReadonlyCursor:
-    __slots__ = ('_issuer', '_budget', '_cursor', '_connection')
+    __slots__ = ('_budget', '_connection', '_cursor', '_issuer')
 
     def __init__(self, issuer: object, budget: _OriginalStoreReadonlyBudget,
                  cursor: object, connection: object | None = None):
@@ -2008,7 +2065,8 @@ class _BudgetedOriginalStoreReadonlyCursor:
     def __enter__(self):
         return self
 
-    def __exit__(self, exc_type: Any, exc: Any, traceback: Any) -> None:
+    def __exit__(self, exc_type: type[BaseException] | None,
+                 exc: BaseException | None, traceback: TracebackType | None) -> None:
         self._cursor.close()
 
     def close(self) -> None:
@@ -2045,7 +2103,7 @@ class _BudgetedOriginalStoreReadonlyCursor:
 class _OriginalStoreCreationCapability:
     """Opaque capability issued after all original journals and the core finish."""
 
-    __slots__ = ('_issuer', '_reservation', '_receipt_digest', '_kind')
+    __slots__ = ('_issuer', '_kind', '_receipt_digest', '_reservation')
 
     def __init__(self, seal: object, issuer: object, reservation: object,
                  receipt_digest: str):
@@ -2126,20 +2184,20 @@ class LocalPostgresSupervisor:
         '_native_effect_outcomes',
         '_native_effect_reservations',
         '_native_targets',
-        '_original_store_reservations',
+        '_observer',
         '_original_store_attempts',
         '_original_store_budgets',
+        '_original_store_capabilities',
+        '_original_store_connection_fences',
+        '_original_store_issuer_pid',
         '_original_store_readonly_budgets',
         '_original_store_readonly_connection_fences',
-        '_original_store_issuer_pid',
-        '_pending_original_store_recovery',
-        '_original_store_connection_fences',
-        '_original_store_capabilities',
-        '_observer',
+        '_original_store_reservations',
         '_owner_core',
         '_owner_payloads',
         '_pending_creation_values',
         '_pending_creations',
+        '_pending_original_store_recovery',
         '_pg_process',
         '_principal_dispatches',
         '_principal_preparations',
@@ -2153,8 +2211,8 @@ class LocalPostgresSupervisor:
         '_store_issuer',
         '_store_preparations',
         '_supervisor_id',
-        '_target_leases',
         '_target_custody_journal_birth',
+        '_target_leases',
         '_target_paths',
     )
 
@@ -5277,10 +5335,7 @@ class LocalPostgresSupervisor:
                     lock_startup_ms = min(lock_startup_ms, lower['lock_timeout'])
                 if statement_startup_ms <= 0 or lock_startup_ms <= 0:
                     raise LocalPostgresError('local-postgresql-store-budget-exhausted')
-            if readonly_budget is not None:
-                options += (f" -c statement_timeout={statement_startup_ms}ms"
-                            f" -c lock_timeout={lock_startup_ms}ms")
-            elif budget_reservation is not None:
+            if readonly_budget is not None or budget_reservation is not None:
                 options += (f" -c statement_timeout={statement_startup_ms}ms"
                             f" -c lock_timeout={lock_startup_ms}ms")
             connection = connect(host='127.0.0.1', port=self._profile.port,
@@ -5298,14 +5353,14 @@ class LocalPostgresSupervisor:
             if connection is not None:
                 try:
                     connection.close()
-                except Exception:  # noqa: BLE001 -- preserve the original fail-closed error
+                except Exception:  # noqa: BLE001, S110 -- preserve original refusal without leaking close details
                     pass
             raise
         except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
             if connection is not None:
                 try:
                     connection.close()
-                except Exception:  # noqa: BLE001 -- preserve the original fail-closed error
+                except Exception:  # noqa: BLE001, S110 -- preserve original refusal without leaking close details
                     pass
             raise LocalPostgresError('local-postgresql-maintenance-authentication-failed') from None
 
@@ -6468,7 +6523,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name"""
             object.__setattr__(budget, '_caller_timeout_lower_ms', collected)
             object.__setattr__(budget, '_timeout_discovery_complete', True)
             return collected
-        except BaseException as exc:  # noqa: BLE001 -- interrupts fence in-flight query state
+        except BaseException as exc:
             if not saw_final or not safely_restored:
                 locked_until_drain = True
                 object.__setattr__(budget, '_fenced', True)
@@ -6928,8 +6983,9 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name"""
                         'local-postgresql-store-readonly-transaction-active')
                 from .ingress_custody import JOURNAL_PROFILE_02, _replay
                 from .row_originals import (
-                    PgRowOriginalsStore, STORE_PROFILE,
                     _RECOVERY_PROVIDER_SEAL,
+                    STORE_PROFILE,
+                    PgRowOriginalsStore,
                 )
                 target_reference = self._custodian._public_reference(
                     target)
@@ -7188,7 +7244,9 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name"""
                 raise LocalPostgresError('local-postgresql-store-recovery-authority-stale')
             if receipt is None:
                 from .row_originals_creation import (
-                    observe_absent_creation_schema, recover_creation_receipt)
+                    observe_absent_creation_schema,
+                    recover_creation_receipt,
+                )
                 absence_proof = observe_absent_creation_schema(
                     connection, store['schemaName'], native_now,
                     intent_payload['evidence']['controller']['oid'],
@@ -7577,12 +7635,12 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name"""
                 raise LocalPostgresError('local-postgresql-store-receipt-mismatch')
             with self._connect_maintenance(
                     self._profile.database_name,
-                    readonly_budget=readonly_budget) as recovery_connection:
-                with self._original_store_readonly_transaction(
-                        recovery_connection, readonly_budget) as readonly_connection:
-                    verified_receipt = verify_creation_receipt(
-                        readonly_connection, reserved['store']['schemaName'], receipt,
-                        evidence['controller']['oid'])
+                    readonly_budget=readonly_budget) as recovery_connection, \
+                 self._original_store_readonly_transaction(
+                     recovery_connection, readonly_budget) as readonly_connection:
+                verified_receipt = verify_creation_receipt(
+                    readonly_connection, reserved['store']['schemaName'], receipt,
+                    evidence['controller']['oid'])
             self._require_original_store_readonly_budget(readonly_budget)
             if verified_receipt != receipt:
                 raise LocalPostgresError('local-postgresql-store-receipt-mismatch')
@@ -7950,7 +8008,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name"""
             actual_payload, actual_observation = self._native_store_preparation_payload(
                 reference, verified_target, registration, authority, native_now,
                 readonly_budget=budget)
-            current_observation = self._resolve_original_store_recovery_observation(
+            self._resolve_original_store_recovery_observation(
                 payload, actual_payload, actual_observation,
                 authority=authority, readonly_budget=budget)
             if not self._native_origin_matches(

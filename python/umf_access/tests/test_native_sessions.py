@@ -19,6 +19,7 @@ from umf_access.unified import (
     observe_table_head,
     observe_table_head_async,
 )
+from umf_access.unified.operation_values import token_decode, token_encode
 from umf_access.unified.session_policy import (
     GET_SETTING,
     GET_SETTINGS,
@@ -26,7 +27,6 @@ from umf_access.unified.session_policy import (
     SET_SETTINGS,
     SETTING_NAMES,
 )
-from umf_access.unified.operation_values import token_decode, token_encode
 
 ALICE = SessionIdentity("person", "alice")
 BATCH = SessionIdentity("batch", "run")

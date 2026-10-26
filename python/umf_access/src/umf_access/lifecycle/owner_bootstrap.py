@@ -1140,8 +1140,8 @@ def _ensure_pending_supervisor_journal(enrollment: dict[str, Any]) -> None:
 
 def _target_custody_journal_initial(enrollment: dict[str, Any]) -> tuple[dict[str, Any], bytes]:
     from .supervisor_journal_codec import (
-        SupervisorJournalCodecError,
         TARGET_CUSTODY_JOURNAL_PROFILE_02,
+        SupervisorJournalCodecError,
         validate_target_custody_birth,
     )
     try:
@@ -1186,7 +1186,7 @@ def _ensure_pending_target_custody_journal(enrollment: dict[str, Any]) -> None:
 
 def _verify_target_custody_journal_resource(enrollment: dict[str, Any]) -> None:
     """Verify the original 0.2 chain against its immutable enrollment birth."""
-    birth, expected = _target_custody_journal_initial(enrollment)
+    birth, _expected = _target_custody_journal_initial(enrollment)
     path, lock = Path(birth['path']), Path(birth['lockPath'])
     _check_private_parent(path)
     try:
@@ -1195,7 +1195,10 @@ def _verify_target_custody_journal_resource(enrollment: dict[str, Any]) -> None:
         raise LocalPostgresError('target-custody-journal-birth-incomplete') from None
     if lock_raw != b'':
         raise LocalPostgresError('target-custody-journal-birth-incomplete')
-    from .ingress_custody import CustodyJournalError, validate_original_target_custody_record
+    from .ingress_custody import (
+        CustodyJournalError,
+        validate_original_target_custody_record,
+    )
     try:
         validate_original_target_custody_record(raw, birth)
     except CustodyJournalError:

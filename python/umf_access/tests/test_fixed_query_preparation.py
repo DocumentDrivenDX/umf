@@ -122,9 +122,9 @@ class FixedQueryPreparation(unittest.TestCase):
             raise ValueError('selected module profile unsupported')
         compiler.prepare_table_operation_module_json=unsupported
         reader=SyncTableReader(session,{}, {},binding,cursor_secret=b'x'*32)
-        with patch.dict(sys.modules,{'weft':compiler}):
-            with self.assertRaisesRegex(SessionError,'declared read compilation refused'):
-                reader._prepared_for(probe.binding_context,'read')
+        with (patch.dict(sys.modules,{'weft':compiler}),
+              self.assertRaisesRegex(SessionError,'declared read compilation refused')):
+            reader._prepared_for(probe.binding_context,'read')
         self.assertEqual(requests,['weft.table-operation-module/0.2'])
 
     def test_cross_profile_source_owner_or_mutated_handle_refuses(self):
@@ -133,9 +133,9 @@ class FixedQueryPreparation(unittest.TestCase):
         session.policy.table_operation_module_profile='weft.table-operation-module/0.2'
         compiler=ModuleType('weft')
         compiler.prepare_table_operation_module_json=lambda _raw: self.fail('cross-profile module must not be prepared')
-        with patch.dict(sys.modules,{'weft':compiler}):
-            with self.assertRaisesRegex(SessionError,'profile differs from prepared source owner'):
-                reader._prepared_for(probe.binding_context,'read')
+        with (patch.dict(sys.modules,{'weft':compiler}),
+              self.assertRaisesRegex(SessionError,'profile differs from prepared source owner')):
+            reader._prepared_for(probe.binding_context,'read')
         second_session,second_binding,_second_probe,_identity=_fixture('read')
         second_session.policy.table_operation_module_profile='weft.table-operation-module/0.2'
         with self.assertRaisesRegex(SessionError,'profile differs from shared source owner'):

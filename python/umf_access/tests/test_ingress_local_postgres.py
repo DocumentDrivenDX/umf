@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import copy
-from enum import IntEnum
 import hashlib
 import json
 import os
@@ -12,27 +11,24 @@ import time
 import unittest
 import uuid
 from contextlib import contextmanager
+from enum import IntEnum
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
 from umf_access.lifecycle import ingress_local_postgres as native
 from umf_access.lifecycle import owner_bootstrap as bootstrap
-from umf_access.lifecycle.catalog import CatalogError
 from umf_access.lifecycle.ingress_local_postgres import (
     _NATIVE_EFFECT_OUTCOME_SEAL,
     _ORIGINAL_STORE_ATTEMPT_SEAL,
     _ORIGINAL_STORE_BUDGET_SEAL,
     _ORIGINAL_STORE_RESERVATION_SEAL,
-    _OriginalStoreCreationAttempt,
-    _OriginalStoreCreationBudget,
-    _OriginalStoreCreationReservation,
-    _BudgetedOriginalStoreConnection,
-    _BudgetedOriginalStoreReadonlyConnection,
     _VERIFIED_STORE_PREPARATION_SEAL,
     LocalPostgresError,
     LocalPostgresSupervisor,
     _AttachedPostmaster,
+    _BudgetedOriginalStoreConnection,
+    _BudgetedOriginalStoreReadonlyConnection,
     _canonical,
     _digest,
     _membership_grant_statements,
@@ -40,6 +36,9 @@ from umf_access.lifecycle.ingress_local_postgres import (
     _NativeEffectReservation,
     _ordered_membership_payload,
     _ordered_required_memberships,
+    _OriginalStoreCreationAttempt,
+    _OriginalStoreCreationBudget,
+    _OriginalStoreCreationReservation,
     _owner_registration_approval_payload,
     _postmaster_pidfile_matches,
     _PreparedOriginalPrincipals,
@@ -51,8 +50,8 @@ from umf_access.lifecycle.ingress_local_postgres import (
     _render_config,
     _render_hba,
     _store_descriptor,
-    _SupervisorJournal,
     _validate_bootstrap_context_journal,
+    _SupervisorJournal,
     _VerifiedNativeEffectOutcome,
     _VerifiedNativeStorePreparation,
     _verify_bootstrap_enrollment,
@@ -118,19 +117,21 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         supervisor._custody_handle = None
         supervisor._authority_context = object()
         supervisor._journal = object()
-        with _patch_supervisor_method('_require_original_control_lease') as lease:
-            with self.assertRaisesRegex(
-                    LocalPostgresError,
-                    'local-postgresql-store-readonly-transaction-active'):
-                supervisor.recover_originals_store_creation(
-                    target, connection, store={
-                        'profile': 'umf.native-row-originals-store/0.1',
-                        'storeId': 'provider', 'schemaName': 'umf_originals_provider'})
+        with (_patch_supervisor_method('_require_original_control_lease') as lease,
+              self.assertRaisesRegex(
+                  LocalPostgresError,
+                  'local-postgresql-store-readonly-transaction-active')):
+            supervisor.recover_originals_store_creation(
+                target, connection, store={
+                    'profile': 'umf.native-row-originals-store/0.1',
+                    'storeId': 'provider', 'schemaName': 'umf_originals_provider'})
         lease.assert_called_once_with(supervisor, operation_kind='store')
 
     def test_public_recovery_facade_selects_only_the_exact_six_part_store_key(self):
         from umf_access.lifecycle.row_originals import (
-            CatalogError, PgRowOriginalsStore, STORE_PROFILE,
+            STORE_PROFILE,
+            CatalogError,
+            PgRowOriginalsStore,
         )
 
         provider_id = '33333333-3333-4333-8333-333333333333'
@@ -307,16 +308,17 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         with (patch.dict(sys.modules, {'psycopg': SimpleNamespace(Connection=Connection)}),
               _patch_supervisor_method('_original_control_lease',
                            side_effect=lambda _supervisor, *, operation_kind:
-                               _synthetic_control_lease(unselected, operation_kind))):
-            with self.assertRaisesRegex(
-                    LocalPostgresError,
-                    'local-postgresql-store-recovery-outcome-unresolved'):
-                unselected.open_originals_store_recovery(
-                    connection, provider_id=provider_id)
+                               _synthetic_control_lease(unselected, operation_kind)),
+              self.assertRaisesRegex(
+                  LocalPostgresError,
+                  'local-postgresql-store-recovery-outcome-unresolved')):
+            unselected.open_originals_store_recovery(
+                connection, provider_id=provider_id)
 
     def test_registration_classifies_reserved_no_intent_without_core_rehydration(self):
         from umf_access.lifecycle.ingress_custody import (
-            JOURNAL_PROFILE_02, _replay,
+            JOURNAL_PROFILE_02,
+            _replay,
         )
 
         provider_id = '10000000-0000-4000-8000-000000000003'
@@ -531,11 +533,11 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                              and event['payload'].get('scope') == 'native-store-creation'
                              for event in supervisor._journal.read()['events']))
         supervisor._custody_handle = target
-        with _patch_supervisor_method('_require_original_control_lease'):
-            with self.assertRaisesRegex(
-                    LocalPostgresError,
-                    'local-postgresql-store-history-supervisor-mismatch'):
-                supervisor._validate_original_store_custody_history(target)
+        with (_patch_supervisor_method('_require_original_control_lease'),
+              self.assertRaisesRegex(
+                  LocalPostgresError,
+                  'local-postgresql-store-history-supervisor-mismatch')):
+            supervisor._validate_original_store_custody_history(target)
         supervisor._custody_handle = None
 
     def test_store_lease_accepts_only_the_issuer_bound_pending_target_for_rehydration(self):
@@ -553,11 +555,12 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         supervisor._journal = object()
         supervisor._pending_original_store_recovery = (
             target, custodian, 'custodian', context, os.getpid(), reference)
-        with _patch_supervisor_method('_require_original_control_lease',
-                          side_effect=lambda _supervisor, *, operation_kind:
-                              self.assertEqual(operation_kind, 'store')):
+        with _patch_supervisor_method(
+                '_require_original_control_lease',
+                side_effect=lambda _supervisor, *, operation_kind:
+                    self.assertEqual(operation_kind, 'store')):
             supervisor._require_original_store_recovery_target(target)
-            with self.assertRaisesRegex(
+            with self.assertRaisesRegex(  # noqa: SIM117 -- refusal assertion must follow first successful validation
                     LocalPostgresError, 'local-postgresql-store-recovery-unverified'):
                 supervisor._require_original_store_recovery_target(object())
         self.assertIsNone(supervisor._custody_handle)
@@ -574,13 +577,14 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         supervisor._journal = object()
         supervisor._custodian = object()
         supervisor._custody_handle = object()
-        with _patch_supervisor_method('_original_control_lease',
-                          side_effect=lambda _supervisor, *, operation_kind:
-                              _synthetic_control_lease(supervisor, operation_kind)):
-            with self.assertRaisesRegex(
-                    LocalPostgresError, 'local-postgresql-store-recovery-unavailable'):
-                supervisor.open_originals_store_recovery(
-                    Connection(), provider_id='44444444-4444-4444-8444-444444444444')
+        with (_patch_supervisor_method(
+                  '_original_control_lease',
+                  side_effect=lambda _supervisor, *, operation_kind:
+                      _synthetic_control_lease(supervisor, operation_kind)),
+              self.assertRaisesRegex(
+                  LocalPostgresError, 'local-postgresql-store-recovery-unavailable')):
+            supervisor.open_originals_store_recovery(
+                Connection(), provider_id='44444444-4444-4444-8444-444444444444')
 
     def test_original_store_readonly_transaction_refuses_active_caller_transaction(self):
         supervisor = object.__new__(LocalPostgresSupervisor)
@@ -592,13 +596,13 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
 
         connection = Connection()
         budget = object()
-        with _patch_supervisor_method('_require_original_store_readonly_budget',
-                          return_value=1_000):
-            with self.assertRaisesRegex(
-                    LocalPostgresError,
-                    'local-postgresql-store-readonly-transaction-active'):
-                with supervisor._original_store_readonly_transaction(connection, budget):
-                    self.fail('active caller transaction must not be adopted')
+        with (_patch_supervisor_method('_require_original_store_readonly_budget',
+                                       return_value=1_000),
+              self.assertRaisesRegex(
+                  LocalPostgresError,
+                  'local-postgresql-store-readonly-transaction-active')):
+            with supervisor._original_store_readonly_transaction(connection, budget):
+                self.fail('active caller transaction must not be adopted')
 
     def test_original_store_readonly_sql_clamps_to_remaining_and_lower_timeouts(self):
         supervisor = object.__new__(LocalPostgresSupervisor)
@@ -624,8 +628,8 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                 supervisor, budget, connection)
             bounded.execute('SELECT 1')
         self.assertEqual(calls, [
-            "SELECT name, setting::pg_catalog.int8 FROM pg_catalog.pg_settings "
-            "WHERE name IN ('statement_timeout','lock_timeout')",
+            ("SELECT name, setting::pg_catalog.int8 FROM pg_catalog.pg_settings "
+             "WHERE name IN ('statement_timeout','lock_timeout')"),
             "SET LOCAL lock_timeout = '1200ms'",
             "SET LOCAL statement_timeout = '800ms'",
             'SELECT 1',
@@ -673,7 +677,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
 
     def test_budgeted_transaction_scope_passively_borrows_only_the_active_transaction(self):
         for readonly in (False, True):
-            supervisor, budget, connection, bounded, require_method, _idle, _changed, _expiry = (
+            _supervisor, budget, connection, bounded, require_method, _idle, _changed, _expiry = (
                 self._passive_transaction_fixture(readonly=readonly, status=2))
             with self.subTest(readonly=readonly):
                 with _patch_supervisor_method(require_method, return_value=1_000) as require:
@@ -697,40 +701,39 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                 (_supervisor, _budget, connection, bounded, require_method,
                  idle_code, _changed, _expiry) = self._passive_transaction_fixture(
                      readonly=readonly, status=status)
-                with self.subTest(readonly=readonly, status=status):
-                    with _patch_supervisor_method(require_method,
-                                                  return_value=1_000) as require:
-                        with self.assertRaisesRegex(LocalPostgresError, idle_code):
-                            with bounded.transaction():
-                                self.fail('an inactive transaction must not be borrowed')
-                    require.assert_called_once()
-                    self.assertEqual(connection.transaction_calls, [])
-                    self.assertEqual(connection.control_sql, [])
+                with (self.subTest(readonly=readonly, status=status),
+                      _patch_supervisor_method(require_method,
+                                               return_value=1_000) as require,
+                      self.assertRaisesRegex(LocalPostgresError, idle_code),
+                      bounded.transaction()):
+                    self.fail('an inactive transaction must not be borrowed')
+                require.assert_called_once()
+                self.assertEqual(connection.transaction_calls, [])
+                self.assertEqual(connection.control_sql, [])
 
     def test_budgeted_transaction_scope_fails_closed_on_expiry_or_status_change(self):
         for readonly in (False, True):
             (_supervisor, _budget, connection, bounded, require_method,
              _idle_code, changed_code, expiry_code) = self._passive_transaction_fixture(
                  readonly=readonly, status=2)
-            with self.subTest(readonly=readonly, failure='expiry'):
-                with _patch_supervisor_method(
-                        require_method, side_effect=[1_000, LocalPostgresError(
-                            expiry_code)]):
-                    with self.assertRaisesRegex(LocalPostgresError, expiry_code):
-                        with bounded.transaction():
-                            pass
-                self.assertEqual(connection.transaction_calls, [])
-                self.assertEqual(connection.control_sql, [])
+            with (self.subTest(readonly=readonly, failure='expiry'),
+                  _patch_supervisor_method(
+                      require_method, side_effect=[1_000, LocalPostgresError(expiry_code)]),
+                  self.assertRaisesRegex(LocalPostgresError, expiry_code),
+                  bounded.transaction()):
+                pass
+            self.assertEqual(connection.transaction_calls, [])
+            self.assertEqual(connection.control_sql, [])
             (_supervisor, _budget, connection, bounded, require_method,
              _idle_code, changed_code, _expiry_code) = self._passive_transaction_fixture(
                  readonly=readonly, status=2)
-            with self.subTest(readonly=readonly, failure='status-change'):
-                with _patch_supervisor_method(require_method, return_value=1_000):
-                    with self.assertRaisesRegex(LocalPostgresError, changed_code):
-                        with bounded.transaction():
-                            connection.info.transaction_status = 3
-                self.assertEqual(connection.transaction_calls, [])
-                self.assertEqual(connection.control_sql, [])
+            with (self.subTest(readonly=readonly, failure='status-change'),
+                  _patch_supervisor_method(require_method, return_value=1_000),
+                  self.assertRaisesRegex(LocalPostgresError, changed_code),
+                  bounded.transaction()):
+                connection.info.transaction_status = 3
+            self.assertEqual(connection.transaction_calls, [])
+            self.assertEqual(connection.control_sql, [])
 
     def test_bounded_psycopg_generator_uses_finite_read_write_readiness_and_releases(self):
         class Ready(IntEnum):
@@ -860,12 +863,11 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                       Wait=Wait)}),
               _patch_supervisor_method('_require_original_store_budget', return_value=1_000),
               patch('umf_access.lifecycle.ingress_local_postgres.select.select',
-                    return_value=([], [], []))):
-            with self.assertRaisesRegex(
-                    LocalPostgresError,
-                    'local-postgresql-store-budget-exhausted'):
-                native._execute_original_store_sql(
-                    supervisor, budget, connection, 'SELECT 1')
+                    return_value=([], [], [])),
+              self.assertRaisesRegex(
+                  LocalPostgresError, 'local-postgresql-store-budget-exhausted')):
+            native._execute_original_store_sql(
+                supervisor, budget, connection, 'SELECT 1')
         self.assertTrue(budget._fenced)
         self.assertIs(supervisor._original_store_connection_fences[id(connection)],
                       connection)
@@ -897,10 +899,10 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
               _patch_supervisor_method('_maintenance_name', return_value='maintenance'),
               _patch_supervisor_method('_require_original_store_readonly_budget',
                                        side_effect=LocalPostgresError(
-                                           'local-postgresql-store-readonly-exhausted'))):
-            with self.assertRaisesRegex(
-                    LocalPostgresError, 'local-postgresql-store-readonly-exhausted'):
-                supervisor._connect_maintenance('postgres', readonly_budget=budget)
+                                           'local-postgresql-store-readonly-exhausted')),
+              self.assertRaisesRegex(
+                  LocalPostgresError, 'local-postgresql-store-readonly-exhausted')):
+            supervisor._connect_maintenance('postgres', readonly_budget=budget)
 
     def test_original_store_readonly_settings_rows_are_never_rewritten(self):
         supervisor = object.__new__(LocalPostgresSupervisor)
@@ -990,23 +992,23 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                          ['transactionReadOnly'], 'on')
         bad_membership = {**observation, 'membershipObservations': [[11, 99, False, False, True]]}
         bad_actual = {**actual, 'nativeAuthorityObservationDigest': _digest(bad_membership)}
-        with _patch_supervisor_method('_require_original_store_readonly_budget',
-                          return_value=1_000):
-            with self.assertRaisesRegex(
-                    LocalPostgresError,
-                    'local-postgresql-store-recovery-membership-mismatch'):
-                supervisor._resolve_original_store_recovery_observation(
-                    original, bad_actual, bad_membership, authority=authority,
-                    readonly_budget=budget)
+        with (_patch_supervisor_method('_require_original_store_readonly_budget',
+                                       return_value=1_000),
+              self.assertRaisesRegex(
+                  LocalPostgresError,
+                  'local-postgresql-store-recovery-membership-mismatch')):
+            supervisor._resolve_original_store_recovery_observation(
+                original, bad_actual, bad_membership, authority=authority,
+                readonly_budget=budget)
         drifted = {**actual, 'targetCustodyDigest': '0' * 64}
-        with _patch_supervisor_method('_require_original_store_readonly_budget',
-                          return_value=1_000):
-            with self.assertRaisesRegex(
-                    LocalPostgresError,
-                    'local-postgresql-store-recovery-authority-stale'):
-                supervisor._resolve_original_store_recovery_observation(
-                    original, drifted, observation, authority=authority,
-                    readonly_budget=budget)
+        with (_patch_supervisor_method('_require_original_store_readonly_budget',
+                                       return_value=1_000),
+              self.assertRaisesRegex(
+                  LocalPostgresError,
+                  'local-postgresql-store-recovery-authority-stale')):
+            supervisor._resolve_original_store_recovery_observation(
+                original, drifted, observation, authority=authority,
+                readonly_budget=budget)
 
     def test_store_recovery_does_not_append_before_authority_and_absence_proof(self):
         supervisor = object.__new__(LocalPostgresSupervisor)
@@ -1202,10 +1204,10 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
               patch('umf_access.lifecycle.ingress_local_postgres._execute_original_store_sql',
                     side_effect=stalled_first_query),
               patch('umf_access.lifecycle.row_originals_creation.reserve_originals_store_creation',
-                    side_effect=AssertionError('reservation must follow controller query'))):
-            with self.assertRaisesRegex(
-                    LocalPostgresError, 'local-postgresql-store-budget-exhausted'):
-                provider.create()
+                    side_effect=AssertionError('reservation must follow controller query')),
+              self.assertRaisesRegex(
+                  LocalPostgresError, 'local-postgresql-store-budget-exhausted')):
+            provider.create()
         self.assertEqual(events[:3], ['mint', 'timeout-discovery', ('refresh', budget)])
         self.assertEqual(events[3], ('controller-query', budget))
 
@@ -1240,10 +1242,10 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
                            side_effect=lambda _self, *, budget=None:
                                events.append(('refresh', budget))),
               patch('umf_access.lifecycle.ingress_local_postgres._execute_original_store_sql',
-                    side_effect=stalled_first_query)):
-            with self.assertRaisesRegex(
-                    LocalPostgresError, 'local-postgresql-store-budget-exhausted'):
-                provider.resume_creation()
+                    side_effect=stalled_first_query),
+              self.assertRaisesRegex(
+                  LocalPostgresError, 'local-postgresql-store-budget-exhausted')):
+            provider.resume_creation()
         self.assertIn(('require', reservation), events)
         self.assertIn(('refresh', budget), events)
         self.assertIn(('controller-query', budget), events)
@@ -1293,18 +1295,18 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
 
     def test_original_creation_budget_expiry_fork_and_missing_registry_fence(self):
         supervisor, reservation, budget = self._creation_budget_fixture()
-        with patch('umf_access.lifecycle.ingress_local_postgres.time.monotonic_ns',
-                   return_value=budget._deadline_ns):
-            with self.assertRaisesRegex(LocalPostgresError,
-                                        'local-postgresql-store-budget-exhausted'):
-                supervisor._require_original_store_budget(reservation)
+        with (patch('umf_access.lifecycle.ingress_local_postgres.time.monotonic_ns',
+                    return_value=budget._deadline_ns),
+              self.assertRaisesRegex(
+                  LocalPostgresError, 'local-postgresql-store-budget-exhausted')):
+            supervisor._require_original_store_budget(reservation)
         self.assertTrue(budget._fenced)
         supervisor, reservation, _budget = self._creation_budget_fixture()
-        with patch('umf_access.lifecycle.ingress_local_postgres.os.getpid',
-                   return_value=os.getpid() + 1):
-            with self.assertRaisesRegex(LocalPostgresError,
-                                        'local-postgresql-store-budget-unavailable'):
-                supervisor._require_original_store_budget(reservation)
+        with (patch('umf_access.lifecycle.ingress_local_postgres.os.getpid',
+                    return_value=os.getpid() + 1),
+              self.assertRaisesRegex(
+                  LocalPostgresError, 'local-postgresql-store-budget-unavailable')):
+            supervisor._require_original_store_budget(reservation)
         supervisor, reservation, budget = self._creation_budget_fixture()
         supervisor._original_store_budgets.clear()
         with self.assertRaisesRegex(LocalPostgresError,
@@ -1316,11 +1318,11 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         supervisor, reservation, _budget = self._creation_budget_fixture()
         supervisor._original_store_reservations[id(reservation)][1][
             'reservationDigest'] = 'f' * 64
-        with patch('umf_access.lifecycle.ingress_local_postgres.time.monotonic_ns',
-                   return_value=1_000_000_001):
-            with self.assertRaisesRegex(LocalPostgresError,
-                                        'local-postgresql-store-budget-unavailable'):
-                supervisor._require_original_store_budget(reservation)
+        with (patch('umf_access.lifecycle.ingress_local_postgres.time.monotonic_ns',
+                    return_value=1_000_000_001),
+              self.assertRaisesRegex(
+                  LocalPostgresError, 'local-postgresql-store-budget-unavailable')):
+            supervisor._require_original_store_budget(reservation)
 
     def test_original_store_sql_clamps_each_timeout_to_remaining_and_existing_lower(self):
         class Cursor:
@@ -1445,7 +1447,6 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             _finish_effect_digest=Mock())
         supervisor._owner_core = core
         supervisor._authority_context = object()
-        doc = {'events': []}
         external_state = {'stores': {'original': {
             'id': record['reservationId'], 'status': 'reserved',
             'reservationDigest': 'a' * 64,

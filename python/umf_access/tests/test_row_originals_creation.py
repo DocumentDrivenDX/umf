@@ -8,11 +8,11 @@ from contextlib import nullcontext
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
-from umf_access.lifecycle import row_originals_creation as creation
-from umf_access.lifecycle import row_originals as originals
 from umf_access.lifecycle import ingress_local_postgres as postgres_supervisor
-from umf_access.lifecycle.ingress_local_postgres import LocalPostgresSupervisor
+from umf_access.lifecycle import row_originals as originals
+from umf_access.lifecycle import row_originals_creation as creation
 from umf_access.lifecycle.catalog import CatalogError
+from umf_access.lifecycle.ingress_local_postgres import LocalPostgresSupervisor
 
 PROVIDER = '00000000-0000-4000-8000-000000000001'
 SCHEMA = 'umf_originals_00000000000040008000000000000001'

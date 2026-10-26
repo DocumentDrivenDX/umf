@@ -55,7 +55,8 @@ class MigrationPhaseTests(unittest.TestCase):
             with self.subTest(mutate=mutate):
                 value = copy.deepcopy(plan())
                 mutate(value)
-                with self.assertRaisesRegex(CatalogError, 'mixed-phase-profile'):
+                with self.assertRaisesRegex(  # noqa: SIM117 -- mutation must remain outside expected-error scope
+                        CatalogError, 'mixed-phase-profile'):
                     _verified_phases(value)
 
     def test_g02_add_fill_tighten_is_one_exact_ordered_phase(self):
@@ -128,7 +129,6 @@ class MigrationPhaseTests(unittest.TestCase):
             _verify_backfill_tighten_target(forged,phase)
 
     def test_g11_field_replacement_accepts_one_closed_ordered_atomic_phase(self):
-        import copy
         from umf_access.lifecycle.approval import APPROVAL_PROFILE
 
         old_field = {'module': 'm', 'element': 'old'}
@@ -191,9 +191,9 @@ class MigrationPhaseTests(unittest.TestCase):
                     sourcePath='/modules/9/tables/0/keys/0')):
             forged = copy.deepcopy(candidate)
             mutate(forged)
-            with self.subTest(mutation=mutate):
-                with self.assertRaisesRegex(CatalogError, 'mixed-phase-profile'):
-                    _verified_phases(forged)
+            with (self.subTest(mutation=mutate),
+                  self.assertRaisesRegex(CatalogError, 'mixed-phase-profile')):
+                _verified_phases(forged)
 
     def test_g11_execution05_requires_exact_generation_ingress_profile(self):
         candidate = self._g11_minimal_plan()
@@ -213,9 +213,9 @@ class MigrationPhaseTests(unittest.TestCase):
                 lambda value: value['executionProfile'].update(extra=True)):
             forged = copy.deepcopy(candidate)
             mutate(forged)
-            with self.subTest(mutation=mutate):
-                with self.assertRaisesRegex(CatalogError, 'mixed-phase-profile'):
-                    _verified_phases(forged)
+            with (self.subTest(mutation=mutate),
+                  self.assertRaisesRegex(CatalogError, 'mixed-phase-profile')):
+                _verified_phases(forged)
 
     def test_g11_native_host_still_refuses_unreleased06_before_acquire(self):
         from umf_access.lifecycle.host import apply_migration_on_host
@@ -232,13 +232,13 @@ class MigrationPhaseTests(unittest.TestCase):
             def acquire(self, *args, **kwargs):
                 raise AssertionError('unreleased .6 reached host acquisition')
 
-        with patch('umf_access.lifecycle.ledger._verified_plan',
-                   return_value=candidate):
-            with self.assertRaisesRegex(CatalogError, 'host-migration-profile'):
-                apply_migration_on_host(
-                    HostMustNotAcquire(), candidate,
-                    expected_head='a' * 64, file_digest='b' * 64,
-                    qualification_profile='test', evidence_digest='c' * 64)
+        with (patch('umf_access.lifecycle.ledger._verified_plan',
+                    return_value=candidate),
+              self.assertRaisesRegex(CatalogError, 'host-migration-profile')):
+            apply_migration_on_host(
+                HostMustNotAcquire(), candidate,
+                expected_head='a' * 64, file_digest='b' * 64,
+                qualification_profile='test', evidence_digest='c' * 64)
 
     def test_g11_phase_refuses_forged_role_subject_order_and_omitted_backfill(self):
         import copy
@@ -261,7 +261,8 @@ class MigrationPhaseTests(unittest.TestCase):
             with self.subTest(mutation=mutate):
                 candidate = copy.deepcopy(case)
                 mutate(candidate)
-                with self.assertRaisesRegex(CatalogError, 'mixed-phase-profile'):
+                with self.assertRaisesRegex(  # noqa: SIM117 -- keep mutation outside expected-error scope
+                        CatalogError, 'mixed-phase-profile'):
                     _verified_phases(candidate)
 
     def test_g11_recovery_witness_selects_predecessor_until_atomic_completion(self):
@@ -331,7 +332,10 @@ class MigrationPhaseTests(unittest.TestCase):
 
     def test_g11_psycopg_lease_observes_the_requested_recovery_prefix(self):
         from umf_access.lifecycle.host import (
-            PhaseReceipt, _PsycopgLease, _PsycopgRequiredPhase)
+            PhaseReceipt,
+            _PsycopgLease,
+            _PsycopgRequiredPhase,
+        )
 
         candidate = self._g11_minimal_plan()
         lease = object.__new__(_PsycopgLease)

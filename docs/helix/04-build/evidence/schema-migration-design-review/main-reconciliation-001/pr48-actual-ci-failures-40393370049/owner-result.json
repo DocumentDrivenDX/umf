@@ -1,0 +1,16 @@
+{
+  "profile": "umf.actual-ci-failure-correction/1",
+  "status": "FAILURES_RETAINED_CORRECTION_PENDING",
+  "sourceCommit": "71b5f87805324c0e0d12c279a4898c8a44f625a9",
+  "prProducerCommit": "88871ad55a1ac348b2070a5ae00714e2299cb646",
+  "prProducerStatus": "historical failing candidate; not final qualified producer",
+  "portableArtifact": {
+    "runId": 40393356507,
+    "artifactId": 12685014116,
+    "zipSha256": "847af131ecde6aefc51daa599cedb2ea4c3afd79e94947c0616a0d114ed91e49"
+  },
+  "scope": "Actual hosted failures and source-only correction plan. Running native and other PR jobs remain live; no acceptance inferred. No local candidate runtime executed.",
+  "timing": "Same source/test/Bun binary passed earlier; cause unresolved. Preserve original cases, versions and time limits. No standalone unchanged retry.",
+  "pythonCorrection": "SOURCE_ACCEPT_RUNTIME_PENDING",
+  "pythonSourceReviewSha256": "d9f35f81660a7b74690c621b140fae16d7ace75c269dd9d0cd13249d0cbc5b38"
+}
