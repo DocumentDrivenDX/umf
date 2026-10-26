@@ -574,6 +574,10 @@ fn host_invoke_value_wire_json(value: &HostInvokeValue) -> String {
             r#"{{"kind":"json","value":{}}}"#,
             rust_value_wire_json(value)
         ),
+        HostInvokeValue::JsonRootOrdinary(value) => format!(
+            r#"{{"kind":"json-root-ordinary","value":{}}}"#,
+            rust_value_wire_json(value)
+        ),
     }
 }
 

@@ -950,10 +950,22 @@ impl Engine {
         )?;
         let complete = mixed.is_empty();
         let mut entries = Vec::with_capacity(mixed.len());
+        let mut valid = true;
         for diagnostic in mixed {
             entries.push(match diagnostic {
                 crate::constraints::ConstraintDiagnostic::Static(diagnostic) => {
+                    if valid && diagnostic.severity == Severity::Error {
+                        valid = false;
+                    }
                     crate::selection_diagnostics::SelectionDiagnosticEntry::Static(diagnostic)
+                }
+                crate::constraints::ConstraintDiagnostic::HostCallback(original) => {
+                    let is_error = valid && provider.host_callback_is_error(&original, ctx)?;
+                    if is_error { valid = false; }
+                    crate::selection_diagnostics::SelectionDiagnosticEntry::Callback {
+                        original,
+                        severity: Utf16::from(if is_error { "error" } else { "warning" }),
+                    }
                 }
                 crate::constraints::ConstraintDiagnostic::HostStructure {
                     code,
@@ -968,6 +980,7 @@ impl Engine {
                             "Caller-owned Selection structure diagnostic message is not a host string",
                         ));
                     };
+                    if valid && severity == Severity::Error { valid = false; }
                     crate::selection_diagnostics::SelectionDiagnosticEntry::HostStructure {
                         code,
                         path,
@@ -979,7 +992,7 @@ impl Engine {
         }
         Ok(crate::selection_diagnostics::SelectionDiagnosticMaterialization {
             complete,
-            static_valid: None,
+            static_valid: Some(valid),
             entries,
         })
     }

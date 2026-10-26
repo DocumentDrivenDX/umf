@@ -293,17 +293,19 @@ test('private host Selection refuses nonstring structure messages before later r
   expect(registryCalls).toBe(2);
 });
 
-test('private host Selection reaches the explicit semantic-callback boundary without invoking it', () => {
+test('private host Selection invokes a bounded semantic callback and preserves an empty diagnostic result', () => {
   let calls = 0;
   const registration = {
     manifest: {scopes: {includes() { return true; }}, capabilities: {validation: 'semantic'}},
     structure() { return true; },
     semantics() { calls++; return []; },
   };
-  expect(() => coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all,
-    {get() { return registration; }}, UmfCoreError))
-    .toThrow(expect.objectContaining({code: 'HOST_JSON_UNSUPPORTED'}));
-  expect(calls).toBe(0);
+  const result = coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all,
+    {get() { return registration; }}, UmfCoreError);
+  expect(calls).toBe(2);
+  expect(result.sourceValidation.valid).toBe(true);
+  expect(result.sourceValidation.diagnostics).toHaveLength(2);
+  expect(result.sourceValidation.diagnostics.map(item => item.code)).toEqual(['UNKNOWN_CORE_FIELD', 'UNKNOWN_SCALAR_TYPE']);
 });
 
 test('private host Selection preserves structure iterator throws by identity and order', () => {

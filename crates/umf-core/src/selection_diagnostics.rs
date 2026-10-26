@@ -52,7 +52,7 @@ impl SelectionDiagnosticMaterialization {
     ) -> Result<Value, EngineError> {
         let valid = self.static_is_valid()?;
         let mut diagnostics = Vec::with_capacity(self.entries.len());
-        for entry in &self.entries {
+        for (index, entry) in self.entries.iter().enumerate() {
             let (code, path, message, severity) = match entry {
                 SelectionDiagnosticEntry::Static(diagnostic) => (
                     diagnostic.code.clone(), diagnostic.path.clone(), diagnostic.message.clone(),
@@ -65,10 +65,14 @@ impl SelectionDiagnosticMaterialization {
                     let message = crate::host_json::read_host_string_value(host, message.clone(), path)?;
                     (code.clone(), path.clone(), message, match severity { Severity::Error => "error", Severity::Warning => "warning" })
                 }
-                SelectionDiagnosticEntry::Callback { .. } => return Err(EngineError::new(
-                    "HOST_JSON_UNSUPPORTED", Utf16::default(),
-                    "Successful Selection callback diagnostics are not materialized by the private host route",
-                )),
+                SelectionDiagnosticEntry::Callback { original, .. } => {
+                    let diagnostic_path = Utf16::from(format!("/sourceValidation/diagnostics/{index}"));
+                    let value = crate::host_json::materialize_semantic_value(
+                        original.clone(), host, ctx, &diagnostic_path, 0,
+                    )?;
+                    diagnostics.push(value);
+                    continue;
+                }
             };
             diagnostics.push(Value::Object(vec![
                 (Utf16::from("code"), Value::String(code)),
@@ -110,13 +114,8 @@ impl SelectionDiagnosticMaterialization {
                     return Ok(false)
                 }
                 SelectionDiagnosticEntry::Static(_) => {}
-                SelectionDiagnosticEntry::Callback { .. } => {
-                    return Err(EngineError::new(
-                        "HOST_JSON_PROTOCOL",
-                        Utf16::default(),
-                        "Static Selection cannot evaluate an opaque callback diagnostic",
-                    ));
-                }
+                SelectionDiagnosticEntry::Callback { severity, .. } if severity == &Utf16::from("error") => return Ok(false),
+                SelectionDiagnosticEntry::Callback { .. } => {}
                 SelectionDiagnosticEntry::HostStructure { severity, .. } => {
                     if *severity == Severity::Error { return Ok(false); }
                 }
@@ -182,6 +181,9 @@ impl SelectionDiagnosticMaterialization {
         ctx: &mut crate::Context<'_>,
         path: &Utf16,
     ) -> Result<bool, EngineError> {
+        if let Some(valid) = self.static_valid {
+            return Ok(valid);
+        }
         let ordered: Vec<_> = self
             .entries
             .iter()
@@ -279,7 +281,7 @@ impl SelectionDiagnosticMaterialization {
         ctx: &mut crate::Context<'_>,
         path: &Utf16,
     ) -> Result<Option<HostOpaqueValue>, EngineError> {
-        if self.is_valid(host, ctx, path)? {
+        if self.static_is_valid()? {
             return Ok(None);
         }
         stringify_diagnostic_array(self.host_array_items(ctx, path)?, host, ctx, path).map(Some)

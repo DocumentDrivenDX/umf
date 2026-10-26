@@ -94,6 +94,7 @@ impl RegistrationProvider for HostProvider<'_> {
     fn host_registration_stage(
         &self,
         handle: u64,
+        document: &Value,
         payload: &Value,
         scope: &Utf16,
         path: &Utf16,
@@ -196,10 +197,94 @@ impl RegistrationProvider for HostProvider<'_> {
             return Ok(HostRegistrationStage::Unchecked);
         }
         let semantics = get_property(&mut **host, ctx, &registration, "semantics")?;
-        if semantics.is_truthy() {
-            return Ok(HostRegistrationStage::Unsupported);
+        if !semantics.is_truthy() {
+            return Ok(HostRegistrationStage::Unchecked);
         }
-        Ok(HostRegistrationStage::Unchecked)
+        let payload_copy = crate::value::copy_json(payload, ctx)?;
+        let document_copy = crate::value::copy_json(document, ctx)?;
+        let context = Value::Object(vec![
+            (Utf16::from("document"), document_copy),
+            (Utf16::from("path"), Value::String(path.clone())),
+            (Utf16::from("scope"), Value::String(scope.clone())),
+        ]);
+        let semantics = get_property(&mut **host, ctx, &registration, "semantics")?;
+        let HostOpaqueValue::Opaque {
+            handle: semantics,
+            opaque_type: HostOpaqueType::Function,
+        } = semantics
+        else {
+            return Err(unsupported_error(
+                "Caller-owned Selection semantics must be a host function",
+            ));
+        };
+        ctx.charge_work(1, path.clone())?;
+        let result = match host.reflect(HostJsonEvent::InvokeOpaque {
+            function: semantics,
+            receiver: HostInvokeValue::Opaque(handle),
+            args: vec![
+                HostInvokeValue::Json(payload_copy),
+                HostInvokeValue::JsonRootOrdinary(context),
+            ],
+            semantic_catch: true,
+        })? {
+            HostJsonReply::Invocation(value) => value,
+            HostJsonReply::SemanticThrow(message) => {
+                return Ok(HostRegistrationStage::SemanticFailure(read_host_string(
+                    &mut **host,
+                    &message,
+                )?));
+            }
+            _ => return Err(protocol_error()),
+        };
+        match crate::host_json::collect_semantic_iterable(result, &mut **host, ctx, path)? {
+            crate::host_json::HostSemanticIterableOutcome::Values(values) => {
+                Ok(HostRegistrationStage::SemanticDiagnostics(values))
+            }
+            crate::host_json::HostSemanticIterableOutcome::SemanticThrow(message) => {
+                Ok(HostRegistrationStage::SemanticFailure(message))
+            }
+            crate::host_json::HostSemanticIterableOutcome::NativeSpreadFailureUnresolved => {
+                Err(unsupported_error(
+                    "Caller-owned Selection semantic result uses an unsupported native spread protocol",
+                ))
+            }
+        }
+    }
+
+    fn host_callback_is_error(
+        &self,
+        diagnostic: &HostOpaqueValue,
+        ctx: &mut Context<'_>,
+    ) -> Result<bool, EngineError> {
+        let mut host = self.host.borrow_mut();
+        let severity = get_property(&mut **host, ctx, diagnostic, "severity")?;
+        match severity {
+            HostOpaqueValue::String(value) => Ok(read_host_string(&mut **host, &value)? == Utf16::from("error")),
+            _ => Ok(false),
+        }
+    }
+
+    fn host_callback_validate_at_emit(
+        &self,
+        diagnostic: &HostOpaqueValue,
+        ctx: &mut Context<'_>,
+    ) -> Result<(), EngineError> {
+        let mut host = self.host.borrow_mut();
+        let severity = get_property(&mut **host, ctx, diagnostic, "severity")?;
+        let HostOpaqueValue::String(severity) = severity else {
+            return Err(EngineError::new("CONSTRAINT_DIAGNOSTIC", Utf16::default(), "Malformed diagnostic"));
+        };
+        let severity = read_host_string(&mut **host, &severity)?;
+        if severity != Utf16::from("error") && severity != Utf16::from("warning") {
+            return Err(EngineError::new("CONSTRAINT_DIAGNOSTIC", Utf16::default(), "Malformed diagnostic"));
+        }
+        for field in ["path", "code", "message"] {
+            let value = get_property(&mut **host, ctx, diagnostic, field)?;
+            let HostOpaqueValue::String(_) = value else {
+                return Err(EngineError::new("CONSTRAINT_DIAGNOSTIC", Utf16::default(), "Malformed diagnostic"));
+            };
+        }
+        Ok(())
     }
 }
 
@@ -315,6 +400,6 @@ pub fn execute(
 
 pub(crate) fn reject_host_semantics() -> EngineError {
     unsupported_error(
-        "Caller-owned Selection semantic callbacks are not implemented by the private host route",
+        "Caller-owned Selection semantic callback shape is outside the private route's verified iterable and diagnostic subset",
     )
 }

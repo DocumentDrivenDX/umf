@@ -57,6 +57,15 @@ function transportArray(length = 0) {
   return result;
 }
 
+function readHostProperty(receiver, key) {
+  const diagnostic = receiver;
+  if (key === 'severity') return diagnostic.severity;
+  if (key === 'path') return diagnostic.path;
+  if (key === 'code') return diagnostic.code;
+  if (key === 'message') return diagnostic.message;
+  return receiver[key];
+}
+
 
 function bits(value) {
   const bytes = new NativeArrayBuffer(8);
@@ -223,6 +232,9 @@ function executeHostInput(addon, resources, operation, inputs, ErrorType, contro
       case 'json':
         try { return fromRustWire(value.value); }
         catch { throw new HostProtocolError('Malformed tagged JSON invocation value'); }
+      case 'json-root-ordinary':
+        try { return fromRustWireRootOrdinary(value.value); }
+        catch { throw new HostProtocolError('Malformed tagged JSON invocation value'); }
       default: throw new HostProtocolError('Malformed opaque invocation value');
     }
   }
@@ -273,7 +285,7 @@ function executeHostInput(addon, resources, operation, inputs, ErrorType, contro
           if (key === null) throw new HostProtocolError('Malformed opaque property key');
           if (request.semanticCatch) {
             let propertyValue;
-            try { propertyValue = receiver[key]; }
+            try { propertyValue = readHostProperty(receiver, key); }
             catch (error) {
               let message;
               try { message = String(error); }
@@ -282,7 +294,7 @@ function executeHostInput(addon, resources, operation, inputs, ErrorType, contro
               break;
             }
             reply = {kind: 'opaque-value', value: opaqueValue(propertyValue)};
-          } else reply = {kind: 'opaque-value', value: opaqueValue(receiver[key])};
+          } else reply = {kind: 'opaque-value', value: opaqueValue(readHostProperty(receiver, key))};
           break;
         }
         case 'invoke-opaque': {
@@ -546,6 +558,15 @@ function fromRustWireOrdinary(value) {
     }
     default: throw new NativeTypeError('Malformed Rust result wire');
   }
+}
+
+function fromRustWireRootOrdinary(value) {
+  if (value?.kind !== 'object' || !isArray(value.members)) throw new NativeTypeError('Malformed ordinary-root JSON invocation value');
+  const result = NativeObjectCreate(objectPrototype);
+  for (const member of value.members) defineProperty(result, fromUnits(member.key), {
+    value: fromRustWire(member.value), writable: true, enumerable: true, configurable: true,
+  });
+  return result;
 }
 
 function fromUnits(units) {

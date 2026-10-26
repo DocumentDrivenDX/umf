@@ -77,6 +77,10 @@ pub enum HostInvokeValue {
     Undefined,
     Opaque(HostHandle),
     Json(Value),
+    /// Tagged JSON reconstructed with ordinary object prototypes. Semantic
+    /// callback context records are ordinary TS object literals, while copied
+    /// document/payload arguments retain the null-prototype JSON profile.
+    JsonRootOrdinary(Value),
 }
 
 #[cfg(test)]
@@ -907,7 +911,7 @@ pub(crate) fn collect_structure_errors(
     Ok(HostStructureErrorsOutcome::Entries(entries))
 }
 
-fn materialize_semantic_value(
+pub(crate) fn materialize_semantic_value(
     value: HostOpaqueValue,
     host: &mut dyn HostJsonReflection,
     ctx: &mut Context<'_>,

@@ -58,9 +58,9 @@ pub(crate) enum RegistrationLookup<'a> {
     HostHandle(u64),
 }
 
-/// Result of the bounded host-owned registration structure stage used only by
-/// the private Selection host route. Semantic callback execution remains a
-/// separate, explicit boundary.
+/// Result of the bounded host-owned registration stage used only by the
+/// private Selection host route. Its semantic diagnostics remain opaque until
+/// checked at `emit`, classified by the post-traversal `some`, and materialized.
 #[derive(Clone, Debug, PartialEq)]
 pub(crate) enum HostRegistrationStage {
     OutOfScope,
@@ -68,6 +68,8 @@ pub(crate) enum HostRegistrationStage {
     StructureErrors(Vec<crate::host_json::HostStructureErrorEntry>),
     Unchecked,
     Unsupported,
+    SemanticDiagnostics(Vec<crate::host_json::HostOpaqueValue>),
+    SemanticFailure(Utf16),
 }
 
 /// Demand-driven registration access used by the shared interpreter. Calls
@@ -83,6 +85,7 @@ pub(crate) trait RegistrationProvider {
     fn host_registration_stage(
         &self,
         _handle: u64,
+        _document: &Value,
         _payload: &Value,
         _scope: &Utf16,
         _path: &Utf16,
@@ -92,6 +95,36 @@ pub(crate) trait RegistrationProvider {
             "HOST_JSON_UNSUPPORTED",
             Utf16::default(),
             "Caller-owned Selection registration requires a host-aware provider",
+        ))
+    }
+
+    /// Read callback diagnostic severity in the predecessor's post-traversal
+    /// validation pass. Implementations must preserve the original handle and
+    /// perform at most this one requested property read.
+    fn host_callback_is_error(
+        &self,
+        _diagnostic: &crate::host_json::HostOpaqueValue,
+        _ctx: &mut Context<'_>,
+    ) -> Result<bool, EngineError> {
+        Err(EngineError::new(
+            "HOST_JSON_UNSUPPORTED",
+            Utf16::default(),
+            "Opaque callback diagnostics require a host-aware provider",
+        ))
+    }
+
+    /// Match the TypeScript `emit` boundary before retaining a callback
+    /// diagnostic. The host adapter reads severity, path, code, message in
+    /// that order and leaves the original opaque value untouched.
+    fn host_callback_validate_at_emit(
+        &self,
+        _diagnostic: &crate::host_json::HostOpaqueValue,
+        _ctx: &mut Context<'_>,
+    ) -> Result<(), EngineError> {
+        Err(EngineError::new(
+            "HOST_JSON_UNSUPPORTED",
+            Utf16::default(),
+            "Opaque callback diagnostics require a host-aware provider",
         ))
     }
 }

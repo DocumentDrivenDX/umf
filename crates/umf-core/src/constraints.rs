@@ -27,6 +27,9 @@ enum Runtime {
         severity: Severity,
         message: crate::host_json::HostOpaqueValue,
     },
+    /// Opaque caller-owned diagnostics can flow only to the private Selection
+    /// packet; constraint operators may not inspect or coerce them.
+    HostCallbackDiagnostic(crate::host_json::HostOpaqueValue),
     Array(Vec<Runtime>),
     Object(Vec<(Utf16, Runtime)>),
     CopiedObject(Vec<(Utf16, Runtime)>),
@@ -45,6 +48,7 @@ enum Runtime {
 #[derive(Clone, Debug, PartialEq)]
 pub(crate) enum ConstraintDiagnostic {
     Static(Diagnostic),
+    HostCallback(crate::host_json::HostOpaqueValue),
     HostStructure {
         code: Utf16,
         path: Utf16,
@@ -55,7 +59,7 @@ pub(crate) enum ConstraintDiagnostic {
 fn runtime_tree_nodes(value: &Runtime) -> usize {
     1 + match value {
         Runtime::Json(value) => crate::dataset_values::tree_values(value).saturating_sub(1),
-        Runtime::HostStructureDiagnostic { .. } => 0,
+        Runtime::HostStructureDiagnostic { .. } | Runtime::HostCallbackDiagnostic(_) => 0,
         Runtime::Array(items) => items.iter().map(runtime_tree_nodes).sum(),
         Runtime::Object(items) | Runtime::CopiedObject(items) => items
             .iter()
@@ -450,6 +454,7 @@ fn canonical_runtime(
         match value {
             Runtime::Missing => Ok(false),
             Runtime::HostStructureDiagnostic { .. } => Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
+            Runtime::HostCallbackDiagnostic(_) => Err(err("HOST_JSON_UNSUPPORTED", "Opaque callback diagnostic cannot be serialized by a constraint operator")),
             Runtime::Json(value) => {
                 let encoded = canonical(value, ctx)?;
                 ctx.charge_work(encoded.len(), Utf16::default())?;
@@ -633,6 +638,7 @@ fn runtime_constraint_diagnostics(
     for diagnostic in diagnostics {
         values.push(match diagnostic {
             ConstraintDiagnostic::Static(diagnostic) => runtime_object(diagnostic, ctx)?,
+            ConstraintDiagnostic::HostCallback(value) => Runtime::HostCallbackDiagnostic(value.clone()),
             ConstraintDiagnostic::HostStructure {
                 code,
                 path,
@@ -659,6 +665,10 @@ fn static_diagnostics(
         .into_iter()
         .map(|diagnostic| match diagnostic {
             ConstraintDiagnostic::Static(diagnostic) => Ok(diagnostic),
+            ConstraintDiagnostic::HostCallback(_) => Err(err(
+                "HOST_JSON_UNSUPPORTED",
+                "Opaque callback diagnostics require the private Selection materializer",
+            )),
             ConstraintDiagnostic::HostStructure { .. } => Err(err(
                 "HOST_JSON_UNSUPPORTED",
                 "Opaque host diagnostics require the private Selection materializer",
@@ -706,6 +716,10 @@ fn runtime_copy(v: &Runtime, ctx: &mut Context<'_>) -> Result<Runtime, EngineErr
         Runtime::HostStructureDiagnostic { code, path, severity, message } => {
             ctx.charge_work(code.len().saturating_add(path.len()).saturating_add(1), path.clone())?;
             Runtime::HostStructureDiagnostic { code: code.clone(), path: path.clone(), severity: *severity, message: message.clone() }
+        }
+        Runtime::HostCallbackDiagnostic(value) => {
+            ctx.charge_work(1, Utf16::default())?;
+            Runtime::HostCallbackDiagnostic(value.clone())
         }
         Runtime::Array(items) => {
             ctx.charge_work(items.len(), Utf16::default())?;
@@ -828,6 +842,7 @@ fn truth(v: &Runtime) -> bool {
         Runtime::Json(Value::String(s)) => !s.is_empty(),
         Runtime::Json(Value::Array(_) | Value::Object(_)) => true,
         Runtime::HostStructureDiagnostic { .. } => true,
+        Runtime::HostCallbackDiagnostic(_) => true,
     }
 }
 fn runtime_text_codepoint_origin(
@@ -882,6 +897,7 @@ fn runtime_text_codepoint_origin(
         match value {
             Runtime::Missing => out.extend("undefined".chars().map(|c| c as u32)),
             Runtime::HostStructureDiagnostic { .. } => return Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
+            Runtime::HostCallbackDiagnostic(_) => return Err(err("HOST_JSON_UNSUPPORTED", "Opaque callback diagnostic cannot be coerced by a constraint operator")),
             Runtime::Map(_) => out.extend("[object Map]".chars().map(|c| c as u32)),
             Runtime::Text {
                 python_origin: Some(origin),
@@ -1051,7 +1067,7 @@ fn runtime_string_into(value: &Runtime, out: &mut Vec<u16>) {
     }
     match value {
         Runtime::Missing => out.extend("undefined".encode_utf16()),
-        Runtime::HostStructureDiagnostic { .. } => return,
+        Runtime::HostStructureDiagnostic { .. } | Runtime::HostCallbackDiagnostic(_) => return,
         Runtime::Map(_) => out.extend("[object Map]".encode_utf16()),
         Runtime::Text {
             value,
@@ -1088,6 +1104,7 @@ fn runtime_primitive<'a>(
     let primitive = match value {
         Runtime::Missing => Primitive::Undefined,
         Runtime::HostStructureDiagnostic { .. } => return Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
+        Runtime::HostCallbackDiagnostic(_) => return Err(err("HOST_JSON_UNSUPPORTED", "Opaque callback diagnostic cannot be coerced by a constraint operator")),
         Runtime::Map(_) => {
             *scratch = Some(Utf16::from("[object Map]"));
             Primitive::String(scratch.as_ref().unwrap())
@@ -1225,6 +1242,7 @@ fn runtime_string_cost(value: &Runtime, ctx: &mut Context<'_>) -> Result<usize, 
             "Object cannot be converted to a primitive",
         )),
         Runtime::HostStructureDiagnostic { .. } => Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
+        Runtime::HostCallbackDiagnostic(_) => Err(err("HOST_JSON_UNSUPPORTED", "Opaque callback diagnostic cannot be coerced by a constraint operator")),
     }
 }
 
@@ -1350,6 +1368,7 @@ fn as_json(v: &Runtime, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     match v {
         Runtime::Json(v) => clone_private(v, ctx),
         Runtime::HostStructureDiagnostic { .. } => Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
+        Runtime::HostCallbackDiagnostic(_) => Err(err("HOST_JSON_UNSUPPORTED", "Opaque callback diagnostic cannot be coerced by a constraint operator")),
         Runtime::Array(items) => {
             ctx.charge_work(items.len(), Utf16::default())?;
             Ok(Value::Array(
@@ -2324,6 +2343,7 @@ fn runtime_to_value(v: Runtime, ctx: &mut Context<'_>) -> Result<Value, EngineEr
             Ok(Value::String(value))
         }
         Runtime::HostStructureDiagnostic { .. } => Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
+        Runtime::HostCallbackDiagnostic(_) => Err(err("HOST_JSON_UNSUPPORTED", "Opaque callback diagnostic cannot be materialized by a constraint operator")),
         Runtime::Missing => Ok(Value::Null),
         Runtime::Map(_) => Ok(Value::Array(vec![])),
     }
@@ -2447,7 +2467,7 @@ fn extension_errors(
             None => continue,
             Some(crate::registry::RegistrationLookup::Borrowed(entry)) => entry,
             Some(crate::registry::RegistrationLookup::HostHandle(handle)) => {
-                match registry.host_registration_stage(handle, payload, scope, &at, ctx)? {
+                match registry.host_registration_stage(handle, doc, payload, scope, &at, ctx)? {
                     crate::registry::HostRegistrationStage::OutOfScope => {
                         out.push(ConstraintDiagnostic::Static(model_diag(policy, "scope", &at, None, ctx)?));
                     }
@@ -2472,6 +2492,12 @@ fn extension_errors(
                     }
                     crate::registry::HostRegistrationStage::Unchecked => {
                         out.push(ConstraintDiagnostic::Static(model_diag(policy, "unchecked", &at, None, ctx)?));
+                    }
+                    crate::registry::HostRegistrationStage::SemanticDiagnostics(diagnostics) => {
+                        out.extend(diagnostics.into_iter().map(ConstraintDiagnostic::HostCallback));
+                    }
+                    crate::registry::HostRegistrationStage::SemanticFailure(message) => {
+                        out.push(ConstraintDiagnostic::Static(model_diag(policy, "failure", &at, Some(message), ctx)?));
                     }
                     crate::registry::HostRegistrationStage::Unsupported => {
                         return Err(crate::selection_host_json::reject_host_semantics());
@@ -2783,7 +2809,7 @@ fn exec(
                         diags,
                         observer,
                     )?;
-                    diags.push(diagnostic_from_runtime(v, ctx)?)
+                    diags.push(diagnostic_from_runtime_with_provider(v, reg, ctx)?)
                 }
             }
             "remember" => {
@@ -2820,7 +2846,7 @@ fn exec(
                     if duplicate {
                         if let Some(d) = get(step, "diagnostic") {
                             let diagnostic = eval(d, env, doc, p, reg, caps, ctx, diags, observer)?;
-                            diags.push(diagnostic_from_runtime(diagnostic, ctx)?)
+                            diags.push(diagnostic_from_runtime_with_provider(diagnostic, reg, ctx)?)
                         }
                     } else {
                         let stored = if let Some(value) = get(step, "value") {
@@ -2851,6 +2877,7 @@ fn diagnostic_from_runtime(v: Runtime, ctx: &mut Context<'_>) -> Result<Constrai
             }
             return Ok(ConstraintDiagnostic::HostStructure { code, path, severity, message });
         }
+        Runtime::HostCallbackDiagnostic(value) => return Ok(ConstraintDiagnostic::HostCallback(value)),
         value => value,
     };
     let fields = match v {
@@ -2935,6 +2962,18 @@ fn diagnostic_from_runtime(v: Runtime, ctx: &mut Context<'_>) -> Result<Constrai
             None
         },
     }))
+}
+
+fn diagnostic_from_runtime_with_provider(
+    value: Runtime,
+    provider: &dyn crate::registry::RegistrationProvider,
+    ctx: &mut Context<'_>,
+) -> Result<ConstraintDiagnostic, EngineError> {
+    if let Runtime::HostCallbackDiagnostic(original) = value {
+        provider.host_callback_validate_at_emit(&original, ctx)?;
+        return Ok(ConstraintDiagnostic::HostCallback(original));
+    }
+    diagnostic_from_runtime(value, ctx)
 }
 pub fn execute_constraints(
     document: &Value,
@@ -3095,6 +3134,7 @@ mod runtime_diagnostic_tests {
         fn host_registration_stage(
             &self,
             _handle: u64,
+            _document: &Value,
             _payload: &Value,
             _scope: &Utf16,
             path: &Utf16,
@@ -3362,6 +3402,7 @@ mod runtime_diagnostic_tests {
     fn static_diagnostic(diagnostic: ConstraintDiagnostic) -> Diagnostic {
         match diagnostic {
             ConstraintDiagnostic::Static(diagnostic) => diagnostic,
+            ConstraintDiagnostic::HostCallback(_) => panic!("expected static diagnostic"),
             ConstraintDiagnostic::HostStructure { .. } => panic!("expected static diagnostic"),
         }
     }
