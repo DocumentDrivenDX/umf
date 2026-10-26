@@ -29,6 +29,36 @@ test('an audited Rust facade import grant does not transfer to another facade', 
 	);
 });
 
+test('the Record Type facade has only its exact audited model imports', () => {
+	const allowed = checkAccessSource(
+		'rust-record-type-default.ts',
+		"import { copyJson } from '../model/json';\n",
+	);
+	const denied = checkAccessSource(
+		'rust-record-type-default.ts',
+		"import { readFile } from 'node:fs';\n",
+	);
+
+	expect(allowed).toEqual([]);
+	expect(denied).toContain('rust-record-type-default.ts: unapproved import node:fs');
+});
+
+test('the Record Type facade cannot restore a predecessor value import', () => {
+	const allowed = checkAccessSource(
+		'rust-record-type-default.ts',
+		"import type {CoreRecordTypeDeclaration} from '../model/record-type';\n",
+	);
+	const denied = checkAccessSource(
+		'rust-record-type-default.ts',
+		"import {declareCoreRecordType} from '../model/record-type';\n",
+	);
+
+	expect(allowed).toEqual([]);
+	expect(denied).toContain('rust-record-type-default.ts: value import from type-only module ../model/record-type');
+	expect(checkAccessSource('rust-record-type-default.ts', "export * from '../model/record-type';\n"))
+		.toContain('rust-record-type-default.ts: value re-export from type-only module ../model/record-type');
+});
+
 test('a per-file allowlist also governs re-export module references', () => {
 	const errors = checkAccessSource(
 		'rust-facets-default.ts',

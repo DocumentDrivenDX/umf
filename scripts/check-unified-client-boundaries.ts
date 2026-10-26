@@ -24,11 +24,17 @@ const allowedImports:Record<string,readonly string[]>={
  'rust-host-reads-v4.ts':['./rust-candidate','./rust-host-reads-v3'],
  'rust-keys-default.ts':['../model/keys','../model/key-tuple','../model/types','../model/json','../model/errors'],
  'rust-relationships-default.ts':['../model/relationships','../model/types','../model/json','../model/errors'],
+ 'rust-record-type-default.ts':['../model/field-kind','../model/record-type','../model/types','../model/json','../model/errors'],
  'rust-schema-properties-default.ts':['../model/schema-properties','../model/schema-literals','../model/types'],
  'rust-runtime.ts':['../model/errors','./rust-candidate','./rust-host-reads-v3','./rust-host-reads-v4'],
  'table-client.ts':['../model/types','../extensions/tables','./types'],
  'table-runtime.ts':[],
  'types.ts':[],
+};
+// These predecessor modules supply declarations only. A value import would
+// restore executable TypeScript behavior behind the Rust-selected facade.
+const typeOnlyImports:Record<string,readonly string[]>={
+ 'rust-record-type-default.ts':['../model/field-kind','../model/record-type','../model/types'],
 };
 const forbidden=new Set(['Bun','process','require','fetch','eval','Function','Buffer','XMLHttpRequest','WebSocket']);
 export function checkAccessSource(file:string,text:string):string[]{
@@ -37,9 +43,17 @@ export function checkAccessSource(file:string,text:string):string[]{
  if(allowedForFile===undefined)errors.push(file+': missing per-file import allowlist');
  const source=ts.createSourceFile(file,text,ts.ScriptTarget.Latest,true);
  function visit(node:ts.Node){
-  if(ts.isImportDeclaration(node)&&ts.isStringLiteral(node.moduleSpecifier)&&!allowedForFile?.includes(node.moduleSpecifier.text))errors.push(file+': unapproved import '+node.moduleSpecifier.text);
+  if(ts.isImportDeclaration(node)&&ts.isStringLiteral(node.moduleSpecifier)){
+   const module=node.moduleSpecifier.text;
+   if(!allowedForFile?.includes(module))errors.push(file+': unapproved import '+module);
+   else if(typeOnlyImports[file]?.includes(module)&&!node.importClause?.isTypeOnly)errors.push(file+': value import from type-only module '+module);
+  }
   if(ts.isImportTypeNode(node)&&ts.isLiteralTypeNode(node.argument)&&ts.isStringLiteral(node.argument.literal)&&!allowedForFile?.includes(node.argument.literal.text))errors.push(file+': unapproved import type '+node.argument.literal.text);
-  if(ts.isExportDeclaration(node)&&node.moduleSpecifier&&ts.isStringLiteral(node.moduleSpecifier)&&!allowedForFile?.includes(node.moduleSpecifier.text))errors.push(file+': unapproved import '+node.moduleSpecifier.text);
+  if(ts.isExportDeclaration(node)&&node.moduleSpecifier&&ts.isStringLiteral(node.moduleSpecifier)){
+   const module=node.moduleSpecifier.text;
+   if(!allowedForFile?.includes(module))errors.push(file+': unapproved import '+module);
+   else if(typeOnlyImports[file]?.includes(module)&&!node.isTypeOnly)errors.push(file+': value re-export from type-only module '+module);
+  }
   if(ts.isCallExpression(node)&&node.expression.kind===ts.SyntaxKind.ImportKeyword)errors.push(file+': dynamic import');
   if(ts.isIdentifier(node)&&forbidden.has(node.text))errors.push(file+': host or executable hook '+node.text);
   ts.forEachChild(node,visit);
