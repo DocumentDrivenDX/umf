@@ -201,6 +201,35 @@ def test_dto_free_validator_returns_outside_profile_before_graph_reads(monkeypat
     }
 
 
+def test_dto_free_validator_refuses_nonempty_steps_before_step_accessors():
+    """The empty-terminal profile must fall back before inspecting step graphs."""
+    reads: list[str] = []
+
+    class ObservedStep(Node):
+        def __getattribute__(self, name):
+            if name in {"op", "args"}:
+                reads.append(name)
+                raise LookupError("step accessor belongs to Python fallback")
+            return super().__getattribute__(name)
+
+    step = object.__new__(ObservedStep)
+    # Populate the instance dictionary without invoking the overridden accessor.
+    object.__setattr__(step, "op", "limit")
+    object.__setattr__(step, "args", (1,))
+    node = Node("all", (RecordRef("demo", "Thing", (_ID,)), (step,)))
+    session = _rust._rust_core.CaptureResourceSession(100_000)
+
+    result = _rust._rust_core.access_validate_capture_exact_empty_terminal_with_session(
+        node, Node, RecordRef, session
+    )
+
+    assert result == {
+        "profile": "umf-access-capture-exact-empty-terminal/0.2.0",
+        "outcome": "outside-profile",
+    }
+    assert reads == []
+
+
 def test_dto_free_validator_rejects_mutated_class_accessors_before_reads(monkeypatch):
     node = Node("all", (RecordRef("demo", "Thing", (_ID,)), ()))
     reads: list[str] = []

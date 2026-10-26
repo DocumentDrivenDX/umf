@@ -133,3 +133,57 @@ Sol independently reran that seven-file focused cohort with the same overlay:
 | `python/umf_access/src/umf_access/rust_catalog_render.py` | `0e99c5c12ce1efddf76484a8b6d0f2d5bd77eabade99a37d86864605ca8f7350` |
 | `python/umf_access/tests/test_capture_resource_budget.py` | `6571425c5236f731505ac02f1e8bb504232e87ea519b1fa3affcb853986b5c95` |
 | `python/umf_access/tests/test_capture_rust_graph_validator.py` | `fc6e090e1d5922fe358fb4f1900db135b6a86c42596297d39c1301c8a46e8bc3` |
+
+## Refused nonempty-step DTO-free profile — 2026-10-26
+
+The private exact-empty-terminal validator continues to return
+`outside-profile` for a nonempty step tuple before reading any step accessor.
+A new negative test supplies a `Node` subclass step whose `op` and `args`
+accessors raise, then proves both remain untouched. This pins the fail-closed
+boundary; it does not add a Rust capture profile or change public `capture()`.
+
+Neither a one-step profile nor get/page selected-key preflight is safe to add by
+merely widening raw admission. `_validate_node` first checks the terminal,
+root-record condition, selected values, scalar/group constraints, and ordered
+join ownership before visiting children. A nonempty step requires replaying
+that order, including each step's `op` and (for selected steps) `args` reads,
+with first-fault and shared-resource accounting. Get/page additionally carry
+selected-key operands whose record/key identity checks must retain their
+precedence over later graph faults; the existing private DTO validator
+exercises that precedence, while the exact-empty-terminal profile rejects
+get/page before graph reads. A future profile therefore needs Rust-directed
+ordered reads and an explicit selected-key preflight before it can accept
+either shape.
+
+The fresh isolated addon was built with Rust 1.90.0:
+
+```sh
+PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH \
+CARGO_TARGET_DIR=/private/tmp/umf-next-capture-profile-target \
+CARGO_NET_OFFLINE=true cargo build --locked --offline -p umf-core-python
+mkdir -p /private/tmp/umf-next-capture-profile-overlay/umf
+cp -R python/src/umf/. /private/tmp/umf-next-capture-profile-overlay/umf/
+cp /private/tmp/umf-next-capture-profile-target/debug/lib_rust_core.dylib \
+  /private/tmp/umf-next-capture-profile-overlay/umf/_rust_core.abi3.so
+```
+
+The Darwin arm64 addon SHA-256 is
+`b38f57c1b77412e31ddaad9c38327052cf18b8d007bf54855c126ceace8ab318`. Against
+that overlay, CPython 3.13.16 ran this seven-file cohort:
+
+```sh
+DYLD_LIBRARY_PATH=/private/tmp/umf-next-capture-profile-overlay/umf \
+PYTHONPATH=/private/tmp/umf-next-capture-profile-overlay:python/umf_access/src:python/src \
+PYTHONDONTWRITEBYTECODE=1 python/.venv/bin/python -m pytest -q -p no:cacheprovider \
+  python/umf_access/tests/test_capture.py \
+  python/umf_access/tests/test_capture_resource_budget.py \
+  python/umf_access/tests/test_capture_field_observation.py \
+  python/umf_access/tests/test_capture_rust_graph_validator.py \
+  python/umf_access/tests/test_captured_declaration_predecessor.py \
+  python/umf_access/tests/test_captured_logical_render_predecessor.py \
+  python/umf_access/tests/test_captured_logical_render_positive.py
+```
+
+Result: 114 tests and 3 subtests passed. `git diff --check` passed. The changed
+test source SHA-256 is
+`9465025a532e8b798e3e63442adcfd9d20044a7d4f09bd9456db3614d47dd6f5`.
