@@ -1,0 +1,358 @@
+{
+  "archive_path": "/private/tmp/umf-core-0.10.2-qualification-evidence.zip",
+  "archive_sha256": "e873b3ce9c374607b516332fd990ee6c4121b9e78610fc8151859f2279c57e47",
+  "archive_size": 163526,
+  "entries": [
+    {
+      "path": "evidence-index.json",
+      "sha256": "87d1eb41105f5ca8894cf9672cc06e081e3b7698515e23d0068910a94bff3b95",
+      "size": 23674
+    },
+    {
+      "path": "linux-manylinux/SHA256SUMS",
+      "sha256": "1ce25409943fe55be631516813e942da78cb010ac9e4fdcc394aacb4e96b1557",
+      "size": 3723
+    },
+    {
+      "path": "linux-manylinux/command-records.jsonl",
+      "sha256": "8f1cbce4005fbe8c76421ff3d9d9cd752f5c47314c2862fd05f06ea6cbb5aea6",
+      "size": 10926
+    },
+    {
+      "path": "linux-manylinux/deadline-ms",
+      "sha256": "fc18ce96a356e3880859861c30eca8f075a23f0e985ed321bffbdfe98cdf9efd",
+      "size": 8
+    },
+    {
+      "path": "linux-manylinux/direct-elf.json",
+      "sha256": "0130dddd9ae9bb3fb47e562166a9609f9faeb0ea8b1192b0fe7d6918d5859183",
+      "size": 2489
+    },
+    {
+      "path": "linux-manylinux/host-tools.json",
+      "sha256": "1110167c047414748b0cb004d51447050490cc692b642e7ad44bd84a2a2e8f22",
+      "size": 694
+    },
+    {
+      "path": "linux-manylinux/installed-after-tests.json",
+      "sha256": "148697a08da40607aa55237626a64b65a082fcef5c6d9f9d40b6eb796ee929b9",
+      "size": 565
+    },
+    {
+      "path": "linux-manylinux/installed-before-tests.json",
+      "sha256": "148697a08da40607aa55237626a64b65a082fcef5c6d9f9d40b6eb796ee929b9",
+      "size": 565
+    },
+    {
+      "path": "linux-manylinux/installed-payload-before-tests.json",
+      "sha256": "85579c37b467935bec7cb708aac0d34d744953aa8444bcffe4768a2d47478834",
+      "size": 299
+    },
+    {
+      "path": "linux-manylinux/logs/auditwheel-repair-auto.log",
+      "sha256": "049b9ed2bf1e52c8252e9682e5cb867a02d1a40e6dd85cec3add1bcd97ba8121",
+      "size": 581
+    },
+    {
+      "path": "linux-manylinux/logs/auditwheel-show-direct.log",
+      "sha256": "f34edb8c5bf93cae2877de5b0fb5df35509d1b7407df63dcaf6a8357096a9765",
+      "size": 821
+    },
+    {
+      "path": "linux-manylinux/logs/auditwheel-show-repaired.log",
+      "sha256": "ae5c8839a99a8d0b8776541d9134f92deb7b7645e32f90b519c7202c891385bc",
+      "size": 782
+    },
+    {
+      "path": "linux-manylinux/logs/auditwheel-version.log",
+      "sha256": "9fd426e8868c77233f90b81ea5f5fb9a6e57bf41b750e47743e3d98d2af46e24",
+      "size": 140
+    },
+    {
+      "path": "linux-manylinux/logs/create-test-environment.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "linux-manylinux/logs/create-tool-environment.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "linux-manylinux/logs/inspect-direct-elf.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "linux-manylinux/logs/inspect-repaired-elf.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "linux-manylinux/logs/install-locked-tools.log",
+      "sha256": "6a05f7906d0c4c928958ffff89d785934256b94127826aaacf940467a980b683",
+      "size": 1134
+    },
+    {
+      "path": "linux-manylinux/logs/install-original-test-tools.log",
+      "sha256": "16e9da07dfac6bef92600e054d20db9644e0bd4b8fdd69cdcc0a4c413b3276fa",
+      "size": 4325
+    },
+    {
+      "path": "linux-manylinux/logs/install-repaired-wheel.log",
+      "sha256": "c466197d090e1a651b53723a5f7d9f0f87a40b5b334b1b0fe025991eb83f220a",
+      "size": 196
+    },
+    {
+      "path": "linux-manylinux/logs/installed-identity-after-tests.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "linux-manylinux/logs/installed-identity-before-tests.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "linux-manylinux/logs/installed-six-module-suite.log",
+      "sha256": "55335187dbbb02e740b78c4e5e6bf1604206a3f9916b142041d3e48d276c0c71",
+      "size": 430
+    },
+    {
+      "path": "linux-manylinux/logs/patchelf-version.log",
+      "sha256": "d897b75391ead2726f0887295ceae36122ec17d8b92cdd652c1e6b57b0fba156",
+      "size": 16
+    },
+    {
+      "path": "linux-manylinux/logs/verify-installed-before-tests.log",
+      "sha256": "85579c37b467935bec7cb708aac0d34d744953aa8444bcffe4768a2d47478834",
+      "size": 299
+    },
+    {
+      "path": "linux-manylinux/logs/verify-repaired-payload-after-tests.log",
+      "sha256": "85579c37b467935bec7cb708aac0d34d744953aa8444bcffe4768a2d47478834",
+      "size": 299
+    },
+    {
+      "path": "linux-manylinux/logs/verify-repaired-payload.log",
+      "sha256": "eb0d3593473932f75546d8452aff0dfe8fdfb617484a5cd55a1bb51f7d368ba6",
+      "size": 2010
+    },
+    {
+      "path": "linux-manylinux/original-input.json",
+      "sha256": "0dbd65f59da44b7982473123c44d516129458e7a7fb428efcf4a03a3fe35b441",
+      "size": 1031
+    },
+    {
+      "path": "linux-manylinux/owner-result.json",
+      "sha256": "25265bbc35a6e10af50f19e61b7c81544aee33ca8f89875aafb65c12ac4a430a",
+      "size": 980
+    },
+    {
+      "path": "linux-manylinux/payload-after-tests.json",
+      "sha256": "85579c37b467935bec7cb708aac0d34d744953aa8444bcffe4768a2d47478834",
+      "size": 299
+    },
+    {
+      "path": "linux-manylinux/payload-before-tests.json",
+      "sha256": "eb0d3593473932f75546d8452aff0dfe8fdfb617484a5cd55a1bb51f7d368ba6",
+      "size": 2010
+    },
+    {
+      "path": "linux-manylinux/qualification.json",
+      "sha256": "7a76bd7416d4564467e11a08205ef9ca46dac3a235a7a19568b1794b3e1c0ad9",
+      "size": 6602
+    },
+    {
+      "path": "linux-manylinux/receipt.json",
+      "sha256": "4fd6a49266194ff857838cb22544f0b86619e3dc50188d1d6a83a24001d7c00c",
+      "size": 2503
+    },
+    {
+      "path": "linux-manylinux/repaired-elf.json",
+      "sha256": "8411780ce11b6673f73edcbfaabd21f16a2934b70d37fe3202447ec4ffafe37a",
+      "size": 2516
+    },
+    {
+      "path": "linux-manylinux/six-module-tests.xml",
+      "sha256": "89a7b89a9c769d1ae18d246238e0d51e5eda671590db7a9ac3be1a9aaa1d0830",
+      "size": 32503
+    },
+    {
+      "path": "linux-manylinux/sol-artifact-review.md",
+      "sha256": "3c5930be60da1671b4a963a3a37669d72b137f21b1c18ff82faf39ac4608a2d7",
+      "size": 4507
+    },
+    {
+      "path": "linux-manylinux/source-identities.json",
+      "sha256": "421d459ec8b3d789a50c02edd1862e75e66e781670e2aa16da69932e875a1b98",
+      "size": 3586
+    },
+    {
+      "path": "linux-manylinux/test-install-report.json",
+      "sha256": "69e22d2ab6de23771cb0039b99ad95d42ad7148704e51fafeb16024b573d07a3",
+      "size": 151731
+    },
+    {
+      "path": "linux-manylinux/tool-downloads.json",
+      "sha256": "b234337dbefe4796de903b790880dcaac0000538f2712c31a0df07c3071ea4c7",
+      "size": 1615
+    },
+    {
+      "path": "linux-manylinux/tool-install-report.json",
+      "sha256": "e2c4a89c37d534f3c32ea999d7a63c5460a786c884c0670422203bceaa6bec01",
+      "size": 18298
+    },
+    {
+      "path": "linux-manylinux/tool-requirements.txt",
+      "sha256": "308dc9b89aab108300cd90ad3ec5f025d12c4bd435d2220caa69aff6f237dfb2",
+      "size": 386
+    },
+    {
+      "path": "linux-manylinux/tool-versions.json",
+      "sha256": "11c6df3947c1eaa9da8c6be5d956643c64740739054dca68c451ead501b2329b",
+      "size": 1736
+    },
+    {
+      "path": "macos-arm64/SHA256SUMS",
+      "sha256": "7f3f538dda48ef30b58489c6fb8cd42c38bdcb06927e3cf9387f138fbcc61c34",
+      "size": 1252
+    },
+    {
+      "path": "macos-arm64/github-commit-api.json",
+      "sha256": "41b63e0eece785aa52b82180b38234ea9a69fef9997c964dddf61dfe2d475e4e",
+      "size": 5000
+    },
+    {
+      "path": "macos-arm64/owner-result.json",
+      "sha256": "15db97b9ac215060f656e35d177c2b2b72d0f1bfd87be405a63dc2fd72878aed",
+      "size": 974
+    },
+    {
+      "path": "macos-arm64/sol-mac-source-artifact-review.md",
+      "sha256": "e74b6e24e40a4688e45ad6b9a1adb938b32189fcd26bde7b626b689386756e57",
+      "size": 4383
+    },
+    {
+      "path": "macos-arm64/umf-artifact-payload.json",
+      "sha256": "2879dc04937c5a7a59c6481b61131fb9cf30074344addee15e1b2f4bb80619f2",
+      "size": 62381
+    },
+    {
+      "path": "macos-arm64/umf-direct-action-tests.xml",
+      "sha256": "f44301ba45ac384c91c98db5788afca1623a67514497c0c5e71992c2b8f583bc",
+      "size": 32558
+    },
+    {
+      "path": "macos-arm64/umf-install-direct.json",
+      "sha256": "c50934c379364369d2ac93ba9a374dc4755bab552d54df7ef496e5b8f6373a5b",
+      "size": 295
+    },
+    {
+      "path": "macos-arm64/umf-install-sdist-rebuilt.json",
+      "sha256": "c50934c379364369d2ac93ba9a374dc4755bab552d54df7ef496e5b8f6373a5b",
+      "size": 295
+    },
+    {
+      "path": "macos-arm64/umf-installed-direct-payload.json",
+      "sha256": "963813572fca07c610e85bf384b451a8548019a1423dcfd9ae10f02c82e3c2b5",
+      "size": 299
+    },
+    {
+      "path": "macos-arm64/umf-installed-direct-posttest.json",
+      "sha256": "963813572fca07c610e85bf384b451a8548019a1423dcfd9ae10f02c82e3c2b5",
+      "size": 299
+    },
+    {
+      "path": "macos-arm64/umf-installed-sdist-rebuilt-payload.json",
+      "sha256": "0d9b1aff5430877a9ddc2061277268c86c9ebb9be2322756e209c41285e6d0a3",
+      "size": 299
+    },
+    {
+      "path": "macos-arm64/umf-installed-sdist-rebuilt-posttest.json",
+      "sha256": "0d9b1aff5430877a9ddc2061277268c86c9ebb9be2322756e209c41285e6d0a3",
+      "size": 299
+    },
+    {
+      "path": "macos-arm64/umf-qualification.json",
+      "sha256": "2d1b797fdf059a68924ef38e7f0fd052a17149aeb2ec3d1fb104e899a4732fc7",
+      "size": 66460
+    },
+    {
+      "path": "macos-arm64/umf-sdist-rebuilt-action-tests.xml",
+      "sha256": "ed07f9acf4089baac62cc1a6bb50cfbf00116ddef3cafe8e511d66fb63bd1fba",
+      "size": 32558
+    },
+    {
+      "path": "pr49-normal-merge/SHA256SUMS",
+      "sha256": "7e58bcc33a55229e07ad388bbc89e9d802c78510bb9d67a3c82284ede11d6688",
+      "size": 419
+    },
+    {
+      "path": "pr49-normal-merge/check-runs.json",
+      "sha256": "d1f8787ca0fcb676f9ac01963151181f4f113cf6e0e8327e4af6d03c165d503a",
+      "size": 197436
+    },
+    {
+      "path": "pr49-normal-merge/merge-commit.json",
+      "sha256": "7cd426b10c69286442d07ed2234a3f0011edb657d73662949d01003fbf3462af",
+      "size": 2707
+    },
+    {
+      "path": "pr49-normal-merge/owner-result.json",
+      "sha256": "d67ca451bbe26f72e86098cf07fb6ce6e4464e1cb4081b6b6cc4b5fa1e9d6eb2",
+      "size": 500
+    },
+    {
+      "path": "pr49-normal-merge/pull-request.json",
+      "sha256": "d103481f5d3e6a1ee2e773cebf8c471c46c5e8ba2a81dd025ac1541351b51cc9",
+      "size": 18880
+    },
+    {
+      "path": "pr49-normal-merge/source-commit.json",
+      "sha256": "845aa7b430026e6101695040624dc2c90dd090e819b4a4bd8904332af947bc04",
+      "size": 1155
+    },
+    {
+      "path": "pr49-source-review/SHA256SUMS",
+      "sha256": "817b9c2fd49eb9211de6256d1ccc3fd4052a12cda3e2d40a2f3a445a63c8b4f2",
+      "size": 177
+    },
+    {
+      "path": "pr49-source-review/owner-result.json",
+      "sha256": "e81cc07ad84b80c36f20f7c25a1e6c3ae004e75f1bfcb85cde750fa56e366e88",
+      "size": 786
+    },
+    {
+      "path": "pr49-source-review/sol-final-source-review.md",
+      "sha256": "fd11738656e5dc6156f0c9563f2ad1c1f43b4e9c386f56d8085da9e099324f3c",
+      "size": 5745
+    }
+  ],
+  "entry_count": 65,
+  "excluded": [
+    "wheels and source archives",
+    "earlier failed attempts",
+    "future publisher PR50/tag/release/public-download evidence"
+  ],
+  "maximum_archive_size": 4194304,
+  "schema": "umf.core-0.10.2-qualification-evidence-zip-manifest/1",
+  "selection_roots": [
+    {
+      "archive_prefix": "linux-manylinux",
+      "source": "docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/core-manylinux-pass-40359647952"
+    },
+    {
+      "archive_prefix": "macos-arm64",
+      "source": "docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/core-current-macos-12664890298"
+    },
+    {
+      "archive_prefix": "pr49-source-review",
+      "source": "docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/core-pr49-final-review"
+    },
+    {
+      "archive_prefix": "pr49-normal-merge",
+      "source": "docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/core-pr49-normal-merge-3fd8c61c"
+    }
+  ]
+}
