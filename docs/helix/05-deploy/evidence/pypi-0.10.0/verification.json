@@ -44,6 +44,11 @@
     "source-receipt.json": "76430a4c0ccc2ce281aa515ae4df2b0aa3254069a0e3b1fd0c64cad7c7498cb5"
   },
   "release": {
+    "archive_provenance": {
+      "coreAssetsReusedImmutable": true,
+      "interpretation": "The SDK release tag/source fields identify enclosing release metadata. The exact core archives were reused unchanged; they are not claimed to have been rebuilt from that SDK commit.",
+      "sdk_tag_and_source_commit": "umf-v0.5.4 / 53de049136c7e41b482d1a73665d031cd5fbaec6"
+    },
     "distribution": "umf-core",
     "files": {
       "umf_core-0.10.0-py3-none-any.whl": "49633924b45a3c8499d4fcc1a24c30d5a8fcb34d974ab019bbda987cb47da0f9",
