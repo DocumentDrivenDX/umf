@@ -158,6 +158,10 @@ fixtures; it does not qualify public routing or package installation.
 
 ## Capture/DTO budget and first-fault reconciliation (2026-10-26)
 
+This section records the initial failed audit; the later
+[native args-before-owner correction](#native-args-before-owner-correction-2026-10-26)
+supersedes its candidate trace and current-status conclusions.
+
 The current callback now passes one `CaptureResourceSession` through Python
 profile admission, Rust terminal observation and DTO encoding. This shares a
 work counter only. The ceilings remain separate: Rust `Context::ordinary()`
@@ -205,3 +209,68 @@ working-tree inputs and built extension are pinned here:
 | `crates/umf-core/src/access_graph_host_observation.rs` | `fde0a1214cd0c96acac24b597c790cc7916365358bb021b804a4babafff67f56` |
 | `bindings/core/python/src/lib.rs` | `095600d725e468ffaa4cfad13b9bade97a1adc2cbbeda83d705208f5a8ab4a71` |
 | temporary `_rust_core.abi3.so` | `861581781aa7aff972985595ac69b72411fdbbd15931be431ee49cb3c5a92d0d` |
+
+## Native args-before-owner correction (2026-10-26)
+
+The first-fault regression exposed two related scheduling defects: Python
+profile admission read `RecordRef.module` before Rust's remaining predecessor
+`Node.args` reads, and the Rust terminal observer reused the `args` access
+used by the RecordRef `isinstance` check instead of re-reading it for
+`record = node.args[0]`. The private callback now checks exact Node identity
+without invoking a Python attribute accessor, then lets Rust own all graph
+reads. The native observer performs four distinct `Node.args` reads before
+the root owner's `module/element/alias`, matching the predecessor's observed
+prefix. It reports whether the observed steps were empty, the root was an
+exact `RecordRef`, and the steps container was an exact tuple; the callback
+admits only the exact empty-steps profile.
+
+The pinned regression compares that complete prefix on the same CPython host
+and injects competing faults at the fourth `Node.args` read and root-owner
+`module` read; both paths rethrow the original `Node.args` exception and never
+touch the owner. It also records that the observer stops after owner/Join
+admission, while the predecessor continues into `visit(node)` with six
+further `Node.op` reads and one `Node.args` read. This fixes the `Node.args`
+versus owner first-fault divergence; it does not qualify full `_validate_node` parity or public
+selection. Existing Python DTO encoding still has separate 50,000-node,
+depth-64 and 8-MiB text/output ceilings, while Python `capture()` has no DTO
+encoder. Those limits should not be imposed by a public capture route that
+returns Python objects; a Rust-owned public route must avoid that encoder or
+separately qualify any changed support boundary. Rust Context's own limits and
+the remaining visitor semantics still block cutover.
+
+The observer capability is now
+`umf-access-capture-graph-observation/0.5.0`. A fresh Rust 1.90.0 build and
+the focused CPython 3.13.16 Darwin arm64 file pass 47/47. Public `capture()`
+remains Python-selected; no installed-wheel or release claim is made.
+The broader focused capture set also passes 93 tests and three subtests,
+including the existing public capture, Rust DTO validator and predecessor
+replay files. The focused Rust observer unit suite passes 10/10.
+
+Reproduce with the temporary extension overlay:
+
+```sh
+PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH \
+CARGO_TARGET_DIR=/private/tmp/umf-capture-budget-target \
+cargo build --locked --offline -p umf-core-python
+cp /private/tmp/umf-capture-budget-target/debug/lib_rust_core.dylib \
+  /private/tmp/umf-capture-budget-overlay/umf/_rust_core.abi3.so
+DYLD_LIBRARY_PATH=/private/tmp/umf-capture-budget-overlay/umf \
+PYTHONPATH=/private/tmp/umf-capture-budget-overlay:python/umf_access/src \
+python/.venv/bin/python -m pytest -q -p no:cacheprovider \
+  python/umf_access/tests/test_capture.py \
+  python/umf_access/tests/test_capture_field_observation.py \
+  python/umf_access/tests/test_capture_rust_graph_validator.py \
+  python/umf_access/tests/test_captured_declaration_predecessor.py \
+  python/umf_access/tests/test_captured_logical_render_positive.py \
+  python/umf_access/tests/test_captured_logical_render_predecessor.py
+```
+
+Current implementation pins (superseding the earlier audit's changed files):
+
+| Input | SHA-256 |
+|---|---|
+| `python/umf_access/src/umf_access/rust_capture_observe.py` | `51457d436b5183ecfed4382e8046b85464cdd227dda2734ff2d9fc66b54b5864` |
+| `python/umf_access/tests/test_capture_field_observation.py` | `d82589b7ad97437298d11b8ce8d92984669b88591af6c546137b8868b8b75bea` |
+| `crates/umf-core/src/access_graph_host_observation.rs` | `49d2e0b28482c83e9575a560a09156202d052831f367fb564931e3be306aa021` |
+| `bindings/core/python/src/lib.rs` | `07a6003e98417a35c8756bc53918c4417172bad74742528f94dba81ec6d44d2e` |
+| temporary `_rust_core.abi3.so` | `d263405ef4ec30870ea338a253a1f23754beb743730142859b933a93ba0766b9` |

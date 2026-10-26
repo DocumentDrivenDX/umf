@@ -35,8 +35,8 @@ def test_private_all_empty_observation_and_dto_encoding_share_work_session():
     assert encoding_work > 0
 
 
-def test_private_all_empty_callback_does_not_match_predecessor_read_trace():
-    """Pin the remaining first-fault blocker before any public route selection."""
+def test_private_all_empty_callback_preserves_args_before_owner_read_prefix():
+    """Pin the first-fault prefix without claiming complete validator parity."""
     from umf_access.capture import _validate_node
 
     root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
@@ -84,23 +84,59 @@ def test_private_all_empty_callback_does_not_match_predecessor_read_trace():
         ("Node", "op"),
         ("Node", "args"),
     )
-    assert candidate == (
-        ("Node", "op"),
-        ("Node", "args"),
-        ("RecordRef", "module"),
-        ("RecordRef", "element"),
-        ("RecordRef", "alias"),
-        ("Node", "op"),
-        ("Node", "args"),
-        ("Node", "args"),
+    assert candidate == predecessor[:8]
+    assert candidate[4:8] == (
         ("Node", "args"),
         ("RecordRef", "module"),
         ("RecordRef", "element"),
         ("RecordRef", "alias"),
     )
-    assert candidate[:2] == predecessor[:2]
-    assert candidate[2] != predecessor[2]
-    assert candidate != predecessor
+    assert candidate != predecessor  # the private observer still ends before `visit(node)`
+
+
+def test_fourth_args_fault_precedes_root_owner_fault_in_both_paths():
+    from umf_access.capture import _validate_node
+
+    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    node = Node("all", (root, ()))
+    original_node = Node.__getattribute__
+    original_record = RecordRef.__getattribute__
+    args_reads = 0
+    owner_reads: list[str] = []
+    args_fault = LookupError("fourth args read")
+    owner_fault = RuntimeError("owner read must remain later")
+
+    def observed_node(instance, name):
+        nonlocal args_reads
+        if instance is node and name == "args":
+            args_reads += 1
+            if args_reads == 4:
+                raise args_fault
+        return original_node(instance, name)
+
+    def observed_record(instance, name):
+        if instance is root and name == "module":
+            owner_reads.append(name)
+            raise owner_fault
+        return original_record(instance, name)
+
+    try:
+        Node.__getattribute__ = observed_node
+        RecordRef.__getattribute__ = observed_record
+        with pytest.raises(LookupError) as predecessor:
+            _validate_node(node, ())
+        assert predecessor.value is args_fault
+        assert owner_reads == []
+
+        args_reads = 0
+        with pytest.raises(LookupError) as candidate:
+            observe_all_empty_capture_profile(node)
+        assert candidate.value is args_fault
+        assert args_reads == 4
+        assert owner_reads == []
+    finally:
+        Node.__getattribute__ = original_node
+        RecordRef.__getattribute__ = original_record
 
 
 def test_capture_session_limit_stops_admission_before_graph_read():
@@ -172,7 +208,7 @@ def test_shared_work_boundary_precedes_args_read_after_one_op_read():
         with pytest.raises(ValueError, match="capture resource limit exceeded"):
             observe_all_empty_capture_profile(node, session)
         assert reads == ["op"]
-        assert session.charged_work == 2
+        assert session.charged_work == 3
     finally:
         Node.__getattribute__ = original
 
@@ -222,7 +258,7 @@ def test_public_capture_retains_four_body_invocations_for_no_parameter_query():
     ],
 )
 def test_private_all_empty_profile_refuses_outside_shapes(node):
-    with pytest.raises(TypeError, match="capture profile"):
+    with pytest.raises((TypeError, IndexError)):
         observe_all_empty_capture_profile(node)
 
 
@@ -268,7 +304,7 @@ def test_private_all_empty_profile_requires_exact_owner_text():
     root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
     object.__setattr__(root, "module", TextSubclass("demo"))
     node = Node("all", (root, ()))
-    with pytest.raises(TypeError, match="exact RecordRef owner text"):
+    with pytest.raises(TypeError, match="unsupported captured graph shape"):
         observe_all_empty_capture_profile(node)
 
 

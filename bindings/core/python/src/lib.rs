@@ -2674,6 +2674,9 @@ fn observe_capture_terminal_join_owners(
         "terminalOp",
         python_utf16_to_str(py, &observed.terminal_op)?,
     )?;
+    output.set_item("stepsEmpty", observed.steps_empty)?;
+    output.set_item("recordExact", observed.record_exact)?;
+    output.set_item("stepsExactTuple", observed.steps_exact_tuple)?;
     let owners = PyList::empty_bound(py);
     let mut sorted = observed.owners.into_iter().collect::<Vec<_>>();
     sorted.sort_by(|left, right| {

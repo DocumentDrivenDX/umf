@@ -6010,7 +6010,7 @@ remains private; public routing,
 the installed wheel, encoder-budget reconciliation and broader search support
 remain unqualified.
 
-The [all-empty capture first-fault audit](evidence/rust-migration/r8-capture-visit-field-join-tuple/README.md#capturedto-budget-and-first-fault-reconciliation-2026-10-26)
+The [all-empty capture first-fault audit](evidence/rust-migration/r8-capture-visit-field-join-tuple/README.md#capture-dto-budget-and-first-fault-reconciliation-2026-10-26)
 blocks a public Rust cutover: the predecessor's third host read is `Node.args`,
 while the candidate reads `RecordRef.module`. A fresh Rust 1.90.0 PyO3 build
 and CPython 3.13.16 focused suite pass 46/46, including the pinned divergent
@@ -6019,6 +6019,20 @@ value/depth-128/4M-text limits with Python DTO encoding's 50,000-value/
 depth-64/8-MiB ceilings or the predecessor's lack of those DTO limits. Public
 `capture()` remains on Python until ordered admission and first-fault/resource
 behavior are resolved.
+
+The [follow-on args-before-owner correction](evidence/rust-migration/r8-capture-visit-field-join-tuple/README.md#native-args-before-owner-correction-2026-10-26)
+removes Python graph-field admission reads and restores the predecessor's four
+distinct `Node.args` accesses before root-owner fields in the private
+empty-steps candidate. A same-host pinned regression confirms that prefix. The
+observer still stops before the predecessor's recursive `visit(node)` reads,
+so it is not full validator parity and public `capture()` remains
+Python-selected. DTO encoding ceilings remain separate from public capture's
+Python-object result; a public Rust route must not introduce encoder-only
+refusals without a reviewed support-boundary change. Rust Context limits,
+broader visitor behavior and installed-wheel qualification remain open. The
+fresh CPython run passes the focused capture group at 93 tests plus three
+subtests; the dedicated observer file passes 47/47. This remains source-level
+evidence, not installed-wheel qualification.
 
 The separate [read-frame gate](evidence/rust-migration/r8-python-read-frame-core/README.md)
 now has a private PyO3 bridge. Rust asks for host `len`/index/iteration reads

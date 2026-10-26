@@ -8,7 +8,7 @@
 use crate::Utf16;
 use std::collections::HashSet;
 
-pub const PROFILE: &str = "umf-access-capture-graph-observation/0.4.0";
+pub const PROFILE: &str = "umf-access-capture-graph-observation/0.5.0";
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct ExpectedOwner {
@@ -320,6 +320,9 @@ pub struct Owner {
 pub struct TerminalJoinObservation {
     pub terminal_op: Utf16,
     pub owners: HashSet<Owner>,
+    pub steps_empty: bool,
+    pub record_exact: bool,
+    pub steps_exact_tuple: bool,
 }
 
 /// Observe owner references in a node's structural child graph after the
@@ -515,18 +518,32 @@ pub fn observe_terminal_join_owners<H: Copy>(
         return Err(ObservationError::MissingRecordIdentity);
     }
     let root_args = object(attr(context, host, node, "args")?)?;
-    let record = budgeted(context, || host.get_item(root_args, 0))?;
-    if !budgeted(context, || host.is_instance(record, GraphType::RecordRef))? {
+    let type_probe = budgeted(context, || host.get_item(root_args, 0))?;
+    if !budgeted(context, || {
+        host.is_instance(type_probe, GraphType::RecordRef)
+    })? {
         return Err(ObservationError::MissingRecordIdentity);
     }
+    // Python reads `node.args[0]` again when assigning `record`, after its
+    // isinstance probe. Keep that live access distinct before the steps read.
+    let record_args = object(attr(context, host, node, "args")?)?;
+    let record = budgeted(context, || host.get_item(record_args, 0))?;
+    let record_exact = budgeted(context, || {
+        host.is_exact_instance(record, GraphType::RecordRef)
+    })?;
     let steps_args = object(attr(context, host, node, "args")?)?;
     let steps = budgeted(context, || host.get_item(steps_args, 1))?;
+    let steps_exact_tuple = budgeted(context, || {
+        host.is_exact_structural(steps, StructuralType::Tuple)
+    })?;
 
     // `selections = [...]` consumes every selected argument before the later
     // `any(isinstance(..., Node))` short-circuit begins.
     let mut selections = Vec::new();
+    let mut steps_empty = true;
     let selection_iter = budgeted(context, || host.iter(steps))?;
     while let Some(step) = budgeted(context, || host.next(selection_iter))? {
+        steps_empty = false;
         if text(attr(context, host, step, "op")?)? == Utf16::from("select") {
             let args = object(attr(context, host, step, "args")?)?;
             let args_iter = budgeted(context, || host.iter(args))?;
@@ -592,6 +609,9 @@ pub fn observe_terminal_join_owners<H: Copy>(
     Ok(TerminalJoinObservation {
         terminal_op,
         owners,
+        steps_empty,
+        record_exact,
+        steps_exact_tuple,
     })
 }
 
@@ -844,6 +864,9 @@ mod tests {
         let observed = observe_terminal_join_owners(&mut context, &mut host, 1).unwrap();
         assert_eq!(observed.terminal_op, Utf16::from("all"));
         assert_eq!(observed.owners.len(), 2);
+        assert!(!observed.steps_empty);
+        assert!(!observed.record_exact);
+        assert!(!observed.steps_exact_tuple);
         let ref_reads = host
             .events
             .iter()
@@ -861,7 +884,7 @@ mod tests {
             .iter()
             .filter(|event| event.as_str() == "get:1.args")
             .count();
-        assert_eq!(node_args, 3);
+        assert_eq!(node_args, 4);
         assert!(
             host.events
                 .iter()

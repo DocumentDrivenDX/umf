@@ -13,7 +13,7 @@ from __future__ import annotations
 
 from typing import Any
 
-_PROFILE = "umf-access-capture-graph-observation/0.4.0"
+_PROFILE = "umf-access-capture-graph-observation/0.5.0"
 
 
 class FieldOwnerObservationUnavailable(RuntimeError):
@@ -83,8 +83,12 @@ def observe_terminal_join_owners(node: object) -> dict[str, object]:
     result = core.access_observe_capture_terminal_join_owners(node, Node, RecordRef)
     if (
         type(result) is not dict
-        or set(result) != {"terminalOp", "owners"}
+        or set(result)
+        != {"terminalOp", "owners", "stepsEmpty", "recordExact", "stepsExactTuple"}
         or type(result["terminalOp"]) is not str
+        or type(result["stepsEmpty"]) is not bool
+        or type(result["recordExact"]) is not bool
+        or type(result["stepsExactTuple"]) is not bool
         or type(result["owners"]) is not list
         or any(
             type(owner) is not dict
@@ -103,10 +107,10 @@ def observe_all_empty_capture_profile(node: object, session: object | None = Non
     """Validate the private exact-base `.all()` empty-steps profile.
 
     This private candidate shares one work counter with the DTO encoder.
-    Python admission reads and Rust graph observations charge that session in
-    order; Rust seeds its Context from the same counter and returns its usage.
-    It does not call `_validate_node`, retry another validator, or select the
-    public capture route. DTO byte/node/depth ceilings remain separately visible.
+    Rust owns graph reads so Python profile admission cannot move the first
+    fault ahead of the predecessor's repeated ``Node.args`` reads. It does not
+    call `_validate_node`, retry another validator, or select public capture.
+    DTO byte/node/depth ceilings remain separate.
     """
     core = _native()
     session_type = getattr(core, "CaptureResourceSession", None)
@@ -126,51 +130,28 @@ def observe_all_empty_capture_profile(node: object, session: object | None = Non
     session.charge_work(1)
     if type(node) is not Node:
         raise TypeError("capture profile requires an exact Node")
-    session.charge_work(1)
-    op = node.op
-    if type(op) is not str or op != "all":
-        raise TypeError("capture profile requires the exact all terminal")
-    session.charge_work(1)
-    args = node.args
-    if type(args) is not tuple:
-        raise TypeError("capture profile requires (RecordRef, empty steps)")
-    session.charge_work(1)
-    if len(args) != 2:
-        raise TypeError("capture profile requires (RecordRef, empty steps)")
-    session.charge_work(1)
-    record = args[0]
-    if type(record) is not RecordRef:
-        raise TypeError("capture profile requires (RecordRef, empty steps)")
-    session.charge_work(1)
-    steps = args[1]
-    if type(steps) is not tuple:
-        raise TypeError("capture profile requires (RecordRef, empty steps)")
-    if steps:
-        raise TypeError("capture profile requires (RecordRef, empty steps)")
-    session.charge_work(1)
-    module = record.module
-    session.charge_work(1)
-    element = record.element
-    session.charge_work(1)
-    alias = record.alias
-    if (
-        type(module) is not str
-        or type(element) is not str
-        or (alias is not None and type(alias) is not str)
-    ):
-        raise TypeError("capture profile requires exact RecordRef owner text")
-
-    # Call the checked native entry point directly after profile admission;
-    # there is no Python semantic-validation fallback on native refusal.
+    # Native observation owns all graph reads and preserves the predecessor's
+    # distinct args accesses before RecordRef owner reads.
     result = observe_session(node, Node, RecordRef, session)
     if (
         type(result) is not dict
-        or set(result) != {"terminalOp", "owners"}
-        or result["terminalOp"] != "all"
+        or set(result)
+        != {"terminalOp", "owners", "stepsEmpty", "recordExact", "stepsExactTuple"}
+        or type(result["terminalOp"]) is not str
         or type(result["owners"]) is not list
         or len(result["owners"]) != 1
+        or type(result["stepsEmpty"]) is not bool
+        or type(result["recordExact"]) is not bool
+        or type(result["stepsExactTuple"]) is not bool
     ):
         raise RuntimeError("Rust graph observer returned an invalid all profile result")
+    if (
+        result["terminalOp"] != "all"
+        or not result["stepsEmpty"]
+        or not result["recordExact"]
+        or not result["stepsExactTuple"]
+    ):
+        raise TypeError("capture profile requires exact all terminal with empty steps")
 
 
 def observe_field_join_tuple(
