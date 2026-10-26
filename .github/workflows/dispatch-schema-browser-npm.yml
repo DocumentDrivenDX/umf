@@ -1,0 +1,80 @@
+name: Dispatch schema browser npm publication
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  dispatch:
+    if: github.repository == 'DocumentDrivenDX/umf' && startsWith(github.event.release.tag_name, 'schema-browser-v')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - name: Assert dispatcher source matches the workflow SHA
+        env:
+          EXPECTED_DRIVER_SHA: ${{ github.workflow_sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_DRIVER_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test release dispatcher identity controls
+        run: python scripts/test_dispatch_schema_browser_npm.py
+      - name: Fetch release and tag metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          EVENT_TAG: ${{ github.event.release.tag_name }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$EVENT_TAG" =~ ^schema-browser-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]
+          mkdir -p incoming
+          gh api "repos/$GH_REPO/releases/tags/$EVENT_TAG" > incoming/release.json
+          gh api "repos/$GH_REPO/git/ref/tags/$EVENT_TAG" > incoming/tag-ref.json
+          if [[ "$(jq -r .object.type incoming/tag-ref.json)" == tag ]]; then
+            OBJECT_SHA="$(jq -r .object.sha incoming/tag-ref.json)"
+            gh api "repos/$GH_REPO/git/tags/$OBJECT_SHA" > incoming/tag-object.json
+          fi
+      - name: Validate immutable release identity and exact public assets
+        id: identity
+        env:
+          GH_REPO: ${{ github.repository }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          EVENT_TAG: ${{ github.event.release.tag_name }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(--repository "$GH_REPO" --default-branch "$DEFAULT_BRANCH" \
+            --event-tag "$EVENT_TAG" --release-json incoming/release.json \
+            --tag-ref-json incoming/tag-ref.json --output-json dispatch-identity.json)
+          if [[ -f incoming/tag-object.json ]]; then args+=(--tag-object-json incoming/tag-object.json); fi
+          python scripts/dispatch_schema_browser_npm.py "${args[@]}"
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          from pathlib import Path
+          identity = json.loads(Path("dispatch-identity.json").read_text(encoding="utf-8"))
+          for key in ("tag", "source_sha", "sums_sha256", "tarball_sha256", "default_branch"):
+              print(f"{key}={identity[key]}")
+          PY
+      - name: Dispatch OIDC publisher from the default branch with exact pins
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.identity.outputs.tag }}
+          SOURCE_SHA: ${{ steps.identity.outputs.source_sha }}
+          SUMS_SHA256: ${{ steps.identity.outputs.sums_sha256 }}
+          TARBALL_SHA256: ${{ steps.identity.outputs.tarball_sha256 }}
+          DEFAULT_BRANCH: ${{ steps.identity.outputs.default_branch }}
+        run: |
+          set -euo pipefail
+          gh workflow run publish-schema-browser-npm.yml --ref "$DEFAULT_BRANCH" \
+            -f tag="$TAG" -f source_sha="$SOURCE_SHA" \
+            -f expected_sums_sha256="$SUMS_SHA256" \
+            -f expected_tarball_sha256="$TARBALL_SHA256"
