@@ -129,10 +129,18 @@ identical tarball; an already matching version skips upload and is recorded as
 existing exact bytes. A separate clean consumer installs from public npm and
 imports the package entrypoint.
 
-GitHub release immutability is currently disabled for this repository, so the
-existing `schema-browser-v2.0.0` release uses the exact-pin manual backfill.
-Enabling immutability affects future releases only, as described in
-[GitHub's release settings](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/establish-provenance-and-integrity/prevent-release-changes).
+GitHub release immutability is enabled for future releases. Attach all assets
+while a release is a draft, before publication. Existing releases retain their
+original status; `schema-browser-v2.0.0` therefore uses the exact-pin manual
+backfill. See [GitHub's release settings](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/establish-provenance-and-integrity/prevent-release-changes).
+
+The main-only `npm` environment and exact package trusted publisher are now
+configured, including **Allow npm publish**. [Actions verification](../evidence/schema-browser-npm-2.0.0/README.md)
+passed release, registry and clean-consumer checks for the unchanged 2.0.0
+archive. Matching bytes skipped upload. The new trusted publisher remains
+**pending its first successful OIDC upload before 2026-10-28 19:22 UTC**;
+npm expires unvalidated configurations after two days. This run is not proof
+of a new OIDC upload. A genuinely qualified new release must close that gate.
 
 The workflow's only publishing identity is the main-only GitHub `npm`
 environment and the npm trusted publisher for `DocumentDrivenDX/umf`, workflow
