@@ -326,19 +326,50 @@ def test_python_graph_refusal_precedes_private_bridge_depth_and_value_budgets():
     with pytest.raises(TypeError, match="expression column belongs to another Record"):
         _validate_graph_variant(shallow_dto)
 
-    # The private route encodes before invoking Rust semantics. Beyond its
-    # stricter 64-level/50,000-value limits, the resource refusal therefore
-    # wins over the predecessor's earlier semantic refusal.
+    # The private route has stricter 64-level/50,000-value limits. When
+    # encoding reaches those limits, predecessor validation still decides
+    # whether an earlier semantic refusal wins.
     for declaration, node in (graph(140), graph(0, 18_000)):
         with pytest.raises(TypeError, match="expression column belongs to another Record"):
             capture(declaration)
-        with pytest.raises(
-            ValueError,
-            match="captured declaration exceeds Rust bridge resource limits",
-        ):
+        with pytest.raises(TypeError, match="expression column belongs to another Record"):
             rust_catalog_render.capture_with_rust_graph_validator(declaration)
         with pytest.raises(ValueError, match="captured declaration exceeds Rust bridge resource limits"):
             _encode_capture(CapturedVariant((), node, ()), _EncodingBudget())
+
+    accepted_node = Node(
+        "all",
+        (
+            owner,
+            tuple(
+                Node(
+                    "filter",
+                    (
+                        Node(
+                            "=",
+                            (
+                                Node("column", (owner.key[0],)),
+                                Node("literal", (index,)),
+                            ),
+                        ),
+                    ),
+                )
+                for index in range(18_000)
+            )
+            + (Node("limit", (1,)),),
+        ),
+    )
+
+    @query
+    def accepted_oversized_graph():
+        return Terminal(accepted_node)
+
+    _validate_node(accepted_node, ())
+    capture(accepted_oversized_graph)
+    with pytest.raises(
+        ValueError, match="captured declaration exceeds Rust bridge resource limits"
+    ):
+        rust_catalog_render.capture_with_rust_graph_validator(accepted_oversized_graph)
 
 
 def test_live_rust_validator_matches_python_capture_for_join_and_many_navigation():

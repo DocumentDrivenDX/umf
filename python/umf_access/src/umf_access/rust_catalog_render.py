@@ -78,6 +78,10 @@ class _AccessorDtoUnsupported(TypeError):
     """A live subclass accessor cannot be represented by the value DTO."""
 
 
+class _DtoBudgetExceeded(ValueError):
+    """DTO encoding crossed a private bridge resource limit."""
+
+
 def _validate_graph_variant(value: object) -> None:
     """Opt-in validator for the narrow captured-DTO graph profile."""
     if type(value) is not dict:
@@ -142,7 +146,17 @@ def capture_with_rust_graph_validator(function: object) -> object:
             # object, the Rust value DTO still cannot represent it safely.
             _validate_node(node, parameters)
             raise
-        budget.charge_output(dto)
+        except _DtoBudgetExceeded:
+            _validate_node(node, parameters)
+            raise
+        try:
+            budget.charge_output(dto)
+        except _DtoBudgetExceeded:
+            # Python capture has no DTO budget. If encoding hit a bridge-only
+            # limit, establish whether the predecessor would already have
+            # refused this graph before exposing that narrower limit.
+            _validate_node(node, parameters)
+            raise
         _validate_graph_variant(dto)
 
     kind = getattr(function, "__umf_kind__", None)
@@ -283,14 +297,14 @@ class _EncodingBudget:
     def charge(self, value: object, depth: int) -> None:
         self.nodes += 1
         if self.nodes > _MAX_CAPTURE_NODES or depth > _MAX_CAPTURE_DEPTH:
-            raise ValueError("captured declaration exceeds Rust bridge resource limits")
+            raise _DtoBudgetExceeded("captured declaration exceeds Rust bridge resource limits")
         if type(value) is str:
             remaining = _MAX_CAPTURE_UTF8_BYTES - self.utf8_bytes
             if len(value) > remaining:
-                raise ValueError("captured declaration exceeds Rust bridge resource limits")
+                raise _DtoBudgetExceeded("captured declaration exceeds Rust bridge resource limits")
             encoded_bytes = len(value.encode("utf-8", errors="strict"))
             if encoded_bytes > remaining:
-                raise ValueError("captured declaration exceeds Rust bridge resource limits")
+                raise _DtoBudgetExceeded("captured declaration exceeds Rust bridge resource limits")
             self.utf8_bytes += encoded_bytes
 
     def charge_output(self, value: object) -> None:
@@ -301,16 +315,16 @@ class _EncodingBudget:
         for chunk in encoder.iterencode(value):
             remaining = _MAX_CAPTURE_UTF8_BYTES - self.output_bytes - measured
             if len(chunk) > remaining:
-                raise ValueError("captured declaration exceeds Rust bridge resource limits")
+                raise _DtoBudgetExceeded("captured declaration exceeds Rust bridge resource limits")
             encoded_bytes = len(chunk.encode("utf-8", errors="strict"))
             if encoded_bytes > remaining:
-                raise ValueError("captured declaration exceeds Rust bridge resource limits")
+                raise _DtoBudgetExceeded("captured declaration exceeds Rust bridge resource limits")
             measured += encoded_bytes
         self.output_bytes += measured
 
     def preflight_output(self, minimum_chars: int) -> None:
         if minimum_chars > _MAX_CAPTURE_UTF8_BYTES - self.output_bytes:
-            raise ValueError("captured declaration exceeds Rust bridge resource limits")
+            raise _DtoBudgetExceeded("captured declaration exceeds Rust bridge resource limits")
 
 
 def _encode_capture(value: object, budget: _EncodingBudget, depth: int = 0) -> object:

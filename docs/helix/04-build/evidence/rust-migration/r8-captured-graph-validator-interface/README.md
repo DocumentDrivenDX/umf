@@ -515,11 +515,13 @@ its exact exception and child order; an otherwise accepted graph stops with a
 clear `TypeError` before any Rust validator call. Public `capture()` is
 unchanged. This is a fail-closed boundary, not subclass parity.
 
-The focused live control also pins an unresolved budget-order difference. On
-a graph beyond the private bridge's 64-level or 50,000-value limit, Python
-`capture()` reaches an earlier foreign-column semantic refusal while the
-opt-in bridge can return `ValueError: captured declaration exceeds Rust bridge
-resource limits` during encoding. Sol reran the capture and private-validator
-suites with the fresh PyO3 overlay on CPython 3.13.16: 34 tests and three
-subtests passed. The budget difference blocks default capture selection until
-the ordered semantic and resource interface is resolved.
+The focused live control also covers budget ordering. If DTO encoding exceeds
+the private bridge's 64-level or 50,000-value limit, the opt-in route now runs
+Python `_validate_node` before returning that bridge-only resource refusal. An
+earlier semantic refusal therefore keeps the same exception type, code and
+message as public `capture()`; a graph accepted by Python still receives the
+bridge resource refusal. Public `capture()` remains unchanged, and accessor
+and extra-field subclass handling remains fail-closed. This is a narrow
+compatibility ordering fix, not broad graph or resource parity.
+The focused CPython 3.13.16 suite passes 17 tests with a fresh local PyO3
+binding; Ruff passes on the changed Python source and tests.
