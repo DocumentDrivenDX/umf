@@ -68,7 +68,12 @@ receipt remains evidence for its original archived source cohort only.
 The verifier now requires an exact package-member and byte match between the
 access wheel and a clean Git checkout containing the verifier. It records the
 source revision, hashes the source package, qualification profile, verifier,
-tests and workflow, and rejects symlinks. Its new `sourceClosure` and
+tests and workflow, and rejects symlinks. The selected qualification profile
+must be a nonsymlinked file under `python/umf_access`; `sourceClosure` names it
+by repository-relative path. The local-candidate profile keeps its exact local
+cohort marker: hosted matrix receipts using that profile retain a false
+`receiptCohortMatchesLocalEvidence` value and do not inherit local qualification.
+The new `sourceClosure` and
 `profileEvidence.receiptCohortMatchesLocalEvidence`
 fields are prerequisites for the public `capture()` semantic harness. That
 harness also checks the installed capture module's wheel-member hash and

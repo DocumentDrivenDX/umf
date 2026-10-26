@@ -229,6 +229,30 @@ class QualificationTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "different checkouts"):
                 gate.source_closure(external_source, PROFILE)
 
+    def test_source_closure_rejects_external_profile(self):
+        with tempfile.TemporaryDirectory() as directory:
+            external_profile = (
+                Path(directory) / "compatibility-profile-dev7-local-candidate.json"
+            )
+            external_profile.write_text(PROFILE.read_text())
+            with self.assertRaisesRegex(
+                ValueError, "profile is outside selected source checkout"
+            ):
+                gate.source_closure(PACKAGE, external_profile)
+
+    def test_source_closure_records_repository_relative_profile_path(self):
+        responses = [
+            subprocess.CompletedProcess([], 0, f"{ROOT}\n", ""),
+            subprocess.CompletedProcess([], 0, "", ""),
+            subprocess.CompletedProcess([], 0, "f" * 40 + "\n", ""),
+        ]
+        with patch.object(gate.subprocess, "run", side_effect=responses):
+            closure = gate.source_closure(PACKAGE, PROFILE)
+        self.assertEqual(
+            closure["qualification-profile:python/umf_access/compatibility-profile.json"],
+            hashlib.sha256(PROFILE.read_bytes()).hexdigest(),
+        )
+
     def test_source_closure_rejects_dirty_selected_checkout(self):
         responses = [
             subprocess.CompletedProcess([], 0, f"{ROOT}\n", ""),

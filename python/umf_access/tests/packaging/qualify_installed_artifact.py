@@ -83,6 +83,17 @@ def source_closure(source_root: Path, profile_path: Path) -> dict[str, str]:
     verifier = Path(__file__).resolve()
     if not verifier.is_relative_to(repository):
         raise ValueError("selected source tree and verifier are from different checkouts")
+    expected_source_root = repository / "python/umf_access"
+    if source_root.resolve() != expected_source_root:
+        raise ValueError("selected source root is not the repository access package")
+    resolved_profile = profile_path.resolve()
+    if (
+        profile_path.is_symlink()
+        or not resolved_profile.is_file()
+        or resolved_profile.parent != expected_source_root
+    ):
+        raise ValueError("qualification profile is outside selected source checkout")
+    profile_relative = resolved_profile.relative_to(repository).as_posix()
     top = subprocess.run(
         ["git", "-C", str(repository), "rev-parse", "--show-toplevel"],
         check=True,
@@ -111,7 +122,7 @@ def source_closure(source_root: Path, profile_path: Path) -> dict[str, str]:
         for path in source_files
         if path.is_file() and "__pycache__" not in path.parts
     }
-    result[f"qualification-profile:{profile_path.name}"] = digest(profile_path)
+    result[f"qualification-profile:{profile_relative}"] = digest(resolved_profile)
     result["source-revision:git-head"] = revision
     for path in (
         Path(__file__).resolve(),
