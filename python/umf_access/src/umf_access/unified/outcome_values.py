@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import hmac
+import json
 import re
 
 from umf import rust_outcome_values
@@ -11,6 +12,7 @@ from .operation_values import canonical, loads
 from .session_policy import SessionError
 
 _VERSION='umf.table-outcome/0.1'
+_EFFECT_FRAME_PROFILE='umf-r6-outcome-effect-frame/0.1.0'
 _HEX=re.compile('[a-f0-9]{64}')
 
 
@@ -92,3 +94,70 @@ def outcome_from_record(secret, principal_oid, key_digest, stored, metadata, *, 
                 or int(count['integerToken'])>max_rows):
             raise SessionError('stored outcome count differs from the declared bound')
     return value
+
+
+def _outcome_effect_frame_admit_rust(value, items, max_rows):
+    """Opt-in effect-frame rule; call only after auth, loads, and metadata checks.
+
+    This profile accepts only exact JSON built-ins with no container aliases,
+    finite floats, UTF-8 scalar strings, and signed/unsigned 64-bit integers.
+    It intentionally refuses values outside that carrier instead of falling
+    back to Python. HMAC, canonicalization, parsing, and metadata equality stay
+    in their predecessor stages.
+    """
+    if type(items) is not int or type(max_rows) is not int or not (0 <= items <= 2**63 - 1) or not (0 <= max_rows <= 2**63 - 1):
+        raise SessionError('native outcome effect-frame profile refuses non-exact integer bounds')
+
+    pending=[value]
+    seen=set()
+    while pending:
+        item=pending.pop()
+        kind=type(item)
+        if kind is dict:
+            identity=id(item)
+            if identity in seen:
+                raise SessionError('native outcome effect-frame profile refuses repeated/cyclic JSON containers')
+            seen.add(identity)
+            for key,child in item.items():
+                if type(key) is not str:
+                    raise SessionError('native outcome effect-frame profile requires exact JSON object keys')
+                try:key.encode('utf-8')
+                except UnicodeEncodeError:raise SessionError('native outcome effect-frame profile requires Unicode scalar strings') from None
+                pending.extend((key,child))
+        elif kind is list:
+            identity=id(item)
+            if identity in seen:
+                raise SessionError('native outcome effect-frame profile refuses repeated/cyclic JSON containers')
+            seen.add(identity)
+            pending.extend(item)
+        elif kind is str:
+            try:item.encode('utf-8')
+            except UnicodeEncodeError:raise SessionError('native outcome effect-frame profile requires Unicode scalar strings') from None
+        elif kind is int:
+            if not -(2**63) <= item <= 2**64-1:
+                raise SessionError('native outcome effect-frame profile refuses out-of-range JSON integers')
+        elif kind is float:
+            if item != item or item in (float('inf'),float('-inf')):
+                raise SessionError('native outcome effect-frame profile refuses non-finite JSON numbers')
+        elif kind not in (bool,) and item is not None:
+            raise SessionError('native outcome effect-frame profile refuses non-JSON values')
+    try:
+        text=json.dumps(value,ensure_ascii=False,separators=(',',':'),allow_nan=False)
+    except (RecursionError,ValueError,TypeError,UnicodeError):
+        raise SessionError('native outcome effect-frame profile cannot encode exact JSON data') from None
+    try:
+        version=rust_outcome_values.effect_frame_profile_version()
+    except (AttributeError,ImportError,RuntimeError) as error:
+        raise SessionError('native outcome effect-frame capability unavailable') from error
+    if version!=_EFFECT_FRAME_PROFILE:
+        raise SessionError('native outcome effect-frame capability profile mismatch')
+    try:
+        result=rust_outcome_values.effect_frame_admission(text,items,max_rows,_EFFECT_FRAME_PROFILE)
+    except (AttributeError,ImportError) as error:
+        raise SessionError('native outcome effect-frame capability unavailable') from error
+    if type(result) is not str or result not in ('admitted','invalid_receipt','count_differs_from_bound'):
+        raise SessionError('native outcome effect-frame capability returned an invalid result')
+    if result=='invalid_receipt':
+        raise SessionError('stored outcome is invalid')
+    if result=='count_differs_from_bound':
+        raise SessionError('stored outcome count differs from the declared bound')

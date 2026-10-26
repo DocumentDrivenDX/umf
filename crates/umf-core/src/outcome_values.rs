@@ -8,6 +8,141 @@ use subtle::ConstantTimeEq;
 
 pub const PROFILE_VERSION: &str = "umf-r6-outcome-crypto/0.1.0";
 pub const CAPABILITIES: &[&str] = &["hmac_sha256", "slot_sha256", "signature_matches"];
+pub const EFFECT_FRAME_PROFILE_VERSION: &str = "umf-r6-outcome-effect-frame/0.1.0";
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum EffectFrameAdmission {
+    Admitted,
+    InvalidReceipt,
+    CountDiffersFromBound,
+}
+
+/// Validate the post-authentication receipt effect frame over closed JSON data.
+/// Authentication, JSON loading, and metadata/authority equality precede this
+/// rule in Python. `items` and `max_rows` have already passed exact-int bounds.
+pub fn effect_frame_admission(
+    value: &serde_json::Value,
+    items: usize,
+    max_rows: u64,
+) -> EffectFrameAdmission {
+    use serde_json::Value;
+
+    let Some(object) = value.as_object() else {
+        return EffectFrameAdmission::InvalidReceipt;
+    };
+    let Some(response_digest) = object.get("responseDigest").and_then(Value::as_str) else {
+        return EffectFrameAdmission::InvalidReceipt;
+    };
+    if !lower_hex_64(response_digest) {
+        return EffectFrameAdmission::InvalidReceipt;
+    }
+    let Some(effects) = object.get("effects").and_then(Value::as_array) else {
+        return EffectFrameAdmission::InvalidReceipt;
+    };
+    if effects.len() != items {
+        return EffectFrameAdmission::InvalidReceipt;
+    }
+    for effect in effects {
+        let Some(fields) = effect.as_object() else {
+            return EffectFrameAdmission::CountDiffersFromBound;
+        };
+        if fields.len() != 1 {
+            return EffectFrameAdmission::CountDiffersFromBound;
+        }
+        let Some(token) = fields.get("integerToken").and_then(Value::as_str) else {
+            return EffectFrameAdmission::CountDiffersFromBound;
+        };
+        if !canonical_count_token(token)
+            || token.parse::<u64>().map_or(true, |count| count > max_rows)
+        {
+            return EffectFrameAdmission::CountDiffersFromBound;
+        }
+    }
+    EffectFrameAdmission::Admitted
+}
+
+/// Parse the JSON fragment emitted only by the exact-data Python bridge.
+pub fn effect_frame_admission_json(
+    text: &str,
+    items: usize,
+    max_rows: u64,
+) -> Option<EffectFrameAdmission> {
+    if has_duplicate_json_object_key(text) {
+        return None;
+    }
+    Some(effect_frame_admission(
+        &serde_json::from_str(text).ok()?,
+        items,
+        max_rows,
+    ))
+}
+
+fn has_duplicate_json_object_key(text: &str) -> bool {
+    use std::collections::HashSet;
+
+    let bytes = text.as_bytes();
+    let mut objects: Vec<HashSet<String>> = Vec::new();
+    let mut index = 0;
+    while index < bytes.len() {
+        match bytes[index] {
+            b'{' => {
+                objects.push(HashSet::new());
+                index += 1;
+            }
+            b'}' => {
+                objects.pop();
+                index += 1;
+            }
+            b'"' => {
+                let start = index;
+                index += 1;
+                while index < bytes.len() {
+                    match bytes[index] {
+                        b'\\' => index = (index + 2).min(bytes.len()),
+                        b'"' => {
+                            index += 1;
+                            break;
+                        }
+                        _ => index += 1,
+                    }
+                }
+                let mut after = index;
+                while after < bytes.len() && bytes[after].is_ascii_whitespace() {
+                    after += 1;
+                }
+                if after < bytes.len() && bytes[after] == b':' {
+                    if let Some(keys) = objects.last_mut() {
+                        let Ok(key) = serde_json::from_slice::<String>(&bytes[start..index]) else {
+                            return false;
+                        };
+                        if !keys.insert(key) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            _ => index += 1,
+        }
+    }
+    false
+}
+
+fn lower_hex_64(value: &str) -> bool {
+    value.len() == 64
+        && value
+            .bytes()
+            .all(|byte| byte.is_ascii_digit() || (b'a'..=b'f').contains(&byte))
+}
+
+fn canonical_count_token(value: &str) -> bool {
+    if value == "0" {
+        return true;
+    }
+    (1..=5).contains(&value.len())
+        && value.as_bytes()[0].is_ascii_digit()
+        && value.as_bytes()[0] != b'0'
+        && value.bytes().all(|byte| byte.is_ascii_digit())
+}
 
 /// HMAC-SHA256 over the exact preimage prepared by the Python owner.
 pub fn hmac_sha256(secret: &[u8], message: &[u8]) -> [u8; 32] {
@@ -116,6 +251,59 @@ mod tests {
             let mut mismatch = left;
             mismatch[position] ^= 1;
             assert!(!signature_matches(&left, &mismatch), "position {position}");
+        }
+    }
+
+    #[test]
+    fn effect_frame_admission_preserves_post_authentication_shape_order() {
+        use EffectFrameAdmission::*;
+        let valid = serde_json::json!({
+            "responseDigest": "a".repeat(64),
+            "effects": [{"integerToken": "0"}, {"integerToken": "100"}]
+        });
+        assert_eq!(effect_frame_admission(&valid, 2, 100), Admitted);
+        assert_eq!(effect_frame_admission(&valid, 1, 100), InvalidReceipt);
+
+        for bad in [
+            serde_json::json!({"responseDigest":"A".repeat(64),"effects":[]}),
+            serde_json::json!({"responseDigest":"a".repeat(63),"effects":[]}),
+            serde_json::json!({"responseDigest":"a".repeat(64),"effects":{}}),
+        ] {
+            assert_eq!(effect_frame_admission(&bad, 0, 100), InvalidReceipt);
+        }
+        assert_eq!(
+            effect_frame_admission_json(
+                r#"{"responseDigest":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","effects":[],"effects":[]}"#,
+                0,
+                100,
+            ),
+            None
+        );
+        for token in ["01", "-1", "+1", "1.0", "100000", "101"] {
+            let value = serde_json::json!({
+                "responseDigest": "a".repeat(64),
+                "effects": [{"integerToken": token}]
+            });
+            assert_eq!(
+                effect_frame_admission(&value, 1, 100),
+                CountDiffersFromBound,
+                "{token}"
+            );
+        }
+        for effect in [
+            serde_json::json!(1),
+            serde_json::json!({}),
+            serde_json::json!({"integerToken": 1}),
+            serde_json::json!({"integerToken":"1","extra":true}),
+        ] {
+            let value = serde_json::json!({
+                "responseDigest": "a".repeat(64),
+                "effects": [effect]
+            });
+            assert_eq!(
+                effect_frame_admission(&value, 1, 100),
+                CountDiffersFromBound
+            );
         }
     }
 }

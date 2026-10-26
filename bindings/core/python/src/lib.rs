@@ -736,6 +736,35 @@ fn outcome_values_signature_matches(
 }
 
 #[pyfunction]
+fn outcome_effect_frame_profile_version() -> &'static str {
+    umf_core::outcome_values::EFFECT_FRAME_PROFILE_VERSION
+}
+
+#[pyfunction]
+fn outcome_effect_frame_admission(
+    text: &str,
+    items: u64,
+    max_rows: u64,
+    profile: &str,
+) -> PyResult<&'static str> {
+    use umf_core::outcome_values::EffectFrameAdmission as Admission;
+
+    if profile != umf_core::outcome_values::EFFECT_FRAME_PROFILE_VERSION {
+        return Err(PyValueError::new_err(
+            "unsupported outcome effect-frame profile",
+        ));
+    }
+    let items = usize::try_from(items)
+        .map_err(|_| PyValueError::new_err("outcome effect-frame item count is out of range"))?;
+    match umf_core::outcome_values::effect_frame_admission_json(text, items, max_rows) {
+        Some(Admission::Admitted) => Ok("admitted"),
+        Some(Admission::InvalidReceipt) => Ok("invalid_receipt"),
+        Some(Admission::CountDiffersFromBound) => Ok("count_differs_from_bound"),
+        None => Err(PyValueError::new_err("invalid outcome effect-frame JSON")),
+    }
+}
+
+#[pyfunction]
 fn operation_canonical(json_text: &str) -> PyResult<String> {
     umf_core::operation_values::canonical(json_text)
         .map_err(|e| PyValueError::new_err(e.to_string()))
@@ -4034,6 +4063,8 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(outcome_values_hmac_sha256, module)?)?;
     module.add_function(wrap_pyfunction!(outcome_values_slot_sha256, module)?)?;
     module.add_function(wrap_pyfunction!(outcome_values_signature_matches, module)?)?;
+    module.add_function(wrap_pyfunction!(outcome_effect_frame_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(outcome_effect_frame_admission, module)?)?;
     module.add_function(wrap_pyfunction!(operation_canonical, module)?)?;
     module.add_function(wrap_pyfunction!(operation_bounded_size, module)?)?;
     module.add_function(wrap_pyfunction!(operation_digest, module)?)?;

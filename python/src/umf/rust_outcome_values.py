@@ -36,3 +36,11 @@ def slot_sha256(message: bytes) -> bytes:
 
 def signature_matches(left: bytes, right: bytes) -> bool:
     return bool(_native_core().outcome_values_signature_matches(left, right))
+
+
+def effect_frame_profile_version() -> str:
+    return _native_core().outcome_effect_frame_profile_version()
+
+
+def effect_frame_admission(text: str, items: int, max_rows: int, profile: str) -> str:
+    return _native_core().outcome_effect_frame_admission(text, items, max_rows, profile)
