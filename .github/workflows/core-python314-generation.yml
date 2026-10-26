@@ -582,14 +582,15 @@ jobs:
           import hashlib, json, os, pathlib, shutil
           evidence=pathlib.Path(os.environ["EVIDENCE_DIR"]); upload=pathlib.Path(os.environ["UPLOAD_DIR"]); success_output=pathlib.Path(os.environ["WORK_OUTPUT_DIR"]); max_bytes=16777216; log_limit=1048576
           shutil.rmtree(upload,ignore_errors=True); upload.mkdir(parents=True)
-          last_command=None; command_records=evidence/"command-records.jsonl"
+          last_command=None; last_command_row=None; command_rows=[]; command_records=evidence/"command-records.jsonl"
           if not command_records.is_symlink() and command_records.is_file() and command_records.stat().st_size<=65536:
               try:
                   rows=[line for line in command_records.read_text().splitlines() if line]
                   if rows:
-                      row=json.loads(rows[-1]); keys=("name","rawExit","captureExit","monotonicStartMs","monotonicEndMs","monotonicDurationMs","startedAtUtc","endedAtUtc","limitSeconds","logBytes","logSha256","truncated")
-                      last_command={key:row[key] for key in keys if key in row}
-              except (OSError,UnicodeDecodeError,json.JSONDecodeError): last_command=None
+                      command_rows=[json.loads(line) for line in rows]
+                      row=command_rows[-1]; keys=("name","stage","argv","rawExit","captureExit","monotonicStartMs","monotonicEndMs","monotonicDurationMs","startedAtUtc","endedAtUtc","limitSeconds","logBytes","logSha256","truncated")
+                      if isinstance(row,dict): last_command={key:row[key] for key in keys if key in row}; last_command_row=row
+              except (OSError,UnicodeDecodeError,json.JSONDecodeError): last_command=None; last_command_row=None; command_rows=[]
           preflight_diagnostic=None; diagnostic_path=evidence/"preflight-diagnostic.json"
           tool_codes={"TOOL_EXECUTABLE_UNAVAILABLE","TOOL_IDENTITY_FAILED","TOOL_IDENTITY_TOO_LARGE","TOOL_VERSION_COMMAND_FAILED","TOOL_VERSION_COMMAND_TIMED_OUT","TOOL_VERSION_OUTPUT_INVALID","TOOL_VERSION_OUTPUT_TOO_LARGE","TOOL_VERSION_MISMATCH","RUSTUP_EXECUTABLE_UNAVAILABLE","RUSTUP_IDENTITY_FAILED","RUSTUP_SELECTION_FAILED","RUSTUP_SELECTION_AMBIGUOUS","RUST_PAYLOAD_UNAVAILABLE","RUST_PAYLOAD_IDENTITY_FAILED","RUST_PAYLOAD_VERSION_FAILED","RUST_PAYLOAD_VERSION_TIMED_OUT","RUST_PAYLOAD_VERSION_MISMATCH","TOOL_OBSERVATION_TOO_LARGE","TOOL_OBSERVATION_INVALID"}
           diagnostic_codes={"SOURCE_EVENT_REF_MISMATCH","SOURCE_HEAD_MISMATCH","SOURCE_WORKTREE_NOT_CLEAN","SOURCE_REPOSITORY_MISMATCH","SOURCE_LOCK_UNAVAILABLE","SOURCE_LOCK_COMMIT_MISMATCH","SOURCE_WORKTREE_CHANGED_DURING_FETCH","PREIMAGE_COMMIT_FETCH_FAILED","PREIMAGE_FETCH_HEAD_MISMATCH","PREIMAGE_COMMIT_UNAVAILABLE","SOURCE_PHASE_MISMATCH","SOURCE_INPUT_UNAVAILABLE","SOURCE_INPUT_SHA_MISMATCH","PREIMAGE_BLOB_UNAVAILABLE","PREIMAGE_SHA_MISMATCH","SOURCE_ADOPTION_STATE_MISMATCH","REGEX_PREIMAGE_UNAVAILABLE","REGEX_PREIMAGE_SHA_MISMATCH"}|tool_codes
@@ -655,17 +656,73 @@ jobs:
                       if install_valid: cpython_installation=installation
                       else: cpython_installation_error="CPYTHON_INSTALLATION_FACT_INVALID"
                   except (OSError,UnicodeDecodeError,json.JSONDecodeError,TypeError,KeyError): cpython_installation_error="CPYTHON_INSTALLATION_FACT_INVALID"
-          def fail(reason_code):
-              shutil.rmtree(upload,ignore_errors=True); upload.mkdir(parents=True)
-              fail_receipt={"profile":"umf.core-python314-generation/1","status":"FAIL_OR_UNKNOWN","reasonCode":reason_code,"sourceCommit":os.environ["SOURCE_COMMIT"],"runId":os.environ["RUN_ID"],"runAttempt":os.environ["RUN_ATTEMPT"],"ref":os.environ["SOURCE_REF"],"event":os.environ["EVENT_NAME"],"generationStepOutcome":os.environ.get("GENERATION_OUTCOME"),"lastCommand":last_command,"preflightDiagnostic":preflight_diagnostic,"toolObservation":tool_observation,"toolObservationError":tool_observation_error,"cpythonInstallation":cpython_installation,"cpythonInstallationError":cpython_installation_error,"aggregateDeadlineSeconds":1800,"childMaximumSeconds":180,"timeoutKillGraceSeconds":10,"cleanupReserveSeconds":60,"aggregateLogLimitBytes":1048576,"aggregateArtifactLimitBytes":16777216,"failureOnlyReceipt":True,"rawLogsUploaded":False,"qualificationClaim":False}
-              (upload/"receipt.json").write_text(json.dumps(fail_receipt,indent=2,sort_keys=True)+"\n")
+          def failed_payload(reason_code,retention):
+              raw_uploaded=retention.get("status")=="RETAINED"
+              return {"profile":"umf.core-python314-generation/1","status":"FAIL_OR_UNKNOWN","reasonCode":reason_code,"sourceCommit":os.environ["SOURCE_COMMIT"],"runId":os.environ["RUN_ID"],"runAttempt":os.environ["RUN_ATTEMPT"],"ref":os.environ["SOURCE_REF"],"event":os.environ["EVENT_NAME"],"generationStepOutcome":os.environ.get("GENERATION_OUTCOME"),"lastCommand":last_command,"preflightDiagnostic":preflight_diagnostic,"toolObservation":tool_observation,"toolObservationError":tool_observation_error,"cpythonInstallation":cpython_installation,"cpythonInstallationError":cpython_installation_error,"diagnosticRetention":retention,"aggregateDeadlineSeconds":1800,"childMaximumSeconds":180,"timeoutKillGraceSeconds":10,"cleanupReserveSeconds":60,"aggregateLogLimitBytes":1048576,"aggregateArtifactLimitBytes":16777216,"failureOnlyReceipt":True,"rawLogsUploaded":raw_uploaded,"qualificationClaim":False}
+          def fail(reason_code,retention=None):
+              if retention is None: retention={"status":"NOT_RETAINED","reasonCode":"NOT_ELIGIBLE","commandName":None,"commandRecordFile":None,"commandRecordBytes":0,"commandRecordSha256":None,"logFile":None,"logBytes":0,"logSha256":None,"truncated":False}
+              if retention.get("status")!="RETAINED": shutil.rmtree(upload,ignore_errors=True); upload.mkdir(parents=True)
+              (upload/"receipt.json").write_text(json.dumps(failed_payload(reason_code,retention),indent=2,sort_keys=True)+"\n")
               (evidence/"finalizer.status").write_text("failed\n")
+          def not_retained(reason):
+              return {"status":"NOT_RETAINED","reasonCode":reason,"commandName":None,"commandRecordFile":None,"commandRecordBytes":0,"commandRecordSha256":None,"logFile":None,"logBytes":0,"logSha256":None,"truncated":False}
+          def file_sha256(path):
+              digest=hashlib.sha256()
+              with path.open("rb") as stream:
+                  for chunk in iter(lambda:stream.read(65536),b""): digest.update(chunk)
+              return digest.hexdigest()
+          def retain_selected_failure():
+              allowed_names={"generate-regex-table-profile","generate-independent-boundaries-314","generate-independent-hex-314","generate-independent-info-314","generate-metamodel-11-outputs","check-metamodel-self-and-root","regenerate-action-plan-identity","regenerate-codegen-and-check","regenerate-r3-inventory-and-boundaries"}
+              if not isinstance(last_command_row,dict): return not_retained("COMMAND_RECORD_UNAVAILABLE")
+              row=last_command_row; name=row.get("name")
+              if not isinstance(name,str) or name not in allowed_names: return not_retained("COMMAND_NOT_ALLOWLISTED")
+              fixed_argv={
+                  "generate-regex-table-profile":["bash","-euo","pipefail","-c","\nstage=\"$RUNNER_TEMP/core-python314-stage\"\nmkdir -p \"$stage/src\" \"$stage/tests/fixtures/cpython-re\"\ngit show d5022e37840329d351bcd6c27fe7d7aad4758544:crates/umf-core/src/python_re_tables.rs > \"$stage/src/python_re_tables.rs\"\ngit show d5022e37840329d351bcd6c27fe7d7aad4758544:crates/umf-core/src/python_re_names.dat > \"$stage/src/python_re_names.dat\"\ncp crates/umf-core/tests/fixtures/cpython-re/re_tests.py crates/umf-core/tests/fixtures/cpython-re/PSF-LICENSE.txt \"$stage/tests/fixtures/cpython-re/\"\nenv LD_LIBRARY_PATH=\"$RUNNER_TOOL_CACHE/Python/3.14.8/x64/lib\" \"$RUNNER_TOOL_CACHE/Python/3.14.8/x64/bin/python3.14\" -I crates/umf-core/tools/extend_python_re_314.py \"$RUNNER_TOOL_CACHE/Python/3.14.8/x64/bin/python3.14\" \"$stage\"\ncp \"$stage/src/python_re_tables.rs\" crates/umf-core/src/python_re_tables.rs\ncp \"$stage/src/python_re_names.dat\" crates/umf-core/src/python_re_names.dat\ncp \"$stage/tests/fixtures/cpython-re/outcomes-3.14.tsv\" crates/umf-core/tests/fixtures/cpython-re/outcomes-3.14.tsv\n"],
+                  "generate-metamodel-11-outputs":["bun","scripts/metamodel/build.ts","--output-root",str(evidence.parent/"core-python314-metamodel-stage")],
+                  "check-metamodel-self-and-root":["bun","run","check:metamodel"],
+                  "generate-independent-boundaries-314":["env","LD_LIBRARY_PATH=/opt/hostedtoolcache/Python/3.14.8/x64/lib","python","-I","crates/umf-core/tools/generate_independent_python_re_boundaries.py","--python314","/opt/hostedtoolcache/Python/3.14.8/x64/bin/python3.14"],
+                  "generate-independent-hex-314":["env","LD_LIBRARY_PATH=/opt/hostedtoolcache/Python/3.14.8/x64/lib","python","-I","crates/umf-core/tools/generate_independent_python_re_hex.py","--python314","/opt/hostedtoolcache/Python/3.14.8/x64/bin/python3.14"],
+                  "generate-independent-info-314":["env","LD_LIBRARY_PATH=/opt/hostedtoolcache/Python/3.14.8/x64/lib","python","-I","crates/umf-core/tools/generate_independent_python_re_info.py","--python314","/opt/hostedtoolcache/Python/3.14.8/x64/bin/python3.14"],
+                  "regenerate-action-plan-identity":["bash","-euo","pipefail","-c","bun scripts/actions-plan-identity.ts && bun scripts/actions-plan-identity.ts --check"],
+                  "regenerate-codegen-and-check":["bash","-euo","pipefail","-c","bun scripts/build-codegen.ts && bun scripts/build-codegen.ts --check"],
+                  "regenerate-r3-inventory-and-boundaries":["bash","-euo","pipefail","-c","python scripts/rust-inventory.py && bun run check:rust-boundaries"],
+              }
+              if name not in fixed_argv or row.get("stage")!=name or row.get("argv")!=fixed_argv[name]: return not_retained("COMMAND_ARGUMENTS_NOT_RECOGNIZED")
+              expected_keys={"name","stage","argv","rawExit","captureExit","monotonicStartMs","monotonicEndMs","monotonicDurationMs","startedAtUtc","endedAtUtc","limitSeconds","logBytes","logSha256","truncated"}
+              if set(row)!=expected_keys or type(row.get("rawExit")) is not int or not 0<=row["rawExit"]<=255 or type(row.get("captureExit")) is not int or row["captureExit"] not in {0,74,75} or type(row.get("truncated")) is not bool or row["truncated"]!=(row["captureExit"]==75) or (row["rawExit"]==0 and row["captureExit"]==0 and not row["truncated"]): return not_retained("COMMAND_RECORD_INVALID")
+              if any(type(row.get(key)) is not int or row[key]<0 for key in ("monotonicStartMs","monotonicEndMs","monotonicDurationMs","limitSeconds","logBytes")) or row["monotonicEndMs"]-row["monotonicStartMs"]!=row["monotonicDurationMs"] or not 1<=row["limitSeconds"]<=180 or row["logBytes"]>log_limit or not isinstance(row.get("startedAtUtc"),str) or len(row["startedAtUtc"])>64 or not isinstance(row.get("endedAtUtc"),str) or len(row["endedAtUtc"])>64 or not isinstance(row.get("logSha256"),str) or len(row["logSha256"])!=64 or any(char not in "0123456789abcdef" for char in row["logSha256"]): return not_retained("COMMAND_RECORD_INVALID")
+              summary_keys=("name","stage","argv","rawExit","captureExit","monotonicStartMs","monotonicEndMs","monotonicDurationMs","startedAtUtc","endedAtUtc","limitSeconds","logBytes","logSha256","truncated")
+              if last_command!={key:row[key] for key in summary_keys}: return not_retained("COMMAND_RECEIPT_MISMATCH")
+              logs=evidence/"logs"; selected=logs/(name+".log")
+              if logs.is_symlink() or not logs.is_dir() or logs.resolve(strict=True)!=evidence.resolve(strict=True)/"logs" or selected.is_symlink() or not selected.is_file(): return not_retained("LOG_PATH_INVALID")
+              log_size=selected.stat().st_size
+              if log_size!=row["logBytes"] or log_size>log_limit: return not_retained("LOG_SIZE_MISMATCH")
+              command_doc={"profile":"umf.core-python314-failed-command/1","sourceCommit":os.environ["SOURCE_COMMIT"],"runId":os.environ["RUN_ID"],"runAttempt":os.environ["RUN_ATTEMPT"],"ref":os.environ["SOURCE_REF"],"event":os.environ["EVENT_NAME"],"command":row}
+              command_bytes=(json.dumps(command_doc,indent=2,sort_keys=True)+"\n").encode()
+              retention={"status":"RETAINED","reasonCode":None,"commandName":name,"commandRecordFile":"failed-command.json","commandRecordBytes":len(command_bytes),"commandRecordSha256":hashlib.sha256(command_bytes).hexdigest(),"logFile":"logs/"+name+".log","logBytes":log_size,"logSha256":row["logSha256"],"truncated":row["truncated"]}
+              receipt_bytes=(json.dumps(failed_payload("generation_step_failed",retention),indent=2,sort_keys=True)+"\n").encode()
+              if log_size>log_limit or len(receipt_bytes)+len(command_bytes)+log_size>max_bytes: return not_retained("PROSPECTIVE_FAMILY_TOO_LARGE")
+              if file_sha256(selected)!=row["logSha256"]: return not_retained("LOG_HASH_MISMATCH")
+              try:
+                  shutil.rmtree(upload,ignore_errors=True); upload.mkdir(parents=True)
+                  log_dir=upload/"logs"; log_dir.mkdir()
+                  shutil.copyfile(selected,log_dir/(name+".log"))
+                  command_copy=upload/"failed-command.json"; command_copy.write_bytes(command_bytes)
+                  copied_log=log_dir/(name+".log")
+                  if copied_log.is_symlink() or not copied_log.is_file() or copied_log.stat().st_size!=log_size or file_sha256(copied_log)!=row["logSha256"]: return not_retained("COPY_VERIFICATION_FAILED")
+                  receipt_copy=upload/"receipt.json"; receipt_copy.write_bytes(receipt_bytes)
+                  entries=list(upload.rglob("*")); expected_roster={"receipt.json","failed-command.json","logs","logs/"+name+".log"}
+                  if command_copy.is_symlink() or command_copy.stat().st_size!=len(command_bytes) or file_sha256(command_copy)!=retention["commandRecordSha256"] or receipt_copy.is_symlink() or receipt_copy.stat().st_size!=len(receipt_bytes) or file_sha256(receipt_copy)!=hashlib.sha256(receipt_bytes).hexdigest() or any(path.is_symlink() or not (path.is_file() or path.is_dir()) for path in entries) or {path.relative_to(upload).as_posix() for path in entries}!=expected_roster or sum(path.stat().st_size for path in entries if path.is_file())>max_bytes or copied_log.stat().st_size>log_limit: return not_retained("COPY_VERIFICATION_FAILED")
+              except (OSError,ValueError): return not_retained("COPY_VERIFICATION_FAILED")
+              return retention
           if tool_observation_error is not None:
               fail("tool_observation_invalid"); raise SystemExit(1)
           if cpython_installation_error is not None:
               fail("cpython_installation_fact_invalid"); raise SystemExit(1)
           if os.environ.get("GENERATION_OUTCOME")!="success":
-              fail("generation_step_failed"); raise SystemExit(1)
+              try: retention=retain_selected_failure()
+              except Exception: retention=not_retained("RETENTION_VALIDATION_FAILED")
+              fail("generation_step_failed",retention); raise SystemExit(1)
           if tool_observation is None or tool_observation.get("status")!="VERSION_GUARDS_PASS":
               fail("tool_observation_invalid"); raise SystemExit(1)
           try:
