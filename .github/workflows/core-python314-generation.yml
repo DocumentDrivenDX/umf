@@ -362,6 +362,23 @@ jobs:
 
           run_bounded install-locked-bun-dependencies 180 bun install --frozen-lockfile --ignore-scripts
           PHASE="$(cat "$EVIDENCE/phase")"
+          if [[ "$PHASE" != "regex-artifacts" ]]; then
+          run_bounded fetch-locked-cargo-dependencies 180 bash -euo pipefail -c '
+          expected="$GITHUB_SHA"
+          actual="$(git rev-parse HEAD)"
+          [[ "$actual" == "$expected" ]] || { echo "Cargo prerequisite source HEAD mismatch" >&2; exit 1; }
+          worktree_status="$(git status --porcelain)"
+          [[ -z "$worktree_status" ]] || { echo "Cargo prerequisite source worktree is not clean" >&2; exit 1; }
+          before="$(sha256sum Cargo.lock Cargo.toml rust-toolchain.toml .cargo/config.toml)"
+          cargo fetch --locked
+          after="$(sha256sum Cargo.lock Cargo.toml rust-toolchain.toml .cargo/config.toml)"
+          [[ "$after" == "$before" ]] || { echo "Cargo prerequisite changed locked source inputs" >&2; exit 1; }
+          actual="$(git rev-parse HEAD)"
+          [[ "$actual" == "$expected" ]] || { echo "Cargo prerequisite source HEAD changed" >&2; exit 1; }
+          worktree_status="$(git status --porcelain)"
+          [[ -z "$worktree_status" ]] || { echo "Cargo prerequisite changed tracked source" >&2; exit 1; }
+          '
+          fi
           if [[ "$PHASE" == "regex-artifacts" ]]; then
           RUNTIME_ROOT="$RUNNER_TOOL_CACHE/Python/3.14.8/x64"
           run_bounded download-cpython314 180 curl --proto '=https' --tlsv1.2 --fail --location --max-filesize 110382248 --output "$RUNNER_TEMP/python-3.14.8-linux-24.04-x64.tar.gz" https://github.com/actions/python-versions/releases/download/3.14.8-36806082737/python-3.14.8-linux-24.04-x64.tar.gz
