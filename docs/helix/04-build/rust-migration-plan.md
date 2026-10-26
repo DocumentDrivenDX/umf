@@ -6263,6 +6263,14 @@ adding ordered projection and a compound bound predicate while reusing the
 same source-pinned installed wheel. Hosted cohorts, full capture semantics and
 native drivers remain unqualified.
 
+The latest clean-source `umf_access` local gate was rebuilt after the private
+Selection Rust change and profile-path guard at `1bf2217b9`. It passes exact
+source-to-wheel closure, profile path provenance, isolated dependency checks,
+and all six predecessor `capture()` cases in CPython 3.14.8 macOS arm64.
+The linked [artifact and semantic receipts](evidence/rust-migration/r8-umf-access-installed-qualification/README.md)
+remain nonpublishing and not release eligible; they do not qualify hosted
+cohorts, native drivers or the complete public access surface.
+
 The regenerated [R8 inventory and gap ledger](evidence/rust-migration/r8-symbol-inventory/README.md)
 still record 922 logical executable default-route retirement gaps: 67 have an
 accepted opt-in Rust mapping and 855 do not. These private/additive changes

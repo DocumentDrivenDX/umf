@@ -102,6 +102,21 @@ to the current checkout and do not constitute a new wheel build or clean-source
 installed receipt. It remains one local CPython 3.14.8 macOS arm64 semantic
 comparison, with `releaseEligible: false`.
 
+The latest clean-source [installed receipt](local-installed-artifact-postvalid-20261026.json)
+and linked [six-case semantic receipt](local-capture-semantic-postvalid-20261026.json)
+supersede those local checkpoints for source revision
+`1bf2217b99b7adf41c017892f621d699f3dde4fd`. Both wheels were rebuilt
+from that clean checkout with the pinned Rust 1.90.0 and build dependencies,
+then installed into a fresh CPython 3.14.8 macOS arm64 venv with the exact
+runtime dependencies; `pip check` passed. The access wheel SHA-256 remains
+`b42b410cd973c09066fcc48c1ff4e2ae4e14c7328066dc38f81bfa123dfaa647`;
+the rebuilt core wheel SHA-256 is
+`ce75629a87b0e4160b0267e7402f1a18b59a8d812c285733497c279fb8203839`.
+The artifact receipt records the repository-relative qualification-profile
+path, the clean source revision and exact source/wheel member equality. The
+semantic receipt links the artifact receipt SHA-256 and matches all six
+predecessor cases. Both remain local candidates with `releaseEligible: false`.
+
 The gate is separate from the existing six-cohort `umf-core` plus `umf-codegen`
 aggregate. Those cohorts use CPython 3.11.17–3.13.16 and install the pair with
 Pydantic 2.11.9; access requires Pydantic 2.13 or newer. Access's fixed
