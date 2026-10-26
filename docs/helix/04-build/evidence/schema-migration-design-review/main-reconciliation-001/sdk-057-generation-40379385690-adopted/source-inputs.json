@@ -1,0 +1,170 @@
+{
+  "adoptedR2Companion": {
+    "adoptionCommit": "63762c9ac233debf1cb6021a3db1fcdc763e64aa",
+    "artifactId": 12629535479,
+    "artifactSha256": "a848f70c9c5494b549bbfb7ca6fd69fa926494b8227fa2d7484c3ad38e310e0c",
+    "bytes": 1525352,
+    "ownerResultPath": "docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/stage-a-40273176398/owner-result.json",
+    "ownerResultSha256": "e743c255bfffd19ae9896f6eb6044b9b72c0b9caafa701781865aa7a7e3bccd9",
+    "path": "src/generated/core-validators-accounted.ts",
+    "provenanceManifestPath": "docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/stage-a-40273176398/manifest.json",
+    "provenanceManifestSha256": "def3865107a9a961ec74757e6bdec46a86f8fc39fdd0a502a829f9c83b297289",
+    "sha256": "314cac8416711899285bc3f1a734765d557f7446f7ab0cf58d3dbd2a7dfdd81e",
+    "sourceOutputReviewPath": "docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/stage-a-40273176398/sol-output-source-review.md",
+    "sourceOutputReviewSha256": "cb7a1e4141460b415665f561dbb395b188dcff623d2dfd8ebadf451ad797b757",
+    "sourcePinsSha256": "ffeb22448d5f941ca67e7d9746728141c07a7e211314cf9efda35d9bda0103e1",
+    "stageARunId": "40273176398",
+    "stageASourceCommit": "85f4a645cd14e7673a83fc475d3dd66dcc629edc"
+  },
+  "core0102Producer": {
+    "candidateCommit": "cdebbc26896b9ed597ef0c7e634f674b2a5e09e3",
+    "distributionVersion": "0.10.2",
+    "metadataPaths": [
+      "python/pyproject.toml",
+      "python/src/umf/__init__.py",
+      "python/src/umf/action_runtime_resource_manifest.json",
+      "spec/core/schema.json"
+    ],
+    "semanticCoreVersion": "0.10.0"
+  },
+  "historicalGeneratedOutputsAreCurrentQualificationEvidence": false,
+  "historicalInventorySeed": {
+    "path": "docs/helix/04-build/evidence/rust-migration/r3/inventory.json",
+    "role": "Core 0.10.2 historical generation seed; exact bytes and SHA256 are retained in historical-placeholder-inputs.json"
+  },
+  "pinnedSourceInputs": [
+    {
+      "bytes": 1525352,
+      "path": "src/generated/core-validators-accounted.ts",
+      "sha256": "314cac8416711899285bc3f1a734765d557f7446f7ab0cf58d3dbd2a7dfdd81e"
+    },
+    {
+      "bytes": 305070,
+      "path": "src/generated/core-validators.ts",
+      "sha256": "4a88fd9bc398c56d71e535841322dcf10d2851e16b026c14679e2d79062e90a7"
+    },
+    {
+      "bytes": 45342,
+      "path": "spec/core/schema.json",
+      "sha256": "bdcf1c6b8a197dfbd769ea47a879eaabeeb1d71cc00cab1f9e600175354c5da7"
+    },
+    {
+      "bytes": 45463,
+      "path": "spec/core/semantic-type-reference.schema.json",
+      "sha256": "48def42448706bbdfe68c458746d23610767feae0da6456735674524b8018887"
+    },
+    {
+      "bytes": 45001,
+      "path": "spec/core/extension-package.schema.json",
+      "sha256": "a4f4694b3ae32ef47a898f49fdce969b890f1ac901fc6747a43cb8c9c6c77c35"
+    },
+    {
+      "bytes": 38482,
+      "path": ".github/workflows/merged-source-generation.yml",
+      "sha256": "0e6e0b970d917c1bc25f15ebdc98c5c7ae2755c36291ee733d39caa345521a80"
+    },
+    {
+      "bytes": 1345,
+      "path": "scripts/actions-plan-identity.ts",
+      "sha256": "f60a7c49623153f554a4693e8b62232e6756539753dad333e7b7ae3af415cc4b"
+    },
+    {
+      "bytes": 5038,
+      "path": "scripts/build-codegen.ts",
+      "sha256": "aa0854e148e47b6f0d5e385841a2d602155db2dc0a1f3cb8901f55b217bdcd9b"
+    },
+    {
+      "bytes": 5380,
+      "path": "package.json",
+      "sha256": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b"
+    },
+    {
+      "bytes": 59024,
+      "path": "bun.lock",
+      "sha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4"
+    },
+    {
+      "bytes": 22,
+      "path": "bunfig.toml",
+      "sha256": "b9fc65eca9014c5179380259d70e76385a6a80788fa9a2df5fb3eaa5554fd2fe"
+    },
+    {
+      "bytes": 5088,
+      "path": "scripts/codegen/entry.ts",
+      "sha256": "6754efc85be8017e8292dcf8b1384fcfa6af21ee5258a2d102e569ab907583a9"
+    },
+    {
+      "bytes": 1150,
+      "path": "scripts/codegen/gzip.ts",
+      "sha256": "ac7316a19cf573d91e20d54f17f65c5b7093669d5a72bb0523edf72c52a87ed3"
+    },
+    {
+      "bytes": 728,
+      "path": "python/umf_codegen/pyproject.toml",
+      "sha256": "07253df785a646223c12051e41e3a07b0d5806e442b5aec96f8dce9362d30620"
+    },
+    {
+      "bytes": 4933,
+      "path": "python/umf_codegen/src/umf_codegen/_embedded.py",
+      "sha256": "06b2c4489d8b0e2068b518e920497b01f984c58ca08954017bfc932a61c9dd53"
+    },
+    {
+      "bytes": 1424,
+      "path": "python/pyproject.toml",
+      "sha256": "dea18d8019a736568fc12416044217dacaf7555dc9ab9ea258cbd2316de09605"
+    },
+    {
+      "bytes": 1258,
+      "path": "python/src/umf/__init__.py",
+      "sha256": "5c6f478e65626135f596d412fafe903b611102e12578c7cfa11505aca55e991e"
+    },
+    {
+      "bytes": 9924,
+      "path": "python/src/umf/schemas.py",
+      "sha256": "4729344e8aa9846281b6af82d0398e3aad41d778b59cf5895f5e7a3d219f642d"
+    },
+    {
+      "bytes": 1721,
+      "path": "python/src/umf/generated_resources.py",
+      "sha256": "9b473cf89f7d9ff5486d741282d590f5cc115e83b831d5b9090464e127e8e7f8"
+    },
+    {
+      "bytes": 1945,
+      "path": "python/src/umf/action_runtime_resource_manifest.json",
+      "sha256": "7b24a7c50a2597feba42bed3bf5f85a121f3b0f787c569fb2414c54fc98f57ec"
+    },
+    {
+      "bytes": 3740,
+      "path": "python/tests/test_python_artifact_version.py",
+      "sha256": "719fd41eeb78829609e167e08e56622c964e48dd99e6cbd952f23a4d40634aa8"
+    },
+    {
+      "bytes": 54917,
+      "path": "scripts/rust-inventory.py",
+      "sha256": "2ddc70900350dfdd613196e3e8a319150a2b5421fe4f2c0b41da6365777e8f85"
+    },
+    {
+      "bytes": 3184,
+      "path": "scripts/rust-inventory-typescript.ts",
+      "sha256": "e9cd4ec974b629d262bc73ca73b39cd479732fd14674e72b0810c571d56acccd"
+    },
+    {
+      "bytes": 32395,
+      "path": "scripts/check-rust-boundaries.py",
+      "sha256": "068ec15a7665943cc7c56ae4e4ea36b40b1abcba7bd7f29e83eae18ca9605125"
+    },
+    {
+      "bytes": 379,
+      "path": "Cargo.toml",
+      "sha256": "89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f"
+    },
+    {
+      "bytes": 32728,
+      "path": "Cargo.lock",
+      "sha256": "e12048f6e1141dd742974ab3c5924dc0d7f025bf063f6aca90fbead32388a34f"
+    }
+  ],
+  "schema": "umf.merged-source-generation-inputs/1",
+  "sourceCommit": "41590b2b02daef923a21103cb4d04eb419d87633",
+  "sourceRef": "refs/heads/codex/migration-merged-generation"
+}

@@ -89,6 +89,8 @@
       "scripts/codegen/entry.ts",
       "scripts/codegen/gzip.ts",
       "scripts/conformance.ts",
+      "scripts/dispatch_core_pypi_release.py",
+      "scripts/dispatch_schema_browser_npm.py",
       "scripts/domain-pack-family.ts",
       "scripts/domain-packs/ontology.ts",
       "scripts/domain-packs/qualify-sec-acquisition.py",
@@ -103,6 +105,7 @@
       "scripts/postgresql-catalog-oracle.ts",
       "scripts/praxis-p1-compatibility.ts",
       "scripts/prepare-action-tests.ts",
+      "scripts/publish_core_pypi_release.py",
       "scripts/qualification/r2-metering-generate.ts",
       "scripts/r2-metering-browser.ts",
       "scripts/reference/browser.ts",
@@ -126,8 +129,11 @@
       "scripts/table-migration-corpus.ts",
       "scripts/table-reviewed-changes-corpus.ts",
       "scripts/test-sdk-install.ts",
+      "scripts/test_dispatch_schema_browser_npm.py",
+      "scripts/test_verify_schema_browser_npm.py",
       "scripts/umf-client-generate.ts",
       "scripts/verify-native-client-types.py",
+      "scripts/verify_schema_browser_npm.py",
       "tests/access-adoption.test.ts",
       "tests/access-native-domains.test.ts",
       "tests/access-native-table.test.ts",
@@ -253,16 +259,16 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "4ea593a0f64e22c4dfb659d03c4f0e1a6ece46cf8c10abdf61cca6a9df78092a",
+    "sourceCohortSha256": "fcd32fc6e561db5fba30b9d190ffe2769a18afe1d683a169b395f4f8a50668bd",
     "typescriptApi": "5.9.3"
   },
   "counts": {
-    "activeScriptFiles": 416,
-    "algorithmSymbols": 12332,
+    "activeScriptFiles": 422,
+    "algorithmSymbols": 12424,
     "pythonModules": 124,
     "rustBuildInputs": 76,
     "rustModules": 127,
-    "scriptFiles": 3030,
+    "scriptFiles": 3038,
     "sourceModules": 622,
     "typescriptModules": 498
   },
@@ -29277,6 +29283,43 @@
       "sha256": "df66a58fc03776a5672b96ea6c0ae2d81b238949c4ad6a0180cd419f1da36fa7"
     },
     {
+      "activationEvidence": [
+        ".github/workflows/pypi.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "core_release",
+        "main",
+        "select_release"
+      ],
+      "bytes": 3597,
+      "disposition": "active-host-tooling-algorithm",
+      "language": "py",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
+      "path": "scripts/dispatch_core_pypi_release.py",
+      "sha256": "db65816b600846b91571ae1884e1551673397c75fbe5f84215d55f72df7f382c"
+    },
+    {
+      "activationEvidence": [
+        ".github/workflows/dispatch-schema-browser-npm.yml",
+        ".github/workflows/schema-browser-npm-validation.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "DispatchError",
+        "main",
+        "read_json",
+        "require",
+        "validate_dispatch"
+      ],
+      "bytes": 5579,
+      "disposition": "active-host-tooling-algorithm",
+      "language": "py",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
+      "path": "scripts/dispatch_schema_browser_npm.py",
+      "sha256": "e187957c34e6742e0200e6ddebc4d41ceba9fd5cb45d7102e1ea60f9d67daa51"
+    },
+    {
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
@@ -34178,6 +34221,34 @@
       "sha256": "bc3d10b47603f9fbd4b2a3e3e835bc8b4614681d96fe89d31b82d1b6edf5d64f"
     },
     {
+      "activationEvidence": [
+        ".github/workflows/publish-pypi.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "ReleaseError",
+        "_metadata",
+        "_require",
+        "_sha",
+        "check",
+        "check_pypi",
+        "load",
+        "main",
+        "parse_sums",
+        "prepare_release",
+        "read_asset",
+        "resolve_tag_commit",
+        "validate_archive",
+        "wait_for_pypi"
+      ],
+      "bytes": 18795,
+      "disposition": "active-host-tooling-algorithm",
+      "language": "py",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
+      "path": "scripts/publish_core_pypi_release.py",
+      "sha256": "eee1cf0064071b8f1115b1534ec23c022bd26a8908fec078f80adaa982524ca5"
+    },
+    {
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [],
@@ -34234,7 +34305,7 @@
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/qualification/r2-metering-generate.ts",
-      "sha256": "32d66948460ea7f6118082af70ea80bf563a6c67b5bef6eb441a25f0c97731c1"
+      "sha256": "fb265f8b027fe40e50556ba88fc5b91f585b03f6c7a4526e175fd2d8b04ca7d0"
     },
     {
       "activationEvidence": [],
@@ -37519,6 +37590,48 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
+        "DispatchTests",
+        "setUp",
+        "test_checksum_collision_and_foreign_repository_fail_closed",
+        "test_core_version_is_independent_of_sdk_release_tag",
+        "test_noncore_releases_and_unpublished_events_do_not_dispatch",
+        "test_standalone_core_release_is_dispatched_without_sdk_version_inference",
+        "test_token_created_release_binds_successful_producer_window"
+      ],
+      "bytes": 3392,
+      "disposition": "unreferenced-script-source",
+      "language": "py",
+      "migrationObligation": "No current package/workflow/import activation edge discovered",
+      "path": "scripts/test_dispatch_core_pypi_release.py",
+      "sha256": "fa48b70f090ce0617ebeb6fcfde20eac24303863b4cbdd215710de2a8bf0e11b"
+    },
+    {
+      "activationEvidence": [
+        ".github/workflows/dispatch-schema-browser-npm.yml",
+        ".github/workflows/publish-schema-browser-npm.yml",
+        ".github/workflows/schema-browser-npm-validation.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "DispatcherTests",
+        "release_fixture",
+        "test_annotated_tag_source_is_peeled_to_commit",
+        "test_exact_immutable_release_resolves_source_and_asset_pins",
+        "test_refuses_missing_or_malformed_digest",
+        "test_refuses_wrong_annotated_target_and_nonexact_asset_inventory",
+        "test_refuses_wrong_repository_branch_tag_or_mutable_release"
+      ],
+      "bytes": 4409,
+      "disposition": "active-host-tooling-algorithm",
+      "language": "py",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
+      "path": "scripts/test_dispatch_schema_browser_npm.py",
+      "sha256": "309ecb4d0cf819d5d3b32316948863c399bfabcc97213dbf8c81dec3a26ec411"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
         "Connection",
         "Controls",
         "example",
@@ -37614,6 +37727,37 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
+        "PublishPypiReleaseTests",
+        "Response",
+        "__enter__",
+        "__exit__",
+        "__init__",
+        "prepare",
+        "read",
+        "sdist",
+        "setUp",
+        "tearDown",
+        "test_prepare_binds_public_assets_tag_source_and_package_metadata",
+        "test_prepare_refuses_direct_url_metadata_and_wrong_distribution",
+        "test_prepare_refuses_source_movement_and_github_digest_mismatch",
+        "test_raw_linux_wheel_is_refused_before_any_upload",
+        "test_registry_check_accepts_only_exact_public_file_bytes",
+        "test_sdk_profile_refuses_multiple_wheels_without_a_selected_file_map",
+        "test_standalone_core_profile_binds_source_and_explicit_file_map",
+        "test_visibility_wait_retries_absence_but_propagates_errors",
+        "wheel"
+      ],
+      "bytes": 11912,
+      "disposition": "unreferenced-script-source",
+      "language": "py",
+      "migrationObligation": "No current package/workflow/import activation edge discovered",
+      "path": "scripts/test_publish_core_pypi_release.py",
+      "sha256": "992df6711ea7ffc7950e37295399142c8c9e52d0a578cb0c50d9fc83fc8a7008"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
         "AsyncCursor",
         "CaptureTests",
         "Cursor",
@@ -37640,6 +37784,42 @@
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/test_record_access_pg_runtime.py",
       "sha256": "53aea18e87a246d77d544224c3df7e8919308309a06117211f8844ee8d6bebef"
+    },
+    {
+      "activationEvidence": [
+        ".github/workflows/publish-schema-browser-npm.yml",
+        ".github/workflows/schema-browser-npm-validation.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "DownloadedArtifactTests",
+        "Response",
+        "VerifyReleaseTests",
+        "__enter__",
+        "__exit__",
+        "digest",
+        "open_request",
+        "read",
+        "release_fixture",
+        "test_exact_release_assets_and_source_are_accepted_without_copying_private_receipt_path",
+        "test_legacy_release_requires_and_accepts_all_exact_manual_pins",
+        "test_oidc_publish_invokes_npm_without_package_lifecycle_scripts",
+        "test_private_archive_is_refused",
+        "test_refuses_unexpected_artifact_member_before_publish",
+        "test_registry_absence_and_exact_existing_archive",
+        "test_registry_collision_is_refused",
+        "test_requires_exact_verified_identity_and_archive_bytes_before_publish",
+        "test_unpinned_mutable_release_is_refused",
+        "test_version_lookup_uses_json_accept_header",
+        "test_wrong_source_is_refused",
+        "test_wrong_tag_is_refused"
+      ],
+      "bytes": 12193,
+      "disposition": "active-host-tooling-algorithm",
+      "language": "py",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
+      "path": "scripts/test_verify_schema_browser_npm.py",
+      "sha256": "a47c612bd5b0e6c46d8b7238a353dfbd084a13574818caa064fc4286ac7c682a"
     },
     {
       "activationEvidence": [],
@@ -38335,6 +38515,37 @@
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/verify-native-client-types.py",
       "sha256": "4d43eefd94c6229827a070b82f6cd95c5ee2aa4c404c2c8eff448aec3f051565"
+    },
+    {
+      "activationEvidence": [
+        ".github/workflows/publish-schema-browser-npm.yml",
+        ".github/workflows/schema-browser-npm-validation.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "ReleaseError",
+        "_download_registry_tarball",
+        "_registry_json",
+        "_safe_tarball",
+        "check_npm_registry",
+        "main",
+        "parse_sums",
+        "read_bytes_json",
+        "read_json",
+        "require",
+        "resolve_tag_commit",
+        "sha",
+        "validate_archive",
+        "verify_downloaded_artifact",
+        "verify_release",
+        "wait_for_registry_match"
+      ],
+      "bytes": 22185,
+      "disposition": "active-host-tooling-algorithm",
+      "language": "py",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
+      "path": "scripts/verify_schema_browser_npm.py",
+      "sha256": "6e0b4f12b8f33f415f7f8db4e598c564995230d139bce70bd9007bd3fcd3db61"
     },
     {
       "activationEvidence": [
@@ -40005,12 +40216,12 @@
         "fetch",
         "pypi_artifact_hash"
       ],
-      "bytes": 10077,
+      "bytes": 10964,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "py",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/codegen/acquire_offline_cohort.py",
-      "sha256": "52dcd0b88c159f919d2f449208d9366981a1198ac6091afe530bc98c7639f465"
+      "sha256": "3fce50c241afd5ef3e5dfa3ea2736c1fbe5b98f8788b98ac296db476395f8503"
     },
     {
       "activationEvidence": [
@@ -56845,7 +57056,6 @@
     },
     {
       "activationEvidence": [
-        ".github/workflows/pypi.yml",
         ".github/workflows/python-action-runtime.yml"
       ],
       "active": true,
@@ -69308,7 +69518,7 @@
         "actionPlanProducerBuild"
       ],
       "resolvedImports": [],
-      "sha256": "d53b8ba01dda06ac0f7b3057424051807e36c15eb0924b572995f0a9bb396b36"
+      "sha256": "3bd7b81b584ac4dfc838551834fac0c11f573ea77b54a9b793e4e48befdfa3f0"
     },
     {
       "bytes": 4286,
