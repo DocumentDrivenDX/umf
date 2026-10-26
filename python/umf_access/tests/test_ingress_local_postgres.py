@@ -631,6 +631,107 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             'SELECT 1',
         ])
 
+    def _passive_transaction_fixture(self, *, readonly, status):
+        class DriverConnection:
+            def __init__(self, transaction_status):
+                self.info = SimpleNamespace(transaction_status=transaction_status)
+                self.transaction_calls = []
+                self.control_sql = []
+
+            @contextmanager
+            def transaction(self, *args, **kwargs):
+                self.transaction_calls.append((args, kwargs))
+                yield self
+
+            def execute(self, query, *args, **kwargs):
+                self.control_sql.append((query, args, kwargs))
+
+        connection = DriverConnection(status)
+        if readonly:
+            supervisor = object.__new__(LocalPostgresSupervisor)
+            budget = SimpleNamespace(_connection=connection)
+            bounded = object.__new__(_BudgetedOriginalStoreReadonlyConnection)
+            object.__setattr__(bounded, '_issuer', supervisor)
+            object.__setattr__(bounded, '_budget', budget)
+            object.__setattr__(bounded, '_connection', connection)
+            object.__setattr__(bounded, '_lower_ms', {})
+            require_method = '_require_original_store_readonly_budget'
+            idle_code = 'local-postgresql-store-readonly-transaction-unavailable'
+            changed_code = idle_code
+            expiry_code = 'local-postgresql-store-readonly-exhausted'
+        else:
+            supervisor, reservation, budget = self._creation_budget_fixture()
+            object.__setattr__(budget, '_connection', connection)
+            object.__setattr__(reservation, '_connection', connection)
+            bounded = _BudgetedOriginalStoreConnection(supervisor, reservation)
+            require_method = '_require_original_store_budget'
+            idle_code = 'local-postgresql-store-budget-connection-state-invalid'
+            changed_code = idle_code
+            expiry_code = 'local-postgresql-store-budget-exhausted'
+        return (supervisor, budget, connection, bounded, require_method,
+                idle_code, changed_code, expiry_code)
+
+    def test_budgeted_transaction_scope_passively_borrows_only_the_active_transaction(self):
+        for readonly in (False, True):
+            supervisor, budget, connection, bounded, require_method, _idle, _changed, _expiry = (
+                self._passive_transaction_fixture(readonly=readonly, status=2))
+            with self.subTest(readonly=readonly):
+                with _patch_supervisor_method(require_method, return_value=1_000) as require:
+                    with bounded.transaction() as scoped:
+                        self.assertIs(scoped, bounded)
+                        self.assertEqual(connection.info.transaction_status, 2)
+                        self.assertEqual(require.call_count, 1)
+                    self.assertEqual(require.call_count, 2)
+                    self.assertIs(require.call_args_list[0].args[1], budget
+                                  if readonly else bounded._budget)
+                with self.assertRaises(TypeError):
+                    bounded.transaction(isolation_level='serializable')
+                with self.assertRaises(TypeError):
+                    bounded.transaction('serializable')
+                self.assertEqual(connection.transaction_calls, [])
+                self.assertEqual(connection.control_sql, [])
+
+    def test_budgeted_transaction_scope_refuses_idle_and_aborted_connections(self):
+        for readonly in (False, True):
+            for status in (0, 3):
+                (_supervisor, _budget, connection, bounded, require_method,
+                 idle_code, _changed, _expiry) = self._passive_transaction_fixture(
+                     readonly=readonly, status=status)
+                with self.subTest(readonly=readonly, status=status):
+                    with _patch_supervisor_method(require_method,
+                                                  return_value=1_000) as require:
+                        with self.assertRaisesRegex(LocalPostgresError, idle_code):
+                            with bounded.transaction():
+                                self.fail('an inactive transaction must not be borrowed')
+                    require.assert_called_once()
+                    self.assertEqual(connection.transaction_calls, [])
+                    self.assertEqual(connection.control_sql, [])
+
+    def test_budgeted_transaction_scope_fails_closed_on_expiry_or_status_change(self):
+        for readonly in (False, True):
+            (_supervisor, _budget, connection, bounded, require_method,
+             _idle_code, changed_code, expiry_code) = self._passive_transaction_fixture(
+                 readonly=readonly, status=2)
+            with self.subTest(readonly=readonly, failure='expiry'):
+                with _patch_supervisor_method(
+                        require_method, side_effect=[1_000, LocalPostgresError(
+                            expiry_code)]):
+                    with self.assertRaisesRegex(LocalPostgresError, expiry_code):
+                        with bounded.transaction():
+                            pass
+                self.assertEqual(connection.transaction_calls, [])
+                self.assertEqual(connection.control_sql, [])
+            (_supervisor, _budget, connection, bounded, require_method,
+             _idle_code, changed_code, _expiry_code) = self._passive_transaction_fixture(
+                 readonly=readonly, status=2)
+            with self.subTest(readonly=readonly, failure='status-change'):
+                with _patch_supervisor_method(require_method, return_value=1_000):
+                    with self.assertRaisesRegex(LocalPostgresError, changed_code):
+                        with bounded.transaction():
+                            connection.info.transaction_status = 3
+                self.assertEqual(connection.transaction_calls, [])
+                self.assertEqual(connection.control_sql, [])
+
     def test_bounded_psycopg_generator_uses_finite_read_write_readiness_and_releases(self):
         class Ready(IntEnum):
             NONE = 0

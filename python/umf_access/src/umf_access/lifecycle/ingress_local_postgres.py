@@ -1725,6 +1725,33 @@ class _BudgetedOriginalStoreConnection:
             raise LocalPostgresError(
                 'local-postgresql-store-timeout-restore-unresolved') from None
 
+    @contextmanager
+    def transaction(self):
+        """Borrow the caller's active transaction without owning its lifecycle."""
+        self._issuer._require_original_store_budget(self._budget)
+        try:
+            if int(self._connection.info.transaction_status) != 2:
+                raise LocalPostgresError(
+                    'local-postgresql-store-budget-connection-state-invalid')
+        except LocalPostgresError:
+            raise
+        except Exception:  # noqa: BLE001 -- transaction ownership must remain provable
+            raise LocalPostgresError(
+                'local-postgresql-store-budget-connection-state-invalid') from None
+        try:
+            yield self
+        finally:
+            self._issuer._require_original_store_budget(self._budget)
+            try:
+                if int(self._connection.info.transaction_status) != 2:
+                    raise LocalPostgresError(
+                        'local-postgresql-store-budget-connection-state-invalid')
+            except LocalPostgresError:
+                raise
+            except Exception:  # noqa: BLE001 -- transaction ownership must remain provable
+                raise LocalPostgresError(
+                    'local-postgresql-store-budget-connection-state-invalid') from None
+
     def __getattr__(self, name: str) -> Any:
         if name == 'cursor':
             return self.cursor
@@ -1912,6 +1939,33 @@ class _BudgetedOriginalStoreReadonlyConnection:
             prepare=prepare, binary=binary)
         self._issuer._require_original_store_readonly_budget(self._budget)
         return _BudgetedOriginalStoreReadonlyCursor(self._issuer, self._budget, cursor)
+
+    @contextmanager
+    def transaction(self):
+        """Borrow the supervisor's active read-only transaction, never end it."""
+        self._issuer._require_original_store_readonly_budget(self._budget)
+        try:
+            if int(self._connection.info.transaction_status) != 2:
+                raise LocalPostgresError(
+                    'local-postgresql-store-readonly-transaction-unavailable')
+        except LocalPostgresError:
+            raise
+        except Exception:  # noqa: BLE001 -- transaction ownership must remain provable
+            raise LocalPostgresError(
+                'local-postgresql-store-readonly-transaction-unknown') from None
+        try:
+            yield self
+        finally:
+            self._issuer._require_original_store_readonly_budget(self._budget)
+            try:
+                if int(self._connection.info.transaction_status) != 2:
+                    raise LocalPostgresError(
+                        'local-postgresql-store-readonly-transaction-unavailable')
+            except LocalPostgresError:
+                raise
+            except Exception:  # noqa: BLE001 -- transaction ownership must remain provable
+                raise LocalPostgresError(
+                    'local-postgresql-store-readonly-transaction-unknown') from None
 
     def __getattr__(self, name: str) -> Any:
         if name == 'cursor':

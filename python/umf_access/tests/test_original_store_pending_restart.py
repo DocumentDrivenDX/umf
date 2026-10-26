@@ -45,6 +45,9 @@ class _Cursor:
     def fetchall(self):
         return list(self.rows)
 
+    def close(self):
+        pass
+
 
 class _FakeDatabase:
     """Narrow query transport for the fixed owner bootstrap/recovery queries."""
@@ -166,6 +169,9 @@ class _FakeConnection:
             yield self
         finally:
             self.info.transaction_status = previous
+
+    def cursor(self, *args, **kwargs):
+        return _Cursor()
 
     def execute(self, sql, params=None):
         text = ' '.join(sql.split())
@@ -657,8 +663,10 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     def fake_psycopg_connect(**kwargs):
                         db.connect_options.append(kwargs['options'])
                         return _FakeConnection(db)
+                    psycopg_rows_fixture = SimpleNamespace(tuple_row=object())
                     psycopg_fixture = SimpleNamespace(
-                        Connection=_FakeConnection, connect=fake_psycopg_connect)
+                        Connection=_FakeConnection, connect=fake_psycopg_connect,
+                        rows=psycopg_rows_fixture)
                     with patch.dict(sys.modules, {'psycopg': psycopg_fixture}):
                         recovery_provider = restarted_supervisor.open_originals_store_recovery(
                             caller_connection, provider_id=provider_id)
@@ -707,7 +715,9 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     absence_queries_before = len(db.absence_queries)
                     namespace_queries_before = len(db.namespace_queries)
                     readonly_connects_before = len(db.readonly_connect_options)
-                    with (patch.dict(sys.modules, {'psycopg': psycopg_fixture}),
+                    with (patch.dict(sys.modules, {
+                              'psycopg': psycopg_fixture,
+                              'psycopg.rows': psycopg_rows_fixture}),
                           patch.object(native, '_execute_original_store_sql',
                                        _execute_journal_recovery_control_transport),
                           patch.object(native.LocalPostgresSupervisor,
@@ -845,7 +855,9 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                         except native.LocalPostgresError as error:
                             second_recovery_codes.append(error.code)
                             raise
-                    with (patch.dict(sys.modules, {'psycopg': psycopg_fixture}),
+                    with (patch.dict(sys.modules, {
+                              'psycopg': psycopg_fixture,
+                              'psycopg.rows': psycopg_rows_fixture}),
                           patch.object(native, '_execute_original_store_sql',
                                        _execute_journal_recovery_control_transport),
                           patch.object(native.LocalPostgresSupervisor,
