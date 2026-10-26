@@ -101,7 +101,7 @@ function schemaPropertiesHostInput(addon, resources, operation, inputs, ErrorTyp
 
 // Private route probe. It does not alter either V4 package root selection.
 function coreElementSelectionHostInput(addon, resources, source, query, registry, ErrorType = Error) {
-  return executeHostInput(addon, resources, 'executeCoreElementSelectionHostJson', [source, query, registry], ErrorType, undefined, [registry !== undefined], undefined, false, false, fromRustWireOrdinary);
+  return executeHostInput(addon, resources, 'executeCoreElementSelectionHostJson', [source, query, registry], ErrorType, undefined, [registry !== undefined], undefined, false, false, fromRustWire);
 }
 
 function validateCoreRecordValuesHostInput(addon, resources, source, identity, values, ErrorType = Error, controlBridge) {

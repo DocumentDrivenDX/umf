@@ -43,6 +43,47 @@ pub(crate) struct SelectionDiagnosticMaterialization {
 }
 
 impl SelectionDiagnosticMaterialization {
+    /// Materialize successful Selection validation while resolving only the
+    /// host-owned primitive strings retained by the structure stage.
+    pub(crate) fn into_host_source_value(
+        &self,
+        host: &mut dyn HostJsonReflection,
+        ctx: &mut crate::Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let valid = self.static_is_valid()?;
+        let mut diagnostics = Vec::with_capacity(self.entries.len());
+        for entry in &self.entries {
+            let (code, path, message, severity) = match entry {
+                SelectionDiagnosticEntry::Static(diagnostic) => (
+                    diagnostic.code.clone(), diagnostic.path.clone(), diagnostic.message.clone(),
+                    match diagnostic.severity { Severity::Error => "error", Severity::Warning => "warning" },
+                ),
+                SelectionDiagnosticEntry::HostStructure { code, path, message, severity } => {
+                    let chunks = message.units.div_ceil(8192);
+                    ctx.charge_text(message.units, path.clone())?;
+                    ctx.charge_work(chunks, path.clone())?;
+                    let message = crate::host_json::read_host_string_value(host, message.clone(), path)?;
+                    (code.clone(), path.clone(), message, match severity { Severity::Error => "error", Severity::Warning => "warning" })
+                }
+                SelectionDiagnosticEntry::Callback { .. } => return Err(EngineError::new(
+                    "HOST_JSON_UNSUPPORTED", Utf16::default(),
+                    "Successful Selection callback diagnostics are not materialized by the private host route",
+                )),
+            };
+            diagnostics.push(Value::Object(vec![
+                (Utf16::from("code"), Value::String(code)),
+                (Utf16::from("path"), Value::String(path)),
+                (Utf16::from("message"), Value::String(message)),
+                (Utf16::from("severity"), Value::String(Utf16::from(severity))),
+            ]));
+        }
+        Ok(Value::Object(vec![
+            (Utf16::from("valid"), Value::Bool(valid)),
+            (Utf16::from("complete"), Value::Bool(self.complete)),
+            (Utf16::from("diagnostics"), Value::Array(diagnostics)),
+        ]))
+    }
+
     pub(crate) fn from_static_validation(validation: Validation) -> Self {
         let static_valid = Some(validation.valid);
         Self {

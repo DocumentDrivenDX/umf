@@ -24,9 +24,9 @@ const packet = read('scripts/rust-migration/r5/selection/input.json');
 const frozen = read('scripts/rust-migration/r5/selection/frozen-typescript.json');
 const result = coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, undefined, Error);
 assert.equal(JSON.stringify(result), JSON.stringify(frozen.cases.all));
-const outputPrototype = Object.getPrototypeOf(result) === Object.prototype ? 'ordinary' : 'other';
-assert.equal(outputPrototype, 'ordinary');
-assert.equal(Object.getPrototypeOf(result.source), Object.prototype);
+const outputPrototype = Object.getPrototypeOf(result) === null ? 'null' : 'other';
+assert.equal(outputPrototype, 'null');
+assert.equal(Object.getPrototypeOf(result.source), null);
 
 const protoSource = structuredClone(packet.source);
 Object.defineProperty(protoSource.extensions.future.opaque, '__proto__', {
@@ -34,9 +34,10 @@ Object.defineProperty(protoSource.extensions.future.opaque, '__proto__', {
 });
 const protoResult = coreElementSelectionHostInput(addon, resources, protoSource, packet.queries.all, undefined, Error);
 const opaque = protoResult.source.extensions.future.opaque;
-assert.equal(Object.getPrototypeOf(opaque), Object.prototype);
+assert.equal(Object.getPrototypeOf(opaque), null);
 assert.equal(Object.hasOwn(opaque, '__proto__'), true);
-assert.deepEqual(opaque.__proto__, {retained: true});
+assert.equal(opaque.__proto__.retained, true);
+assert.equal(Object.getPrototypeOf(opaque.__proto__), null);
 assert.equal(Object.prototype.retained, undefined);
 
 const sentinel = {identity: true};

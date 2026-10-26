@@ -322,6 +322,7 @@ fn select_core_elements_after_copy(
         capabilities,
         ctx,
         None,
+        None,
     )
 }
 
@@ -337,6 +338,12 @@ fn select_core_elements_after_copy_with_host_refusal(
             &crate::selection_diagnostics::SelectionDiagnosticMaterialization,
             &mut Context<'_>,
         ) -> Result<Utf16, EngineError>,
+    >,
+    mut host_source_validation: Option<
+        &mut dyn FnMut(
+            &crate::selection_diagnostics::SelectionDiagnosticMaterialization,
+            &mut Context<'_>,
+        ) -> Result<Value, EngineError>,
     >,
 ) -> Result<Value, EngineError> {
     let (transitive, filters, identities) = parse_query(&query)?;
@@ -570,6 +577,11 @@ fn select_core_elements_after_copy_with_host_refusal(
             }
         }
     }
+    let source_validation_value = if let Some(materialize) = host_source_validation.as_deref_mut() {
+        materialize(&source_validation, ctx)?
+    } else {
+        source_validation.clone().into_static_source_value()?
+    };
     let result = obj(vec![
         ("scope", text("core-elements")),
         (
@@ -580,7 +592,7 @@ fn select_core_elements_after_copy_with_host_refusal(
         ("query", query),
         (
             "sourceValidation",
-            source_validation.into_static_source_value()?,
+            source_validation_value,
         ),
         ("selection", Value::Array(selection)),
         ("boundaryReferences", Value::Array(boundary_references)),
@@ -612,6 +624,29 @@ pub(crate) fn select_core_elements_admitted_with_host_refusal(
         capabilities,
         ctx,
         Some(refusal),
+        None,
+    )
+}
+
+pub(crate) fn select_core_elements_admitted_with_host_materializers(
+    source: Value,
+    query: Value,
+    engine: &Engine,
+    provider: &dyn crate::registry::RegistrationProvider,
+    capabilities: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+    refusal: &mut dyn FnMut(
+        &crate::selection_diagnostics::SelectionDiagnosticMaterialization,
+        &mut Context<'_>,
+    ) -> Result<Utf16, EngineError>,
+    source_validation: &mut dyn FnMut(
+        &crate::selection_diagnostics::SelectionDiagnosticMaterialization,
+        &mut Context<'_>,
+    ) -> Result<Value, EngineError>,
+) -> Result<Value, EngineError> {
+    select_core_elements_after_copy_with_host_refusal(
+        source, query, engine, provider, capabilities, ctx,
+        Some(refusal), Some(source_validation),
     )
 }
 

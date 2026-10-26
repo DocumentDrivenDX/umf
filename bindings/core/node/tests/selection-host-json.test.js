@@ -3,6 +3,7 @@ import {expect, setDefaultTimeout, test} from 'bun:test';
 import {createRequire} from 'node:module';
 import {coreElementSelectionHostInput} from '../src/host-json.js';
 import {UmfCoreError} from '../index.js';
+import {directTypescriptWarningSelection} from '../../../../scripts/rust-migration/r8/selection-private-host-direct.mjs';
 import {readFileSync} from 'node:fs';
 import coreSchema from '../../../../spec/core/schema.json' with {type: 'json'};
 import referenceSchema from '../../../../spec/core/semantic-type-reference.schema.json' with {type: 'json'};
@@ -17,27 +18,28 @@ const packet = JSON.parse(readFileSync(new URL('../../../../scripts/rust-migrati
 const frozen = JSON.parse(readFileSync(new URL('../../../../scripts/rust-migration/r5/selection/frozen-typescript.json', import.meta.url), 'utf8'));
 setDefaultTimeout(30_000);
 
+
 test('private host Selection route matches the complete frozen R5 result with an omitted Registry', () => {
   const output = coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, undefined, UmfCoreError);
   expect(output).toEqual(frozen.cases.all);
-  expect(Object.getPrototypeOf(output)).toBe(Object.prototype);
-  expect(Object.getPrototypeOf(output.source)).toBe(Object.prototype);
-  expect(Object.getPrototypeOf(output.source.modules[0])).toBe(Object.prototype);
+  expect(Object.getPrototypeOf(output)).toBe(null);
+  expect(Object.getPrototypeOf(output.source)).toBe(null);
+  expect(Object.getPrototypeOf(output.source.modules[0])).toBe(null);
 });
 
-test('private host Selection returns ordinary nested objects and preserves __proto__ as own data', () => {
+test('private host Selection returns TypeScript null-prototype objects and preserves __proto__ as own data', () => {
   const source = structuredClone(packet.source);
   Object.defineProperty(source.extensions.future.opaque, '__proto__', {
     value: {retained: true}, writable: true, enumerable: true, configurable: true,
   });
   const output = coreElementSelectionHostInput(addon, resources, source, packet.queries.all, undefined, UmfCoreError);
   const opaque = output.source.extensions.future.opaque;
-  expect(Object.getPrototypeOf(output)).toBe(Object.prototype);
-  expect(Object.getPrototypeOf(output.source.extensions)).toBe(Object.prototype);
-  expect(Object.getPrototypeOf(opaque)).toBe(Object.prototype);
+  expect(Object.getPrototypeOf(output)).toBe(null);
+  expect(Object.getPrototypeOf(output.source.extensions)).toBe(null);
+  expect(Object.getPrototypeOf(opaque)).toBe(null);
   expect(Object.hasOwn(opaque, '__proto__')).toBe(true);
   expect(opaque.__proto__).toEqual({retained: true});
-  expect(Object.getPrototypeOf(opaque.__proto__)).toBe(Object.prototype);
+  expect(Object.getPrototypeOf(opaque.__proto__)).toBe(null);
   expect(Object.prototype.retained).toBeUndefined();
 });
 
@@ -138,6 +140,71 @@ test('private host Selection stringifies ordered structure diagnostics once befo
     'get', 'get', 'includes:document:true', 'structure:true:false',
     'get', 'includes:element:true', 'structure:true:false',
   ]);
+});
+
+test('private host Selection returns successful ordered host structure warnings matching TypeScript', async () => {
+  const warningResources = structuredClone(resources);
+  warningResources.domainPolicy.extensions.structure.severity = 'warning';
+  const warningEvents = [];
+  const structure = () => false;
+  const errors = [
+    {get instancePath() { warningEvents.push('instancePath'); return '/first'; }, get message() { warningEvents.push('message'); return 'first warning'; }},
+    {get instancePath() { warningEvents.push('instancePath'); return '/second'; }, get message() { warningEvents.push('message'); return 'second warning'; }},
+  ];
+  Object.defineProperty(structure, 'errors', {get() { warningEvents.push('errors'); return errors; }});
+  const registration = {
+    manifest: {scopes: {includes() { return true; }}, capabilities: {validation: 'none'}},
+    structure,
+  };
+  const originalStringify = JSON.stringify;
+  let diagnosticStringifies = 0;
+  JSON.stringify = function(value, ...args) {
+    if (Array.isArray(value) && value[0]?.code === 'EXTENSION_STRUCTURE') diagnosticStringifies++;
+    return Reflect.apply(originalStringify, this, [value, ...args]);
+  };
+  let output;
+  try {
+    output = coreElementSelectionHostInput(addon, warningResources, packet.source, packet.queries.all,
+      {get() { return registration; }}, UmfCoreError);
+  } finally {
+    JSON.stringify = originalStringify;
+  }
+  expect(Object.getPrototypeOf(output)).toBe(null);
+  expect(Object.getPrototypeOf(output.sourceValidation)).toBe(null);
+  expect(diagnosticStringifies).toBe(0);
+  const direct = await directTypescriptWarningSelection();
+  expect(direct.sourceValidation).toEqual({
+    valid: true,
+    complete: false,
+    diagnostics: [
+      {code: 'EXTENSION_STRUCTURE', path: '/extensions/future/first', message: 'first warning', severity: 'warning'},
+      {code: 'EXTENSION_STRUCTURE', path: '/extensions/future/second', message: 'second warning', severity: 'warning'},
+      {code: 'EXTENSION_STRUCTURE', path: '/modules/0/elements/0/extensions/future/first', message: 'first warning', severity: 'warning'},
+      {code: 'EXTENSION_STRUCTURE', path: '/modules/0/elements/0/extensions/future/second', message: 'second warning', severity: 'warning'},
+      {code: 'UNKNOWN_CORE_FIELD', path: '/modules/0/elements/0/references/0/future', message: 'Field retained without interpretation', severity: 'warning'},
+      {code: 'UNKNOWN_SCALAR_TYPE', path: '/modules/1/elements/0/scalarType', message: 'Scalar family retained without interpretation', severity: 'warning'},
+    ],
+  });
+  expect(JSON.stringify(output.sourceValidation)).toBe(JSON.stringify(direct.sourceValidation));
+  expect(direct.rootPrototype).toBe('null');
+  expect(direct.validationPrototype).toBe('null');
+  expect(warningEvents).toEqual(direct.events);
+  expect(direct.diagnosticStringifies).toBe(0);
+  expect(direct.registryThrownIdentity).toBe(true);
+});
+
+test('private host Selection meters successful host warning string materialization', () => {
+  const warningResources = structuredClone(resources);
+  warningResources.domainPolicy.extensions.structure.severity = 'warning';
+  const structure = () => false;
+  structure.errors = [{instancePath: '/large', message: 'x'.repeat(4_000_001)}];
+  const registration = {
+    manifest: {scopes: {includes() { return true; }}, capabilities: {validation: 'none'}},
+    structure,
+  };
+  expect(() => coreElementSelectionHostInput(addon, warningResources, packet.source, packet.queries.all,
+    {get() { return registration; }}, UmfCoreError))
+    .toThrow(expect.objectContaining({code: 'LIMIT'}));
 });
 
 test('private host Selection preserves structure getter throws by identity', () => {

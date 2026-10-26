@@ -41,10 +41,11 @@ frozen `all` JSON value and preserved a `Registry.get` thrown object's identity:
 UMF_SELECTION_ADDON=/path/to/fresh/umf_core_node.node node scripts/rust-migration/r8/selection-private-host-node.mjs
 ```
 
-The original Node probe captured that the decoded result then had a null
-prototype, while the TypeScript predecessor had an ordinary object prototype.
-The Selection-only projection added in the Chromium follow-up below supersedes
-that shape observation for the current source. The WASM target compiled with
+The original Node probe captured a null-prototype decoded result. A later
+ordinary-object projection was assumed to match TypeScript, but a direct
+`selectCoreElements` probe disproved that assumption: `copyJson` returns
+null-prototype objects. The current Selection-only projection now preserves
+that shape. The WASM target compiled with
 `cargo check --target wasm32-unknown-unknown -p umf-core-wasm`, but a real
 Chromium execution had not yet run at that earlier checkpoint because the
 checked-in WASM glue predated the new export.
@@ -101,14 +102,12 @@ fresh wasm32 artifact and glue to hashes for the Rust selection kernel, private
 WASM host bridge, host protocol, frozen inputs, schemas, generated resources,
 and harness sources.
 
-All seven decoded result roots and nested objects had ordinary prototypes, and
-arrays retained `Array.prototype`. A separate source case preserved an own
-`__proto__` data key without changing that object's prototype or polluting
-`Object.prototype`. The evidence remains limited to the private route, seven
-frozen query cases, one own-`__proto__` case, and one thrown-identity case;
-semantic callbacks, successful host-warning diagnostics, full event parity,
-resource accounting, installed package qualification, and public/default
-selection remain open.
+All seven decoded result roots and nested objects had null prototypes, and
+arrays retained `Array.prototype`, matching direct TypeScript `copyJson`.
+A separate source case preserved an own `__proto__` data key without changing
+the null prototype or polluting `Object.prototype`. At that checkpoint, the
+evidence remained limited to seven frozen query cases, one own-`__proto__` case,
+and one thrown-identity case; later successful warning evidence follows below.
 
 Reproduce from the repository root with:
 
@@ -144,3 +143,30 @@ Chromium now confirms the frozen results, nested object prototypes, own
 containing host-owned warning diagnostics, semantic callbacks, full event parity,
 and installed package qualification remain open. The route is private and does
 not retire a default export.
+
+## Successful structure-warning diagnostics — 2026-10-26
+
+The private success branch now materializes the captured ordered diagnostic
+packet into `sourceValidation`, resolving retained host string tokens only at
+that return boundary. It preserves static and structure warnings in one
+diagnostic list and does not call aggregate `JSON.stringify` on the successful
+path. A synthetic invocation policy sets `domainPolicy.extensions.structure`
+severity to `warning` so the branch can be exercised without changing the
+checked-in policy. Node/Bun verifies the exact six-entry order against a direct
+TypeScript predecessor run in a fresh Bun subprocess, null result prototypes,
+zero diagnostic-array stringifications and all earlier refusal controls. A
+4,000,001 UTF-16-unit warning message trips the Text-unit limit.
+[`chromium.json`](chromium.json) records the same six entries matching the
+cross-host direct-source baseline, with null prototype, in Chromium
+153.0.8010.12 against a fresh wasm32 artifact;
+the seven frozen query values, own `__proto__` preservation, and Registry throw
+identity still pass.
+
+The synthetic warning-policy receipt does not claim that the checked-in policy
+emits structure warnings; its structure severity is `error`. Direct source
+execution occurs in a fresh Bun child process because the policy object is
+deliberately frozen in normal operation. Chromium compares against that
+cross-host direct-source baseline; direct TypeScript itself does not run in the
+browser. Semantic callback diagnostics, resource-boundary parity beyond this
+string path, installed-package qualification, and public/default route
+selection remain open.

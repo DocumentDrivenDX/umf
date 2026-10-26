@@ -204,6 +204,14 @@ impl RegistrationProvider for HostProvider<'_> {
 }
 
 impl HostProvider<'_> {
+    fn source_validation_value(
+        &self,
+        packet: &crate::selection_diagnostics::SelectionDiagnosticMaterialization,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        packet.into_host_source_value(&mut **self.host.borrow_mut(), ctx)
+    }
+
     fn refusal_message(
         &self,
         packet: &crate::selection_diagnostics::SelectionDiagnosticMaterialization,
@@ -291,7 +299,9 @@ pub fn execute(
     let mut capabilities = NoCapabilities;
     let mut refusal = |packet: &crate::selection_diagnostics::SelectionDiagnosticMaterialization,
                        ctx: &mut Context<'_>| provider.refusal_message(packet, ctx);
-    crate::selection::select_core_elements_admitted_with_host_refusal(
+    let mut source_validation = |packet: &crate::selection_diagnostics::SelectionDiagnosticMaterialization,
+                       ctx: &mut Context<'_>| provider.source_validation_value(packet, ctx);
+    crate::selection::select_core_elements_admitted_with_host_materializers(
         source,
         query,
         engine,
@@ -299,6 +309,7 @@ pub fn execute(
         &mut capabilities,
         ctx,
         &mut refusal,
+        &mut source_validation,
     )
 }
 

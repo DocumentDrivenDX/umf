@@ -7,6 +7,7 @@ type Payload = {
   source: unknown;
   queries: Record<string, unknown>;
   frozen: Record<string, unknown>;
+  directWarningSourceValidation: unknown;
 };
 
 export function runSelectionBrowserCases(payload: Payload) {
@@ -19,7 +20,7 @@ export function runSelectionBrowserCases(payload: Payload) {
     const expected = JSON.stringify(payload.frozen[name]);
     outcomes[name] = {
       equal: actual === expected,
-      prototype: Object.getPrototypeOf(result) === Object.prototype ? 'ordinary' : 'other',
+      prototype: Object.getPrototypeOf(result) === null ? 'null' : 'other',
       resultJson: actual,
     };
   }
@@ -29,7 +30,7 @@ export function runSelectionBrowserCases(payload: Payload) {
     const prototype = Object.getPrototypeOf(value);
     found.push({path, prototype: isArray
       ? (prototype === Array.prototype ? 'array' : 'other')
-      : (prototype === Object.prototype ? 'ordinary' : 'other')});
+      : (prototype === null ? 'null' : 'other')});
     for (const key of Reflect.ownKeys(value)) {
       if (typeof key !== 'string') continue;
       const descriptor = Object.getOwnPropertyDescriptor(value, key);
@@ -47,13 +48,23 @@ export function runSelectionBrowserCases(payload: Payload) {
     protoSource, payload.queries.all, undefined, Error);
   const opaque = protoResult.source.extensions.future.opaque;
   const ownProto = Object.getOwnPropertyDescriptor(opaque, '__proto__')?.value as {retained?: unknown} | undefined;
-  const protoKeyPreserved = Object.getPrototypeOf(protoResult) === Object.prototype
-    && Object.getPrototypeOf(protoResult.source) === Object.prototype
-    && Object.getPrototypeOf(opaque) === Object.prototype
+  const protoKeyPreserved = Object.getPrototypeOf(protoResult) === null
+    && Object.getPrototypeOf(protoResult.source) === null
+    && Object.getPrototypeOf(opaque) === null
     && Object.hasOwn(opaque, '__proto__')
     && ownProto?.retained === true
-    && Object.getPrototypeOf(ownProto) === Object.prototype
+    && Object.getPrototypeOf(ownProto) === null
     && Object.getOwnPropertyDescriptor(Object.prototype, 'retained') === undefined;
+  const warningResources = structuredClone(payload.resources) as any;
+  warningResources.domainPolicy.extensions.structure.severity = 'warning';
+  const structure = () => false;
+  (structure as any).errors = [
+    {instancePath: '/first', message: 'first warning'},
+    {instancePath: '/second', message: 'second warning'},
+  ];
+  const warningResult = coreElementSelectionHostInput(addon, warningResources,
+    payload.source, payload.queries.all,
+    {get() { return {manifest: {scopes: {includes() { return true; }}, capabilities: {validation: 'none'}}, structure}; }}, Error);
   const sentinel = {selectionRegistryThrown: true};
   let calls = 0;
   let thrownIdentity = false;
@@ -64,5 +75,9 @@ export function runSelectionBrowserCases(payload: Payload) {
   } catch (error) {
     thrownIdentity = error === sentinel;
   }
-  return {outcomes, allPrototypes, protoKeyPreserved, registryThrow: {calls, thrownIdentity}};
+  return {outcomes, allPrototypes, protoKeyPreserved,
+    successfulWarnings: {sourceValidation: warningResult.sourceValidation,
+      crossHostDirectSourceBaselineEqual: JSON.stringify(warningResult.sourceValidation) === JSON.stringify(payload.directWarningSourceValidation),
+      nullPrototype: Object.getPrototypeOf(warningResult.sourceValidation) === null},
+    registryThrow: {calls, thrownIdentity}};
 }
