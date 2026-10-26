@@ -174,6 +174,97 @@ Node/WASM helper source is mapped by
 current); helper SHA-256 is
 `27b4404a59d038c5b717de52b4213e3bd88c598ea052d852647a6c28a7fc5141`.
 
+## R8 raw-host default-route gate — blocked
+
+The public TypeScript export remains selected through `src/model/serialization.ts`
+and the V4 roots re-export `src/index.ts`; neither V4 entry currently overrides
+`assertExactJsonNumber`. A source-pinned raw-host packet now captures ten values
+outside the declared `string` type, including primitive values, `Symbol`, two
+object coercion sequences, and a thrown sentinel. Its direct TypeScript test
+passes 3 tests / 8 assertions. The packet is
+[`raw-host-predecessor.json`](raw-host-predecessor.json); it hashes both V4
+roots, the exporting module, implementation and `UmfError` source, candidate
+Rust operation/wire, and case generator.
+
+Fresh Node 26.12.1 and Bun 1.4.3 candidate comparisons each mismatch all 10
+cases. The TypeScript predecessor accepts numeric `1` and a coercible object,
+uses `Number` before its later string coercion (observable `number`, then
+`string` hints), and rethrows the identical exception from a throwing
+`Symbol.toPrimitive`. The opt-in Rust facade rejects each non-string immediately
+with `TypeError: token must be a string`, before invoking those hooks. A freshly
+compiled optimized Node addon was used; its SHA-256 is
+`966af8c4e466ebec512b9c0d61099f433765a913abcd273d18225222437261d1`. The copied
+Node facade, `json-number.js`, and `wire.js` hashes match the live source pins
+in the receipt.
+
+The same ten-case result was reproduced in real Chromium 153.0.8010.12 against
+a freshly built optimized current-source WASM artifact: 10/10 mismatches, no
+page errors, and no Node globals. WASM SHA-256 is
+`619ed4ebdeb6ba01376f25ed75e2a3b6373444416464657b520ee54c4f39514f`;
+wasm-bindgen glue SHA-256 is
+`4fb317cf04f5a038fe88160fab5b4c225d15703f5384e93a8745fe94010b7b51`, and the
+current bundled WASM facade SHA-256 is
+`217db666db7db2fec9a236f51d73bc4bbd2ee59d47c12420bec3bb19e5666560`.
+The exact host receipts are
+[`raw-host-node.json`](raw-host-node.json),
+[`raw-host-bun.json`](raw-host-bun.json), and
+[`raw-host-chromium.json`](raw-host-chromium.json); each records the case-level
+expected/actual values and source/artifact hashes.
+
+There is a separate resource mismatch even for a string. The TypeScript
+predecessor accepts a 4,000,001-character string of zeroes, while Rust refuses
+it with `LIMIT: Text-unit limit exceeded` at the current 4,000,000-unit core
+limit. Node and Bun receipts record this exact result. Chromium's raw-value
+matrix intentionally omits the multi-megabyte performance probe; no browser
+resource-parity claim is made for that input.
+
+These two concrete blockers keep the default route unchanged. Preserving the
+declared TypeScript `string` interface alone is insufficient: JavaScript callers
+can observe the existing conversion order and exception identity. Matching the
+unbounded predecessor behavior for large text also requires an explicit policy
+decision about operation budgeting before selection. This work changes no V4
+root, leaves the Rust operation opt-in, and does not reduce any R8 logical
+retirement gap or qualify a release.
+
+Reproduce the source packet and focused test with:
+
+```sh
+bun scripts/rust-migration/r8/json-number-raw-host-predecessor.ts --check
+bun test tests/rust-migration/json-number-raw-host.test.ts
+```
+
+The tested browser reference and WASM facade were built with:
+
+```sh
+bun build ./src/model/internal/json-number.ts --target=browser --format=esm --outfile=/private/tmp/umf-r8-json-number-raw/reference.mjs
+bun build ./bindings/core/wasm/index.js --target=browser --format=esm --outfile=/private/tmp/umf-r8-json-number-raw/facade.mjs
+```
+
+The fresh Node addon was built with Rust 1.90.0 and staged with the current
+Node facade and helper sources under
+`/private/tmp/umf-r8-json-number-node/package`; that same staged directory is
+the default for the Node and Bun runners. Reproduce them with:
+
+```sh
+node scripts/rust-migration/r8/json-number-raw-host-node.mjs
+bun scripts/rust-migration/r8/json-number-raw-host-node.mjs
+```
+
+The current WASM build was generated under
+`/private/tmp/umf-r8-json-number-raw-wasm/package`. Reproduce Chromium with:
+
+```sh
+UMF_JSON_NUMBER_WASM_PACKAGE=/private/tmp/umf-r8-json-number-raw-wasm/package \
+UMF_JSON_NUMBER_REFERENCE=/private/tmp/umf-r8-json-number-raw/reference.mjs \
+UMF_JSON_NUMBER_WASM_FACADE=/private/tmp/umf-r8-json-number-raw/facade.mjs \
+UMF_CHROMIUM_PATH='/Users/erik/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing' \
+node scripts/rust-migration/r8/json-number-raw-host-browser.mjs
+```
+
+The Chromium runner needs loopback access for its local page. The source and
+artifact hashes in each receipt identify the tested artifacts; these are
+private diagnostics and do not qualify a published or default package.
+
 Operation and test source SHA-256 values at this evidence cut:
 
 | Source | SHA-256 |

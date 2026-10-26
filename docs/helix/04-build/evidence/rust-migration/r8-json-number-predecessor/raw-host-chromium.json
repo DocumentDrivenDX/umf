@@ -1,0 +1,272 @@
+{
+  "format": "umf.r8.json-number-raw-host-comparison/1",
+  "runtime": {
+    "name": "Chromium",
+    "version": "153.0.8010.12"
+  },
+  "status": "known-default-cutover-blocker",
+  "sourceHashes": {
+    "src/index-node-v4.ts": "59f2b8b474683c28b356e462faa3c265f6fcc694bd324a21edf054c51ec6571d",
+    "src/index-browser-v4.ts": "dd054c8f1322214d22c6f7ea63e850cc0a702701585c837fa8a04515795cf5a7",
+    "src/index.ts": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da",
+    "src/model/internal/json-number.ts": "30b51ae2f1aaecb87611ccdae6c1f3eaae04c02764b224407f6acb07ea9c5a06",
+    "src/model/errors.ts": "65bc53689f6aa0546be249ff4bd42616b446966cfc5f9d525faf9a428031dbd6",
+    "src/model/serialization.ts": "027360ffd8bf77905f7d14a3d4d933035fe11d9f52ae28d54691cc607cb43586",
+    "Cargo.lock": "c55364fa3058e7a90bb2833dda6288621b863bed13a629c9bbf2f706401d602c",
+    "bindings/core/node/src/lib.rs": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437",
+    "bindings/core/wasm/src/lib.rs": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c",
+    "bindings/core/wasm/src/json-number.js": "27b4404a59d038c5b717de52b4213e3bd88c598ea052d852647a6c28a7fc5141",
+    "crates/umf-core/src/json_number.rs": "2ab551fe8d16394b965f0ec6a0d08d51667c6b4f5fa8a7c2d39c9dc5ab858dd3",
+    "crates/umf-core-wire/src/lib.rs": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63",
+    "crates/umf-core-wire/src/json_number_binding.rs": "2e06f7c1d43bb79be11029e868da43798b69d9a856e34199e4deacc9ab75412f",
+    "scripts/rust-migration/r8/json-number-raw-host-cases.mjs": "706cad97343696aaa9547150e56b22a0fffa32788fb7e55047e8f0750130c50f",
+    "scripts/rust-migration/r8/json-number-raw-host-cases.d.mts": "2993cf7c2a7244ccf35788b1690514cc152f94b5fe01b502b8f7442e8dab0dd6",
+    "scripts/rust-migration/r8/json-number-raw-host-predecessor.ts": "504aa1e569cc687aeb12074138cbee817084afe5332a873b93e2cd407361adc6",
+    "scripts/rust-migration/r8/json-number-raw-host-node.mjs": "bf62754ff1d885f4a238046f9c10e3d81702851c68d97f75bfc6f93540a4e46d",
+    "scripts/rust-migration/r8/json-number-raw-host-browser.mjs": "e2a3ba8a97be991a57fe746a0c8741d3183e184fe16f6d5ad5fa840089e02773",
+    "tests/rust-migration/json-number-raw-host.test.ts": "2558110d91fb683caf4925fdd48e421f495343b4d01e5e269bbe99d69967efad"
+  },
+  "artifacts": {
+    "referenceSha256": "8cb017e9c14bac22ca07581a7b46d7b5b0c9fe4f5fa853ef4363bf10e0ba1a98",
+    "wasmGlueSha256": "4fb317cf04f5a038fe88160fab5b4c225d15703f5384e93a8745fe94010b7b51",
+    "wasmSha256": "619ed4ebdeb6ba01376f25ed75e2a3b6373444416464657b520ee54c4f39514f",
+    "facadeSha256": "217db666db7db2fec9a236f51d73bc4bbd2ee59d47c12420bec3bb19e5666560"
+  },
+  "caseCount": 10,
+  "exactMatchCount": 0,
+  "mismatchCount": 10,
+  "mismatches": [
+    {
+      "id": "undefined",
+      "expected": {
+        "id": "undefined",
+        "error": {
+          "name": "UmfError",
+          "code": "NUMBER",
+          "message": "Noninteroperable JSON number",
+          "sameSentinel": false
+        },
+        "events": []
+      },
+      "actual": {
+        "id": "undefined",
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "message": "token must be a string",
+          "sameSentinel": false
+        },
+        "events": []
+      }
+    },
+    {
+      "id": "null",
+      "expected": {
+        "id": "null",
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "message": "Cannot read properties of null (reading 'split')",
+          "sameSentinel": false
+        },
+        "events": []
+      },
+      "actual": {
+        "id": "null",
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "message": "token must be a string",
+          "sameSentinel": false
+        },
+        "events": []
+      }
+    },
+    {
+      "id": "boolean-true",
+      "expected": {
+        "id": "boolean-true",
+        "error": {
+          "name": "UmfError",
+          "code": "NUMBER",
+          "message": "Unsupported numeric spelling",
+          "sameSentinel": false
+        },
+        "events": []
+      },
+      "actual": {
+        "id": "boolean-true",
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "message": "token must be a string",
+          "sameSentinel": false
+        },
+        "events": []
+      }
+    },
+    {
+      "id": "number-one",
+      "expected": {
+        "id": "number-one",
+        "outcome": "undefined",
+        "events": []
+      },
+      "actual": {
+        "id": "number-one",
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "message": "token must be a string",
+          "sameSentinel": false
+        },
+        "events": []
+      }
+    },
+    {
+      "id": "number-zero",
+      "expected": {
+        "id": "number-zero",
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "message": "token.split is not a function",
+          "sameSentinel": false
+        },
+        "events": []
+      },
+      "actual": {
+        "id": "number-zero",
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "message": "token must be a string",
+          "sameSentinel": false
+        },
+        "events": []
+      }
+    },
+    {
+      "id": "symbol",
+      "expected": {
+        "id": "symbol",
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "message": "Cannot convert a Symbol value to a number",
+          "sameSentinel": false
+        },
+        "events": []
+      },
+      "actual": {
+        "id": "symbol",
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "message": "token must be a string",
+          "sameSentinel": false
+        },
+        "events": []
+      }
+    },
+    {
+      "id": "symbol-to-primitive-number-then-string",
+      "expected": {
+        "id": "symbol-to-primitive-number-then-string",
+        "outcome": "undefined",
+        "events": [
+          "number",
+          "string"
+        ]
+      },
+      "actual": {
+        "id": "symbol-to-primitive-number-then-string",
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "message": "token must be a string",
+          "sameSentinel": false
+        },
+        "events": []
+      }
+    },
+    {
+      "id": "valueof-then-string-coercion",
+      "expected": {
+        "id": "valueof-then-string-coercion",
+        "outcome": "undefined",
+        "events": [
+          "valueOf",
+          "toString",
+          "toString"
+        ]
+      },
+      "actual": {
+        "id": "valueof-then-string-coercion",
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "message": "token must be a string",
+          "sameSentinel": false
+        },
+        "events": []
+      }
+    },
+    {
+      "id": "throwing-number-coercion",
+      "expected": {
+        "id": "throwing-number-coercion",
+        "error": {
+          "name": "Error",
+          "code": null,
+          "message": "host coercion sentinel",
+          "sameSentinel": true
+        },
+        "events": [
+          "number"
+        ]
+      },
+      "actual": {
+        "id": "throwing-number-coercion",
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "message": "token must be a string",
+          "sameSentinel": false
+        },
+        "events": []
+      }
+    },
+    {
+      "id": "nonprimitive-to-primitive-result",
+      "expected": {
+        "id": "nonprimitive-to-primitive-result",
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "message": "Cannot convert object to primitive value",
+          "sameSentinel": false
+        },
+        "events": [
+          "number"
+        ]
+      },
+      "actual": {
+        "id": "nonprimitive-to-primitive-result",
+        "error": {
+          "name": "TypeError",
+          "code": null,
+          "message": "token must be a string",
+          "sameSentinel": false
+        },
+        "events": []
+      }
+    }
+  ],
+  "pageErrors": [],
+  "nodeGlobals": {
+    "process": "undefined",
+    "Buffer": "undefined",
+    "require": "undefined"
+  }
+}

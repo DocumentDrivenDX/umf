@@ -1,0 +1,117 @@
+{
+  "format": "umf.r8.json-number-raw-host-predecessor/1",
+  "runtime": {
+    "name": "Bun",
+    "version": "1.4.3"
+  },
+  "sourceHashes": {
+    "src/model/internal/json-number.ts": "30b51ae2f1aaecb87611ccdae6c1f3eaae04c02764b224407f6acb07ea9c5a06",
+    "src/model/errors.ts": "65bc53689f6aa0546be249ff4bd42616b446966cfc5f9d525faf9a428031dbd6",
+    "src/model/serialization.ts": "027360ffd8bf77905f7d14a3d4d933035fe11d9f52ae28d54691cc607cb43586",
+    "scripts/rust-migration/r8/json-number-raw-host-cases.mjs": "706cad97343696aaa9547150e56b22a0fffa32788fb7e55047e8f0750130c50f",
+    "scripts/rust-migration/r8/json-number-raw-host-cases.d.mts": "2993cf7c2a7244ccf35788b1690514cc152f94b5fe01b502b8f7442e8dab0dd6",
+    "scripts/rust-migration/r8/json-number-raw-host-predecessor.ts": "504aa1e569cc687aeb12074138cbee817084afe5332a873b93e2cd407361adc6",
+    "bindings/core/node/src/json-number.js": "27b4404a59d038c5b717de52b4213e3bd88c598ea052d852647a6c28a7fc5141",
+    "bindings/core/wasm/src/json-number.js": "27b4404a59d038c5b717de52b4213e3bd88c598ea052d852647a6c28a7fc5141",
+    "crates/umf-core/src/json_number.rs": "2ab551fe8d16394b965f0ec6a0d08d51667c6b4f5fa8a7c2d39c9dc5ab858dd3",
+    "crates/umf-core-wire/src/json_number_binding.rs": "2e06f7c1d43bb79be11029e868da43798b69d9a856e34199e4deacc9ab75412f"
+  },
+  "cases": [
+    {
+      "id": "undefined",
+      "error": {
+        "name": "UmfError",
+        "code": "NUMBER",
+        "message": "Noninteroperable JSON number",
+        "sameSentinel": false
+      },
+      "events": []
+    },
+    {
+      "id": "null",
+      "error": {
+        "name": "TypeError",
+        "code": null,
+        "message": "null is not an object (evaluating 'token.split')",
+        "sameSentinel": false
+      },
+      "events": []
+    },
+    {
+      "id": "boolean-true",
+      "error": {
+        "name": "UmfError",
+        "code": "NUMBER",
+        "message": "Unsupported numeric spelling",
+        "sameSentinel": false
+      },
+      "events": []
+    },
+    {
+      "id": "number-one",
+      "outcome": "undefined",
+      "events": []
+    },
+    {
+      "id": "number-zero",
+      "error": {
+        "name": "TypeError",
+        "code": null,
+        "message": "token.split is not a function. (In 'token.split(/[eE]/)', 'token.split' is undefined)",
+        "sameSentinel": false
+      },
+      "events": []
+    },
+    {
+      "id": "symbol",
+      "error": {
+        "name": "TypeError",
+        "code": null,
+        "message": "Cannot convert a symbol to a number",
+        "sameSentinel": false
+      },
+      "events": []
+    },
+    {
+      "id": "symbol-to-primitive-number-then-string",
+      "outcome": "undefined",
+      "events": [
+        "number",
+        "string"
+      ]
+    },
+    {
+      "id": "valueof-then-string-coercion",
+      "outcome": "undefined",
+      "events": [
+        "valueOf",
+        "toString",
+        "toString"
+      ]
+    },
+    {
+      "id": "throwing-number-coercion",
+      "error": {
+        "name": "Error",
+        "code": null,
+        "message": "host coercion sentinel",
+        "sameSentinel": true
+      },
+      "events": [
+        "number"
+      ]
+    },
+    {
+      "id": "nonprimitive-to-primitive-result",
+      "error": {
+        "name": "TypeError",
+        "code": null,
+        "message": "Symbol.toPrimitive returned an object",
+        "sameSentinel": false
+      },
+      "events": [
+        "number"
+      ]
+    }
+  ]
+}
