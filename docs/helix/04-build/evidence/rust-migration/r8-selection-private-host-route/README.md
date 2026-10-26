@@ -84,3 +84,8 @@ private-route probe passes its two frozen-value and thrown-identity cases.
 Chromium did not run this Selection route; the existing Chromium receipts remain
 host-primitive evidence only. This checkpoint does not establish complete
 Selection parity, default-route selection, or release qualification.
+
+The [mixed-diagnostic interface decision](mixed-diagnostic-interface-decision-20261026.md)
+records why nonempty structure errors cannot yet pass through Engine's static
+`Validation` result, and the exact ordered host carrier and qualification gate
+required before that private route can advance.

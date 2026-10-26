@@ -5585,3 +5585,29 @@ where the TypeScript reference returns ordinary objects, so full JS shape
 parity remains open. The WASM target compiles, but this new Selection export
 has no real Chromium runtime receipt yet.
 No public/default route or retirement claim follows from this checkpoint.
+
+The [mixed-diagnostic interface decision](evidence/rust-migration/r8-selection-private-host-route/mixed-diagnostic-interface-decision-20261026.md)
+sets the next Selection gate. Nonempty caller-owned `structure.errors` are
+observed, but the current constraint and Engine interfaces reduce every
+emitted diagnostic to a static Rust `Diagnostic` before Selection can perform
+its ordered severity pass and single aggregate serialization. An exact private
+route needs an invocation-local mixed carrier at the constraint emission site,
+with a proven order-preserving transport through Engine. Its transport shape
+is still unresolved; no sentinel, eager message copy, or partial stringify
+change is accepted. After that interface is designed, qualify structure errors
+in Node, Bun, and real Chromium before adding semantic callback behavior.
+
+The strict unified-client checker continues to scan every `src/access` source
+with exact per-file import allowances. Two added negative controls prove that
+one audited Rust facade cannot borrow another's allowance and that newly
+introduced host hooks remain rejected; the checker and seven boundary tests
+pass. This policy guard does not select a Rust route or reduce retirement gaps.
+
+The next operation-resource authority decision is to author Key v2 and Record
+Type v6 as closed metamodel outputs under a narrow CONTRACT-080 vocabulary
+1.3.0 amendment. Their current schema bytes must remain exact. The compiler
+needs resource-specific fixed ordering for Key, an omitted empty `$defs` for
+Record Type, and explicit authorization for the Record Type link to the Kind
+v6 resource. Only after the metamodel fixed point and pinned hashes pass can
+the ledger move their four aliases from unresolved to generated-known. This
+resource decision does not alter executable route or release status.
