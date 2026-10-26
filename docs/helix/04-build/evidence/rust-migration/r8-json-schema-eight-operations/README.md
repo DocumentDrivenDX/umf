@@ -222,3 +222,44 @@ before decoding the document; malformed-document plus non-string-pointer
 precedence therefore remains unresolved. This correction does not qualify a
 default route, general exotic-object parity, schema-profile expansion, or Draft
 2020-12 parity.
+
+## Direct TypeScript import host-observation subset
+
+[`import-host-observation.ts`](../../../../../../scripts/rust-migration/r8/import-host-observation.ts)
+calls the current `importJsonSchema` source directly and captures nine bounded
+stage 1–6 cases: successful getter ordering through document construction,
+invalid URI precedence, original getter-exception identity, resources getter
+and `ownKeys` failures, resource parse precedence, and the source's observed
+`toString` call before YAML reports a non-string root. The observed Bun 1.4.3
+receipt is [here](import-host-observation.json). The same source was bundled
+with Bun and run under Node 26.12.1; its receipt is
+[here](import-host-observation-node.json). Both pin the same
+`src/adapters/json-schema/index.ts` SHA-256 and record outcomes/events rather
+than predicted traces. Real Chromium 153.0.8010.12 ran the same seven calls
+from a browser-targeted bundle served over loopback; its separate receipt is
+[here](import-host-observation-chromium.json). All three cohorts have identical
+case traces and outcomes, including the root `toString` event immediately
+before `TypeError("source is not a string")`. The final two cases show that
+three absolute `baseUri` reads remain distinct (payload URI is read #2 while
+module namespace is read #3) and that root parse failure after read #2 prevents
+both `id` and read #3. Chromium also recorded zero page errors, zero external
+requests and exactly one successful (200) served-bundle request. Every runner
+asserts its negative controls before writing its receipt.
+
+Run the Bun cohort from the repository root with:
+
+```sh
+bun scripts/rust-migration/r8/import-host-observation.ts
+```
+
+For Node, bundle that entrypoint with the repository's Bun 1.4.3 toolchain
+(`bun build scripts/rust-migration/r8/import-host-observation.ts --target=node
+--outfile=/tmp/r8-import-host-observation.mjs`), then run the generated module
+with Node and pass an output path. Run the browser cohort from the repository
+root with `bun scripts/rust-migration/r8/import-host-observation-chromium.ts`.
+This is a partial oracle only: it does not
+cover all refusal boundaries, descriptor/get traps, symbols/non-enumerable
+properties, three distinct changing URI values, parser coercion hooks, or the
+required staged-binding dispatch counts. The source hash covers only the
+`index.ts` entry module, not transitive imports. It adds no Rust binding
+evidence and does not support route changes; the default remains TypeScript.
