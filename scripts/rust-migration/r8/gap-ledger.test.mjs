@@ -66,7 +66,17 @@ test('securityNot normalizes only the exact V4 binding and TypeScript reference 
   const installed = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-security-not-direct-binding/installed-route.json', 'utf8'));
   assert.equal(installed.format, 'umf-r8-security-not-v4-installed-route/1');
   assert.equal(installed.status, 'pass');
-  assert.equal(installed.buildQualification.sourceTransformStatus, 'derived-private-snapshot-not-release-fixed-point');
+  assert.equal(installed.archive.sha256, '8b1d5ad2e57fa33487752b0116211b7628df201359cbd2a13a75912e0e08e60e');
+  assert.equal(installed.buildQualification.sourceTransformStatus, 'fixed-point');
+  assert.equal(installed.buildQualification.sourceCommit, 'dc746ad53');
+  assert.equal(installed.buildQualification.generatedInputCount, 0);
+  assert.equal(installed.buildQualification.capturedLiveSourceTreeSha256, '189772e74079af4d00fbd973380a4318330d5fe91a8652691feb3321ea5e6d8e');
+  assert.equal(installed.buildQualification.derivedSourceTreeSha256, installed.buildQualification.capturedLiveSourceTreeSha256);
+  assert.equal(installed.node.cases, 14);
+  assert.equal(installed.bun.cases, 14);
+  assert.equal(installed.chromium.cases, 14);
+  assert.equal(installed.chromium.nodeGlobalsAbsent, true);
+  assert.equal(installed.chromium.wasmRequested, true);
   assert.match(installed.qualification, /No publication or full security migration qualification/);
   const symbols = [
     { routeId: 'package-root-node', exportName: 'securityNot', declarationName: 'securityNot', declarationKind: 'VariableDeclaration', initializerShape: 'call-expression', source: 'src/index-node-v4.ts', line: 28, sourceSha256: 'a'.repeat(64) },
@@ -79,14 +89,17 @@ test('securityNot normalizes only the exact V4 binding and TypeScript reference 
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     const row = ledger.rows.find(item => item.routeId === routeId);
     assert.equal(row.acceptedRustOperation, 'umf_core::security_logic::security_not');
-    assert.equal(row.sourceSelectedImplementation.status, 'source-selected-installed-private-provisional');
+    assert.equal(row.sourceSelectedImplementation.status, 'source-selected-installed-private-source-pinned');
     assert.match(row.sourceSelectedImplementation.bindingRoute, /guarded securityNot adapter/);
-    assert.equal(row.bindingRouteStatus, 'installed-private-provisional-not-current');
+    assert.equal(row.bindingRouteStatus, 'installed-private-source-pinned-not-current');
     assert.equal(row.bindingRoute, row.sourceSelectedImplementation.bindingRoute);
-    assert.match(row.sourceSelectedImplementation.qualificationStatus, /provisional installed-route evidence only/);
+    assert.match(row.sourceSelectedImplementation.qualificationStatus, /source commit dc746ad53/);
+    assert.match(row.sourceSelectedImplementation.qualificationStatus, /not qualification of the current worktree or release/);
+    assert.match(row.sourceSelectedImplementation.qualificationStatus, /logical retirement gap remains open/);
     assert.ok(row.sourceSelectedImplementation.qualificationEvidenceClosure.some(item =>
       item.path === 'docs/helix/04-build/evidence/rust-migration/r8-security-not-direct-binding/installed-route.json'));
-    assert.match(row.implementationStatus, /provisional private installed Node\/Bun\/Chromium evidence is source-drifted/);
+    assert.match(row.implementationStatus, /pinned to fixed-point source commit dc746ad53/);
+    assert.match(row.implementationStatus, /current-source qualification/);
     assert.match(row.disposition, /retirement gap remains open/);
   }
   const reference = ledger.rows.find(item => item.routeId === 'package-reference');

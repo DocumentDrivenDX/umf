@@ -402,7 +402,7 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
       ...evidencePaths,
     ];
     return {
-      status: 'source-selected-installed-private-provisional',
+      status: 'source-selected-installed-private-source-pinned',
       rustOwner: 'umf_core::security_logic::security_not',
       wireOperation: 'security-logic/1.0.0:securityNot',
       bindingRoute: browser
@@ -410,7 +410,7 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
         : 'V4 Node root -> guarded securityNot adapter -> Node security-logic binding -> Rust',
       sourceClosure: closure(sourcePaths),
       qualificationEvidenceClosure: closure(evidencePaths),
-      qualificationStatus: 'A private installed SDK archive replay matched all 14 securityNot cases in Node, Bun and Chromium, with the browser WASM asset loaded and Node globals absent. The archive receipt records a derived private snapshot with source drift, not a clean fixed-point build; treat this as provisional installed-route evidence only. The ./reference route remains TypeScript, broader security operations are unchanged, complete parity and release qualification remain open, and the logical retirement gap remains open.',
+      qualificationStatus: 'A private installed SDK archive (SHA-256 8b1d5ad2e57fa33487752b0116211b7628df201359cbd2a13a75912e0e08e60e) replay matched all 14 securityNot cases in Node v26.12.1, Bun 1.4.3 and Chromium 153.0.8010.12, with browser WASM loaded and Node globals absent. The receipt pins this evidence to source commit dc746ad53 and source closure 189772e74079af4d00fbd973380a4318330d5fe91a8652691feb3321ea5e6d8e; the package is a fixed-point build with zero generated-input transforms. This is private historical source-pinned evidence, not qualification of the current worktree or release. The ./reference route remains TypeScript, broader security operations are unchanged, complete parity and release qualification remain open, and the logical retirement gap remains open.',
     };
   }
   if (['declareCoreRecordType', 'verifyCoreRecordTypeDeclaration'].includes(exportName)) {
@@ -1763,7 +1763,7 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
           : ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName) ? 'Rust facets operation selected by source route; installed qualification pending'
           : row.exportName === 'validateCoreDatasetValuesCompact' ? 'Rust compact Dataset validation selected by source route; installed qualification pending'
           : row.exportName === 'verifyCoreKeyOperation' ? 'Staged Rust Core Key verifier selected by source route; private Node/Bun/Chromium archive receipt is source-pinned; current-source qualification pending'
-          : row.exportName === 'securityNot' && selectedBySource ? 'Guarded Rust securityNot adapter selected by V4 source route; provisional private installed Node/Bun/Chromium evidence is source-drifted; fixed-point, broader parity, release qualification and retirement remain open'
+          : row.exportName === 'securityNot' && selectedBySource ? 'Guarded Rust securityNot adapter selected by V4 source route; private installed Node/Bun/Chromium evidence is pinned to fixed-point source commit dc746ad53; current-source qualification, broader parity, release qualification and retirement remain open'
           : ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName) ? 'Rust Core Keys operation selected by source route; aggregate installed qualification pending for current worktree'
           : selectedBit128 ? 'Rust Bit128/UUID operation selected by source route; installed qualification pending'
           : ['inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'].includes(row.exportName) && selectedBySource ? 'Rust core inspector selected by source route; current private installed archive passed 26 frozen cases, while selected host-error envelopes differ; retirement open'
@@ -1781,7 +1781,7 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
           : ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName) ? 'Rust facets operation selected by source route; installed qualification pending'
           : row.exportName === 'validateCoreDatasetValuesCompact' ? 'Rust compact Dataset validation selected by source route; installed qualification pending'
           : row.exportName === 'verifyCoreKeyOperation' ? 'Staged Rust Core Key verifier selected by source route; private Node/Bun/Chromium archive receipt is source-pinned; current-source qualification pending'
-          : row.exportName === 'securityNot' && selectedBySource ? 'Guarded Rust securityNot adapter selected by V4 source route; provisional private installed Node/Bun/Chromium evidence is source-drifted; fixed-point, broader parity, release qualification and retirement remain open'
+          : row.exportName === 'securityNot' && selectedBySource ? 'Guarded Rust securityNot adapter selected by V4 source route; private installed Node/Bun/Chromium evidence is pinned to fixed-point source commit dc746ad53; current-source qualification, broader parity, release qualification and retirement remain open'
           : ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName) ? 'Rust Core Keys operation selected by source route; aggregate installed qualification pending for current worktree'
           : selectedBit128 ? 'Rust Bit128/UUID operation selected by source route; installed qualification pending'
           : ['inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'].includes(row.exportName) && selectedBySource ? 'Rust core inspector selected by source route; current private installed archive passed 26 frozen cases, while selected host-error envelopes differ; retirement open'
@@ -1807,7 +1807,7 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
         : row.exportName === 'generatePythonClient' && ['package-root-node', 'package-root-browser'].includes(row.routeId)
           ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust V4 implementation selected by source route; installed qualification pending; TypeScript retirement gap remains open`
           : row.exportName === 'securityNot' && sourceSelection && ['package-root-node', 'package-root-browser'].includes(row.routeId)
-            ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} guarded Rust securityNot adapter selected by V4 source route; provisional private installed Node/Bun/Chromium evidence is source-drifted and not fixed-point/release qualification; retirement gap remains open`
+            ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} guarded Rust securityNot adapter selected by V4 source route; private installed Node/Bun/Chromium evidence is source-pinned to fixed-point archive commit dc746ad53, not current-source or release qualification; retirement gap remains open`
           : ['declareCoreRecordType', 'verifyCoreRecordTypeDeclaration'].includes(row.exportName) && ['package-root-node', 'package-root-browser'].includes(row.routeId)
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust Core Record Type v6 operation selected by V4 source route; separate same-archive Node/Bun/Chromium private receipt passed; aggregate gate excludes this family and retirement remains open`
           : selectedCardinality
@@ -1853,7 +1853,9 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
       operationOwnership: operation,
       ...(inert ? { resourceOwnership: resourceOwnership(row, aliasNamesBySource.get(row.source).size, scans) } : {}),
       evidence: mapping ? mapping.evidencePaths[0] : null,
-      bindingRoute: ['source-selected-installed-private-current-cohort', 'source-selected-installed-private-provisional'].includes(sourceSelection?.status) ? sourceSelection.bindingRoute : null,
+      bindingRoute: ['source-selected-installed-private-current-cohort', 'source-selected-installed-private-provisional'].includes(sourceSelection?.status)
+        || (row.exportName === 'securityNot' && sourceSelection?.status === 'source-selected-installed-private-source-pinned')
+        ? sourceSelection.bindingRoute : null,
       bindingRouteStatus: sourceSelection?.status === 'source-selected-installed-private-current-cohort' ? 'installed-private-current-cohort' : sourceSelection?.status === 'source-selected-installed-private-source-pinned' ? 'installed-private-source-pinned-not-current' : sourceSelection?.status === 'source-selected-installed-private-provisional' ? 'installed-private-provisional-not-current' : 'unproven',
       disposition,
     };
