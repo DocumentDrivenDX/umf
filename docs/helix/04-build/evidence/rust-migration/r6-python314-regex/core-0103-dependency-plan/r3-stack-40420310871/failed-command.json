@@ -1,0 +1,30 @@
+{
+  "command": {
+    "argv": [
+      "bash",
+      "-euo",
+      "pipefail",
+      "-c",
+      "echo \"R3_DIAGNOSTIC inventory:start\" >&2\npython \"$RUNNER_TEMP/core-python314-r3-inventory-diagnostic.py\"\necho \"R3_DIAGNOSTIC inventory:passed\" >&2\necho \"R3_DIAGNOSTIC boundaries:start\" >&2\nbun run check:rust-boundaries\necho \"R3_DIAGNOSTIC boundaries:passed\" >&2"
+    ],
+    "captureExit": 0,
+    "endedAtUtc": "2026-10-26T23:35:56.936520692Z",
+    "limitSeconds": 180,
+    "logBytes": 707,
+    "logSha256": "60d83f84fa21dfacc375ec3c744f34d62efd4291dd73ff38ffdaf8f18b0c5443",
+    "monotonicDurationMs": 180011,
+    "monotonicEndMs": 309740,
+    "monotonicStartMs": 129729,
+    "name": "regenerate-r3-inventory-and-boundaries",
+    "rawExit": 124,
+    "stage": "regenerate-r3-inventory-and-boundaries",
+    "startedAtUtc": "2026-10-26T23:32:56.928196110Z",
+    "truncated": false
+  },
+  "event": "push",
+  "profile": "umf.core-python314-failed-command/1",
+  "ref": "refs/heads/codex/core-python314-generation",
+  "runAttempt": "1",
+  "runId": "40420310871",
+  "sourceCommit": "78a91ca5b2736d4d77f43cb5cf9a09f139a17ace"
+}

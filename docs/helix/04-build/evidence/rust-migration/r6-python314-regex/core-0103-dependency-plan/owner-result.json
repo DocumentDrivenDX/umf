@@ -1,5 +1,5 @@
 {
-  "status": "DEPENDENT_R3_TIMEOUT_AWAITING_BOUNDED_DIAGNOSIS",
+  "status": "R3_PATH_SET_HOTSPOT_LOCATED_AWAITING_REVIEWED_PURE_HOIST",
   "baseCommit": "d5022e37840329d351bcd6c27fe7d7aad4758544",
   "donorCommit": "f4a410c0522135065a0b20e8d2b69705fddcbac4",
   "extractionCommit": "ad5e59591",
@@ -133,6 +133,20 @@
       "workflowSha256": "bf68f1036a74c234a452ead3a1836863147a978e8fde4c8609a99867cefc757f",
       "closure": "sol-r3-diagnostic-closure002.md",
       "closureSha256": "c8890d615be989c296e3362c7bceb63fd533f8420f98f70215bb42174d8e0cdb"
+    }
+  },
+  "r3StackDiagnostic": {
+    "evidence": "r3-stack-40420310871",
+    "custodySha256": "da3342c1f6fc802ce382a9e3d7791d3a75c6b7f1cf86b8ea4d8450c821af12fd",
+    "outputAdoption": null,
+    "plan": "sol-inventory-pathset-hoist-plan001.md",
+    "planSha256": "2c3499b884b27f2c59c2fef1e54fed9f3221401b45657d3f6d6420340edeb75b",
+    "sourceCorrection": {
+      "status": "SOURCE_ACCEPTED_AWAITING_WHOLE_DEPENDENT_RUN",
+      "path": "scripts/rust-inventory.py",
+      "sha256": "edf1e1bb1c3bf49ee637e15bfeb0abde1df56f9e1f71f5993072b44e07bdf931",
+      "closure": "sol-inventory-pathset-hoist-closure001.md",
+      "closureSha256": "f352fd64bc660a7e7db1b541b818c833ab6cd81724fd48fc890e18d55c838519"
     }
   }
 }
