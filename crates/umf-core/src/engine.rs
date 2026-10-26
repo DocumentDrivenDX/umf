@@ -270,21 +270,22 @@ impl Capabilities for FieldValueNoCapabilities {
     }
 }
 impl Engine {
-    /// Compare a complete caller-supplied resource set with this engine's
-    /// immutable admitted resources. Used only by retained private dispatch.
-    pub fn matches_resource_values(
+    /// Compare a caller-supplied retained-dispatch resource witness while
+    /// charging every visited value and object key to the current operation.
+    pub fn matches_resource_values_with_context(
         &self,
         core_schema: &Value,
         reference_schema: &Value,
         package_schema: &Value,
         constraints: &Value,
         domain_policy: &Value,
-    ) -> bool {
-        &self.resources.core_schema == core_schema
-            && &self.resources.reference_schema == reference_schema
-            && &self.resources.package_schema == package_schema
-            && &self.resources.constraints == constraints
-            && &self.resources.domain_policy == domain_policy
+        ctx: &mut Context<'_>,
+    ) -> Result<bool, EngineError> {
+        Ok(resource_values_equal(&self.resources.core_schema, core_schema, ctx)?
+            && resource_values_equal(&self.resources.reference_schema, reference_schema, ctx)?
+            && resource_values_equal(&self.resources.package_schema, package_schema, ctx)?
+            && resource_values_equal(&self.resources.constraints, constraints, ctx)?
+            && resource_values_equal(&self.resources.domain_policy, domain_policy, ctx)?)
     }
     /// Resolve a declared core Field default without mutating its source.
     /// This is the Rust-owned CONTRACT-049 operation used by the opt-in
@@ -1374,6 +1375,60 @@ impl Engine {
     }
     pub fn reference_schema(&self) -> &CompiledSchema {
         &self.reference
+    }
+}
+
+fn resource_values_equal(
+    left: &Value,
+    right: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<bool, EngineError> {
+    match (left, right) {
+        (Value::Null, Value::Null) => {
+            ctx.charge_work(1, Utf16::default())?;
+            Ok(true)
+        }
+        (Value::Bool(left), Value::Bool(right)) => {
+            ctx.charge_work(1, Utf16::default())?;
+            Ok(left == right)
+        }
+        (Value::Number(left), Value::Number(right)) => {
+            ctx.charge_work(1, Utf16::default())?;
+            Ok(left == right)
+        }
+        (Value::String(left), Value::String(right)) => {
+            ctx.charge_work(1usize.saturating_add(left.len()), Utf16::default())?;
+            Ok(left == right)
+        }
+        (Value::Array(left), Value::Array(right)) => {
+            ctx.charge_work(1usize.saturating_add(left.len()), Utf16::default())?;
+            if left.len() != right.len() {
+                return Ok(false);
+            }
+            for (left, right) in left.iter().zip(right) {
+                if !resource_values_equal(left, right, ctx)? {
+                    return Ok(false);
+                }
+            }
+            Ok(true)
+        }
+        (Value::Object(left), Value::Object(right)) => {
+            ctx.charge_work(1usize.saturating_add(left.len()), Utf16::default())?;
+            if left.len() != right.len() {
+                return Ok(false);
+            }
+            for ((left_key, left_value), (right_key, right_value)) in left.iter().zip(right) {
+                ctx.charge_work(left_key.len(), Utf16::default())?;
+                if left_key != right_key || !resource_values_equal(left_value, right_value, ctx)? {
+                    return Ok(false);
+                }
+            }
+            Ok(true)
+        }
+        _ => {
+            ctx.charge_work(1, Utf16::default())?;
+            Ok(false)
+        }
     }
 }
 

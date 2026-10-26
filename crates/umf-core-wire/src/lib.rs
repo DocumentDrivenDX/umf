@@ -1581,24 +1581,32 @@ fn execute_request_inner(
     if let Some(operation) = op.strip_prefix("codegen/") {
         return codegen::execute(operation, &mut request, &mut operation_context);
     }
-    let mut resources = take_field(&mut request, "resources")
-        .ok_or_else(|| fail("REQUEST", "Explicit resources are required"))?;
-    if let Some(engine) = retained_engine {
+    let supplied_resources = take_field(&mut request, "resources");
+    if retained_engine.is_none() && supplied_resources.is_none() {
+        return Err(fail("REQUEST", "Explicit resources are required"));
+    }
+    if let (Some(engine), Some(resources)) = (retained_engine, supplied_resources.as_ref()) {
         if !has_exact_members(
-            &resources,
+            resources,
             &["coreSchema", "referenceSchema", "packageSchema", "constraints", "domainPolicy"],
-        ) || !engine.matches_resource_values(
-            field(&resources, "coreSchema").unwrap_or(&Value::Null),
-            field(&resources, "referenceSchema").unwrap_or(&Value::Null),
-            field(&resources, "packageSchema").unwrap_or(&Value::Null),
-            field(&resources, "constraints").unwrap_or(&Value::Null),
-            field(&resources, "domainPolicy").unwrap_or(&Value::Null),
-        ) {
+        ) || !engine.matches_resource_values_with_context(
+            field(resources, "coreSchema").unwrap_or(&Value::Null),
+            field(resources, "referenceSchema").unwrap_or(&Value::Null),
+            field(resources, "packageSchema").unwrap_or(&Value::Null),
+            field(resources, "constraints").unwrap_or(&Value::Null),
+            field(resources, "domainPolicy").unwrap_or(&Value::Null),
+            &mut operation_context,
+        )? {
             return Err(fail("REQUEST", "Retained model resources do not match the admitted runtime"));
         }
     }
+    let mut resources = supplied_resources.unwrap_or_else(|| Value::Object(Vec::new()));
     let registry_value = take_field(&mut request, "registry");
+    let prior_work = operation_context.charged_work();
+    let prior_constraint_steps = operation_context.constraint_steps();
+    drop(operation_context);
     let mut operation = Context::ordinary().with_host_control(control);
+    operation.carry_transport_usage(prior_work, prior_constraint_steps);
     let mut owned_engine: Option<Engine> = None;
     let registry = operation.with_catalog_value_limit(|catalog| {
         let resource = |resources: &mut Value, name: &str| {
@@ -2924,6 +2932,78 @@ mod tests {
         let envelope: serde_json::Value = serde_json::from_str(&response).unwrap();
         assert_eq!(envelope["status"], "error");
         assert_eq!(envelope["code"], "REQUEST");
+    }
+
+    #[test]
+    fn retained_engine_dispatch_accepts_bound_requests_without_a_resource_witness() {
+        let mut catalog = Context::catalog();
+        let resources = object(vec![
+            ("coreSchema", parse_wire_source(include_str!("../../../spec/core/schema.json"), &mut catalog)),
+            ("referenceSchema", parse_wire_source(include_str!("../../../spec/core/semantic-type-reference.schema.json"), &mut catalog)),
+            ("packageSchema", parse_wire_source(include_str!("../../../spec/core/extension-package.schema.json"), &mut catalog)),
+            ("constraints", parse_wire_source(include_str!("../../../spec/metamodel/generated/core-constraints.json"), &mut catalog)),
+            ("domainPolicy", parse_wire_source(include_str!("../../../spec/metamodel/generated/domain-policy.json"), &mut catalog)),
+        ]);
+        let mut admitted = resources.clone();
+        let engine = catalog.with_catalog_value_limit(|ctx| Engine::new(ResourceSet::new(
+            take_field(&mut admitted, "coreSchema").unwrap(),
+            take_field(&mut admitted, "referenceSchema").unwrap(),
+            take_field(&mut admitted, "packageSchema").unwrap(),
+            take_field(&mut admitted, "constraints").unwrap(),
+            take_field(&mut admitted, "domainPolicy").unwrap(),
+        ), ctx)).unwrap();
+        let request = comparison_request(vec![
+            ("op", Value::String(Utf16::from("model/inspectCoreKind"))),
+            ("registry", Value::Array(vec![])),
+            ("source", object(vec![("modules", Value::Array(vec![]))])),
+            ("identity", object(vec![("module", Value::String(Utf16::from("m"))), ("element", Value::String(Utf16::from("e")))])),
+        ]);
+        let mut capabilities = NumericNoCapabilities;
+        let response = execute_request_with_engine_and_control(
+            &request, ResourceProfile::Cooperative, &mut capabilities, &mut |_| Ok(()), Some(&engine),
+        );
+        let envelope: serde_json::Value = serde_json::from_str(&response).unwrap();
+        assert_ne!(envelope["code"], "REQUEST", "bound runtime should not require a repeated resource witness");
+
+        let witnessed_request = comparison_request(vec![
+            ("op", Value::String(Utf16::from("model/inspectCoreKind"))),
+            ("resources", resources),
+            ("registry", Value::Array(vec![])),
+            ("source", object(vec![("modules", Value::Array(vec![]))])),
+            ("identity", object(vec![("module", Value::String(Utf16::from("m"))), ("element", Value::String(Utf16::from("e")))])),
+        ]);
+        let mut charged = 0usize;
+        let mut meter = |amount| { charged = charged.saturating_add(amount); Ok(()) };
+        let mut capabilities = NumericNoCapabilities;
+        let _ = execute_request_with_engine_and_control(
+            &witnessed_request, ResourceProfile::Cooperative, &mut capabilities, &mut meter, Some(&engine),
+        );
+        let threshold = charged.saturating_sub(1);
+        let mut charged_again = 0usize;
+        let mut refusing_meter = |amount| {
+            charged_again = charged_again.saturating_add(amount);
+            if charged_again > threshold {
+                Err(EngineError::new("TEST_BUDGET", Utf16::default(), "combined work budget exceeded"))
+            } else { Ok(()) }
+        };
+        let mut capabilities = NumericNoCapabilities;
+        let response = execute_request_with_engine_and_control(
+            &witnessed_request, ResourceProfile::Cooperative, &mut capabilities, &mut refusing_meter, Some(&engine),
+        );
+        let envelope: serde_json::Value = serde_json::from_str(&response).unwrap();
+        assert_eq!(envelope["code"], "TEST_BUDGET", "decode, witness comparison, and model operation share the host work cap");
+
+        let closed_request = comparison_request(vec![
+            ("op", Value::String(Utf16::from("model/declareCoreRecordType"))),
+            ("fieldAuthor", Value::Null),
+            ("recordAuthor", Value::Null),
+        ]);
+        let mut capabilities = NumericNoCapabilities;
+        let response = execute_request_with_engine_and_control(
+            &closed_request, ResourceProfile::Cooperative, &mut capabilities, &mut |_| Ok(()), Some(&engine),
+        );
+        let envelope: serde_json::Value = serde_json::from_str(&response).unwrap();
+        assert_eq!(envelope["code"], "REQUEST", "closed Record Type request still requires its explicit witness shape");
     }
 
     #[test]

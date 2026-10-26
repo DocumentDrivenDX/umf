@@ -30,6 +30,7 @@ function nativeCoreError(failure) { const error = new UmfCoreError(failure.code,
 const require = createRequire(import.meta.url);
 const addon = require('./umf_core_node.node');
 const CORE_KIND_NULLABILITY_RUNTIME = Symbol('core-kind-nullability-runtime');
+const CORE_KIND_NULLABILITY_PREPARED = Symbol('core-kind-nullability-prepared');
 
 export class UmfCoreError extends Error {
   constructor(code, message, path = '') {
@@ -466,8 +467,8 @@ function createNativeCoreKeyVerificationOperations(addon, resources, controls, s
   }
   let runtime;
   try {
-    const resourcesWire = encodeWire(resources, {maxDepth: 128, maxValues: 1_000_000, work: setup.work});
-    setup.work?.(resourcesWire.length);
+    const resourcesWire = setup.resourcesWire ?? encodeWire(resources, {maxDepth: 128, maxValues: 1_000_000, work: setup.work});
+    if (setup.resourcesWire === undefined) setup.work?.(resourcesWire.length);
     runtime = new addon.CoreKeyVerificationRuntime(resourcesWire, setup.bridge);
   } catch (error) { nativeKeyTupleFailure(error); }
   return {
@@ -647,7 +648,7 @@ export function createCoreModelRootEngine(resources, options = {}) {
 /** Private opt-in retained model and Kind/Nullability dispatcher. */
 export function createCoreModelRootKindNullabilityEngine(resources, options = {}) {
   const staged = createCoreKindNullabilityHostInputEngine(resources, options);
-  const model = createEngineInternal(resources, options, true, true, false, false, false, false, staged[CORE_KIND_NULLABILITY_RUNTIME]);
+  const model = createEngineInternal(resources, options, true, true, false, false, false, false, staged[CORE_KIND_NULLABILITY_RUNTIME], staged[CORE_KIND_NULLABILITY_PREPARED]);
   const api = {...model};
   for (const name of ['inspectCoreElementKind','declareCoreElementKind','verifyCoreKindDeclaration','inspectCoreNullability','declareCoreNullability','verifyCoreNullabilityDeclaration']) api[name] = staged[name];
   return Object.freeze(api);
@@ -701,7 +702,7 @@ export function createCoreRecordValuesHostInputEngine(resources, options = {}) {
 /** Create a Rust-owned host-input route for the six core kind/nullability operations. */
 export function createCoreKindNullabilityHostInputEngine(resources, options = {}) {
   if (typeof addon.CoreKindNullabilityRuntime !== 'function') throw new UmfCoreError('RUST_NODE_BINDING_MISSING', 'Node binding does not expose retained core kind/nullability resources');
-  const {controls} = codegenOptions(options);
+  const {profile, controls} = codegenOptions(options);
   const rawResourceControls = dataProperty(options, 'resourceControls', false);
   const resourceControls = rawResourceControls === undefined ? controls : codegenOptions({controls:rawResourceControls}).controls;
   const names = ['coreSchema', 'referenceSchema', 'packageSchema', 'constraints', 'domainPolicy'];
@@ -735,6 +736,7 @@ export function createCoreKindNullabilityHostInputEngine(resources, options = {}
   };
   return Object.freeze({
     [CORE_KIND_NULLABILITY_RUNTIME]: runtime,
+    [CORE_KIND_NULLABILITY_PREPARED]: {fixedResources, resourcesWire, resourceBridge: initializeBridge, hostWork: initializeWork, profile, controls},
     inspectCoreElementKind(source, identity) { return call('inspectCoreKind', [source, identity, undefined]); },
     declareCoreElementKind(source, identity, kind) { return call('declareCoreKind', [source, identity, kind]); },
     verifyCoreKindDeclaration(receipt, current) { return call('verifyCoreKindDeclaration', [receipt, current, undefined]); },
@@ -1111,17 +1113,19 @@ export function createAvroFieldsEngine(options = {}) {
   }});
 }
 
-function createEngineInternal(resources, options, withModel, withSchemaPropertiesHostInput = false, includeKeyTuple = withModel, includeRecordType = false, recordTypeOnly = false, withCardinalityHostInput = false, retainedRuntime = undefined) {
-  const {profile, controls} = codegenOptions(options);
-  const rawResourceControls = dataProperty(options, 'resourceControls', false);
-  const resourceControls = rawResourceControls === undefined ? controls : codegenOptions({controls: rawResourceControls}).controls;
+function createEngineInternal(resources, options, withModel, withSchemaPropertiesHostInput = false, includeKeyTuple = withModel, includeRecordType = false, recordTypeOnly = false, withCardinalityHostInput = false, retainedRuntime = undefined, preparedResources = undefined) {
+  const {profile, controls} = preparedResources ?? codegenOptions(options);
+  const rawResourceControls = preparedResources ? undefined : dataProperty(options, 'resourceControls', false);
+  const resourceControls = preparedResources ? undefined : rawResourceControls === undefined ? controls : codegenOptions({controls: rawResourceControls}).controls;
   const names = ['coreSchema', 'referenceSchema', 'packageSchema', 'constraints', 'domainPolicy'];
-  const resourceBridge = withModel && hasControls(resourceControls) ? createControlBridge(resourceControls) : undefined;
-  const hostWork = withModel ? admissionWork(resourceBridge) : undefined;
+  const resourceBridge = preparedResources ? preparedResources.resourceBridge : withModel && hasControls(resourceControls) ? createControlBridge(resourceControls) : undefined;
+  const hostWork = preparedResources ? preparedResources.hostWork : withModel ? admissionWork(resourceBridge) : undefined;
   // Model factories meter their host-side resource snapshot, with one catalog
   // budget per resource. Legacy engine snapshot semantics remain unchanged.
   let fixedResources;
-  if (withModel) {
+  if (preparedResources) {
+    fixedResources = preparedResources.fixedResources;
+  } else if (withModel) {
     hostWork?.(1);
     const prototype = Object.getPrototypeOf(resources);
     if (prototype !== Object.prototype && prototype !== null) throw new TypeError('Engine resources must be a plain object');
@@ -1176,7 +1180,8 @@ function createEngineInternal(resources, options, withModel, withSchemaPropertie
       registry.push({id, version, scopes, schema, semantic: Boolean(semantics)});
     }
     hostWork?.(1);
-    const request = {op, resources: fixedResources, registry, ...args};
+    const requiresResourceWitness = ['model/inspectCoreRecordMembers', 'model/declareCoreRecordType', 'model/verifyCoreRecordTypeDeclaration'].includes(op);
+    const request = retainedRuntime && !requiresResourceWitness ? {op, registry, ...args} : {op, resources: fixedResources, registry, ...args};
     return runRequest(request, callbackMap, profile, controls, withModel, controlBridge, hostWork, retainedRuntime);
   }
   const api = {
@@ -1205,7 +1210,7 @@ function createEngineInternal(resources, options, withModel, withSchemaPropertie
     } else {
       Object.assign(api, createCoreModelOperations(call, {ErrorType: JsonSchemaUmfError}));
       if (includeKeyTuple) Object.assign(api, createCoreKeyTupleOperations(call, createNativeKeyTupleOperations(addon, fixedResources, controls, {bridge: resourceBridge, work: hostWork})));
-      Object.assign(api, createCoreKeysOperations(call, createNativeCoreKeyVerificationOperations(addon, fixedResources, controls, {bridge: resourceBridge, work: hostWork})));
+      Object.assign(api, createCoreKeysOperations(call, createNativeCoreKeyVerificationOperations(addon, fixedResources, controls, {bridge: resourceBridge, work: hostWork, resourcesWire: preparedResources?.resourcesWire})));
       if (includeRecordType) Object.assign(api, createCoreRecordTypeOperations(call, createNativeCoreRecordTypeVerificationOperations(addon, fixedResources, controls, {bridge: resourceBridge, work: hostWork}), {ErrorType:UmfCoreError}));
       Object.assign(api, createCompactDatasetValueOperations(call));
       Object.assign(api, createDatasetValueOperations(call, {ErrorType: JsonSchemaUmfError}));

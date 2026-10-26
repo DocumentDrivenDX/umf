@@ -23,10 +23,53 @@ const [source, surrogate, successOracle, refusalOracle, coreSchema, referenceSch
   read('spec/metamodel/generated/core-constraints.json'),
   read('spec/metamodel/generated/domain-policy.json'),
 ]);
-const engine = createCoreKindNullabilityHostInputEngine({coreSchema, referenceSchema, packageSchema, constraints, domainPolicy});
-const shared = createCoreModelRootKindNullabilityEngine({coreSchema, referenceSchema, packageSchema, constraints, domainPolicy});
-assert.deepEqual(normalize(shared.inspectCoreElementKind(source, {module:'m',element:'known'})), normalize(engine.inspectCoreElementKind(source, {module:'m',element:'known'})), 'shared retained runtime staged route');
-assert.deepEqual(normalize(shared.inspectCoreKind(source, 'm', 'known')), normalize(shared.inspectCoreElementKind(source, {module:'m',element:'known'})), 'shared retained runtime model route');
+const makeMeter = () => ({calls:0, work:0, hash:2166136261, first:null, last:null});
+const resourceMeter = makeMeter();
+const stagedMeter = makeMeter();
+const combinedSetupMeter = {calls:20_990_852, work:832_477_520, hash:1_107_312_751, first:1, last:7};
+const countMeter = meter => amount => {
+  meter.calls++;
+  meter.work += amount;
+  meter.hash = Math.imul(meter.hash ^ (amount >>> 0), 16777619) >>> 0;
+  if (meter.first === null) meter.first = amount;
+  meter.last = amount;
+};
+const trackedResources = () => {
+  const counts = {prototype:0, ownKeys:0, descriptors:0};
+  const events = [];
+  const proxy = new Proxy({coreSchema, referenceSchema, packageSchema, constraints, domainPolicy}, {
+    getPrototypeOf(target) { counts.prototype++; events.push('prototype'); return Reflect.getPrototypeOf(target); },
+    ownKeys(target) { counts.ownKeys++; events.push('ownKeys'); return Reflect.ownKeys(target); },
+    getOwnPropertyDescriptor(target, key) { counts.descriptors++; events.push(`descriptor:${String(key)}`); return Reflect.getOwnPropertyDescriptor(target, key); },
+  });
+  return {proxy, counts, events};
+};
+const stagedResources = trackedResources();
+const combinedResources = trackedResources();
+const engine = createCoreKindNullabilityHostInputEngine(stagedResources.proxy, {resourceControls:{meter:countMeter(stagedMeter)}});
+const shared = createCoreModelRootKindNullabilityEngine(combinedResources.proxy, {resourceControls:{meter:countMeter(resourceMeter)}});
+const setupReflection = [...combinedResources.events];
+assert.deepEqual(combinedResources.counts, {prototype:6, ownKeys:1, descriptors:5});
+assert.deepEqual(combinedResources.events, stagedResources.events, 'combined factory matches staged resource reflection order');
+// One prototype trap validates the root; each of the five data-property
+// checks also confirms that its source remains a plain object.
+assert.deepEqual(resourceMeter, combinedSetupMeter, 'combined setup meter fixture drifted; recapture the exact staged-plus-Core-Key-runtime baseline for the current resource/source cohort before changing this expected trace');
+const sharedStagedResult = shared.inspectCoreElementKind(source, {module:'m',element:'known'});
+assert.deepEqual(combinedResources.events, setupReflection, 'staged operation does not re-reflect caller resources');
+const independentStagedResult = engine.inspectCoreElementKind(source, {module:'m',element:'known'});
+assert.deepEqual(combinedResources.events, setupReflection, 'independent staged operation does not re-reflect caller resources');
+assert.deepEqual(normalize(sharedStagedResult), normalize(independentStagedResult), 'shared retained runtime staged route');
+const sharedModelResult = shared.inspectCoreKind(source, 'm', 'known');
+assert.deepEqual(combinedResources.events, setupReflection, 'model operation does not re-reflect caller resources');
+assert.deepEqual(normalize(sharedModelResult), normalize(shared.inspectCoreElementKind(source, {module:'m',element:'known'})), 'shared retained runtime model route');
+assert.deepEqual(combinedResources.events, setupReflection, 'subsequent staged operation does not re-reflect caller resources');
+
+let getterCalls = 0;
+const accessorResources = {referenceSchema, packageSchema, constraints, domainPolicy};
+Object.defineProperty(accessorResources, 'coreSchema', {enumerable:true, get() { getterCalls++; return coreSchema; }});
+assert.throws(() => createCoreModelRootKindNullabilityEngine(accessorResources), TypeError);
+assert.equal(getterCalls, 0, 'resource getter is rejected without invocation');
+
 const kindReceipt = engine.declareCoreElementKind(source, {module: 'm', element: 'missing'}, 'field');
 const nullReceipt = engine.declareCoreNullability(source, {module: 'm', element: 'missing'}, 'absent-allowed');
 const successes = {

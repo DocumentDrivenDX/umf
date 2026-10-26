@@ -16,6 +16,7 @@ import {createDocumentComparisonOperations, DOCUMENT_COMPARISON_PROFILE} from '.
 import {schemaPropertiesHostInput, cardinalityHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse} from './src/host-json.js';
 import {createSemanticTypeRegistry as createSemanticTypeRegistryWithWire} from './src/semantic-value.js';
 const CORE_KIND_NULLABILITY_RUNTIME = Symbol('core-kind-nullability-runtime');
+const CORE_KIND_NULLABILITY_PREPARED = Symbol('core-kind-nullability-prepared');
 export {isWireAdmissionError} from './src/wire.js';
 export {isBit128EngineError};
 const nativeUmfCoreErrors = new WeakSet();
@@ -185,7 +186,7 @@ export async function initializeCoreKindNullabilityHostInputWasm(resources, load
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
   if (typeof module.CoreKindNullabilityRuntime !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
-  const {controls} = codegenOptions(options);
+  const {profile, controls} = codegenOptions(options);
   const rawResourceControls = descriptor(options, 'resourceControls', false);
   const resourceControls = rawResourceControls === undefined ? controls : codegenOptions({controls:rawResourceControls}).controls;
   const names = ['coreSchema', 'referenceSchema', 'packageSchema', 'constraints', 'domainPolicy'];
@@ -219,6 +220,7 @@ export async function initializeCoreKindNullabilityHostInputWasm(resources, load
   };
   return Object.freeze({
     [CORE_KIND_NULLABILITY_RUNTIME]: runtime,
+    [CORE_KIND_NULLABILITY_PREPARED]: {fixedResources, resourcesWire, resourceBridge: initializeBridge, hostWork: initializeWork, profile, controls},
     inspectCoreElementKind(source, identity) { return call('inspectCoreKind', [source, identity, undefined]); },
     declareCoreElementKind(source, identity, kind) { return call('declareCoreKind', [source, identity, kind]); },
     verifyCoreKindDeclaration(receipt, current) { return call('verifyCoreKindDeclaration', [receipt, current, undefined]); },
@@ -538,8 +540,8 @@ function createNativeCoreKeyVerificationOperations(module, resources, controls, 
   }
   let runtime;
   try {
-    const resourcesWire = encodeWire(resources, {maxDepth: 128, maxValues: 1_000_000, work: setup.work});
-    setup.work?.(resourcesWire.length);
+    const resourcesWire = setup.resourcesWire ?? encodeWire(resources, {maxDepth: 128, maxValues: 1_000_000, work: setup.work});
+    if (setup.resourcesWire === undefined) setup.work?.(resourcesWire.length);
     runtime = new module.CoreKeyVerificationRuntime(resourcesWire, setup.bridge);
   } catch (error) { nativeKeyTupleFailure(error); }
   return {
@@ -704,7 +706,7 @@ export async function initializeCoreModelRootKindNullabilityWasm(resources, load
   const module = await loader();
   if (typeof module.default === 'function') await module.default();
   const staged = await initializeCoreKindNullabilityHostInputWasm(resources, async () => module, host, options);
-  const model = createEngineInternal(module, resources, options, true, false, false, false, staged[CORE_KIND_NULLABILITY_RUNTIME]);
+  const model = createEngineInternal(module, resources, options, true, false, false, false, staged[CORE_KIND_NULLABILITY_RUNTIME], staged[CORE_KIND_NULLABILITY_PREPARED]);
   const api = {...model};
   for (const name of ['inspectCoreElementKind','declareCoreElementKind','verifyCoreKindDeclaration','inspectCoreNullability','declareCoreNullability','verifyCoreNullabilityDeclaration']) api[name] = staged[name];
   return Object.freeze(api);
@@ -1278,10 +1280,10 @@ export async function initializeAvroFieldsWasm(loader = () => import('./pkg/umf_
   return createAvroFieldsEngine(module, options);
 }
 
-function createEngineInternal(module, resources, options, withModel, includeKeyTuple = withModel, withSchemaPropertiesHostInput = false, withCardinalityHostInput = false, retainedRuntime = undefined) {
-  const {profile, controls} = codegenOptions(options);
-  const rawResourceControls = descriptor(options ?? Object.create(null), 'resourceControls', false);
-  const resourceControls = rawResourceControls === undefined ? controls : codegenOptions({controls: rawResourceControls}).controls;
+function createEngineInternal(module, resources, options, withModel, includeKeyTuple = withModel, withSchemaPropertiesHostInput = false, withCardinalityHostInput = false, retainedRuntime = undefined, preparedResources = undefined) {
+  const {profile, controls} = preparedResources ?? codegenOptions(options);
+  const rawResourceControls = preparedResources ? undefined : descriptor(options ?? Object.create(null), 'resourceControls', false);
+  const resourceControls = preparedResources ? undefined : rawResourceControls === undefined ? controls : codegenOptions({controls: rawResourceControls}).controls;
   if (typeof module.copyJsonWire !== 'function' || typeof module.executeRequestWire !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
   const base = {
     engineVersion: typeof module.engineVersion === 'function' ? module.engineVersion() : module.engineVersion,
@@ -1308,10 +1310,12 @@ function createEngineInternal(module, resources, options, withModel, includeKeyT
   };
   if (resources === undefined) return Object.freeze(base);
   const names = ['coreSchema', 'referenceSchema', 'packageSchema', 'constraints', 'domainPolicy'];
-  const resourceBridge = withModel && hasControls(resourceControls) ? createControlBridge(resourceControls) : undefined;
-  const hostWork = withModel ? admissionWork(resourceBridge) : undefined;
+  const resourceBridge = preparedResources ? preparedResources.resourceBridge : withModel && hasControls(resourceControls) ? createControlBridge(resourceControls) : undefined;
+  const hostWork = preparedResources ? preparedResources.hostWork : withModel ? admissionWork(resourceBridge) : undefined;
   let fixedResources;
-  if (withModel) {
+  if (preparedResources) {
+    fixedResources = preparedResources.fixedResources;
+  } else if (withModel) {
     hostWork?.(1);
     const prototype = Object.getPrototypeOf(resources);
     if (prototype !== Object.prototype && prototype !== null) throw new TypeError('Engine resources must be a plain object');
@@ -1367,7 +1371,9 @@ function createEngineInternal(module, resources, options, withModel, includeKeyT
       registry.push({id, version, scopes, schema, semantic: Boolean(semantics)});
     }
     hostWork?.(1);
-    return invoke(module, {op, resources: fixedResources, registry, ...args}, callbacks, profile, controls, withModel, controlBridge, hostWork, retainedRuntime);
+    const requiresResourceWitness = ['model/inspectCoreRecordMembers', 'model/declareCoreRecordType', 'model/verifyCoreRecordTypeDeclaration'].includes(op);
+    const request = retainedRuntime && !requiresResourceWitness ? {op, registry, ...args} : {op, resources: fixedResources, registry, ...args};
+    return invoke(module, request, callbacks, profile, controls, withModel, controlBridge, hostWork, retainedRuntime);
   }
   const api = {...base,
     listKinds(registry = []) { return call('list-kinds', {}, registry); },
@@ -1381,7 +1387,7 @@ function createEngineInternal(module, resources, options, withModel, includeKeyT
     const invoke = (op, args, extensions) => call(op, args, extensions);
     Object.assign(api, createCoreModelOperations(invoke, {ErrorType: JsonSchemaUmfError}));
     if (includeKeyTuple) Object.assign(api, createCoreKeyTupleOperations(invoke, createNativeKeyTupleOperations(module, fixedResources, controls, {bridge: resourceBridge, work: hostWork})));
-    Object.assign(api, createCoreKeysOperations(invoke, createNativeCoreKeyVerificationOperations(module, fixedResources, controls, {bridge: resourceBridge, work: hostWork})));
+    Object.assign(api, createCoreKeysOperations(invoke, createNativeCoreKeyVerificationOperations(module, fixedResources, controls, {bridge: resourceBridge, work: hostWork, resourcesWire: preparedResources?.resourcesWire})));
     Object.assign(api, createCompactDatasetValueOperations(invoke));
     Object.assign(api, createDatasetValueOperations(invoke, {ErrorType: JsonSchemaUmfError}));
     Object.assign(api, createCoreRelationshipOperations(invoke));
