@@ -3,7 +3,7 @@
   "scope": "Route-specific runtime export declarations for the default Node root, default browser root and explicit TypeScript reference route in the pinned condition-aware inventory. Logical default gaps are counted once, with per-route status; this is a gap census, not retirement approval.",
   "input": {
     "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json",
-    "sha256": "0ed368b556c3abbb4dd7534ed18ec68fef9738da0124fca2612293a371e0a56c"
+    "sha256": "1d7589b8bad71a50f1fdcebcc50bfa897af25d7dbd2cdfbdf452f6a5ae8aa3c2"
   },
   "counts": {
     "packageRootRows": 3360,
@@ -61,9 +61,9 @@
     "uniqueResourceFiles": 189,
     "resourceAuthorityByStatus": {
       "generated-authority-known": 39,
-      "authored-authority-known": 36,
+      "authored-authority-known": 41,
       "candidate-generated": 88,
-      "authority-unresolved": 35
+      "authority-unresolved": 30
     }
   },
   "runtimeExportDispositionSupplement": {
@@ -71,8 +71,8 @@
     "scope": "Per-export source authority and runtime classification for five src/model/types.ts exports. Supplemental classification does not alter executable row kinds, Rust route mappings, logical retirement gaps or installed-release qualification.",
     "generatedProvenance": {
       "modelSha256": "42144576e3b15da4945ca744623a31967e3b29efa54da8ba3961e446b1c0e34b",
-      "compilerSha256": "46dd787873f83038c21f94e77e1a4c0e878f212870877d0222a12d919acd25f8",
-      "generatedCoreModelSha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347",
+      "compilerSha256": "5241078e998a172d860ceeda1ce387d3a57ff4a0a3d502a627d4aa47820ab917",
+      "generatedCoreModelSha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba",
       "sourceClosure": [
         {
           "path": "crates/umf-metamodel/src/lib.rs",
@@ -96,7 +96,7 @@
         },
         {
           "path": "spec/metamodel/generated/manifest.json",
-          "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+          "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
         },
         {
           "path": "spec/metamodel/umf.yaml",
@@ -112,7 +112,7 @@
         },
         {
           "path": "src/generated/core-model.ts",
-          "sha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347"
+          "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
         },
         {
           "path": "src/index-browser-v4.ts",
@@ -10499,7 +10499,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -13953,18 +13953,66 @@
           "packageRootAliasCount": 2
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "authored-authority-known",
           "canonicalPath": "spec/core/relationship-metadata-selection-v2.schema.json",
-          "generatorKind": "unresolved",
+          "generatorKind": "authored-versioned-contract-schema",
           "generator": null,
           "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
+          "kind": "authored-versioned-contract-schema",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+            "docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md"
+          ],
           "governingClauses": [],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "authoredRevisionClosure": [
+            {
+              "commit": "25a38767a3ce7a2c7af297cf541196e9cbc6ad4a",
+              "action": "added",
+              "sha256": "991f845a1b8a7517c1ad6a43826b31cb83ae03d597b8cbc8b7dcea8e933c29b8"
+            },
+            {
+              "commit": "8706814a9",
+              "action": "updated",
+              "sha256": "e1586b2164f8f1c06dabdf7505861ab7c39c5cef0a267a3033a8d95aa479f720"
+            }
+          ],
+          "sourceClosureCompleteness": "direct versioned schema authorship and governing contract/current source/package closure are pinned; SDK archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+              "sha256": "b84ed0a802fd8a7f7585dddda69a040f2133c28928d126d352b5d979ae76554a"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md",
+              "sha256": "373f396361aeaa38109348d3bebb1328d5014343625055e5bda8cd212055df20"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/relationship-selection.ts",
+              "sha256": "c6a1a570846fb507069d4a45c77722990b5e282ee7b24d48a76bdfcb22fe7f6d"
+            },
+            {
+              "path": "tests/core/relationship-selection.test.ts",
+              "sha256": "4567785fdc156040d8a0b18e1f6cdeae7e9411070d7845f3dee54a7ae2bf46ae"
+            }
+          ]
         },
         "routes": [
           {
@@ -14068,7 +14116,7 @@
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -17609,7 +17657,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -18000,7 +18048,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -19224,18 +19272,66 @@
           "packageRootAliasCount": 2
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "authored-authority-known",
           "canonicalPath": "spec/core/relationship-metadata-selection-v2.schema.json",
-          "generatorKind": "unresolved",
+          "generatorKind": "authored-versioned-contract-schema",
           "generator": null,
           "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
+          "kind": "authored-versioned-contract-schema",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+            "docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md"
+          ],
           "governingClauses": [],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "authoredRevisionClosure": [
+            {
+              "commit": "25a38767a3ce7a2c7af297cf541196e9cbc6ad4a",
+              "action": "added",
+              "sha256": "991f845a1b8a7517c1ad6a43826b31cb83ae03d597b8cbc8b7dcea8e933c29b8"
+            },
+            {
+              "commit": "8706814a9",
+              "action": "updated",
+              "sha256": "e1586b2164f8f1c06dabdf7505861ab7c39c5cef0a267a3033a8d95aa479f720"
+            }
+          ],
+          "sourceClosureCompleteness": "direct versioned schema authorship and governing contract/current source/package closure are pinned; SDK archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+              "sha256": "b84ed0a802fd8a7f7585dddda69a040f2133c28928d126d352b5d979ae76554a"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md",
+              "sha256": "373f396361aeaa38109348d3bebb1328d5014343625055e5bda8cd212055df20"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/relationship-selection.ts",
+              "sha256": "c6a1a570846fb507069d4a45c77722990b5e282ee7b24d48a76bdfcb22fe7f6d"
+            },
+            {
+              "path": "tests/core/relationship-selection.test.ts",
+              "sha256": "4567785fdc156040d8a0b18e1f6cdeae7e9411070d7845f3dee54a7ae2bf46ae"
+            }
+          ]
         },
         "routes": [
           {
@@ -19339,7 +19435,7 @@
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -19561,18 +19657,66 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "authored-authority-known",
           "canonicalPath": "spec/core/relationship-operation-v3.schema.json",
-          "generatorKind": "unresolved",
+          "generatorKind": "authored-versioned-contract-schema",
           "generator": null,
           "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
+          "kind": "authored-versioned-contract-schema",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+            "docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md"
+          ],
           "governingClauses": [],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "authoredRevisionClosure": [
+            {
+              "commit": "25a38767a3ce7a2c7af297cf541196e9cbc6ad4a",
+              "action": "added",
+              "sha256": "58c3d8a0ba0a0261ef3954f2952df62830c28b2570f523e11eab612206e67603"
+            },
+            {
+              "commit": "8706814a9",
+              "action": "updated",
+              "sha256": "42a3a7ad1e3ef7ac80ef5044948aad12847de22aaf63367e6264bfcb2434bda7"
+            }
+          ],
+          "sourceClosureCompleteness": "direct versioned schema authorship and governing contract/current source/package closure are pinned; SDK archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+              "sha256": "b84ed0a802fd8a7f7585dddda69a040f2133c28928d126d352b5d979ae76554a"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md",
+              "sha256": "373f396361aeaa38109348d3bebb1328d5014343625055e5bda8cd212055df20"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/relationships.ts",
+              "sha256": "66b15764cb80059de8e98adb9741b9314a1966674f22ef4f114306e679d5e547"
+            },
+            {
+              "path": "tests/core/relationship-operations.test.ts",
+              "sha256": "9287450ad26f932bc01742bfb46facd2c3e6d1509a583017d3490378f2acde89"
+            }
+          ]
         },
         "routes": [
           {
@@ -19676,7 +19820,7 @@
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -19824,7 +19968,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b",
+      "sourceSha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
       "ownerFamily": "resource:spec/core/schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from explicit TypeScript reference route",
@@ -19834,7 +19978,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/schema.json",
-          "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b",
+          "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
           "packageRootAliasCount": 2
         },
         "authority": {
@@ -19867,7 +20011,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
             }
           ]
         },
@@ -19886,7 +20030,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -20222,7 +20366,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347"
+                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
               },
               {
                 "path": "src/index.ts",
@@ -20358,7 +20502,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -20584,7 +20728,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -20668,7 +20812,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -20692,7 +20836,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -20723,7 +20867,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -20758,7 +20902,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -20777,7 +20921,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -20804,7 +20948,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b",
+      "sourceSha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
       "ownerFamily": "resource:spec/core/schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from explicit TypeScript reference route",
@@ -20814,7 +20958,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/schema.json",
-          "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b",
+          "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
           "packageRootAliasCount": 2
         },
         "authority": {
@@ -20847,7 +20991,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
             }
           ]
         },
@@ -20866,7 +21010,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -21202,7 +21346,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347"
+                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
               },
               {
                 "path": "src/index.ts",
@@ -21338,7 +21482,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -21564,7 +21708,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -21648,7 +21792,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -21672,7 +21816,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -21703,7 +21847,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -21738,7 +21882,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -21757,7 +21901,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -21910,7 +22054,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/semantic-type-reference.schema.json",
       "line": 1,
-      "sourceSha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a",
+      "sourceSha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23",
       "ownerFamily": "resource:spec/core/semantic-type-reference.schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from explicit TypeScript reference route",
@@ -21920,7 +22064,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/semantic-type-reference.schema.json",
-          "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a",
+          "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23",
           "packageRootAliasCount": 1
         },
         "authority": {
@@ -21953,7 +22097,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
             }
           ]
         },
@@ -21972,7 +22116,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -21984,7 +22128,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347"
+                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
               },
               {
                 "path": "src/index.ts",
@@ -22032,7 +22176,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
               }
             ],
             "installedQualification": {
@@ -22246,7 +22390,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -22326,7 +22470,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
               }
             ],
             "installedQualification": {
@@ -22350,7 +22494,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
               }
             ],
             "installedQualification": {
@@ -22381,7 +22525,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
               }
             ],
             "installedQualification": {
@@ -22416,7 +22560,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
               }
             ],
             "installedQualification": {
@@ -22435,7 +22579,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -23054,7 +23198,7 @@
       "declarationKind": "VariableDeclaration",
       "source": "src/generated/core-model.ts",
       "line": 3,
-      "sourceSha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347",
+      "sourceSha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba",
       "ownerFamily": "generated-runtime",
       "rowKind": "executable",
       "defaultRoute": "explicit TypeScript reference declaration",
@@ -25760,7 +25904,7 @@
             },
             {
               "path": "spec/core/extension-package.schema.json",
-              "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+              "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
             },
             {
               "path": "spec/core/native-json.schema.json",
@@ -25768,11 +25912,11 @@
             },
             {
               "path": "spec/core/schema.json",
-              "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+              "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
             },
             {
               "path": "spec/core/semantic-type-reference.schema.json",
-              "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+              "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
             },
             {
               "path": "spec/extensions/delta/package.json",
@@ -25784,11 +25928,11 @@
             },
             {
               "path": "spec/metamodel/generated/core-constraints.json",
-              "sha256": "a132b2454e1715df392ef5a30b7aba58704c53943e23bc3737908ab21d30a7df"
+              "sha256": "332a5ab39c83ba3b22fb3f124f982df8caad5b5bda358c0265f3ed1f9f98068c"
             },
             {
               "path": "spec/metamodel/generated/domain-policy.json",
-              "sha256": "86ed18aefb00c71d7cf176b85d28e67d24aa04d85547dc5093d93b86f7d00003"
+              "sha256": "348913d56fe96d3ff4f9a46c446a641f06d31758532f686277cd5d3208df5465"
             },
             {
               "path": "src/adapters/delta/index.ts",
@@ -25800,7 +25944,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347"
+              "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
             },
             {
               "path": "src/index.ts",
@@ -27537,7 +27681,7 @@
             },
             {
               "path": "spec/core/extension-package.schema.json",
-              "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+              "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
             },
             {
               "path": "spec/core/native-json.schema.json",
@@ -27545,11 +27689,11 @@
             },
             {
               "path": "spec/core/schema.json",
-              "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+              "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
             },
             {
               "path": "spec/core/semantic-type-reference.schema.json",
-              "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+              "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
             },
             {
               "path": "spec/extensions/delta-table/package.json",
@@ -27561,11 +27705,11 @@
             },
             {
               "path": "spec/metamodel/generated/core-constraints.json",
-              "sha256": "a132b2454e1715df392ef5a30b7aba58704c53943e23bc3737908ab21d30a7df"
+              "sha256": "332a5ab39c83ba3b22fb3f124f982df8caad5b5bda358c0265f3ed1f9f98068c"
             },
             {
               "path": "spec/metamodel/generated/domain-policy.json",
-              "sha256": "86ed18aefb00c71d7cf176b85d28e67d24aa04d85547dc5093d93b86f7d00003"
+              "sha256": "348913d56fe96d3ff4f9a46c446a641f06d31758532f686277cd5d3208df5465"
             },
             {
               "path": "src/adapters/delta/index.ts",
@@ -27577,7 +27721,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347"
+              "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
             },
             {
               "path": "src/index.ts",
@@ -30342,7 +30486,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/extension-package.schema.json",
       "line": 1,
-      "sourceSha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535",
+      "sourceSha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7",
       "ownerFamily": "resource:spec/core/extension-package.schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from explicit TypeScript reference route",
@@ -30352,7 +30496,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/extension-package.schema.json",
-          "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535",
+          "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7",
           "packageRootAliasCount": 1
         },
         "authority": {
@@ -30385,7 +30529,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
             }
           ]
         },
@@ -30404,7 +30548,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -30416,7 +30560,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347"
+                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
               },
               {
                 "path": "src/index.ts",
@@ -30456,7 +30600,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
               }
             ],
             "installedQualification": {
@@ -30646,7 +30790,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/binding_index_projection.rs",
@@ -30718,7 +30862,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
               }
             ],
             "installedQualification": {
@@ -30742,7 +30886,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
               }
             ],
             "installedQualification": {
@@ -30773,7 +30917,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
               }
             ],
             "installedQualification": {
@@ -30808,7 +30952,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
               }
             ],
             "installedQualification": {
@@ -30827,7 +30971,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -57375,16 +57519,32 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "authored-authority-known",
           "canonicalPath": "spec/core/relationship-extras.schema.json",
-          "generatorKind": "historical-generator-cohort-output; exact writer unresolved",
+          "generatorKind": "authored-versioned-contract-schema",
           "generator": null,
           "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
+          "kind": "authored-versioned-contract-schema",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+            "docs/helix/02-design/technical-designs/TD-045-relationship.md",
+            "docs/helix/01-frame/user-stories/US-045-relationship.md"
+          ],
           "governingClauses": [],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "authoredRevisionClosure": [
+            {
+              "commit": "997c1a16a9b52e62252b5ce4e4bc3d4f3b7b7cb9",
+              "action": "added",
+              "sha256": "8976c2c707c5616922bebf085f65d6d029ca7ed685c90cad5613dbd87ecb226c"
+            },
+            {
+              "commit": "8706814a9",
+              "action": "updated",
+              "sha256": "fad9ec7ad8b33cc631647a30e1061a926307c702e9a5c18ba7cdf8dff94510e6"
+            }
+          ],
+          "sourceClosureCompleteness": "direct versioned schema authorship and governing contract/current source/package closure are pinned; SDK archive bytes remain unqualified",
           "historicalGeneratorReceipt": {
             "path": "docs/helix/04-build/evidence/metamodel-authority/regression/current-schema-generators/receipt.json",
             "sha256": "f4ab1c57f034d58ea498097e6776a42de6d974d47841f221cfc3b99064d902e1",
@@ -57392,8 +57552,44 @@
           },
           "sourceClosure": [
             {
+              "path": "docs/helix/01-frame/user-stories/US-045-relationship.md",
+              "sha256": "c204796efbe490e9568b3d74bc35dd6e0b1dbe780061b592082b64a80f2fdc24"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+              "sha256": "b84ed0a802fd8a7f7585dddda69a040f2133c28928d126d352b5d979ae76554a"
+            },
+            {
+              "path": "docs/helix/02-design/technical-designs/TD-045-relationship.md",
+              "sha256": "dcb8dffcbdf2b8966a25ff04d640d23f56c991e99156649024e29741cd522468"
+            },
+            {
               "path": "docs/helix/04-build/evidence/metamodel-authority/regression/current-schema-generators/receipt.json",
               "sha256": "f4ab1c57f034d58ea498097e6776a42de6d974d47841f221cfc3b99064d902e1"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/core-ideals/relationship-extras.ts",
+              "sha256": "c45acfba9539c29f7fa604d89ed0f4a5773b742dc2951e1ca15da2f542248937"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "tests/core-ideals/relationship-extras.test.ts",
+              "sha256": "7e5d57a47ce4ed6ccaa19f4ed7d43eb853d6724d90a17ed096be70d52d40516d"
             }
           ]
         },
@@ -57479,7 +57675,7 @@
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -57515,16 +57711,31 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "authored-authority-known",
           "canonicalPath": "spec/core/relationship-parquet-projection.schema.json",
-          "generatorKind": "historical-generator-cohort-output; exact writer unresolved",
+          "generatorKind": "authored-versioned-contract-schema",
           "generator": null,
           "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
+          "kind": "authored-versioned-contract-schema",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+            "docs/helix/02-design/contracts/CONTRACT-019-parquet.md"
+          ],
           "governingClauses": [],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "authoredRevisionClosure": [
+            {
+              "commit": "f69d1a7c7b7d62d4f2924217b813f8b58b07ecef",
+              "action": "added",
+              "sha256": "ef753a57872076791c435ec2612efb3ce7259ed719baa2a2b28d7a6494c223ec"
+            },
+            {
+              "commit": "8706814a9",
+              "action": "updated",
+              "sha256": "01c2c812a06130abddb4ec78d8760537f18cff2eb6bfd96f09b87b748dd9192b"
+            }
+          ],
+          "sourceClosureCompleteness": "direct versioned schema authorship and governing contract/current source/package closure are pinned; SDK archive bytes remain unqualified",
           "historicalGeneratorReceipt": {
             "path": "docs/helix/04-build/evidence/metamodel-authority/regression/current-schema-generators/receipt.json",
             "sha256": "f4ab1c57f034d58ea498097e6776a42de6d974d47841f221cfc3b99064d902e1",
@@ -57532,8 +57743,40 @@
           },
           "sourceClosure": [
             {
+              "path": "docs/helix/02-design/contracts/CONTRACT-019-parquet.md",
+              "sha256": "e47f7bf0ab24b0d3a65808c70a2c53867bbf24f9a992ce11485c10f078eab696"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+              "sha256": "b84ed0a802fd8a7f7585dddda69a040f2133c28928d126d352b5d979ae76554a"
+            },
+            {
               "path": "docs/helix/04-build/evidence/metamodel-authority/regression/current-schema-generators/receipt.json",
               "sha256": "f4ab1c57f034d58ea498097e6776a42de6d974d47841f221cfc3b99064d902e1"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/core-ideals/relationship-parquet-projection.ts",
+              "sha256": "43307332c23141b127d075c8dceebbb06223ea97eec3ac7e21b61a2bf27a94ae"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "tests/core-ideals/relationship-parquet.test.ts",
+              "sha256": "5271515bbbd2ea375bfeea5b4107bc7394dcfcaaef28a5e7db0135822bd5132b"
             }
           ]
         },
@@ -57619,7 +57862,7 @@
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -71662,7 +71905,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -72208,7 +72451,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -72224,7 +72467,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -72347,7 +72590,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -72363,7 +72606,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -72486,7 +72729,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -72502,7 +72745,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -72625,7 +72868,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -72641,7 +72884,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -72764,7 +73007,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -72780,7 +73023,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -72903,7 +73146,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -72919,7 +73162,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -75028,7 +75271,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -75044,7 +75287,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -75659,18 +75902,66 @@
           "packageRootAliasCount": 2
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "authored-authority-known",
           "canonicalPath": "spec/core/relationship-metadata-selection-v2.schema.json",
-          "generatorKind": "unresolved",
+          "generatorKind": "authored-versioned-contract-schema",
           "generator": null,
           "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
+          "kind": "authored-versioned-contract-schema",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+            "docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md"
+          ],
           "governingClauses": [],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "authoredRevisionClosure": [
+            {
+              "commit": "25a38767a3ce7a2c7af297cf541196e9cbc6ad4a",
+              "action": "added",
+              "sha256": "991f845a1b8a7517c1ad6a43826b31cb83ae03d597b8cbc8b7dcea8e933c29b8"
+            },
+            {
+              "commit": "8706814a9",
+              "action": "updated",
+              "sha256": "e1586b2164f8f1c06dabdf7505861ab7c39c5cef0a267a3033a8d95aa479f720"
+            }
+          ],
+          "sourceClosureCompleteness": "direct versioned schema authorship and governing contract/current source/package closure are pinned; SDK archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+              "sha256": "b84ed0a802fd8a7f7585dddda69a040f2133c28928d126d352b5d979ae76554a"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md",
+              "sha256": "373f396361aeaa38109348d3bebb1328d5014343625055e5bda8cd212055df20"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/relationship-selection.ts",
+              "sha256": "c6a1a570846fb507069d4a45c77722990b5e282ee7b24d48a76bdfcb22fe7f6d"
+            },
+            {
+              "path": "tests/core/relationship-selection.test.ts",
+              "sha256": "4567785fdc156040d8a0b18e1f6cdeae7e9411070d7845f3dee54a7ae2bf46ae"
+            }
+          ]
         },
         "routes": [
           {
@@ -75778,7 +76069,7 @@
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -79395,7 +79686,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -79790,7 +80081,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -81042,18 +81333,66 @@
           "packageRootAliasCount": 2
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "authored-authority-known",
           "canonicalPath": "spec/core/relationship-metadata-selection-v2.schema.json",
-          "generatorKind": "unresolved",
+          "generatorKind": "authored-versioned-contract-schema",
           "generator": null,
           "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
+          "kind": "authored-versioned-contract-schema",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+            "docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md"
+          ],
           "governingClauses": [],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "authoredRevisionClosure": [
+            {
+              "commit": "25a38767a3ce7a2c7af297cf541196e9cbc6ad4a",
+              "action": "added",
+              "sha256": "991f845a1b8a7517c1ad6a43826b31cb83ae03d597b8cbc8b7dcea8e933c29b8"
+            },
+            {
+              "commit": "8706814a9",
+              "action": "updated",
+              "sha256": "e1586b2164f8f1c06dabdf7505861ab7c39c5cef0a267a3033a8d95aa479f720"
+            }
+          ],
+          "sourceClosureCompleteness": "direct versioned schema authorship and governing contract/current source/package closure are pinned; SDK archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+              "sha256": "b84ed0a802fd8a7f7585dddda69a040f2133c28928d126d352b5d979ae76554a"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md",
+              "sha256": "373f396361aeaa38109348d3bebb1328d5014343625055e5bda8cd212055df20"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/relationship-selection.ts",
+              "sha256": "c6a1a570846fb507069d4a45c77722990b5e282ee7b24d48a76bdfcb22fe7f6d"
+            },
+            {
+              "path": "tests/core/relationship-selection.test.ts",
+              "sha256": "4567785fdc156040d8a0b18e1f6cdeae7e9411070d7845f3dee54a7ae2bf46ae"
+            }
+          ]
         },
         "routes": [
           {
@@ -81161,7 +81500,7 @@
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -81387,18 +81726,66 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "authored-authority-known",
           "canonicalPath": "spec/core/relationship-operation-v3.schema.json",
-          "generatorKind": "unresolved",
+          "generatorKind": "authored-versioned-contract-schema",
           "generator": null,
           "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
+          "kind": "authored-versioned-contract-schema",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+            "docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md"
+          ],
           "governingClauses": [],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "authoredRevisionClosure": [
+            {
+              "commit": "25a38767a3ce7a2c7af297cf541196e9cbc6ad4a",
+              "action": "added",
+              "sha256": "58c3d8a0ba0a0261ef3954f2952df62830c28b2570f523e11eab612206e67603"
+            },
+            {
+              "commit": "8706814a9",
+              "action": "updated",
+              "sha256": "42a3a7ad1e3ef7ac80ef5044948aad12847de22aaf63367e6264bfcb2434bda7"
+            }
+          ],
+          "sourceClosureCompleteness": "direct versioned schema authorship and governing contract/current source/package closure are pinned; SDK archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+              "sha256": "b84ed0a802fd8a7f7585dddda69a040f2133c28928d126d352b5d979ae76554a"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md",
+              "sha256": "373f396361aeaa38109348d3bebb1328d5014343625055e5bda8cd212055df20"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/relationships.ts",
+              "sha256": "66b15764cb80059de8e98adb9741b9314a1966674f22ef4f114306e679d5e547"
+            },
+            {
+              "path": "tests/core/relationship-operations.test.ts",
+              "sha256": "9287450ad26f932bc01742bfb46facd2c3e6d1509a583017d3490378f2acde89"
+            }
+          ]
         },
         "routes": [
           {
@@ -81506,7 +81893,7 @@
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -81658,7 +82045,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b",
+      "sourceSha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
       "ownerFamily": "resource:spec/core/schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from browser package root",
@@ -81668,7 +82055,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/schema.json",
-          "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b",
+          "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
           "packageRootAliasCount": 2
         },
         "authority": {
@@ -81701,7 +82088,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
             }
           ]
         },
@@ -81720,7 +82107,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -82056,7 +82443,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347"
+                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
               },
               {
                 "path": "src/index-browser-v4.ts",
@@ -82196,7 +82583,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -82422,7 +82809,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -82506,7 +82893,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -82530,7 +82917,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -82561,7 +82948,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -82596,7 +82983,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -82615,7 +83002,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -82642,7 +83029,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b",
+      "sourceSha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
       "ownerFamily": "resource:spec/core/schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from browser package root",
@@ -82652,7 +83039,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/schema.json",
-          "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b",
+          "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
           "packageRootAliasCount": 2
         },
         "authority": {
@@ -82685,7 +83072,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
             }
           ]
         },
@@ -82704,7 +83091,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -83040,7 +83427,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347"
+                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
               },
               {
                 "path": "src/index-browser-v4.ts",
@@ -83180,7 +83567,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -83406,7 +83793,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -83490,7 +83877,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -83514,7 +83901,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -83545,7 +83932,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -83580,7 +83967,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -83599,7 +83986,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -83756,7 +84143,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/semantic-type-reference.schema.json",
       "line": 1,
-      "sourceSha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a",
+      "sourceSha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23",
       "ownerFamily": "resource:spec/core/semantic-type-reference.schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from browser package root",
@@ -83766,7 +84153,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/semantic-type-reference.schema.json",
-          "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a",
+          "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23",
           "packageRootAliasCount": 1
         },
         "authority": {
@@ -83799,7 +84186,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
             }
           ]
         },
@@ -83818,7 +84205,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -83830,7 +84217,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347"
+                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
               },
               {
                 "path": "src/index-browser-v4.ts",
@@ -83882,7 +84269,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
               }
             ],
             "installedQualification": {
@@ -84096,7 +84483,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -84176,7 +84563,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
               }
             ],
             "installedQualification": {
@@ -84200,7 +84587,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
               }
             ],
             "installedQualification": {
@@ -84231,7 +84618,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
               }
             ],
             "installedQualification": {
@@ -84266,7 +84653,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
               }
             ],
             "installedQualification": {
@@ -84285,7 +84672,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -84916,7 +85303,7 @@
       "declarationKind": "VariableDeclaration",
       "source": "src/generated/core-model.ts",
       "line": 3,
-      "sourceSha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347",
+      "sourceSha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba",
       "ownerFamily": "generated-runtime",
       "rowKind": "executable",
       "defaultRoute": "browser package root declaration",
@@ -87870,7 +88257,7 @@
             },
             {
               "path": "spec/core/extension-package.schema.json",
-              "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+              "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
             },
             {
               "path": "spec/core/native-json.schema.json",
@@ -87878,11 +88265,11 @@
             },
             {
               "path": "spec/core/schema.json",
-              "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+              "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
             },
             {
               "path": "spec/core/semantic-type-reference.schema.json",
-              "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+              "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
             },
             {
               "path": "spec/extensions/delta/package.json",
@@ -87894,11 +88281,11 @@
             },
             {
               "path": "spec/metamodel/generated/core-constraints.json",
-              "sha256": "a132b2454e1715df392ef5a30b7aba58704c53943e23bc3737908ab21d30a7df"
+              "sha256": "332a5ab39c83ba3b22fb3f124f982df8caad5b5bda358c0265f3ed1f9f98068c"
             },
             {
               "path": "spec/metamodel/generated/domain-policy.json",
-              "sha256": "86ed18aefb00c71d7cf176b85d28e67d24aa04d85547dc5093d93b86f7d00003"
+              "sha256": "348913d56fe96d3ff4f9a46c446a641f06d31758532f686277cd5d3208df5465"
             },
             {
               "path": "src/adapters/delta/index.ts",
@@ -87910,7 +88297,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347"
+              "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
             },
             {
               "path": "src/index.ts",
@@ -89675,7 +90062,7 @@
             },
             {
               "path": "spec/core/extension-package.schema.json",
-              "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+              "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
             },
             {
               "path": "spec/core/native-json.schema.json",
@@ -89683,11 +90070,11 @@
             },
             {
               "path": "spec/core/schema.json",
-              "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+              "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
             },
             {
               "path": "spec/core/semantic-type-reference.schema.json",
-              "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+              "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
             },
             {
               "path": "spec/extensions/delta-table/package.json",
@@ -89699,11 +90086,11 @@
             },
             {
               "path": "spec/metamodel/generated/core-constraints.json",
-              "sha256": "a132b2454e1715df392ef5a30b7aba58704c53943e23bc3737908ab21d30a7df"
+              "sha256": "332a5ab39c83ba3b22fb3f124f982df8caad5b5bda358c0265f3ed1f9f98068c"
             },
             {
               "path": "spec/metamodel/generated/domain-policy.json",
-              "sha256": "86ed18aefb00c71d7cf176b85d28e67d24aa04d85547dc5093d93b86f7d00003"
+              "sha256": "348913d56fe96d3ff4f9a46c446a641f06d31758532f686277cd5d3208df5465"
             },
             {
               "path": "src/adapters/delta/index.ts",
@@ -89715,7 +90102,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347"
+              "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
             },
             {
               "path": "src/index.ts",
@@ -92492,7 +92879,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/extension-package.schema.json",
       "line": 1,
-      "sourceSha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535",
+      "sourceSha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7",
       "ownerFamily": "resource:spec/core/extension-package.schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from browser package root",
@@ -92502,7 +92889,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/extension-package.schema.json",
-          "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535",
+          "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7",
           "packageRootAliasCount": 1
         },
         "authority": {
@@ -92535,7 +92922,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
             }
           ]
         },
@@ -92554,7 +92941,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -92566,7 +92953,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347"
+                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
               },
               {
                 "path": "src/index-browser-v4.ts",
@@ -92610,7 +92997,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
               }
             ],
             "installedQualification": {
@@ -92800,7 +93187,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/binding_index_projection.rs",
@@ -92872,7 +93259,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
               }
             ],
             "installedQualification": {
@@ -92896,7 +93283,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
               }
             ],
             "installedQualification": {
@@ -92927,7 +93314,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
               }
             ],
             "installedQualification": {
@@ -92962,7 +93349,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
               }
             ],
             "installedQualification": {
@@ -92981,7 +93368,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -99090,7 +99477,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/core-model.js",
@@ -99106,7 +99493,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -99235,7 +99622,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/core-model.js",
@@ -99251,7 +99638,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -99522,7 +99909,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/core-model.js",
@@ -99538,7 +99925,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -109889,7 +110276,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -109905,7 +110292,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -110035,7 +110422,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
@@ -110313,7 +110700,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
@@ -110432,7 +110819,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -110448,7 +110835,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -120864,16 +121251,32 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "authored-authority-known",
           "canonicalPath": "spec/core/relationship-extras.schema.json",
-          "generatorKind": "historical-generator-cohort-output; exact writer unresolved",
+          "generatorKind": "authored-versioned-contract-schema",
           "generator": null,
           "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
+          "kind": "authored-versioned-contract-schema",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+            "docs/helix/02-design/technical-designs/TD-045-relationship.md",
+            "docs/helix/01-frame/user-stories/US-045-relationship.md"
+          ],
           "governingClauses": [],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "authoredRevisionClosure": [
+            {
+              "commit": "997c1a16a9b52e62252b5ce4e4bc3d4f3b7b7cb9",
+              "action": "added",
+              "sha256": "8976c2c707c5616922bebf085f65d6d029ca7ed685c90cad5613dbd87ecb226c"
+            },
+            {
+              "commit": "8706814a9",
+              "action": "updated",
+              "sha256": "fad9ec7ad8b33cc631647a30e1061a926307c702e9a5c18ba7cdf8dff94510e6"
+            }
+          ],
+          "sourceClosureCompleteness": "direct versioned schema authorship and governing contract/current source/package closure are pinned; SDK archive bytes remain unqualified",
           "historicalGeneratorReceipt": {
             "path": "docs/helix/04-build/evidence/metamodel-authority/regression/current-schema-generators/receipt.json",
             "sha256": "f4ab1c57f034d58ea498097e6776a42de6d974d47841f221cfc3b99064d902e1",
@@ -120881,8 +121284,44 @@
           },
           "sourceClosure": [
             {
+              "path": "docs/helix/01-frame/user-stories/US-045-relationship.md",
+              "sha256": "c204796efbe490e9568b3d74bc35dd6e0b1dbe780061b592082b64a80f2fdc24"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+              "sha256": "b84ed0a802fd8a7f7585dddda69a040f2133c28928d126d352b5d979ae76554a"
+            },
+            {
+              "path": "docs/helix/02-design/technical-designs/TD-045-relationship.md",
+              "sha256": "dcb8dffcbdf2b8966a25ff04d640d23f56c991e99156649024e29741cd522468"
+            },
+            {
               "path": "docs/helix/04-build/evidence/metamodel-authority/regression/current-schema-generators/receipt.json",
               "sha256": "f4ab1c57f034d58ea498097e6776a42de6d974d47841f221cfc3b99064d902e1"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/core-ideals/relationship-extras.ts",
+              "sha256": "c45acfba9539c29f7fa604d89ed0f4a5773b742dc2951e1ca15da2f542248937"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "tests/core-ideals/relationship-extras.test.ts",
+              "sha256": "7e5d57a47ce4ed6ccaa19f4ed7d43eb853d6724d90a17ed096be70d52d40516d"
             }
           ]
         },
@@ -120972,7 +121411,7 @@
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -121008,16 +121447,31 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "authored-authority-known",
           "canonicalPath": "spec/core/relationship-parquet-projection.schema.json",
-          "generatorKind": "historical-generator-cohort-output; exact writer unresolved",
+          "generatorKind": "authored-versioned-contract-schema",
           "generator": null,
           "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
+          "kind": "authored-versioned-contract-schema",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+            "docs/helix/02-design/contracts/CONTRACT-019-parquet.md"
+          ],
           "governingClauses": [],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "authoredRevisionClosure": [
+            {
+              "commit": "f69d1a7c7b7d62d4f2924217b813f8b58b07ecef",
+              "action": "added",
+              "sha256": "ef753a57872076791c435ec2612efb3ce7259ed719baa2a2b28d7a6494c223ec"
+            },
+            {
+              "commit": "8706814a9",
+              "action": "updated",
+              "sha256": "01c2c812a06130abddb4ec78d8760537f18cff2eb6bfd96f09b87b748dd9192b"
+            }
+          ],
+          "sourceClosureCompleteness": "direct versioned schema authorship and governing contract/current source/package closure are pinned; SDK archive bytes remain unqualified",
           "historicalGeneratorReceipt": {
             "path": "docs/helix/04-build/evidence/metamodel-authority/regression/current-schema-generators/receipt.json",
             "sha256": "f4ab1c57f034d58ea498097e6776a42de6d974d47841f221cfc3b99064d902e1",
@@ -121025,8 +121479,40 @@
           },
           "sourceClosure": [
             {
+              "path": "docs/helix/02-design/contracts/CONTRACT-019-parquet.md",
+              "sha256": "e47f7bf0ab24b0d3a65808c70a2c53867bbf24f9a992ce11485c10f078eab696"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+              "sha256": "b84ed0a802fd8a7f7585dddda69a040f2133c28928d126d352b5d979ae76554a"
+            },
+            {
               "path": "docs/helix/04-build/evidence/metamodel-authority/regression/current-schema-generators/receipt.json",
               "sha256": "f4ab1c57f034d58ea498097e6776a42de6d974d47841f221cfc3b99064d902e1"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/core-ideals/relationship-parquet-projection.ts",
+              "sha256": "43307332c23141b127d075c8dceebbb06223ea97eec3ac7e21b61a2bf27a94ae"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "tests/core-ideals/relationship-parquet.test.ts",
+              "sha256": "5271515bbbd2ea375bfeea5b4107bc7394dcfcaaef28a5e7db0135822bd5132b"
             }
           ]
         },
@@ -121116,7 +121602,7 @@
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -122134,7 +122620,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
@@ -128032,7 +128518,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
@@ -129099,7 +129585,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -129115,7 +129601,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -129238,7 +129724,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -129254,7 +129740,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -129701,7 +130187,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/csv-boolean-lexical.js",
@@ -129717,7 +130203,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/csv-boolean-lexical.js",
@@ -130955,7 +131441,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/csv-boolean-lexical.js",
@@ -130971,7 +131457,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/csv-boolean-lexical.js",
@@ -135949,7 +136435,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -136495,7 +136981,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -136511,7 +136997,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -136634,7 +137120,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -136650,7 +137136,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -136773,7 +137259,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -136789,7 +137275,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -136912,7 +137398,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -136928,7 +137414,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -137051,7 +137537,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -137067,7 +137553,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -137190,7 +137676,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -137206,7 +137692,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -139315,7 +139801,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -139331,7 +139817,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -139946,18 +140432,66 @@
           "packageRootAliasCount": 2
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "authored-authority-known",
           "canonicalPath": "spec/core/relationship-metadata-selection-v2.schema.json",
-          "generatorKind": "unresolved",
+          "generatorKind": "authored-versioned-contract-schema",
           "generator": null,
           "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
+          "kind": "authored-versioned-contract-schema",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+            "docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md"
+          ],
           "governingClauses": [],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "authoredRevisionClosure": [
+            {
+              "commit": "25a38767a3ce7a2c7af297cf541196e9cbc6ad4a",
+              "action": "added",
+              "sha256": "991f845a1b8a7517c1ad6a43826b31cb83ae03d597b8cbc8b7dcea8e933c29b8"
+            },
+            {
+              "commit": "8706814a9",
+              "action": "updated",
+              "sha256": "e1586b2164f8f1c06dabdf7505861ab7c39c5cef0a267a3033a8d95aa479f720"
+            }
+          ],
+          "sourceClosureCompleteness": "direct versioned schema authorship and governing contract/current source/package closure are pinned; SDK archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+              "sha256": "b84ed0a802fd8a7f7585dddda69a040f2133c28928d126d352b5d979ae76554a"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md",
+              "sha256": "373f396361aeaa38109348d3bebb1328d5014343625055e5bda8cd212055df20"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/relationship-selection.ts",
+              "sha256": "c6a1a570846fb507069d4a45c77722990b5e282ee7b24d48a76bdfcb22fe7f6d"
+            },
+            {
+              "path": "tests/core/relationship-selection.test.ts",
+              "sha256": "4567785fdc156040d8a0b18e1f6cdeae7e9411070d7845f3dee54a7ae2bf46ae"
+            }
+          ]
         },
         "routes": [
           {
@@ -140065,7 +140599,7 @@
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -143682,7 +144216,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -144077,7 +144611,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -145329,18 +145863,66 @@
           "packageRootAliasCount": 2
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "authored-authority-known",
           "canonicalPath": "spec/core/relationship-metadata-selection-v2.schema.json",
-          "generatorKind": "unresolved",
+          "generatorKind": "authored-versioned-contract-schema",
           "generator": null,
           "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
+          "kind": "authored-versioned-contract-schema",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+            "docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md"
+          ],
           "governingClauses": [],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "authoredRevisionClosure": [
+            {
+              "commit": "25a38767a3ce7a2c7af297cf541196e9cbc6ad4a",
+              "action": "added",
+              "sha256": "991f845a1b8a7517c1ad6a43826b31cb83ae03d597b8cbc8b7dcea8e933c29b8"
+            },
+            {
+              "commit": "8706814a9",
+              "action": "updated",
+              "sha256": "e1586b2164f8f1c06dabdf7505861ab7c39c5cef0a267a3033a8d95aa479f720"
+            }
+          ],
+          "sourceClosureCompleteness": "direct versioned schema authorship and governing contract/current source/package closure are pinned; SDK archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+              "sha256": "b84ed0a802fd8a7f7585dddda69a040f2133c28928d126d352b5d979ae76554a"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md",
+              "sha256": "373f396361aeaa38109348d3bebb1328d5014343625055e5bda8cd212055df20"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/relationship-selection.ts",
+              "sha256": "c6a1a570846fb507069d4a45c77722990b5e282ee7b24d48a76bdfcb22fe7f6d"
+            },
+            {
+              "path": "tests/core/relationship-selection.test.ts",
+              "sha256": "4567785fdc156040d8a0b18e1f6cdeae7e9411070d7845f3dee54a7ae2bf46ae"
+            }
+          ]
         },
         "routes": [
           {
@@ -145448,7 +146030,7 @@
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -145674,18 +146256,66 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "authored-authority-known",
           "canonicalPath": "spec/core/relationship-operation-v3.schema.json",
-          "generatorKind": "unresolved",
+          "generatorKind": "authored-versioned-contract-schema",
           "generator": null,
           "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
+          "kind": "authored-versioned-contract-schema",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+            "docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md"
+          ],
           "governingClauses": [],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "authoredRevisionClosure": [
+            {
+              "commit": "25a38767a3ce7a2c7af297cf541196e9cbc6ad4a",
+              "action": "added",
+              "sha256": "58c3d8a0ba0a0261ef3954f2952df62830c28b2570f523e11eab612206e67603"
+            },
+            {
+              "commit": "8706814a9",
+              "action": "updated",
+              "sha256": "42a3a7ad1e3ef7ac80ef5044948aad12847de22aaf63367e6264bfcb2434bda7"
+            }
+          ],
+          "sourceClosureCompleteness": "direct versioned schema authorship and governing contract/current source/package closure are pinned; SDK archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+              "sha256": "b84ed0a802fd8a7f7585dddda69a040f2133c28928d126d352b5d979ae76554a"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md",
+              "sha256": "373f396361aeaa38109348d3bebb1328d5014343625055e5bda8cd212055df20"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/relationships.ts",
+              "sha256": "66b15764cb80059de8e98adb9741b9314a1966674f22ef4f114306e679d5e547"
+            },
+            {
+              "path": "tests/core/relationship-operations.test.ts",
+              "sha256": "9287450ad26f932bc01742bfb46facd2c3e6d1509a583017d3490378f2acde89"
+            }
+          ]
         },
         "routes": [
           {
@@ -145793,7 +146423,7 @@
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -145945,7 +146575,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b",
+      "sourceSha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
       "ownerFamily": "resource:spec/core/schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from Node package root",
@@ -145955,7 +146585,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/schema.json",
-          "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b",
+          "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
           "packageRootAliasCount": 2
         },
         "authority": {
@@ -145988,7 +146618,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
             }
           ]
         },
@@ -146007,7 +146637,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -146343,7 +146973,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347"
+                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
               },
               {
                 "path": "src/index-node-v4.ts",
@@ -146483,7 +147113,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -146709,7 +147339,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -146793,7 +147423,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -146817,7 +147447,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -146848,7 +147478,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -146883,7 +147513,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -146902,7 +147532,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -146929,7 +147559,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b",
+      "sourceSha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
       "ownerFamily": "resource:spec/core/schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from Node package root",
@@ -146939,7 +147569,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/schema.json",
-          "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b",
+          "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
           "packageRootAliasCount": 2
         },
         "authority": {
@@ -146972,7 +147602,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
             }
           ]
         },
@@ -146991,7 +147621,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -147327,7 +147957,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347"
+                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
               },
               {
                 "path": "src/index-node-v4.ts",
@@ -147467,7 +148097,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -147693,7 +148323,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -147777,7 +148407,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -147801,7 +148431,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -147832,7 +148462,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -147867,7 +148497,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
               }
             ],
             "installedQualification": {
@@ -147886,7 +148516,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -148043,7 +148673,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/semantic-type-reference.schema.json",
       "line": 1,
-      "sourceSha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a",
+      "sourceSha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23",
       "ownerFamily": "resource:spec/core/semantic-type-reference.schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from Node package root",
@@ -148053,7 +148683,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/semantic-type-reference.schema.json",
-          "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a",
+          "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23",
           "packageRootAliasCount": 1
         },
         "authority": {
@@ -148086,7 +148716,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
             }
           ]
         },
@@ -148105,7 +148735,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -148117,7 +148747,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347"
+                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
               },
               {
                 "path": "src/index-node-v4.ts",
@@ -148169,7 +148799,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
               }
             ],
             "installedQualification": {
@@ -148383,7 +149013,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -148463,7 +149093,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
               }
             ],
             "installedQualification": {
@@ -148487,7 +149117,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
               }
             ],
             "installedQualification": {
@@ -148518,7 +149148,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
               }
             ],
             "installedQualification": {
@@ -148553,7 +149183,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
               }
             ],
             "installedQualification": {
@@ -148572,7 +149202,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -149203,7 +149833,7 @@
       "declarationKind": "VariableDeclaration",
       "source": "src/generated/core-model.ts",
       "line": 3,
-      "sourceSha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347",
+      "sourceSha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba",
       "ownerFamily": "generated-runtime",
       "rowKind": "executable",
       "defaultRoute": "Node package root declaration",
@@ -152157,7 +152787,7 @@
             },
             {
               "path": "spec/core/extension-package.schema.json",
-              "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+              "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
             },
             {
               "path": "spec/core/native-json.schema.json",
@@ -152165,11 +152795,11 @@
             },
             {
               "path": "spec/core/schema.json",
-              "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+              "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
             },
             {
               "path": "spec/core/semantic-type-reference.schema.json",
-              "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+              "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
             },
             {
               "path": "spec/extensions/delta/package.json",
@@ -152181,11 +152811,11 @@
             },
             {
               "path": "spec/metamodel/generated/core-constraints.json",
-              "sha256": "a132b2454e1715df392ef5a30b7aba58704c53943e23bc3737908ab21d30a7df"
+              "sha256": "332a5ab39c83ba3b22fb3f124f982df8caad5b5bda358c0265f3ed1f9f98068c"
             },
             {
               "path": "spec/metamodel/generated/domain-policy.json",
-              "sha256": "86ed18aefb00c71d7cf176b85d28e67d24aa04d85547dc5093d93b86f7d00003"
+              "sha256": "348913d56fe96d3ff4f9a46c446a641f06d31758532f686277cd5d3208df5465"
             },
             {
               "path": "src/adapters/delta/index.ts",
@@ -152197,7 +152827,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347"
+              "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
             },
             {
               "path": "src/index.ts",
@@ -153962,7 +154592,7 @@
             },
             {
               "path": "spec/core/extension-package.schema.json",
-              "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+              "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
             },
             {
               "path": "spec/core/native-json.schema.json",
@@ -153970,11 +154600,11 @@
             },
             {
               "path": "spec/core/schema.json",
-              "sha256": "11047309691ac68d8cf87a170fea20ade779ae8b3344b79b7ebe5b00fb5a5f0b"
+              "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
             },
             {
               "path": "spec/core/semantic-type-reference.schema.json",
-              "sha256": "5c40748b73732a8e08e63a7168cffb8e62d0bda8a526c25e91c3066f3092575a"
+              "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
             },
             {
               "path": "spec/extensions/delta-table/package.json",
@@ -153986,11 +154616,11 @@
             },
             {
               "path": "spec/metamodel/generated/core-constraints.json",
-              "sha256": "a132b2454e1715df392ef5a30b7aba58704c53943e23bc3737908ab21d30a7df"
+              "sha256": "332a5ab39c83ba3b22fb3f124f982df8caad5b5bda358c0265f3ed1f9f98068c"
             },
             {
               "path": "spec/metamodel/generated/domain-policy.json",
-              "sha256": "86ed18aefb00c71d7cf176b85d28e67d24aa04d85547dc5093d93b86f7d00003"
+              "sha256": "348913d56fe96d3ff4f9a46c446a641f06d31758532f686277cd5d3208df5465"
             },
             {
               "path": "src/adapters/delta/index.ts",
@@ -154002,7 +154632,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347"
+              "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
             },
             {
               "path": "src/index.ts",
@@ -156779,7 +157409,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/extension-package.schema.json",
       "line": 1,
-      "sourceSha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535",
+      "sourceSha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7",
       "ownerFamily": "resource:spec/core/extension-package.schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from Node package root",
@@ -156789,7 +157419,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/extension-package.schema.json",
-          "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535",
+          "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7",
           "packageRootAliasCount": 1
         },
         "authority": {
@@ -156822,7 +157452,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
             }
           ]
         },
@@ -156841,7 +157471,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -156853,7 +157483,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "0dfd495cf09cf3e90e5c1810465b189711478e92cc35adfbba6739ef8f8e7347"
+                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
               },
               {
                 "path": "src/index-node-v4.ts",
@@ -156897,7 +157527,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
               }
             ],
             "installedQualification": {
@@ -157087,7 +157717,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "bfcbd20c454a584c8eae05fe5e30dd78c277e17b42ad96541bbea226e60c40f7"
+                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
               },
               {
                 "path": "crates/umf-core/src/binding_index_projection.rs",
@@ -157159,7 +157789,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
               }
             ],
             "installedQualification": {
@@ -157183,7 +157813,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
               }
             ],
             "installedQualification": {
@@ -157214,7 +157844,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
               }
             ],
             "installedQualification": {
@@ -157249,7 +157879,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "817df42389e06b32320c5f18ebf610cec9bdef83f6b58342411c5da31037a535"
+                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
               }
             ],
             "installedQualification": {
@@ -157268,7 +157898,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "8b32dadc57b1e1a12928fcbd4f6309e562be2330540b1e434f2f4fff5a96fb9c"
+            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -163377,7 +164007,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/core-model.js",
@@ -163393,7 +164023,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -163522,7 +164152,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/core-model.js",
@@ -163538,7 +164168,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -163809,7 +164439,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/core-model.js",
@@ -163825,7 +164455,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -174176,7 +174806,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -174192,7 +174822,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -174322,7 +174952,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
@@ -174600,7 +175230,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
@@ -174719,7 +175349,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -174735,7 +175365,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -185151,16 +185781,32 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "authored-authority-known",
           "canonicalPath": "spec/core/relationship-extras.schema.json",
-          "generatorKind": "historical-generator-cohort-output; exact writer unresolved",
+          "generatorKind": "authored-versioned-contract-schema",
           "generator": null,
           "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
+          "kind": "authored-versioned-contract-schema",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+            "docs/helix/02-design/technical-designs/TD-045-relationship.md",
+            "docs/helix/01-frame/user-stories/US-045-relationship.md"
+          ],
           "governingClauses": [],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "authoredRevisionClosure": [
+            {
+              "commit": "997c1a16a9b52e62252b5ce4e4bc3d4f3b7b7cb9",
+              "action": "added",
+              "sha256": "8976c2c707c5616922bebf085f65d6d029ca7ed685c90cad5613dbd87ecb226c"
+            },
+            {
+              "commit": "8706814a9",
+              "action": "updated",
+              "sha256": "fad9ec7ad8b33cc631647a30e1061a926307c702e9a5c18ba7cdf8dff94510e6"
+            }
+          ],
+          "sourceClosureCompleteness": "direct versioned schema authorship and governing contract/current source/package closure are pinned; SDK archive bytes remain unqualified",
           "historicalGeneratorReceipt": {
             "path": "docs/helix/04-build/evidence/metamodel-authority/regression/current-schema-generators/receipt.json",
             "sha256": "f4ab1c57f034d58ea498097e6776a42de6d974d47841f221cfc3b99064d902e1",
@@ -185168,8 +185814,44 @@
           },
           "sourceClosure": [
             {
+              "path": "docs/helix/01-frame/user-stories/US-045-relationship.md",
+              "sha256": "c204796efbe490e9568b3d74bc35dd6e0b1dbe780061b592082b64a80f2fdc24"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+              "sha256": "b84ed0a802fd8a7f7585dddda69a040f2133c28928d126d352b5d979ae76554a"
+            },
+            {
+              "path": "docs/helix/02-design/technical-designs/TD-045-relationship.md",
+              "sha256": "dcb8dffcbdf2b8966a25ff04d640d23f56c991e99156649024e29741cd522468"
+            },
+            {
               "path": "docs/helix/04-build/evidence/metamodel-authority/regression/current-schema-generators/receipt.json",
               "sha256": "f4ab1c57f034d58ea498097e6776a42de6d974d47841f221cfc3b99064d902e1"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/core-ideals/relationship-extras.ts",
+              "sha256": "c45acfba9539c29f7fa604d89ed0f4a5773b742dc2951e1ca15da2f542248937"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "tests/core-ideals/relationship-extras.test.ts",
+              "sha256": "7e5d57a47ce4ed6ccaa19f4ed7d43eb853d6724d90a17ed096be70d52d40516d"
             }
           ]
         },
@@ -185259,7 +185941,7 @@
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -185295,16 +185977,31 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "authored-authority-known",
           "canonicalPath": "spec/core/relationship-parquet-projection.schema.json",
-          "generatorKind": "historical-generator-cohort-output; exact writer unresolved",
+          "generatorKind": "authored-versioned-contract-schema",
           "generator": null,
           "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
+          "kind": "authored-versioned-contract-schema",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+            "docs/helix/02-design/contracts/CONTRACT-019-parquet.md"
+          ],
           "governingClauses": [],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "authoredRevisionClosure": [
+            {
+              "commit": "f69d1a7c7b7d62d4f2924217b813f8b58b07ecef",
+              "action": "added",
+              "sha256": "ef753a57872076791c435ec2612efb3ce7259ed719baa2a2b28d7a6494c223ec"
+            },
+            {
+              "commit": "8706814a9",
+              "action": "updated",
+              "sha256": "01c2c812a06130abddb4ec78d8760537f18cff2eb6bfd96f09b87b748dd9192b"
+            }
+          ],
+          "sourceClosureCompleteness": "direct versioned schema authorship and governing contract/current source/package closure are pinned; SDK archive bytes remain unqualified",
           "historicalGeneratorReceipt": {
             "path": "docs/helix/04-build/evidence/metamodel-authority/regression/current-schema-generators/receipt.json",
             "sha256": "f4ab1c57f034d58ea498097e6776a42de6d974d47841f221cfc3b99064d902e1",
@@ -185312,8 +186009,40 @@
           },
           "sourceClosure": [
             {
+              "path": "docs/helix/02-design/contracts/CONTRACT-019-parquet.md",
+              "sha256": "e47f7bf0ab24b0d3a65808c70a2c53867bbf24f9a992ce11485c10f078eab696"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
+              "sha256": "b84ed0a802fd8a7f7585dddda69a040f2133c28928d126d352b5d979ae76554a"
+            },
+            {
               "path": "docs/helix/04-build/evidence/metamodel-authority/regression/current-schema-generators/receipt.json",
               "sha256": "f4ab1c57f034d58ea498097e6776a42de6d974d47841f221cfc3b99064d902e1"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/core-ideals/relationship-parquet-projection.ts",
+              "sha256": "43307332c23141b127d075c8dceebbb06223ea97eec3ac7e21b61a2bf27a94ae"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "tests/core-ideals/relationship-parquet.test.ts",
+              "sha256": "5271515bbbd2ea375bfeea5b4107bc7394dcfcaaef28a5e7db0135822bd5132b"
             }
           ]
         },
@@ -185403,7 +186132,7 @@
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -186421,7 +187150,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
@@ -192319,7 +193048,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
@@ -193386,7 +194115,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -193402,7 +194131,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -193525,7 +194254,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -193541,7 +194270,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -193988,7 +194717,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/csv-boolean-lexical.js",
@@ -194004,7 +194733,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/csv-boolean-lexical.js",
@@ -195242,7 +195971,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "73e830355533ae5a6b31207f7c12570036fedceb253991b6f2bf4e99b05f8b0b"
+            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
           },
           {
             "path": "bindings/core/node/src/csv-boolean-lexical.js",
@@ -195258,7 +195987,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "675d73c2cf92795485e87f01f5ce6209befa4fe1fb3dd8029507671598b6752d"
+            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
           },
           {
             "path": "bindings/core/wasm/src/csv-boolean-lexical.js",
@@ -208453,7 +209182,7 @@
       },
       {
         "source": "scripts/rust-migration/r8/gap-ledger.mjs",
-        "sourceSha256": "1ad9a65cc0c9d528838f1346d0b52ca0ad39fed44bc2e5aec1b75bcdfee49726",
+        "sourceSha256": "f8e266c9abc07c7c86eb6478b2ec6c8f20453595ffaa043dc89625697a5f1ad0",
         "packageScriptEntrypoints": [],
         "activity": "package-entrypoint-reachability-unresolved",
         "role": "support-tool",
@@ -208461,7 +209190,7 @@
       },
       {
         "source": "scripts/rust-migration/r8/gap-ledger.test.mjs",
-        "sourceSha256": "18638618d81e8c54453e6349169545f64bbe81c93ed6ca437ea03a8ac5e8e716",
+        "sourceSha256": "e97ab73155f31a111a651817b00219d0961c9a88f1a8df95313192472f2f75db",
         "packageScriptEntrypoints": [],
         "activity": "package-entrypoint-reachability-unresolved",
         "role": "support-tool",
@@ -208485,7 +209214,7 @@
       },
       {
         "source": "scripts/rust-migration/r8/json-value-serialization-binding-node.mjs",
-        "sourceSha256": "1ae3351c2fa618ae0f22939865389665b01cd4a390a83d8e56c5231da0d8e68f",
+        "sourceSha256": "5f755bb25b1f927c9a579308b42553055fbb8a752c764611ccfbe2863d7f2b9c",
         "packageScriptEntrypoints": [],
         "activity": "package-entrypoint-reachability-unresolved",
         "role": "support-tool",
@@ -208493,7 +209222,7 @@
       },
       {
         "source": "scripts/rust-migration/r8/json-value-serialization-browser.mjs",
-        "sourceSha256": "0a7860e059a1ee4fcab4d58e5b36f1a190ff89c99ecf98078aad623b77bb0bed",
+        "sourceSha256": "ead42a77d42038b933846096c7da1bfa27cb8291a565ba4a3c5afeca43aeece3",
         "packageScriptEntrypoints": [],
         "activity": "package-entrypoint-reachability-unresolved",
         "role": "support-tool",
@@ -208501,7 +209230,7 @@
       },
       {
         "source": "scripts/rust-migration/r8/json-value-serialization-wasm-node.mjs",
-        "sourceSha256": "befe264d8110dd75019475df84d5165c72fe3b9ee242a29376b1f476c4519aab",
+        "sourceSha256": "a436880db7ce5a645ffc73b90d27f9e62a798ef90809bcba25e8adfcdd14f595",
         "packageScriptEntrypoints": [],
         "activity": "package-entrypoint-reachability-unresolved",
         "role": "support-tool",
@@ -211401,7 +212130,7 @@
           },
           {
             "source": "python/umf_access/src/umf_access/generated_core.py",
-            "sourceSha256": "2623b215bb517f11130d013080870f4594ad5df43dc1ee07559158f6ad749142",
+            "sourceSha256": "825f5d8576d5ca7522177c0f08c3f6e97f984b1e7d65c1c5ab4a960c3f86bd3e",
             "publicCallableNames": [],
             "disposition": "module-level public-by-convention surface; exact contract and Rust route remain unreviewed"
           },

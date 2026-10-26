@@ -4821,3 +4821,30 @@ inventory SHA-256 is
 and ledger SHA-256 is
 `5f55f338943c1a9bfb082a668d4fa6342d97787dafd3e7a99a14e66e6bdf32df`;
 all 922 logical default-route gaps remain.
+
+The next integrated checkpoint repairs the two YAML diagnostics through
+source-offset-preserving Rust parsing and keeps the Node/WASM public format
+fallback aligned with TypeScript. The recaptured
+[24-case serialization packet](evidence/rust-migration/r8-json-value-serialization/README.md)
+is SHA-256
+`3b720b959a934e9e0aad6f86a80d7dc9bc995a21a302f32448a73a39d599678e`;
+fresh Node/Bun native, Node/Bun WASM, and Chromium WASM replays each match
+24/24. The Bun native replay temporarily loaded the fresh dylib in place of
+the stale ignored checkout addon; installed package qualification is still
+required. Host error identity, proxy reflection order, and broader YAML
+writer behavior remain open. The bounded Avro Record Type classifier also
+matches the ordered mapping arrays of 30 frozen strict/report cases, including
+blocked generic Field mappings; full result, recovery, host, and installed
+parity remain open. The
+[relationship resource review](evidence/rust-migration/r8-symbol-inventory/relationship-resource-authority.md)
+establishes direct authorship for four files and leaves the composite
+relationship-selection schema unresolved. Current inventory SHA-256 is
+`1d7589b8bad71a50f1fdcebcc50bfa897af25d7dbd2cdfbdf452f6a5ae8aa3c2`;
+ledger SHA-256 is
+`12485a87eb3aba1a6ca8f52aa1b4c196445b89d4b325af18da9ab6320b99368f`.
+Its resource classification is 39 generated-known, 41 authored-known, 88
+candidate-generated, and 30 unresolved files. The 58 accepted opt-in
+mappings, 864 unmapped names, 922 default-route retirement gaps, and zero
+proven current-cohort default binding routes are unchanged. Do not promote
+these slices to a default route or release until their host and installed
+qualification and the remaining R8 closure are complete.

@@ -1140,14 +1140,22 @@ const versionedCoreSchemaAuthors = new Map([
     ['spec/core/facet-operation-v5.schema.json', ['docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md', 'docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md'], ['src/model/facets.ts', 'src/index.ts'], 'f70a0cf3ee39ee725d5a33def64ed6c8557e7fbef4d3d0ca89afd53a8b6820e3', 'de87a6c79500be2b99337f5a885698b24b9e4d47a997c6d3cd649c90ea853bca'],
     ['spec/core/key-operation-v4.schema.json', ['docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md', 'docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md'], ['src/model/keys.ts', 'src/index.ts'], 'dd087b5e26a92dd6ee5366ded216a006ed4ef5e7b31e851890fd81d978606ba1', 'f9306a891b4f0f9f180160144109e05b42e05e8868dcc84fc301f5819c63519f'],
     ['spec/core/key-tuple-operation-v4.schema.json', ['docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md', 'docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md'], ['src/model/key-tuple.ts', 'src/model/evolution.ts', 'src/model/dataset-values.ts', 'src/model/dataset-values-compact.ts', 'src/index.ts'], '90691e12c3edd982009124ea3d7a170d0f109bca76d388d5388bd2578ffaee0c', 'fe7d93da41ac331696686bd32fb0be8ca62b7a5638b95b975034195d66dff2cc'],
-  ].map(([file, governingArtifacts, consumers, addedSha256, refreshedSha256]) => [file, {
+    ['spec/core/relationship-metadata-selection-v2.schema.json', ['docs/helix/02-design/contracts/CONTRACT-041-relationship.md', 'docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md'], ['src/model/relationship-selection.ts', 'src/index.ts'], '991f845a1b8a7517c1ad6a43826b31cb83ae03d597b8cbc8b7dcea8e933c29b8', 'e1586b2164f8f1c06dabdf7505861ab7c39c5cef0a267a3033a8d95aa479f720'],
+    ['spec/core/relationship-operation-v3.schema.json', ['docs/helix/02-design/contracts/CONTRACT-041-relationship.md', 'docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md'], ['src/model/relationships.ts', 'src/index.ts'], '58c3d8a0ba0a0261ef3954f2952df62830c28b2570f523e11eab612206e67603', '42a3a7ad1e3ef7ac80ef5044948aad12847de22aaf63367e6264bfcb2434bda7'],
+    ['spec/core/relationship-extras.schema.json', ['docs/helix/02-design/contracts/CONTRACT-041-relationship.md', 'docs/helix/02-design/technical-designs/TD-045-relationship.md', 'docs/helix/01-frame/user-stories/US-045-relationship.md'], ['src/core-ideals/relationship-extras.ts', 'src/index.ts'], '8976c2c707c5616922bebf085f65d6d029ca7ed685c90cad5613dbd87ecb226c', 'fad9ec7ad8b33cc631647a30e1061a926307c702e9a5c18ba7cdf8dff94510e6', '997c1a16a9b52e62252b5ce4e4bc3d4f3b7b7cb9'],
+    ['spec/core/relationship-parquet-projection.schema.json', ['docs/helix/02-design/contracts/CONTRACT-041-relationship.md', 'docs/helix/02-design/contracts/CONTRACT-019-parquet.md'], ['src/core-ideals/relationship-parquet-projection.ts', 'src/index.ts'], 'ef753a57872076791c435ec2612efb3ce7259ed719baa2a2b28d7a6494c223ec', '01c2c812a06130abddb4ec78d8760537f18cff2eb6bfd96f09b87b748dd9192b', 'f69d1a7c7b7d62d4f2924217b813f8b58b07ecef'],
+  ].map(([file, governingArtifacts, consumers, addedSha256, refreshedSha256, addedCommit = '25a38767a3ce7a2c7af297cf541196e9cbc6ad4a']) => [file, {
     kind: 'authored-versioned-contract-schema',
     governingArtifacts,
     authoringHistory: [
-      { commit: '25a38767a3ce7a2c7af297cf541196e9cbc6ad4a', action: 'added', sha256: addedSha256 },
+      { commit: addedCommit, action: 'added', sha256: addedSha256 },
       { commit: '8706814a9', action: 'updated', sha256: refreshedSha256 },
     ],
     closurePaths: [...governingArtifacts, ...consumers,
+      ...(file === 'spec/core/relationship-extras.schema.json' ? ['docs/helix/01-frame/user-stories/US-045-relationship.md', 'tests/core-ideals/relationship-extras.test.ts'] : []),
+      ...(file === 'spec/core/relationship-parquet-projection.schema.json' ? ['tests/core-ideals/relationship-parquet.test.ts'] : []),
+      ...(file === 'spec/core/relationship-metadata-selection-v2.schema.json' ? ['tests/core/relationship-selection.test.ts'] : []),
+      ...(file === 'spec/core/relationship-operation-v3.schema.json' ? ['tests/core/relationship-operations.test.ts'] : []),
       'scripts/build.ts', 'scripts/package-sdk-rust-default.ts', 'scripts/package-sdk.py'],
   }]),
 ]);

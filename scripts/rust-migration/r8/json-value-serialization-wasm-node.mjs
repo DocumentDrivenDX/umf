@@ -11,10 +11,8 @@ await wasm.default(await readFile(resolve(packageRoot, 'umf_core_wasm_bg.wasm'))
 const packetBytes = await readFile(resolve(root, 'docs/helix/04-build/evidence/rust-migration/r8-json-value-serialization/predecessor.json'));
 const packet = JSON.parse(packetBytes);
 const engine = createEngine(wasm);
-const knownDiagnosticMismatches = new Set(['read.syntax.yaml-duplicate-key', 'read.syntax.yaml-multiple-documents']);
 let matched = 0;
 const mismatches = [];
-const diagnosticMismatches = [];
 
 function sourceFor(input) {
   if (typeof input.source === 'string') return input.source;
@@ -34,7 +32,6 @@ for (const item of packet.cases.filter(({id}) => id.startsWith('read.'))) {
   } catch (error) {
     const actual = {status: 'threw', name: error.name, code: error.code, path: error.path, message: error.message};
     if (item.outcome.status !== 'threw') mismatches.push({id: item.id, actual, expected: item.outcome});
-    else if (knownDiagnosticMismatches.has(item.id)) diagnosticMismatches.push({id:item.id,code:actual.code,path:actual.path,message:actual.message});
     else if (actual.name !== item.outcome.name || actual.code !== item.outcome.code || actual.path !== item.outcome.path || actual.message !== item.outcome.message) mismatches.push({id: item.id, actual, expected: item.outcome});
     else matched++;
   }
@@ -56,14 +53,11 @@ for (const item of packet.cases.filter(({id}) => id.startsWith('write.'))) {
   }
 }
 assert.deepEqual(mismatches, []);
-assert.deepEqual(diagnosticMismatches,[
-  {id:'read.syntax.yaml-duplicate-key',code:'DUPLICATE_KEY',path:'',message:'Duplicate mapping key'},
-  {id:'read.syntax.yaml-multiple-documents',code:'YAML_DOCUMENTS',path:'',message:'Exactly one YAML document is required'},
-]);
+assert.equal(matched, packet.cases.length);
 assert.deepEqual(JSON.parse(JSON.stringify(engine.readJsonValue('name: example\n'))), {name: 'example'});
 assert.deepEqual(JSON.parse(JSON.stringify(engine.readJsonValue('{"name":"example"}', 'json'))), {name: 'example'});
-assert.throws(() => engine.readJsonValue('{}', 'JSON'), error => error.code === 'FORMAT');
+assert.deepEqual(JSON.parse(JSON.stringify(engine.readJsonValue('{}', 'JSON'))), {});
 assert.throws(() => engine.readValue('x: &a 1\ny: *a\n', 'yaml'), error => error.code === 'YAML_ALIAS');
 const limited = createEngine(wasm, undefined, {controls: {maxWork: 0}});
 assert.throws(() => limited.readJsonValue('name: example\n'), error => error.code === 'RESOURCE_LIMIT');
-console.log(JSON.stringify({runtime: process.versions.bun ? 'bun' : process.release.name, browserArtifact: resolve(packageRoot, 'umf_core_wasm_bg.wasm'), matched, mismatches: diagnosticMismatches.length, knownDiagnosticMismatches: diagnosticMismatches, unexpectedMismatches: 0}));
+console.log(JSON.stringify({runtime: process.versions.bun ? 'bun' : process.release.name, browserArtifact: resolve(packageRoot, 'umf_core_wasm_bg.wasm'), matched, mismatches: mismatches.length, unexpectedMismatches: 0}));

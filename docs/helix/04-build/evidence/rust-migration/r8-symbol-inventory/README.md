@@ -786,3 +786,21 @@ the matching ledger SHA-256 is
 The ledger still records 58 accepted opt-in mappings, 864 unmapped executable
 names, 922 logical default-route retirement gaps, zero proven current-cohort
 default binding routes, and the same 39/36/88/35 resource authority counts.
+
+## YAML diagnostic and relationship authority recapture (2026-10-25)
+
+The [serialization profile](../r8-json-value-serialization/README.md) now
+matches all 24 frozen cases with the fresh Node/Bun native addon and Node,
+Bun, and Chromium WASM builds. The native Bun test temporarily used the fresh
+dylib in place of an ignored stale checkout addon.
+The [relationship resource authority review](relationship-resource-authority.md)
+pins four directly authored files representing five exported aliases; one
+relationship-selection schema remains unresolved. After regenerating the
+metamodel and source-bound snapshots, the inventory SHA-256 is
+`1d7589b8bad71a50f1fdcebcc50bfa897af25d7dbd2cdfbdf452f6a5ae8aa3c2`
+and the ledger SHA-256 is
+`12485a87eb3aba1a6ca8f52aa1b4c196445b89d4b325af18da9ab6320b99368f`.
+The 189 resource files classify as 39 generated-known, 41 authored-known,
+88 candidate-generated and 30 unresolved. All 922 logical default-route
+retirement gaps remain open; no installed SDK archive is qualified by this
+recapture.

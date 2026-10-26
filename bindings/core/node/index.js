@@ -228,8 +228,9 @@ function runRawValue(nativeFunction, input, format, controls) {
 
 function runRawJsonValue(nativeFunction, input, format, controls, encodeOptions) {
   const bridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+  const hostWork = admissionWork(bridge);
   let wire;
-  try { wire = encodeWire(input, encodeOptions); }
+  try { wire = encodeWire(input, {...encodeOptions, work: hostWork}); }
   catch (error) {
     if (error?.code === 'CYCLE') throw new JsonSchemaUmfError(error.code, error.message, error.path);
     throw error;
@@ -1100,11 +1101,11 @@ function createEngineInternal(resources, options, withModel, withSchemaPropertie
     writeValue(value, format = 'json') { return runRawValue(addon.writeValueWire, value, format, controls); },
     readJsonValue(source, format = 'yaml') {
       if (typeof addon.readTypescriptJsonValueWire !== 'function') throw new UmfCoreError('RUST_BINDING_MISSING', 'The TypeScript JSON-value profile binding is unavailable');
-      return runRawJsonValue(addon.readTypescriptJsonValueWire, source, format, controls);
+      return runRawJsonValue(addon.readTypescriptJsonValueWire, source, format === 'json' ? 'json' : 'yaml', controls);
     },
     writeJsonValue(value, format = 'yaml') {
       if (typeof addon.writeTypescriptJsonValueWire !== 'function') throw new UmfCoreError('RUST_BINDING_MISSING', 'The TypeScript JSON-value profile binding is unavailable');
-      return runRawJsonValue(addon.writeTypescriptJsonValueWire, value, format, controls, {detectCycles: true});
+      return runRawJsonValue(addon.writeTypescriptJsonValueWire, value, format === 'json' ? 'json' : 'yaml', controls, {detectCycles: true});
     },
   };
   if (withModel) {

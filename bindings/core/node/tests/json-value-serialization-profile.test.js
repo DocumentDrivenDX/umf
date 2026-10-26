@@ -15,7 +15,6 @@ function sourceFor(input) {
 test('Node public readJsonValue facade replays frozen predecessor cases', () => {
   const cases = packet.cases.filter(({id}) => id.startsWith('read.'));
   const mismatches = [];
-  const knownYamlDiagnosticMismatches = [];
   for (const item of cases) {
     const format = item.input.format ?? 'yaml';
     try {
@@ -31,32 +30,31 @@ test('Node public readJsonValue facade replays frozen predecessor cases', () => 
         continue;
       }
       expect(error).toBeInstanceOf(UmfError);
-      if (['read.syntax.yaml-duplicate-key', 'read.syntax.yaml-multiple-documents'].includes(item.id)) {
-        knownYamlDiagnosticMismatches.push({id: item.id, code: error.code, path: error.path, message: error.message});
-        continue;
-      }
+      expect(error.name, item.id).toBe(item.outcome.name);
       expect(error.code, item.id).toBe(item.outcome.code);
       expect(error.path).toBe(item.outcome.path);
       expect(error.message).toBe(item.outcome.message);
     }
   }
   expect(mismatches).toEqual([]);
-  expect(knownYamlDiagnosticMismatches).toEqual([
-    {id: 'read.syntax.yaml-duplicate-key', code: 'DUPLICATE_KEY', path: '', message: 'Duplicate mapping key'},
-    {id: 'read.syntax.yaml-multiple-documents', code: 'YAML_DOCUMENTS', path: '', message: 'Exactly one YAML document is required'},
-  ]);
 });
 
-test('Node public readJsonValue keeps YAML default, explicit JSON, strict format and host controls', () => {
+test('Node public readJsonValue keeps YAML default, explicit JSON and host controls', () => {
   expect(engine.readJsonValue('name: example\n')).toEqual({name: 'example'});
   expect(engine.readJsonValue('{"name":"example"}', 'json')).toEqual({name: 'example'});
-  expect(() => engine.readJsonValue('{}', 'JSON')).toThrow(UmfError);
+  expect(engine.readJsonValue('{}', 'JSON')).toEqual({});
   const limited = createEngine(
     {coreSchema: null, referenceSchema: null, packageSchema: null, constraints: null, domainPolicy: null},
     {controls: {maxWork: 0}},
   );
   expect(() => limited.readJsonValue('name: example\n')).toThrow(expect.objectContaining({code: 'RESOURCE_LIMIT'}));
   expect(() => limited.readJsonValue('name: example\n')).toThrow(UmfCoreError);
+});
+
+test('Node JSON-value facade maps every non-json runtime format to YAML', () => {
+  expect(engine.readJsonValue('name: example\n', null)).toEqual({name: 'example'});
+  expect(engine.readJsonValue('name: example\n', Symbol('format'))).toEqual({name: 'example'});
+  expect(engine.writeJsonValue({name: 'example'}, 7)).toBe(engine.writeJsonValue({name: 'example'}, 'yaml'));
 });
 
 test('Node generic readValue and writeValue retain their existing JSON/YAML behavior', () => {
@@ -86,4 +84,44 @@ test('Node public writeJsonValue facade replays the frozen writer cases', () => 
       expect(error.message).toBe(item.outcome.message);
     }
   }
+});
+
+test('Node JSON-value writer meters host admission before reflection and never invokes getters', () => {
+  const zeroBudget = createEngine(
+    {coreSchema: null, referenceSchema: null, packageSchema: null, constraints: null, domainPolicy: null},
+    {controls: {maxWork: 0}},
+  );
+  const zeroBudgetTraps = [];
+  const zeroBudgetProxy = new Proxy({value: 1}, {
+    getPrototypeOf(target) { zeroBudgetTraps.push('getPrototypeOf'); return Reflect.getPrototypeOf(target); },
+    ownKeys(target) { zeroBudgetTraps.push('ownKeys'); return Reflect.ownKeys(target); },
+  });
+  expect(() => zeroBudget.writeJsonValue(zeroBudgetProxy)).toThrow(expect.objectContaining({code: 'RESOURCE_LIMIT'}));
+  expect(zeroBudgetTraps).toEqual([]);
+
+  const metered = [];
+  const trapOrder = [];
+  const limited = createEngine(
+    {coreSchema: null, referenceSchema: null, packageSchema: null, constraints: null, domainPolicy: null},
+    {controls: {maxWork: 1, meter(amount) { metered.push(amount); }}},
+  );
+  const proxy = new Proxy({first: 1, second: 2}, {
+    getPrototypeOf(target) { trapOrder.push('getPrototypeOf'); return Reflect.getPrototypeOf(target); },
+    ownKeys(target) { trapOrder.push('ownKeys'); return Reflect.ownKeys(target); },
+    getOwnPropertyDescriptor(target, key) { trapOrder.push(`descriptor:${String(key)}`); return Reflect.getOwnPropertyDescriptor(target, key); },
+  });
+  expect(() => limited.writeJsonValue(proxy)).toThrow(expect.objectContaining({code: 'RESOURCE_LIMIT'}));
+  expect(trapOrder).toEqual(['getPrototypeOf', 'ownKeys']);
+  expect(metered).toEqual([1]);
+
+  let getterCalls = 0;
+  const accessor = {};
+  Object.defineProperty(accessor, 'hiddenFromTraversal', {enumerable: true, get() { getterCalls++; return 1; }});
+  expect(() => engine.writeJsonValue(accessor)).toThrow(expect.objectContaining({code: 'ACCESSOR_PROPERTY'}));
+  expect(getterCalls).toBe(0);
+
+  const shared = {value: 1};
+  expect(engine.writeJsonValue({left: shared, right: shared}, 'json')).toBe(
+    '{\n  "left": {\n    "value": 1\n  },\n  "right": {\n    "value": 1\n  }\n}\n',
+  );
 });

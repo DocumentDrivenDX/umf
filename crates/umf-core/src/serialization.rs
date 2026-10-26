@@ -1777,12 +1777,45 @@ fn write_yaml<S: OutputSink>(
 fn write_typescript_yaml_string<S: OutputSink>(
     value: &Utf16,
     out: &mut S,
+    block_indent: Option<usize>,
     ctx: &mut Context<'_>,
 ) -> Result<(), EngineError> {
     ctx.charge_work(value.len(), Utf16::default())?;
     let text =
         String::from_utf16(value.units()).map_err(|_| fail("SOURCE_ENCODING", "Invalid UTF-16"))?;
-    if typescript_yaml_plain_string(&text) {
+    if block_indent.is_some()
+        && text.contains('\n')
+        && text.chars().all(|ch| ch == '\n' || !ch.is_control())
+    {
+        // The TypeScript YAML package chooses literal block scalars for safe
+        // multiline strings. Keep the body unallocated and write it directly
+        // to the bounded sink.
+        let trailing_breaks = text.chars().rev().take_while(|ch| *ch == '\n').count();
+        let body_end = text.len() - trailing_breaks;
+        out.push_str(if trailing_breaks == 0 {
+            "|-"
+        } else if trailing_breaks == 1 && body_end > 0 {
+            "|"
+        } else {
+            "|+"
+        });
+        out.push_char('\n');
+        let body = &text[..body_end];
+        for (index, line) in body.split('\n').enumerate() {
+            if index > 0 {
+                out.push_char('\n');
+            }
+            if !line.is_empty() {
+                pad(out, block_indent.expect("block scalar indentation"), ' ');
+                out.push_str(line);
+            }
+        }
+        if trailing_breaks > 1 {
+            for _ in 1..trailing_breaks {
+                out.push_char('\n');
+            }
+        }
+    } else if typescript_yaml_plain_string(&text) {
         out.push_str(&text);
     } else {
         write_yaml_string(value, out, ctx)?;
@@ -1791,12 +1824,22 @@ fn write_typescript_yaml_string<S: OutputSink>(
 }
 
 fn typescript_yaml_plain_string(value: &str) -> bool {
+    let date_like = value.len() == 10
+        && value.as_bytes()[..4].iter().all(u8::is_ascii_digit)
+        && value.as_bytes()[4] == b'-'
+        && value.as_bytes()[5..7].iter().all(u8::is_ascii_digit)
+        && value.as_bytes()[7] == b'-'
+        && value.as_bytes()[8..].iter().all(u8::is_ascii_digit);
     if value.is_empty()
         || value.trim() != value
-        || !value
-            .bytes()
-            .all(|byte| byte.is_ascii_alphanumeric() || matches!(byte, b'_' | b'-' | b'.'))
-        || !value.as_bytes()[0].is_ascii_alphabetic() && !value.starts_with('_')
+        || !value.chars().all(|ch| {
+            ch.is_alphanumeric()
+                || matches!(ch, '_' | '-' | '.')
+                || (!ch.is_ascii() && !ch.is_control())
+        })
+        || !value.chars().next().is_some_and(|ch| {
+            ch.is_alphabetic() || ch == '_' || (!ch.is_ascii() && !ch.is_control())
+        }) && !date_like
     {
         return false;
     }
@@ -1809,13 +1852,14 @@ fn typescript_yaml_plain_string(value: &str) -> bool {
 fn write_typescript_yaml_scalar<S: OutputSink>(
     value: &Value,
     out: &mut S,
+    block_indent: usize,
     ctx: &mut Context<'_>,
 ) -> Result<(), EngineError> {
     match value {
         Value::Null => out.push_str("null"),
         Value::Bool(value) => out.push_str(if *value { "true" } else { "false" }),
         Value::Number(value) => out.push_str(&crate::ecma_number_to_string(*value)),
-        Value::String(value) => write_typescript_yaml_string(value, out, ctx)?,
+        Value::String(value) => write_typescript_yaml_string(value, out, Some(block_indent), ctx)?,
         Value::Array(_) | Value::Object(_) => write_yaml_typescript(value, out, 0, ctx)?,
     }
     Ok(())
@@ -1841,7 +1885,7 @@ fn write_yaml_typescript<S: OutputSink>(
                     out.push_char('\n');
                 }
                 pad(out, indent, ' ');
-                write_typescript_yaml_string(key, out, ctx)?;
+                write_typescript_yaml_string(key, out, None, ctx)?;
                 match value {
                     Value::Array(children) if !children.is_empty() => {
                         out.push_str(":\n");
@@ -1853,7 +1897,7 @@ fn write_yaml_typescript<S: OutputSink>(
                     }
                     _ => {
                         out.push_str(": ");
-                        write_typescript_yaml_scalar(value, out, ctx)?;
+                        write_typescript_yaml_scalar(value, out, indent + 2, ctx)?;
                     }
                 }
             }
@@ -1876,14 +1920,99 @@ fn write_yaml_typescript<S: OutputSink>(
                     }
                     _ => {
                         out.push_char(' ');
-                        write_typescript_yaml_scalar(value, out, ctx)?;
+                        write_typescript_yaml_scalar(value, out, indent + 2, ctx)?;
                     }
                 }
             }
         }
-        _ => write_typescript_yaml_scalar(value, out, ctx)?,
+        _ => write_typescript_yaml_scalar(value, out, indent, ctx)?,
     }
     Ok(())
+}
+
+fn yaml_source_diagnostic(
+    source: &[u16],
+    offset: usize,
+    headline: &str,
+    ctx: &mut Context<'_>,
+) -> Result<EngineError, EngineError> {
+    // Account for the source-location scan before doing it. Excerpt storage
+    // below is capped at the formatter's 80-unit line limit plus one context line.
+    ctx.charge_work(source.len(), Utf16::default())?;
+    let mut line = 1usize;
+    let mut line_start = 0usize;
+    let mut previous_line_start = 0usize;
+    for (index, unit) in source.iter().take(offset).enumerate() {
+        if *unit == 0x0a {
+            line += 1;
+            previous_line_start = line_start;
+            line_start = index + 1;
+        }
+    }
+    let col = offset.saturating_sub(line_start) + 1;
+    let line_end = source[offset..]
+        .iter()
+        .position(|unit| *unit == 0x0a)
+        .map_or(source.len(), |relative| offset + relative + 1);
+    let mut end = line_end;
+    while end > line_start && matches!(source[end - 1], 0x0a | 0x0d) {
+        end -= 1;
+    }
+    let line_len = end - line_start;
+    let mut caret = col - 1;
+    let mut line_text = Vec::with_capacity(80);
+    if caret >= 60 && line_len > 80 {
+        let trim = (caret - 39).min(line_len - 79);
+        line_text.push(0x2026);
+        line_text.extend_from_slice(
+            &source[line_start + trim..line_start + trim + 79.min(line_len - trim)],
+        );
+        caret = caret.saturating_sub(trim).saturating_add(1);
+    } else if line_len > 80 {
+        line_text.extend_from_slice(&source[line_start..line_start + 79]);
+        line_text.truncate(79);
+        line_text.push(0x2026);
+    } else {
+        line_text.extend_from_slice(&source[line_start..end]);
+    }
+    if line > 1
+        && line_text[..caret.min(line_text.len())]
+            .iter()
+            .all(|unit| *unit == 0x20)
+    {
+        let prev_end = line_start;
+        let prev_start = previous_line_start;
+        let prev_len = prev_end - prev_start;
+        let prev_excerpt_len = if prev_len > 80 { 81 } else { prev_len };
+        ctx.charge_work(prev_excerpt_len + line_text.len(), Utf16::default())?;
+        let mut previous = Vec::with_capacity(prev_excerpt_len + line_text.len());
+        if prev_len > 80 {
+            previous.extend_from_slice(&source[prev_start..prev_start + 79]);
+            previous.extend([0x2026, 0x0a]);
+        } else {
+            previous.extend_from_slice(&source[prev_start..prev_end]);
+        }
+        previous.extend_from_slice(&line_text);
+        line_text = previous;
+    } else {
+        ctx.charge_work(line_text.len(), Utf16::default())?;
+    }
+    let mut message: Vec<u16> = format!("{headline} at line {line}, column {col}")
+        .encode_utf16()
+        .collect();
+    if line_text.iter().any(|unit| *unit != 0x20) {
+        message.push(0x3a);
+        message.extend([0x0a, 0x0a]);
+        message.extend_from_slice(&line_text);
+        message.push(0x0a);
+        message.extend(std::iter::repeat(0x20).take(caret));
+        message.extend([0x5e, 0x0a]);
+    }
+    Ok(EngineError::new(
+        "SYNTAX",
+        Utf16::default(),
+        Utf16::new(message),
+    ))
 }
 
 fn fail(code: &str, message: &str) -> EngineError {
@@ -1893,7 +2022,12 @@ fn fail(code: &str, message: &str) -> EngineError {
 #[derive(Debug)]
 enum YamlFrame<T, V> {
     Seq(Vec<V>),
-    Map { values: Vec<(T, V)>, key: Option<T> },
+    Map {
+        values: Vec<(T, V)>,
+        key: Option<T>,
+        key_start: usize,
+        key_positions: Vec<usize>,
+    },
 }
 
 #[derive(Clone)]
@@ -1901,6 +2035,7 @@ struct LocatedEvent {
     event: Event<'static>,
     start: usize,
     end: usize,
+    source_start: usize,
 }
 
 fn yaml_events_with_profile(
@@ -1936,6 +2071,7 @@ fn yaml_events_with_profile(
                 event,
                 start: span.start.index(),
                 end: span.end.index(),
+                source_start: span.start.index(),
             });
         }
     }
@@ -1954,7 +2090,7 @@ fn parse_yaml_utf16(
 ) -> Result<Value, EngineError> {
     let (events, prefix) = prepare_yaml_events(source, ScanProfile::Yaml12, ctx)?;
     let builder = CoreYamlBuilder { typescript_profile };
-    let mut value = parse_yaml_events::<CoreYamlBuilder>(events, ctx, builder)?;
+    let mut value = parse_yaml_events::<CoreYamlBuilder>(events, ctx, builder, Some(source))?;
     decode_private_value(&mut value, prefix)?;
     Ok(value)
 }
@@ -1966,6 +2102,7 @@ fn prepare_yaml_events(
 ) -> Result<(Vec<LocatedEvent>, (char, char)), EngineError> {
     // YAML permits one stream BOM; keeping it out of both private views
     // leaves their spans aligned with the corresponding original source slice.
+    let source_base = usize::from(source.starts_with(&[0xfeff]));
     let source = source.strip_prefix(&[0xfeff]).unwrap_or(source);
     // Budget both private source views before allocating either one. The final
     // adapter can expand each isolated unit to a seven-character token.
@@ -2018,6 +2155,7 @@ fn prepare_yaml_events(
     }
     let prefix = choose_private_prefix(&decoded, ctx)?;
     let mut final_chars = Vec::with_capacity(first_chars.len());
+    let mut source_offsets = Vec::with_capacity(first_chars.len() + 1);
     let mut source_index = 0usize;
     let mut char_index = 0usize;
     let mut next_poll = 0;
@@ -2034,10 +2172,14 @@ fn prepare_yaml_events(
         {
             let cp = 0x10000
                 + (((u as u32 - 0xd800) << 10) + (source[source_index + 1] as u32 - 0xdc00));
+            source_offsets.push(source_index + source_base);
             final_chars.push(char::from_u32(cp).unwrap());
             source_index += 2;
             char_index += 1;
         } else if (0xd800..=0xdfff).contains(&u) {
+            for _ in 0..7 {
+                source_offsets.push(source_index + source_base);
+            }
             push_private_token(&mut final_chars, prefix, u);
             source_index += 1;
             char_index += 1;
@@ -2061,6 +2203,9 @@ fn prepare_yaml_events(
                         })
                         .unwrap_or(0);
                     if preceding % 2 == 0 {
+                        for _ in 0..7 {
+                            source_offsets.push(source_index + source_base);
+                        }
                         push_private_token(&mut final_chars, prefix, unit);
                         source_index += length;
                         char_index += length;
@@ -2068,13 +2213,21 @@ fn prepare_yaml_events(
                     }
                 }
             }
+            source_offsets.push(source_index + source_base);
             final_chars.push(c);
             source_index += 1;
             char_index += 1;
         }
     }
     let final_text: String = final_chars.iter().collect();
-    let final_events = yaml_events_with_profile(&final_text, profile)?;
+    let mut final_events = yaml_events_with_profile(&final_text, profile)?;
+    source_offsets.push(source.len() + source_base);
+    for located in &mut final_events {
+        located.source_start = source_offsets
+            .get(located.start)
+            .copied()
+            .unwrap_or(source.len() + source_base);
+    }
     if !same_yaml_structure(&first, &final_events) {
         return Err(fail(
             "YAML_PROFILE",
@@ -2558,6 +2711,7 @@ fn parse_yaml_events<B: YamlBuilder>(
     events: Vec<LocatedEvent>,
     ctx: &mut Context<'_>,
     builder: B,
+    diagnostic_source: Option<&[u16]>,
 ) -> Result<B::Value, EngineError> {
     let mut stack: Vec<YamlFrame<B::Text, B::Value>> = Vec::new();
     let mut root = None;
@@ -2565,11 +2719,22 @@ fn parse_yaml_events<B: YamlBuilder>(
     let mut values = 0usize;
     for located in events {
         let event = located.event;
+        let source_start = located.source_start;
         ctx.charge_work(1, Utf16::default())?;
         match event {
             Event::DocumentStart(_) => {
                 documents += 1;
                 if documents > 1 {
+                    if builder.typescript_profile() {
+                        if let Some(source) = diagnostic_source {
+                            return Err(yaml_source_diagnostic(
+                                source,
+                                source_start,
+                                "Source contains multiple documents; please use YAML.parseAllDocuments()",
+                                ctx,
+                            )?);
+                        }
+                    }
                     return Err(fail(
                         "YAML_DOCUMENTS",
                         "Exactly one YAML document is required",
@@ -2597,7 +2762,7 @@ fn parse_yaml_events<B: YamlBuilder>(
                     }
                 }
                 let scalar = builder.scalar(&raw, style, tag.is_some(), &path, ctx)?;
-                add_yaml_value(scalar, &mut stack, &mut root, &builder)?;
+                add_yaml_value(scalar, source_start, &mut stack, &mut root, &builder)?;
             }
             Event::SequenceStart(anchor, tag) => {
                 let _ = anchor;
@@ -2620,13 +2785,21 @@ fn parse_yaml_events<B: YamlBuilder>(
                 stack.push(YamlFrame::Map {
                     values: Vec::new(),
                     key: None,
+                    key_start: 0,
+                    key_positions: Vec::new(),
                 });
             }
             Event::SequenceEnd => {
                 let Some(YamlFrame::Seq(items)) = stack.pop() else {
                     return Err(fail("YAML_SYNTAX", "Unexpected sequence end"));
                 };
-                add_yaml_value(builder.array(items), &mut stack, &mut root, &builder)?;
+                add_yaml_value(
+                    builder.array(items),
+                    source_start,
+                    &mut stack,
+                    &mut root,
+                    &builder,
+                )?;
                 values += 1;
                 check_yaml_value_count(values, &builder, &stack, ctx)?;
             }
@@ -2634,6 +2807,8 @@ fn parse_yaml_events<B: YamlBuilder>(
                 let Some(YamlFrame::Map {
                     values: members,
                     key: None,
+                    key_positions,
+                    ..
                 }) = stack.pop()
                 else {
                     return Err(fail("YAML_SYNTAX", "Unexpected or incomplete mapping"));
@@ -2647,10 +2822,26 @@ fn parse_yaml_events<B: YamlBuilder>(
                         Utf16::default(),
                     )?;
                     if !seen.insert(name) {
+                        if builder.typescript_profile() {
+                            if let Some(source) = diagnostic_source {
+                                return Err(yaml_source_diagnostic(
+                                    source,
+                                    key_positions[index],
+                                    "Map keys must be unique",
+                                    ctx,
+                                )?);
+                            }
+                        }
                         return Err(fail("DUPLICATE_KEY", "Duplicate mapping key"));
                     }
                 }
-                add_yaml_value(builder.object(members), &mut stack, &mut root, &builder)?;
+                add_yaml_value(
+                    builder.object(members),
+                    source_start,
+                    &mut stack,
+                    &mut root,
+                    &builder,
+                )?;
                 values += 1;
                 check_yaml_value_count(values, &builder, &stack, ctx)?;
             }
@@ -2679,6 +2870,7 @@ fn check_yaml_value_count<B: YamlBuilder>(
 }
 fn add_yaml_value<B: YamlBuilder>(
     value: B::Value,
+    source_start: usize,
     stack: &mut [YamlFrame<B::Text, B::Value>],
     root: &mut Option<B::Value>,
     builder: &B,
@@ -2690,11 +2882,18 @@ fn add_yaml_value<B: YamlBuilder>(
             }
         }
         Some(YamlFrame::Seq(items)) => items.push(value),
-        Some(YamlFrame::Map { values, key }) => {
+        Some(YamlFrame::Map {
+            values,
+            key,
+            key_start,
+            key_positions,
+        }) => {
             if let Some(name) = key.take() {
                 values.push((name, value));
+                key_positions.push(*key_start);
             } else {
                 *key = Some(builder.into_key(value)?);
+                *key_start = source_start;
             }
         }
     }
@@ -2727,7 +2926,7 @@ fn parse_python_yaml(
     }
     let units = source.to_utf16(ctx)?;
     let (events, prefix) = prepare_yaml_events(units.units(), ScanProfile::PythonRuamel12, ctx)?;
-    let mut value = parse_yaml_events::<PythonYamlBuilder>(events, ctx, PythonYamlBuilder)?;
+    let mut value = parse_yaml_events::<PythonYamlBuilder>(events, ctx, PythonYamlBuilder, None)?;
     decode_private_python_value(&mut value, prefix, ctx)?;
     check_python_duplicate_keys(&value, ctx)?;
     Ok(value)
@@ -3679,23 +3878,42 @@ mod tests {
                 let code = error.code.as_str();
                 let path = error.path.to_utf8().unwrap();
                 let message = error.message.to_utf8().unwrap();
-                if matches!(
-                    id,
-                    "read.syntax.yaml-duplicate-key" | "read.syntax.yaml-multiple-documents"
-                ) {
-                    // The bounded native parser preserves its detailed YAML
-                    // diagnostic shape; the JS `yaml` package message remains
-                    // a documented public-boundary mismatch.
-                    assert!(
-                        code.starts_with("YAML_") || code == "DUPLICATE_KEY",
-                        "{id}: {code}"
-                    );
-                    continue;
-                }
                 assert_eq!(code, expected["code"], "{id}");
                 assert_eq!(path, expected["path"], "{id}");
                 assert_eq!(message, expected["message"], "{id}");
             }
+        }
+    }
+
+    #[test]
+    fn typescript_yaml_diagnostics_retain_original_source_locations() {
+        for (source, expected) in [
+            (
+                "é: 1\né: 2\n",
+                "Map keys must be unique at line 2, column 1:\n\né: 1\né: 2\n^\n".to_owned(),
+            ),
+            (
+                "\"a\\u0062\": 1\nab: 2\n",
+                "Map keys must be unique at line 2, column 1:\n\n\"a\\u0062\": 1\nab: 2\n^\n".to_owned(),
+            ),
+            (
+                "\u{feff}x: 1\nx: 2\n",
+                "Map keys must be unique at line 2, column 1:\n\n\u{feff}x: 1\nx: 2\n^\n".to_owned(),
+            ),
+            (
+                "x: 1\n---\ny: 2\n",
+                "Source contains multiple documents; please use YAML.parseAllDocuments() at line 2, column 1:\n\nx: 1\n---\n^\n".to_owned(),
+            ),
+        ] {
+            let error = read_json_value_typescript_order(
+                &source.encode_utf16().collect::<Vec<_>>(),
+                Format::Yaml,
+                &mut Context::ordinary(),
+            )
+            .unwrap_err();
+            assert_eq!(error.code, "SYNTAX", "{source:?}");
+            assert_eq!(error.path, Utf16::default(), "{source:?}");
+            assert_eq!(error.message.to_utf8().unwrap(), expected, "{source:?}");
         }
     }
 
@@ -4057,6 +4275,103 @@ mod tests {
             read_json_value(yaml.units(), Format::Yaml, &mut Context::ordinary()).unwrap(),
             lone
         );
+    }
+
+    #[test]
+    fn typescript_yaml_writer_matches_proven_scalar_corpus() {
+        let cases = [
+            (Value::String(Utf16::from("hello")), "hello\n"),
+            (Value::String(Utf16::from("123")), "\"123\"\n"),
+            (Value::String(Utf16::from("TRUE")), "\"TRUE\"\n"),
+            (Value::String(Utf16::from("null")), "\"null\"\n"),
+            (Value::String(Utf16::from("one # two")), "\"one # two\"\n"),
+            (Value::String(Utf16::from("2024-01-01")), "2024-01-01\n"),
+            (Value::String(Utf16::from("café")), "café\n"),
+            (Value::String(Utf16::from("東京")), "東京\n"),
+            (Value::String(Utf16::from("🙂")), "🙂\n"),
+            (Value::String(Utf16::from("x\ny")), "|-\nx\ny\n"),
+            (Value::String(Utf16::from("x\n")), "|\nx\n"),
+            (Value::String(Utf16::from("x\n\ny\n\n")), "|+\nx\n\ny\n\n"),
+            (
+                Value::Object(vec![
+                    (Utf16::from("multi"), Value::String(Utf16::from("x\ny"))),
+                    (
+                        Utf16::from("date"),
+                        Value::String(Utf16::from("2024-01-01")),
+                    ),
+                ]),
+                "multi: |-\n  x\n  y\ndate: 2024-01-01\n",
+            ),
+            (
+                Value::Array(vec![Value::String(Utf16::from("x\ny"))]),
+                "- |-\n  x\n  y\n",
+            ),
+            (
+                Value::Object(vec![(Utf16::from("x\ny"), Value::Number(1.0))]),
+                "\"x\\ny\": 1\n",
+            ),
+        ];
+        for (value, expected) in cases {
+            let actual =
+                write_typescript_json_value(&value, Some(Format::Yaml), &mut Context::ordinary())
+                    .unwrap()
+                    .to_utf8()
+                    .unwrap();
+            assert_eq!(actual, expected);
+        }
+
+        let original = Value::Object(vec![(
+            Utf16::from("x\ny"),
+            Value::String(Utf16::from("root\nmultiline")),
+        )]);
+        let encoded =
+            write_typescript_json_value(&original, Some(Format::Yaml), &mut Context::ordinary())
+                .unwrap();
+        assert_eq!(
+            encoded.to_utf8().unwrap(),
+            "\"x\\ny\": |-\n  root\n  multiline\n"
+        );
+        let decoded = read_json_value_typescript_order(
+            encoded.units(),
+            Format::Yaml,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        assert_eq!(decoded, original);
+
+        let root = Value::String(Utf16::from("root\nmultiline"));
+        let encoded =
+            write_typescript_json_value(&root, Some(Format::Yaml), &mut Context::ordinary())
+                .unwrap();
+        assert_eq!(encoded.to_utf8().unwrap(), "|-\nroot\nmultiline\n");
+        assert_eq!(
+            read_json_value_typescript_order(
+                encoded.units(),
+                Format::Yaml,
+                &mut Context::ordinary(),
+            )
+            .unwrap(),
+            root
+        );
+
+        for (root, expected) in [
+            (Value::String(Utf16::from("\n")), "|+\n\n"),
+            (Value::String(Utf16::from("\n\n")), "|+\n\n\n"),
+        ] {
+            let encoded =
+                write_typescript_json_value(&root, Some(Format::Yaml), &mut Context::ordinary())
+                    .unwrap();
+            assert_eq!(encoded.to_utf8().unwrap(), expected);
+            assert_eq!(
+                read_json_value_typescript_order(
+                    encoded.units(),
+                    Format::Yaml,
+                    &mut Context::ordinary(),
+                )
+                .unwrap(),
+                root
+            );
+        }
     }
 
     #[test]

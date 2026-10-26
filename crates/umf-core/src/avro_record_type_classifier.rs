@@ -11,7 +11,7 @@ use crate::{
     avro_fields::AvroDependency,
     avro_record_classifier,
     avro_record_declarations::inventory_record_declarations,
-    avro_record_type_candidate::{Resolution, resolve_candidate},
+    avro_record_type_candidate::{resolve_candidate, Resolution},
     context::Context,
     engine::{Capabilities, Engine, ResourceSet, SemanticContext},
     error::{Diagnostic, EngineError},
@@ -19,7 +19,7 @@ use crate::{
     registry::Registry,
     schema::{CompiledSchema, SchemaResources},
     serialization::{self, Format},
-    value::{Utf16, Value, copy_json},
+    value::{copy_json, Utf16, Value},
 };
 
 const RESULT_SCHEMA: &str =
@@ -345,7 +345,7 @@ pub fn classify_avro_record_type(
             ..
         } => (path, dependency_id),
         Resolution::Ambiguous { .. } => {
-            return blocked(
+            return blocked_with_field_mapping(
                 &source,
                 &request,
                 &column,
@@ -355,7 +355,7 @@ pub fn classify_avro_record_type(
             );
         }
         Resolution::Unresolved { .. } => {
-            return blocked(
+            return blocked_with_field_mapping(
                 &source,
                 &request,
                 &column,
@@ -365,7 +365,7 @@ pub fn classify_avro_record_type(
             );
         }
         Resolution::Unsupported { reason } => {
-            return blocked(
+            return blocked_with_field_mapping(
                 &source,
                 &request,
                 &column,
@@ -551,22 +551,7 @@ pub fn classify_avro_record_type(
                 .transpose()?
                 .unwrap_or(Value::Null)
         };
-        let mut mappings = get(&record, "mappings")
-            .and_then(|value| {
-                if let Value::Array(items) = value {
-                    Some(items)
-                } else {
-                    None
-                }
-            })
-            .map(|items| {
-                items
-                    .iter()
-                    .map(|item| copy_json(item, ctx))
-                    .collect::<Result<Vec<_>, _>>()
-            })
-            .transpose()?
-            .unwrap_or_default();
+        let mut mappings = copy_record_mappings(&record, ctx)?;
         let native_field = candidate
             .field
             .native_field
@@ -701,22 +686,7 @@ pub fn classify_avro_record_type(
         ),
     ]));
     validate_target(&target, ctx)?;
-    let mut mappings = get(&record, "mappings")
-        .and_then(|v| {
-            if let Value::Array(a) = v {
-                Some(a)
-            } else {
-                None
-            }
-        })
-        .map(|items| {
-            items
-                .iter()
-                .map(|item| copy_json(item, ctx))
-                .collect::<Result<Vec<_>, _>>()
-        })
-        .transpose()?
-        .unwrap_or_default();
+    let mut mappings = copy_record_mappings(&record, ctx)?;
     let native_field_value = candidate
         .field
         .native_field
@@ -857,6 +827,31 @@ fn locate_field<'a>(
         })?;
     Ok((mi, ei, &elements[ei]))
 }
+
+fn copy_record_mappings(record: &Value, ctx: &mut Context<'_>) -> Result<Vec<Value>, EngineError> {
+    let Some(Value::Array(items)) = get(record, "mappings") else {
+        return Ok(Vec::new());
+    };
+    items
+        .iter()
+        .map(|item| {
+            let mut item = copy_json(item, ctx)?;
+            if let Value::Object(fields) = &mut item {
+                if let Some(dependency_index) =
+                    fields.iter().position(|(key, _)| key == &k("dependencyId"))
+                {
+                    let dependency = fields.remove(dependency_index);
+                    let native_index = fields
+                        .iter()
+                        .position(|(key, _)| key == &k("nativeFragment"))
+                        .unwrap_or(fields.len());
+                    fields.insert(native_index, dependency);
+                }
+            }
+            Ok(item)
+        })
+        .collect()
+}
 fn locate_field_mut(
     target: &mut Value,
     mi: usize,
@@ -925,6 +920,62 @@ fn blocked(
         message,
         value,
         Vec::new(),
+        ctx,
+    )
+}
+
+fn blocked_with_field_mapping(
+    source: &Value,
+    request: &Value,
+    column: &Utf16,
+    code: &str,
+    message: &str,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let mut field_request = obj(vec![
+        ("column", Value::String(copy_text(column, ctx)?)),
+        (
+            "nativeSource",
+            copy_json(
+                get(request, "nativeSource")
+                    .ok_or_else(|| error("AVRO_RECORD_TYPE_REQUEST", "nativeSource is required"))?,
+                ctx,
+            )?,
+        ),
+        (
+            "mode",
+            copy_json(
+                get(request, "mode")
+                    .ok_or_else(|| error("AVRO_RECORD_TYPE_REQUEST", "mode is required"))?,
+                ctx,
+            )?,
+        ),
+    ]);
+    if let Some(dependencies) = get(request, "dependencies") {
+        if let Value::Object(fields) = &mut field_request {
+            fields.push((k("dependencies"), copy_json(dependencies, ctx)?));
+        }
+    }
+    let field_result = avro_field_classifier::classify_field(source, &field_request, ctx)?;
+    let mappings = if let Some(Value::Array(items)) = get(&field_result, "mappings") {
+        items
+            .iter()
+            .map(|item| copy_json(item, ctx))
+            .collect::<Result<Vec<_>, _>>()?
+    } else if let Some(mapping) = get(&field_result, "mapping") {
+        vec![copy_json(mapping, ctx)?]
+    } else {
+        Vec::new()
+    };
+    let (_, _, element) = locate_field(source, column)?;
+    blocked_with_mappings(
+        source,
+        request,
+        column,
+        code,
+        message,
+        copy_json(element, ctx)?,
+        mappings,
         ctx,
     )
 }
@@ -1000,6 +1051,7 @@ fn blocked_with_mappings(
 #[cfg(test)]
 mod tests {
     use super::*;
+
     use crate::avro_record_type_recovery::recover_avro_record_type_bundle;
     fn source(schema: &str) -> Value {
         avro_document::import_schema(
@@ -1468,6 +1520,41 @@ mod tests {
         assert_eq!(
             get(&actual_conflicting, "diagnostics"),
             get(expected_conflicting, "diagnostics")
+        );
+    }
+
+    #[test]
+    fn frozen_matrix_mapping_arrays_match_predecessor_exactly() {
+        let mut ctx = Context::ordinary();
+        let packet = parse(
+            include_str!("../../../docs/helix/04-build/evidence/rust-migration/r8-avro-record-type/typescript-predecessor.json"),
+            &mut ctx,
+        )
+        .unwrap();
+        let outcomes = get(&packet, "outcomes").unwrap();
+        let Value::Object(cases) = outcomes else {
+            panic!("predecessor outcomes are not an object");
+        };
+        let mut compared = 0;
+        for (name, case) in cases
+            .iter()
+            .filter(|(name, _)| name.units().starts_with(k("matrix/").units()))
+        {
+            let expected = get(case, "result").expect("matrix case has result");
+            let source = get(expected, "source").expect("result has source");
+            let request = get(expected, "request").expect("result has request");
+            let actual = classify_avro_record_type(source, request, &mut Context::ordinary())
+                .unwrap_or_else(|error| panic!("{name:?}: {error:?}"));
+            assert_eq!(
+                get(&actual, "mappings"),
+                get(expected, "mappings"),
+                "ordered mapping array differs for {name:?}"
+            );
+            compared += 1;
+        }
+        assert_eq!(
+            compared, 30,
+            "all strict/report predecessor matrix cases run"
         );
     }
 }

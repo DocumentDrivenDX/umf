@@ -484,8 +484,35 @@ test('versioned core operation schemas pin direct authoring history without prom
       closure: ['src/model/key-tuple.ts', 'src/model/evolution.ts', 'src/model/dataset-values.ts', 'src/model/dataset-values-compact.ts', 'src/index.ts'],
       revisionHashes: ['90691e12c3edd982009124ea3d7a170d0f109bca76d388d5388bd2578ffaee0c', 'fe7d93da41ac331696686bd32fb0be8ca62b7a5638b95b975034195d66dff2cc'],
     }],
+    ['spec/core/relationship-metadata-selection-v2.schema.json', {
+      id: 'urn:umf:core:relationship-metadata-selection:2.0.0',
+      contracts: ['docs/helix/02-design/contracts/CONTRACT-041-relationship.md', 'docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md'],
+      closure: ['src/model/relationship-selection.ts', 'src/index.ts', 'tests/core/relationship-selection.test.ts'],
+      added: '25a38767a3ce7a2c7af297cf541196e9cbc6ad4a',
+      revisionHashes: ['991f845a1b8a7517c1ad6a43826b31cb83ae03d597b8cbc8b7dcea8e933c29b8', 'e1586b2164f8f1c06dabdf7505861ab7c39c5cef0a267a3033a8d95aa479f720'],
+    }],
+    ['spec/core/relationship-operation-v3.schema.json', {
+      id: 'urn:umf:core:relationship-operation:3.0.0',
+      contracts: ['docs/helix/02-design/contracts/CONTRACT-041-relationship.md', 'docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md'],
+      closure: ['src/model/relationships.ts', 'src/index.ts', 'tests/core/relationship-operations.test.ts'],
+      added: '25a38767a3ce7a2c7af297cf541196e9cbc6ad4a',
+      revisionHashes: ['58c3d8a0ba0a0261ef3954f2952df62830c28b2570f523e11eab612206e67603', '42a3a7ad1e3ef7ac80ef5044948aad12847de22aaf63367e6264bfcb2434bda7'],
+    }],
+    ['spec/core/relationship-extras.schema.json', {
+      id: 'urn:umf:core:relationship-extras:1.0.0',
+      contracts: ['docs/helix/02-design/contracts/CONTRACT-041-relationship.md', 'docs/helix/02-design/technical-designs/TD-045-relationship.md', 'docs/helix/01-frame/user-stories/US-045-relationship.md'],
+      closure: ['src/core-ideals/relationship-extras.ts', 'src/index.ts', 'tests/core-ideals/relationship-extras.test.ts'],
+      added: '997c1a16a9b52e62252b5ce4e4bc3d4f3b7b7cb9',
+      revisionHashes: ['8976c2c707c5616922bebf085f65d6d029ca7ed685c90cad5613dbd87ecb226c', 'fad9ec7ad8b33cc631647a30e1061a926307c702e9a5c18ba7cdf8dff94510e6'],
+    }],
+    ['spec/core/relationship-parquet-projection.schema.json', {
+      id: 'urn:umf:core:relationship-parquet-projection:1.0.0',
+      contracts: ['docs/helix/02-design/contracts/CONTRACT-041-relationship.md', 'docs/helix/02-design/contracts/CONTRACT-019-parquet.md'],
+      closure: ['src/core-ideals/relationship-parquet-projection.ts', 'src/index.ts', 'tests/core-ideals/relationship-parquet.test.ts'],
+      added: 'f69d1a7c7b7d62d4f2924217b813f8b58b07ecef',
+      revisionHashes: ['ef753a57872076791c435ec2612efb3ce7259ed719baa2a2b28d7a6494c223ec', '01c2c812a06130abddb4ec78d8760537f18cff2eb6bfd96f09b87b748dd9192b'],
+    }],
   ]);
-  const addition = '25a38767a3ce7a2c7af297cf541196e9cbc6ad4a';
   const refresh = '8706814a9';
   for (const [source, expectation] of expected) {
     const row = current.rows.find(item => item.source === source && item.routeId === 'package-root-node');
@@ -497,7 +524,7 @@ test('versioned core operation schemas pin direct authoring history without prom
     assert.equal(authority.generatorKind, 'authored-versioned-contract-schema', source);
     assert.deepEqual(authority.governingArtifacts, expectation.contracts, source);
     assert.deepEqual(authority.authoredRevisionClosure.map(item => [item.commit, item.action, item.sha256]), [
-      [addition, 'added', expectation.revisionHashes[0]], [refresh, 'updated', expectation.revisionHashes[1]],
+      [expectation.added ?? '25a38767a3ce7a2c7af297cf541196e9cbc6ad4a', 'added', expectation.revisionHashes[0]], [refresh, 'updated', expectation.revisionHashes[1]],
     ], source);
     for (const revision of authority.authoredRevisionClosure) {
       assert.match(revision.sha256, /^[a-f0-9]{64}$/, `${source} ${revision.commit}`);
@@ -522,7 +549,9 @@ test('versioned core operation schemas pin direct authoring history without prom
     assert.equal(row.resourceOwnership.authority.status, 'authority-unresolved', source);
   }
   // The count includes the explicit resource families in the R8 authority map.
-  assert.equal(current.counts.resourceAuthorityByStatus['authored-authority-known'], 36);
+  const relationshipSelection = current.rows.find(item => item.source === 'spec/core/relationship-selection.schema.json');
+  assert.equal(relationshipSelection.resourceOwnership.authority.status, 'authority-unresolved', 'one-off generated selection schema lacks a current reproducible writer');
+  assert.equal(current.counts.resourceAuthorityByStatus['authored-authority-known'], 41);
 });
 
 test('dataset-value operation schemas pin direct authorship, consumer closure and archive limits', () => {
@@ -579,7 +608,7 @@ test('dataset-value operation schemas pin direct authorship, consumer closure an
   }
   assert.match(archiveBuild, /cp\(join\(root,'spec'\),join\(dist,'spec'\),\{recursive:true\}\)/);
   assert.match(archive, /\(root\s*\/\s*'dist'\)\.rglob\('\*'\)/);
-  assert.equal(ledger.counts.resourceAuthorityByStatus['authored-authority-known'], 36);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['authored-authority-known'], 41);
 });
 
 test('OpenAPI result schemas pin their governing contracts and package data closure', () => {
@@ -842,7 +871,7 @@ test('native JSON tree schema is contract-attested and preserves its public sour
   assert.match(readFileSync('docs/helix/02-design/contracts/CONTRACT-001-core-envelope.md', 'utf8'), /spec\/core\/native-json\.schema\.json.*src\/model\/native-json\.ts/);
   assert.match(readFileSync('src/index.ts', 'utf8'), /nativeJsonSchema.*native-json\.schema\.json/);
   assert.equal(row.resourceOwnership.routes.find(route => route.id === 'sdk-archive').installedQualification.status, 'not-installed-qualified');
-  assert.equal(ledger.counts.resourceAuthorityByStatus['authored-authority-known'], 36);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['authored-authority-known'], 41);
 });
 
 test('PostgreSQL Key catalog schemas pin one exact contract-governed three-output writer', async () => {

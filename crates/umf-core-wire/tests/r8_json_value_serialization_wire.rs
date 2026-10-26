@@ -131,6 +131,74 @@ fn typescript_json_value_profile_is_opt_in_yaml_default_and_admits_format_strict
 }
 
 #[test]
+fn typescript_yaml_diagnostics_keep_exact_source_spans_on_wire() {
+    let duplicate = response(&read_typescript_json_value_wire(
+        &source_wire("x: 1\nx: 2\n"),
+        "yaml",
+    ));
+    assert_eq!(duplicate["status"], "error");
+    assert_eq!(duplicate["code"], "SYNTAX");
+    assert_eq!(duplicate["pathUnits"], serde_json::json!([]));
+    assert_eq!(
+        message(&duplicate),
+        "Map keys must be unique at line 2, column 1:\n\nx: 1\nx: 2\n^\n"
+    );
+
+    let documents = response(&read_typescript_json_value_wire(
+        &source_wire("---\nx: 1\n---\ny: 2\n"),
+        "yaml",
+    ));
+    assert_eq!(documents["status"], "error");
+    assert_eq!(documents["code"], "SYNTAX");
+    assert_eq!(documents["pathUnits"], serde_json::json!([]));
+    assert_eq!(
+        message(&documents),
+        "Source contains multiple documents; please use YAML.parseAllDocuments() at line 3, column 1:\n\nx: 1\n---\n^\n"
+    );
+}
+
+#[test]
+fn host_control_can_deny_yaml_diagnostic_work() {
+    let source = format!("{}x: 1\nx: 2\n", "# filler\n".repeat(128));
+    let wire = source_wire(&source);
+    let mut completed_calls = 0usize;
+    let completed = response(&read_typescript_json_value_wire_with_control(
+        &wire,
+        "yaml",
+        &mut |_| {
+            completed_calls += 1;
+            Ok(())
+        },
+    ));
+    assert_eq!(completed["code"], "SYNTAX");
+    assert!(completed_calls > 0);
+
+    let mut denied_calls = 0usize;
+    let mut denied_amount = None;
+    let denied = response(&read_typescript_json_value_wire_with_control(
+        &wire,
+        "yaml",
+        &mut |amount| {
+            denied_calls += 1;
+            if denied_calls == completed_calls {
+                denied_amount = Some(amount);
+                Err(EngineError::new(
+                    "RESOURCE_LIMIT",
+                    Utf16::default(),
+                    "Host work budget exceeded",
+                ))
+            } else {
+                Ok(())
+            }
+        },
+    ));
+    assert_eq!(denied["code"], "RESOURCE_LIMIT");
+    assert_eq!(message(&denied), "Host work budget exceeded");
+    assert_eq!(denied_calls, completed_calls);
+    assert!(denied_amount.unwrap() <= 161);
+}
+
+#[test]
 fn typescript_json_value_profile_honors_host_control() {
     let mut calls = 0;
     let result = response(&read_typescript_json_value_wire_with_control(

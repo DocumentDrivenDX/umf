@@ -35,10 +35,10 @@ const html = `<!doctype html><meta charset="utf-8"><script type="module">
   }
   let measuredWork=0; createEngine(wasm,undefined,{controls:{meter(amount){measuredWork+=amount;}}}).readJsonValue('name: example\\n');
   let hostControl; try { createEngine(wasm,undefined,{controls:{maxWork:0}}).readJsonValue('name: example\\n'); } catch(error) { hostControl={name:error.name,code:error.code,message:error.message}; }
-  let formatError; try { engine.readJsonValue('{}','JSON'); } catch(error) { formatError={name:error.name,code:error.code,message:error.message}; }
+  let formatFallback; try { formatFallback=engine.readJsonValue('{}','JSON'); } catch(error) { formatFallback={name:error.name,code:error.code,message:error.message}; }
   let genericAlias; try { engine.readValue('x: &a 1\\ny: *a\\n','yaml'); } catch(error) { genericAlias={name:error.name,code:error.code,message:error.message}; }
   let genericWrite; try { genericWrite=engine.writeValue({name:'example'},'yaml'); } catch(error) { genericWrite=error.message; }
-  window.__serializationReceipt={cases,writeCases,measuredWork,hostControl,formatError,genericAlias,genericWrite,nodeGlobals:{process:typeof process,Buffer:typeof Buffer,require:typeof require}};
+  window.__serializationReceipt={cases,writeCases,measuredWork,hostControl,formatFallback,genericAlias,genericWrite,nodeGlobals:{process:typeof process,Buffer:typeof Buffer,require:typeof require}};
 </script>`;
 const server = createServer(async (request, response) => {
   const pathname = new URL(request.url, 'http://127.0.0.1').pathname;
@@ -57,16 +57,15 @@ try {
   await page.goto(`http://127.0.0.1:${server.address().port}/`);
   try { await page.waitForFunction(()=>Boolean(window.__serializationReceipt)); }
   catch(error) { throw new Error(`${error}; browser errors: ${pageErrors.join(' | ')}`); }
-  const actual=await page.evaluate(()=>window.__serializationReceipt); const known=new Set(['read.syntax.yaml-duplicate-key','read.syntax.yaml-multiple-documents']);
-  const packetCases=packet.cases.filter(({id})=>id.startsWith('read.')); let matched=0; const mismatches=[]; const diagnosticMismatches=[];
+  const actual=await page.evaluate(()=>window.__serializationReceipt);
+  const packetCases=packet.cases.filter(({id})=>id.startsWith('read.')); let matched=0; const mismatches=[];
   for(let index=0;index<packetCases.length;index++) {
     const expected=packetCases[index], got=actual.cases[index];
     if(got.id!==expected.id) {mismatches.push({id:expected.id,actual:got});continue;}
     if(expected.outcome.status==='returned') {
       try {assert.deepEqual(got,{id:expected.id,status:'returned',value:expected.outcome.value});matched++;}
       catch {mismatches.push({id:expected.id,actual:got,expected:expected.outcome});}
-    } else if(known.has(expected.id)) {diagnosticMismatches.push({id:got.id,code:got.code,path:got.path,message:got.message});}
-    else {
+    } else {
       const result={id:expected.id,status:'threw',name:got.name,code:got.code,path:got.path,message:got.message};
       try {assert.deepEqual(result,{id:expected.id,...expected.outcome});matched++;}
       catch {mismatches.push({id:expected.id,actual:result,expected:expected.outcome});}
@@ -83,13 +82,10 @@ try {
       try {assert.deepEqual(result,expected.outcome);matched++;} catch {mismatches.push({id:expected.id,actual:result,expected:expected.outcome});}
     }
   }
-  assert.deepEqual(mismatches,[]); assert.deepEqual(diagnosticMismatches,[
-    {id:'read.syntax.yaml-duplicate-key',code:'DUPLICATE_KEY',path:'',message:'Duplicate mapping key'},
-    {id:'read.syntax.yaml-multiple-documents',code:'YAML_DOCUMENTS',path:'',message:'Exactly one YAML document is required'},
-  ]);
+  assert.deepEqual(mismatches,[]); assert.equal(matched,packet.cases.length);
   assert.ok(actual.measuredWork>0); assert.deepEqual(actual.hostControl,{name:'UmfCoreError',code:'RESOURCE_LIMIT',message:'Host work budget exceeded'});
-  assert.deepEqual(actual.formatError,{name:'UmfError',code:'FORMAT',message:'Format must be json or yaml'}); assert.deepEqual(actual.genericAlias,{name:'UmfCoreError',code:'YAML_ALIAS',message:'YAML aliases are not allowed'});
+  assert.deepEqual(actual.formatFallback,{}); assert.deepEqual(actual.genericAlias,{name:'UmfCoreError',code:'YAML_ALIAS',message:'YAML aliases are not allowed'});
   assert.equal(actual.genericWrite,'"name": "example"\n');
   assert.deepEqual(actual.nodeGlobals,{process:'undefined',Buffer:'undefined',require:'undefined'});
-  console.log(JSON.stringify({browser:await browser.version(),matched,mismatches:diagnosticMismatches.length,knownDiagnosticMismatches:diagnosticMismatches,unexpectedMismatches:0,packetSha256:digest(packetBytes),wasmPath:resolve(packageRoot,'umf_core_wasm_bg.wasm'),wasmSha256:digest(await readFile(resolve(packageRoot,'umf_core_wasm_bg.wasm'))),facadeSha256:digest(await readFile(facadePath)),...actual,writeCases:actual.writeCases}));
+  console.log(JSON.stringify({browser:await browser.version(),matched,mismatches:mismatches.length,unexpectedMismatches:0,packetSha256:digest(packetBytes),wasmPath:resolve(packageRoot,'umf_core_wasm_bg.wasm'),wasmSha256:digest(await readFile(resolve(packageRoot,'umf_core_wasm_bg.wasm'))),facadeSha256:digest(await readFile(facadePath)),...actual,writeCases:actual.writeCases}));
 } finally { await browser.close(); await new Promise(resolveClose=>server.close(resolveClose)); }
