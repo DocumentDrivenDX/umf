@@ -4,7 +4,7 @@ import {verifyTableMigration} from './index';
 import {validateG05SourceSelections} from './inventory-g05-selection';
 import {verifyG10BundleForShape} from './inventory-verified-deployment';
 import type {AccountingContext} from '../model/internal/accounting-context';
-import {ownedR2HistoryByteLength,ownR2HistoryExecutionWrapper,R2WorkMeter} from './inventory-r2-context';
+import {normalizeOwnedR2History,ownedR2HistoryByteLength,R2WorkMeter} from './inventory-r2-context';
 /** Closed G10 request/history admission. Semantic source/prefix validation,
  * component composition and native authority remain separate compiler gates.
  */
@@ -72,7 +72,8 @@ function validateHistory(h:unknown,previous:TableDeploymentBundle|null,predecess
  });
  if(previous===null){need(predecessor===null&&h.plans.length===0,'/history','initial-history-not-empty');}
  else {need(isObject(predecessor)&&h.plans.length>0,'/history','installed-history-required');const last=h.plans.at(-1);need(last.id===predecessor.id&&last.digest===predecessor.digest&&last.toBundleDigest===previous.bundleDigest,'/history','history-terminal-does-not-match-predecessor');}
- const executions=h.executions.map((execution:any,index:number)=>accounting instanceof R2WorkMeter?ownR2HistoryExecutionWrapper(execution,accounting,`/history/executions/${index}`) as {planDigest:string;entryDigest:string;seedOutcomes:TableInventorySeedOutcome[]}:({planDigest:execution.planDigest,entryDigest:execution.entryDigest,seedOutcomes:execution.seedOutcomes as TableInventorySeedOutcome[]}));
+ if(accounting instanceof R2WorkMeter){const normalized=normalizeOwnedR2History(h,accounting);if(normalized)return normalized as unknown as G10ValidatedRequest['history'];}
+ const executions=h.executions.map((execution:any)=>({planDigest:execution.planDigest,entryDigest:execution.entryDigest,seedOutcomes:execution.seedOutcomes as TableInventorySeedOutcome[]}));
  return {profile:h.profile,plans:h.plans as TableInventoryHistoryPlan[],executions};
 }
 function validateBundleEnvelope(v:unknown,path:string,accounting?:AccountingContext):TableDeploymentBundle {

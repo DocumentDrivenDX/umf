@@ -7,7 +7,7 @@ import {readJsonDocumentWithAccounting} from '../../src/model/document-accountin
 import {scanJsonFrameCharged} from '../../src/model/internal/scan-json-frame';
 import {inspectR2InventorySourceContext,prepareR2InventorySourceContext} from '../../src/table-migration/inventory';
 import {
- ownR2HistoryComponent,ownR2HistoryExecutionWrapper,ownedR2HistoryByteLength,ownedR2HistoryMember,parseR2DiscoverySelectorShape,R2_CONTEXT_BYTE_LIMIT,R2_WORK_EVENT_UNITS,R2_WORK_LIMIT,R2WorkLimitError,R2WorkMeter,snapshotR2HistoryJson,snapshotR2Json,snapshotR2SourceData,
+ normalizeOwnedR2History,ownedR2HistoryCanonical,ownR2HistoryComponent,ownR2HistoryExecutionWrapper,ownedR2HistoryByteLength,ownedR2HistoryMember,parseR2DiscoverySelectorShape,R2_CONTEXT_BYTE_LIMIT,R2_WORK_EVENT_UNITS,R2_WORK_LIMIT,R2WorkLimitError,R2WorkMeter,snapshotR2HistoryJson,snapshotR2Json,snapshotR2SourceData,
 } from '../../src/table-migration/inventory-r2-context';
 
 const emptySelector={
@@ -275,6 +275,17 @@ test('R2 owned history canonical spans bind exact frozen roots and members',()=>
  expect(ownedR2HistoryMember(ownedCopy.value.plans[0],copyMeter,'/controlled-copy/plans/0')?.text).toBe(canonical(copy.plans[0]));
  const execution=ownR2HistoryExecutionWrapper(owned.value.executions[0],meter,'/wrapper-control');
  expect(ownedR2HistoryMember(execution,meter,'/wrapper-control/member')?.text).toBe(canonical(owned.value.executions[0]));
+ const normalized=normalizeOwnedR2History(owned.value,meter);
+ expect(normalized).toBeDefined();expect(canonical(normalized)).toBe(owned.canonical);
+ expect(ownedR2HistoryCanonical(normalized,meter)).toBe(owned.canonical);
+ expect(Object.isFrozen(normalized)).toBe(true);expect(Object.isFrozen(normalized!.executions)).toBe(true);
+ expect(normalized!.executions).not.toBe(owned.value.executions);
+ const shallowFrozen=Object.freeze({profile:'umf.table-inventory-source-history/0.1',plans:[],executions:[]});
+ expect(ownedR2HistoryCanonical(shallowFrozen,meter)).toBeUndefined();
+ expect(ownedR2HistoryCanonical(structuredClone(normalized),meter)).toBeUndefined();
+ expect(ownedR2HistoryCanonical(normalized,new R2WorkMeter())).toBeUndefined();
+ const copiedRoot=ownR2HistoryComponent(structuredClone(owned.value),new R2WorkMeter());
+ expect(normalizeOwnedR2History(copiedRoot.value,meter)).toBeUndefined();
  const extra=Object.freeze({...owned.value.executions[0],extension:true});expect(()=>ownR2HistoryExecutionWrapper(extra,meter,'/extra')).toThrow(/R2_HISTORY_EXECUTION_SOURCE/);
  let getterCalls=0;const accessor=Object.create(null) as Record<string,unknown>;
  Object.defineProperties(accessor,{planDigest:{enumerable:true,get(){getterCalls++;return 'a'.repeat(64);}},entryDigest:{enumerable:true,value:'b'.repeat(64)},seedOutcomes:{enumerable:true,value:[]}});Object.freeze(accessor);

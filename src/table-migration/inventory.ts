@@ -1,11 +1,11 @@
-import {canonical,canonicalCharged,canonicalChargedMeasured,hashCanonical,hashCanonicalCharged} from '../compilation/bundle/hash';
+import {canonical,canonicalCharged,canonicalChargedMeasured,hashCanonical,hashCanonicalCharged,sha256TextCharged} from '../compilation/bundle/hash';
 import {readDocument} from '../model/document';
 import {verifyTableDeployment,type TableDeploymentBundle} from '../table-deployment';
 import {UmfError} from '../model/errors';
 import {copyJson,copyJsonCharged} from '../model/json';
 import type {AccountingContext} from '../model/internal/accounting-context';
 import {ownCanonicalComponent} from './inventory-component-copy';
-import {freezeSourceIndex,freezeSourceIndexSide,ownR2HistoryComponent,ownR2SourceComponents,ownedR2HistoryMember,R2WorkMeter,type R2OwnedSourceComponents,type R2BundleSourceIndex} from './inventory-r2-context';
+import {freezeSourceIndex,freezeSourceIndexSide,ownR2HistoryComponent,ownR2SourceComponents,ownedR2HistoryCanonical,ownedR2HistoryMember,R2WorkMeter,type R2OwnedSourceComponents,type R2BundleSourceIndex} from './inventory-r2-context';
 import {initialInventoryPrefix,inventoryCatalogIdentity,scheduleTypedInventoryEffects,type CatalogMutation,type EffectNode,type InventorySubject,type ScheduledInventoryEffects,type TypedDependency} from './inventory-graph';
 import type {PrefixFrame} from './inventory-graph';
 import {copyInventoryReviewForSide,projectG10Bundle,projectG10BundleWithAccounting,type InventoryProjection,type InventoryChange,type InventoryFieldChange,type InventoryTable,type InventoryDelta,type CatalogProjection,type Identity,type PrefixCatalog,type Subject} from './inventory-projection';
@@ -93,6 +93,7 @@ function prepareR2InventorySourceContextInScope(input:unknown,meter:R2WorkMeter)
  r2SourceContexts.set(handle,Object.freeze({view:state,meter,historyVerifier:verifier}));return handle;
 }
 function freezeOwnedHistory(history:TableInventorySourceHistory,meter:R2WorkMeter):TableInventorySourceHistory{
+ if(ownedR2HistoryCanonical(history,meter,'/history/freeze-owned-root')!==undefined)return history;
  const seen=new Set<object>();
  const freeze=(value:unknown,path:string):void=>{
   if(value===null||typeof value!=='object')return;
@@ -108,6 +109,10 @@ function freezeOwnedHistory(history:TableInventorySourceHistory,meter:R2WorkMete
   Object.freeze(value);
  };
  freeze(history,'/history');return history;
+}
+function historyDigest(history:unknown,accounting:AccountingContext|undefined,path:string):string{
+ if(accounting instanceof R2WorkMeter){const text=ownedR2HistoryCanonical(history,accounting,path);if(text!==undefined)return sha256TextCharged(text,25_165_824,accounting,path);}
+ return accounting?hashCanonicalCharged(history,accounting,path):hashCanonical(history);
 }
 /** Resolve only a handle issued after this module's original verification path. */
 export function inspectR2InventorySourceContext(handle:unknown):R2InventorySourceContextState{
@@ -453,7 +458,7 @@ function compileInventoryPlanCore(input:InventoryPlanInput,accounting?:Accountin
  if(schedule.prefixes.length!==schedule.phases.length+1||schedule.phases.length<3||schedule.phases[0]?.kind!=='prepare'||schedule.phases[1]?.kind!=='approval'||schedule.phases.at(-1)?.kind!=='publication')fail('PHASE_ENVELOPE');
  const {steps,phases,prefixes}=serialize(schedule,sources,metadataIds,accounting),executionProfile={version:'umf.table-inventory-execution/0.1',progressRelation:'umf_lifecycle_inventory_progress',ownerOnly:true,ingressProfile:'umf.table-inventory-generation-ingress/0.1',inventoryProfile:'umf.table-inventory-prefix/0.1',initial:previous===null,conversionProfile:null,originalsProfile:null,retirementProfile:null,retiredStoreProfile:null},approvalProfile={version:'umf.table-migration-approval/0.1',relation:'umf_lifecycle_approvals',ownerOnly:true};
  const serializedInventory={...input.inventory} as Record<string,unknown>;delete serializedInventory.fieldChanges;
- const history=input.history as any;if(!history||history.profile!=='umf.table-inventory-source-history/0.1'||!Array.isArray(history.plans)||!Array.isArray(history.executions)||input.historyBinding.count!==history.plans.length||input.historyBinding.digest!==(accounting?hashCanonicalCharged(history,accounting,'/history'):hashCanonical(history))||input.historyBinding.profile!==history.profile)fail('HISTORY_BINDING');
+ const history=input.history as any;if(!history||history.profile!=='umf.table-inventory-source-history/0.1'||!Array.isArray(history.plans)||!Array.isArray(history.executions)||input.historyBinding.count!==history.plans.length||input.historyBinding.digest!==historyDigest(history,accounting,'/history')||input.historyBinding.profile!==history.profile)fail('HISTORY_BINDING');
  const body:Record<string,Json>={version:'umf.table-inventory-migration/0.1',canonicalization:'RFC8785',id:input.id,predecessor:input.predecessor as unknown as Json,previous:input.previous as unknown as Json,next:input.next as unknown as Json,fromBundleDigest:previous?.bundleDigest??null,toBundleDigest:next.bundleDigest,steps:steps as unknown as Json,seedExecution:input.seedExecution as unknown as Json,phases:phases as unknown as Json,executionProfile,approvalProfile,options:input.options,review:input.review,requiresApproval:true,nativeQualified:false,inventory:serializedInventory as unknown as Json,prefixes:prefixes as unknown as Json,historyBinding:input.historyBinding as unknown as Json};
  body.digest=accounting?hashCanonicalCharged(body,accounting,'/plan'):hashCanonical(body);
  if(captureCanonical&&accounting)freezeCapturedPlan(body as unknown as Json,accounting);
@@ -938,7 +943,7 @@ function compileInventoryPlanFromPrepared(prepared:PreparedInventoryCompilation,
   }
  }
  accounting?.visit('g10-plan-initial-prefix-seeds','/seedLineage',lineage.length);const initialPrefix=initialInventoryPrefix(previous?{catalog:previous.projection.catalog as unknown as Record<string,Json[]>,tables:previous.tables}:null,lineage as unknown as Json[],accounting);
- const history=prepared.stableRequest.history as unknown as Json,historyBinding={profile:'umf.table-inventory-source-history/0.1' as const,count:request.history.plans.length,digest:accounting?hashCanonicalCharged(prepared.stableRequest.history,accounting,'/history'):hashCanonical(prepared.stableRequest.history)};
+ const history=prepared.stableRequest.history as unknown as Json,historyBinding={profile:'umf.table-inventory-source-history/0.1' as const,count:request.history.plans.length,digest:historyDigest(prepared.stableRequest.history,accounting,'/history')};
  const seedExecution=request.options.seedSets.length?{version:'umf.table-seed-execution/0.1' as const,sets:[...request.options.seedSets]}:'none';
  accounting?.visit('g10-provenance-mutation-derivation','/effects',effects.length);const provenanceMutations=deriveG10ProvenanceMutations(previous?.projection??null,next.projection,effects,accounting);
  return compileInventoryPlanCore({id:request.id,predecessor:request.predecessor,previous:request.previous,next:request.next,options:prepared.stableRequest.options as unknown as Json,history,historyBinding,inventory,initialPrefix,nextCatalog:next.projection.catalog as unknown as Record<string,Json[]>,effects,dependencies,publicationObligations:derived.publicationObligations,provenanceMutations,seedExecution,review:review as unknown as Json[]},accounting,captureCanonical);
@@ -992,7 +997,7 @@ function exactReview(request:TableInventoryMigrationRequest,verifier:HistoricalG
  return validateExactReviewCandidates(request,candidates);
 }
 function exactReviewFromPrepared(request:TableInventoryMigrationRequest,verifier:HistoricalG10PlanVerifier,prepared:PreparedReviewInputs,accounting?:AccountingContext):TableInventoryReviewedChangeCandidate[]{
- if(accounting){hashCanonicalCharged(request.options,accounting,'/options/reviewedChanges');hashCanonicalCharged(prepared.history,accounting,'/history/review');}
+ if(accounting){hashCanonicalCharged(request.options,accounting,'/options/reviewedChanges');historyDigest(prepared.history,accounting,'/history/review');}
  const candidates=discoverInventoryReviewCandidatesCore(request.previous,request.next,discoverySelector(request.options),request.history,verifier,prepared,accounting);
  return validateExactReviewCandidates(request,candidates);
 }

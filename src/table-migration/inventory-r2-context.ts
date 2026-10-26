@@ -57,6 +57,7 @@ const ownedHistoryRegistrationToken=Symbol('r2-owned-history-registration');
 const registerOwnedHistory=Symbol('r2-register-owned-history');
 const lookupOwnedHistory=Symbol('r2-lookup-owned-history');
 const associateOwnedHistoryMember=Symbol('r2-associate-owned-history-member');
+const associateOwnedHistoryRoot=Symbol('r2-associate-owned-history-root');
 type OwnedHistoryDocument=CanonicalHistoryDocument&{readonly materialized:WeakMap<CanonicalHistoryMemberSpan,string>};
 /**
  * Frozen deterministic work-event table for the D1 admission primitives.
@@ -103,7 +104,30 @@ export class R2WorkMeter implements AccountingContext {
   if(token!==ownedHistoryRegistrationToken)throw new TypeError('R2_CONTEXT_HISTORY_OWNER');return {root:this.#ownedHistoryMetadata.get(value),member:this.#ownedHistoryMembers.get(value)};
  }
  [associateOwnedHistoryMember](token:typeof ownedHistoryRegistrationToken,source:object,copy:object):void{
-  if(token!==ownedHistoryRegistrationToken||!Object.isFrozen(copy))throw new TypeError('R2_CONTEXT_HISTORY_OWNER');const found=this.#ownedHistoryMembers.get(source);if(found){this.visit('r2-history-normalized-member-map-retention','/history/executions');this.#ownedHistoryMembers.set(copy,found);}
+  if(token!==ownedHistoryRegistrationToken||!Object.isFrozen(copy))throw new TypeError('R2_CONTEXT_HISTORY_OWNER');this.visit('r2-history-normalized-member-lookup','/history/executions');const found=this.#ownedHistoryMembers.get(source);if(found){this.visit('r2-history-normalized-member-map-retention','/history/executions');this.#ownedHistoryMembers.set(copy,found);}
+ }
+ [associateOwnedHistoryRoot](token:typeof ownedHistoryRegistrationToken,source:object,normalized:object):boolean{
+  if(token!==ownedHistoryRegistrationToken)throw new TypeError('R2_CONTEXT_HISTORY_OWNER');
+  this.visit('r2-history-normalized-root-association-lookup','/history');const document=this.#ownedHistoryMetadata.get(source);if(!document)return false;
+  this.visit('r2-history-normalized-root-association-shape','/history',4);
+  const sourceValue=source as Record<string,unknown>,target=normalized as Record<string,unknown>;
+  const closed=(value:object)=>Object.getPrototypeOf(value)===Object.prototype&&Object.getOwnPropertySymbols(value).length===0&&Object.keys(value).length===3&&['profile','plans','executions'].every(key=>{const descriptor=Object.getOwnPropertyDescriptor(value,key);return !!descriptor&&descriptor.enumerable&&Object.hasOwn(descriptor,'value');});
+  if(!Object.isFrozen(source)||!closed(source)||Object.isFrozen(normalized)||!closed(normalized)||sourceValue.profile!=='umf.table-inventory-source-history/0.1'||target.profile!==sourceValue.profile||!Array.isArray(sourceValue.plans)||!Array.isArray(sourceValue.executions)||!Object.isFrozen(sourceValue.plans)||!Object.isFrozen(sourceValue.executions)||target.plans!==sourceValue.plans||!Array.isArray(target.executions)||target.executions.length!==sourceValue.executions.length||sourceValue.plans.length!==sourceValue.executions.length)throw new TypeError('R2_HISTORY_NORMALIZED_ROOT');
+  const plans=sourceValue.plans as object[],sourceExecutions=sourceValue.executions as object[],targetExecutions=target.executions as object[];
+  for(let index=0;index<plans.length;index++){
+   this.visit('r2-history-normalized-root-member-check',`/history/plans/${index}`);
+   const found=this.#ownedHistoryMembers.get(plans[index]!);if(!found||found.document!==document||found.span.kind!=='plans'||found.span.index!==index)throw new TypeError('R2_HISTORY_NORMALIZED_ROOT');
+  }
+  for(let index=0;index<sourceExecutions.length;index++){
+   this.visit('r2-history-normalized-root-member-check',`/history/executions/${index}`);
+   const sourceExecution=sourceExecutions[index]!,targetExecution=targetExecutions[index]!,sourceMember=this.#ownedHistoryMembers.get(sourceExecution),targetMember=this.#ownedHistoryMembers.get(targetExecution);
+   if(!sourceMember||!targetMember||sourceMember.document!==document||targetMember.document!==document||sourceMember.span!==targetMember.span||sourceMember.span.kind!=='executions'||sourceMember.span.index!==index||!Object.isFrozen(targetExecution)||Object.getPrototypeOf(targetExecution)!==Object.prototype||Object.getOwnPropertySymbols(targetExecution).length!==0||Object.keys(targetExecution).length!==3)throw new TypeError('R2_HISTORY_NORMALIZED_ROOT');
+   const read=(value:object,key:string)=>{const descriptor=Object.getOwnPropertyDescriptor(value,key);return descriptor&&descriptor.enumerable&&Object.hasOwn(descriptor,'value')?descriptor.value:undefined;};
+   if(read(sourceExecution,'planDigest')!==read(targetExecution,'planDigest')||read(sourceExecution,'entryDigest')!==read(targetExecution,'entryDigest')||read(sourceExecution,'seedOutcomes')!==read(targetExecution,'seedOutcomes'))throw new TypeError('R2_HISTORY_NORMALIZED_ROOT');
+  }
+  this.visit('r2-history-normalized-root-freeze', '/history',4);for(const key of ['profile','plans','executions'])this.scanUtf8(key,'/history/@key');
+  this.visit('r2-history-normalized-executions-freeze','/history/executions',targetExecutions.length);
+  Object.freeze(targetExecutions);Object.freeze(normalized);this.visit('r2-history-normalized-root-map-retention','/history');this.#ownedHistoryMetadata.set(normalized,document);return true;
  }
  charge(event:string,count=1,path='/'):void{
   if(!Object.hasOwn(R2_WORK_EVENT_UNITS,event)||!Number.isSafeInteger(count)||count<0)throw new R2WorkLimitError(path,'work');
@@ -140,6 +164,27 @@ export function ownedR2HistoryByteLength(value:unknown,meter:R2WorkMeter,path='/
  if(!value||typeof value!=='object')return undefined;meter.visit('r2-history-canonical-root-lookup',path);
  return meter[lookupOwnedHistory](ownedHistoryRegistrationToken,value).root?.byteLength;
 }
+/** Exact canonical bytes only for a registered immutable root in this same meter. */
+export function ownedR2HistoryCanonical(value:unknown,meter:R2WorkMeter,path='/history'):string|undefined{
+ if(!value||typeof value!=='object')return undefined;meter.visit('r2-history-canonical-root-lookup',path);
+ return meter[lookupOwnedHistory](ownedHistoryRegistrationToken,value).root?.text;
+}
+/** Fixed validator constructor propagating canonical ownership across execution wrappers. */
+export function normalizeOwnedR2History(source:unknown,meter:R2WorkMeter,path='/history'):R2OwnedHistoryEnvelope|undefined{
+ if(!source||typeof source!=='object')return undefined;
+ meter.visit('r2-history-normalized-root-lookup',path);const root=meter[lookupOwnedHistory](ownedHistoryRegistrationToken,source).root;if(!root)return undefined;
+ const sourceValue=source as Record<string,unknown>;
+ meter.visit('r2-history-normalized-root-shape',path,4);
+ if(!Array.isArray(sourceValue.plans)||!Array.isArray(sourceValue.executions)||sourceValue.plans.length!==sourceValue.executions.length||sourceValue.plans.length>128)throw new TypeError(`R2_HISTORY_NORMALIZED_ROOT:${path}`);
+ const sourceExecutions=sourceValue.executions as unknown[];
+ meter.visit('r2-history-normalized-executions-array-allocation',`${path}/executions`,sourceExecutions.length+1);
+ const executions:R2Json[]=new Array(sourceExecutions.length);
+ for(let index=0;index<sourceExecutions.length;index++)executions[index]=ownR2HistoryExecutionWrapper(sourceExecutions[index],meter,`${path}/executions/${index}`) as R2Json;
+ meter.visit('r2-history-normalized-root-allocation',path,4);for(const key of ['profile','plans','executions'])meter.scanUtf8(key,`${path}/@key`);
+ const normalized={profile:sourceValue.profile as 'umf.table-inventory-source-history/0.1',plans:sourceValue.plans as R2Json[],executions};
+ if(!meter[associateOwnedHistoryRoot](ownedHistoryRegistrationToken,source,normalized))throw new TypeError(`R2_HISTORY_NORMALIZED_ROOT:${path}`);
+ return normalized as unknown as R2OwnedHistoryEnvelope;
+}
 /** Exact canonical member bytes for a member of a registered frozen history only. */
 export function ownedR2HistoryMember(value:unknown,meter:R2WorkMeter,path='/history/member'):{readonly text:string;readonly byteLength:number}|undefined{
  if(!value||typeof value!=='object')return undefined;meter.visit('r2-history-canonical-member-lookup',path);
@@ -151,9 +196,10 @@ export function ownedR2HistoryMember(value:unknown,meter:R2WorkMeter,path='/hist
 
 /** Fixed validator-constructor propagation for normalized execution wrappers. */
 export function ownR2HistoryExecutionWrapper(source:unknown,meter:R2WorkMeter,path:string):{planDigest:unknown;entryDigest:unknown;seedOutcomes:unknown[]} {
+ meter.visit('r2-history-normalized-execution-source-shape',path,4);
  if(!isPlainRecord(source)||!Object.isFrozen(source)||Object.getOwnPropertySymbols(source).length!==0||Object.getOwnPropertyNames(source).length!==3)throw new TypeError(`R2_HISTORY_EXECUTION_SOURCE:${path}`);
  const read=(key:'planDigest'|'entryDigest'|'seedOutcomes'):unknown=>{const descriptor=Object.getOwnPropertyDescriptor(source,key);if(!descriptor||!descriptor.enumerable||!Object.hasOwn(descriptor,'value'))throw new TypeError(`R2_HISTORY_EXECUTION_SOURCE:${path}`);return descriptor.value;};
- const planDigest=read('planDigest'),entryDigest=read('entryDigest'),seedOutcomes=read('seedOutcomes');
+ meter.visit('r2-history-normalized-execution-source-lookup',path);const planDigest=read('planDigest'),entryDigest=read('entryDigest'),seedOutcomes=read('seedOutcomes');
  if(!Array.isArray(seedOutcomes)||!meter[lookupOwnedHistory](ownedHistoryRegistrationToken,source).member)throw new TypeError(`R2_HISTORY_EXECUTION_SOURCE:${path}`);
  meter.visit('r2-history-normalized-execution-copy',path,3);const copy=Object.freeze({planDigest,entryDigest,seedOutcomes});meter[associateOwnedHistoryMember](ownedHistoryRegistrationToken,source,copy);return copy;
 }
