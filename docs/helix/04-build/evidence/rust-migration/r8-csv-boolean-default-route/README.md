@@ -89,3 +89,14 @@ the metamodel and action-identity fixed point. This receipt qualifies the
 two installed operations in this exact private archive, not the broader CSV
 adapter, all 922 default-route retirement decisions, or a publishable SDK
 release. The explicit retirement decision remains open.
+
+The [independent retirement review](retirement-review.md) compared the
+installed default against the installed TypeScript reference and found a
+request-accessor error mismatch, so neither CSV Boolean declaration is
+retired. A subsequent source-level CSV facade correction recovers the
+predecessor `NON_JSON` child path for one unambiguous accessor or hidden
+property without calling getters. Focused Bun tests cover source and request
+properties plus receipt-first behavior. The private archive above predates
+that correction; its Node/Bun/Chromium installed results cannot qualify the
+new source. Multiple hidden members, exotic proxy traps, competing invalid
+values, and the new source in an installed browser package remain open.

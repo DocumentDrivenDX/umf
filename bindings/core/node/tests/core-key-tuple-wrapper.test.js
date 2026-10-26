@@ -22,6 +22,28 @@ for (const [host, factory] of [['Node/Bun', nodeOperations], ['WASM', wasmOperat
     ]);
   });
 
+  test(`${host} direct byte reads bypass the tagged-array response ceiling`, () => {
+    const sizes = [100_001, 4_000_000];
+    const nativeCalls = [];
+    const api = factory(() => { throw new Error('large reads must bypass tagged wire'); }, {
+      prepareRead(receipt) {
+        nativeCalls.push(['prepareRead', receipt]);
+        return {readBytes(current) {
+          nativeCalls.push(['readBytes', current]);
+          return new Uint8Array(current.size);
+        }};
+      },
+    });
+    for (const size of sizes) {
+      const bytes = api.readCoreKeyTupleBytes({receipt: size}, {size});
+      expect(bytes).toBeInstanceOf(Uint8Array);
+      expect(bytes.byteLength).toBe(size);
+    }
+    expect(nativeCalls).toEqual(sizes.flatMap(size => [
+      ['prepareRead', {receipt: size}], ['readBytes', {size}],
+    ]));
+  });
+
   test(`${host} prepared tuple handle owns and freezes the Rust-admitted source`, () => {
     const original = {umf: '0.10.0', modules: [{elements: [{id: 'r'}]}]};
     const calls = [];

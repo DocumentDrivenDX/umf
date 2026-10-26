@@ -1,0 +1,44 @@
+{
+  "format": "umf.r8.core-key-tuple-limit.chromium/1",
+  "status": "pass",
+  "browser": "Microsoft Edge 156.0.4314.42",
+  "build": {
+    "rust": "1.90.0",
+    "wasmBindgen": "0.2.100",
+    "command": "CARGO_TARGET_DIR=/private/tmp/umf-keytuple-limit-wasm-target cargo build --locked --offline --release --target wasm32-unknown-unknown -p umf-core-wasm",
+    "preBindgenBinarySha256": "1d88b47a49e64f21c709d7755fcce0346891e828d2ed04bc09e3e52ad8598c6d"
+  },
+  "replay": {
+    "script": "/private/tmp/keytuple-limit-browser.mjs",
+    "scriptSha256": "212e47587a72c13303371d189c2a85bd2d39d52403ca3f2665b7e6594c4120a6",
+    "encoders": 88,
+    "inProfilePublicEncoders": 87,
+    "verifiers": 5,
+    "publicVerifiers": 5,
+    "rawByteBoundaries": [100001, 4000000, 4000001],
+    "byteOutcomes": {
+      "100001": "success as Uint8Array",
+      "4000000": "success as Uint8Array",
+      "4000001": "encoder LIMIT at /values before receipt/output"
+    },
+    "receiptBeforeCurrent": true,
+    "cumulativeWorkRefusal": true,
+    "oneShotStage": true,
+    "outputCopyCharged": true,
+    "nodeGlobalsAbsent": true
+  },
+  "sourceSha256": {
+    "bindings/core/node/index.js": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a",
+    "bindings/core/wasm/index.js": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea",
+    "bindings/core/node/src/core_key_tuple.rs": "ed53e9fa525819dba16ca84a6de1e5badf96a18b9f44d9a9f8e18a29c11b610c",
+    "bindings/core/wasm/src/core_key_tuple.rs": "63ca8e2247eeb3176c1100b5b5a0897f49fb5295f8f5aeb4283c9143b36a1e72",
+    "crates/umf-core-wire/src/core_key_tuple_binding.rs": "b8500e05faacab7a6649d8f949d88139f94b6dfbc3a11a84c27bcb87ca2f0d8f",
+    "bindings/core/wasm/src/core-key-tuple.js": "fec83f9857b2cb3d955ba0e35c63b471bf3e8bda98d2adddf65fe452e90ad290",
+    "bindings/core/wasm/src/wire.js": "d7687bae10505fea1295d841a73c174ddcda22ec49c534b2165033631fadfa1f"
+  },
+  "wasmArtifacts": {
+    "javascriptSha256": "548abebfb3c92b317cfa24ef4c23e7501f343cee7248f8f32df89784fc348bd0",
+    "binarySha256": "5be7415216c5a7c129fe213619d2cc26467b683f109b50d11a28a5e36e3b3732"
+  },
+  "qualification": "Fresh isolated WASM build and Chromium replay of the public opt-in factory. Default-root selection and installed SDK integration remain unqualified."
+}

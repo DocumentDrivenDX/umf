@@ -1,0 +1,26 @@
+{
+  "format": "umf.r8.core-key-tuple-limit.node-bun/1",
+  "status": "pass",
+  "runtime": "Bun 1.4.3",
+  "command": "bun test ./bindings/core/node/tests/core-key-tuple-direct-runtime.test.js ./bindings/core/node/tests/core-key-tuple-wrapper.test.js",
+  "tests": 14,
+  "assertions": 195,
+  "addonSha256": "3a87eaccfae4f3dec3d2baae45befbe4138f2d8feb5b5659a047b54d757e784b",
+  "boundaryCase": {
+    "successBytes": [100001, 4000000],
+    "refusalInputBytes": 4000001,
+    "refusalStage": "encode before receipt/output",
+    "refusal": {
+      "code": "LIMIT",
+      "message": "Encoded tuple exceeds limit",
+      "path": "/values"
+    }
+  },
+  "sourceSha256": {
+    "bindings/core/node/src/core-key-tuple.js": "fec83f9857b2cb3d955ba0e35c63b471bf3e8bda98d2adddf65fe452e90ad290",
+    "bindings/core/wasm/src/core-key-tuple.js": "fec83f9857b2cb3d955ba0e35c63b471bf3e8bda98d2adddf65fe452e90ad290",
+    "bindings/core/node/tests/core-key-tuple-wrapper.test.js": "990e23267e49d7553e928330dd248c176da78a220da9db34ec165bb42c3b31ea",
+    "bindings/core/node/tests/core-key-tuple-direct-runtime.test.js": "677b09ffcbe8b5a29bded8aa988a4b6e5945d14a42e6c096214e16a92a668fb0"
+  },
+  "qualification": "Focused wrapper and direct runtime tests pass. This does not qualify the installed SDK or default package-root selection."
+}

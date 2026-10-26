@@ -283,7 +283,7 @@ function sourceSelectedImplementation(routeId, exportName, source = null) {
       profile: 'CONTRACT-053 CSV Boolean lexical profile',
       rustSource: 'crates/umf-core/src/csv_boolean_lexical.rs',
       testSources: ['crates/umf-core/tests/r5_csv_boolean_lexical.rs', 'crates/umf-core-wire/tests/r5_csv_boolean_lexical_wire.rs', 'tests/rust-csv-boolean-default.test.ts'],
-      evidencePaths: ['docs/helix/04-build/evidence/rust-migration/r5-csv-boolean-default-route/README.md', 'docs/helix/04-build/evidence/rust-migration/r5-csv-boolean-default-route/chromium-smoke.json', 'scripts/rust-migration/r5/csv-boolean-default-route/predecessor.json'],
+      evidencePaths: ['docs/helix/04-build/evidence/rust-migration/r5-csv-boolean-default-route/README.md', 'docs/helix/04-build/evidence/rust-migration/r5-csv-boolean-default-route/chromium-smoke.json', 'scripts/rust-migration/r5/csv-boolean-default-route/predecessor.json', 'docs/helix/04-build/evidence/rust-migration/r8-csv-boolean-default-route/README.md', 'docs/helix/04-build/evidence/rust-migration/r8-csv-boolean-default-route/installed-replay.json', 'docs/helix/04-build/evidence/rust-migration/r8-csv-boolean-default-route/retirement-review.md', 'scripts/rust-migration/r8/csv-boolean-default-route-installed.mjs', 'scripts/rust-migration/r8/csv-boolean-retirement-reference.mjs'],
     }],
     ['verifyCsvBooleanLexical', {
       rustOwner: 'umf_core::csv_boolean_lexical::verify_csv_boolean_lexical',
@@ -292,28 +292,28 @@ function sourceSelectedImplementation(routeId, exportName, source = null) {
       profile: 'CONTRACT-053 CSV Boolean lexical profile',
       rustSource: 'crates/umf-core/src/csv_boolean_lexical.rs',
       testSources: ['crates/umf-core/tests/r5_csv_boolean_lexical.rs', 'crates/umf-core-wire/tests/r5_csv_boolean_lexical_wire.rs', 'tests/rust-csv-boolean-default.test.ts'],
-      evidencePaths: ['docs/helix/04-build/evidence/rust-migration/r5-csv-boolean-default-route/README.md', 'docs/helix/04-build/evidence/rust-migration/r5-csv-boolean-default-route/chromium-smoke.json', 'scripts/rust-migration/r5/csv-boolean-default-route/predecessor.json'],
+      evidencePaths: ['docs/helix/04-build/evidence/rust-migration/r5-csv-boolean-default-route/README.md', 'docs/helix/04-build/evidence/rust-migration/r5-csv-boolean-default-route/chromium-smoke.json', 'scripts/rust-migration/r5/csv-boolean-default-route/predecessor.json', 'docs/helix/04-build/evidence/rust-migration/r8-csv-boolean-default-route/README.md', 'docs/helix/04-build/evidence/rust-migration/r8-csv-boolean-default-route/installed-replay.json', 'docs/helix/04-build/evidence/rust-migration/r8-csv-boolean-default-route/retirement-review.md', 'scripts/rust-migration/r8/csv-boolean-default-route-installed.mjs', 'scripts/rust-migration/r8/csv-boolean-retirement-reference.mjs'],
     }],
     ['inspectCoreScalarType', {
       rustOwner: 'umf_core::scalar_type_inspection::inspect_core_scalar_type',
       wireOperation: 'model/inspectCoreScalarType', bindingMethod: 'inspectCoreScalarType(source, identity)',
       profile: 'core scalar-type inspection/0.3.0', rustSource: 'crates/umf-core/src/scalar_type_inspection.rs',
       testSources: ['crates/umf-core-wire/tests/r5_scalar_type_inspection.rs'],
-      evidencePaths: ['docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/README.md', 'docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/chromium.json', 'docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/frozen-predecessors.json', 'docs/helix/04-build/evidence/rust-migration/r5-scalar-type-inspection/README.md', 'docs/helix/04-build/evidence/rust-migration/r5-scalar-type-inspection/frozen-typescript.json'],
+      evidencePaths: ['docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/README.md', 'docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/chromium.json', 'docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/frozen-predecessors.json', 'docs/helix/04-build/evidence/rust-migration/r5-scalar-type-inspection/README.md', 'docs/helix/04-build/evidence/rust-migration/r5-scalar-type-inspection/frozen-typescript.json', 'docs/helix/04-build/evidence/rust-migration/r8-core-inspectors-installed/README.md', 'docs/helix/04-build/evidence/rust-migration/r8-core-inspectors-installed/receipt.json', 'scripts/rust-migration/r8/core-inspectors-installed.mjs'],
     }],
     ['inspectCoreRecordMembers', {
       rustOwner: 'umf_core::record_members_inspection::inspect_core_record_members',
       wireOperation: 'model/inspectCoreRecordMembers', bindingMethod: 'inspectCoreRecordMembers(source, identity)',
       profile: 'core record-member inspection/0.3.0', rustSource: 'crates/umf-core/src/record_members_inspection.rs',
       testSources: ['crates/umf-core-wire/tests/r5_record_members_inspection.rs'],
-      evidencePaths: ['docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/README.md', 'docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/chromium.json', 'docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/frozen-predecessors.json', 'docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/README.md', 'docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/chromium.json', 'docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/frozen-typescript.json'],
+      evidencePaths: ['docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/README.md', 'docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/chromium.json', 'docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/frozen-predecessors.json', 'docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/README.md', 'docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/chromium.json', 'docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/frozen-typescript.json', 'docs/helix/04-build/evidence/rust-migration/r8-core-inspectors-installed/README.md', 'docs/helix/04-build/evidence/rust-migration/r8-core-inspectors-installed/receipt.json', 'scripts/rust-migration/r8/core-inspectors-installed.mjs'],
     }],
     ['inspectCoreReferenceLinks', {
       rustOwner: 'umf_core::reference_links_inspection::inspect_core_reference_links',
       wireOperation: 'model/inspectCoreReferenceLinks', bindingMethod: 'inspectCoreReferenceLinks(source, identity)',
       profile: 'core reference-link inspection/0.3.0', rustSource: 'crates/umf-core/src/reference_links_inspection.rs',
       testSources: ['crates/umf-core/tests/r5_reference_links_inspection.rs', 'crates/umf-core-wire/tests/r5_reference_links_inspection.rs'],
-      evidencePaths: ['docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/README.md', 'docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/chromium.json', 'docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/frozen-predecessors.json', 'docs/helix/04-build/evidence/rust-migration/r5-reference-links-inspection/README.md', 'docs/helix/04-build/evidence/rust-migration/r5-reference-links-inspection/chromium.json', 'docs/helix/04-build/evidence/rust-migration/r5-reference-links-inspection/frozen-typescript.json'],
+      evidencePaths: ['docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/README.md', 'docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/chromium.json', 'docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/frozen-predecessors.json', 'docs/helix/04-build/evidence/rust-migration/r5-reference-links-inspection/README.md', 'docs/helix/04-build/evidence/rust-migration/r5-reference-links-inspection/chromium.json', 'docs/helix/04-build/evidence/rust-migration/r5-reference-links-inspection/frozen-typescript.json', 'docs/helix/04-build/evidence/rust-migration/r8-core-inspectors-installed/README.md', 'docs/helix/04-build/evidence/rust-migration/r8-core-inspectors-installed/receipt.json', 'scripts/rust-migration/r8/core-inspectors-installed.mjs'],
     }],
     ['parseGregorianDate', {
       rustOwner: 'umf_core::gregorian_date::parse_gregorian_date', wireOperation: 'temporal/parseGregorianDate', bindingMethod: 'parseGregorianDate(value)', profile: 'CONTRACT-005 Gregorian date operations', rustSource: 'crates/umf-core/src/gregorian_date.rs', testSources: ['crates/umf-core-wire/tests/gregorian_date_wire.rs'], evidencePaths: ['docs/helix/04-build/evidence/rust-migration/r5-temporal-default-route/README.md', 'docs/helix/04-build/evidence/rust-migration/r5-temporal-default-route/sol-review.md'],
@@ -359,7 +359,9 @@ function sourceSelectedImplementation(routeId, exportName, source = null) {
       bindingRoute: browser ? 'default browser v4 entrypoint -> WASM wrapper -> Rust wire dispatcher' : 'default Node v4 entrypoint -> Node-API wrapper -> Rust wire dispatcher',
       sourceClosure: closure(routeClosure),
       evidenceClosure: closure(selection.evidencePaths),
-      qualificationStatus: 'The bounded R5 evidence records opt-in Node and/or isolated Chromium source-route behavior for its captured source cohort. This inventory records current default source selection only; no installed SDK qualification, proven installed binding route, or declaration retirement is claimed.',
+      qualificationStatus: exportName === 'validateCsvBooleanLexical' || exportName === 'verifyCsvBooleanLexical'
+        ? 'A prior fixed-point private SDK archive passed 14 frozen CSV Boolean cases in installed Node, Bun and Chromium defaults. Independent reference review found an accessor-admission mismatch in that archive; the current scoped source correction is not in the archive. Current-cohort installed/browser parity, a proven current binding route and declaration retirement remain open.'
+        : 'A prior fixed-point private SDK archive passed the three inspector predecessor packets (8/9/9 cases) in installed Node, Bun and Chromium defaults, with selected Node/Bun host-shape comparisons and damaged-addon refusals. Current-cohort installed qualification, broader host parity, a proven current binding route and declaration retirement remain open.',
     };
   }
   const bit128Symbols = new Map([
@@ -705,6 +707,53 @@ const authoredResourceAuthorities = new Map([
       'src/adapters/postgresql/key-correlation.ts', 'scripts/build.ts',
       'scripts/package-sdk-rust-default.ts', 'scripts/package-sdk.py'],
   }],
+  ['spec/core/semantic-types-selection.schema.json', {
+    kind: 'authored-versioned-contract-schema',
+    governingArtifacts: ['docs/helix/02-design/contracts/CONTRACT-078-semantic-types.md'],
+    governingClauses: ['CONTRACT-078 § Published schemas'],
+    authoringHistory: [{
+      commit: 'f397e484727cc7405958c9ec40468cf6134e48e3',
+      action: 'added; current bytes match introducing blob',
+      sha256: '529d97cfd8ff7b5e201967c7156dc8c9439d5984ac1ee755bdb60a2d505bdead',
+    }],
+    closurePaths: ['docs/helix/02-design/contracts/CONTRACT-078-semantic-types.md',
+      'src/model/selection-schemas.ts', 'src/model/semantic-types.ts',
+      'tests/semantic-types/composition.test.ts', 'src/index.ts',
+      'scripts/build.ts', 'scripts/package-sdk-rust-default.ts',
+      'scripts/package-sdk.py',
+      'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/core-selection-schema-authority.md'],
+  }],
+  ...[
+    ['spec/projections/ddd-graphql.schema.json',
+      'docs/helix/02-design/technical-designs/TD-049-ddd-graphql.md',
+      'TD-049 § Complete 0.7.0 projection',
+      'dcc8c540b', '8a4a5686d67ee70a8adc3bde0abdae4989e1437aa389fccce6c0a62b2592cb21',
+      '1a550add6922767237364b6ecc0184d165c08c0c34a7208a7db7ad423f9a0042',
+      ['src/projections/ddd-graphql/index.ts', 'tests/projections/ddd-graphql.test.ts']],
+    ['spec/core/facets-sqlserver-projection.schema.json',
+      'docs/helix/02-design/technical-designs/TD-043-core-facets.md',
+      'TD-043 § SQL Server authored facet projection',
+      'e1c5bb2df', 'a539e3fd69967c44c60f8a4757a0d8aeb743e889a41a4532699380230a3d7ef8',
+      '6c92fee8e2bdaad0991e846d72786d259364ee3bc901503db90609d278885f2d',
+      ['src/core-ideals/facets-sqlserver-projection.ts', 'scripts/core-ideals/facets-sqlserver-projection-native.ts']],
+    ['spec/core/sqlserver-facet-classification.schema.json',
+      'docs/helix/02-design/technical-designs/TD-043-core-facets.md',
+      'TD-043 § SQL Server facet classification API',
+      '0749e74fa', 'fe3f7f430bd8682f8ab6ad8f71a4606c1b43a469a412352e3ee4cb6684e331c2',
+      'b2db09ae9cd6877aa6ac8e3fc2fa267ebf2c530fa9d2c2867f1de21c38cc67f5',
+      ['src/core-ideals/facets-sqlserver.ts', 'scripts/core-ideals/facets-sqlserver-classification-browser.ts']],
+  ].map(([file, design, clause, addedCommit, addedSha256, refreshedSha256, consumers]) => [file, {
+    kind: 'authored-versioned-design-schema',
+    governingArtifacts: [design],
+    governingClauses: [clause],
+    authoringHistory: [
+      {commit: addedCommit, action: 'added', sha256: addedSha256},
+      {commit: '8706814a9', action: 'updated; current bytes match', sha256: refreshedSha256},
+    ],
+    closurePaths: [design, ...consumers, 'src/index.ts', 'scripts/build.ts',
+      'scripts/package-sdk-rust-default.ts', 'scripts/package-sdk.py',
+      'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/projection-parquet-sqlserver-resource-authority.md'],
+  }]),
   ...[
     ['spec/projections/avro-json-schema.schema.json',
       'docs/helix/02-design/contracts/CONTRACT-008-avro-document-projection.md',
@@ -778,6 +827,23 @@ const authoredResourceAuthorities = new Map([
   }]),
 ]);
 const explicitGeneratedResourceAuthorities = new Map([
+  ['spec/extensions/parquet/idl.json', {
+    kind: 'generated-from-pinned-parquet-thrift-descriptor-writer',
+    governingArtifacts: ['docs/helix/02-design/contracts/CONTRACT-019-parquet.md'],
+    governingClauses: ['CONTRACT-019 § Pinned IDL and named metadata (US-019-AC6)'],
+    generator: 'scripts/parquet-idl.py',
+    reproductionStatus: 'Current bytes match the historical generated output and the current writer differs only by SPDX; a fresh thriftpy2 0.5.3 compiler replay was unavailable in this worktree.',
+    inputPaths: ['native/parquet/sources/manifest.json', 'native/parquet/sources/parquet.thrift'],
+    closurePaths: ['docs/helix/02-design/contracts/CONTRACT-019-parquet.md',
+      'scripts/parquet-idl.py', 'native/parquet/sources/manifest.json',
+      'native/parquet/sources/parquet.thrift', 'native/parquet/sources/LogicalTypes.md',
+      'native/parquet/sources/Encryption.md', 'native/parquet/sources/Encodings.md',
+      'native/parquet/sources/LICENSE', 'native/parquet/sources/NOTICE',
+      'docker/core-replay/oracle-requirements.txt', 'src/adapters/parquet/idl-map.ts',
+      'scripts/parquet-metadata-schema.ts', 'src/index.ts', 'scripts/build.ts',
+      'scripts/package-sdk-rust-default.ts', 'scripts/package-sdk.py',
+      'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/projection-parquet-sqlserver-resource-authority.md'],
+  }],
   ['spec/extensions/delta-log/inspection.schema.json', {
     kind: 'generated-from-exact-contract-governed-delta-log-schema-writer',
     governingArtifacts: ['docs/helix/02-design/contracts/CONTRACT-018-delta.md',
@@ -1244,7 +1310,7 @@ function resourceOwnership(row, aliasCount, scans) {
   const generatorPaths = metamodelGenerated ? ['scripts/metamodel/build.ts', 'crates/umf-metamodel/src/lib.rs'] : explicitGeneratedAuthority ? [explicitGeneratedAuthority.generator] : generators;
   const authorityStatus = metamodelGenerated || explicitGeneratedAuthority ? 'generated-authority-known' : authoredAuthority ? 'authored-authority-known' : generators.length === 1 ? 'candidate-generated' : 'authority-unresolved';
   const generatorRuntime = explicitGeneratedAuthority
-    ? { language: 'TypeScript', runtime: 'Bun', entrypoints: generatorPaths }
+    ? { language: generatorPaths.some(file => file.endsWith('.py')) ? 'Python' : 'TypeScript', runtime: generatorPaths.some(file => file.endsWith('.py')) ? 'Python 3' : 'Bun', entrypoints: generatorPaths }
     : metamodelGenerated
     ? { language: 'TypeScript host plus Rust compiler', runtime: 'Bun host; pinned native Rust metamodel compiler', entrypoints: generatorPaths }
     : generators.length
@@ -1350,6 +1416,7 @@ function resourceOwnership(row, aliasCount, scans) {
       governingArtifacts: authoredAuthority?.governingArtifacts ?? explicitGeneratedAuthority?.governingArtifacts ?? [],
       governingClauses: authoredAuthority?.governingClauses ?? explicitGeneratedAuthority?.governingClauses ?? [],
       generatorInputs: explicitGeneratedAuthority?.inputPaths ?? [],
+      ...(explicitGeneratedAuthority?.reproductionStatus ? {reproductionStatus: explicitGeneratedAuthority.reproductionStatus} : {}),
       ...(authoredAuthority?.authoringHistory ? { authoredRevisionClosure: authoredAuthority.authoringHistory } : {}),
       sourceClosureCompleteness: authoredAuthority?.authoringHistory ? 'direct versioned schema authorship and governing contract/current source/package closure are pinned; SDK archive bytes remain unqualified' : authoredAuthority ? 'normative schema authority traced to governing contract; authored schema bytes are copied under dist/spec by the SDK build; installed archive bytes remain unqualified' : explicitGeneratedAuthority ? 'exact generator, schema-builder inputs, governing contract, package exports and build/archive rules are hash-pinned; installed archive bytes remain unqualified' : metamodelGenerated ? 'direct compiler/host/manifest files; transitive Cargo and metamodel input closure not frozen per resource' : generatorRuntime ? 'candidate entrypoint hash only; writer condition and transitive input closure unproven' : 'no generator source closure established',
       historicalGeneratorReceipt: recordedGenerated ? { path: scans.generatorReceiptPath, sha256: digest(read(scans.generatorReceiptPath)), outputSha256: digest(Buffer.from(String(json(scans.generatorReceiptPath).affectedResourceSha256[sourcePath]))) } : null,
@@ -1456,8 +1523,8 @@ function publicRows(inventory) {
           : row.exportName === 'validateCoreDatasetValuesCompact' ? 'Rust compact Dataset validation selected by source route; installed qualification pending'
           : ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName) ? 'Rust Core Keys operation selected by source route; installed qualification pending'
           : selectedBit128 ? 'Rust Bit128/UUID operation selected by source route; installed qualification pending'
-          : ['inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'].includes(row.exportName) && selectedBySource ? 'Rust core inspector selected by source route; installed SDK qualification pending'
-          : ['validateCsvBooleanLexical', 'verifyCsvBooleanLexical'].includes(row.exportName) && selectedBySource ? 'Rust CSV Boolean lexical operation selected by source route; installed SDK qualification pending'
+          : ['inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'].includes(row.exportName) && selectedBySource ? 'Rust core inspector selected by source route; prior private installed archive passed; current cohort qualification pending'
+          : ['validateCsvBooleanLexical', 'verifyCsvBooleanLexical'].includes(row.exportName) && selectedBySource ? 'Rust CSV Boolean lexical operation selected by source route; prior private installed archive passed frozen cases but accessor parity failed; current cohort qualification pending'
           : inert ? 'TypeScript package-root data export remains default' : 'inherited TypeScript implementation remains default',
       },
       'package-root-browser': {
@@ -1470,8 +1537,8 @@ function publicRows(inventory) {
           : row.exportName === 'validateCoreDatasetValuesCompact' ? 'Rust compact Dataset validation selected by source route; installed qualification pending'
           : ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName) ? 'Rust Core Keys operation selected by source route; installed qualification pending'
           : selectedBit128 ? 'Rust Bit128/UUID operation selected by source route; installed qualification pending'
-          : ['inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'].includes(row.exportName) && selectedBySource ? 'Rust core inspector selected by source route; installed SDK qualification pending'
-          : ['validateCsvBooleanLexical', 'verifyCsvBooleanLexical'].includes(row.exportName) && selectedBySource ? 'Rust CSV Boolean lexical operation selected by source route; installed SDK qualification pending'
+          : ['inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'].includes(row.exportName) && selectedBySource ? 'Rust core inspector selected by source route; prior private installed archive passed; current cohort qualification pending'
+          : ['validateCsvBooleanLexical', 'verifyCsvBooleanLexical'].includes(row.exportName) && selectedBySource ? 'Rust CSV Boolean lexical operation selected by source route; prior private installed archive passed frozen cases but accessor parity failed; current cohort qualification pending'
           : inert ? 'TypeScript package-root data export remains default' : 'inherited TypeScript implementation remains default',
       },
       'package-reference': {
@@ -1501,9 +1568,9 @@ function publicRows(inventory) {
           : ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName) && ['package-root-node', 'package-root-browser'].includes(row.routeId)
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust Core Keys operation selected by source route; installed qualification pending; verifyCoreKeyOperation remains TypeScript and retirement gap remains open`
           : ['inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'].includes(row.exportName) && selectedBySource
-            ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust core inspector selected by source route; scoped Node/Chromium evidence only; installed SDK qualification pending; retirement gap remains open`
+            ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust core inspector selected by source route; prior private archive passed installed Node/Bun/Chromium frozen cases; current-cohort qualification and retirement remain open`
           : ['validateCsvBooleanLexical', 'verifyCsvBooleanLexical'].includes(row.exportName) && selectedBySource
-            ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust CSV Boolean lexical operation selected by source route; scoped Node/Chromium evidence only; installed SDK qualification pending; retirement gap remains open`
+            ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust CSV Boolean lexical operation selected by source route; prior private archive passed installed frozen cases but accessor parity failed; current-cohort qualification and retirement remain open`
           : selectedBit128
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired`
           : mapping

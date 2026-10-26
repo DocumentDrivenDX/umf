@@ -1666,7 +1666,7 @@ mod tests {
     }
 
     #[test]
-    fn selected_predecessor_full_results_and_recoveries_match() {
+    fn matrix_predecessor_full_results_and_recoveries_match() {
         fn canonical(value: &Value) -> Value {
             match value {
                 Value::Array(items) => Value::Array(items.iter().map(canonical).collect()),
@@ -1737,15 +1737,10 @@ mod tests {
         };
         let mut compared = 0;
         let mut differences = Vec::new();
-        for (name, case) in cases.iter().filter(|(name, _)| {
-            [
-                "matrix/nested/id/strict",
-                "matrix/dependencies/left/strict",
-                "matrix/direct/recursive/strict",
-            ]
+        for (name, case) in cases
             .iter()
-            .any(|selected| name == &k(selected))
-        }) {
+            .filter(|(name, _)| name.units().starts_with(k("matrix/").units()))
+        {
             let expected = get(case, "result").expect("matrix case has result");
             let source = get(expected, "source").expect("result has source");
             let request = get(expected, "request").expect("result has request");
@@ -1781,8 +1776,8 @@ mod tests {
             compared += 1;
         }
         assert_eq!(
-            compared, 3,
-            "the selected full-result predecessor cases run"
+            compared, 30,
+            "all strict/report predecessor full-result cases run"
         );
         assert!(differences.is_empty(), "{}", differences.join("\n"));
     }

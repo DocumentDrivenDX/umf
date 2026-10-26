@@ -4888,3 +4888,73 @@ qualify the entire SDK release. The remaining R8 order is to review those
 rows, extend installed qualification to the next bounded inspectors and Key
 tuple operations, resolve the other executable/resource dispositions, then
 run a publishable integrated cohort before PR, merge and release.
+
+The [independent CSV retirement review](evidence/rust-migration/r8-csv-boolean-default-route/retirement-review.md)
+found that an installed request accessor returns `AdmissionError` at
+`/csvRequest` from the Rust default but `UmfError/NON_JSON` at `/profile`
+from the TypeScript reference. Both lexical declaration rows remain open.
+The CSV facade now has a bounded, descriptor-only correction for one
+unambiguous accessor or hidden property, and source-level Node/Bun tests
+pass for selected source/request paths and receipt-first verification. The
+private archive predates this change; current-source installed Node/Bun and
+real-browser parity, competing-invalid-input order, and proxy behavior are
+still required before reconsidering retirement.
+
+The [installed core-inspector receipt](evidence/rust-migration/r8-core-inspectors-installed/README.md)
+reuses the same fixed-point private 0.5.6 archive and passes 26 frozen
+predecessor cases across three source-selected inspectors in Node 26.12.1,
+Bun 1.4.3, and Chromium 153. Selected Node/Bun result and error shapes match
+the explicit TypeScript reference; missing/corrupt native-addon package
+copies refuse at import. This is prior-archive route evidence, not
+current-cohort retirement or release qualification. Sol independently
+replayed the harness. The [Core Key tuple response-limit review](evidence/rust-migration/r8-core-key-tuple-limit/README.md)
+also shows that the opt-in direct Node/WASM byte read already handles
+100,001 and 4,000,000 bytes without the tagged-array ceiling. Its default
+package roots and installed SDK are still unqualified.
+
+The [older operation-schema review](evidence/rust-migration/r8-symbol-inventory/core-operation-schema-authority.md)
+and [follow-up](evidence/rust-migration/r8-symbol-inventory/older-core-operation-schema-authority.md)
+reproduced historical version writers but found no writer for the current
+bytes, so eight older operation resources remain unresolved. The
+[selection-schema review](evidence/rust-migration/r8-symbol-inventory/core-selection-schema-authority.md)
+established direct CONTRACT-078 authorship only for the unchanged
+`semantic-types-selection.schema.json`; the three composite selections
+remain unresolved. The [projection and Parquet review](evidence/rust-migration/r8-symbol-inventory/projection-parquet-sqlserver-resource-authority.md)
+also pins three directly authored DDD/SQL Server schemas and the Parquet IDL
+writer with historical output equivalence; its fresh `thriftpy2==0.5.3`
+compiler reproduction remains unavailable and is qualified in the ledger.
+Resource authority is now 44 generated-known, 46 authored-known, 88
+candidate-generated and 20 unresolved. The ledger's 43 tests pass. Its 922
+logical retirement gaps and zero proven current-cohort binding routes remain
+unchanged.
+
+The metamodel and both Python resource mirrors have been refreshed against
+the settled source cohort; the strict boundary check passes across 702
+modules with zero V8 debt and zero findings. The [Python package audit](evidence/rust-migration/r8-python-v8-closure-audit/README.md)
+finds no source-level Node, Bun or V8 dependency under the three Python
+packages, while Python still owns public models and substantial host/API
+behavior. The full installed wheel and sdist matrix remains open. The coordinated
+inventory SHA-256 is
+`2939e6f766ce346cef109bdfa672a8e31c36c42704f62ce64328880bc80de9ca`;
+the matching ledger SHA-256 is
+`6446eef26ea664be200319215f3e13f3128a28f888b63dbdc3a3853b58bc8085`.
+The expanded [Avro matrix follow-up](evidence/rust-migration/r8-avro-record-type/full-matrix-parity.md)
+passes complete results for all 30 frozen strict/report cases and exact
+recovery for ten classified cases in Rust and through a fresh addon under
+Bun's Node-API host. Node's own full matrix, Chromium/WASM, other controls,
+and the installed default route remain open.
+
+The [private Python installed follow-up](evidence/rust-migration/r8-python-v8-closure-audit/installed-replay-20261025.md)
+resolved the local Hatchling backend gap and built all three sdist/wheel
+artifacts offline from one captured source cohort. The core extracted-sdist
+verifier and non-publishing core/codegen pair verifier passed on macOS arm64
+CPython 3.11.17; an isolated three-wheel probe generated seven client files
+with Node, Bun, Cargo and rustc absent from PATH, and wheel member lists had
+no JS/WASM assets. This is one private host subset, not the required six-cohort
+release matrix or full Python API closure. A deeper metamodel clean-source
+test exposed a separate compiler bootstrap regression: `umf-cli
+--no-default-features` now compiles unrelated core modules whose `include_str!`
+inputs include generated spec outputs omitted from the clean authored-source
+fixture. `check:metamodel` passes in the full checkout, but the clean-source
+generation test fails; isolated bootstrap feature work is required before
+R8 can close.

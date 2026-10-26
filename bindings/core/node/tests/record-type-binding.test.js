@@ -33,6 +33,26 @@ test('Node tagged wire classifies and recovers the frozen Avro Record Type case'
   expect(recovered.schema).toBeDefined();
 }, 120_000);
 
+test('Node tagged wire matches full Avro Record Type matrix receipts and recoveries', () => {
+  const canonical = (value) => JSON.stringify(value, (key, item) => item && typeof item === 'object' && !Array.isArray(item)
+    ? Object.fromEntries(Object.keys(item).sort().map((name) => [name, item[name]]))
+    : item);
+  const matrix = Object.entries(avroPacket.outcomes).filter(([name]) => name.startsWith('matrix/'));
+  expect(matrix).toHaveLength(30);
+  let classified = 0;
+  for (const [name, item] of matrix) {
+    const expected = item.result;
+    const {value: receipt} = call('classifyAvroRecordType', {source: expected.source, request: expected.request});
+    expect(canonical(receipt), `${name} full receipt`).toBe(canonical(expected));
+    if (expected.status === 'classified') {
+      const {value: recovered} = call('recoverAvroRecordTypeBundle', {receipt, current: receipt.target});
+      expect(canonical(recovered), `${name} exact recovery`).toBe(canonical(item.recovery.json));
+      classified++;
+    }
+  }
+  expect(classified).toBe(10);
+}, 900_000);
+
 test('Node public package facade forwards the opt-in profile through classify and recover', () => {
   expect(facade.RECORD_TYPE_BINDING_PROFILE).toBe(RECORD_TYPE_BINDING_PROFILE);
   const profileRefusal = JSON.parse(facade.executeRecordTypeBindingWire(encodeRequestWire({profile: 'wrong', op: 'classifyAvroRecordType'})));

@@ -144,7 +144,7 @@ test('TableSpec Cardinality projection schema pins its direct Field base and pac
     'the imported Field base is qualified independently, not promoted transitively');
   assert.ok(row.resourceOwnership.routes.some(route => route.id === 'sdk-archive'
     && route.artifactPath === 'package/dist/spec/core/cardinality-tablespec-projection.schema.json'));
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 43);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
 });
 
@@ -200,7 +200,7 @@ test('SQL Server Field and Cardinality projection schemas pin exact writer chain
   assert.equal(field.resourceOwnership.authority.status, 'generated-authority-known');
   assert.deepEqual(field.resourceOwnership.authority.generatorInputs, ['spec/core/field-postgresql-projection.schema.json']);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 43);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
 });
 
 test('SQL Server schema writer --check rejects stale output in an isolated project copy', async () => {
@@ -350,7 +350,7 @@ test('Parquet metadata schema outputs pin their exact multi-output writer and di
     assert.ok(row.resourceOwnership.routes.some(route => route.id === 'sdk-archive'
       && route.artifactPath === `package/dist/${resource}`));
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 43);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
 });
 
@@ -551,7 +551,47 @@ test('versioned core operation schemas pin direct authoring history without prom
   // The count includes the explicit resource families in the R8 authority map.
   const relationshipSelection = current.rows.find(item => item.source === 'spec/core/relationship-selection.schema.json');
   assert.equal(relationshipSelection.resourceOwnership.authority.status, 'authority-unresolved', 'one-off generated selection schema lacks a current reproducible writer');
-  assert.equal(current.counts.resourceAuthorityByStatus['authored-authority-known'], 42);
+  assert.equal(current.counts.resourceAuthorityByStatus['authored-authority-known'], 46);
+});
+
+test('semantic-types selection has exact contract authorship while composite selection authorities stay open', () => {
+  const output = execFileSync('node', ['scripts/rust-migration/r8/gap-ledger.mjs', '--stdout'], {
+    cwd: process.cwd(), maxBuffer: 64 * 1024 * 1024, encoding: 'utf8',
+  });
+  const current = JSON.parse(output);
+  const authority = file => current.rows.find(row => row.routeId === 'package-root-node' && row.source === file)?.resourceOwnership.authority;
+  const semantic = authority('spec/core/semantic-types-selection.schema.json');
+  assert.equal(semantic.status, 'authored-authority-known');
+  assert.deepEqual(semantic.governingArtifacts, ['docs/helix/02-design/contracts/CONTRACT-078-semantic-types.md']);
+  assert.equal(semantic.authoredRevisionClosure[0].sha256, '529d97cfd8ff7b5e201967c7156dc8c9439d5984ac1ee755bdb60a2d505bdead');
+  assert.ok(semantic.sourceClosure.some(item => item.path === 'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/core-selection-schema-authority.md'));
+  for (const file of ['spec/core/key-selection.schema.json', 'spec/core/relationship-selection.schema.json', 'spec/core/schema-properties-selection.schema.json']) {
+    assert.equal(authority(file).status, 'authority-unresolved', file);
+  }
+});
+
+test('named DDD and SQL Server schemas and pinned Parquet IDL have exact authority without promoting its relationship schema', () => {
+  const output = execFileSync('node', ['scripts/rust-migration/r8/gap-ledger.mjs', '--stdout'], {
+    cwd: process.cwd(), maxBuffer: 64 * 1024 * 1024, encoding: 'utf8',
+  });
+  const current = JSON.parse(output);
+  const authority = file => current.rows.find(row => row.routeId === 'package-root-node' && row.source === file)?.resourceOwnership.authority;
+  for (const file of ['spec/projections/ddd-graphql.schema.json', 'spec/core/facets-sqlserver-projection.schema.json', 'spec/core/sqlserver-facet-classification.schema.json']) {
+    const row = current.rows.find(item => item.routeId === 'package-root-node' && item.source === file);
+    const entry = row.resourceOwnership.authority;
+    assert.equal(entry.status, 'authored-authority-known', file);
+    assert.equal(entry.kind, 'authored-versioned-design-schema', file);
+    assert.equal(entry.authoredRevisionClosure.at(-1).sha256, row.resourceOwnership.source.sha256);
+    assert.ok(entry.sourceClosure.some(item => item.path === 'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/projection-parquet-sqlserver-resource-authority.md'));
+  }
+  const idl = authority('spec/extensions/parquet/idl.json');
+  assert.equal(idl.status, 'generated-authority-known');
+  assert.equal(idl.generator.language, 'Python');
+  assert.equal(idl.generator.runtime, 'Python 3');
+  assert.deepEqual(idl.generator.entrypoints, ['scripts/parquet-idl.py']);
+  assert.deepEqual(idl.generatorInputs, ['native/parquet/sources/manifest.json', 'native/parquet/sources/parquet.thrift']);
+  assert.match(idl.reproductionStatus, /fresh thriftpy2 0\.5\.3 compiler replay was unavailable/);
+  assert.equal(authority('spec/core/parquet-relationship-classification.schema.json').status, 'authority-unresolved');
 });
 
 test('CSV Boolean operation schema pins its added and refreshed authored blobs', () => {
@@ -736,8 +776,8 @@ test('Delta log, Parquet framing and Spark datatype schemas pin current writers 
     const row = ledger.rows.find(item => item.source === resource);
     if (row) assert.equal(row.resourceOwnership.authority.status, 'authority-unresolved', `${resource} is a negative historical control`);
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 43);
-  assert.equal(ledger.counts.resourceAuthorityByStatus['authority-unresolved'], 25);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['authority-unresolved'], 20);
 });
 
 test('dataset-value operation schemas pin direct authorship, consumer closure and archive limits', () => {
@@ -794,7 +834,7 @@ test('dataset-value operation schemas pin direct authorship, consumer closure an
   }
   assert.match(archiveBuild, /cp\(join\(root,'spec'\),join\(dist,'spec'\),\{recursive:true\}\)/);
   assert.match(archive, /\(root\s*\/\s*'dist'\)\.rglob\('\*'\)/);
-  assert.equal(ledger.counts.resourceAuthorityByStatus['authored-authority-known'], 42);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['authored-authority-known'], 46);
 });
 
 test('OpenAPI result schemas pin their governing contracts and package data closure', () => {
@@ -860,7 +900,7 @@ test('domain-pack resources pin the schema builder, contract inputs and package 
   const archive = readFileSync('scripts/package-sdk.py', 'utf8');
   assert.match(build, /cp\(join\(root,'spec'\),join\(dist,'spec'\),\{recursive:true\}\)/);
   assert.match(archive, /\(root\s*\/\s*'dist'\)\.rglob\('\*'\)/);
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 43);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
 });
 
 test('Arrow IPC single-output schema writers have read-only check mode and pinned package closure', () => {
@@ -894,7 +934,7 @@ test('Arrow IPC single-output schema writers have read-only check mode and pinne
     const after = createHash('sha256').update(readFileSync(resource)).digest('hex');
     assert.equal(after, before, `${generator} --check changed ${resource}`);
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 43);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
 });
 
 test('Arrow base schemas pin PostgreSQL and vendored FlatBuffer generator inputs', () => {
@@ -944,7 +984,7 @@ test('Arrow base schemas pin PostgreSQL and vendored FlatBuffer generator inputs
     execFileSync('bun', [generator, '--check'], { stdio: 'pipe' });
     for (const resource of resources) assert.equal(createHash('sha256').update(readFileSync(resource)).digest('hex'), before.get(resource), `${generator} --check changed ${resource}`);
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 43);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
 });
 
 test('Delta action and checkpoint report schemas pin CONTRACT-018 composition and package closure', async () => {
@@ -1028,7 +1068,7 @@ test('Delta action and checkpoint report schemas pin CONTRACT-018 composition an
   } finally {
     await rm(generatedCheckpoint, { recursive: true, force: true });
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 43);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
 });
 
 test('native JSON tree schema is contract-attested and preserves its public source closure', () => {
@@ -1057,7 +1097,7 @@ test('native JSON tree schema is contract-attested and preserves its public sour
   assert.match(readFileSync('docs/helix/02-design/contracts/CONTRACT-001-core-envelope.md', 'utf8'), /spec\/core\/native-json\.schema\.json.*src\/model\/native-json\.ts/);
   assert.match(readFileSync('src/index.ts', 'utf8'), /nativeJsonSchema.*native-json\.schema\.json/);
   assert.equal(row.resourceOwnership.routes.find(route => route.id === 'sdk-archive').installedQualification.status, 'not-installed-qualified');
-  assert.equal(ledger.counts.resourceAuthorityByStatus['authored-authority-known'], 42);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['authored-authority-known'], 46);
 });
 
 test('PostgreSQL Key catalog schemas pin one exact contract-governed three-output writer', async () => {
@@ -1121,7 +1161,7 @@ test('PostgreSQL Key catalog schemas pin one exact contract-governed three-outpu
   } finally {
     await rm(isolated, { recursive: true, force: true });
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 43);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
 });
 
 test('Spark projection schemas pin US-017 clauses, composed input, public exports and package closure', () => {
@@ -1196,7 +1236,7 @@ test('Parquet level, physical, row and logical report schemas pin their input ch
     execFileSync('bun', [generator, '--check'], { stdio: 'pipe' });
     assert.equal(createHash('sha256').update(readFileSync(row.source)).digest('hex'), before, `${generator} --check changed ${row.source}`);
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 43);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
 });
 
 test('condition-aware routes count logical gaps once and classify each default separately', () => {
@@ -1356,7 +1396,8 @@ test('five current R8 default selections retain exact source, wire, binder and b
       assert.ok(selected.sourceClosure.some(item => item.path === (selected.bindingMethod.includes('CsvBoolean') ? `bindings/core/${routeId.endsWith('browser') ? 'wasm' : 'node'}/src/csv-boolean-lexical.js` : `bindings/core/${routeId.endsWith('browser') ? 'wasm' : 'node'}/src/core-model.js`)));
       assert.ok(selected.sourceClosure.every(item => /^[a-f0-9]{64}$/.test(item.sha256)));
       assert.ok(selected.evidenceClosure.length >= 3);
-      assert.match(selected.qualificationStatus, /no installed SDK qualification/);
+      assert.match(selected.qualificationStatus, /prior fixed-point private SDK archive/i);
+      assert.match(selected.qualificationStatus, /[Cc]urrent-cohort installed/);
     }
   }
   const csv = ledger.rows.find(item => item.routeId === 'package-root-node' && item.exportName === 'verifyCsvBooleanLexical').sourceSelectedImplementation;
@@ -1952,7 +1993,7 @@ test('Delta datatype and table-context schemas pin exact writers and isolated fu
   } finally {
     await rm(directory, { recursive: true, force: true });
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 43);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
 });
 
 test('Python source census walks nested package modules', async t => {
