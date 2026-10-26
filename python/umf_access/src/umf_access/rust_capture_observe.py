@@ -15,10 +15,56 @@ from typing import Any
 
 _PROFILE = "umf-access-capture-graph-observation/0.6.0"
 _EXACT_EMPTY_TERMINAL_PROFILE = "umf-access-capture-exact-empty-terminal/0.2.0"
+_SELECTED_KEY_PROFILE = "umf-access-capture-selected-key-observation/0.1.0"
 
 
 class FieldOwnerObservationUnavailable(RuntimeError):
     """The installed umf-core does not provide the observation profile."""
+
+
+def observe_selected_key_preflight(
+    key: object, record: object, terminal_op: str, session: object
+) -> str:
+    """Observe the selected-key stage after terminal and Join-owner preflight.
+
+    The caller is responsible for completing the predecessor's terminal/header
+    reads and full sequential Join-owner closure before entering this observer.
+    Unsupported key/record subclasses fall back before any live graph reads.
+    ``unsupported-after-read`` is terminal: callers must never retry Python
+    validation after this observer has consumed a live accessor.
+    """
+    from umf import _rust
+
+    from umf_access.dsl._nodes import Node, RecordRef
+
+    if terminal_op not in ("get", "page"):
+        raise TypeError("selected-key terminal must be get or page")
+    if type(key) is not Node or type(record) is not RecordRef:
+        return "outside-profile"
+    core = getattr(_rust, "_rust_core", None)
+    version = getattr(core, "access_capture_selected_key_observation_profile_version", None)
+    observe = getattr(core, "access_observe_capture_selected_key_preflight", None)
+    session_type = getattr(core, "CaptureResourceSession", None)
+    if (
+        not callable(version)
+        or version() != _SELECTED_KEY_PROFILE
+        or not callable(observe)
+        or not callable(session_type)
+        or type(session) is not session_type
+    ):
+        raise FieldOwnerObservationUnavailable(
+            "installed umf-core lacks selected-key observation profile"
+        )
+    outcome = observe(key, record, Node, RecordRef, terminal_op, session)
+    if outcome not in (
+        "accepted",
+        "foreign-record",
+        "selected-key-mismatch",
+        "outside-profile",
+        "unsupported-after-read",
+    ):
+        raise RuntimeError("Rust selected-key observer returned an invalid outcome")
+    return outcome
 
 
 def _native() -> Any:

@@ -447,6 +447,198 @@ def test_live_rust_validator_matches_get_page_selected_key_preflight_order():
             assert (rust.value.code, str(rust.value)) == expected
 
 
+@pytest.mark.parametrize("faulting_name", ["op", "args"])
+@pytest.mark.parametrize("terminal_op", ["get", "page"])
+def test_selected_key_observer_preserves_key_fault_before_root_owner(faulting_name, terminal_op):
+    sentinel = LookupError(f"key {faulting_name} sentinel")
+    root_sentinel = LookupError("repeated root module sentinel")
+    key = Node("key_param", ("key", (), (("module", "demo"), ("element", "Thing"))))
+    record = RecordRef("demo", "Thing", (_ID,), source=_GRAPH_SOURCE, key_id="thing_id")
+    original_node_getattribute = Node.__getattribute__
+    original_record_getattribute = RecordRef.__getattribute__
+    module_reads = 0
+
+    def node_getattribute(instance, name):
+        if instance is key and name == faulting_name:
+            raise sentinel
+        return original_node_getattribute(instance, name)
+
+    def record_getattribute(instance, name):
+        nonlocal module_reads
+        if instance is record and name == "module":
+            module_reads += 1
+            if module_reads == 2:
+                raise root_sentinel
+        return original_record_getattribute(instance, name)
+
+    with patch.object(Node, "__getattribute__", node_getattribute), patch.object(
+        RecordRef, "__getattribute__", record_getattribute
+    ):
+        terminal_args = (record, (), key) if terminal_op == "get" else (record, (), 10, key)
+        predecessor_node = Node(terminal_op, terminal_args)
+        with pytest.raises(LookupError) as predecessor:
+            _validate_node(predecessor_node, ())
+        assert predecessor.value is sentinel
+        module_reads = 0
+        session = _rust._rust_core.CaptureResourceSession(100)
+        # The observer's explicit precondition: the earlier terminal/root pass
+        # has already read the root owner once.
+        session.charge_work(2)
+        _ = record.module
+        _ = record.element
+        with pytest.raises(LookupError) as error:
+            rust_capture_observe.observe_selected_key_preflight(
+                key, record, terminal_op, session
+            )
+    assert error.value is sentinel
+    expected_work = 3 if faulting_name == "op" else 4
+    assert session.charged_work == expected_work
+
+
+def test_selected_key_observer_preserves_key_id_before_source_fault_identity():
+    trace = []
+    source_sentinel = LookupError("source sentinel")
+    key = Node("key_param", ("key", (), (("module", "demo"), ("element", "Thing"))))
+    record = RecordRef("demo", "Thing", (_ID,), source=_GRAPH_SOURCE, key_id="thing_id")
+    original_record_getattribute = RecordRef.__getattribute__
+
+    def record_getattribute(instance, name):
+        if instance is record and name in {"module", "element", "key_id", "source"}:
+            trace.append(name)
+        if instance is record and name == "source":
+            raise source_sentinel
+        return original_record_getattribute(instance, name)
+
+    with patch.object(RecordRef, "__getattribute__", record_getattribute):
+        predecessor_node = Node("get", (record, (), key))
+        with pytest.raises(LookupError) as predecessor:
+            _validate_node(predecessor_node, ())
+        predecessor_trace = list(trace)
+        assert predecessor.value is source_sentinel
+        trace.clear()
+        session = _rust._rust_core.CaptureResourceSession(100)
+        session.charge_work(2)
+        _ = record.module
+        _ = record.element
+        with pytest.raises(LookupError) as error:
+            rust_capture_observe.observe_selected_key_preflight(
+                key, record, "page", session
+            )
+    assert error.value is source_sentinel
+    assert trace == ["module", "element", "module", "element", "key_id", "source"]
+    assert trace == predecessor_trace
+    assert session.charged_work == 10
+
+
+def test_selected_key_observer_preserves_dict_missing_identity_keyerror():
+    key = Node("key_param", ("key", (), (("element", "Thing"),)))
+    record = RecordRef("demo", "Thing", (_ID,))
+    session = _rust._rust_core.CaptureResourceSession(100)
+    with pytest.raises(KeyError, match="module") as error:
+        rust_capture_observe.observe_selected_key_preflight(key, record, "get", session)
+    assert error.value.args == ("module",)
+
+
+def test_selected_key_observer_uses_python_dict_duplicate_key_semantics():
+    key = Node(
+        "key_param",
+        (
+            "key",
+            (),
+            (("module", "foreign"), ("module", "demo"), ("element", "Thing")),
+        ),
+    )
+    record = RecordRef("demo", "Thing", (_ID,))
+    session = _rust._rust_core.CaptureResourceSession(100)
+    assert (
+        rust_capture_observe.observe_selected_key_preflight(key, record, "get", session)
+        == "accepted"
+    )
+
+
+def test_selected_key_observer_preserves_tuple_comparison_order_for_dynamic_owner_values():
+    comparisons = []
+
+    class OwnerModule:
+        def __hash__(self):
+            return 1
+
+        def __eq__(self, other):
+            comparisons.append(("module", other))
+            return other == "demo"
+
+    value = OwnerModule()
+    key = Node("key_param", ("key", (), (("module", "demo"), ("element", "Thing"))))
+    record = RecordRef("demo", "Thing", (_ID,))
+    original_record_getattribute = RecordRef.__getattribute__
+
+    def record_getattribute(instance, name):
+        if instance is record and name == "module":
+            return value
+        return original_record_getattribute(instance, name)
+
+    with patch.object(RecordRef, "__getattribute__", record_getattribute):
+        predecessor_node = Node("get", (record, (), key))
+        with pytest.raises(CaptureError):
+            _validate_node(predecessor_node, ())
+        predecessor_comparisons = list(comparisons)
+        comparisons.clear()
+        session = _rust._rust_core.CaptureResourceSession(100)
+        _ = record.module
+        _ = record.element
+        outcome = rust_capture_observe.observe_selected_key_preflight(
+            key, record, "get", session
+        )
+    assert outcome == "accepted"
+    assert comparisons == predecessor_comparisons == [("module", "demo")]
+
+
+def test_selected_key_observer_falls_back_for_subclasses_before_graph_reads():
+    reads = []
+
+    class DerivedNode(Node):
+        def __getattribute__(self, name):
+            if name in {"op", "args"}:
+                reads.append(name)
+                raise AssertionError("subclass graph access must remain untouched")
+            return super().__getattribute__(name)
+
+    node = object.__new__(DerivedNode)
+    record = RecordRef("demo", "Thing", (_ID,))
+    session = _rust._rust_core.CaptureResourceSession(100)
+    assert (
+        rust_capture_observe.observe_selected_key_preflight(
+            node, record, "get", session
+        )
+        == "outside-profile"
+    )
+    assert reads == []
+    assert session.charged_work == 0
+
+
+def test_selected_key_observer_never_falls_back_after_a_live_shape_change():
+    key = Node("key_param", ("key", (), (("module", "demo"), ("element", "Thing"))))
+    record = RecordRef("demo", "Thing", (_ID,))
+    original = Node.__getattribute__
+    reads = []
+
+    def stateful(instance, name):
+        if instance is key and name == "op":
+            reads.append(name)
+            if len(reads) == 1:
+                return "key"
+            raise AssertionError("a retry would duplicate the consumed getter")
+        return original(instance, name)
+
+    with patch.object(Node, "__getattribute__", stateful):
+        session = _rust._rust_core.CaptureResourceSession(100)
+        outcome = rust_capture_observe.observe_selected_key_preflight(
+            key, record, "get", session
+        )
+    assert outcome == "unsupported-after-read"
+    assert reads == ["op"]
+
+
 def test_private_rust_route_fails_closed_on_subclass_accessor_semantics():
     owner = RecordRef("demo", "Thing", (FieldRef("demo", "Thing", "id"),))
 

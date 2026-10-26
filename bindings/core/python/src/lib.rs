@@ -3049,6 +3049,180 @@ fn access_validate_capture_exact_empty_terminal_with_session(
     capture_exact_empty_terminal_response(py, "accepted")
 }
 
+const CAPTURE_SELECTED_KEY_OBSERVATION_PROFILE: &str =
+    "umf-access-capture-selected-key-observation/0.1.0";
+
+#[pyfunction]
+fn access_capture_selected_key_observation_profile_version() -> &'static str {
+    CAPTURE_SELECTED_KEY_OBSERVATION_PROFILE
+}
+
+/// Observe only the selected-key preflight stage after the caller has completed
+/// terminal/header and join-owner checks. The caller must not invoke this before
+/// that predecessor-ordered pass. It uses the original Python handles and one
+/// shared capture session; it deliberately does not construct a graph DTO.
+#[pyfunction]
+fn access_observe_capture_selected_key_preflight(
+    py: Python<'_>,
+    key: PyObject,
+    record: PyObject,
+    node_type: PyObject,
+    record_ref_type: PyObject,
+    terminal_op: &str,
+    mut session: PyRefMut<'_, CaptureResourceSession>,
+) -> PyResult<&'static str> {
+    if !matches!(terminal_op, "get" | "page") {
+        return Err(PyValueError::new_err("selected-key terminal must be get or page"));
+    }
+    macro_rules! charge { () => { session.charge_work(1)? }; }
+    let key = key.bind(py);
+    let record = record.bind(py);
+    let node_type = node_type.bind(py);
+    let record_ref_type = record_ref_type.bind(py);
+    // Side-effect-free exact-shape admission precedes the observable getter
+    // schedule. An unsupported op must fall back without having consumed a
+    // stateful `key.op` read that Python would then repeat.
+    let builtins = py.import_bound("builtins")?;
+    let builtin_type = builtins.getattr("type")?;
+    if !node_type.get_type().is(&builtin_type)
+        || !record_ref_type.get_type().is(&builtin_type)
+        || !key.get_type().is(node_type)
+        || !record.get_type().is(record_ref_type)
+    {
+        return Ok("outside-profile");
+    }
+    let object_type = builtins.getattr("object")?;
+    let object_getattribute = object_type.getattr("__getattribute__")?;
+    let has_builtin_instance_dict = |class: &Bound<'_, PyAny>| -> PyResult<bool> {
+        let class_dict = class.getattr("__dict__")?;
+        let descriptor = class_dict.get_item("__dict__")?;
+        let getset_type = py.import_bound("types")?.getattr("GetSetDescriptorType")?;
+        if !descriptor.get_type().is(&getset_type) {
+            return Ok(false);
+        }
+        Ok(descriptor.getattr("__name__")?.extract::<String>()? == "__dict__"
+            && descriptor.getattr("__objclass__")?.is(class))
+    };
+    if !has_builtin_instance_dict(node_type)? || !has_builtin_instance_dict(record_ref_type)? {
+        return Ok("outside-profile");
+    }
+    for class in [node_type, record_ref_type] {
+        let class_dict = class.getattr("__dict__")?;
+        if class_dict.contains("op")? || class_dict.contains("args")? {
+            return Ok("outside-profile");
+        }
+    }
+    let raw_key = object_getattribute.call1((key, "__dict__"))?;
+    if !raw_key.is_exact_instance_of::<PyDict>() {
+        return Ok("outside-profile");
+    }
+    let raw_key = raw_key.downcast::<PyDict>()?;
+    let keys = raw_key.keys();
+    if keys.len() != 2
+        || !keys.iter().all(|item| item.is_exact_instance_of::<PyString>())
+        || !raw_key.contains("op")?
+        || !raw_key.contains("args")?
+    {
+        return Ok("outside-profile");
+    }
+    let raw_op = raw_key.get_item("op")?.ok_or_else(|| PyValueError::new_err("malformed key node"))?;
+    if !raw_op.is_exact_instance_of::<PyString>() || raw_op.extract::<String>()? != "key_param" {
+        return Ok("outside-profile");
+    }
+    let raw_args = raw_key.get_item("args")?.ok_or_else(|| PyValueError::new_err("malformed key node"))?;
+    if !raw_args.is_exact_instance_of::<PyTuple>() || raw_args.len()? != 3 {
+        return Ok("outside-profile");
+    }
+    let raw_identity = raw_args.get_item(2)?;
+    if !raw_identity.is_exact_instance_of::<PyTuple>()
+        || !raw_identity.try_iter()?.all(|item| {
+            item.ok().is_some_and(|item| {
+                item.is_exact_instance_of::<PyTuple>()
+                    && item.len().ok() == Some(2)
+                    && item.get_item(0).ok().is_some_and(|v| v.is_exact_instance_of::<PyString>())
+                    && item.get_item(1).ok().is_some_and(|v| v.is_exact_instance_of::<PyString>())
+            })
+        })
+    {
+        return Ok("outside-profile");
+    }
+    // `_validate_node` first evaluates key.op, then key.args and its identity
+    // tuple. Preserve those live reads and let PyO3 propagate the original
+    // exception object unchanged.
+    charge!();
+    let key_op = key.getattr("op")?;
+    let key_param_token = PyString::new_bound(py, "key_param");
+    if !key_op.eq(&key_param_token)? {
+        return Ok("unsupported-after-read");
+    }
+    charge!();
+    let key_args = key.getattr("args")?;
+    let identity = key_args.get_item(2)?;
+    if !identity.is_exact_instance_of::<PyTuple>() {
+        return Ok("unsupported-after-read");
+    }
+    for item in identity.downcast::<PyTuple>()?.iter() {
+        if !item.is_exact_instance_of::<PyTuple>()
+            || item.len()? != 2
+            || !item.get_item(0)?.is_exact_instance_of::<PyString>()
+            || !item.get_item(1)?.is_exact_instance_of::<PyString>()
+        {
+            return Ok("unsupported-after-read");
+        }
+        charge!();
+    }
+    let identity_dict = py.import_bound("builtins")?.getattr("dict")?.call1((identity,))?;
+    if identity_dict.is_truthy()? {
+        if identity_dict.get_item("module")?.is_none() {
+            return Err(pyo3::exceptions::PyKeyError::new_err("module"));
+        }
+        if identity_dict.get_item("element")?.is_none() {
+            return Err(pyo3::exceptions::PyKeyError::new_err("element"));
+        }
+        charge!();
+        let module = record.getattr("module")?;
+        charge!();
+        let element = record.getattr("element")?;
+        let identity_module = identity_dict.get_item("module")?;
+        let identity_element = identity_dict.get_item("element")?;
+        let identity_owner = PyTuple::new_bound(py, [identity_module, identity_element]);
+        let selected_owner = PyTuple::new_bound(py, [module, element]);
+        if identity_owner.ne(&selected_owner)? {
+            return Ok("foreign-record");
+        }
+    }
+    // Match Python's short-circuit reads: key_id, source, then expected source
+    // fields and the repeated root module/element/key_id reads.
+    charge!();
+    let key_id = record.getattr("key_id")?;
+    if !key_id.is_none() {
+        charge!();
+        let source = record.getattr("source")?;
+        if !source.is_none() {
+            charge!();
+            let document_id = source.getattr("document_id")?;
+            charge!();
+            let core_version = source.getattr("core_version")?;
+            charge!();
+            let module = record.getattr("module")?;
+            charge!();
+            let element = record.getattr("element")?;
+            charge!();
+            let selected_key = record.getattr("key_id")?;
+            let expected = PyDict::new_bound(py);
+            expected.set_item("documentId", document_id)?;
+            expected.set_item("coreVersion", core_version)?;
+            expected.set_item("module", module)?;
+            expected.set_item("element", element)?;
+            expected.set_item("key", selected_key)?;
+            if identity_dict.ne(&expected)? {
+                return Ok("selected-key-mismatch");
+            }
+        }
+    }
+    Ok("accepted")
+}
+
 fn observe_capture_terminal_join_owners(
     py: Python<'_>,
     node: PyObject,
@@ -4978,6 +5152,14 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     )?)?;
     module.add_function(wrap_pyfunction!(
         access_validate_capture_exact_empty_terminal_with_session,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_capture_selected_key_observation_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_observe_capture_selected_key_preflight,
         module
     )?)?;
     module.add_class::<CaptureResourceSession>()?;
