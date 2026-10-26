@@ -1,5 +1,5 @@
 {
-  "status": "TOOL_IDENTITY_PREFLIGHT_CORRECTION_IN_PROGRESS",
+  "status": "TOOL_IDENTITY_SOURCE_ACCEPTED_AWAITING_CHANGED_RUN",
   "baseCommit": "d5022e37840329d351bcd6c27fe7d7aad4758544",
   "donorCommit": "f4a410c0522135065a0b20e8d2b69705fddcbac4",
   "extractionCommit": "ad5e59591",
@@ -34,7 +34,7 @@
   "regexDispatch": "isolated-regex-dispatch.json",
   "wheelSourceClosure": "sol-wheel-public-closure004.md",
   "wheelSourceStatus": "SOURCE_ACCEPTED",
-  "browserMainFollowup": "Arras reports normally merged browser draft-ID recovery c0fbbbc56ea0df228aef4da51f58c30caab24114; actual fetch/source delta still to reconcile before final dependent generation. No old result relabeled.",
+  "browserMainFollowup": "Actual main c0fbbbc56ea0df228aef4da51f58c30caab24114 normally merged in39a8dfc8dcb86e89854533bd6f84a5f728a512f3; only separately owned browser recovery workflow/docs changed. Core implementation postimages preserved.",
   "wheelSourceFreeze": "wheel-public-source-freeze004.json",
   "preflightSourceClosure": "sol-shallow-preimage-source-closure001.md",
   "changedRegexSourceCommit": "5549ea45c5301bb8c608888d5f2ad14dc66d961e",
@@ -61,5 +61,7 @@
     "artifactSha256": "1013b3d4c1e3bb69ba63d885e2ac906fa97a1cfddad6395f8457753ba04acc42",
     "locatedBoundary": "Retained45-byte log identity exactly matches fixed tool-version guard message. All priorpreimagechecks reached. Individual mismatching tool unknown; per-tool records were only written after guard. Source resolves executable path before invocation, potentially changing rustup proxy argv0; this is source-supported defect, not confirmed actual differing tool output."
   },
-  "weftNextCohort": "Arras reports actual umf-weft pending publisher accepted by Stack. Use current qualified0.4.54 source retaining G02/current fixes; next renamed distribution0.4.55 subject owner availability confirmation and actual new qualification/archive handoff. All18/D5/four-cell/native gates rerun before consumer admission."
+  "weftNextCohort": "Arras reports actual umf-weft pending publisher accepted by Stack. Use current qualified0.4.54 source retaining G02/current fixes; next renamed distribution0.4.55 subject owner availability confirmation and actual new qualification/archive handoff. All18/D5/four-cell/native gates rerun before consumer admission.",
+  "toolIdentitySourceCommit": "0b006ad6e2c1e341af813d0c2d144694507da1d5",
+  "toolIdentityClosure": "sol-tool-version-source-closure001.md"
 }
