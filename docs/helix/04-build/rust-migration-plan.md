@@ -5676,8 +5676,9 @@ now preserves runtime-native non-string pointer errors before Rust dispatch in
 the opt-in Node and WASM facades; focused tests pass 19 cases and 135
 assertions. `getJsonSchemaNode` still differs on malformed-document versus
 non-string-pointer refusal precedence, and raw `importJsonSchema` getter/Proxy
-traces and refusal order remain unresolved. The production cutover design is a
-literal host-observation bridge for JavaScript reflection and exception timing,
+traces and refusal order remain unresolved. The
+[production cutover interface draft](evidence/rust-migration/r8-json-schema-eight-operations/import-host-observation-decision.md)
+specifies a literal host-observation bridge for JavaScript reflection and exception timing,
 with Rust retaining schema and document semantics. It needs a governed
 interface, frozen trace tests and Node/Bun/Chromium evidence before any default
 route selection; preserving the TypeScript semantic route permanently would
