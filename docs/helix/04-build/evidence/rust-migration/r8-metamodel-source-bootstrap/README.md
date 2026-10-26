@@ -85,3 +85,42 @@ The current-source checks passed on macOS arm64 with Bun 1.4.3:
 This is a current-source fixed-point and scoped compiler/browser result. It
 does not qualify the Rust migration as complete or change any runtime support
 claim.
+
+## Current-source refresh after the origin/main merge
+
+After `bfb082cac` and merge commit `1328c79b8`, the metamodel manifest was
+regenerated. Only the source digest for `bindings/core/python/src/lib.rs`
+changed; generated schema outputs did not change. The manifest SHA-256 is
+`538f601d30a183c6188343c36ec8ac8a40588cbb24d20ee61dcc10ad492af07c`. The
+action-plan identity was refreshed against the new manifest; its generated
+source SHA-256 is
+`0c8c7e448020f1fc69c8a7193272adb7507e78fee7ab4e015950e13604b9d9cc`.
+
+On macOS arm64 with Bun 1.4.3, `bun run build:metamodel`,
+`bun run check:metamodel`, `bun scripts/actions-plan-identity.ts --check`, and
+`bun run typecheck` passed. `bun scripts/metamodel-browser.ts` passed on
+Chromium 153.0.8010.12 with receipts 138 + 1 and no page errors. `git diff
+--check` passed. This refresh verifies current generated provenance and
+browser behavior for the unchanged schema output set; it makes no additional
+Rust binding, parity, or release claim.
+
+## Final source refresh at `84cc17df3`
+
+The final source at `84cc17df33a97330956c97fa375ae61e1c1549d2` includes the
+capture extension from `e9f003a4e` and the stable Selection test whose exact
+source SHA-256 is
+`4ba6cc0ebc57a0dbdca20318bd9a6b567a601aa6493e92c426150173c0038154`.
+Regeneration updated the manifest source digests for
+`bindings/core/node/tests/selection-host-json.test.js` and
+`bindings/core/python/src/lib.rs`; generated schema outputs remain unchanged.
+The final manifest SHA-256 is
+`76d7161544b1343cbec9171b013be8a7fa2b731a1ec14273c155fd6b63d975a0`. The
+action-plan identity was refreshed against that manifest and has SHA-256
+`9d5c54ee37c4a84d5838acf0a177ae48970da07cc7d0f8c79787886fa2026687`.
+
+On macOS arm64 with Bun 1.4.3, `bun run build:metamodel`,
+`bun run check:metamodel`, `bun scripts/actions-plan-identity.ts --check`,
+`bun run typecheck`, `bun scripts/metamodel-browser.ts`, and `git diff --check`
+passed. Chromium 153.0.8010.12 reported receipts 138 + 1 and no page errors.
+This final source refresh supersedes earlier uncommitted manifest hashes in
+this evidence; it does not expand runtime or release support claims.
