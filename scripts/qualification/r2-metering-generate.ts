@@ -10,10 +10,10 @@ import {fileURLToPath} from 'node:url';
 import {structuralAccountingSource} from '../metamodel/structural-accounting';
 
 const INPUTS=[
- {path:'src/generated/core-validators.ts',sha256:'88e4252883b595782c01d6b63fd86e7a5ba8492aa4fec953a628e32a051bbbc4',kind:'source'},
- {path:'spec/core/schema.json',sha256:'57bdb4a349ccc1d5ab56e5b0700bcf8a11caa91e13b2efc33b29ff27839e76cb',kind:'schema'},
- {path:'spec/core/semantic-type-reference.schema.json',sha256:'ae1585250d493cb119db4d457b13ae3bec1c1ee55f5ca0f3bcb047aeedc5c411',kind:'schema'},
- {path:'spec/core/extension-package.schema.json',sha256:'eeda9a096c2a277b13335f2f86c14e3400f83f4f9ad1e6fdc4ed73544fd6db32',kind:'schema'},
+ {path:'src/generated/core-validators.ts',sha256:'4a88fd9bc398c56d71e535841322dcf10d2851e16b026c14679e2d79062e90a7',kind:'source'},
+ {path:'spec/core/schema.json',sha256:'bdcf1c6b8a197dfbd769ea47a879eaabeeb1d71cc00cab1f9e600175354c5da7',kind:'schema'},
+ {path:'spec/core/semantic-type-reference.schema.json',sha256:'48def42448706bbdfe68c458746d23610767feae0da6456735674524b8018887',kind:'schema'},
+ {path:'spec/core/extension-package.schema.json',sha256:'a4f4694b3ae32ef47a898f49fdce969b890f1ac901fc6747a43cb8c9c6c77c35',kind:'schema'},
 ] as const;
 type OutputPurpose='stage-a'|'stage-b-reproduction';
 function outputPurpose():OutputPurpose{
@@ -25,7 +25,7 @@ const LOCKED_FILES=[
  {path:'package.json',sha256:'031bdb38c663c33804c02de06906c9c4fdd7bbf32728204cd4c8d30959c324ed'},
  {path:'bun.lock',sha256:'5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4'},
  {path:'bunfig.toml',sha256:'b9fc65eca9014c5179380259d70e76385a6a80788fa9a2df5fb3eaa5554fd2fe'},
- {path:'scripts/metamodel/structural-accounting.ts',sha256:'19fecf24c37428e29b15bcd780421e9f0414cc6b8fa0bf7c87c18b2dbe9e9dbc'},
+ {path:'scripts/metamodel/structural-accounting.ts',sha256:'63b0171e644b5ce2d7a10d97393cee5e67a45c6abc03da8144de65a0e1a54c28'},
 ] as const;
 const sha256=(bytes:string|Uint8Array)=>createHash('sha256').update(bytes).digest('hex');
 const root=resolve(fileURLToPath(new URL('../..',import.meta.url)));

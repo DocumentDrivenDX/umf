@@ -2233,6 +2233,9 @@ fn extension_errors(
         let Some(entry) = registry.get(id, &version) else {
             continue;
         };
+        let (kind_invalid, mut kind_diagnostics) =
+            crate::kinds::occurrence(entry, payload, scope, &at, policy, ctx)?;
+        out.append(&mut kind_diagnostics);
         if !entry
             .scopes()
             .iter()
@@ -2283,6 +2286,9 @@ fn extension_errors(
             }
             continue;
         }
+        if kind_invalid {
+            continue;
+        }
         if !entry.semantic() {
             out.push(model_diag(policy, "unchecked", &at, None, ctx)?);
             continue;
@@ -2319,7 +2325,7 @@ fn extension_errors(
     Ok(out)
 }
 
-fn model_diag(
+pub(crate) fn model_diag(
     policy: &Value,
     name: &str,
     path: &Utf16,

@@ -14,6 +14,10 @@ export function validateDocumentWithAccounting(input:unknown,registry:Registry,m
  return validateDocumentInternal(input,registry,meter,copy);
 }
 function validateDocumentInternal(input:unknown,registry:Registry,meter?:ConstraintMeter,copy?:{property:(key:string,path:string,isArray:boolean)=>void;text:(value:string,path:string)=>void}):Validation{
+ if(registry.kindRuntime){
+  if(meter)throw new UmfError('EXTENSION_KIND_RUNTIME_CONTROLS','Use the shared engine controls for native work metering');
+  return registry.kindRuntime.validateDocument(input,registry.registrations());
+ }
  let document:Document;
  const hooks=copy?{beforeProperty:copy.property,retainText:copy.text}:undefined;
  try{document=copyJsonCharged(input,n=>meter?.('document-copy',n),hooks) as unknown as Document;}catch(error){if(!(error instanceof UmfError))throw error;return {valid:false,complete:false,diagnostics:[{code:error.code,path:error.path,message:error.message,severity:'error'}]};}

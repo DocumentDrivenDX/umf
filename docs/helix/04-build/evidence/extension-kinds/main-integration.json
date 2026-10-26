@@ -1,0 +1,91 @@
+{
+  "profile": "umf.extension-kinds.main-integration/1",
+  "main": "259bf1ed91466ff7e9782d7517c14f2112282026",
+  "sdk": "0.5.6",
+  "pythonDistribution": "0.10.1",
+  "coreDocument": "0.10.0",
+  "contract": "CONTRACT-907",
+  "checks": {
+    "typecheck": "pass",
+    "focusedBun": {
+      "passed": 203,
+      "assertions": 4306
+    },
+    "rust": {
+      "passed": 324,
+      "suites": 37
+    },
+    "metamodelAndLedger": {
+      "passed": 64,
+      "assertions": 1665,
+      "seconds": 322.68,
+      "cleanRoomAssertionSeconds": 78.71834
+    },
+    "installedPython": {
+      "passed": 254,
+      "seconds": 51.37,
+      "includes": "core, Rust core, extension kinds, action fixture vectors, generated action client and runtime resources"
+    },
+    "ruff": "pass",
+    "schemaPackages": 71,
+    "schemas": 381,
+    "chromium": {
+      "version": "153.0.8010.12",
+      "vectors": 138,
+      "callbackControls": 1,
+      "failures": 0
+    },
+    "coreAuthority": "pass",
+    "compilationBoundaries": "pass",
+    "codegenCustody": "pass",
+    "cliTransport": {
+      "passed": 9
+    },
+    "referenceIdentities": {
+      "passed": 3
+    },
+    "deterministicGzip": {
+      "passed": 1
+    },
+    "portableInventory": {
+      "modules": 578,
+      "activeScripts": 340,
+      "lockedJavaScriptPackages": 244,
+      "status": "regenerated"
+    },
+    "rustBoundaries": {
+      "status": "pass",
+      "modules": 590,
+      "findings": 0
+    }
+  },
+  "sources": {
+    "spec/metamodel/umf.yaml": "42144576e3b15da4945ca744623a31967e3b29efa54da8ba3961e446b1c0e34b",
+    "spec/metamodel/generated/manifest.json": "760f65aa3a62ea4e4e2be6204310ef4e1c8cddc0958092761cc46c0be6e59903",
+    "python/src/umf/action_runtime.py": "d49d9119cd2fc74af26fea2d9e9fa8d94f1424ab25ef6c1fc52c91d2ff388140",
+    "python/src/umf/action_runtime_resource_manifest.json": "7b24a7c50a2597feba42bed3bf5f85a121f3b0f787c569fb2414c54fc98f57ec",
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json": "afbedcd535e8c633daf8f9952edbed18c4a20187f9621d10f6376c14e883b8fe",
+    "scripts/rust-core/full-conformance.ts": "8470a9b414d1837dd6cebb865a870e677fc02048bcd3309535a952e43ae2af67",
+    "docs/helix/04-build/evidence/rust-migration/r3/inventory.json": "9541287a1d5f4fc476a2230bb2e78dcaf567a327fced4e2e0d2803eabc17363b",
+    "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json": "73d4665b245b0d5dcefb6307c79810aa116121305fb55668e0f38d9c3073d05e"
+  },
+  "logs": {
+    "typecheck": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "focused": "b4988dd79c30ff2bcd7f5ddce83bdcb608eec1541675af2e437d4a48de7ed4af",
+    "rust": "654bd337b93fed33e77906a8b1591e5c34b653af9ee4838b5f4a989e08c343f7",
+    "metamodel-tests": "11ebd100edf60485c4ba82b636829043cabe2a7237f924f69238752b359fa283",
+    "python": "b4a473f0756eac49814636610db3d4586c39ae7552493dda0b7bc3e050604694",
+    "ruff": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "browser": "80b35516b902aeb8b3b4f54d452a149ec04945008930063e0964b3e8a3115c1d",
+    "schemas": "d28e0fb50a0ade2a35162d5f1c30731dc59a21d1924cb1859c5e456c76c6d91a",
+    "authority": "5e6df9d9d480ee35c490745e10dfa95a5e6392da48a26601789e207b35977246",
+    "boundaries": "7ae67bbd75cbf529df5c23255cbeb755bb2e748614425e321ebf4ea08c5c21b9",
+    "codegen-check": "c4eeb6096d2a3d04845d2495fc59193de7939233cf70f94bb0aa6abb170c5f9e",
+    "transport": "2693aa1255fada1d2be551d70ba2c06904fcfa9d70d7bbc5f6b03b70e78ab89c",
+    "reference": "411b214fa491fde923bf9e72d75947073bff2820f8aaa44517bd825bb431a8cb",
+    "gzip": "6c5f71a9fa6e275b9626549999e8645d32f6f574f9a1b90a686e78e5d9139ee7",
+    "inventory-final": "b7000faef5ad033ea6644f8a20c3908332b10d3e9a917c72d28fe0eff62c7fa9",
+    "rust-boundaries": "cc79cd9e934c0553943c306e0c11cd395bcfcf2d184304bbd16b73f30d6b3fb3"
+  },
+  "limits": "Local Darwin-arm64 qualification. Earlier five-host kind parity receipts retain their recorded source cohort. Hosted CI and publication are not inferred."
+}

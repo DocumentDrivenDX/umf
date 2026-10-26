@@ -65,6 +65,23 @@ def sha(path: Path) -> str:
 def scan_text(path: str, source: str, *, allowed_debt: dict[str, dict[str, object]] | None = None) -> list[dict[str, object]]:
     findings = []
     allowed_debt = allowed_debt or {}
+    kind_generic = path in {
+        "crates/umf-core/src/kinds.rs", "src/model/extension-kinds.ts",
+        "src/registry/kind-runtime.ts", "src/registry/registry.ts",
+    }
+    if kind_generic and re.search(r'''["'](?:umf\.)?(?:dashboard|lakeview)["']''', source):
+        findings.append({"rule": "ecosystem-kind-in-generic-core", "path": path,
+                         "message": "Generic kind code contains an ecosystem-specific discriminator"})
+    if kind_generic and re.search(r'''(?:from\s*["'][^"']*(?:adapters|extensions)/|crate::adapters)''', source):
+        findings.append({"rule": "kind-core-adapter-import", "path": path,
+                         "message": "Generic kind code imports ecosystem implementation"})
+    if (path.startswith("bindings/core/") or path in {"python/src/umf/registry.py", "python/src/umf/validation.py"}) and path.endswith((".js", ".ts", ".py")):
+        if re.search(r"\b(?:if|switch|match)\b[^\n]*(?:payload\.kind|payload\[['\"]kind['\"]\])", source):
+            findings.append({"rule": "kind-semantic-fork-in-wrapper", "path": path,
+                             "message": "Binding contains payload kind interpretation"})
+        if "const manifest =" in source and "'manifest', false)" in source and not re.search(r"return\s*\{\s*manifest\s*,\s*kinds\s*,", source):
+            findings.append({"rule": "kind-manifest-transport-loss", "path": path,
+                             "message": "Full-manifest registration does not forward its manifest and explicit kind opt-in"})
     is_engine_source = path.startswith("src/") or path.startswith("python/src/") or path.startswith("python/umf_access/src/") or path.startswith("python/umf_codegen/src/") or path.startswith("bindings/")
     if path.startswith("python/src/umf/") and path.endswith(".py") and RETIRED_CORE_RUNTIME_IMPORTS.search(source):
         findings.append({"rule": "retired-python-core-runtime", "path": path, "message": "Production Python core imports a retired schema/YAML semantic runtime"})
@@ -363,6 +380,7 @@ def check_production_core() -> tuple[list[dict[str, object]], list[dict[str, obj
     for folder in PRODUCTION_SOURCE_FOLDERS:
         for path in sorted((ROOT / folder).rglob("*.rs")):
             source = path.read_text()
+            findings.extend(scan_text(path.relative_to(ROOT).as_posix(), source))
             for match in CORE_HOST_MODULES.finditer(source):
                 findings.append({"rule": "production-core-host-capability", "path": path.relative_to(ROOT).as_posix(), "message": match.group(0)})
     return findings, reports

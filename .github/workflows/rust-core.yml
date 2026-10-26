@@ -5,6 +5,8 @@ on:
     branches-ignore:
       - codex/migration-portable-qualification
       - codex/migration-integrated-qualification
+      - codex/migration-metering-qualification
+      - codex/migration-merged-generation
       - codex/g04-python-unit-qualification
       - codex/migration-g02-g03-native-qualification
     tags:

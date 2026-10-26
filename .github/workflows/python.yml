@@ -5,6 +5,8 @@ on:
     branches-ignore:
       - codex/migration-portable-qualification
       - codex/migration-integrated-qualification
+      - codex/migration-metering-qualification
+      - codex/migration-merged-generation
       - codex/g04-python-unit-qualification
       - codex/migration-g02-g03-native-qualification
     tags:
@@ -25,7 +27,7 @@ jobs:
         with:
           toolchain: 1.90.0
           components: rustfmt
-      - run: python -m pip install ./python pytest ruff==0.17.1 build
+      - run: python -m pip install ./python pytest ruff==0.17.1 build 'hatchling>=1.27,<2'
       - run: python -m pytest python/tests -q
       - run: ruff check python
       - run: python -m build python

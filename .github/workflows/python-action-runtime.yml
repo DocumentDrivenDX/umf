@@ -1,0 +1,365 @@
+name: Python action-runtime artifact qualification
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qualify-installed-artifact:
+    if: github.event_name != 'push' || (github.ref != 'refs/heads/codex/migration-metering-qualification' && github.ref != 'refs/heads/codex/migration-integrated-qualification' && github.ref != 'refs/heads/codex/migration-merged-generation')
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - cohort: linux-x86_64
+            runs-on: ubuntu-24.04
+            python-architecture: x64
+            python-version: '3.11.17'
+            expected-machine: x86_64
+            expected-platform: linux_x86_64
+          - cohort: macos-arm64
+            runs-on: macos-15
+            python-architecture: arm64
+            python-version: '3.11.9'
+            expected-machine: arm64
+            expected-platform: macos_arm64
+    runs-on: ${{ matrix.runs-on }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Isolate Rust toolchain state
+        run: |
+          {
+            printf 'RUSTUP_HOME=%s/umf-action-rustup\n' "$RUNNER_TEMP"
+            printf 'CARGO_TARGET_DIR=%s/umf-action-target\n' "$RUNNER_TEMP"
+          } >> "$GITHUB_ENV"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: ${{ matrix.python-architecture }}
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+      - name: Record the compiler cohort
+        run: |
+          rustc -Vv > "$RUNNER_TEMP/umf-rustc-version.txt"
+          cargo --version > "$RUNNER_TEMP/umf-cargo-version.txt"
+      - name: Require the declared runner architecture
+        env:
+          EXPECTED_MACHINE: ${{ matrix.expected-machine }}
+          EXPECTED_PLATFORM: ${{ matrix.expected-platform }}
+        run: |
+          python - <<'PY'
+          import os
+          import platform
+          import sys
+          import sysconfig
+
+          machine = platform.machine().lower()
+          expected = os.environ["EXPECTED_MACHINE"]
+          expected_platform = os.environ["EXPECTED_PLATFORM"]
+          if machine != expected:
+              raise SystemExit(f"Expected {expected}; runner reported {machine}")
+          current = sysconfig.get_platform().replace("-", "_").replace(".", "_")
+          if expected_platform == "linux_x86_64" and (sys.platform != "linux" or current != expected_platform):
+              raise SystemExit(f"Unexpected Linux wheel platform: {current}")
+          if expected_platform == "macos_arm64" and (sys.platform != "darwin" or not current.startswith("macosx_")):
+              raise SystemExit(f"Unexpected macOS interpreter platform: {current}")
+          print(f"runner={sys.platform} machine={machine} python_platform={current}")
+          PY
+      - name: Install bounded build and test tools
+        run: python -m pip install 'build==1.3.0' 'hatchling==1.27.0'
+      - name: Build the source and binary distributions
+        run: python -m build --wheel --sdist --no-isolation python
+      - name: Verify wheel payload and rebuild from the sdist
+        env:
+          EXPECTED_PLATFORM: ${{ matrix.expected-platform }}
+        run: |
+          python tools/verify_python_artifacts.py \
+            --wheel python/dist/*.whl \
+            --sdist python/dist/*.tar.gz \
+            --rebuilt-wheel-directory "$RUNNER_TEMP/umf-sdist-rebuilt" \
+            --repository . \
+            --expected-platform "$EXPECTED_PLATFORM" \
+            --receipt "$RUNNER_TEMP/umf-artifact-payload.json"
+      - name: Create isolated environments for both native artifacts
+        run: |
+          set -euo pipefail
+          direct_wheel=(python/dist/*.whl)
+          rebuilt_wheel=("$RUNNER_TEMP"/umf-sdist-rebuilt/*.whl)
+          if [[ ${#direct_wheel[@]} != 1 || ${#rebuilt_wheel[@]} != 1 ]]; then
+            echo 'Expected exactly one direct and one sdist-rebuilt wheel' >&2
+            exit 1
+          fi
+          for artifact in direct sdist-rebuilt; do
+            environment="$RUNNER_TEMP/umf-installed-$artifact"
+            python -m venv "$environment"
+            "$environment/bin/python" -m pip install \
+              'pytest==8.4.2' 'hatchling==1.27.0' 'pydantic==2.11.9'
+          done
+          "$RUNNER_TEMP/umf-installed-direct/bin/python" -m pip install \
+            --no-deps --no-compile "${direct_wheel[0]}"
+          "$RUNNER_TEMP/umf-installed-sdist-rebuilt/bin/python" -m pip install \
+            --no-deps --no-compile "${rebuilt_wheel[0]}"
+      - name: Verify both installed distributions, payloads, and native modules
+        env:
+          EXPECTED_MACHINE: ${{ matrix.expected-machine }}
+        run: |
+          set -euo pipefail
+          direct_wheel=("$GITHUB_WORKSPACE"/python/dist/*.whl)
+          rebuilt_wheel=("$RUNNER_TEMP"/umf-sdist-rebuilt/*.whl)
+          verify_install() {
+            artifact="$1"
+            wheel="$2"
+            environment="$RUNNER_TEMP/umf-installed-$artifact"
+            "$environment/bin/python" -I -B \
+              "$GITHUB_WORKSPACE/tools/verify_python_artifacts.py" \
+              --wheel "$wheel" --verify-installed-wheel \
+              --receipt "$RUNNER_TEMP/umf-installed-$artifact-payload.json"
+            "$environment/bin/python" -I -B - "$RUNNER_TEMP/umf-install-$artifact.json" <<'PY'
+          import importlib.metadata
+          import json
+          import os
+          import platform
+          import sys
+          import sysconfig
+          from pathlib import Path
+          import umf
+          from umf._rust import _rust_core
+          from umf import current_core_version
+
+          package_root = Path(umf.__file__).resolve()
+          platlib = Path(sysconfig.get_path("platlib")).resolve()
+          if not package_root.is_relative_to(platlib):
+              raise SystemExit("UMF imported outside the isolated installation")
+          if platform.machine().lower() != os.environ["EXPECTED_MACHINE"]:
+              raise SystemExit("Installed test interpreter architecture changed")
+          if importlib.metadata.version("umf-core") != "0.10.1" or umf.__version__ != "0.10.1":
+              raise SystemExit("Installed distribution version is not 0.10.1")
+          if current_core_version() != "0.10.0":
+              raise SystemExit("Installed semantic core is not 0.10.0")
+          extension = Path(_rust_core.__file__).resolve()
+          if not extension.is_relative_to(package_root.parent) or extension.suffix != ".so":
+              raise SystemExit("Rust extension is not installed within UMF")
+          output = {
+              "python": platform.python_version(),
+              "python_platform": sysconfig.get_platform(),
+              "machine": platform.machine(),
+              "system": platform.platform(),
+              "libc": list(platform.libc_ver()),
+              "distribution_version": importlib.metadata.version("umf-core"),
+              "semantic_core_version": current_core_version(),
+              "installed_inside_environment": True,
+              "native_extension": extension.name,
+          }
+          Path(sys.argv[1]).write_text(json.dumps(output, sort_keys=True) + "\n", encoding="utf-8")
+          PY
+          }
+          verify_install direct "${direct_wheel[0]}"
+          verify_install sdist-rebuilt "${rebuilt_wheel[0]}"
+      - name: Run installed action-runtime and core regression tests
+        id: direct_installed_tests
+        run: |
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/umf-installed-direct/bin/python" -I -B -m pytest -q \
+            --junitxml="$RUNNER_TEMP/umf-direct-action-tests.xml" \
+            "$GITHUB_WORKSPACE/python/tests/test_action_runtime_generated_client.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_action_runtime_resources.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_action_fixture_vectors.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_core.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_rust_core.py"
+      - name: Recheck direct wheel payload after tests
+        if: always()
+        run: |
+          wheel=("$GITHUB_WORKSPACE"/python/dist/*.whl)
+          if [[ ${#wheel[@]} != 1 || ! -x "$RUNNER_TEMP/umf-installed-direct/bin/python" ]]; then
+            echo 'Direct post-test payload check prerequisites are unavailable' >&2
+            exit 1
+          fi
+          "$RUNNER_TEMP/umf-installed-direct/bin/python" -I -B \
+            "$GITHUB_WORKSPACE/tools/verify_python_artifacts.py" \
+            --wheel "${wheel[0]}" --verify-installed-wheel \
+            --receipt "$RUNNER_TEMP/umf-installed-direct-posttest.json"
+      - name: Run the same tests against the sdist-rebuilt native artifact
+        id: rebuilt_installed_tests
+        run: |
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/umf-installed-sdist-rebuilt/bin/python" -I -B -m pytest -q \
+            --junitxml="$RUNNER_TEMP/umf-sdist-rebuilt-action-tests.xml" \
+            "$GITHUB_WORKSPACE/python/tests/test_action_runtime_generated_client.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_action_runtime_resources.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_action_fixture_vectors.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_core.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_rust_core.py"
+      - name: Recheck sdist-rebuilt wheel payload after tests
+        if: always()
+        run: |
+          wheel=("$RUNNER_TEMP"/umf-sdist-rebuilt/*.whl)
+          if [[ ${#wheel[@]} != 1 || ! -x "$RUNNER_TEMP/umf-installed-sdist-rebuilt/bin/python" ]]; then
+            echo 'Rebuilt post-test payload check prerequisites are unavailable' >&2
+            exit 1
+          fi
+          "$RUNNER_TEMP/umf-installed-sdist-rebuilt/bin/python" -I -B \
+            "$GITHUB_WORKSPACE/tools/verify_python_artifacts.py" \
+            --wheel "${wheel[0]}" --verify-installed-wheel \
+            --receipt "$RUNNER_TEMP/umf-installed-sdist-rebuilt-posttest.json"
+      - name: Finalize qualification receipt
+        if: always()
+        env:
+          DIRECT_TEST_OUTCOME: ${{ steps.direct_installed_tests.outcome }}
+          SDIST_REBUILT_TEST_OUTCOME: ${{ steps.rebuilt_installed_tests.outcome }}
+          COHORT: ${{ matrix.cohort }}
+          SOURCE_REVISION: ${{ github.sha }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+        run: |
+          python - "$GITHUB_WORKSPACE/tools/verify_python_artifacts.py" "$RUNNER_TEMP/umf-artifact-payload.json" "$RUNNER_TEMP/umf-rustc-version.txt" "$RUNNER_TEMP/umf-cargo-version.txt" "$RUNNER_TEMP/umf-qualification.json" <<'PY'
+          import hashlib
+          import json
+          import os
+          import sys
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          verifier_path, payload_path, rustc_path, cargo_path, receipt_path = map(Path, sys.argv[1:])
+          receipt = json.loads(payload_path.read_text(encoding="utf-8")) if payload_path.is_file() else {
+              "schema": "umf.python-artifact-qualification/1",
+              "verification": "not_completed",
+          }
+          receipt["cohort"] = os.environ["COHORT"]
+          receipt["source_revision"] = os.environ["SOURCE_REVISION"]
+          receipt["workflow_run_id"] = os.environ["RUN_ID"]
+          receipt["workflow_run_attempt"] = os.environ["RUN_ATTEMPT"]
+          receipt["verifier_source_sha256"] = hashlib.sha256(verifier_path.read_bytes()).hexdigest()
+          if rustc_path.is_file():
+              compiler = {}
+              for line in rustc_path.read_text(encoding="utf-8").splitlines():
+                  key, separator, value = line.partition(": ")
+                  if separator and key in {"release", "host", "commit-date", "LLVM version"}:
+                      compiler[key.replace("-", "_").replace(" ", "_")] = value
+              receipt["rustc"] = compiler
+          if cargo_path.is_file():
+              receipt["cargo"] = cargo_path.read_text(encoding="utf-8").strip()
+          run_temp = Path(os.environ["RUNNER_TEMP"])
+          installed_artifacts = {}
+          for name, step_outcome, junit_name in (
+              ("direct", "DIRECT_TEST_OUTCOME", "umf-direct-action-tests.xml"),
+              ("sdist_rebuilt", "SDIST_REBUILT_TEST_OUTCOME", "umf-sdist-rebuilt-action-tests.xml"),
+          ):
+              artifact = receipt.get("artifacts", {}).get(name)
+              artifact_name = name.replace("_", "-")
+              install_path = run_temp / f"umf-install-{artifact_name}.json"
+              payload_path = run_temp / f"umf-installed-{artifact_name}-payload.json"
+              posttest_path = run_temp / f"umf-installed-{artifact_name}-posttest.json"
+              junit_path = run_temp / junit_name
+              installation = json.loads(install_path.read_text(encoding="utf-8")) if install_path.is_file() else None
+              installed_payload = json.loads(payload_path.read_text(encoding="utf-8")) if payload_path.is_file() else None
+              posttest_payload = json.loads(posttest_path.read_text(encoding="utf-8")) if posttest_path.is_file() else None
+              counts = None
+              if junit_path.is_file():
+                  root = ET.parse(junit_path).getroot()
+                  suites = [root] if root.tag == "testsuite" else list(root.findall("testsuite"))
+                  counts = {key: sum(int(suite.get(key, "0")) for suite in suites) for key in ("tests", "errors", "failures", "skipped")}
+              test_outcome = os.environ.get(step_outcome, "not_run")
+              passed = (
+                  isinstance(artifact, dict)
+                  and installation is not None
+                  and installed_payload is not None
+                  and counts is not None
+                  and counts["tests"] > 0
+                  and counts["errors"] == 0
+                  and counts["failures"] == 0
+                  and counts["skipped"] == 0
+                  and test_outcome == "success"
+                  and installation.get("installed_inside_environment") is True
+                  and installation.get("distribution_version") == "0.10.1"
+                  and installation.get("semantic_core_version") == "0.10.0"
+                  and installed_payload.get("status") == "passed"
+                  and installed_payload.get("wheel_sha256") == artifact.get("sha256")
+                  and installed_payload.get("native_sha256") == artifact.get("native_sha256")
+                  and installed_payload.get("package_file_count") == artifact.get("package_file_count")
+                  and posttest_payload is not None
+                  and posttest_payload.get("status") == "passed"
+                  and posttest_payload.get("wheel_sha256") == artifact.get("sha256")
+                  and posttest_payload.get("wheel_sha256") == installed_payload.get("wheel_sha256")
+                  and posttest_payload.get("native_sha256") == artifact.get("native_sha256")
+                  and posttest_payload.get("native_sha256") == installed_payload.get("native_sha256")
+                  and posttest_payload.get("package_file_count") == artifact.get("package_file_count")
+                  and posttest_payload.get("package_file_count") == installed_payload.get("package_file_count")
+              )
+              installed_artifacts[name] = {
+                  "qualification": "passed" if passed else "failed_or_incomplete",
+                  "test_step": test_outcome,
+                  "test_counts": counts,
+                  "installation": installation,
+                  "payload_parity": installed_payload,
+                  "post_test_payload_parity": posttest_payload,
+              }
+          receipt["installed_artifacts"] = installed_artifacts
+          direct_artifact = receipt.get("artifacts", {}).get("direct", {})
+          rebuilt_artifact = receipt.get("artifacts", {}).get("sdist_rebuilt", {})
+          receipt["native_byte_identity"] = receipt.get("sdist_rebuild", {}).get("native_byte_identity")
+          if receipt["native_byte_identity"] is False:
+              receipt["native_identity_note"] = "Native bytes differ; each artifact requires independent qualification, and binary equivalence is not claimed."
+          source_revision_valid = len(receipt["source_revision"]) == 40 and all(char in "0123456789abcdef" for char in receipt["source_revision"])
+          verifier_hash_valid = len(receipt["verifier_source_sha256"]) == 64 and all(char in "0123456789abcdef" for char in receipt["verifier_source_sha256"])
+          passed = (
+              receipt.get("source_payload_verification") == "passed"
+              and receipt.get("sdist_rebuild", {}).get("non_native_package_payload_matches") is True
+              and receipt.get("sdist_rebuild", {}).get("version_matches") is True
+              and receipt.get("sdist_rebuild", {}).get("tag_matches") is True
+              and receipt.get("sdist_rebuild", {}).get("metadata_byte_identity") is True
+              and receipt.get("sdist_rebuild", {}).get("wheel_byte_identity") is True
+              and type(receipt.get("sdist_rebuild", {}).get("native_byte_identity")) is bool
+              and isinstance(receipt.get("sdist_build_inputs"), dict)
+              and receipt["sdist_build_inputs"].get("schema") == "umf.python-sdist-build-inputs/1"
+              and type(receipt["sdist_build_inputs"].get("file_count")) is int
+              and receipt["sdist_build_inputs"].get("file_count", 0) > 0
+              and len(receipt["sdist_build_inputs"].get("sha256", "")) == 64
+              and all(char in "0123456789abcdef" for char in receipt["sdist_build_inputs"].get("sha256", ""))
+              and receipt.get("sdist_helper_sha256") == "81ce3ed420fce370ae9440d2994413d11e3b3838aa0e3eb9c32df8594f2d6b7e"
+              and receipt.get("native_platform_helper_sha256") == "5856eb375d176af7671ad22981d983a14cec24663e3a8bc466446b433c2cd7b1"
+              and (os.environ["COHORT"] != "macos-arm64" or (
+                  isinstance(direct_artifact.get("native_platform"), dict)
+                  and direct_artifact["native_platform"].get("format") == "thin-64-bit-macho"
+                  and direct_artifact["native_platform"].get("machine") == "arm64"
+                  and direct_artifact["native_platform"].get("minimum_os") == "11.0.0"
+                  and rebuilt_artifact.get("native_platform") == direct_artifact.get("native_platform")
+              ))
+              and receipt.get("action_runtime_resource_count") == 9
+              and receipt.get("distribution_version") == "0.10.1"
+              and receipt.get("semantic_core_version") == "0.10.0"
+              and direct_artifact.get("version") == "0.10.1"
+              and rebuilt_artifact.get("version") == "0.10.1"
+              and direct_artifact.get("tag") == rebuilt_artifact.get("tag")
+              and direct_artifact.get("native_sha256")
+              and rebuilt_artifact.get("native_sha256")
+              and installed_artifacts.get("direct", {}).get("qualification") == "passed"
+              and installed_artifacts.get("sdist_rebuilt", {}).get("qualification") == "passed"
+              and source_revision_valid
+              and verifier_hash_valid
+          )
+          receipt["installed_qualification"] = "passed" if passed else "failed_or_incomplete"
+          receipt_path.write_text(json.dumps(receipt, sort_keys=True) + "\n", encoding="utf-8")
+          if not passed:
+              raise SystemExit("Both independently built native artifacts require successful installs and positive zero-skip tests")
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: umf-python-action-runtime-${{ matrix.cohort }}
+          path: |
+            python/dist/*.whl
+            python/dist/*.tar.gz
+            ${{ runner.temp }}/umf-sdist-rebuilt/*.whl
+            ${{ runner.temp }}/umf-artifact-payload.json
+            ${{ runner.temp }}/umf-install-*.json
+            ${{ runner.temp }}/umf-installed-*-payload.json
+            ${{ runner.temp }}/umf-installed-*-posttest.json
+            ${{ runner.temp }}/umf-direct-action-tests.xml
+            ${{ runner.temp }}/umf-sdist-rebuilt-action-tests.xml
+            ${{ runner.temp }}/umf-qualification.json
+          if-no-files-found: warn

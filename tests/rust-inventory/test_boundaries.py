@@ -15,6 +15,18 @@ SPEC.loader.exec_module(MODULE)
 
 
 class BoundaryRuleTests(unittest.TestCase):
+    def test_generic_kinds_keep_ecosystem_semantics_out_of_core(self):
+        self.assertEqual([], MODULE.scan_text("crates/umf-core/src/kinds.rs", 'let tag = get(payload, "kind");'))
+        self.assertEqual("ecosystem-kind-in-generic-core", MODULE.scan_text("crates/umf-core/src/kinds.rs", 'if tag == "dashboard" {}')[0]["rule"])
+        self.assertEqual("kind-core-adapter-import", MODULE.scan_text("src/model/extension-kinds.ts", "import {x} from '../extensions/vendor';")[0]["rule"])
+
+    def test_kind_wrapper_transport_and_semantic_fork_controls(self):
+        path = "bindings/core/node/index.js"
+        good = "const manifest = dataProperty(extension, 'manifest', false); return {manifest, kinds, semantic: false};"
+        self.assertEqual([], MODULE.scan_text(path, good))
+        self.assertEqual("kind-manifest-transport-loss", MODULE.scan_text(path, good.replace("{manifest, kinds,", "{id, version,"))[0]["rule"])
+        self.assertEqual("kind-semantic-fork-in-wrapper", MODULE.scan_text(path, "if (payload.kind === 'vendor-kind') return true;")[0]["rule"])
+
     def test_current_v8_is_only_allowed_at_exact_pre_r4_sources(self):
         debt = {}
         for path, record in MODULE.V8_DEBT.items():

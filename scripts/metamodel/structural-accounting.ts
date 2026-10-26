@@ -4,7 +4,7 @@
 import ts from 'typescript-api';
 import {createHash} from 'node:crypto';
 
-const GENERATED_SOURCE_SHA256='88e4252883b595782c01d6b63fd86e7a5ba8492aa4fec953a628e32a051bbbc4';
+const GENERATED_SOURCE_SHA256='4a88fd9bc398c56d71e535841322dcf10d2851e16b026c14679e2d79062e90a7';
 const EXPECTED_VALIDATORS={checkCore:'validate20',checkSemanticTypeReference:'validate44',checkPackage:'validate57',checkCoreLiteral:'validate58',checkSemanticTypeReferences:'validate61'} as const;
 const ACCOUNTING_PATH='/generated/core';
 let generatedCallableNames=new Set<string>();

@@ -5,6 +5,19 @@ from ._rust import validate_document as rust_validate_document
 from .registry import Diagnostic, Registry, Validation
 
 
+def inspect_extension_kinds(value, registry: Registry | None = None):
+    """Discover classifications without inferring native or core shape meaning."""
+    import json
+
+    from ._rust import _current_engine, _from_wire, _raise_native, encode_wire
+    registry = registry if registry is not None else Registry()
+    try:
+        result = _current_engine().inspect_extension_kinds(encode_wire(value), registry._rust_registry)
+        return _from_wire(json.loads(result))
+    except ValueError as error:
+        _raise_native(error)
+
+
 def validate_document(
     value,
     registry: Registry | None = None,

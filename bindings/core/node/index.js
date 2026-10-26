@@ -171,6 +171,17 @@ export function createEngine(resources, options = {}) {
   function invoke(op, args = {}, extensions = []) {
     const callbackMap = new Map();
     const registry = dataArray(extensions, 'extensions').map((extension, index) => {
+      const manifest = dataProperty(extension, 'manifest', false);
+      if (manifest !== undefined) {
+        const semantics = dataProperty(extension, 'semantics', false);
+        if (semantics !== undefined && typeof semantics !== 'function') throw new TypeError('Extension semantics must be a host callback function');
+        if (semantics) callbackMap.set(index + 1, semantics);
+        if (Reflect.ownKeys(extension).some(key => !['manifest','semantics','kinds'].includes(key))) throw new TypeError('Full manifest and legacy registration fields cannot be mixed');
+        const kindOption = dataProperty(extension, 'kinds', false);
+        const kinds = kindOption === undefined ? false : kindOption;
+        if (typeof kinds !== 'boolean') throw new TypeError('kinds must be a boolean');
+        return {manifest, kinds, semantic: Boolean(semantics)};
+      }
       const id = dataProperty(extension, 'id');
       const version = dataProperty(extension, 'version');
       const scopes = dataProperty(extension, 'scopes');
@@ -185,6 +196,9 @@ export function createEngine(resources, options = {}) {
   }
   return Object.freeze({
     engineVersion,
+    listKinds(registry = []) { return invoke('list-kinds', {}, registry); },
+    getKind(reference, registry = []) { return invoke('get-kind', {reference}, registry) ?? undefined; },
+    inspectExtensionKinds(document, registry = []) { return invoke('inspect-kinds', {document}, registry); },
     validateDocument(document, registry = []) { return invoke('validate', {document}, registry); },
     readDocument(source, format = 'json', registry = []) { return invoke('read', {source, format}, registry).document; },
     writeDocument(document, format = 'json', registry = []) { return invoke('write', {document, format}, registry).source; },

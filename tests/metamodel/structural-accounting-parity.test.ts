@@ -6,6 +6,7 @@ import {R2WorkLimitError,R2WorkMeter} from '../../src/table-migration/inventory-
 import {checkCore} from '../../src/generated/core-validators';
 import {runAccountedCore} from '../../src/generated/core-validators-accounted';
 import currentConformance from '../../fixtures/metamodel/current-conformance.json';
+import extensionKindConformance from '../../fixtures/extension-kinds/conformance.json';
 
 const CURRENT_CONFORMANCE_SHA256='bb008a98b8448050748e65f867e7863475ccad9501a5b9229ae9e6d336691544';
 const CURRENT_CONFORMANCE_CASES=139;
@@ -28,6 +29,10 @@ test('accounted core matches the complete current-conformance corpus',()=>{
   const result=compare(item.document);
   expect(result.work,item.id).toBeGreaterThan(0);
  }
+});
+
+test('accounted core matches extension-kind document schema cases',()=>{
+ for(const item of extensionKindConformance)compare(item.document);
 });
 
 test('accounted core matches focused valid and refusal values',()=>{

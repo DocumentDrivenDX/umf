@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
-# Generated from spec/metamodel/umf.yaml; model 1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce; compiler e3088d5c9bb519953181fd236443a91e1bfa7b77e0b6c93ae1564031c3ae4f3e
+# Generated from spec/metamodel/umf.yaml; model 42144576e3b15da4945ca744623a31967e3b29efa54da8ba3961e446b1c0e34b; compiler d4d3a53295b173b24cbdc7f4ba5ea1cf0012f30c5c2b5665f6aaf4c7916ead76
 from typing import Final, Literal, TypeAlias
 CURRENT_CORE_VERSION: Final = "0.10.0"
 CoreVersion: TypeAlias = Literal["0.10.0"]
