@@ -1,0 +1,37 @@
+{
+  "format": "umf-r8-security-not-v4-installed-route/1",
+  "status": "pass",
+  "archive": {
+    "path": ".cache/sdk-distribution/umf-sdk.tgz",
+    "sha256": "f41668177749948cbd5358e9a2fbfb5feb818fea5d897ffaef43b4df8b7fcee2",
+    "bytes": 43624774,
+    "manifestSha256": "de4609626096445a8c6d86bbc76f3ddd2f6617590420268eeaa3be8321b8ce2b"
+  },
+  "packageRoutes": {
+    "node": "./dist/umf-node.js",
+    "browser": "./dist/umf-browser.js",
+    "import": "./dist/umf-browser.js",
+    "reference": "./dist/umf.js"
+  },
+  "node": {
+    "runtime": "Node v26.12.1",
+    "cases": 14
+  },
+  "bun": {
+    "runtime": "Bun 1.4.3",
+    "cases": 14
+  },
+  "chromium": {
+    "version": "153.0.8010.12",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+    "cases": 14,
+    "nodeGlobalsAbsent": true,
+    "wasmRequested": true
+  },
+  "buildQualification": {
+    "status": "private-r7-default-route-qualification-source-drift-not-publishable",
+    "sourceTransformStatus": "derived-private-snapshot-not-release-fixed-point",
+    "note": "The build snapshot contained the concurrent uncommitted capture-tail source. This installed replay is provisional current-tree evidence, not release-eligible source qualification. Rebuild from a clean committed source cohort before relying on it as final evidence."
+  },
+  "qualification": "Private installed archive root-only securityNot parity; TypeScript reference root remains unchanged. No publication or full security migration qualification."
+}

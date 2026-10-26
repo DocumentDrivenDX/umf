@@ -1,0 +1,448 @@
+{
+  "format": "umf-r8-security-not-browser-parity/1",
+  "status": "pass-guarded-parity-raw-error-class-blocker",
+  "runtime": {
+    "bun": "1.4.3",
+    "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
+    "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+    "wasmBindgen": "wasm-bindgen 0.2.100",
+    "chromium": "153.0.8010.12",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36"
+  },
+  "profile": "umf.security-logic/1.0.0",
+  "cases": {
+    "T": {
+      "reference": {
+        "kind": "return",
+        "value": "F",
+        "trace": []
+      },
+      "raw": {
+        "kind": "return",
+        "value": "F",
+        "trace": []
+      },
+      "rawEqual": true,
+      "guarded": {
+        "kind": "return",
+        "value": "F",
+        "trace": []
+      },
+      "guardedEqual": true
+    },
+    "F": {
+      "reference": {
+        "kind": "return",
+        "value": "T",
+        "trace": []
+      },
+      "raw": {
+        "kind": "return",
+        "value": "T",
+        "trace": []
+      },
+      "rawEqual": true,
+      "guarded": {
+        "kind": "return",
+        "value": "T",
+        "trace": []
+      },
+      "guardedEqual": true
+    },
+    "U": {
+      "reference": {
+        "kind": "return",
+        "value": "U",
+        "trace": []
+      },
+      "raw": {
+        "kind": "return",
+        "value": "U",
+        "trace": []
+      },
+      "rawEqual": true,
+      "guarded": {
+        "kind": "return",
+        "value": "U",
+        "trace": []
+      },
+      "guardedEqual": true
+    },
+    "null": {
+      "reference": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "raw": {
+        "kind": "throw",
+        "name": "UmfCoreError",
+        "constructor": "UmfCoreError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "rawEqual": false,
+      "guarded": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "guardedEqual": true
+    },
+    "number": {
+      "reference": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "raw": {
+        "kind": "throw",
+        "name": "UmfCoreError",
+        "constructor": "UmfCoreError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "rawEqual": false,
+      "guarded": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "guardedEqual": true
+    },
+    "boolean": {
+      "reference": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "raw": {
+        "kind": "throw",
+        "name": "UmfCoreError",
+        "constructor": "UmfCoreError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "rawEqual": false,
+      "guarded": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "guardedEqual": true
+    },
+    "unknown-string": {
+      "reference": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "raw": {
+        "kind": "throw",
+        "name": "UmfCoreError",
+        "constructor": "UmfCoreError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "rawEqual": false,
+      "guarded": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "guardedEqual": true
+    },
+    "array": {
+      "reference": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "raw": {
+        "kind": "throw",
+        "name": "UmfCoreError",
+        "constructor": "UmfCoreError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "rawEqual": false,
+      "guarded": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "guardedEqual": true
+    },
+    "object": {
+      "reference": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "raw": {
+        "kind": "throw",
+        "name": "UmfCoreError",
+        "constructor": "UmfCoreError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "rawEqual": false,
+      "guarded": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "guardedEqual": true
+    },
+    "null-prototype": {
+      "reference": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "raw": {
+        "kind": "throw",
+        "name": "UmfCoreError",
+        "constructor": "UmfCoreError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "rawEqual": false,
+      "guarded": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "guardedEqual": true
+    },
+    "accessor": {
+      "reference": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "raw": {
+        "kind": "throw",
+        "name": "UmfCoreError",
+        "constructor": "UmfCoreError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "rawEqual": false,
+      "guarded": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "guardedEqual": true
+    },
+    "proxy-ownKeys": {
+      "reference": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "raw": {
+        "kind": "throw",
+        "name": "UmfCoreError",
+        "constructor": "UmfCoreError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "rawEqual": false,
+      "guarded": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "guardedEqual": true
+    },
+    "proxy-getPrototype": {
+      "reference": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "raw": {
+        "kind": "throw",
+        "name": "UmfCoreError",
+        "constructor": "UmfCoreError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "rawEqual": false,
+      "guarded": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "guardedEqual": true
+    },
+    "proxy-get": {
+      "reference": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "raw": {
+        "kind": "throw",
+        "name": "UmfCoreError",
+        "constructor": "UmfCoreError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "rawEqual": false,
+      "guarded": {
+        "kind": "throw",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "code": "SECURITY_TRUTH",
+        "message": "Invalid security truth",
+        "path": "",
+        "trace": []
+      },
+      "guardedEqual": true
+    }
+  },
+  "parity": {
+    "raw": {
+      "matches": 3,
+      "total": 14,
+      "validTruthOnly": true,
+      "invalidMismatch": "UmfError versus UmfCoreError; code/message/path/host effects otherwise equal"
+    },
+    "guarded": {
+      "matches": 14,
+      "total": 14,
+      "sourceAdapter": "src/extensions/security/rust-not-adapter.ts"
+    }
+  },
+  "artifacts": {
+    "src/extensions/security/logic.ts": "df5857cf39f924552a8082f87d911b81725cce0cf1fda4375daeeb07dd48c8c8",
+    "src/extensions/security/rust-not-adapter.ts": "c75a12d6bd6b0d8d30c0d5d9b016d65e60fb7b78240c419d6f56c84f58c757ac",
+    "src/index.ts": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da",
+    "src/index-browser-v4.ts": "2b0514befb028aa7410b27a9638d606d0b5e59560353517844a10842aded4c1d",
+    "src/model/errors.ts": "65bc53689f6aa0546be249ff4bd42616b446966cfc5f9d525faf9a428031dbd6",
+    "bindings/core/wasm/index.js": "273ca1ad4bbfbd30d186408904fbfbab9346b5dbab4327324c1afb3e6a226d8f",
+    "scripts/rust-migration/r8/security-not-parity.mjs": "e9cfc4e2630e7fd006021a8b9f78ebe7b5caa37c6458ba43082c1810981d9a88",
+    "bindings/core/wasm/src/security-logic.js": "5d2f5e273b38a271b3ab7c771073da23db2c5b422065a095be79d374533468f0",
+    "bindings/core/wasm/src/lib.rs": "51d4ff99a253b62c4cd93feeaae56d37e161757082ce63fd095c72a0b235959e",
+    "crates/umf-core-wire/src/security_logic_binding.rs": "d94fc1e66dca1d571fe24c76a8e3a5050b695bffa0dd8f29374020eb9fe05087",
+    "crates/umf-core/src/security_logic.rs": "38bea5c75d7d01365817237a554176dfc24b759d25d12185591c13cb91062c19",
+    "scripts/rust-migration/r8/security-not-browser.mjs": "2c7f2dc2be48ef8187a244073461a70a31319f0f1e6f1aa6a519f48ae697f485",
+    "scripts/rust-migration/r8/security-not-browser-entry.ts": "0780525e015eb29ba58f9e3cfee427ad15d222886292ac06eeb9ff05b5d48b72",
+    "fresh-wasm": "44181f8aec1b4bf937ae765881811bc819d249c0537836b849df1efaa7025c89",
+    "fresh-wasm-bindgen-glue": "fa7bb350e3054b43ca17f274bbeebb5cecaa95349b7cae76cb6f520f595f6a73",
+    "browser-entry-bundle": "52b284a361dba37e958447abbfb1a53bde94c371d2dc86e69abd00908ba0f436"
+  },
+  "limits": [
+    "Fresh source-level direct scalar WASM and compatibility-adapter comparison only; no installed-package qualification or default-route change.",
+    "Fourteen same-host cases cover T/F/U, invalid scalar and object shapes, accessor, and Proxy traps. No timing or broader security operation claims."
+  ]
+}

@@ -6184,31 +6184,39 @@ The [direct `securityNot` cutover comparison](evidence/rust-migration/r8-securit
 matched the three valid T/F/U inputs but only 3 of 14 same-host cases in
 both Node 26.12.1 and Bun 1.4.3. Invalid inputs change `UmfError` to
 `UmfCoreError`; accessor and Proxy cases also change host effects during
-generic wire admission. The public TypeScript export remains selected. A
-reviewed host-boundary admission adapter, fresh browser comparison and
-installed-package replay are required before retirement. The attempted fresh
-Chromium launch was blocked by the recorded local browser policy, so no new
-browser parity is claimed for this raw-host packet.
+generic wire admission. This raw-host finding remains valid for the unguarded
+factory. The guarded route now preserves the predecessor's scalar admission,
+and a fresh Chromium comparison confirms 3/14 raw versus 14/14 guarded parity.
+V4 package-root and installed archive checks are recorded in the direct-binding
+evidence below; the installed archive is provisional and not release eligible.
 
 The [guarded private `securityNot` adapter](evidence/rust-migration/r8-security-not-admission-adapter/README.md)
 now preflights only the three exact scalar truth tokens and delegates valid
 NOT decisions to Rust. Direct Node and Bun comparisons match all 14 outcomes
 and host-effect traces, with Rust work/cancellation controls retained for
-valid tokens. The adapter is not selected by either V4 root. Its local call
-cost remains roughly 1,100–3,800 times the tiny TypeScript operation;
-real Chromium, installed-package and performance qualification remain open.
-The public inventory has no new adapter export reachable from a package root.
+valid tokens. The V4 Node and browser roots now select this adapter around the
+direct scalar binding; `src/index.ts` and internal TypeScript callers retain
+the predecessor. The adapter remains internal rather than a new public export.
 
 The [direct scalar `securityNot` binding](evidence/rust-migration/r8-security-not-direct-binding/README.md)
-replaces the generic tagged-JSON call within that opt-in factory. A strict
-host guard preserves the predecessor's invalid-input error and callback order;
-Rust owns valid T/F/U decisions and charges one work unit. Node and Bun each
-match all 14 frozen outcome/host-effect cases. Local median calls fell to
+replaces the generic tagged-JSON call for valid inputs through the V4 root
+factory. A strict host guard preserves the predecessor's invalid-input error
+and callback order; Rust owns valid T/F/U decisions and charges one work unit.
+Node and Bun each match all 14 frozen outcome/host-effect cases. Local median calls fell to
 169 ns and 185 ns, respectively, from approximately 10 µs through the generic
 wire, though both remain materially slower than the tiny TypeScript function.
-The WASM module builds and passes a Node smoke check; real Chromium and
-installed-package qualification for this exact direct binding remain open.
-The V4 package roots still select TypeScript, so no retirement gap closes.
+The measured guarded-route overhead over the raw direct binding is small
+(approximately 4.5 ns/call in the Node sample and 1.0 ns/call in Bun) and is
+accepted to preserve the predecessor's admission contract. Fresh Chromium
+source parity and freshly built V4 Node/Bun root comparisons each cover all 14
+cases. A private installed archive replay also passes 14 cases in Node, Bun and
+Chromium with WASM loaded and Node globals absent. Its manifest marks the
+archive source-drifted/private because the source snapshot contained concurrent
+uncommitted capture-tail changes; this evidence is provisional, not release
+eligible, and must be replaced by a clean committed-source rebuild and replay.
+The override is limited to the `securityNot` export at V4 roots: `src/index.ts`,
+internal TypeScript imports, AND/OR/composition, and broader security logic are
+unchanged. No R8 ledger regeneration or complete security migration is claimed.
 
 The [raw-host JSON-number packet](evidence/rust-migration/r8-json-number-predecessor/README.md#r8-raw-host-default-route-gate--blocked)
 now records ten untyped JavaScript values. Fresh Node, Bun and real Chromium

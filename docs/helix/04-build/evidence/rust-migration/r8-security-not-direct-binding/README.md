@@ -33,22 +33,47 @@ For admitted tokens, Rust charges one unit through its `Context` host-control
 hook and applies the existing `security_logic::security_not` decision. The
 main request and result no longer pass through generic JSON tagging.
 
-The direct operation is used only by the existing opt-in security logic
-factories. It changes neither the TypeScript default export nor the Node or
-browser V4 package roots. AND, OR, and composition continue through the
-existing generic wire interface.
+The direct operation now backs the `securityNot` export selected by both V4
+package roots through `createSecurityNotRustAdapter`. The default TypeScript
+source export in `src/index.ts` and internal TypeScript imports remain
+unchanged; AND, OR, and composition continue through their existing routes.
+This is a single-operation V4 root override, not a complete security migration.
 
 ## Parity and controls
 
-The existing 14 frozen same-host cases were replayed against the current direct
-Rust route by
-[`security-not-adapter-parity.mjs`](../../../../../../scripts/rust-migration/r8/security-not-adapter-parity.mjs).
-Node 26.12.1 and Bun 1.4.3 each matched all 14 cases exactly, including error
-class/name/code/message/path and getter/Proxy effect traces. All three valid
-tokens reach Rust. Invalid values with meter, cancellation and clock controls
-enabled call none of those callbacks. A valid token at `maxWork: 0` still
-returns `RESOURCE_LIMIT`; cancellation returns `CANCELLED`; the meter receives
-one unit for a successful scalar call.
+The frozen 14-case Node 26.12.1 and Bun 1.4.3 comparisons in [`node.json`](node.json)
+and [`bun.json`](bun.json) exercise the compatibility route:
+`createSecurityNotRustAdapter(createSecurityLogicEngine())`. That guard rejects
+invalid values with the predecessor's `UmfError` before invoking Rust and sends
+valid T/F/U decisions to the direct scalar operation. Both hosts match all 14
+outcomes and host-effect traces. The raw WASM factory alone is not fully
+compatible: on invalid inputs it returns `UmfCoreError` instead of the
+predecessor's `UmfError`, with the same `SECURITY_TRUTH` code, message, empty
+path, and no getter or Proxy effects.
+
+The fresh [Chromium route comparison](chromium.json) confirms this distinction
+in Chromium 153.0.8010.12. The raw factory matches only the three valid truth
+tokens (3/14); all eleven invalid cases differ only in error class/name. The
+source compatibility adapter matches all 14/14 cases, including error
+class/name/code/message/path and getter/Proxy effect traces. The receipt pins
+the current browser source cohort, including the V4 browser root.
+
+The [V4 root comparison](../../../../../../scripts/rust-migration/r8/security-not-v4-root-parity.mjs)
+matched all 14 cases in freshly built `dist/umf-node.js` against unchanged
+`dist/umf.js` under Node 26.12.1 and Bun 1.4.3. The
+[installed archive replay](installed-route.json) also matched all 14 cases in
+Node, Bun and Chromium while exercising the package's actual Node/browser
+exports and loading its WASM asset. This receipt is provisional: the builder
+manifest marks the archive
+`private-r7-default-route-qualification-source-drift-not-publishable` because
+the private snapshot included concurrent uncommitted capture-tail source.
+Rebuild from the clean committed cohort and rerun the installed replay before
+treating this as final package evidence or release qualification.
+
+All three valid tokens reach Rust through the guard. Invalid values with meter,
+cancellation and clock controls enabled call none of those callbacks. A valid
+token at `maxWork: 0` still returns `RESOURCE_LIMIT`; cancellation returns
+`CANCELLED`; the meter receives one unit for a successful scalar call.
 
 Captured host results and timing summaries are in [`node.json`](node.json) and
 [`bun.json`](bun.json).
@@ -72,20 +97,37 @@ The prior generic-wire values come from the same-host sample in the preceding
 [`r8-security-not-admission-adapter`](../r8-security-not-admission-adapter/README.md)
 receipt. These are local microbenchmarks, not a release performance claim.
 They show that the direct route removes nearly all of the generic tagged-JSON
-binding cost while retaining the required Rust call and host controls.
+binding cost while retaining the required Rust call and host controls. The V4
+root selects the guarded adapter and accepts the measured small-call cost over
+the raw binding to preserve the established admission contract: about 4.5 ns
+per call on the Node sample and 1.0 ns on Bun. These remain local
+microbenchmarks, not a release performance claim.
 
 ## WASM qualification
 
-Rust 1.90.0 successfully built the release `wasm32-unknown-unknown` target.
-The generated NodeJS WASM module returned the expected T/F/U values, invoked a
-successful control callback once with amount 1, and preserved a `CANCELLED`
-refusal. This is a module smoke check, not Chromium evidence. The existing
-recorded Chrome URL policy rejects the local parity page and prohibits the
-available local-server or indirect-execution workarounds; the earlier headless
-browser attempt also exited with SIGTRAP. No browser or installed-package
-qualification is claimed.
+Rust 1.90.0 built the release `wasm32-unknown-unknown` target with wasm-bindgen
+0.2.100. The NodeJS WASM smoke check returned T/F/U, invoked a successful
+control callback once with amount 1, and preserved a `CANCELLED` refusal. The
+fresh Chromium receipt adds browser source parity for the guarded route;
+`installed-route.json` records provisional installed Node/Bun and Chromium
+package-root parity. This does not change `src/index.ts` or internal TypeScript
+callers and does not establish complete security support. Reproduce the
+source-level browser cohort with:
+
+```sh
+bun scripts/rust-migration/r8/security-not-browser.mjs docs/helix/04-build/evidence/rust-migration/r8-security-not-direct-binding/chromium.json
+```
 
 ## Source pins
+
+The table below is the original direct-binding slice's source cohort.
+[`chromium.json`](chromium.json) pins the fresh browser comparison and the
+installed archive manifest pins its compiled source closure. The V4 root files
+in that provisional archive were `src/index-node-v4.ts`
+(`931fd947592cda93687e9a967f8a19614046b609c82b0f4885c19ede82f86aee`) and
+`src/index-browser-v4.ts`
+(`2b0514befb028aa7410b27a9638d606d0b5e59560353517844a10842aded4c1d`). A
+clean-source rebuild and replay will supersede these installed-route pins.
 
 | File | SHA-256 |
 | --- | --- |
@@ -98,3 +140,8 @@ qualification is claimed.
 | `bindings/core/node/src/security-logic.js` | `5d2f5e273b38a271b3ab7c771073da23db2c5b422065a095be79d374533468f0` |
 | `bindings/core/wasm/src/security-logic.js` | `5d2f5e273b38a271b3ab7c771073da23db2c5b422065a095be79d374533468f0` |
 | `scripts/rust-migration/r8/security-not-adapter-parity.mjs` | `74b995e9f6b8b42f8c145ee01212700915b25df3c9635c63cd5d5dcc399a7760` |
+
+The Chromium receipt carries exact hashes for its current execution cohort,
+including the guarded adapter and browser harness. The installed-route receipt
+records the archive and package-manifest hashes plus host/runtime versions. A
+clean-source rebuild and replay remain required for final package qualification.
