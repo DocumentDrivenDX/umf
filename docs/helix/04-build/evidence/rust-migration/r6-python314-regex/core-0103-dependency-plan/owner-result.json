@@ -1,5 +1,5 @@
 {
-  "status": "EXISTING_PREFIX_CORRECTION_SOURCE_ACCEPTED",
+  "status": "REVIEWED_REGEX_OUTPUTS_ADOPTED_METAMODEL_GENERATION_PENDING",
   "baseCommit": "d5022e37840329d351bcd6c27fe7d7aad4758544",
   "donorCommit": "f4a410c0522135065a0b20e8d2b69705fddcbac4",
   "extractionCommit": "ad5e59591",
@@ -74,5 +74,8 @@
     "actualBoundary": "Tool guards PASS with recorded real payloads; archive size/full SHA guards reached and passed; exact44-byte digest identifies existing extraction directory refusal. No actual CPython3.14 runtime/generation/output adoption yet."
   },
   "existingPrefixSourceCommit": "8b6715d9a2a4e599518d8a8d09827921617fe209",
-  "existingPrefixSourceClosure": "sol-existing-runtime-prefix-closure001.md"
+  "existingPrefixSourceClosure": "sol-existing-runtime-prefix-closure001.md",
+  "successfulRegexEvidence": "regex-artifact-40414089598",
+  "successfulRegexEvidenceCustodySha256": "a2a3da45afe855bc62317ee639c3ca56ce5ceba692fa188132a1a3c1eed9427c",
+  "regexOutputAdoptionReviewSha256": "cd19115e37a89c55a979b13ed2c65e25e61ca11509439df364708e831891f2b0"
 }

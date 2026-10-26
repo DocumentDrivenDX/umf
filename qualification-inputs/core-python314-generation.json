@@ -1,7 +1,7 @@
 {
   "profile": "umf.core-python314-generation-inputs/1",
   "status": "source-pinned-hosted-generation-required",
-  "phase": "regex-artifacts",
+  "phase": "metamodel-artifacts",
   "sourceCommit": "d5022e37840329d351bcd6c27fe7d7aad4758544",
   "mainPreimages": {
     "crates/umf-core/src/python_re_tables.rs": "84f931263193ce41a1459640f1a20182f61a9fe14bfd02c319f3609237248d2c",
@@ -27,8 +27,29 @@
     "crates/umf-core/tests/fixtures/cpython-re/independent-info-boundaries.json": "a744855957ce7c89d04ae9b7b754049401cd04b4f611d7a8c5412d05b08a3b55",
     "crates/umf-core/tests/fixtures/cpython-re/independent-info-outcomes.tsv": "299ca3f80fcef799c58e9e159839b053751d023bd5c05e11427627212b26e463"
   },
-  "adoptedRegexOutputs": null,
-  "adoption": null,
+  "adoptedRegexOutputs": {
+    "crates/umf-core/src/python_re_tables.rs": "bbf65feeaca0a21d4db893ba0b7f11c6ca43e7e1945992d4e979347291d85ee2",
+    "crates/umf-core/src/python_re_names.dat": "83e6ec8d43bf356fa1a511508ebf45aef2f6a56efd9d834ba653f3b21b79456f",
+    "crates/umf-core/tests/fixtures/cpython-re/outcomes-3.14.tsv": "b1795db238445eeeafcbd7b370ae27a63ca914dc06ec33440fccd445a384de4a",
+    "crates/umf-core/tests/fixtures/cpython-re/independent-boundaries.json": "91dd68657df6bc771dc3e3e639594d1403f59dbbfb2a29b8de86144124194e3e",
+    "crates/umf-core/tests/fixtures/cpython-re/independent-outcomes.tsv": "3e1926845dae0fbb48880e0d342e6b484771f7e2e9792ad2ae1163043bd8275d",
+    "crates/umf-core/tests/fixtures/cpython-re/independent-hex-boundaries.json": "a811b8282da50f469381cdc4169b972da58aded7b9d148313cc64f7719aa9c40",
+    "crates/umf-core/tests/fixtures/cpython-re/independent-hex-outcomes.tsv": "95c77e23a8852bdc317e6e1e65d325e2179c9ac12b7b45cafe747730161e8e94",
+    "crates/umf-core/tests/fixtures/cpython-re/independent-info-boundaries.json": "efed8109ef53d65311b736d2171df5a649f767a4566f9492139a574732197b32",
+    "crates/umf-core/tests/fixtures/cpython-re/independent-info-outcomes.tsv": "e7240c15c4f9827a4dd5ee73e4003dce72fa15083b00618739efd131efc30e57"
+  },
+  "adoption": {
+    "status": "PASS_REGEX_GENERATION_ARTIFACTS_ONLY",
+    "sourceCommit": "ca3388d2478cc81ed71dd341cb4aa7f8418acacd",
+    "runId": "40414089598",
+    "runAttempt": "1",
+    "artifactId": "12694886130",
+    "artifactSha256": "db175f4801449c833452b417852dbb570604d10f71476148906ce0807c6fee80",
+    "receiptSha256": "c00fb78f672c219e2c384c29b18dff563bdd8272e1eec1e3851d612443ae4c1e",
+    "archiveSha256": "7e90c0b357689058c1a4cd0d0aa7da81e76dc428bd451d8283fafd6885e641ee",
+    "outputManifestSha256": "57c74b67b7f1690f16a5d51e5f416da8a9d906e680f6363e48155e28e592b7df",
+    "reviewSha256": "cd19115e37a89c55a979b13ed2c65e25e61ca11509439df364708e831891f2b0"
+  },
   "adoptedMetamodelOutputs": null,
   "metamodelAdoption": null,
   "cpython": {
