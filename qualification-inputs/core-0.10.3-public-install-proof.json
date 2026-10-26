@@ -1,0 +1,50 @@
+{
+  "profile": "umf.core-0.10.3-public-install-proof-inputs/1",
+  "status": "HELD",
+  "producer": {
+    "sourceCommit": "HELD",
+    "sourceTree": "HELD",
+    "workflowPath": "HELD",
+    "event": "HELD",
+    "headBranch": "HELD",
+    "workflowRunId": "HELD",
+    "workflowRunAttempt": "HELD"
+  },
+  "publicRelease": {
+    "tag": "python-v0.10.3",
+    "commit": "HELD",
+    "assets": {
+      "linuxWheel": {
+        "filename": "HELD",
+        "sizeBytes": "HELD",
+        "sha256": "HELD",
+        "nativeSha256": "HELD"
+      },
+      "macosWheel": {
+        "filename": "HELD",
+        "sizeBytes": "HELD",
+        "sha256": "HELD",
+        "nativeSha256": "HELD"
+      },
+      "sdist": {
+        "filename": "umf_core-0.10.3.tar.gz",
+        "sizeBytes": "HELD",
+        "sha256": "HELD"
+      }
+    },
+    "metadata": {
+      "sha256Sums": {"filename": "SHA256SUMS", "sizeBytes": "HELD", "sha256": "HELD"},
+      "releasePins": {"filename": "release-pins.json", "sizeBytes": "HELD", "sha256": "HELD"},
+      "qualification": {"filename": "HELD", "sizeBytes": "HELD", "sha256": "HELD"},
+      "sourceCi": {"filename": "HELD", "sizeBytes": "HELD", "sha256": "HELD"},
+      "evidence": {"filename": "HELD", "sizeBytes": "HELD", "sha256": "HELD"},
+      "notes": {"filename": "HELD", "sizeBytes": "HELD", "sha256": "HELD"},
+      "inventory": {"filename": "HELD", "sizeBytes": "HELD", "sha256": "HELD"}
+    }
+  },
+  "limits": {
+    "cellSeconds": 1200,
+    "wheelBytes": 16777216,
+    "sdistBytes": 16777216
+  }
+}
