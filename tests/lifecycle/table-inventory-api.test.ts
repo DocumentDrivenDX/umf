@@ -203,7 +203,7 @@ function installOneFixtureR2MeterDiagnostic(){
  const byPhase=(labels:readonly string[])=>Object.fromEntries(phases.map(phase=>[phase,Object.fromEntries(labels.map(label=>[label,zero()]))])) as Record<(typeof phases)[number],Record<string,Total>>;
  const phaseTotals=Object.fromEntries(phases.map(phase=>[phase,zero()])) as Record<(typeof phases)[number],Total>,categoryTotals=byPhase(categories),pathTotals=byPhase(paths);
  const checkpoints:{work:number;subjects:number;bytes:number}[]=[];let meter:R2WorkMeter|undefined,activeCategory:string|undefined,unexpectedMeters=0,incomplete=false;
- const cache={hit:0,miss:0,reuse:0};let rejection:{leaf:string;dimension:string;path:string}|undefined;
+ const cache={hit:0,miss:0,reuse:0};let rejection:{leaf:string;dimension:string;path:string;callsite?:string}|undefined;
  const dimension=(error:unknown,fallback:string)=>error instanceof R2WorkLimitError?error.dimension:fallback;
  const observe=(candidate:unknown)=>{if(!candidate||typeof candidate!=='object')return;const value=candidate as R2WorkMeter;if(!meter){meter=value;return;}if(value!==meter){unexpectedMeters++;incomplete=true;}};
  const categoryOf=(label:string|undefined,event:string|undefined,pathBucket:string):string=>{
@@ -231,7 +231,7 @@ function installOneFixtureR2MeterDiagnostic(){
   const phase=phases[Math.min(checkpoints.length,phases.length-1)]!,pathBucket=pathOf(path),category=categoryOf(activeCategory,event,pathBucket);
   for(const target of [phaseTotals[phase],categoryTotals[phase]![category]!,pathTotals[phase]![pathBucket]!]){target.calls++;target.work+=work;target.bytes+=bytes;target.subjects+=subjects;}
  };
- const reject=(leaf:string,dimension:string,path:unknown)=>{if(rejection)return;rejection={leaf,dimension,path:typeof path==='string'?path.slice(0,256):''};};
+ const reject=(leaf:string,dimension:string,path:unknown)=>{if(rejection)return;let callsite:string|undefined;const errorConstructor=Error as typeof Error&{stackTraceLimit?:number},descriptor=Object.getOwnPropertyDescriptor(Error,'stackTraceLimit');try{errorConstructor.stackTraceLimit=48;const stack=new Error().stack;if(typeof stack==='string')callsite=stack.split('\n').slice(1).slice(-24).join('\n').slice(0,4096);}catch{/* callsite diagnostics must not replace the original failure */}finally{try{if(descriptor)Object.defineProperty(Error,'stackTraceLimit',descriptor);else delete errorConstructor.stackTraceLimit;}catch{/* preserve the diagnostic path even if stack configuration is unavailable */}}rejection={leaf,dimension,path:typeof path==='string'?path.slice(0,256):'',...(callsite?{callsite}:{})};};
  const original=(name:string)=>{const descriptor=Object.getOwnPropertyDescriptor(proto,name);if(!descriptor||typeof descriptor.value!=='function')throw new Error(`R2 diagnostic expected prototype method ${name}`);saved.set(name,descriptor);return descriptor.value as (...args:any[])=>any;};
  const originals=Object.fromEntries(leaves.map(name=>[name,original(name)])) as Record<(typeof leaves)[number],(...args:any[])=>any>;
  const wrappers:Record<string,Function>={
