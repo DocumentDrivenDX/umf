@@ -10,6 +10,8 @@ pub mod delta_log_binding;
 pub mod delta_schema_table;
 pub mod delta_spark_hash;
 pub mod host_response_frames;
+#[cfg(feature = "embedded-adapters")]
+pub mod json_schema_import_session_binding;
 pub mod javascript_numeric_runtime;
 pub mod json_number_binding;
 pub mod parquet_record_type_binding;

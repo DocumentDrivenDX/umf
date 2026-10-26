@@ -44,6 +44,173 @@ pub struct ExportBundle {
     pub diagnostics: Vec<Diagnostic>,
 }
 
+/// A per-import staging object for bindings that must interleave host
+/// observations with Rust-owned URI checks, parsing, and document admission.
+/// Each stage accepts the caller's short-lived Context. A binding spanning
+/// host calls should seed/capture one [`crate::context::TransportUsage`] around
+/// each stage. No host values or references are retained; accepted inputs are
+/// copied into owned Rust state.
+pub struct JsonSchemaImportSession {
+    validated_base_uri_observation: Utf16,
+    payload_base_uri: Option<Utf16>,
+    id: Option<Utf16>,
+    namespace: Option<Utf16>,
+    resources: Vec<(Utf16, NativeJsonTree)>,
+    seen_resource_uris: BTreeSet<Utf16>,
+    root: Option<NativeJsonTree>,
+    stage: JsonSchemaImportStage,
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+enum JsonSchemaImportStage {
+    Resources,
+    Root,
+    Id,
+    Namespace,
+    Finish,
+    Failed,
+}
+
+impl JsonSchemaImportSession {
+    /// Begin after the host's first `baseUri` observation has succeeded. Rust
+    /// independently enforces the accepted retrieval-URI rule here.
+    pub fn new(
+        validated_base_uri_observation: &Utf16,
+        ctx: &mut Context<'_>,
+    ) -> Result<Self, EngineError> {
+        parse_uri(validated_base_uri_observation, ctx)?;
+        Ok(Self {
+            validated_base_uri_observation: validated_base_uri_observation.clone(),
+            payload_base_uri: None,
+            id: None,
+            namespace: None,
+            resources: Vec::new(),
+            seen_resource_uris: BTreeSet::new(),
+            root: None,
+            stage: JsonSchemaImportStage::Resources,
+        })
+    }
+
+    /// Retain one ordered resource after the host has observed and checked its
+    /// URI. URI admission precedes parsing, and this method returns before the
+    /// caller may observe/check the next resource.
+    pub fn add_resource(
+        &mut self,
+        uri: &Utf16,
+        source: &[u16],
+        ctx: &mut Context<'_>,
+    ) -> Result<(), EngineError> {
+        self.require_stage(JsonSchemaImportStage::Resources)?;
+        let result = (|| {
+            parse_uri(uri, ctx)?;
+            ctx.charge_work(uri.len().saturating_add(1), Utf16::default())?;
+            if !self.seen_resource_uris.insert(uri.clone()) {
+                return Err(err(
+                    "JSON_SCHEMA_RESOURCE_COLLISION",
+                    "Duplicate retrieval URI",
+                ));
+            }
+            let tree = NativeJsonTree::parse_json(source, ctx)?;
+            self.resources.push((uri.clone(), tree));
+            Ok(())
+        })();
+        if result.is_err() {
+            self.stage = JsonSchemaImportStage::Failed;
+        }
+        result
+    }
+
+    /// Record the second host `baseUri` observation for the payload. Its
+    /// CONTRACT-002 validation is deliberately deferred to final document
+    /// inspection, after root parsing and the later id/namespace observations.
+    pub fn set_payload_base_uri(&mut self, payload_base_uri: Utf16) -> Result<(), EngineError> {
+        self.require_stage(JsonSchemaImportStage::Resources)?;
+        self.payload_base_uri = Some(payload_base_uri);
+        self.stage = JsonSchemaImportStage::Root;
+        Ok(())
+    }
+
+    /// Parse the root only after the payload URI observation. The caller must
+    /// wait for this result before observing `id` or the namespace URI.
+    pub fn parse_root(&mut self, source: &[u16], ctx: &mut Context<'_>) -> Result<(), EngineError> {
+        self.require_stage(JsonSchemaImportStage::Root)?;
+        match NativeJsonTree::parse_json(source, ctx) {
+            Ok(root) => {
+                self.root = Some(root);
+                self.stage = JsonSchemaImportStage::Id;
+                Ok(())
+            }
+            Err(error) => {
+                self.stage = JsonSchemaImportStage::Failed;
+                Err(error)
+            }
+        }
+    }
+
+    /// Retain the `id` observation after successful root parsing. The next
+    /// host observation is the third `baseUri` value for module namespace.
+    pub fn set_id(&mut self, id: Utf16) -> Result<(), EngineError> {
+        self.require_stage(JsonSchemaImportStage::Id)?;
+        self.id = Some(id);
+        self.stage = JsonSchemaImportStage::Namespace;
+        Ok(())
+    }
+
+    /// Retain the third `baseUri` observation for module namespace after the
+    /// `id` observation. Payload URI validation remains deferred to admission.
+    pub fn set_namespace(&mut self, namespace: Utf16) -> Result<(), EngineError> {
+        self.require_stage(JsonSchemaImportStage::Namespace)?;
+        self.namespace = Some(namespace);
+        self.stage = JsonSchemaImportStage::Finish;
+        Ok(())
+    }
+
+    /// Complete document assembly and semantic admission after all staged host
+    /// observations and root parsing have succeeded.
+    pub fn finish(
+        mut self,
+        runtime: Option<&JsonSchemaRuntime>,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        self.require_stage(JsonSchemaImportStage::Finish)?;
+        let payload_base_uri = self
+            .payload_base_uri
+            .take()
+            .ok_or_else(import_order_error)?;
+        let id = self.id.take().ok_or_else(import_order_error)?;
+        let namespace = self.namespace.take().ok_or_else(import_order_error)?;
+        let root = self.root.take().ok_or_else(import_order_error)?;
+        // Keep the first observation as session-owned state through completion:
+        // it is an independent validation input, not either later URI value.
+        let _validated_base_uri_observation = self.validated_base_uri_observation;
+        admit_import_parts(
+            root,
+            self.resources,
+            &id,
+            &payload_base_uri,
+            &namespace,
+            runtime,
+            ctx,
+        )
+    }
+
+    fn require_stage(&mut self, expected: JsonSchemaImportStage) -> Result<(), EngineError> {
+        if self.stage == expected {
+            Ok(())
+        } else {
+            self.stage = JsonSchemaImportStage::Failed;
+            Err(import_order_error())
+        }
+    }
+}
+
+fn import_order_error() -> EngineError {
+    err(
+        "JSON_SCHEMA_IMPORT_ORDER",
+        "JSON Schema import stages were called out of order",
+    )
+}
+
 const CORE_VERSION: &str = "0.10.0";
 const EXTENSION_VERSION: &str = "0.1.0";
 
@@ -228,7 +395,36 @@ fn import_json_schema_inner(
         resources,
         representation_extras: Vec::new(),
     };
-    let document = make_document(id, base_uri, &payload, ctx)?;
+    admit_import_payload(id, base_uri, &payload, runtime, ctx)
+}
+
+fn admit_import_parts(
+    root: NativeJsonTree,
+    resources: Vec<(Utf16, NativeJsonTree)>,
+    id: &Utf16,
+    payload_base_uri: &Utf16,
+    namespace: &Utf16,
+    runtime: Option<&JsonSchemaRuntime>,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let payload = JsonSchemaPayload {
+        dialect: Utf16::from(DIALECT_2020_12),
+        base_uri: payload_base_uri.clone(),
+        root,
+        resources,
+        representation_extras: Vec::new(),
+    };
+    admit_import_payload(id, namespace, &payload, runtime, ctx)
+}
+
+fn admit_import_payload(
+    id: &Utf16,
+    namespace: &Utf16,
+    payload: &JsonSchemaPayload,
+    runtime: Option<&JsonSchemaRuntime>,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let document = make_document(id, namespace, payload, ctx)?;
     let validation = match match runtime {
         Some(runtime) => runtime.inspect_document(&document, ctx),
         None => crate::json_schema_inspect::inspect_document(&document, ctx),
@@ -969,12 +1165,12 @@ fn exportable_payload(
 
 fn make_document(
     id: &Utf16,
-    base_uri: &Utf16,
+    namespace: &Utf16,
     payload: &JsonSchemaPayload,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     ctx.charge_work(payload.resources.len().saturating_add(3), Utf16::default())?;
-    ctx.charge_work(id.len().saturating_add(base_uri.len()), Utf16::default())?;
+    ctx.charge_work(id.len().saturating_add(namespace.len()), Utf16::default())?;
     let mut resource_members = Vec::with_capacity(payload.resources.len());
     for (uri, tree) in &payload.resources {
         ctx.charge_work(uri.len().saturating_add(1), Utf16::default())?;
@@ -1002,7 +1198,7 @@ fn make_document(
     ]);
     let module = Value::Object(vec![
         (Utf16::from("id"), Value::string_utf8("schema")),
-        (Utf16::from("namespace"), Value::String(base_uri.clone())),
+        (Utf16::from("namespace"), Value::String(namespace.clone())),
         (Utf16::from("elements"), Value::Array(vec![element])),
     ]);
     let vocabularies = Value::Object(vec![(
