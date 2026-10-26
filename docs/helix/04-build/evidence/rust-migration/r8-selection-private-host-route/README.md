@@ -167,6 +167,50 @@ emits structure warnings; its structure severity is `error`. Direct source
 execution occurs in a fresh Bun child process because the policy object is
 deliberately frozen in normal operation. Chromium compares against that
 cross-host direct-source baseline; direct TypeScript itself does not run in the
-browser. Semantic callback diagnostics, resource-boundary parity beyond this
-string path, installed-package qualification, and public/default route
-selection remain open.
+browser. The following callback and lookup slice supersedes the earlier
+semantic-callback limitation only for the named scenarios.
+
+## Semantic callback and lookup interleaving — 2026-10-26
+
+The private registration provider now has Node and WASM same-host controls for
+the exact demand schedule frozen in the reference-host baseline. One source
+contains three built-in `registered(id, version)` constraint queries and four
+extension payloads across document and element scopes. The custom Registry
+records all seven `get` calls and every per-payload manifest, scope,
+structure, capability, semantic getter, and callback stage. Each host matches
+the exact 47-event trace: the three constraint lookups precede the payload
+walk, and each payload's lookup and callback stages remain in source order.
+The callback verifies its copied payload/document, path, scope, and receiver,
+then returns an ordered warning diagnostic with an unknown `origin` member.
+Node compares the complete result JSON to TypeScript and asserts the first
+four diagnostic records; Chromium compares its trace and complete result JSON
+to same-host TypeScript. `chromium.json` records `sameTrace: true`,
+`sameResult: true`, Rust event count 47 and seven lookups on Chromium
+153.0.8010.12 using Rust 1.90.0 and wasm-bindgen 0.2.100.
+The receipt's `artifacts` map pins the exact Rust kernel/provider/constraint,
+wire, Node/WASM wrapper, fixture, and browser-harness source hashes used for
+the fresh WASM run. The Bun run used the prebuilt
+`bindings/core/node/umf_core_node.node` addon with SHA-256
+`4a2437d8f2124bb9f35ff6a6b1b69a84b17accf07099ef359e23e0075a9e0285`; the
+receipt separately pins the tested Node wrapper and test source hashes.
+
+The focused Bun binding file now passes 26/26 with the prebuilt Node addon;
+this slice changes only tests and the WASM evidence harness, so the run does
+not claim a fresh Node rebuild. It also compares ordinary semantic callback
+throws with TypeScript's failure diagnostic and confirms that a throwing
+`String(error)` conversion escapes by exact object identity. A fresh WASM
+artifact produced with a dedicated Cargo target passes the same 47-event and
+diagnostic comparison in Chromium. The first sandboxed Playwright launch
+failed before page execution because macOS denied Chromium's
+`MachPortRendezvousServer` bootstrap check (`Permission denied (1100)`); the
+same fresh artifact and harness then completed under the authorized elevated
+browser run. The Rust library's `registration_provider_` filter passes three
+provider and first-fault tests, and `--test r5_selection` passes all 10 frozen
+static Selection vectors. Both commands used their own Cargo target directory.
+No runtime source was modified for this slice; the existing Rust provider and
+Node/WASM callback bridge were exercised and source-pinned here.
+
+The evidence establishes this exact private route subset and these registered
+lookup/callback controls. It does not qualify arbitrary semantic iterable
+diagnostics, all caller-owned property traps, resource-boundary parity,
+installed-package qualification, or public/default route selection.

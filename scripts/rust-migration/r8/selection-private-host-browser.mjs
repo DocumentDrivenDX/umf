@@ -10,8 +10,8 @@ import {directTypescriptWarningSelection} from './selection-private-host-direct.
 const root = resolve(import.meta.dirname, '../../..');
 const toolchain = process.env.UMF_RUST_TOOLCHAIN ?? '/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin';
 const bindgen = process.env.UMF_WASM_BINDGEN ?? '/private/tmp/umf-wasm-bindgen-0.2.100/bin/wasm-bindgen';
-const target = '/private/tmp/umf-r8-selection-private-host-cargo';
-const output = '/private/tmp/umf-r8-selection-private-host-browser';
+const target = process.env.UMF_SELECTION_PRIVATE_TARGET ?? '/private/tmp/umf-r8-selection-private-host-cargo';
+const output = process.env.UMF_SELECTION_PRIVATE_OUTPUT ?? '/private/tmp/umf-r8-selection-private-host-browser';
 const wasmOut = `${output}/wasm`;
 const entryOut = `${output}/selection-private-host-browser-entry.js`;
 const receiptPath = resolve(process.argv[2] ?? 'docs/helix/04-build/evidence/rust-migration/r8-selection-private-host-route/chromium.json');
@@ -52,8 +52,15 @@ const payload = {resources, source: source.source, queries: source.queries, froz
 const artifacts = {};
 for (const path of [
   'crates/umf-core/src/selection.rs',
+  'crates/umf-core/src/registry.rs',
+  'crates/umf-core/src/constraints.rs',
+  'crates/umf-core/src/engine.rs',
+  'crates/umf-core/src/host_json.rs',
   'crates/umf-core/src/selection_host_json.rs',
   'crates/umf-core/src/selection_diagnostics.rs',
+  'crates/umf-core-wire/src/lib.rs',
+  'bindings/core/node/src/host_json.rs',
+  'bindings/core/node/src/host-json.js',
   'bindings/core/wasm/src/host_json.rs',
   'bindings/core/wasm/src/host-json.js',
   'bindings/core/node/src/host-json.js',
@@ -137,6 +144,10 @@ try {
   assert.equal(result.selectionKindRuntimeBranch.trace.at(-1), 'validation.valid:get',
     'private Selection route read beyond the result.valid branch');
   assert.match(result.selectionKindRuntimeBranch.actualError, /HOST_JSON_UNSUPPORTED/);
+  assert.equal(result.registrationInterleaving.sameTrace, true,
+    'Selection registered(...) and per-payload callback events differ from same-host TypeScript');
+  assert.equal(result.registrationInterleaving.sameResult, true,
+    'Selection semantic callback diagnostics differ from same-host TypeScript');
   const record = {
     profile: 'umf.r8.selection-private-host-route.chromium/1',
     status: 'pass-private-frozen-values-direct-warning-source-and-null-prototypes',
@@ -150,6 +161,13 @@ try {
     kindRuntimeResultCases: result.kindRuntimeResultCases,
     kindRuntimeDynamicReadCases: result.kindRuntimeDynamicReadCases,
     selectionKindRuntimeBranch: result.selectionKindRuntimeBranch,
+    registrationInterleaving: {
+      sameTrace: result.registrationInterleaving.sameTrace,
+      sameResult: result.registrationInterleaving.sameResult,
+      expectedEvents: result.registrationInterleaving.expectedEvents,
+      rustEvents: result.registrationInterleaving.rustEvents,
+      resultJson: result.registrationInterleaving.resultJson,
+    },
     successfulWarnings: {...result.successfulWarnings, directBaselineHost: 'Bun 1.4.3 direct TypeScript source'},
     resourceMeterControl: {host: 'Bun 1.4.3 Node addon', messageUnits: 4000001, outcome: 'LIMIT'},
     shapeFinding: 'Selection result projection recreates TypeScript copyJson null-prototype objects; own __proto__ remains data and cannot mutate the prototype.',
@@ -159,7 +177,7 @@ try {
       'fresh-wasm-bindgen-glue': sha(Buffer.from(glueSource)),
       'bundled-browser-entry': sha(Buffer.from(entrySource)),
     },
-    limits: ['Private route only; no public/default selection.', 'Seven frozen query cases, one own-__proto__ projection case, one Registry.get thrown-identity case, and one successful warning packet using a synthetic warning structure policy compared to direct TypeScript sourceValidation.', 'The kindRuntime result packet covers 12 returned values with exact Object.is value parity, identity, getter/call traces, a dynamic second-read null control, and a throwing dynamic method getter. The consumer-stage branch packet reads only `.valid` at Selection validation; it deliberately stops before refusal diagnostics or successful sourceValidation materialization. Arbitrary diagnostic iteration, static validation, and resource-accounting parity remain unimplemented. The generated TypeError wording for a null second runtime remains host-specific.', 'Resource-limit control is Node addon evidence, not a Chromium case. No general Selection semantic callback parity or installed package qualification.'],
+    limits: ['Private route only; no public/default selection.', 'Seven frozen query cases, one own-__proto__ projection case, one Registry.get thrown-identity case, and one successful warning packet using a synthetic warning structure policy compared to direct TypeScript sourceValidation.', 'A same-Chromium-host scenario now compares three built-in registered(...) lookups interleaved with four document/element extension payload lookups, exact per-payload getter/callback order and copied callback diagnostics. It does not establish arbitrary semantic iterable parity or Registry behavior outside this case.', 'The kindRuntime result packet covers 12 returned values with exact Object.is value parity, identity, getter/call traces, a dynamic second-read null control, and a throwing dynamic method getter. The consumer-stage branch packet reads only `.valid` at Selection validation; it deliberately stops before refusal diagnostics or successful sourceValidation materialization. Arbitrary diagnostic iteration, static validation, and resource-accounting parity remain unimplemented. The generated TypeError wording for a null second runtime remains host-specific.', 'Resource-limit control is Node addon evidence, not a Chromium case. Installed package qualification remains open.'],
   };
   await mkdir(resolve(receiptPath, '..'), {recursive: true});
   await writeFile(receiptPath, JSON.stringify(record, null, 2) + '\n');

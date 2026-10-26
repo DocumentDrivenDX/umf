@@ -198,6 +198,78 @@ export function runSelectionBrowserCases(payload: Payload) {
     return {prefixMatches: JSON.stringify(expected.events.slice(0, actual.events.length)) === JSON.stringify(actual.events),
       expectedError: expected.error, actualError: actual.error, trace: actual.events};
   })();
+  const registrationInterleaving = (() => {
+    const interleavedSource = structuredClone(payload.source) as Record<string, any>;
+    interleavedSource.vocabularies = {
+      future: {version: '1.0.0'}, alpha: {version: '2.0.0'}, beta: {version: '3.0.0'},
+    };
+    interleavedSource.extensions = {alpha: {at: 'document-alpha'}, future: {at: 'document-future'}};
+    interleavedSource.modules[0].elements[0].extensions = {
+      beta: {at: 'element-beta'}, future: {at: 'element-future'},
+    };
+    const run = (select: (source: unknown, query: unknown, registry: unknown) => unknown) => {
+      const events: string[] = [];
+      let entry: Record<string, unknown>;
+      entry = {
+        get structure() {
+          events.push('entry.structure');
+          return function(this: unknown, value: {at: string}) {
+            events.push(`structure:${value.at}:receiver=${this === entry}`);
+            return true;
+          };
+        },
+        get semantics() {
+          events.push('entry.semantics');
+          return function(this: unknown, value: {at: string}, context: {path: string; scope: string}) {
+            events.push(`semantics:${value.at}:${context.scope}:receiver=${this === entry}`);
+            return [{code: `CALLBACK_${value.at.toUpperCase().replaceAll('-', '_')}`,
+              path: context.path, message: `observed ${value.at}`, severity: 'warning',
+              origin: {scope: context.scope, retained: true}}];
+          };
+        },
+      };
+      Object.defineProperty(entry, 'manifest', {get() {
+        events.push('entry.manifest');
+        const scopes = {includes(scope: string) {
+          events.push(`scopes.includes:${scope}:receiver=${this === scopes}`);
+          return true;
+        }};
+        return {
+          get scopes() { events.push('manifest.scopes'); return scopes; },
+          get capabilities() { events.push('manifest.capabilities'); return {validation: 'semantic'}; },
+        };
+      }});
+      let registry: object;
+      registry = new Proxy({}, {get(_target, key) {
+        if (key === 'get') return function(this: unknown, id: string, version: string) {
+          events.push(`get:${id}@${version}:receiver=${this === registry}`);
+          return entry;
+        };
+        return undefined;
+      }});
+      const result = select(interleavedSource, {references: 'none'}, registry);
+      return {events, resultJson: JSON.stringify(result)};
+    };
+    const reference = run(typescriptSelectCoreElements as (source: unknown, query: unknown, registry: unknown) => unknown);
+    const rust = run((source, query, registry) => coreElementSelectionHostInput(
+      addon, payload.resources, source, query, registry, Error));
+    const expected = [
+      'get:future@1.0.0:receiver=true', 'get:alpha@2.0.0:receiver=true', 'get:beta@3.0.0:receiver=true',
+    ];
+    for (const [id, version, scope, value] of [
+      ['alpha', '2.0.0', 'document', 'document-alpha'],
+      ['future', '1.0.0', 'document', 'document-future'],
+      ['beta', '3.0.0', 'element', 'element-beta'],
+      ['future', '1.0.0', 'element', 'element-future'],
+    ]) expected.push(`get:${id}@${version}:receiver=true`, 'entry.manifest', 'manifest.scopes',
+      `scopes.includes:${scope}:receiver=true`, 'entry.structure', `structure:${value}:receiver=true`,
+      'entry.manifest', 'manifest.capabilities', 'entry.semantics', 'entry.semantics',
+      `semantics:${value}:${scope}:receiver=true`);
+    return {sameTrace: JSON.stringify(reference.events) === JSON.stringify(rust.events)
+        && JSON.stringify(rust.events) === JSON.stringify(expected),
+      sameResult: reference.resultJson === rust.resultJson, expectedEvents: expected,
+      rustEvents: rust.events, resultJson: rust.resultJson};
+  })();
   const throwSentinel = Object.freeze({kindRuntimeThrow: true});
   let kindRuntimeThrowIdentity = false;
   try {
@@ -216,5 +288,5 @@ export function runSelectionBrowserCases(payload: Payload) {
       equalTrace: JSON.stringify(typescriptDelegation.events) === JSON.stringify(rustDelegation.events),
       resultIdentity: rustDelegation.resultIdentity, thrownIdentity: kindRuntimeThrowIdentity,
       falsyRuntimeRefused, falsyRuntimeError}, kindRuntimeResultCases, kindRuntimeDynamicReadCases,
-    selectionKindRuntimeBranch};
+    selectionKindRuntimeBranch, registrationInterleaving};
 }

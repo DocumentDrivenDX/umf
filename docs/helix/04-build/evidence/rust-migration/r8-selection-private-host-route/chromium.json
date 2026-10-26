@@ -52,53 +52,432 @@
     "calls": 1,
     "thrownIdentity": true
   },
+  "kindRuntimeDelegation": {
+    "typescript": {
+      "events": [
+        "registry.kindRuntime:get",
+        "registry.kindRuntime:get",
+        "runtime.validateDocument:get",
+        "registry.registrations:get",
+        "registry.registrations:call",
+        "runtime.validateDocument:call"
+      ],
+      "resultIdentity": true
+    },
+    "rust": {
+      "events": [
+        "registry.kindRuntime:get",
+        "registry.kindRuntime:get",
+        "runtime.validateDocument:get",
+        "registry.registrations:get",
+        "registry.registrations:call",
+        "runtime.validateDocument:call"
+      ],
+      "resultIdentity": true
+    },
+    "equalTrace": true,
+    "resultIdentity": true,
+    "thrownIdentity": true,
+    "falsyRuntimeRefused": true,
+    "falsyRuntimeError": "Error: HOST_JSON_UNSUPPORTED"
+  },
+  "kindRuntimeResultCases": [
+    {
+      "name": "undefined",
+      "sameValue": true,
+      "sameIdentity": true,
+      "sameTrace": true,
+      "trace": [
+        "kindRuntime:get",
+        "kindRuntime:get",
+        "validateDocument:get",
+        "registrations:get",
+        "registrations:call",
+        "validateDocument:call"
+      ]
+    },
+    {
+      "name": "null",
+      "sameValue": true,
+      "sameIdentity": true,
+      "sameTrace": true,
+      "trace": [
+        "kindRuntime:get",
+        "kindRuntime:get",
+        "validateDocument:get",
+        "registrations:get",
+        "registrations:call",
+        "validateDocument:call"
+      ]
+    },
+    {
+      "name": "boolean",
+      "sameValue": true,
+      "sameIdentity": true,
+      "sameTrace": true,
+      "trace": [
+        "kindRuntime:get",
+        "kindRuntime:get",
+        "validateDocument:get",
+        "registrations:get",
+        "registrations:call",
+        "validateDocument:call"
+      ]
+    },
+    {
+      "name": "negative-zero",
+      "sameValue": true,
+      "sameIdentity": true,
+      "sameTrace": true,
+      "trace": [
+        "kindRuntime:get",
+        "kindRuntime:get",
+        "validateDocument:get",
+        "registrations:get",
+        "registrations:call",
+        "validateDocument:call"
+      ]
+    },
+    {
+      "name": "nan",
+      "sameValue": true,
+      "sameIdentity": true,
+      "sameTrace": true,
+      "trace": [
+        "kindRuntime:get",
+        "kindRuntime:get",
+        "validateDocument:get",
+        "registrations:get",
+        "registrations:call",
+        "validateDocument:call"
+      ]
+    },
+    {
+      "name": "positive-infinity",
+      "sameValue": true,
+      "sameIdentity": true,
+      "sameTrace": true,
+      "trace": [
+        "kindRuntime:get",
+        "kindRuntime:get",
+        "validateDocument:get",
+        "registrations:get",
+        "registrations:call",
+        "validateDocument:call"
+      ]
+    },
+    {
+      "name": "negative-infinity",
+      "sameValue": true,
+      "sameIdentity": true,
+      "sameTrace": true,
+      "trace": [
+        "kindRuntime:get",
+        "kindRuntime:get",
+        "validateDocument:get",
+        "registrations:get",
+        "registrations:call",
+        "validateDocument:call"
+      ]
+    },
+    {
+      "name": "string",
+      "sameValue": true,
+      "sameIdentity": true,
+      "sameTrace": true,
+      "trace": [
+        "kindRuntime:get",
+        "kindRuntime:get",
+        "validateDocument:get",
+        "registrations:get",
+        "registrations:call",
+        "validateDocument:call"
+      ]
+    },
+    {
+      "name": "object",
+      "sameValue": true,
+      "sameIdentity": true,
+      "sameTrace": true,
+      "trace": [
+        "kindRuntime:get",
+        "kindRuntime:get",
+        "validateDocument:get",
+        "registrations:get",
+        "registrations:call",
+        "validateDocument:call"
+      ]
+    },
+    {
+      "name": "function",
+      "sameValue": true,
+      "sameIdentity": true,
+      "sameTrace": true,
+      "trace": [
+        "kindRuntime:get",
+        "kindRuntime:get",
+        "validateDocument:get",
+        "registrations:get",
+        "registrations:call",
+        "validateDocument:call"
+      ]
+    },
+    {
+      "name": "symbol",
+      "sameValue": true,
+      "sameIdentity": true,
+      "sameTrace": true,
+      "trace": [
+        "kindRuntime:get",
+        "kindRuntime:get",
+        "validateDocument:get",
+        "registrations:get",
+        "registrations:call",
+        "validateDocument:call"
+      ]
+    },
+    {
+      "name": "bigint",
+      "sameValue": true,
+      "sameIdentity": true,
+      "sameTrace": true,
+      "trace": [
+        "kindRuntime:get",
+        "kindRuntime:get",
+        "validateDocument:get",
+        "registrations:get",
+        "registrations:call",
+        "validateDocument:call"
+      ]
+    }
+  ],
+  "kindRuntimeDynamicReadCases": [
+    {
+      "name": "second-read-null",
+      "sameType": true,
+      "sameText": true,
+      "sameTrace": true,
+      "trace": [
+        "kindRuntime:get",
+        "kindRuntime:get"
+      ]
+    },
+    {
+      "name": "second-runtime-method-getter-throws",
+      "sameType": true,
+      "sameText": true,
+      "sameTrace": true,
+      "trace": [
+        "kindRuntime:get",
+        "kindRuntime:get"
+      ]
+    }
+  ],
+  "selectionKindRuntimeBranch": {
+    "prefixMatches": true,
+    "expectedError": "UmfError: Hidden fields and accessors cannot be serialized faithfully",
+    "actualError": "Error: HOST_JSON_UNSUPPORTED",
+    "trace": [
+      "registry.kindRuntime:get",
+      "registry.kindRuntime:get",
+      "registry.registrations:call",
+      "kindRuntime.validateDocument:call",
+      "validation.valid:get"
+    ]
+  },
+  "registrationInterleaving": {
+    "sameTrace": true,
+    "sameResult": true,
+    "expectedEvents": [
+      "get:future@1.0.0:receiver=true",
+      "get:alpha@2.0.0:receiver=true",
+      "get:beta@3.0.0:receiver=true",
+      "get:alpha@2.0.0:receiver=true",
+      "entry.manifest",
+      "manifest.scopes",
+      "scopes.includes:document:receiver=true",
+      "entry.structure",
+      "structure:document-alpha:receiver=true",
+      "entry.manifest",
+      "manifest.capabilities",
+      "entry.semantics",
+      "entry.semantics",
+      "semantics:document-alpha:document:receiver=true",
+      "get:future@1.0.0:receiver=true",
+      "entry.manifest",
+      "manifest.scopes",
+      "scopes.includes:document:receiver=true",
+      "entry.structure",
+      "structure:document-future:receiver=true",
+      "entry.manifest",
+      "manifest.capabilities",
+      "entry.semantics",
+      "entry.semantics",
+      "semantics:document-future:document:receiver=true",
+      "get:beta@3.0.0:receiver=true",
+      "entry.manifest",
+      "manifest.scopes",
+      "scopes.includes:element:receiver=true",
+      "entry.structure",
+      "structure:element-beta:receiver=true",
+      "entry.manifest",
+      "manifest.capabilities",
+      "entry.semantics",
+      "entry.semantics",
+      "semantics:element-beta:element:receiver=true",
+      "get:future@1.0.0:receiver=true",
+      "entry.manifest",
+      "manifest.scopes",
+      "scopes.includes:element:receiver=true",
+      "entry.structure",
+      "structure:element-future:receiver=true",
+      "entry.manifest",
+      "manifest.capabilities",
+      "entry.semantics",
+      "entry.semantics",
+      "semantics:element-future:element:receiver=true"
+    ],
+    "rustEvents": [
+      "get:future@1.0.0:receiver=true",
+      "get:alpha@2.0.0:receiver=true",
+      "get:beta@3.0.0:receiver=true",
+      "get:alpha@2.0.0:receiver=true",
+      "entry.manifest",
+      "manifest.scopes",
+      "scopes.includes:document:receiver=true",
+      "entry.structure",
+      "structure:document-alpha:receiver=true",
+      "entry.manifest",
+      "manifest.capabilities",
+      "entry.semantics",
+      "entry.semantics",
+      "semantics:document-alpha:document:receiver=true",
+      "get:future@1.0.0:receiver=true",
+      "entry.manifest",
+      "manifest.scopes",
+      "scopes.includes:document:receiver=true",
+      "entry.structure",
+      "structure:document-future:receiver=true",
+      "entry.manifest",
+      "manifest.capabilities",
+      "entry.semantics",
+      "entry.semantics",
+      "semantics:document-future:document:receiver=true",
+      "get:beta@3.0.0:receiver=true",
+      "entry.manifest",
+      "manifest.scopes",
+      "scopes.includes:element:receiver=true",
+      "entry.structure",
+      "structure:element-beta:receiver=true",
+      "entry.manifest",
+      "manifest.capabilities",
+      "entry.semantics",
+      "entry.semantics",
+      "semantics:element-beta:element:receiver=true",
+      "get:future@1.0.0:receiver=true",
+      "entry.manifest",
+      "manifest.scopes",
+      "scopes.includes:element:receiver=true",
+      "entry.structure",
+      "structure:element-future:receiver=true",
+      "entry.manifest",
+      "manifest.capabilities",
+      "entry.semantics",
+      "entry.semantics",
+      "semantics:element-future:element:receiver=true"
+    ],
+    "resultJson": "{\"scope\":\"core-elements\",\"referenceScope\":\"explicit-core-references-item-types-members-and-keys\",\"source\":{\"umf\":\"0.10.0\",\"id\":\"r5-selection\",\"vocabularies\":{\"future\":{\"version\":\"1.0.0\"},\"alpha\":{\"version\":\"2.0.0\"},\"beta\":{\"version\":\"3.0.0\"}},\"extensions\":{\"alpha\":{\"at\":\"document-alpha\"},\"future\":{\"at\":\"document-future\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"scalarType\":\"integer\",\"extensions\":{\"beta\":{\"at\":\"element-beta\"},\"future\":{\"at\":\"element-future\"}},\"references\":[{\"role\":\"account\",\"module\":\"billing\",\"element\":\"account\",\"future\":\"annotation\"},{\"role\":\"account\",\"module\":\"billing\",\"element\":\"account\"}]}]},{\"id\":\"support\",\"namespace\":\"support\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"scalarType\":\"future-scalar\",\"extensions\":{}}]},{\"id\":\"billing\",\"namespace\":\"billing\",\"elements\":[{\"id\":\"account\",\"name\":\"AccountHolder\",\"scalarType\":\"string\",\"extensions\":{},\"references\":[{\"role\":\"owner\",\"module\":\"sales\",\"element\":\"customer\"}]}]}]},\"query\":{\"references\":\"none\"},\"sourceValidation\":{\"valid\":true,\"complete\":false,\"diagnostics\":[{\"code\":\"CALLBACK_DOCUMENT_ALPHA\",\"path\":\"/extensions/alpha\",\"message\":\"observed document-alpha\",\"severity\":\"warning\",\"origin\":{\"scope\":\"document\",\"retained\":true}},{\"code\":\"CALLBACK_DOCUMENT_FUTURE\",\"path\":\"/extensions/future\",\"message\":\"observed document-future\",\"severity\":\"warning\",\"origin\":{\"scope\":\"document\",\"retained\":true}},{\"code\":\"CALLBACK_ELEMENT_BETA\",\"path\":\"/modules/0/elements/0/extensions/beta\",\"message\":\"observed element-beta\",\"severity\":\"warning\",\"origin\":{\"scope\":\"element\",\"retained\":true}},{\"code\":\"CALLBACK_ELEMENT_FUTURE\",\"path\":\"/modules/0/elements/0/extensions/future\",\"message\":\"observed element-future\",\"severity\":\"warning\",\"origin\":{\"scope\":\"element\",\"retained\":true}},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/0/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"},{\"code\":\"UNKNOWN_SCALAR_TYPE\",\"path\":\"/modules/1/elements/0/scalarType\",\"message\":\"Scalar family retained without interpretation\",\"severity\":\"warning\"}]},\"selection\":[{\"module\":\"sales\",\"namespace\":\"sales\",\"path\":\"/modules/0/elements/0\",\"element\":{\"id\":\"customer\",\"name\":\"Customer\",\"scalarType\":\"integer\",\"extensions\":{\"beta\":{\"at\":\"element-beta\"},\"future\":{\"at\":\"element-future\"}},\"references\":[{\"role\":\"account\",\"module\":\"billing\",\"element\":\"account\",\"future\":\"annotation\"},{\"role\":\"account\",\"module\":\"billing\",\"element\":\"account\"}]},\"includedBy\":\"match\"},{\"module\":\"support\",\"namespace\":\"support\",\"path\":\"/modules/1/elements/0\",\"element\":{\"id\":\"customer\",\"name\":\"Customer\",\"scalarType\":\"future-scalar\",\"extensions\":{}},\"includedBy\":\"match\"},{\"module\":\"billing\",\"namespace\":\"billing\",\"path\":\"/modules/2/elements/0\",\"element\":{\"id\":\"account\",\"name\":\"AccountHolder\",\"scalarType\":\"string\",\"extensions\":{},\"references\":[{\"role\":\"owner\",\"module\":\"sales\",\"element\":\"customer\"}]},\"includedBy\":\"match\"}],\"boundaryReferences\":[],\"boundaryItemTypes\":[],\"boundaryMembers\":[],\"boundaryKeyFields\":[]}"
+  },
   "successfulWarnings": {
     "sourceValidation": {
       "valid": true,
       "complete": false,
       "diagnostics": [
-        {"code": "EXTENSION_STRUCTURE", "path": "/extensions/future/first", "message": "first warning", "severity": "warning"},
-        {"code": "EXTENSION_STRUCTURE", "path": "/extensions/future/second", "message": "second warning", "severity": "warning"},
-        {"code": "EXTENSION_STRUCTURE", "path": "/modules/0/elements/0/extensions/future/first", "message": "first warning", "severity": "warning"},
-        {"code": "EXTENSION_STRUCTURE", "path": "/modules/0/elements/0/extensions/future/second", "message": "second warning", "severity": "warning"},
-        {"code": "UNKNOWN_CORE_FIELD", "path": "/modules/0/elements/0/references/0/future", "message": "Field retained without interpretation", "severity": "warning"},
-        {"code": "UNKNOWN_SCALAR_TYPE", "path": "/modules/1/elements/0/scalarType", "message": "Scalar family retained without interpretation", "severity": "warning"}
+        {
+          "code": "EXTENSION_STRUCTURE",
+          "path": "/extensions/future/first",
+          "message": "first warning",
+          "severity": "warning"
+        },
+        {
+          "code": "EXTENSION_STRUCTURE",
+          "path": "/extensions/future/second",
+          "message": "second warning",
+          "severity": "warning"
+        },
+        {
+          "code": "EXTENSION_STRUCTURE",
+          "path": "/modules/0/elements/0/extensions/future/first",
+          "message": "first warning",
+          "severity": "warning"
+        },
+        {
+          "code": "EXTENSION_STRUCTURE",
+          "path": "/modules/0/elements/0/extensions/future/second",
+          "message": "second warning",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_CORE_FIELD",
+          "path": "/modules/0/elements/0/references/0/future",
+          "message": "Field retained without interpretation",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_SCALAR_TYPE",
+          "path": "/modules/1/elements/0/scalarType",
+          "message": "Scalar family retained without interpretation",
+          "severity": "warning"
+        }
       ]
     },
     "crossHostDirectSourceBaselineEqual": true,
     "nullPrototype": true,
     "directBaselineHost": "Bun 1.4.3 direct TypeScript source"
   },
-  "resourceMeterControl": {"host": "Bun 1.4.3 Node addon", "messageUnits": 4000001, "outcome": "LIMIT"},
+  "resourceMeterControl": {
+    "host": "Bun 1.4.3 Node addon",
+    "messageUnits": 4000001,
+    "outcome": "LIMIT"
+  },
   "shapeFinding": "Selection result projection recreates TypeScript copyJson null-prototype objects; own __proto__ remains data and cannot mutate the prototype.",
   "browserErrors": [],
   "artifacts": {
-    "crates/umf-core/src/selection.rs": "35312a51bebc29acb3b441463c287f41409d9ba2c92b14f369f1f7b0dbe640b1",
-    "crates/umf-core/src/selection_host_json.rs": "105673d2dbef60f252f22e1daea288e7f028c0fce463499afec03531827106df",
-    "crates/umf-core/src/selection_diagnostics.rs": "1f42cadc6f71ba4b041fe1aec96f29e126059c213c98c332e604de0af92c65fa",
-    "bindings/core/wasm/src/host_json.rs": "f7673a77db2da808474a85df65e8cc2e4fd8195157d422a8c354f11c6bd3e480",
-    "bindings/core/wasm/src/host-json.js": "4f527fc909553a630731b293cb422d0af8a79027750c662c4fdcbe671a4c345a",
-    "bindings/core/node/src/host-json.js": "6af46f9a09c005e7fc9e4d44a49fbb5ed80c0cec777a6b676b2c41868f26ff52",
-    "scripts/rust-migration/r8/selection-private-host-browser-entry.ts": "a7399c20c698dd316aba1b79e9a214ffd23c4b7c70468d12cb7b4e3f748f6d43",
-    "scripts/rust-migration/r8/selection-private-host-browser.mjs": "9975d6e0bde9700e51b9aa5ddedead70a19c0f491722dec0cafc737b0fb94509",
+    "crates/umf-core/src/selection.rs": "4e493e054d58dd555107d8c04d7e5e7e8e9cc761ff3a8b2fd815d690db650219",
+    "crates/umf-core/src/registry.rs": "cebc2321fe9ecfa7fd722ba4afc2d55c3181642f6f72366279c232e37250bba3",
+    "crates/umf-core/src/constraints.rs": "b7047fa9bf76430bd6e6d9a9a06a20116bce7fe592251cf3dab4ddeb6f0e2c87",
+    "crates/umf-core/src/engine.rs": "1dbc5ab957e99a881c0aeaecbc25c5f66046f4acf2421989c174fa5bcb8d615e",
+    "crates/umf-core/src/host_json.rs": "d1cd6f30344eb98591feb1547005e1daf124df0035f7e8002c253cc52a5a4761",
+    "crates/umf-core/src/selection_host_json.rs": "ab3ff7f1d22d8d7a62525944c36caa2c466958af0c8f3e370eefb65e0247c324",
+    "crates/umf-core/src/selection_diagnostics.rs": "c7989ce596cf2c7502bde079db53f6f3a41287728df593c9f815a277a6a1fd43",
+    "crates/umf-core-wire/src/lib.rs": "9367c2e23f55fa5b06ad6c157867733b8a4f62a899ef4440d7ac8586a5b93890",
+    "bindings/core/node/src/host_json.rs": "d2fb5bfc1249d2adc8c18d68b63cf5491c8462fae6aa5442abd09ed125513f92",
+    "bindings/core/node/src/host-json.js": "3a95847391904a5090e5a75667e6ee9f8ef07ded3393f7f089f8942633414c79",
+    "bindings/core/wasm/src/host_json.rs": "29682fa9d437880e7fd4cce8b8e4f1a1e9d7cb5ad246b6a344dfcbd5014afbe9",
+    "bindings/core/wasm/src/host-json.js": "3a95847391904a5090e5a75667e6ee9f8ef07ded3393f7f089f8942633414c79",
+    "scripts/rust-migration/r8/selection-private-host-browser-entry.ts": "eb876d0b968fd1d01fe6505ac0820848cd8fd74d82117874aeffbcf4591d8987",
+    "scripts/rust-migration/r8/selection-private-host-browser.mjs": "a58bfc70dcdb37236a969c38a968057b80989f2d8446bf653e71d43f5f35b8b7",
+    "dist/umf.js": "b572a4f49dc1c53734991464792e8a97308fea038a682731e24b7192ee8bd9a1",
     "scripts/rust-migration/r8/selection-private-host-direct.mjs": "6525c1ea877d614f7641eb0ced8979172b354442aab58629186af3646d2154a4",
     "scripts/rust-migration/r8/selection-private-host-direct-child.mjs": "09871517c3e4b71d50b8c9da967a16cc0060e45539b189768d1250358d644f86",
-    "scripts/rust-migration/r8/selection-private-host-node.mjs": "5e66a72e3b7132fb93e49fb51ba087608583e6a160d64a1343623913957b648e",
-    "bindings/core/node/tests/selection-host-json.test.js": "784a969dc5be738f6f01548d0b0d2c5d3740f3695516287bcff7df1d73b46edf",
+    "scripts/rust-migration/r8/selection-private-host-node.mjs": "ea7fee68f743a1373a601dda11261b32c5e56c07718e257b1815cd3278d33d9b",
+    "bindings/core/node/tests/selection-host-json.test.js": "97e9f1ec8feb00c5faf13b64ae5cfac8aa7e99c66485abd22f8b2d5a9ddc620d",
     "scripts/rust-migration/r5/selection/input.json": "1d4bc67745d20df018a6275c820ed72c00c82d33caeb541596910d1254b67258",
     "scripts/rust-migration/r5/selection/frozen-typescript.json": "2fb5429888f34d6bb2684553201f652a68424fc68125a457c6b5e01aeaa7817a",
-    "spec/core/schema.json": "34058737069b2ffb1e952b54986f14b046d0cee6dacbd7aec3a0fc88b213d5a0",
-    "spec/core/semantic-type-reference.schema.json": "2701c14d8c125b34dc446a1b6f98fe25fb1e809b7b13b6616c7e87b1b3e52c74",
-    "spec/core/extension-package.schema.json": "0b33f92d755dfd40aee3e2ae9b8d81f9347c5d676b2420b471cacc6b87940017",
-    "spec/metamodel/generated/core-constraints.json": "5a760fac5554ebba94d8aa3ff076571ed46236f4b35f1592e667907fa58a9ae1",
-    "spec/metamodel/generated/domain-policy.json": "7c77edd0c5a3c9a4ec1df9a2b5f6e0d059b58336e04f94dbca2f48b3072734fc",
-    "fresh-wasm32-artifact": "6e66605571a4d6a21c82af6e53da46d8f6a39d1d7f8452ff88576fb32c984d39",
-    "fresh-wasm-bindgen-glue": "3de6c711b7d81be6e755f00514f89d084845ec3e4f8f69c5bd4c90e52813e4f4",
-    "bundled-browser-entry": "a089dba6d4b50b4b5271de866b84df4078eee1b881f00e9598f0fd86dbd96f5e"
+    "spec/core/schema.json": "93f54d8bd8e8232b7120dbe63bdfe536ca4186e45ff650e0ef9ce7fd51af6314",
+    "spec/core/semantic-type-reference.schema.json": "bd7ecc159a01f9f4ac60279ec61aaf36c32ea65eee22f749b231da4fda9a6180",
+    "spec/core/extension-package.schema.json": "14de0398f96fe5b1f505fb6dd5228affbada59550ecab70835b2db75b5ca34a9",
+    "spec/metamodel/generated/core-constraints.json": "4e302ec2aa0fda0448fba08c15c0f92b659f8aaa1d8dc364ded6780600b63b9e",
+    "spec/metamodel/generated/domain-policy.json": "1f2cb299afb9115079a8350bae36dfe920a305c5c12e4508c018a21db0193b0a",
+    "fresh-wasm32-artifact": "40673ec4bf91789d8f6392ff19fa8a885eda806826a589b3a5af87ddf19a8198",
+    "fresh-wasm-bindgen-glue": "dd99cdc66ebe799234fbf322261e5f46629a6d9db2b895e7a263a6a724956846",
+    "bundled-browser-entry": "afaa6c2efd7e97947ea52415efcf59a72a3f5b8a3e0ba029aa37a1f3b62a4bf2"
   },
   "limits": [
     "Private route only; no public/default selection.",
     "Seven frozen query cases, one own-__proto__ projection case, one Registry.get thrown-identity case, and one successful warning packet using a synthetic warning structure policy compared to direct TypeScript sourceValidation.",
-    "The direct TypeScript oracle runs in a fresh Bun child process; Chromium compares against this cross-host source baseline. Resource-limit control is Node addon evidence, not a Chromium case. No semantic callbacks or installed package qualification."
+    "A same-Chromium-host scenario now compares three built-in registered(...) lookups interleaved with four document/element extension payload lookups, exact per-payload getter/callback order and copied callback diagnostics. It does not establish arbitrary semantic iterable parity or Registry behavior outside this case.",
+    "The kindRuntime result packet covers 12 returned values with exact Object.is value parity, identity, getter/call traces, a dynamic second-read null control, and a throwing dynamic method getter. The consumer-stage branch packet reads only `.valid` at Selection validation; it deliberately stops before refusal diagnostics or successful sourceValidation materialization. Arbitrary diagnostic iteration, static validation, and resource-accounting parity remain unimplemented. The generated TypeError wording for a null second runtime remains host-specific.",
+    "Resource-limit control is Node addon evidence, not a Chromium case. Installed package qualification remains open."
   ]
 }

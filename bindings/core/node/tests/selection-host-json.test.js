@@ -601,3 +601,144 @@ test('private host Selection preserves structure iterator throws by identity and
     'structure-property', 'errors', 'iterator', 'next',
   ]);
 });
+
+test('private host Selection matches the registered and per-payload callback demand schedule', () => {
+  const source = structuredClone(packet.source);
+  source.vocabularies = {
+    future: {version: '1.0.0'}, alpha: {version: '2.0.0'}, beta: {version: '3.0.0'},
+  };
+  source.extensions = {alpha: {at: 'document-alpha'}, future: {at: 'document-future'}};
+  source.modules[0].elements[0].extensions = {
+    beta: {at: 'element-beta'}, future: {at: 'element-future'},
+  };
+
+  const run = select => {
+    const events = [];
+    let entry;
+    entry = {
+      get structure() {
+        events.push('entry.structure');
+        return function(payload) {
+          events.push(`structure:${payload.at}:receiver=${this === entry}`);
+          return true;
+        };
+      },
+      get semantics() {
+        events.push('entry.semantics');
+        return function(payload, context) {
+          events.push(`semantics:${payload.at}:${context.scope}:receiver=${this === entry}`);
+          expect(Object.getPrototypeOf(payload)).toBe(null);
+          expect(Object.getPrototypeOf(context)).not.toBe(null);
+          expect(Object.getPrototypeOf(context.document)).toBe(null);
+          expect(context.path).toBe(payload.at.startsWith('document-')
+            ? `/extensions/${payload.at.slice('document-'.length)}`
+            : `/modules/0/elements/0/extensions/${payload.at.slice('element-'.length)}`);
+          return [{
+            code: `CALLBACK_${payload.at.toUpperCase().replaceAll('-', '_')}`,
+            path: context.path,
+            message: `observed ${payload.at}`,
+            severity: 'warning',
+            origin: {scope: context.scope, retained: true},
+          }];
+        };
+      },
+    };
+    Object.defineProperty(entry, 'manifest', {get() {
+      events.push('entry.manifest');
+      const scopes = {includes(scope) {
+        events.push(`scopes.includes:${scope}:receiver=${this === scopes}`);
+        return true;
+      }};
+      return {
+        get scopes() { events.push('manifest.scopes'); return scopes; },
+        get capabilities() {
+          events.push('manifest.capabilities');
+          return {validation: 'semantic'};
+        },
+      };
+    }});
+    let registry;
+    registry = new Proxy({}, {get(_target, key) {
+      if (key === 'get') return function(id, version) {
+        events.push(`get:${id}@${version}:receiver=${this === registry}`);
+        return entry;
+      };
+      return undefined;
+    }});
+    const result = select(source, {references: 'none'}, registry);
+    return {events, result};
+  };
+
+  const reference = run((sourceValue, query, registry) =>
+    typescriptSelectCoreElements(sourceValue, query, registry));
+  const actual = run((sourceValue, query, registry) =>
+    coreElementSelectionHostInput(addon, resources, sourceValue, query, registry, UmfCoreError));
+  const expected = [
+    'get:future@1.0.0:receiver=true', 'get:alpha@2.0.0:receiver=true', 'get:beta@3.0.0:receiver=true',
+  ];
+  for (const [id, version, scope, payload] of [
+    ['alpha', '2.0.0', 'document', 'document-alpha'],
+    ['future', '1.0.0', 'document', 'document-future'],
+    ['beta', '3.0.0', 'element', 'element-beta'],
+    ['future', '1.0.0', 'element', 'element-future'],
+  ]) {
+    expected.push(`get:${id}@${version}:receiver=true`, 'entry.manifest', 'manifest.scopes',
+      `scopes.includes:${scope}:receiver=true`, 'entry.structure', `structure:${payload}:receiver=true`,
+      'entry.manifest', 'manifest.capabilities', 'entry.semantics', 'entry.semantics',
+      `semantics:${payload}:${scope}:receiver=true`);
+  }
+  expect(reference.events).toEqual(expected);
+  expect(actual.events).toEqual(expected);
+  expect(JSON.stringify(actual.result)).toBe(JSON.stringify(reference.result));
+  expect(actual.result.sourceValidation.diagnostics.slice(0, 4)).toEqual([
+    {code: 'CALLBACK_DOCUMENT_ALPHA', path: '/extensions/alpha', message: 'observed document-alpha', severity: 'warning', origin: {scope: 'document', retained: true}},
+    {code: 'CALLBACK_DOCUMENT_FUTURE', path: '/extensions/future', message: 'observed document-future', severity: 'warning', origin: {scope: 'document', retained: true}},
+    {code: 'CALLBACK_ELEMENT_BETA', path: '/modules/0/elements/0/extensions/beta', message: 'observed element-beta', severity: 'warning', origin: {scope: 'element', retained: true}},
+    {code: 'CALLBACK_ELEMENT_FUTURE', path: '/modules/0/elements/0/extensions/future', message: 'observed element-future', severity: 'warning', origin: {scope: 'element', retained: true}},
+  ]);
+});
+
+test('private host Selection converts semantic throws and preserves a throwing String conversion by identity', () => {
+  const makeRegistry = semantics => ({get() {
+    return {
+      manifest: {scopes: {includes() { return true; }}, capabilities: {validation: 'semantic'}},
+      structure() { return true; },
+      semantics,
+    };
+  }});
+  const callbackFailure = new Error('semantic callback failed');
+  const referenceFailure = (() => {
+    try {
+      typescriptSelectCoreElements(packet.source, packet.queries.all, makeRegistry(() => { throw callbackFailure; }));
+      return undefined;
+    } catch (error) { return error; }
+  })();
+  const rustFailure = (() => {
+    try {
+      coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all,
+        makeRegistry(() => { throw callbackFailure; }), UmfCoreError);
+      return undefined;
+    } catch (error) { return error; }
+  })();
+  expect(rustFailure).toBeInstanceOf(UmfCoreError);
+  expect(rustFailure.code).toBe(referenceFailure.code);
+  expect(rustFailure.message).toBe(referenceFailure.message);
+  expect(rustFailure.code).toBe('CORE_SELECTION_SOURCE');
+  expect(rustFailure.message).toContain('VALIDATOR_FAILURE');
+
+  const referenceSentinel = {toString() { throw referenceSentinel; }};
+  const rustSentinel = {toString() { throw rustSentinel; }};
+  const captureThrow = (select, sentinel) => {
+    try {
+      select(() => { throw sentinel; });
+      return undefined;
+    } catch (error) { return error; }
+  };
+  const referenceConversionThrow = captureThrow(semantics =>
+    typescriptSelectCoreElements(packet.source, packet.queries.all, makeRegistry(semantics)), referenceSentinel);
+  const rustConversionThrow = captureThrow(semantics =>
+    coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all,
+      makeRegistry(semantics), UmfCoreError), rustSentinel);
+  expect(referenceConversionThrow).toBe(referenceSentinel);
+  expect(rustConversionThrow).toBe(rustSentinel);
+});
