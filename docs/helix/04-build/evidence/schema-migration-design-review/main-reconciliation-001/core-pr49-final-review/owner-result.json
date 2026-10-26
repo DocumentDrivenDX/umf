@@ -1,0 +1,18 @@
+{
+  "status": "CORE_SOURCE_ACCEPT_RELEASE_HELD",
+  "coreCandidateCommit": "a1b909d4f92da6604aeb21d3ea60e9a9943a7f87",
+  "reviewSha256": "fd11738656e5dc6156f0c9563f2ad1c1f43b4e9c386f56d8085da9e099324f3c",
+  "linuxCurrentProducerRun": 40338720085,
+  "linuxArtifactId": 12659280057,
+  "linuxZipSha256": "741b45e5e15c393e5cc78571f22afb2bacda2cc0c355c929a02a4022fc2b531f",
+  "currentLinuxDirectTests": 254,
+  "currentLinuxRebuiltTests": 254,
+  "remainingHolds": [
+    "Current macOS artifact proof",
+    "All normal current-source Core gates",
+    "Normal PR49 merge",
+    "Immutable GitHub release",
+    "Fresh public-byte/install verification"
+  ],
+  "scope": "Dependency source review retained in migration workstream; no producer source change, release or native qualification claim."
+}
