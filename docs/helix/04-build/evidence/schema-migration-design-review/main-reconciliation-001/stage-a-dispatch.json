@@ -1,0 +1,20 @@
+{
+  "sourceCommit": "85f4a645cd14e7673a83fc475d3dd66dcc629edc",
+  "branch": "codex/migration-main-metering-generation",
+  "runId": 40273176398,
+  "workflowSha256": "1448e1f70d345652b494d3282e91abd2e1674ae0979b90999aa4c3513d1418fb",
+  "sourcePinManifestSha256": "ffeb22448d5f941ca67e7d9746728141c07a7e211314cf9efda35d9bda0103e1",
+  "observedRoster": [
+    {
+      "runId": 40273176398,
+      "name": "R2 metering accounted-companion generation",
+      "status": "in_progress"
+    },
+    {
+      "runId": 40273176318,
+      "name": "Python action-runtime artifact qualification",
+      "conclusion": "skipped"
+    }
+  ],
+  "scope": "Artifact-only generation. No candidate tests, output import/adoption or qualification claim."
+}

@@ -49,6 +49,7 @@ def parse_args() -> argparse.Namespace:
         "transitions", "empty", "required", "rollback", "commit-observation", "finalize-observation",
         "finalize-before-publication", "unknown-no-commit",
         "writer-barrier", "tampering", "admission-refusal", "domains", "domain-uuid",
+        "domain-date", "domain-text", "domain-decimal", "domain-uuid-selected", "domain-currentTimestamp",
         "semantics", "ordinary", "campaign"
     ))
     return parser.parse_args()
@@ -757,6 +758,18 @@ def domain_future_writes(connection: object, schema: str, role: str, case: str,
     return output
 
 
+def compile_only_domain_controls(fixture: dict[str, object]) -> list[dict[str, object]]:
+    compile_only = []
+    for control in fixture["compileOnlyControls"]:
+        checked = compile_table_deployment(source_text(control["source"]),
+                                           configuration=fixture["configuration"])
+        if checked.get("status") != "blocked":
+            raise AssertionError("invalid source admission control compiled: "+control["id"])
+        compile_only.append({"id": control["id"], "status": checked.get("status"),
+                             "diagnosticCodes": sorted({item.get("code") for item in checked.get("diagnostics", [])})})
+    return compile_only
+
+
 def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: str,
               campaign_id: str | None = None) -> dict[str, object]:
     failure_checkpoint = "create-and-verify-owned-target"
@@ -1462,21 +1475,23 @@ def main() -> int:
         mark((case_id, "G03-N14"), "PARTIAL_SUBCASE_PASS_FULL_CASE_OPEN" if selected_pass else "FAIL")
         result = 0 if selected_pass else 2
     elif args.scenario == "domains":
-        compile_only = []
-        for control in fixture["compileOnlyControls"]:
-            checked = compile_table_deployment(source_text(control["source"]),
-                                               configuration=fixture["configuration"])
-            if checked.get("status") != "blocked":
-                raise AssertionError("invalid source admission control compiled: "+control["id"])
-            compile_only.append({"id": control["id"], "status": checked.get("status"),
-                                 "diagnosticCodes": sorted({item.get("code") for item in checked.get("diagnostics", [])})})
-        report["compileOnlyRefusals"] = compile_only
+        report["compileOnlyRefusals"] = compile_only_domain_controls(fixture)
         results = [run_chain(args, fixture, "domain-"+name)
                    for name in ("date", "text", "decimal", "uuid", "currentTimestamp")]
         report["domainResults"] = results
         selected_pass = all(item["status"].startswith("PASS_SELECTED_NATIVE_SUBCASE") for item in results)
         report["status"] = "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN" if selected_pass else "FAIL"
         mark(("G03-N10", "G03-N11", "G03-N14"), "PARTIAL_SUBCASE_PASS_FULL_CASE_OPEN" if selected_pass else "FAIL")
+        result = 0 if selected_pass else 2
+    elif args.scenario in ("domain-date", "domain-text", "domain-decimal", "domain-uuid-selected", "domain-currentTimestamp"):
+        report["compileOnlyRefusals"] = compile_only_domain_controls(fixture)
+        case_scenario = "domain-uuid" if args.scenario == "domain-uuid-selected" else args.scenario
+        case = run_chain(args, fixture, case_scenario)
+        report["domainResults"] = [case]
+        selected_pass = case["status"].startswith("PASS_SELECTED_NATIVE_SUBCASE")
+        report["status"] = "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN" if selected_pass else "FAIL"
+        case_id = "G03-N10" if args.scenario in ("domain-date", "domain-text", "domain-decimal") else "G03-N11"
+        mark((case_id, "G03-N14"), "PARTIAL_SUBCASE_PASS_FULL_CASE_OPEN" if selected_pass else "FAIL")
         result = 0 if selected_pass else 2
     elif args.scenario == "domain-uuid":
         case = run_chain(args, fixture, "domain-uuid")

@@ -355,11 +355,19 @@ jobs:
 
           for scenario in transitions empty required admission-refusal semantics rollback \
             commit-observation finalize-observation finalize-before-publication unknown-no-commit \
-            writer-barrier domains tampering; do
+            writer-barrier; do
             run_bounded "g03-$scenario" 180 "$WORK/installed/bin/python" tests/lifecycle/g03-defaults-native.py \
               --dsn "$PG_DSN" --fixture /tmp/g02-g03-defaults-fixture.json \
               --scenario "$scenario" --report "$EVIDENCE/reports/g03-$scenario.json"
           done
+          for domain in date text decimal uuid-selected currentTimestamp; do
+            run_bounded "g03-domain-$domain" 180 "$WORK/installed/bin/python" tests/lifecycle/g03-defaults-native.py \
+              --dsn "$PG_DSN" --fixture /tmp/g02-g03-defaults-fixture.json \
+              --scenario "domain-$domain" --report "$EVIDENCE/reports/g03-domain-$domain.json"
+          done
+          run_bounded g03-tampering 180 "$WORK/installed/bin/python" tests/lifecycle/g03-defaults-native.py \
+            --dsn "$PG_DSN" --fixture /tmp/g02-g03-defaults-fixture.json \
+            --scenario tampering --report "$EVIDENCE/reports/g03-tampering.json"
 
           cp "$WORK/cohort/cohort.lock.json" "$EVIDENCE/cohort.lock.json"
           cp "$WORK/cohort/mirror/manifest.json" "$EVIDENCE/cohort-mirror-manifest.json"
@@ -443,6 +451,9 @@ jobs:
                                 "finalize-before-publication", "unknown-no-commit", "writer-barrier",
                                 "domains", "tampering"]
           assert scenarios == expected_scenarios
+          domain_scenarios = pins["selectedNativeScope"]["g03DomainSubscenarioArguments"]
+          assert domain_scenarios == ["domain-date", "domain-text", "domain-decimal", "domain-uuid-selected",
+                                      "domain-currentTimestamp"]
           partial = "PARTIAL_SUBCASE_PASS_FULL_CASE_OPEN"
           case_ids_by_scenario = {
               "transitions": ("G03-N01", "G03-N14"),
@@ -462,7 +473,12 @@ jobs:
           statuses = {}
           native_target_identity = None
           for scenario in scenarios:
-              item = json.loads((reports / f"g03-{scenario}.json").read_text())
+              if scenario == "domains":
+                  item = {"scenario": "domains", "status": "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN",
+                          "runnerSha256": pins["sourcePins"]["tests/lifecycle/g03-defaults-native.py"]["sha256"],
+                          "fixtureSha256": sha(defaults_path), "packages": runtime_versions}
+              else:
+                  item = json.loads((reports / f"g03-{scenario}.json").read_text())
               assert item["scenario"] == scenario
               assert item["runnerSha256"] == pins["sourcePins"]["tests/lifecycle/g03-defaults-native.py"]["sha256"]
               assert item["fixtureSha256"] == sha(defaults_path)
@@ -486,13 +502,67 @@ jobs:
                       assert admission_target_identity == native_target_identity
                   assert "PostgreSQL 18.6" in target["serverVersion"]
                   expected_case_status["G03-N04"] = item["status"]
+              elif scenario == "domains":
+                  expected_controls = None
+                  domain_database_names = []
+                  domain_schema_names = []
+                  domain_role_names = []
+                  for domain_scenario in domain_scenarios:
+                      domain_name = domain_scenario.removeprefix("domain-")
+                      domain_item = json.loads((reports / f"g03-{domain_scenario}.json").read_text())
+                      assert domain_item["scenario"] == domain_scenario
+                      assert domain_item["runnerSha256"] == pins["sourcePins"]["tests/lifecycle/g03-defaults-native.py"]["sha256"]
+                      assert domain_item["fixtureSha256"] == sha(defaults_path)
+                      assert domain_item["packages"] == runtime_versions
+                      assert domain_item["status"] == "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
+                      controls = domain_item["compileOnlyRefusals"]
+                      expected_control_ids = [control["id"] for control in defaults_fixture["compileOnlyControls"]]
+                      assert [control["id"] for control in controls] == expected_control_ids
+                      assert all(control["status"] == "blocked" for control in controls)
+                      if expected_controls is None:
+                          expected_controls = controls
+                      else:
+                          assert controls == expected_controls
+                      cases = domain_item["domainResults"]
+                      case_scenario = "domain-uuid" if domain_scenario == "domain-uuid-selected" else domain_scenario
+                      assert len(cases) == 1 and cases[0]["scenario"] == case_scenario
+                      case = cases[0]
+                      assert case["status"] == "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
+                      assert len(case["roleNames"]) == 5 and len(set(case["roleNames"])) == 5
+                      domain_database_names.append(case["database"])
+                      domain_schema_names.append(case["schema"])
+                      domain_role_names.extend(case["roleNames"])
+                      assert case["cleanup"]["status"] == "PASS"
+                      verification = case["cleanupVerification"]
+                      assert verification["ownedDatabaseAbsent"] is True
+                      assert verification["ownedRolesAbsent"] is True
+                      assert verification["targetIdentityUnchanged"] is True
+                      assert verification["schemaAndTableAbsentByOwnedDatabaseRemoval"] is True
+                      assert "PostgreSQL 18.6" in case["targetIdentity"]["serverVersion"]
+                      assert case["targetIdentity"]["currentUser"] == case["targetIdentity"]["sessionUser"]
+                      case_target_identity = case["targetIdentity"]
+                      identity_tuple = (case_target_identity["maintenanceDatabase"],
+                                        case_target_identity["serverVersion"],
+                                        case_target_identity["sessionUser"],
+                                        case_target_identity["currentUser"],
+                                        case_target_identity["serverPort"],
+                                        case_target_identity["postmasterStart"],
+                                        case_target_identity["systemIdentifier"])
+                      if native_target_identity is None:
+                          native_target_identity = identity_tuple
+                      else:
+                          assert identity_tuple == native_target_identity
+                      case_id = "G03-N10" if domain_name in ("date", "text", "decimal") else "G03-N11"
+                      expected_domain_case_status = dict(defaults_fixture["caseStatus"])
+                      expected_domain_case_status.update({case_id: partial, "G03-N14": partial})
+                      assert domain_item["caseStatus"] == expected_domain_case_status, domain_scenario
+                  assert len(set(domain_database_names)) == len(domain_scenarios)
+                  assert len(set(domain_schema_names)) == len(domain_scenarios)
+                  assert len(set(domain_role_names)) == len(domain_scenarios) * 5
+                  item = {"status": "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN"}
+                  expected_case_status.update({"G03-N10": partial, "G03-N11": partial, "G03-N14": partial})
               else:
-                  if scenario == "domains":
-                      assert item["status"] == "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN"
-                      cases = item["domainResults"]
-                      expected_subscenarios = ("domain-date", "domain-text", "domain-decimal", "domain-uuid",
-                                               "domain-currentTimestamp")
-                  elif scenario == "semantics":
+                  if scenario == "semantics":
                       assert item["status"] == "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN"
                       cases = item["semanticResults"]
                       expected_subscenarios = ("semantic-null", "semantic-decimal")
@@ -533,18 +603,14 @@ jobs:
                           assert case["tamperingRefusals"] == [
                               "wrong-approval", "wrong-head", "wrong-file", "wrong-source",
                               "wrong-default-target", "wrong-default-value", "wrong-phase", "wrong-marker"]
-                  if scenario == "domains":
-                      expected_case_status.update({"G03-N10": partial, "G03-N11": partial, "G03-N14": partial})
-                  elif scenario == "semantics":
+                  if scenario == "semantics":
                       expected_case_status.update({"G03-N05": partial, "G03-N14": partial})
                   else:
                       for case_id in case_ids_by_scenario[scenario]:
                           expected_case_status[case_id] = partial
-              assert item["caseStatus"] == expected_case_status, scenario
-              if scenario == "domains":
-                  statuses[scenario] = item["status"]
-              else:
-                  statuses[scenario] = item["status"]
+              if scenario != "domains":
+                  assert item["caseStatus"] == expected_case_status, scenario
+              statuses[scenario] = item["status"]
 
           artifact_files = [path for path in evidence.rglob("*") if path.is_file()]
           total_bytes = sum(path.stat().st_size for path in artifact_files)

@@ -71,7 +71,7 @@
       "purpose": "G03 fixed-source fixture and case-status generator"
     },
     "tests/lifecycle/g03-defaults-native.py": {
-      "sha256": "ffb5c1b50daec8b8b7ab6857d9149654dd75b13f785446465fd4389bdec9a088",
+      "sha256": "361f250158e10ade881e78baf480d534e0b27ecf6c70062b9955e2110e23c0ed",
       "purpose": "G03 selected-scenario PostgreSQL 18 native runner"
     },
     "tests/lifecycle/g03_campaign_orchestration.py": {
@@ -231,6 +231,13 @@
       "writer-barrier",
       "domains",
       "tampering"
+    ],
+    "g03DomainSubscenarioArguments": [
+      "domain-date",
+      "domain-text",
+      "domain-decimal",
+      "domain-uuid-selected",
+      "domain-currentTimestamp"
     ],
     "g03CaseIds": [
       "G03-N01",

@@ -2,8 +2,10 @@
 import {checkCore} from '../../src/generated/core-validators';
 import {runAccountedCore} from '../../src/generated/core-validators-accounted';
 import currentConformance from '../../fixtures/metamodel/current-conformance.json';
+import extensionKindConformance from '../../fixtures/extension-kinds/conformance.json';
 
 const CURRENT_CONFORMANCE_CASES=139;
+const EXTENSION_KIND_CONFORMANCE_CASES=15;
 
 declare global {
  interface Window {__umfR2MeteringResult?:{count:number;failures:string[];work:number}}
@@ -35,6 +37,11 @@ if(currentConformance.cases.length!==CURRENT_CONFORMANCE_CASES)throw new Error('
 for(const item of currentConformance.cases){
  try{totalWork+=assertParity(item.id,item.document);count++;}
  catch{failures.push(item.id);}
+}
+if(extensionKindConformance.length!==EXTENSION_KIND_CONFORMANCE_CASES)throw new Error('R2_BROWSER_EXTENSION_KIND_CORPUS_COUNT');
+for(const item of extensionKindConformance){
+ try{totalWork+=assertParity(`extension-kind-${item.name}`,item.document);count++;}
+ catch{failures.push(`extension-kind-${item.name}`);}
 }
 for(const item of [
  {id:'focused-valid',document:{umf:'0.10.0',id:'r2-focused',vocabularies:{},modules:[]}},
