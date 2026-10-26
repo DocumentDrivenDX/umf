@@ -94,6 +94,15 @@ class QualificationTests(unittest.TestCase):
             "forbiddenImports": ["psycopg", "databricks", "pyspark"],
         }
         profile_path.write_text(json.dumps(profile))
+        source_root = base / "source/python/umf_access"
+        (source_root / "src/umf_access").mkdir(parents=True)
+        (source_root / "pyproject.toml").write_text(
+            '[project]\nname = "umf_access"\nversion = "0.1.0.dev7"\n'
+            'dependencies = ["pydantic>=2.13,<3", "typing-extensions>=4.16,<5", "umf-core==0.11.0"]\n'
+            '[project.optional-dependencies]\nsql-containment = ["pglast==7.20"]\n'
+        )
+        (source_root / "src/umf_access/__init__.py").write_bytes(module_bytes)
+        (source_root / "src/umf_access/py.typed").write_bytes(b"")
         access_distribution = types.SimpleNamespace(version="0.1.0.dev7", locate_file=lambda _: site)
         core_distribution = types.SimpleNamespace(version="0.11.0", locate_file=lambda _: site)
         module_origin = base / "outside/umf_access.py" if outside_origin else package_dir / "__init__.py"
@@ -107,22 +116,23 @@ class QualificationTests(unittest.TestCase):
         native_core_module = types.ModuleType("umf._rust_core")
         native_core_module.__file__ = str(site / "umf/_rust_core.abi3.so")
         versions = {"pydantic": "2.14.1", "pydantic-core": "2.50.1", "annotated-types": "0.8.0", "typing-extensions": "4.16.0", "typing-inspection": "0.4.4", "umf-core": "0.11.0"}
-        return base, site, wheel, core_wheel, profile_path, access_distribution, core_distribution, module, core_module, native_core_module, versions
+        return base, site, wheel, core_wheel, profile_path, access_distribution, core_distribution, module, core_module, native_core_module, versions, source_root
 
     def _qualify(self, case, expected_digest=None):
-        base, _site, wheel, core, profile, access_distribution, core_distribution, module, core_module, native_core_module, versions = case
+        base, _site, wheel, core, profile, access_distribution, core_distribution, module, core_module, native_core_module, versions, source_root = case
         with (
             patch.object(sys, "prefix", str(base)),
             patch.object(importlib.metadata, "distribution", side_effect=lambda name: core_distribution if name == "umf-core" else access_distribution),
             patch.object(importlib.metadata, "version", side_effect=lambda name: versions[name]),
             patch.object(gate.importlib, "import_module", side_effect=lambda name: core_module if name == "umf" else native_core_module if name == "umf._rust_core" else module),
+            patch.object(gate, "source_closure", return_value={"synthetic-source": "pinned"}),
         ):
             return gate.qualify(
                 wheel,
                 core,
                 expected_digest or hashlib.sha256(core.read_bytes()).hexdigest(),
                 profile,
-                PACKAGE,
+                source_root,
                 "synthetic-cpython-314-linux-x86_64",
             )
 
@@ -187,7 +197,46 @@ class QualificationTests(unittest.TestCase):
         self.assertFalse(result["releaseEligible"])
         self.assertEqual(result["dependencies"]["umf-core"], "0.11.0")
         self.assertEqual(result["imports"]["umf._rust_core"]["abi"], "abi3")
-        self.assertIn("python/umf_access/tests/packaging/qualify_installed_artifact.py", result["sourceClosure"])
+        self.assertEqual(result["sourceClosure"], {"synthetic-source": "pinned"})
+        self.assertFalse(result["profileEvidence"]["receiptCohortMatchesLocalEvidence"])
+
+    def test_access_wheel_source_member_drift_refuses(self):
+        case = self._case()
+        case[11].joinpath("src/umf_access/__init__.py").write_bytes(b"CHANGED = True\n")
+        with self.assertRaisesRegex(ValueError, "differ from selected source tree"):
+            self._qualify(case)
+
+    def test_access_wheel_source_member_set_drift_refuses(self):
+        case = self._case()
+        case[11].joinpath("src/umf_access/extra.py").write_text("EXTRA = True\n")
+        with self.assertRaisesRegex(ValueError, "differ from selected source tree"):
+            self._qualify(case)
+
+    def test_source_access_package_symlink_refuses(self):
+        case = self._case()
+        source_init = case[11] / "src/umf_access/__init__.py"
+        source_init.unlink()
+        external = case[0] / "external-init.py"
+        external.write_bytes(b"RUNTIME_ABI = 'umf-access-runtime/0.1'\n")
+        source_init.symlink_to(external)
+        with self.assertRaisesRegex(ValueError, "source access package contains a symlink"):
+            self._qualify(case)
+
+    def test_source_closure_rejects_source_from_another_checkout(self):
+        with tempfile.TemporaryDirectory() as directory:
+            external_source = Path(directory) / "python/umf_access"
+            external_source.mkdir(parents=True)
+            with self.assertRaisesRegex(ValueError, "different checkouts"):
+                gate.source_closure(external_source, PROFILE)
+
+    def test_source_closure_rejects_dirty_selected_checkout(self):
+        responses = [
+            subprocess.CompletedProcess([], 0, f"{ROOT}\n", ""),
+            subprocess.CompletedProcess([], 0, " M python/umf_access/src/umf_access/capture.py\n", ""),
+        ]
+        with patch.object(gate.subprocess, "run", side_effect=responses):
+            with self.assertRaisesRegex(ValueError, "selected source checkout is dirty"):
+                gate.source_closure(PACKAGE, PROFILE)
 
     def test_wrong_core_wheel_digest_refuses(self):
         case = self._case()

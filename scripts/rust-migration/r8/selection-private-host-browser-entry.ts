@@ -109,6 +109,63 @@ export function runSelectionBrowserCases(payload: Payload) {
   const typescriptDelegation = delegationTrace(typescriptValidateDocument as (source: unknown, registry: unknown) => unknown);
   const rustDelegation = delegationTrace((sourceValue, registryValue) =>
     kindRuntimeValidationHostInput(addon, sourceValue, registryValue, Error));
+  const resultKinds = [
+    ['undefined', undefined], ['null', null], ['boolean', false], ['negative-zero', -0],
+    ['nan', NaN], ['positive-infinity', Infinity], ['negative-infinity', -Infinity],
+    ['string', 'validation'], ['object', Object.freeze({valid: true})],
+    ['function', function validationResult() {}], ['symbol', Symbol('validation')], ['bigint', 17n],
+  ] as const;
+  const kindRuntimeResultCases = resultKinds.map(([name, returned]) => {
+    const invoke = (route: (source: unknown, registry: unknown) => unknown) => {
+      const events: string[] = [];
+      const sourceValue = Object.freeze({resultCase: name});
+      const registrationsValue = Object.freeze([{id: name}]);
+      let runtime: object;
+      runtime = Object.defineProperty({}, 'validateDocument', {get() {
+        events.push('validateDocument:get');
+        return function(this: unknown, source: unknown, registrations: unknown) {
+          events.push('validateDocument:call');
+          if (this !== runtime || source !== sourceValue || registrations !== registrationsValue) throw new Error('result case identity changed');
+          return returned;
+        };
+      }});
+      const registry = Object.defineProperties({}, {
+        kindRuntime: {get() { events.push('kindRuntime:get'); return runtime; }},
+        registrations: {get() { events.push('registrations:get'); return function(this: unknown) {
+          events.push('registrations:call');
+          if (this !== registry) throw new Error('registrations receiver changed');
+          return registrationsValue;
+        }; }},
+      });
+      return {events, value: route(sourceValue, registry)};
+    };
+    const expected = invoke(typescriptValidateDocument as (source: unknown, registry: unknown) => unknown);
+    const actual = invoke((sourceValue, registryValue) => kindRuntimeValidationHostInput(addon, sourceValue, registryValue, Error));
+    return {name, sameValue: Object.is(actual.value, returned), sameIdentity: Object.is(actual.value, returned),
+      sameTrace: JSON.stringify(expected.events) === JSON.stringify(actual.events), trace: actual.events};
+  });
+  const kindRuntimeDynamicReadCases = [null, Object.defineProperty({}, 'validateDocument', {get() {
+    throw new Error('second runtime method getter');
+  }})].map((secondRuntime, index) => {
+    const run = (route: (source: unknown, registry: unknown) => unknown) => {
+      const events: string[] = [];
+      let reads = 0;
+      const firstRuntime = {};
+      const registry = {
+        get kindRuntime() { events.push('kindRuntime:get'); return ++reads === 1 ? firstRuntime : secondRuntime; },
+        registrations() { events.push('registrations:call'); return []; },
+      };
+      try { route({}, registry); return {events, thrown: undefined}; }
+      catch (thrown) { return {events, thrown}; }
+    };
+    const route = typescriptValidateDocument as (source: unknown, registry: unknown) => unknown;
+    const expected = run(route);
+    const actual = run((sourceValue, registryValue) => kindRuntimeValidationHostInput(addon, sourceValue, registryValue, Error));
+    return {name: index === 0 ? 'second-read-null' : 'second-runtime-method-getter-throws',
+      sameType: actual.thrown instanceof (expected.thrown as Error).constructor,
+      sameText: String(actual.thrown) === String(expected.thrown),
+      sameTrace: JSON.stringify(actual.events) === JSON.stringify(expected.events), trace: actual.events};
+  });
   const throwSentinel = Object.freeze({kindRuntimeThrow: true});
   let kindRuntimeThrowIdentity = false;
   try {
@@ -126,5 +183,5 @@ export function runSelectionBrowserCases(payload: Payload) {
     kindRuntimeDelegation: {typescript: typescriptDelegation, rust: rustDelegation,
       equalTrace: JSON.stringify(typescriptDelegation.events) === JSON.stringify(rustDelegation.events),
       resultIdentity: rustDelegation.resultIdentity, thrownIdentity: kindRuntimeThrowIdentity,
-      falsyRuntimeRefused, falsyRuntimeError}};
+      falsyRuntimeRefused, falsyRuntimeError}, kindRuntimeResultCases, kindRuntimeDynamicReadCases};
 }

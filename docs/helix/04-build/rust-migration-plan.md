@@ -6208,3 +6208,38 @@ delegation primitive: arbitrary callback result/iterable handling, static
 validation behavior, resource-accounting parity and installed-package
 qualification remain open. Neither V4 default root changes, and no default
 route gap is retired.
+
+The [private Selection result continuation](evidence/rust-migration/r8-selection-kind-runtime-result-continuation/README.md)
+preserves `kindRuntime.validateDocument` return values across the Rust-directed
+host sequence, including undefined, special IEEE-754 numbers, and invocation-
+local object, function, symbol and bigint identities. Five focused Rust tests,
+22 Bun binding tests, twelve same-host Node result comparisons, and a fresh
+Chromium 153 WASM replay pass at the recorded source pins. The null second-
+runtime read has the same TypeError class and access trace but different
+generated text in Node. Arbitrary diagnostics, static validation, resource
+parity and installed-package qualification remain open. Both V4 defaults stay
+on their predecessor route.
+
+The [Protobuf descriptor write CLI](evidence/rust-migration/r8-protobuf-descriptor-write-cli/README.md)
+adds one opt-in pure Rust operation, `protobuf.descriptor.write`, that emits
+raw `FileDescriptorSet` bytes. The local Rust 1.90.0 CLI suite passes 51/51,
+including a byte-for-byte R5 TypeScript predecessor vector and unknown-field
+preservation. Its 32 MiB stdin and 4 MB output bounds are explicit; stdin
+read and preflight decode are outside the cooperative work/deadline meter.
+This does not select a Node/Bun, browser, Python or V4 default route and does
+not qualify Protobuf source operations.
+
+The [`umf_access` local installed-artifact gate](evidence/rust-migration/r8-umf-access-installed-qualification/README.md)
+now compares every access package wheel member with the selected clean Git
+source checkout, binds the verifier and profile to that revision, and rejects
+source symlinks. Its new public `capture()` semantic harness rejects a cohort
+mismatch and compares four scoped declarations with a pinned source predecessor only after
+the installed wheel identity gate passes. The earlier dev7 receipt predates
+this source-to-wheel closure check and is historical. A fresh clean-source
+local receipt for these checks is still pending in this checkpoint; hosted
+cohorts, full capture semantics and native drivers remain unqualified.
+
+The regenerated [R8 inventory and gap ledger](evidence/rust-migration/r8-symbol-inventory/README.md)
+still record 922 logical executable default-route retirement gaps: 67 have an
+accepted opt-in Rust mapping and 855 do not. These private/additive changes
+retire none. The Rust port and release gates remain open.

@@ -125,7 +125,7 @@ function coreOpaqueReturnHostInput(addon, fn, receiver, argument, ErrorType = Er
 
 // Private exact delegation stage for validateDocument's caller kindRuntime branch.
 function kindRuntimeValidationHostInput(addon, source, registry, ErrorType = Error) {
-  return executeHostInput(addon, undefined, 'executeCoreKindRuntimeValidationHostJson', [source, registry], ErrorType, undefined, [registry !== undefined], undefined, true, false, fromRustWire, true);
+  return executeHostInput(addon, undefined, 'executeCoreKindRuntimeValidationHostJson', [source, registry], ErrorType, undefined, [registry !== undefined], undefined, true, false, fromRustWire, true, true);
 }
 
 /** Private reusable engine facade for the R8 Selection host-input route. */
@@ -162,7 +162,7 @@ function coreProtobufSourceHostResponse(runtime, operation, value, ErrorType = E
   return executeHostInput(runtime, undefined, operation, [value], ErrorType, controlBridge, [], undefined, true, true);
 }
 
-function executeHostInput(addon, resources, operation, inputs, ErrorType, controlBridge, operationArgs = [], preparedResourcesWire, retainedRuntime = false, includeBinary = false, resultProjection = fromRustWire, opaqueReturn = false) {
+function executeHostInput(addon, resources, operation, inputs, ErrorType, controlBridge, operationArgs = [], preparedResourcesWire, retainedRuntime = false, includeBinary = false, resultProjection = fromRustWire, opaqueReturn = false, allowPrimitiveReturn = false) {
   const handles = new NativeMap();
   const objectHandles = new NativeWeakMap();
   const primitiveOpaqueHandles = new NativeMap();
@@ -517,10 +517,30 @@ function executeHostInput(addon, resources, operation, inputs, ErrorType, contro
     // any original argument through the existing eager host serializer.
     if (opaqueReturn) {
       const carrier = resultProjection(result);
-      if (!carrier || !hasOwn(carrier, '__umf_host_opaque_return_v1') || carrier.__umf_host_opaque_return_v1 !== true || !safeInteger(carrier.handle) || carrier.handle <= 0 || !mapHas(handles, carrier.handle)) {
-        throw new NativeTypeError('Malformed opaque host return carrier');
+      if (carrier && hasOwn(carrier, '__umf_host_opaque_return_v1')) {
+        if (carrier.__umf_host_opaque_return_v1 !== true || !safeInteger(carrier.handle) || carrier.handle <= 0 || !mapHas(handles, carrier.handle)) {
+          throw new NativeTypeError('Malformed opaque host return carrier');
+        }
+        return mapGet(handles, carrier.handle);
       }
-      return mapGet(handles, carrier.handle);
+      if (!allowPrimitiveReturn) throw new NativeTypeError('Malformed opaque host return carrier');
+      if (carrier && hasOwn(carrier, '__umf_host_undefined_return_v1')) {
+        if (carrier.__umf_host_undefined_return_v1 !== true) throw new NativeTypeError('Malformed undefined host return carrier');
+        return undefined;
+      }
+      if (carrier && hasOwn(carrier, '__umf_host_number_return_v1')) {
+        if (carrier.__umf_host_number_return_v1 !== true || typeof carrier.bits !== 'string' || carrier.bits.length !== 16) throw new NativeTypeError('Malformed number host return carrier');
+        const bytes = new NativeUint8Array(new NativeArrayBuffer(8));
+        for (let index = 0; index < 8; index++) {
+          const pair = stringSlice(carrier.bits, index * 2, index * 2 + 2);
+          const byte = nativeParseInt(pair, 16);
+          if (!safeInteger(byte) || byte < 0 || byte > 255 || pair !== HEX[byte >> 4] + HEX[byte & 15]) throw new NativeTypeError('Malformed number host return carrier');
+          bytes[index] = byte;
+        }
+        return dataViewGetFloat64(new NativeDataView(typedArrayBuffer(bytes)), 0, false);
+      }
+      if (carrier === null || typeof carrier !== 'object') return carrier;
+      throw new NativeTypeError('Malformed primitive host return carrier');
     }
     const value = resultProjection(result);
     return includeBinary ? {value, binary} : value;

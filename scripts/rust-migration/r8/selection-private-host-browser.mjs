@@ -119,6 +119,14 @@ try {
   assert.equal(result.kindRuntimeDelegation.resultIdentity, true, 'kindRuntime return identity changed');
   assert.equal(result.kindRuntimeDelegation.thrownIdentity, true, 'kindRuntime thrown-value identity changed');
   assert.equal(result.kindRuntimeDelegation.falsyRuntimeRefused, true, 'private stage did not refuse falsy kindRuntime');
+  assert.deepEqual(result.kindRuntimeResultCases.map(item => [item.name, item.sameValue, item.sameIdentity, item.sameTrace]),
+    ['undefined', 'null', 'boolean', 'negative-zero', 'nan', 'positive-infinity', 'negative-infinity', 'string', 'object', 'function', 'symbol', 'bigint']
+      .map(name => [name, true, true, true]), 'kindRuntime result subset diverged from same-host TypeScript');
+  assert.deepEqual(result.kindRuntimeDynamicReadCases.map(item => [item.name, item.sameType, item.sameTrace]), [
+    ['second-read-null', true, true], ['second-runtime-method-getter-throws', true, true],
+  ], 'kindRuntime second-read behavior diverged from same-host TypeScript');
+  assert.equal(result.kindRuntimeDynamicReadCases[1].sameText, true,
+    'caller getter exception should preserve its own message');
   const record = {
     profile: 'umf.r8.selection-private-host-route.chromium/1',
     status: 'pass-private-frozen-values-direct-warning-source-and-null-prototypes',
@@ -129,6 +137,8 @@ try {
     ownProtoData: {preserved: result.protoKeyPreserved, prototypePollution: false},
     registryThrow: result.registryThrow,
     kindRuntimeDelegation: result.kindRuntimeDelegation,
+    kindRuntimeResultCases: result.kindRuntimeResultCases,
+    kindRuntimeDynamicReadCases: result.kindRuntimeDynamicReadCases,
     successfulWarnings: {...result.successfulWarnings, directBaselineHost: 'Bun 1.4.3 direct TypeScript source'},
     resourceMeterControl: {host: 'Bun 1.4.3 Node addon', messageUnits: 4000001, outcome: 'LIMIT'},
     shapeFinding: 'Selection result projection recreates TypeScript copyJson null-prototype objects; own __proto__ remains data and cannot mutate the prototype.',
@@ -138,7 +148,7 @@ try {
       'fresh-wasm-bindgen-glue': sha(Buffer.from(glueSource)),
       'bundled-browser-entry': sha(Buffer.from(entrySource)),
     },
-    limits: ['Private route only; no public/default selection.', 'Seven frozen query cases, one own-__proto__ projection case, one Registry.get thrown-identity case, and one successful warning packet using a synthetic warning structure policy compared to direct TypeScript sourceValidation.', 'The kindRuntime check covers the caller-owned validateDocument delegation sequence, getter/call trace, object result identity, thrown identity, and falsy-runtime refusal only; it does not establish general iterable, primitive-return, resource-accounting, or default-route parity.', 'Resource-limit control is Node addon evidence, not a Chromium case. No general Selection semantic callback parity or installed package qualification.'],
+    limits: ['Private route only; no public/default selection.', 'Seven frozen query cases, one own-__proto__ projection case, one Registry.get thrown-identity case, and one successful warning packet using a synthetic warning structure policy compared to direct TypeScript sourceValidation.', 'The kindRuntime result packet covers 12 returned values with exact Object.is value parity, identity, getter/call traces, a dynamic second-read null control, and a throwing dynamic method getter. It does not implement arbitrary diagnostic iteration, static validation, or resource-accounting parity. The generated TypeError wording for a null second runtime remains host-specific.', 'Resource-limit control is Node addon evidence, not a Chromium case. No general Selection semantic callback parity or installed package qualification.'],
   };
   await mkdir(resolve(receiptPath, '..'), {recursive: true});
   await writeFile(receiptPath, JSON.stringify(record, null, 2) + '\n');

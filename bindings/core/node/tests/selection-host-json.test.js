@@ -133,6 +133,67 @@ test('private kindRuntime stage refuses a falsy runtime instead of entering a de
     .toThrow('Caller Registry has no truthy kindRuntime for the private delegation route');
 });
 
+test('private kindRuntime stage returns primitive and identity-bearing results unchanged', () => {
+  const values = [undefined, null, false, -0, NaN, Infinity, -Infinity, 'validation', Object.freeze({valid: true}),
+    function validationResult() {}, Symbol('validation'), 17n];
+  for (const value of values) {
+    const source = {};
+    const registrations = [];
+    const trace = [];
+    const referenceTrace = [];
+    let activeTrace = referenceTrace;
+    const runtime = {validateDocument(input, actualRegistrations) {
+      activeTrace.push('validateDocument:call');
+      expect(this).toBe(runtime);
+      expect(input).toBe(source);
+      expect(actualRegistrations).toBe(registrations);
+      return value;
+    }};
+    let runtimeReads = 0;
+    const registry = {
+      get kindRuntime() { trace.push('kindRuntime:get'); runtimeReads++; return runtime; },
+      registrations() { trace.push('registrations:call'); return registrations; },
+    };
+    const referenceRegistry = {
+      get kindRuntime() { referenceTrace.push('kindRuntime:get'); return runtime; },
+      registrations() { referenceTrace.push('registrations:call'); return registrations; },
+    };
+    expect(Object.is(typescriptValidateDocument(source, referenceRegistry), value)).toBe(true);
+    activeTrace = trace;
+    const actual = kindRuntimeValidationHostInput(addon, source, registry, UmfCoreError);
+    expect(Object.is(actual, value)).toBe(true);
+    expect(trace).toEqual(referenceTrace);
+    expect(runtimeReads).toBe(2);
+  }
+});
+
+test('private kindRuntime stage uses the second dynamic runtime read and preserves its failure', () => {
+  for (const secondRuntime of [null, Object.defineProperty({}, 'validateDocument', {get() {
+    throw new Error('second runtime getter');
+  }})]) {
+    const firstRuntime = {};
+    const trace = [];
+    const referenceTrace = [];
+    let reads = 0;
+    const registry = {
+      get kindRuntime() { trace.push('kindRuntime:get'); return ++reads === 1 ? firstRuntime : secondRuntime; },
+      registrations() { trace.push('registrations:call'); return []; },
+    };
+    let referenceReads = 0;
+    const referenceRegistry = {
+      get kindRuntime() { referenceTrace.push('kindRuntime:get'); return ++referenceReads === 1 ? firstRuntime : secondRuntime; },
+      registrations() { referenceTrace.push('registrations:call'); return []; },
+    };
+    let expected;
+    let actual;
+    try { typescriptValidateDocument({}, referenceRegistry); } catch (error) { expected = error; }
+    try { kindRuntimeValidationHostInput(addon, {}, registry, UmfCoreError); } catch (error) { actual = error; }
+    expect(actual).toBeInstanceOf(expected.constructor);
+    expect(actual.constructor).toBe(expected.constructor);
+    expect(trace).toEqual(referenceTrace);
+  }
+});
+
 
 test('private host Selection route matches the complete frozen R5 result with an omitted Registry', () => {
   const output = coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, undefined, UmfCoreError);

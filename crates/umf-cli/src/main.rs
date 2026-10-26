@@ -20,6 +20,8 @@ const MAX_PROTOBUF_DESCRIPTOR_INPUT_BYTES: usize = 4_000_000;
 #[cfg(feature = "embedded-adapters")]
 const PROTOBUF_DESCRIPTOR_READ_CLI_PROFILE: &str = "umf.protobuf-descriptor-read-cli/0.1.0";
 #[cfg(feature = "embedded-adapters")]
+const PROTOBUF_DESCRIPTOR_WRITE_CLI_PROFILE: &str = "umf.protobuf-descriptor-write-cli/0.1.0";
+#[cfg(feature = "embedded-adapters")]
 const MAX_AVRO_CANDIDATE_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_JSON_SCHEMA_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 
@@ -928,6 +930,9 @@ fn protobuf_run(args: &[String]) -> Result<(), String> {
 
 #[cfg(feature = "embedded-adapters")]
 fn protobuf_descriptor_run(args: &[String]) -> Result<(), String> {
+    if args.first().map(String::as_str) == Some("write") {
+        return protobuf_descriptor_write_run(&args[1..]);
+    }
     if args == ["read", "--version"] {
         println!(
             "{{\"profile\":\"{}\",\"version\":\"{}\"}}",
@@ -1042,6 +1047,149 @@ fn protobuf_descriptor_run(args: &[String]) -> Result<(), String> {
     };
     let response = umf_core_wire::protobuf_document::execute(&request_wire, &bytes, &mut control);
     println!("{}", response.wire_envelope);
+    Ok(())
+}
+
+#[cfg(feature = "embedded-adapters")]
+fn protobuf_descriptor_write_run(args: &[String]) -> Result<(), String> {
+    if args == ["--version"] {
+        println!(
+            "{{\"profile\":\"{}\",\"version\":\"{}\"}}",
+            PROTOBUF_DESCRIPTOR_WRITE_CLI_PROFILE,
+            env!("CARGO_PKG_VERSION"),
+        );
+        return Ok(());
+    }
+    if args == ["--capabilities"] {
+        println!(
+            "{{\"profile\":\"{}\",\"operations\":[\"protobuf.descriptor.write\"],\"input\":\"umf.core-wire/1 descriptor tree request\",\"output\":\"raw FileDescriptorSet bytes on stdout\",\"maxOutputBytes\":{},\"resourceProfile\":\"cooperative\"}}",
+            PROTOBUF_DESCRIPTOR_WRITE_CLI_PROFILE,
+            MAX_PROTOBUF_DESCRIPTOR_INPUT_BYTES,
+        );
+        return Ok(());
+    }
+    let mut stdin_wire = false;
+    let mut max_work = None;
+    let mut timeout_ms = None;
+    let mut index = 0;
+    while index < args.len() {
+        match args[index].as_str() {
+            "--stdin-wire" if !stdin_wire => stdin_wire = true,
+            "--max-work" if max_work.is_none() => {
+                index += 1;
+                max_work = Some(
+                    args.get(index)
+                        .ok_or("--max-work requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--max-work requires a nonnegative integer")?,
+                );
+            }
+            "--timeout-ms" if timeout_ms.is_none() => {
+                index += 1;
+                timeout_ms = Some(
+                    args.get(index)
+                        .ok_or("--timeout-ms requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--timeout-ms requires a nonnegative integer")?,
+                );
+            }
+            _ => return Err(
+                "usage: umf protobuf descriptor write --stdin-wire [--max-work N] [--timeout-ms N]"
+                    .into(),
+            ),
+        }
+        index += 1;
+    }
+    if !stdin_wire {
+        return Err("--stdin-wire is required".into());
+    }
+    let started = std::time::Instant::now();
+    let wire = String::from_utf8(read_limited(
+        io::stdin(),
+        MAX_PROTOBUF_INSPECT_REQUEST_BYTES,
+    )?)
+    .map_err(|_| "Protobuf descriptor write wire request is not valid UTF-8".to_owned())?;
+    let mut admission_context = Context::ordinary();
+    let request = match admission_context
+        .with_tagged_transport_limit(|transport| umf_core_wire::decode(&wire, transport))
+    {
+        Ok(request) => request,
+        Err(error) => {
+            println!("{}", umf_core_wire::result_envelope(Err(error)));
+            return Ok(());
+        }
+    };
+    let operation = field(&request, "op").and_then(|value| match value {
+        Value::String(operation) => operation.to_utf8().ok(),
+        _ => None,
+    });
+    if operation.as_deref() != Some("protobuf.descriptor.write") {
+        println!(
+            "{}",
+            umf_core_wire::result_envelope(Err(umf_core::EngineError::new(
+                "REQUEST",
+                Utf16::from("/op"),
+                "Protobuf descriptor write operation is required",
+            )))
+        );
+        return Ok(());
+    }
+    let mut remaining = max_work.unwrap_or(u64::MAX);
+    let mut control = |amount: usize| {
+        let amount = amount as u64;
+        if amount > remaining {
+            return Err(umf_core::EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Protobuf descriptor write work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(umf_core::EngineError::new(
+                "DEADLINE",
+                Utf16::default(),
+                "Protobuf descriptor write deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    let response = umf_core_wire::protobuf_document::execute(&wire, &[], &mut control);
+    let envelope = umf_core::serialization::read_json_value(
+        &response.wire_envelope.encode_utf16().collect::<Vec<_>>(),
+        Format::Json,
+        &mut Context::ordinary(),
+    )
+    .map_err(|error| error.to_string())?;
+    let status = field(&envelope, "status").and_then(|value| match value {
+        Value::String(status) => status.to_utf8().ok(),
+        _ => None,
+    });
+    match status.as_deref() {
+        Some("error") => println!("{}", response.wire_envelope),
+        Some("ok") if response.binary.len() <= MAX_PROTOBUF_DESCRIPTOR_INPUT_BYTES => {
+            use std::io::Write;
+            io::stdout()
+                .write_all(&response.binary)
+                .map_err(|error| error.to_string())?;
+        }
+        Some("ok") => println!(
+            "{}",
+            umf_core_wire::result_envelope(Err(umf_core::EngineError::new(
+                "LIMIT",
+                Utf16::default(),
+                "Descriptor output exceeds limit"
+            )))
+        ),
+        _ => println!(
+            "{}",
+            umf_core_wire::result_envelope(Err(umf_core::EngineError::new(
+                "OUTPUT_PROTOCOL",
+                Utf16::default(),
+                "Protobuf descriptor writer returned an invalid response envelope"
+            )))
+        ),
+    }
     Ok(())
 }
 

@@ -13,6 +13,7 @@ from pathlib import Path
 import platform
 import re
 import stat
+import subprocess
 import sys
 import tomllib
 import zipfile
@@ -27,6 +28,29 @@ _REPLAY_SPEC.loader.exec_module(_REPLAY_MODULE)
 inspect_wheel = _REPLAY_MODULE.inspect_wheel
 verify_installed_files = _REPLAY_MODULE.verify_installed_files
 safe_relative = _REPLAY_MODULE.safe_relative
+
+
+def verify_source_access_package(source_root: Path, wheel_files: dict[str, bytes]) -> None:
+    package_root = source_root / "src/umf_access"
+    if not package_root.is_dir() or package_root.is_symlink():
+        raise ValueError("source access package root is unavailable or symlinked")
+    paths = list(package_root.rglob("*"))
+    if any(path.is_symlink() for path in paths):
+        raise ValueError("source access package contains a symlink")
+    expected = {
+        "umf_access/" + path.relative_to(package_root).as_posix(): path.read_bytes()
+        for path in paths
+        if path.is_file() and "__pycache__" not in path.parts
+    }
+    actual = {
+        name: content
+        for name, content in wheel_files.items()
+        if name.startswith("umf_access/")
+    }
+    if expected != actual:
+        raise ValueError("access wheel package members differ from selected source tree")
+
+
 def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -55,6 +79,32 @@ def inspect_core_wheel(path: Path) -> tuple[dict[str, bytes], str]:
 
 
 def source_closure(source_root: Path, profile_path: Path) -> dict[str, str]:
+    repository = source_root.resolve().parents[1]
+    verifier = Path(__file__).resolve()
+    if not verifier.is_relative_to(repository):
+        raise ValueError("selected source tree and verifier are from different checkouts")
+    top = subprocess.run(
+        ["git", "-C", str(repository), "rev-parse", "--show-toplevel"],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    if Path(top).resolve() != repository:
+        raise ValueError("selected source root does not match its Git checkout root")
+    status = subprocess.run(
+        ["git", "-C", str(repository), "status", "--porcelain"],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout
+    if status:
+        raise ValueError("selected source checkout is dirty")
+    revision = subprocess.run(
+        ["git", "-C", str(repository), "rev-parse", "HEAD"],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
     source_files = [source_root / "pyproject.toml", *sorted((source_root / "src/umf_access").rglob("*"))]
     result = {
         str(path.relative_to(source_root)): digest(path)
@@ -62,7 +112,7 @@ def source_closure(source_root: Path, profile_path: Path) -> dict[str, str]:
         if path.is_file() and "__pycache__" not in path.parts
     }
     result[f"qualification-profile:{profile_path.name}"] = digest(profile_path)
-    repository = source_root.resolve().parents[1]
+    result["source-revision:git-head"] = revision
     for path in (
         Path(__file__).resolve(),
         Path(__file__).with_name("test_qualify_installed_artifact.py").resolve(),
@@ -99,6 +149,7 @@ def qualify(
     if actual_core_sha256 != expected_core_sha256:
         raise ValueError("core wheel SHA-256 differs from build receipt")
     members = inspect_wheel(wheel, pin)
+    verify_source_access_package(source_root, members)
     metadata_name = next(name for name in members if name.endswith(".dist-info/METADATA"))
     metadata = BytesParser().parsebytes(members[metadata_name])
     wheel_requirements = [Requirement(item) for item in metadata.get_all("Requires-Dist", [])]
@@ -191,6 +242,10 @@ def qualify(
         "sourceClosure": sources,
         "imports": imported,
         "releaseScope": "separate from the umf-core + umf-codegen six-cohort aggregate",
+        "profileEvidence": {
+            "locallyQualifiedCohort": profile.get("locallyQualifiedCohort"),
+            "receiptCohortMatchesLocalEvidence": cohort == profile.get("locallyQualifiedCohort"),
+        },
     }
 
 

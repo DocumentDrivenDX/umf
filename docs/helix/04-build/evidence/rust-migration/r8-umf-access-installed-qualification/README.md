@@ -52,14 +52,30 @@ workflow remains `workflow_dispatch` only until its hosted matrix has run and
 those receipts are reviewed. The earlier dev0-versus-dev7 blocked receipt is
 retained as historical evidence in `local-build-attempt-20261026.json`.
 
-The local candidate was built from clean source archive commit `76aebded3`
+The historical local candidate was built from clean source archive commit `76aebded3`
 with pinned build tools and Rust 1.90.0, then installed in an isolated Python
 3.14.8 venv with exact runtime wheels. The candidate gate passed package
 identity, `Requires-Dist` (including the optional extra marker), installed
 core/access artifact origins and inventories, the exact core wheel digest,
 runtime dependency pins, ABI and required exports. The local receipt is
 `local-installed-artifact-candidate-20261026.json`. It is one local cohort and
-does not establish hosted parity or release eligibility.
+does not establish hosted parity or release eligibility. Subsequent replay
+found that its installed `generated_core.py` no longer matched the regenerated
+current source. The former verifier compared installed files with wheel members
+but did not compare those wheel members with the selected source tree. The
+receipt remains evidence for its original archived source cohort only.
+
+The verifier now requires an exact package-member and byte match between the
+access wheel and a clean Git checkout containing the verifier. It records the
+source revision, hashes the source package, qualification profile, verifier,
+tests and workflow, and rejects symlinks. Its
+new `sourceClosure` and `profileEvidence.receiptCohortMatchesLocalEvidence`
+fields are prerequisites for the public `capture()` semantic harness. That
+harness also checks the installed capture module's wheel-member hash and
+origin before comparing four declaration outcomes with the pinned source
+predecessor. The intended stage is `local-installed-candidate`, never release
+eligible. A fresh clean-source installed receipt and semantic receipt are
+pending at this checkpoint.
 
 The gate is separate from the existing six-cohort `umf-core` plus `umf-codegen`
 aggregate. Those cohorts use CPython 3.11.17–3.13.16 and install the pair with
@@ -69,7 +85,7 @@ Integration requires a new, explicit shared host/dependency profile and receipts
 covering the same exact source revision and run. Until then this is a distinct
 installed-artifact gate.
 
-This gate does not qualify public capture behavior, broader access semantics,
+The identity gate alone does not qualify public capture behavior, broader access semantics,
 native driver behavior, all supported Python versions, release eligibility, or
 publication. The existing six-cohort pair manifest remains `releaseEligible:
 false`.
@@ -87,6 +103,7 @@ and binds its origin to the installed core wheel. Negative controls reject
 digest drift, wrong import origins, dependency and marker drift,
 duplicate/traversal core-wheel members and symlink members. A subprocess
 control invokes the verifier with isolated `-I` and confirms the real
-historical-profile mismatch is retained in a blocked receipt. Thirteen
-controls pass under the pinned qualification environment. These controls
+historical-profile mismatch is retained in a blocked receipt. Eighteen
+installed-verifier and eight semantic-harness controls pass under the pinned
+qualification environment. These controls
 supplement, but do not extend, the single local installed-wheel cohort.

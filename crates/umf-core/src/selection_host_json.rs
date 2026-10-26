@@ -504,18 +504,46 @@ pub fn execute_kind_runtime_validate_document(
         ],
         semantic_catch: false,
     })? {
-        HostJsonReply::Invocation(HostOpaqueValue::Opaque {
-            handle,
-            opaque_type: HostOpaqueType::Object | HostOpaqueType::Function,
-        }) => handle,
-        HostJsonReply::Invocation(_) => {
-            return Err(unsupported_error(
-                "Caller kindRuntime.validateDocument return must be an object or function",
-            ));
-        }
+        HostJsonReply::Invocation(value) => return_kind_runtime_value(value, host, ctx)?,
         _ => return Err(protocol_error()),
     };
-    Ok(opaque_return_carrier(result))
+    Ok(result)
+}
+
+/// Carry the result of the caller-owned validation function without reading
+/// properties from it. JSON primitives travel as JSON; undefined has a
+/// reserved marker; identity-bearing values keep their invocation-local host
+/// handle. Symbols and bigints use the same opaque handle table as objects.
+fn return_kind_runtime_value(
+    value: HostOpaqueValue,
+    host: &mut dyn HostJsonReflection,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    Ok(match value {
+        HostOpaqueValue::Undefined => Value::Object(vec![(
+            Utf16::from("__umf_host_undefined_return_v1"),
+            Value::Bool(true),
+        )]),
+        HostOpaqueValue::Null => Value::Null,
+        HostOpaqueValue::Boolean(value) => Value::Bool(value),
+        HostOpaqueValue::Number(value) => Value::Object(vec![
+            (Utf16::from("__umf_host_number_return_v1"), Value::Bool(true)),
+            (Utf16::from("bits"), Value::String(Utf16::from(format!("{:016x}", value.to_bits())))),
+        ]),
+        HostOpaqueValue::String(value) => {
+            if value.units > ctx.limits().max_text_units {
+                return Err(EngineError::new(
+                    "LIMIT",
+                    Utf16::default(),
+                    "Caller kindRuntime result string exceeds the host-return text limit",
+                ));
+            }
+            Value::String(read_host_string(host, &value)?)
+        }
+        HostOpaqueValue::Opaque { handle, .. } | HostOpaqueValue::BigInt { handle, .. } => {
+            opaque_return_carrier(handle)
+        }
+    })
 }
 
 pub(crate) fn reject_host_semantics() -> EngineError {
@@ -565,7 +593,36 @@ mod opaque_return_tests {
     }
 
     #[test]
-    fn primitive_return_is_refused() {
+    fn kind_runtime_primitive_results_continue_without_property_reads() {
+        let mut host = ScriptedHost { reply: None, events: Vec::new() };
+        let mut ctx = Context::ordinary();
+        for (input, expected) in [
+            (HostOpaqueValue::Null, Value::Null),
+            (HostOpaqueValue::Boolean(false), Value::Bool(false)),
+        ] {
+            assert_eq!(return_kind_runtime_value(input, &mut host, &mut ctx).unwrap(), expected);
+        }
+        for number in [-0.0, f64::NAN, f64::INFINITY, f64::NEG_INFINITY] {
+            let value = return_kind_runtime_value(HostOpaqueValue::Number(number), &mut host, &mut ctx).unwrap();
+            assert!(matches!(value, Value::Object(ref fields)
+                if fields.contains(&(Utf16::from("bits"), Value::String(Utf16::from(format!("{:016x}", number.to_bits())))))));
+        }
+        let undefined = return_kind_runtime_value(HostOpaqueValue::Undefined, &mut host, &mut ctx).unwrap();
+        assert!(matches!(undefined, Value::Object(ref fields)
+            if fields.contains(&(Utf16::from("__umf_host_undefined_return_v1"), Value::Bool(true)))));
+        for input in [
+            HostOpaqueValue::Opaque { handle: 41, opaque_type: HostOpaqueType::Symbol },
+            HostOpaqueValue::BigInt { handle: 42, is_zero: false },
+        ] {
+            let value = return_kind_runtime_value(input, &mut host, &mut ctx).unwrap();
+            assert!(matches!(value, Value::Object(ref fields)
+                if fields.contains(&(Utf16::from("__umf_host_opaque_return_v1"), Value::Bool(true)))));
+        }
+        assert!(host.events.is_empty());
+    }
+
+    #[test]
+    fn opaque_return_probe_still_refuses_primitive_results() {
         let (result, events) = run(HostJsonReply::Invocation(HostOpaqueValue::Null));
         assert_eq!(result.unwrap_err().code, "HOST_JSON_UNSUPPORTED");
         assert_eq!(events.len(), 1);

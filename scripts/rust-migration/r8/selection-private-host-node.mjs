@@ -11,7 +11,8 @@ const addonPath = process.env.UMF_SELECTION_ADDON;
 if (!addonPath) throw new Error('UMF_SELECTION_ADDON must name a freshly built Node addon');
 const require = createRequire(import.meta.url);
 const addon = require(addonPath);
-const {coreElementSelectionHostInput} = await import(pathToFileURL(resolve(root, 'bindings/core/node/src/host-json.js')));
+const {coreElementSelectionHostInput, kindRuntimeValidationHostInput} = await import(pathToFileURL(resolve(root, 'bindings/core/node/src/host-json.js')));
+const {validateDocument: typescriptValidateDocument} = await import(pathToFileURL(resolve(root, 'dist/umf-node.js')));
 const read = path => JSON.parse(readFileSync(resolve(root, path), 'utf8'));
 const resources = {
   coreSchema: read('spec/core/schema.json'),
@@ -40,6 +41,32 @@ assert.equal(opaque.__proto__.retained, true);
 assert.equal(Object.getPrototypeOf(opaque.__proto__), null);
 assert.equal(Object.prototype.retained, undefined);
 
+const kindRuntimeResultValues = [undefined, null, false, -0, NaN, Infinity, -Infinity, 'validation',
+  Object.freeze({valid: true}), function validationResult() {}, Symbol('validation'), 17n];
+const kindRuntimeResultCases = kindRuntimeResultValues.map((value, index) => {
+  const events = [];
+  const referenceEvents = [];
+  let activeEvents = referenceEvents;
+  const source = Object.freeze({index});
+  const registrations = Object.freeze([{index}]);
+  const runtime = {validateDocument(input, actualRegistrations) {
+    activeEvents.push('validateDocument:call');
+    if (this !== runtime || input !== source || actualRegistrations !== registrations) throw new Error('result callback identity changed');
+    return value;
+  }};
+  const makeRegistry = target => ({
+    get kindRuntime() { target.push('kindRuntime:get'); return runtime; },
+    registrations() { target.push('registrations:call'); return registrations; },
+  });
+  const expected = typescriptValidateDocument(source, makeRegistry(referenceEvents));
+  activeEvents = events;
+  const actual = kindRuntimeValidationHostInput(addon, source, makeRegistry(events), Error);
+  return {index, sameValue: Object.is(expected, value) && Object.is(actual, value), sameIdentity: Object.is(actual, value),
+    sameTrace: JSON.stringify(events) === JSON.stringify(referenceEvents), events};
+});
+assert.deepEqual(kindRuntimeResultCases.map(item => [item.sameValue, item.sameIdentity, item.sameTrace]),
+  kindRuntimeResultCases.map(() => [true, true, true]));
+
 const sentinel = {identity: true};
 let calls = 0;
 try {
@@ -49,4 +76,4 @@ try {
   assert.equal(error, sentinel);
 }
 assert.equal(calls, 1);
-console.log(JSON.stringify({status: 'json-value-and-shape-pass', host: process.version, cases: 3, outputPrototype, ownProtoKey: true}));
+console.log(JSON.stringify({status: 'json-value-and-shape-pass', host: process.version, cases: 3, outputPrototype, ownProtoKey: true, kindRuntimeResultCases}));
