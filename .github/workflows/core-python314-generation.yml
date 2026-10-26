@@ -515,7 +515,7 @@ jobs:
           fi
 
           run_bounded prepare-output-archive 180 python -I - "$RUNNER_TEMP/core-python314-success" "$EVIDENCE" "$RUNNER_TEMP/core-python314-metamodel-stage" <<'PY'
-          import hashlib, json, os, pathlib, tarfile, sys
+          import hashlib, json, os, pathlib, re, tarfile, sys
           root=pathlib.Path.cwd().resolve(); output=pathlib.Path(sys.argv[1]); output.mkdir(parents=True,exist_ok=False); evidence=pathlib.Path(os.environ["EVIDENCE_DIR"]); phase=(evidence/"phase").read_text().strip(); metamodel_root=pathlib.Path(sys.argv[3]).resolve(); max_bytes=16777216; log_limit=1048576
           regex_paths=["crates/umf-core/src/python_re_tables.rs","crates/umf-core/src/python_re_names.dat","crates/umf-core/tests/fixtures/cpython-re/outcomes-3.14.tsv","crates/umf-core/tests/fixtures/cpython-re/independent-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-outcomes.tsv","crates/umf-core/tests/fixtures/cpython-re/independent-hex-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-hex-outcomes.tsv","crates/umf-core/tests/fixtures/cpython-re/independent-info-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-info-outcomes.tsv"]
           metamodel_paths=["spec/core/schema.json","spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json","spec/metamodel/package.json","spec/metamodel/generated/core-constraints.json","spec/metamodel/generated/domain-policy.json","spec/metamodel/generated/python-shapes.json","python/umf_access/src/umf_access/generated_core.py","src/generated/core-model.ts","src/generated/core-validators.ts","spec/metamodel/generated/manifest.json"]
@@ -524,18 +524,67 @@ jobs:
               resolved=path.resolve(strict=True)
               if not resolved.is_relative_to(base.resolve(strict=True)): raise SystemExit("source file escaped its declared root: "+str(path))
               return path.stat().st_size
+          declared_asset_hashes={}
           if phase=="regex-artifacts": paths=regex_paths
           elif phase=="metamodel-artifacts": paths=metamodel_paths
           elif phase=="dependent-artifacts":
               paths=["src/extensions/actions/plan-identity.ts","docs/helix/04-build/evidence/rust-migration/r3/inventory.json"]
-              codegen_manifest=root/"python/umf_codegen/src/umf_codegen/_assets/manifest.json"
+              assets_root=root/"python/umf_codegen/src/umf_codegen/_assets"
+              if assets_root.is_symlink() or not assets_root.is_dir(): raise SystemExit("Codegen asset root is missing or unsafe")
+              codegen_manifest=assets_root/"manifest.json"
               if regular_file(codegen_manifest,root)>65536: raise SystemExit("Codegen output manifest exceeds metadata reserve")
-              manifest=json.loads(codegen_manifest.read_text())
-              if not isinstance(manifest,dict) or not isinstance(manifest.get("files"),list): raise SystemExit("invalid Codegen output manifest")
-              for name in manifest["files"]:
-                  if not isinstance(name,str): raise SystemExit("invalid Codegen manifest member")
+              def unique_json_object(pairs):
+                  result={}
+                  for key,value in pairs:
+                      if key in result: raise SystemExit("duplicate Codegen manifest object key")
+                      result[key]=value
+                  return result
+              manifest=json.loads(codegen_manifest.read_text(),object_pairs_hook=unique_json_object)
+              if not isinstance(manifest,dict) or manifest.get("profile")!="umf.codegen-v8/1" or not isinstance(manifest.get("files"),dict) or not manifest["files"] or not isinstance(manifest.get("dependencies"),list) or not manifest["dependencies"]:
+                  raise SystemExit("invalid Codegen output manifest")
+              declared_asset_hashes=manifest["files"]
+              expected_asset_names={"generator.js.gz"}
+              dependency_names=set()
+              notice_prefixes=set()
+              for dependency in manifest["dependencies"]:
+                  if not isinstance(dependency,dict) or not isinstance(dependency.get("name"),str) or not dependency["name"] or dependency["name"] in dependency_names or not isinstance(dependency.get("version"),str) or not dependency["version"] or not isinstance(dependency.get("license"),str) or not dependency["license"] or not isinstance(dependency.get("files"),list) or not dependency["files"]:
+                      raise SystemExit("invalid Codegen dependency declaration")
+                  dependency_name=dependency["name"]
+                  if "\\" in dependency_name or any(ord(char)<32 or ord(char)==127 for char in dependency_name) or any(part in {"",".",".."} for part in dependency_name.split("/")):
+                      raise SystemExit("invalid Codegen dependency name")
+                  dependency_names.add(dependency_name)
+                  prefix="notices/"+dependency_name.replace("/","__")+"/"
+                  if prefix in notice_prefixes: raise SystemExit("colliding Codegen dependency notice prefix")
+                  notice_prefixes.add(prefix)
+                  expected_asset_names.add(prefix+"package.json")
+                  declared_notices=set()
+                  for notice in dependency["files"]:
+                      if not isinstance(notice,str): raise SystemExit("invalid Codegen dependency notice declaration")
+                      notice_path=pathlib.PurePosixPath(notice)
+                      leaf=notice_path.name.lower()
+                      if notice_path.as_posix()!=notice or notice_path.parent.as_posix()!=prefix.rstrip("/") or not notice.startswith(prefix) or not re.match(r"^(?:licen[cs]e|copying|notice)(?:[._-]|$)",leaf) or notice in declared_notices:
+                          raise SystemExit("invalid Codegen dependency notice path")
+                      declared_notices.add(notice)
+                      expected_asset_names.add(notice)
+              if len(dependency_names)!=len(manifest["dependencies"]): raise SystemExit("duplicate Codegen dependency declaration")
+              for name,digest in declared_asset_hashes.items():
+                  if not isinstance(name,str) or type(digest) is not str or not re.fullmatch(r"[0-9a-f]{64}",digest):
+                      raise SystemExit("invalid Codegen manifest member digest")
                   relative=pathlib.PurePosixPath(name)
-                  if relative.is_absolute() or ".." in relative.parts or not relative.parts: raise SystemExit("invalid Codegen manifest member path")
+                  if relative.as_posix()!=name or relative.is_absolute() or not relative.parts or any(part in {"",".",".."} for part in relative.parts) or "\\" in name or any(ord(char)<32 or ord(char)==127 for char in name) or name in {"manifest.json","../_release.py"}:
+                      raise SystemExit("invalid Codegen manifest member path")
+              if set(declared_asset_hashes)!=expected_asset_names:
+                  raise SystemExit("Codegen manifest asset roster differs from declared dependencies")
+              actual_asset_names=set()
+              for path in assets_root.rglob("*"):
+                  if path.is_symlink(): raise SystemExit("Codegen asset tree contains a symlink")
+                  if path.is_file():
+                      regular_file(path,assets_root)
+                      actual_asset_names.add(path.relative_to(assets_root).as_posix())
+                  elif not path.is_dir(): raise SystemExit("Codegen asset tree contains a non-regular member")
+              if actual_asset_names!=set(declared_asset_hashes)|{"manifest.json"}:
+                  raise SystemExit("Codegen asset tree differs from its complete declared roster")
+              for name in sorted(declared_asset_hashes):
                   paths.append("python/umf_codegen/src/umf_codegen/_assets/"+name)
               paths += ["python/umf_codegen/src/umf_codegen/_assets/manifest.json","python/umf_codegen/src/umf_codegen/_release.py"]
           else: raise SystemExit("unknown generation phase")
@@ -557,7 +606,12 @@ jobs:
               digest=hashlib.sha256(); source_path=base/item["path"]
               with source_path.open("rb") as stream:
                   for chunk in iter(lambda:stream.read(65536),b""): digest.update(chunk)
-              records.append({**item,"sha256":digest.hexdigest()})
+              actual_digest=digest.hexdigest()
+              asset_prefix="python/umf_codegen/src/umf_codegen/_assets/"
+              if phase=="dependent-artifacts" and item["path"].startswith(asset_prefix) and item["path"]!=asset_prefix+"manifest.json":
+                  declared_name=item["path"][len(asset_prefix):]
+                  if declared_asset_hashes.get(declared_name)!=actual_digest: raise SystemExit("Codegen asset SHA differs from declared manifest")
+              records.append({**item,"sha256":actual_digest})
           output_manifest={"profile":"umf.core-python314-generated-output-manifest/1","phase":phase,"sourceCommit":os.environ["GITHUB_SHA"],"outputs":records}
           manifest_bytes=(json.dumps(output_manifest,sort_keys=True,separators=(",",":"))+"\n").encode(); output_manifest["outputsSha256"]=hashlib.sha256(manifest_bytes).hexdigest()
           manifest_path=output/"outputs.json"; manifest_path.write_text(json.dumps(output_manifest,indent=2,sort_keys=True)+"\n")
