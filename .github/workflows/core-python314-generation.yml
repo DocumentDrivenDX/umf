@@ -90,6 +90,21 @@ jobs:
           EVIDENCE="$EVIDENCE_DIR"
           DEADLINE_MS="$(cat "$EVIDENCE/monotonic-deadline-ms")"
           : > "$EVIDENCE/command-records.jsonl"
+          cat > "$RUNNER_TEMP/core-python314-r3-inventory-diagnostic.py" <<'PY'
+          import faulthandler
+          import runpy
+          import sys
+          from pathlib import Path
+
+          script = "scripts/rust-inventory.py"
+          faulthandler.dump_traceback_later(90, repeat=False, file=sys.stderr, exit=False)
+          try:
+              sys.argv[:] = [script]
+              sys.path[0] = str(Path(script).resolve().parent)
+              runpy.run_path(script, run_name="__main__")
+          finally:
+              faulthandler.cancel_dump_traceback_later()
+          PY
           cat > "$RUNNER_TEMP/core-python314-work.sh" <<'WORK'
           set -euo pipefail
           EVIDENCE="$EVIDENCE_DIR"
@@ -491,7 +506,12 @@ jobs:
           run_bounded check-metamodel-self-and-root 180 bun run check:metamodel
           run_bounded regenerate-action-plan-identity 180 bash -euo pipefail -c 'bun scripts/actions-plan-identity.ts && bun scripts/actions-plan-identity.ts --check'
           run_bounded regenerate-codegen-and-check 180 bash -euo pipefail -c 'bun scripts/build-codegen.ts && bun scripts/build-codegen.ts --check'
-          run_bounded regenerate-r3-inventory-and-boundaries 180 bash -euo pipefail -c 'python scripts/rust-inventory.py && bun run check:rust-boundaries'
+          run_bounded regenerate-r3-inventory-and-boundaries 180 bash -euo pipefail -c 'echo "R3_DIAGNOSTIC inventory:start" >&2
+          python "$RUNNER_TEMP/core-python314-r3-inventory-diagnostic.py"
+          echo "R3_DIAGNOSTIC inventory:passed" >&2
+          echo "R3_DIAGNOSTIC boundaries:start" >&2
+          bun run check:rust-boundaries
+          echo "R3_DIAGNOSTIC boundaries:passed" >&2'
           fi
 
           run_bounded prepare-output-archive 180 python -I - "$RUNNER_TEMP/core-python314-success" "$EVIDENCE" "$RUNNER_TEMP/core-python314-metamodel-stage" <<'PY'
@@ -608,6 +628,30 @@ jobs:
                       row=command_rows[-1]; keys=("name","stage","argv","rawExit","captureExit","monotonicStartMs","monotonicEndMs","monotonicDurationMs","startedAtUtc","endedAtUtc","limitSeconds","logBytes","logSha256","truncated")
                       if isinstance(row,dict): last_command={key:row[key] for key in keys if key in row}; last_command_row=row
               except (OSError,UnicodeDecodeError,json.JSONDecodeError): last_command=None; last_command_row=None; command_rows=[]
+          fixed_command_names={"fetch-pinned-main-preimage","source-preflight","install-locked-bun-dependencies","fetch-locked-cargo-dependencies","download-cpython314","inspect-extract-cpython314","verify-cpython314-runtime","generate-regex-table-profile","generate-independent-boundaries-314","generate-independent-hex-314","generate-independent-info-314","generate-metamodel-11-outputs","check-metamodel-self-and-root","regenerate-action-plan-identity","regenerate-codegen-and-check","regenerate-r3-inventory-and-boundaries","prepare-output-archive"}
+          predecessor_summary={"status":"UNAVAILABLE","reason":"COMMAND_RECORDS_UNAVAILABLE","commands":[]}
+          if command_rows:
+              if len(command_rows)>32:
+                  predecessor_summary["reason"]="COMMAND_SUMMARY_COUNT_EXCEEDED"
+              else:
+                  summaries=[]; summaries_valid=True
+                  expected_record_keys={"name","stage","argv","rawExit","captureExit","monotonicStartMs","monotonicEndMs","monotonicDurationMs","startedAtUtc","endedAtUtc","limitSeconds","logBytes","logSha256","truncated"}
+                  for row in command_rows[:-1]:
+                      if not isinstance(row,dict) or set(row)!=expected_record_keys or not isinstance(row.get("name"),str) or row.get("name") not in fixed_command_names or row.get("stage")!=row.get("name") or not isinstance(row.get("argv"),list) or any(not isinstance(value,str) for value in row["argv"]):
+                          summaries_valid=False; break
+                      if type(row.get("rawExit")) is not int or not 0<=row["rawExit"]<=255 or type(row.get("captureExit")) is not int or row["captureExit"] not in {0,74,75} or type(row.get("truncated")) is not bool or row["truncated"]!=(row["captureExit"]==75):
+                          summaries_valid=False; break
+                      if any(type(row.get(key)) is not int or row[key]<0 for key in ("monotonicStartMs","monotonicEndMs","monotonicDurationMs","limitSeconds","logBytes")) or row["monotonicEndMs"]<row["monotonicStartMs"] or row["monotonicEndMs"]-row["monotonicStartMs"]!=row["monotonicDurationMs"] or not 1<=row["limitSeconds"]<=180 or row["logBytes"]>1048576:
+                          summaries_valid=False; break
+                      if not isinstance(row.get("startedAtUtc"),str) or len(row["startedAtUtc"])>64 or not isinstance(row.get("endedAtUtc"),str) or len(row["endedAtUtc"])>64 or not isinstance(row.get("logSha256"),str) or len(row["logSha256"])!=64 or any(char not in "0123456789abcdef" for char in row["logSha256"]):
+                          summaries_valid=False; break
+                      summaries.append({key:row[key] for key in ("name","rawExit","captureExit","monotonicStartMs","monotonicEndMs","monotonicDurationMs","startedAtUtc","endedAtUtc","limitSeconds","logBytes","logSha256","truncated")})
+                  if summaries_valid and sum(item["logBytes"] for item in summaries)>1048576:
+                      summaries_valid=False
+                  if summaries_valid:
+                      predecessor_summary={"status":"AVAILABLE","reason":None,"commands":summaries}
+                  else:
+                      predecessor_summary["reason"]="COMMAND_SUMMARY_INVALID"
           preflight_diagnostic=None; diagnostic_path=evidence/"preflight-diagnostic.json"
           tool_codes={"TOOL_EXECUTABLE_UNAVAILABLE","TOOL_IDENTITY_FAILED","TOOL_IDENTITY_TOO_LARGE","TOOL_VERSION_COMMAND_FAILED","TOOL_VERSION_COMMAND_TIMED_OUT","TOOL_VERSION_OUTPUT_INVALID","TOOL_VERSION_OUTPUT_TOO_LARGE","TOOL_VERSION_MISMATCH","RUSTUP_EXECUTABLE_UNAVAILABLE","RUSTUP_IDENTITY_FAILED","RUSTUP_SELECTION_FAILED","RUSTUP_SELECTION_AMBIGUOUS","RUST_PAYLOAD_UNAVAILABLE","RUST_PAYLOAD_IDENTITY_FAILED","RUST_PAYLOAD_VERSION_FAILED","RUST_PAYLOAD_VERSION_TIMED_OUT","RUST_PAYLOAD_VERSION_MISMATCH","TOOL_OBSERVATION_TOO_LARGE","TOOL_OBSERVATION_INVALID"}
           diagnostic_codes={"SOURCE_EVENT_REF_MISMATCH","SOURCE_HEAD_MISMATCH","SOURCE_WORKTREE_NOT_CLEAN","SOURCE_REPOSITORY_MISMATCH","SOURCE_LOCK_UNAVAILABLE","SOURCE_LOCK_COMMIT_MISMATCH","SOURCE_WORKTREE_CHANGED_DURING_FETCH","PREIMAGE_COMMIT_FETCH_FAILED","PREIMAGE_FETCH_HEAD_MISMATCH","PREIMAGE_COMMIT_UNAVAILABLE","SOURCE_PHASE_MISMATCH","SOURCE_INPUT_UNAVAILABLE","SOURCE_INPUT_SHA_MISMATCH","PREIMAGE_BLOB_UNAVAILABLE","PREIMAGE_SHA_MISMATCH","SOURCE_ADOPTION_STATE_MISMATCH","REGEX_PREIMAGE_UNAVAILABLE","REGEX_PREIMAGE_SHA_MISMATCH"}|tool_codes
@@ -675,7 +719,7 @@ jobs:
                   except (OSError,UnicodeDecodeError,json.JSONDecodeError,TypeError,KeyError): cpython_installation_error="CPYTHON_INSTALLATION_FACT_INVALID"
           def failed_payload(reason_code,retention):
               raw_uploaded=retention.get("status")=="RETAINED"
-              return {"profile":"umf.core-python314-generation/1","status":"FAIL_OR_UNKNOWN","reasonCode":reason_code,"sourceCommit":os.environ["SOURCE_COMMIT"],"runId":os.environ["RUN_ID"],"runAttempt":os.environ["RUN_ATTEMPT"],"ref":os.environ["SOURCE_REF"],"event":os.environ["EVENT_NAME"],"generationStepOutcome":os.environ.get("GENERATION_OUTCOME"),"lastCommand":last_command,"preflightDiagnostic":preflight_diagnostic,"toolObservation":tool_observation,"toolObservationError":tool_observation_error,"cpythonInstallation":cpython_installation,"cpythonInstallationError":cpython_installation_error,"diagnosticRetention":retention,"aggregateDeadlineSeconds":1800,"childMaximumSeconds":180,"timeoutKillGraceSeconds":10,"cleanupReserveSeconds":60,"aggregateLogLimitBytes":1048576,"aggregateArtifactLimitBytes":16777216,"failureOnlyReceipt":True,"rawLogsUploaded":raw_uploaded,"qualificationClaim":False}
+              return {"profile":"umf.core-python314-generation/1","status":"FAIL_OR_UNKNOWN","reasonCode":reason_code,"sourceCommit":os.environ["SOURCE_COMMIT"],"runId":os.environ["RUN_ID"],"runAttempt":os.environ["RUN_ATTEMPT"],"ref":os.environ["SOURCE_REF"],"event":os.environ["EVENT_NAME"],"generationStepOutcome":os.environ.get("GENERATION_OUTCOME"),"lastCommand":last_command,"predecessorCommandSummaries":predecessor_summary,"preflightDiagnostic":preflight_diagnostic,"toolObservation":tool_observation,"toolObservationError":tool_observation_error,"cpythonInstallation":cpython_installation,"cpythonInstallationError":cpython_installation_error,"diagnosticRetention":retention,"aggregateDeadlineSeconds":1800,"childMaximumSeconds":180,"timeoutKillGraceSeconds":10,"cleanupReserveSeconds":60,"aggregateLogLimitBytes":1048576,"aggregateArtifactLimitBytes":16777216,"failureOnlyReceipt":True,"rawLogsUploaded":raw_uploaded,"qualificationClaim":False}
           def fail(reason_code,retention=None):
               if retention is None: retention={"status":"NOT_RETAINED","reasonCode":"NOT_ELIGIBLE","commandName":None,"commandRecordFile":None,"commandRecordBytes":0,"commandRecordSha256":None,"logFile":None,"logBytes":0,"logSha256":None,"truncated":False}
               if retention.get("status")!="RETAINED": shutil.rmtree(upload,ignore_errors=True); upload.mkdir(parents=True)
@@ -702,7 +746,7 @@ jobs:
                   "generate-independent-info-314":["env","LD_LIBRARY_PATH=/opt/hostedtoolcache/Python/3.14.8/x64/lib","python","-I","crates/umf-core/tools/generate_independent_python_re_info.py","--python314","/opt/hostedtoolcache/Python/3.14.8/x64/bin/python3.14"],
                   "regenerate-action-plan-identity":["bash","-euo","pipefail","-c","bun scripts/actions-plan-identity.ts && bun scripts/actions-plan-identity.ts --check"],
                   "regenerate-codegen-and-check":["bash","-euo","pipefail","-c","bun scripts/build-codegen.ts && bun scripts/build-codegen.ts --check"],
-                  "regenerate-r3-inventory-and-boundaries":["bash","-euo","pipefail","-c","python scripts/rust-inventory.py && bun run check:rust-boundaries"],
+                  "regenerate-r3-inventory-and-boundaries":["bash","-euo","pipefail","-c","echo \"R3_DIAGNOSTIC inventory:start\" >&2\npython \"$RUNNER_TEMP/core-python314-r3-inventory-diagnostic.py\"\necho \"R3_DIAGNOSTIC inventory:passed\" >&2\necho \"R3_DIAGNOSTIC boundaries:start\" >&2\nbun run check:rust-boundaries\necho \"R3_DIAGNOSTIC boundaries:passed\" >&2"],
               }
               if name not in fixed_argv or row.get("stage")!=name or row.get("argv")!=fixed_argv[name]: return not_retained("COMMAND_ARGUMENTS_NOT_RECOGNIZED")
               expected_keys={"name","stage","argv","rawExit","captureExit","monotonicStartMs","monotonicEndMs","monotonicDurationMs","startedAtUtc","endedAtUtc","limitSeconds","logBytes","logSha256","truncated"}
