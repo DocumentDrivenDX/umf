@@ -1,0 +1,97 @@
+{
+  "artifacts": [
+    {
+      "archive_sha256": "7d3766c787a0c5db670092a60e062062fd153b406dc1401d6a25643fcc2f3d02",
+      "id": 12672015690,
+      "name": "umf-core-pypi-release-0.10.0",
+      "receipt": "source-receipt.json"
+    },
+    {
+      "archive_sha256": "085413a0b7d1995e9ea34b61c1618debfa617a06ac714adc4ea82c00372e445e",
+      "id": 12671303614,
+      "name": "umf-core-pypi-publication-0.10.0",
+      "receipt": "publication-receipt.json"
+    },
+    {
+      "archive_sha256": "9b2ac322fc8e76b2d5265e0f1a31023299b20b1eb4ab9a6d695cb972d0e87a0a",
+      "id": 12671927633,
+      "name": "umf-core-pypi-consumer-0.10.0",
+      "receipt": "consumer-receipt.json"
+    }
+  ],
+  "checks": {
+    "all_three_github_jobs_succeeded": true,
+    "artifact_ids_and_archive_digests_match_current_run_artifacts": true,
+    "consumer_receipt_matches_public_index_and_version": true,
+    "publication_matches_source_tag_and_files": true,
+    "receipt_bytes_match_artifact_contents": true,
+    "release_archives_match_the_pinned_file_hashes": true
+  },
+  "consumer": {
+    "index": "https://pypi.org/simple",
+    "status": "passed",
+    "version": "0.10.0"
+  },
+  "publication": {
+    "mode": "oidc_upload",
+    "oidc_trusted_publisher": true,
+    "registry": "pypi",
+    "registry_bytes_verified": true
+  },
+  "receipt_sha256": {
+    "consumer-receipt.json": "b3901ecb87a56b62627af301377176d4cf2a890c5fd71e2e4abb6e9c05ead7e3",
+    "publication-receipt.json": "b329ced1f392ffeb7c631e977ae12ebc74c277e55fa7e240dab0ab901affe0ea",
+    "source-receipt.json": "76430a4c0ccc2ce281aa515ae4df2b0aa3254069a0e3b1fd0c64cad7c7498cb5"
+  },
+  "release": {
+    "distribution": "umf-core",
+    "files": {
+      "umf_core-0.10.0-py3-none-any.whl": "49633924b45a3c8499d4fcc1a24c30d5a8fcb34d974ab019bbda987cb47da0f9",
+      "umf_core-0.10.0.tar.gz": "6b3ad653f95ed5321d5cec69fcaa08037ce1546386b76cbc4e52d1abf19cb19d"
+    },
+    "release_pins_sha256": "8523d66e80c1761505f0c5e1245f842b6ccb8925e03757755cf491296f50bc27",
+    "source_commit": "53de049136c7e41b482d1a73665d031cd5fbaec6",
+    "sums_sha256": "ebd8b92e18b769e530ea7107922ad69b3831a2f5f46071d9d66d858f3cf89bb0",
+    "tag": "umf-v0.5.4",
+    "version": "0.10.0"
+  },
+  "run": {
+    "branch": "main",
+    "completed_at": "2026-10-26T17:37:45Z",
+    "conclusion": "success",
+    "driver_commit": "6337b4b5f65144387ce5c0bbf9cbad955a921c8f",
+    "event": "workflow_dispatch",
+    "id": 40368039611,
+    "jobs": [
+      {
+        "completed_at": "2026-10-26T17:25:15Z",
+        "conclusion": "success",
+        "name": "verify-release",
+        "started_at": "2026-10-26T17:24:24Z"
+      },
+      {
+        "completed_at": "2026-10-26T17:36:41Z",
+        "conclusion": "success",
+        "name": "publish",
+        "started_at": "2026-10-26T17:34:51Z"
+      },
+      {
+        "completed_at": "2026-10-26T17:37:44Z",
+        "conclusion": "success",
+        "name": "installed-consumer",
+        "started_at": "2026-10-26T17:37:29Z"
+      }
+    ],
+    "name": "Publish released UMF core to PyPI",
+    "started_at": "2026-10-26T17:22:43Z"
+  },
+  "schema": "umf.pypi-publication-evidence/1",
+  "scope_limitations": [
+    "Qualifies the exact umf-core 0.10.0 source, OIDC publication, PyPI-served bytes, and clean public-PyPI consumer install.",
+    "Does not establish end-to-end resolution of arras[truss,umf].",
+    "Does not claim any later automatic 0.10.2 publication succeeded.",
+    "Does not broaden native wheel or platform support."
+  ],
+  "status": "passed",
+  "verified_at_utc": "2026-10-26T17:43:19Z"
+}

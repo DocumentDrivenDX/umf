@@ -35,9 +35,14 @@ files and bytes; conflicts and registry errors fail immediately.
 
 A subsequent job without OIDC checks a clean public-PyPI install and installed
 origin. Source-validation, upload, byte and consumer receipts remain separate.
-The approved environment and trusted publisher are configured. Actual backfill
-publication remains pending; configuration alone is not publication evidence. Historical package namespaces and support limits
-remain unchanged. Native producer qualification is a separate release lane.
+The approved environment and trusted publisher are configured. The exact
+`umf-core==0.10.0` backfill passed source verification, OIDC publication,
+PyPI-served byte verification, and a clean public-index consumer install; see
+[the run evidence](evidence/pypi-0.10.0/README.md). This evidence covers the
+core package only. It does not yet establish end-to-end installation of
+`arras[truss,umf]`, or successful automatic publication of a later release.
+Historical package namespaces and support limits remain unchanged. Native
+producer qualification is a separate release lane.
 Only its genuinely compatible, qualified wheel cohort may be selected for PyPI;
 registry publication does not broaden that cohort’s platform or runtime claims.
 
