@@ -1,0 +1,203 @@
+bun test v1.4.3 (c6da4a4d3)
+
+::group::tests/lifecycle/g03-renderer-compatibility.test.ts:
+(pass) typed literal, clock and UUID default rendering remains byte-stable [1.24ms]
+(pass) historical G01 existing-default fill/tighten plan remains byte-identical [459.37ms]
+(pass) historical G02 append/fill/default/tighten plan remains byte-identical [355.84ms]
+
+::endgroup::
+
+::group::tests/lifecycle/g03-discovery-bridge.test.ts:
+(pass) discovery bridge keeps the unselected request/output historical and adds defaults only by selector [392.17ms]
+(pass) discovery bridge refuses null, wrong and unknown selectors and unknown request members [563.08ms]
+
+::endgroup::
+
+::group::tests/lifecycle/migration.test.ts:
+(pass) domain descriptions, reviewed scoped backfills, checks/FKs and concurrent phases have exact source custody [2390.50ms]
+(pass) unacknowledged, duplicate, unrelated or parameterized backfills refuse without erasing source [3128.12ms]
+(pass) concurrent source selections refuse mixed effects and rehashed/unapproved phase substitution [1941.19ms]
+(pass) comments escape SQL text and multibyte identifier bounds are byte-based [1082.04ms]
+(pass) legacy description-bearing deployment bundles retain exact verifier recovery [1665.28ms]
+(pass) removing an authored description explicitly clears its native comment [809.17ms]
+(pass) backfill column generation never parses SQL-looking identifier text [2067.02ms]
+
+::endgroup::
+
+::group::tests/lifecycle/g04-checked-conversion.test.ts:
+112 |   accounting?.visit('hash-node',at);
+113 |   if(typeof v==='string'){appendString(v,at);return;}
+114 |   if(v===null||typeof v==='boolean'||typeof v==='number'&&Number.isFinite(v)){append(JSON.stringify(v),at);return;}
+115 |   if(Array.isArray(v)){append('[',at);v.forEach((item,i)=>{if(i)append(',',at);accounting?.visit('hash-array-slot',`${at}/${i}`);visit(item,`${at}/${i}`);});append(']',at);return;}
+116 |   if(v&&typeof v==='object'){append('{',at);const keys=accounting?ownSortedKeys(v,accounting,at,'hash'):Object.keys(v).sort();keys.forEach((key,i)=>{if(i)append(',',at);accounting?.visit('hash-object-key',`${at}/${key}`);const keyPath=`${at}/${key}`;if(accounting)accounting.retainBytes('canonical-token',jsonStringTokenUtf8Bytes(key),keyPath);append(JSON.stringify(key),keyPath,!!accounting);append(':',at);visit((v as Record<string,unknown>)[key],`${at}/${key}`);});append('}',at);return;}
+117 |   throw new Error('INPUT');
+                               ^
+error: INPUT
+      at visit (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:117:26)
+      at <anonymous> (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:115:130)
+      at forEach (1:11)
+      at visit (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:115:41)
+      at hashCanonicalImpl (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:118:4)
+      at discoverG04TableMigrationChanges (/home/runner/work/umf/umf/src/table-migration/g04-conversion.ts:176:48)
+      at request (/home/runner/work/umf/umf/tests/lifecycle/g04-checked-conversion.test.ts:29:19)
+      at <anonymous> (/home/runner/work/umf/umf/tests/lifecycle/g04-checked-conversion.test.ts:38:15)
+
+::error file=src/compilation/bundle/hash.ts,line=117,col=26,title=error: INPUT::%0A      at visit (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:117:26)%0A      at <anonymous> (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:115:130)%0A      at forEach (1:11)%0A      at visit (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:115:41)%0A      at hashCanonicalImpl (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:118:4)%0A      at discoverG04TableMigrationChanges (/home/runner/work/umf/umf/src/table-migration/g04-conversion.ts:176:48)%0A      at request (/home/runner/work/umf/umf/tests/lifecycle/g04-checked-conversion.test.ts:29:19)%0A      at <anonymous> (/home/runner/work/umf/umf/tests/lifecycle/g04-checked-conversion.test.ts:38:15)
+(fail) G04 .7 emits typed empty-SQL conversion phases and recompiles retained and irreversible recovery choices [115.02ms]
+112 |   accounting?.visit('hash-node',at);
+113 |   if(typeof v==='string'){appendString(v,at);return;}
+114 |   if(v===null||typeof v==='boolean'||typeof v==='number'&&Number.isFinite(v)){append(JSON.stringify(v),at);return;}
+115 |   if(Array.isArray(v)){append('[',at);v.forEach((item,i)=>{if(i)append(',',at);accounting?.visit('hash-array-slot',`${at}/${i}`);visit(item,`${at}/${i}`);});append(']',at);return;}
+116 |   if(v&&typeof v==='object'){append('{',at);const keys=accounting?ownSortedKeys(v,accounting,at,'hash'):Object.keys(v).sort();keys.forEach((key,i)=>{if(i)append(',',at);accounting?.visit('hash-object-key',`${at}/${key}`);const keyPath=`${at}/${key}`;if(accounting)accounting.retainBytes('canonical-token',jsonStringTokenUtf8Bytes(key),keyPath);append(JSON.stringify(key),keyPath,!!accounting);append(':',at);visit((v as Record<string,unknown>)[key],`${at}/${key}`);});append('}',at);return;}
+117 |   throw new Error('INPUT');
+                               ^
+error: INPUT
+      at visit (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:117:26)
+      at <anonymous> (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:115:130)
+      at forEach (1:11)
+      at visit (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:115:41)
+      at hashCanonicalImpl (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:118:4)
+      at discoverG04TableMigrationChanges (/home/runner/work/umf/umf/src/table-migration/g04-conversion.ts:176:48)
+      at request (/home/runner/work/umf/umf/tests/lifecycle/g04-checked-conversion.test.ts:29:19)
+      at <anonymous> (/home/runner/work/umf/umf/tests/lifecycle/g04-checked-conversion.test.ts:51:14)
+
+::error file=src/compilation/bundle/hash.ts,line=117,col=26,title=error: INPUT::%0A      at visit (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:117:26)%0A      at <anonymous> (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:115:130)%0A      at forEach (1:11)%0A      at visit (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:115:41)%0A      at hashCanonicalImpl (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:118:4)%0A      at discoverG04TableMigrationChanges (/home/runner/work/umf/umf/src/table-migration/g04-conversion.ts:176:48)%0A      at request (/home/runner/work/umf/umf/tests/lifecycle/g04-checked-conversion.test.ts:29:19)%0A      at <anonymous> (/home/runner/work/umf/umf/tests/lifecycle/g04-checked-conversion.test.ts:51:14)
+(fail) G04 discovery strips only irreversible marker references and binds complete source meaning [113.86ms]
+112 |   accounting?.visit('hash-node',at);
+113 |   if(typeof v==='string'){appendString(v,at);return;}
+114 |   if(v===null||typeof v==='boolean'||typeof v==='number'&&Number.isFinite(v)){append(JSON.stringify(v),at);return;}
+115 |   if(Array.isArray(v)){append('[',at);v.forEach((item,i)=>{if(i)append(',',at);accounting?.visit('hash-array-slot',`${at}/${i}`);visit(item,`${at}/${i}`);});append(']',at);return;}
+116 |   if(v&&typeof v==='object'){append('{',at);const keys=accounting?ownSortedKeys(v,accounting,at,'hash'):Object.keys(v).sort();keys.forEach((key,i)=>{if(i)append(',',at);accounting?.visit('hash-object-key',`${at}/${key}`);const keyPath=`${at}/${key}`;if(accounting)accounting.retainBytes('canonical-token',jsonStringTokenUtf8Bytes(key),keyPath);append(JSON.stringify(key),keyPath,!!accounting);append(':',at);visit((v as Record<string,unknown>)[key],`${at}/${key}`);});append('}',at);return;}
+117 |   throw new Error('INPUT');
+                               ^
+error: INPUT
+      at visit (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:117:26)
+      at <anonymous> (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:115:130)
+      at forEach (1:11)
+      at visit (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:115:41)
+      at hashCanonicalImpl (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:118:4)
+      at discoverG04TableMigrationChanges (/home/runner/work/umf/umf/src/table-migration/g04-conversion.ts:176:48)
+      at request (/home/runner/work/umf/umf/tests/lifecycle/g04-checked-conversion.test.ts:29:19)
+      at <anonymous> (/home/runner/work/umf/umf/tests/lifecycle/g04-checked-conversion.test.ts:63:18)
+
+::error file=src/compilation/bundle/hash.ts,line=117,col=26,title=error: INPUT::%0A      at visit (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:117:26)%0A      at <anonymous> (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:115:130)%0A      at forEach (1:11)%0A      at visit (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:115:41)%0A      at hashCanonicalImpl (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:118:4)%0A      at discoverG04TableMigrationChanges (/home/runner/work/umf/umf/src/table-migration/g04-conversion.ts:176:48)%0A      at request (/home/runner/work/umf/umf/tests/lifecycle/g04-checked-conversion.test.ts:29:19)%0A      at <anonymous> (/home/runner/work/umf/umf/tests/lifecycle/g04-checked-conversion.test.ts:63:18)
+(fail) G04 rejects unsupported round-trip proof issuance, dependent native closure, stale bindings and legacy conversion qualifiers [112.07ms]
+112 |   accounting?.visit('hash-node',at);
+113 |   if(typeof v==='string'){appendString(v,at);return;}
+114 |   if(v===null||typeof v==='boolean'||typeof v==='number'&&Number.isFinite(v)){append(JSON.stringify(v),at);return;}
+115 |   if(Array.isArray(v)){append('[',at);v.forEach((item,i)=>{if(i)append(',',at);accounting?.visit('hash-array-slot',`${at}/${i}`);visit(item,`${at}/${i}`);});append(']',at);return;}
+116 |   if(v&&typeof v==='object'){append('{',at);const keys=accounting?ownSortedKeys(v,accounting,at,'hash'):Object.keys(v).sort();keys.forEach((key,i)=>{if(i)append(',',at);accounting?.visit('hash-object-key',`${at}/${key}`);const keyPath=`${at}/${key}`;if(accounting)accounting.retainBytes('canonical-token',jsonStringTokenUtf8Bytes(key),keyPath);append(JSON.stringify(key),keyPath,!!accounting);append(':',at);visit((v as Record<string,unknown>)[key],`${at}/${key}`);});append('}',at);return;}
+117 |   throw new Error('INPUT');
+                               ^
+error: INPUT
+      at visit (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:117:26)
+      at <anonymous> (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:115:130)
+      at forEach (1:11)
+      at visit (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:115:41)
+      at hashCanonicalImpl (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:118:4)
+      at discoverG04TableMigrationChanges (/home/runner/work/umf/umf/src/table-migration/g04-conversion.ts:176:48)
+      at request (/home/runner/work/umf/umf/tests/lifecycle/g04-checked-conversion.test.ts:29:19)
+      at <anonymous> (/home/runner/work/umf/umf/tests/lifecycle/g04-checked-conversion.test.ts:71:14)
+
+::error file=src/compilation/bundle/hash.ts,line=117,col=26,title=error: INPUT::%0A      at visit (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:117:26)%0A      at <anonymous> (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:115:130)%0A      at forEach (1:11)%0A      at visit (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:115:41)%0A      at hashCanonicalImpl (/home/runner/work/umf/umf/src/compilation/bundle/hash.ts:118:4)%0A      at discoverG04TableMigrationChanges (/home/runner/work/umf/umf/src/table-migration/g04-conversion.ts:176:48)%0A      at request (/home/runner/work/umf/umf/tests/lifecycle/g04-checked-conversion.test.ts:29:19)%0A      at <anonymous> (/home/runner/work/umf/umf/tests/lifecycle/g04-checked-conversion.test.ts:71:14)
+(fail) G04 .7 schemas describe the closed discovery, options, plan and phase carriers [110.07ms]
+
+::endgroup::
+
+::group::tests/lifecycle/reviewed.test.ts:
+(pass) a column drop needs its exact review marker, compiles a digest-bound drop and rejects changed source [3111.56ms]
+(pass) reviewed middle-column removal preserves unchanged trailing fields by stable Field identity [1160.53ms]
+(pass) column removal and appended fields refuse before producing an incomplete plan at same or mixed counts [2006.36ms]
+(pass) column drops resolve nested policy references by stable field identity and require a reviewed policy rewrite [2220.43ms]
+(pass) column drops detect related-policy references from other selected tables and order reviewed rewrites first [2235.29ms]
+(pass) column drops resolve nested command references independent of object key order [1620.43ms]
+(pass) reviewed column rename and NOT NULL tightening compile only with exact source markers [3667.23ms]
+(pass) renamed columns revoke old column grants before changing the physical name [1190.39ms]
+(pass) type changes require a digest-bound explicit safe PostgreSQL widening conversion [3439.98ms]
+(pass) reviewed index replacement emits an ordered drop and create for the exact source object [2118.12ms]
+(pass) stable-ID index replacement emits both drop and create at the same array position [1431.09ms]
+(pass) reviewed index removal names unreviewed objects and emits an explicit DROP INDEX [1832.65ms]
+(pass) policy revisions require old/new policy digests and update stored policy plus grants [1519.45ms]
+(pass) primary-key replacement requires an exact marker and refuses dependent foreign keys by name [1510.67ms]
+(pass) reviewed primary-key replacement emits ordered DROP and ADD when dependency closure is empty [1744.07ms]
+(pass) reviewed foreign-key replacement drops the old constraint before adding the exact successor [1838.94ms]
+(pass) stable-ID foreign-key replacement emits drop and add at the same array position [1203.57ms]
+(pass) reviewed foreign-key removal requires a marker and emits an explicit constraint drop [1525.02ms]
+(pass) reviewed check-constraint replacement drops the old definition before adding its successor [1997.55ms]
+(pass) reviewed check-constraint removal requires a marker and emits an explicit constraint drop [1438.07ms]
+(pass) selected new foreign keys compile as add-not-valid and separate validation phases [1364.88ms]
+(pass) version 0.2 refuses table inventory changes the phase runtime cannot fence yet [863.59ms]
+(pass) version 0.2 refuses initial publication until the mixed runtime supports it [566.63ms]
+
+::endgroup::
+
+::group::tests/lifecycle/g03-defaults.test.ts:
+(pass) G03 changes one existing target default and preserves immutable target identity [1074.42ms]
+(pass) G03 marker binds full physical and logical target meaning [298.98ms]
+(pass) G03 supports SET and DROP and records an absent-to-literal-NULL change [506.43ms]
+(pass) G03 plan compilation uses portable JSON copying without structuredClone [253.04ms]
+(pass) G03 discovery selector is exact and legacy discovery stays unchanged [121.75ms]
+(pass) G03 opt-in discovery refuses non-JSON sources while unselected legacy YAML behavior remains unchanged [122.01ms]
+(pass) G03 keeps logical-only default changes out of its selector and refuses unrelated source effects [351.69ms]
+(pass) G03 numeric spellings bind separately while the typed DDL is canonical [337.97ms]
+(pass) G03 typed clock and UUID defaults are accepted only on matching native domains [518.23ms]
+(pass) G03 admits exact unrefined Gregorian date literals and preserves typed qualifiers [781.70ms]
+(pass) G03 temporal literal support does not relax non-temporal refinements or logical defaults [118.67ms]
+(pass) G03 refuses retained unknown native and logical qualifiers before source verification [0.89ms]
+(pass) G03 raw-source preflight rejects malformed retained bundles with located diagnostics [0.70ms]
+(pass) G03 native numeric preflight bounds exact integer widths and numeric precision before coefficient allocation [2.89ms]
+(pass) G03 bounds raw numeric native-type qualifiers before numeric preflight [1.07ms]
+(pass) G03 preflight does not invoke accessors before the JSON-safety refusal [109.49ms]
+(pass) G03 preserves the historical .2 missing-predecessor refusal and handles null inputs [96.78ms]
+(pass) G03 preflight preserves the predecessor-specific YAML refusal path [50.59ms]
+(pass) G03 preflight refuses an oversized predecessor literal even when the new source drops it [59.05ms]
+(pass) G03 reports logical-default errors at the actual module element pointer [0.39ms]
+(pass) G03 native fixture retains complete sources and admits one exact default phase [1151.14ms]
+(pass) G03 required target keeps explicit-only commands and rejects retained omission [102.95ms]
+(pass) G03 N04 compares retained-omission sources before any native lifecycle effect [115.61ms]
+
+::endgroup::
+
+::group::tests/lifecycle/table-deployment-operations.test.ts:
+(pass) internal table deployment operation sidecar > records source-site operations without changing public deployment bytes [159.27ms]
+(pass) shared grant rows preserve complete source mappings, authored UPDATE order, all-Key exclusion, and quoted SQL [74.08ms]
+(pass) generated columns are excluded while insertion remains denied for both audiences [69.31ms]
+(pass) large valid comment-rich deployment retains standard bundle admission and copies its bounded private sidecar [6281.48ms]
+(pass) shared grant SQL renderer refuses malformed row variants instead of coercing them [0.30ms]
+(pass) shared source derivation rejects an unrelated Record binding and denied policies produce no row [0.48ms]
+(pass) an allowed person UPDATE with no mutable ordinary column retains its located refusal [56.43ms]
+
+::endgroup::
+
+::group::tests/lifecycle/g11-field-replacement.test.ts:
+(pass) G11 compiles mapping-only removal by Field identity while retaining the removed Field declaration [449.84ms]
+(pass) G11 JSON Schemas admit the compiled plan and reject inconsistent phase carriers [1209.35ms]
+(pass) G11 admits a new Key only from its shifted successor source identity [813.33ms]
+(pass) G11 preserves unaffected authored seeds without replay when a Field mapping changes [447.68ms]
+(pass) G11 supports definition removal at a middle source position and orders multiple fill targets by typed DAG [1172.94ms]
+(pass) G11 binds changed CHECK subjects and orders their removal/addition around the exact Field carriers [562.24ms]
+(pass) G11 binds generated finite-domain CHECK drops and additions to exact Field mappings [939.21ms]
+(pass) G11 permits only source-path relocation of retained inputs after an earlier column is removed [840.87ms]
+(pass) G11 rejects removal of an unselected unused Field and reordering retained operations [753.19ms]
+(pass) G11 projects a seed-free Legal domain replacement while preserving owner/via RLS and batch UPDATE denial [2160.93ms]
+(pass) G11 represents allow-to-deny policy evolution as typed drop/add subjects without treating deny as a grant [517.44ms]
+(pass) G11 represents deny-to-allow policy evolution and restores the typed update grant [507.76ms]
+(pass) internal G11 grant effects retain complete typed table-grant rows for add and revoke [1027.40ms]
+(pass) G11 orders a referenced Key and its cross-table ForeignKey by typed dependency identity [4320.66ms]
+(pass) G11 binds via-policy relationship, ForeignKey, target-Key and terminal Field dependencies [3198.32ms]
+(pass) G11 refuses missing purge review, unrelated logical edits and source-context forgery [1797.88ms]
+(pass) G11 refuses to revise retained authored seed-set behavior [1581.31ms]
+(pass) discovery 0.3 hashes exact source bytes and preserves both pointers for operation identities containing null [311.29ms]
+
+::endgroup::
+
+4 tests failed:
+(fail) G04 .7 emits typed empty-SQL conversion phases and recompiles retained and irreversible recovery choices [115.02ms]
+(fail) G04 discovery strips only irreversible marker references and binds complete source meaning [113.86ms]
+(fail) G04 rejects unsupported round-trip proof issuance, dependent native closure, stale bindings and legacy conversion qualifiers [112.07ms]
+(fail) G04 .7 schemas describe the closed discovery, options, plan and phase carriers [110.07ms]
+
+ 83 pass
+ 4 fail
+ 672 expect() calls
+Ran 87 tests across 8 files. [92.88s]
