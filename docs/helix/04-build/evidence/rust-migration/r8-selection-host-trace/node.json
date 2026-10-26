@@ -1,0 +1,4723 @@
+{
+  "format": "umf.r8.selection-host-trace.node/1",
+  "status": "diagnostic-source-pinned-opt-in-comparison",
+  "runtime": {
+    "node": "v26.12.1",
+    "bun": null
+  },
+  "candidate": "executeCoreElementSelectionHostJson through private Node binding helper; package default root not changed",
+  "package": {
+    "manifestSourceClosureSha256": "ec7202ff4e292556cd60f9b9a0e07bf3260b36b7ddcd00b01fc926f11a2efa74",
+    "referenceBundleSha256": "b95916bdb6b4791b223bd04d84b34b4ff68ad7330658468a529005cefbad68b7",
+    "nodeBundleSha256": "95b61512d49f35c82e28bd0cc3225afdfa043e10adf466efa1c15522cc367069",
+    "addonSha256": "e0112aa834f0bf55a0b0bc631189a1e53341d1f2e6cffb581effff7a09b6d4e1"
+  },
+  "inputs": {
+    "src/model/selection.ts": "db9ff795c112df42e5db2cd1194659bb09e19422ebbd0b7997671e4faf9ae195",
+    "src/model/json.ts": "d0a06bd26beb215d262b92f5c47d5cea9e85291bb4a780f0aea98b8277c15f98",
+    "src/validation/document.ts": "bb88c43790277f67269cea09af251b908e93ddd356a1a4aa8bc10c0cf135720a",
+    "src/validation/constraint-kernel.ts": "968bde65e6e7e8da7ec92849498dbfbe9a71f931c9538094a18c85be5b4a4362",
+    "src/registry/registry.ts": "3fa010311edc23c5dc74826eb7a74a8a19a9a4c41da3031bc66e6f741d1164c1",
+    "bindings/core/node/src/host-json.js": "fb53a11e5d733e0c763fa8f7e3188f825d635f5acd2b83da60b554b4c23e45e7",
+    "bindings/core/node/src/lib.rs": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437",
+    "crates/umf-core/src/selection.rs": "35312a51bebc29acb3b441463c287f41409d9ba2c92b14f369f1f7b0dbe640b1",
+    "crates/umf-core/src/selection_host_json.rs": "105673d2dbef60f252f22e1daea288e7f028c0fce463499afec03531827106df",
+    "crates/umf-core-wire/src/lib.rs": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63",
+    "scripts/rust-migration/r8/selection-host-suite.mjs": "3a77c91ac2433968535409d7a8a640ca5b9183d7f0c49b59b2d60a61b40d54f5",
+    "scripts/rust-migration/r8/selection-host-trace-node.mjs": "7c421e2a2bf6c24fcf639facfc47eb7424e8b415cd7548c24ef6ec8956fc2422",
+    "scripts/rust-migration/r5/selection/input.json": "1d4bc67745d20df018a6275c820ed72c00c82d33caeb541596910d1254b67258",
+    "scripts/rust-migration/r5/selection/frozen-typescript.json": "2fb5429888f34d6bb2684553201f652a68424fc68125a457c6b5e01aeaa7817a",
+    "scripts/rust-migration/r5/selection/frozen-refusals.json": "7abf69091dbf3f24f69ea468436f13fcb6b567317d95f0c70a938bbb1382e49b",
+    "spec/core/schema.json": "a25248b822b5c97f9383e2b4fdc9fa168abb2eeea8119eb36a9ca97b9849c215",
+    "spec/core/semantic-type-reference.schema.json": "e4c7c99cadbf92cf63378aa5e23ce40321b3b132cedd2f6e63dffa3d3c404adf",
+    "spec/core/extension-package.schema.json": "388964bd88cf2107b027dfb4e100ba50571cbe0077388010d2745e6bf796e394",
+    "spec/metamodel/generated/core-constraints.json": "9f5ba3e72e5e475bb46ea2a33e9099ec195effaefe165457a4ac894fc66791fa",
+    "spec/metamodel/generated/domain-policy.json": "5e7d0f0a8e27a2db5afb820653fd8d8ab04a1ef8ad4a1dae2d437b50dce03eb2"
+  },
+  "sourceClosureVerification": {
+    "selectedInputs": 15,
+    "driftCount": 0,
+    "drift": []
+  },
+  "caseCount": 13,
+  "cases": {
+    "warning-diagnostic": {
+      "reference": {
+        "ok": true,
+        "value": {
+          "scope": "core-elements",
+          "referenceScope": "explicit-core-references-item-types-members-and-keys",
+          "source": {
+            "umf": "0.10.0",
+            "id": "selection-host-trace",
+            "vocabularies": {
+              "alpha": {
+                "version": "1.0.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "customer",
+                    "name": "Customer",
+                    "scalarType": "string",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "account",
+                    "name": "Account",
+                    "scalarType": "integer",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "owner",
+                        "module": "sales",
+                        "element": "customer",
+                        "future": "keep"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "extensions": {
+              "alpha": {
+                "value": "alpha"
+              }
+            }
+          },
+          "query": {
+            "references": "none"
+          },
+          "sourceValidation": {
+            "valid": true,
+            "complete": false,
+            "diagnostics": [
+              {
+                "code": "CALLER_WARNING",
+                "path": "/extensions/alpha",
+                "message": "retained warning",
+                "severity": "warning"
+              },
+              {
+                "code": "UNKNOWN_CORE_FIELD",
+                "path": "/modules/0/elements/1/references/0/future",
+                "message": "Field retained without interpretation",
+                "severity": "warning"
+              }
+            ]
+          },
+          "selection": [
+            {
+              "module": "sales",
+              "namespace": "sales",
+              "path": "/modules/0/elements/0",
+              "element": {
+                "id": "customer",
+                "name": "Customer",
+                "scalarType": "string",
+                "extensions": {}
+              },
+              "includedBy": "match"
+            },
+            {
+              "module": "sales",
+              "namespace": "sales",
+              "path": "/modules/0/elements/1",
+              "element": {
+                "id": "account",
+                "name": "Account",
+                "scalarType": "integer",
+                "extensions": {},
+                "references": [
+                  {
+                    "role": "owner",
+                    "module": "sales",
+                    "element": "customer",
+                    "future": "keep"
+                  }
+                ]
+              },
+              "includedBy": "match"
+            }
+          ],
+          "boundaryReferences": [],
+          "boundaryItemTypes": [],
+          "boundaryMembers": [],
+          "boundaryKeyFields": []
+        },
+        "outputPrototypes": {
+          "result": "null",
+          "source": "null",
+          "query": "null",
+          "validation": "null",
+          "selection": "other",
+          "firstEntry": "null",
+          "firstElement": "null"
+        },
+        "outputShape": [
+          {
+            "path": "$",
+            "keys": [
+              "scope",
+              "referenceScope",
+              "source",
+              "query",
+              "sourceValidation",
+              "selection",
+              "boundaryReferences",
+              "boundaryItemTypes",
+              "boundaryMembers",
+              "boundaryKeyFields"
+            ],
+            "descriptors": [
+              {
+                "key": "scope",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "referenceScope",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "source",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "query",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "sourceValidation",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "selection",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryReferences",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryItemTypes",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryMembers",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryKeyFields",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source",
+            "keys": [
+              "umf",
+              "id",
+              "vocabularies",
+              "modules",
+              "extensions"
+            ],
+            "descriptors": [
+              {
+                "key": "umf",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "vocabularies",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "modules",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "extensions",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/vocabularies",
+            "keys": [
+              "alpha"
+            ],
+            "descriptors": [
+              {
+                "key": "alpha",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/vocabularies/alpha",
+            "keys": [
+              "version"
+            ],
+            "descriptors": [
+              {
+                "key": "version",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/modules",
+            "keys": [
+              "0",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/modules/0",
+            "keys": [
+              "id",
+              "namespace",
+              "elements"
+            ],
+            "descriptors": [
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "namespace",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "elements",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/extensions",
+            "keys": [
+              "alpha"
+            ],
+            "descriptors": [
+              {
+                "key": "alpha",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/extensions/alpha",
+            "keys": [
+              "value"
+            ],
+            "descriptors": [
+              {
+                "key": "value",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/query",
+            "keys": [
+              "references"
+            ],
+            "descriptors": [
+              {
+                "key": "references",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation",
+            "keys": [
+              "valid",
+              "complete",
+              "diagnostics"
+            ],
+            "descriptors": [
+              {
+                "key": "valid",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "complete",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "diagnostics",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation/diagnostics",
+            "keys": [
+              "0",
+              "1",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "1",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation/diagnostics/0",
+            "keys": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "descriptors": [
+              {
+                "key": "code",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "message",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "severity",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation/diagnostics/1",
+            "keys": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "descriptors": [
+              {
+                "key": "code",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "message",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "severity",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection",
+            "keys": [
+              "0",
+              "1",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "1",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/0",
+            "keys": [
+              "module",
+              "namespace",
+              "path",
+              "element",
+              "includedBy"
+            ],
+            "descriptors": [
+              {
+                "key": "module",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "namespace",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "element",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "includedBy",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/0/element",
+            "keys": [
+              "id",
+              "name",
+              "scalarType",
+              "extensions"
+            ],
+            "descriptors": [
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "scalarType",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "extensions",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/1",
+            "keys": [
+              "module",
+              "namespace",
+              "path",
+              "element",
+              "includedBy"
+            ],
+            "descriptors": [
+              {
+                "key": "module",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "namespace",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "element",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "includedBy",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/1/element",
+            "keys": [
+              "id",
+              "name",
+              "scalarType",
+              "extensions",
+              "references"
+            ],
+            "descriptors": [
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "scalarType",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "extensions",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "references",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryReferences",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryItemTypes",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryMembers",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryKeyFields",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          }
+        ],
+        "events": [
+          "callback:alpha",
+          "callback-this:registration",
+          "callback-context:/extensions/alpha:document"
+        ]
+      },
+      "optIn": {
+        "ok": false,
+        "thrownIdentity": false,
+        "error": {
+          "name": "UmfError",
+          "code": "HOST_JSON_UNSUPPORTED",
+          "path": "",
+          "message": "Caller-owned Selection semantic callbacks are not implemented by the private host route",
+          "stack": "UmfError: Caller-owned Selection semantic callbacks are not implemented by the private host route\n    at executeHostInput (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/node/src/host-json.js:479:13)\n    at Module.coreElementSelectionHostInput (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/node/src/host-json.js:108:10)\n    at candidate (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:37:57)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:121:33\n    at outcome (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:48:19)\n    at runPair (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:121:19)\n    at runSelectionHostSuite (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:125:3)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:38:16",
+          "ownKeys": [
+            "stack",
+            "message",
+            "code",
+            "path",
+            "name"
+          ]
+        },
+        "events": []
+      },
+      "comparison": {
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": false,
+        "hostTraceEqual": false
+      }
+    },
+    "callback-registration-order": {
+      "reference": {
+        "ok": true,
+        "value": {
+          "scope": "core-elements",
+          "referenceScope": "explicit-core-references-item-types-members-and-keys",
+          "source": {
+            "umf": "0.10.0",
+            "id": "selection-host-trace",
+            "vocabularies": {
+              "alpha": {
+                "version": "1.0.0"
+              },
+              "beta": {
+                "version": "1.0.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "customer",
+                    "name": "Customer",
+                    "scalarType": "string",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "account",
+                    "name": "Account",
+                    "scalarType": "integer",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "owner",
+                        "module": "sales",
+                        "element": "customer",
+                        "future": "keep"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "extensions": {
+              "alpha": {
+                "value": "alpha"
+              },
+              "beta": {
+                "value": "beta"
+              }
+            }
+          },
+          "query": {
+            "references": "none"
+          },
+          "sourceValidation": {
+            "valid": true,
+            "complete": false,
+            "diagnostics": [
+              {
+                "code": "A",
+                "path": "/extensions/alpha",
+                "message": "A warning",
+                "severity": "warning"
+              },
+              {
+                "code": "B",
+                "path": "/extensions/beta",
+                "message": "B warning",
+                "severity": "warning"
+              },
+              {
+                "code": "UNKNOWN_CORE_FIELD",
+                "path": "/modules/0/elements/1/references/0/future",
+                "message": "Field retained without interpretation",
+                "severity": "warning"
+              }
+            ]
+          },
+          "selection": [
+            {
+              "module": "sales",
+              "namespace": "sales",
+              "path": "/modules/0/elements/0",
+              "element": {
+                "id": "customer",
+                "name": "Customer",
+                "scalarType": "string",
+                "extensions": {}
+              },
+              "includedBy": "match"
+            },
+            {
+              "module": "sales",
+              "namespace": "sales",
+              "path": "/modules/0/elements/1",
+              "element": {
+                "id": "account",
+                "name": "Account",
+                "scalarType": "integer",
+                "extensions": {},
+                "references": [
+                  {
+                    "role": "owner",
+                    "module": "sales",
+                    "element": "customer",
+                    "future": "keep"
+                  }
+                ]
+              },
+              "includedBy": "match"
+            }
+          ],
+          "boundaryReferences": [],
+          "boundaryItemTypes": [],
+          "boundaryMembers": [],
+          "boundaryKeyFields": []
+        },
+        "outputPrototypes": {
+          "result": "null",
+          "source": "null",
+          "query": "null",
+          "validation": "null",
+          "selection": "other",
+          "firstEntry": "null",
+          "firstElement": "null"
+        },
+        "outputShape": [
+          {
+            "path": "$",
+            "keys": [
+              "scope",
+              "referenceScope",
+              "source",
+              "query",
+              "sourceValidation",
+              "selection",
+              "boundaryReferences",
+              "boundaryItemTypes",
+              "boundaryMembers",
+              "boundaryKeyFields"
+            ],
+            "descriptors": [
+              {
+                "key": "scope",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "referenceScope",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "source",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "query",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "sourceValidation",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "selection",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryReferences",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryItemTypes",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryMembers",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryKeyFields",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source",
+            "keys": [
+              "umf",
+              "id",
+              "vocabularies",
+              "modules",
+              "extensions"
+            ],
+            "descriptors": [
+              {
+                "key": "umf",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "vocabularies",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "modules",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "extensions",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/vocabularies",
+            "keys": [
+              "alpha",
+              "beta"
+            ],
+            "descriptors": [
+              {
+                "key": "alpha",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "beta",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/vocabularies/alpha",
+            "keys": [
+              "version"
+            ],
+            "descriptors": [
+              {
+                "key": "version",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/vocabularies/beta",
+            "keys": [
+              "version"
+            ],
+            "descriptors": [
+              {
+                "key": "version",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/modules",
+            "keys": [
+              "0",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/modules/0",
+            "keys": [
+              "id",
+              "namespace",
+              "elements"
+            ],
+            "descriptors": [
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "namespace",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "elements",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/extensions",
+            "keys": [
+              "alpha",
+              "beta"
+            ],
+            "descriptors": [
+              {
+                "key": "alpha",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "beta",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/extensions/alpha",
+            "keys": [
+              "value"
+            ],
+            "descriptors": [
+              {
+                "key": "value",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/extensions/beta",
+            "keys": [
+              "value"
+            ],
+            "descriptors": [
+              {
+                "key": "value",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/query",
+            "keys": [
+              "references"
+            ],
+            "descriptors": [
+              {
+                "key": "references",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation",
+            "keys": [
+              "valid",
+              "complete",
+              "diagnostics"
+            ],
+            "descriptors": [
+              {
+                "key": "valid",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "complete",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "diagnostics",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation/diagnostics",
+            "keys": [
+              "0",
+              "1",
+              "2",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "1",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "2",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation/diagnostics/0",
+            "keys": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "descriptors": [
+              {
+                "key": "code",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "message",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "severity",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation/diagnostics/1",
+            "keys": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "descriptors": [
+              {
+                "key": "code",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "message",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "severity",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation/diagnostics/2",
+            "keys": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "descriptors": [
+              {
+                "key": "code",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "message",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "severity",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection",
+            "keys": [
+              "0",
+              "1",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "1",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/0",
+            "keys": [
+              "module",
+              "namespace",
+              "path",
+              "element",
+              "includedBy"
+            ],
+            "descriptors": [
+              {
+                "key": "module",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "namespace",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "element",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "includedBy",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/0/element",
+            "keys": [
+              "id",
+              "name",
+              "scalarType",
+              "extensions"
+            ],
+            "descriptors": [
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "scalarType",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "extensions",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/1",
+            "keys": [
+              "module",
+              "namespace",
+              "path",
+              "element",
+              "includedBy"
+            ],
+            "descriptors": [
+              {
+                "key": "module",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "namespace",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "element",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "includedBy",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/1/element",
+            "keys": [
+              "id",
+              "name",
+              "scalarType",
+              "extensions",
+              "references"
+            ],
+            "descriptors": [
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "scalarType",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "extensions",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "references",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryReferences",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryItemTypes",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryMembers",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryKeyFields",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          }
+        ],
+        "events": [
+          "callback:alpha",
+          "callback-this:registration",
+          "callback-context:/extensions/alpha:document",
+          "callback:beta",
+          "callback-this:registration",
+          "callback-context:/extensions/beta:document"
+        ]
+      },
+      "optIn": {
+        "ok": false,
+        "thrownIdentity": false,
+        "error": {
+          "name": "UmfError",
+          "code": "HOST_JSON_UNSUPPORTED",
+          "path": "",
+          "message": "Caller-owned Selection semantic callbacks are not implemented by the private host route",
+          "stack": "UmfError: Caller-owned Selection semantic callbacks are not implemented by the private host route\n    at executeHostInput (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/node/src/host-json.js:479:13)\n    at Module.coreElementSelectionHostInput (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/node/src/host-json.js:108:10)\n    at candidate (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:37:57)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:121:33\n    at outcome (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:48:19)\n    at runPair (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:121:19)\n    at runSelectionHostSuite (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:128:3)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:38:16",
+          "ownKeys": [
+            "stack",
+            "message",
+            "code",
+            "path",
+            "name"
+          ]
+        },
+        "events": []
+      },
+      "comparison": {
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": false,
+        "hostTraceEqual": false
+      }
+    },
+    "callback-throws-error": {
+      "reference": {
+        "ok": false,
+        "thrownIdentity": false,
+        "error": {
+          "name": "UmfError",
+          "code": "CORE_SELECTION_SOURCE",
+          "path": "",
+          "message": "[{\"code\":\"VALIDATOR_FAILURE\",\"path\":\"/extensions/alpha\",\"message\":\"Error: callback failed\",\"severity\":\"error\"},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/1/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"}]",
+          "stack": "UmfError: [{\"code\":\"VALIDATOR_FAILURE\",\"path\":\"/extensions/alpha\",\"message\":\"Error: callback failed\",\"severity\":\"error\"},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/1/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"}]\n    at selectCoreElements (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:104314:11)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:120:37\n    at outcome (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:48:19)\n    at runPair (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:120:23)\n    at runSelectionHostSuite (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:134:3)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:38:16",
+          "ownKeys": [
+            "stack",
+            "message",
+            "code",
+            "path",
+            "name"
+          ]
+        },
+        "events": [
+          "callback:alpha",
+          "callback-this:registration",
+          "callback-context:/extensions/alpha:document"
+        ]
+      },
+      "optIn": {
+        "ok": false,
+        "thrownIdentity": false,
+        "error": {
+          "name": "UmfError",
+          "code": "HOST_JSON_UNSUPPORTED",
+          "path": "",
+          "message": "Caller-owned Selection semantic callbacks are not implemented by the private host route",
+          "stack": "UmfError: Caller-owned Selection semantic callbacks are not implemented by the private host route\n    at executeHostInput (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/node/src/host-json.js:479:13)\n    at Module.coreElementSelectionHostInput (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/node/src/host-json.js:108:10)\n    at candidate (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:37:57)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:121:33\n    at outcome (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:48:19)\n    at runPair (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:121:19)\n    at runSelectionHostSuite (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:134:3)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:38:16",
+          "ownKeys": [
+            "stack",
+            "message",
+            "code",
+            "path",
+            "name"
+          ]
+        },
+        "events": []
+      },
+      "comparison": {
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": true,
+        "hostTraceEqual": false
+      }
+    },
+    "callback-throws-string": {
+      "reference": {
+        "ok": false,
+        "thrownIdentity": false,
+        "error": {
+          "name": "UmfError",
+          "code": "CORE_SELECTION_SOURCE",
+          "path": "",
+          "message": "[{\"code\":\"VALIDATOR_FAILURE\",\"path\":\"/extensions/alpha\",\"message\":\"callback failed\",\"severity\":\"error\"},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/1/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"}]",
+          "stack": "UmfError: [{\"code\":\"VALIDATOR_FAILURE\",\"path\":\"/extensions/alpha\",\"message\":\"callback failed\",\"severity\":\"error\"},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/1/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"}]\n    at selectCoreElements (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:104314:11)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:120:37\n    at outcome (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:48:19)\n    at runPair (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:120:23)\n    at runSelectionHostSuite (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:137:3)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:38:16",
+          "ownKeys": [
+            "stack",
+            "message",
+            "code",
+            "path",
+            "name"
+          ]
+        },
+        "events": [
+          "callback:alpha",
+          "callback-this:registration",
+          "callback-context:/extensions/alpha:document"
+        ]
+      },
+      "optIn": {
+        "ok": false,
+        "thrownIdentity": false,
+        "error": {
+          "name": "UmfError",
+          "code": "HOST_JSON_UNSUPPORTED",
+          "path": "",
+          "message": "Caller-owned Selection semantic callbacks are not implemented by the private host route",
+          "stack": "UmfError: Caller-owned Selection semantic callbacks are not implemented by the private host route\n    at executeHostInput (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/node/src/host-json.js:479:13)\n    at Module.coreElementSelectionHostInput (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/node/src/host-json.js:108:10)\n    at candidate (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:37:57)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:121:33\n    at outcome (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:48:19)\n    at runPair (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:121:19)\n    at runSelectionHostSuite (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:137:3)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:38:16",
+          "ownKeys": [
+            "stack",
+            "message",
+            "code",
+            "path",
+            "name"
+          ]
+        },
+        "events": []
+      },
+      "comparison": {
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": true,
+        "hostTraceEqual": false
+      }
+    },
+    "callback-throws-custom-to-string": {
+      "reference": {
+        "ok": false,
+        "thrownIdentity": false,
+        "error": {
+          "name": "UmfError",
+          "code": "CORE_SELECTION_SOURCE",
+          "path": "",
+          "message": "[{\"code\":\"VALIDATOR_FAILURE\",\"path\":\"/extensions/alpha\",\"message\":\"custom callback failure\",\"severity\":\"error\"},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/1/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"}]",
+          "stack": "UmfError: [{\"code\":\"VALIDATOR_FAILURE\",\"path\":\"/extensions/alpha\",\"message\":\"custom callback failure\",\"severity\":\"error\"},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/1/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"}]\n    at selectCoreElements (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:104314:11)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:120:37\n    at outcome (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:48:19)\n    at runPair (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:120:23)\n    at runSelectionHostSuite (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:140:3)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:38:16",
+          "ownKeys": [
+            "stack",
+            "message",
+            "code",
+            "path",
+            "name"
+          ]
+        },
+        "events": [
+          "callback:alpha",
+          "callback-this:registration",
+          "callback-context:/extensions/alpha:document",
+          "thrown:toString"
+        ]
+      },
+      "optIn": {
+        "ok": false,
+        "thrownIdentity": false,
+        "error": {
+          "name": "UmfError",
+          "code": "HOST_JSON_UNSUPPORTED",
+          "path": "",
+          "message": "Caller-owned Selection semantic callbacks are not implemented by the private host route",
+          "stack": "UmfError: Caller-owned Selection semantic callbacks are not implemented by the private host route\n    at executeHostInput (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/node/src/host-json.js:479:13)\n    at Module.coreElementSelectionHostInput (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/node/src/host-json.js:108:10)\n    at candidate (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:37:57)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:121:33\n    at outcome (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:48:19)\n    at runPair (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:121:19)\n    at runSelectionHostSuite (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:140:3)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:38:16",
+          "ownKeys": [
+            "stack",
+            "message",
+            "code",
+            "path",
+            "name"
+          ]
+        },
+        "events": []
+      },
+      "comparison": {
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": true,
+        "hostTraceEqual": false
+      }
+    },
+    "callback-invalid-result": {
+      "reference": {
+        "ok": false,
+        "thrownIdentity": false,
+        "error": {
+          "name": "UmfError",
+          "code": "CONSTRAINT_DIAGNOSTIC",
+          "path": "",
+          "message": "Malformed diagnostic",
+          "stack": "UmfError: Malformed diagnostic\n    at emit (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:93153:13)\n    at execute (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:93173:13)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:93165:44\n    at Array.forEach (<anonymous>)\n    at execute (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:93165:18)\n    at interpretConstraints (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:93187:3)\n    at runCoreConstraints (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:93194:10)\n    at validateDocument (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:93217:23)\n    at selectCoreElements (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:104312:28)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:120:37",
+          "ownKeys": [
+            "stack",
+            "message",
+            "code",
+            "path",
+            "name"
+          ]
+        },
+        "events": [
+          "callback:alpha",
+          "callback-this:registration",
+          "callback-context:/extensions/alpha:document"
+        ]
+      },
+      "optIn": {
+        "ok": false,
+        "thrownIdentity": false,
+        "error": {
+          "name": "UmfError",
+          "code": "HOST_JSON_UNSUPPORTED",
+          "path": "",
+          "message": "Caller-owned Selection semantic callbacks are not implemented by the private host route",
+          "stack": "UmfError: Caller-owned Selection semantic callbacks are not implemented by the private host route\n    at executeHostInput (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/node/src/host-json.js:479:13)\n    at Module.coreElementSelectionHostInput (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/node/src/host-json.js:108:10)\n    at candidate (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:37:57)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:121:33\n    at outcome (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:48:19)\n    at runPair (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:121:19)\n    at runSelectionHostSuite (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:143:3)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:38:16",
+          "ownKeys": [
+            "stack",
+            "message",
+            "code",
+            "path",
+            "name"
+          ]
+        },
+        "events": []
+      },
+      "comparison": {
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": true,
+        "hostTraceEqual": false
+      }
+    },
+    "invalid-query-before-registry-reflection": {
+      "reference": {
+        "ok": false,
+        "thrownIdentity": false,
+        "error": {
+          "name": "UmfError",
+          "code": "CORE_SELECTION_QUERY",
+          "path": "",
+          "message": "Expected exact core filters and explicit reference traversal policy",
+          "stack": "UmfError: Expected exact core filters and explicit reference traversal policy\n    at selectCoreElements (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:104311:11)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:120:37\n    at outcome (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:48:19)\n    at runPair (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:120:23)\n    at runSelectionHostSuite (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:146:3)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:38:16",
+          "ownKeys": [
+            "stack",
+            "message",
+            "code",
+            "path",
+            "name"
+          ]
+        },
+        "events": []
+      },
+      "optIn": {
+        "ok": false,
+        "thrownIdentity": false,
+        "error": {
+          "name": "UmfError",
+          "code": "CORE_SELECTION_QUERY",
+          "path": "",
+          "message": "Expected exact core filters and explicit reference traversal policy",
+          "stack": "UmfError: Expected exact core filters and explicit reference traversal policy\n    at executeHostInput (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/node/src/host-json.js:479:13)\n    at Module.coreElementSelectionHostInput (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/node/src/host-json.js:108:10)\n    at candidate (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:37:57)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:121:33\n    at outcome (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:48:19)\n    at runPair (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:121:19)\n    at runSelectionHostSuite (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:146:3)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:38:16",
+          "ownKeys": [
+            "stack",
+            "message",
+            "code",
+            "path",
+            "name"
+          ]
+        },
+        "events": []
+      },
+      "comparison": {
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": true,
+        "hostTraceEqual": true
+      }
+    },
+    "invalid-source-before-callback": {
+      "reference": {
+        "ok": false,
+        "thrownIdentity": false,
+        "error": {
+          "name": "UmfError",
+          "code": "CORE_SELECTION_SOURCE",
+          "path": "",
+          "message": "[{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/0/id\",\"message\":\"must NOT have fewer than 1 characters\",\"severity\":\"error\"}]",
+          "stack": "UmfError: [{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/0/id\",\"message\":\"must NOT have fewer than 1 characters\",\"severity\":\"error\"}]\n    at selectCoreElements (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:104314:11)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:120:37\n    at outcome (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:48:19)\n    at runPair (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:120:23)\n    at runSelectionHostSuite (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:149:3)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:38:16",
+          "ownKeys": [
+            "stack",
+            "message",
+            "code",
+            "path",
+            "name"
+          ]
+        },
+        "events": []
+      },
+      "optIn": {
+        "ok": false,
+        "thrownIdentity": false,
+        "error": {
+          "name": "UmfError",
+          "code": "CORE_SELECTION_SOURCE",
+          "path": "",
+          "message": "[{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/0/id\",\"message\":\"must NOT have fewer than 1 characters\",\"severity\":\"error\"}]",
+          "stack": "UmfError: [{\"code\":\"SEMANTIC_TYPE_STRUCTURE\",\"path\":\"/modules/0/elements/0/id\",\"message\":\"must NOT have fewer than 1 characters\",\"severity\":\"error\"}]\n    at executeHostInput (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/node/src/host-json.js:479:13)\n    at Module.coreElementSelectionHostInput (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/node/src/host-json.js:108:10)\n    at candidate (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:37:57)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:121:33\n    at outcome (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:48:19)\n    at runPair (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:121:19)\n    at runSelectionHostSuite (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:149:3)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:38:16",
+          "ownKeys": [
+            "stack",
+            "message",
+            "code",
+            "path",
+            "name"
+          ]
+        },
+        "events": []
+      },
+      "comparison": {
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": true,
+        "hostTraceEqual": true
+      }
+    },
+    "empty-result-still-runs-source-validation": {
+      "reference": {
+        "ok": true,
+        "value": {
+          "scope": "core-elements",
+          "referenceScope": "explicit-core-references-item-types-members-and-keys",
+          "source": {
+            "umf": "0.10.0",
+            "id": "selection-host-trace",
+            "vocabularies": {
+              "alpha": {
+                "version": "1.0.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "customer",
+                    "name": "Customer",
+                    "scalarType": "string",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "account",
+                    "name": "Account",
+                    "scalarType": "integer",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "owner",
+                        "module": "sales",
+                        "element": "customer",
+                        "future": "keep"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "extensions": {
+              "alpha": {
+                "value": "alpha"
+              }
+            }
+          },
+          "query": {
+            "references": "none",
+            "names": []
+          },
+          "sourceValidation": {
+            "valid": true,
+            "complete": false,
+            "diagnostics": [
+              {
+                "code": "CALLER_WARNING",
+                "path": "/extensions/alpha",
+                "message": "retained warning",
+                "severity": "warning"
+              },
+              {
+                "code": "UNKNOWN_CORE_FIELD",
+                "path": "/modules/0/elements/1/references/0/future",
+                "message": "Field retained without interpretation",
+                "severity": "warning"
+              }
+            ]
+          },
+          "selection": [],
+          "boundaryReferences": [],
+          "boundaryItemTypes": [],
+          "boundaryMembers": [],
+          "boundaryKeyFields": []
+        },
+        "outputPrototypes": {
+          "result": "null",
+          "source": "null",
+          "query": "null",
+          "validation": "null",
+          "selection": "other",
+          "firstEntry": "undefined",
+          "firstElement": "undefined"
+        },
+        "outputShape": [
+          {
+            "path": "$",
+            "keys": [
+              "scope",
+              "referenceScope",
+              "source",
+              "query",
+              "sourceValidation",
+              "selection",
+              "boundaryReferences",
+              "boundaryItemTypes",
+              "boundaryMembers",
+              "boundaryKeyFields"
+            ],
+            "descriptors": [
+              {
+                "key": "scope",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "referenceScope",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "source",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "query",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "sourceValidation",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "selection",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryReferences",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryItemTypes",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryMembers",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryKeyFields",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source",
+            "keys": [
+              "umf",
+              "id",
+              "vocabularies",
+              "modules",
+              "extensions"
+            ],
+            "descriptors": [
+              {
+                "key": "umf",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "vocabularies",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "modules",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "extensions",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/vocabularies",
+            "keys": [
+              "alpha"
+            ],
+            "descriptors": [
+              {
+                "key": "alpha",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/vocabularies/alpha",
+            "keys": [
+              "version"
+            ],
+            "descriptors": [
+              {
+                "key": "version",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/modules",
+            "keys": [
+              "0",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/modules/0",
+            "keys": [
+              "id",
+              "namespace",
+              "elements"
+            ],
+            "descriptors": [
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "namespace",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "elements",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/extensions",
+            "keys": [
+              "alpha"
+            ],
+            "descriptors": [
+              {
+                "key": "alpha",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/extensions/alpha",
+            "keys": [
+              "value"
+            ],
+            "descriptors": [
+              {
+                "key": "value",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/query",
+            "keys": [
+              "references",
+              "names"
+            ],
+            "descriptors": [
+              {
+                "key": "references",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "names",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/query/names",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation",
+            "keys": [
+              "valid",
+              "complete",
+              "diagnostics"
+            ],
+            "descriptors": [
+              {
+                "key": "valid",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "complete",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "diagnostics",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation/diagnostics",
+            "keys": [
+              "0",
+              "1",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "1",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation/diagnostics/0",
+            "keys": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "descriptors": [
+              {
+                "key": "code",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "message",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "severity",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation/diagnostics/1",
+            "keys": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "descriptors": [
+              {
+                "key": "code",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "message",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "severity",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryReferences",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryItemTypes",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryMembers",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryKeyFields",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          }
+        ],
+        "events": [
+          "callback:alpha",
+          "callback-this:registration",
+          "callback-context:/extensions/alpha:document"
+        ]
+      },
+      "optIn": {
+        "ok": false,
+        "thrownIdentity": false,
+        "error": {
+          "name": "UmfError",
+          "code": "HOST_JSON_UNSUPPORTED",
+          "path": "",
+          "message": "Caller-owned Selection semantic callbacks are not implemented by the private host route",
+          "stack": "UmfError: Caller-owned Selection semantic callbacks are not implemented by the private host route\n    at executeHostInput (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/node/src/host-json.js:479:13)\n    at Module.coreElementSelectionHostInput (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/node/src/host-json.js:108:10)\n    at candidate (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:37:57)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:121:33\n    at outcome (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:48:19)\n    at runPair (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:121:19)\n    at runSelectionHostSuite (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:155:3)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:38:16",
+          "ownKeys": [
+            "stack",
+            "message",
+            "code",
+            "path",
+            "name"
+          ]
+        },
+        "events": []
+      },
+      "comparison": {
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": false,
+        "hostTraceEqual": false
+      }
+    },
+    "budget-before-registry-callback": {
+      "reference": {
+        "ok": false,
+        "thrownIdentity": false,
+        "error": {
+          "name": "UmfError",
+          "code": "LIMIT",
+          "path": "/extensions/alpha/oversized/99972",
+          "message": "JSON structural limit exceeded",
+          "stack": "UmfError: JSON structural limit exceeded\n    at visit (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:84848:13)\n    at visit (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:84875:20)\n    at visit (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:84875:20)\n    at visit (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:84875:20)\n    at visit (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:84875:20)\n    at copyJsonCharged (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:84883:10)\n    at copyJson (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:84840:10)\n    at selectCoreElements (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/dist/umf.js:104307:18)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:120:37\n    at outcome (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:48:19)",
+          "ownKeys": [
+            "stack",
+            "message",
+            "code",
+            "path",
+            "name"
+          ]
+        },
+        "events": []
+      },
+      "optIn": {
+        "ok": false,
+        "thrownIdentity": false,
+        "error": {
+          "name": "UmfError",
+          "code": "LIMIT",
+          "path": "/extensions/alpha/oversized/99972",
+          "message": "JSON structural limit exceeded",
+          "stack": "UmfError: JSON structural limit exceeded\n    at executeHostInput (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/node/src/host-json.js:479:13)\n    at Module.coreElementSelectionHostInput (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/node/src/host-json.js:108:10)\n    at candidate (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:37:57)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:121:33\n    at outcome (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:48:19)\n    at runPair (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:121:19)\n    at runSelectionHostSuite (file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-suite.mjs:158:3)\n    at file:///Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-migration/r8/selection-host-trace-node.mjs:38:16",
+          "ownKeys": [
+            "stack",
+            "message",
+            "code",
+            "path",
+            "name"
+          ]
+        },
+        "events": []
+      },
+      "comparison": {
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": true,
+        "hostTraceEqual": true
+      }
+    },
+    "kind-runtime-delegation": {
+      "reference": {
+        "ok": true,
+        "value": {
+          "scope": "core-elements",
+          "referenceScope": "explicit-core-references-item-types-members-and-keys",
+          "source": {
+            "umf": "0.10.0",
+            "id": "selection-host-trace",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "customer",
+                    "name": "Customer",
+                    "scalarType": "string",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "account",
+                    "name": "Account",
+                    "scalarType": "integer",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "owner",
+                        "module": "sales",
+                        "element": "customer",
+                        "future": "keep"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "query": {
+            "references": "none"
+          },
+          "sourceValidation": {
+            "valid": true,
+            "complete": true,
+            "diagnostics": []
+          },
+          "selection": [
+            {
+              "module": "sales",
+              "namespace": "sales",
+              "path": "/modules/0/elements/0",
+              "element": {
+                "id": "customer",
+                "name": "Customer",
+                "scalarType": "string",
+                "extensions": {}
+              },
+              "includedBy": "match"
+            },
+            {
+              "module": "sales",
+              "namespace": "sales",
+              "path": "/modules/0/elements/1",
+              "element": {
+                "id": "account",
+                "name": "Account",
+                "scalarType": "integer",
+                "extensions": {},
+                "references": [
+                  {
+                    "role": "owner",
+                    "module": "sales",
+                    "element": "customer",
+                    "future": "keep"
+                  }
+                ]
+              },
+              "includedBy": "match"
+            }
+          ],
+          "boundaryReferences": [],
+          "boundaryItemTypes": [],
+          "boundaryMembers": [],
+          "boundaryKeyFields": []
+        },
+        "outputPrototypes": {
+          "result": "null",
+          "source": "null",
+          "query": "null",
+          "validation": "null",
+          "selection": "other",
+          "firstEntry": "null",
+          "firstElement": "null"
+        },
+        "outputShape": [
+          {
+            "path": "$",
+            "keys": [
+              "scope",
+              "referenceScope",
+              "source",
+              "query",
+              "sourceValidation",
+              "selection",
+              "boundaryReferences",
+              "boundaryItemTypes",
+              "boundaryMembers",
+              "boundaryKeyFields"
+            ],
+            "descriptors": [
+              {
+                "key": "scope",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "referenceScope",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "source",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "query",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "sourceValidation",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "selection",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryReferences",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryItemTypes",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryMembers",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryKeyFields",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source",
+            "keys": [
+              "umf",
+              "id",
+              "vocabularies",
+              "modules"
+            ],
+            "descriptors": [
+              {
+                "key": "umf",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "vocabularies",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "modules",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/vocabularies",
+            "keys": [],
+            "descriptors": []
+          },
+          {
+            "path": "$/source/modules",
+            "keys": [
+              "0",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/modules/0",
+            "keys": [
+              "id",
+              "namespace",
+              "elements"
+            ],
+            "descriptors": [
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "namespace",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "elements",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/query",
+            "keys": [
+              "references"
+            ],
+            "descriptors": [
+              {
+                "key": "references",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation",
+            "keys": [
+              "valid",
+              "complete",
+              "diagnostics"
+            ],
+            "descriptors": [
+              {
+                "key": "valid",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "complete",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "diagnostics",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation/diagnostics",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection",
+            "keys": [
+              "0",
+              "1",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "1",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/0",
+            "keys": [
+              "module",
+              "namespace",
+              "path",
+              "element",
+              "includedBy"
+            ],
+            "descriptors": [
+              {
+                "key": "module",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "namespace",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "element",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "includedBy",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/0/element",
+            "keys": [
+              "id",
+              "name",
+              "scalarType",
+              "extensions"
+            ],
+            "descriptors": [
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "scalarType",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "extensions",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/1",
+            "keys": [
+              "module",
+              "namespace",
+              "path",
+              "element",
+              "includedBy"
+            ],
+            "descriptors": [
+              {
+                "key": "module",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "namespace",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "element",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "includedBy",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/1/element",
+            "keys": [
+              "id",
+              "name",
+              "scalarType",
+              "extensions",
+              "references"
+            ],
+            "descriptors": [
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "scalarType",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "extensions",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "references",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryReferences",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryItemTypes",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryMembers",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryKeyFields",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          }
+        ],
+        "events": [
+          "registry:registrations",
+          "kindRuntime:validateDocument:0"
+        ]
+      },
+      "optIn": {
+        "ok": true,
+        "value": {
+          "scope": "core-elements",
+          "referenceScope": "explicit-core-references-item-types-members-and-keys",
+          "source": {
+            "umf": "0.10.0",
+            "id": "selection-host-trace",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "customer",
+                    "name": "Customer",
+                    "scalarType": "string",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "account",
+                    "name": "Account",
+                    "scalarType": "integer",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "owner",
+                        "module": "sales",
+                        "element": "customer",
+                        "future": "keep"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "query": {
+            "references": "none"
+          },
+          "sourceValidation": {
+            "valid": true,
+            "complete": false,
+            "diagnostics": [
+              {
+                "code": "UNKNOWN_CORE_FIELD",
+                "path": "/modules/0/elements/1/references/0/future",
+                "message": "Field retained without interpretation",
+                "severity": "warning"
+              }
+            ]
+          },
+          "selection": [
+            {
+              "module": "sales",
+              "namespace": "sales",
+              "path": "/modules/0/elements/0",
+              "element": {
+                "id": "customer",
+                "name": "Customer",
+                "scalarType": "string",
+                "extensions": {}
+              },
+              "includedBy": "match"
+            },
+            {
+              "module": "sales",
+              "namespace": "sales",
+              "path": "/modules/0/elements/1",
+              "element": {
+                "id": "account",
+                "name": "Account",
+                "scalarType": "integer",
+                "extensions": {},
+                "references": [
+                  {
+                    "role": "owner",
+                    "module": "sales",
+                    "element": "customer",
+                    "future": "keep"
+                  }
+                ]
+              },
+              "includedBy": "match"
+            }
+          ],
+          "boundaryReferences": [],
+          "boundaryItemTypes": [],
+          "boundaryMembers": [],
+          "boundaryKeyFields": []
+        },
+        "outputPrototypes": {
+          "result": "null",
+          "source": "null",
+          "query": "null",
+          "validation": "null",
+          "selection": "other",
+          "firstEntry": "null",
+          "firstElement": "null"
+        },
+        "outputShape": [
+          {
+            "path": "$",
+            "keys": [
+              "scope",
+              "referenceScope",
+              "source",
+              "query",
+              "sourceValidation",
+              "selection",
+              "boundaryReferences",
+              "boundaryItemTypes",
+              "boundaryMembers",
+              "boundaryKeyFields"
+            ],
+            "descriptors": [
+              {
+                "key": "scope",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "referenceScope",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "source",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "query",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "sourceValidation",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "selection",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryReferences",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryItemTypes",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryMembers",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryKeyFields",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source",
+            "keys": [
+              "umf",
+              "id",
+              "vocabularies",
+              "modules"
+            ],
+            "descriptors": [
+              {
+                "key": "umf",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "vocabularies",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "modules",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/vocabularies",
+            "keys": [],
+            "descriptors": []
+          },
+          {
+            "path": "$/source/modules",
+            "keys": [
+              "0",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/modules/0",
+            "keys": [
+              "id",
+              "namespace",
+              "elements"
+            ],
+            "descriptors": [
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "namespace",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "elements",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/query",
+            "keys": [
+              "references"
+            ],
+            "descriptors": [
+              {
+                "key": "references",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation",
+            "keys": [
+              "valid",
+              "complete",
+              "diagnostics"
+            ],
+            "descriptors": [
+              {
+                "key": "valid",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "complete",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "diagnostics",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation/diagnostics",
+            "keys": [
+              "0",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation/diagnostics/0",
+            "keys": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "descriptors": [
+              {
+                "key": "code",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "message",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "severity",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection",
+            "keys": [
+              "0",
+              "1",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "1",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/0",
+            "keys": [
+              "module",
+              "namespace",
+              "path",
+              "element",
+              "includedBy"
+            ],
+            "descriptors": [
+              {
+                "key": "module",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "namespace",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "element",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "includedBy",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/0/element",
+            "keys": [
+              "id",
+              "name",
+              "scalarType",
+              "extensions"
+            ],
+            "descriptors": [
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "scalarType",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "extensions",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/1",
+            "keys": [
+              "module",
+              "namespace",
+              "path",
+              "element",
+              "includedBy"
+            ],
+            "descriptors": [
+              {
+                "key": "module",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "namespace",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "element",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "includedBy",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/1/element",
+            "keys": [
+              "id",
+              "name",
+              "scalarType",
+              "extensions",
+              "references"
+            ],
+            "descriptors": [
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "scalarType",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "extensions",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "references",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryReferences",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryItemTypes",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryMembers",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryKeyFields",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          }
+        ],
+        "events": []
+      },
+      "comparison": {
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": false,
+        "hostTraceEqual": false
+      }
+    },
+    "source-then-query-copy-and-output-prototypes": {
+      "reference": {
+        "ok": true,
+        "value": {
+          "scope": "core-elements",
+          "referenceScope": "explicit-core-references-item-types-members-and-keys",
+          "source": {
+            "umf": "0.10.0",
+            "id": "selection-host-trace",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "customer",
+                    "name": "Customer",
+                    "scalarType": "string",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "account",
+                    "name": "Account",
+                    "scalarType": "integer",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "owner",
+                        "module": "sales",
+                        "element": "customer",
+                        "future": "keep"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "query": {
+            "references": "none"
+          },
+          "sourceValidation": {
+            "valid": true,
+            "complete": false,
+            "diagnostics": [
+              {
+                "code": "UNKNOWN_CORE_FIELD",
+                "path": "/modules/0/elements/1/references/0/future",
+                "message": "Field retained without interpretation",
+                "severity": "warning"
+              }
+            ]
+          },
+          "selection": [
+            {
+              "module": "sales",
+              "namespace": "sales",
+              "path": "/modules/0/elements/0",
+              "element": {
+                "id": "customer",
+                "name": "Customer",
+                "scalarType": "string",
+                "extensions": {}
+              },
+              "includedBy": "match"
+            },
+            {
+              "module": "sales",
+              "namespace": "sales",
+              "path": "/modules/0/elements/1",
+              "element": {
+                "id": "account",
+                "name": "Account",
+                "scalarType": "integer",
+                "extensions": {},
+                "references": [
+                  {
+                    "role": "owner",
+                    "module": "sales",
+                    "element": "customer",
+                    "future": "keep"
+                  }
+                ]
+              },
+              "includedBy": "match"
+            }
+          ],
+          "boundaryReferences": [],
+          "boundaryItemTypes": [],
+          "boundaryMembers": [],
+          "boundaryKeyFields": []
+        },
+        "outputPrototypes": {
+          "result": "null",
+          "source": "null",
+          "query": "null",
+          "validation": "null",
+          "selection": "other",
+          "firstEntry": "null",
+          "firstElement": "null"
+        },
+        "outputShape": [
+          {
+            "path": "$",
+            "keys": [
+              "scope",
+              "referenceScope",
+              "source",
+              "query",
+              "sourceValidation",
+              "selection",
+              "boundaryReferences",
+              "boundaryItemTypes",
+              "boundaryMembers",
+              "boundaryKeyFields"
+            ],
+            "descriptors": [
+              {
+                "key": "scope",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "referenceScope",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "source",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "query",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "sourceValidation",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "selection",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryReferences",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryItemTypes",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryMembers",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryKeyFields",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source",
+            "keys": [
+              "umf",
+              "id",
+              "vocabularies",
+              "modules"
+            ],
+            "descriptors": [
+              {
+                "key": "umf",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "vocabularies",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "modules",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/vocabularies",
+            "keys": [],
+            "descriptors": []
+          },
+          {
+            "path": "$/source/modules",
+            "keys": [
+              "0",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/modules/0",
+            "keys": [
+              "id",
+              "namespace",
+              "elements"
+            ],
+            "descriptors": [
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "namespace",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "elements",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/query",
+            "keys": [
+              "references"
+            ],
+            "descriptors": [
+              {
+                "key": "references",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation",
+            "keys": [
+              "valid",
+              "complete",
+              "diagnostics"
+            ],
+            "descriptors": [
+              {
+                "key": "valid",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "complete",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "diagnostics",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation/diagnostics",
+            "keys": [
+              "0",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation/diagnostics/0",
+            "keys": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "descriptors": [
+              {
+                "key": "code",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "message",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "severity",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection",
+            "keys": [
+              "0",
+              "1",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "1",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/0",
+            "keys": [
+              "module",
+              "namespace",
+              "path",
+              "element",
+              "includedBy"
+            ],
+            "descriptors": [
+              {
+                "key": "module",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "namespace",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "element",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "includedBy",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/0/element",
+            "keys": [
+              "id",
+              "name",
+              "scalarType",
+              "extensions"
+            ],
+            "descriptors": [
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "scalarType",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "extensions",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/1",
+            "keys": [
+              "module",
+              "namespace",
+              "path",
+              "element",
+              "includedBy"
+            ],
+            "descriptors": [
+              {
+                "key": "module",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "namespace",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "element",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "includedBy",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/1/element",
+            "keys": [
+              "id",
+              "name",
+              "scalarType",
+              "extensions",
+              "references"
+            ],
+            "descriptors": [
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "scalarType",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "extensions",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "references",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryReferences",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryItemTypes",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryMembers",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryKeyFields",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          }
+        ],
+        "events": [
+          "source:getPrototypeOf",
+          "source:ownKeys",
+          "source:ownKeys",
+          "source:descriptor:umf",
+          "source:descriptor:id",
+          "source:descriptor:vocabularies",
+          "source:descriptor:modules",
+          "query:getPrototypeOf",
+          "query:ownKeys",
+          "query:ownKeys",
+          "query:descriptor:references"
+        ]
+      },
+      "optIn": {
+        "ok": true,
+        "value": {
+          "scope": "core-elements",
+          "referenceScope": "explicit-core-references-item-types-members-and-keys",
+          "source": {
+            "umf": "0.10.0",
+            "id": "selection-host-trace",
+            "vocabularies": {},
+            "modules": [
+              {
+                "id": "sales",
+                "namespace": "sales",
+                "elements": [
+                  {
+                    "id": "customer",
+                    "name": "Customer",
+                    "scalarType": "string",
+                    "extensions": {}
+                  },
+                  {
+                    "id": "account",
+                    "name": "Account",
+                    "scalarType": "integer",
+                    "extensions": {},
+                    "references": [
+                      {
+                        "role": "owner",
+                        "module": "sales",
+                        "element": "customer",
+                        "future": "keep"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "query": {
+            "references": "none"
+          },
+          "sourceValidation": {
+            "valid": true,
+            "complete": false,
+            "diagnostics": [
+              {
+                "code": "UNKNOWN_CORE_FIELD",
+                "path": "/modules/0/elements/1/references/0/future",
+                "message": "Field retained without interpretation",
+                "severity": "warning"
+              }
+            ]
+          },
+          "selection": [
+            {
+              "module": "sales",
+              "namespace": "sales",
+              "path": "/modules/0/elements/0",
+              "element": {
+                "id": "customer",
+                "name": "Customer",
+                "scalarType": "string",
+                "extensions": {}
+              },
+              "includedBy": "match"
+            },
+            {
+              "module": "sales",
+              "namespace": "sales",
+              "path": "/modules/0/elements/1",
+              "element": {
+                "id": "account",
+                "name": "Account",
+                "scalarType": "integer",
+                "extensions": {},
+                "references": [
+                  {
+                    "role": "owner",
+                    "module": "sales",
+                    "element": "customer",
+                    "future": "keep"
+                  }
+                ]
+              },
+              "includedBy": "match"
+            }
+          ],
+          "boundaryReferences": [],
+          "boundaryItemTypes": [],
+          "boundaryMembers": [],
+          "boundaryKeyFields": []
+        },
+        "outputPrototypes": {
+          "result": "null",
+          "source": "null",
+          "query": "null",
+          "validation": "null",
+          "selection": "other",
+          "firstEntry": "null",
+          "firstElement": "null"
+        },
+        "outputShape": [
+          {
+            "path": "$",
+            "keys": [
+              "scope",
+              "referenceScope",
+              "source",
+              "query",
+              "sourceValidation",
+              "selection",
+              "boundaryReferences",
+              "boundaryItemTypes",
+              "boundaryMembers",
+              "boundaryKeyFields"
+            ],
+            "descriptors": [
+              {
+                "key": "scope",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "referenceScope",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "source",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "query",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "sourceValidation",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "selection",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryReferences",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryItemTypes",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryMembers",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "boundaryKeyFields",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source",
+            "keys": [
+              "umf",
+              "id",
+              "vocabularies",
+              "modules"
+            ],
+            "descriptors": [
+              {
+                "key": "umf",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "vocabularies",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "modules",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/vocabularies",
+            "keys": [],
+            "descriptors": []
+          },
+          {
+            "path": "$/source/modules",
+            "keys": [
+              "0",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/source/modules/0",
+            "keys": [
+              "id",
+              "namespace",
+              "elements"
+            ],
+            "descriptors": [
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "namespace",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "elements",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/query",
+            "keys": [
+              "references"
+            ],
+            "descriptors": [
+              {
+                "key": "references",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation",
+            "keys": [
+              "valid",
+              "complete",
+              "diagnostics"
+            ],
+            "descriptors": [
+              {
+                "key": "valid",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "complete",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "diagnostics",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation/diagnostics",
+            "keys": [
+              "0",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/sourceValidation/diagnostics/0",
+            "keys": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "descriptors": [
+              {
+                "key": "code",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "message",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "severity",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection",
+            "keys": [
+              "0",
+              "1",
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "0",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "1",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/0",
+            "keys": [
+              "module",
+              "namespace",
+              "path",
+              "element",
+              "includedBy"
+            ],
+            "descriptors": [
+              {
+                "key": "module",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "namespace",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "element",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "includedBy",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/0/element",
+            "keys": [
+              "id",
+              "name",
+              "scalarType",
+              "extensions"
+            ],
+            "descriptors": [
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "scalarType",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "extensions",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/1",
+            "keys": [
+              "module",
+              "namespace",
+              "path",
+              "element",
+              "includedBy"
+            ],
+            "descriptors": [
+              {
+                "key": "module",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "namespace",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "path",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "element",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "includedBy",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/selection/1/element",
+            "keys": [
+              "id",
+              "name",
+              "scalarType",
+              "extensions",
+              "references"
+            ],
+            "descriptors": [
+              {
+                "key": "id",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "name",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "scalarType",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "extensions",
+                "enumerable": true,
+                "kind": "data"
+              },
+              {
+                "key": "references",
+                "enumerable": true,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryReferences",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryItemTypes",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryMembers",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          },
+          {
+            "path": "$/boundaryKeyFields",
+            "keys": [
+              "length"
+            ],
+            "descriptors": [
+              {
+                "key": "length",
+                "enumerable": false,
+                "kind": "data"
+              }
+            ]
+          }
+        ],
+        "events": [
+          "source:getPrototypeOf",
+          "source:ownKeys",
+          "source:ownKeys",
+          "source:descriptor:umf",
+          "source:descriptor:id",
+          "source:descriptor:vocabularies",
+          "source:descriptor:modules",
+          "query:getPrototypeOf",
+          "query:ownKeys",
+          "query:ownKeys",
+          "query:descriptor:references"
+        ]
+      },
+      "comparison": {
+        "valueOrErrorEqual": true,
+        "outputShapeEqual": true,
+        "hostTraceEqual": true
+      }
+    },
+    "source-proxy-before-query": {
+      "reference": {
+        "ok": false,
+        "thrownIdentity": true,
+        "error": {
+          "kind": "caller-thrown-object"
+        },
+        "events": [
+          "source:getPrototypeOf",
+          "source:ownKeys"
+        ]
+      },
+      "optIn": {
+        "ok": false,
+        "thrownIdentity": true,
+        "error": {
+          "kind": "caller-thrown-object"
+        },
+        "events": [
+          "source:getPrototypeOf",
+          "source:ownKeys"
+        ]
+      },
+      "comparison": {
+        "valueOrErrorEqual": true,
+        "outputShapeEqual": true,
+        "hostTraceEqual": true
+      }
+    }
+  },
+  "summary": {
+    "exactValueAndErrorMatches": 2,
+    "exactOutputShapeMatches": 9,
+    "exactHostTraceMatches": 5,
+    "mismatches": [
+      {
+        "name": "warning-diagnostic",
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": false,
+        "hostTraceEqual": false
+      },
+      {
+        "name": "callback-registration-order",
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": false,
+        "hostTraceEqual": false
+      },
+      {
+        "name": "callback-throws-error",
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": true,
+        "hostTraceEqual": false
+      },
+      {
+        "name": "callback-throws-string",
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": true,
+        "hostTraceEqual": false
+      },
+      {
+        "name": "callback-throws-custom-to-string",
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": true,
+        "hostTraceEqual": false
+      },
+      {
+        "name": "callback-invalid-result",
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": true,
+        "hostTraceEqual": false
+      },
+      {
+        "name": "invalid-query-before-registry-reflection",
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": true,
+        "hostTraceEqual": true
+      },
+      {
+        "name": "invalid-source-before-callback",
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": true,
+        "hostTraceEqual": true
+      },
+      {
+        "name": "empty-result-still-runs-source-validation",
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": false,
+        "hostTraceEqual": false
+      },
+      {
+        "name": "budget-before-registry-callback",
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": true,
+        "hostTraceEqual": true
+      },
+      {
+        "name": "kind-runtime-delegation",
+        "valueOrErrorEqual": false,
+        "outputShapeEqual": false,
+        "hostTraceEqual": false
+      }
+    ]
+  },
+  "limits": [
+    "Node host only in this receipt. Does not cut over the default route.",
+    "Small frozen probes expose callback/Registry order, raw source/query copy effects, thrown-value identity and diagnostic projection; this is not a complete predecessor parity packet.",
+    "KindRuntime is tested as a distinct TS delegation boundary; the current Rust candidate does not promise equivalent Registry.kindRuntime delegation.",
+    "Output comparison uses JSON value, bounded own-key/order/descriptor summaries, and prototypes; it does not prove every accessor/proxy trap across all possible inputs."
+  ]
+}
