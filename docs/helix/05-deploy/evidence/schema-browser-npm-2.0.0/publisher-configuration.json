@@ -1,0 +1,32 @@
+{
+  "schema": "umf.registry-publisher-configuration/1",
+  "observed_at_utc": "2026-10-26T19:25:16.193091+00:00",
+  "repository": "DocumentDrivenDX/umf",
+  "github_environment": {
+    "name": "npm",
+    "allowed_refs": [
+      {
+        "name": "main",
+        "type": "branch"
+      }
+    ],
+    "per_release_reviewers": false,
+    "custom_branch_policies": true
+  },
+  "github_immutable_future_releases": true,
+  "existing_releases_unchanged": true,
+  "npm": {
+    "package": "@documentdrivendx/umf-schema-browser",
+    "workflow": "publish-schema-browser-npm.yml",
+    "environment": "npm",
+    "allow_publish": true,
+    "allow_dist_tag": false,
+    "implicit_stage_publish": true,
+    "saved_and_read_back": true,
+    "configuration_status": "pending_validation",
+    "first_successful_publish_deadline_utc": "2026-10-28T19:22Z",
+    "actual_new_version_oidc_upload_verified": false,
+    "note": "The historical exact-byte Actions skip does not validate this new npm configuration. npm requires a first successful publish within two days.",
+    "deadline_precision": "minute (npm UI)"
+  }
+}

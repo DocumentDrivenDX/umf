@@ -46,7 +46,12 @@ dispatcher and main-only publisher successfully: OIDC publication, exact
 PyPI-served bytes, and a clean public Linux consumer all passed. See [the
 0.10.2 evidence](evidence/pypi-0.10.2/README.md). This does not establish
 end-to-end installation of `arras[truss,umf]` or broaden native/platform
-qualification. Historical package namespaces and support limits remain
+qualification. Separate [Arras public-extras evidence](https://github.com/DocumentDrivenDX/arras/blob/main/docs/helix/05-deploy/evidence/public-pypi-extras-20261026/README.md)
+now records successful fresh public-index installs of the exact Arras 0.6.3 /
+Truss 0.0.50 / UMF 0.10.0 / Weft 0.4.51 cohort on hosted Linux x86_64 and macOS
+arm64 in [run 40370325928](https://github.com/DocumentDrivenDX/arras/actions/runs/40370325928).
+Those later receipts are distinct from the Core publisher checks. Historical
+package namespaces and support limits remain
 unchanged. Native producer qualification is a separate release lane.
 Only its genuinely compatible, qualified wheel cohort may be selected for PyPI;
 registry publication does not broaden that cohort’s platform or runtime claims.
