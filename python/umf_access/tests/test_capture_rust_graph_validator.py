@@ -224,6 +224,50 @@ def test_public_capture_selects_exact_empty_terminal_profile(monkeypatch, op):
     assert validate.call_count == 4
 
 
+def test_public_capture_falls_back_before_reads_for_previous_rust_profile():
+    record = RecordRef("demo", "Thing", (_ID,))
+    node = Node("group_count", (record, ()))
+
+    @query
+    def declaration():
+        return Terminal(node)
+
+    with patch.object(
+        _rust._rust_core,
+        "access_capture_exact_empty_terminal_profile_version",
+        return_value="umf-access-capture-exact-empty-terminal/0.2.0",
+    ), patch.object(
+        _rust._rust_core,
+        "access_validate_capture_exact_empty_terminal_with_session",
+        side_effect=AssertionError("old validator must not read the graph"),
+    ), patch.object(
+        _CAPTURE_MODULE, "_validate_node", wraps=_validate_node
+    ) as predecessor:
+        captured = capture(declaration)
+
+    assert captured.variants[0].node.op == "group_count"
+    assert predecessor.call_count == 4
+
+
+def test_public_capture_fails_closed_for_unknown_rust_profile(monkeypatch):
+    node = Node("all", (RecordRef("demo", "Thing", (_ID,)), ()))
+
+    @query
+    def declaration():
+        return Terminal(node)
+
+    with patch.object(
+        _rust._rust_core,
+        "access_capture_exact_empty_terminal_profile_version",
+        return_value="umf-access-capture-exact-empty-terminal/9.9.0",
+    ), patch.object(
+        _rust._rust_core,
+        "access_validate_capture_exact_empty_terminal_with_session",
+        side_effect=AssertionError("unknown profile must not read the graph"),
+    ), pytest.raises(RuntimeError, match="unsupported profile version"):
+        capture(declaration)
+
+
 def test_public_capture_oversized_record_dictionary_falls_back_before_reads():
     record = RecordRef("demo", "Thing", (_ID,))
     vars(record)["extra_a"] = 1

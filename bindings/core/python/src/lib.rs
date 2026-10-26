@@ -2797,6 +2797,11 @@ fn access_observe_capture_terminal_join_owners_with_session(
 }
 
 const CAPTURE_EXACT_EMPTY_TERMINAL_PROFILE: &str = "umf-access-capture-exact-empty-terminal/0.3.0";
+#[pyfunction]
+fn access_capture_exact_empty_terminal_profile_version() -> &'static str {
+    CAPTURE_EXACT_EMPTY_TERMINAL_PROFILE
+}
+
 // `Node` has two instance fields and `RecordRef` has eight. The profile scans
 // exact instance dictionaries to reject arbitrary Python keys before any
 // string-key lookup. Keep that scan bounded; larger dictionaries fall back
@@ -5162,6 +5167,10 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     )?)?;
     module.add_function(wrap_pyfunction!(
         access_observe_capture_terminal_join_owners_with_session,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_capture_exact_empty_terminal_profile_version,
         module
     )?)?;
     module.add_function(wrap_pyfunction!(

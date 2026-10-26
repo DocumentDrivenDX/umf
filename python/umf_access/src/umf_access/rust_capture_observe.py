@@ -15,6 +15,7 @@ from typing import Any
 
 _PROFILE = "umf-access-capture-graph-observation/0.6.0"
 _EXACT_EMPTY_TERMINAL_PROFILE = "umf-access-capture-exact-empty-terminal/0.3.0"
+_PREVIOUS_EXACT_EMPTY_TERMINAL_PROFILE = "umf-access-capture-exact-empty-terminal/0.2.0"
 _SELECTED_KEY_PROFILE = "umf-access-capture-selected-key-observation/0.1.0"
 
 
@@ -225,12 +226,26 @@ def validate_exact_empty_terminal_profile(
     from umf import _rust
 
     core = getattr(_rust, "_rust_core", None)
+    profile_version = getattr(
+        core, "access_capture_exact_empty_terminal_profile_version", None
+    )
     validate = getattr(
         core, "access_validate_capture_exact_empty_terminal_with_session", None
     )
     session_type = getattr(core, "CaptureResourceSession", None)
     if not callable(validate) or not callable(session_type) or type(session) is not session_type:
         return False
+    # Check the profile before passing the graph into Rust. An older core may
+    # expose the validator but admit fewer shapes; invoking it and inspecting
+    # its response profile would occur after it has read live graph accessors.
+    # Missing capability and the known 0.2 profile safely select Python.
+    if not callable(profile_version):
+        return False
+    version = profile_version()
+    if version == _PREVIOUS_EXACT_EMPTY_TERMINAL_PROFILE:
+        return False
+    if type(version) is not str or version != _EXACT_EMPTY_TERMINAL_PROFILE:
+        raise RuntimeError("Rust exact capture validator has an unsupported profile version")
     result = validate(node, node_type, record_ref_type, session)
     if (
         type(result) is not dict
