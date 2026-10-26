@@ -1,0 +1,392 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
+name: Core 0.10.2 R3 inventory generation
+
+on:
+  push:
+    branches:
+      - codex/core-0102-inventory-generation
+
+permissions:
+  contents: read
+
+jobs:
+  generate:
+    name: Bounded artifact-only R3 inventory generation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Start the original deadline and seed a fresh failure receipt
+        if: always()
+        timeout-minutes: 1
+        env:
+          EVIDENCE_DIR: ${{ runner.temp }}/core-0102-r3-generation
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_RUN_ATTEMPT: ${{ github.run_attempt }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_WORKFLOW: ${{ github.workflow }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR/logs" "$RUNNER_TEMP/core-0102-r3-generation-upload"
+          START_MS="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+          printf '%s\n' "$START_MS" > "$EVIDENCE_DIR/monotonic-start-ms"
+          printf '%s\n' "$((START_MS + 600000))" > "$EVIDENCE_DIR/monotonic-deadline-ms"
+          cat > "$EVIDENCE_DIR/receipt.json" <<JSON
+          {
+            "profile": "umf.core-0102-r3-inventory-generation/1",
+            "status": "FAIL_OR_UNKNOWN",
+            "reason": "Generation did not reach its passing finalizer.",
+            "sourceCommit": "$GITHUB_SHA",
+            "runId": "$GITHUB_RUN_ID",
+            "runAttempt": "$GITHUB_RUN_ATTEMPT",
+            "ref": "$GITHUB_REF",
+            "workflow": "$GITHUB_WORKFLOW",
+            "scope": "R3 inventory generation artifact only; no currentness or release claim",
+            "outputAllowlist": ["docs/helix/04-build/evidence/rust-migration/r3/inventory.json"],
+            "aggregateDeadlineSeconds": 600,
+            "childMaximumSeconds": 500,
+            "cleanupReserveSeconds": 95,
+            "aggregateLogLimitBytes": 1048576,
+            "aggregateArtifactLimitBytes": 16777216,
+            "failureOnlyReceipt": true,
+            "rawLogUpload": false,
+            "claims": {"generatedInventoryArtifact": false, "inventoryCurrentness": false, "checkOrQualification": false, "sourceAdoption": false, "release": false}
+          }
+          JSON
+          cp "$EVIDENCE_DIR/receipt.json" "$RUNNER_TEMP/core-0102-r3-generation-upload/receipt.json"
+
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        timeout-minutes: 2
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        timeout-minutes: 2
+        with:
+          bun-version: 1.4.3
+
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        timeout-minutes: 2
+        with:
+          python-version: '3.12.15'
+
+      - name: Freeze source and tools, then generate the inventory
+        timeout-minutes: 8
+        env:
+          EVIDENCE_DIR: ${{ runner.temp }}/core-0102-r3-generation
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          EVIDENCE="$EVIDENCE_DIR"
+          DEADLINE_MS="$(cat "$EVIDENCE/monotonic-deadline-ms")"
+          mkdir -p "$EVIDENCE/logs"
+
+          run_bounded() {
+            local name="$1" maximum="$2" now_ms remaining limit status capture_status log started_ms ended_ms prior_log_bytes available_log_bytes
+            local -a pipeline_status
+            shift 2
+            now_ms="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+            remaining="$(((DEADLINE_MS - now_ms - 95000) / 1000))"
+            if (( remaining <= 0 )); then
+              echo "Original 600-second budget exhausted before $name" >&2
+              return 124
+            fi
+            limit="$maximum"
+            if (( remaining < limit )); then limit="$remaining"; fi
+            log="$EVIDENCE/logs/$name.log"
+            prior_log_bytes="$(find "$EVIDENCE/logs" -type f -name '*.log' -exec wc -c {} + | awk 'END {print $1+0}')"
+            available_log_bytes=$((1048576 - prior_log_bytes))
+            if (( available_log_bytes < 0 )); then available_log_bytes=0; fi
+            started_ms="$now_ms"
+            : > "$log"
+            set +e
+            timeout --signal=TERM --kill-after=10s "${limit}s" "$@" 2>&1 | python -I -c '
+          import sys
+          path, cap = sys.argv[1], int(sys.argv[2])
+          marker = b"\n[LOG TRUNCATED: output exceeded aggregate capture cap]\n"
+          failed = False
+          truncated = False
+          stored = 0
+          try:
+              output = open(path, "wb", buffering=0)
+          except OSError:
+              output = None
+              failed = True
+          while True:
+              chunk = sys.stdin.buffer.read(65536)
+              if not chunk:
+                  break
+              if output is None:
+                  continue
+              available = max(0, cap - stored)
+              piece = chunk[:available]
+              if piece:
+                  try:
+                      output.write(piece)
+                      stored += len(piece)
+                  except OSError:
+                      failed = True
+                      try:
+                          output.close()
+                      except OSError:
+                          pass
+                      output = None
+              if len(chunk) > available:
+                  truncated = True
+          if output is not None:
+              try:
+                  if truncated:
+                      marker_bytes = marker[:cap]
+                      output.seek(max(0, cap - len(marker_bytes)))
+                      output.truncate()
+                      output.write(marker_bytes)
+                  output.close()
+              except OSError:
+                  failed = True
+          sys.exit(74 if failed else 75 if truncated else 0)
+          ' "$log" "$available_log_bytes"
+            pipeline_status=("${PIPESTATUS[@]}")
+            set -e
+            status="${pipeline_status[0]}"
+            capture_status="${pipeline_status[1]}"
+            ended_ms="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+            python -I - "$EVIDENCE/command-records.jsonl" "$log" "$name" "$status" "$capture_status" "$((ended_ms - started_ms))" "$limit" "$@" <<'PY'
+          import hashlib, json, pathlib, sys
+          records, log_path, name, raw_exit, capture_exit, duration, limit_seconds, *argv = sys.argv[1:]
+          payload = pathlib.Path(log_path).read_bytes()
+          record = {"name": name, "stage": name, "argv": argv, "rawExit": int(raw_exit),
+                    "captureExit": int(capture_exit), "monotonicDurationMs": int(duration),
+                    "limitSeconds": int(limit_seconds),
+                    "logBytes": len(payload), "logSha256": hashlib.sha256(payload).hexdigest(),
+                    "truncated": int(capture_exit) == 75,
+                    "truncationMarker": "LOG TRUNCATED: output exceeded aggregate capture cap" if int(capture_exit) == 75 else None}
+          with pathlib.Path(records).open("a", encoding="utf-8") as stream:
+              stream.write(json.dumps(record, sort_keys=True) + "\n")
+          PY
+            if (( status != 0 || capture_status != 0 )); then
+              echo "Command $name failed: raw exit $status, capture exit $capture_status, cap ${limit}s" >&2
+              return 1
+            fi
+          }
+
+          if [[ "$GITHUB_EVENT_NAME" != "push" || "$GITHUB_REF" != "refs/heads/codex/core-0102-inventory-generation" ]]; then
+            echo "Unexpected event or ref" >&2
+            exit 1
+          fi
+
+          run_bounded source-and-tool-identities 180 python -I - <<'PY'
+          import hashlib, json, os, pathlib, shutil, subprocess
+          root = pathlib.Path(".")
+          expected_commit = os.environ["GITHUB_SHA"]
+          actual_commit = subprocess.run(["git", "rev-parse", "HEAD"], check=True, text=True,
+                                         stdout=subprocess.PIPE).stdout.strip()
+          if actual_commit != expected_commit:
+              raise SystemExit("checkout does not match the triggering source commit")
+          if subprocess.run(["git", "status", "--porcelain"], check=True, text=True,
+                            stdout=subprocess.PIPE).stdout:
+              raise SystemExit("checkout is not clean")
+          tree = subprocess.run(["git", "rev-parse", "HEAD^{tree}"], check=True, text=True,
+                                stdout=subprocess.PIPE).stdout.strip()
+          relevant = [
+              "scripts/rust-inventory.py",
+              "scripts/rust-inventory-typescript.ts",
+              "scripts/actions-reference/executor.ts",
+              "tests/actions-reference/handler-executor.test.ts",
+              "scripts/reference/ontology-browser.ts",
+              "package.json",
+              "bun.lock",
+              ".github/workflows/core-0102-inventory-generation.yml",
+          ]
+          def file_record(name):
+              path = root / name
+              data = path.read_bytes()
+              return {"sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data)}
+          corrected_inputs = {
+              "scripts/actions-reference/executor.ts": "2fc6849548220155e70a25e0dfb87ace7a5047a57aa7a1bd1579564920cfe95a",
+              "tests/actions-reference/handler-executor.test.ts": "92f1114d74f2b3f1e75699f66e91fa5414298e86c7afc55dcbdfcb636e927954",
+              "scripts/reference/ontology-browser.ts": "21f4425b258f425a20edd7b83f123bfaa8e4e214bccfcb70ee7d91d043f5dd2c",
+          }
+          for name, expected_sha in corrected_inputs.items():
+              if file_record(name)["sha256"] != expected_sha:
+                  raise SystemExit("corrected PR49 source input does not match its frozen hash")
+          source = {
+              "profile": "umf.core-0102-r3-inventory-source/1",
+              "event": os.environ["GITHUB_EVENT_NAME"],
+              "ref": os.environ["GITHUB_REF"],
+              "commit": actual_commit,
+              "tree": tree,
+              "trackedSourceClosure": "bound by the exact Git commit and inventory sourceCohortSha256",
+              "inputs": {name: file_record(name) for name in relevant},
+              "correctedPR49Inputs": corrected_inputs,
+              "inventoryPath": "docs/helix/04-build/evidence/rust-migration/r3/inventory.json",
+              "priorInventory": file_record("docs/helix/04-build/evidence/rust-migration/r3/inventory.json"),
+              "priorInventoryRole": "seed only; not a generated or current result",
+          }
+          tools = {}
+          for name in ("bun", "python", "git", "timeout"):
+              binary = pathlib.Path(shutil.which(name)).resolve(strict=True)
+              version = subprocess.run([str(binary), "--version"], check=True, text=True,
+                                       stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                       timeout=10).stdout.strip()
+              with binary.open("rb") as stream:
+                  binary_sha = hashlib.file_digest(stream, "sha256").hexdigest()
+              tools[name] = {"path": str(binary), "version": version, "binarySha256": binary_sha}
+          if not tools["bun"]["version"].endswith("1.4.3") or not tools["python"]["version"].endswith("3.12.15"):
+              raise SystemExit("unexpected Bun or Python tool version")
+          pathlib.Path(os.environ["EVIDENCE_DIR"], "source-inputs.json").write_text(
+              json.dumps(source, indent=2, sort_keys=True) + "\n")
+          pathlib.Path(os.environ["EVIDENCE_DIR"], "toolchain.json").write_text(
+              json.dumps(tools, indent=2, sort_keys=True) + "\n")
+          PY
+
+          run_bounded bun-install 180 bun install --frozen-lockfile
+
+          run_bounded source-clean-after-install 30 python -I -c 'import subprocess; p=subprocess.run(["git","status","--porcelain","--untracked-files=all"],check=True,text=True,stdout=subprocess.PIPE); print(p.stdout,end=""); raise SystemExit(bool(p.stdout))'
+
+          run_bounded r3-inventory-generation 500 python scripts/rust-inventory.py
+          printf '%s\n' 'GENERATION_COMMANDS_COMPLETE' > "$EVIDENCE/generation-complete"
+
+      - name: Finalize bounded artifact-only result
+        if: always()
+        timeout-minutes: 1
+        env:
+          EVIDENCE_DIR: ${{ runner.temp }}/core-0102-r3-generation
+          UPLOAD_DIR: ${{ runner.temp }}/core-0102-r3-generation-upload
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_RUN_ATTEMPT: ${{ github.run_attempt }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_WORKFLOW: ${{ github.workflow }}
+        run: |
+          set -euo pipefail
+          python -I - <<'PY'
+          import hashlib, json, os, pathlib, shutil
+          evidence = pathlib.Path(os.environ["EVIDENCE_DIR"])
+          upload = pathlib.Path(os.environ["UPLOAD_DIR"])
+          upload.mkdir(parents=True, exist_ok=True)
+          receipt_path = evidence / "receipt.json"
+          try:
+              receipt = json.loads(receipt_path.read_text())
+          except Exception:
+              receipt = {"profile": "umf.core-0102-r3-inventory-generation/1",
+                         "status": "FAIL_OR_UNKNOWN", "reason": "fresh receipt could not be read"}
+          output_rel = pathlib.Path("docs/helix/04-build/evidence/rust-migration/r3/inventory.json")
+          output = pathlib.Path.cwd() / output_rel
+          records_path = evidence / "command-records.jsonl"
+          source_path = evidence / "source-inputs.json"
+          tools_path = evidence / "toolchain.json"
+          expected_names = ["source-and-tool-identities", "bun-install", "source-clean-after-install", "r3-inventory-generation"]
+          expected_argv = [
+              ["python", "-I", "-"],
+              ["bun", "install", "--frozen-lockfile"],
+              ["python", "-I", "-c", 'import subprocess; p=subprocess.run(["git","status","--porcelain","--untracked-files=all"],check=True,text=True,stdout=subprocess.PIPE); print(p.stdout,end=""); raise SystemExit(bool(p.stdout))'],
+              ["python", "scripts/rust-inventory.py"],
+          ]
+          expected_limits = [180, 180, 30, 500]
+          try:
+              records = [json.loads(line) for line in records_path.read_text().splitlines()]
+              source = json.loads(source_path.read_text())
+              tools = json.loads(tools_path.read_text())
+              corrected_inputs = {
+                  "scripts/actions-reference/executor.ts": "2fc6849548220155e70a25e0dfb87ace7a5047a57aa7a1bd1579564920cfe95a",
+                  "tests/actions-reference/handler-executor.test.ts": "92f1114d74f2b3f1e75699f66e91fa5414298e86c7afc55dcbdfcb636e927954",
+                  "scripts/reference/ontology-browser.ts": "21f4425b258f425a20edd7b83f123bfaa8e4e214bccfcb70ee7d91d043f5dd2c",
+              }
+              if source.get("correctedPR49Inputs") != corrected_inputs:
+                  raise ValueError("corrected PR49 source hash pins do not match the reviewed set")
+              log_bytes = sum(int(row["logBytes"]) for row in records)
+              commands_ok = (
+                  [row["name"] for row in records] == expected_names
+                  and [row["argv"] for row in records] == expected_argv
+                  and all(row["rawExit"] == 0 and row["captureExit"] == 0 and not row["truncated"] for row in records)
+                  and all(0 < row["limitSeconds"] <= maximum and row["monotonicDurationMs"] <= row["limitSeconds"] * 1000 + 10000 for row, maximum in zip(records, expected_limits))
+                  and log_bytes <= 1048576
+              )
+              output_bytes = output.stat().st_size
+              if output_bytes > 16777216:
+                  raise ValueError("inventory output exceeds the 16 MiB cap")
+              if not (evidence / "generation-complete").is_file() or not commands_ok:
+                  raise ValueError("generation command or aggregate log cap failed")
+              output_bytes_value = output.read_bytes()
+              output_sha = hashlib.sha256(output_bytes_value).hexdigest()
+              inventory = json.loads(output_bytes_value)
+              capture = inventory.get("capture", {})
+              cohort = capture.get("sourceCohortSha256", "")
+              if inventory.get("schema") != "umf.rust-migration-inventory/0.2" or capture.get("inventoryScript") != "scripts/rust-inventory.py" or len(cohort) != 64 or any(ch not in "0123456789abcdef" for ch in cohort):
+                  raise ValueError("generated inventory schema or source cohort identity is invalid")
+              if source["event"] != "push" or source["commit"] != os.environ["GITHUB_SHA"] or source["ref"] != os.environ["GITHUB_REF"]:
+                  raise ValueError("source receipt identity does not match this workflow run")
+              if source["inventoryPath"] != output_rel.as_posix():
+                  raise ValueError("output path is outside the exact inventory allowlist")
+              receipt.update({
+                  "status": "GENERATION_PASS_ARTIFACT_ONLY",
+                  "reason": "The exact source inventory generator completed successfully.",
+                  "sourceCommit": os.environ["GITHUB_SHA"],
+                  "runId": os.environ["GITHUB_RUN_ID"],
+                  "runAttempt": os.environ["GITHUB_RUN_ATTEMPT"],
+                  "ref": os.environ["GITHUB_REF"],
+                  "workflow": os.environ["GITHUB_WORKFLOW"],
+                  "sourceTree": source["tree"],
+                  "sourceInputsSha256": hashlib.sha256(source_path.read_bytes()).hexdigest(),
+                  "toolchainSha256": hashlib.sha256(tools_path.read_bytes()).hexdigest(),
+                  "commandRecordsSha256": hashlib.sha256(records_path.read_bytes()).hexdigest(),
+                  "commandRecords": records,
+                  "aggregateLogBytes": log_bytes,
+                  "output": {"path": output_rel.as_posix(), "bytes": output_bytes, "sha256": output_sha,
+                             "sourceCohortSha256": cohort, "counts": inventory.get("counts", {})},
+                  "claims": {"generatedInventoryArtifact": True, "inventoryCurrentness": False,
+                             "checkOrQualification": False, "sourceAdoption": False, "release": False},
+                  "failureOnlyReceipt": False
+              })
+              allowed = [
+                  (output, upload / "inventory.json"),
+                  (source_path, upload / "source-inputs.json"),
+                  (tools_path, upload / "toolchain.json"),
+                  (records_path, upload / "command-records.jsonl"),
+              ]
+              for source_file, destination in allowed:
+                  shutil.copyfile(source_file, destination)
+              artifact_bytes = sum(p.stat().st_size for p in upload.iterdir() if p.is_file())
+              if artifact_bytes + 65536 > 16777216:
+                  raise ValueError("allowlisted artifact files exceed 16 MiB")
+              receipt["artifactBytesIncludingReceiptReserve"] = artifact_bytes + 65536
+          except Exception as error:
+              receipt.update({
+                  "status": "FAIL_OR_UNKNOWN",
+                  "reason": type(error).__name__,
+                  "sourceCommit": os.environ["GITHUB_SHA"],
+                  "runId": os.environ["GITHUB_RUN_ID"],
+                  "runAttempt": os.environ["GITHUB_RUN_ATTEMPT"],
+                  "ref": os.environ["GITHUB_REF"],
+                  "workflow": os.environ["GITHUB_WORKFLOW"],
+                  "claims": {"generatedInventoryArtifact": False, "inventoryCurrentness": False,
+                             "checkOrQualification": False, "sourceAdoption": False, "release": False},
+                  "failureOnlyReceipt": True,
+                  "rawLogUpload": False
+              })
+              for path in upload.iterdir():
+                  if path.is_file():
+                      path.unlink()
+          receipt_path.parent.mkdir(parents=True, exist_ok=True)
+          receipt_path.write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n")
+          shutil.copyfile(receipt_path, upload / "receipt.json")
+          if receipt.get("status") != "GENERATION_PASS_ARTIFACT_ONLY":
+              raise SystemExit("artifact-only inventory generation did not pass")
+          PY
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        timeout-minutes: 1
+        with:
+          name: core-0102-r3-inventory-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/core-0102-r3-generation-upload/receipt.json
+            ${{ runner.temp }}/core-0102-r3-generation-upload/inventory.json
+            ${{ runner.temp }}/core-0102-r3-generation-upload/source-inputs.json
+            ${{ runner.temp }}/core-0102-r3-generation-upload/toolchain.json
+            ${{ runner.temp }}/core-0102-r3-generation-upload/command-records.jsonl
+          if-no-files-found: error
+          retention-days: 7

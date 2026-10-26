@@ -2,6 +2,10 @@ name: Python action-runtime artifact qualification
 
 on:
   push:
+    branches-ignore:
+      - codex/core-0102-inventory-generation
+    tags:
+      - '**'
   pull_request:
   workflow_dispatch:
 

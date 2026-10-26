@@ -3,6 +3,10 @@ name: Typed access boundaries
 
 on:
   push:
+    branches-ignore:
+      - codex/core-0102-inventory-generation
+    tags:
+      - '**'
   pull_request:
 
 permissions:

@@ -1,0 +1,238 @@
+"test","--timeout","30000","./tests/actions-reference/create.test.ts"]}
+2026-10-24T11:00:30.0599323Z bun test v1.4.2 (744846f84)
+2026-10-24T11:00:30.0626882Z 
+2026-10-24T11:00:30.0628713Z ##[group]tests/actions-reference/create.test.ts:
+2026-10-24T11:00:39.6157069Z (pass) native CREATE proves aliases, preserves pre-state, supports later SET and blocks all-Key/concurrent collisions [8969.28ms]
+2026-10-24T11:00:39.6165384Z 
+2026-10-24T11:00:39.6167889Z ##[endgroup]
+2026-10-24T11:00:39.6168208Z 
+2026-10-24T11:00:39.6168379Z  1 pass
+2026-10-24T11:00:39.6168797Z  0 fail
+2026-10-24T11:00:39.6169219Z  31 expect() calls
+2026-10-24T11:00:39.6169675Z Ran 1 test across 1 file. [9.55s]
+2026-10-24T11:00:39.6253134Z {"testProcess":"tests/actions-reference/create.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":31,"completeSummary":true,"logSha256":"8a74f7f29769eeb58a60ed36b6ca4689a30d7bab2ab00980ad33e73c848d4735"}
+2026-10-24T11:00:39.6254693Z {"testProcess":"tests/actions-reference/creation-relationships.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/creation-relationships.test.ts"]}
+2026-10-24T11:00:39.6297087Z bun test v1.4.2 (744846f84)
+2026-10-24T11:00:39.6297689Z 
+2026-10-24T11:00:39.6298876Z ##[group]tests/actions-reference/creation-relationships.test.ts:
+2026-10-24T11:00:40.6593108Z (pass) CREATE lower bounds use targets per source and sources per target independently [439.31ms]
+2026-10-24T11:00:40.6593740Z 
+2026-10-24T11:00:40.6595181Z ##[endgroup]
+2026-10-24T11:00:40.6595365Z 
+2026-10-24T11:00:40.6595614Z  1 pass
+2026-10-24T11:00:40.6595963Z  0 fail
+2026-10-24T11:00:40.6596326Z  8 expect() calls
+2026-10-24T11:00:40.6596815Z Ran 1 test across 1 file. [1031.00ms]
+2026-10-24T11:00:40.6660042Z {"testProcess":"tests/actions-reference/creation-relationships.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":8,"completeSummary":true,"logSha256":"d50a6a266efaac8310c3af2f55f045d7d835a473a39b1881ee1dc6dcf0525ca6"}
+2026-10-24T11:00:40.6661859Z {"testProcess":"tests/actions-reference/delete.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/delete.test.ts"]}
+2026-10-24T11:00:40.6681315Z bun test v1.4.2 (744846f84)
+2026-10-24T11:00:40.6699356Z 
+2026-10-24T11:00:40.6700794Z ##[group]tests/actions-reference/delete.test.ts:
+2026-10-24T11:00:47.3509546Z (pass) native deletion is canonical, atomic and replayable; alias reuse and remaining-link constraints roll back [6082.77ms]
+2026-10-24T11:00:47.3535890Z 
+2026-10-24T11:00:47.3537093Z ##[endgroup]
+2026-10-24T11:00:47.3537336Z 
+2026-10-24T11:00:47.3537515Z  1 pass
+2026-10-24T11:00:47.3538309Z  0 fail
+2026-10-24T11:00:47.3538665Z  21 expect() calls
+2026-10-24T11:00:47.3539281Z Ran 1 test across 1 file. [6.68s]
+2026-10-24T11:00:47.3599501Z {"testProcess":"tests/actions-reference/delete.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":21,"completeSummary":true,"logSha256":"6622ca9ba60a9938c376d2eeef8ba38bf06c8e8057545c10d75f870a6e616530"}
+2026-10-24T11:00:47.3601183Z {"testProcess":"tests/actions-reference/discovery.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/discovery.test.ts"]}
+2026-10-24T11:00:47.3616061Z bun test v1.4.2 (744846f84)
+2026-10-24T11:00:47.3644225Z 
+2026-10-24T11:00:47.3645432Z ##[group]tests/actions-reference/discovery.test.ts:
+2026-10-24T11:00:50.9567584Z (pass) native discovery permission protects token presence across changing revision policies before any token SQL access [2994.48ms]
+2026-10-24T11:00:50.9568264Z 
+2026-10-24T11:00:50.9568752Z ##[endgroup]
+2026-10-24T11:00:50.9568946Z 
+2026-10-24T11:00:50.9569149Z  1 pass
+2026-10-24T11:00:50.9569497Z  0 fail
+2026-10-24T11:00:50.9569783Z  21 expect() calls
+2026-10-24T11:00:50.9570172Z Ran 1 test across 1 file. [3.59s]
+2026-10-24T11:00:50.9627776Z {"testProcess":"tests/actions-reference/discovery.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":21,"completeSummary":true,"logSha256":"104a4b3764a919b870c2827a3dc62a9d99bd08e5126e98d969d5771a60839536"}
+2026-10-24T11:00:50.9629373Z {"testProcess":"tests/actions-reference/evolution.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/evolution.test.ts"]}
+2026-10-24T11:00:50.9644758Z bun test v1.4.2 (744846f84)
+2026-10-24T11:00:50.9678699Z 
+2026-10-24T11:00:50.9679976Z ##[group]tests/actions-reference/evolution.test.ts:
+2026-10-24T11:00:53.8548258Z (pass) evolution review preserves exact signature/frame/condition/policy/profile/unknown changes without proving caller compatibility [2244.66ms]
+2026-10-24T11:00:57.4497307Z (pass) native immutable revision comparison flags strengthened conditions and leaves original replay and explicit fresh selection independent [3594.46ms]
+2026-10-24T11:00:57.4497948Z 
+2026-10-24T11:00:57.4498615Z ##[endgroup]
+2026-10-24T11:00:57.4498823Z 
+2026-10-24T11:00:57.4499015Z  2 pass
+2026-10-24T11:00:57.4499372Z  0 fail
+2026-10-24T11:00:57.4499675Z  57 expect() calls
+2026-10-24T11:00:57.4500008Z Ran 2 tests across 1 file. [6.48s]
+2026-10-24T11:00:57.4595479Z {"testProcess":"tests/actions-reference/evolution.test.ts","exitCode":0,"pass":2,"fail":0,"skip":0,"assertions":57,"completeSummary":true,"logSha256":"263c7a23d63acfa6c38f8687a9d5f7a6e9cdec86602ae82be31e4900237de09b"}
+2026-10-24T11:00:57.4597355Z {"testProcess":"tests/actions-reference/executor.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/executor.test.ts"]}
+2026-10-24T11:00:57.4625703Z bun test v1.4.2 (744846f84)
+2026-10-24T11:00:57.4638961Z 
+2026-10-24T11:00:57.4640161Z ##[group]tests/actions-reference/executor.test.ts:
+2026-10-24T11:01:03.4802138Z (pass) native SET invocation atomically commits typed verification, replays, preserves no-op versions and rolls back audit failure [5379.56ms]
+2026-10-24T11:01:07.3821823Z (pass) native missing/version/precondition terminal decisions persist and replay without reevaluating state [3901.95ms]
+2026-10-24T11:01:10.6373400Z (pass) native concurrent invokes retain one same-token result and serialize distinct-token resource assertions [3255.10ms]
+2026-10-24T11:01:10.6374375Z 
+2026-10-24T11:01:10.6375140Z ##[endgroup]
+2026-10-24T11:01:10.6375615Z 
+2026-10-24T11:01:10.6375802Z  3 pass
+2026-10-24T11:01:10.6376100Z  0 fail
+2026-10-24T11:01:10.6376443Z  58 expect() calls
+2026-10-24T11:01:10.6376864Z Ran 3 tests across 1 file. [13.18s]
+2026-10-24T11:01:10.6456888Z {"testProcess":"tests/actions-reference/executor.test.ts","exitCode":0,"pass":3,"fail":0,"skip":0,"assertions":58,"completeSummary":true,"logSha256":"5423967fde578af2b0ea66ec7dc6ae8d798e08d5dc7319429f37d0cbf24198b3"}
+2026-10-24T11:01:10.6458916Z {"testProcess":"tests/actions-reference/fresh-admission.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/fresh-admission.test.ts"]}
+2026-10-24T11:01:10.6491473Z bun test v1.4.2 (744846f84)
+2026-10-24T11:01:10.6503489Z 
+2026-10-24T11:01:10.6505401Z ##[group]tests/actions-reference/fresh-admission.test.ts:
+2026-10-24T11:01:13.7279250Z (pass) native fresh admission refuses full-declaration unknowns and fences without business or terminal writes [2500.82ms]
+2026-10-24T11:01:13.7280092Z 
+2026-10-24T11:01:13.7281066Z ##[endgroup]
+2026-10-24T11:01:13.7281272Z 
+2026-10-24T11:01:13.7281555Z  1 pass
+2026-10-24T11:01:13.7282025Z  0 fail
+2026-10-24T11:01:13.7282473Z  9 expect() calls
+2026-10-24T11:01:13.7282992Z Ran 1 test across 1 file. [3.08s]
+2026-10-24T11:01:13.7338328Z {"testProcess":"tests/actions-reference/fresh-admission.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":9,"completeSummary":true,"logSha256":"c8d1d6b3ac02506cc61f49cbf0c65f2356e260f8bc8ede5e9d542b9cc5ce654a"}
+2026-10-24T11:01:13.7339778Z {"testProcess":"tests/actions-reference/gateway.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/gateway.test.ts"]}
+2026-10-24T11:01:13.7368526Z bun test v1.4.2 (744846f84)
+2026-10-24T11:01:13.7385469Z 
+2026-10-24T11:01:13.7386803Z ##[group]tests/actions-reference/gateway.test.ts:
+2026-10-24T11:01:14.3866981Z (pass) gateway verifies immediate writes, reports net restoration and isolates snapshots [44.57ms]
+2026-10-24T11:01:14.4022881Z (pass) gateway permanently aborts outside-frame, immutable-Key and invalid refinement attempts [15.74ms]
+2026-10-24T11:01:14.4299162Z (pass) gateway unions write aliases while read grants cannot widen write permission [27.35ms]
+2026-10-24T11:01:14.4454544Z (pass) public typed input admission refuses coercible malformed literal wrappers [15.70ms]
+2026-10-24T11:01:15.0900007Z (pass) gateway operation bound counts no-ops and permanently aborts on operation 257 [644.49ms]
+2026-10-24T11:01:15.0989638Z (pass) gateway reads candidate state through read aliases without granting writes and keeps pre-state frozen [9.00ms]
+2026-10-24T11:01:15.1389020Z (pass) gateway delete unions only write grants and permanently rejects canonical alias reuse [39.81ms]
+2026-10-24T11:01:15.1480888Z (pass) gateway runtime value refinement failure has stable CONSTRAINT and permanent abort [9.20ms]
+2026-10-24T11:01:15.1777279Z (pass) gateway CREATE keeps pre-state absent, emits one final creation and never permits created deletion [29.62ms]
+2026-10-24T11:01:15.1892695Z (pass) gateway CREATE requires the exact frozen primary tuple and primary-origin create flag [11.47ms]
+2026-10-24T11:01:15.1968597Z (pass) gateway CREATE cannot borrow Field permission from a proven read alias [7.58ms]
+2026-10-24T11:01:15.1969342Z 
+2026-10-24T11:01:15.1970138Z ##[endgroup]
+2026-10-24T11:01:15.1976001Z 
+2026-10-24T11:01:15.1976427Z  11 pass
+2026-10-24T11:01:15.1976851Z  0 fail
+2026-10-24T11:01:15.1978931Z  349 expect() calls
+2026-10-24T11:01:15.1979601Z Ran 11 tests across 1 file. [1461.00ms]
+2026-10-24T11:01:15.2026513Z {"testProcess":"tests/actions-reference/gateway.test.ts","exitCode":0,"pass":11,"fail":0,"skip":0,"assertions":349,"completeSummary":true,"logSha256":"1be9904bb3c0fa710cf288e5237456b859a9a11c2586f16c5f2d6b6b0015dc45"}
+2026-10-24T11:01:15.2027827Z {"testProcess":"tests/actions-reference/graph.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/graph.test.ts"]}
+2026-10-24T11:01:15.2043730Z bun test v1.4.2 (744846f84)
+2026-10-24T11:01:15.2065244Z 
+2026-10-24T11:01:15.2066434Z ##[group]tests/actions-reference/graph.test.ts:
+2026-10-24T11:01:17.7772895Z (pass) native final graph applies CREATE/LINK and UNLINK/DELETE deltas and sees unselected competing edges [1978.46ms]
+2026-10-24T11:01:17.7774095Z 
+2026-10-24T11:01:17.7774959Z ##[endgroup]
+2026-10-24T11:01:17.7775360Z 
+2026-10-24T11:01:17.7775757Z  1 pass
+2026-10-24T11:01:17.7776278Z  0 fail
+2026-10-24T11:01:17.7776601Z  15 expect() calls
+2026-10-24T11:01:17.7776949Z Ran 1 test across 1 file. [2.57s]
+2026-10-24T11:01:17.7818906Z {"testProcess":"tests/actions-reference/graph.test.ts","exitCode":0,"pass":1,"fail":0,"skip":0,"assertions":15,"completeSummary":true,"logSha256":"b212d77c14ebaf1a22ed391cf6c414aa095dfd8e73881607f4afdf978b8648e1"}
+2026-10-24T11:01:17.7820538Z {"testProcess":"tests/actions-reference/handler-executor.test.ts","command":["/home/runner/.bun/bin/bun","test","--timeout","30000","./tests/actions-reference/handler-executor.test.ts"]}
+2026-10-24T11:01:17.7853810Z bun test v1.4.2 (744846f84)
+2026-10-24T11:01:17.7869422Z 
+2026-10-24T11:01:17.7870761Z ##[group]tests/actions-reference/handler-executor.test.ts:
+2026-10-24T11:01:26.4967841Z 28 |   await executor.admission.revisions.retain('s',target,document,deployment);await policy.membership('s','person','approver',true);await policy.replayDiscovery('s','sales','approve',['approver']);await store.transaction('s',(tx,control)=>seedReferenceEntity(tx,control,document,{module:'sales',element:'order'},fields,'v0'));
+2026-10-24T11:01:26.4970091Z 29 |   const forged=await executor.admission.prepareFresh('s',credential,request),otherBuild=install(handlers,'return {};');forged.deployment=otherBuild;
+2026-10-24T11:01:26.4971499Z 30 |   expect(()=>referencePreparedHandlers(forged,handlers)!.resolve(forged.action,otherBuild,false)).toThrow('unavailable');
+2026-10-24T11:01:26.4972640Z 31 |   await expect(store.transaction('s',(tx,control)=>freezeReferenceState(tx,control,forged,handlers))).rejects.toThrow('authoritative retained deployment');
+2026-10-24T11:01:26.4975575Z 32 |   const preview=await executor.preview('s',credential,{protocol:request.protocol,target,inputs:request.inputs});expect(preview.status).toBe('preview');expect(decodeReferenceJson((await store.sql`select fields from action_entity`)[0]!.fields)).toEqual(fields);for(const table of ['action_outcome','action_audit','action_outbox'])expect(await store.sql.unsafe('select * from '+table)).toHaveLength(0);
+2026-10-24T11:01:26.4980818Z 33 |   const result=await executor.invoke('s',credential,request);expect(result).toMatchObject({status:'committed'});if(result.status!=='committed')throw Error('Expected handler commit');expect(result.outputs).toEqual({status:{string:'approved'},order:input});expect(result.verification).toEqual({kind:'handler',deployment,postconditions:[{condition:'approved-output',status:'satisfied'}],frames:'enforced',constraints:'verified',outputs:'verified'});expect(result.changes).toEqual([{kind:'updated',entity:input}]);expect(decodeReferenceJson((await store.sql`select fields from action_entity`)[0]!.fields)).toEqual({...fields,[actionFieldValueKey(field)]:{string:'approved'}});expect(decodeReferenceJson((await store.sql`select deployment from action_audit`)[0]!.deployment)).toEqual({...deployment});expect(await executor.invoke('s',credential,request)).toEqual(result);
+2026-10-24T11:01:26.4983419Z 
+2026-10-24T11:01:26.4983643Z error: expect(received).toMatchObject(expected)
+2026-10-24T11:01:26.4983914Z 
+2026-10-24T11:01:26.4984081Z   {
+2026-10-24T11:01:26.4984410Z -   "status": "committed",
+2026-10-24T11:01:26.4984968Z +   "code": "LIMIT",
+2026-10-24T11:01:26.4985517Z +   "status": "failed",
+2026-10-24T11:01:26.4985842Z   }
+2026-10-24T11:01:26.4986007Z 
+2026-10-24T11:01:26.4986156Z - Expected  - 1
+2026-10-24T11:01:26.4986553Z + Received  + 2
+2026-10-24T11:01:26.4986711Z 
+2026-10-24T11:01:26.4987067Z       at <anonymous> (/home/runner/work/umf/umf/tests/actions-reference/handler-executor.test.ts:33:77)
+2026-10-24T11:01:26.4987863Z       at async withReferenceStore (/home/runner/work/umf/umf/tests/actions-reference/native-harness.ts:12:41)
+2026-10-24T11:01:26.4988649Z       at async <anonymous> (/home/runner/work/umf/umf/tests/actions-reference/handler-executor.test.ts:26:8)
+2026-10-24T11:01:26.4989308Z 
+2026-10-24T11:01:26.5013535Z ##[error]  {
+-   "status": "committed",
++   "code": "LIMIT",
++   "status": "failed",
+  }
+
+- Expected  - 1
++ Received  + 2
+
+      at <anonymous> (/home/runner/work/umf/umf/tests/actions-reference/handler-executor.test.ts:33:77)
+      at async withReferenceStore (/home/runner/work/umf/umf/tests/actions-reference/native-harness.ts:12:41)
+      at async <anonymous> (/home/runner/work/umf/umf/tests/actions-reference/handler-executor.test.ts:26:8)
+2026-10-24T11:01:26.5024208Z (fail) native isolated handler commits typed outputs, pins verification, previews without effects and replays after retirement/restart [8123.56ms]
+2026-10-24T11:01:43.5045591Z (pass) native handler access/output/postcondition failures roll back every protected and business write [17007.75ms]
+2026-10-24T11:01:49.9896028Z (pass) native handler creates complete Keys, returns a verified alternate identity and refuses malformed CREATE without leakage [6485.08ms]
+2026-10-24T11:01:53.0990131Z (pass) arbitrary entity outputs disclose neither existing nor absent unselected native identities and execute zero business queries [3109.24ms]
+2026-10-24T11:01:59.0681639Z (pass) native handler CREATE/SET/LINK then UNLINK/DELETE shares graph invariants and read-only target stamps [5969.21ms]
+2026-10-24T11:02:02.1223511Z (pass) retirement during an admitted native handler pins its accepted build and fences subsequent fresh admission [3054.16ms]
+2026-10-24T11:02:06.5053590Z (pass) durable operator catalog survives new consumers, scopes stores and permanently retains retirement [4383.03ms]
+2026-10-24T11:02:10.7081822Z (pass) native catalog retirement waits for admitted handler commit then refuses fresh work [4202.75ms]
+2026-10-24T11:02:10.7082562Z 
+2026-10-24T11:02:10.7083734Z ##[endgroup]
+2026-10-24T11:02:10.7084014Z 
+2026-10-24T11:02:10.7084240Z  7 pass
+2026-10-24T11:02:10.7084733Z  1 fail
+2026-10-24T11:02:10.7085284Z  193 expect() calls
+2026-10-24T11:02:10.7085727Z Ran 8 tests across 1 file. [52.92s]
+2026-10-24T11:02:10.7168235Z {"testProcess":"tests/actions-reference/handler-executor.test.ts","exitCode":1,"pass":7,"fail":1,"skip":0,"assertions":193,"completeSummary":true,"logSha256":"4a7b053805e982a9cb3667b8fb6c8e9cee60443029edb092d724b09a49c91665"}
+2026-10-24T11:02:10.7172277Z Complete test file failed or terminated: tests/actions-reference/handler-executor.test.ts
+2026-10-24T11:02:10.7172926Z 
+2026-10-24T11:02:10.7173102Z  52 pass
+2026-10-24T11:02:10.7173538Z  0 skip
+2026-10-24T11:02:10.7173938Z  1 fail
+2026-10-24T11:02:10.7174390Z  1065 expect() calls
+2026-10-24T11:02:10.7175118Z Ran 53 tests across 14 files. [165.60s]
+2026-10-24T11:02:10.7178686Z error: script "test:actions" exited with code 1
+2026-10-24T11:02:10.7192347Z ##[error]Process completed with exit code 1.
+2026-10-24T11:02:10.7298258Z ##[group]Run actions/upload-artifact@v4
+2026-10-24T11:02:10.7298698Z with:
+2026-10-24T11:02:10.7299080Z   name: command-execution-evidence
+2026-10-24T11:02:10.7299483Z   include-hidden-files: true
+2026-10-24T11:02:10.7300225Z   path: command-execution.log
+fixtures/actions/browser.json
+.cache/sdk-distribution/umf-sdk.tgz
+.cache/sdk-distribution/manifest.json
+
+2026-10-24T11:02:10.7300979Z   if-no-files-found: warn
+2026-10-24T11:02:10.7301329Z   compression-level: 6
+2026-10-24T11:02:10.7301705Z   overwrite: false
+2026-10-24T11:02:10.7302042Z ##[endgroup]
+2026-10-24T11:02:10.8965514Z (node:23742) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-24T11:02:10.8966315Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-24T11:02:10.9047682Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-10-24T11:02:10.9055828Z The least common ancestor is /home/runner/work/umf/umf. This will be the root directory of the artifact
+2026-10-24T11:02:10.9056938Z With the provided path, there will be 2 files uploaded
+2026-10-24T11:02:10.9058223Z Artifact name is valid!
+2026-10-24T11:02:10.9058887Z Root directory input is valid!
+2026-10-24T11:02:11.2184039Z Beginning upload of artifact content to blob storage
+2026-10-24T11:02:11.2491793Z (node:23742) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-24T11:02:11.4128954Z Uploaded bytes 16812
+2026-10-24T11:02:11.4544526Z Finished uploading artifact content to blob storage!
+2026-10-24T11:02:11.4545650Z SHA256 digest of uploaded artifact zip is fdb1c2efd6618ae1969d1fe2d8c56a7e669f8c9a0796ac722bc37fbbda94cf43
+2026-10-24T11:02:11.4546510Z Finalizing artifact upload
+2026-10-24T11:02:11.8755945Z Artifact command-execution-evidence.zip successfully finalized. Artifact ID 12557768188
+2026-10-24T11:02:11.8756999Z Artifact command-execution-evidence has been successfully uploaded! Final size is 16812 bytes. Artifact ID is 12557768188
+2026-10-24T11:02:11.8762603Z Artifact download URL: https://github.com/DocumentDrivenDX/umf/actions/runs/40087699837/artifacts/12557768188
+2026-10-24T11:02:11.8963204Z Post job cleanup.
+2026-10-24T11:02:11.9847220Z [command]/usr/bin/git version
+2026-10-24T11:02:11.9888787Z git version 2.55.0
+2026-10-24T11:02:11.9921543Z Temporarily overriding HOME='/home/runner/work/_temp/1aa182ba-5060-488d-b118-cb16d3d7a8e2' before making global git config changes
+2026-10-24T11:02:11.9922937Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-24T11:02:11.9927223Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/umf/umf
+2026-10-24T11:02:11.9969034Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-24T11:02:12.0002479Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-24T11:02:12.0374056Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-24T11:02:12.0400054Z http.https://github.com/.extraheader
+2026-10-24T11:02:12.0410428Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-24T11:02:12.0449641Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-24T11:02:12.0819856Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-24T11:02:12.0853063Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-24T11:02:12.1346756Z Cleaning up orphan processes
+2026-10-24T11:02:12.1815254Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

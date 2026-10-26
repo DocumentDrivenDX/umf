@@ -1,5 +1,13 @@
 # Core 0.10.2 producer evidence
 
+The current repair batch updates the website oracle to all 24 authored Records and
+adds bounded static LIMIT diagnostics through the existing attempt journal. The
+original execution limits and commit assertion remain unchanged. Hosted inventory
+regeneration, current-source qualification, merge and publication are pending.
+The retained records below keep their historical source and scope.
+
+## Historical source checkpoint
+
 The current checked product-source candidate is
 `2a76a8e8213ec64334408ec49edadc3b6e765cce`. Its parent
 `e527340c60c68c56ace12b9e0644e93211d3f792` fixes cross-filesystem reference
