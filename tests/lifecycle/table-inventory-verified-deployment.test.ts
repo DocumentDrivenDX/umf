@@ -170,4 +170,11 @@ test('shape reuse remains exact, descriptor-safe, and local to its meter and inv
   expect(()=>verifyG10BundleForShape(invalid,retryMeter,'/shape-failed-first')).toThrow();
   expect(()=>verifyG10BundleForShape(invalid,retryMeter,'/shape-failed-retry')).toThrow();
  });
+ const missingDigest=structuredClone(valid) as Partial<typeof valid>;
+ delete missingDigest.bundleDigest;
+ const missingDigestMeter=new R2WorkMeter();
+ withVerifiedG10BundleScope(missingDigestMeter,()=>{
+  verifyAndRememberG10Deployment(valid,missingDigestMeter);
+  expect(()=>verifyG10BundleForShape(missingDigest as typeof valid,missingDigestMeter,'/shape-missing-digest')).toThrow();
+ });
 });

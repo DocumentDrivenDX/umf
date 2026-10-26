@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** One-shot reuse of a complete, metered source recompilation inside G10 admission. */
-import {canonicalCharged,sha256TextCharged} from '../compilation/bundle/hash';
+import {canonicalCharged} from '../compilation/bundle/hash';
 import {ownCanonicalComponent,type InventoryComponentJson} from './inventory-component-copy';
 import {verifyTableDeploymentWithAccounting,type TableDeploymentBundle} from '../table-deployment';
 import type {AccountingContext} from '../model/internal/accounting-context';
@@ -54,7 +54,9 @@ function sameCanonical(left:string,right:string,accounting:AccountingContext,pat
 }
 function storeVerifiedBundle(canonical:string,bundle:TableDeploymentBundle,accounting:AccountingContext,path:string,alreadyOwned=false):void{
  const scope=scopes.get(accounting as object);if(!scope||scope.slots>=MAX_RETAINED_BUNDLES)return;
- const index=sha256TextCharged(canonical,BUNDLE_COPY_BYTES,accounting,`${path}/cache-index`);
+ const index=bundle.bundleDigest;
+ accounting.visit('r2-verified-bundle-cache-index-lookup',path);
+ const indexBytes=accounting.scanUtf8(index,`${path}/cache-index`);
  const bucket=scope.byIndex.get(index);if(bucket){for(const entry of bucket)if(sameCanonical(canonical,entry.canonical,accounting,`${path}/existing-canonical-compare`))return;}
  const copied=alreadyOwned?bundle as unknown as InventoryComponentJson:ownCanonicalComponent(bundle,path,BUNDLE_COPY_BYTES,accounting);
  const frozenCopy=freezeBundle(copied,accounting,path);
@@ -63,12 +65,17 @@ function storeVerifiedBundle(canonical:string,bundle:TableDeploymentBundle,accou
  const frozen=frozenCopy as unknown as FrozenBundle;
  const bytes=accounting.scanUtf8(canonical,`${path}/cache-key`);accounting.retainBytes('r2-verified-bundle-cache-key',bytes,`${path}/cache-key`);
  accounting.visit('r2-verified-bundle-cache-entry',path);
- const indexBytes=accounting.scanUtf8(index,`${path}/cache-index`);accounting.retainBytes('r2-verified-bundle-cache-index',indexBytes,`${path}/cache-index`);
+ accounting.retainBytes('r2-verified-bundle-cache-index',indexBytes,`${path}/cache-index`);
  accounting.visit('r2-verified-bundle-cache-entry-array-slot',path);accounting.visit('r2-verified-bundle-cache-entry-object',path);
  const entry={canonical,bundle:frozen};if(bucket)bucket.push(entry);else{const entries:CacheEntry[]=[];scope.byIndex.set(index,entries);entries.push(entry);}scope.slots++;
 }
-function cachedBundle(canonical:string,accounting:AccountingContext,path:string):FrozenBundle|undefined{
- const index=sha256TextCharged(canonical,BUNDLE_COPY_BYTES,accounting,`${path}/cache-index`),entries=scopes.get(accounting as object)?.byIndex.get(index);if(!entries)return undefined;
+function cachedBundleBucket(digest:unknown,accounting:AccountingContext,path:string):CacheEntry[]|undefined{
+ const scope=scopes.get(accounting as object);if(!scope||typeof digest!=='string')return undefined;
+ accounting.visit('r2-verified-bundle-cache-index-lookup',path);
+ accounting.scanUtf8(digest,`${path}/cache-index`);
+ return scope.byIndex.get(digest);
+}
+function cachedBundle(canonical:string,entries:readonly CacheEntry[],accounting:AccountingContext,path:string):FrozenBundle|undefined{
  for(const entry of entries)if(sameCanonical(canonical,entry.canonical,accounting,`${path}/canonical-compare`))return entry.bundle;
  return undefined;
 }
@@ -102,21 +109,27 @@ export function consumeVerifiedG10Deployment(input:TableDeploymentBundle,account
 /** Metered envelope reuse. Hits return only the frozen bundle, never verifier auxiliaries. */
 export function verifyG10BundleForShape(input:TableDeploymentBundle,accounting:AccountingContext,path:string):TableDeploymentBundle{
  const owned=ownCanonicalComponent(input,path,BUNDLE_COPY_BYTES,accounting);
- const inputCanonical=canonicalCharged(owned,accounting,`${path}/shape-input`);
  const claimedDigest=owned!==null&&typeof owned==='object'&&!Array.isArray(owned)?(owned as Record<string,InventoryComponentJson>).bundleDigest:undefined;
- const hit=cachedBundle(inputCanonical,accounting,path);
- if(hit){if(hit.bundleDigest!==claimedDigest)throw new TypeError(`R2_VERIFIED_BUNDLE_DIGEST_MISMATCH:${path}`);return hit;}
+ const bucket=cachedBundleBucket(claimedDigest,accounting,path);
+ if(bucket){
+  const inputCanonical=canonicalCharged(owned,accounting,`${path}/shape-input`),hit=cachedBundle(inputCanonical,bucket,accounting,path);
+  if(hit){if(hit.bundleDigest!==claimedDigest)throw new TypeError(`R2_VERIFIED_BUNDLE_DIGEST_MISMATCH:${path}`);return hit;}
+ }
  return verifyAndRememberG10Deployment(owned as unknown as TableDeploymentBundle,accounting);
 }
 
 /** Lineage-only exact-content reuse. Every miss runs the complete source verifier. */
 export function verifyG10BundleForLineage(input:TableDeploymentBundle,accounting:AccountingContext,path:string):TableDeploymentBundle{
  const owned=ownCanonicalComponent(input,path,BUNDLE_COPY_BYTES,accounting);
- const inputCanonical=canonicalCharged(owned,accounting,`${path}/lineage-input`);
  const claimedDigest=owned!==null&&typeof owned==='object'&&!Array.isArray(owned)?(owned as Record<string,InventoryComponentJson>).bundleDigest:undefined;
- const hit=cachedBundle(inputCanonical,accounting,path);if(hit){if(hit.bundleDigest!==claimedDigest)throw new TypeError(`R2_VERIFIED_BUNDLE_DIGEST_MISMATCH:${path}`);return hit;}
+ const bucket=cachedBundleBucket(claimedDigest,accounting,path);
+ if(bucket){
+  const inputCanonical=canonicalCharged(owned,accounting,`${path}/lineage-input`),hit=cachedBundle(inputCanonical,bucket,accounting,path);
+  if(hit){if(hit.bundleDigest!==claimedDigest)throw new TypeError(`R2_VERIFIED_BUNDLE_DIGEST_MISMATCH:${path}`);return hit;}
+ }
  const result=verifyCompleteAndStore(owned as unknown as TableDeploymentBundle,accounting,`${path}/verified-bundle-cache`,true,claimedDigest);
  // The fixed verifier's returned bundle is a new core copy, not the candidate
  // or any caller-owned object, and is private to this lineage call.
- return cachedBundle(result.inputCanonical,accounting,path)??result.bundle;
+ const stored=cachedBundleBucket(result.bundle.bundleDigest,accounting,path);
+ return stored?cachedBundle(result.inputCanonical,stored,accounting,path)??result.bundle:result.bundle;
 }
