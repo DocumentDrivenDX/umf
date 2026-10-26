@@ -70,6 +70,7 @@
       "scripts/codegen-corpus.ts",
       "scripts/conformance.ts",
       "scripts/dispatch_core_pypi_release.py",
+      "scripts/dispatch_schema_browser_npm.py",
       "scripts/domain-pack-family.ts",
       "scripts/domain-packs/ontology.ts",
       "scripts/domain-packs/qualify-sec-acquisition.py",
@@ -105,8 +106,11 @@
       "scripts/table-migration-corpus.ts",
       "scripts/table-reviewed-changes-corpus.ts",
       "scripts/test-sdk-install.ts",
+      "scripts/test_dispatch_schema_browser_npm.py",
+      "scripts/test_verify_schema_browser_npm.py",
       "scripts/umf-client-generate.ts",
       "scripts/verify-native-client-types.py",
+      "scripts/verify_schema_browser_npm.py",
       "tests/access-adoption.test.ts",
       "tests/access-native-domains.test.ts",
       "tests/access-native-table.test.ts",
@@ -203,16 +207,16 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "4b7d8b4e17ae7ccb43c4b0dbbeeeb1a4ef7ddec458e0451550b15c5d1d853867",
+    "sourceCohortSha256": "8c3686920035a0a33e55cc43535b10e727ccdb2371e7fc09081a3011f06edf8d",
     "typescriptApi": "5.9.3"
   },
   "counts": {
-    "activeScriptFiles": 349,
-    "algorithmSymbols": 10375,
+    "activeScriptFiles": 353,
+    "algorithmSymbols": 10424,
     "pythonModules": 105,
     "rustBuildInputs": 76,
     "rustModules": 127,
-    "scriptFiles": 2957,
+    "scriptFiles": 2961,
     "sourceModules": 578,
     "typescriptModules": 473
   },
@@ -26954,6 +26958,26 @@
       "sha256": "db65816b600846b91571ae1884e1551673397c75fbe5f84215d55f72df7f382c"
     },
     {
+      "activationEvidence": [
+        ".github/workflows/dispatch-schema-browser-npm.yml",
+        ".github/workflows/schema-browser-npm-validation.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "DispatchError",
+        "main",
+        "read_json",
+        "require",
+        "validate_dispatch"
+      ],
+      "bytes": 5579,
+      "disposition": "active-host-tooling-algorithm",
+      "language": "py",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
+      "path": "scripts/dispatch_schema_browser_npm.py",
+      "sha256": "e187957c34e6742e0200e6ddebc4d41ceba9fd5cb45d7102e1ea60f9d67daa51"
+    },
+    {
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
@@ -35116,6 +35140,29 @@
       "sha256": "fa48b70f090ce0617ebeb6fcfde20eac24303863b4cbdd215710de2a8bf0e11b"
     },
     {
+      "activationEvidence": [
+        ".github/workflows/dispatch-schema-browser-npm.yml",
+        ".github/workflows/publish-schema-browser-npm.yml",
+        ".github/workflows/schema-browser-npm-validation.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "DispatcherTests",
+        "release_fixture",
+        "test_annotated_tag_source_is_peeled_to_commit",
+        "test_exact_immutable_release_resolves_source_and_asset_pins",
+        "test_refuses_missing_or_malformed_digest",
+        "test_refuses_wrong_annotated_target_and_nonexact_asset_inventory",
+        "test_refuses_wrong_repository_branch_tag_or_mutable_release"
+      ],
+      "bytes": 4409,
+      "disposition": "active-host-tooling-algorithm",
+      "language": "py",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
+      "path": "scripts/test_dispatch_schema_browser_npm.py",
+      "sha256": "309ecb4d0cf819d5d3b32316948863c399bfabcc97213dbf8c81dec3a26ec411"
+    },
+    {
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
@@ -35271,6 +35318,42 @@
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/test_record_access_pg_runtime.py",
       "sha256": "53aea18e87a246d77d544224c3df7e8919308309a06117211f8844ee8d6bebef"
+    },
+    {
+      "activationEvidence": [
+        ".github/workflows/publish-schema-browser-npm.yml",
+        ".github/workflows/schema-browser-npm-validation.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "DownloadedArtifactTests",
+        "Response",
+        "VerifyReleaseTests",
+        "__enter__",
+        "__exit__",
+        "digest",
+        "open_request",
+        "read",
+        "release_fixture",
+        "test_exact_release_assets_and_source_are_accepted_without_copying_private_receipt_path",
+        "test_legacy_release_requires_and_accepts_all_exact_manual_pins",
+        "test_oidc_publish_invokes_npm_without_package_lifecycle_scripts",
+        "test_private_archive_is_refused",
+        "test_refuses_unexpected_artifact_member_before_publish",
+        "test_registry_absence_and_exact_existing_archive",
+        "test_registry_collision_is_refused",
+        "test_requires_exact_verified_identity_and_archive_bytes_before_publish",
+        "test_unpinned_mutable_release_is_refused",
+        "test_version_lookup_uses_json_accept_header",
+        "test_wrong_source_is_refused",
+        "test_wrong_tag_is_refused"
+      ],
+      "bytes": 12193,
+      "disposition": "active-host-tooling-algorithm",
+      "language": "py",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
+      "path": "scripts/test_verify_schema_browser_npm.py",
+      "sha256": "a47c612bd5b0e6c46d8b7238a353dfbd084a13574818caa064fc4286ac7c682a"
     },
     {
       "activationEvidence": [],
@@ -35966,6 +36049,37 @@
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/verify-native-client-types.py",
       "sha256": "4d43eefd94c6229827a070b82f6cd95c5ee2aa4c404c2c8eff448aec3f051565"
+    },
+    {
+      "activationEvidence": [
+        ".github/workflows/publish-schema-browser-npm.yml",
+        ".github/workflows/schema-browser-npm-validation.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "ReleaseError",
+        "_download_registry_tarball",
+        "_registry_json",
+        "_safe_tarball",
+        "check_npm_registry",
+        "main",
+        "parse_sums",
+        "read_bytes_json",
+        "read_json",
+        "require",
+        "resolve_tag_commit",
+        "sha",
+        "validate_archive",
+        "verify_downloaded_artifact",
+        "verify_release",
+        "wait_for_registry_match"
+      ],
+      "bytes": 22185,
+      "disposition": "active-host-tooling-algorithm",
+      "language": "py",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
+      "path": "scripts/verify_schema_browser_npm.py",
+      "sha256": "6e0b4f12b8f33f415f7f8db4e598c564995230d139bce70bd9007bd3fcd3db61"
     },
     {
       "activationEvidence": [
