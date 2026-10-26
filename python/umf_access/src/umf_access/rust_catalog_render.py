@@ -97,15 +97,32 @@ def _validate_graph_variant(value: object) -> None:
         if result["kind"] == "capture-error":
             from umf_access.capture import CaptureError
             raise CaptureError(result["code"], result["rule"])
+        if (
+            result["kind"] == "type-error"
+            and result["code"] == ""
+            and result["rule"] == "expression column belongs to another Record"
+        ):
+            raise TypeError(result["rule"])
         raise RuntimeError("Rust captured graph validator returned an unsupported refusal")
     raise RuntimeError("Rust captured graph validator returned an invalid outcome")
 
 
 def capture_with_rust_graph_validator(function: object) -> object:
     """Private opt-in capture route; public ``capture`` stays Python-selected."""
-    from umf_access.capture import CapturedVariant, _capture_with_validator
+    from umf import _rust
 
-    def validate(node: object, parameters: tuple[object, ...], presence: frozenset[str]) -> None:
+    from umf_access.capture import (
+        CapturedDeclaration,
+        CapturedVariant,
+        CaptureError,
+        _canonical,
+        _invoke,
+        _parameters,
+    )
+
+    def validate(
+        node: object, parameters: tuple[object, ...], presence: frozenset[str]
+    ) -> None:
         budget = _EncodingBudget()
         ordered_presence = tuple(
             parameter.name for parameter in parameters if parameter.name in presence
@@ -114,7 +131,133 @@ def capture_with_rust_graph_validator(function: object) -> object:
         budget.charge_output(dto)
         _validate_graph_variant(dto)
 
-    return _capture_with_validator(function, validate)
+    kind = getattr(function, "__umf_kind__", None)
+    if kind not in ("query", "command"):
+        raise CaptureError(
+            "CAPTURE_UNSUPPORTED", "explicit query/command decorator required"
+        )
+    parameters = _parameters(function)
+    optional = tuple(parameter.name for parameter in parameters if parameter.optional)
+
+    def pair(
+        presence: frozenset[str],
+        expected_used: tuple[str, ...] | None,
+        stage: str,
+    ):
+        first = _invoke(function, parameters, presence, validate)
+        second = _invoke(function, parameters, presence, validate)
+        first_bytes = json.dumps(
+            _canonical(first),
+            ensure_ascii=False,
+            allow_nan=False,
+            separators=(",", ":"),
+        )
+        second_bytes = json.dumps(
+            _canonical(second),
+            ensure_ascii=False,
+            allow_nan=False,
+            separators=(",", ":"),
+        )
+        pairs = []
+        for (node, used), canonical_bytes in zip(
+            (first, second), (first_bytes, second_bytes)
+        ):
+            used_names = [
+                parameter.name
+                for parameter in parameters
+                if parameter.name in used
+            ]
+            pairs.append(
+                {
+                    "canonical": canonical_bytes,
+                    "usedOptional": used_names,
+                    "terminalOp": node.op,
+                }
+            )
+        request = {
+            "profile": "umf-access-capture-orchestration/0.1.0",
+            "stage": stage,
+            "kind": kind,
+            "parameters": [
+                {"name": parameter.name, "optional": parameter.optional}
+                for parameter in parameters
+            ],
+            "presence": [
+                parameter.name
+                for parameter in parameters
+                if parameter.name in presence
+            ],
+            "expectedUsed": (
+                None if expected_used is None else list(expected_used)
+            ),
+            "pairs": pairs,
+        }
+        try:
+            result = _rust._rust_core.access_orchestrate_capture_pair(request)
+        except AttributeError:
+            raise CatalogLogicalRenderUnavailable(
+                "Rust capture orchestration capability unavailable"
+            ) from None
+        if (
+            type(result) is not dict
+            or result.get("profile") != "umf-access-capture-orchestration/0.1.0"
+        ):
+            raise RuntimeError("Rust capture orchestrator returned an invalid response")
+        if (
+            result.get("outcome") == "refused"
+            and set(result) == {"profile", "outcome", "kind", "code", "rule"}
+            and all(type(result[key]) is str for key in ("kind", "code", "rule"))
+        ):
+            raise CaptureError(result["code"], result["rule"])
+        if stage == "discover":
+            if (
+                set(result) != {"profile", "outcome", "presences"}
+                or result.get("outcome") != "scheduled"
+            ):
+                raise RuntimeError("Rust capture orchestrator returned an invalid schedule")
+            presences = result["presences"]
+            if type(presences) is not list or len(presences) > 16:
+                raise RuntimeError("Rust capture orchestrator returned an invalid schedule")
+            optional_names = set(optional)
+            for selected in presences:
+                if (
+                    type(selected) is not list
+                    or any(
+                        type(name) is not str or name not in optional_names
+                        for name in selected
+                    )
+                    or len(selected) != len(set(selected))
+                    or selected != [name for name in optional if name in selected]
+                ):
+                    raise RuntimeError("Rust capture orchestrator returned an invalid schedule")
+            return first[0], first[1], presences
+        if (
+            set(result) != {"profile", "outcome", "presences"}
+            or result.get("outcome") != "accepted"
+            or result.get("presences") != []
+        ):
+            raise RuntimeError("Rust capture orchestrator returned an invalid acceptance")
+        return first[0], first[1], None
+
+    _, used, presences = pair(frozenset(optional), None, "discover")
+    variants = []
+    used_names = tuple(parameter.name for parameter in parameters if parameter.name in used)
+    for selected in presences:
+        if type(selected) is not list or any(type(name) is not str for name in selected):
+            raise RuntimeError("Rust capture orchestrator returned an invalid presence variant")
+        node, _variant_used, _ = pair(frozenset(selected), used_names, "variant")
+        variants.append(CapturedVariant(tuple(selected), node, parameters))
+    action = None
+    if kind == "command":
+        from umf_access.types import ActionRef
+
+        reference = getattr(function, "__umf_action__", None)
+        if not isinstance(reference, ActionRef):
+            raise CaptureError(
+                "CAPTURE_UNSUPPORTED", "command requires generated action identity"
+            )
+        action = reference.source
+    return CapturedDeclaration(function.__name__, kind, parameters, tuple(variants), action)
 
 
 class _EncodingBudget:
@@ -167,6 +310,8 @@ def _encode_capture(value: object, budget: _EncodingBudget, depth: int = 0) -> o
 
     if value is MISSING:
         return {"$sentinel": "umf_access.types.MISSING"}
+    if value is Ellipsis:
+        return {"$ellipsis": True}
     if isinstance(value, Enum):
         return {"$enum": f"{type(value).__module__}.{type(value).__qualname__}", "value": encode(value.value)}
     if value is None or type(value) in (str, bool, int):

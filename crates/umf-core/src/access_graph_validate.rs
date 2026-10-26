@@ -8,6 +8,7 @@
 use crate::{PyText, PythonConsumerValue};
 
 pub const PROFILE: &str = "umf-access-captured-graph-validation/0.1.0";
+pub const ORCHESTRATION_PROFILE: &str = "umf-access-capture-orchestration/0.1.0";
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Refusal {
@@ -61,6 +62,326 @@ fn text(value: &PythonConsumerValue) -> Option<String> {
         .iter()
         .map(|x| char::from_u32(*x))
         .collect()
+}
+
+fn string(value: &PythonConsumerValue) -> Option<&PyText> {
+    match value {
+        PythonConsumerValue::String(value) => Some(value),
+        _ => None,
+    }
+}
+
+fn exact_object(value: &PythonConsumerValue, members: &[&str]) -> bool {
+    let PythonConsumerValue::Object(fields) = value else {
+        return false;
+    };
+    fields.len() == members.len() && members.iter().all(|name| get(value, name).is_some())
+}
+
+/// Apply the deterministic scheduling and terminal-authority portion of the
+/// private Python capture seam. Callable execution and graph validation happen
+/// in Python before each pair reaches this function.
+pub fn orchestrate_capture_pair(input: &PythonConsumerValue) -> Result<Vec<Vec<String>>, Refusal> {
+    let invalid = || Refusal {
+        kind: "capture-error",
+        code: "CAPTURE_DTO_INVALID",
+        rule: "capture orchestration input is outside the closed profile",
+    };
+    if !exact_object(
+        input,
+        &[
+            "profile",
+            "stage",
+            "kind",
+            "parameters",
+            "presence",
+            "expectedUsed",
+            "pairs",
+        ],
+    ) || get(input, "profile").and_then(text).as_deref() != Some(ORCHESTRATION_PROFILE)
+    {
+        return Err(invalid());
+    }
+    let Some(stage) = get(input, "stage").and_then(text) else {
+        return Err(invalid());
+    };
+    let Some(kind) = get(input, "kind").and_then(text) else {
+        return Err(invalid());
+    };
+    if !matches!(stage.as_str(), "discover" | "variant")
+        || !matches!(kind.as_str(), "query" | "command")
+    {
+        return Err(invalid());
+    }
+    let Some(parameters) = get(input, "parameters").and_then(|v| match v {
+        PythonConsumerValue::Array(a) => Some(a),
+        _ => None,
+    }) else {
+        return Err(invalid());
+    };
+    let mut names = Vec::with_capacity(parameters.len());
+    let mut optional = Vec::new();
+    for parameter in parameters {
+        if !exact_object(parameter, &["name", "optional"]) {
+            return Err(invalid());
+        }
+        let Some(name) = get(parameter, "name").and_then(text) else {
+            return Err(invalid());
+        };
+        let Some(PythonConsumerValue::Bool(is_optional)) = get(parameter, "optional") else {
+            return Err(invalid());
+        };
+        if names.contains(&name) {
+            return Err(invalid());
+        }
+        names.push(name.clone());
+        if *is_optional {
+            optional.push(name);
+        }
+    }
+    let Some(presence) = get(input, "presence").and_then(|v| match v {
+        PythonConsumerValue::Array(a) => Some(a),
+        _ => None,
+    }) else {
+        return Err(invalid());
+    };
+    let mut presence_names = Vec::new();
+    for item in presence {
+        let Some(name) = text(item) else {
+            return Err(invalid());
+        };
+        if !optional.contains(&name) || presence_names.contains(&name) {
+            return Err(invalid());
+        }
+        presence_names.push(name);
+    }
+    let expected_used = match get(input, "expectedUsed") {
+        Some(PythonConsumerValue::Null) if stage == "discover" => None,
+        Some(PythonConsumerValue::Array(items)) if stage == "variant" => {
+            let mut values = Vec::new();
+            for item in items {
+                let Some(name) = text(item) else {
+                    return Err(invalid());
+                };
+                if !optional.contains(&name) || values.contains(&name) {
+                    return Err(invalid());
+                }
+                values.push(name);
+            }
+            Some(values)
+        }
+        _ => return Err(invalid()),
+    };
+    let Some(PythonConsumerValue::Array(pairs)) = get(input, "pairs") else {
+        return Err(invalid());
+    };
+    if pairs.len() != 2 {
+        return Err(invalid());
+    }
+    let mut canonical = Vec::new();
+    for pair in pairs {
+        let Some(bytes) = get(pair, "canonical").and_then(string) else {
+            return Err(invalid());
+        };
+        canonical.push(bytes);
+    }
+    if canonical[0] != canonical[1] {
+        return Err(Refusal {
+            kind: "capture-error",
+            code: "CAPTURE_NONDETERMINISTIC",
+            rule: "two captures differ",
+        });
+    }
+    let mut uses = Vec::new();
+    let mut nodes = Vec::new();
+    for pair in pairs {
+        if !exact_object(pair, &["canonical", "usedOptional", "terminalOp"]) {
+            return Err(invalid());
+        }
+        let Some(PythonConsumerValue::Array(items)) = get(pair, "usedOptional") else {
+            return Err(invalid());
+        };
+        let mut used = Vec::new();
+        for item in items {
+            let Some(name) = text(item) else {
+                return Err(invalid());
+            };
+            if !optional.contains(&name) || used.contains(&name) {
+                return Err(invalid());
+            }
+            used.push(name);
+        }
+        uses.push(used);
+        nodes.push(get(pair, "terminalOp"));
+    }
+    let used_set = &uses[0];
+    if stage == "discover" {
+        if uses[1] != *used_set {
+            return Err(invalid());
+        }
+        if used_set.len() > 4 {
+            return Err(Refusal {
+                kind: "capture-error",
+                code: "VARIANT_LIMIT",
+                rule: "optional filters exceed 16 variants",
+            });
+        }
+        let ordered: Vec<String> = optional
+            .iter()
+            .filter(|name| used_set.contains(name))
+            .cloned()
+            .collect();
+        let mut schedule = Vec::new();
+        for size in 0..=ordered.len() {
+            combinations(&ordered, size, 0, &mut Vec::new(), &mut schedule);
+        }
+        return Ok(schedule);
+    }
+    if uses[1] != *used_set {
+        return Err(invalid());
+    }
+    if expected_used.as_ref() != Some(used_set) {
+        return Err(Refusal {
+            kind: "capture-error",
+            code: "CAPTURE_UNSUPPORTED",
+            rule: "optional-filter topology changes across variants",
+        });
+    }
+    let terminal_op = nodes[0].and_then(text).ok_or_else(invalid)?;
+    if (terminal_op == "update") != (kind == "command") {
+        return Err(Refusal {
+            kind: "capture-error",
+            code: "CAPTURE_UNSUPPORTED",
+            rule: "writes require command and reads require query",
+        });
+    }
+    Ok(Vec::new())
+}
+
+fn combinations(
+    values: &[String],
+    remaining: usize,
+    start: usize,
+    current: &mut Vec<String>,
+    output: &mut Vec<Vec<String>>,
+) {
+    if remaining == 0 {
+        output.push(current.clone());
+        return;
+    }
+    for index in start..=values.len().saturating_sub(remaining) {
+        current.push(values[index].clone());
+        combinations(values, remaining - 1, index + 1, current, output);
+        current.pop();
+    }
+}
+
+fn is_vector_carrier(value: &PythonConsumerValue) -> bool {
+    if !exact_object(value, &["$typing", "args"])
+        || text(get(value, "$typing").unwrap_or(&PythonConsumerValue::Null)).as_deref()
+            != Some("builtins.tuple")
+    {
+        return false;
+    }
+    let Some(PythonConsumerValue::Array(args)) = get(value, "args") else {
+        return false;
+    };
+    args.len() == 2
+        && exact_object(&args[0], &["$typeRef"])
+        && text(get(&args[0], "$typeRef").unwrap_or(&PythonConsumerValue::Null)).as_deref()
+            == Some("builtins.float")
+        && exact_object(&args[1], &["$ellipsis"])
+        && matches!(
+            get(&args[1], "$ellipsis"),
+            Some(PythonConsumerValue::Bool(true))
+        )
+}
+
+fn has_omitted(value: &PythonConsumerValue) -> bool {
+    if let Some(fields) = tag(value, "umf_access.dsl._nodes.Node") {
+        if get(fields, "op").and_then(text).as_deref() == Some("omitted") {
+            return true;
+        }
+        return get(fields, "args")
+            .and_then(tuple)
+            .is_some_and(|items| items.iter().any(has_omitted));
+    }
+    tuple(value).is_some_and(|items| items.iter().any(has_omitted))
+}
+
+fn update_temporal_parameter_profiles(
+    op: &str,
+    args: &[PythonConsumerValue],
+    profiles: &mut Vec<(String, String)>,
+) -> Result<(), Refusal> {
+    if !matches!(
+        op,
+        "=" | "<>"
+            | "<"
+            | "<="
+            | ">"
+            | ">="
+            | "BETWEEN"
+            | "IN"
+            | "NOT IN"
+            | "IS DISTINCT FROM"
+            | "IS NOT DISTINCT FROM"
+    ) {
+        return Ok(());
+    }
+    let Some(left) = args.first() else {
+        return Ok(());
+    };
+    let Some(left_fields) = tag(left, "umf_access.dsl._nodes.Node") else {
+        return Ok(());
+    };
+    if get(left_fields, "op").and_then(text).as_deref() != Some("column") {
+        return Ok(());
+    }
+    let Some(field) = get(left_fields, "args")
+        .and_then(tuple)
+        .and_then(|args| args.first())
+        .and_then(|field| tag(field, "umf_access.dsl._nodes.FieldRef"))
+    else {
+        return Err(refuse_dto());
+    };
+    let Some(temporal) = get(field, "temporal")
+        .filter(|value| !matches!(value, PythonConsumerValue::Null))
+        .and_then(text)
+    else {
+        return Ok(());
+    };
+    for right in args.iter().skip(1) {
+        let Some(right_fields) = tag(right, "umf_access.dsl._nodes.Node") else {
+            continue;
+        };
+        if get(right_fields, "op").and_then(text).as_deref() != Some("param") {
+            continue;
+        }
+        let Some(name) = get(right_fields, "args")
+            .and_then(tuple)
+            .and_then(|args| args.first())
+            .and_then(text)
+        else {
+            return Err(refuse_dto());
+        };
+        if let Some((_, previous)) = profiles.iter().find(|(parameter, _)| parameter == &name) {
+            if previous != &temporal {
+                return Err(Refusal {
+                    kind: "capture-error",
+                    code: "CAPTURE_UNSUPPORTED",
+                    rule: "parameter spans incompatible temporal profiles",
+                });
+            }
+        } else {
+            profiles.push((name, temporal.clone()));
+        }
+    }
+    Ok(())
+}
+
+fn text_value_for_validator(value: &str) -> PythonConsumerValue {
+    PythonConsumerValue::String(PyText::from_utf8(value))
 }
 
 fn refuse_dto() -> Refusal {
@@ -160,6 +481,7 @@ pub fn validate_captured_variant(input: &PythonConsumerValue) -> Result<(), Refu
     };
     struct Parameter<'a> {
         name: String,
+        carrier: Option<&'a PythonConsumerValue>,
         key_components: &'a PythonConsumerValue,
         key_identity: &'a PythonConsumerValue,
     }
@@ -171,6 +493,7 @@ pub fn validate_captured_variant(input: &PythonConsumerValue) -> Result<(), Refu
         let Some(name) = get(pfields, "name").and_then(text) else {
             return Err(refuse_dto());
         };
+        let carrier = get(pfields, "carrier");
         let Some(components) =
             get(pfields, "key_components").filter(|value| tuple(value).is_some())
         else {
@@ -182,6 +505,7 @@ pub fn validate_captured_variant(input: &PythonConsumerValue) -> Result<(), Refu
         };
         declared.push(Parameter {
             name,
+            carrier,
             key_components: components,
             key_identity: identity,
         });
@@ -205,15 +529,43 @@ pub fn validate_captured_variant(input: &PythonConsumerValue) -> Result<(), Refu
     // Keep this profile bounded to terminals whose capture shape and selected
     // Key preflight are represented here. Python's public capture remains the
     // authority for all other terminal checks.
-    if !matches!(terminal_op.as_str(), "all" | "get" | "page")
-        || args.len() < 2
-        || tag(&args[0], "umf_access.dsl._nodes.RecordRef").is_none()
-    {
+    if !matches!(
+        terminal_op.as_str(),
+        "all"
+            | "first"
+            | "one"
+            | "count"
+            | "exists"
+            | "get"
+            | "page"
+            | "group_count"
+            | "update"
+            | "search_top"
+    ) {
+        return Err(Refusal {
+            kind: "capture-error",
+            code: "CAPTURE_UNSUPPORTED",
+            rule: "unsupported terminal form",
+        });
+    }
+    if args.is_empty() || tag(&args[0], "umf_access.dsl._nodes.RecordRef").is_none() {
+        return Err(Refusal {
+            kind: "capture-error",
+            code: "CAPTURE_UNSUPPORTED",
+            rule: "terminal has no record identity",
+        });
+    }
+    if args.len() < 2 {
         return Err(refuse_dto());
     }
-    if (terminal_op == "all" && args.len() != 2)
+    if (matches!(
+        terminal_op.as_str(),
+        "all" | "first" | "one" | "count" | "exists" | "group_count"
+    ) && args.len() != 2)
         || (terminal_op == "get" && args.len() != 3)
         || (terminal_op == "page" && args.len() != 4)
+        || (terminal_op == "update" && args.len() != 3)
+        || (terminal_op == "search_top" && args.len() != 5)
     {
         return Err(refuse_dto());
     }
@@ -223,6 +575,22 @@ pub fn validate_captured_variant(input: &PythonConsumerValue) -> Result<(), Refu
     let Some(steps) = tuple(&args[1]) else {
         return Err(refuse_dto());
     };
+    if terminal_op == "update" {
+        let Some(assignments) = tuple(&args[2]) else {
+            return Err(refuse_dto());
+        };
+        if assignments.is_empty()
+            || assignments.iter().any(|assignment| {
+                tuple(assignment).is_none_or(|pair| {
+                    pair.len() != 2
+                        || tag(&pair[0], "umf_access.dsl._nodes.FieldRef").is_none()
+                        || tag(&pair[1], "umf_access.dsl._nodes.Node").is_none()
+                })
+            })
+        {
+            return Err(refuse_dto());
+        }
+    }
     let mut selections = Vec::new();
     let mut has_group = false;
     let mut has_into = false;
@@ -385,6 +753,8 @@ pub fn validate_captured_variant(input: &PythonConsumerValue) -> Result<(), Refu
         value: &PythonConsumerValue,
         declared: &[Parameter<'_>],
         owners: &[Owner],
+        input: &PythonConsumerValue,
+        temporal_profiles: &mut Vec<(String, String)>,
     ) -> Result<(), Refusal> {
         if let Some(fields) = tag(value, "umf_access.dsl._nodes.Node") {
             let Some(op) = get(fields, "op").and_then(text) else {
@@ -393,6 +763,253 @@ pub fn validate_captured_variant(input: &PythonConsumerValue) -> Result<(), Refu
             let Some(args) = get(fields, "args").and_then(tuple) else {
                 return Err(refuse_dto());
             };
+            if op == "related" {
+                if args.len() != 4 {
+                    return Err(Refusal {
+                        kind: "capture-error",
+                        code: "CAPTURE_UNSUPPORTED",
+                        rule: "malformed navigation source",
+                    });
+                }
+                let source = &args[0];
+                let Some(source_steps) = tuple(&args[1]) else {
+                    return Err(Refusal {
+                        kind: "capture-error",
+                        code: "CAPTURE_UNSUPPORTED",
+                        rule: "closed navigation source required",
+                    });
+                };
+                if source_steps
+                    .iter()
+                    .any(|step| tag(step, "umf_access.dsl._nodes.Node").is_none())
+                {
+                    return Err(Refusal {
+                        kind: "capture-error",
+                        code: "CAPTURE_UNSUPPORTED",
+                        rule: "closed navigation source required",
+                    });
+                }
+                let Some(relation_fields) = get(&args[2], "fields") else {
+                    return Err(Refusal {
+                        kind: "capture-error",
+                        code: "CAPTURE_UNSUPPORTED",
+                        rule: "malformed navigation source",
+                    });
+                };
+                let Some(relation_tag) = get(&args[2], "$type").and_then(text) else {
+                    return Err(Refusal {
+                        kind: "capture-error",
+                        code: "CAPTURE_UNSUPPORTED",
+                        rule: "malformed navigation source",
+                    });
+                };
+                let relationship = &args[2];
+                let Some(direction) = text(&args[3]) else {
+                    return Err(Refusal {
+                        kind: "capture-error",
+                        code: "CAPTURE_UNSUPPORTED",
+                        rule: "closed navigation source required",
+                    });
+                };
+                if !matches!(direction.as_str(), "forward" | "inverse") {
+                    return Err(Refusal {
+                        kind: "capture-error",
+                        code: "CAPTURE_UNSUPPORTED",
+                        rule: "closed navigation source required",
+                    });
+                }
+                let relation_family = match relation_tag.as_str() {
+                    "umf_access.dsl.navigation.RequiredNavigation"
+                    | "umf_access.dsl.navigation.OptionalNavigation" => "join",
+                    "umf_access.dsl.navigation.ManyNavigation" => "many",
+                    _ => {
+                        return Err(Refusal {
+                            kind: "capture-error",
+                            code: "CAPTURE_UNSUPPORTED",
+                            rule: "closed navigation source required",
+                        });
+                    }
+                };
+                let Some(source_query) = get(relation_fields, "source_query") else {
+                    return Err(Refusal {
+                        kind: "capture-error",
+                        code: "CAPTURE_UNSUPPORTED",
+                        rule: "malformed navigation source",
+                    });
+                };
+                let Some(target_query) = get(relation_fields, "target_query") else {
+                    return Err(Refusal {
+                        kind: "capture-error",
+                        code: "CAPTURE_UNSUPPORTED",
+                        rule: "malformed navigation source",
+                    });
+                };
+                let (expected_source, expected_target) = if direction == "forward" {
+                    (source_query, target_query)
+                } else {
+                    (target_query, source_query)
+                };
+                if source != expected_source {
+                    return Err(Refusal {
+                        kind: "capture-error",
+                        code: "CAPTURE_UNSUPPORTED",
+                        rule: "navigation selected root differs",
+                    });
+                }
+                // Python compares RecordRef dataclasses, including pinned source,
+                // key metadata and alias, for the selected navigation root.
+                let selected_root = get(input, "fields")
+                    .and_then(|fields| get(fields, "node"))
+                    .and_then(|node| get(node, "fields"))
+                    .and_then(|node_fields| get(node_fields, "args"))
+                    .and_then(tuple)
+                    .and_then(|terminal_args| terminal_args.first())
+                    .ok_or_else(refuse_dto)?;
+                if selected_root != expected_target {
+                    return Err(Refusal {
+                        kind: "capture-error",
+                        code: "CAPTURE_UNSUPPORTED",
+                        rule: "navigation selected root differs",
+                    });
+                }
+                let relationship_type = get(relationship, "$type")
+                    .and_then(text)
+                    .ok_or_else(refuse_dto)?;
+                let supported_relationship = match relation_family {
+                    "many" => relationship_type == "umf_access.dsl.navigation.ManyNavigation",
+                    _ => {
+                        relation_tag == relationship_type
+                            && matches!(
+                                relation_tag.as_str(),
+                                "umf_access.dsl.navigation.RequiredNavigation"
+                                    | "umf_access.dsl.navigation.OptionalNavigation"
+                            )
+                    }
+                };
+                if !supported_relationship {
+                    return Err(Refusal {
+                        kind: "capture-error",
+                        code: "CAPTURE_UNSUPPORTED",
+                        rule: "closed navigation source required",
+                    });
+                }
+                let source_node = PythonConsumerValue::Object(vec![
+                    (
+                        key("$type"),
+                        text_value_for_validator("umf_access.dsl._nodes.Node"),
+                    ),
+                    (
+                        key("fields"),
+                        PythonConsumerValue::Object(vec![
+                            (key("op"), text_value_for_validator("all")),
+                            (
+                                key("args"),
+                                PythonConsumerValue::Object(vec![(
+                                    key("$tuple"),
+                                    PythonConsumerValue::Array(vec![
+                                        source.clone(),
+                                        args[1].clone(),
+                                    ]),
+                                )]),
+                            ),
+                        ]),
+                    ),
+                ]);
+                let source_variant = PythonConsumerValue::Object(vec![
+                    (
+                        key("$type"),
+                        text_value_for_validator("umf_access.capture.CapturedVariant"),
+                    ),
+                    (
+                        key("fields"),
+                        PythonConsumerValue::Object(vec![
+                            (key("node"), source_node),
+                            (
+                                key("parameters"),
+                                get(get(input, "fields").ok_or_else(refuse_dto)?, "parameters")
+                                    .ok_or_else(refuse_dto)?
+                                    .clone(),
+                            ),
+                        ]),
+                    ),
+                ]);
+                validate_captured_variant(&source_variant)?;
+                return Ok(());
+            }
+            if op == "aggregate" || op == "bucket_width" {
+                let scalar_shape_valid = if op == "aggregate" {
+                    args.len() == 3
+                        && (tag(&args[1], "umf_access.dsl._nodes.FieldRef").is_some()
+                            || (matches!(args[1], PythonConsumerValue::Null)
+                                && args.first().and_then(text).as_deref() == Some("count")))
+                } else {
+                    args.len() == 2 && tag(&args[0], "umf_access.dsl._nodes.FieldRef").is_some()
+                };
+                if !scalar_shape_valid {
+                    return Err(Refusal {
+                        kind: "capture-error",
+                        code: "CAPTURE_UNSUPPORTED",
+                        rule: "unknown scalar expression",
+                    });
+                }
+                if op == "aggregate" {
+                    let aggregate_op = args.first().and_then(text).ok_or_else(refuse_dto)?;
+                    if !matches!(
+                        aggregate_op.as_str(),
+                        "sum"
+                            | "min"
+                            | "max"
+                            | "avg"
+                            | "count"
+                            | "count_distinct"
+                            | "approx_count_distinct"
+                    ) {
+                        return Err(Refusal {
+                            kind: "capture-error",
+                            code: "CAPTURE_UNSUPPORTED",
+                            rule: "unknown aggregate operation",
+                        });
+                    }
+                    let field = &args[1];
+                    if tag(field, "umf_access.dsl._nodes.FieldRef").is_some()
+                        && get(
+                            tag(field, "umf_access.dsl._nodes.FieldRef").unwrap(),
+                            "temporal",
+                        )
+                        .is_some_and(|value| !matches!(value, PythonConsumerValue::Null))
+                    {
+                        return Err(Refusal {
+                            kind: "capture-error",
+                            code: "CAPTURE_UNSUPPORTED",
+                            rule: "temporal aggregate qualification is held",
+                        });
+                    }
+                    if aggregate_op == "avg" {
+                        let valid_scale = match &args[2] {
+                            PythonConsumerValue::Integer(value) => value
+                                .to_string()
+                                .parse::<i64>()
+                                .is_ok_and(|scale| (0..=1000).contains(&scale)),
+                            _ => false,
+                        };
+                        if !valid_scale {
+                            return Err(Refusal {
+                                kind: "capture-error",
+                                code: "CAPTURE_UNSUPPORTED",
+                                rule: "average requires bounded literal scale",
+                            });
+                        }
+                    }
+                }
+            }
+            update_temporal_parameter_profiles(&op, args, temporal_profiles)?;
+            if matches!(op.as_str(), "and" | "or" | "not") && has_omitted(value) {
+                return Err(Refusal {
+                    kind: "capture-error",
+                    code: "CAPTURE_UNSUPPORTED",
+                    rule: "optional filters must be top-level filter arguments",
+                });
+            }
             if op == "param" || op == "key_param" {
                 let Some(name) = args.first().and_then(text) else {
                     return Err(refuse_dto());
@@ -423,7 +1040,104 @@ pub fn validate_captured_variant(input: &PythonConsumerValue) -> Result<(), Refu
                 }
             }
             for child in args {
-                visit(child, declared, owners)?;
+                visit(child, declared, owners, input, temporal_profiles)?;
+            }
+        } else if let Some(fields) = tag(value, "umf_access.dsl.search.SearchLeg") {
+            let Some(record_value) = get(fields, "record") else {
+                return Err(refuse_dto());
+            };
+            let Some(search_record) = owner(record_value, "umf_access.dsl._nodes.RecordRef") else {
+                return Err(refuse_dto());
+            };
+            let Some(root_fields) = tag(
+                get(input, "fields")
+                    .and_then(|fields| get(fields, "node"))
+                    .and_then(|node| get(node, "fields"))
+                    .and_then(|node_fields| get(node_fields, "args"))
+                    .and_then(tuple)
+                    .and_then(|args| args.first())
+                    .ok_or_else(refuse_dto)?,
+                "umf_access.dsl._nodes.RecordRef",
+            ) else {
+                return Err(refuse_dto());
+            };
+            let Some(root_module) = get(root_fields, "module").and_then(text) else {
+                return Err(refuse_dto());
+            };
+            let Some(root_element) = get(root_fields, "element").and_then(text) else {
+                return Err(refuse_dto());
+            };
+            if search_record.module != root_module || search_record.element != root_element {
+                return Err(Refusal {
+                    kind: "capture-error",
+                    code: "SEARCH_DECLARATION",
+                    rule: "foreign search Record",
+                });
+            }
+            let Some(kind) = get(fields, "kind").and_then(text) else {
+                return Err(refuse_dto());
+            };
+            if let Some(value) =
+                get(fields, "value").filter(|value| !matches!(value, PythonConsumerValue::Null))
+            {
+                let Some(value_fields) = tag(value, "umf_access.dsl._nodes.Node") else {
+                    return Err(refuse_dto());
+                };
+                if get(value_fields, "op").and_then(text).as_deref() != Some("param") {
+                    return Err(Refusal {
+                        kind: "capture-error",
+                        code: "SEARCH_DECLARATION",
+                        rule: "search requires bound parameters",
+                    });
+                }
+                let Some(args) = get(value_fields, "args").and_then(tuple) else {
+                    return Err(refuse_dto());
+                };
+                let Some(name) = args.first().and_then(text) else {
+                    return Err(refuse_dto());
+                };
+                let Some(parameter) = declared.iter().find(|parameter| parameter.name == name)
+                else {
+                    return Err(Refusal {
+                        kind: "capture-error",
+                        code: "CAPTURE_SIGNATURE",
+                        rule: "search parameter carrier differs from selected leg",
+                    });
+                };
+                let matches = if kind == "vector" {
+                    parameter.carrier.is_some_and(is_vector_carrier)
+                } else {
+                    let carrier_tag = parameter
+                        .carrier
+                        .and_then(|carrier| get(carrier, "$typeRef"))
+                        .and_then(text);
+                    carrier_tag.as_deref() == Some("builtins.str")
+                };
+                if !matches {
+                    return Err(Refusal {
+                        kind: "capture-error",
+                        code: "CAPTURE_SIGNATURE",
+                        rule: "search parameter carrier differs from selected leg",
+                    });
+                }
+                visit(value, declared, owners, input, temporal_profiles)?;
+            }
+            if let Some(legs) = get(fields, "legs") {
+                let items = tuple(legs)
+                    .or_else(|| match legs {
+                        PythonConsumerValue::Object(fields) => fields
+                            .iter()
+                            .find(|(name, _)| name == &key("$list"))
+                            .and_then(|(_, value)| match value {
+                                PythonConsumerValue::Array(items) => Some(items.as_slice()),
+                                _ => None,
+                            }),
+                        _ => None,
+                    })
+                    .ok_or_else(refuse_dto)?;
+                for leg in items {
+                    visit(leg, declared, owners, input, temporal_profiles)?;
+                }
             }
         } else if tag(value, "umf_access.dsl._nodes.FieldRef").is_some() {
             let Some(found) = owner(value, "umf_access.dsl._nodes.FieldRef") else {
@@ -440,7 +1154,7 @@ pub fn validate_captured_variant(input: &PythonConsumerValue) -> Result<(), Refu
             let Some(reference) = get(fields, "ref") else {
                 return Err(refuse_dto());
             };
-            visit(reference, declared, owners)?;
+            visit(reference, declared, owners, input, temporal_profiles)?;
         } else if let Some(fields) = match value {
             PythonConsumerValue::Object(fields)
                 if fields.iter().any(|(name, _)| name == &key("$type")) =>
@@ -479,16 +1193,16 @@ pub fn validate_captured_variant(input: &PythonConsumerValue) -> Result<(), Refu
             let _ = fields;
         } else if let Some(items) = tuple(value) {
             for child in items {
-                visit(child, declared, owners)?;
+                visit(child, declared, owners, input, temporal_profiles)?;
             }
         } else if let PythonConsumerValue::Array(items) = value {
             for child in items {
-                visit(child, declared, owners)?;
+                visit(child, declared, owners, input, temporal_profiles)?;
             }
         }
         Ok(())
     }
-    visit(node, &declared, &owners)
+    visit(node, &declared, &owners, input, &mut Vec::new())
 }
 
 #[cfg(test)]
@@ -507,6 +1221,27 @@ mod tests {
     fn tuple_value(values: Vec<PythonConsumerValue>) -> PythonConsumerValue {
         obj(&[("$tuple", PythonConsumerValue::Array(values))])
     }
+    fn orchestration_input(first: PyText, second: PyText) -> PythonConsumerValue {
+        let pair = |canonical: PyText| {
+            obj(&[
+                ("canonical", PythonConsumerValue::String(canonical)),
+                ("usedOptional", PythonConsumerValue::Array(vec![])),
+                ("terminalOp", text_value("all")),
+            ])
+        };
+        obj(&[
+            ("profile", text_value(ORCHESTRATION_PROFILE)),
+            ("stage", text_value("discover")),
+            ("kind", text_value("query")),
+            ("parameters", PythonConsumerValue::Array(vec![])),
+            ("presence", PythonConsumerValue::Array(vec![])),
+            ("expectedUsed", PythonConsumerValue::Null),
+            (
+                "pairs",
+                PythonConsumerValue::Array(vec![pair(first), pair(second)]),
+            ),
+        ])
+    }
     fn graph(parameter_name: &str, declared: &str) -> PythonConsumerValue {
         let node = tagged(
             "umf_access.dsl._nodes.Node",
@@ -516,6 +1251,26 @@ mod tests {
             ]),
         );
         owner_graph(vec![owner_filter(node)], vec![parameter(declared)])
+    }
+
+    #[test]
+    fn orchestration_compares_python_codepoints_without_losing_surrogates() {
+        let surrogate = PyText::from_codepoints(vec![0xd800]).unwrap();
+        assert_eq!(
+            orchestrate_capture_pair(&orchestration_input(surrogate.clone(), surrogate.clone())),
+            Ok(vec![vec![]])
+        );
+        assert_eq!(
+            orchestrate_capture_pair(&orchestration_input(
+                surrogate,
+                PyText::from_utf8("different")
+            )),
+            Err(Refusal {
+                kind: "capture-error",
+                code: "CAPTURE_NONDETERMINISTIC",
+                rule: "two captures differ",
+            })
+        );
     }
     fn key_param_graph(
         parameter_name: &str,
@@ -625,6 +1380,18 @@ mod tests {
             ]),
         )
     }
+    fn temporal_field(profile: &str) -> PythonConsumerValue {
+        tagged(
+            "umf_access.dsl._nodes.FieldRef",
+            obj(&[
+                ("module", text_value("commerce")),
+                ("element", text_value("Order")),
+                ("field", text_value(profile)),
+                ("alias", PythonConsumerValue::Null),
+                ("temporal", text_value(profile)),
+            ]),
+        )
+    }
     fn node(op: &str, args: Vec<PythonConsumerValue>) -> PythonConsumerValue {
         tagged(
             "umf_access.dsl._nodes.Node",
@@ -635,8 +1402,36 @@ mod tests {
         steps: Vec<PythonConsumerValue>,
         parameters: Vec<PythonConsumerValue>,
     ) -> PythonConsumerValue {
-        let root = record("commerce", "Order", None);
-        let terminal = node("all", vec![root, tuple_value(steps)]);
+        owner_graph_for(record("commerce", "Order", None), steps, parameters)
+    }
+    fn owner_graph_for(
+        root: PythonConsumerValue,
+        steps: Vec<PythonConsumerValue>,
+        parameters: Vec<PythonConsumerValue>,
+    ) -> PythonConsumerValue {
+        owner_terminal_graph("all", root, steps, parameters)
+    }
+    fn owner_terminal_graph(
+        op: &str,
+        root: PythonConsumerValue,
+        steps: Vec<PythonConsumerValue>,
+        parameters: Vec<PythonConsumerValue>,
+    ) -> PythonConsumerValue {
+        let terminal = node(op, vec![root, tuple_value(steps)]);
+        tagged(
+            "umf_access.capture.CapturedVariant",
+            obj(&[("node", terminal), ("parameters", tuple_value(parameters))]),
+        )
+    }
+    fn update_graph(
+        root: PythonConsumerValue,
+        assignments: Vec<PythonConsumerValue>,
+        parameters: Vec<PythonConsumerValue>,
+    ) -> PythonConsumerValue {
+        let terminal = node(
+            "update",
+            vec![root, tuple_value(vec![]), tuple_value(assignments)],
+        );
         tagged(
             "umf_access.capture.CapturedVariant",
             obj(&[("node", terminal), ("parameters", tuple_value(parameters))]),
@@ -655,6 +1450,9 @@ mod tests {
     fn owner_filter(expression: PythonConsumerValue) -> PythonConsumerValue {
         node("filter", vec![expression])
     }
+    fn scalar_graph(expression: PythonConsumerValue) -> PythonConsumerValue {
+        owner_graph(vec![node("select", vec![expression])], vec![])
+    }
     fn join(source: PythonConsumerValue, target: PythonConsumerValue) -> PythonConsumerValue {
         let relation = tagged(
             "umf_access.dsl._expressions.Join",
@@ -663,9 +1461,202 @@ mod tests {
         node("join", vec![relation])
     }
 
+    fn source_record(document: &str, core_version: &str) -> PythonConsumerValue {
+        record_with_key("commerce", "Order", None, Some((document, core_version)))
+    }
+
+    fn related_many(
+        source: PythonConsumerValue,
+        target: PythonConsumerValue,
+        inverse: bool,
+    ) -> PythonConsumerValue {
+        let (source_query, target_query, direction) = if inverse {
+            (target.clone(), source.clone(), "inverse")
+        } else {
+            (source.clone(), target.clone(), "forward")
+        };
+        let base_relationship = tagged(
+            "umf_access.dsl.navigation.ManyNavigation",
+            obj(&[
+                ("source_query", source_query.clone()),
+                ("target_query", target_query.clone()),
+                ("direction", text_value("forward")),
+            ]),
+        );
+        node(
+            "related",
+            vec![
+                source,
+                tuple_value(vec![]),
+                base_relationship,
+                text_value(direction),
+            ],
+        )
+    }
+
+    fn related_join(
+        source: PythonConsumerValue,
+        target: PythonConsumerValue,
+        inverse: bool,
+    ) -> PythonConsumerValue {
+        let (source_query, target_query, direction) = if inverse {
+            (target.clone(), source.clone(), "inverse")
+        } else {
+            (source.clone(), target.clone(), "forward")
+        };
+        let relation = tagged(
+            "umf_access.dsl.navigation.RequiredNavigation",
+            obj(&[
+                ("source_query", source_query.clone()),
+                ("target_query", target_query.clone()),
+                ("direction", text_value("forward")),
+            ]),
+        );
+        node(
+            "related",
+            vec![source, tuple_value(vec![]), relation, text_value(direction)],
+        )
+    }
+
+    fn search_parameter(name: &str, carrier: PythonConsumerValue) -> PythonConsumerValue {
+        tagged(
+            "umf_access.capture.CapturedParameter",
+            obj(&[
+                ("name", text_value(name)),
+                ("carrier", carrier),
+                ("key_components", tuple_value(vec![])),
+                ("key_identity", tuple_value(vec![])),
+            ]),
+        )
+    }
+
+    fn string_carrier() -> PythonConsumerValue {
+        obj(&[("$typeRef", text_value("builtins.str"))])
+    }
+
+    fn vector_carrier() -> PythonConsumerValue {
+        obj(&[
+            ("$typing", text_value("builtins.tuple")),
+            (
+                "args",
+                PythonConsumerValue::Array(vec![
+                    obj(&[("$typeRef", text_value("builtins.float"))]),
+                    obj(&[("$ellipsis", PythonConsumerValue::Bool(true))]),
+                ]),
+            ),
+        ])
+    }
+
+    fn search_leg(
+        record: PythonConsumerValue,
+        kind: &str,
+        value: PythonConsumerValue,
+        legs: Vec<PythonConsumerValue>,
+    ) -> PythonConsumerValue {
+        tagged(
+            "umf_access.dsl.search.SearchLeg",
+            obj(&[
+                ("record", record),
+                ("kind", text_value(kind)),
+                ("index_json", PythonConsumerValue::Null),
+                ("value", value),
+                ("legs", tuple_value(legs)),
+                ("fusion", PythonConsumerValue::Null),
+            ]),
+        )
+    }
+
+    fn search_graph(
+        root: PythonConsumerValue,
+        leg: PythonConsumerValue,
+        parameters: Vec<PythonConsumerValue>,
+    ) -> PythonConsumerValue {
+        let terminal = node(
+            "search_top",
+            vec![
+                root,
+                tuple_value(vec![]),
+                leg,
+                PythonConsumerValue::Integer(num_bigint::BigInt::from(5)),
+                PythonConsumerValue::Bool(false),
+            ],
+        );
+        tagged(
+            "umf_access.capture.CapturedVariant",
+            obj(&[("node", terminal), ("parameters", tuple_value(parameters))]),
+        )
+    }
+
     #[test]
     fn accepts_declared_parameter_reference() {
         assert_eq!(validate_captured_variant(&graph("value", "value")), Ok(()));
+    }
+
+    #[test]
+    fn accepts_forward_many_navigation_with_full_record_refs() {
+        let root = record("commerce", "Order", None);
+        let navigation = related_many(record("commerce", "Customer", None), root.clone(), false);
+        let variant = owner_graph_for(root, vec![owner_filter(navigation)], vec![]);
+        assert_eq!(validate_captured_variant(&variant), Ok(()));
+    }
+
+    #[test]
+    fn accepts_inverse_many_navigation_with_full_record_refs() {
+        let root = record("commerce", "Order", None);
+        let navigation = related_many(record("commerce", "Customer", None), root.clone(), true);
+        let variant = owner_graph_for(root, vec![owner_filter(navigation)], vec![]);
+        assert_eq!(validate_captured_variant(&variant), Ok(()));
+    }
+
+    #[test]
+    fn accepts_forward_and_inverse_join_navigation() {
+        let root = record("commerce", "Order", None);
+        let forward = related_join(record("commerce", "Customer", None), root.clone(), false);
+        let variant = owner_graph_for(root.clone(), vec![owner_filter(forward)], vec![]);
+        assert_eq!(validate_captured_variant(&variant), Ok(()));
+
+        let inverse = related_join(record("commerce", "Customer", None), root.clone(), true);
+        let variant = owner_graph_for(root, vec![owner_filter(inverse)], vec![]);
+        assert_eq!(validate_captured_variant(&variant), Ok(()));
+    }
+
+    #[test]
+    fn related_root_comparison_includes_source_core_version() {
+        let root = source_record("orders", "0.10.0");
+        let different_pin = source_record("orders", "0.9.0");
+        let navigation = related_many(record("commerce", "Customer", None), different_pin, false);
+        let variant = owner_graph_for(root, vec![owner_filter(navigation)], vec![]);
+        assert_eq!(
+            validate_captured_variant(&variant),
+            Err(Refusal {
+                kind: "capture-error",
+                code: "CAPTURE_UNSUPPORTED",
+                rule: "navigation selected root differs",
+            })
+        );
+    }
+
+    #[test]
+    fn related_refusal_follows_join_owner_preflight() {
+        let root = record("commerce", "Order", None);
+        let navigation = related_many(
+            record("commerce", "Customer", None),
+            record("commerce", "DifferentRoot", None),
+            false,
+        );
+        let missing_join = join(
+            field("commerce", "Missing", None),
+            record("commerce", "Customer", None),
+        );
+        let variant = owner_graph_for(root, vec![missing_join, owner_filter(navigation)], vec![]);
+        assert_eq!(
+            validate_captured_variant(&variant),
+            Err(Refusal {
+                kind: "capture-error",
+                code: "CAPTURE_UNSUPPORTED",
+                rule: "join source is absent",
+            })
+        );
     }
 
     #[test]
@@ -1043,6 +2034,439 @@ mod tests {
                 assert_eq!(validate_captured_variant(&graph), Ok(()), "{op}");
             }
         }
+    }
+
+    #[test]
+    fn related_navigation_runs_inside_get_and_page_after_key_preflight() {
+        for op in ["get", "page"] {
+            let root = record_with_key(
+                "commerce",
+                "Order",
+                Some("Order_key"),
+                Some(("doc", "0.10.0")),
+            );
+            let navigation =
+                related_many(record("commerce", "Customer", None), root.clone(), false);
+            let key_value = selected_literal(complete_identity("commerce", "Order", "Order_key"));
+            let graph = selected_graph(op, root, key_value, vec![owner_filter(navigation)], vec![]);
+            assert_eq!(validate_captured_variant(&graph), Ok(()), "{op}");
+        }
+    }
+
+    #[test]
+    fn selected_key_refusal_precedes_related_expression_refusal() {
+        for op in ["get", "page"] {
+            let root = record_with_key(
+                "commerce",
+                "Order",
+                Some("Order_key"),
+                Some(("doc", "0.10.0")),
+            );
+            let navigation = related_many(
+                record("commerce", "Customer", None),
+                record("commerce", "Other", None),
+                false,
+            );
+            let key_value = selected_literal(complete_identity("elsewhere", "Other", "bad"));
+            let graph = selected_graph(op, root, key_value, vec![owner_filter(navigation)], vec![]);
+            assert_eq!(
+                validate_captured_variant(&graph),
+                Err(Refusal {
+                    kind: "capture-error",
+                    code: "CAPTURE_SIGNATURE",
+                    rule: "Key belongs to another Record",
+                }),
+                "{op}"
+            );
+        }
+    }
+
+    #[test]
+    fn accepts_string_and_vector_search_carriers_and_nested_legs() {
+        let root = record("commerce", "Order", None);
+        let string_value = node("param", vec![text_value("text")]);
+        let string_leg = search_leg(root.clone(), "keyword", string_value.clone(), vec![]);
+        assert_eq!(
+            validate_captured_variant(&search_graph(
+                root.clone(),
+                string_leg,
+                vec![search_parameter("text", string_carrier())],
+            )),
+            Ok(())
+        );
+
+        let vector_value = node("param", vec![text_value("vector")]);
+        let vector_leg = search_leg(root.clone(), "vector", vector_value.clone(), vec![]);
+        assert_eq!(
+            validate_captured_variant(&search_graph(
+                root.clone(),
+                vector_leg,
+                vec![search_parameter("vector", vector_carrier())],
+            )),
+            Ok(())
+        );
+
+        let nested = search_leg(
+            root.clone(),
+            "hybrid",
+            PythonConsumerValue::Null,
+            vec![
+                search_leg(root.clone(), "keyword", string_value, vec![]),
+                search_leg(root.clone(), "text-vector", vector_value, vec![]),
+            ],
+        );
+        assert_eq!(
+            validate_captured_variant(&search_graph(
+                root,
+                nested,
+                vec![
+                    search_parameter("text", string_carrier()),
+                    search_parameter("vector", string_carrier()),
+                ],
+            )),
+            Ok(())
+        );
+    }
+
+    #[test]
+    fn search_leg_refusal_order_matches_python_checks() {
+        let root = record("commerce", "Order", None);
+        let foreign = search_leg(
+            record("commerce", "Customer", None),
+            "keyword",
+            node("literal", vec![text_value("unbound")]),
+            vec![],
+        );
+        assert_eq!(
+            validate_captured_variant(&search_graph(root.clone(), foreign, vec![])),
+            Err(Refusal {
+                kind: "capture-error",
+                code: "SEARCH_DECLARATION",
+                rule: "foreign search Record",
+            })
+        );
+
+        let unbound = search_leg(
+            root.clone(),
+            "keyword",
+            node("literal", vec![text_value("unbound")]),
+            vec![],
+        );
+        assert_eq!(
+            validate_captured_variant(&search_graph(root.clone(), unbound, vec![])),
+            Err(Refusal {
+                kind: "capture-error",
+                code: "SEARCH_DECLARATION",
+                rule: "search requires bound parameters",
+            })
+        );
+
+        let mismatch = search_leg(
+            root.clone(),
+            "vector",
+            node("param", vec![text_value("text")]),
+            vec![],
+        );
+        assert_eq!(
+            validate_captured_variant(&search_graph(
+                root,
+                mismatch,
+                vec![search_parameter("text", string_carrier())],
+            )),
+            Err(Refusal {
+                kind: "capture-error",
+                code: "CAPTURE_SIGNATURE",
+                rule: "search parameter carrier differs from selected leg",
+            })
+        );
+    }
+
+    #[test]
+    fn nested_omitted_filter_refusal_precedes_child_parameter_visit() {
+        let omitted = node("omitted", vec![]);
+        let undeclared = node("param", vec![text_value("missing")]);
+        let nested = node("and", vec![omitted, undeclared]);
+        assert_eq!(
+            validate_captured_variant(&owner_graph(vec![owner_filter(nested)], vec![])),
+            Err(Refusal {
+                kind: "capture-error",
+                code: "CAPTURE_UNSUPPORTED",
+                rule: "optional filters must be top-level filter arguments",
+            })
+        );
+    }
+
+    #[test]
+    fn temporal_parameter_profile_refusal_precedes_child_parameter_visit() {
+        let instant = node(
+            "=",
+            vec![
+                node("column", vec![temporal_field("instant")]),
+                node("param", vec![text_value("value")]),
+            ],
+        );
+        let local_with_undeclared = node(
+            "=",
+            vec![
+                node("column", vec![temporal_field("local")]),
+                node("param", vec![text_value("value")]),
+            ],
+        );
+        let mut profiles = Vec::new();
+        let first_args = get(&instant, "fields")
+            .and_then(|fields| get(fields, "args"))
+            .and_then(tuple)
+            .unwrap();
+        assert_eq!(
+            update_temporal_parameter_profiles("=", first_args, &mut profiles),
+            Ok(())
+        );
+        assert_eq!(profiles, vec![("value".to_string(), "instant".to_string())]);
+        let second_args = get(&local_with_undeclared, "fields")
+            .and_then(|fields| get(fields, "args"))
+            .and_then(tuple)
+            .unwrap();
+        assert_eq!(
+            update_temporal_parameter_profiles("=", second_args, &mut profiles),
+            Err(Refusal {
+                kind: "capture-error",
+                code: "CAPTURE_UNSUPPORTED",
+                rule: "parameter spans incompatible temporal profiles",
+            })
+        );
+        let undeclared = owner_filter(node("param", vec![text_value("missing")]));
+        assert_eq!(
+            validate_captured_variant(&owner_graph(
+                vec![
+                    owner_filter(instant),
+                    owner_filter(local_with_undeclared),
+                    undeclared,
+                ],
+                vec![parameter("value")],
+            )),
+            Err(Refusal {
+                kind: "capture-error",
+                code: "CAPTURE_UNSUPPORTED",
+                rule: "parameter spans incompatible temporal profiles",
+            })
+        );
+    }
+
+    #[test]
+    fn aggregate_and_bucket_validation_matches_scalar_shape_and_refusal_order() {
+        let mut accepted = [
+            "sum",
+            "min",
+            "max",
+            "avg",
+            "count_distinct",
+            "approx_count_distinct",
+        ]
+        .into_iter()
+        .map(|op| {
+            node(
+                "aggregate",
+                vec![
+                    text_value(op),
+                    field("commerce", "Order", None),
+                    if op == "avg" {
+                        PythonConsumerValue::Integer(1000.into())
+                    } else {
+                        PythonConsumerValue::Null
+                    },
+                ],
+            )
+        })
+        .collect::<Vec<_>>();
+        accepted.push(node(
+            "aggregate",
+            vec![
+                text_value("count"),
+                PythonConsumerValue::Null,
+                PythonConsumerValue::Null,
+            ],
+        ));
+        accepted.push(node(
+            "bucket_width",
+            vec![
+                field("commerce", "Order", None),
+                PythonConsumerValue::Integer(1.into()),
+            ],
+        ));
+        for expression in accepted {
+            assert_eq!(validate_captured_variant(&scalar_graph(expression)), Ok(()));
+        }
+
+        let malformed = node(
+            "aggregate",
+            vec![text_value("unknown"), field("commerce", "Order", None)],
+        );
+        assert_eq!(
+            validate_captured_variant(&scalar_graph(malformed)),
+            Err(Refusal {
+                kind: "capture-error",
+                code: "CAPTURE_UNSUPPORTED",
+                rule: "unknown scalar expression",
+            })
+        );
+        let unknown_temporal = node(
+            "aggregate",
+            vec![
+                text_value("unknown"),
+                temporal_field("instant"),
+                PythonConsumerValue::Null,
+            ],
+        );
+        assert_eq!(
+            validate_captured_variant(&scalar_graph(unknown_temporal)),
+            Err(Refusal {
+                kind: "capture-error",
+                code: "CAPTURE_UNSUPPORTED",
+                rule: "unknown aggregate operation",
+            })
+        );
+        let temporal_bad_scale = node(
+            "aggregate",
+            vec![
+                text_value("avg"),
+                temporal_field("local"),
+                PythonConsumerValue::Integer(1001.into()),
+            ],
+        );
+        assert_eq!(
+            validate_captured_variant(&scalar_graph(temporal_bad_scale)),
+            Err(Refusal {
+                kind: "capture-error",
+                code: "CAPTURE_UNSUPPORTED",
+                rule: "temporal aggregate qualification is held",
+            })
+        );
+        let bad_scale = node(
+            "aggregate",
+            vec![
+                text_value("avg"),
+                field("commerce", "Order", None),
+                PythonConsumerValue::Integer(1001.into()),
+            ],
+        );
+        assert_eq!(
+            validate_captured_variant(&scalar_graph(bad_scale)),
+            Err(Refusal {
+                kind: "capture-error",
+                code: "CAPTURE_UNSUPPORTED",
+                rule: "average requires bounded literal scale",
+            })
+        );
+    }
+
+    #[test]
+    fn read_terminal_shapes_match_python_preflight_order() {
+        let root = record("commerce", "Order", None);
+        for op in ["all", "first", "one", "count", "exists", "group_count"] {
+            let steps = if op == "group_count" {
+                vec![node("group", vec![field("commerce", "Order", None)])]
+            } else {
+                vec![]
+            };
+            assert_eq!(
+                validate_captured_variant(&owner_terminal_graph(op, root.clone(), steps, vec![],)),
+                Ok(()),
+                "{op}"
+            );
+        }
+
+        let scalar = node(
+            "aggregate",
+            vec![
+                text_value("sum"),
+                field("commerce", "Order", None),
+                PythonConsumerValue::Null,
+            ],
+        );
+        let scalar_count = owner_terminal_graph(
+            "count",
+            root.clone(),
+            vec![node("select", vec![scalar.clone()])],
+            vec![],
+        );
+        assert_eq!(
+            validate_captured_variant(&scalar_count),
+            Err(Refusal {
+                kind: "capture-error",
+                code: "CAPTURE_UNSUPPORTED",
+                rule: "scalar aggregate/bucket projection does not admit this terminal",
+            })
+        );
+
+        let malformed_first = tagged(
+            "umf_access.capture.CapturedVariant",
+            obj(&[
+                (
+                    "node",
+                    node(
+                        "first",
+                        vec![root, tuple_value(vec![]), PythonConsumerValue::Null],
+                    ),
+                ),
+                ("parameters", tuple_value(vec![])),
+            ]),
+        );
+        assert_eq!(
+            validate_captured_variant(&malformed_first),
+            Err(refuse_dto())
+        );
+    }
+
+    #[test]
+    fn update_assignments_validate_closed_shape_ownership_and_parameters() {
+        let root = record("commerce", "Order", None);
+        let assignment = tuple_value(vec![
+            field("commerce", "Order", None),
+            node("param", vec![text_value("status")]),
+        ]);
+        assert_eq!(
+            validate_captured_variant(&update_graph(
+                root.clone(),
+                vec![assignment.clone()],
+                vec![parameter("status")],
+            )),
+            Ok(())
+        );
+
+        assert_eq!(
+            validate_captured_variant(&update_graph(root.clone(), vec![assignment], vec![],)),
+            Err(Refusal {
+                kind: "capture-error",
+                code: "CAPTURE_SIGNATURE",
+                rule: "expression references an undeclared parameter",
+            })
+        );
+
+        let foreign_before_missing_parameter = tuple_value(vec![
+            field("commerce", "Customer", None),
+            node("param", vec![text_value("missing")]),
+        ]);
+        assert_eq!(
+            validate_captured_variant(&update_graph(
+                root.clone(),
+                vec![foreign_before_missing_parameter],
+                vec![],
+            )),
+            Err(Refusal {
+                kind: "type-error",
+                code: "",
+                rule: "expression column belongs to another Record",
+            })
+        );
+
+        assert_eq!(
+            validate_captured_variant(&update_graph(
+                root,
+                vec![tuple_value(vec![field("commerce", "Order", None)])],
+                vec![],
+            )),
+            Err(refuse_dto())
+        );
     }
 
     #[test]

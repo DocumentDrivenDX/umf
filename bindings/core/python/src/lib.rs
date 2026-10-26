@@ -1733,30 +1733,11 @@ fn access_catalog_render_logical_variant(
     }
     let mut context = Context::ordinary();
     let mut count = 0usize;
-    let input = python_value::from_python(py, input, &mut context, 0, &mut count)
-        .map_err(py_error)?;
-    let response = match umf_core::access_logical_render::render_captured_variant(
-        &input,
-        &mut context,
-    ) {
-        Ok(logical_request) => PythonConsumerValue::Object(vec![
-            (
-                umf_core::PyText::from_utf8("profile"),
-                PythonConsumerValue::String(umf_core::PyText::from_utf8(
-                    umf_core::access_logical_render::PROFILE,
-                )),
-            ),
-            (
-                umf_core::PyText::from_utf8("outcome"),
-                PythonConsumerValue::String(umf_core::PyText::from_utf8("rendered")),
-            ),
-            (
-                umf_core::PyText::from_utf8("logicalRequest"),
-                PythonConsumerValue::String(umf_core::PyText::from_utf8(&logical_request)),
-            ),
-        ]),
-        Err(umf_core::access_logical_render::LogicalRenderError::Refused(refusal)) => {
-            PythonConsumerValue::Object(vec![
+    let input =
+        python_value::from_python(py, input, &mut context, 0, &mut count).map_err(py_error)?;
+    let response =
+        match umf_core::access_logical_render::render_captured_variant(&input, &mut context) {
+            Ok(logical_request) => PythonConsumerValue::Object(vec![
                 (
                     umf_core::PyText::from_utf8("profile"),
                     PythonConsumerValue::String(umf_core::PyText::from_utf8(
@@ -1765,22 +1746,39 @@ fn access_catalog_render_logical_variant(
                 ),
                 (
                     umf_core::PyText::from_utf8("outcome"),
-                    PythonConsumerValue::String(umf_core::PyText::from_utf8("refused")),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8("rendered")),
                 ),
                 (
-                    umf_core::PyText::from_utf8("code"),
-                    PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.code)),
+                    umf_core::PyText::from_utf8("logicalRequest"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8(&logical_request)),
                 ),
-                (
-                    umf_core::PyText::from_utf8("message"),
-                    PythonConsumerValue::String(umf_core::PyText::from_utf8(&refusal.message)),
-                ),
-            ])
-        }
-        Err(umf_core::access_logical_render::LogicalRenderError::Resource(error)) => {
-            return Err(py_error(error));
-        }
-    };
+            ]),
+            Err(umf_core::access_logical_render::LogicalRenderError::Refused(refusal)) => {
+                PythonConsumerValue::Object(vec![
+                    (
+                        umf_core::PyText::from_utf8("profile"),
+                        PythonConsumerValue::String(umf_core::PyText::from_utf8(
+                            umf_core::access_logical_render::PROFILE,
+                        )),
+                    ),
+                    (
+                        umf_core::PyText::from_utf8("outcome"),
+                        PythonConsumerValue::String(umf_core::PyText::from_utf8("refused")),
+                    ),
+                    (
+                        umf_core::PyText::from_utf8("code"),
+                        PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.code)),
+                    ),
+                    (
+                        umf_core::PyText::from_utf8("message"),
+                        PythonConsumerValue::String(umf_core::PyText::from_utf8(&refusal.message)),
+                    ),
+                ])
+            }
+            Err(umf_core::access_logical_render::LogicalRenderError::Resource(error)) => {
+                return Err(py_error(error));
+            }
+        };
     python_value::to_python(py, &response, &mut context)
 }
 
@@ -1790,22 +1788,133 @@ fn access_validate_captured_graph_variant(
     input: &Bound<'_, PyAny>,
 ) -> PyResult<PyObject> {
     if !input.is_exact_instance_of::<PyDict>() {
-        return Err(PyValueError::new_err("captured graph input must be an exact dict"));
+        return Err(PyValueError::new_err(
+            "captured graph input must be an exact dict",
+        ));
     }
     let mut context = Context::ordinary();
     let mut count = 0usize;
-    let input = python_value::from_python(py, input, &mut context, 0, &mut count).map_err(py_error)?;
+    let input =
+        python_value::from_python(py, input, &mut context, 0, &mut count).map_err(py_error)?;
     let response = match umf_core::access_graph_validate::validate_captured_variant(&input) {
         Ok(()) => PythonConsumerValue::Object(vec![
-            (umf_core::PyText::from_utf8("profile"), PythonConsumerValue::String(umf_core::PyText::from_utf8(umf_core::access_graph_validate::PROFILE))),
-            (umf_core::PyText::from_utf8("outcome"), PythonConsumerValue::String(umf_core::PyText::from_utf8("accepted"))),
+            (
+                umf_core::PyText::from_utf8("profile"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(
+                    umf_core::access_graph_validate::PROFILE,
+                )),
+            ),
+            (
+                umf_core::PyText::from_utf8("outcome"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8("accepted")),
+            ),
         ]),
         Err(refusal) => PythonConsumerValue::Object(vec![
-            (umf_core::PyText::from_utf8("profile"), PythonConsumerValue::String(umf_core::PyText::from_utf8(umf_core::access_graph_validate::PROFILE))),
-            (umf_core::PyText::from_utf8("outcome"), PythonConsumerValue::String(umf_core::PyText::from_utf8("refused"))),
-            (umf_core::PyText::from_utf8("kind"), PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.kind))),
-            (umf_core::PyText::from_utf8("code"), PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.code))),
-            (umf_core::PyText::from_utf8("rule"), PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.rule))),
+            (
+                umf_core::PyText::from_utf8("profile"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(
+                    umf_core::access_graph_validate::PROFILE,
+                )),
+            ),
+            (
+                umf_core::PyText::from_utf8("outcome"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8("refused")),
+            ),
+            (
+                umf_core::PyText::from_utf8("kind"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.kind)),
+            ),
+            (
+                umf_core::PyText::from_utf8("code"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.code)),
+            ),
+            (
+                umf_core::PyText::from_utf8("rule"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.rule)),
+            ),
+        ]),
+    };
+    python_value::to_python(py, &response, &mut context)
+}
+
+#[pyfunction]
+fn access_orchestrate_capture_pair(py: Python<'_>, input: &Bound<'_, PyAny>) -> PyResult<PyObject> {
+    if !input.is_exact_instance_of::<PyDict>() {
+        return Err(PyValueError::new_err(
+            "capture orchestration input must be an exact dict",
+        ));
+    }
+    let mut context = Context::ordinary();
+    let mut count = 0usize;
+    let input =
+        python_value::from_python(py, input, &mut context, 0, &mut count).map_err(py_error)?;
+    let is_discover = match &input {
+        PythonConsumerValue::Object(fields) => fields
+            .iter()
+            .find(|(k, _)| k == &umf_core::PyText::from_utf8("stage"))
+            .is_some_and(|(_, value)| {
+                matches!(value, PythonConsumerValue::String(stage) if stage == &umf_core::PyText::from_utf8("discover"))
+            }),
+        _ => false,
+    };
+    let response = match umf_core::access_graph_validate::orchestrate_capture_pair(&input) {
+        Ok(schedule) => {
+            let variants = PythonConsumerValue::Array(
+                schedule
+                    .into_iter()
+                    .map(|names| {
+                        PythonConsumerValue::Array(
+                            names
+                                .into_iter()
+                                .map(|name| {
+                                    PythonConsumerValue::String(umf_core::PyText::from_utf8(&name))
+                                })
+                                .collect(),
+                        )
+                    })
+                    .collect(),
+            );
+            PythonConsumerValue::Object(vec![
+                (
+                    umf_core::PyText::from_utf8("profile"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8(
+                        umf_core::access_graph_validate::ORCHESTRATION_PROFILE,
+                    )),
+                ),
+                (
+                    umf_core::PyText::from_utf8("outcome"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8(if is_discover {
+                        "scheduled"
+                    } else {
+                        "accepted"
+                    })),
+                ),
+                (umf_core::PyText::from_utf8("presences"), variants),
+            ])
+        }
+        Err(refusal) => PythonConsumerValue::Object(vec![
+            (
+                umf_core::PyText::from_utf8("profile"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(
+                    umf_core::access_graph_validate::ORCHESTRATION_PROFILE,
+                )),
+            ),
+            (
+                umf_core::PyText::from_utf8("outcome"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8("refused")),
+            ),
+            (
+                umf_core::PyText::from_utf8("kind"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.kind)),
+            ),
+            (
+                umf_core::PyText::from_utf8("code"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.code)),
+            ),
+            (
+                umf_core::PyText::from_utf8("rule"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.rule)),
+            ),
         ]),
     };
     python_value::to_python(py, &response, &mut context)
@@ -3528,9 +3637,19 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
         access_check_native_column_sources,
         module
     )?)?;
-    module.add_function(wrap_pyfunction!(access_catalog_logical_render_profile_version, module)?)?;
-    module.add_function(wrap_pyfunction!(access_catalog_render_logical_variant, module)?)?;
-    module.add_function(wrap_pyfunction!(access_validate_captured_graph_variant, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        access_catalog_logical_render_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_catalog_render_logical_variant,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_validate_captured_graph_variant,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(access_orchestrate_capture_pair, module)?)?;
     module.add_function(wrap_pyfunction!(copy_python_consumer_value, module)?)?;
     module.add_function(wrap_pyfunction!(copy_python_json_value, module)?)?;
     module.add_function(wrap_pyfunction!(engine_version, module)?)?;
