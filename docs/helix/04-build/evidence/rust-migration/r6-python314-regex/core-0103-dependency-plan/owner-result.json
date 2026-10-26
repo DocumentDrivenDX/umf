@@ -127,6 +127,12 @@
     "locatedSubcommand": null,
     "outputAdoption": null,
     "plan": "sol-r3-timeout-diagnostic-plan001.md",
-    "planSha256": "ac4fa74d2982cdef08a58b7535015722c89bb5077a082af10cdef327fbd385fb"
+    "planSha256": "ac4fa74d2982cdef08a58b7535015722c89bb5077a082af10cdef327fbd385fb",
+    "diagnosticSource": {
+      "status": "SOURCE_ACCEPTED_AWAITING_ONE_HOSTED_DIAGNOSTIC",
+      "workflowSha256": "bf68f1036a74c234a452ead3a1836863147a978e8fde4c8609a99867cefc757f",
+      "closure": "sol-r3-diagnostic-closure002.md",
+      "closureSha256": "c8890d615be989c296e3362c7bceb63fd533f8420f98f70215bb42174d8e0cdb"
+    }
   }
 }
