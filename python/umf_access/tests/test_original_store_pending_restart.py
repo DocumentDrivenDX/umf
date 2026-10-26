@@ -1197,6 +1197,13 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     self.assertIsNone(pending_provider._creation_reservation)
                     self.assertIsNone(pending_provider._creation_capability)
                     self.assertIsNone(pending_provider._schema_oid)
+                    target_requests_before_refusal = len(
+                        after_pending_supervisor._owner_core._requests)
+                    pending_creations_before_refusal = dict(
+                        after_pending_supervisor._pending_creations)
+                    native_targets_before_refusal = dict(
+                        after_pending_supervisor._native_targets)
+                    handles_before_refusal = dict(after_pending_supervisor._handles)
                     with patch.object(native.LocalPostgresSupervisor,
                                       '_validate_installation_binaries',
                                       return_value=(profile.postgres_binary,
@@ -1204,5 +1211,24 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                          patch.object(native, '_sha_file', return_value='b' * 64):
                         with self.assertRaisesRegex(
                                 native.LocalPostgresError,
-                                'original-creation-already-exists'):
+                                'target-path-already-exists'):
                             after_pending.prepare_target_creation()
+                    with after_pending_supervisor._original_control_lease(
+                            operation_kind='store'):
+                        self.assertEqual(
+                            after_pending_supervisor._journal.read()['events'], second_events)
+                    self.assertEqual(db.ddl, ddl_before_recovery)
+                    self.assertEqual(
+                        len(after_pending_supervisor._owner_core._requests),
+                        target_requests_before_refusal)
+                    self.assertEqual(after_pending_supervisor._pending_creations,
+                                     pending_creations_before_refusal)
+                    self.assertEqual(after_pending_supervisor._native_targets,
+                                     native_targets_before_refusal)
+                    self.assertEqual(after_pending_supervisor._handles,
+                                     handles_before_refusal)
+                    self.assertIsNone(after_pending_supervisor._active_creation)
+                    self.assertIsNone(after_pending_supervisor.custody_handle)
+                    self.assertIsNone(pending_provider._creation_reservation)
+                    self.assertIsNone(pending_provider._creation_capability)
+                    self.assertIsNone(pending_provider._schema_oid)
