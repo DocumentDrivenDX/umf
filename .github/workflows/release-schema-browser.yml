@@ -243,7 +243,7 @@ jobs:
           VERSION: ${{ needs.qualify.outputs.version }}
         run: |
           set -euo pipefail
-          gh release create "$RELEASE_TAG" --repo "$GH_REPO" --draft --verify-tag \
+          gh release create "$RELEASE_TAG" --repo "$GH_REPO" --draft --verify-tag --latest=false \
             --title "$RELEASE_TAG" --target "$SOURCE_SHA" \
             --notes "Qualified schema-browser package $VERSION from source $SOURCE_SHA."
           gh release upload "$RELEASE_TAG" --repo "$GH_REPO" \
@@ -283,7 +283,7 @@ jobs:
         run: |
           set -euo pipefail
           RELEASE_ID="$(jq -r .id release.json)"
-          gh api --method PATCH "repos/$GH_REPO/releases/$RELEASE_ID" -F draft=false > published-release.json
+          gh api --method PATCH "repos/$GH_REPO/releases/$RELEASE_ID" -F draft=false -f make_latest=false > published-release.json
           jq -e --arg tag "$RELEASE_TAG" '.draft == false and .prerelease == false and .immutable == true and .tag_name == $tag' \
             published-release.json >/dev/null
       - name: Dispatch main-only npm publisher with exact immutable release pins
