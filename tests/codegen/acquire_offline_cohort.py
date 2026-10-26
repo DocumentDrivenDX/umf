@@ -23,9 +23,19 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 TEMPLATE_PATH = ROOT / 'python/packaging/embedder-wheel-lock.template.json'
-CORE_SHA256 = '49633924b45a3c8499d4fcc1a24c30d5a8fcb34d974ab019bbda987cb47da0f9'
-CORE_URL = ('https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.4/'
-            'umf_core-0.10.0-py3-none-any.whl')
+CORE_RELEASE = 'python-v0.10.2'
+CORE_ARTIFACTS = {
+    ('ubuntu-24.04', 'x86_64'): {
+        'filename': 'umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl',
+        'sha256': '708f967747b0539b9ca7b6a5f39d1017eea8ddb1d07cd62f4f46592e088f6f39',
+        'nativeSha256': '78dd1542f723b4f4d8c336c137caa478974a981ed759ada171a5877d7e0368a8',
+    },
+    ('macos-14', 'arm64'): {
+        'filename': 'umf_core-0.10.2-cp311-abi3-macosx_11_0_arm64.whl',
+        'sha256': '99ff1d1250c613a7b65bdd4dc6cf3ee9fec647e02ec34f8dc5ffb84285b0ac59',
+        'nativeSha256': '49847a1e052e4337d414415e2e3fd3b752238df0238c20f936db7f7bebe7365a',
+    },
+}
 
 SPEC = importlib.util.spec_from_file_location('python_package_mirror', ROOT / 'scripts/python-package-mirror.py')
 assert SPEC and SPEC.loader
@@ -58,6 +68,11 @@ if cell is None or cell['os'] != args.expected_os or cell['architecture'] != arg
     raise SystemExit(f'Runner is outside exact target cell: {identity}, expected {args.expected_os}/{args.expected_architecture}/py{args.expected_python}')
 if platform.python_version_tuple()[:2] != tuple(args.expected_python.split('.')):
     raise SystemExit(f'Python version mismatch: {platform.python_version()} != {args.expected_python}')
+core_artifact = CORE_ARTIFACTS.get((args.expected_os, args.expected_architecture))
+if core_artifact is None:
+    raise SystemExit(f'No published Core wheel is pinned for this exact cohort cell: {args.expected_os}/{args.expected_architecture}')
+core_url = (f'https://github.com/DocumentDrivenDX/umf/releases/download/{CORE_RELEASE}/'
+            f'{core_artifact["filename"]}')
 if len(args.source_commit) != 40 or any(character not in '0123456789abcdef' for character in args.source_commit.lower()):
     raise SystemExit('Source commit must be a full 40-character Git SHA')
 if len(args.weft_wheel_sha256) != 64 or any(character not in '0123456789abcdef' for character in args.weft_wheel_sha256):
@@ -100,7 +115,7 @@ def pypi_artifact_hash(project_url: str, filename: str) -> tuple[str, str]:
         raise SystemExit(f'PyPI release metadata omits the selected wheel hash: {project} {version} {filename}')
     return api_url, digest
 
-acquire_release_wheel(CORE_URL, wheelhouse / 'umf_core-0.10.0-py3-none-any.whl', CORE_SHA256)
+acquire_release_wheel(core_url, wheelhouse / core_artifact['filename'], core_artifact['sha256'])
 acquire_release_wheel(args.weft_wheel_url, wheelhouse / args.weft_wheel_filename, args.weft_wheel_sha256)
 
 mini_metadata = MIRROR.wheel_metadata(args.mini_racer_wheel)
@@ -130,7 +145,8 @@ with tempfile.TemporaryDirectory(prefix='umf-offline-cohort-') as temporary:
         if name in ('umf-access', 'umf-codegen'):
             source['commit'] = args.source_commit
         elif name == 'umf-core':
-            source.update({'url': CORE_URL, 'sha256': CORE_SHA256, 'release': 'umf-v0.5.4'})
+            source.update({'url': core_url, 'sha256': core_artifact['sha256'],
+                           'release': CORE_RELEASE, 'nativeSha256': core_artifact['nativeSha256']})
         elif name == 'weft-sql':
             source.update({'url': args.weft_wheel_url, 'sha256': args.weft_wheel_sha256,
                            'release': f'weft v{package["version"]}'})

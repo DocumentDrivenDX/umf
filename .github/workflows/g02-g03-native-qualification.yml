@@ -441,6 +441,8 @@ jobs:
           core_pin = pins["dependencyPins"]["core"]
           assert packages["umf-core"]["version"] == core_pin["version"]
           assert packages["umf-core"]["source"]["sha256"] == core_pin["sha256"]
+          core_wheels = [wheel for wheel in cohort["wheels"] if wheel["distribution"] == "umf-core"]
+          assert len(core_wheels) == 1 and core_wheels[0]["filename"] == core_pin["wheel"]
           runtime_distributions = ("umf-access", "umf-codegen", "weft-sql", "umf-core")
           runtime_versions = {name: packages[name]["version"] for name in runtime_distributions}
           assert g02["packages"] == runtime_versions

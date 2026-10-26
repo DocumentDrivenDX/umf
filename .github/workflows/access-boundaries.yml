@@ -226,7 +226,7 @@ jobs:
             -r /tmp/umf-g02-cohort/mirror/requirements.lock
           /tmp/g02-native-installed/bin/python -I -m pip --isolated check
           /tmp/g02-native-installed/bin/python -I -c \
-            "from importlib.metadata import version; assert version('weft-sql')=='0.4.53'; assert version('umf-access')=='0.1.0.dev8'; assert version('umf-codegen')=='0.1.0a5'; assert version('umf-core')=='0.10.0'"
+            "from importlib.metadata import version; assert version('weft-sql')=='0.4.53'; assert version('umf-access')=='0.1.0.dev8'; assert version('umf-codegen')=='0.1.0a5'; assert version('umf-core')=='0.10.2'"
           /tmp/g02-native-installed/bin/python -I - <<'PY'
           import psycopg
           with psycopg.connect('host=127.0.0.1 port=5432 dbname=postgres user=postgres') as connection:

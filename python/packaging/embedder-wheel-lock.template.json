@@ -3,15 +3,15 @@
   "status": "template",
   "description": "U7/U8 administrative Python wheel cohort. The cells below are intended qualification targets, not completed support claims. Capture exact immutable wheel hashes and receipts after release candidates are built; never treat this template as an install lock.",
   "intendedCells": [
-    {"os": "ubuntu-24.04", "architecture": "x86_64", "libc": "glibc >= 2.27", "python": "3.11"},
-    {"os": "ubuntu-24.04", "architecture": "x86_64", "libc": "glibc >= 2.27", "python": "3.14"},
+    {"os": "ubuntu-24.04", "architecture": "x86_64", "libc": "glibc >= 2.34", "python": "3.11"},
+    {"os": "ubuntu-24.04", "architecture": "x86_64", "libc": "glibc >= 2.34", "python": "3.14"},
     {"os": "macos-14", "architecture": "arm64", "libc": "not applicable", "python": "3.11"},
     {"os": "macos-14", "architecture": "arm64", "libc": "not applicable", "python": "3.14"}
   ],
   "packages": [
     {"distribution": "umf-access", "version": "0.1.0.dev8", "source": {"kind": "repository-wheel", "path": "python/umf_access", "commit": "FILL_AT_CANDIDATE_FREEZE"}},
     {"distribution": "umf-codegen", "version": "0.1.0a5", "source": {"kind": "repository-wheel", "path": "python/umf_codegen", "commit": "FILL_AT_CANDIDATE_FREEZE"}},
-    {"distribution": "umf-core", "version": "0.10.0", "source": {"kind": "immutable-release-wheel", "release": "umf-core 0.10.0", "sha256": "FILL_FROM_EXISTING_RELEASE_CUSTODY"}},
+    {"distribution": "umf-core", "version": "0.10.2", "source": {"kind": "immutable-release-wheel", "release": "python-v0.10.2", "sha256": "FILL_FROM_EXISTING_RELEASE_CUSTODY"}},
     {"distribution": "weft-sql", "version": "0.4.53", "source": {"kind": "immutable-release-wheel", "release": "weft-sql 0.4.53", "sha256": "FILL_FROM_EXISTING_RELEASE_CUSTODY"}},
     {"distribution": "mini-racer", "version": "0.14.1", "source": {"kind": "pypi-wheel", "url": "https://pypi.org/project/mini-racer/0.14.1/"}},
     {"distribution": "annotated-types", "version": "0.8.0", "source": {"kind": "pypi-wheel", "url": "https://pypi.org/project/annotated-types/0.8.0/"}},
