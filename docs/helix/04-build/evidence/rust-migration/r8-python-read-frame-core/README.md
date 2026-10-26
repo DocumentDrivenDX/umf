@@ -73,3 +73,54 @@ caller-supplied `usize` row count and bound. It cannot be exposed on a public
 route until admitted program/native-host bounds and a cumulative resource
 budget are established. This is not an installed-wheel or live database check,
 and makes no public release claim.
+
+## Public `result_frame` cutover audit
+
+The public route remains Python. The frozen predecessor and current
+`operation_values.py::result_frame` have this observable order:
+
+1. `count`: call `len(rows)`, then (only when short-circuit permits) read
+   `rows[0]` and call `len(row)`; decode the count and reject a negative
+   integer token.
+2. Other kinds: iterate rows and call `len(row)` in order, stopping at the
+   first width mismatch; decode every cell in every row before checking result
+   cardinality.
+3. Apply `one`/`optional`/`many`/`page` cardinality. A page with one lookahead
+   row then extracts cursor key literals and constructs the authenticated
+   cursor through Python-owned field/carrier lookup and token helpers.
+4. Assemble the result envelope, append version/module/operation/source digest,
+   then call `bounded_size(response)` last. No partial response is returned.
+
+At the integration seam, `SyncTableReader.read` and `AsyncTableReader.read`
+execute the business query, call `fetchall()`, and only then call
+`result_frame`. CONTRACT-079's declared read profile separately requires the
+`pg18-read-frame/0.1` native guard to enforce 8,388,608 visible uncompressed
+value octets, including lookahead, before delivering an oversized native
+frame, followed by an 8,388,608-byte serialized wire-frame limit. CONTRACT-081
+keeps the lease, module lifecycle lock, authenticated principal/scope and
+native policy enforcement in the host transaction. The current Rust bridge is
+downstream of all these effects: it neither bounds/owns `fetchall`, nor owns
+scalar decoding, cursor extraction/HMAC, envelope assembly, or final serialized
+size measurement. Its caller-supplied `row_count` and `bound` do not prove a
+shared per-request budget, and no shared `Context` charge/deadline/cancellation
+spans the operation. This slice is therefore a private structural predicate;
+it cannot replace public `result_frame` or qualify database read execution.
+
+Installed-wheel evidence does not yet reach this bridge. The prior
+`r6-operation-values` installed CPython 3.11/3.12 replays qualify the typed
+token helper and existing table-read tests through count conversion and
+cardinality, but predate this read-frame profile. This receipt uses a temporary
+extension overlay on CPython 3.14.8, not installed core and `umf_access` wheels.
+A later public-route gate must build both wheels from one frozen source cohort,
+install them into a fresh target, verify the exact
+`umf-python-read-frame/0.1.0` capability from the installed packages, and replay
+the ordering/refusal corpus there. Database-backed claims additionally require
+the native query/transport and lease behavior above; an in-package invocation
+over supplied rows is not a substitute.
+
+The focused tests retain evidence for the seam currently movable: count
+host-read order, iterator/row error identity, short-circuit before later rows,
+all-row decode before cardinality refusal, and separate profile
+mismatch/unavailability behavior. They intentionally do not route the public
+function through Rust or emulate database/resource authority the bridge does
+not own.
