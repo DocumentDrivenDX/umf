@@ -1,0 +1,87 @@
+{
+  "profile": "core-0102-manylinux-pypi-wheel-metadata-check/1",
+  "retrievedDate": "2026-10-26",
+  "source": "Official PyPI JSON API release records; selected info and matching wheel URL records copied from each release response.",
+  "lockPath": "/Users/erik/.codex/worktrees/core-reference-browser/umf/qualification-inputs/core-0102-manylinux-tool-lock.json",
+  "lockSha256": "feb68748b792072606c7f661a514f36ad725f3dc65cfa9cd10164b4801b5551f",
+  "releaseRecords": [
+    {
+      "releaseJson": "https://pypi.org/pypi/auditwheel/6.8.2/json",
+      "info": {
+        "name": "auditwheel",
+        "version": "6.8.2",
+        "requires_python": ">=3.10",
+        "requires_dist": ["packaging>=20.9", "pyelftools>=0.24"]
+      },
+      "wheel": {
+        "filename": "auditwheel-6.8.2-py3-none-any.whl",
+        "size": 65324,
+        "sha256": "05fd2dd4b743217cd5f66066adc95b03a079424b1f0a878ad1e40fe2cdea4704",
+        "url": "https://files.pythonhosted.org/packages/78/33/475398f5eb069aa20910ec8486bdc62a87deadd8229494cbc80a1ddbf740/auditwheel-6.8.2-py3-none-any.whl"
+      },
+      "lockFieldsMatch": true
+    },
+    {
+      "releaseJson": "https://pypi.org/pypi/packaging/25.0/json",
+      "info": {
+        "name": "packaging",
+        "version": "25.0",
+        "requires_python": ">=3.8",
+        "requires_dist": null
+      },
+      "wheel": {
+        "filename": "packaging-25.0-py3-none-any.whl",
+        "size": 66469,
+        "sha256": "29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484",
+        "url": "https://files.pythonhosted.org/packages/20/12/38679034af332785aac8774540895e234f4d07f7545804097de4b666afd8/packaging-25.0-py3-none-any.whl"
+      },
+      "lockFieldsMatch": true
+    },
+    {
+      "releaseJson": "https://pypi.org/pypi/pyelftools/0.32/json",
+      "info": {
+        "name": "pyelftools",
+        "version": "0.32",
+        "requires_python": null,
+        "requires_dist": null
+      },
+      "wheel": {
+        "filename": "pyelftools-0.32-py3-none-any.whl",
+        "size": 188525,
+        "sha256": "013df952a006db5e138b1edf6d8a68ecc50630adbd0d83a2d41e7f846163d738",
+        "url": "https://files.pythonhosted.org/packages/af/43/700932c4f0638c3421177144a2e8648c0d75dbaee2c7936bda3f9fd0878/pyelftools-0.32-py3-none-any.whl"
+      },
+      "lockFieldsMatch": true
+    },
+    {
+      "releaseJson": "https://pypi.org/pypi/patchelf/0.17.2.4/json",
+      "info": {
+        "name": "patchelf",
+        "version": "0.17.2.4",
+        "requires_python": ">=3.7",
+        "requires_dist": [
+          "importlib_metadata>=2.0; extra == \"test\"",
+          "pytest>=6.0; extra == \"test\""
+        ]
+      },
+      "wheel": {
+        "filename": "patchelf-0.17.2.4-py3-none-manylinux1_x86_64.manylinux_2_5_x86_64.musllinux_1_1_x86_64.whl",
+        "size": 482846,
+        "sha256": "d9b35ebfada70c02679ad036407d9724ffe1255122ba4ac5e4be5868618a5689",
+        "url": "https://files.pythonhosted.org/packages/7e/19/f7821ef31aab01fa7dc8ebe697ece88ec4f7a0fdd3155dab2dfee4b00e5c/patchelf-0.17.2.4-py3-none-manylinux1_x86_64.manylinux_2_5_x86_64.musllinux_1_1_x86_64.whl"
+      },
+      "lockFieldsMatch": true
+    }
+  ],
+  "runEvidence": {
+    "runId": "40357751182",
+    "harnessCommit": "3f167ba4b40885f8cafabbe69d1945e0196dd992",
+    "qualificationSha256": "3e27d067ede68286f9617a28f239c95d23c083457f8368819f301e9abc3bf4ac",
+    "reasonType": "HTTPError",
+    "originalInputEvidencePresent": true,
+    "toolDownloadCommandRecords": 0,
+    "perArtifactDownloadStatusCaptured": false
+  },
+  "conclusion": "All locked filename, byte-size, SHA-256, and URL fields match the official PyPI JSON records. The available hosted receipt contains no HTTP status, failing artifact identity, or download URL, so the HTTPError cannot be assigned to a specific record. No lock literal is changed by this inspection.",
+  "minimalFutureErrorContext": "On HTTPError during each pinned wheel fetch, retain only distribution name, exact filename, response status code and reason class; do not retain query strings, headers, response body, or credentials."
+}

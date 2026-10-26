@@ -1,0 +1,34 @@
+{
+  "profile": "core-0102-manylinux-pypi-wheel-url-correction/1",
+  "supersedes": {
+    "path": "/private/tmp/core-manylinux-pypi-url-check-40357751182.json",
+    "sha256": "d65a534737f2e612f0f949368881a82486598775fd176f022afa506bac4a0ba8",
+    "reason": "The prior extract incorrectly transcribed one character in the pyelftools URL and marked all records as matching."
+  },
+  "primaryMetadata": {
+    "path": "/private/tmp/pyelftools-032-primary-release.json",
+    "source": "https://pypi.org/pypi/pyelftools/0.32/json",
+    "sha256": "8dcf0f2ee50e388a00353db615a9766b01a9de6a60964a926c158ff1d5977b45"
+  },
+  "lock": {
+    "path": "/Users/erik/.codex/worktrees/core-reference-browser/umf/qualification-inputs/core-0102-manylinux-tool-lock.json",
+    "sha256AfterCorrection": "d3da744a60df39decf9838ea068728bde3378fbb34a294294d634ea0e7a41a23"
+  },
+  "pyelftools": {
+    "distribution": "pyelftools",
+    "version": "0.32",
+    "filename": "pyelftools-0.32-py3-none-any.whl",
+    "bytes": 188525,
+    "sha256": "013df952a006db5e138b1edf6d8a68ecc50630adbd0d83a2d41e7f846163d738",
+    "incorrectLockedUrl": "https://files.pythonhosted.org/packages/af/43/700932c4f0638c3421177144a2e8648c0d75dbaee2c7936bda3f9fd0878/pyelftools-0.32-py3-none-any.whl",
+    "officialMetadataUrl": "https://files.pythonhosted.org/packages/af/43/700932c4f0638c3421177144a2e86448c0d75dbaee2c7936bda3f9fd0878/pyelftools-0.32-py3-none-any.whl",
+    "lockedUrlHeadStatus": 404,
+    "correctedFieldsMatchOfficialMetadata": true
+  },
+  "run40357751182": {
+    "failureReasonType": "HTTPError",
+    "firstFailingDownload": "pyelftools-0.32-py3-none-any.whl",
+    "basis": "auditwheel and packaging exact locked URLs returned 200; the third locked URL was the pyelftools URL returning 404. Tool downloads occur in lock order, and no tool-install command had begun."
+  },
+  "otherArtifacts": "No other lock field changed. The original comparison file is retained unchanged as historical evidence."
+}
