@@ -1,0 +1,65 @@
+{
+  "format": "core0102-ruff-source-fix/2",
+  "status": "source-only-candidate-for-review",
+  "base_commit": "b4f2eafbcb3f0a5e72c1ba88ffcc85e49451ec35",
+  "baseline_git_blob": "dc7f04b149b09818dc24d1d18d18620fd1b77564",
+  "baseline_raw_sha256": "629b6303a22c08a1ca4af68aadc3448d0f30e0ed9b6dbbb9134e39004e7e8d57",
+  "ruff_config_git_blob": "78ef03204ca46d8be4e2775ed71137de62d3847b",
+  "change": "Only import-order formatting and combined context managers in the existing test; test assertions and verifier behavior are unchanged.",
+  "tooling": {
+    "python": "CPython 3.12.15 at /Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12",
+    "ruff": "Ruff 0.17.1 at /Users/erik/.cache/uv/archive-v0/CK8JiGH866FVBH6T/bin/ruff",
+    "pytest": "pytest 8.4.2 at /Users/erik/.cache/uv/archive-v0/okqbN6LI_3DR0HdK/bin/pytest"
+  },
+  "commands": [
+    "/Users/erik/.cache/uv/archive-v0/CK8JiGH866FVBH6T/bin/ruff check --config .ruff.toml python/tests/test_python_artifact_version.py (baseline expected to fail with I001 and SIM117; candidate passes)",
+    "/Users/erik/.cache/uv/archive-v0/okqbN6LI_3DR0HdK/bin/pytest -q python/tests/test_python_artifact_version.py"
+  ],
+  "results": {
+    "baseline_ruff": "I001 and SIM117 reproduced",
+    "candidate_ruff": "passed",
+    "pytest": "3 passed"
+  },
+  "files": {
+    "candidate_test": {
+      "path": "candidate-source/python/tests/test_python_artifact_version.py",
+      "sha256": "719fd41eeb78829609e167e08e56622c964e48dd99e6cbd952f23a4d40634aa8"
+    },
+    "verifier": {
+      "path": "candidate-source/tools/verify_python_artifacts.py",
+      "sha256": "628bc0ea00eabca17e976b537ba2534c00a6fe53b09acb46399f74f3c0c85fb3"
+    },
+    "python_project": {
+      "path": "candidate-source/python/pyproject.toml",
+      "sha256": "dea18d8019a736568fc12416044217dacaf7555dc9ab9ea258cbd2316de09605"
+    },
+    "ruff_config": {
+      "path": "candidate-source/.ruff.toml",
+      "sha256": "03b33a057f6fd6a2f6e3c9884d244bcced2a8b3381d3200047b976552d7b590a"
+    },
+    "workflow": {
+      "path": "base-source/python-action-runtime.yml",
+      "sha256": "639a30c9e6b5aa73338203104f0bc86cec4e4b132b11498e74280faf7110bb24"
+    },
+    "baseline_test": {
+      "path": "base-source/test_python_artifact_version.py",
+      "sha256": "629b6303a22c08a1ca4af68aadc3448d0f30e0ed9b6dbbb9134e39004e7e8d57"
+    },
+    "baseline_ruff_log": {
+      "path": "baseline-ruff.log",
+      "sha256": "3c43d6592eb16d3e041a99ee8fedd241d28e9266fd57a2fc2f895de336d05c69"
+    },
+    "candidate_ruff_log": {
+      "path": "candidate-ruff.log",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    "pytest_log": {
+      "path": "pytest.log",
+      "sha256": "6affff3fa6ce0c6f95578cfcdc5fb8f6e18696d0b51309940bab380bda460a3e"
+    },
+    "patch": {
+      "path": "patch.diff",
+      "sha256": "8c0e1fb403378029da1fa2d0fc484013aa3942c98df4c9132d12841c761ae7f7"
+    }
+  }
+}

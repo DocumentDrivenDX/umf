@@ -1,0 +1,19 @@
+{
+  "status": "LOCAL_DEPENDENCY_MERGE_GENERATION_INPUTS_ONLY",
+  "migrationParent": "63762c9ac233debf1cb6021a3db1fcdc763e64aa",
+  "coreProducerParent": "cdebbc26896b9ed597ef0c7e634f674b2a5e09e3",
+  "corePR": 49,
+  "corePublication": "pending normal gates, merge, immutable publication and public verification",
+  "generatedInventorySeed": {
+    "migrationParent": {
+      "sha256": "f2283d297f4cac656b16fe3e7a3c88db63eb027857cce7b10f91b304355a088d",
+      "bytes": 2583649
+    },
+    "coreProducerParent": {
+      "sha256": "cc6f8343fe4c210b1120495151ec6bb38fe048b515886198573329873b621a67",
+      "bytes": 2609044
+    }
+  },
+  "decision": "Use exact Core parent inventory as historical seed; current full migration inventory must be hosted-generated. No manual union or currentness claim.",
+  "releaseGate": "PR48 merge/release remains dependent on verified Core0.10.2 publication."
+}

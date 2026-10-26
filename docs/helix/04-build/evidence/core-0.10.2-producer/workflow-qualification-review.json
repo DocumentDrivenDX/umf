@@ -1,0 +1,28 @@
+{
+  "profile": "umf.core0102-extension-kinds-qualification-proposal/2",
+  "status": "proposal-only; no checkout edits, commit, artifact build, or tests executed",
+  "baseRevision": "7cc87c4b79999d4e240bc5c600ca32ce10b65b88",
+  "basePath": "/private/tmp/umf-core0102-extension-kinds-qualification-001/python-action-runtime.yml.base",
+  "baseWorkflowSha256": "66ef23173b624a2c4c893a845fb3037945518a17ef740e4aea73a6107a06caff",
+  "proposedWorkflowPath": "/private/tmp/umf-core0102-extension-kinds-qualification-001/python-action-runtime.yml.proposed",
+  "proposedWorkflowSha256": "e53d602a209f10596ab8b60b01074db314f8e6f510e992c18a63a851c3a83180",
+  "patchPath": "/private/tmp/umf-core0102-extension-kinds-qualification-001/proposal.patch",
+  "patchSha256": "437e1aa82145fd8df6594f500255eb581968d27e86ba92f5114a88bd4042b3da",
+  "testPath": "python/tests/test_extension_kinds.py",
+  "testSourceSha256": "69258167b0386cacd2b39ea33d6a3c75b03210fb7a8d7c5070b3b0c627456c18",
+  "fixturePath": "fixtures/extension-kinds/conformance.json (reached via Path(__file__).resolve().parents[2])",
+  "fixtureSha256": "780543fe5bd2ca481c4e1062f7f3c755070b0d1934724ee7960f46642a03e598",
+  "validation": {
+    "workflowYamlParse": "passed using Ruby Psych",
+    "installedArtifactInvocations": 2,
+    "path": "Both invocation blocks already run from RUNNER_TEMP and pass absolute GITHUB_WORKSPACE/python/tests/... file paths; adding this test leaves its __file__ absolute, parents[2] resolves repository root, and fixture lookup remains independent of cwd.",
+    "postTestPayloadChecks": "Remain in place after each test suite; proposed change does not modify them.",
+    "inventoryRoots": "The test file and fixtures already belong to the existing Python test/inventory roots; this qualification-path change does not activate any new runtime resource or artifact root.",
+    "shellContinuation": "Both test invocations retain a trailing shell continuation on test_rust_core.py before the appended test path.",
+    "testActivationRoots": "This change adds an active R3 source/test activation root: the test was absent from the installed-artifact workflow invocations in base revision 7cc87. The general Python pytest-directory workflow runs it, but the R3 inventory scanner does not expand that directory invocation, so it is not already active/disposed there.",
+    "corePayloadInventory": "No Core package payload root changes: the added file is under python/tests, while the wheel/sdist payload inventory remains rooted at python/src/umf and its existing declared metadata/resources.",
+    "r3Impact": "R3 inventory, active/disposition accounting, evidence/count and cohort must be regenerated and checked; this workflow-only proposal does not itself establish those updated receipts."
+  },
+  "change": "Append the existing python/tests/test_extension_kinds.py to both direct-wheel and sdist-rebuilt installed test invocations; no product code or build inputs changed.",
+  "inventoryRootClaim": "The Core package payload inventory is unchanged, but R3 activation-root inventory changes because the installed-artifact lane explicitly adds this test."
+}

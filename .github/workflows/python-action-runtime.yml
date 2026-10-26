@@ -2,6 +2,10 @@ name: Python action-runtime artifact qualification
 
 on:
   push:
+    branches-ignore:
+      - codex/core-0102-inventory-generation
+    tags:
+      - '**'
   pull_request:
   workflow_dispatch:
 
@@ -71,7 +75,9 @@ jobs:
           print(f"runner={sys.platform} machine={machine} python_platform={current}")
           PY
       - name: Install bounded build and test tools
-        run: python -m pip install 'build==1.3.0' 'hatchling==1.27.0'
+        run: python -m pip install 'build==1.3.0' 'hatchling==1.27.0' 'pytest==8.4.2'
+      - name: Test the artifact verifier version selector
+        run: python -m pytest -q python/tests/test_python_artifact_version.py
       - name: Build the source and binary distributions
         run: python -m build --wheel --sdist --no-isolation python
       - name: Verify wheel payload and rebuild from the sdist
@@ -80,6 +86,7 @@ jobs:
         run: |
           python tools/verify_python_artifacts.py \
             --wheel python/dist/*.whl \
+            --expected-version 0.10.2 \
             --sdist python/dist/*.tar.gz \
             --rebuilt-wheel-directory "$RUNNER_TEMP/umf-sdist-rebuilt" \
             --repository . \
@@ -117,7 +124,7 @@ jobs:
             environment="$RUNNER_TEMP/umf-installed-$artifact"
             "$environment/bin/python" -I -B \
               "$GITHUB_WORKSPACE/tools/verify_python_artifacts.py" \
-              --wheel "$wheel" --verify-installed-wheel \
+              --wheel "$wheel" --expected-version 0.10.2 --verify-installed-wheel \
               --receipt "$RUNNER_TEMP/umf-installed-$artifact-payload.json"
             "$environment/bin/python" -I -B - "$RUNNER_TEMP/umf-install-$artifact.json" <<'PY'
           import importlib.metadata
@@ -137,8 +144,8 @@ jobs:
               raise SystemExit("UMF imported outside the isolated installation")
           if platform.machine().lower() != os.environ["EXPECTED_MACHINE"]:
               raise SystemExit("Installed test interpreter architecture changed")
-          if importlib.metadata.version("umf-core") != "0.10.1" or umf.__version__ != "0.10.1":
-              raise SystemExit("Installed distribution version is not 0.10.1")
+          if importlib.metadata.version("umf-core") != "0.10.2" or umf.__version__ != "0.10.2":
+              raise SystemExit("Installed distribution version is not 0.10.2")
           if current_core_version() != "0.10.0":
               raise SystemExit("Installed semantic core is not 0.10.0")
           extension = Path(_rust_core.__file__).resolve()
@@ -170,7 +177,8 @@ jobs:
             "$GITHUB_WORKSPACE/python/tests/test_action_runtime_resources.py" \
             "$GITHUB_WORKSPACE/python/tests/test_action_fixture_vectors.py" \
             "$GITHUB_WORKSPACE/python/tests/test_core.py" \
-            "$GITHUB_WORKSPACE/python/tests/test_rust_core.py"
+            "$GITHUB_WORKSPACE/python/tests/test_rust_core.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_extension_kinds.py"
       - name: Recheck direct wheel payload after tests
         if: always()
         run: |
@@ -181,7 +189,7 @@ jobs:
           fi
           "$RUNNER_TEMP/umf-installed-direct/bin/python" -I -B \
             "$GITHUB_WORKSPACE/tools/verify_python_artifacts.py" \
-            --wheel "${wheel[0]}" --verify-installed-wheel \
+            --wheel "${wheel[0]}" --expected-version 0.10.2 --verify-installed-wheel \
             --receipt "$RUNNER_TEMP/umf-installed-direct-posttest.json"
       - name: Run the same tests against the sdist-rebuilt native artifact
         id: rebuilt_installed_tests
@@ -193,7 +201,8 @@ jobs:
             "$GITHUB_WORKSPACE/python/tests/test_action_runtime_resources.py" \
             "$GITHUB_WORKSPACE/python/tests/test_action_fixture_vectors.py" \
             "$GITHUB_WORKSPACE/python/tests/test_core.py" \
-            "$GITHUB_WORKSPACE/python/tests/test_rust_core.py"
+            "$GITHUB_WORKSPACE/python/tests/test_rust_core.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_extension_kinds.py"
       - name: Recheck sdist-rebuilt wheel payload after tests
         if: always()
         run: |
@@ -204,7 +213,7 @@ jobs:
           fi
           "$RUNNER_TEMP/umf-installed-sdist-rebuilt/bin/python" -I -B \
             "$GITHUB_WORKSPACE/tools/verify_python_artifacts.py" \
-            --wheel "${wheel[0]}" --verify-installed-wheel \
+            --wheel "${wheel[0]}" --expected-version 0.10.2 --verify-installed-wheel \
             --receipt "$RUNNER_TEMP/umf-installed-sdist-rebuilt-posttest.json"
       - name: Finalize qualification receipt
         if: always()
@@ -275,7 +284,7 @@ jobs:
                   and counts["skipped"] == 0
                   and test_outcome == "success"
                   and installation.get("installed_inside_environment") is True
-                  and installation.get("distribution_version") == "0.10.1"
+                  and installation.get("distribution_version") == "0.10.2"
                   and installation.get("semantic_core_version") == "0.10.0"
                   and installed_payload.get("status") == "passed"
                   and installed_payload.get("wheel_sha256") == artifact.get("sha256")
@@ -330,10 +339,10 @@ jobs:
                   and rebuilt_artifact.get("native_platform") == direct_artifact.get("native_platform")
               ))
               and receipt.get("action_runtime_resource_count") == 9
-              and receipt.get("distribution_version") == "0.10.1"
+              and receipt.get("distribution_version") == "0.10.2"
               and receipt.get("semantic_core_version") == "0.10.0"
-              and direct_artifact.get("version") == "0.10.1"
-              and rebuilt_artifact.get("version") == "0.10.1"
+              and direct_artifact.get("version") == "0.10.2"
+              and rebuilt_artifact.get("version") == "0.10.2"
               and direct_artifact.get("tag") == rebuilt_artifact.get("tag")
               and direct_artifact.get("native_sha256")
               and rebuilt_artifact.get("native_sha256")

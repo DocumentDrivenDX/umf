@@ -1,0 +1,194 @@
+{
+  "check": {
+    "argv": [
+      "/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12",
+      "scripts/rust-inventory.py",
+      "--check"
+    ],
+    "inventorySha256After": "66166e441062358f3f8ba73943079e7bfcca964157f6076fcc754c4c21cdffea",
+    "inventorySha256Before": "66166e441062358f3f8ba73943079e7bfcca964157f6076fcc754c4c21cdffea",
+    "returncode": 0,
+    "stdout": "Rust inventory current: 578 source modules; 342 active scripts\n",
+    "timedOut": false,
+    "unchanged": true
+  },
+  "cleanup": {
+    "gitRegistrationAbsent": true,
+    "independentlyAbsentPgids": [
+      70381,
+      70386,
+      70387,
+      70388,
+      70430,
+      70432,
+      70433,
+      70434,
+      70563,
+      70567,
+      70568,
+      71520
+    ],
+    "independentlyAbsentPids": [
+      70381,
+      70386,
+      70387,
+      70388,
+      70430,
+      70432,
+      70433,
+      70434,
+      70563,
+      70567,
+      70568,
+      71520
+    ],
+    "worktreePathAbsent": true
+  },
+  "controllerSha256": "d8d659bacad7c7ebccbff59f513fa62061f4b61289f3afbaea0beee0e49b2440",
+  "derivedCandidate": {
+    "bytes": 2606023,
+    "canonicalAndByteIdenticalToReviewedInput": true,
+    "classification": "Derived candidate independently checked current for exact14cc by actual unmodified full --check; prior091 generation/check provenance retained separately.",
+    "sha256": "66166e441062358f3f8ba73943079e7bfcca964157f6076fcc754c4c21cdffea"
+  },
+  "findings": [],
+  "manifestSha256": "c7a5c19eaf0fd18a708b26b727dd93c1df8b8af08fde5016e0b31894a5249ad3",
+  "nodeModules": {
+    "entryCount": 19517,
+    "freshLiveSnapshotMatchesEveryRecord": true,
+    "savedBeforeAfterByteIdentical": true,
+    "sha256": "f97d9a3f77efe220f3b5f11473d81755ee14f9beb7007968c795187794433cdf",
+    "snapshotFileSha256": "492dd2e85a4cc03706c350d44624295f5f0c392d441c4b36185000c8489f5e49"
+  },
+  "outerControllerTerminal": {
+    "elapsedSeconds": 96.149,
+    "evidence": "Root-attested actual terminal; independent retained child logs and current process absence verified.",
+    "exitCode": 0,
+    "session": 61365
+  },
+  "parentRevision": "b4f2eafbcb3f0a5e72c1ba88ffcc85e49451ec35",
+  "receiptPath": "/private/tmp/umf-core0102-r3-check-010-prep002-run/receipt.json",
+  "receiptSha256": "d349d4e2c52df35bda5d3d94221348eb8a3d593d8bdbf4cc3b0b8b5d550948bb",
+  "reviewedUtc": "2026-10-24T07:09:25Z",
+  "revision": "14cc001d8944cb3ed61da720c7795b8b521d496e",
+  "role": "sol",
+  "rootCleanupSha256": "a41405d739404f48c8ddf2158fb227db7220a1d06337a0b2309c0bb9d7958119",
+  "rootPrepReviewSha256": "45223ab00adef6beb9696e38c867deda342ab2d2a57beaed1e2727bd4cb21bfc",
+  "scope": "Independent read-only completion/custody review of exact Core010 check-only run; no product rerun, generation, build, target tests, native CI, database/service, publication or general release qualification. Approves using these exact inert records for the subsequent evidence-overlay review; overlay pathset/bytes and resulting commit still require independent review.",
+  "solPrepReviewSha256": "9e7bf03f23b39d44346bac69ddff28d906070c63459ec351f52eb81e32e274bd",
+  "status": "approved",
+  "stderr": "Actual product check stderr contains retained SyntaxWarning for preexisting pg-old-snapshot-admission-probe.py escape sequence; exact311B/hash verified; check exited0.",
+  "validatedLogFiles": [
+    {
+      "bytes": 41,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-70386.stdout",
+      "sha256": "56cc17d8e957e15ac30d7d91af07f0e8711ea3262c05c17250e85bea7b2c06e2"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-70386.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 41,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-70387.stdout",
+      "sha256": "14a2b3ed90e4a92c38a9a984788c189d21e01f350d3e87f0f68dda74cd024495"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-70387.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 45,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-70388.stdout",
+      "sha256": "c974eb96b7ca8124d869abddbfbf8d7f6ff5c05d5a387fb6cf0ce67fb1c10a5a"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-70388.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 15,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-70430.stdout",
+      "sha256": "9bdce2f3bc127762fcb79db8faf0385c42e81e916436db64486d7162bc1d04e0"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-70430.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 6,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-70432.stdout",
+      "sha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-70432.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 35,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-70433.stdout",
+      "sha256": "2aa6da9ca331dc6de6fe72460146b9d1ebc22c8df24f3eb2a4c4f7c3c41b93ca"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-70433.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 93,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-70434.stdout",
+      "sha256": "6c8bcfbc022250a1a9db6fd75497c9e3678385e5766157a7965a3f634bb78955"
+    },
+    {
+      "bytes": 3646,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-70434.stderr",
+      "sha256": "5a691ea502832bc738c574c11e133979e52a5026ef17260a349cbc6cde19e7a0"
+    },
+    {
+      "bytes": 41,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-70563.stdout",
+      "sha256": "56cc17d8e957e15ac30d7d91af07f0e8711ea3262c05c17250e85bea7b2c06e2"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-70563.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 3740,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-70567.stdout",
+      "sha256": "719fd41eeb78829609e167e08e56622c964e48dd99e6cbd952f23a4d40634aa8"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-70567.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 63,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-70568.stdout",
+      "sha256": "28265961c1933a918f37f154ea4c83ac1697351bcd6d649334b8143d6ad016f8"
+    },
+    {
+      "bytes": 311,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-70568.stderr",
+      "sha256": "9c396c932c0e550ccf3a53502f499a03c05cfd44ffb272b3e7635a311dda1668"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-71520.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/umf-core0102-r3-check-010-prep002-run/child-71520.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "validatedManifestMembers": 26
+}

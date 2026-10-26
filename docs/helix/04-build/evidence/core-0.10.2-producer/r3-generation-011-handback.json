@@ -1,0 +1,80 @@
+{
+  "profile": "umf.core011.independent-generation-handback/1",
+  "status": "pass",
+  "observedUtc": "2026-10-24T09:47:14.950074+00:00",
+  "controllerReceiptSha256": "1fc18d44418fc81617b2572c3287fa1de6ca488f392a70d7c23dc65809d02e4f",
+  "controllerPid": 85526,
+  "controllerPgid": 85526,
+  "actualStartedUtc": "2026-10-24T09:43:51Z",
+  "totalDeadlineUtc": "2026-10-24T09:53:51Z",
+  "actualEndedUtc": "2026-10-24T09:45:35Z",
+  "controllerElapsedSeconds": 103.764,
+  "unifiedExecSession": 86081,
+  "actualSessionExit": 0,
+  "independentProcessAbsence": [
+    {
+      "pid": 85526,
+      "pgid": 85526,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 85528,
+      "pgid": 85528,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 85530,
+      "pgid": 85530,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 85531,
+      "pgid": 85531,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 85552,
+      "pgid": 85552,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 85553,
+      "pgid": 85553,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 85555,
+      "pgid": 85555,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 85558,
+      "pgid": 85558,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 85666,
+      "pgid": 85666,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 85671,
+      "pgid": 85671,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 87021,
+      "pgid": 87021,
+      "independentlyAbsent": true
+    }
+  ],
+  "worktreeFilesystemAndGitRegistryAbsent": true,
+  "freshIndependentNodeModules": {
+    "entryCount": 19517,
+    "sha256": "f97d9a3f77efe220f3b5f11473d81755ee14f9beb7007968c795187794433cdf",
+    "matchesBothRetainedSnapshots": true
+  },
+  "inventorySha256": "90ecd7dc3c7461660d67aa42358d8c339534cb9618d6b68b6b8c336cb843e35c",
+  "inventoryBytes": 2607211,
+  "scope": "Generation and cleanup only; no check/build/test/package/release or global-quiet claim"
+}

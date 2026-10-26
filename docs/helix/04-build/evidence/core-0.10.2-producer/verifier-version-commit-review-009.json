@@ -1,0 +1,17 @@
+{
+  "status": "committed-fix-source-byte-exact",
+  "commit": "091aea5d111045fe70b229bc72fb47ef95febb9d",
+  "parent": "937dcd04b365dafe8ebec4565aff392fa67126d8",
+  "tree": "8b6fb256fcb5215f446b47971d2a93b415b04a01",
+  "paths": [
+    ".github/workflows/python-action-runtime.yml",
+    "tools/verify_python_artifacts.py",
+    "python/tests/test_python_artifact_version.py"
+  ],
+  "independentSourceReviewSha256": "703bc1361feda04f1bd6296126448ed42a8b24b0a82b0ed0ada858ed24fdaef2",
+  "limits": [
+    "FreshR3stillrequired",
+    "Root51test-body-passfollowedbyforcedterminationisNOTterminalsuccess",
+    "No newnative/releaseclaim"
+  ]
+}

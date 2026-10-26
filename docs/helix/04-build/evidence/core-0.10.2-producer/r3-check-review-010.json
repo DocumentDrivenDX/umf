@@ -1,0 +1,75 @@
+{
+  "actualFinalFourInertControls": {
+    "cases": [
+      "timeout-zero-exit-stays-failure",
+      "interrupt-after-real-spawn-preserves-unknown-and-worktree",
+      "communicate-interrupt-retains-child-handle-and-reaps-before-cleanup",
+      "preexisting-output-refusal-does-not-mutate-or-hash"
+    ],
+    "controlsSha256": "db15c1dabe49d24bbc37eb795fc76e677c255e0cbb794150cf38cdded5eb3427",
+    "count": 4,
+    "exitCode": 0,
+    "flags": [
+      "-I",
+      "-B"
+    ],
+    "knownCommunicateInterruptionPidPgid": 66814,
+    "python": "/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12",
+    "session": 63123,
+    "terminalAndAbsenceAssertionsPassed": true,
+    "timeoutZeroExitPidPgid": 66742
+  },
+  "controllerReview": "Compared complete controller against reviewed009 baseline and inspected final002 provenance delta. Sole product-source invocation remains exact unmodified rust-inventory.py --check at pinned14cc. Validates committed parent/diff/tool and generator pins, exact old inventory, candidate test bytes, canonical candidate record delta and cohort formula before seeding isolated worktree. Full shared dependency snapshots before/after,600-second budget, child<=500 with95-second reserve, bounded spawn/interruption/process-group custody, output ownership and worktree cleanup retained. Full prior check is independently located by exact SHA, retained separately from generation and checked for source/mode/argv/zero-nontimedout/unchanged-a260/cleanup. All26 manifest members and all three tool binary hashes independently match. New run output path absent.",
+  "controllerSha256": "d8d659bacad7c7ebccbff59f513fa62061f4b61289f3afbaea0beee0e49b2440",
+  "findings": [],
+  "independentDerivedInventoryAudit": {
+    "actualTerminalSession": 18525,
+    "changedJsonPaths": [
+      "$.capture.sourceCohortSha256",
+      "$.scripts[51].bytes",
+      "$.scripts[51].sha256"
+    ],
+    "classification": "Derived candidate only; not generated/current until the later unmodified product --check actually succeeds.",
+    "countsActivationAndOtherValuesUnchanged": true,
+    "exitCode": 0,
+    "finalPrep002InputsByteEqualToAuditedPrep001": true,
+    "helperPath": "/private/tmp/core010-sol-inventory-audit.py",
+    "helperSha256": "88ed0f06e793ec41a888fa7c561680f1383f69d4111d36bba0ae20b6d4b831ea",
+    "inventoryBytes": 2606023,
+    "inventorySha256": "66166e441062358f3f8ba73943079e7bfcca964157f6076fcc754c4c21cdffea",
+    "path": "/private/tmp/core010-sol-inventory-audit.json",
+    "recordRowsIncludingDependencyResources": 3738,
+    "sha256": "03aa0c2f8c999bd7d6d08276319a9770419960090e5fff93588e2a3429a02059",
+    "sourceCohortSha256": "e8c99668761d72bb8a1be840d93d883b83c5ec5b2f72b5e81d7c1d98e61e31f2",
+    "uniqueRecordedGitBytes": 37730421,
+    "uniqueRecordedGitPaths": 3624
+  },
+  "manifestSha256": "c7a5c19eaf0fd18a708b26b727dd93c1df8b8af08fde5016e0b31894a5249ad3",
+  "mode": "check-only",
+  "parentRevision": "b4f2eafbcb3f0a5e72c1ba88ffcc85e49451ec35",
+  "predecessorProvenance": {
+    "actualCheckReceiptSha256": "bb5b848369d7bbc15343eadc6df206339402b5fcca584ed573d743671760e180",
+    "generationAndCheckDistinctAndCorrectlyValidated": true,
+    "generationReceiptSha256": "c512727c5a37463d8baa9e038e610da162c2f5cc4b9c7ef70289f6e4fc0c9891",
+    "locatedActualCheckReceipt": "/private/tmp/umf-core0102-r3-attempt009-check/receipt.json",
+    "predecessorInventorySha256": "a2609b45cd6131aae1211a764405912472f4ccdd998d021807d65948b53f939b",
+    "predecessorSource": "091aea5d111045fe70b229bc72fb47ef95febb9d",
+    "prep001ManifestPreservedSha256": "67e9fac29cda5719357daf89dadbe614e838c06a90e646ebd89786188fabb0e8",
+    "prep002CheckCopyByteIdentical": true
+  },
+  "reviewedUtc": "2026-10-24T07:01:44.542126+00:00",
+  "revision": "14cc001d8944cb3ed61da720c7795b8b521d496e",
+  "role": "sol",
+  "rootReviewSha256": "45223ab00adef6beb9696e38c867deda342ab2d2a57beaed1e2727bd4cb21bfc",
+  "scope": "Approval of this exact prep002 controller/revision/mode tuple and independently audited derived inventory input only. No product check, generator, worktree, build, target test suite, native/database/service or publication launched by reviewer. No coordinator reservation/GO or launch authority supplied. Real14cc full-check outcome, current-source CI/native/platform/release/public-byte gates remain open and are not inferred from prior091/b4 evidence.",
+  "sourceCommitReview": {
+    "candidateBlob": "152aa9553ec3c1ff2b8d163246ea9ec2d7421b88",
+    "candidateSha256": "719fd41eeb78829609e167e08e56622c964e48dd99e6cbd952f23a4d40634aa8",
+    "changedPaths": [
+      "python/tests/test_python_artifact_version.py"
+    ],
+    "meaning": "The imported stdlib names and all remaining AST nodes are identical after normalizing only import ordering and flattening the same ordered nested with managers. No verifier/runtime/workflow/semantic-version implementation changed. No target unit-test suite executed by reviewer.",
+    "normalizedPythonAstEqualExceptImportOrderAndWithFlattening": true
+  },
+  "status": "approved"
+}
