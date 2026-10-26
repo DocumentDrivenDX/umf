@@ -1009,7 +1009,7 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     self.assertEqual(pending_outcome.approval_status, 'consumed')
                     self.assertEqual(pending_outcome.effect_status, 'effect-pending')
                     self.assertEqual(pending_outcome.effect_digest,
-                                     native._digest(effect_event['recordDigest']))
+                                     effect_event['recordDigest'])
                     self.assertIsNone(restarted_supervisor.custody_handle)
                     self.assertIsNone(recovery_provider._creation_reservation)
                     self.assertIsNone(recovery_provider._creation_capability)
