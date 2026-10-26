@@ -9,6 +9,7 @@ pub mod access_related_keys;
 pub mod access_stream;
 pub mod access_temporal;
 pub mod access_values;
+pub mod artifact_references;
 #[cfg(feature = "embedded-adapters")]
 pub mod avro_document;
 #[cfg(feature = "embedded-adapters")]
