@@ -1,0 +1,50 @@
+{
+  "status": "diagnostic-only; default-route gate fails",
+  "operation": "inspectCoreElementKind",
+  "source": "scripts/rust-migration/r5/kind-nullability/input.json",
+  "iterationsPerRoutePerRound": 30,
+  "rounds": 5,
+  "measurement": "Alternating TypeScript-first and Rust-first; setup measured separately; warm call loops measured after factory construction.",
+  "bun": {
+    "runtime": "Bun 1.4.3 (Node compatibility 26.3.0)",
+    "platform": "darwin-arm64",
+    "rounds": [
+      {"order":"typescript-first","setupMs":598.77,"typescriptMs":12.76,"rustWarmMs":170.36,"typescriptPerCallMs":0.425,"rustWarmPerCallMs":5.679},
+      {"order":"rust-first","setupMs":600.46,"typescriptMs":5.16,"rustWarmMs":167.72,"typescriptPerCallMs":0.172,"rustWarmPerCallMs":5.591},
+      {"order":"typescript-first","setupMs":601.11,"typescriptMs":4.73,"rustWarmMs":168.66,"typescriptPerCallMs":0.158,"rustWarmPerCallMs":5.622},
+      {"order":"rust-first","setupMs":602.26,"typescriptMs":4.91,"rustWarmMs":166.54,"typescriptPerCallMs":0.164,"rustWarmPerCallMs":5.551},
+      {"order":"typescript-first","setupMs":594.73,"typescriptMs":3.24,"rustWarmMs":163.73,"typescriptPerCallMs":0.108,"rustWarmPerCallMs":5.458}
+    ],
+    "medianSetupMs":600.46,
+    "p95SetupMs":602.26,
+    "medianTypescriptPerCallMs":0.164,
+    "p95TypescriptPerCallMs":0.425,
+    "medianRustWarmPerCallMs":5.591,
+    "p95RustWarmPerCallMs":5.679,
+    "medianWarmRegression":34.1
+  },
+  "node": {
+    "runtime": "Node 26.12.1",
+    "platform": "darwin-arm64",
+    "reference": "dist/umf-node.js TypeScript predecessor bundle",
+    "rounds": [
+      {"order":"typescript-first","setupMs":606.32,"typescriptMs":13.33,"rustWarmMs":168.32,"typescriptPerCallMs":0.444,"rustWarmPerCallMs":5.611},
+      {"order":"rust-first","setupMs":661.49,"typescriptMs":8.70,"rustWarmMs":178.00,"typescriptPerCallMs":0.290,"rustWarmPerCallMs":5.933},
+      {"order":"typescript-first","setupMs":666.17,"typescriptMs":8.22,"rustWarmMs":195.11,"typescriptPerCallMs":0.274,"rustWarmPerCallMs":6.504},
+      {"order":"rust-first","setupMs":669.68,"typescriptMs":8.34,"rustWarmMs":186.56,"typescriptPerCallMs":0.278,"rustWarmPerCallMs":6.219},
+      {"order":"typescript-first","setupMs":664.71,"typescriptMs":8.13,"rustWarmMs":189.96,"typescriptPerCallMs":0.271,"rustWarmPerCallMs":6.332}
+    ],
+    "medianSetupMs":664.71,
+    "p95SetupMs":669.68,
+    "medianTypescriptPerCallMs":0.278,
+    "p95TypescriptPerCallMs":0.444,
+    "medianRustWarmPerCallMs":6.219,
+    "p95RustWarmPerCallMs":6.504,
+    "medianWarmRegression":22.4
+  },
+  "limits": [
+    "Single 820-byte representative source and inspect operation only; not a release benchmark.",
+    "Rounds are local Darwin arm64 only; different runtimes use their matching Node addon and TypeScript source/bundle route.",
+    "The measured retained runtime owns one Engine and compiled operation schemas per factory. It does not measure the cost of adding a second retained factory to V4 root initialization."
+  ]
+}
