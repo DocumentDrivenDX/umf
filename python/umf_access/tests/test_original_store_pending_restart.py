@@ -28,6 +28,7 @@ from owner_bootstrap_setup_fixture import install_pending_owner_setup
 from umf_access.lifecycle import ingress_custody as custody
 from umf_access.lifecycle import ingress_local_postgres as native
 from umf_access.lifecycle import owner_bootstrap as bootstrap
+from umf_access.lifecycle import owner_approval_core as approval_core
 from umf_access.lifecycle import supervisor_journal_codec as codec
 from umf_access.lifecycle.owner_authority import (
     _SIGNATURE_DOMAIN, _canonical_bytes, create_owner_authority_session,
@@ -854,9 +855,22 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     absence_queries_before = len(db.absence_queries)
                     namespace_queries_before = len(db.namespace_queries)
                     readonly_connects_before = len(db.readonly_connect_options)
+                    recovery_effect_bindings = []
+                    original_bind_effect = approval_core.OwnerApprovalCore._bind_effect_digest
+                    def capture_store_effect_binding(
+                            issuer, verified_approval, reservation_digest):
+                        handle = original_bind_effect(
+                            issuer, verified_approval, reservation_digest)
+                        request = verified_approval._request
+                        if request._scope == 'native-store-creation':
+                            recovery_effect_bindings.append((reservation_digest, handle))
+                        return handle
                     with (patch.dict(sys.modules, {
                               'psycopg': psycopg_fixture,
                               'psycopg.rows': psycopg_rows_fixture}),
+                          patch.object(approval_core.OwnerApprovalCore,
+                                       '_bind_effect_digest',
+                                       capture_store_effect_binding),
                           patch.object(native, '_execute_original_store_sql',
                                        _execute_journal_recovery_control_transport),
                           patch.object(native.LocalPostgresSupervisor,
@@ -907,6 +921,12 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     self.assertEqual(len(typed_events), 1)
                     self.assertEqual(len(effect_events), 1)
                     typed_event, effect_event = typed_events[0], effect_events[0]
+                    self.assertEqual(len(recovery_effect_bindings), 2)
+                    for bound_digest, handle in recovery_effect_bindings:
+                        self.assertEqual(bound_digest, effect_event['recordDigest'])
+                        self.assertEqual(handle._reservation_digest,
+                                         effect_event['recordDigest'])
+                        self.assertIs(handle._core, restarted_supervisor._owner_core)
                     typed_payload = typed_event['payload']
                     self.assertEqual(typed_payload['purpose'], profile.purpose)
                     self.assertEqual(typed_payload['reservation'], external_reservation)
@@ -994,9 +1014,21 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                         except native.LocalPostgresError as error:
                             second_recovery_codes.append(error.code)
                             raise
+                    second_effect_bindings = []
+                    def capture_second_store_effect_binding(
+                            issuer, verified_approval, reservation_digest):
+                        handle = original_bind_effect(
+                            issuer, verified_approval, reservation_digest)
+                        request = verified_approval._request
+                        if request._scope == 'native-store-creation':
+                            second_effect_bindings.append((reservation_digest, handle))
+                        return handle
                     with (patch.dict(sys.modules, {
                               'psycopg': psycopg_fixture,
                               'psycopg.rows': psycopg_rows_fixture}),
+                          patch.object(approval_core.OwnerApprovalCore,
+                                       '_bind_effect_digest',
+                                       capture_second_store_effect_binding),
                           patch.object(native, '_execute_original_store_sql',
                                        _execute_journal_recovery_control_transport),
                           patch.object(native.LocalPostgresSupervisor,
@@ -1037,6 +1069,18 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                             operation_kind='store'):
                         second_events = after_pending_supervisor._journal.read()['events']
                     self.assertEqual(second_events, before_retry_events)
+                    second_effect_event = next(
+                        event for event in second_events
+                        if event['kind'] == 'native-effect-intent'
+                        and event['payload'].get('scope') == 'native-store-creation'
+                        and event['payload'].get('requestDigest')
+                            == store_request._intent_digest)
+                    self.assertEqual(len(second_effect_bindings), 2)
+                    for bound_digest, handle in second_effect_bindings:
+                        self.assertEqual(bound_digest, second_effect_event['recordDigest'])
+                        self.assertEqual(handle._reservation_digest,
+                                         second_effect_event['recordDigest'])
+                        self.assertIs(handle._core, after_pending_supervisor._owner_core)
                     self.assertEqual(len([event for event in second_events
                         if event['kind'] == 'originals-store-creation-intent'
                         and event['payload'].get('reservationDigest')

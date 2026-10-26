@@ -3441,7 +3441,7 @@ class LocalPostgresSupervisor:
             self._profile.purpose, target, typed_event, intent_bytes)
         try:
             self._owner_core._bind_effect_digest(
-                approval, _digest(self._journal.read()['events'][-1]['recordDigest']))
+                approval, self._journal.read()['events'][-1]['recordDigest'])
         except Exception:  # noqa: BLE001 -- preserve the original intent without DDL
             raise LocalPostgresError('local-postgresql-store-recovery-binding-unresolved') from None
         return self._recover_original_native_effect(
@@ -6673,7 +6673,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name"""
         try:
             self._require_original_store_budget_pre_reservation(budget)
             effect_handle = self._owner_core._bind_effect_digest(
-                approval, _digest(native_effect._journal_record_digest))
+                approval, native_effect._journal_record_digest)
         except Exception:  # noqa: BLE001 -- pending binding must precede DDL
             raise LocalPostgresError('local-postgresql-owner-effect-binding-required') from None
         result = _OriginalStoreCreationReservation(
@@ -7244,7 +7244,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name"""
                 evidence, evidence, _canonical(origin), _canonical(registration),
                 _canonical(authority))
             effect_handle = self._owner_core._bind_effect_digest(
-                approval, _digest(native_effect._journal_record_digest))
+                approval, native_effect._journal_record_digest)
             reservation = _OriginalStoreCreationReservation(
                 _ORIGINAL_STORE_RESERVATION_SEAL, self, evidence=evidence,
                 approval=approval, custodian=self._custodian, target=target,
