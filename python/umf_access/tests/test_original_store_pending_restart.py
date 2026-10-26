@@ -141,7 +141,7 @@ class _FakeDatabase:
             self.absence_queries.append(text)
             controller = next((name for name in self.roles if name.startswith('umf_c_')), None)
             maintenance = next((name for name in self.roles if name.startswith('umf_m_')), None)
-            return _Cursor([('fixturedb', 5, '181818181818', maintenance,
+            return _Cursor([('fixturedb', 6, '181818181818', maintenance,
                              controller, controller, 'pg_catalog', 'UTC', 'on',
                              'origin', 'on', 'read committed',
                              self.roles[maintenance][0], self.roles[controller][0])])
