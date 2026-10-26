@@ -271,6 +271,12 @@ export declare function createCoreModelRootEngine(resources: UmfCoreResources, o
 export declare function createCoreKeyTupleEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): Pick<UmfCoreModelEngine, 'encodeCoreKeyTuple' | 'verifyCoreKeyTuple' | 'readCoreKeyTupleBytes' | 'prepareCoreKeyTuples'>;
 /** Create the opt-in Rust-owned umf.host-json/1 schema-property declaration route. */
 export declare function createCoreSchemaPropertiesHostInputEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): UmfCoreEngine & UmfCoreModelEngine;
+/** Create the private Rust-owned umf.host-json/1 Core Cardinality admission engine. */
+export declare function createCoreCardinalityHostInputEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): {
+  inspectCoreCardinality(source: unknown, identity: unknown): unknown;
+  declareCoreCardinality(source: unknown, identity: unknown, request: unknown): unknown;
+  verifyCoreCardinalityDeclaration(receipt: unknown, current: unknown): unknown;
+};
 /** Create the opt-in Rust-owned umf.host-json/1 logical Record-value admission route. */
 export declare function createCoreRecordValuesHostInputEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): {validateCoreRecordValues(source: unknown, identity: unknown, values: unknown): unknown};
 export declare function createCoreKindNullabilityHostInputEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): {

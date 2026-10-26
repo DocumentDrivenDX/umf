@@ -99,6 +99,10 @@ function schemaPropertiesHostInput(addon, resources, operation, inputs, ErrorTyp
   return executeHostInput(addon, resources, 'executeCoreSchemaPropertiesHostJson', inputs, ErrorType, undefined, [operation]);
 }
 
+function cardinalityHostInput(addon, resources, operation, inputs, ErrorType = Error) {
+  return executeHostInput(addon, resources, 'executeCoreCardinalityHostJson', inputs, ErrorType, undefined, [operation]);
+}
+
 // Private route probe. It does not alter either V4 package root selection.
 function coreElementSelectionHostInput(addon, resources, source, query, registry, ErrorType = Error) {
   return executeHostInput(addon, resources, 'executeCoreElementSelectionHostJson', [source, query, registry], ErrorType, undefined, [registry !== undefined], undefined, false, false, fromRustWire);
@@ -325,6 +329,15 @@ function executeHostInput(addon, resources, operation, inputs, ErrorType, contro
               diagnostics[index] = requireHostHandle(item.handle);
             } else if (item?.kind === 'static') {
               diagnostics[index] = fromRustWireOrdinary(item.value);
+            } else if (item?.kind === 'structure'
+              && safeInteger(item.messageToken) && item.messageToken > 0
+              && mapHas(strings, item.messageToken)) {
+              const entry = NativeObjectCreate(objectPrototype);
+              defineProperty(entry, 'code', {value: fromRustWireOrdinary(item.code), writable: true, enumerable: true, configurable: true});
+              defineProperty(entry, 'path', {value: fromRustWireOrdinary(item.path), writable: true, enumerable: true, configurable: true});
+              defineProperty(entry, 'message', {value: mapGet(strings, item.messageToken), writable: true, enumerable: true, configurable: true});
+              defineProperty(entry, 'severity', {value: fromRustWireOrdinary(item.severity), writable: true, enumerable: true, configurable: true});
+              diagnostics[index] = entry;
             } else {
               throw new HostProtocolError('Malformed diagnostic serialization item');
             }
@@ -543,4 +556,4 @@ function fromUnits(units) {
   return result;
 }
 
-export {declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, coreElementSelectionHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse};
+export {declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, cardinalityHostInput, coreElementSelectionHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse};

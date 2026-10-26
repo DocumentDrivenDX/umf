@@ -243,6 +243,12 @@ export interface PreparedCoreKeyTuples {readonly profile: 'umf.core.key-tuples.p
 export declare function createCoreModelEngine(module: any, resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): UmfCoreEngine & UmfCoreModelEngine;
 /** @internal Default-root facade while Key tuple exports remain on TypeScript. */
 export declare function createCoreModelRootEngine(module: any, resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): UmfCoreEngine & UmfCoreRootModelEngine;
+/** Create the private Rust-owned umf.host-json/1 Core Cardinality admission engine. */
+export declare function createCoreCardinalityHostInputEngine(module: any, resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): {
+  inspectCoreCardinality(source: unknown, identity: unknown): unknown;
+  declareCoreCardinality(source: unknown, identity: unknown, request: unknown): unknown;
+  verifyCoreCardinalityDeclaration(receipt: unknown, current: unknown): unknown;
+};
 export declare function createCoreKeyTupleEngine(module: any, resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): Pick<UmfCoreModelEngine, 'encodeCoreKeyTuple' | 'verifyCoreKeyTuple' | 'readCoreKeyTupleBytes' | 'prepareCoreKeyTuples'>;
 export interface UmfCoreRecordTypeEngine {
   declareCoreRecordType(fieldAuthor: unknown, recordAuthor: unknown): unknown;

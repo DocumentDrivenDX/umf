@@ -16,7 +16,7 @@ import {createBit128Engine as createBit128EngineWithWire, isBit128EngineError, B
 import {createJsonNumberEngine as createJsonNumberEngineWithWire, JSON_NUMBER_PROFILE} from './src/json-number.js';
 import {createJsonSchemaOperations, JSON_SCHEMA_PROFILE, UmfError as JsonSchemaUmfError, jsonSchemaFailureError} from './src/json-schema.js';
 import {createDocumentComparisonOperations, DOCUMENT_COMPARISON_PROFILE} from './src/document-comparison.js';
-import {declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse} from './src/host-json.js';
+import {declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, cardinalityHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse} from './src/host-json.js';
 import {createSemanticTypeRegistry as createSemanticTypeRegistryEngine} from './src/semantic-value.js';
 
 export {isWireAdmissionError} from './src/wire.js';
@@ -661,6 +661,16 @@ export function createCoreSchemaPropertiesHostInputEngine(resources, options = {
   return createEngineInternal(resources, options, true, true);
 }
 
+/** Create the private Rust-owned host-admission engine for Core Cardinality. */
+export function createCoreCardinalityHostInputEngine(resources, options = {}) {
+  if (typeof addon.executeCoreCardinalityHostJson !== 'function') throw new UmfCoreError('RUST_NODE_BINDING_MISSING', 'Node binding does not expose umf.host-json/1 Core Cardinality');
+  const {controls} = codegenOptions(options);
+  const rawResourceControls = dataProperty(options, 'resourceControls', false);
+  const resourceControls = rawResourceControls === undefined ? controls : codegenOptions({controls: rawResourceControls}).controls;
+  if (hasControls(controls) || hasControls(resourceControls)) throw new UmfCoreError('HOST_JSON_CONTROLS_UNSUPPORTED', 'Host-input Core Cardinality operations do not accept operation or resource control callbacks');
+  return createEngineInternal(resources, options, false, false, false, false, false, true);
+}
+
 /** Create the opt-in Rust-owned host-input route for logical Record values. */
 export function createCoreRecordValuesHostInputEngine(resources, options = {}) {
   if (typeof addon.executeValidateCoreRecordValuesHostJson !== 'function') throw new UmfCoreError('RUST_NODE_BINDING_MISSING', 'Node binding does not expose umf.host-json/1 record values');
@@ -1087,7 +1097,7 @@ export function createAvroFieldsEngine(options = {}) {
   }});
 }
 
-function createEngineInternal(resources, options, withModel, withSchemaPropertiesHostInput = false, includeKeyTuple = withModel, includeRecordType = false, recordTypeOnly = false) {
+function createEngineInternal(resources, options, withModel, withSchemaPropertiesHostInput = false, includeKeyTuple = withModel, includeRecordType = false, recordTypeOnly = false, withCardinalityHostInput = false) {
   const {profile, controls} = codegenOptions(options);
   const rawResourceControls = dataProperty(options, 'resourceControls', false);
   const resourceControls = rawResourceControls === undefined ? controls : codegenOptions({controls: rawResourceControls}).controls;
@@ -1199,6 +1209,15 @@ function createEngineInternal(resources, options, withModel, withSchemaPropertie
     api.declareCoreSchemaProperties = (source, identity, patch) => call('declareCoreSchemaProperties', [source, identity, patch]);
     api.validateCoreFieldValue = (source, identity, value) => call('validateCoreFieldValue', [source, identity, value]);
     api.resolveCoreDefault = (source, identity, state) => call('resolveCoreDefault', [source, identity, state]);
+  }
+  if (withCardinalityHostInput) {
+    const call = (operation, inputs) => {
+      if (hasControls(controls)) throw new UmfCoreError('HOST_JSON_CONTROLS_UNSUPPORTED', 'Host-input Core Cardinality operations do not accept host control callbacks');
+      return cardinalityHostInput(addon, fixedResources, operation, inputs, JsonSchemaUmfError);
+    };
+    api.inspectCoreCardinality = (source, identity) => call('inspectCoreCardinality', [source, identity, undefined]);
+    api.declareCoreCardinality = (source, identity, request) => call('declareCoreCardinality', [source, identity, request]);
+    api.verifyCoreCardinalityDeclaration = (receipt, current) => call('verifyCoreCardinalityDeclaration', [receipt, current, undefined]);
   }
   return Object.freeze(api);
 }

@@ -99,6 +99,10 @@ function schemaPropertiesHostInput(addon, resources, operation, inputs, ErrorTyp
   return executeHostInput(addon, resources, 'executeCoreSchemaPropertiesHostJson', inputs, ErrorType, undefined, [operation]);
 }
 
+function cardinalityHostInput(addon, resources, operation, inputs, ErrorType = Error) {
+  return executeHostInput(addon, resources, 'executeCoreCardinalityHostJson', inputs, ErrorType, undefined, [operation]);
+}
+
 // Private route probe. It does not alter either V4 package root selection.
 function coreElementSelectionHostInput(addon, resources, source, query, registry, ErrorType = Error) {
   return executeHostInput(addon, resources, 'executeCoreElementSelectionHostJson', [source, query, registry], ErrorType, undefined, [registry !== undefined], undefined, false, false, fromRustWire);
@@ -552,4 +556,4 @@ function fromUnits(units) {
   return result;
 }
 
-export {declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, coreElementSelectionHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse};
+export {declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, cardinalityHostInput, coreElementSelectionHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse};

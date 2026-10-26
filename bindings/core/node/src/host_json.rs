@@ -10,7 +10,7 @@ use umf_core::{
         HostJsonKind, HostJsonReflection, HostJsonReply, HostOpaqueKey, HostOpaqueValue,
         HostPropertyDescriptor, HostPrototype, HostSpreadFailureTarget, HostStringRef,
     },
-    record_values, schema_properties, Context, Engine, EngineError, ResourceSet, Utf16, Value,
+    cardinality_host_json, record_values, schema_properties, Context, Engine, EngineError, ResourceSet, Utf16, Value,
 };
 
 fn kind_nullability_operation(
@@ -408,6 +408,45 @@ pub fn execute_core_schema_properties_host_json(
         let value = umf_core::schema_properties_host_json::execute(
             &operation, source_handle as HostHandle, identity_handle as HostHandle,
             third_handle as HostHandle, &mut host, &engine, &mut ctx,
+        )?;
+        umf_core_wire::encode(&value, &mut ctx)
+    })();
+    umf_core_wire::result_envelope(result)
+}
+
+/// Private opt-in Core Cardinality route. Caller roots stay opaque until Rust
+/// requests them; one operation Context owns reflection and semantic work.
+#[napi(js_name = "executeCoreCardinalityHostJson")]
+pub fn execute_core_cardinality_host_json(
+    env: Env,
+    resources_wire: String,
+    operation: String,
+    source_handle: u32,
+    identity_handle: u32,
+    third_handle: u32,
+    dispatcher: JsFunction,
+) -> String {
+    let mut host = NodeHostJson { env, dispatcher, string_lengths: BTreeMap::new() };
+    let result = (|| -> Result<String, EngineError> {
+        let resources = umf_core_wire::decode(&resources_wire, &mut umf_core_wire::transport_context())?;
+        let resource = |name: &str| object_field(&resources, name).cloned().ok_or_else(|| {
+            EngineError::new("REQUEST", Utf16::from(name), "Explicit resource is required")
+        });
+        let engine = {
+            let mut catalog = Context::catalog();
+            Engine::new(ResourceSet::new(
+                resource("coreSchema")?, resource("referenceSchema")?,
+                resource("packageSchema")?, resource("constraints")?,
+                resource("domainPolicy")?,
+            ), &mut catalog)?
+        };
+        let mut ctx = Context::ordinary();
+        let value = cardinality_host_json::execute(
+            &operation,
+            &[source_handle as HostHandle, identity_handle as HostHandle, third_handle as HostHandle],
+            &mut host,
+            &engine,
+            &mut ctx,
         )?;
         umf_core_wire::encode(&value, &mut ctx)
     })();

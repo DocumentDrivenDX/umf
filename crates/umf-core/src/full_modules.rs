@@ -31,6 +31,7 @@ pub mod binding_index_projection;
 pub mod binding_inspection;
 pub mod bit128;
 pub mod cardinality;
+pub mod cardinality_host_json;
 pub mod constraint_language;
 pub mod constraints;
 pub mod context;

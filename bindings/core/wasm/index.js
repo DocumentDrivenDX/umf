@@ -13,7 +13,7 @@ import {createBit128Engine as createBit128EngineWithWire, isBit128EngineError, B
 import {createJsonNumberEngine as createJsonNumberEngineWithWire, JSON_NUMBER_PROFILE} from './src/json-number.js';
 import {createJsonSchemaOperations, JSON_SCHEMA_PROFILE, UmfError as JsonSchemaUmfError, jsonSchemaFailureError} from './src/json-schema.js';
 import {createDocumentComparisonOperations, DOCUMENT_COMPARISON_PROFILE} from './src/document-comparison.js';
-import {schemaPropertiesHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse} from './src/host-json.js';
+import {schemaPropertiesHostInput, cardinalityHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse} from './src/host-json.js';
 import {createSemanticTypeRegistry as createSemanticTypeRegistryWithWire} from './src/semantic-value.js';
 export {isWireAdmissionError} from './src/wire.js';
 export {isBit128EngineError};
@@ -693,6 +693,15 @@ export function createCoreModelRootEngine(module, resources, options = {}) {
   return createEngineInternal(module, resources, options, true, false, true);
 }
 
+/** Create the private opt-in Rust-owned host-admission engine for Core Cardinality. */
+export function createCoreCardinalityHostInputEngine(module, resources, options = {}) {
+  const {controls} = codegenOptions(options);
+  const rawResourceControls = descriptor(options ?? Object.create(null), 'resourceControls', false);
+  const resourceControls = rawResourceControls === undefined ? controls : codegenOptions({controls: rawResourceControls}).controls;
+  if (hasControls(controls) || hasControls(resourceControls)) throw new UmfCoreError('HOST_JSON_CONTROLS_UNSUPPORTED', 'Host-input Core Cardinality operations do not accept operation or resource control callbacks');
+  return createEngineInternal(module, resources, options, false, false, false, true);
+}
+
 /** Create the opt-in retained WASM Record Type declaration/verification engine. */
 export function createCoreRecordTypeEngine(module, resources, options = {}) {
   const Runtime = module?.CoreRecordTypeVerificationRuntime;
@@ -1252,7 +1261,7 @@ export async function initializeAvroFieldsWasm(loader = () => import('./pkg/umf_
   return createAvroFieldsEngine(module, options);
 }
 
-function createEngineInternal(module, resources, options, withModel, includeKeyTuple = withModel, withSchemaPropertiesHostInput = false) {
+function createEngineInternal(module, resources, options, withModel, includeKeyTuple = withModel, withSchemaPropertiesHostInput = false, withCardinalityHostInput = false) {
   const {profile, controls} = codegenOptions(options);
   const rawResourceControls = descriptor(options ?? Object.create(null), 'resourceControls', false);
   const resourceControls = rawResourceControls === undefined ? controls : codegenOptions({controls: rawResourceControls}).controls;
@@ -1372,6 +1381,16 @@ function createEngineInternal(module, resources, options, withModel, includeKeyT
     api.declareCoreSchemaProperties = (source, identity, patch) => hostCall('declareCoreSchemaProperties', [source, identity, patch]);
     api.validateCoreFieldValue = (source, identity, value) => hostCall('validateCoreFieldValue', [source, identity, value]);
     api.resolveCoreDefault = (source, identity, state) => hostCall('resolveCoreDefault', [source, identity, state]);
+  }
+  if (withCardinalityHostInput) {
+    if (typeof module.executeCoreCardinalityHostJson !== 'function') throw new UmfCoreError('RUST_WASM_BINDING_MISSING', 'WASM binding does not expose umf.host-json/1 Core Cardinality');
+    const hostCall = (operation, inputs) => {
+      if (hasControls(controls)) throw new UmfCoreError('HOST_JSON_CONTROLS_UNSUPPORTED', 'Host-input Core Cardinality operations do not accept host control callbacks');
+      return cardinalityHostInput(module, fixedResources, operation, inputs, JsonSchemaUmfError);
+    };
+    api.inspectCoreCardinality = (source, identity) => hostCall('inspectCoreCardinality', [source, identity, undefined]);
+    api.declareCoreCardinality = (source, identity, request) => hostCall('declareCoreCardinality', [source, identity, request]);
+    api.verifyCoreCardinalityDeclaration = (receipt, current) => hostCall('verifyCoreCardinalityDeclaration', [receipt, current, undefined]);
   }
   return Object.freeze(api);
 }

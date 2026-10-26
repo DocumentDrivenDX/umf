@@ -336,6 +336,28 @@ fn locate(
         ));
     }
     let source = copy(input, ctx)?;
+    locate_admitted(source, identity, engine, registry, caps, ctx, code)
+}
+
+/// Locate against a source already admitted by an opaque host adapter. This
+/// keeps host reflection and semantic validation in one invocation Context
+/// without charging a second recursive source copy.
+fn locate_admitted(
+    source: Value,
+    identity: &Identity,
+    engine: &Engine,
+    registry: &Registry,
+    caps: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+    code: &str,
+) -> Result<Located, EngineError> {
+    if identity.module.is_empty() || identity.element.is_empty() {
+        return Err(err(
+            "CORE_CARDINALITY_IDENTITY",
+            "Expected explicit module and element identities",
+            "",
+        ));
+    }
     validate(engine, &source, registry, caps, ctx, code, "")?;
     ctx.charge_work(
         identity.module.len() + identity.element.len(),
@@ -434,6 +456,36 @@ pub fn inspect_core_cardinality(
         ctx,
         "CORE_CARDINALITY_SOURCE",
     )?;
+    inspect_core_cardinality_from_located(found, identity, engine, ctx)
+}
+
+/// Inspect a source value already admitted by a Rust-driven host adapter.
+pub(crate) fn inspect_core_cardinality_after_admission(
+    source: Value,
+    identity: &Identity,
+    engine: &Engine,
+    registry: &Registry,
+    caps: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let found = locate_admitted(
+        source,
+        identity,
+        engine,
+        registry,
+        caps,
+        ctx,
+        "CORE_CARDINALITY_SOURCE",
+    )?;
+    inspect_core_cardinality_from_located(found, identity, engine, ctx)
+}
+
+fn inspect_core_cardinality_from_located(
+    found: Located,
+    identity: &Identity,
+    engine: &Engine,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
     let result = obj(vec![
         ("operation", text("inspect-core-cardinality")),
         ("version", text("6.0.0")),
@@ -544,9 +596,26 @@ pub fn admit_core_cardinality_request(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let copied = copy(request, ctx)?;
+    admit_core_cardinality_request_admitted(copied, ctx).map(|admitted| admitted.value)
+}
+
+/// Request paired with its parsed form after host JSON admission. The value is
+/// already a Rust-owned copy and must remain private to one invocation.
+pub(crate) struct AdmittedRequest {
+    value: Value,
+    parsed: Request,
+}
+
+pub(crate) fn admit_core_cardinality_request_admitted(
+    copied: Value,
+    ctx: &mut Context<'_>,
+) -> Result<AdmittedRequest, EngineError> {
     validate_request_schema(&copied, ctx)?;
-    parse_request(&copied, ctx)?;
-    Ok(copied)
+    let parsed = parse_request(&copied, ctx)?;
+    Ok(AdmittedRequest {
+        value: copied,
+        parsed,
+    })
 }
 
 fn set_member(object: &mut Value, name: &str, value: Option<Value>) -> Result<(), EngineError> {
@@ -632,6 +701,60 @@ pub fn declare_core_cardinality(
         ctx,
         "CORE_CARDINALITY_SOURCE",
     )?;
+    declare_core_cardinality_from_located(
+        found,
+        identity,
+        request,
+        retained_request,
+        engine,
+        registry,
+        caps,
+        ctx,
+    )
+}
+
+/// Apply a declaration after the host adapter has copied and admitted request
+/// and source in predecessor order. This avoids re-copying either root.
+pub(crate) fn declare_core_cardinality_after_admission(
+    source: Value,
+    identity: &Identity,
+    request: AdmittedRequest,
+    engine: &Engine,
+    registry: &Registry,
+    caps: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let found = locate_admitted(
+        source,
+        identity,
+        engine,
+        registry,
+        caps,
+        ctx,
+        "CORE_CARDINALITY_SOURCE",
+    )?;
+    declare_core_cardinality_from_located(
+        found,
+        identity,
+        request.parsed,
+        request.value,
+        engine,
+        registry,
+        caps,
+        ctx,
+    )
+}
+
+fn declare_core_cardinality_from_located(
+    found: Located,
+    identity: &Identity,
+    request: Request,
+    retained_request: Value,
+    engine: &Engine,
+    registry: &Registry,
+    caps: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
     if get(&found.source, "umf").and_then(string).as_deref() != Some(CURRENT_CORE) {
         return Err(err(
             "CORE_CARDINALITY_VERSION",
@@ -844,6 +967,18 @@ pub fn prepare_core_cardinality_verification(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let receipt = copy(receipt, ctx)?;
+    prepare_core_cardinality_verification_after_admission(receipt, engine, registry, caps, ctx)
+}
+
+/// Validate an already-admitted receipt before a host adapter reflects the
+/// later current-document argument.
+pub(crate) fn prepare_core_cardinality_verification_after_admission(
+    receipt: Value,
+    engine: &Engine,
+    registry: &Registry,
+    caps: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
     prepare_verified_cardinality_receipt(receipt, engine, registry, caps, ctx)
 }
 
@@ -862,6 +997,17 @@ pub fn finish_core_cardinality_verification(
     let current = copy(current, ctx)?;
     let receipt = prepare_verified_cardinality_receipt(prepared, engine, registry, caps, ctx)?;
     finish_verified_cardinality_current(receipt, current, ctx)
+}
+
+/// Complete a host-staged verification using values already admitted in the
+/// same invocation Context. `prepared` is the private result of the preceding
+/// receipt-validation phase, not caller input.
+pub(crate) fn finish_core_cardinality_verification_after_admission(
+    prepared: Value,
+    current: Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    finish_verified_cardinality_current(prepared, current, ctx)
 }
 
 fn finish_verified_cardinality_current(
@@ -1413,6 +1559,33 @@ mod tests {
             panic!("diagnostics must be an ordered array")
         };
         assert!(items.len() > 1, "expected multiple schema diagnostics");
+    }
+
+    #[test]
+    fn empty_identity_refuses_before_copying_invalid_source() {
+        let invalid = obj(vec![("unknown", Value::Bool(true))]);
+        let mut metered = 0usize;
+        let mut meter = |amount: usize| {
+            metered += amount;
+            Ok(())
+        };
+        let error = inspect_core_cardinality(
+            &invalid,
+            &Identity {
+                module: Utf16::default(),
+                element: Utf16::from("e"),
+            },
+            &engine(),
+            &Registry::new(),
+            &mut NoCapabilities,
+            &mut Context::ordinary().with_meter(&mut meter),
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "CORE_CARDINALITY_IDENTITY");
+        assert_eq!(
+            metered, 0,
+            "source copy must not start before identity admission"
+        );
     }
 
     #[test]

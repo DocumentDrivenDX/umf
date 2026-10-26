@@ -1,0 +1,76 @@
+{
+  "format": "umf-r8.cardinality-private-host-route.chromium/1",
+  "status": "pass-private-frozen-host-admission",
+  "scope": "Private opt-in Core Cardinality Rust host-reflection route; public/default V4 selection unchanged; ordinary Context only.",
+  "runtime": {
+    "bun": "1.4.3",
+    "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+    "wasmBindgen": "wasm-bindgen 0.2.100",
+    "chromium": "153.0.8010.12",
+    "browserUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36"
+  },
+  "operation": "executeCoreCardinalityHostJson (private WASM export; no package-root selection)",
+  "cases": {
+    "frozenSemanticEnvelopeMatches": true,
+    "frozenCases": [
+      "missing",
+      "known",
+      "unknown",
+      "inapplicable",
+      "declaration",
+      "surrogateItemDeclaration",
+      "verified"
+    ],
+    "inspectSourceBeforeIdentity": [
+      "source",
+      "source",
+      "identity",
+      "identity"
+    ],
+    "requestBeforeSource": {
+      "events": [
+        "request",
+        "request"
+      ],
+      "code": "CORE_CARDINALITY_REQUEST"
+    },
+    "receiptBeforeCurrent": {
+      "currentReads": 0,
+      "code": "CORE_CARDINALITY_RECEIPT"
+    },
+    "thrownHostIdentityPreserved": true,
+    "nodeGlobalsAbsent": true
+  },
+  "browserErrors": [],
+  "artifacts": {
+    "crates/umf-core/src/cardinality.rs": "52d8158b167d6a3a31ffe15c7b37edc74306312f968849540de613da8e061dde",
+    "crates/umf-core/src/cardinality_host_json.rs": "fe9a3ac1486b8a4f8b005b599312b35d431e7201a96ee61833ec3478187005b8",
+    "crates/umf-core/src/full_modules.rs": "f481f561a391838ad62ecaa55e903ebb946454cbeb763f8dd6dfaf3e104fb15e",
+    "bindings/core/wasm/index.js": "b51cead36b49ec799022d077ccbfb095a1f50dc909a3b13a578489cd2566f69d",
+    "bindings/core/wasm/index.d.ts": "a2abeaffcbf0178b14f4f6d1e02d0fea876b77e2d7a1af676ad396aa06cb1ab2",
+    "bindings/core/wasm/src/host-json.js": "fb53a11e5d733e0c763fa8f7e3188f825d635f5acd2b83da60b554b4c23e45e7",
+    "bindings/core/wasm/src/host_json.rs": "6aaabed561db3d43a333e68b8727371070fbb36554e05258952236a954af4dd4",
+    "bindings/core/node/index.js": "670956c913b9450b49100bcd7ab8c7c569a992781ca2f048e69c446db3abb25f",
+    "bindings/core/node/index.d.ts": "9ffc6b25608dd87c34d5bbc1f47b2304e95b9d1dd5b4a8df101284bd549ee40c",
+    "bindings/core/node/src/host-json.js": "fb53a11e5d733e0c763fa8f7e3188f825d635f5acd2b83da60b554b4c23e45e7",
+    "bindings/core/node/src/host_json.rs": "592f6c72d823f97fa074e89189b68658699f74649501023d9d0cf71350b6b24a",
+    "bindings/core/node/tests/cardinality-host-json.test.js": "a2ab58a16773efbf04cde2fc12723da6e6393629057d7db51314f85095c6c9e6",
+    "scripts/rust-migration/r8/cardinality-private-host-browser-entry.ts": "4d601c3d4d39b22136914062e327e878ecb18af6c0d389c29d8433fdd3329040",
+    "scripts/rust-migration/r8/cardinality-private-host-browser.mjs": "c9fd246ce598082579b37e30b6c14846a7e6c4f34686d85691d6beaf7d026130",
+    "docs/helix/04-build/evidence/rust-migration/r5-model-bindings/frozen-cardinality-typescript.json": "6d18efe22f1eb525844cb78ae5cc7854ec78ce1aa103d3fdc2eb65b274c5aeea",
+    "spec/core/schema.json": "34058737069b2ffb1e952b54986f14b046d0cee6dacbd7aec3a0fc88b213d5a0",
+    "spec/core/semantic-type-reference.schema.json": "2701c14d8c125b34dc446a1b6f98fe25fb1e809b7b13b6616c7e87b1b3e52c74",
+    "spec/core/extension-package.schema.json": "0b33f92d755dfd40aee3e2ae9b8d81f9347c5d676b2420b471cacc6b87940017",
+    "spec/metamodel/generated/core-constraints.json": "5a760fac5554ebba94d8aa3ff076571ed46236f4b35f1592e667907fa58a9ae1",
+    "spec/metamodel/generated/domain-policy.json": "7c77edd0c5a3c9a4ec1df9a2b5f6e0d059b58336e04f94dbca2f48b3072734fc",
+    "fresh-wasm32-artifact": "3d19067c32952247517c44ea095e39325f377ca1e784e091a9bc390efda93f97",
+    "fresh-wasm-bindgen-glue": "4fb317cf04f5a038fe88160fab5b4c225d15703f5384e93a8745fe94010b7b51",
+    "fresh-wasm-bindgen-binary": "42e7217bac69fcf190440b7a6deace442305c52bb09ff9e0e72ede6f897f2ab4",
+    "bundled-browser-entry": "73be9fd369691a6727b6176a933d5c074d7f5e6d4682e93ed3b31fd22d025c05"
+  },
+  "limits": [
+    "Private route only; no default or installed package qualification.",
+    "No operation controls or resourceControls are accepted; evidence covers ordinary Context.",
+    "Frozen profile compares the semantic result values; error ordering, caller-thrown identity, and browser global absence are separately asserted."
+  ]
+}
