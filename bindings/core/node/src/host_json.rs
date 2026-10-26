@@ -790,6 +790,7 @@ fn event_json(event: &HostJsonEvent) -> String {
             let target = match target {
                 HostSpreadFailureTarget::Nullish(value) => format!(r#"{{"kind":"nullish","value":{}}}"#, host_invoke_value_wire_json(value)),
                 HostSpreadFailureTarget::IteratorMethod(value) => format!(r#"{{"kind":"iterator-method","value":{}}}"#, host_invoke_value_wire_json(value)),
+                HostSpreadFailureTarget::IteratorResultPrimitive(value) => format!(r#"{{"kind":"iterator-result-primitive","value":{}}}"#, host_invoke_value_wire_json(value)),
             };
             format!(r#"{{"event":"materialize-spread-failure","target":{target}}}"#)
         },
@@ -1416,6 +1417,8 @@ mod opaque_reply_tests {
         assert_eq!(event_json(&nullish), r#"{"event":"materialize-spread-failure","target":{"kind":"nullish","value":{"kind":"undefined"}}}"#);
         let method = HostJsonEvent::MaterializeSpreadFailure { target: HostSpreadFailureTarget::IteratorMethod(HostInvokeValue::Json(Value::Bool(false))) };
         assert_eq!(event_json(&method), r#"{"event":"materialize-spread-failure","target":{"kind":"iterator-method","value":{"kind":"json","value":{"kind":"boolean","value":false}}}}"#);
+        let primitive_iterator = HostJsonEvent::MaterializeSpreadFailure { target: HostSpreadFailureTarget::IteratorResultPrimitive(HostInvokeValue::Json(Value::Number(17.0))) };
+        assert_eq!(event_json(&primitive_iterator), r#"{"event":"materialize-spread-failure","target":{"kind":"iterator-result-primitive","value":{"kind":"json","value":{"kind":"number","bits":"4031000000000000"}}}}"#);
         let reply = Value::Object(vec![(Utf16::from("kind"), Value::String(Utf16::from("spread-failure"))), (Utf16::from("message"), Value::Object(vec![(Utf16::from("token"), Value::Number(1.0)), (Utf16::from("units"), Value::Number(4.0))]))]);
         assert!(decode_reply(&nullish, reply, &mut BTreeMap::new()).is_ok());
         let malformed = Value::Object(vec![(Utf16::from("kind"), Value::String(Utf16::from("iterator-closed")))]);

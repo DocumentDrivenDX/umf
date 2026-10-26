@@ -44,10 +44,10 @@ From the repository root, build the native addon into a private target and run
 the host-specific suites:
 
 ```sh
-CARGO_TARGET_DIR=/private/tmp/umf-selection-callback-target cargo build --locked --offline --release -p umf-core-node
-cp /private/tmp/umf-selection-callback-target/release/libumf_core_node.dylib /private/tmp/umf-selection-callback-target/release/umf_core_node.node
-UMF_SELECTION_ADDON=/private/tmp/umf-selection-callback-target/release/umf_core_node.node node scripts/rust-migration/r8/selection-callback-node.mjs
-UMF_SELECTION_ADDON=/private/tmp/umf-selection-callback-target/release/umf_core_node.node bun scripts/rust-migration/r8/selection-callback-node.mjs
+PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH CARGO_TARGET_DIR=/private/tmp/umf-selection-callback-target cargo build --locked --offline -p umf-core-node
+cp /private/tmp/umf-selection-callback-target/debug/libumf_core_node.dylib /private/tmp/umf-selection-callback-target/debug/umf_core_node.node
+UMF_SELECTION_ADDON=/private/tmp/umf-selection-callback-target/debug/umf_core_node.node node scripts/rust-migration/r8/selection-callback-node.mjs
+UMF_SELECTION_ADDON=/private/tmp/umf-selection-callback-target/debug/umf_core_node.node bun scripts/rust-migration/r8/selection-callback-node.mjs
 bun scripts/rust-migration/r8/selection-callback-browser.mjs
 ```
 
@@ -61,13 +61,14 @@ native/WASM artifact hashes.
 
 ## Results and limits
 
-Node 26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12 each passed 21/21 outcome
-and exact host-trace comparisons with zero mismatches. The native addon SHA-256
+The initial 2026-10-26 checkpoint passed 21/21 outcome and exact host-trace
+comparisons. The later primitive iterator-result checkpoint below supersedes
+that case count and its receipts. The original native addon SHA-256
 is `fd34bf7828d4e27bb0340db303d66effb557cdf38a5aa4238006dc858ace39f1`; the
 fresh WASM binary SHA-256 is
-`fc9ae0be48fa2bda7073a9a4d63f2f82a4185b3feaba923bbaab00efd415e8c5`. Exact
-source and artifact pins are in [node.json](./node.json), [bun.json](./bun.json),
-and [chromium.json](./chromium.json).
+`fc9ae0be48fa2bda7073a9a4d63f2f82a4185b3feaba923bbaab00efd415e8c5`.
+The current [Node](./node.json), [Bun](./bun.json), and
+[Chromium](./chromium.json) receipts pin the later 24-case checkpoint.
 
 This qualification is limited to the private Selection host bridge and the
 listed fixtures. It does not establish whole-SDK source closure, release
@@ -97,3 +98,31 @@ This is still an opt-in implementation seam. The receipts do not qualify full
 raw-host parity, `Registry.kindRuntime`, all proxy/accessor cases, final
 installed source closure, or public V4 routing. The R8 route decision's Sol
 review and remaining host/resource gates still apply.
+
+## Primitive iterator-result spread parity — 2026-10-26
+
+The callback corpus now adds callable `Symbol.iterator` methods that return a
+number, `null`, and `undefined`. The first probe found Rust's unresolved native
+spread refusal diverged from the predecessor's native `TypeError`. Rust now
+passes the exact returned primitive through `HostSpreadFailureTarget` to a
+private host materializer, which performs a synthetic spread using the same
+predecessor expression shape. Its placeholder `payload` and `doc` are local
+null-prototype objects; placeholder copying is side-effect-free and does not
+read caller objects or invoke caller callbacks again.
+
+Fresh Node 26.12.1 and Bun 1.4.3 addon runs and fresh Chromium 153.0.8010.12
+WASM execution each match TypeScript on all 24 outcomes and exact host traces,
+including the three primitive iterator-return cases. The extra materialization
+has no caller-visible events; the compared callback/Registry/iterator trace is
+unchanged. The Node addon is SHA-256
+`23cf55d93a52ffb6e872d9a30f93574deeb7ba5be641bf2d7c3a24dd76614728`; the
+WASM binary is SHA-256
+`54924c8a602290513f0b364fcc88d1b922129fa97e3930f3ac0324ec57fc7707`. Exact
+source, runtime and artifact pins are recorded in the refreshed [Node](./node.json),
+[Bun](./bun.json), and [Chromium](./chromium.json) receipts.
+
+The three primitive cases establish the exercised host versions and values
+only. Other host versions and additional native spread failure shapes remain
+unqualified. This remains a private route; default Selection, complete host
+parity, resource boundaries, installed package qualification and retirement
+remain open.

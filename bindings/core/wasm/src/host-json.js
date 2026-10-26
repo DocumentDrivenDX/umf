@@ -396,13 +396,19 @@ function executeHostInput(addon, resources, operation, inputs, ErrorType, contro
             if (typeof method === 'function') throw new HostProtocolError('Iterator method target is callable');
             candidate = NativeObjectCreate(null);
             defineProperty(candidate, iteratorSymbol, {value: method, writable: true, enumerable: true, configurable: true});
+          } else if (target.kind === 'iterator-result-primitive') {
+            candidate = NativeObjectCreate(null);
+            const iteratorResult = invocationValue(target.value);
+            defineProperty(candidate, iteratorSymbol, {value() { return iteratorResult; }, writable: true, enumerable: true, configurable: true});
           } else throw new HostProtocolError('Unknown spread-failure target');
           const entry = NativeObjectCreate(null);
           defineProperty(entry, 'semantics', {value: function semantics() { return candidate; }, writable: true, enumerable: true, configurable: true});
           const out = NativeObjectCreate(null);
           defineProperty(out, 'push', {value: function push() {}, writable: true, enumerable: true, configurable: true});
+          const payload = NativeObjectCreate(null), doc = NativeObjectCreate(null), at = '', scope = '';
+          const copyJson = () => NativeObjectCreate(null);
           try {
-            out.push(...entry.semantics());
+            out.push(...entry.semantics(copyJson(payload), { document: copyJson(doc), path: at, scope }));
             throw new HostProtocolError('Spread-failure target unexpectedly iterated');
           } catch (error) {
             if (error instanceof HostProtocolError) throw error;

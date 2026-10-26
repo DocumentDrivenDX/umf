@@ -229,6 +229,8 @@ pub enum HostSpreadFailureTarget {
     Nullish(HostInvokeValue),
     /// The callback result's already-read Symbol.iterator value was not callable.
     IteratorMethod(HostInvokeValue),
+    /// The callback result's callable Symbol.iterator method returned a primitive.
+    IteratorResultPrimitive(HostInvokeValue),
 }
 
 /// One entry in a Rust-assembled refusal diagnostics array.
@@ -987,7 +989,13 @@ pub(crate) fn collect_semantic_iterable(
         SemanticHostStep::Value(value) => value,
     };
     if !matches!(iterator, HostOpaqueValue::Opaque { opaque_type: HostOpaqueType::Object | HostOpaqueType::Function, .. }) {
-        return Ok(HostSemanticIterableOutcome::NativeSpreadFailureUnresolved);
+        let message = native_spread_failure_message(
+            HostSpreadFailureTarget::IteratorResultPrimitive(opaque_invoke_value_charged(iterator, host, ctx, path)?),
+            host,
+            ctx,
+            path,
+        )?;
+        return Ok(HostSemanticIterableOutcome::SemanticThrow(message));
     }
     let next_method = match semantic_get(
         iterator.clone(),

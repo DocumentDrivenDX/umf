@@ -126,6 +126,12 @@ export function runSelectionCallbackSuite({Registry, selectCoreElements, candida
     {name: 'callback-noncallable-iterator-native-spread-failure', make: events => ({source: documentFor(), query: {references: 'none'}, registry: makeRegistry(Registry, events, {
       alpha: () => ({[Symbol.iterator]: 17}),
     })})},
+    ...[['number', 17], ['null', null], ['undefined', undefined]].map(([kind, result]) => ({
+      name: `callback-iterator-method-returns-${kind}-native-spread-failure`,
+      make: events => ({source: documentFor(), query: {references: 'none'}, registry: makeRegistry(Registry, events, {
+        alpha: () => ({[Symbol.iterator]() { events.push('diagnostics:iterator'); return result; }}),
+      })}),
+    })),
     {name: 'callback-receiver-context-and-prototype-boundary', make: events => {
       const input = documentFor();
       Object.defineProperty(input, '__proto__', {value: {marker: 'retained'}, enumerable: true, writable: true, configurable: true});
