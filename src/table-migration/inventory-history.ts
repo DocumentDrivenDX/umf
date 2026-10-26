@@ -1,9 +1,9 @@
-import {hashCanonical,hashCanonicalCharged,sha256Text,sha256TextCharged} from '../compilation/bundle/hash';
+import {canonicalCharged,hashCanonical,hashCanonicalCharged,sha256Text,sha256TextCharged} from '../compilation/bundle/hash';
 import {verifyTableDeployment,type TableDeploymentBundle} from '../table-deployment';
 import {verifyTableMigration} from './index';
 import type {AccountingContext} from '../model/internal/accounting-context';
-import {ownedR2HistoryMember,R2WorkMeter} from './inventory-r2-context';
-import {verifyG10BundleForLineage,withVerifiedG10BundleScope} from './inventory-verified-deployment';
+import {ownedR2HistoryMember,ownedR2HistoryPlanBundle,R2WorkMeter} from './inventory-r2-context';
+import {lookupVerifiedG10Bundle,verifyG10BundleForLineage,withVerifiedG10BundleScope} from './inventory-verified-deployment';
 
 type Json=null|boolean|number|string|Json[]|{[key:string]:Json};
 type SeedSet=TableDeploymentBundle['seedSets'][number];
@@ -24,6 +24,35 @@ function exact(value:unknown,keys:readonly string[]):value is Record<string,unkn
 function sha(value:unknown):value is string{return typeof value==='string'&&SHA.test(value);}
 function withoutDigest(plan:Record<string,unknown>):Json {const copy:Record<string,Json>={};for(const [key,value]of Object.entries(plan)){if(key==='digest')continue;copy[key]=value as Json;}return copy;}
 function verifiedBundle(value:unknown,accounting?:AccountingContext):TableDeploymentBundle {if(accounting)return verifyG10BundleForLineage(value as TableDeploymentBundle,accounting,'/history-bundle');const result=verifyTableDeployment(value);if(result.bundleDigest!==((value as Record<string,unknown>).bundleDigest))fail('BUNDLE_DIGEST');return result;}
+function verifiedPlanBundle(plan:Record<string,unknown>,side:'next',accounting?:AccountingContext):TableDeploymentBundle;
+function verifiedPlanBundle(plan:Record<string,unknown>,side:'previous',accounting?:AccountingContext):TableDeploymentBundle|null;
+function verifiedPlanBundle(plan:Record<string,unknown>,side:'previous'|'next',accounting?:AccountingContext):TableDeploymentBundle|null{
+ if(accounting instanceof R2WorkMeter){
+  const owned=ownedR2HistoryPlanBundle(plan,side,accounting,`/history/plans/${side}-bundle-owner`);
+  if(owned){
+   const value=owned.value;
+   if(value===null&&side==='previous')return null;
+   if(value!==null&&typeof value==='object'&&!Array.isArray(value)){
+    accounting.visit('r2-history-owned-bundle-digest-read',`/history-bundle/${side}/bundleDigest`);
+    const descriptor=Object.getOwnPropertyDescriptor(value,'bundleDigest');
+    if(descriptor&&descriptor.enumerable&&Object.hasOwn(descriptor,'value')&&typeof descriptor.value==='string'){
+     const digest=descriptor.value;
+     accounting.scanUtf8(digest,`/history-bundle/${side}/bundleDigest`);
+     const indexed=lookupVerifiedG10Bundle(digest,undefined,accounting,`/history-bundle/${side}/cache-index`);
+     if(indexed.indexed){
+      const candidateCanonical=canonicalCharged(value,accounting,`/history-bundle/${side}/owned-candidate`);
+      const matched=lookupVerifiedG10Bundle(digest,candidateCanonical,accounting,`/history-bundle/${side}/cache-match`);
+      if(matched.bundle){accounting.visit('r2-history-owned-bundle-cache-hit',`/history-bundle/${side}`);return matched.bundle;}
+     }
+    }
+    return verifiedBundle(value,accounting);
+   }
+  }
+ }
+ const value=plan[side];
+ if(value===null&&side==='previous')return null;
+ return verifiedBundle(value,accounting);
+}
 function seedMap(bundle:TableDeploymentBundle,accounting?:AccountingContext,path='/seedSets'):Map<string,SeedSet>{const out=new Map<string,SeedSet>();for(let index=0;index<bundle.seedSets.length;index++){accounting?.visit('seed-lineage-map-entry',`${path}/${index}`);const definition=bundle.seedSets[index]!;if(out.has(definition.id))fail('DUPLICATE_DEFINITION');accounting?.visit('seed-lineage-map-retention',`${path}/${index}`);out.set(definition.id,definition);}return out;}
 function pythonCanonical(value:unknown):string {
  if(value===null||typeof value==='string'||typeof value==='boolean')return JSON.stringify(value);
@@ -141,7 +170,7 @@ function deriveInventorySeedLineageCore(history:InventoryHistory,current:Current
  for(let i=0;i<history.plans.length;i++){
   accounting?.charge('historyMember',1,`/history/plans/${i}`);accounting?.charge('historyMember',1,`/history/executions/${i}`);
   if(accounting){historyMemberDigest(history.plans[i],accounting,`/history/plans/${i}`);historyMemberDigest(history.executions[i],accounting,`/history/executions/${i}`);}
-  accounting?.visit('seed-history-prefix-copy',`/history/${i}`,i*2);const plan=assertPlanShape(history.plans[i],i,{profile:history.profile,plans:history.plans.slice(0,i),executions:history.executions.slice(0,i)},verifyG10,accounting),next=verifiedBundle(plan.next,accounting),previous=plan.previous===null?null:verifiedBundle(plan.previous,accounting);
+  accounting?.visit('seed-history-prefix-copy',`/history/${i}`,i*2);const plan=assertPlanShape(history.plans[i],i,{profile:history.profile,plans:history.plans.slice(0,i),executions:history.executions.slice(0,i)},verifyG10,accounting),next=verifiedPlanBundle(plan,'next',accounting),previous=verifiedPlanBundle(plan,'previous',accounting);
   if(i===0){if(previous!==null||plan.predecessor!==null)return fail('FIRST_PLAN_NOT_INITIAL');}
   else {if(!priorPlan||!priorBundle||!previous||previous.bundleDigest!==priorBundle.bundleDigest||!exact(plan.predecessor,['id','digest'])||plan.predecessor.id!==priorPlan.id||plan.predecessor.digest!==priorPlan.digest)return fail('HISTORY_CHAIN');}
   const {selected,retired}=idsFromPlan(plan,accounting,`/history/plans/${i}`),nextSeeds=seedMap(next,accounting,`/history/plans/${i}/next/seedSets`),beforeIds:string[]=[];for(const id of states.keys()){accounting?.visit('seed-lineage-before-id',`/history/plans/${i}`);accounting?.visit('seed-lineage-before-id-retention',`/history/plans/${i}`);beforeIds.push(id);}

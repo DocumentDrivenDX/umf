@@ -1,0 +1,21 @@
+# R2 owned history bundles — bounded SOURCE ACCEPT
+
+Accepted for the final four-file tuple below against plan `/private/tmp/r2-lineage-owned-bundles-sol-decision001.md` SHAb12b9e50b17d7ac612d3814705678a7ca6b651395614cd03ab54953338974e59. No remaining concrete correctness blocker found. Actual resource fit and all new controls remain UNRUN here; the next unchanged hosted gate decides fit.
+
+The final owner query uses the existing exact same-meter member registry, requires kind plans, span.value===plan and frozen original plan, then reads only the selected own enumerable data descriptor. It does not incorrectly require root metadata on a direct member; executions, copied/frozen lookalikes and foreign meters cannot acquire ownership. This proves prior immutable ownership only, not semantic validity. Genuine historical verification still precedes verifiedPlanBundle.
+
+The lineage loop preserves plan+literal side. Only proven owned nested bundle objects probe the existing verified scope through descriptor-read digest indexing. A bucket hit alone returns nothing: the actual complete owned candidate is canonically produced on the same meter and full contents compared against a genuine complete-verifier-produced independently frozen entry. The new lookup is DATA-only, does not register entries, issue context, certify an accompanying DTO or expose doc/operation auxiliaries. All bucket/member/result work and full canonical comparison remain charged. A missing owner/index/match falls back to original descriptor-safe copy and complete verifier. previous:null is retained in both owned and unowned paths; next has an honest non-null overload. The final readable blocks close the earlier reported missing-brace issue.
+
+No new helper→context runtime import cycle: owner orchestration resides in history, which already imports both dependencies. Scope258 bound, same-meter/invocation identity, original complete producer, one-shot consume and owner-finally cleanup remain unchanged. Historical recompilation, chronological source/phase/seed proof validation, target/catalog semantics and original ordinary .1 handling are not bypassed. Only the redundant copy of an already-owned history bundle is omitted on exact cache hit.
+
+New source controls exercise genuine owned plan resolution and initial previous:null, shallow/frozen-copy/execution/foreign-meter refusal and an unowned getter that remains uninvoked. The complete mixed seeded Note history positive requires historyBundleHit>0; full plan/prefix/phase tamper, source mutation isolation and existing canonical cache mismatch/refusal controls remain in the qualification cohort. These assertions are source-reviewed, not executed results. Existing unchanged complete cache-equality semantics and prior reviewed negative cohort are reused; this review does not claim they were rerun locally.
+
+The TWO current.previous/current.next calls still use the original generic verifiedBundle path and therefore still own/canonicalize their inputs. They are intentionally unchanged: the new direct history-member ownership proof does not establish ownership of those separate root components. Resource fit remains OPEN, with no evidence-based promise that the removed historical copies cover remaining work. This is not a correctness blocker or permission to broaden trust before the actual fixed-cap measurement. No caps/full fixture/deadlines were changed.
+
+Exact final inputs, rechecked at sealing:
+- `src/table-migration/inventory-r2-context.ts` — `44114e50a0e6742ee7dca0f8024f658c8a48c232dad898e87f9ab550321f41f3`
+- `src/table-migration/inventory-verified-deployment.ts` — `034c72c9a7e861a551807cf45e97d74919bb4fb94522e63b06b6574c771f8e2c`
+- `src/table-migration/inventory-history.ts` — `5dd3c6086e3a1379d2aac08787e04d8026046b534f9ad1c78447617acc5d38f7`
+- `tests/lifecycle/table-inventory-api.test.ts` — `a15835e98895e5dc6f43746d376b26be6d1d53d31c3c2c3cca8d99916cb94571`
+
+Earlier root-identified member/root lookup and brace defects were corrected before this final tuple; their old hashes are not accepted. No source edits, imports, runtime/tests, AST/type/schema evaluation, SQL/process or Git actions. No native/public .2/full R2 support claim. Proceed with one exact existing hosted gate, without another audit chain.

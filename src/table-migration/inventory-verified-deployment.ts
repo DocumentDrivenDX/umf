@@ -79,6 +79,16 @@ function cachedBundle(canonical:string,entries:readonly CacheEntry[],accounting:
  for(const entry of entries)if(sameCanonical(canonical,entry.canonical,accounting,`${path}/canonical-compare`))return entry.bundle;
  return undefined;
 }
+/** Read-only full-content query; the digest only selects a bounded bucket. */
+export function lookupVerifiedG10Bundle(digest:string,canonicalCandidate:string|undefined,accounting:AccountingContext,path:string):{readonly indexed:boolean;readonly bundle?:TableDeploymentBundle}{
+ const bucket=cachedBundleBucket(digest,accounting,path);if(!bucket){accounting.visit('r2-verified-bundle-cache-query-result',path);return Object.freeze({indexed:false});}
+ if(canonicalCandidate===undefined){accounting.visit('r2-verified-bundle-cache-query-result',path);return Object.freeze({indexed:true});}
+ const bundle=cachedBundle(canonicalCandidate,bucket,accounting,path);
+ if(!bundle||bundle.bundleDigest!==digest){accounting.visit('r2-verified-bundle-cache-query-result',path);return Object.freeze({indexed:true});}
+ accounting.visit('r2-verified-bundle-cache-hit',path);
+ accounting.visit('r2-verified-bundle-cache-result-retention',path);
+ return Object.freeze({indexed:true,bundle});
+}
 
 
 /** Fixed complete verifier and scope publisher; caller data never supplies a result. */

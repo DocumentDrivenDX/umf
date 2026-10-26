@@ -194,6 +194,21 @@ export function ownedR2HistoryMember(value:unknown,meter:R2WorkMeter,path='/hist
  const text=document.text.slice(span.start,span.end);document.materialized.set(span,text);return {text,byteLength};
 }
 
+/** Fixed read-only lookup of a bundle value nested in an owned history plan. */
+export function ownedR2HistoryPlanBundle(plan:unknown,side:'previous'|'next',meter:R2WorkMeter,path='/history/plan-bundle'):{readonly value:unknown}|undefined{
+ if(side!=='previous'&&side!=='next')return undefined;
+ if(!plan||typeof plan!=='object'||Array.isArray(plan))return undefined;
+ meter.visit('r2-history-plan-bundle-owner-lookup',path);
+ const found=meter[lookupOwnedHistory](ownedHistoryRegistrationToken,plan);
+ const member=found.member;
+ if(!member||member.span.kind!=='plans'||member.span.value!==plan||!Object.isFrozen(plan))return undefined;
+ meter.visit('r2-history-plan-bundle-descriptor-read',`${path}/${side}`);
+ const descriptor=Object.getOwnPropertyDescriptor(plan,side);
+ if(!descriptor||!descriptor.enumerable||!Object.hasOwn(descriptor,'value'))return undefined;
+ meter.visit('r2-history-plan-bundle-result-retention',`${path}/${side}`);
+ return Object.freeze({value:descriptor.value});
+}
+
 /** Fixed validator-constructor propagation for normalized execution wrappers. */
 export function ownR2HistoryExecutionWrapper(source:unknown,meter:R2WorkMeter,path:string):{planDigest:unknown;entryDigest:unknown;seedOutcomes:unknown[]} {
  meter.visit('r2-history-normalized-execution-source-shape',path,4);
