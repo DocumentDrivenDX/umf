@@ -1,0 +1,302 @@
+name: Qualify and release schema browser
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: New immutable schema-browser-vX.Y.Z release tag.
+        required: true
+        type: string
+      source_ref:
+        description: Exact 40-character main-ancestor commit or existing schema-browser-vX.Y.Z tag.
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: schema-browser-release-${{ inputs.tag || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  qualify:
+    if: github.repository == 'DocumentDrivenDX/umf' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    outputs:
+      tag: ${{ steps.identity.outputs.tag }}
+      version: ${{ steps.identity.outputs.version }}
+      source_sha: ${{ steps.identity.outputs.source_sha }}
+      archive_sha256: ${{ steps.identity.outputs.archive_sha256 }}
+      sums_sha256: ${{ steps.identity.outputs.sums_sha256 }}
+      release_manifest_sha256: ${{ steps.identity.outputs.release_manifest_sha256 }}
+      receipt_sha256: ${{ steps.identity.outputs.receipt_sha256 }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - name: Assert workflow driver is the requested default-branch revision
+        env:
+          EXPECTED_DRIVER_SHA: ${{ github.workflow_sha }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          set -euo pipefail
+          [[ "$DEFAULT_BRANCH" == main ]]
+          [[ "$(git rev-parse HEAD)" == "$EXPECTED_DRIVER_SHA" ]]
+      - name: Resolve exact release source and enforce main ancestry
+        id: source
+        env:
+          SOURCE_REF: ${{ inputs.source_ref }}
+          RELEASE_TAG: ${{ inputs.tag }}
+          DRIVER_SHA: ${{ github.workflow_sha }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$RELEASE_TAG" =~ ^schema-browser-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]
+          if [[ "$SOURCE_REF" =~ ^[0-9a-f]{40}$ ]]; then
+            SOURCE_SHA="$SOURCE_REF"
+          elif [[ "$SOURCE_REF" =~ ^schema-browser-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
+            gh api "repos/$GH_REPO/git/ref/tags/$SOURCE_REF" > source-tag-ref.json
+            type="$(jq -r '.object.type' source-tag-ref.json)"
+            object_sha="$(jq -r '.object.sha' source-tag-ref.json)"
+            if [[ "$type" == tag ]]; then
+              gh api "repos/$GH_REPO/git/tags/$object_sha" > source-tag-object.json
+              [[ "$(jq -r .sha source-tag-object.json)" == "$object_sha" ]]
+              [[ "$(jq -r .object.type source-tag-object.json)" == commit ]]
+              SOURCE_SHA="$(jq -r .object.sha source-tag-object.json)"
+            elif [[ "$type" == commit ]]; then
+              SOURCE_SHA="$object_sha"
+            else
+              echo 'source tag must point directly to a commit or one annotated tag' >&2
+              exit 1
+            fi
+          else
+            echo 'source_ref must be a full commit SHA or schema-browser-vX.Y.Z tag' >&2
+            exit 1
+          fi
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          gh api "repos/$GH_REPO/compare/$SOURCE_SHA...$DRIVER_SHA" > source-ancestry.json
+          [[ "$(jq -r .base_commit.sha source-ancestry.json)" == "$SOURCE_SHA" ]]
+          [[ "$(jq -r .merge_base_commit.sha source-ancestry.json)" == "$SOURCE_SHA" ]]
+          status="$(jq -r .status source-ancestry.json)"
+          [[ "$status" == ahead || "$status" == identical ]]
+          printf 'source_sha=%s\n' "$SOURCE_SHA" >> "$GITHUB_OUTPUT"
+          VERSION="${RELEASE_TAG#schema-browser-v}"
+          printf 'version=%s\n' "$VERSION" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.source.outputs.source_sha }}
+          path: source
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+      - name: Install locked source dependencies
+        working-directory: source
+        run: bun install --frozen-lockfile
+      - name: Install pinned Chromium runtime
+        working-directory: source
+        run: bun node_modules/playwright/cli.js install --with-deps chromium
+      - name: Run package, embedding, integrity and parity controls
+        working-directory: source
+        run: >-
+          bun test
+          tests/domain-packs/schema-browser-package.test.ts
+          tests/domain-packs/schema-browser-embedding.test.ts
+          tests/domain-packs/schema-browser-reproducibility.test.ts
+          tests/domain-packs/schema-browser-site-parity.test.ts
+      - name: Build twice, install offline, and qualify actual package in Chromium
+        env:
+          SOURCE_SHA: ${{ steps.source.outputs.source_sha }}
+          RELEASE_TAG: ${{ inputs.tag }}
+          OUTPUT_DIR: ${{ runner.temp }}/schema-browser-qualified-output
+        run: |
+          set -euo pipefail
+          bun scripts/qualify-schema-browser-release.ts qualify \
+            --repo "$GITHUB_WORKSPACE/source" --source-sha "$SOURCE_SHA" \
+            --tag "$RELEASE_TAG" --output "$OUTPUT_DIR"
+      - name: Export verified identity for release job
+        id: identity
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+          SOURCE_SHA: ${{ steps.source.outputs.source_sha }}
+          OUTPUT_DIR: ${{ runner.temp }}/schema-browser-qualified-output
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os
+          from pathlib import Path
+          result=json.loads(Path(os.environ['OUTPUT_DIR'],'identity.json').read_text())
+          if result['tag'] != os.environ['RELEASE_TAG'] or result['sourceSha'] != os.environ['SOURCE_SHA']:
+              raise SystemExit('qualified output identity differs from selected tag/source')
+          for key,value in [('tag',result['tag']),('version',result['version']),
+                            ('source_sha',result['sourceSha']),('archive_sha256',result['archiveSha256']),
+                            ('sums_sha256',result['sumsSha256']),
+                            ('release_manifest_sha256',result['releaseManifestSha256']),
+                            ('receipt_sha256',result['receiptSha256'])]:
+              print(f'{key}={value}')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: schema-browser-qualified-${{ steps.identity.outputs.version }}
+          path: ${{ runner.temp }}/schema-browser-qualified-output/release-assets/*
+          if-no-files-found: error
+          retention-days: 30
+
+  publish-release:
+    needs: qualify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - name: Assert publisher controls come from the reviewed workflow SHA
+        env:
+          EXPECTED_DRIVER_SHA: ${{ github.workflow_sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_DRIVER_SHA"
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+      - uses: actions/download-artifact@v4
+        with:
+          name: schema-browser-qualified-${{ needs.qualify.outputs.version }}
+          path: release-assets
+      - name: Verify artifact receipt and exact source-bound release asset set
+        id: verify
+        env:
+          RELEASE_TAG: ${{ needs.qualify.outputs.tag }}
+          SOURCE_SHA: ${{ needs.qualify.outputs.source_sha }}
+          VERSION: ${{ needs.qualify.outputs.version }}
+          ARCHIVE_SHA256: ${{ needs.qualify.outputs.archive_sha256 }}
+          SUMS_SHA256: ${{ needs.qualify.outputs.sums_sha256 }}
+          RELEASE_MANIFEST_SHA256: ${{ needs.qualify.outputs.release_manifest_sha256 }}
+          RECEIPT_SHA256: ${{ needs.qualify.outputs.receipt_sha256 }}
+        run: |
+          set -euo pipefail
+          identity="$(bun scripts/qualify-schema-browser-release.ts verify-assets \
+            --assets release-assets --source-sha "$SOURCE_SHA" --tag "$RELEASE_TAG")"
+          printf '%s\n' "$identity" > verified-release-identity.json
+          python3 - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          data=json.loads(Path('verified-release-identity.json').read_text())
+          assert data['tag']==os.environ['RELEASE_TAG']
+          assert data['version']==os.environ['VERSION']
+          assert data['sourceSha']==os.environ['SOURCE_SHA']
+          assert data['archiveSha256']==os.environ['ARCHIVE_SHA256']
+          sums=hashlib.sha256(Path('release-assets/SHA256SUMS').read_bytes()).hexdigest()
+          assert sums==os.environ['SUMS_SHA256']
+          manifest=hashlib.sha256(Path('release-assets/release-manifest.json').read_bytes()).hexdigest()
+          assert manifest==os.environ['RELEASE_MANIFEST_SHA256']
+          receipt=hashlib.sha256(Path('release-assets/receipt.json').read_bytes()).hexdigest()
+          assert receipt==os.environ['RECEIPT_SHA256']
+          PY
+      - name: Refuse an existing release or tag before creating the draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ needs.qualify.outputs.tag }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          for endpoint in "repos/$GH_REPO/releases/tags/$RELEASE_TAG" "repos/$GH_REPO/git/ref/tags/$RELEASE_TAG"; do
+            set +e
+            response="$(gh api --include "$endpoint" 2>&1)"
+            status=$?
+            set -e
+            code="$(printf '%s\n' "$response" | sed -nE 's#^HTTP/[0-9.]+[[:space:]]+([0-9]{3}).*#\1#p' | head -n 1)"
+            if [[ $status -eq 0 ]]; then
+              echo "Refusing existing release or tag: $RELEASE_TAG" >&2
+              exit 1
+            fi
+            [[ "$code" == 404 ]] || { echo "GitHub API lookup failed for $endpoint" >&2; exit 1; }
+          done
+      - name: Create exact tag ref at the qualified source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ needs.qualify.outputs.tag }}
+          SOURCE_SHA: ${{ needs.qualify.outputs.source_sha }}
+        run: |
+          set -euo pipefail
+          gh api --method POST "repos/$GH_REPO/git/refs" \
+            -f "ref=refs/tags/$RELEASE_TAG" -f "sha=$SOURCE_SHA" >/dev/null
+      - name: Create draft release at exact source and attach the four verified assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ needs.qualify.outputs.tag }}
+          SOURCE_SHA: ${{ needs.qualify.outputs.source_sha }}
+          VERSION: ${{ needs.qualify.outputs.version }}
+        run: |
+          set -euo pipefail
+          gh release create "$RELEASE_TAG" --repo "$GH_REPO" --draft --verify-tag \
+            --title "$RELEASE_TAG" --target "$SOURCE_SHA" \
+            --notes "Qualified schema-browser package $VERSION from source $SOURCE_SHA."
+          gh release upload "$RELEASE_TAG" --repo "$GH_REPO" \
+            release-assets/SHA256SUMS release-assets/receipt.json \
+            release-assets/release-manifest.json \
+            "release-assets/documentdrivendx-umf-schema-browser-$VERSION.tgz"
+      - name: Verify draft tag and all GitHub asset digests before publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ needs.qualify.outputs.tag }}
+          SOURCE_SHA: ${{ needs.qualify.outputs.source_sha }}
+          VERSION: ${{ needs.qualify.outputs.version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/$GH_REPO/releases/tags/$RELEASE_TAG" > release.json
+          gh api "repos/$GH_REPO/git/ref/tags/$RELEASE_TAG" > tag-ref.json
+          jq -e --arg tag "$RELEASE_TAG" '.draft == true and .tag_name == $tag and .prerelease == false' release.json >/dev/null
+          [[ "$(jq -r '.object.type' tag-ref.json)" == commit ]]
+          [[ "$(jq -r '.object.sha' tag-ref.json)" == "$SOURCE_SHA" ]]
+          archive="documentdrivendx-umf-schema-browser-$VERSION.tgz"
+          jq -e --arg archive "$archive" \
+            '([.assets[].name] | sort) == (["SHA256SUMS","receipt.json","release-manifest.json",$archive] | sort)' \
+            release.json >/dev/null
+          for name in SHA256SUMS receipt.json release-manifest.json "$archive"; do
+            actual="$(sha256sum "release-assets/$name" | cut -d' ' -f1)"
+            jq -e --arg name "$name" --arg digest "sha256:$actual" \
+              'any(.assets[]; .name == $name and .digest == $digest)' release.json >/dev/null
+          done
+      - name: Publish immutable release and verify the API result
+        id: publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ needs.qualify.outputs.tag }}
+        run: |
+          set -euo pipefail
+          RELEASE_ID="$(jq -r .id release.json)"
+          gh api --method PATCH "repos/$GH_REPO/releases/$RELEASE_ID" -F draft=false > published-release.json
+          jq -e --arg tag "$RELEASE_TAG" '.draft == false and .prerelease == false and .immutable == true and .tag_name == $tag' \
+            published-release.json >/dev/null
+      - name: Dispatch main-only npm publisher with exact immutable release pins
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ needs.qualify.outputs.tag }}
+          SOURCE_SHA: ${{ needs.qualify.outputs.source_sha }}
+          SUMS_SHA256: ${{ needs.qualify.outputs.sums_sha256 }}
+          ARCHIVE_SHA256: ${{ needs.qualify.outputs.archive_sha256 }}
+        run: |
+          set -euo pipefail
+          gh workflow run publish-schema-browser-npm.yml --repo "$GH_REPO" --ref main \
+            -f tag="$RELEASE_TAG" -f source_sha="$SOURCE_SHA" \
+            -f expected_sums_sha256="$SUMS_SHA256" \
+            -f expected_tarball_sha256="$ARCHIVE_SHA256"
