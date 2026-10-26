@@ -4,6 +4,8 @@
 import json
 from copy import deepcopy
 from datetime import datetime
+from importlib import import_module
+from types import SimpleNamespace
 from typing import ClassVar
 from unittest.mock import patch
 
@@ -15,6 +17,7 @@ from umf_access.capture import (
     CapturedParameter,
     CapturedVariant,
     CaptureError,
+    _capture_with_validator,
     _validate_node,
     capture,
 )
@@ -55,6 +58,7 @@ _QUERY = Query(RecordRef(module="demo", element="Thing", key=(_ID,)))
 _GRAPH_SOURCE = GeneratedSource(
     "graph-validator-test", "0.10.0", "a" * 64, "b" * 64, "umf-access-runtime/0.1"
 )
+_CAPTURE_MODULE = import_module("umf_access.capture")
 
 
 class ThingKey(BaseModel):
@@ -187,6 +191,226 @@ def test_dto_free_exact_empty_terminal_matches_python_predecessor(monkeypatch, o
     monkeypatch.setattr(rust_catalog_render, "_encode_capture", no_dto)
     captured = rust_catalog_render.capture_with_rust_graph_validator(declaration)
     assert captured.variants[0].node.op == op
+
+
+@pytest.mark.parametrize("op", ["all", "first", "one", "count", "exists"])
+def test_public_capture_selects_exact_empty_terminal_profile(monkeypatch, op):
+    record = RecordRef("demo", "Thing", (_ID,))
+    node = Node(op, (record, ()))
+
+    @query
+    def declaration():
+        return Terminal(node)
+
+    expected = _capture_with_validator(
+        declaration,
+        lambda candidate, parameters, _presence: _validate_node(candidate, parameters),
+    )
+    original = rust_capture_observe.validate_exact_empty_terminal_profile
+    class UnexpectedPythonValidation:
+        def __call__(self, *_args, **_kwargs):
+            raise AssertionError("accepted exact profile must select Rust")
+
+    monkeypatch.setattr(
+        _CAPTURE_MODULE, "_validate_node", UnexpectedPythonValidation()
+    )
+    with patch.object(
+        rust_capture_observe,
+        "validate_exact_empty_terminal_profile",
+        wraps=original,
+    ) as validate:
+        actual = capture(declaration)
+    assert actual == expected
+    assert validate.call_count == 4
+
+
+def test_public_capture_oversized_record_dictionary_falls_back_before_reads():
+    record = RecordRef("demo", "Thing", (_ID,))
+    vars(record)["extra_a"] = 1
+
+    @query
+    def declaration():
+        return Terminal(Node("all", (record, ())))
+
+    expected = _capture_with_validator(
+        declaration,
+        lambda candidate, parameters, _presence: _validate_node(candidate, parameters),
+    )
+    original = rust_capture_observe.validate_exact_empty_terminal_profile
+    with patch.object(
+        rust_capture_observe,
+        "validate_exact_empty_terminal_profile",
+        wraps=original,
+    ) as validate:
+        actual = capture(declaration)
+    assert actual == expected
+    assert validate.call_count == 4
+
+
+def test_public_capture_oversized_node_dictionary_falls_back():
+    record = RecordRef("demo", "Thing", (_ID,))
+    node = Node("all", (record, ()))
+    vars(node)["extra"] = 1
+
+    @query
+    def declaration():
+        return Terminal(node)
+
+    expected = _capture_with_validator(
+        declaration,
+        lambda candidate, parameters, _presence: _validate_node(candidate, parameters),
+    )
+    assert capture(declaration) == expected
+
+
+def test_public_capture_long_raw_key_falls_back_before_copy():
+    record = RecordRef("demo", "Thing", (_ID,))
+    fields = vars(record)
+    del fields["logical_name"]
+    fields["x" * 4096] = None
+
+    @query
+    def declaration():
+        return Terminal(Node("all", (record, ())))
+
+    expected = _capture_with_validator(
+        declaration,
+        lambda candidate, parameters, _presence: _validate_node(candidate, parameters),
+    )
+    assert capture(declaration) == expected
+
+
+def test_public_capture_custom_record_dictionary_key_falls_back_without_hooks():
+    class TrapKey:
+        armed = False
+
+        def __hash__(self):
+            if self.armed:
+                raise AssertionError("capture admission must not hash a custom key")
+            return hash("module")
+
+        def __eq__(self, _other):
+            if self.armed:
+                raise AssertionError("capture admission must not compare a custom key")
+            return False
+
+    record = RecordRef("demo", "Thing", (_ID,))
+    fields = vars(record)
+    del fields["logical_name"]
+    trap = TrapKey()
+    fields[trap] = None
+    trap.armed = True
+
+    @query
+    def declaration():
+        return Terminal(Node("all", (record, ())))
+
+    expected = _capture_with_validator(
+        declaration,
+        lambda candidate, parameters, _presence: _validate_node(candidate, parameters),
+    )
+    assert capture(declaration) == expected
+
+
+def test_public_capture_long_raw_op_falls_back_to_python_refusal():
+    record = RecordRef("demo", "Thing", (_ID,))
+    node = Node("x" * 4096, (record, ()))
+
+    @query
+    def declaration():
+        return Terminal(node)
+
+    with pytest.raises(CaptureError, match="unsupported terminal form"):
+        capture(declaration)
+
+
+def test_public_capture_falls_back_when_installed_core_lacks_profile(monkeypatch):
+    record = RecordRef("demo", "Thing", (_ID,))
+
+    @query
+    def declaration():
+        return Terminal(Node("all", (record, ())))
+
+    expected = _capture_with_validator(
+        declaration,
+        lambda candidate, parameters, _presence: _validate_node(candidate, parameters),
+    )
+    monkeypatch.setattr(_rust, "_rust_core", SimpleNamespace())
+    assert capture(declaration) == expected
+
+
+def test_public_capture_preserves_patched_accessor_first_fault(monkeypatch):
+    record = RecordRef("demo", "Thing", (_ID,))
+    node = Node("all", (record, ()))
+    sentinel = LookupError("patched Node accessor")
+    reads = []
+    original = Node.__getattribute__
+
+    def patched(instance, name):
+        if instance is node and name in {"op", "args"}:
+            reads.append(name)
+            raise sentinel
+        return original(instance, name)
+
+    monkeypatch.setattr(Node, "__getattribute__", patched)
+
+    @query
+    def declaration():
+        return Terminal(node)
+
+    with pytest.raises(LookupError) as caught:
+        capture(declaration)
+    assert caught.value is sentinel
+    assert reads == ["op"]
+
+
+def test_public_capture_with_parameters_keeps_parameter_map_first_fault(monkeypatch):
+    record = RecordRef("demo", "Thing", (_ID,))
+    node = Node("all", (record, ()))
+    sentinel = LookupError("parameter map first fault")
+    events = []
+
+    class ParameterProbe:
+        armed = False
+        optional = True
+
+        @property
+        def name(self):
+            events.append("parameter-map-name" if self.armed else "optional-name")
+            if self.armed:
+                raise sentinel
+            return "value"
+
+    probe = ParameterProbe()
+    graph_reads = []
+    original_getattribute = Node.__getattribute__
+
+    def tracked_getattribute(instance, name):
+        if instance is node and name in {"op", "args"}:
+            graph_reads.append(name)
+        return original_getattribute(instance, name)
+
+    monkeypatch.setattr(Node, "__getattribute__", tracked_getattribute)
+    monkeypatch.setattr(_CAPTURE_MODULE, "_parameters", lambda _function: (probe,))
+
+    def invoke(_function, _parameters, presence, validator):
+        probe.armed = True
+        validator(node, (probe,), presence)
+
+    monkeypatch.setattr(_CAPTURE_MODULE, "_invoke", invoke)
+    declaration = lambda: None
+    declaration.__umf_kind__ = "query"
+    with patch.object(
+        _rust._rust_core,
+        "access_validate_capture_exact_empty_terminal_with_session",
+        side_effect=AssertionError("parameterized capture must remain Python-selected"),
+    ) as validate:
+        with pytest.raises(LookupError) as caught:
+            capture(declaration)
+    assert caught.value is sentinel
+    assert events == ["optional-name", "parameter-map-name"]
+    assert graph_reads == ["op", "args", "args", "args", "args"]
+    validate.assert_not_called()
 
 
 def test_dto_free_validator_returns_outside_profile_before_graph_reads(monkeypatch):

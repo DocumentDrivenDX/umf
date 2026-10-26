@@ -415,8 +415,53 @@ def _capture_with_validator(
 
 
 def capture(function: Callable[..., Any]) -> CapturedDeclaration:
-    """Capture using the established Python graph validator."""
+    """Capture a declaration, using Rust for the exact empty terminal profile."""
+
+    def validate(
+        node: Node,
+        parameters: tuple[CapturedParameter, ...],
+        _presence: frozenset[str],
+    ) -> None:
+        # The predecessor first builds a parameter map by reading every
+        # parameter's `.name`. Keep that path in Python unless it is empty.
+        if type(parameters) is tuple and not parameters:
+            try:
+                from umf import _rust
+                from .rust_capture_observe import validate_exact_empty_terminal_profile
+            except ImportError:
+                _validate_node(node, parameters)
+                return
+
+            core = getattr(_rust, "_rust_core", None)
+            session_type = getattr(core, "CaptureResourceSession", None)
+            observe = getattr(
+                core,
+                "access_validate_capture_exact_empty_terminal_with_session",
+                None,
+            )
+            node_type = Node
+            record_ref_type = RecordRef
+            if (
+                callable(session_type)
+                and callable(observe)
+                and isinstance(node_type, type)
+                and isinstance(record_ref_type, type)
+            ):
+                # The admitted shape has bounded raw dictionaries (Node <= 2
+                # keys, RecordRef <= 8 keys, short field/op strings). Keep the
+                # session effectively unbounded like Context::ordinary(); a
+                # smaller cap would add a refusal absent from public capture.
+                session = session_type((1 << 64) - 1)
+                if validate_exact_empty_terminal_profile(
+                    node, session, node_type, record_ref_type
+                ):
+                    return
+
+        # Outside-profile admission is side-effect free with respect to graph
+        # accessors, so the predecessor can decide the original result/order.
+        _validate_node(node, parameters)
+
     return _capture_with_validator(
         function,
-        lambda node, parameters, _presence: _validate_node(node, parameters),
+        validate,
     )

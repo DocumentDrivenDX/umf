@@ -2797,6 +2797,13 @@ fn access_observe_capture_terminal_join_owners_with_session(
 }
 
 const CAPTURE_EXACT_EMPTY_TERMINAL_PROFILE: &str = "umf-access-capture-exact-empty-terminal/0.2.0";
+// `Node` has two instance fields and `RecordRef` has eight. The profile scans
+// exact instance dictionaries to reject arbitrary Python keys before any
+// string-key lookup. Keep that scan bounded; larger dictionaries fall back
+// before graph accessors are observed.
+const CAPTURE_ADMISSION_MAX_DICT_KEYS: usize = 8;
+const CAPTURE_ADMISSION_MAX_KEY_CHARS: usize = 32;
+const CAPTURE_ADMISSION_MAX_OP_CHARS: usize = 16;
 
 fn capture_exact_empty_terminal_response(py: Python<'_>, outcome: &str) -> PyResult<PyObject> {
     let result = PyDict::new_bound(py);
@@ -2871,10 +2878,13 @@ fn access_validate_capture_exact_empty_terminal_with_session(
         return outside();
     }
     let node_fields = node_fields.downcast::<PyDict>()?;
+    if node_fields.len() != 2 {
+        return outside();
+    }
     let mut node_keys = Vec::new();
     for key in node_fields.keys().iter() {
         charge!();
-        if !key.is_exact_instance_of::<PyString>() {
+        if !key.is_exact_instance_of::<PyString>() || key.len()? > CAPTURE_ADMISSION_MAX_KEY_CHARS {
             return outside();
         }
         let Ok(key) = key.extract::<String>() else {
@@ -2892,12 +2902,13 @@ fn access_validate_capture_exact_empty_terminal_with_session(
     let Some(op) = node_fields.get_item("op")? else {
         return outside();
     };
-    if !op.is_exact_instance_of::<PyString>()
-        || !matches!(
-            op.extract::<String>().ok().as_deref(),
-            Some("all" | "first" | "one" | "count" | "exists")
-        )
-    {
+    if !op.is_exact_instance_of::<PyString>() || op.len()? > CAPTURE_ADMISSION_MAX_OP_CHARS {
+        return outside();
+    }
+    if !matches!(
+        op.extract::<String>().ok().as_deref(),
+        Some("all" | "first" | "one" | "count" | "exists")
+    ) {
         return outside();
     }
     charge!();
@@ -2944,12 +2955,15 @@ fn access_validate_capture_exact_empty_terminal_with_session(
         return outside();
     }
     let record_fields = record_fields.downcast::<PyDict>()?;
+    if record_fields.len() > CAPTURE_ADMISSION_MAX_DICT_KEYS {
+        return outside();
+    }
     let mut has_module = false;
     let mut has_element = false;
     let mut has_alias = false;
     for key in record_fields.keys().iter() {
         charge!();
-        if !key.is_exact_instance_of::<PyString>() {
+        if !key.is_exact_instance_of::<PyString>() || key.len()? > CAPTURE_ADMISSION_MAX_KEY_CHARS {
             return outside();
         }
         let Ok(key) = key.extract::<String>() else {
