@@ -11,6 +11,11 @@ on:
         description: Exact 40-character main-ancestor commit or existing schema-browser-vX.Y.Z tag.
         required: true
         type: string
+      draft_release_id:
+        description: Optional existing draft ID; requalifies the same source and requires all four existing asset digests to match without replacing bytes.
+        required: false
+        default: ''
+        type: string
 
 permissions:
   contents: read
@@ -53,12 +58,14 @@ jobs:
           SOURCE_REF: ${{ inputs.source_ref }}
           RELEASE_TAG: ${{ inputs.tag }}
           DRIVER_SHA: ${{ github.workflow_sha }}
+          DRAFT_RELEASE_ID: ${{ inputs.draft_release_id }}
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         shell: bash
         run: |
           set -euo pipefail
           [[ "$RELEASE_TAG" =~ ^schema-browser-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]
+          [[ -z "$DRAFT_RELEASE_ID" || "$DRAFT_RELEASE_ID" =~ ^[1-9][0-9]*$ ]]
           if [[ "$SOURCE_REF" =~ ^[0-9a-f]{40}$ ]]; then
             SOURCE_SHA="$SOURCE_REF"
           elif [[ "$SOURCE_REF" =~ ^schema-browser-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
@@ -105,7 +112,7 @@ jobs:
         run: bun install --frozen-lockfile
       - name: Install pinned Chromium runtime
         working-directory: source
-        run: bun node_modules/playwright/cli.js install --with-deps chromium
+        run: node node_modules/playwright/cli.js install --with-deps chromium
       - name: Run package, embedding, integrity and parity controls
         working-directory: source
         run: >-
@@ -205,6 +212,7 @@ jobs:
           assert receipt==os.environ['RECEIPT_SHA256']
           PY
       - name: Refuse an existing release or tag before creating the draft
+        if: inputs.draft_release_id == ''
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
@@ -225,6 +233,7 @@ jobs:
             [[ "$code" == 404 ]] || { echo "GitHub API lookup failed for $endpoint" >&2; exit 1; }
           done
       - name: Create exact tag ref at the qualified source
+        if: inputs.draft_release_id == ''
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
@@ -235,6 +244,8 @@ jobs:
           gh api --method POST "repos/$GH_REPO/git/refs" \
             -f "ref=refs/tags/$RELEASE_TAG" -f "sha=$SOURCE_SHA" >/dev/null
       - name: Create draft release at exact source and attach the four verified assets
+        if: inputs.draft_release_id == ''
+        id: draft
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
@@ -243,9 +254,11 @@ jobs:
           VERSION: ${{ needs.qualify.outputs.version }}
         run: |
           set -euo pipefail
-          gh release create "$RELEASE_TAG" --repo "$GH_REPO" --draft --verify-tag --latest=false \
-            --title "$RELEASE_TAG" --target "$SOURCE_SHA" \
-            --notes "Qualified schema-browser package $VERSION from source $SOURCE_SHA."
+          gh api --method POST "repos/$GH_REPO/releases" \
+            -f "tag_name=$RELEASE_TAG" -f "target_commitish=$SOURCE_SHA" \
+            -f "name=$RELEASE_TAG" -F draft=true -F prerelease=false -f make_latest=false \
+            -f "body=Qualified schema-browser package $VERSION from source $SOURCE_SHA." > created-release.json
+          printf 'release_id=%s\n' "$(jq -er '.id | numbers' created-release.json)" >> "$GITHUB_OUTPUT"
           gh release upload "$RELEASE_TAG" --repo "$GH_REPO" \
             release-assets/SHA256SUMS release-assets/receipt.json \
             release-assets/release-manifest.json \
@@ -257,12 +270,15 @@ jobs:
           RELEASE_TAG: ${{ needs.qualify.outputs.tag }}
           SOURCE_SHA: ${{ needs.qualify.outputs.source_sha }}
           VERSION: ${{ needs.qualify.outputs.version }}
+          RELEASE_ID: ${{ inputs.draft_release_id || steps.draft.outputs.release_id }}
         shell: bash
         run: |
           set -euo pipefail
-          gh api "repos/$GH_REPO/releases/tags/$RELEASE_TAG" > release.json
+          [[ "$RELEASE_ID" =~ ^[1-9][0-9]*$ ]]
+          gh api "repos/$GH_REPO/releases/$RELEASE_ID" > release.json
           gh api "repos/$GH_REPO/git/ref/tags/$RELEASE_TAG" > tag-ref.json
-          jq -e --arg tag "$RELEASE_TAG" '.draft == true and .tag_name == $tag and .prerelease == false' release.json >/dev/null
+          jq -e --arg tag "$RELEASE_TAG" --arg source "$SOURCE_SHA" --argjson id "$RELEASE_ID" \
+            '.id == $id and .draft == true and .tag_name == $tag and .prerelease == false and .target_commitish == $source' release.json >/dev/null
           [[ "$(jq -r '.object.type' tag-ref.json)" == commit ]]
           [[ "$(jq -r '.object.sha' tag-ref.json)" == "$SOURCE_SHA" ]]
           archive="documentdrivendx-umf-schema-browser-$VERSION.tgz"

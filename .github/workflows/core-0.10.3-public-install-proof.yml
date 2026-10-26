@@ -1,0 +1,426 @@
+name: Core 0.10.3 public Python install proof
+
+on:
+  push:
+    branches:
+      - codex/core-python314-public-install-proof
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  public-installed-wheel:
+    name: ${{ matrix.cohort }} Python ${{ matrix.python-version }} public wheel
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include:
+          - cohort: linux-x86_64
+            platform: linux
+            runs-on: ubuntu-24.04
+            architecture: x64
+            expected-machine: x86_64
+            python-version: '3.11.17'
+            expected-python-minor: '11'
+            wheel-key: linuxWheel
+          - cohort: linux-x86_64
+            platform: linux
+            runs-on: ubuntu-24.04
+            architecture: x64
+            expected-machine: x86_64
+            python-version: '3.14.8'
+            expected-python-minor: '14'
+            wheel-key: linuxWheel
+          - cohort: macos-arm64
+            platform: macos
+            runs-on: macos-15
+            architecture: arm64
+            expected-machine: arm64
+            python-version: '3.11.9'
+            expected-python-minor: '11'
+            wheel-key: macosWheel
+          - cohort: macos-arm64
+            platform: macos
+            runs-on: macos-15
+            architecture: arm64
+            expected-machine: arm64
+            python-version: '3.14.8'
+            expected-python-minor: '14'
+            wheel-key: macosWheel
+    runs-on: ${{ matrix.runs-on }}
+    steps:
+      - name: Seed fail-closed public cell receipt
+        timeout-minutes: 1
+        env:
+          RECEIPT: ${{ runner.temp }}/core-0.10.3-public-cell.json
+          COHORT: ${{ matrix.cohort }}
+          PYTHON_VERSION: ${{ matrix.python-version }}
+          SOURCE_H: ${{ github.sha }}
+        run: |
+          python - "$RECEIPT" "$RUNNER_TEMP/core-wheel-bounds" <<'PY'
+          import json, os, pathlib, sys
+          import time
+          root = pathlib.Path(sys.argv[2]); root.mkdir(parents=True, exist_ok=True)
+          now = time.monotonic()
+          limits = {"totalSeconds": 1200, "cleanupReserveSeconds": 60, "timeoutKillGraceSeconds": 10, "drainMarginSeconds": 2, "childSeconds": 180, "aggregateLogBytes": 1048576, "artifactBytes": 16777216}
+          (root / "deadline.json").write_text(json.dumps({"profile": "umf.core-python-qualification-deadline/1", "startedMonotonic": now, "deadlineMonotonic": now + limits["totalSeconds"], **limits}, sort_keys=True) + "\n")
+          (root / "failure-receipt.json").write_text(json.dumps({"profile": "umf.core-python-qualification-run/1", "status": "failed_or_incomplete", "commands": [], "limits": limits}, sort_keys=True) + "\n")
+          pathlib.Path(sys.argv[1]).write_text(json.dumps({
+              "profile": "umf.core-0.10.3-public-install-cell/1",
+              "status": "FAIL_OR_UNKNOWN",
+              "reason": "Public proof did not reach its passing finalizer.",
+              "sourceH": os.environ["SOURCE_H"],
+              "cohort": os.environ["COHORT"],
+              "requestedPython": os.environ["PYTHON_VERSION"],
+          }, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+          PY
+      - uses: actions/checkout@v4
+        timeout-minutes: 2
+        with:
+          persist-credentials: false
+          submodules: false
+      - name: Fail closed until actual producer and public asset identities are reviewed
+        id: packet
+        env:
+          REPOSITORY: ${{ github.repository }}
+          EVENT_NAME: ${{ github.event_name }}
+          REF: ${{ github.ref }}
+          INPUT_PACKET: qualification-inputs/core-0.10.3-public-install-proof.json
+          WHEEL_KEY: ${{ matrix.wheel-key }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name validate-held-public-proof-packet -- \
+            python - "$INPUT_PACKET" "$GITHUB_OUTPUT" <<'PY'
+          import json, os, pathlib, re, sys
+          packet_path, output_path = map(pathlib.Path, sys.argv[1:])
+          packet = json.loads(packet_path.read_text(encoding="utf-8"))
+          if os.environ["REPOSITORY"] != "DocumentDrivenDX/umf" or os.environ["EVENT_NAME"] != "push" or os.environ["REF"] != "refs/heads/codex/core-python314-public-install-proof":
+              raise SystemExit("Wrong repository, event, or exact public-proof branch")
+          if packet.get("profile") != "umf.core-0.10.3-public-install-proof-inputs/1" or packet.get("status") != "READY":
+              raise SystemExit("Public proof is HELD until actual producer, release, and asset identities are reviewed")
+          sha = lambda value: isinstance(value, str) and re.fullmatch(r"[0-9a-f]{40}", value) is not None
+          digest = lambda value: isinstance(value, str) and re.fullmatch(r"[0-9a-f]{64}", value) is not None
+          producer = packet.get("producer", {})
+          release = packet.get("publicRelease", {})
+          if not sha(producer.get("sourceCommit")) or not sha(producer.get("sourceTree")):
+              raise SystemExit("Producer source commit/tree identities are held or malformed")
+          if type(producer.get("workflowRunId")) is not int or producer["workflowRunId"] <= 0 or type(producer.get("workflowRunAttempt")) is not int or producer["workflowRunAttempt"] <= 0:
+              raise SystemExit("Producer workflow run identity is held or malformed")
+          if producer.get("workflowPath") != ".github/workflows/python-action-runtime.yml" or producer.get("event") not in {"push", "workflow_dispatch"} or not isinstance(producer.get("headBranch"), str) or not producer["headBranch"]:
+              raise SystemExit("Producer workflow path, event, or head branch is held or malformed")
+          if release.get("tag") != "python-v0.10.3" or not sha(release.get("commit")):
+              raise SystemExit("Public release tag or merge commit identity is held or malformed")
+          assets = release.get("assets", {})
+          if set(assets) != {"linuxWheel", "macosWheel", "sdist"}:
+              raise SystemExit("Public Core release asset roster must contain exactly two wheels and one sdist")
+          for key, row in assets.items():
+              if not isinstance(row, dict) or not isinstance(row.get("filename"), str) or row["filename"] == "HELD" or pathlib.PurePosixPath(row["filename"]).name != row["filename"] or type(row.get("sizeBytes")) is not int or row["sizeBytes"] <= 0 or not digest(row.get("sha256")):
+                  raise SystemExit("Public asset identity is held or malformed: " + key)
+          for key in ("linuxWheel", "macosWheel"):
+              if not digest(assets[key].get("nativeSha256")):
+                  raise SystemExit("Public native module identity is held or malformed: " + key)
+          if not re.fullmatch(r"umf_core-0\.10\.3-cp311-abi3-manylinux_2_[0-9]+_x86_64\.whl", assets["linuxWheel"]["filename"]):
+              raise SystemExit("Linux public wheel does not carry an exact abi3 manylinux x86_64 identity")
+          if assets["macosWheel"]["filename"] != "umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl" or assets["sdist"]["filename"] != "umf_core-0.10.3.tar.gz":
+              raise SystemExit("macOS wheel or common sdist filename differs from the closed release profile")
+          metadata = release.get("metadata", {})
+          metadata_roles = {"sha256Sums", "releasePins", "qualification", "sourceCi", "evidence", "notes", "inventory"}
+          if set(metadata) != metadata_roles:
+              raise SystemExit("Public release metadata roles differ from the held closed assembly profile")
+          for key, row in metadata.items():
+              if not isinstance(row, dict) or not isinstance(row.get("filename"), str) or row["filename"] == "HELD" or pathlib.PurePosixPath(row["filename"]).name != row["filename"] or type(row.get("sizeBytes")) is not int or row["sizeBytes"] <= 0 or row["sizeBytes"] > 16777216 or not digest(row.get("sha256")):
+                  raise SystemExit("Public release metadata identity is held or malformed: " + key)
+          if metadata["sha256Sums"]["filename"] != "SHA256SUMS" or metadata["releasePins"]["filename"] != "release-pins.json":
+              raise SystemExit("Public checksums or release-pins filename differs from the closed profile")
+          metadata_names = [row["filename"] for row in metadata.values()]
+          archive_names = [row["filename"] for row in assets.values()]
+          complete_names = archive_names + metadata_names
+          if len(complete_names) != len(set(complete_names)):
+              raise SystemExit("Public release archive and metadata filenames are not unique")
+          limits = packet.get("limits", {})
+          if limits != {"cellSeconds": 1200, "wheelBytes": 16777216, "sdistBytes": 16777216}:
+              raise SystemExit("Original bounded public-cell limits changed")
+          for key, row in assets.items():
+              if row["sizeBytes"] > limits["wheelBytes" if key.endswith("Wheel") else "sdistBytes"]:
+                  raise SystemExit("Public asset exceeds its exact download bound")
+          if sum(row["sizeBytes"] for row in assets.values()) + sum(row["sizeBytes"] for row in metadata.values()) > 16777216:
+              raise SystemExit("Complete public release asset family exceeds the fixed 16 MiB aggregate bound")
+          for key, value in (("producer_source_commit", producer["sourceCommit"]), ("producer_source_tree", producer["sourceTree"]), ("producer_run_id", str(producer["workflowRunId"])), ("producer_run_attempt", str(producer["workflowRunAttempt"])), ("release_tag", release["tag"]), ("release_commit", release["commit"])):
+              output_path.open("a", encoding="utf-8").write(f"{key}={value}\n")
+          PY
+      - name: Verify the exact successful producer run, attempt, jobs and artifacts
+        id: producer
+        if: steps.packet.outcome == 'success'
+        timeout-minutes: 5
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PRODUCER_RUN_ID: ${{ steps.packet.outputs.producer_run_id }}
+          PRODUCER_ATTEMPT: ${{ steps.packet.outputs.producer_run_attempt }}
+          PRODUCER_COMMIT: ${{ steps.packet.outputs.producer_source_commit }}
+          PRODUCER_TREE: ${{ steps.packet.outputs.producer_source_tree }}
+        run: |
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name verify-producer-run-and-artifacts -- \
+            python3 tools/verify_core_public_producer.py \
+              --run-id "$PRODUCER_RUN_ID" --attempt "$PRODUCER_ATTEMPT" --commit "$PRODUCER_COMMIT" --tree "$PRODUCER_TREE" \
+              --packet qualification-inputs/core-0.10.3-public-install-proof.json \
+              --output "$RUNNER_TEMP/core-0.10.3-producer-evidence.json"
+      - name: Check out the exact public release source
+        if: steps.packet.outcome == 'success'
+        timeout-minutes: 2
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.packet.outputs.release_tag }}
+          path: release-source
+          persist-credentials: false
+          fetch-depth: 0
+          submodules: false
+      - name: Check out the exact qualified producer source
+        if: steps.packet.outcome == 'success'
+        timeout-minutes: 2
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.packet.outputs.producer_source_commit }}
+          path: producer-source
+          persist-credentials: false
+          fetch-depth: 0
+          submodules: false
+      - uses: actions/setup-python@v5
+        if: steps.packet.outcome == 'success'
+        timeout-minutes: 2
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: ${{ matrix.architecture }}
+      - name: Verify public release source, unauthenticated GitHub assets, and runner identity
+        id: release
+        if: steps.packet.outcome == 'success'
+        timeout-minutes: 8
+        env:
+          RELEASE_COMMIT: ${{ steps.packet.outputs.release_commit }}
+          PRODUCER_COMMIT: ${{ steps.packet.outputs.producer_source_commit }}
+          PRODUCER_TREE: ${{ steps.packet.outputs.producer_source_tree }}
+          EXPECTED_MACHINE: ${{ matrix.expected-machine }}
+          EXPECTED_PYTHON_MINOR: ${{ matrix.expected-python-minor }}
+          PLATFORM: ${{ matrix.platform }}
+        run: |
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name verify-public-release-bytes-and-pins -- \
+            python3 tools/verify_core_public_release.py \
+              --packet qualification-inputs/core-0.10.3-public-install-proof.json \
+              --release-source release-source --producer-source producer-source \
+              --producer-evidence "$RUNNER_TEMP/core-0.10.3-producer-evidence.json" \
+              --platform "$PLATFORM" --machine "$EXPECTED_MACHINE" --python-minor "$EXPECTED_PYTHON_MINOR" \
+              --output "$RUNNER_TEMP/core-0.10.3-public-release.json"
+      - name: Acquire frozen binary public test cohort
+        if: steps.release.outcome == 'success'
+        env:
+          CELL_ID: ${{ matrix.cohort }}-py${{ matrix.expected-python-minor }}
+        run: |
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name fetch-public-test-wheels -- \
+            python3 tools/core_python_qualification_runner.py fetch-wheels --lock qualification-inputs/core-0.10.3-wheel-input-lock.json \
+              --profile test --cell "$CELL_ID" --output "$RUNNER_TEMP/core-test-wheels"
+      - name: Install the exact public wheel and binary test cohort into a fresh environment
+        if: steps.release.outcome == 'success'
+        timeout-minutes: 5
+        env:
+          WHEEL_PATH: ${{ steps.release.outputs.wheel_path }}
+        run: |
+          set -euo pipefail
+          environment="$RUNNER_TEMP/core-public-venv"
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name create-public-wheel-venv -- python -m venv "$environment"
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name install-public-wheel-and-test-wheels -- \
+            "$environment/bin/python" -m pip install --disable-pip-version-check --no-index --no-deps --only-binary=:all: \
+              --no-compile "$RUNNER_TEMP/core-test-wheels"/*.whl "$WHEEL_PATH"
+      - name: Verify public installed bytes and record exact behavior probes
+        id: public_probes
+        if: steps.release.outcome == 'success'
+        env:
+          WHEEL_PATH: ${{ steps.release.outputs.wheel_path }}
+          EXPECTED_MACHINE: ${{ matrix.expected-machine }}
+          EXPECTED_PYTHON_MINOR: ${{ matrix.expected-python-minor }}
+          EXPECTED_PYTHON_VERSION: ${{ matrix.python-version }}
+        run: |
+          set -euo pipefail
+          environment="$RUNNER_TEMP/core-public-venv"
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name public-wheel-installed-verifier -- \
+            "$environment/bin/python" -I -B producer-source/tools/verify_python_artifacts.py \
+              --wheel "$WHEEL_PATH" --expected-version 0.10.3 --verify-installed-wheel \
+              --receipt "$RUNNER_TEMP/core-0.10.3-public-installed.json"
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name public-wheel-runtime-probes -- \
+            "$environment/bin/python" -I -B - <<'PY'
+          import importlib.metadata
+          import json
+          import os
+          import platform
+          import sys
+          import sysconfig
+          from pathlib import Path
+          import umf
+          from umf import Document, current_core_version, read_document, write_document
+          from umf._rust import UmfCoreError, compile_python_schema
+          from umf.schemas import schema_validator
+
+          if platform.machine().lower() != os.environ["EXPECTED_MACHINE"] or str(sys.version_info.minor) != os.environ["EXPECTED_PYTHON_MINOR"] or platform.python_version() != os.environ["EXPECTED_PYTHON_VERSION"]:
+              raise SystemExit("Public installed cell exact platform or Python version changed")
+          package_root = Path(umf.__file__).resolve()
+          if not package_root.is_relative_to(Path(sysconfig.get_path("platlib")).resolve()):
+              raise SystemExit("Public UMF package imported outside the fresh venv")
+          if importlib.metadata.version("umf-core") != "0.10.3" or current_core_version() != "0.10.0":
+              raise SystemExit("Public UMF distribution or semantic Core identity changed")
+          if importlib.metadata.version("pydantic") != "2.14.1" or importlib.metadata.version("pydantic-core") != "2.50.1":
+              raise SystemExit("Public Python test dependency binary tuple changed")
+          source = {"umf": "0.10.0", "id": "core314-public-roundtrip", "vocabularies": {}, "modules": []}
+          document = Document.model_validate(source)
+          roundtrips = {}
+          for format in ("json", "yaml"):
+              if read_document(write_document(document, format), format).to_dict() != source:
+                  raise SystemExit("Public default-profile Document round trip changed content")
+              roundtrips[format] = True
+          probes = {}
+          if sys.version_info.minor == 14:
+              probes["strictEndAnchor"] = schema_validator({"type": "string", "pattern": r"\z"}).is_valid("")
+              probes["emptyInputNonBoundary"] = schema_validator({"type": "string", "pattern": r"\B"}).is_valid("")
+              probes["unicode16Word"] = schema_validator({"type": "string", "pattern": r"\w"}).is_valid(chr(0x1C89))
+              try:
+                  compile_python_schema({"type": "string", "pattern": "x"}, python_minor=15)
+              except UmfCoreError as error:
+                  probes["futureProfileRefused"] = error.code == "PYTHON_REGEX_PROFILE_UNAVAILABLE"
+              else:
+                  raise SystemExit("Public Core did not refuse future Python 3.15 profile")
+              if not all(probes.values()):
+                  raise SystemExit("A public Python 3.14 behavior probe failed")
+          Path(os.environ["RUNNER_TEMP"], "core-0.10.3-public-probes.json").write_text(json.dumps({
+              "python": platform.python_version(), "pythonPlatform": sysconfig.get_platform(),
+              "machine": platform.machine(), "packageRoot": str(package_root),
+              "umfVersion": importlib.metadata.version("umf-core"),
+              "semanticCoreVersion": current_core_version(), "pydanticVersion": importlib.metadata.version("pydantic"),
+              "pydanticCoreVersion": importlib.metadata.version("pydantic-core"),
+              "documentRoundTrips": roundtrips, "profile314Probes": probes,
+          }, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+          PY
+      - name: Run the original installed action-runtime and Core suite from exact producer source S
+        id: public_tests
+        if: steps.release.outcome == 'success'
+        timeout-minutes: 6
+        run: |
+          cd "$RUNNER_TEMP"
+          python3 "$GITHUB_WORKSPACE/tools/core_python_qualification_runner.py" run --root "$RUNNER_TEMP/core-wheel-bounds" --name public-wheel-original-installed-suite -- \
+            "$RUNNER_TEMP/core-public-venv/bin/python" -I -B -m pytest -q \
+              --junitxml="$RUNNER_TEMP/core-0.10.3-public-tests.xml" \
+              "$GITHUB_WORKSPACE/producer-source/python/tests/test_action_runtime_generated_client.py" \
+              "$GITHUB_WORKSPACE/producer-source/python/tests/test_action_runtime_resources.py" \
+              "$GITHUB_WORKSPACE/producer-source/python/tests/test_action_fixture_vectors.py" \
+              "$GITHUB_WORKSPACE/producer-source/python/tests/test_core.py" \
+              "$GITHUB_WORKSPACE/producer-source/python/tests/test_rust_core.py" \
+              "$GITHUB_WORKSPACE/producer-source/python/tests/test_extension_kinds.py"
+      - name: Reverify the exact public wheel installation after tests
+        id: public-wheel-post-test-verifier
+        if: always()
+        timeout-minutes: 3
+        env:
+          WHEEL_PATH: ${{ steps.release.outputs.wheel_path }}
+        run: |
+          if [[ ! -x "$RUNNER_TEMP/core-public-venv/bin/python" || ! -f "$WHEEL_PATH" ]]; then
+            echo 'Public post-test verifier prerequisites are unavailable' >&2
+            exit 1
+          fi
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name public-wheel-post-test-verifier -- \
+            "$RUNNER_TEMP/core-public-venv/bin/python" -I -B producer-source/tools/verify_python_artifacts.py \
+              --wheel "$WHEEL_PATH" --expected-version 0.10.3 --verify-installed-wheel \
+              --receipt "$RUNNER_TEMP/core-0.10.3-public-posttest.json"
+      - name: Finalize public cell receipt
+        if: always()
+        timeout-minutes: 4
+        env:
+          TEST_OUTCOME: ${{ steps.public_tests.outcome }}
+          COHORT: ${{ matrix.cohort }}
+          PLATFORM: ${{ matrix.platform }}
+          EXPECTED_MACHINE: ${{ matrix.expected-machine }}
+          PYTHON_VERSION: ${{ matrix.python-version }}
+          EXPECTED_PYTHON_MINOR: ${{ matrix.expected-python-minor }}
+          SOURCE_H: ${{ github.sha }}
+          RELEASE_COMMIT: ${{ steps.packet.outputs.release_commit }}
+          PRODUCER_COMMIT: ${{ steps.packet.outputs.producer_source_commit }}
+          PRODUCER_TREE: ${{ steps.packet.outputs.producer_source_tree }}
+          PROOF_RUN_ID: ${{ github.run_id }}
+          PROOF_RUN_ATTEMPT: ${{ github.run_attempt }}
+          PROOF_WORKFLOW: ${{ github.workflow }}
+          EXPECTED_WHEEL_SHA256: ${{ steps.release.outputs.wheel_sha256 }}
+          EXPECTED_NATIVE_SHA256: ${{ steps.release.outputs.wheel_native_sha256 }}
+          COMMON_SDIST_SHA256: ${{ steps.release.outputs.sdist_sha256 }}
+          PROBE_OUTCOME: ${{ steps.public_probes.outcome }}
+          POSTTEST_OUTCOME: ${{ steps.public-wheel-post-test-verifier.outcome }}
+        run: |
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name finalize-public-cell-receipt -- \
+            python - "$RUNNER_TEMP/core-0.10.3-public-cell.json" "$RUNNER_TEMP/core-0.10.3-public-installed.json" "$RUNNER_TEMP/core-0.10.3-public-posttest.json" "$RUNNER_TEMP/core-0.10.3-public-probes.json" "$RUNNER_TEMP/core-0.10.3-public-tests.xml" <<'PY'
+          import hashlib, json, os, pathlib, sys, xml.etree.ElementTree as ET
+          receipt_path, installed_path, posttest_path, probes_path, junit_path = map(pathlib.Path, sys.argv[1:])
+          for path in (receipt_path, installed_path, posttest_path, probes_path):
+              if path.exists() and (path.is_symlink() or not path.is_file() or path.stat().st_size > 16777216):
+                  raise SystemExit("Public cell JSON evidence is not a bounded regular file")
+          receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+          installed = json.loads(installed_path.read_text(encoding="utf-8")) if installed_path.is_file() else None
+          posttest = json.loads(posttest_path.read_text(encoding="utf-8")) if posttest_path.is_file() else None
+          probes = json.loads(probes_path.read_text(encoding="utf-8")) if probes_path.is_file() else None
+          counts = None
+          if junit_path.is_file():
+              if junit_path.is_symlink() or junit_path.stat().st_size > 16777216:
+                  raise SystemExit("Public cell test report exceeds its fixed read bound")
+              root = ET.parse(junit_path).getroot()
+              suites = [root] if root.tag == "testsuite" else list(root.findall("testsuite"))
+              counts = {key: sum(int(suite.get(key, "0")) for suite in suites) for key in ("tests", "errors", "failures", "skipped")}
+          packet_path = pathlib.Path("qualification-inputs/core-0.10.3-public-install-proof.json")
+          if packet_path.is_symlink() or packet_path.stat().st_size > 1048576:
+              raise SystemExit("Public proof packet is not a bounded regular file")
+          receipt.update({"sourceH": os.environ["SOURCE_H"], "producerSourceCommit": os.environ.get("PRODUCER_COMMIT"), "producerSourceTree": os.environ.get("PRODUCER_TREE"), "releaseCommit": os.environ.get("RELEASE_COMMIT"), "proofRunId": os.environ["PROOF_RUN_ID"], "proofRunAttempt": os.environ["PROOF_RUN_ATTEMPT"], "proofWorkflow": os.environ["PROOF_WORKFLOW"], "packetSha256": hashlib.sha256(packet_path.read_bytes()).hexdigest(), "cohort": os.environ["COHORT"], "platform": os.environ["PLATFORM"], "requestedPython": os.environ["PYTHON_VERSION"], "testOutcome": os.environ.get("TEST_OUTCOME", "not_run"), "probeOutcome": os.environ.get("PROBE_OUTCOME", "not_run"), "posttestOutcome": os.environ.get("POSTTEST_OUTCOME", "not_run"), "testCounts": counts, "installedPayload": installed, "postTestPayload": posttest, "runtimeProbes": probes, "expectedWheelSha256": os.environ.get("EXPECTED_WHEEL_SHA256"), "expectedNativeSha256": os.environ.get("EXPECTED_NATIVE_SHA256"), "commonSdistSha256": os.environ.get("COMMON_SDIST_SHA256")})
+          expected_probes = probes is not None and probes.get("python") == os.environ["PYTHON_VERSION"] and probes.get("machine", "").lower() == os.environ["EXPECTED_MACHINE"] and probes.get("umfVersion") == "0.10.3" and probes.get("semanticCoreVersion") == "0.10.0" and probes.get("pydanticVersion") == "2.14.1" and probes.get("pydanticCoreVersion") == "2.50.1" and probes.get("documentRoundTrips") == {"json": True, "yaml": True} and (os.environ["EXPECTED_PYTHON_MINOR"] != "14" or probes.get("profile314Probes") == {"strictEndAnchor": True, "emptyInputNonBoundary": True, "unicode16Word": True, "futureProfileRefused": True})
+          payload_parity = installed is not None and posttest is not None and installed.get("status") == "passed" and posttest.get("status") == "passed" and installed.get("wheel_sha256") == os.environ.get("EXPECTED_WHEEL_SHA256") and posttest.get("wheel_sha256") == installed.get("wheel_sha256") and installed.get("native_sha256") == os.environ.get("EXPECTED_NATIVE_SHA256") and posttest.get("native_sha256") == installed.get("native_sha256") and posttest.get("package_file_count") == installed.get("package_file_count")
+          passed = payload_parity and expected_probes and bool(os.environ.get("COMMON_SDIST_SHA256")) and counts is not None and counts["tests"] == 254 and counts["errors"] == 0 and counts["failures"] == 0 and counts["skipped"] == 0 and os.environ.get("TEST_OUTCOME") == "success" and os.environ.get("PROBE_OUTCOME") == "success" and os.environ.get("POSTTEST_OUTCOME") == "success"
+          receipt["status"] = "passed" if passed else "failed_or_incomplete"
+          receipt_path.write_text(json.dumps(receipt, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+          if not passed:
+              raise SystemExit("Public Core wheel cell did not complete its exact installed suite")
+          PY
+      - name: Assemble bounded public-cell evidence
+        if: always()
+        timeout-minutes: 2
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          files=()
+          for path in \
+            "$RUNNER_TEMP/core-0.10.3-public-cell.json" \
+            "$RUNNER_TEMP/core-0.10.3-public-installed.json" \
+            "$RUNNER_TEMP/core-0.10.3-public-posttest.json" \
+            "$RUNNER_TEMP/core-0.10.3-public-probes.json" \
+            "$RUNNER_TEMP/core-0.10.3-public-tests.xml" \
+            "$RUNNER_TEMP/core-0.10.3-public-release.json" \
+            "$RUNNER_TEMP/core-0.10.3-producer-evidence.json" \
+            "$RUNNER_TEMP/core-wheel-bounds/deadline.json" \
+            "$RUNNER_TEMP/core-wheel-bounds/failure-receipt.json" \
+            "$RUNNER_TEMP/core-wheel-bounds/commands.json" \
+            "$RUNNER_TEMP/core-wheel-bounds/logs"/*; do
+            [[ -f "$path" ]] && files+=("$path")
+          done
+          if ! python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name assemble-public-cell-evidence -- \
+            python3 tools/core_python_qualification_runner.py bundle --output "$RUNNER_TEMP/core-public-cell-evidence" --maximum-bytes 16777216 "${files[@]}"; then
+            python3 - "$RUNNER_TEMP/core-wheel-bounds/commands.json" "$RUNNER_TEMP/core-wheel-bounds/last-command-failure.json" <<'PY'
+          import json, pathlib, sys
+          source, output = map(pathlib.Path, sys.argv[1:])
+          rows = json.loads(source.read_text(encoding="utf-8")) if source.is_file() and source.stat().st_size <= 1048576 else []
+          last = rows[-1] if rows else {}
+          keys = ("name", "startedUtc", "endedUtc", "appliedAllowanceSeconds", "rawExitCode", "captureExitCode", "timedOut", "overflow", "observedBytes", "capturedBytes", "logSha256")
+          output.write_text(json.dumps({"profile": "umf.core-python-qualification-failure/1", "status": "failed_or_incomplete", "lastCommand": {key: last.get(key) for key in keys}}, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+          PY
+            python3 tools/core_python_qualification_runner.py bundle --output "$RUNNER_TEMP/core-public-cell-evidence" --maximum-bytes 16777216 "$RUNNER_TEMP/core-wheel-bounds/deadline.json" "$RUNNER_TEMP/core-wheel-bounds/last-command-failure.json"
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: core-0.10.3-public-install-${{ matrix.cohort }}-py${{ matrix.expected-python-minor }}
+          path: ${{ runner.temp }}/core-public-cell-evidence
+          if-no-files-found: error

@@ -128,6 +128,13 @@ publisher with exact source and archive pins. An explicit main-branch dispatch
 selects the source and new release tag; private SDKs and the site's separate
 installed-browser pin are outside this route.
 
+If promotion stops after draft creation, pass that draft's numeric
+`draft_release_id` with the same tag and source. Actions reruns the complete
+qualification and requires the existing draft's exact tag, source and all four
+asset digests to match before publication. It does not replace draft assets.
+Draft verification uses the release ID because GitHub's tag lookup does not
+return the unpublished draft.
+
 The public package `@documentdrivendx/umf-schema-browser` is published only by
 the Actions workflow [`publish-schema-browser-npm.yml`](../../../../.github/workflows/publish-schema-browser-npm.yml).
 Publishing verifies the exact public GitHub release, immutable tag target,
