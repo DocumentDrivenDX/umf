@@ -1,0 +1,16 @@
+{
+  "status": "runner-source-and-observer-controls-gate-passed",
+  "packetSha256": "dbd2506f5c88eb17753293adf750d39c89445b6ed2808aafbc43ab10d94d0478",
+  "runnerSha256": "ad2e7f74ef4c4a606aa0e8a83610e7e2e035e2c466a744fa0699489fd4f9bdee",
+  "membersVerified": 12,
+  "independentObserverControls": 4,
+  "fixtureSha256": "91a419debb54378a60982480259c48e02860695229ef8eed748a25758f8426fb",
+  "review": [
+    "DedicatedtrustedobserverconnectionreadOnly+UTC+rowsecurityon; session/currentuser/role/bypassauthoritysamebeforeafter",
+    "Handwrittenexact3initialrows assertedbeforeeffectandafterrollback, noempty-RLS falsecomparison",
+    "Hostroleidentity checkedunchangedbefore/aftereffect; ownerpgcatalogcontextpreserved",
+    "Allpreviousfullrow/catalog/history/READYbindings/prefix/fenceoraclesretained",
+    "Actualinitial-onlydiagnostic hash39e831 audited: owner0/admin3 rows; no successorcompiled/applied; exactDB/role/settingsrestored"
+  ],
+  "limits": "Clears exact007runner+unchangedfixture/candidate012 for localnative retry only. Fourcontroltests independentlypassed inpacket; shippingtestfixturepathneedsseparateexplicitfixture/wiringfixbeforefinalCI. Prior006validationlogsinpacketremainpriorclaims, notnewtypecheck. No acceptedfullnativecase yet."
+}

@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "/Users/erik/.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/bin/python3.11",
+    "-I",
+    "/Users/erik/.codex/worktrees/g02-final-integration/umf/tests/codegen/offline_mirror_probe_legacy.py",
+    "--wheelhouse",
+    "/private/tmp/umf-g02-legacy-public055-replay-001/input/default-mirror/mirror/files",
+    "--lock",
+    "/private/tmp/umf-g02-legacy-public055-replay-001/input/default-mirror/cohort.lock.json",
+    "--mirror",
+    "/private/tmp/umf-g02-legacy-public055-replay-001/fresh-mirror",
+    "--generator-corpus",
+    "/private/tmp/umf-g02-legacy-public055-replay-001/input/default-mirror/qualification/fixtures/codegen/generator-corpus.json",
+    "--fixture-root",
+    "/private/tmp/umf-g02-legacy-public055-replay-001/input/default-mirror/qualification/fixtures/table-lifecycle/legal",
+    "--report",
+    "/private/tmp/umf-g02-legacy-public055-replay-001/replay-report.json"
+  ],
+  "startUtc": "2026-10-24T01:38:18.029706+00:00",
+  "endUtc": "2026-10-24T01:55:04.725626+00:00",
+  "returncode": 0,
+  "stdoutSha256": "686c8b6c4d2554a67d533f6f3091ed1f9c92400a0d0bd5c46afb420f69a462b2",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "scope": "Fresh actual legacy public union replay on local Mac27/CPython3.11.17 only; not final G02 four-cell qualification"
+}

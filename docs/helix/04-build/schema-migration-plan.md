@@ -277,6 +277,62 @@ version after checking concurrent publishers; historical 0.4.49 artifacts cannot
 be relabeled. Public platform support follows shipped and verified artifacts,
 not a historical platform count.
 
+#### Historical pre-reconciliation G02 integration checkpoint — Core 0.10.1
+
+This is a preserved pre-reconciliation checkpoint for the earlier Core 0.10.1
+producer. Its source comparison and qualification receipts are historical evidence;
+they do not describe the current Core 0.10.2 cohort or qualify reconciled source.
+
+SDK 0.5.7 is selected after the separate Core 0.10.1 publication at
+`umf-v0.5.6`, commit `259bf1ed91466ff7e9782d7517c14f2112282026`.
+The integration retains those immutable Core wheel/sdist bytes and their original
+producer identity. Comparison against the regenerated SDK 0.5.7 source maps
+32 Core Python/JSON payloads: 31 match exactly; the generated metamodel manifest
+differs only in two root `package.json` fingerprints. The Core semantic document
+version remains 0.10.0. Reusing the published component requires fresh installed
+composition tests; an SDK source fingerprint does not relabel its Core producer.
+
+The combined source passed type checking, nine focused G02 compiler tests
+(47 assertions), five host phase tests, one ordinary-runtime refusal test and
+three host-error privacy tests. The reviewed single-cell selector and aggregate
+verifier passed 29 self-contained tests in the integration checkout. These checks precede the final
+source freeze and do not replace current-source CI or native acceptance.
+
+The actual published 0.5.5 legacy mirror passed a fresh network-denied replay on
+macOS 27.0.1 arm64 / CPython 3.11.17 using its original corpus and fixtures.
+Independent review verified the archive, all 29 original wheels, actual exit
+status and probe receipts. The retained [replay evidence](evidence/mig-g02/final-integration/legacy-public-0.5.5/independent-review.json)
+qualifies that legacy path only. Missing/tamper controls use separate temporary
+copies; the generated mirror is disposable test output excluded from publication.
+
+The additional date/instant/UUID/boolean native fixture passed its owner run on
+PostgreSQL 18.6 with the frozen installed cohort: five cases and 78 checks,
+including retained ordinary creates, exact full-row oracles and matched-NULL
+rollback with the authenticated READY receipt and ingress fence retained.
+The [actual report and dispatch](evidence/mig-g02/final-integration/temporal-native-attempt-005/runner-report.json)
+bind the reviewed runner and fixture; settings and database/role inventory
+projections were restored. A separate installed environment independently passed
+the same five cases and 78 checks; all 431 installed payloads remained exact
+afterward. The [independent receipt](evidence/mig-g02/final-integration/temporal-independent-007-review.json)
+records that gate and owned-resource cleanup. Full settings/inventory projection
+equality is the separate owner-run evidence, not an inferred independent check.
+
+Earlier harness failures are retained: an initial boolean cast, a query assuming
+transient progress survives publication, and unequal observation roles under
+FORCE RLS. An initial-install-only diagnostic proved the owner saw zero rows
+while the administrative observer saw all three. The corrected runner uses one
+read-only UTC administrative observer and an explicit manual three-row baseline.
+A separate socket-permission failure occurred before native dispatch. These
+failures do not substitute for the successful run or its independent gate.
+
+Final candidate review includes a closed four-cell wheel-union index and actual
+network-denied installation from that union on each supported runtime cell.
+Aggregate source review passed its scoped gate. Final regeneration, current-source CI, independently
+reviewed native evidence, merge and SDK publication remain open. The
+[0.5.7 candidate notes](../05-deploy/sdk-release-notes-0.5.7.md) retain the finite
+capability and residual migration scopes. Earlier 0.5.6 backfill candidate
+receipts remain historical evidence with their original components and hashes.
+
 ### Successor work queue and closure gates
 
 After each reviewed release, update the residual matrix with exact qualified

@@ -1,0 +1,8 @@
+{
+  "runnerPacket007Sha256": "dbd2506f5c88eb17753293adf750d39c89445b6ed2808aafbc43ab10d94d0478",
+  "integrationSupplement008Sha256": "9a8bacf8637249e0ea6f198890d541c0335423dcab3329ac7dd9bbd9a77c2c99",
+  "sourcePacketObservedHeadQualification": "The observedHead c46d483 in packets007/008 was inherited from the predecessor packet, not a fresh observation. Integration was at aca8d14 while these packets were authored. results/validation.json retains packet006 validation; fresh007/008 controls are separately scoped in their manifests.",
+  "diagnosticScope": "Initial deployment only: configured owner sees zero FORCE-RLS rows; same login RESET ROLE sees exact three fixture rows. No successor migration or backfill dispatched. Full baseline restored.",
+  "correction": "Dedicated read-only UTC administrative observer for identical before/after authority; explicit initial three-row manual oracle, exact post-failure equality and host-owner preservation; existing READY/fencing requirements retained.",
+  "nativeAcceptance": "Pending fresh exact-runner execution; source review is not native acceptance."
+}

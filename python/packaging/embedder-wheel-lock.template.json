@@ -2,6 +2,11 @@
   "profile": "umf.embedder-wheel-lock/1",
   "status": "template",
   "description": "U7/U8 administrative Python wheel cohort. The cells below are intended qualification targets, not completed support claims. Capture exact immutable wheel hashes and receipts after release candidates are built; never treat this template as an install lock.",
+  "coreSemanticVersion": "0.10.0",
+  "packageRoots": {
+    "production": ["umf-core", "umf-access", "umf-codegen", "weft-sql"],
+    "qualificationDrivers": ["psycopg", "psycopg-binary", "jsonschema", "ruamel-yaml"]
+  },
   "intendedCells": [
     {"os": "ubuntu-24.04", "architecture": "x86_64", "libc": "glibc >= 2.34", "python": "3.11"},
     {"os": "ubuntu-24.04", "architecture": "x86_64", "libc": "glibc >= 2.34", "python": "3.14"},

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.machinery
 import importlib.util
 import json
 import os
@@ -11,6 +12,7 @@ import platform
 import subprocess
 import tempfile
 import venv
+import zipfile
 import shutil
 from pathlib import Path
 
@@ -19,17 +21,51 @@ SPEC = importlib.util.spec_from_file_location('python_package_mirror', ROOT / 's
 assert SPEC and SPEC.loader
 MIRROR = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MIRROR)
+SELECTOR_SPEC = importlib.util.spec_from_file_location('cohort_selector', ROOT / 'tests/codegen/cohort_selector.py')
+assert SELECTOR_SPEC and SELECTOR_SPEC.loader
+SELECTOR = importlib.util.module_from_spec(SELECTOR_SPEC)
+SELECTOR_SPEC.loader.exec_module(SELECTOR)
+AGGREGATE_SPEC = importlib.util.spec_from_file_location('aggregate_cohort', ROOT / 'tests/codegen/aggregate_cohort.py')
+assert AGGREGATE_SPEC and AGGREGATE_SPEC.loader
+AGGREGATE = importlib.util.module_from_spec(AGGREGATE_SPEC)
+AGGREGATE_SPEC.loader.exec_module(AGGREGATE)
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--wheelhouse', required=True, type=Path)
-parser.add_argument('--lock', required=True, type=Path)
+parser.add_argument('--wheelhouse', type=Path)
+parser.add_argument('--lock', type=Path)
+parser.add_argument('--aggregate-index', type=Path)
+parser.add_argument('--selected-cell')
+parser.add_argument('--expected-source-commit')
 parser.add_argument('--mirror', required=True, type=Path)
 parser.add_argument('--generator-corpus', required=True, type=Path)
 parser.add_argument('--fixture-root', type=Path, default=ROOT / 'fixtures/table-lifecycle/legal')
 parser.add_argument('--report', required=True, type=Path)
 args = parser.parse_args()
 
-lock, checked_wheels = MIRROR.locked_wheels(args.lock, args.wheelhouse)
+aggregate_mode = args.aggregate_index is not None or args.selected_cell is not None
+if aggregate_mode:
+    if not args.aggregate_index or not args.selected_cell or args.wheelhouse or args.lock:
+        raise SystemExit('Aggregate mode requires --aggregate-index and --selected-cell only')
+    if not args.expected_source_commit:
+        raise SystemExit('Aggregate mode requires --expected-source-commit')
+    try:
+        aggregate_index, lock, checked_wheels = AGGREGATE.validate_aggregate(
+            args.aggregate_index, args.selected_cell, args.mirror)
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        raise SystemExit(f'Aggregate validation refused: {error}') from None
+    if aggregate_index.get('sourceCommit') != args.expected_source_commit:
+        raise SystemExit('Aggregate source commit differs from this checked-out candidate')
+    aggregate_root = args.aggregate_index.parent
+    args.wheelhouse = aggregate_root / aggregate_index['union']['wheelhouse']
+    args.lock = aggregate_root / next(
+        cell['lock']['path'] for cell in aggregate_index['cells']
+        if cell['id'] == args.selected_cell)
+    requirements_file = None
+else:
+    if args.wheelhouse is None or args.lock is None:
+        raise SystemExit('Single-cell mode requires --wheelhouse and --lock')
+    lock, checked_wheels = MIRROR.locked_wheels(args.lock, args.wheelhouse)
+    requirements_file = args.mirror / 'requirements.lock'
 expected_cells = lock.get('intendedCells', lock.get('supportedCells', []))
 cell = MIRROR.select_runner_cell(expected_cells, platform.python_version().rsplit('.', 1)[0])
 if cell is None:
@@ -38,16 +74,50 @@ try:
     network_prefix, isolation_name = MIRROR.network_isolation_prefix()
 except RuntimeError as error:
     raise SystemExit(str(error)) from None
-manifest = MIRROR.build_mirror(args.lock, args.wheelhouse, args.mirror)
+if aggregate_mode:
+    manifest = MIRROR.read_json(args.mirror / 'manifest.json')
+else:
+    manifest = MIRROR.build_mirror(args.lock, args.wheelhouse, args.mirror)
 expected_versions = {item['distribution']: item['version'] for item in lock['packages']}
-if len(expected_versions) != 18 or manifest['wheelCount'] < 18:
-    raise SystemExit(f'Expected all 18 locked packages and at least one wheel each; got {len(expected_versions)}/{manifest["wheelCount"]}')
+declared_distributions = {MIRROR.normalized_name(item['distribution']) for item in lock['packages']}
+locked_distributions = [item['distribution'] for item in lock['wheels']]
+if (not declared_distributions or len(expected_versions) != len(lock['packages'])
+        or len(checked_wheels) != len(declared_distributions)
+        or len(locked_distributions) != len(declared_distributions)
+        or set(locked_distributions) != declared_distributions
+        or len(set(locked_distributions)) != len(locked_distributions)
+        or (not aggregate_mode and manifest['wheelCount'] != len(declared_distributions))
+        or (aggregate_mode and manifest['wheelCount'] != len(aggregate_index['union']['inventory']))):
+    raise SystemExit('Mirror wheel inventory is not exactly one wheel per declared distribution')
+
+if 'coreSemanticVersion' in lock:
+    resolution = lock.get('dependencyResolution', {})
+    roots = lock.get('packageRoots', {})
+    try:
+        from packaging.markers import default_environment
+    except ImportError:
+        from pip._vendor.packaging.markers import default_environment
+    marker_environment = default_environment()
+    if resolution.get('markerEnvironment') != marker_environment:
+        raise SystemExit('Offline probe marker environment differs from the acquisition cell environment')
+    recomputed = SELECTOR.resolve_dependency_closure(
+        roots.get('production', []) + roots.get('qualificationDrivers', []),
+        lock['packages'],
+        {item['distribution']: item for item in checked_wheels},
+        marker_environment,
+    )
+    if (recomputed['selectedNormalizedDistributions'] != sorted(declared_distributions)
+            or recomputed['checkedRequirements'] != resolution.get('checkedRequirements')):
+        raise SystemExit('Offline lock package set differs from exact-wheel METADATA closure')
 
 with tempfile.TemporaryDirectory(prefix='umf-offline-mirror-') as directory:
     # macOS commonly exposes TMPDIR through a symlinked /var/folders alias;
     # package writers reject symlink ancestors to prevent path substitution.
     # Resolve our private disposable workspace instead of weakening that guard.
     work = Path(directory).resolve()
+    if aggregate_mode:
+        requirements_file = work / 'selected-requirements.lock'
+        requirements_file.write_text(AGGREGATE.requirements_text(lock), encoding='utf-8')
     environment = work / 'venv'
     venv.EnvBuilder(with_pip=True).create(environment)
     python = environment / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
@@ -55,7 +125,7 @@ with tempfile.TemporaryDirectory(prefix='umf-offline-mirror-') as directory:
     install = subprocess.run(
         network_prefix + [str(python), '-I', '-m', 'pip', '--isolated', 'install', '--disable-pip-version-check',
          '--no-cache-dir', '--only-binary=:all:', '--require-hashes', '--index-url', index,
-         '-r', str(args.mirror / 'requirements.lock')],
+         '-r', str(requirements_file)],
         check=False, text=True, capture_output=True,
     )
     if install.returncode:
@@ -69,7 +139,7 @@ with tempfile.TemporaryDirectory(prefix='umf-offline-mirror-') as directory:
     # missing and altered bytes with the same network-denial boundary active.
     missing_mirror = work / 'missing-mirror'
     shutil.copytree(args.mirror, missing_mirror)
-    missing_file = next((missing_mirror / 'files').glob('*.whl'))
+    missing_file = missing_mirror / 'files' / checked_wheels[0]['filename']
     missing_file.unlink()
     missing_env = work / 'missing-venv'
     venv.EnvBuilder(with_pip=True).create(missing_env)
@@ -77,7 +147,7 @@ with tempfile.TemporaryDirectory(prefix='umf-offline-mirror-') as directory:
     missing_install = subprocess.run(
         network_prefix + [str(missing_python), '-I', '-m', 'pip', '--isolated', 'install',
          '--disable-pip-version-check', '--no-cache-dir', '--only-binary=:all:', '--require-hashes',
-         '--index-url', (missing_mirror / 'simple').as_uri(), '-r', str(missing_mirror / 'requirements.lock')],
+         '--index-url', (missing_mirror / 'simple').as_uri(), '-r', str(requirements_file)],
         check=False, text=True, capture_output=True,
     )
     missing_diagnostic = (missing_install.stdout + missing_install.stderr).lower()
@@ -86,7 +156,7 @@ with tempfile.TemporaryDirectory(prefix='umf-offline-mirror-') as directory:
 
     tampered_mirror = work / 'tampered-mirror'
     shutil.copytree(args.mirror, tampered_mirror)
-    tampered_file = next((tampered_mirror / 'files').glob('*.whl'))
+    tampered_file = tampered_mirror / 'files' / checked_wheels[0]['filename']
     with tampered_file.open('ab') as stream:
         stream.write(b'UMF-OFFLINE-MIRROR-TAMPER')
     tampered_env = work / 'tampered-venv'
@@ -95,7 +165,7 @@ with tempfile.TemporaryDirectory(prefix='umf-offline-mirror-') as directory:
     tampered_install = subprocess.run(
         network_prefix + [str(tampered_python), '-I', '-m', 'pip', '--isolated', 'install',
          '--disable-pip-version-check', '--no-cache-dir', '--only-binary=:all:', '--require-hashes',
-         '--index-url', (tampered_mirror / 'simple').as_uri(), '-r', str(tampered_mirror / 'requirements.lock')],
+         '--index-url', (tampered_mirror / 'simple').as_uri(), '-r', str(requirements_file)],
         check=False, text=True, capture_output=True,
     )
     tampered_diagnostic = (tampered_install.stdout + tampered_install.stderr).lower()
@@ -176,7 +246,36 @@ with tempfile.TemporaryDirectory(prefix='umf-offline-mirror-') as directory:
     )
     observed_versions = json.loads(versions.stdout)
     if observed_versions != expected_versions:
-        raise SystemExit('Installed full-stack distribution versions differ from the 18-package lock')
+        raise SystemExit('Installed full-stack distribution versions differ from the complete package lock')
+
+    # Prove that installed Core is the selected compiled wheel rather than a
+    # same-named Python fallback or a different native binary. The member and
+    # installed-file digests are compared against the exact locked wheel bytes.
+    core_wheels = [item for item in checked_wheels if item['distribution'] == 'umf-core']
+    if len(core_wheels) != 1:
+        raise SystemExit('Selected Core must have exactly one immutable wheel in the lock')
+    core_wheel = args.wheelhouse / core_wheels[0]['filename']
+    with zipfile.ZipFile(core_wheel) as archive:
+        native_members = [name for name in archive.namelist()
+                          if name.startswith('umf/') and name.endswith(('.abi3.so', '.abi3.dylib', '.abi3.pyd'))
+                          and name.rsplit('/', 1)[-1].startswith('_rust_core')]
+        if len(native_members) != 1:
+            raise SystemExit('Selected Core wheel must contain exactly one umf._rust_core native extension')
+        native_member = native_members[0]
+        wheel_native_sha = hashlib.sha256(archive.read(native_member)).hexdigest()
+    native_probe = subprocess.run(
+        network_prefix + [str(python), '-I', '-c', "\nimport hashlib, importlib.machinery, importlib.metadata, json, pathlib\nfrom umf import current_core_version, read_document, validate_document, write_document\nfrom umf._rust import _rust_core\nimport umf\nmodule_path = pathlib.Path(_rust_core.__file__).resolve()\nsite = pathlib.Path(umf.__file__).resolve().parent.parent\nassert isinstance(_rust_core.__spec__.loader, importlib.machinery.ExtensionFileLoader)\nassert module_path.is_relative_to(site)\nassert module_path.parent == pathlib.Path(umf.__file__).resolve().parent\nsource = {'umf': current_core_version(), 'id': 'offline-native-core-probe', 'vocabularies': {}, 'modules': []}\nassert validate_document(source).valid\nroundtrip = json.loads(write_document(read_document(json.dumps(source), format='json'), format='json'))\nassert roundtrip == source\nprint(json.dumps({'distributionVersion': importlib.metadata.version('umf-core'), 'semanticCoreVersion': current_core_version(), 'modulePath': str(module_path), 'nativeSha256': hashlib.sha256(module_path.read_bytes()).hexdigest(), 'roundtrip': roundtrip}))\n"],
+        check=False, text=True, capture_output=True,
+    )
+    if native_probe.returncode:
+        raise SystemExit('Installed Core native import/API probe failed:\n' + native_probe.stdout + native_probe.stderr)
+    native_observed = json.loads(native_probe.stdout)
+    expected_core_version = expected_versions['umf-core']
+    expected_semantic_version = lock.get('coreSemanticVersion')
+    if (native_observed['distributionVersion'] != expected_core_version
+            or native_observed['semanticCoreVersion'] != expected_semantic_version
+            or native_observed['nativeSha256'] != wheel_native_sha):
+        raise SystemExit('Installed Core distribution/API versions or native binary differ from selected inputs')
     receipt = {
         'profile': 'umf-offline-mirror-installed/1',
         'cell': {'os': cell['os'], 'architecture': cell['architecture'], 'libc': cell['libc'],
@@ -189,15 +288,32 @@ with tempfile.TemporaryDirectory(prefix='umf-offline-mirror-') as directory:
                     'sourceBuilds': 'forbidden', 'requireHashes': True, 'dependencyCheck': 'passed',
                     'networkIsolation': isolation_name},
         'installedVersions': observed_versions,
+        'coreNative': {'wheel': core_wheels[0]['filename'], 'wheelSha256': core_wheels[0]['sha256'],
+                       'member': native_member, 'memberSha256': wheel_native_sha,
+                       'installedPath': native_observed['modulePath'],
+                       'installedSha256': native_observed['nativeSha256'],
+                       'distributionVersion': native_observed['distributionVersion'],
+                       'semanticCoreVersion': native_observed['semanticCoreVersion'],
+                       'roundtrip': 'passed'},
         'probes': {
             'umf-codegen-generate': 'passed', 'umf-codegen-check': 'passed',
             'umf-table-check': 'passed', 'umf-table-new': 'passed',
             'umf-table-apply': 'approval-required before connection',
+            'umf-core-native-import': 'passed', 'umf-core-public-validation': 'passed',
+            'umf-core-public-roundtrip': 'passed',
             'missing-wheel': 'refused under OS network denial',
             'tampered-wheel': 'refused under OS network denial',
         },
         'status': 'passed',
     }
+    if aggregate_mode:
+        receipt['aggregate'] = {
+            'profile': AGGREGATE.PROFILE,
+            'indexSha256': MIRROR.sha256(args.aggregate_index),
+            'sourceCommit': aggregate_index['sourceCommit'],
+            'selectedCell': args.selected_cell,
+            'sharedUnionMirror': str(args.mirror),
+        }
 args.report.parent.mkdir(parents=True, exist_ok=True)
 args.report.write_text(json.dumps(receipt, indent=2, sort_keys=True) + '\n', encoding='utf-8')
 print(json.dumps({'status': receipt['status'], 'cell': receipt['cell'], 'wheels': receipt['wheelCount']}))

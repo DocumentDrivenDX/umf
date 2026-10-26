@@ -298,6 +298,30 @@ def capture_lock(template_path: Path, wheelhouse: Path, output_path: Path) -> di
     cohort = template.get('cohort', 'default')
     if not isinstance(cohort, str) or not cohort:
         raise ValueError('Lock template cohort must be a non-empty string')
+    core_semantic_version = template.get('coreSemanticVersion')
+    package_roots = template.get('packageRoots')
+    dependency_resolution = template.get('dependencyResolution')
+    if any(value is not None for value in (core_semantic_version, package_roots, dependency_resolution)):
+        if (not isinstance(core_semantic_version, str) or not core_semantic_version
+                or not isinstance(package_roots, dict) or not isinstance(dependency_resolution, dict)):
+            raise ValueError('Derived Core lock metadata must include semantic version, roots and resolution')
+        expected_selected = sorted(expected)
+        if (dependency_resolution.get('selectedNormalizedDistributions') != expected_selected
+                or not isinstance(dependency_resolution.get('checkedRequirements'), list)
+                or not isinstance(package_roots.get('production'), list)
+                or not isinstance(package_roots.get('qualificationDrivers'), list)
+                or not isinstance(dependency_resolution.get('markerEnvironment'), dict)):
+            raise ValueError('Derived lock closure must exactly describe packages and explicit root classes')
+        roots = [normalized_name(name) for role in ('production', 'qualificationDrivers')
+                 for name in package_roots[role] if isinstance(name, str)]
+        if (len(roots) != len(package_roots['production']) + len(package_roots['qualificationDrivers'])
+                or not roots or len(set(roots)) != len(roots) or not set(roots).issubset(expected)):
+            raise ValueError('Derived lock roots must be unique declared package distributions')
+        for edge in dependency_resolution['checkedRequirements']:
+            if (not isinstance(edge, dict) or not isinstance(edge.get('from'), str)
+                    or edge['from'] not in expected or not isinstance(edge.get('requirement'), str)
+                    or not isinstance(edge.get('active'), bool)):
+                raise ValueError('Derived lock requirement edges must be complete and refer to declared packages')
     locked = {
         'profile': PROFILE,
         'status': 'locked',
@@ -311,6 +335,10 @@ def capture_lock(template_path: Path, wheelhouse: Path, output_path: Path) -> di
         ],
         'wheels': sorted((wheel for wheels in found.values() for wheel in wheels), key=lambda wheel: wheel['filename']),
     }
+    if core_semantic_version is not None:
+        locked.update({'coreSemanticVersion': core_semantic_version,
+                       'packageRoots': package_roots,
+                       'dependencyResolution': dependency_resolution})
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(locked, indent=2, sort_keys=True) + '\n', encoding='utf-8')
     return locked
