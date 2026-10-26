@@ -1198,7 +1198,7 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     self.assertIsNone(pending_provider._creation_capability)
                     self.assertIsNone(pending_provider._schema_oid)
                     with patch.object(native.LocalPostgresSupervisor,
-                                      '_validate_installation_binaries', autospec=True,
+                                      '_validate_installation_binaries',
                                       return_value=(profile.postgres_binary,
                                                     profile.initdb_binary)), \
                          patch.object(native, '_sha_file', return_value='b' * 64):
