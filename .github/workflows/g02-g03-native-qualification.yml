@@ -1,0 +1,417 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
+name: G02 and G03 selected native qualification
+
+on:
+  push:
+    branches:
+      - codex/migration-g02-g03-native-qualification
+
+permissions:
+  contents: read
+
+jobs:
+  selected-native:
+    name: Bounded UMF and Weft PostgreSQL 18.6 qualification
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    services:
+      postgres:
+        image: postgres:18.6
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 12
+    steps:
+      - name: Start the original monotonic deadline and fresh failure receipt
+        if: always()
+        timeout-minutes: 1
+        env:
+          QUALIFICATION_DIR: ${{ runner.temp }}/umf-g02-g03-native-qualification
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_RUN_ATTEMPT: ${{ github.run_attempt }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_WORKFLOW: ${{ github.workflow }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$QUALIFICATION_DIR/logs" "$QUALIFICATION_DIR/reports"
+          START_MS="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+          DEADLINE_MS="$((START_MS + 1800000))"
+          printf '%s\n' "$START_MS" > "$QUALIFICATION_DIR/monotonic-start-ms"
+          printf '%s\n' "$DEADLINE_MS" > "$QUALIFICATION_DIR/monotonic-deadline-ms"
+          cat > "$QUALIFICATION_DIR/receipt.json" <<EOF
+          {
+            "profile": "umf.g02-g03-selected-native-qualification/1",
+            "status": "FAIL_OR_UNKNOWN",
+            "reason": "The workflow did not reach its passing finalizer.",
+            "sourceCommit": "${GITHUB_SHA}",
+            "runId": "${GITHUB_RUN_ID}",
+            "runAttempt": "${GITHUB_RUN_ATTEMPT}",
+            "ref": "${GITHUB_REF}",
+            "workflow": "${GITHUB_WORKFLOW}",
+            "selectedScopeOnly": true,
+            "fullG03Campaign": "OPEN"
+          }
+          EOF
+
+      - uses: actions/checkout@v4
+        timeout-minutes: 2
+
+      - uses: oven-sh/setup-bun@v2
+        timeout-minutes: 2
+        with:
+          bun-version: 1.4.3
+
+      - uses: actions/setup-python@v5
+        timeout-minutes: 2
+        with:
+          python-version: '3.11'
+
+      - name: Check source freeze and run the bounded selected cohort
+        env:
+          QUALIFICATION_DIR: ${{ runner.temp }}/umf-g02-g03-native-qualification
+          QUALIFICATION_STAGE_DIR: ${{ runner.temp }}/umf-g02-g03-native-qualification-upload
+          PG_DSN: host=127.0.0.1 port=5432 dbname=postgres user=postgres application_name=umf_g02_g03_native_gate connect_timeout=5 options='-c statement_timeout=120000 -c lock_timeout=5000'
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_RUN_ATTEMPT: ${{ github.run_attempt }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_WORKFLOW: ${{ github.workflow }}
+        run: |
+          set -euo pipefail
+          START_MS="$(cat "$QUALIFICATION_DIR/monotonic-start-ms")"
+          DEADLINE_MS="$(cat "$QUALIFICATION_DIR/monotonic-deadline-ms")"
+          NOW_MS="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+          REMAINING_SECONDS="$(((DEADLINE_MS - NOW_MS - 60000) / 1000))"
+          if (( REMAINING_SECONDS <= 0 )); then
+            echo "Original 30-minute budget exhausted before qualification work." >&2
+            exit 124
+          fi
+          timeout --signal=TERM --kill-after=10s "${REMAINING_SECONDS}s" bash -euo pipefail <<'BOUNDED_NATIVE_WORK'
+          EVIDENCE="$QUALIFICATION_DIR"
+          WORK="$RUNNER_TEMP/umf-g02-g03-native-work"
+          mkdir -p "$WORK" "$WORK/mini-racer" "$WORK/builder-wheels" "$WORK/installed" "$EVIDENCE/logs" "$EVIDENCE/reports"
+
+          run_bounded() {
+            local name="$1" maximum="$2" now_ms deadline_ms remaining limit status log started_ms ended_ms
+            shift 2
+            now_ms="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+            deadline_ms="$(cat "$EVIDENCE/monotonic-deadline-ms")"
+            remaining=$(((deadline_ms - now_ms - 60000) / 1000))
+            if (( remaining <= 0 )); then
+              echo "Aggregate work deadline exhausted before $name" >&2
+              log="$EVIDENCE/logs/$name.log"
+              printf '%s\n' "Original aggregate work deadline exhausted before $name" >"$log"
+              ended_ms="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+              python -I - "$EVIDENCE/command-records.jsonl" "$log" "$name" "$name" 124 "$((ended_ms - now_ms))" "$@" <<'PY'
+          import hashlib, json, pathlib, sys
+          records, log_path, name, stage, raw_exit, duration, *argv = sys.argv[1:]
+          payload = pathlib.Path(log_path).read_bytes()
+          record = {"name": name, "stage": stage, "argv": argv,
+                    "rawExit": int(raw_exit), "monotonicDurationMs": int(duration),
+                    "logBytes": len(payload), "logSha256": hashlib.sha256(payload).hexdigest(),
+                    "truncated": False}
+          with pathlib.Path(records).open("a", encoding="utf-8") as stream:
+              stream.write(json.dumps(record, sort_keys=True) + "\n")
+          PY
+              return 124
+            fi
+            limit="$maximum"
+            if (( remaining < limit )); then limit="$remaining"; fi
+            log="$EVIDENCE/logs/$name.log"
+            started_ms="$now_ms"
+            set +e
+            (ulimit -f 2048; timeout --signal=TERM --kill-after=10s "${limit}s" "$@") >"$log" 2>&1
+            status=$?
+            set -e
+            ended_ms="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
+            if (( status != 0 )); then
+              head -c 4096 "$log" >&2 || true
+              echo "Command $name failed with status $status (limit ${limit}s)" >&2
+            fi
+            python -I - "$EVIDENCE/command-records.jsonl" "$log" "$name" "$name" "$status" "$((ended_ms - started_ms))" "$@" <<'PY'
+          import hashlib, json, pathlib, sys
+          records, log_path, name, stage, raw_exit, duration, *argv = sys.argv[1:]
+          payload = pathlib.Path(log_path).read_bytes()
+          record = {"name": name, "stage": stage, "argv": argv,
+                    "rawExit": int(raw_exit), "monotonicDurationMs": int(duration),
+                    "logBytes": len(payload), "logSha256": hashlib.sha256(payload).hexdigest(),
+                    "truncated": len(payload) >= 1048576}
+          with pathlib.Path(records).open("a", encoding="utf-8") as stream:
+              stream.write(json.dumps(record, sort_keys=True) + "\n")
+          PY
+            local log_bytes
+            log_bytes="$(find "$EVIDENCE/logs" -type f -name '*.log' -exec wc -c {} + | awk 'END {print $1+0}')"
+            if (( log_bytes > 1048576 )); then
+              echo "Captured command logs exceed the 1 MiB limit" >&2
+              return 1
+            fi
+            if (( status != 0 )); then return "$status"; fi
+          }
+
+          run_bounded toolchain-identity 180 python -I - <<'PY'
+          import hashlib, json, os, pathlib, shutil, subprocess
+          tools = {}
+          for name in ("bun", "python", "git", "timeout"):
+              path = shutil.which(name)
+              resolved = pathlib.Path(path).resolve(strict=True)
+              version = subprocess.run([path, "--version"], check=True, text=True,
+                                       stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=10).stdout.strip()
+              with resolved.open("rb") as binary:
+                  binary_sha256 = hashlib.file_digest(binary, "sha256").hexdigest()
+              tools[name] = {"path": str(resolved), "version": version,
+                             "binarySha256": binary_sha256}
+          print(json.dumps(tools, sort_keys=True))
+          pathlib.Path(os.environ["QUALIFICATION_DIR"], "toolchain.json").write_text(
+              json.dumps(tools, indent=2, sort_keys=True) + "\n")
+          PY
+
+          run_bounded source-pins 180 python -I - <<'PY'
+          import hashlib, json, pathlib, subprocess
+
+          manifest_path = pathlib.Path("docs/helix/04-build/evidence/mig-g02-g03/native-qualification-source-pins.json")
+          pins = json.loads(manifest_path.read_text())
+          expected_commit = __import__("os").environ["GITHUB_SHA"]
+          actual_commit = subprocess.run(["git", "rev-parse", "HEAD"], check=True, text=True,
+                                         capture_output=True).stdout.strip()
+          assert actual_commit == expected_commit, (actual_commit, expected_commit)
+          for name, entry in pins["sourcePins"].items():
+              path = pathlib.Path(name)
+              digest = hashlib.sha256(path.read_bytes()).hexdigest()
+              assert digest == entry["sha256"], (name, digest, entry["sha256"])
+          print(json.dumps({"sourceCommit": actual_commit, "sourcePins": len(pins["sourcePins"])}))
+          PY
+          run_bounded bun-install 180 bun install --frozen-lockfile --ignore-scripts
+          run_bounded builder-wheel-download 180 python -m pip download --disable-pip-version-check \
+            --no-deps --only-binary=:all: --require-hashes \
+            --dest "$WORK/builder-wheels" \
+            -r docs/helix/04-build/evidence/mig-g02-g03/build-tools-requirements.txt
+          run_bounded builder-venv 180 python -m venv "$WORK/builder"
+          run_bounded builder-install 180 "$WORK/builder/bin/python" -m pip --isolated install \
+            --disable-pip-version-check --no-cache-dir --no-index --only-binary=:all: --no-deps \
+            --find-links "$WORK/builder-wheels" --require-hashes \
+            -r docs/helix/04-build/evidence/mig-g02-g03/build-tools-requirements.txt
+          run_bounded mini-racer-download 180 python -m pip download --disable-pip-version-check --no-deps --only-binary=:all: --dest "$WORK/mini-racer" mini-racer==0.14.1
+          run_bounded mini-racer-verify 180 python -I tests/codegen/verify_mini_racer_wheel.py \
+            --wheelhouse "$WORK/mini-racer" \
+            --pins docs/helix/04-build/evidence/praxis-embedder/mini-racer-wheel-pins.json \
+            --expected-platform linux-x86_64-glibc-2.27+
+          run_bounded cohort-build 480 "$WORK/builder/bin/python" tests/codegen/acquire_offline_cohort.py \
+            --output-dir "$WORK/cohort" \
+            --source-commit "$GITHUB_SHA" \
+            --expected-os ubuntu-24.04 \
+            --expected-architecture x86_64 \
+            --expected-python 3.11 \
+            --weft-wheel-url "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.53/weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl" \
+            --weft-wheel-filename 'weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl' \
+            --weft-wheel-sha256 "db01c4cf6357d674f1591609a2b9c83a9322ad8f8937c345e5950cc1582b83d2" \
+            --mini-racer-wheel "$WORK/mini-racer"/*.whl
+          run_bounded current-codegen-corpus 180 bun scripts/codegen-corpus.ts /tmp/g02-g03-current-codegen-corpus.json
+          run_bounded offline-cohort-probe 180 python -I tests/codegen/offline_mirror_probe.py \
+            --wheelhouse "$WORK/cohort/wheelhouse" \
+            --lock "$WORK/cohort/cohort.lock.json" \
+            --mirror "$WORK/cohort/mirror" \
+            --generator-corpus /tmp/g02-g03-current-codegen-corpus.json \
+            --report "$EVIDENCE/reports/offline-cohort.json"
+          run_bounded cohort-install 180 python -m venv "$WORK/installed"
+          run_bounded locked-install 180 "$WORK/installed/bin/python" -I -m pip --isolated install \
+            --disable-pip-version-check --no-cache-dir --no-index --only-binary=:all: \
+            --find-links "$WORK/cohort/wheelhouse" --require-hashes \
+            -r "$WORK/cohort/mirror/requirements.lock"
+          run_bounded locked-check 180 "$WORK/installed/bin/python" -I -m pip --isolated check
+          run_bounded postgres-version 180 "$WORK/installed/bin/python" -I - <<'PY'
+          import psycopg
+          with psycopg.connect("host=127.0.0.1 port=5432 dbname=postgres user=postgres connect_timeout=5 options='-c statement_timeout=120000 -c lock_timeout=5000'", autocommit=True) as connection:
+              version, number = connection.execute("select current_setting('server_version'), current_setting('server_version_num')").fetchone()
+          assert number == "180006", (version, number)
+          print({"postgresqlServerVersion": version, "postgresqlServerVersionNum": number})
+          PY
+          run_bounded g02-fixture 180 bun tests/lifecycle/g02-temporal-native-fixture.ts /tmp/g02-g03-temporal-fixture.json
+          run_bounded g03-fixture 180 bun tests/lifecycle/g03-defaults-native-fixture.ts /tmp/g02-g03-defaults-fixture.json
+          run_bounded fixture-guards 180 python -I - <<'PY'
+          import hashlib, json, pathlib
+          pins = json.loads(pathlib.Path("docs/helix/04-build/evidence/mig-g02-g03/native-qualification-source-pins.json").read_text())
+          temporal = pathlib.Path("/tmp/g02-g03-temporal-fixture.json")
+          defaults = pathlib.Path("/tmp/g02-g03-defaults-fixture.json")
+          temporal_fixture = json.loads(temporal.read_text())
+          defaults_fixture = json.loads(defaults.read_text())
+          assert temporal_fixture["version"] == pins["generatedInputPins"]["g02TemporalFixture"]["version"]
+          assert [case["id"] for case in temporal_fixture["cases"]] == pins["generatedInputPins"]["g02TemporalFixture"]["caseIds"]
+          temporal_sha = hashlib.sha256(temporal.read_bytes()).hexdigest()
+          assert temporal_sha == pins["generatedInputPins"]["g02TemporalFixture"]["reviewedArtifactSha256"], temporal_sha
+          assert defaults_fixture["version"] == pins["generatedInputPins"]["g03DefaultsFixture"]["version"]
+          assert defaults_fixture["status"] == pins["generatedInputPins"]["g03DefaultsFixture"]["statusMustRemain"]
+          for case_id, expected in pins["generatedInputPins"]["g03DefaultsFixture"]["caseStatusMustRemain"].items():
+              assert defaults_fixture["caseStatus"][case_id] == expected, case_id
+          print({"g02TemporalFixtureSha256": temporal_sha,
+                 "g03DefaultsCaseIds": list(defaults_fixture["caseStatus"])})
+          PY
+
+          run_bounded g02-temporal-native 180 "$WORK/installed/bin/python" -I tests/lifecycle/g02-temporal-native.py \
+            --dsn "$PG_DSN" --fixture /tmp/g02-g03-temporal-fixture.json \
+            --report "$EVIDENCE/reports/g02-temporal-native.json"
+
+          for scenario in transitions empty required admission-refusal semantics rollback \
+            commit-observation finalize-observation finalize-before-publication unknown-no-commit \
+            writer-barrier domains tampering; do
+            run_bounded "g03-$scenario" 180 "$WORK/installed/bin/python" tests/lifecycle/g03-defaults-native.py \
+              --dsn "$PG_DSN" --fixture /tmp/g02-g03-defaults-fixture.json \
+              --scenario "$scenario" --report "$EVIDENCE/reports/g03-$scenario.json"
+          done
+
+          cp "$WORK/cohort/cohort.lock.json" "$EVIDENCE/cohort.lock.json"
+          cp "$WORK/cohort/mirror/manifest.json" "$EVIDENCE/cohort-mirror-manifest.json"
+          cp /tmp/g02-g03-temporal-fixture.json "$EVIDENCE/g02-temporal-fixture.json"
+          cp /tmp/g02-g03-defaults-fixture.json "$EVIDENCE/g03-defaults-fixture.json"
+          run_bounded finalize-receipt 180 python -I - <<'PY'
+          import hashlib, json, os, pathlib
+
+          evidence = pathlib.Path(os.environ["QUALIFICATION_DIR"])
+          pins = json.loads(pathlib.Path("docs/helix/04-build/evidence/mig-g02-g03/native-qualification-source-pins.json").read_text())
+          reports = evidence / "reports"
+          g02 = json.loads((reports / "g02-temporal-native.json").read_text())
+          assert g02["serverVersionNum"] == "180006" and g02["cases"] == 5 and g02["checks"]
+          scenarios = pins["selectedNativeScope"]["g03ScenarioArguments"]
+          statuses = {}
+          for scenario in scenarios:
+              item = json.loads((reports / f"g03-{scenario}.json").read_text())
+              status = item["status"]
+              if scenario == "admission-refusal":
+                  assert status == "PASS_SOURCE_REFUSAL_AND_NATIVE_NO_EFFECTS", status
+              else:
+                  assert status.startswith(("PASS_SELECTED_NATIVE_SUBCASE", "PASS_EXPECTED_FENCED_SUBCASE")), (scenario, status)
+              statuses[scenario] = status
+          artifact_files = [path for path in evidence.rglob("*") if path.is_file()]
+          total_bytes = sum(path.stat().st_size for path in artifact_files)
+          log_bytes = sum(path.stat().st_size for path in (evidence / "logs").glob("*.log"))
+          assert total_bytes <= pins["evidenceLimits"]["capturedRunArtifactsMaximumBytes"], total_bytes
+          assert log_bytes <= pins["evidenceLimits"]["capturedCommandLogsMaximumBytes"], log_bytes
+          outputs = {
+              "profile": "umf.g02-g03-selected-native-qualification/1",
+              "status": "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN",
+              "sourceCommit": os.environ["GITHUB_SHA"],
+              "runId": os.environ["GITHUB_RUN_ID"],
+              "runAttempt": os.environ["GITHUB_RUN_ATTEMPT"],
+              "ref": os.environ["GITHUB_REF"],
+              "workflow": os.environ["GITHUB_WORKFLOW"],
+              "postgresqlServerVersionNum": g02["serverVersionNum"],
+              "g02Temporal": {"cases": g02["cases"], "checks": len(g02["checks"]),
+                              "fixtureSha256": g02["fixtureSha256"], "runnerSha256": g02["runnerSha256"]},
+              "g03SelectedScenarios": statuses,
+              "g03SelectedCaseIds": pins["selectedNativeScope"]["g03CaseIds"],
+              "g03N12": "UNQUALIFIED pending compatible Weft .2 cohort",
+              "g03N14AndFullCampaign": "OPEN; campaign selector was not invoked",
+              "cohortLockSha256": hashlib.sha256((evidence / "cohort.lock.json").read_bytes()).hexdigest(),
+              "sourcePins": pins["sourcePins"],
+              "reportHashes": {path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+                               for path in sorted(reports.glob("*.json"))},
+              "capturedCommandLogBytes": log_bytes,
+              "capturedArtifactBytes": total_bytes,
+              "limits": pins["target"]["dsnBounds"],
+              "nativeQualification": "selected subcases only; no full G03 or full campaign claim"
+          }
+          (evidence / "run-manifest.json").write_text(json.dumps(outputs, indent=2, sort_keys=True) + "\n")
+          (evidence / "receipt.json").write_text(json.dumps({
+              "profile": outputs["profile"], "status": outputs["status"],
+              "sourceCommit": outputs["sourceCommit"],
+              "runId": outputs["runId"], "runAttempt": outputs["runAttempt"],
+              "ref": outputs["ref"], "workflow": outputs["workflow"],
+              "selectedG02CaseCount": g02["cases"],
+              "selectedG03ScenarioCount": len(statuses),
+              "g03N12": outputs["g03N12"],
+              "g03N14AndFullCampaign": outputs["g03N14AndFullCampaign"]
+          }, indent=2, sort_keys=True) + "\n")
+          PY
+          BOUNDED_NATIVE_WORK
+
+      - name: Stage bounded evidence or a failure-only receipt
+        if: always()
+        timeout-minutes: 1
+        env:
+          QUALIFICATION_DIR: ${{ runner.temp }}/umf-g02-g03-native-qualification
+          QUALIFICATION_STAGE_DIR: ${{ runner.temp }}/umf-g02-g03-native-qualification-upload
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_RUN_ATTEMPT: ${{ github.run_attempt }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_WORKFLOW: ${{ github.workflow }}
+        run: |
+          set -euo pipefail
+          rm -rf "$QUALIFICATION_STAGE_DIR"
+          rm -rf "${QUALIFICATION_STAGE_DIR}.candidate"
+          python -I - "$QUALIFICATION_DIR" "$QUALIFICATION_STAGE_DIR" "$GITHUB_SHA" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" "$GITHUB_REF" "$GITHUB_WORKFLOW" <<'PY'
+          import hashlib, json, pathlib, shutil, sys
+          root, stage = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])
+          candidate = stage.with_name(stage.name + ".candidate")
+          candidate.mkdir(parents=True)
+          source, run_id, attempt, ref, workflow = sys.argv[3:]
+          files = [path for path in root.rglob("*") if path.is_file()]
+          total = sum(path.stat().st_size for path in files)
+          logs = sum(path.stat().st_size for path in (root / "logs").glob("*.log"))
+          receipt = root / "receipt.json"
+          toolchain_path = root / "toolchain.json"
+          failed = (not receipt.is_file() or not toolchain_path.is_file() or
+                    logs > 1048576 or total > 16777216)
+          common = {"profile": "umf.g02-g03-selected-native-qualification/1",
+                    "sourceCommit": source, "runId": run_id, "runAttempt": attempt,
+                    "ref": ref, "workflow": workflow, "selectedScopeOnly": True,
+                    "fullG03Campaign": "OPEN", "capturedLogsBytes": logs,
+                    "capturedArtifactBytes": total,
+                    "limits": {"logs": 1048576, "artifacts": 16777216}}
+          workflow_path = pathlib.Path(".github/workflows/g02-g03-native-qualification.yml")
+          manifest_path = pathlib.Path("docs/helix/04-build/evidence/mig-g02-g03/native-qualification-source-pins.json")
+          common["workflowSha256"] = hashlib.sha256(workflow_path.read_bytes()).hexdigest() if workflow_path.is_file() else None
+          common["manifestSha256"] = hashlib.sha256(manifest_path.read_bytes()).hexdigest() if manifest_path.is_file() else None
+          if failed:
+              common["toolchain"] = json.loads(toolchain_path.read_text()) if toolchain_path.is_file() else None
+              common.update({"status": "FAIL_OR_UNKNOWN",
+                             "reason": "Evidence receipt missing or bounded artifact limits exceeded; raw evidence withheld."})
+              (candidate / "receipt.json").write_text(json.dumps(common, indent=2, sort_keys=True) + "\n")
+              candidate.rename(stage)
+              raise SystemExit(1)
+          common["toolchain"] = json.loads(toolchain_path.read_text())
+          original_receipt = json.loads(receipt.read_text())
+          original_receipt.update(common)
+          (candidate / "receipt.json").write_text(json.dumps(original_receipt, indent=2, sort_keys=True) + "\n")
+          expected = {}
+          for path in files:
+              relative = path.relative_to(root)
+              if relative.as_posix() == "receipt.json":
+                  continue
+              destination = candidate / relative
+              destination.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copyfile(path, destination)
+              digest = hashlib.sha256(path.read_bytes()).hexdigest()
+              copied = hashlib.sha256(destination.read_bytes()).hexdigest()
+              if copied != digest:
+                  raise SystemExit("Evidence copy hash mismatch: " + relative.as_posix())
+              expected[relative.as_posix()] = digest
+          (candidate / "copy-hashes.json").write_text(json.dumps(expected, indent=2, sort_keys=True) + "\n")
+          staged_total = sum(path.stat().st_size for path in candidate.rglob("*") if path.is_file())
+          if staged_total > 16777216:
+              shutil.rmtree(candidate)
+              candidate.mkdir(parents=True)
+              failure = {**common, "status": "FAIL_OR_UNKNOWN",
+                         "reason": "Staged evidence would exceed 16 MiB; raw evidence withheld.",
+                         "stagedArtifactBytes": staged_total}
+              (candidate / "receipt.json").write_text(json.dumps(failure, indent=2, sort_keys=True) + "\n")
+              candidate.rename(stage)
+              raise SystemExit(1)
+          print(json.dumps({"capturedLogsBytes": logs, "capturedArtifactBytes": total,
+                            "stagedArtifactBytes": staged_total,
+                            "workflowSha256": common["workflowSha256"],
+                            "manifestSha256": common["manifestSha256"]}, sort_keys=True))
+          candidate.rename(stage)
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        timeout-minutes: 1
+        with:
+          name: g02-g03-native-qualification-${{ github.sha }}
+          path: ${{ runner.temp }}/umf-g02-g03-native-qualification-upload/
+          if-no-files-found: error
+          retention-days: 14

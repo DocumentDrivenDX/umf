@@ -1,0 +1,191 @@
+{
+  "profile": "umf.g02-g03-selected-native-qualification-pins/1",
+  "status": "PROPOSAL_NOT_EXECUTED",
+  "workflow": ".github/workflows/g02-g03-native-qualification.yml",
+  "qualificationBranch": "codex/migration-g02-g03-native-qualification",
+  "reviewBasis": {
+    "profile": "umf.g02-g03-native-integration-source-review/1",
+    "disposition": "SOURCE_ACCEPT_BOUNDED",
+    "baseCommit": "e66381bb81337bb58ee958121fec4753f4e5b843",
+    "receiptSha256": "84242306cd236bd845014b06976b22b12f31578913be41700abb22c9d812fbfa",
+    "sourceReviewExecution": "NONE"
+  },
+  "target": {
+    "runner": "ubuntu-24.04 x86_64",
+    "python": "3.11",
+    "bun": "1.4.3",
+    "postgresImage": "postgres:18.6",
+    "requiredServerVersionNum": "180006",
+    "dsnBounds": {
+      "connectTimeoutSeconds": 5,
+      "statementTimeoutMilliseconds": 120000,
+      "lockTimeoutMilliseconds": 5000,
+      "commandTimeoutSeconds": 180,
+      "commandKillGraceSeconds": 10,
+      "aggregateWorkTimeoutSeconds": 1740,
+      "evidenceReserveSeconds": 60,
+      "jobTimeoutMinutes": 35
+    }
+  },
+  "dependencyPins": {
+    "sourceCohort": "current UMF wheels built from github.sha and recorded in cohort.lock.json",
+    "cohortProfile": "python/packaging/embedder-wheel-lock.template.json",
+    "cohortProfileSha256": "1391ea3c77999e20ce5acbd05fcbf1e6e29b1c75afba38e75f8b62897edb4e08",
+    "weft": {
+      "distribution": "weft-sql",
+      "version": "0.4.53",
+      "wheel": "weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "db01c4cf6357d674f1591609a2b9c83a9322ad8f8937c345e5950cc1582b83d2"
+    },
+    "core": {
+      "distribution": "umf-core",
+      "version": "0.10.0",
+      "sha256": "49633924b45a3c8499d4fcc1a24c30d5a8fcb34d974ab019bbda987cb47da0f9"
+    },
+    "wheelBuilder": {
+      "build": "1.3.0",
+      "hatchling": "1.27.0",
+      "requirementsFile": "docs/helix/04-build/evidence/mig-g02-g03/build-tools-requirements.txt",
+      "requirementsFileSha256": "e83304c7c1ec7b5d6eb26ca519b3b72a20dbd693d899753b8dce9f1bd3ded84c",
+      "wheelHashesAreEnforced": true
+    },
+    "pythonRuntimeInstall": "offline --require-hashes from the generated cohort mirror; generated lock and wheel hashes are retained as run evidence"
+  },
+  "sourcePins": {
+    "tests/lifecycle/g02-temporal-native-fixture.ts": {
+      "sha256": "3f560b6be517d5328c08717239c8728dedbeae4a6e25f95538b2e8405c805122",
+      "purpose": "G02 temporal five-case fixture generator"
+    },
+    "tests/lifecycle/g02-temporal-native.py": {
+      "sha256": "ad2e7f74ef4c4a606aa0e8a83610e7e2e035e2c466a744fa0699489fd4f9bdee",
+      "purpose": "G02 temporal PostgreSQL 18 native runner"
+    },
+    "tests/lifecycle/g03-defaults-native-fixture.ts": {
+      "sha256": "8547d5f51aa0af84fc693bb2283ec35fc1aaa255ca3d79ee6a187227a9e7bf6d",
+      "purpose": "G03 fixed-source fixture and case-status generator"
+    },
+    "tests/lifecycle/g03-defaults-native.py": {
+      "sha256": "ca8aeb612d6536312232d395170e933c3c46a6aae5e1673ae5903a53b26c9cca",
+      "purpose": "G03 selected-scenario PostgreSQL 18 native runner"
+    },
+    "tests/lifecycle/g03_campaign_orchestration.py": {
+      "sha256": "fe2fa9bee0f648e24095d9fb5b30d2430ebde351f3db42261d69d14d476dd265",
+      "purpose": "Imported G03 fixed-roster helper; pinned even though this gate does not invoke the campaign selector"
+    },
+    "tests/binding/fixtures/table-lifecycle-note.json": {
+      "sha256": "0f8a2f5d38d32514ec38fc3bbe393c5b88d45c251c2ae05ac23bea261b0e94ee",
+      "purpose": "Shared source fixture imported by both G02 and G03 fixture generators"
+    },
+    "package.json": {
+      "sha256": "031bdb38c663c33804c02de06906c9c4fdd7bbf32728204cd4c8d30959c324ed",
+      "purpose": "Bun fixture-generation environment"
+    },
+    "bun.lock": {
+      "sha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+      "purpose": "Frozen Bun dependency graph"
+    },
+    "tests/codegen/acquire_offline_cohort.py": {
+      "sha256": "52dcd0b88c159f919d2f449208d9366981a1198ac6091afe530bc98c7639f465",
+      "purpose": "Existing current-source cohort acquisition and lock construction"
+    },
+    "scripts/python-package-mirror.py": {
+      "sha256": "77d3b225a7c5c19621be554356aaad4d6f33b8337e700531780e22e0cd1289da",
+      "purpose": "Existing wheel mirror and hash-lock implementation"
+    },
+    "tests/codegen/offline_mirror_probe.py": {
+      "sha256": "8e01356472c51861619f5dc243dc596006d58b0b63d0d7386761609c58f9e002",
+      "purpose": "Existing offline installation and network-denial probe"
+    },
+    "tests/codegen/verify_mini_racer_wheel.py": {
+      "sha256": "91b096c95a96933edb6065fe4aaa84ae797cdde9bac9fce5e2fdaa024ce4ba0e",
+      "purpose": "Existing platform wheel verification used by the cohort workflow"
+    },
+    "docs/helix/04-build/evidence/praxis-embedder/mini-racer-wheel-pins.json": {
+      "sha256": "834388231050ac831f5a59623155f71cc8d5269d8189e54f21d929d1ea25862f",
+      "purpose": "Existing public platform-wheel pins checked before building the runtime cohort"
+    },
+    "python/umf_access/pyproject.toml": {
+      "sha256": "73889fb402ed50d253dd76c4bad1cff5a0c3d7b68885dfd5d32e8b17d0557003",
+      "purpose": "Current-source UMF access wheel build inputs"
+    },
+    "python/umf_codegen/pyproject.toml": {
+      "sha256": "07253df785a646223c12051e41e3a07b0d5806e442b5aec96f8dce9362d30620",
+      "purpose": "Current-source UMF compiler wheel build inputs"
+    },
+    "python/packaging/embedder-wheel-lock.template.json": {
+      "sha256": "1391ea3c77999e20ce5acbd05fcbf1e6e29b1c75afba38e75f8b62897edb4e08",
+      "purpose": "Existing 18-wheel public dependency cohort template"
+    },
+    "docs/helix/04-build/evidence/mig-g02-g03/build-tools-requirements.txt": {
+      "sha256": "e83304c7c1ec7b5d6eb26ca519b3b72a20dbd693d899753b8dce9f1bd3ded84c",
+      "purpose": "Hash-locked public wheel builder toolchain"
+    }
+  },
+  "generatedInputPins": {
+    "g02TemporalFixture": {
+      "version": "umf.g02-temporal-native-fixture/1",
+      "reviewedArtifactSha256": "91a419debb54378a60982480259c48e02860695229ef8eed748a25758f8426fb",
+      "caseIds": [
+        "temporal-birthday-date-coalesce",
+        "temporal-instant-copy-coalesce",
+        "temporal-uuid-copy-coalesce",
+        "temporal-boolean-copy-coalesce",
+        "temporal-matched-null-date-rollback"
+      ]
+    },
+    "g03DefaultsFixture": {
+      "version": "umf.praxis.g03-defaults-native-fixture/1",
+      "statusMustRemain": "SOURCE_ONLY_ALL_NATIVE_CASES_UNRUN",
+      "caseStatusMustRemain": {
+        "G03-N12": "UNQUALIFIED_COMPATIBLE_WEFT_02_COHORT_REQUIRED",
+        "G03-N14": "SERIAL_CLEANUP_CAMPAIGN_SOURCE_IMPLEMENTED_NATIVE_UNRUN_FULL_CASE_OPEN"
+      }
+    }
+  },
+  "selectedNativeScope": {
+    "g02Temporal": "all five fixture cases",
+    "g03ScenarioArguments": [
+      "transitions",
+      "empty",
+      "required",
+      "admission-refusal",
+      "semantics",
+      "rollback",
+      "commit-observation",
+      "finalize-observation",
+      "finalize-before-publication",
+      "unknown-no-commit",
+      "writer-barrier",
+      "domains",
+      "tampering"
+    ],
+    "g03CaseIds": [
+      "G03-N01",
+      "G03-N02",
+      "G03-N03",
+      "G03-N04",
+      "G03-N05",
+      "G03-N06",
+      "G03-N07",
+      "G03-N08",
+      "G03-N09",
+      "G03-N10",
+      "G03-N11",
+      "G03-N13"
+    ],
+    "explicitlyNotQualified": [
+      "G03-N12 ordinary selected-module .2 execution: UNQUALIFIED pending compatible Weft .2 cohort",
+      "G03-N14 and the full serial G03 campaign: OPEN; campaign selector is never invoked"
+    ],
+    "aggregateDecision": "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN; never label this a full G03 pass"
+  },
+  "evidenceLimits": {
+    "capturedRunArtifactsMaximumBytes": 16777216,
+    "capturedCommandLogsMaximumBytes": 1048576,
+    "freshFailureReceipt": true,
+    "noSecrets": true,
+    "noPrivateOrManagedTargets": true,
+    "disposableServiceOnly": true,
+    "noLocalVmOrUserDatabase": true
+  }
+}
