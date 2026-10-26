@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   qualify-installed-artifact:
-    if: github.event_name != 'push' || (github.ref != 'refs/heads/codex/migration-metering-qualification' && github.ref != 'refs/heads/codex/migration-main-metering-generation' && github.ref != 'refs/heads/codex/migration-integrated-qualification' && github.ref != 'refs/heads/codex/migration-merged-generation' && github.ref != 'refs/heads/codex/migration-g02-g03-native-qualification')
+    if: github.event_name != 'push' || (github.ref != 'refs/heads/codex/migration-metering-qualification' && github.ref != 'refs/heads/codex/migration-main-metering-generation' && github.ref != 'refs/heads/codex/migration-integrated-qualification' && github.ref != 'refs/heads/codex/migration-merged-generation' && github.ref != 'refs/heads/codex/migration-g02-g03-native-qualification' && github.ref != 'refs/heads/codex/mig-g02-typed-backfills')
     strategy:
       fail-fast: false
       matrix:

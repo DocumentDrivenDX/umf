@@ -148,6 +148,7 @@
       "tests/binding/table-temporal.test.ts",
       "tests/binding/tables.test.ts",
       "tests/codegen/acquire_offline_cohort.py",
+      "tests/codegen/aggregate_cohort.py",
       "tests/codegen/build_probe.py",
       "tests/codegen/deployment_probe.py",
       "tests/codegen/installed_probe.py",
@@ -156,6 +157,8 @@
       "tests/codegen/offline_mirror_probe.py",
       "tests/codegen/reviewed_changes_probe.py",
       "tests/codegen/row_scope_probe.py",
+      "tests/codegen/test_aggregate_cohort.py",
+      "tests/codegen/test_cohort_selector.py",
       "tests/codegen/test_package_mirror.py",
       "tests/codegen/verify_mini_racer_wheel.py",
       "tests/compilation/access-generator.test.ts",
@@ -202,6 +205,7 @@
       "tests/lifecycle/g02-renderer-operation-sidecar.test.ts",
       "tests/lifecycle/g02-temporal-native-fixture.test.ts",
       "tests/lifecycle/g02-temporal-native-fixture.ts",
+      "tests/lifecycle/g02-temporal-native-observer.test.py",
       "tests/lifecycle/g02-temporal-native.py",
       "tests/lifecycle/g03-defaults-native-fixture.ts",
       "tests/lifecycle/g03-defaults-native.py",
@@ -259,16 +263,16 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "fcd32fc6e561db5fba30b9d190ffe2769a18afe1d683a169b395f4f8a50668bd",
+    "sourceCohortSha256": "95e904a407dfd115797265e95b3d00d1433e063e559c32a679bce0532e288fb8",
     "typescriptApi": "5.9.3"
   },
   "counts": {
-    "activeScriptFiles": 422,
-    "algorithmSymbols": 12424,
+    "activeScriptFiles": 426,
+    "algorithmSymbols": 12485,
     "pythonModules": 124,
     "rustBuildInputs": 76,
     "rustModules": 127,
-    "scriptFiles": 3038,
+    "scriptFiles": 3043,
     "sourceModules": 622,
     "typescriptModules": 498
   },
@@ -34280,12 +34284,12 @@
         "wheel_metadata",
         "wheelhouse_files"
       ],
-      "bytes": 22394,
+      "bytes": 24696,
       "disposition": "unreferenced-script-source",
       "language": "py",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/python-package-mirror.py",
-      "sha256": "77d3b225a7c5c19621be554356aaad4d6f33b8337e700531780e22e0cd1289da"
+      "sha256": "11d57f3b166728ffa75a6a2a7d19a740220f1a7f5ba3a2d45b302888c1daeb7f"
     },
     {
       "activationEvidence": [
@@ -40216,12 +40220,39 @@
         "fetch",
         "pypi_artifact_hash"
       ],
-      "bytes": 10964,
+      "bytes": 20155,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "py",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/codegen/acquire_offline_cohort.py",
-      "sha256": "3fce50c241afd5ef3e5dfa3ea2736c1fbe5b98f8788b98ac296db476395f8503"
+      "sha256": "72d9d5b9e3886f54c63e25d2f851b626d833eacd6c8bbe4bbf26f518c0812ce0"
+    },
+    {
+      "activationEvidence": [
+        ".github/workflows/access-boundaries.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "_resolve_ref",
+        "_resolve_relative",
+        "_safe_ref",
+        "_safe_relative",
+        "assemble",
+        "canonical_source",
+        "digest",
+        "main",
+        "metadata_digest",
+        "requirements_text",
+        "validate_aggregate",
+        "validate_cells",
+        "validate_core_native_custody"
+      ],
+      "bytes": 33581,
+      "disposition": "test-oracle-fixture-algorithm",
+      "language": "py",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
+      "path": "tests/codegen/aggregate_cohort.py",
+      "sha256": "9e2def3d465c6f3295936f019a566c5541583c1b1327e40e2c0a22d3e9b68584"
     },
     {
       "activationEvidence": [
@@ -40235,6 +40266,24 @@
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/codegen/build_probe.py",
       "sha256": "b8cc04f51a18cfb0abe0d048f3cab21eef46cc1c77723aecd2745febfbfbdc57"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
+        "dependency_closure",
+        "normalized_name",
+        "resolve_dependency_closure",
+        "validate_exact_profile_closure",
+        "validate_exact_wheel_inventory",
+        "validate_release_asset_urls"
+      ],
+      "bytes": 8059,
+      "disposition": "unreferenced-test-source",
+      "language": "py",
+      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "path": "tests/codegen/cohort_selector.py",
+      "sha256": "65e4e20c5bd21d0c94af0d7f0fca496210242cc36a0b17e28d6f2192ade8cee0"
     },
     {
       "activationEvidence": [
@@ -40311,11 +40360,22 @@
       ],
       "active": true,
       "algorithmSymbols": [],
-      "bytes": 11156,
+      "bytes": 19098,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "py",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/codegen/offline_mirror_probe.py",
+      "sha256": "9f135a31b06eca07402b4ceaa33bc270de7cb2715126308b203755c1da4fac90"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [],
+      "bytes": 11156,
+      "disposition": "unreferenced-test-source",
+      "language": "py",
+      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "path": "tests/codegen/offline_mirror_probe_legacy.py",
       "sha256": "8e01356472c51861619f5dc243dc596006d58b0b63d0d7386761609c58f9e002"
     },
     {
@@ -40343,6 +40403,76 @@
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/codegen/row_scope_probe.py",
       "sha256": "2e907d6256b7dda88f8bba80c887821c9234e7634b7d3d62a74ae783f1611f12"
+    },
+    {
+      "activationEvidence": [
+        "workflow:.github/workflows/access-boundaries.yml unittest discover -s tests/codegen -p test_aggregate_cohort.py"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "AggregateCohortTests",
+        "_assemble",
+        "_make_cells",
+        "_sha256",
+        "_source",
+        "_wheel_bytes",
+        "setUp",
+        "tearDown",
+        "test_child_hash_tampering_refuses_before_selected_install",
+        "test_child_native_hash_must_match_receipt_and_exact_wheel_member",
+        "test_conflicting_root_package_provenance_refuses",
+        "test_conflicting_root_version_or_core_semantic_contract_refuses",
+        "test_existing_output_is_never_reused",
+        "test_four_cell_assembly_has_exact_union_and_receipt_bindings",
+        "test_missing_cell_refuses",
+        "test_missing_or_extra_union_wheel_inventory_refuses",
+        "test_physical_extra_wheel_refuses",
+        "test_physical_missing_wheel_refuses",
+        "test_rebound_child_lock_with_wrong_cell_identity_refuses",
+        "test_rehashed_union_lock_provenance_mutant_refuses",
+        "test_same_filename_with_different_bytes_refuses",
+        "test_symlinked_union_path_refuses",
+        "test_unexpected_shared_mirror_file_refuses",
+        "test_unknown_aggregate_fields_refuse",
+        "test_unsafe_union_path_refuses_before_path_use",
+        "test_wrong_selected_environment_refuses"
+      ],
+      "bytes": 21127,
+      "disposition": "test-oracle-fixture-algorithm",
+      "language": "py",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
+      "path": "tests/codegen/test_aggregate_cohort.py",
+      "sha256": "5ed231e43af34ccd9a3b5b93c0b511f60d84152555a90e1456363bb64e661548"
+    },
+    {
+      "activationEvidence": [
+        "workflow:.github/workflows/access-boundaries.yml unittest discover -s tests/codegen -p test_cohort_selector.py"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "CliAdmissionTests",
+        "InventoryTests",
+        "setUp",
+        "test_active_closure_refuses_a_missing_qualification_root",
+        "test_active_direct_url_requirement_refuses_but_inactive_edge_stays_inactive",
+        "test_active_requirement_extras_refuse_but_inactive_optional_edge_stays_inactive",
+        "test_active_requires_dist_closure_uses_exact_metadata_and_markers",
+        "test_automatic_core_selector_refuses_outside_exact_runner_cell_before_output",
+        "test_default_profile_roots_are_four_products_with_mini_racer_from_metadata",
+        "test_duplicate_distribution_refuses",
+        "test_duplicate_template_distribution_refuses",
+        "test_malformed_core_hash_refuses_before_output_or_network",
+        "test_missing_selected_distribution_refuses",
+        "test_selected_release_asset_urls_accept_actual_release_asset_routes",
+        "test_template_complete_inventory_accepts",
+        "test_undeclared_distribution_refuses"
+      ],
+      "bytes": 13011,
+      "disposition": "test-oracle-fixture-algorithm",
+      "language": "py",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
+      "path": "tests/codegen/test_cohort_selector.py",
+      "sha256": "2b4b76f261b21a0706d5aff6567d7a32b37c886dfa719f54a60d0bf6ae546c8d"
     },
     {
       "activationEvidence": [
@@ -45953,6 +46083,7 @@
     },
     {
       "activationEvidence": [
+        ".github/workflows/access-boundaries.yml",
         ".github/workflows/combined-migration-qualification.yml"
       ],
       "active": true,
@@ -45966,6 +46097,7 @@
     },
     {
       "activationEvidence": [
+        ".github/workflows/access-boundaries.yml",
         ".github/workflows/g02-g03-native-qualification.yml"
       ],
       "active": true,
@@ -45985,8 +46117,10 @@
       "sha256": "3f560b6be517d5328c08717239c8728dedbeae4a6e25f95538b2e8405c805122"
     },
     {
-      "activationEvidence": [],
-      "active": false,
+      "activationEvidence": [
+        ".github/workflows/access-boundaries.yml"
+      ],
+      "active": true,
       "algorithmSymbols": [
         "ObserverControls",
         "call_source",
@@ -45999,14 +46133,15 @@
         "test_manual_initial_oracle_is_asserted_before_host_effect"
       ],
       "bytes": 4672,
-      "disposition": "unreferenced-test-source",
+      "disposition": "test-oracle-fixture-algorithm",
       "language": "py",
-      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/lifecycle/g02-temporal-native-observer.test.py",
       "sha256": "7d98b567143e93e1ee02afa3218fe522eb8fc4d02903189373fb9c6e4bf55a69"
     },
     {
       "activationEvidence": [
+        ".github/workflows/access-boundaries.yml",
         ".github/workflows/g02-g03-native-qualification.yml"
       ],
       "active": true,
