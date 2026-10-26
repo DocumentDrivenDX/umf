@@ -502,3 +502,24 @@ extension overlay on CPython 3.13.16: 31 tests and three subtests passed.
 This is source-tree opt-in parity for the exercised shapes. Arbitrary subclass
 accessor behavior, wider capture admission and resource-limit parity,
 installed-wheel qualification, and public `capture()` selection remain open.
+
+## Accessor-bearing subclasses and bridge budget order — 2026-10-26
+
+The private Python DTO encoder now refuses a trusted graph subclass that
+overrides a base field, `__getattribute__`, or `__getattr__`, or adds dataclass
+fields outside the closed base DTO. A Python graph validator can observe such
+an accessor's live value, while serializing base fields could capture a
+different value or repeat a stateful read. The opt-in bridge first runs Python
+validation if this refusal occurs: an earlier Python semantic refusal keeps
+its exact exception and child order; an otherwise accepted graph stops with a
+clear `TypeError` before any Rust validator call. Public `capture()` is
+unchanged. This is a fail-closed boundary, not subclass parity.
+
+The focused live control also pins an unresolved budget-order difference. On
+a graph beyond the private bridge's 64-level or 50,000-value limit, Python
+`capture()` reaches an earlier foreign-column semantic refusal while the
+opt-in bridge can return `ValueError: captured declaration exceeds Rust bridge
+resource limits` during encoding. Sol reran the capture and private-validator
+suites with the fresh PyO3 overlay on CPython 3.13.16: 34 tests and three
+subtests passed. The budget difference blocks default capture selection until
+the ordered semantic and resource interface is resolved.

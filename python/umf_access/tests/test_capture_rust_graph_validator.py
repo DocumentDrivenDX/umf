@@ -11,7 +11,7 @@ import pytest
 from pydantic import BaseModel
 from umf import _rust
 from umf_access import rust_catalog_render
-from umf_access.capture import CaptureError, _validate_node, capture
+from umf_access.capture import CapturedVariant, CaptureError, _validate_node, capture
 from umf_access.dsl import (
     Column,
     FieldRef,
@@ -32,8 +32,8 @@ from umf_access.dsl import (
     rrf,
     sum_,
 )
-from umf_access.dsl._nodes import GeneratedSource, Node
 from umf_access.dsl._expressions import operand
+from umf_access.dsl._nodes import GeneratedSource, Node
 from umf_access.dsl.navigation import RequiredNavigation
 from umf_access.rust_catalog_render import (
     _encode_capture,
@@ -202,15 +202,143 @@ def test_live_rust_validator_matches_get_page_selected_key_preflight_order():
             dto = _encode_capture(
                 type(variant)(variant.presence, node, params), _EncodingBudget()
             )
-            failures = []
-            for validate in (
-                lambda: _validate_node(node, params),
-                lambda: _validate_graph_variant(dto),
-            ):
-                with pytest.raises(CaptureError) as caught:
-                    validate()
-                failures.append((caught.value.code, str(caught.value)))
-            assert failures[0] == failures[1] == (code, f"{code}: {message}")
+            with pytest.raises(CaptureError) as predecessor:
+                _validate_node(node, params)
+            with pytest.raises(CaptureError) as rust:
+                _validate_graph_variant(dto)
+            expected = (code, f"{code}: {message}")
+            assert (predecessor.value.code, str(predecessor.value)) == expected
+            assert (rust.value.code, str(rust.value)) == expected
+
+
+def test_private_rust_route_fails_closed_on_subclass_accessor_semantics():
+    owner = RecordRef("demo", "Thing", (FieldRef("demo", "Thing", "id"),))
+
+    class OverrideModuleField(FieldRef):
+        def __getattribute__(self, name):
+            if name == "module":
+                return "demo"
+            if name == "element":
+                return "Thing"
+            return super().__getattribute__(name)
+
+    hidden_foreign = OverrideModuleField("foreign", "Elsewhere", "value")
+    predicate = Node(
+        "=", (Node("column", (hidden_foreign,)), Node("literal", ("x",)))
+    )
+
+    @query
+    def hidden_owner():
+        return Terminal(
+            Node("all", (owner, (Node("filter", (predicate,)), Node("limit", (1,)))))
+        )
+
+    # The Python predecessor observes the overridden accessor and accepts the
+    # field as root-owned. The closed DTO cannot preserve that behavior.
+    captured = capture(hidden_owner)
+    assert captured.variants[0].node.op == "all"
+    assert hidden_foreign.module == "demo"
+    calls = []
+    native = _rust._rust_core.access_validate_captured_graph_variant
+
+    def record_native(value):
+        calls.append(value)
+        return native(value)
+
+    with patch.object(
+        _rust._rust_core,
+        "access_validate_captured_graph_variant",
+        side_effect=record_native,
+    ), pytest.raises(
+        TypeError, match="captured graph subclass overrides trusted field access"
+    ):
+        rust_catalog_render.capture_with_rust_graph_validator(hidden_owner)
+    assert calls == []
+
+
+def test_subclass_accessor_refusal_precedes_later_parameter_in_both_capture_paths():
+    owner = RecordRef("demo", "Thing", (FieldRef("demo", "Thing", "id"),))
+
+    class ForeignModuleField(FieldRef):
+        def __getattribute__(self, name):
+            if name == "module":
+                return "foreign"
+            return super().__getattribute__(name)
+
+    column = Node("column", (ForeignModuleField("demo", "Thing", "value"),))
+    missing = Node("param", ("missing",))
+
+    def declaration_for(children):
+        @query
+        def declaration():
+            return Terminal(
+                Node("all", (owner, (Node("filter", (Node("and", children),)),)))
+            )
+
+        return declaration
+
+    for declaration, exception, message in (
+        (
+            declaration_for((column, missing)),
+            TypeError,
+            "expression column belongs to another Record",
+        ),
+        (
+            declaration_for((missing, column)),
+            CaptureError,
+            "CAPTURE_SIGNATURE: expression references an undeclared parameter",
+        ),
+    ):
+        outcomes = []
+        for capture_fn in (capture, rust_catalog_render.capture_with_rust_graph_validator):
+            with pytest.raises(exception) as caught:
+                capture_fn(declaration)
+            outcomes.append(str(caught.value))
+        assert outcomes == [message, message], (declaration.__name__, outcomes)
+
+
+def test_python_graph_refusal_precedes_private_bridge_depth_and_value_budgets():
+    owner = RecordRef("demo", "Thing", (FieldRef("demo", "Thing", "id"),))
+    foreign = FieldRef("foreign", "Elsewhere", "value")
+
+    def graph(depth: int, padding: int = 0):
+        expression = Node("column", (foreign,))
+        for _ in range(depth):
+            expression = Node("not", (expression,))
+        children = [expression, Node("param", ("missing",))]
+        children.extend(Node("literal", ("x",)) for _ in range(padding))
+        node = Node("all", (owner, (Node("filter", (Node("and", tuple(children)),)),)))
+
+        @query
+        def declaration():
+            return Terminal(node)
+
+        return declaration, node
+
+    # A valid DTO within both native Context limits reaches Rust and returns
+    # the same first semantic refusal as Python.
+    _, shallow_node = graph(8)
+    shallow_dto = _encode_capture(
+        CapturedVariant((), shallow_node, ()), _EncodingBudget()
+    )
+    with pytest.raises(TypeError, match="expression column belongs to another Record"):
+        _validate_node(shallow_node, ())
+    with pytest.raises(TypeError, match="expression column belongs to another Record"):
+        _validate_graph_variant(shallow_dto)
+
+    # The private route encodes before invoking Rust semantics. Beyond its
+    # stricter 64-level/50,000-value limits, the resource refusal therefore
+    # wins over the predecessor's earlier semantic refusal.
+    for declaration, node in (graph(140), graph(0, 18_000)):
+        with pytest.raises(TypeError, match="expression column belongs to another Record"):
+            capture(declaration)
+        with pytest.raises(
+            ValueError,
+            match="captured declaration exceeds Rust bridge resource limits",
+        ):
+            rust_catalog_render.capture_with_rust_graph_validator(declaration)
+        with pytest.raises(ValueError, match="captured declaration exceeds Rust bridge resource limits"):
+            _encode_capture(CapturedVariant((), node, ()), _EncodingBudget())
 
 
 def test_live_rust_validator_matches_python_capture_for_join_and_many_navigation():

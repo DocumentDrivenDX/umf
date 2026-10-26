@@ -74,6 +74,10 @@ def render_variant(value: dict[str, Any]) -> dict[str, Any]:
 _GRAPH_PROFILE = "umf-access-captured-graph-validation/0.1.0"
 
 
+class _AccessorDtoUnsupported(TypeError):
+    """A live subclass accessor cannot be represented by the value DTO."""
+
+
 def _validate_graph_variant(value: object) -> None:
     """Opt-in validator for the narrow captured-DTO graph profile."""
     if type(value) is not dict:
@@ -118,6 +122,7 @@ def capture_with_rust_graph_validator(function: object) -> object:
         _canonical,
         _invoke,
         _parameters,
+        _validate_node,
     )
 
     def validate(
@@ -127,7 +132,16 @@ def capture_with_rust_graph_validator(function: object) -> object:
         ordered_presence = tuple(
             parameter.name for parameter in parameters if parameter.name in presence
         )
-        dto = _encode_capture(CapturedVariant(ordered_presence, node, parameters), budget)
+        try:
+            dto = _encode_capture(
+                CapturedVariant(ordered_presence, node, parameters), budget
+            )
+        except _AccessorDtoUnsupported:
+            # Preserve Python's observable refusal and child order for
+            # accessor-bearing subclasses. If Python accepts the live
+            # object, the Rust value DTO still cannot represent it safely.
+            _validate_node(node, parameters)
+            raise
         budget.charge_output(dto)
         _validate_graph_variant(dto)
 
@@ -426,7 +440,30 @@ def _captured_graph_base(value: object) -> type | None:
     ]
     if len(most_specific) != 1:
         raise TypeError("captured graph class inherits unrelated trusted bases")
-    return most_specific[0]
+    graph_base = most_specific[0]
+
+    # The DTO is a value snapshot, while Python validation dispatches through
+    # the live subclass accessors. Retagging such an object as its base could
+    # serialize a different value (or trigger a second stateful read), so keep
+    # these cases out of the Rust route until the bridge carries an explicit
+    # accessor-preserving snapshot.
+    base_fields = {field.name for field in fields(graph_base)}
+    for cls in mro:
+        if cls is graph_base:
+            break
+        namespace = type.__getattribute__(cls, "__dict__")
+        if (
+            "__getattribute__" in namespace
+            or "__getattr__" in namespace
+            or any(name in namespace for name in base_fields)
+        ):
+            raise _AccessorDtoUnsupported(
+                "captured graph subclass overrides trusted field access"
+            )
+    concrete_fields = {field.name for field in fields(type(value))}
+    if not concrete_fields.issubset(base_fields):
+        raise TypeError("captured graph subclass adds fields outside the closed DTO")
+    return graph_base
 
 
 def render_declaration(declaration: object) -> dict[str, Any]:
