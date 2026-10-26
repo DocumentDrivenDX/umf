@@ -231,6 +231,10 @@ pub enum HostSpreadFailureTarget {
     IteratorMethod(HostInvokeValue),
     /// The callback result's callable Symbol.iterator method returned a primitive.
     IteratorResultPrimitive(HostInvokeValue),
+    /// The acquired iterator's already-read `next` value was not callable.
+    IteratorNextMethod(HostInvokeValue),
+    /// A callable iterator's `next` returned this primitive iterator result.
+    IteratorStepPrimitive(HostInvokeValue),
 }
 
 /// One entry in a Rust-assembled refusal diagnostics array.
@@ -1007,7 +1011,9 @@ pub(crate) fn collect_semantic_iterable(
         SemanticHostStep::Value(value) => value,
     };
     let HostOpaqueValue::Opaque { handle: next_function, opaque_type: HostOpaqueType::Function } = next_method else {
-        return Ok(HostSemanticIterableOutcome::NativeSpreadFailureUnresolved);
+        let target = HostSpreadFailureTarget::IteratorNextMethod(opaque_invoke_value_charged(next_method, host, ctx, path)?);
+        let message = native_spread_failure_message(target, host, ctx, path)?;
+        return Ok(HostSemanticIterableOutcome::SemanticThrow(message));
     };
     let mut values = Vec::new();
     loop {
@@ -1017,7 +1023,9 @@ pub(crate) fn collect_semantic_iterable(
             SemanticHostStep::Value(value) => value,
         };
         if !matches!(step, HostOpaqueValue::Opaque { opaque_type: HostOpaqueType::Object | HostOpaqueType::Function, .. }) {
-            return Ok(HostSemanticIterableOutcome::NativeSpreadFailureUnresolved);
+            let target = HostSpreadFailureTarget::IteratorStepPrimitive(opaque_invoke_value_charged(step, host, ctx, path)?);
+            let message = native_spread_failure_message(target, host, ctx, path)?;
+            return Ok(HostSemanticIterableOutcome::SemanticThrow(message));
         }
         let done = match semantic_get(
             step.clone(),

@@ -1,16 +1,16 @@
 {
   "profile": "umf.r8.selection-semantic-callback.private.node/1",
-  "status": "pass-private-24-case-exact-outcomes-and-host-traces",
+  "status": "pass-private-30-case-exact-outcomes-and-host-traces",
   "runtime": "v26.12.1",
-  "caseCount": 24,
+  "caseCount": 30,
   "summary": {
-    "exactOutcomeMatches": 24,
-    "exactHostTraceMatches": 24,
+    "exactOutcomeMatches": 30,
+    "exactHostTraceMatches": 30,
     "mismatches": []
   },
   "candidateAddon": {
-    "path": "/private/tmp/umf-selection-callback-target/debug/umf_core_node.node",
-    "sha256": "23cf55d93a52ffb6e872d9a30f93574deeb7ba5be641bf2d7c3a24dd76614728"
+    "path": "/private/tmp/umf-selection-callback-target/release/umf_core_node.node",
+    "sha256": "a6ff3edd8d7048fabbacdea3f4cc0b0c0038b05e9d345cfd47cdd5f9a4a545e2"
   },
   "sourceHashes": {
     "src/validation/constraint-kernel.ts": "968bde65e6e7e8da7ec92849498dbfbe9a71f931c9538094a18c85be5b4a4362",
@@ -18,29 +18,29 @@
     "src/model/json.ts": "d0a06bd26beb215d262b92f5c47d5cea9e85291bb4a780f0aea98b8277c15f98",
     "crates/umf-core/src/constraints.rs": "b7047fa9bf76430bd6e6d9a9a06a20116bce7fe592251cf3dab4ddeb6f0e2c87",
     "crates/umf-core/src/engine.rs": "1dbc5ab957e99a881c0aeaecbc25c5f66046f4acf2421989c174fa5bcb8d615e",
-    "crates/umf-core/src/host_json.rs": "258d49fda3e9f91b67758aa106684489ca457f7b1aaf468b4a23fa4888ef5791",
+    "crates/umf-core/src/host_json.rs": "8cf3bd23160fce262f05cd0a23e662a9bae2a767f9397a49ff42895b5846e77e",
     "crates/umf-core/src/registry.rs": "cebc2321fe9ecfa7fd722ba4afc2d55c3181642f6f72366279c232e37250bba3",
     "crates/umf-core/src/selection_diagnostics.rs": "c7989ce596cf2c7502bde079db53f6f3a41287728df593c9f815a277a6a1fd43",
     "crates/umf-core/src/selection_host_json.rs": "ab3ff7f1d22d8d7a62525944c36caa2c466958af0c8f3e370eefb65e0247c324",
-    "bindings/core/node/src/host-json.js": "878bfc4fd2a974dd57ba12eea341e60852312214548f0a732326d1b6cd76857b",
-    "bindings/core/node/src/host_json.rs": "abc69598573e4608c10500d2ba8bdf9072ab749e444fc1ea61895773f2f02939",
+    "bindings/core/node/src/host-json.js": "10c5f3a89e9772cfdd383720895ba01d185683481f64f3b8db4884e79fbada17",
+    "bindings/core/node/src/host_json.rs": "eb6881a737233911a45a23b88417e45c27f9af5dcd0811c0707a38478c39674b",
     "src/access/rust-selection-default.ts": "ad27e7b42b464c0143ba4b99d3fd5eadb6fd6bba15fb88b51d4f378e23271c97",
-    "bindings/core/wasm/src/host-json.js": "878bfc4fd2a974dd57ba12eea341e60852312214548f0a732326d1b6cd76857b",
-    "bindings/core/wasm/src/host_json.rs": "d97c8cbd665cb495845ff9465624ad8cd4702b65b9a1e3de0d1d746b1099c23c",
+    "bindings/core/wasm/src/host-json.js": "10c5f3a89e9772cfdd383720895ba01d185683481f64f3b8db4884e79fbada17",
+    "bindings/core/wasm/src/host_json.rs": "b964ae7c7b6bf7521446ad8b5583dd335db6cd23851f92a3ed6b5a781aafd38c",
     "bindings/core/node/tests/selection-host-json.test.js": "4ba6cc0ebc57a0dbdca20318bd9a6b567a601aa6493e92c426150173c0038154",
-    "scripts/rust-migration/r8/selection-callback-suite.mjs": "d8f61caba8451cbfd592140cf51f4b71fe463494527e2a10d163ab9583c766c7",
-    "scripts/rust-migration/r8/selection-callback-node.mjs": "04cb365dbb1378f34db3523b1f27cef1591450854803cf897bae7b0917edefdf",
+    "scripts/rust-migration/r8/selection-callback-suite.mjs": "6baabe5b873dd026700c30bb5c0958e29137f47305923b138f9f890299b2739d",
+    "scripts/rust-migration/r8/selection-callback-node.mjs": "c0c247b60cf295bfeb0e7d1434eb3ff7c9863f8c5cebd1266113c4faceab974f",
     "scripts/rust-migration/r8/selection-callback-browser-entry.ts": "2f5573d76b61bc8b38d54efed487c1796508d2afaf7d52e9ec12cdb50370b6ee",
-    "scripts/rust-migration/r8/selection-callback-browser.mjs": "15162d9ba1210140cb2e9d94040d86a966c8bf9902404272f18ef6046e41cb74",
+    "scripts/rust-migration/r8/selection-callback-browser.mjs": "a95b746f2744a8a1c9679f34e47ed8386847ddb9b4ca080c24e58aa20d04a88b",
     "dist/umf.js": "b572a4f49dc1c53734991464792e8a97308fea038a682731e24b7192ee8bd9a1",
     "dist/umf-node.js": "e6195d633d912c38d0fad23b734869e969c442c9fec5702ecc5bec434313ebb7",
     "scripts/rust-migration/r5/selection/input.json": "1d4bc67745d20df018a6275c820ed72c00c82d33caeb541596910d1254b67258",
     "scripts/rust-migration/r5/selection/frozen-typescript.json": "2fb5429888f34d6bb2684553201f652a68424fc68125a457c6b5e01aeaa7817a",
-    "spec/core/schema.json": "93f54d8bd8e8232b7120dbe63bdfe536ca4186e45ff650e0ef9ce7fd51af6314",
-    "spec/core/semantic-type-reference.schema.json": "bd7ecc159a01f9f4ac60279ec61aaf36c32ea65eee22f749b231da4fda9a6180",
-    "spec/core/extension-package.schema.json": "14de0398f96fe5b1f505fb6dd5228affbada59550ecab70835b2db75b5ca34a9",
-    "spec/metamodel/generated/core-constraints.json": "4e302ec2aa0fda0448fba08c15c0f92b659f8aaa1d8dc364ded6780600b63b9e",
-    "spec/metamodel/generated/domain-policy.json": "1f2cb299afb9115079a8350bae36dfe920a305c5c12e4508c018a21db0193b0a"
+    "spec/core/schema.json": "a37af58939e98140855d7337810b18e2daa5fcc497379c063ffc076a905b6893",
+    "spec/core/semantic-type-reference.schema.json": "ee651f3e5204a5812ce615bcd655301c82b1e519fb07e07a40871703e55f4da9",
+    "spec/core/extension-package.schema.json": "fe8e636f1693ccb63996dca985065b9011da5067ee3eb246a90893a1f4cda6ae",
+    "spec/metamodel/generated/core-constraints.json": "b945d09e3ead84cb4b096fcb2ac38a4747c7623158f3d4546e0055e162dff671",
+    "spec/metamodel/generated/domain-policy.json": "43852b31d18903959bc681379d29dd29913f6e6e4614c9c23f03ab6f0e9d9f46"
   },
   "opaqueReturnCarrier": {
     "objectIdentity": true,
@@ -50,6 +50,7 @@
   "limits": [
     "Private opt-in host route; no package default/root selection change or release qualification.",
     "Pins same-host bundled TS reference, route sources, resources and fixtures.",
-    "Spread coverage includes undefined return, non-callable Symbol.iterator, a throwing Symbol.iterator getter, number/null/undefined iterator-method returns, and next/done/value abrupt completions; other native spread failures, kindRuntime and default routing remain unqualified."
+    "Spread coverage includes undefined return, non-callable Symbol.iterator, a throwing Symbol.iterator getter, number/null/undefined iterator-method returns, number/null/undefined iterator.next values, number/null/undefined iterator-step results, and next/done/value abrupt completions; other native spread failures, kindRuntime and default routing remain unqualified.",
+    "Resource-limit precedence is unqualified: native-error materialization adds charged work after the original iterator reads and may differ at resource boundaries."
   ]
 }

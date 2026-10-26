@@ -62,7 +62,7 @@ try {
     return entry.runSelectionCallbackBrowser(module, {resources});
   }, {glueSource: glueBytes.toString('utf8'), wasmBase64: wasmBytes.toString('base64'), entrySource: entryBytes.toString('utf8'), resources});
   assert.deepEqual(browserErrors, []);
-  assert.equal(result.caseCount, 24);
+  assert.equal(result.caseCount, 30);
   assert.equal(result.opaqueReturnIdentity, true, 'WASM opaque return carrier must preserve object identity');
   assert.equal(result.opaqueThrowIdentity, true, 'WASM opaque return carrier must preserve thrown identity');
   assert.equal(result.summary.exactOutcomeMatches, result.caseCount, JSON.stringify(result.summary.mismatches));
@@ -90,7 +90,7 @@ try {
   const sourceHashes = Object.fromEntries(await Promise.all(sourcePaths.map(async path => [path, sha(await read(path))])));
   const record = {
     profile: 'umf.r8.selection-semantic-callback.private.chromium/1',
-    status: 'pass-private-same-browser-direct-typescript-24-case-outcomes-and-host-traces',
+    status: 'pass-private-same-browser-direct-typescript-30-case-outcomes-and-host-traces',
     runtime: {bun: Bun.version, cargo: await run(`${toolchain}/cargo`, ['--version']), rustc: await run(`${toolchain}/rustc`, ['--version']), wasmBindgen: bindgenVersion, chromium: browser.version(), userAgent: await page.evaluate(() => navigator.userAgent)},
     operation: 'executeCoreElementSelectionHostJson (private WASM export; package-root selection unchanged)',
     reference: 'dist/umf.js TypeScript Selection implementation, imported in the same Chromium page and run against the same registry setup',
@@ -101,7 +101,8 @@ try {
     limits: [
       'Private opt-in Selection host route only; no default/root route or release qualification.',
       'Covers bounded callback invocation, order, receiver/context prototypes, iterable callback diagnostics, emit field order, malformed/null/undefined/primitive results, thrown conversion, severity short-circuit and source-validation materialization.',
-      'Spread coverage includes undefined return, non-callable Symbol.iterator, a throwing Symbol.iterator getter, primitive iterator returns (number/null/undefined), and next/done/value abrupt completions; broader native TypeError wording, kindRuntime and default routing remain unqualified.',
+      'Spread coverage includes undefined return, non-callable Symbol.iterator, a throwing Symbol.iterator getter, primitive iterator returns, non-callable iterator.next values, primitive iterator-step results, and next/done/value abrupt completions for the recorded cases; other native spread failures, kindRuntime and default routing remain unqualified.',
+      'Resource-limit precedence is unqualified: native-error materialization adds charged work after the original iterator reads and may differ at resource boundaries.',
       'Pins the browser/reference bundles and live source files listed in artifacts; this is not a whole SDK archive/source-closure qualification.',
     ],
   };

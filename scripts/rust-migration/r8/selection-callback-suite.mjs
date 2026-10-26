@@ -132,6 +132,18 @@ export function runSelectionCallbackSuite({Registry, selectCoreElements, candida
         alpha: () => ({[Symbol.iterator]() { events.push('diagnostics:iterator'); return result; }}),
       })}),
     })),
+    ...[['number', 17], ['null', null], ['undefined', undefined]].map(([kind, result]) => ({
+      name: `callback-iterator-next-is-${kind}-native-spread-failure`,
+      make: events => ({source: documentFor(), query: {references: 'none'}, registry: makeRegistry(Registry, events, {
+        alpha: () => ({[Symbol.iterator]() { events.push('diagnostics:iterator'); return {next: result}; }}),
+      })}),
+    })),
+    ...[['number', 17], ['null', null], ['undefined', undefined]].map(([kind, result]) => ({
+      name: `callback-iterator-step-is-${kind}-native-spread-failure`,
+      make: events => ({source: documentFor(), query: {references: 'none'}, registry: makeRegistry(Registry, events, {
+        alpha: () => ({[Symbol.iterator]() { events.push('diagnostics:iterator'); return {next() { events.push('diagnostics:next'); return result; }}; }}),
+      })}),
+    })),
     {name: 'callback-receiver-context-and-prototype-boundary', make: events => {
       const input = documentFor();
       Object.defineProperty(input, '__proto__', {value: {marker: 'retained'}, enumerable: true, writable: true, configurable: true});

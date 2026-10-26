@@ -39,7 +39,7 @@ const resources = {
 const candidateEngine = hostJson.createCoreElementSelectionHostInputEngine(addon, resources, UmfError);
 const candidate = (source, query, registry) => candidateEngine.selectCoreElements(source, query, registry);
 const result = runSelectionCallbackSuite({Registry, selectCoreElements, candidate});
-assert.equal(result.caseCount, 24);
+assert.equal(result.caseCount, 30);
 assert.equal(result.summary.exactOutcomeMatches, result.caseCount, JSON.stringify(result.summary.mismatches));
 assert.equal(result.summary.exactHostTraceMatches, result.caseCount, JSON.stringify(result.summary.mismatches));
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -64,13 +64,14 @@ const pinned = [
 ];
 const sourceHashes = Object.fromEntries(pinned.map(path => [path, sha(readFileSync(resolve(root, path)))]));
 const record = {profile: 'umf.r8.selection-semantic-callback.private.node/1',
-  status: 'pass-private-24-case-exact-outcomes-and-host-traces', runtime: process.version,
+  status: 'pass-private-30-case-exact-outcomes-and-host-traces', runtime: process.version,
   caseCount: result.caseCount, summary: result.summary,
   candidateAddon: {path: addonPath, sha256: sha(readFileSync(addonPath))}, sourceHashes,
   opaqueReturnCarrier: {objectIdentity: true, thrownIdentity: true, scope: 'private invocation-local object/function handle return; primitive returns refused'},
   limits: ['Private opt-in host route; no package default/root selection change or release qualification.',
     'Pins same-host bundled TS reference, route sources, resources and fixtures.',
-    'Spread coverage includes undefined return, non-callable Symbol.iterator, a throwing Symbol.iterator getter, number/null/undefined iterator-method returns, and next/done/value abrupt completions; other native spread failures, kindRuntime and default routing remain unqualified.']};
+    'Spread coverage includes undefined return, non-callable Symbol.iterator, a throwing Symbol.iterator getter, number/null/undefined iterator-method returns, number/null/undefined iterator.next values, number/null/undefined iterator-step results, and next/done/value abrupt completions; other native spread failures, kindRuntime and default routing remain unqualified.',
+    'Resource-limit precedence is unqualified: native-error materialization adds charged work after the original iterator reads and may differ at resource boundaries.']};
 const defaultReceipt = typeof Bun === 'undefined' ? 'node.json' : 'bun.json';
 const receiptPath = resolve(process.env.UMF_SELECTION_RECEIPT ?? `docs/helix/04-build/evidence/rust-migration/r8-selection-callback-trace/${defaultReceipt}`);
 mkdirSync(dirname(receiptPath), {recursive: true});

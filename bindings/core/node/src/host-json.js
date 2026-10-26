@@ -400,6 +400,14 @@ function executeHostInput(addon, resources, operation, inputs, ErrorType, contro
             candidate = NativeObjectCreate(null);
             const iteratorResult = invocationValue(target.value);
             defineProperty(candidate, iteratorSymbol, {value() { return iteratorResult; }, writable: true, enumerable: true, configurable: true});
+          } else if (target.kind === 'iterator-next-method') {
+            candidate = NativeObjectCreate(null);
+            const nextMethod = invocationValue(target.value);
+            defineProperty(candidate, iteratorSymbol, {value() { return {next: nextMethod}; }, writable: true, enumerable: true, configurable: true});
+          } else if (target.kind === 'iterator-step-primitive') {
+            candidate = NativeObjectCreate(null);
+            const iteratorResult = invocationValue(target.value);
+            defineProperty(candidate, iteratorSymbol, {value() { return {next() { return iteratorResult; }}; }, writable: true, enumerable: true, configurable: true});
           } else throw new HostProtocolError('Unknown spread-failure target');
           const entry = NativeObjectCreate(null);
           defineProperty(entry, 'semantics', {value: function semantics() { return candidate; }, writable: true, enumerable: true, configurable: true});

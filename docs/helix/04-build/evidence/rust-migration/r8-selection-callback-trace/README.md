@@ -126,3 +126,23 @@ only. Other host versions and additional native spread failure shapes remain
 unqualified. This remains a private route; default Selection, complete host
 parity, resource boundaries, installed package qualification and retirement
 remain open.
+
+## Iterator `next` spread failures — 2026-10-26
+
+The current 30-case Node/Bun/Chromium replay adds six outcomes: non-callable
+iterator `next` values (`number`, `null`, `undefined`) and primitive
+iterator-step results with the same values. Rust preserves the already-read
+`next` value or returned step as an invocation-local primitive; Node and WASM
+host adapters place it in a private synthetic iterable and recover the
+engine-native TypeError by executing the predecessor's spread expression shape.
+No original iterator, callback, getter, or caller object is re-read. All three
+hosts match the bundled same-host TypeScript reference on exact outcomes and the
+complete caller-visible trace: 30/30 each, with zero mismatches. The [Node](./node.json),
+[Bun](./bun.json), and [Chromium](./chromium.json) receipts pin live sources,
+reference bundles, resource JSON, fixtures and built artifacts.
+
+This does not qualify resource-limit precedence: materializing a native failure
+adds charged work after the original iterator reads and could change which fault
+wins at a limit boundary. Other spread failures, arbitrary proxy/accessor
+behavior, `Registry.kindRuntime`, default routing, installed-source closure and
+release qualification remain open.
