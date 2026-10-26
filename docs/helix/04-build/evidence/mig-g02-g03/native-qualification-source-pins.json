@@ -25,6 +25,12 @@
       "aggregateWorkTimeoutSeconds": 1740,
       "evidenceReserveSeconds": 60,
       "jobTimeoutMinutes": 35
+    },
+    "executionConcurrency": {
+      "g02TemporalMaximumWorkers": 2,
+      "perWorkerCodegenVmHardMemoryBytes": 536870912,
+      "peakOverlappingCodegenVmHardMemoryBytes": 1073741824,
+      "githubRunnerEnvironmentCapUnchanged": true
     }
   },
   "dependencyPins": {
@@ -57,7 +63,7 @@
       "purpose": "G02 temporal five-case fixture generator"
     },
     "tests/lifecycle/g02-temporal-native.py": {
-      "sha256": "a808e2a81c1c39cd8a1e63cda1768c4e13063cb6cff8d43ba0e6d56fa1c9bfe6",
+      "sha256": "13155d45458c1706a99b22fec4474832dfbe892e6eb9981c4ca550c9a35998a8",
       "purpose": "G02 temporal PostgreSQL 18 native runner"
     },
     "tests/lifecycle/g03-defaults-native-fixture.ts": {

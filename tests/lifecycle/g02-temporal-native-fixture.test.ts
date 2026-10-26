@@ -36,7 +36,12 @@ test('G02 temporal native packet contains independently compiled carrier transit
   expect(packet.cases[1].expectedRows[2][4]).toBe('1998-01-02 03:04:05+00');
   expect(packet.cases[2].expectedRows[1]).toEqual(['p2','g02_bob',null,null,null,null,null,'00000000-0000-4000-8000-000000000009',null,null]);
   const runner=await readFile('tests/lifecycle/g02-temporal-native.py','utf8');
-  const metadata=runner.slice(runner.indexOf('def metadata_snapshot('),runner.indexOf('\nwith psycopg.connect'));
+  const metadataStart=runner.indexOf('def metadata_snapshot(');
+  const metadataEnd=runner.indexOf('\ndef run_case(',metadataStart);
+  expect(metadataStart).toBeGreaterThanOrEqual(0);
+  expect(metadataEnd).toBeGreaterThan(metadataStart);
+  expect(runner.slice(metadataEnd).startsWith('\ndef run_case(')).toBe(true);
+  const metadata=runner.slice(metadataStart,metadataEnd);
   expect(metadata).toContain("cfg['schema']+'.umf_lifecycle_progress'");
   expect(metadata).toContain('pg_catalog.to_regclass(%s)');
   expect(metadata).toContain('if progress_relation is not None:');

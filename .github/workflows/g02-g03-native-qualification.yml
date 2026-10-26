@@ -372,7 +372,18 @@ jobs:
           pins = json.loads(pathlib.Path("docs/helix/04-build/evidence/mig-g02-g03/native-qualification-source-pins.json").read_text())
           reports = evidence / "reports"
           g02 = json.loads((reports / "g02-temporal-native.json").read_text())
+          expected_g02_ids = pins["generatedInputPins"]["g02TemporalFixture"]["caseIds"]
+          expected_g02_passes = ("PASS_AND_CLEANED", "PASS_EXPECTED_ROLLBACK_AND_CLEANED")
+          assert g02["status"] == "PASS_G02_TEMPORAL_FIVE_CASES"
           assert g02["serverVersionNum"] == "180006" and g02["cases"] == 5 and g02["checks"]
+          assert g02["caseIds"] == expected_g02_ids
+          assert g02["maxWorkers"] == 2
+          assert g02["cleanupUnknown"] is False
+          assert g02["sharedRolesCleanup"] == "VERIFIED"
+          assert len(g02["caseResults"]) == 5
+          assert [case["caseId"] for case in g02["caseResults"]] == expected_g02_ids
+          assert all(case["status"] in expected_g02_passes and case["databaseCleanup"] == "VERIFIED"
+                     for case in g02["caseResults"])
           scenarios = pins["selectedNativeScope"]["g03ScenarioArguments"]
           statuses = {}
           for scenario in scenarios:
