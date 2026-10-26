@@ -1390,3 +1390,10 @@ function admissionWork(bridge) {
     }
   };
 }
+
+// This private staged importer is opt-in and is not connected to the default adapter.
+import {createJsonSchemaStagedImportSession, JSON_SCHEMA_STAGED_IMPORT_PROFILE} from './src/json-schema-import-session.js';
+export {JSON_SCHEMA_STAGED_IMPORT_PROFILE};
+export function createJsonSchemaStagedImportSessionEngine() {
+  return createJsonSchemaStagedImportSession(addon);
+}

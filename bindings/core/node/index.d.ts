@@ -411,3 +411,11 @@ export declare function createRetainedCodegenEngine(resources: UmfCodegenResourc
 
 export interface UmfCorePackage { manifest: unknown; kinds?: boolean; semantics?: (payload: unknown, context: {document: unknown; path: string; scope: string}) => {code:string;path:string;message:string;severity:"error"|"warning"}[]; }
 export type UmfCoreRegistration = UmfCoreExtension | UmfCorePackage;
+
+/** Private opt-in staged Rust import profile; source parity is limited to string inputs and remains unqualified. */
+export declare const JSON_SCHEMA_STAGED_IMPORT_PROFILE: 'umf-r8-json-schema-staged-node-private/0.1.0';
+export interface JsonSchemaStagedImportSessionEngine {
+  importJsonSchema(source: string, options: {id: string; baseUri: string; resources?: Record<string, string>}): unknown;
+}
+/** Create a private opt-in staged importer. The default JSON Schema route is unchanged. */
+export declare function createJsonSchemaStagedImportSessionEngine(): JsonSchemaStagedImportSessionEngine;
