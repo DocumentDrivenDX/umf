@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.1 — 2026-10-26
+
+Include the complete dual-license and NOTICE files in the package. Qualify the
+archive from an exact committed source, frozen dependency lock and Bun 1.4.2,
+including clean-build parity and an installed strict-CSP browser consumer.
+The release and npm publication now run through GitHub Actions with immutable
+release assets and trusted OIDC publishing. Existing mount/catalog contracts
+and qualified browser support limits remain in force.
+
 ## 2.0.0 — 2026-10-18
 
 Current-core reference integration moves to one `reference/core.html` host with

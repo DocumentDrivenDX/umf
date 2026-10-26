@@ -2,7 +2,7 @@
 
 A reusable, framework-neutral browser for UMF documents, TableSpec tables,
 domain packs, source artifact collections and ontology diagrams. This is the
-same renderer used by the UMF microsite. Version 2.0.0 ships compiled browser
+same renderer used by the UMF microsite. Version 2.0.1 ships compiled browser
 ESM, TypeScript declarations and static assets. No Bun, Node runtime, framework,
 public corpus or network connection to the UMF microsite is required.
 
@@ -11,7 +11,7 @@ public corpus or network connection to the UMF microsite is required.
 Install the public npm package:
 
 ```sh
-npm install @documentdrivendx/umf-schema-browser@2.0.0
+npm install @documentdrivendx/umf-schema-browser@2.0.1
 ```
 
 For local release review, install from the built package directory. A site
@@ -103,14 +103,14 @@ Metadata-dependent details link to their source overview when it is not yet load
 
 ## Build
 
-The default producer command builds the required comparison WASM from the
-repository's pinned Rust sources, then bundles it with the browser package:
+The current-source default producer builds the required comparison WASM from
+the repository's pinned Rust sources, then bundles it with the browser package:
 
 ```sh
 bun run build:schema-browser /tmp/schema-browser-a
 ```
 
-It requires Bun 1.4.2, the preinstalled Rust 1.90.0 toolchain with its
+It uses Bun and requires the preinstalled Rust 1.90.0 toolchain with its
 `wasm32-unknown-unknown` target, and the preinstalled `wasm-bindgen 0.2.100`
 CLI on `PATH`. The build is offline and does not install tools or targets.
 Generated Cargo output stays under `target/schema-browser-rust-wasm/`; the
@@ -135,7 +135,22 @@ npm pack /tmp/schema-browser-a
 The reusable package contains no sample dataset archives; users supply their
 catalog and original assets.
 
+The released 2.0.1 producer used Bun 1.4.2 and its own committed `build.ts`
+entrypoint. Reproduce that release from its source commit; the current-source
+Rust build instructions above describe the later worktree.
+
 ## npm release publication
+
+New releases use [`release-schema-browser.yml`](../../../../.github/workflows/release-schema-browser.yml)
+to qualify an exact committed source with frozen dependencies and Bun 1.4.2.
+It compares two clean builds, verifies the recorded source closure, installs the
+packed archive into a fresh consumer, checks both TypeScript module modes and
+runs the installed example in strict-CSP Chromium. Only after those gates pass
+does it attach the complete archive/manifest/checksum/receipt cohort to a draft
+GitHub release, publish that immutable release and dispatch the main npm
+publisher with exact source and archive pins. An explicit main-branch dispatch
+selects the source and new release tag; private SDKs and the site's separate
+installed-browser pin are outside this route.
 
 The public package `@documentdrivendx/umf-schema-browser` is published only by
 the Actions workflow [`publish-schema-browser-npm.yml`](../../../../.github/workflows/publish-schema-browser-npm.yml).
