@@ -64,6 +64,7 @@ class _FakeDatabase:
         self.namespace_queries = []
         self.connect_options = []
         self.readonly_connect_options = []
+        self.readonly_transactions = []
 
     def maintenance(self, name):
         self.roles[name] = (self.next_oid, True, True, False, False, False, False, False)
@@ -190,6 +191,8 @@ class _FakeConnection:
 def _execute_journal_recovery_control_transport(_issuer, budget, connection, query, params=None, **_kwargs):
     """Journal/recovery-control transport seam, not bounded-I/O qualification."""
     text = ' '.join(query.split())
+    if text in ('BEGIN READ ONLY', 'COMMIT', 'ROLLBACK'):
+        connection.db.readonly_transactions.append((budget, id(connection), text))
     if text == ("SELECT name, setting::pg_catalog.int8 FROM pg_catalog.pg_settings "
                 "WHERE name IN ('statement_timeout','lock_timeout')"):
         startup = budget._timeout_state
@@ -389,7 +392,9 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     connection = original_connect_maintenance(
                         _self, database_name, **kwargs)
                 db.readonly_connect_options.append(
-                    (readonly_budget, db.connect_options[-1]))
+                    (readonly_budget, db.connect_options[-1],
+                     readonly_budget._timeout_state['startupStatementTimeoutMs'],
+                     readonly_budget._timeout_state['startupLockTimeoutMs']))
                 yield connection
             def run_child(_self, argv, _log_path, _timeout, **_kwargs):
                 data_path = Path(argv[2])
@@ -855,6 +860,8 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     absence_queries_before = len(db.absence_queries)
                     namespace_queries_before = len(db.namespace_queries)
                     readonly_connects_before = len(db.readonly_connect_options)
+                    readonly_transactions_before = len(db.readonly_transactions)
+                    readonly_observations_before = len(readonly_observations)
                     recovery_effect_bindings = []
                     original_bind_effect = approval_core.OwnerApprovalCore._bind_effect_digest
                     def capture_store_effect_binding(
@@ -886,15 +893,47 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     self.assertEqual(recovery_codes, [
                         'local-postgresql-store-recovery-noncommit-unproven'])
                     first_readonly_connects = db.readonly_connect_options[readonly_connects_before:]
-                    self.assertEqual(len(first_readonly_connects), 1)
-                    for budget, options in first_readonly_connects:
+                    self.assertEqual(len(first_readonly_connects), 2)
+                    first_readonly_budget = first_readonly_connects[0][0]
+                    self.assertEqual(
+                        first_readonly_budget._deadline_ns
+                        - first_readonly_budget._started_ns, 30_000_000_000)
+                    first_readonly_observations = readonly_observations[
+                        readonly_observations_before:]
+                    self.assertEqual(len(first_readonly_observations), 1)
+                    self.assertIs(first_readonly_observations[0], first_readonly_budget)
+                    for budget, options, statement_ms, lock_ms in first_readonly_connects:
+                        self.assertIs(budget, first_readonly_budget)
+                        self.assertGreater(statement_ms, 0)
+                        self.assertLessEqual(statement_ms, 30_000)
+                        self.assertGreater(lock_ms, 0)
+                        self.assertLessEqual(lock_ms, 5_000)
                         self.assertEqual(options,
                             "-c search_path=pg_catalog -c row_security=on "
                             "-c session_replication_role=origin "
                             "-c default_transaction_read_only=off "
                             "-c 'default_transaction_isolation=read committed' "
-                            f"-c statement_timeout={budget._timeout_state['startupStatementTimeoutMs']}ms "
-                            f"-c lock_timeout={budget._timeout_state['startupLockTimeoutMs']}ms")
+                            f"-c statement_timeout={statement_ms}ms "
+                            f"-c lock_timeout={lock_ms}ms")
+                    first_readonly_transactions = db.readonly_transactions[
+                        readonly_transactions_before:]
+                    self.assertEqual(
+                        [item[2] for item in first_readonly_transactions],
+                        ['BEGIN READ ONLY', 'BEGIN READ ONLY', 'COMMIT', 'ROLLBACK'])
+                    first_transaction_connections = {
+                        connection_id for _budget, connection_id, _command
+                        in first_readonly_transactions}
+                    self.assertEqual(len(first_transaction_connections), 2)
+                    first_commands_by_connection = {}
+                    for budget, _connection_id, _command in first_readonly_transactions:
+                        self.assertIs(budget, first_readonly_budget)
+                    for _budget, connection_id, command in first_readonly_transactions:
+                        first_commands_by_connection.setdefault(connection_id, []).append(command)
+                    self.assertEqual(
+                        sorted(tuple(commands) for commands
+                               in first_commands_by_connection.values()),
+                        sorted((('BEGIN READ ONLY', 'COMMIT'),
+                                ('BEGIN READ ONLY', 'ROLLBACK'))))
                     self.assertGreater(len(db.absence_queries), absence_queries_before)
                     self.assertTrue(all(
                         'FROM pg_catalog.pg_database d WHERE d.datname=pg_catalog.current_database()'
@@ -998,10 +1037,11 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                         pending_provider.create()
                     with self.assertRaisesRegex(Exception, 'store-recovery-only'):
                         pending_provider.resume_creation()
-                    before_retry_observations = len(readonly_observations)
                     before_retry_absence_queries = len(db.absence_queries)
                     before_retry_namespace_queries = len(db.namespace_queries)
                     before_retry_readonly_connects = len(db.readonly_connect_options)
+                    before_retry_readonly_transactions = len(db.readonly_transactions)
+                    before_retry_readonly_observations = len(readonly_observations)
                     with after_pending_supervisor._original_control_lease(
                             operation_kind='store'):
                         before_retry_events = after_pending_supervisor._journal.read()['events']
@@ -1045,15 +1085,44 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                         'local-postgresql-store-recovery-noncommit-unproven'])
                     second_readonly_connects = db.readonly_connect_options[
                         before_retry_readonly_connects:]
-                    self.assertEqual(len(second_readonly_connects), 1)
-                    for budget, options in second_readonly_connects:
+                    self.assertEqual(len(second_readonly_connects), 2)
+                    second_readonly_budget = second_readonly_connects[0][0]
+                    self.assertIsNot(second_readonly_budget, first_readonly_budget)
+                    self.assertEqual(
+                        second_readonly_budget._deadline_ns
+                        - second_readonly_budget._started_ns, 30_000_000_000)
+                    for budget, options, statement_ms, lock_ms in second_readonly_connects:
+                        self.assertIs(budget, second_readonly_budget)
+                        self.assertGreater(statement_ms, 0)
+                        self.assertLessEqual(statement_ms, 30_000)
+                        self.assertGreater(lock_ms, 0)
+                        self.assertLessEqual(lock_ms, 5_000)
                         self.assertEqual(options,
                             "-c search_path=pg_catalog -c row_security=on "
                             "-c session_replication_role=origin "
                             "-c default_transaction_read_only=off "
                             "-c 'default_transaction_isolation=read committed' "
-                            f"-c statement_timeout={budget._timeout_state['startupStatementTimeoutMs']}ms "
-                            f"-c lock_timeout={budget._timeout_state['startupLockTimeoutMs']}ms")
+                            f"-c statement_timeout={statement_ms}ms "
+                            f"-c lock_timeout={lock_ms}ms")
+                    second_readonly_transactions = db.readonly_transactions[
+                        before_retry_readonly_transactions:]
+                    self.assertEqual(
+                        [item[2] for item in second_readonly_transactions],
+                        ['BEGIN READ ONLY', 'BEGIN READ ONLY', 'COMMIT', 'ROLLBACK'])
+                    second_transaction_connections = {
+                        connection_id for _budget, connection_id, _command
+                        in second_readonly_transactions}
+                    self.assertEqual(len(second_transaction_connections), 2)
+                    second_commands_by_connection = {}
+                    for budget, _connection_id, _command in second_readonly_transactions:
+                        self.assertIs(budget, second_readonly_budget)
+                    for _budget, connection_id, command in second_readonly_transactions:
+                        second_commands_by_connection.setdefault(connection_id, []).append(command)
+                    self.assertEqual(
+                        sorted(tuple(commands) for commands
+                               in second_commands_by_connection.values()),
+                        sorted((('BEGIN READ ONLY', 'COMMIT'),
+                                ('BEGIN READ ONLY', 'ROLLBACK'))))
                     self.assertGreater(len(db.absence_queries), before_retry_absence_queries)
                     self.assertTrue(all(
                         'FROM pg_catalog.pg_database d WHERE d.datname=pg_catalog.current_database()'
@@ -1064,7 +1133,10 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                         'FROM pg_catalog.pg_namespace n WHERE n.nspname=%s',
                         retry_namespace_queries[0][0])
                     self.assertEqual(retry_namespace_queries[0][1], (store['schemaName'],))
-                    self.assertGreater(len(readonly_observations), before_retry_observations)
+                    second_readonly_observations = readonly_observations[
+                        before_retry_readonly_observations:]
+                    self.assertEqual(len(second_readonly_observations), 1)
+                    self.assertIs(second_readonly_observations[0], second_readonly_budget)
                     with after_pending_supervisor._original_control_lease(
                             operation_kind='store'):
                         second_events = after_pending_supervisor._journal.read()['events']
