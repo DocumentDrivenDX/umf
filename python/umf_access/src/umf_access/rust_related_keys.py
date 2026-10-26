@@ -18,6 +18,7 @@ from umf import rust_related_keys as _core
 from .types import RelatedKeyParserUnavailable
 
 _PROFILE = "umf-r6-related-key-json/0.1.0"
+_TRUSS_COMPONENT_PROFILE = "umf-r6-truss-related-key-component/0.1.0"
 
 
 def profile_version() -> str:
@@ -84,3 +85,76 @@ def loads_default(text: str) -> Any:
     the original ``loads`` path and frame layout.
     """
     return loads(text)
+
+
+def truss_component_type_matches(value: object, carrier: object) -> bool:
+    """Use Rust only for exact built-in JSON metadata trees without aliases.
+
+    Python's reference predicate can invoke custom equality or dict-subclass
+    behavior. The public default remains Python; this explicit opt-in refuses
+    such inputs and admits only data with the same meaning after JSON transport.
+    """
+    if type(value) is not dict or type(carrier) is not str:
+        raise RelatedKeyParserUnavailable(
+            "Rust Truss component profile requires an exact dict and string carrier"
+        )
+    try:
+        version = profile_version()
+        if version != _PROFILE:
+            raise RelatedKeyParserUnavailable(
+                "umf-core related-Key parser capability profile mismatch"
+            )
+        operation = _core.truss_component_type_matches
+    except (AttributeError, ImportError):
+        raise RelatedKeyParserUnavailable(
+            "umf-core related-Key component capability unavailable"
+        ) from None
+
+    pending = [value]
+    seen: set[int] = set()
+    while pending:
+        item = pending.pop()
+        kind = type(item)
+        if kind is dict:
+            identity = id(item)
+            if identity in seen:
+                raise RelatedKeyParserUnavailable(
+                    "Rust Truss component profile refuses repeated/cyclic JSON metadata"
+                )
+            seen.add(identity)
+            for key, child in item.items():
+                if type(key) is not str:
+                    raise RelatedKeyParserUnavailable(
+                        "Rust Truss component profile requires exact string object keys"
+                    )
+                pending.append(key)
+                pending.append(child)
+        elif kind is list:
+            identity = id(item)
+            if identity in seen:
+                raise RelatedKeyParserUnavailable(
+                    "Rust Truss component profile refuses repeated/cyclic JSON metadata"
+                )
+            seen.add(identity)
+            pending.extend(item)
+        elif kind in (str, int, bool) or item is None:
+            continue
+        elif kind is float:
+            if item != item or item in (float("inf"), float("-inf")):
+                raise RelatedKeyParserUnavailable(
+                    "Rust Truss component profile requires finite JSON numbers"
+                )
+        else:
+            raise RelatedKeyParserUnavailable(
+                "Rust Truss component profile requires exact JSON value types"
+            )
+    try:
+        encoded = json.dumps(value, separators=(",", ":"), ensure_ascii=False, allow_nan=False)
+    except (UnicodeEncodeError, ValueError, TypeError):
+        raise RelatedKeyParserUnavailable(
+            "Rust Truss component profile could not encode exact JSON metadata"
+        ) from None
+    result = operation(encoded, carrier, _TRUSS_COMPONENT_PROFILE)
+    if type(result) is not bool:
+        raise RuntimeError("Rust Truss component profile returned a non-boolean result")
+    return result

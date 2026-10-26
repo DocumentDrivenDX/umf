@@ -16,6 +16,7 @@ use umf_core::access_related_keys::{
 };
 
 pub const PROFILE_VERSION: &str = "umf-r6-related-key-json/0.1.0";
+pub const TRUSS_COMPONENT_PROFILE_VERSION: &str = "umf-r6-truss-related-key-component/0.1.0";
 
 /// Return `(tree, failure_kind, diagnostic, offset)`.
 ///
@@ -211,4 +212,23 @@ impl Drop for RecursionBudget {
 #[pyfunction]
 pub fn related_keys_profile_version() -> &'static str {
     PROFILE_VERSION
+}
+
+/// Match the bounded Truss component profile over an already encoded JSON
+/// metadata fragment. Python retains generated-Key identity and other decoder
+/// admission; this operation does not inspect native engine values.
+#[pyfunction]
+pub fn related_keys_truss_component_profile_matches(
+    text: &str,
+    carrier: &str,
+    profile: &str,
+) -> PyResult<bool> {
+    if profile != TRUSS_COMPONENT_PROFILE_VERSION {
+        return Err(PyValueError::new_err(
+            "unsupported Truss related-Key component profile",
+        ));
+    }
+    umf_core::access_related_keys::truss_component_type_json_matches(text, carrier).ok_or_else(
+        || PyValueError::new_err("invalid Truss related-Key component JSON"),
+    )
 }

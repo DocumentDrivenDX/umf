@@ -12,3 +12,9 @@ def profile_version() -> str:
 
 def parse(text: str, diagnostic_profile: str):
     return _rust._rust_core.related_keys_parse(text, diagnostic_profile)
+
+
+def truss_component_type_matches(text: str, carrier: str, profile: str) -> bool:
+    return _rust._rust_core.related_keys_truss_component_profile_matches(
+        text, carrier, profile
+    )

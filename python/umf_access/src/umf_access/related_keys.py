@@ -7,7 +7,7 @@ import re
 import sys
 from decimal import Decimal, InvalidOperation
 from types import GenericAlias
-from typing import cast
+from typing import Callable, cast
 
 from pydantic import BaseModel
 
@@ -40,6 +40,17 @@ def key_descriptor(key_model: type[StrictModel]) -> dict[str, object]:
 
 
 def validate_decoder(decoder: object, key_model: type[StrictModel]) -> dict[str, object]:
+    return _validate_decoder(decoder, key_model, _truss_component_type)
+
+
+def validate_decoder_rust(decoder: object, key_model: type[StrictModel]) -> dict[str, object]:
+    """Opt into Rust for the closed Truss component-profile predicate only."""
+    from .rust_related_keys import truss_component_type_matches
+
+    return _validate_decoder(decoder, key_model, truss_component_type_matches)
+
+
+def _validate_decoder(decoder: object, key_model: type[StrictModel], component_check: Callable[[object, object], bool]) -> dict[str, object]:
     if type(decoder) is not dict:
         raise CodecError("closed original related-Key decoder required")
     profile=decoder.get("profile")
@@ -56,11 +67,11 @@ def validate_decoder(decoder: object, key_model: type[StrictModel]) -> dict[str,
     if declared_key != descriptor or type(components) is not list or any(type(c) is not dict or c.get("nullable") is not False for c in components):
         raise CodecError("original relationship Key descriptor differs from generated class")
     if profile in ("ashlar-related-keys-string/0.1","truss-related-keys/0.1"):
-        _engine_metadata(decoder,key_model,descriptor)
+        _engine_metadata(decoder,key_model,descriptor,component_check)
     return cast(dict[str,object],decoder)
 
 
-def _engine_metadata(decoder: dict[str,object], key_model: type[StrictModel], descriptor: dict[str,object]) -> None:
+def _engine_metadata(decoder: dict[str,object], key_model: type[StrictModel], descriptor: dict[str,object], component_check: object) -> None:
     """Validate original metadata only; native engine values stay engine-owned."""
     source=getattr(key_model,"UMF_SOURCE",None)
     pins=decoder["modelPins"]
@@ -93,7 +104,7 @@ def _engine_metadata(decoder: dict[str,object], key_model: type[StrictModel], de
         types=[{"family":"string","facets":{},"nullable":False} for _ in components]
         if any(c["carrier"]!="string" for c in components) or any(type(t) is not dict or t.get("nullable") is not False for t in key["types"]) or key["types"]!=types:
             raise CodecError("original Ashlar required String-Key profile differs")
-    elif any(not _truss_component_type(t,c["carrier"]) for t,c in zip(key["types"],components,strict=True)):
+    elif any(not component_check(t,c["carrier"]) for t,c in zip(key["types"],components,strict=True)):
         raise CodecError("original Truss non-temporal related-Key profile differs")
 
 

@@ -118,6 +118,64 @@ pub fn parse_related_key_json(
     Parser::new(input, profile).parse()
 }
 
+/// Match one original Truss related-Key component type against the closed
+/// non-temporal carrier profile used by `umf_access` decoder metadata.
+///
+/// This rule validates only a JSON metadata fragment. It does not decode
+/// engine values, construct Keys, or establish engine ownership.
+pub fn truss_component_type_matches(value: &serde_json::Value, carrier: &str) -> bool {
+    use serde_json::Value;
+
+    let Some(object) = value.as_object() else {
+        return false;
+    };
+    if object.len() != 3
+        || object.get("family").and_then(Value::as_str) != Some(carrier)
+        || object.get("nullable") != Some(&Value::Bool(false))
+    {
+        return false;
+    }
+    let Some(facets) = object.get("facets").and_then(Value::as_object) else {
+        return false;
+    };
+    match carrier {
+        "string" | "boolean" => facets.is_empty(),
+        "integer" => {
+            if facets.is_empty() {
+                return true;
+            }
+            if facets.len() != 1 {
+                return false;
+            }
+            let Some(width) = facets.get("integerWidth").and_then(Value::as_object) else {
+                return false;
+            };
+            width.len() == 2
+                && width
+                    .get("bits")
+                    .and_then(Value::as_i64)
+                    .is_some_and(|bits| bits == 64)
+                && width.get("signed") == Some(&Value::Bool(true))
+        }
+        "decimal" => {
+            if facets.len() != 2 || !facets.contains_key("precision") || !facets.contains_key("scale") {
+                return false;
+            }
+            let precision = facets.get("precision").and_then(Value::as_i64);
+            let scale = facets.get("scale").and_then(Value::as_i64);
+            matches!((precision, scale), (Some(18), Some(4) | Some(2)) | (Some(12), Some(2)))
+        }
+        _ => false,
+    }
+}
+
+/// Parse one exact JSON metadata fragment and apply the Truss closed-profile
+/// predicate. `None` denotes invalid JSON rather than a profile mismatch.
+pub fn truss_component_type_json_matches(input: &str, carrier: &str) -> Option<bool> {
+    let value = serde_json::from_str(input).ok()?;
+    Some(truss_component_type_matches(&value, carrier))
+}
+
 #[derive(Debug)]
 enum FrameKind {
     Array {
@@ -903,5 +961,42 @@ mod tests {
             failure.diagnostic(DiagnosticProfile::Cpython311, &input),
             "Expecting value: line 1 column 7 (char 6)"
         );
+    }
+
+    #[test]
+    fn truss_component_type_matches_the_closed_non_temporal_profile() {
+        let accepted = [
+            ("string", serde_json::json!({"family":"string","facets":{},"nullable":false})),
+            ("boolean", serde_json::json!({"family":"boolean","facets":{},"nullable":false})),
+            ("integer", serde_json::json!({"family":"integer","facets":{},"nullable":false})),
+            ("integer", serde_json::json!({"family":"integer","facets":{"integerWidth":{"bits":64,"signed":true}},"nullable":false})),
+            ("decimal", serde_json::json!({"family":"decimal","facets":{"precision":18,"scale":4},"nullable":false})),
+            ("decimal", serde_json::json!({"family":"decimal","facets":{"precision":18,"scale":2},"nullable":false})),
+            ("decimal", serde_json::json!({"family":"decimal","facets":{"precision":12,"scale":2},"nullable":false})),
+        ];
+        for (carrier, value) in accepted {
+            assert!(truss_component_type_matches(&value, carrier), "{carrier}: {value}");
+        }
+
+        let rejected = [
+            ("string", serde_json::json!({"family":"string","facets":{"maxLength":12},"nullable":false})),
+            ("boolean", serde_json::json!({"family":"boolean","facets":{"future":true},"nullable":false})),
+            ("integer", serde_json::json!({"family":"integer","facets":{"integerWidth":{"bits":32,"signed":true}},"nullable":false})),
+            ("integer", serde_json::json!({"family":"integer","facets":{"integerWidth":{"bits":64,"signed":false}},"nullable":false})),
+            ("integer", serde_json::json!({"family":"integer","facets":{"integerWidth":{"bits":64.0,"signed":true}},"nullable":false})),
+            ("integer", serde_json::json!({"family":"integer","facets":{"integerWidth":{"bits":64,"signed":1}},"nullable":false})),
+            ("integer", serde_json::json!({"family":"integer","facets":{"integerWidth":{"bits":64,"signed":true,"extra":0}},"nullable":false})),
+            ("decimal", serde_json::json!({"family":"decimal","facets":{},"nullable":false})),
+            ("decimal", serde_json::json!({"family":"decimal","facets":{"precision":38,"scale":9},"nullable":false})),
+            ("decimal", serde_json::json!({"family":"decimal","facets":{"precision":18.0,"scale":4},"nullable":false})),
+            ("decimal", serde_json::json!({"family":"decimal","facets":{"precision":18,"scale":true},"nullable":false})),
+            ("date", serde_json::json!({"family":"date","facets":{},"nullable":false})),
+            ("integer", serde_json::json!({"family":"integer","facets":{},"nullable":0})),
+            ("integer", serde_json::json!({"family":"integer","facets":{},"nullable":false,"extra":0})),
+            ("integer", serde_json::json!(["integer", {}, false])),
+        ];
+        for (carrier, value) in rejected {
+            assert!(!truss_component_type_matches(&value, carrier), "{carrier}: {value}");
+        }
     }
 }

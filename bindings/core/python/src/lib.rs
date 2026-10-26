@@ -3783,6 +3783,10 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     )?)?;
     module.add_function(wrap_pyfunction!(related_keys::related_keys_parse, module)?)?;
     module.add_function(wrap_pyfunction!(
+        related_keys::related_keys_truss_component_profile_matches,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
         protobuf_descriptor_profile_version,
         module
     )?)?;
