@@ -16,6 +16,7 @@ import sys
 import tempfile
 import unittest
 import uuid
+import traceback
 from contextlib import contextmanager
 from pathlib import Path
 from types import SimpleNamespace
@@ -598,9 +599,13 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                                 return original_reattach(issuer, *args, **kwargs)
                             except Exception as error:
                                 diagnostic = ' '.join(str(error).split())[:256]
+                                frames = traceback.extract_tb(error.__traceback__)[-8:]
+                                trace = ' <- '.join(
+                                    f'{Path(frame.filename).name}:{frame.lineno}:{frame.name}'
+                                    for frame in frames)
                                 print(
                                     'G04 reattach_confirmed_target: '
-                                    f'{type(error).__name__}: {diagnostic}',
+                                    f'{type(error).__name__}: {diagnostic}; {trace}',
                                     file=sys.stderr,
                                 )
                                 raise

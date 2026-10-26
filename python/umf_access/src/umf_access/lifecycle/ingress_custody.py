@@ -1296,7 +1296,7 @@ class LocalTargetCustodian:
             raise CustodyJournalError('owner-registration-mismatch')
         registration_id = payload['registrationId']
         document = self._journal._load()
-        current = _replay(document['events'])['registration']
+        current = _replay(document['events'], profile=self._journal._profile)['registration']
         if current is None:
             # An original durable intent is recorded before any subsequent
             # provider enrollment operation.  It is never replaced on restart.
@@ -1323,7 +1323,7 @@ class LocalTargetCustodian:
                 if intents != [expected_intent]:
                     raise
             document = self._journal._load()
-            current = _replay(document['events'])['registration']
+            current = _replay(document['events'], profile=self._journal._profile)['registration']
         else:
             original_intent = next(event['payload'] for event in document['events']
                                    if event['kind'] == 'registration-intent')
@@ -1349,7 +1349,8 @@ class LocalTargetCustodian:
                         and event['payload'] == observation_event]
             if not matching:
                 raise
-        latest = _replay(self._journal._load()['events'])['registration']
+        latest = _replay(self._journal._load()['events'],
+                         profile=self._journal._profile)['registration']
         reference = {
             'profile': 'umf.native-target-custody/0.1',
             'custodianId': self.custodian_id,
@@ -1406,7 +1407,7 @@ class LocalTargetCustodian:
             raise CustodyJournalError('owner-registration-mismatch')
 
         document = self._journal._load()
-        state = _replay(document['events'])['registration']
+        state = _replay(document['events'], profile=self._journal._profile)['registration']
         if state is None or state.get('status') != 'confirmed':
             raise CustodyJournalError('registration-confirmation-required')
         intents = [event['payload'] for event in document['events']
