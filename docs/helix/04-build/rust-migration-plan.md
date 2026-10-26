@@ -6220,6 +6220,17 @@ generated text in Node. Arbitrary diagnostics, static validation, resource
 parity and installed-package qualification remain open. Both V4 defaults stay
 on their predecessor route.
 
+The [private Selection consumer-stage `.valid` cut](evidence/rust-migration/r8-selection-kind-runtime-result-continuation/README.md#consumer-stage-boundary-decision)
+now invokes the caller `kindRuntime.validateDocument` at the Selection
+validation branch, reads only its result's `.valid` property, and stops before
+either diagnostics formatting or successful result copying. Sol reran the
+focused Rust test, 24 Bun binding tests (215 assertions), Node 26 same-host
+trace, and a fresh Chromium 153 WASM replay. The five observable host events
+match TypeScript through `.valid`; the final outcomes intentionally differ
+(`HOST_JSON_UNSUPPORTED` at the private Rust boundary versus the predecessor's
+later behavior). Arbitrary callback diagnostics, static validation, resource
+parity and installed-package/default-route qualification remain open.
+
 The [Protobuf descriptor write CLI](evidence/rust-migration/r8-protobuf-descriptor-write-cli/README.md)
 adds one opt-in pure Rust operation, `protobuf.descriptor.write`, that emits
 raw `FileDescriptorSet` bytes. The local Rust 1.90.0 CLI suite passes 51/51,

@@ -93,6 +93,11 @@ try {
     const entry = await import(entryUrl);
     return entry.runSelectionBrowserCases(payload);
   }, {glueSource, wasmBase64: wasmBytes.toString('base64'), entrySource, payload});
+  const branchDiagnosticPath = resolve(process.argv[3] ?? '/private/tmp/umf-selection-kind-runtime-branch-browser-debug.json');
+  await writeFile(branchDiagnosticPath, JSON.stringify({
+    selectionKindRuntimeBranch: result.selectionKindRuntimeBranch,
+    chromium: browser.version(),
+  }, null, 2) + '\n');
   assert.deepEqual(browserErrors, []);
   for (const [name, outcome] of Object.entries(result.outcomes)) {
     assert.equal(outcome.equal, true, `frozen JSON mismatch: ${name}`);
@@ -127,6 +132,11 @@ try {
   ], 'kindRuntime second-read behavior diverged from same-host TypeScript');
   assert.equal(result.kindRuntimeDynamicReadCases[1].sameText, true,
     'caller getter exception should preserve its own message');
+  assert.equal(result.selectionKindRuntimeBranch.prefixMatches, true,
+    `Selection kindRuntime validity branch differs from same-host TypeScript: ${JSON.stringify(result.selectionKindRuntimeBranch)}`);
+  assert.equal(result.selectionKindRuntimeBranch.trace.at(-1), 'validation.valid:get',
+    'private Selection route read beyond the result.valid branch');
+  assert.match(result.selectionKindRuntimeBranch.actualError, /HOST_JSON_UNSUPPORTED/);
   const record = {
     profile: 'umf.r8.selection-private-host-route.chromium/1',
     status: 'pass-private-frozen-values-direct-warning-source-and-null-prototypes',
@@ -139,6 +149,7 @@ try {
     kindRuntimeDelegation: result.kindRuntimeDelegation,
     kindRuntimeResultCases: result.kindRuntimeResultCases,
     kindRuntimeDynamicReadCases: result.kindRuntimeDynamicReadCases,
+    selectionKindRuntimeBranch: result.selectionKindRuntimeBranch,
     successfulWarnings: {...result.successfulWarnings, directBaselineHost: 'Bun 1.4.3 direct TypeScript source'},
     resourceMeterControl: {host: 'Bun 1.4.3 Node addon', messageUnits: 4000001, outcome: 'LIMIT'},
     shapeFinding: 'Selection result projection recreates TypeScript copyJson null-prototype objects; own __proto__ remains data and cannot mutate the prototype.',
@@ -148,7 +159,7 @@ try {
       'fresh-wasm-bindgen-glue': sha(Buffer.from(glueSource)),
       'bundled-browser-entry': sha(Buffer.from(entrySource)),
     },
-    limits: ['Private route only; no public/default selection.', 'Seven frozen query cases, one own-__proto__ projection case, one Registry.get thrown-identity case, and one successful warning packet using a synthetic warning structure policy compared to direct TypeScript sourceValidation.', 'The kindRuntime result packet covers 12 returned values with exact Object.is value parity, identity, getter/call traces, a dynamic second-read null control, and a throwing dynamic method getter. It does not implement arbitrary diagnostic iteration, static validation, or resource-accounting parity. The generated TypeError wording for a null second runtime remains host-specific.', 'Resource-limit control is Node addon evidence, not a Chromium case. No general Selection semantic callback parity or installed package qualification.'],
+    limits: ['Private route only; no public/default selection.', 'Seven frozen query cases, one own-__proto__ projection case, one Registry.get thrown-identity case, and one successful warning packet using a synthetic warning structure policy compared to direct TypeScript sourceValidation.', 'The kindRuntime result packet covers 12 returned values with exact Object.is value parity, identity, getter/call traces, a dynamic second-read null control, and a throwing dynamic method getter. The consumer-stage branch packet reads only `.valid` at Selection validation; it deliberately stops before refusal diagnostics or successful sourceValidation materialization. Arbitrary diagnostic iteration, static validation, and resource-accounting parity remain unimplemented. The generated TypeError wording for a null second runtime remains host-specific.', 'Resource-limit control is Node addon evidence, not a Chromium case. No general Selection semantic callback parity or installed package qualification.'],
   };
   await mkdir(resolve(receiptPath, '..'), {recursive: true});
   await writeFile(receiptPath, JSON.stringify(record, null, 2) + '\n');

@@ -12,7 +12,7 @@ if (!addonPath) throw new Error('UMF_SELECTION_ADDON must name a freshly built N
 const require = createRequire(import.meta.url);
 const addon = require(addonPath);
 const {coreElementSelectionHostInput, kindRuntimeValidationHostInput} = await import(pathToFileURL(resolve(root, 'bindings/core/node/src/host-json.js')));
-const {validateDocument: typescriptValidateDocument} = await import(pathToFileURL(resolve(root, 'dist/umf-node.js')));
+const {validateDocument: typescriptValidateDocument, selectCoreElements: typescriptSelectCoreElements} = await import(pathToFileURL(resolve(root, 'dist/umf-node.js')));
 const read = path => JSON.parse(readFileSync(resolve(root, path), 'utf8'));
 const resources = {
   coreSchema: read('spec/core/schema.json'),
@@ -67,6 +67,53 @@ const kindRuntimeResultCases = kindRuntimeResultValues.map((value, index) => {
 assert.deepEqual(kindRuntimeResultCases.map(item => [item.sameValue, item.sameIdentity, item.sameTrace]),
   kindRuntimeResultCases.map(() => [true, true, true]));
 
+const selectionKindRuntimeBranch = (() => {
+  const referenceTrace = [];
+  const actualTrace = [];
+  const makeRegistry = trace => {
+    const result = Object.defineProperty({}, 'valid', {
+      get() { trace.push('validation.valid:get'); return true; },
+    });
+    const runtime = {validateDocument(source, registrations) {
+      trace.push('kindRuntime.validateDocument:call');
+      if (this !== runtime || JSON.stringify(source) !== JSON.stringify(packet.source) || registrations.length !== 0) {
+        throw new Error('Selection kindRuntime receiver or arguments changed');
+      }
+      assert.equal(Object.getPrototypeOf(source), null);
+      assert.equal(Object.getPrototypeOf(source.modules[0]), null);
+      return result;
+    }};
+    return {
+      get kindRuntime() { trace.push('registry.kindRuntime:get'); return runtime; },
+      registrations() { trace.push('registry.registrations:call'); return []; },
+    };
+  };
+  try { typescriptSelectCoreElements(packet.source, packet.queries.all, makeRegistry(referenceTrace)); }
+  catch (error) { assert.equal(error.code, 'NON_JSON'); }
+  try {
+    coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, makeRegistry(actualTrace), Error);
+    assert.fail('expected the bounded consumer-stage stop');
+  } catch (error) {
+    assert.equal(error.message, 'HOST_JSON_UNSUPPORTED');
+  }
+  assert.equal(actualTrace.at(-1), 'validation.valid:get');
+  assert.deepEqual(referenceTrace.slice(0, actualTrace.length), actualTrace);
+  const sentinel = Object.freeze({validGetter: true});
+  const thrownTrace = [];
+  const throwingRegistry = {
+    kindRuntime: {validateDocument() {
+      return Object.defineProperty({}, 'valid', {get() { thrownTrace.push('valid:get'); throw sentinel; }});
+    }},
+    registrations() { thrownTrace.push('registrations:call'); return []; },
+  };
+  let thrown;
+  try { coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, throwingRegistry, Error); }
+  catch (error) { thrown = error; }
+  assert.equal(thrown, sentinel);
+  return {prefixMatches: true, trace: actualTrace, unsupportedAfterValid: true,
+    thrownGetterIdentity: thrown === sentinel, thrownTrace};
+})();
+
 const sentinel = {identity: true};
 let calls = 0;
 try {
@@ -76,4 +123,4 @@ try {
   assert.equal(error, sentinel);
 }
 assert.equal(calls, 1);
-console.log(JSON.stringify({status: 'json-value-and-shape-pass', host: process.version, cases: 3, outputPrototype, ownProtoKey: true, kindRuntimeResultCases}));
+console.log(JSON.stringify({status: 'json-value-and-shape-pass', host: process.version, cases: 3, outputPrototype, ownProtoKey: true, kindRuntimeResultCases, selectionKindRuntimeBranch}));

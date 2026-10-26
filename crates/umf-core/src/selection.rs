@@ -323,6 +323,7 @@ fn select_core_elements_after_copy(
         ctx,
         None,
         None,
+        None,
     )
 }
 
@@ -345,8 +346,24 @@ fn select_core_elements_after_copy_with_host_refusal(
             &mut Context<'_>,
         ) -> Result<Value, EngineError>,
     >,
+    mut host_kind_runtime: Option<
+        &mut dyn FnMut(&Value, &mut Context<'_>) -> Result<Option<bool>, EngineError>,
+    >,
 ) -> Result<Value, EngineError> {
     let (transitive, filters, identities) = parse_query(&query)?;
+    if let Some(validate) = host_kind_runtime.as_deref_mut() {
+        match validate(&source, ctx)? {
+            Some(false) => return Err(EngineError::new(
+                "HOST_JSON_UNSUPPORTED", Utf16::default(),
+                "Caller kindRuntime Selection refusal stops before diagnostics materialization",
+            )),
+            Some(true) => return Err(EngineError::new(
+                "HOST_JSON_UNSUPPORTED", Utf16::default(),
+                "Caller kindRuntime Selection success stops before sourceValidation materialization",
+            )),
+            None => {}
+        }
+    }
     let source_validation = if host_refusal.is_some() {
         engine.selection_diagnostic_packet_with_provider(&source, provider, capabilities, ctx)?
     } else {
@@ -625,6 +642,7 @@ pub(crate) fn select_core_elements_admitted_with_host_refusal(
         ctx,
         Some(refusal),
         None,
+        None,
     )
 }
 
@@ -643,10 +661,13 @@ pub(crate) fn select_core_elements_admitted_with_host_materializers(
         &crate::selection_diagnostics::SelectionDiagnosticMaterialization,
         &mut Context<'_>,
     ) -> Result<Value, EngineError>,
+    kind_runtime: Option<
+        &mut dyn FnMut(&Value, &mut Context<'_>) -> Result<Option<bool>, EngineError>,
+    >,
 ) -> Result<Value, EngineError> {
     select_core_elements_after_copy_with_host_refusal(
         source, query, engine, provider, capabilities, ctx,
-        Some(refusal), Some(source_validation),
+        Some(refusal), Some(source_validation), kind_runtime,
     )
 }
 

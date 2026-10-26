@@ -4,6 +4,7 @@ import {createRequire} from 'node:module';
 import {coreElementSelectionHostInput, coreOpaqueReturnHostInput, kindRuntimeValidationHostInput} from '../src/host-json.js';
 import {UmfCoreError} from '../index.js';
 import {validateDocument as typescriptValidateDocument} from '../../../../dist/umf-node.js';
+import {selectCoreElements as typescriptSelectCoreElements} from '../../../../dist/umf-node.js';
 import {encodeWire} from '../src/wire.js';
 import {directTypescriptWarningSelection} from '../../../../scripts/rust-migration/r8/selection-private-host-direct.mjs';
 import {readFileSync} from 'node:fs';
@@ -201,6 +202,65 @@ test('private host Selection route matches the complete frozen R5 result with an
   expect(Object.getPrototypeOf(output)).toBe(null);
   expect(Object.getPrototypeOf(output.source)).toBe(null);
   expect(Object.getPrototypeOf(output.source.modules[0])).toBe(null);
+});
+
+test('private Selection kindRuntime reads result.valid at the consumer branch before refusing the continuation', () => {
+  const referenceTrace = [];
+  const actualTrace = [];
+  const makeRegistry = trace => {
+    const result = Object.defineProperty({}, 'valid', {
+      get() { trace.push('validation.valid:get'); return true; },
+    });
+    const runtime = {validateDocument(source, registrations) {
+      trace.push('kindRuntime.validateDocument:call');
+      expect(this).toBe(runtime);
+      expect(source).toEqual(packet.source);
+      expect(Object.getPrototypeOf(source)).toBe(null);
+      expect(Object.getPrototypeOf(source.modules[0])).toBe(null);
+      expect(registrations).toEqual([]);
+      return result;
+    }};
+    return {
+      get kindRuntime() { trace.push('registry.kindRuntime:get'); return runtime; },
+      registrations() { trace.push('registry.registrations:call'); return []; },
+    };
+  };
+
+  const referenceRegistry = makeRegistry(referenceTrace);
+  try {
+    typescriptSelectCoreElements(packet.source, packet.queries.all, referenceRegistry);
+  } catch (error) {
+    // The final sourceValidation copy rejects this non-enumerable accessor
+    // after `.valid` was read; this stage compares the observable prefix only.
+    expect(error.code).toBe('NON_JSON');
+  }
+  const actualRegistry = makeRegistry(actualTrace);
+  expect(() => coreElementSelectionHostInput(
+    addon, resources, packet.source, packet.queries.all, actualRegistry, UmfCoreError,
+  )).toThrow(expect.objectContaining({
+    code: 'HOST_JSON_UNSUPPORTED',
+    message: 'Caller kindRuntime Selection success stops before sourceValidation materialization',
+  }));
+  expect(actualTrace.at(-1)).toBe('validation.valid:get');
+  expect(referenceTrace.slice(0, actualTrace.length)).toEqual(actualTrace);
+});
+
+test('private Selection kindRuntime preserves a thrown result.valid getter value and stops at that read', () => {
+  const sentinel = Object.freeze({validGetter: 'thrown'});
+  const trace = [];
+  const registry = {
+    kindRuntime: {validateDocument() {
+      return Object.defineProperty({}, 'valid', {get() { trace.push('valid:get'); throw sentinel; }});
+    }},
+    registrations() { trace.push('registrations:call'); return []; },
+  };
+  try {
+    coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, registry, UmfCoreError);
+    throw new Error('expected result.valid getter failure');
+  } catch (error) {
+    expect(error).toBe(sentinel);
+  }
+  expect(trace).toEqual(['registrations:call', 'valid:get']);
 });
 
 test('private host Selection returns TypeScript null-prototype objects and preserves __proto__ as own data', () => {

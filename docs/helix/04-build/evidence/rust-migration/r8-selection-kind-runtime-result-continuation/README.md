@@ -57,3 +57,53 @@ objects, qualify string-limit accounting beyond the stated bound, or qualify
 installed packages. It does not change either V4 default root or retire any
 default-route gap. Generated native TypeError wording for the null second-read
 case remains an explicit host-runtime difference.
+
+## Consumer-stage boundary decision
+
+The next predecessor behavior is owned by `selectCoreElements`, not by
+`validateDocument`: Selection reads `sourceValidation.valid`; if falsy, it
+reads and stringifies `sourceValidation.diagnostics` while constructing the
+refusal; if truthy, the returned validation object is retained in the
+Selection candidate and reached by the final `copyJson`. Therefore draining or
+materializing a returned diagnostic iterable in this continuation would move
+observable getter, iterator, and serialization effects ahead of the
+predecessor's `.valid` decision. The callback result must remain an opaque
+identity-bearing handle until the consumer stage chooses the applicable path.
+
+The private Selection route now carries this boundary through the `.valid`
+decision only. After it copies source and query and accepts the query, it
+checks the caller runtime, invokes `validateDocument` with the copied
+null-prototype source and registrations result, then reads `result.valid` at
+the Selection branch. A true result stops before successful
+`sourceValidation` materialization; a false result stops before reading or
+stringifying diagnostics. A throwing `.valid` getter propagates the original
+thrown value. The no-runtime branch continues through the existing Rust-owned
+validation path. No public V4 route changes.
+
+The focused Rust branch test passes. The Bun 1.4.3 Node-addon suite passes
+24 tests and 215 assertions, including exact TypeScript observable-prefix
+comparison and `.valid` thrown-value identity. The same-host Node 26.12.1
+runner reports the same five-event prefix through `validation.valid:get` and
+preserves a thrown getter value. The real-browser replay passed in Chromium
+153.0.8010.12. The runner writes its raw branch outcome to
+`/private/tmp/umf-selection-kind-runtime-branch-browser-debug.json` before
+assertions so a mismatch remains diagnosable.
+
+The focused result receipts are [Node/Bun](selection-validity-node.json) and
+[Chromium 153](selection-validity-chromium.json). Both pin the Rust Selection
+sources and runner inputs. Chromium records prefix parity through `.valid`; its
+expected TypeScript call proceeds to final copy and raises `NON_JSON` for the
+non-enumerable accessor, while the scoped Rust route returns
+`HOST_JSON_UNSUPPORTED` at the deliberate boundary.
+
+The consumer-stage resource boundary is also explicit: core `Context` can
+charge host reflection events, copied primitive text, and bounded traversal,
+but cannot meter arbitrary user code run by result getters, iterators,
+`toJSON`, or `JSON.stringify`. A consumer-stage slice must preserve the
+predecessor's order and thrown-value identity, and fail closed when the bridge
+cannot reproduce the host's native protocol outcome; it must not claim total
+resource equivalence. Static validation is a separate branch and is not a
+substitute for this `kindRuntime` continuation. Arbitrary diagnostics
+iteration, refusal formatting, and successful callback-result copying remain
+unimplemented; this is not full Selection parity or installed-package
+qualification.

@@ -2,7 +2,7 @@
 // @ts-expect-error The private JavaScript host bridge has no declaration file.
 import {coreElementSelectionHostInput, kindRuntimeValidationHostInput} from '../../../bindings/core/wasm/src/host-json.js';
 // @ts-expect-error The checked-in browser bundle is the same-host TS predecessor.
-import {validateDocument as typescriptValidateDocument} from '../../../dist/umf.js';
+import {validateDocument as typescriptValidateDocument, selectCoreElements as typescriptSelectCoreElements} from '../../../dist/umf.js';
 
 type Payload = {
   resources: Record<string, unknown>;
@@ -166,6 +166,38 @@ export function runSelectionBrowserCases(payload: Payload) {
       sameText: String(actual.thrown) === String(expected.thrown),
       sameTrace: JSON.stringify(actual.events) === JSON.stringify(expected.events), trace: actual.events};
   });
+  const selectionKindRuntimeBranch = (() => {
+    const invoke = (route: (source: unknown, query: unknown, registry: unknown) => unknown) => {
+      const events: string[] = [];
+      const result = Object.defineProperty({}, 'valid', {get() {
+        events.push('validation.valid:get');
+        return true;
+      }});
+      const runtime = {validateDocument(source: unknown, registrations: unknown) {
+        events.push('kindRuntime.validateDocument:call');
+        if (JSON.stringify(source) !== JSON.stringify(payload.source) || !Array.isArray(registrations) || registrations.length !== 0) {
+          throw new Error('Selection kindRuntime arguments changed');
+        }
+        if (Object.getPrototypeOf(source) !== null
+          || Object.getPrototypeOf((source as any).modules[0]) !== null) {
+          throw new Error('Selection kindRuntime source copy prototypes changed');
+        }
+        return result;
+      }};
+      const registry = {
+        get kindRuntime() { events.push('registry.kindRuntime:get'); return runtime; },
+        registrations() { events.push('registry.registrations:call'); return []; },
+      };
+      try { route(payload.source, payload.queries.all, registry); }
+      catch (error) { return {events, error: String(error)}; }
+      return {events, error: undefined};
+    };
+    const expected = invoke(typescriptSelectCoreElements as (source: unknown, query: unknown, registry: unknown) => unknown);
+    const actual = invoke((source, query, registry) => coreElementSelectionHostInput(addon,
+      payload.resources, source, query, registry, Error));
+    return {prefixMatches: JSON.stringify(expected.events.slice(0, actual.events.length)) === JSON.stringify(actual.events),
+      expectedError: expected.error, actualError: actual.error, trace: actual.events};
+  })();
   const throwSentinel = Object.freeze({kindRuntimeThrow: true});
   let kindRuntimeThrowIdentity = false;
   try {
@@ -183,5 +215,6 @@ export function runSelectionBrowserCases(payload: Payload) {
     kindRuntimeDelegation: {typescript: typescriptDelegation, rust: rustDelegation,
       equalTrace: JSON.stringify(typescriptDelegation.events) === JSON.stringify(rustDelegation.events),
       resultIdentity: rustDelegation.resultIdentity, thrownIdentity: kindRuntimeThrowIdentity,
-      falsyRuntimeRefused, falsyRuntimeError}, kindRuntimeResultCases, kindRuntimeDynamicReadCases};
+      falsyRuntimeRefused, falsyRuntimeError}, kindRuntimeResultCases, kindRuntimeDynamicReadCases,
+    selectionKindRuntimeBranch};
 }

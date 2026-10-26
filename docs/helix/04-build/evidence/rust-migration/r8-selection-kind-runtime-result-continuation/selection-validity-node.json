@@ -1,0 +1,47 @@
+{
+  "profile": "umf.r8.selection-kind-runtime-validity.node/1",
+  "status": "pass-private-selection-kind-runtime-valid-branch-prefix",
+  "host": "Node.js 26.12.1",
+  "binding": "Fresh local Node release addon, Rust 1.90.0",
+  "operation": "executeCoreElementSelectionHostJson (private host JSON route; no package-root selection)",
+  "selectionKindRuntimeBranch": {
+    "prefixMatches": true,
+    "trace": [
+      "registry.kindRuntime:get",
+      "registry.kindRuntime:get",
+      "registry.registrations:call",
+      "kindRuntime.validateDocument:call",
+      "validation.valid:get"
+    ],
+    "unsupportedAfterValid": true,
+    "thrownGetterIdentity": true,
+    "thrownTrace": ["registrations:call", "valid:get"],
+    "typescriptFinalError": "NON_JSON from the non-enumerable valid accessor during final result copy",
+    "rustStop": "HOST_JSON_UNSUPPORTED after evaluating the valid branch"
+  },
+  "focusedBindingSuite": {
+    "runtime": "Bun 1.4.3",
+    "tests": 24,
+    "assertions": 215,
+    "status": "passed"
+  },
+  "rustTest": {
+    "command": "cargo test --locked --offline -p umf-core selection_host_json::opaque_return_tests::selection_kind_runtime_reads_valid_only_after_callback_return",
+    "passed": 1,
+    "status": "passed"
+  },
+  "freshNodeAddonSha256": "a7dc666c27d5b11c0cea8bc819405bf0c7868904a2e72d63a5f360f822db84e2",
+  "sourcePins": {
+    "crates/umf-core/src/selection.rs": "4e493e054d58dd555107d8c04d7e5e7e8e9cc761ff3a8b2fd815d690db650219",
+    "crates/umf-core/src/selection_host_json.rs": "ab3ff7f1d22d8d7a62525944c36caa2c466958af0c8f3e370eefb65e0247c324",
+    "bindings/core/node/tests/selection-host-json.test.js": "c4c1ceffe0854b0a458c9e78d9ad444e2e7f9b6d9d66525a0c58af2df07ea52e",
+    "scripts/rust-migration/r8/selection-private-host-node.mjs": "ea7fee68f743a1373a601dda11261b32c5e56c07718e257b1815cd3278d33d9b",
+    "scripts/rust-migration/r8/selection-private-host-browser-entry.ts": "f86cbb1f426f27f704ffe7eca5b31f99cc5d15e32b60a77b88404e11edcf09f3",
+    "scripts/rust-migration/r8/selection-private-host-browser.mjs": "a3110f94ee6b0955aa0a43f5e9dfa461216b5193173deae18d7c15a74f2420f6"
+  },
+  "limits": [
+    "Private route only; no public/default Selection route changed.",
+    "The callback result remains opaque through invocation; this stage reads only result.valid and then refuses before refusal diagnostics or successful sourceValidation materialization.",
+    "No arbitrary returned diagnostic iterable, full static validation continuation, resource-accounting parity, installed-package qualification, or default-route qualification."
+  ]
+}

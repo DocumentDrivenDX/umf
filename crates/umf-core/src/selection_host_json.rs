@@ -289,6 +289,63 @@ impl RegistrationProvider for HostProvider<'_> {
 }
 
 impl HostProvider<'_> {
+    /// Invoke a caller kindRuntime at Selection's validation branch and read
+    /// only the returned `.valid` value. The caller deliberately stops after
+    /// this branch until diagnostics and successful-result copying are wired.
+    fn kind_runtime_validity(
+        &self,
+        source: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Option<bool>, EngineError> {
+        let Some(registry) = self.registry else { return Ok(None) };
+        let mut host = self.host.borrow_mut();
+        let registry_value = HostOpaqueValue::Opaque {
+            handle: registry,
+            opaque_type: HostOpaqueType::Object,
+        };
+        let first_runtime = get_property(&mut **host, ctx, &registry_value, "kindRuntime")?;
+        if !first_runtime.is_truthy() { return Ok(None); }
+        let runtime = get_property(&mut **host, ctx, &registry_value, "kindRuntime")?;
+        let method = get_property(&mut **host, ctx, &runtime, "validateDocument")?;
+        let HostOpaqueValue::Opaque {
+            handle: method,
+            opaque_type: HostOpaqueType::Function,
+        } = method else {
+            return Err(unsupported_error("Caller kindRuntime.validateDocument must be a host function"));
+        };
+        let registrations_method = get_property(&mut **host, ctx, &registry_value, "registrations")?;
+        let HostOpaqueValue::Opaque {
+            handle: registrations_method,
+            opaque_type: HostOpaqueType::Function,
+        } = registrations_method else {
+            return Err(unsupported_error("Caller Registry.registrations must be a host function"));
+        };
+        ctx.charge_work(1, Utf16::default())?;
+        let registrations = match host.reflect(HostJsonEvent::InvokeOpaque {
+            function: registrations_method,
+            receiver: HostInvokeValue::Opaque(registry),
+            args: Vec::new(),
+            semantic_catch: false,
+        })? {
+            HostJsonReply::Invocation(value) => value,
+            _ => return Err(protocol_error()),
+        };
+        let runtime_receiver = opaque_value(&runtime, &mut **host)?;
+        let registrations = opaque_value(&registrations, &mut **host)?;
+        ctx.charge_work(1, Utf16::default())?;
+        let result = match host.reflect(HostJsonEvent::InvokeOpaque {
+            function: method,
+            receiver: runtime_receiver,
+            args: vec![HostInvokeValue::Json(source.clone()), registrations],
+            semantic_catch: false,
+        })? {
+            HostJsonReply::Invocation(value) => value,
+            _ => return Err(protocol_error()),
+        };
+        let valid = get_property(&mut **host, ctx, &result, "valid")?;
+        Ok(Some(valid.is_truthy()))
+    }
+
     fn source_validation_value(
         &self,
         packet: &crate::selection_diagnostics::SelectionDiagnosticMaterialization,
@@ -386,6 +443,9 @@ pub fn execute(
                        ctx: &mut Context<'_>| provider.refusal_message(packet, ctx);
     let mut source_validation = |packet: &crate::selection_diagnostics::SelectionDiagnosticMaterialization,
                        ctx: &mut Context<'_>| provider.source_validation_value(packet, ctx);
+    let mut kind_runtime = |source: &Value, ctx: &mut Context<'_>| {
+        provider.kind_runtime_validity(source, ctx)
+    };
     crate::selection::select_core_elements_admitted_with_host_materializers(
         source,
         query,
@@ -395,6 +455,7 @@ pub fn execute(
         ctx,
         &mut refusal,
         &mut source_validation,
+        Some(&mut kind_runtime),
     )
 }
 
@@ -703,5 +764,36 @@ mod opaque_return_tests {
                 args: vec![HostInvokeValue::Opaque(11), HostInvokeValue::Opaque(23)], semantic_catch: false,
             },
         ]);
+    }
+
+    #[test]
+    fn selection_kind_runtime_reads_valid_only_after_callback_return() {
+        let mut host = SequenceHost {
+            replies: [
+                object(20), object(20), function(21), function(22), invoked_object(23),
+                invoked_object(24), HostJsonReply::OpaqueValue(HostOpaqueValue::Boolean(true)),
+            ].into_iter().map(Ok).collect(),
+            events: Vec::new(),
+        };
+        let provider = HostProvider { registry: Some(12), host: RefCell::new(&mut host) };
+        let mut ctx = Context::ordinary();
+        let source = Value::Object(vec![(Utf16::from("marker"), Value::Bool(true))]);
+        assert_eq!(provider.kind_runtime_validity(&source, &mut ctx).unwrap(), Some(true));
+        drop(provider);
+        let events = &host.events;
+        assert_eq!(events.len(), 7);
+        assert!(matches!(events[5], HostJsonEvent::InvokeOpaque {
+            function: 21,
+            args: ref args,
+            ..
+        } if args == &vec![
+            HostInvokeValue::Json(source),
+            HostInvokeValue::Opaque(23),
+        ]));
+        assert!(matches!(events[6], HostJsonEvent::GetOpaqueProperty {
+            receiver: HostInvokeValue::Opaque(24),
+            key: HostOpaqueKey::String(ref key),
+            semantic_catch: false,
+        } if key == &Utf16::from("valid").into_units()));
     }
 }
