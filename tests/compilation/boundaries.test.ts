@@ -35,6 +35,24 @@ describe("actual compilation boundary checker", () => {
     rejects("ts", { "src/compilation/ir/index.ts": 'import "../targets/python/index";', "src/compilation/targets/python/index.ts": "" }, "DEPENDENCY");
     rejects("ts", { "src/compilation/targets/python/index.ts": 'import "../../ir/private";', "src/compilation/ir/private.ts": "" }, "PRIVATE");
   });
+  test("admits only the exact private erased AccountingContext leaf in bundle hash", () => {
+    const files = {
+      "src/index.ts": 'export {canonical} from "./compilation/bundle/hash";',
+      "src/compilation/bundle/hash.ts": 'import type {AccountingContext} from "../../model/internal/accounting-context"; export function canonical(value:unknown,account:AccountingContext):string{return "";}',
+      "src/model/internal/accounting-context.ts": "export interface AccountingContext { visit(category:string,path:string,count?:number):void; }",
+    };
+    expect(check("ts", files).exitCode).toBe(0);
+    for (const [target,source,barrel] of [
+      ["src/model/internal/accounting-context.ts", 'import {AccountingContext} from "../../model/internal/accounting-context"; export const value=AccountingContext;', ""],
+      ["src/model/internal/accounting-context.ts", 'import type {Other} from "../../model/internal/accounting-context"; export type Value=Other;', ""],
+      ["src/model/internal/accounting-context.ts", 'import type {AccountingContext} from "../../model/internal/accounting-context"; export type Value=AccountingContext;', 'export type {AccountingContext} from "./model/internal/accounting-context";'],
+    ]) {
+      const rejected = { ...files, "src/compilation/bundle/hash.ts": source, "src/index.ts": 'export {canonical} from "./compilation/bundle/hash";'+barrel };
+      expect(check("ts", rejected).exitCode).toBe(1);
+    }
+    const privatePath = { ...files, "src/model/internal/other.ts": "export interface AccountingContext {}", "src/compilation/bundle/hash.ts": 'import type {AccountingContext} from "../../model/internal/other"; export type Value=AccountingContext;' };
+    expect(check("ts", privatePath).exitCode).toBe(1);
+  });
   test("rejects host imports, globals, dynamic loading and unresolved imports", () => {
     for (const source of ['import "node:fs";', 'export const x = process.env;', 'export const x = globalThis["Bun"];', 'export const x = require("fs");', 'export const x = import(name);']) {
       rejects("ts", { "src/compilation/ir/index.ts": source }, "HOST");
