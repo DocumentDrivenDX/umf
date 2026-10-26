@@ -224,6 +224,78 @@ fn aggregate_value_and_serialized_byte_limits_preflight_before_validation() {
 }
 
 #[test]
+fn aggregate_value_and_input_byte_limits_cover_the_exact_preflight_edge() {
+    let (_packet, engine) = cases();
+    let policy = Value::Object(vec![(
+        Utf16::from("profile"),
+        Value::string_utf8("core-0.8-absent-string-additions/0.1"),
+    )]);
+
+    // Policy contributes two Values; each source array contributes its root
+    // plus its items.  49,998 nulls therefore lands exactly at 100,000 Values.
+    let at_value_limit = Value::Array(vec![Value::Null; 49_998]);
+    assert_eq!(
+        inspect_core_evolution(
+            &engine,
+            &at_value_limit,
+            &at_value_limit,
+            &policy,
+            &mut Context::ordinary(),
+        )
+        .unwrap_err()
+        .code,
+        "CORE_DATASET_SOURCE"
+    );
+    let over_value_limit = Value::Array(vec![Value::Null; 49_999]);
+    assert_eq!(
+        inspect_core_evolution(
+            &engine,
+            &over_value_limit,
+            &over_value_limit,
+            &policy,
+            &mut Context::ordinary(),
+        )
+        .unwrap_err()
+        .code,
+        "LIMIT"
+    );
+
+    // For this ASCII-only malformed source pair, aggregate preflight bytes are
+    // the exact policy JSON size plus two quoted strings.  The at-limit input
+    // proceeds to the semantic source refusal; the next byte is rejected.
+    let profile_len = "core-0.8-absent-string-additions/0.1".len();
+    let policy_bytes = 14 + profile_len; // {"profile":"<profile>"}
+    let padding = (4_000_000 - policy_bytes) / 2 - 2;
+    assert_eq!(policy_bytes + 2 * (padding + 2), 4_000_000);
+    let at_byte_limit = Value::string_utf8(&"x".repeat(padding));
+    assert_eq!(
+        inspect_core_evolution(
+            &engine,
+            &at_byte_limit,
+            &at_byte_limit,
+            &policy,
+            &mut Context::ordinary(),
+        )
+        .unwrap_err()
+        .code,
+        "CORE_DATASET_SOURCE"
+    );
+    let over_byte_limit = Value::string_utf8(&"x".repeat(padding + 1));
+    assert_eq!(
+        inspect_core_evolution(
+            &engine,
+            &over_byte_limit,
+            &over_byte_limit,
+            &policy,
+            &mut Context::ordinary(),
+        )
+        .unwrap_err()
+        .code,
+        "LIMIT"
+    );
+}
+
+#[test]
 fn duplicate_keys_fail_closed_and_large_unknown_objects_are_metered() {
     let (packet, engine) = cases();
     let policy = Value::Object(vec![(
@@ -457,4 +529,191 @@ fn get_mut<'a>(v: &'a mut Value, name: &str) -> Option<&'a mut Value> {
             .map(|(_, v)| v),
         _ => None,
     }
+}
+
+fn module_elements_mut(doc: &mut Value) -> &mut Vec<Value> {
+    let modules = match get_mut(doc, "modules").unwrap() {
+        Value::Array(values) => values,
+        _ => panic!("modules must be an array"),
+    };
+    let domain = modules
+        .iter_mut()
+        .find(|module| get(module, "id") == Some(&Value::string_utf8("domain")))
+        .unwrap();
+    match get_mut(domain, "elements").unwrap() {
+        Value::Array(values) => values,
+        _ => panic!("elements must be an array"),
+    }
+}
+
+fn element_mut<'a>(doc: &'a mut Value, id: &str) -> &'a mut Value {
+    module_elements_mut(doc)
+        .iter_mut()
+        .find(|element| get(element, "id") == Some(&Value::string_utf8(id)))
+        .unwrap()
+}
+
+fn append_field(doc: &mut Value, id: &str, name: &str, nullability: &str) {
+    let field = Value::Object(vec![
+        (Utf16::from("id"), Value::string_utf8(id)),
+        (Utf16::from("name"), Value::string_utf8(name)),
+        (Utf16::from("kind"), Value::string_utf8("field")),
+        (Utf16::from("scalarType"), Value::string_utf8("string")),
+        (Utf16::from("cardinality"), Value::string_utf8("one")),
+        (Utf16::from("nullability"), Value::string_utf8(nullability)),
+        (Utf16::from("extensions"), Value::Object(vec![])),
+    ]);
+    module_elements_mut(doc).push(field);
+    let products = element_mut(doc, "products");
+    let members = match get_mut(products, "members").unwrap() {
+        Value::Array(values) => values,
+        _ => panic!("record members must be an array"),
+    };
+    members.push(Value::Object(vec![
+        (Utf16::from("module"), Value::string_utf8("domain")),
+        (Utf16::from("element"), Value::string_utf8(id)),
+    ]));
+}
+
+#[test]
+fn current_source_negative_control_matrix_is_closed() {
+    let (packet, engine) = cases();
+    let unchanged = get(get(&packet, "cases").unwrap(), "unchanged").unwrap();
+    let base = get(unchanged, "before").unwrap().clone();
+    let policy = get(unchanged, "policy").unwrap();
+    let mut control_index = 0;
+    let mut classify = |before: &Value, after: &Value| {
+        control_index += 1;
+        let receipt = inspect_core_evolution(&engine, before, after, policy, &mut Context::ordinary())
+            .unwrap_or_else(|error| panic!("control {control_index} source was refused: {error}"));
+        get(&receipt, "classification").and_then(|v| match v {
+            Value::String(value) => value.to_utf8().ok(),
+            _ => None,
+        }).unwrap()
+    };
+
+    let required = get(
+        get(&packet, "cases").unwrap(),
+        "required_addition",
+    )
+    .unwrap();
+    let required = get(required, "after").unwrap();
+    assert_eq!(classify(&base, &required), "breaking");
+
+    let mut unknown_before = base.clone();
+    if let Value::Object(fields) = &mut unknown_before {
+        fields.push((Utf16::from("opaque"), Value::string_utf8("before")));
+    }
+    let mut unknown_after = unknown_before.clone();
+    if let Some(value) = get_mut(&mut unknown_after, "opaque") {
+        *value = Value::string_utf8("after");
+    }
+    assert_eq!(classify(&unknown_before, &unknown_before), "unsupported");
+    assert_eq!(classify(&unknown_before, &unknown_after), "unsupported");
+
+    let mut removed = base.clone();
+    module_elements_mut(&mut removed).retain(|element| {
+        get(element, "id") != Some(&Value::string_utf8("products.sku"))
+    });
+    let members = match get_mut(element_mut(&mut removed, "products"), "members").unwrap() {
+        Value::Array(values) => values,
+        _ => panic!("record members must be an array"),
+    };
+    members.retain(|member| get(member, "element") != Some(&Value::string_utf8("products.sku")));
+    assert_eq!(classify(&base, &removed), "breaking");
+
+    let mut reordered = base.clone();
+    module_elements_mut(&mut reordered).reverse();
+    let reordered_receipt = inspect_core_evolution(
+        &engine,
+        &base,
+        &reordered,
+        policy,
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    assert_eq!(
+        get(&reordered_receipt, "classification"),
+        Some(&Value::string_utf8("breaking"))
+    );
+    let changes = match get(&reordered_receipt, "changes").unwrap() {
+        Value::Array(values) => values,
+        _ => panic!("changes must be an array"),
+    };
+    let first_removed = changes
+        .iter()
+        .find(|change| get(change, "kind") == Some(&Value::string_utf8("removed-definition")))
+        .unwrap();
+    assert_eq!(get(first_removed, "afterPath"), Some(&Value::Null));
+
+    let mut facet = base.clone();
+    let facets = get_mut(element_mut(&mut facet, "products.unit_price"), "facets").unwrap();
+    if let Value::Object(fields) = facets {
+        if let Some((_, scale)) = fields.iter_mut().find(|(key, _)| key == &Utf16::from("scale")) {
+            *scale = Value::Number(3.0);
+        }
+    }
+    assert_eq!(classify(&base, &facet), "breaking");
+
+    let mut default = base.clone();
+    if let Value::Object(fields) = element_mut(&mut default, "products.sku") {
+        fields.push((
+            Utf16::from("default"),
+            Value::Object(vec![
+                (Utf16::from("on"), Value::string_utf8("missing")),
+                (
+                    Utf16::from("value"),
+                    Value::Object(vec![(Utf16::from("string"), Value::string_utf8("synthetic"))]),
+                ),
+            ]),
+        ));
+    }
+    assert_eq!(classify(&base, &default), "breaking");
+
+    let mut key = base.clone();
+    let keys = match get_mut(element_mut(&mut key, "products"), "keys").unwrap() {
+        Value::Array(values) => values,
+        _ => panic!("keys must be an array"),
+    };
+    if let Some(name) = get_mut(&mut keys[0], "name") {
+        *name = Value::string_utf8("Changed identity label");
+    }
+    assert_eq!(classify(&base, &key), "breaking");
+
+    let mut relationship = base.clone();
+    let modules = match get_mut(&mut relationship, "modules").unwrap() {
+        Value::Array(values) => values,
+        _ => panic!("modules must be an array"),
+    };
+    let domain = modules.iter_mut().find(|item| get(item, "id") == Some(&Value::string_utf8("domain"))).unwrap();
+    let relationships = match get_mut(domain, "relationships").unwrap() {
+        Value::Array(values) => values,
+        _ => panic!("relationships must be an array"),
+    };
+    if let Some(name) = get_mut(&mut relationships[0], "name") {
+        *name = Value::string_utf8("Changed relationship label");
+    }
+    assert_eq!(classify(&base, &relationship), "breaking");
+
+    let mut identity = base.clone();
+    if let Some(id) = get_mut(&mut identity, "id") {
+        *id = Value::string_utf8("urn:umf:other");
+    }
+    assert_eq!(classify(&base, &identity), "breaking");
+
+    let mut duplicate_names = base.clone();
+    append_field(&mut duplicate_names, "products.note_a", "repeated", "absent-allowed");
+    append_field(&mut duplicate_names, "products.note_b", "repeated", "absent-allowed");
+    assert_eq!(classify(&base, &duplicate_names), "preserved");
+
+    let mut wrong_version = base.clone();
+    if let Some(version) = get_mut(&mut wrong_version, "umf") {
+        *version = Value::string_utf8("0.9.0");
+    }
+    assert_eq!(
+        inspect_core_evolution(&engine, &wrong_version, &base, policy, &mut Context::ordinary())
+            .unwrap_err()
+            .code,
+        "CORE_DATASET_SOURCE"
+    );
 }

@@ -63,6 +63,8 @@ try {
   }, {glueSource: glueBytes.toString('utf8'), wasmBase64: wasmBytes.toString('base64'), entrySource: entryBytes.toString('utf8'), resources});
   assert.deepEqual(browserErrors, []);
   assert.equal(result.caseCount, 21);
+  assert.equal(result.opaqueReturnIdentity, true, 'WASM opaque return carrier must preserve object identity');
+  assert.equal(result.opaqueThrowIdentity, true, 'WASM opaque return carrier must preserve thrown identity');
   assert.equal(result.summary.exactOutcomeMatches, result.caseCount, JSON.stringify(result.summary.mismatches));
   assert.equal(result.summary.exactHostTraceMatches, result.caseCount, JSON.stringify(result.summary.mismatches));
   const sourcePaths = [

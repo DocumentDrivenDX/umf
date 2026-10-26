@@ -117,6 +117,12 @@ function coreElementSelectionHostInput(addon, resources, source, query, registry
   return executeHostInput(addon, resources, 'executeCoreElementSelectionHostJson', [source, query, registry], ErrorType, undefined, [registry !== undefined], undefined, false, false, fromRustWire);
 }
 
+// Private R8 probe for a host-owned object returned from inside Rust. The
+// wrapper resolves the invocation-local handle before executeHostInput clears it.
+function coreOpaqueReturnHostInput(addon, fn, receiver, argument, ErrorType = Error) {
+  return executeHostInput(addon, undefined, 'executeCoreOpaqueReturnHostJson', [fn, receiver, argument], ErrorType, undefined, [], undefined, true, false, fromRustWire, true);
+}
+
 /** Private reusable engine facade for the R8 Selection host-input route. */
 function createCoreElementSelectionHostInputEngine(addon, resources, ErrorType = Error) {
   if (typeof addon?.executeCoreElementSelectionHostJson !== 'function') throw new ErrorType('RUST_BINDING_MISSING', 'Binding does not expose umf.host-json/1 Core Element Selection');
@@ -151,7 +157,7 @@ function coreProtobufSourceHostResponse(runtime, operation, value, ErrorType = E
   return executeHostInput(runtime, undefined, operation, [value], ErrorType, controlBridge, [], undefined, true, true);
 }
 
-function executeHostInput(addon, resources, operation, inputs, ErrorType, controlBridge, operationArgs = [], preparedResourcesWire, retainedRuntime = false, includeBinary = false, resultProjection = fromRustWire) {
+function executeHostInput(addon, resources, operation, inputs, ErrorType, controlBridge, operationArgs = [], preparedResourcesWire, retainedRuntime = false, includeBinary = false, resultProjection = fromRustWire, opaqueReturn = false) {
   const handles = new NativeMap();
   const objectHandles = new NativeWeakMap();
   const primitiveOpaqueHandles = new NativeMap();
@@ -504,6 +510,13 @@ function executeHostInput(addon, resources, operation, inputs, ErrorType, contro
     const result = parse(response.wire);
     // The result is Rust-produced umf.core-wire/1. Convert it without passing
     // any original argument through the existing eager host serializer.
+    if (opaqueReturn) {
+      const carrier = resultProjection(result);
+      if (!carrier || !hasOwn(carrier, '__umf_host_opaque_return_v1') || carrier.__umf_host_opaque_return_v1 !== true || !safeInteger(carrier.handle) || carrier.handle <= 0 || !mapHas(handles, carrier.handle)) {
+        throw new NativeTypeError('Malformed opaque host return carrier');
+      }
+      return mapGet(handles, carrier.handle);
+    }
     const value = resultProjection(result);
     return includeBinary ? {value, binary} : value;
   } finally {
@@ -587,4 +600,4 @@ function fromUnits(units) {
   return result;
 }
 
-export {declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, cardinalityHostInput, coreElementSelectionHostInput, createCoreElementSelectionHostInputEngine, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse};
+export {declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, cardinalityHostInput, coreElementSelectionHostInput, coreOpaqueReturnHostInput, createCoreElementSelectionHostInputEngine, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse};

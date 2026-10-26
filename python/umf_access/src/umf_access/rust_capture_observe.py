@@ -99,31 +99,59 @@ def observe_terminal_join_owners(node: object) -> dict[str, object]:
     return result
 
 
-def observe_all_empty_capture_profile(node: object) -> None:
+def observe_all_empty_capture_profile(node: object, session: object | None = None) -> None:
     """Validate the private exact-base `.all()` empty-steps profile.
 
-    This deliberately narrow callback uses the terminal observer as the sole
-    Rust validation operation, so all semantic checks share one Rust Context.
-    Python performs only closed-profile admission checks on exact base objects;
-    it does not call `_validate_node`, serialize a DTO, or retry another
-    validator. It remains private because it does not share the encoder's
-    cross-variant resource budget and public capture does not select it.
+    This private candidate shares one work counter with the DTO encoder.
+    Python admission reads and Rust graph observations charge that session in
+    order; Rust seeds its Context from the same counter and returns its usage.
+    It does not call `_validate_node`, retry another validator, or select the
+    public capture route. DTO byte/node/depth ceilings remain separately visible.
     """
     core = _native()
+    session_type = getattr(core, "CaptureResourceSession", None)
+    observe_session = getattr(
+        core, "access_observe_capture_terminal_join_owners_with_session", None
+    )
+    if not callable(session_type) or not callable(observe_session):
+        raise FieldOwnerObservationUnavailable(
+            "installed umf-core lacks the shared capture resource session"
+        )
+    if session is None:
+        session = session_type((1 << 64) - 1)
+    if type(session) is not session_type:
+        raise TypeError("capture profile requires a native resource session")
     from umf_access.dsl._nodes import Node, RecordRef
 
+    session.charge_work(1)
     if type(node) is not Node:
         raise TypeError("capture profile requires an exact Node")
-    if type(node.op) is not str or node.op != "all":
+    session.charge_work(1)
+    op = node.op
+    if type(op) is not str or op != "all":
         raise TypeError("capture profile requires the exact all terminal")
+    session.charge_work(1)
     args = node.args
-    if type(args) is not tuple or len(args) != 2:
+    if type(args) is not tuple:
         raise TypeError("capture profile requires (RecordRef, empty steps)")
-    if type(args[0]) is not RecordRef or type(args[1]) is not tuple or args[1]:
+    session.charge_work(1)
+    if len(args) != 2:
         raise TypeError("capture profile requires (RecordRef, empty steps)")
+    session.charge_work(1)
     record = args[0]
+    if type(record) is not RecordRef:
+        raise TypeError("capture profile requires (RecordRef, empty steps)")
+    session.charge_work(1)
+    steps = args[1]
+    if type(steps) is not tuple:
+        raise TypeError("capture profile requires (RecordRef, empty steps)")
+    if steps:
+        raise TypeError("capture profile requires (RecordRef, empty steps)")
+    session.charge_work(1)
     module = record.module
+    session.charge_work(1)
     element = record.element
+    session.charge_work(1)
     alias = record.alias
     if (
         type(module) is not str
@@ -134,7 +162,7 @@ def observe_all_empty_capture_profile(node: object) -> None:
 
     # Call the checked native entry point directly after profile admission;
     # there is no Python semantic-validation fallback on native refusal.
-    result = core.access_observe_capture_terminal_join_owners(node, Node, RecordRef)
+    result = observe_session(node, Node, RecordRef, session)
     if (
         type(result) is not dict
         or set(result) != {"terminalOp", "owners"}
@@ -164,8 +192,8 @@ def observe_field_join_tuple(
         for owner in allowed_owners
     ):
         raise TypeError("allowed owners must be exact (str, str, str | None) tuples")
-    from umf_access.dsl._nodes import FieldRef, Node, RecordRef
     from umf_access.dsl._expressions import Join
+    from umf_access.dsl._nodes import FieldRef, Node, RecordRef
     from umf_access.dsl.search import SearchLeg
 
     core = _native()
@@ -176,8 +204,8 @@ def observe_field_join_tuple(
 
 def observe_empty_search_leg(value: object, root_record: object) -> None:
     """Observe SearchLeg's empty-value, empty-legs predecessor branch."""
-    from umf_access.dsl._nodes import FieldRef, Node, RecordRef
     from umf_access.dsl._expressions import Join
+    from umf_access.dsl._nodes import FieldRef, Node, RecordRef
     from umf_access.dsl.search import SearchLeg
 
     core = _native()
@@ -199,8 +227,8 @@ def observe_keyword_search_leg(
         raise TypeError("keyword search observation requires a captured parameter")
     string_carrier = parameter.carrier is str
     vector_carrier = parameter.carrier is Vector
-    from umf_access.dsl._nodes import FieldRef, Node, RecordRef
     from umf_access.dsl._expressions import Join
+    from umf_access.dsl._nodes import FieldRef, Node, RecordRef
     from umf_access.dsl.search import SearchLeg
 
     core = _native()

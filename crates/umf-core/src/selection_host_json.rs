@@ -398,8 +398,97 @@ pub fn execute(
     )
 }
 
+/// Private proof that a host-owned object result can cross the Rust operation
+/// boundary without JSON materialization. The caller supplies an already
+/// captured function and receiver; the returned invocation-local handle is
+/// encoded as a reserved carrier and resolved by the JS wrapper before its
+/// handle table is released.
+pub fn invoke_opaque_object_return(
+    function: HostHandle,
+    receiver: HostHandle,
+    argument: HostHandle,
+    host: &mut dyn HostJsonReflection,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    ctx.charge_work(1, Utf16::default())?;
+    let result = match host.reflect(HostJsonEvent::InvokeOpaque {
+        function,
+        receiver: HostInvokeValue::Opaque(receiver),
+        args: vec![HostInvokeValue::Opaque(argument)],
+        semantic_catch: false,
+    })? {
+        HostJsonReply::Invocation(HostOpaqueValue::Opaque { handle, opaque_type })
+            if matches!(opaque_type, HostOpaqueType::Object | HostOpaqueType::Function) => handle,
+        HostJsonReply::Invocation(_) => {
+            return Err(unsupported_error(
+                "Opaque return carrier currently supports object and function results",
+            ));
+        }
+        _ => return Err(protocol_error()),
+    };
+    Ok(Value::Object(vec![
+        (Utf16::from("__umf_host_opaque_return_v1"), Value::Bool(true)),
+        (Utf16::from("handle"), Value::Number(result as f64)),
+    ]))
+}
+
 pub(crate) fn reject_host_semantics() -> EngineError {
     unsupported_error(
         "Caller-owned Selection semantic callback shape is outside the private route's verified iterable and diagnostic subset",
     )
+}
+
+#[cfg(test)]
+mod opaque_return_tests {
+    use super::*;
+    use crate::{host_json::{HostJsonReply, HostOpaqueValue}, Context};
+
+    struct ScriptedHost {
+        reply: Option<HostJsonReply>,
+        events: Vec<HostJsonEvent>,
+    }
+    impl HostJsonReflection for ScriptedHost {
+        fn reflect(&mut self, event: HostJsonEvent) -> Result<HostJsonReply, EngineError> {
+            self.events.push(event);
+            self.reply.take().ok_or_else(|| protocol_error())
+        }
+        fn release_descriptor_snapshot(&mut self, _: u64) {}
+    }
+
+    fn run(reply: HostJsonReply) -> (Result<Value, EngineError>, Vec<HostJsonEvent>) {
+        let mut host = ScriptedHost { reply: Some(reply), events: Vec::new() };
+        let mut ctx = Context::ordinary();
+        let result = invoke_opaque_object_return(7, 11, 13, &mut host, &mut ctx);
+        (result, host.events)
+    }
+
+    #[test]
+    fn object_and_function_return_handles_are_carried_without_materialization() {
+        for (opaque_type, handle) in [(HostOpaqueType::Object, 29), (HostOpaqueType::Function, 31)] {
+            let (result, events) = run(HostJsonReply::Invocation(HostOpaqueValue::Opaque { handle, opaque_type }));
+            let Value::Object(fields) = result.unwrap() else { panic!("expected carrier object") };
+            assert!(fields.contains(&(Utf16::from("__umf_host_opaque_return_v1"), Value::Bool(true))));
+            assert!(fields.contains(&(Utf16::from("handle"), Value::Number(handle as f64))));
+            assert_eq!(events, vec![HostJsonEvent::InvokeOpaque {
+                function: 7,
+                receiver: HostInvokeValue::Opaque(11),
+                args: vec![HostInvokeValue::Opaque(13)],
+                semantic_catch: false,
+            }]);
+        }
+    }
+
+    #[test]
+    fn primitive_return_is_refused() {
+        let (result, events) = run(HostJsonReply::Invocation(HostOpaqueValue::Null));
+        assert_eq!(result.unwrap_err().code, "HOST_JSON_UNSUPPORTED");
+        assert_eq!(events.len(), 1);
+    }
+
+    #[test]
+    fn malformed_host_reply_is_refused() {
+        let (result, events) = run(HostJsonReply::Boolean(true));
+        assert_eq!(result.unwrap_err().code, "HOST_JSON_PROTOCOL");
+        assert_eq!(events.len(), 1);
+    }
 }

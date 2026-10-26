@@ -2569,6 +2569,24 @@ gates. No dates, speedup or package-size promises are made.
 
 ## Continuation evidence
 
+The separate [`umf_access` installed-artifact gate](evidence/rust-migration/r8-umf-access-installed-qualification/README.md)
+builds a dev7 wheel with the pinned 0.11.0 core dependency and records cohort
+receipts without changing the pair custody manifest. It is scoped to installed
+package identity, dependency versions and selected imports/exports; public
+capture and broader access semantics remain unqualified. The checked-in
+compatibility profile still says dev0, so the manual-only gate currently
+records a blocked receipt with a nonzero result for source metadata at dev7.
+Do not update that historical profile by
+relabeling it; first regenerate and validate its full fields against a clean
+installed dev7 wheel.
+Its CPython 3.14.8 Linux/macOS cohorts also differ from the pair's CPython
+3.11.17–3.13.16 matrix and Pydantic 2.11.9 environment. The evidence remains
+separate until a shared exact host/dependency/source cohort is established.
+Eleven local verifier controls now exercise the explicit profile blocker, a
+synthetic installed artifact pass, and digest, import-origin and dependency
+metadata/archive-safety negatives. They validate the gate logic only; hosted receipt evidence
+and the actual dev7 profile replay remain open.
+
 R0/R1 executed in the managed `rust-binding-spike` worktree on
 `codex/rust-binding-spike`. Sol planned and independently reviewed the slices;
 Luna agents implemented the census/boundary gate, Rust engine/bindings and installed
@@ -6051,6 +6069,18 @@ drift across 28 source pins per receipt. The focused Bun binding suite passes
 general spread behavior, `kindRuntime`, full resource accounting, and default
 V4 routing remain unqualified.
 
+The [private opaque return carrier](evidence/rust-migration/r8-selection-opaque-return-carrier/README.md)
+adds a Rust-directed host invocation that can return an object or function by
+its invocation-local handle, with strict live-handle validation and identity
+preservation in Node and WASM. Its focused Rust tests, 17-case Bun binding
+suite, 21-case Node/Bun predecessor comparisons and 21-case Chromium replay
+pass. Final receipts pin 28 current source inputs per host with zero drift
+after metamodel/resource/inventory regeneration. This is
+the result-transport primitive needed by a future `Registry.kindRuntime`
+route; it does not implement the complete delegation sequence, qualify full
+`kindRuntime` parity, change V4 default routing, or retire any of the 922
+default-route gaps.
+
 The [extension-kind runtime disposition](evidence/rust-migration/r8-explicit-runtime-extension-kinds/README.md)
 records why `inspectExtensionKinds` remains caller-runtime-selected. CONTRACT-907
 requires explicit `new Registry(runtime)` and an unavailable-capability refusal
@@ -6061,17 +6091,22 @@ default-route retirement.
 
 The [Core Evolution candidate](evidence/rust-migration/r8-core-evolution-candidate/README.md)
 adds an opt-in binding over existing Rust inspect/verify operations. Its
-frozen seven-case packet, current/forged receipt checks and adapter error
-controls passed three Bun tests with 12 assertions; TypeScript typecheck and
-the Rust Core Evolution suite passed. Neither V4 root selects it. Before a
-default cutover, reconcile CONTRACT-058's 0.8.0 wording with the current
-0.10.0 source, run its full negative-control and exact resource-boundary
-matrix, and refresh Node/Bun/Chromium and installed-package provenance. These
+frozen seven-case packet, current/forged receipt checks, adapter error
+controls and expanded same-host preservation matrix passed four Bun tests with
+24 assertions against a fresh Node addon. The Rust Core Evolution suite passed
+10/10, including exact aggregate input preflight edges at 100,000 values and
+4,000,000 bytes; typecheck passed. Neither V4 root selects it. Before a default
+cutover, reconcile CONTRACT-058's 0.8.0 wording and duplicate ID with the
+current 0.10.0 source, prove retained-output and exact work limits plus the
+crossed-control matrix, and refresh package-level Node/Bun/Chromium and
+installed-package provenance. These
 private results do not alter the last fixed-point 67/855/922 ledger counts.
 
 The strict unified-client checker now lists the private Core Evolution file
 with only its audited imports; its predecessor declaration imports are
-type-only. The full directory scan and ten focused negative controls pass.
+type-only. The full directory scan and eleven focused boundary tests pass in
+the current worktree (`bun run check:unified-client-boundaries`,
+`bun test tests/unified-client-boundaries.test.ts`, and `bun run typecheck`).
 Adding a facade still requires its own exact entry and cannot inherit another
 file's grants. This boundary change does not select the candidate by default.
 

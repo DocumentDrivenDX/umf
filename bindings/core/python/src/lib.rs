@@ -2153,6 +2153,45 @@ struct PythonCaptureGraphObserver<'py> {
     conversion_error: Option<PyErr>,
 }
 
+/// Private shared accounting handle for one capture bridge operation.
+/// Python DTO encoding and Rust graph observation charge the same counter.
+#[pyclass]
+struct CaptureResourceSession {
+    charged_work: u64,
+    max_work: u64,
+}
+
+#[pymethods]
+impl CaptureResourceSession {
+    #[new]
+    fn new(max_work: u64) -> Self {
+        Self {
+            charged_work: 0,
+            max_work,
+        }
+    }
+
+    fn charge_work(&mut self, amount: u64) -> PyResult<()> {
+        let Some(total) = self.charged_work.checked_add(amount) else {
+            return Err(pyo3::exceptions::PyValueError::new_err(
+                "capture resource limit exceeded",
+            ));
+        };
+        if total > self.max_work {
+            return Err(pyo3::exceptions::PyValueError::new_err(
+                "capture resource limit exceeded",
+            ));
+        }
+        self.charged_work = total;
+        Ok(())
+    }
+
+    #[getter]
+    fn charged_work(&self) -> u64 {
+        self.charged_work
+    }
+}
+
 impl<'py> PythonCaptureGraphObserver<'py> {
     fn object(&self, handle: u32) -> PyResult<Bound<'py, PyAny>> {
         self.objects
@@ -2563,6 +2602,27 @@ fn access_observe_capture_terminal_join_owners(
     node_type: PyObject,
     record_ref_type: PyObject,
 ) -> PyResult<PyObject> {
+    observe_capture_terminal_join_owners(py, node, node_type, record_ref_type, None)
+}
+
+#[pyfunction]
+fn access_observe_capture_terminal_join_owners_with_session(
+    py: Python<'_>,
+    node: PyObject,
+    node_type: PyObject,
+    record_ref_type: PyObject,
+    session: PyRefMut<'_, CaptureResourceSession>,
+) -> PyResult<PyObject> {
+    observe_capture_terminal_join_owners(py, node, node_type, record_ref_type, Some(session))
+}
+
+fn observe_capture_terminal_join_owners(
+    py: Python<'_>,
+    node: PyObject,
+    node_type: PyObject,
+    record_ref_type: PyObject,
+    mut session: Option<PyRefMut<'_, CaptureResourceSession>>,
+) -> PyResult<PyObject> {
     use umf_core::access_graph_host_observation::observe_terminal_join_owners;
     let mut observer = PythonCaptureGraphObserver {
         py,
@@ -2575,9 +2635,40 @@ fn access_observe_capture_terminal_join_owners(
         host_error: None,
         conversion_error: None,
     };
-    let mut context = Context::ordinary();
-    let observed = observe_terminal_join_owners(&mut context, &mut observer, 0)
-        .map_err(|error| capture_graph_error(py, &mut observer, error))?;
+    let observed = if let Some(session) = session.as_mut() {
+        let mut remaining = session.max_work.saturating_sub(session.charged_work);
+        let mut meter_refused = false;
+        let mut meter = |amount: usize| {
+            if amount as u64 > remaining {
+                meter_refused = true;
+                return Err(umf_core::EngineError::new(
+                    "LIMIT",
+                    umf_core::Utf16::default(),
+                    "capture resource limit exceeded",
+                ));
+            }
+            remaining -= amount as u64;
+            Ok(())
+        };
+        let mut context = Context::ordinary().with_meter(&mut meter);
+        context.carry_transport_usage(session.charged_work, 0);
+        let observed_result = observe_terminal_join_owners(&mut context, &mut observer, 0);
+        session.charged_work = context.charged_work();
+        drop(context);
+        observed_result.map_err(|error| {
+            if meter_refused
+                && error == umf_core::access_graph_host_observation::ObservationError::Budget
+            {
+                pyo3::exceptions::PyValueError::new_err("capture resource limit exceeded")
+            } else {
+                capture_graph_error(py, &mut observer, error)
+            }
+        })?
+    } else {
+        let mut context = Context::ordinary();
+        observe_terminal_join_owners(&mut context, &mut observer, 0)
+            .map_err(|error| capture_graph_error(py, &mut observer, error))?
+    };
     let output = PyDict::new_bound(py);
     output.set_item(
         "terminalOp",
@@ -4438,6 +4529,11 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
         access_observe_capture_terminal_join_owners,
         module
     )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_observe_capture_terminal_join_owners_with_session,
+        module
+    )?)?;
+    module.add_class::<CaptureResourceSession>()?;
     module.add_function(wrap_pyfunction!(
         access_observe_capture_field_join_tuple,
         module

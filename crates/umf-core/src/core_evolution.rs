@@ -678,7 +678,7 @@ fn inspect_core_evolution_admitted(
                     &mut breaking,
                     "removed-definition",
                     Some(&format!("/modules/{mi}/elements/{ei}")),
-                    Some(&format!("/modules/{mi}/elements/{ei}")),
+                    None,
                     ctx,
                 )?;
                 continue;

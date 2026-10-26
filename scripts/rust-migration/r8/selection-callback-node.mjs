@@ -17,6 +17,17 @@ const [{Registry, UmfError, selectCoreElements}, hostJson] = await Promise.all([
   import(pathToFileURL(resolve(root, 'dist/umf-node.js'))),
   import(pathToFileURL(resolve(root, 'bindings/core/node/src/host-json.js'))),
 ]);
+const carrierReceiver = {};
+const carrierArgument = {};
+const carrierResult = Object.freeze({valid: false, diagnostics: []});
+function validateDocument(document) {
+  assert.equal(this, carrierReceiver);
+  assert.equal(document, carrierArgument);
+  return carrierResult;
+}
+assert.equal(hostJson.coreOpaqueReturnHostInput(addon, validateDocument, carrierReceiver, carrierArgument, UmfError), carrierResult);
+const carrierThrown = Object.freeze({kind: 'opaque-return-thrown'});
+assert.throws(() => hostJson.coreOpaqueReturnHostInput(addon, function() { throw carrierThrown; }, {}, {}, UmfError), error => error === carrierThrown);
 const read = path => JSON.parse(readFileSync(resolve(root, path), 'utf8'));
 const resources = {
   coreSchema: read('spec/core/schema.json'),
@@ -56,6 +67,7 @@ const record = {profile: 'umf.r8.selection-semantic-callback.private.node/1',
   status: 'pass-private-21-case-exact-outcomes-and-host-traces', runtime: process.version,
   caseCount: result.caseCount, summary: result.summary,
   candidateAddon: {path: addonPath, sha256: sha(readFileSync(addonPath))}, sourceHashes,
+  opaqueReturnCarrier: {objectIdentity: true, thrownIdentity: true, scope: 'private invocation-local object/function handle return; primitive returns refused'},
   limits: ['Private opt-in host route; no package default/root selection change or release qualification.',
     'Pins same-host bundled TS reference, route sources, resources and fixtures.',
     'Spread coverage includes undefined return, non-callable Symbol.iterator, a throwing Symbol.iterator getter, and next/done/value abrupt completions; broader native TypeError wording, kindRuntime and default routing remain unqualified.']};

@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect, setDefaultTimeout, test} from 'bun:test';
 import {createRequire} from 'node:module';
-import {coreElementSelectionHostInput} from '../src/host-json.js';
+import {coreElementSelectionHostInput, coreOpaqueReturnHostInput} from '../src/host-json.js';
 import {UmfCoreError} from '../index.js';
+import {encodeWire} from '../src/wire.js';
 import {directTypescriptWarningSelection} from '../../../../scripts/rust-migration/r8/selection-private-host-direct.mjs';
 import {readFileSync} from 'node:fs';
 import coreSchema from '../../../../spec/core/schema.json' with {type: 'json'};
@@ -17,6 +18,37 @@ const resources = {coreSchema, referenceSchema, packageSchema, constraints, doma
 const packet = JSON.parse(readFileSync(new URL('../../../../scripts/rust-migration/r5/selection/input.json', import.meta.url), 'utf8'));
 const frozen = JSON.parse(readFileSync(new URL('../../../../scripts/rust-migration/r5/selection/frozen-typescript.json', import.meta.url), 'utf8'));
 setDefaultTimeout(30_000);
+
+test('private opaque return carrier preserves a host object result by identity', () => {
+  const receiver = {};
+  const argument = {};
+  const result = Object.freeze({valid: false, diagnostics: []});
+  function validateDocument(document) {
+    expect(this).toBe(receiver);
+    expect(document).toBe(argument);
+    return result;
+  }
+  expect(coreOpaqueReturnHostInput(addon, validateDocument, receiver, argument, UmfCoreError)).toBe(result);
+});
+
+test('private opaque return carrier preserves thrown host values by identity', () => {
+  const sentinel = Object.freeze({kind: 'host-validation-failure'});
+  try {
+    coreOpaqueReturnHostInput(addon, function() { throw sentinel; }, {}, {}, UmfCoreError);
+    throw new Error('expected host invocation to throw');
+  } catch (error) {
+    expect(error).toBe(sentinel);
+  }
+});
+
+test('private opaque return carrier rejects handles outside the live invocation', () => {
+  const forged = {__umf_host_opaque_return_v1: true, handle: 999};
+  const fakeAddon = {executeCoreOpaqueReturnHostJson() {
+    return JSON.stringify({profile: 'umf.core-wire/1', status: 'ok', wire: encodeWire(forged)});
+  }};
+  expect(() => coreOpaqueReturnHostInput(fakeAddon, () => ({}), {}, {}, UmfCoreError))
+    .toThrow('Malformed opaque host return carrier');
+});
 
 
 test('private host Selection route matches the complete frozen R5 result with an omitted Registry', () => {

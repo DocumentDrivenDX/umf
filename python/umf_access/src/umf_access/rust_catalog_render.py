@@ -115,6 +115,32 @@ def _validate_graph_variant(value: object) -> None:
     raise RuntimeError("Rust captured graph validator returned an invalid outcome")
 
 
+def _capture_exact_empty_all_candidate(
+    node: object,
+    parameters: tuple[object, ...] = (),
+    presence: tuple[str, ...] = (),
+    *,
+    _session: object | None = None,
+) -> tuple[object, object, int]:
+    """Private shared-session prototype for exact `.all()` with empty steps."""
+    from umf import _rust
+
+    from umf_access.capture import CapturedVariant
+    from umf_access.rust_capture_observe import observe_all_empty_capture_profile
+
+    session = (
+        _rust._rust_core.CaptureResourceSession((1 << 64) - 1)
+        if _session is None
+        else _session
+    )
+    observe_all_empty_capture_profile(node, session)
+    observation_work = session.charged_work
+    budget = _EncodingBudget(session)
+    dto = _encode_capture(CapturedVariant(presence, node, parameters), budget)
+    budget.charge_output(dto)
+    return dto, session, session.charged_work - observation_work
+
+
 def capture_with_rust_graph_validator(function: object) -> object:
     """Private opt-in capture route; public ``capture`` stays Python-selected."""
     from umf import _rust
@@ -289,12 +315,15 @@ def capture_with_rust_graph_validator(function: object) -> object:
 
 
 class _EncodingBudget:
-    def __init__(self) -> None:
+    def __init__(self, session: object | None = None) -> None:
         self.nodes = 0
         self.utf8_bytes = 0
         self.output_bytes = 0
+        self.session = session
 
     def charge(self, value: object, depth: int) -> None:
+        if self.session is not None:
+            self.session.charge_work(1)
         self.nodes += 1
         if self.nodes > _MAX_CAPTURE_NODES or depth > _MAX_CAPTURE_DEPTH:
             raise _DtoBudgetExceeded("captured declaration exceeds Rust bridge resource limits")

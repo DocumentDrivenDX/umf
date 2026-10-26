@@ -462,6 +462,29 @@ pub fn execute_core_element_selection_host_json(
     umf_core_wire::result_envelope(result)
 }
 
+/// Private R8 carrier probe: return a host-owned invocation result by identity.
+#[wasm_bindgen(js_name = executeCoreOpaqueReturnHostJson)]
+pub fn execute_core_opaque_return_host_json(
+    function_handle: u32,
+    receiver_handle: u32,
+    argument_handle: u32,
+    dispatcher: &Function,
+) -> String {
+    let result = (|| -> Result<String, EngineError> {
+        let mut host = WasmHostJson { dispatcher: dispatcher.clone(), string_lengths: BTreeMap::new() };
+        let mut ctx = Context::ordinary();
+        let value = umf_core::selection_host_json::invoke_opaque_object_return(
+            function_handle as HostHandle,
+            receiver_handle as HostHandle,
+            argument_handle as HostHandle,
+            &mut host,
+            &mut ctx,
+        )?;
+        umf_core_wire::encode(&value, &mut ctx)
+    })();
+    umf_core_wire::result_envelope(result)
+}
+
 fn event_json(event: &HostJsonEvent) -> String {
     match event {
         HostJsonEvent::UnicodeCount { value } => format!(

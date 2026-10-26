@@ -3,16 +3,17 @@
 
 from __future__ import annotations
 
-import pytest
 import sys
 from types import ModuleType, SimpleNamespace
+
+import pytest
 from umf_access.capture import CaptureError, capture
 from umf_access.dsl import FieldRef, Node, Query, RecordRef, RequiredJoin, query
 from umf_access.rust_capture_observe import (
     FieldOwnerObservationUnavailable,
     observe_all_empty_capture_profile,
-    observe_field_join_tuple,
     observe_empty_search_leg,
+    observe_field_join_tuple,
     observe_terminal_join_owners,
     validate_field_owner,
 )
@@ -21,6 +22,112 @@ from umf_access.rust_capture_observe import (
 def test_private_all_empty_profile_uses_native_terminal_observer():
     root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
     observe_all_empty_capture_profile(Node("all", (root, ())))
+
+
+def test_private_all_empty_observation_and_dto_encoding_share_work_session():
+    from umf import _rust
+    from umf_access.rust_catalog_render import _capture_exact_empty_all_candidate
+
+    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    node = Node("all", (root, ()))
+    _dto, session, encoding_work = _capture_exact_empty_all_candidate(node)
+    assert session.charged_work > 0
+    assert encoding_work > 0
+
+
+def test_capture_session_limit_stops_admission_before_graph_read():
+    from umf import _rust
+
+    reads: list[str] = []
+    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    node = Node("all", (root, ()))
+    original = Node.__getattribute__
+
+    def observed_getattribute(instance, name):
+        if instance is node and name == "op":
+            reads.append("op")
+            raise AssertionError("budget must stop before graph reads")
+        return original(instance, name)
+
+    try:
+        Node.__getattribute__ = observed_getattribute
+        session = _rust._rust_core.CaptureResourceSession(100_000)
+        session.charge_work(100_000)
+        with pytest.raises(ValueError, match="capture resource limit exceeded"):
+            observe_all_empty_capture_profile(node, session)
+        assert reads == []
+    finally:
+        Node.__getattribute__ = original
+
+
+def test_exact_profile_preserves_caller_exception_identity_at_first_read():
+    from umf import _rust
+
+    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    node = Node("all", (root, ()))
+    original = Node.__getattribute__
+    sentinel = LookupError("exact op accessor sentinel")
+
+    def failing_getattribute(instance, name):
+        if instance is node and name == "op":
+            raise sentinel
+        return original(instance, name)
+
+    try:
+        Node.__getattribute__ = failing_getattribute
+        session = _rust._rust_core.CaptureResourceSession(100_000)
+        with pytest.raises(LookupError) as caught:
+            observe_all_empty_capture_profile(node, session)
+        assert caught.value is sentinel
+        assert session.charged_work == 2
+    finally:
+        Node.__getattribute__ = original
+
+
+def test_shared_work_boundary_precedes_args_read_after_one_op_read():
+    from umf import _rust
+
+    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    node = Node("all", (root, ()))
+    original = Node.__getattribute__
+    reads: list[str] = []
+
+    def observed_getattribute(instance, name):
+        if instance is node and name == "op":
+            reads.append("op")
+            return "all"
+        return original(instance, name)
+
+    try:
+        Node.__getattribute__ = observed_getattribute
+        session = _rust._rust_core.CaptureResourceSession(2)
+        with pytest.raises(ValueError, match="capture resource limit exceeded"):
+            observe_all_empty_capture_profile(node, session)
+        assert reads == ["op"]
+        assert session.charged_work == 2
+    finally:
+        Node.__getattribute__ = original
+
+
+def test_wrong_session_type_refuses_before_exact_profile_graph_reads():
+    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    node = Node("all", (root, ()))
+    original = Node.__getattribute__
+    reads: list[str] = []
+
+    def observed_getattribute(instance, name):
+        if instance is node and name == "op":
+            reads.append("op")
+            return "all"
+        return original(instance, name)
+
+    try:
+        Node.__getattribute__ = observed_getattribute
+        with pytest.raises(TypeError, match="native resource session"):
+            observe_all_empty_capture_profile(node, object())
+        assert reads == []
+    finally:
+        Node.__getattribute__ = original
 
 
 def test_public_capture_retains_four_body_invocations_for_no_parameter_query():

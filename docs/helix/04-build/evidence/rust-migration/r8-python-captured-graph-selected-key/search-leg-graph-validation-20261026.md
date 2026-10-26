@@ -200,6 +200,41 @@ before later reads, and one-item termination on nonempty legs. The full
 These checks establish this local private observer subset only; they do not
 change the broader graph-validator or package support claims above.
 
+## Shared-session exact `.all()`/empty-steps candidate — 2026-10-26
+
+The private exact-base `.all()` with empty steps candidate now has a PyO3
+`CaptureResourceSession`. Python admission reads charge its work counter in
+predecessor order; the Rust terminal/owner observer seeds its `Context` from
+that counter, uses the same remaining-work meter, and returns the updated
+count; Python DTO node encoding charges the same session afterward. The
+candidate helper composes those three stages for this exact shape. Its
+resource counter is unbounded by default, matching `Context::ordinary()`'s
+lack of a generic work ceiling. Explicit caps (including the two-work negative
+control) are caller-supplied test controls, not predecessor acceptance limits
+or claims about the public `capture()` route. This establishes a shared
+accounting primitive, not complete predecessor resource parity. DTO node,
+depth, and byte ceilings remain separate checks.
+
+The original three-argument terminal observer remains available with its
+original context and error translation. The session-aware entrypoint is
+separately named; only refusal by its explicit session meter maps to `ValueError`
+with the candidate resource-limit message. Other graph budget failures retain
+the original translation.
+The tests pin wrong-session refusal before graph reads, a caller exception's
+identity at the first `.op` read, exhaustion before the `args` read after one
+`.op` read at an explicit two-work test cap, and shared accounting through DTO
+encoding. No public route selects this candidate, and broader operation,
+variant-schedule, or byte-budget parity is not established.
+
+With Rust 1.90.0, the offline `umf-core-python` build succeeded. On CPython
+3.13.16 with the resulting extension loaded from `/private/tmp/umf`, the
+combined `test_capture_field_observation.py` and
+`test_capture_rust_graph_validator.py` suite passed **69/69**. Ruff import
+checks, Python AST parsing, and `git diff --check` passed. `rustfmt --check`
+reported only pre-existing import-order differences at unrelated locations in
+`bindings/core/python/src/lib.rs` and `bindings/core/python/src/related_keys.rs`;
+no diff was applied from that formatter run.
+
 Build output included existing unrelated Rust/PyO3 warnings. No Cargo lockfile
 was intentionally edited by this slice; the shared worktree contains other
 concurrent changes, so the parent task owns reconciliation of unrelated
