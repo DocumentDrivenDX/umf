@@ -68,14 +68,23 @@ receipt remains evidence for its original archived source cohort only.
 The verifier now requires an exact package-member and byte match between the
 access wheel and a clean Git checkout containing the verifier. It records the
 source revision, hashes the source package, qualification profile, verifier,
-tests and workflow, and rejects symlinks. Its
-new `sourceClosure` and `profileEvidence.receiptCohortMatchesLocalEvidence`
+tests and workflow, and rejects symlinks. Its new `sourceClosure` and
+`profileEvidence.receiptCohortMatchesLocalEvidence`
 fields are prerequisites for the public `capture()` semantic harness. That
 harness also checks the installed capture module's wheel-member hash and
 origin before comparing four declaration outcomes with the pinned source
 predecessor. The intended stage is `local-installed-candidate`, never release
-eligible. A fresh clean-source installed receipt and semantic receipt are
-pending at this checkpoint.
+eligible. The fresh clean-source [installed receipt](local-installed-artifact-current-source-20261026.json)
+passes at source commit `f8284549896e5f0e33157c543e09d799db924307` with
+access wheel SHA-256 `b42b410cd973c09066fcc48c1ff4e2ae4e14c7328066dc38f81bfa123dfaa647`
+and core wheel SHA-256 `e9ad7cb196e0de0a166eb03eabf143be2b7eb2b1d7931e6423c5e1a39f477044`.
+An isolated CPython 3.14.8 macOS arm64 runtime venv passed `pip check` and
+the installed-artifact gate. The dependent [semantic receipt](local-capture-semantic-candidate-20261026.json)
+matches direct, bound-parameter, optional-parameter and unsupported-carrier
+refusal outcomes against the exact predecessor source SHA-256
+`492f68954ca66f3fbd15eb008f7e1d6fa690829d9c31e3ec3d85ecb09a7e67a6`.
+Both receipts set `releaseEligible: false`; they do not qualify other capture
+shapes or hosted cohorts.
 
 The gate is separate from the existing six-cohort `umf-core` plus `umf-codegen`
 aggregate. Those cohorts use CPython 3.11.17–3.13.16 and install the pair with

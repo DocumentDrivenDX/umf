@@ -6233,11 +6233,13 @@ The [`umf_access` local installed-artifact gate](evidence/rust-migration/r8-umf-
 now compares every access package wheel member with the selected clean Git
 source checkout, binds the verifier and profile to that revision, and rejects
 source symlinks. Its new public `capture()` semantic harness rejects a cohort
-mismatch and compares four scoped declarations with a pinned source predecessor only after
-the installed wheel identity gate passes. The earlier dev7 receipt predates
-this source-to-wheel closure check and is historical. A fresh clean-source
-local receipt for these checks is still pending in this checkpoint; hosted
-cohorts, full capture semantics and native drivers remain unqualified.
+mismatch and compares four scoped declarations with a pinned source predecessor
+only after the installed wheel identity gate passes. The earlier dev7 receipt
+predates this source-to-wheel closure check and is historical. The fresh
+clean-source CPython 3.14.8 macOS arm64 artifact receipt passes at `f82845498`;
+the dependent semantic receipt matches four public `capture()` cases with the
+pinned source predecessor. Hosted cohorts, full capture semantics and native
+drivers remain unqualified.
 
 The regenerated [R8 inventory and gap ledger](evidence/rust-migration/r8-symbol-inventory/README.md)
 still record 922 logical executable default-route retirement gaps: 67 have an
