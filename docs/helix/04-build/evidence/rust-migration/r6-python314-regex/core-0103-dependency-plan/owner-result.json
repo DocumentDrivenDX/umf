@@ -1,5 +1,5 @@
 {
-  "status": "R3_PATH_SET_HOTSPOT_LOCATED_AWAITING_REVIEWED_PURE_HOIST",
+  "status": "ALL_DEPENDENT_CHECKS_PASS_ARCHIVE_MAP_READER_CORRECTION_REQUIRED",
   "baseCommit": "d5022e37840329d351bcd6c27fe7d7aad4758544",
   "donorCommit": "f4a410c0522135065a0b20e8d2b69705fddcbac4",
   "extractionCommit": "ad5e59591",
@@ -147,6 +147,19 @@
       "sha256": "edf1e1bb1c3bf49ee637e15bfeb0abde1df56f9e1f71f5993072b44e07bdf931",
       "closure": "sol-inventory-pathset-hoist-closure001.md",
       "closureSha256": "f352fd64bc660a7e7db1b541b818c833ab6cd81724fd48fc890e18d55c838519"
+    }
+  },
+  "codegenMapRefusal": {
+    "evidence": "codegen-map-refusal-40421280489",
+    "custodySha256": "c0789c83fc0663f7d73b5a0c36c60f9b4359d1d693fe470b9f2af9848fc4e242",
+    "dependentOutputAdoption": null,
+    "plan": "sol-codegen-files-map-plan001.md",
+    "planSha256": "b5da6ef3232c24fcf239fd3d1e351f8bdf999fb5a709064a19fbdaa723be9d41",
+    "sourceCorrection": {
+      "status": "SOURCE_ACCEPTED_AWAITING_WHOLE_DEPENDENT_RUN",
+      "workflowSha256": "a5a0062aa091b35f1618da1bd9832f68fc45278a24fc5d33d8298b2e2387899d",
+      "closure": "sol-codegen-files-map-closure002.md",
+      "closureSha256": "ffdbab340b577f928b21eb227f69eb58cf29241eeeffeeb538570185238328d4"
     }
   }
 }
