@@ -1,0 +1,33 @@
+{
+    "version": 1,
+    "wheel": "umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl",
+    "pure": false,
+    "overall_tag": "manylinux_2_34_x86_64",
+    "sym_tag": "manylinux_2_34_x86_64",
+    "pyfpe": false,
+    "ucs2": false,
+    "unsupported_isa": false,
+    "versioned_symbols": {
+        "libc.so.6": [
+            "GLIBC_2.14",
+            "GLIBC_2.18",
+            "GLIBC_2.2.5",
+            "GLIBC_2.25",
+            "GLIBC_2.28",
+            "GLIBC_2.3",
+            "GLIBC_2.3.4",
+            "GLIBC_2.33",
+            "GLIBC_2.34"
+        ],
+        "libgcc_s.so.1": [
+            "GCC_3.0",
+            "GCC_3.3",
+            "GCC_4.2.0"
+        ],
+        "libm.so.6": [
+            "GLIBC_2.29"
+        ]
+    },
+    "external_libs": {},
+    "policy_upgrades": {}
+}
