@@ -61,14 +61,16 @@ ddx:
 
 **Current source recapture (2026-10-26):** The inventory and condition-aware
 gap ledger were regenerated from the current ten package conditions after the
-V4 Node/browser entries grew to 45 direct declarations each and the source
-cohort merged at `85627a2a4`; a follow-up typecheck-only commit is `6429dbfbb`.
+V4 Node/browser entries grew to 45 direct declarations each. The inventory
+and ledger were recaptured after commits `2b953bfec`, `e3de811e6`, `38b572c60`,
+`4cbbe0c2f`, and `bfb082cac`, then extended through `e9f003a4e` and merged
+with current main at `84cc17df3`.
 The inventory
 contains 3,375 route-specific runtime declaration rows across 506 source files,
 1,126 unique export names, and 1,120 declarations in each Node, browser, and
 `./reference` root. Each default root has 922 executable declarations and 198
 JSON resource aliases spanning 189 distinct `spec/` files. The inventory SHA-256
-is `5eeef22302fe43127f74e8de530ae76e62deb183a0b1098a1e45df036f3e42c9`.
+is `f68de5672db92529b3c21909307c2c7e511fd0a36aec305e4b4396458b886d5e`.
 
 The ledger contains 3,360 root rows, 922 logical executable default-route
 retirement gaps, 67 names with accepted opt-in Rust-operation mappings, and 855
@@ -96,7 +98,7 @@ declaration is a `FunctionDeclaration`; the ledger normalizes only this exact
 route-shape difference. That signature normalization does not change its
 implementation status, Rust ownership evidence, route selection, or retirement
 disposition. The ledger SHA-256 is
-`230755922202869b5d11bcbf511212b18aac11fa49bfb4bc2d4f67a4ba8a184b`.
+`5d2e5e7ad272041d4abb5bbe668ebbda724e75fa037cc3c9a75b32d18196985e`.
 
 The resource authority counts are 56 generated-known, 49 authored-known, 88
 candidate-generated, and 5 unresolved. Kind v6 and Nullability v5 now have
@@ -109,9 +111,8 @@ current-source qualification for the verifier, or release readiness. The
 source-pinned `securityNot` receipt is separate and does not increase the five
 current-source routes proven by the fixed-point aggregate.
 
-The inventory and ledger were recaptured from the merged V4 source cut after
-the metamodel reached a generated-output fixed point; both remain current after
-the follow-up typecheck-only commit. The ledger records 45 source-selected
+The inventory and ledger were recaptured after the listed source commits and
+the metamodel generated-output fixed point. The ledger records 45 source-selected
 overrides per default root, including `securityNot`; its source-pinned private
 receipt does not contribute to the five fixed-point current-cohort routes. Both
 inventory and ledger `--check` modes pass. The exact-shape regression passes
