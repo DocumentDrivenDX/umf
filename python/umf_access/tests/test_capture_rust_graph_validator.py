@@ -84,7 +84,7 @@ def test_private_opt_in_capture_accepts_closed_rust_response():
     }
     with patch.object(
         _rust._rust_core,
-        "access_validate_captured_graph_variant",
+        "access_validate_captured_graph_variant_with_session",
         return_value=response,
         create=True,
     ) as validate, patch.object(
@@ -116,7 +116,7 @@ def test_private_opt_in_capture_maps_rust_signature_refusal():
     }
     with patch.object(
         _rust._rust_core,
-        "access_validate_captured_graph_variant",
+        "access_validate_captured_graph_variant_with_session",
         return_value=response,
         create=True,
     ), pytest.raises(CaptureError) as caught:

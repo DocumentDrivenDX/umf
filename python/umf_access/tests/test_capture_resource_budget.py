@@ -108,3 +108,31 @@ def test_near_full_native_output_budget_is_shared_across_adapters():
         _EncodingBudget(session).charge_output("x")
     assert session.output_chars == before_chars
     assert session.output_utf8_bytes == before_bytes
+
+
+def test_graph_validator_admission_uses_rust_session_before_semantic_refusal():
+    core = _rust._rust_core
+
+    exhausted = core.CaptureResourceSession(0)
+    with pytest.raises(ValueError, match="^capture resource limit exceeded$"):
+        core.access_validate_captured_graph_variant_with_session({}, exhausted)
+    assert exhausted.charged_work == 0
+
+    exact = core.CaptureResourceSession(1)
+    result = core.access_validate_captured_graph_variant_with_session({}, exact)
+    assert result == {
+        "profile": "umf-access-captured-graph-validation/0.1.0",
+        "outcome": "refused",
+        "kind": "capture-error",
+        "code": "CAPTURE_DTO_INVALID",
+        "rule": "captured variant shape is outside graph validator profile",
+    }
+    assert exact.charged_work == 1
+
+    semantic_first = core.CaptureResourceSession((1 << 64) - 1)
+    result = core.access_validate_captured_graph_variant_with_session(
+        {}, semantic_first
+    )
+    assert result["outcome"] == "refused"
+    assert result["code"] == "CAPTURE_DTO_INVALID"
+    assert semantic_first.charged_work == 1

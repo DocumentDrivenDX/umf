@@ -94,3 +94,42 @@ The public `capture()` route remains unchanged and continues to use the Python
 validator. No installed-wheel or default-route claim follows from this
 evidence; public cutover still requires complete first-fault semantic parity
 and the installed-wheel gate.
+
+## Private session-aware graph-validator admission — 2026-10-26
+
+The PyO3 binding adds
+`access_validate_captured_graph_variant_with_session(input, session)`. During
+Rust graph validation, Python DTO-to-`PythonConsumerValue` admission uses
+`Context::ordinary()` with a host-control meter that charges the caller's Rust
+`CaptureResourceSession`. Session exhaustion is translated to the private
+`ValueError("capture resource limit exceeded")`; other admission errors retain
+their existing engine error conversion. The Rust semantic graph validator runs
+only after complete admission, so a semantic refusal still wins when admission
+fits the supplied session. A focused test also verifies that a zero-work
+session refuses during admission before the malformed DTO reaches semantic
+validation.
+
+The private opt-in capture candidate supplies a fresh session with the full
+`u64` work range for each graph validation, preserving the existing ordinary
+Context text/depth/value limits while recording admission work in Rust. The
+fixed Rust response envelope is converted to Python under a fresh ordinary
+Context and is outside this slice's shared session. Python continues to own
+capture traversal, JSON encoding and the DTO-free `_validate_node`; public
+`capture()` routing is unchanged. This does not establish validator semantic
+parity, reconcile the separate DTO ceilings, qualify installed wheels or
+authorize a route cutover.
+
+The session admission boundary and current Python source passed the focused
+CPython 3.13.16 cohort listed above: 101 tests and 3 subtests. The extension
+was rebuilt offline with Rust 1.90.0 using an isolated Cargo target directory;
+the tested Darwin arm64 overlay SHA-256 is
+`706a9f1d9e1ed0496caf0d681f5350b6358dd4c7eed2e39591956b14791b20c4`.
+Sol independently reran that seven-file focused cohort with the same overlay:
+101 tests and 3 subtests passed. The source preimages for this continuation are:
+
+| Input | SHA-256 |
+| --- | --- |
+| `bindings/core/python/src/lib.rs` | `c6a6e984d250638a23e47ae39428a26c71f42466c996dbdc19ade2fcdb0ac741` |
+| `python/umf_access/src/umf_access/rust_catalog_render.py` | `0e99c5c12ce1efddf76484a8b6d0f2d5bd77eabade99a37d86864605ca8f7350` |
+| `python/umf_access/tests/test_capture_resource_budget.py` | `6571425c5236f731505ac02f1e8bb504232e87ea519b1fa3affcb853986b5c95` |
+| `python/umf_access/tests/test_capture_rust_graph_validator.py` | `fc6e090e1d5922fe358fb4f1900db135b6a86c42596297d39c1301c8a46e8bc3` |

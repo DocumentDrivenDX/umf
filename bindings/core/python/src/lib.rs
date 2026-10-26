@@ -1983,15 +1983,57 @@ fn access_validate_captured_graph_variant(
     py: Python<'_>,
     input: &Bound<'_, PyAny>,
 ) -> PyResult<PyObject> {
+    access_validate_captured_graph_variant_inner(py, input, None)
+}
+
+#[pyfunction]
+fn access_validate_captured_graph_variant_with_session(
+    py: Python<'_>,
+    input: &Bound<'_, PyAny>,
+    session: PyRefMut<'_, CaptureResourceSession>,
+) -> PyResult<PyObject> {
+    access_validate_captured_graph_variant_inner(py, input, Some(session))
+}
+
+fn access_validate_captured_graph_variant_inner(
+    py: Python<'_>,
+    input: &Bound<'_, PyAny>,
+    mut session: Option<PyRefMut<'_, CaptureResourceSession>>,
+) -> PyResult<PyObject> {
     if !input.is_exact_instance_of::<PyDict>() {
         return Err(PyValueError::new_err(
             "captured graph input must be an exact dict",
         ));
     }
-    let mut context = Context::ordinary();
-    let mut count = 0usize;
-    let input =
-        python_value::from_python(py, input, &mut context, 0, &mut count).map_err(py_error)?;
+    let mut refused_by_session = false;
+    let input = if let Some(session) = session.as_mut() {
+        let mut meter = |amount: usize| match session.charge_work(amount as u64) {
+            Ok(()) => Ok(()),
+            Err(_) => {
+                refused_by_session = true;
+                Err(EngineError::new(
+                    "LIMIT",
+                    Utf16::default(),
+                    "capture resource limit exceeded",
+                ))
+            }
+        };
+        let mut context = Context::ordinary().with_host_control(&mut meter);
+        let mut count = 0usize;
+        let admitted = python_value::from_python(py, input, &mut context, 0, &mut count);
+        drop(context);
+        match admitted {
+            Ok(value) => value,
+            Err(_) if refused_by_session => {
+                return Err(PyValueError::new_err("capture resource limit exceeded"));
+            }
+            Err(error) => return Err(py_error(error)),
+        }
+    } else {
+        let mut context = Context::ordinary();
+        let mut count = 0usize;
+        python_value::from_python(py, input, &mut context, 0, &mut count).map_err(py_error)?
+    };
     let response = match umf_core::access_graph_validate::validate_captured_variant(&input) {
         Ok(()) => PythonConsumerValue::Object(vec![
             (
@@ -2030,6 +2072,7 @@ fn access_validate_captured_graph_variant(
             ),
         ]),
     };
+    let mut context = Context::ordinary();
     python_value::to_python(py, &response, &mut context)
 }
 
@@ -4658,6 +4701,10 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     )?)?;
     module.add_function(wrap_pyfunction!(
         access_validate_captured_graph_variant,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_validate_captured_graph_variant_with_session,
         module
     )?)?;
     module.add_function(wrap_pyfunction!(

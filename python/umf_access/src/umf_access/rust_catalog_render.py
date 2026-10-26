@@ -91,13 +91,18 @@ def _capture_budget_call(method: Any, *args: int) -> None:
         raise
 
 
-def _validate_graph_variant(value: object) -> None:
+def _validate_graph_variant(value: object, session: object | None = None) -> None:
     """Opt-in validator for the narrow captured-DTO graph profile."""
     if type(value) is not dict:
         raise TypeError("captured graph input must be an exact dict")
     try:
         from umf import _rust
-        result = _rust._rust_core.access_validate_captured_graph_variant(value)
+        if session is None:
+            result = _rust._rust_core.access_validate_captured_graph_variant(value)
+        else:
+            result = _rust._rust_core.access_validate_captured_graph_variant_with_session(
+                value, session
+            )
     except (AttributeError, ImportError):
         raise CatalogLogicalRenderUnavailable(
             "Rust captured graph validation capability unavailable"
@@ -192,7 +197,20 @@ def capture_with_rust_graph_validator(function: object) -> object:
             # refused this graph before exposing that narrower limit.
             _validate_node(node, parameters)
             raise
-        _validate_graph_variant(dto)
+        validation_session_type = getattr(
+            _rust._rust_core, "CaptureResourceSession", None
+        )
+        validate_with_session = getattr(
+            _rust._rust_core,
+            "access_validate_captured_graph_variant_with_session",
+            None,
+        )
+        if not callable(validation_session_type) or not callable(validate_with_session):
+            raise CatalogLogicalRenderUnavailable(
+                "Rust captured graph resource session unavailable"
+            )
+        validation_session = validation_session_type((1 << 64) - 1)
+        _validate_graph_variant(dto, validation_session)
 
     kind = getattr(function, "__umf_kind__", None)
     if kind not in ("query", "command"):
