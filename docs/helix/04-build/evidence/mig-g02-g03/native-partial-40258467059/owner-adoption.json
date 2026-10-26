@@ -1,0 +1,11 @@
+{
+  "profile": "umf.g02-g03-native-hosted-owner-adoption/8",
+  "head": "82cb660b28737ac185b589974a0c6590e8f35ae1",
+  "tree": "00631ebb312b0a21e10f615b33fa8be145cf1c30",
+  "remoteBranch": "d63ee1711e3c29b18da4f747714768a7974e6b74",
+  "workflowSha256": "b35952bcb7491f44201d5ff7fe711be0f6c40245639d441c9ea614ecf05e68c0",
+  "manifestSha256": "fbbbc6bb9f17ee86c3b6ba32426a30f7c1d967a577f6a994ff110e3892ae0f05",
+  "review": "Root reviewed exact guard and whole fixture diff. Shadow remains before initial apply and all real privilege checks. Admin owns schema/function; PUBLIC revoked; Alice login only granted usage/execute. Catalog ownership/directACL/effective root noaccess +Aliceaccess and exact sentinel assertions before apply. No product verifier change or postponement of adversary.",
+  "dataflow": "Unchanged original finite existing public UUID-only hosted disposablePG18.6 diagnostic/tools/cohort/original1800s/180s+grace/SQL/log/artifactcaps; priorattemptcompletedfailure. No local runtime/privateDB/production or expanded claim.",
+  "status": "UNRUN_UUID_SELECTED_SUBCASE_FINAL_FULL_GATE_OPEN"
+}
