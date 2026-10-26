@@ -1,0 +1,78 @@
+{
+  "schema": "umf.schema-browser.npm-evidence/1",
+  "workflow_run": 40385375283,
+  "workflow_url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40385375283",
+  "publisher_driver": "1bf52abcbfbc5eb4aa1c3ec9f1db3ee0bf72ee6b",
+  "all_four_jobs_passed": true,
+  "artifact_api_checksums_verified": [
+    {
+      "id": 12681145978,
+      "name": "schema-browser-npm-publication-2.0.0",
+      "digest": "sha256:68135fd5f2871e48028cbed0227eadc250da4d20134dc8f98f4c3a2d3df84e10",
+      "size_in_bytes": 509
+    },
+    {
+      "id": 12680806018,
+      "name": "schema-browser-verified-2.0.0",
+      "digest": "sha256:bd70e7ee70ed02f3e55b5c1e141d3db92cc6ed3e6f7a53119fe376aa0950bd6d",
+      "size_in_bytes": 2168512
+    },
+    {
+      "id": 12680063435,
+      "name": "schema-browser-npm-preflight-2.0.0",
+      "digest": "sha256:e362502e4505086cdd04d4280fb6c032d1ff1d019726514cdca00a83ae31f0b4",
+      "size_in_bytes": 166
+    },
+    {
+      "id": 12680048907,
+      "name": "schema-browser-npm-consumer-2.0.0",
+      "digest": "sha256:e5b77390362b47e56994cc20595b4f51f016350f58095a9671bb5a2dac63ebb1",
+      "size_in_bytes": 318
+    }
+  ],
+  "raw_receipt_files_sha256": {
+    "identity.json": "87567b5f670fc87b588aaf85f8cd72975065762bce471a2f197ff1ad5ebec031",
+    "npm-preflight.txt": "a32abc113a4867a4843cc26e15d3f5073d0a749282cad92fd2130c0eb8957250",
+    "npm-publication-receipt.json": "d02adf1fb2f22c06f16283d0a1f198587604f3737b382f4483adc33298735a6f",
+    "npm-consumer-receipt.json": "74b95916f2d84f924666d6c4e204bfb8afb7d4711eb6ffc0927a7600d384b62d",
+    "publisher-configuration.json": "cf48f4402abd5e6b32557d0c959175fe28feb1f91662d46bfd4b1a1ea4338771"
+  },
+  "checks": {
+    "exact_source_tarball_and_sums": true,
+    "raw_receipt_zip_members_equal": true,
+    "registry_matching_exact_bytes": true,
+    "public_npm_clean_install_and_entrypoint_import": true,
+    "new_oidc_upload": false
+  },
+  "limitations": [
+    "Existing 2.0.0 matching bytes caused upload to be skipped. This is not an actual npm OIDC upload or validation of the newly saved trusted publisher.",
+    "The npm publisher remains pending its first successful upload before 2026-10-28T19:22:00Z; otherwise npm expires the configuration.",
+    "The private @umf/core development package and GitHub SDK archives are outside this npm publication."
+  ],
+  "jobs": [
+    {
+      "id": 121792128331,
+      "name": "verify-release",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 121792609901,
+      "name": "npm-preflight",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 121793160288,
+      "name": "npm-publish",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 121793545038,
+      "name": "npm-consumer",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ]
+}
