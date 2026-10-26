@@ -36,7 +36,7 @@
   "dependencyPins": {
     "sourceCohort": "current UMF wheels built from github.sha and recorded in cohort.lock.json",
     "cohortProfile": "python/packaging/embedder-wheel-lock.template.json",
-    "cohortProfileSha256": "5ce1f5a5f69132737d3710126921c085e4dadc751b20d827dd9d4f59c62c8c0f",
+    "cohortProfileSha256": "726108e5a03af52c24d3c1efc36b37f6bdd53bdcd698af97f5165f07b1a1ee30",
     "weft": {
       "distribution": "weft-sql",
       "version": "0.4.53",
@@ -93,15 +93,15 @@
       "purpose": "Frozen Bun dependency graph"
     },
     "tests/codegen/acquire_offline_cohort.py": {
-      "sha256": "3fce50c241afd5ef3e5dfa3ea2736c1fbe5b98f8788b98ac296db476395f8503",
+      "sha256": "72d9d5b9e3886f54c63e25d2f851b626d833eacd6c8bbe4bbf26f518c0812ce0",
       "purpose": "Existing current-source cohort acquisition and lock construction"
     },
     "scripts/python-package-mirror.py": {
-      "sha256": "77d3b225a7c5c19621be554356aaad4d6f33b8337e700531780e22e0cd1289da",
+      "sha256": "11d57f3b166728ffa75a6a2a7d19a740220f1a7f5ba3a2d45b302888c1daeb7f",
       "purpose": "Existing wheel mirror and hash-lock implementation"
     },
     "tests/codegen/offline_mirror_probe.py": {
-      "sha256": "8e01356472c51861619f5dc243dc596006d58b0b63d0d7386761609c58f9e002",
+      "sha256": "9f135a31b06eca07402b4ceaa33bc270de7cb2715126308b203755c1da4fac90",
       "purpose": "Existing offline installation and network-denial probe"
     },
     "tests/codegen/verify_mini_racer_wheel.py": {
@@ -181,12 +181,20 @@
       "purpose": "Reviewed pre-rebuild bundled YAML package metadata output"
     },
     "python/packaging/embedder-wheel-lock.template.json": {
-      "sha256": "5ce1f5a5f69132737d3710126921c085e4dadc751b20d827dd9d4f59c62c8c0f",
+      "sha256": "726108e5a03af52c24d3c1efc36b37f6bdd53bdcd698af97f5165f07b1a1ee30",
       "purpose": "Existing 18-wheel public dependency cohort template"
     },
     "docs/helix/04-build/evidence/mig-g02-g03/build-tools-requirements.txt": {
       "sha256": "e83304c7c1ec7b5d6eb26ca519b3b72a20dbd693d899753b8dce9f1bd3ded84c",
       "purpose": "Hash-locked public wheel builder toolchain"
+    },
+    "tests/codegen/cohort_selector.py": {
+      "sha256": "65e4e20c5bd21d0c94af0d7f0fca496210242cc36a0b17e28d6f2192ade8cee0",
+      "purpose": "Strict immutable-release selector and exact original18 dependency-closure guard imported by current acquisition and probe"
+    },
+    "tests/codegen/aggregate_cohort.py": {
+      "sha256": "9e2def3d465c6f3295936f019a566c5541583c1b1327e40e2c0a22d3e9b68584",
+      "purpose": "Closed four-cell union validator imported by offline probe; selected-native gate uses the existing single-cell mode"
     }
   },
   "codegenRefresh": {
