@@ -126,7 +126,7 @@ pub fn compile_model(model: &Value, ctx: &mut Context<'_>) -> Result<CompiledMod
         .unwrap_or(&Value::Null),
     )
     .as_deref()
-        != Some("1.2.0")
+        != Some("1.3.0")
     {
         return Err(shape_error(
             "METAMODEL_VOCABULARY_VERSION",
@@ -465,7 +465,7 @@ pub fn render_outputs_with_context(
     let annotation_schema = annotation_schema();
     let package = obj(vec![
         ("id", Value::string_utf8("umf.metamodel")),
-        ("version", Value::string_utf8("1.2.0")),
+        ("version", Value::string_utf8("1.3.0")),
         (
             "coreVersion",
             clone_metered(
@@ -589,11 +589,27 @@ fn compile_operation_resources(
             "resources must be an array",
         ));
     };
-    if declarations.len() != 4 {
+    if declarations.len() != 6 {
         return Err(shape_error(
             "METAMODEL_RESOURCE_DECLARATIONS",
-            "this vocabulary version requires the Facets v3, Cardinality v4, Kind v6, and Nullability v5 resources",
+            "this vocabulary version requires Facets v3, Cardinality v4, Kind v6, Nullability v5, Key v2, and Record Type v6 resources",
         ));
+    }
+    let mut declared_output_ids: BTreeSet<Vec<u16>> =
+        [core_schema_id.units().to_vec()].into_iter().collect();
+    let mut declared_resource_definitions: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
+    for declaration in declarations {
+        if let Some(id) = text(get(declaration, "id").unwrap_or(&Value::Null)) {
+            declared_output_ids.insert(Utf16::from(id.as_str()).units().to_vec());
+            let names = arr(Some(
+                get(declaration, "definitions").unwrap_or(&Value::Null),
+            ))
+            .unwrap_or(&[])
+            .iter()
+            .filter_map(|definition| text(get(definition, "name").unwrap_or(&Value::Null)))
+            .collect();
+            declared_resource_definitions.insert(id, names);
+        }
     }
     let mut paths = BTreeSet::new();
     let mut ids = BTreeSet::new();
@@ -658,6 +674,16 @@ fn compile_operation_resources(
                 "urn:umf:core:nullability-operation:5.0.0",
                 "Core nullability inspection and explicit author declaration results (Key envelope) (Relationship envelope)",
             ),
+            (
+                "spec/core/key-operation-v2.schema.json",
+                "urn:umf:core:key-operation:2.0.0",
+                "Core Key and Record membership authoring and inspection receipts (Relationship envelope)",
+            ),
+            (
+                "spec/core/record-type-operation-v6.schema.json",
+                "urn:umf:core:record-type-operation:6.0.0",
+                "Core record type declaration receipt",
+            ),
         ];
         if !permitted
             .iter()
@@ -685,10 +711,26 @@ fn compile_operation_resources(
                 "externalResourceIds must be an array",
             )
         })?;
-        if external_ids.len() != 1 || external_ids[0] != Value::String(core_schema_id.clone()) {
+        let mut expected_external_ids = vec![Value::String(core_schema_id.clone())];
+        if path == "spec/core/record-type-operation-v6.schema.json" {
+            expected_external_ids.push(Value::string_utf8(
+                "urn:umf:core:kind-operation:6.0.0",
+            ));
+        }
+        let mut seen_external_ids = BTreeSet::new();
+        if external_ids.len() != expected_external_ids.len()
+            || external_ids
+                .iter()
+                .zip(&expected_external_ids)
+                .any(|(value, expected)| {
+                    value != expected
+                        || !seen_external_ids.insert(text(value).unwrap_or_default())
+                        || !matches!(expected, Value::String(id) if declared_output_ids.contains(id.units()))
+                })
+        {
             return Err(shape_error(
                 "METAMODEL_RESOURCE_EXTERNAL_IDS",
-                "operation resources must explicitly allow only the current core schema id",
+                "operation resources must list only their declared external output ids in contract order",
             ));
         }
         let definitions = arr(get(declaration, "definitions")).ok_or_else(|| {
@@ -697,12 +739,6 @@ fn compile_operation_resources(
                 "definitions must be an array",
             )
         })?;
-        if definitions.is_empty() {
-            return Err(shape_error(
-                "METAMODEL_RESOURCE_DEFINITIONS",
-                "definitions must not be empty",
-            ));
-        }
         let mut names = BTreeSet::new();
         let mut emitted_defs = Vec::with_capacity(definitions.len());
         for definition in definitions {
@@ -741,12 +777,22 @@ fn compile_operation_resources(
                 get(definition, "shape").unwrap_or(&Value::Null),
             ));
         }
-        let external = text(&external_ids[0]).unwrap();
-        let targets: BTreeSet<Vec<u16>> = names
+        let mut targets: BTreeSet<Vec<u16>> = names
             .iter()
             .map(|name| Utf16::from(name.as_str()).units().to_vec())
-            .chain([Utf16::from(external.as_str()).units().to_vec()])
             .collect();
+        for external_id in external_ids.iter().filter_map(text) {
+            targets.insert(Utf16::from(external_id.as_str()).units().to_vec());
+            if let Some(definitions) = declared_resource_definitions.get(&external_id) {
+                for definition in definitions {
+                    targets.insert(
+                        Utf16::from(format!("{external_id}#/$defs/{definition}").as_str())
+                            .units()
+                            .to_vec(),
+                    );
+                }
+            }
+        }
         let root = get(declaration, "root").unwrap_or(&Value::Null);
         for (_, shape) in &emitted_defs {
             check_shape_at(shape, &Utf16::default(), ctx)?;
@@ -755,13 +801,18 @@ fn compile_operation_resources(
         check_shape_at(root, &Utf16::default(), ctx)?;
         check_resource_shape(root, &targets, false, ctx)?;
         let mut defs = Vec::with_capacity(emitted_defs.len());
+        let key_v2_layout = path == "spec/core/key-operation-v2.schema.json";
         for (name, shape) in emitted_defs {
             defs.push((
                 name,
-                reorder_operation_shape(emit_shape_mode(shape, &targets, ctx, true)?)?,
+                reorder_operation_shape(
+                    emit_shape_mode(shape, &targets, ctx, true)?,
+                    key_v2_layout,
+                )?,
             ));
         }
-        let root_schema = reorder_operation_shape(emit_shape_mode(root, &targets, ctx, true)?)?;
+        let root_schema =
+            reorder_operation_shape(emit_shape_mode(root, &targets, ctx, true)?, key_v2_layout)?;
         let Value::Object(mut root_members) = root_schema else {
             return Err(shape_error(
                 "METAMODEL_RESOURCE_ROOT",
@@ -775,8 +826,10 @@ fn compile_operation_resources(
             ),
             (Utf16::from("$id"), Value::string_utf8(id)),
             (Utf16::from("title"), Value::string_utf8(title)),
-            (Utf16::from("$defs"), Value::Object(defs)),
         ];
+        if !defs.is_empty() {
+            members.push((Utf16::from("$defs"), Value::Object(defs)));
+        }
         members.append(&mut root_members);
         output.push((path, Value::Object(members)));
     }
@@ -838,7 +891,7 @@ fn check_resource_shape(
     Ok(())
 }
 
-fn reorder_operation_shape(value: Value) -> Result<Value, EngineError> {
+fn reorder_operation_shape(value: Value, key_v2_layout: bool) -> Result<Value, EngineError> {
     let Value::Object(entries) = value else {
         return Ok(value);
     };
@@ -853,7 +906,9 @@ fn reorder_operation_shape(value: Value) -> Result<Value, EngineError> {
                 Value::Object(entries) => Value::Object(
                     entries
                         .into_iter()
-                        .map(|(name, schema)| Ok((name, reorder_operation_shape(schema)?)))
+                        .map(|(name, schema)| {
+                            Ok((name, reorder_operation_shape(schema, key_v2_layout)?))
+                        })
                         .collect::<Result<Vec<_>, EngineError>>()?,
                 ),
                 other => other,
@@ -862,7 +917,7 @@ fn reorder_operation_shape(value: Value) -> Result<Value, EngineError> {
                 Value::Array(entries) => Value::Array(
                     entries
                         .into_iter()
-                        .map(reorder_operation_shape)
+                        .map(|schema| reorder_operation_shape(schema, key_v2_layout))
                         .collect::<Result<Vec<_>, EngineError>>()?,
                 ),
                 other => other,
@@ -874,23 +929,32 @@ fn reorder_operation_shape(value: Value) -> Result<Value, EngineError> {
             | "items"
             | "contains"
             | "propertyNames"
-            | "additionalProperties" => reorder_operation_shape(value)?,
+            | "additionalProperties" => reorder_operation_shape(value, key_v2_layout)?,
             _ => value,
         };
         members.push((key, value));
     }
-    let rank = |key: &Utf16| match key.to_utf8().as_deref() {
-        Ok("type") => 0,
-        Ok("additionalProperties") => 1,
-        Ok("required") => 2,
-        Ok("properties") => 3,
-        Ok("dependentRequired") => 4,
-        Ok("minProperties") => 5,
-        Ok("propertyNames") => 6,
-        Ok("allOf") => 7,
-        Ok("if") => 8,
-        Ok("then") => 9,
-        Ok("else") => 10,
+    let rank = |key: &Utf16| match (key_v2_layout, key.to_utf8().as_deref()) {
+        (true, Ok("type")) => 0,
+        (true, Ok("required")) => 1,
+        (true, Ok("additionalProperties")) => 2,
+        (true, Ok("properties")) => 3,
+        (true, Ok("uniqueItems")) => 1,
+        (true, Ok("items")) => 2,
+        (true, Ok("minItems")) => 3,
+        (true, Ok("oneOf")) => 11,
+        (true, Ok("description")) => 12,
+        (false, Ok("type")) => 0,
+        (false, Ok("additionalProperties")) => 1,
+        (false, Ok("required")) => 2,
+        (false, Ok("properties")) => 3,
+        (false, Ok("dependentRequired")) => 4,
+        (false, Ok("minProperties")) => 5,
+        (false, Ok("propertyNames")) => 6,
+        (false, Ok("allOf")) => 7,
+        (false, Ok("if")) => 8,
+        (false, Ok("then")) => 9,
+        (false, Ok("else")) => 10,
         _ => 11,
     };
     members.sort_by_key(|(key, _)| rank(key));
@@ -2419,7 +2483,7 @@ mod tests {
             ),
             (Utf16::from("type"), Value::string_utf8("object")),
         ]);
-        let Value::Object(ordered) = reorder_operation_shape(source).unwrap() else {
+        let Value::Object(ordered) = reorder_operation_shape(source, false).unwrap() else {
             panic!("schema remains an object");
         };
         assert_eq!(ordered[0].0, Utf16::from("type"));

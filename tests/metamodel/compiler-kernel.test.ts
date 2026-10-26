@@ -99,11 +99,14 @@ describe('clean source generation',()=>{
  beforeAll(async()=>{
   dir=await mkdtemp(join(tmpdir(),'umf-metamodel-clean-'));
   manifest=await Bun.file(join(root,'spec/metamodel/generated/manifest.json')).json();
+  const outputPaths=[...Object.keys(manifest.outputs),'spec/metamodel/generated/manifest.json'];
   const packageFiles=(await Promise.all(rustCompilePackages.map(packageSources))).flat();
-  const declaredSources=new Set(Object.keys(manifest.sources));
+  // A previously generated manifest can still list an output as a source.
+  // Never copy such overlap into the clean fixture: generated outputs must be
+  // rebuilt from authored inputs, and the newly emitted manifest must retire it.
+  const declaredSources=new Set(Object.keys(manifest.sources).filter((path:string)=>!outputPaths.includes(path)));
   expect(packageFiles.filter((path:string)=>!declaredSources.has(path))).toEqual([]);
   const sourcePaths=[...new Set([...declaredSources,...rustCompileResources])];
-  const outputPaths=[...Object.keys(manifest.outputs),'spec/metamodel/generated/manifest.json'];
   expect(sourcePaths.filter((path:string)=>outputPaths.includes(path))).toEqual([]);
   for(const path of outputPaths)expect(await Bun.file(join(dir,path)).exists()).toBe(false);
   await Promise.all([...new Set(sourcePaths.map(path=>dirname(join(dir,path))))].map(path=>mkdir(path,{recursive:true})));
@@ -118,6 +121,11 @@ describe('clean source generation',()=>{
  test('clean generation has no derived dependency; fixed point and no-write check enforce inventory',async()=>{
   expect(initialStatus).toBe(0);
   const generatedManifest=await Bun.file(join(dir,'spec/metamodel/generated/manifest.json')).json();
+  const outputPaths=[...Object.keys(generatedManifest.outputs),'spec/metamodel/generated/manifest.json'];
+  expect(Object.keys(generatedManifest.sources).filter((path:string)=>outputPaths.includes(path))).toEqual([]);
+  const derivedResource='spec/core/cardinality-operation-v4.schema.json';
+  expect(Object.hasOwn(generatedManifest.sources,derivedResource)).toBe(false);
+  expect(await readFile(join(dir,derivedResource),'utf8')).toBe(await readFile(join(root,derivedResource),'utf8'));
   for(const path of rustCompileResources){const bytes=await readFile(join(root,path));expect(generatedManifest.sources[path]).toBe(createHash('sha256').update(bytes).digest('hex'));}
   const files=[...Object.keys(manifest.outputs),'spec/metamodel/generated/manifest.json'];
   const snapshots=await Promise.all(files.map(async path=>({path,text:await readFile(join(dir,path),'utf8'),mtime:(await stat(join(dir,path))).mtimeMs})));
