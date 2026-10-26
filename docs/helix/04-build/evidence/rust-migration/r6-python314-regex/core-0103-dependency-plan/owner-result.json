@@ -1,5 +1,5 @@
 {
-  "status": "METAMODEL_GENERATOR_FAILED_BOUNDED_DIAGNOSTIC_REPAIR_IN_PROGRESS",
+  "status": "LOCKED_CARGO_PREREQUISITE_SOURCE_ACCEPTED_AWAITING_HOSTED_METAMODEL",
   "baseCommit": "d5022e37840329d351bcd6c27fe7d7aad4758544",
   "donorCommit": "f4a410c0522135065a0b20e8d2b69705fddcbac4",
   "extractionCommit": "ad5e59591",
@@ -88,5 +88,19 @@
     "actualCompilerCause": null,
     "phase": "metamodel-artifacts",
     "outputAdoption": null
+  },
+  "actualMetamodelDiagnostic": {
+    "evidence": "metamodel-diagnostic-40417120061",
+    "custodySha256": "2c759dd57c935424aa9e1616a5b337ac37e9d5de08475d9ee4cdd69cea142fe0",
+    "cause": "num-traits unavailable to locked/offline source-bound compiler",
+    "fix": "Sol approved bounded locked-Cargo prerequisite; Luna implementing workflow-only correction; affected source review and actual run still required"
+  },
+  "lockedCargoPrerequisitePlan": "sol-locked-cargo-prerequisite-plan001.md",
+  "lockedCargoPrerequisite": {
+    "workflowSha256": "7e909a250d58ed27e60bf453d28e0b69acfb08d396c7518d2ffe421aa2034ef1",
+    "sourceStatus": "SOURCE_ACCEPTED",
+    "closure": "sol-cargo-prerequisite-closure002.md",
+    "closureSha256": "0e940c7e42ff158e602f22e5469fdca111e5933852571627208ce016631e6fe8",
+    "actualGeneratedOutputs": null
   }
 }
