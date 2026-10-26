@@ -2,6 +2,7 @@
 // receives only the values observed for the current source-ordered stage.
 import {encodeWire, fromWire, resultError} from './wire.js';
 import {jsonSchemaFailureError} from './json-schema.js';
+import {finishJsonSchemaSourceObservation, stageJsonSchemaSource} from '../../shared/json-schema-import-source.js';
 
 export const JSON_SCHEMA_STAGED_IMPORT_PROFILE = 'umf-r8-json-schema-staged-node-private/0.1.0';
 
@@ -27,6 +28,15 @@ export function createJsonSchemaStagedImportSession(addon) {
   if (addon.jsonSchemaImportSessionProfileVersion() !== JSON_SCHEMA_STAGED_IMPORT_PROFILE) throw new Error('RUST_NODE_BINDING_PROFILE_MISMATCH');
   return Object.freeze({
     importJsonSchema(source, options) {
+      return runImport(source, options, false);
+    },
+    /** Private opt-in ToString-compatible source profile; default import stays string-only. */
+    importJsonSchemaHostCoercion(source, options) {
+      return runImport(source, options, true);
+    },
+  });
+
+  function runImport(source, options, hostCoercion) {
       const session = new addon.JsonSchemaImportSessionHandle();
       const dispatch = (stage, fields = {}) => {
         const response = JSON.parse(session.executeStage(encodeWire({stage, ...fields})));
@@ -46,16 +56,20 @@ export function createJsonSchemaStagedImportSession(addon) {
       const entries = Object.entries(options.resources || {});
       for (const [uri, resourceSource] of entries) {
         ensureUri(uri);
-        if (typeof resourceSource !== 'string') throw new TypeError('Staged JSON Schema import accepts string resource sources only');
-        dispatch('resource', {uri, source: resourceSource});
+        if (!hostCoercion && typeof resourceSource !== 'string') throw new TypeError('Staged JSON Schema import accepts string resource sources only');
+        const stagedResource = hostCoercion ? stageJsonSchemaSource(resourceSource) : {text: resourceSource, nonString: false};
+        dispatch('resource', {uri, source: stagedResource.text});
+        finishJsonSchemaSourceObservation(stagedResource);
       }
 
       const payloadBaseUri = options.baseUri;
       if (typeof payloadBaseUri !== 'string') throw new TypeError('Staged JSON Schema import accepts a string baseUri');
       dispatch('payloadBaseUri', {baseUri: payloadBaseUri});
 
-      if (typeof source !== 'string') throw new TypeError('Staged JSON Schema import accepts a string root source');
-      dispatch('root', {source});
+      if (!hostCoercion && typeof source !== 'string') throw new TypeError('Staged JSON Schema import accepts a string root source');
+      const stagedRoot = hostCoercion ? stageJsonSchemaSource(source) : {text: source, nonString: false};
+      dispatch('root', {source: stagedRoot.text});
+      finishJsonSchemaSourceObservation(stagedRoot);
 
       const id = options.id;
       if (typeof id !== 'string') throw new TypeError('Staged JSON Schema import accepts a string id');
@@ -65,6 +79,5 @@ export function createJsonSchemaStagedImportSession(addon) {
       if (typeof namespace !== 'string') throw new TypeError('Staged JSON Schema import accepts a string namespace');
       dispatch('namespace', {baseUri: namespace});
       return dispatch('finish');
-    },
-  });
+  }
 }

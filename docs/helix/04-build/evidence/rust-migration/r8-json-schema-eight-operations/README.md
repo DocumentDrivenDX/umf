@@ -295,5 +295,13 @@ The [non-string host observation](import-host-nonstring-decision.md) adds nine
 direct-source root/resource cases with identical traces and outcomes in Bun,
 Node, and real Chromium. These cases expose repeated `length` reads and
 `JSON.parse` coercion before a later YAML parser TypeError for some objects.
-The private staged import remains string-only until a host/Rust protocol can
-preserve that ordering without moving semantic parsing out of Rust.
+The existing private staged method remains string-only. A separate
+[bounded host-coercion bridge decision](import-host-nonstring-bridge-decision.md)
+records an additive private method that admits only two effective source
+texts. Its 29-case [Node/Bun matrix](import-host-nonstring-boundary-matrix.json)
+and fresh [Chromium/WASM receipt](import-host-nonstring-chromium-bridge.json)
+match direct TypeScript effects and outcomes for all 20 admitted cases per
+host. Nine cases fail closed as explicit profile exclusions. Rust retains JSON
+parsing; the host observes the source's coercion and later type refusal. This
+does not qualify arbitrary non-string inputs or alter the TypeScript default
+route.

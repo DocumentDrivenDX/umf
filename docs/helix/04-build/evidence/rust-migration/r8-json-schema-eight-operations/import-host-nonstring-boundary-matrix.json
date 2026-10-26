@@ -1,0 +1,116 @@
+{
+  "format": "umf.r8-json-schema-import-nonstring-boundary-matrix/1",
+  "status": "pass-with-exclusions",
+  "profile": "nonstring-string-source-oracle-v1",
+  "description": "Direct current-TypeScript source observations and a separate comparison of the private staged Rust bridge. The bridge is experimental and does not alter the default importJsonSchema route.",
+  "source": {
+    "caseMatrix": {
+      "path": "scripts/rust-migration/r8/json-schema-import-nonstring-boundary-cases.mjs",
+      "sha256": "a129b75a378e9fca31def9975dfeaad7148e307cacf7dc8a11cfa2795492aff4"
+    },
+    "directSourceRunner": {
+      "path": "scripts/rust-migration/r8/json-schema-import-nonstring-boundary-runner.mjs",
+      "sha256": "ecc7e0a3d9914e09cb390c6ec9ecd4e3e8ac0ab3c143023e6ebfd92528a0d4d7"
+    },
+    "directChromiumEntry": {
+      "path": "scripts/rust-migration/r8/json-schema-import-nonstring-chromium-entry.ts",
+      "sha256": "171aabc360df0810239cd841acbec6cb43cdee14b8dd1a9fae692906f0f29630"
+    },
+    "bridgeMatrixRunner": {
+      "path": "scripts/rust-migration/r8/json-schema-import-nonstring-bridge-matrix.mjs",
+      "sha256": "05a2b43c970e13d75655f54b791ef971ae9c12a79a73aa0f559351e92d2832e5"
+    },
+    "sharedBoundaryHelper": {
+      "path": "bindings/core/shared/json-schema-import-source.js",
+      "sha256": "a880ce70c0dba2fe3958c63635090f03c0a91128fb2117706b32be52bb14af36"
+    },
+    "nodeFacade": {
+      "path": "bindings/core/node/src/json-schema-import-session.js",
+      "sha256": "f7ac4a8e3485bd3e275d33439c4ccbfa826db65d374380ed5a0ba098d6838d24"
+    },
+    "wasmFacade": {
+      "path": "bindings/core/wasm/index.js",
+      "sha256": "c3f3aa3aebf4c525df0410e89a8fbba99bc5653548d78a1b9e3fc69efa572fb5"
+    },
+    "nodeAddon": {
+      "path": "/private/tmp/umf-core-node-r8-fresh.node",
+      "sha256": "49893ba1f859ca2cf017eded9af89ff2a5186137fb12e18b046924d974f8f2e8"
+    }
+  },
+  "directSourceMatrix": {
+    "caseCount": 25,
+    "covered": [
+      "length getter effects and comparison coercion/order",
+      "ToPrimitive with string hint, toString fallback, and coercion-result types",
+      "Symbol and primitive root inputs",
+      "thrown primitive and object identity",
+      "root and resource refusal sequencing",
+      "pre- and post-coercion length limits"
+    ],
+    "bun": {
+      "version": "1.4.3",
+      "resultSha256": "88670ee6a9370f73eb55a0484b34f50eda2ce7ae2b88862e510902a4f790a88b"
+    },
+    "node": {
+      "version": "v26.12.1",
+      "resultSha256": "71d6d58a26cbcbb5a82c9ded5212974b246db0b913b3020a7c49e1177e9a0bed"
+    },
+    "crossRuntimeNote": "The only observed direct-source record differences were host-native TypeError messages for null/undefined length access (Bun versus Node wording); effect order and remaining outcomes matched."
+  },
+  "bridgeComparison": {
+    "bun": {
+      "runtime": "Bun 1.4.3",
+      "nodeAddonHost": "v26.3.0",
+      "total": 29,
+      "eligible": 20,
+      "eligibleEffectPass": 20,
+      "eligibleExactOutcomePass": 20,
+      "excluded": 9,
+      "excludedEffectPass": 4,
+      "eligibleDifferences": [],
+      "resultSha256": "c4cfc26152f7a83c2805547b362d26868b5b992861c66b82af065de90e9979b4",
+      "rawEvidencePath": "/private/tmp/umf-json-schema-nonstring-bridge-matrix-bun.json"
+    },
+    "node": {
+      "runtime": "Node v26.12.1",
+      "total": 29,
+      "eligible": 20,
+      "eligibleEffectPass": 20,
+      "eligibleExactOutcomePass": 20,
+      "excluded": 9,
+      "excludedEffectPass": 4,
+      "eligibleDifferences": [],
+      "resultSha256": "119b7717ce68ce820153498adb33620cf7a230911305860e696a1df65c9c7d67",
+      "rawEvidencePath": "/private/tmp/umf-json-schema-nonstring-bridge-matrix-node.json"
+    },
+    "eligibleTexts": [
+      "{}",
+      "{"
+    ],
+    "eligibleBehavior": "The source-length check, ECMAScript coercion effects, Rust JSON parse/refusal, and (only after successful parse) second source.length read are compared. Exact effects and outcomes matched all 20 eligible cases in each host. Rust retains JSON parsing semantics; JavaScript performs only the native ToString effect required by the source boundary.",
+    "excludedCases": [
+      "root-length-greater-than-limit-stops-before-coercion",
+      "root-length-coercion-greater-than-limit-stops-before-source-coercion",
+      "root-coercion-returns-number",
+      "root-coercion-returns-boolean",
+      "root-coercion-returns-null",
+      "root-coercion-returns-over-limit-valid-json",
+      "root-coercion-returns-duplicate-key-json",
+      "root-number-primitive",
+      "resource-length-limit-before-coercion-and-root"
+    ],
+    "exclusionReason": "These cases fail closed with JSON_SCHEMA_HOST_INPUT_PROFILE. In four limit/number-primitive cases effects before refusal match, but exact source errors and/or later effects intentionally differ. Coercions returning non-allowlisted text are refused before the source's second length read. These are exclusions, not parity.",
+    "directCurrentTypeScriptVsBridgeMismatchCount": 0,
+    "browser": {
+      "status": "not-run",
+      "reason": "The Playwright Chromium process could not launch in this environment (MachPortRendezvousServer permission denial), and Bun serve could not bind a loopback port. Chrome automation rejected the local file URL under browser URL policy. No browser workaround was attempted.",
+      "wasm": "The WASM facade bundles for browser target, but its non-string behavior has not been run in real Chromium."
+    }
+  },
+  "verification": {
+    "command": "bun test ./bindings/core/node/tests/json-schema-staged-import-session.test.js",
+    "result": "12 pass, 0 fail, 27 expects",
+    "wasmSyntaxBundle": "bun build bindings/core/wasm/index.js --target=browser --format=esm --external './pkg/umf_core_wasm.js' --outfile=/private/tmp/umf-wasm-index-check.js (success; syntax/build only)"
+  },
+  "decision": "Keep the additive importJsonSchemaHostCoercion method experimental/private. It must not be committed as a supported route or wired as the default until Chromium WASM evidence and independent review exist. The existing string-only importJsonSchema behavior is unchanged."
+}

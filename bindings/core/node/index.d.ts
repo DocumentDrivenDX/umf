@@ -416,6 +416,8 @@ export type UmfCoreRegistration = UmfCoreExtension | UmfCorePackage;
 export declare const JSON_SCHEMA_STAGED_IMPORT_PROFILE: 'umf-r8-json-schema-staged-node-private/0.1.0';
 export interface JsonSchemaStagedImportSessionEngine {
   importJsonSchema(source: string, options: {id: string; baseUri: string; resources?: Record<string, string>}): unknown;
+  /** Private finite host-coercion profile; unsupported non-string inputs fail closed. */
+  importJsonSchemaHostCoercion(source: unknown, options: {id: string; baseUri: string; resources?: Record<string, unknown>}): unknown;
 }
 /** Create a private opt-in staged importer. The default JSON Schema route is unchanged. */
 export declare function createJsonSchemaStagedImportSessionEngine(): JsonSchemaStagedImportSessionEngine;

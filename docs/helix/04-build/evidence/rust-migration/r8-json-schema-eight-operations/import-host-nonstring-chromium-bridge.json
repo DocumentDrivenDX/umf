@@ -1,0 +1,1239 @@
+{
+  "format": "umf.r8-json-schema-import-nonstring-chromium-bridge/1",
+  "profile": "nonstring-string-source-oracle-v1",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+  "counts": {
+    "total": 29,
+    "eligible": 20,
+    "eligibleEffectPass": 20,
+    "eligibleExactOutcomePass": 20,
+    "excluded": 9,
+    "excludedEffectsPass": 4,
+    "eligibleDifferences": []
+  },
+  "cases": [
+    {
+      "id": "root-length-string-numeric",
+      "eligible": true,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": true
+      },
+      "typescript": {
+        "events": [
+          "length",
+          "toPrimitive:string",
+          "length"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length",
+          "toPrimitive:string",
+          "length"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri",
+          "root"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-length-number-valueof-before-coercion",
+      "eligible": true,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": true
+      },
+      "typescript": {
+        "events": [
+          "length",
+          "length:valueOf",
+          "toPrimitive:string",
+          "length"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length",
+          "length:valueOf",
+          "toPrimitive:string",
+          "length"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri",
+          "root"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-length-greater-than-limit-stops-before-coercion",
+      "eligible": false,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": false
+      },
+      "typescript": {
+        "events": [
+          "length"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "UmfError",
+          "message": "Native JSON exceeds text limit",
+          "code": "LIMIT",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "Non-string source exceeds the staged host-coercion profile limit",
+          "code": "JSON_SCHEMA_HOST_INPUT_PROFILE",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-length-exact-limit-allows-coercion",
+      "eligible": true,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": true
+      },
+      "typescript": {
+        "events": [
+          "length",
+          "toPrimitive:string",
+          "length"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length",
+          "toPrimitive:string",
+          "length"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri",
+          "root"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-length-coercion-greater-than-limit-stops-before-source-coercion",
+      "eligible": false,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": false
+      },
+      "typescript": {
+        "events": [
+          "length",
+          "length:toPrimitive:number"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "UmfError",
+          "message": "Native JSON exceeds text limit",
+          "code": "LIMIT",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length",
+          "length:toPrimitive:number"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "Non-string source exceeds the staged host-coercion profile limit",
+          "code": "JSON_SCHEMA_HOST_INPUT_PROFILE",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-length-throws-primitive",
+      "eligible": true,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": true
+      },
+      "typescript": {
+        "events": [
+          "length"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "symbol",
+          "message": "Symbol(boundary thrown sentinel)",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": true
+        }
+      },
+      "wasm": {
+        "events": [
+          "length"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "symbol",
+          "message": "Symbol(boundary thrown sentinel)",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": true
+        }
+      }
+    },
+    {
+      "id": "root-length-throws-object",
+      "eligible": true,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": true
+      },
+      "typescript": {
+        "events": [
+          "length"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "Error",
+          "message": "boundary sentinel",
+          "code": "BOUNDARY_SENTINEL",
+          "sameObject": true,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "Error",
+          "message": "boundary sentinel",
+          "code": "BOUNDARY_SENTINEL",
+          "sameObject": true,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-coercion-returns-number",
+      "eligible": false,
+      "checks": {
+        "orderedHostEffects": false,
+        "exactOutcome": false
+      },
+      "typescript": {
+        "events": [
+          "length",
+          "toPrimitive:string",
+          "length"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length",
+          "toPrimitive:string"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "Non-string source is outside the staged host-coercion source profile",
+          "code": "JSON_SCHEMA_HOST_INPUT_PROFILE",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-coercion-returns-boolean",
+      "eligible": false,
+      "checks": {
+        "orderedHostEffects": false,
+        "exactOutcome": false
+      },
+      "typescript": {
+        "events": [
+          "length",
+          "toPrimitive:string",
+          "length"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length",
+          "toPrimitive:string"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "Non-string source is outside the staged host-coercion source profile",
+          "code": "JSON_SCHEMA_HOST_INPUT_PROFILE",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-coercion-returns-null",
+      "eligible": false,
+      "checks": {
+        "orderedHostEffects": false,
+        "exactOutcome": false
+      },
+      "typescript": {
+        "events": [
+          "length",
+          "toPrimitive:string",
+          "length"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length",
+          "toPrimitive:string"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "Non-string source is outside the staged host-coercion source profile",
+          "code": "JSON_SCHEMA_HOST_INPUT_PROFILE",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-coercion-returns-symbol",
+      "eligible": true,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": true
+      },
+      "typescript": {
+        "events": [
+          "length",
+          "toPrimitive:string"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "UmfError",
+          "message": "Invalid native JSON",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length",
+          "toPrimitive:string"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri",
+          "root"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "UmfError",
+          "message": "Invalid native JSON",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-coercion-returns-object",
+      "eligible": true,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": true
+      },
+      "typescript": {
+        "events": [
+          "length",
+          "toPrimitive:string"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "UmfError",
+          "message": "Invalid native JSON",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length",
+          "toPrimitive:string"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri",
+          "root"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "UmfError",
+          "message": "Invalid native JSON",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-coercion-returns-over-limit-valid-json",
+      "eligible": false,
+      "checks": {
+        "orderedHostEffects": false,
+        "exactOutcome": false
+      },
+      "typescript": {
+        "events": [
+          "length",
+          "toPrimitive:string",
+          "length"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length",
+          "toPrimitive:string"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "Coerced source exceeds the staged host-coercion profile limit",
+          "code": "JSON_SCHEMA_HOST_INPUT_PROFILE",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-coercion-returns-duplicate-key-json",
+      "eligible": false,
+      "checks": {
+        "orderedHostEffects": false,
+        "exactOutcome": false
+      },
+      "typescript": {
+        "events": [
+          "length",
+          "toPrimitive:string",
+          "length"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length",
+          "toPrimitive:string"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "Non-string source is outside the staged host-coercion source profile",
+          "code": "JSON_SCHEMA_HOST_INPUT_PROFILE",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-coercion-throws-primitive",
+      "eligible": true,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": true
+      },
+      "typescript": {
+        "events": [
+          "length",
+          "toPrimitive:string"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "UmfError",
+          "message": "Invalid native JSON",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length",
+          "toPrimitive:string"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri",
+          "root"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "UmfError",
+          "message": "Invalid native JSON",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-coercion-throws-object",
+      "eligible": true,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": true
+      },
+      "typescript": {
+        "events": [
+          "length",
+          "toPrimitive:string"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "UmfError",
+          "message": "Invalid native JSON",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length",
+          "toPrimitive:string"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri",
+          "root"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "UmfError",
+          "message": "Invalid native JSON",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-malformed-coerced-json-before-second-length",
+      "eligible": true,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": true
+      },
+      "typescript": {
+        "events": [
+          "length",
+          "toPrimitive:string"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "UmfError",
+          "message": "Invalid native JSON",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length",
+          "toPrimitive:string"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri",
+          "root"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "UmfError",
+          "message": "Invalid native JSON",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-native-json-valid-object-then-yaml-source-refusal",
+      "eligible": true,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": true
+      },
+      "typescript": {
+        "events": [
+          "length",
+          "toPrimitive:string",
+          "length"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length",
+          "toPrimitive:string",
+          "length"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri",
+          "root"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-null-before-length",
+      "eligible": true,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": true
+      },
+      "typescript": {
+        "events": [],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "Cannot read properties of null (reading 'length')",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [],
+        "stages": [
+          "begin",
+          "payloadBaseUri"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "Cannot read properties of null (reading 'length')",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-undefined-before-length",
+      "eligible": true,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": true
+      },
+      "typescript": {
+        "events": [],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "Cannot read properties of undefined (reading 'length')",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [],
+        "stages": [
+          "begin",
+          "payloadBaseUri"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "Cannot read properties of undefined (reading 'length')",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-number-primitive",
+      "eligible": false,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": false
+      },
+      "typescript": {
+        "events": [],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [],
+        "stages": [
+          "begin",
+          "payloadBaseUri"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "Non-string source is outside the staged host-coercion source profile",
+          "code": "JSON_SCHEMA_HOST_INPUT_PROFILE",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "resource-length-limit-before-coercion-and-root",
+      "eligible": false,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": false
+      },
+      "typescript": {
+        "events": [
+          "length"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "UmfError",
+          "message": "Native JSON exceeds text limit",
+          "code": "LIMIT",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length"
+        ],
+        "stages": [
+          "begin"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "Non-string source exceeds the staged host-coercion profile limit",
+          "code": "JSON_SCHEMA_HOST_INPUT_PROFILE",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "resource-coercion-failure-before-root",
+      "eligible": true,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": true
+      },
+      "typescript": {
+        "events": [
+          "length",
+          "toPrimitive:string"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "UmfError",
+          "message": "Invalid native JSON",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length",
+          "toPrimitive:string"
+        ],
+        "stages": [
+          "begin",
+          "resource"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "UmfError",
+          "message": "Invalid native JSON",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "resource-valid-coercion-yaml-refusal-before-root",
+      "eligible": true,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": true
+      },
+      "typescript": {
+        "events": [
+          "length",
+          "toPrimitive:string",
+          "length"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length",
+          "toPrimitive:string",
+          "length"
+        ],
+        "stages": [
+          "begin",
+          "resource"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "resource-invalid-json-refusal-before-root",
+      "eligible": true,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": true
+      },
+      "typescript": {
+        "events": [
+          "length",
+          "toPrimitive:string"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "UmfError",
+          "message": "Invalid native JSON",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length",
+          "toPrimitive:string"
+        ],
+        "stages": [
+          "begin",
+          "resource"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "UmfError",
+          "message": "Invalid native JSON",
+          "code": "JSON_SCHEMA_SYNTAX",
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-length-then-toString-then-length-changes-to-limit",
+      "eligible": true,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": true
+      },
+      "typescript": {
+        "events": [
+          "length#1",
+          "toString",
+          "length#2"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length#1",
+          "toString",
+          "length#2"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri",
+          "root"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-second-length-throws-after-rust-success",
+      "eligible": true,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": true
+      },
+      "typescript": {
+        "events": [
+          "length#1",
+          "toString",
+          "length#2"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "Error",
+          "message": "boundary sentinel",
+          "code": "BOUNDARY_SENTINEL",
+          "sameObject": true,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length#1",
+          "toString",
+          "length#2"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri",
+          "root"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "Error",
+          "message": "boundary sentinel",
+          "code": "BOUNDARY_SENTINEL",
+          "sameObject": true,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "root-length-compare-coercion-throws",
+      "eligible": true,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": true
+      },
+      "typescript": {
+        "events": [
+          "length",
+          "length:toPrimitive:number"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "string",
+          "message": "length failure",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length",
+          "length:toPrimitive:number"
+        ],
+        "stages": [
+          "begin",
+          "payloadBaseUri"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "string",
+          "message": "length failure",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    },
+    {
+      "id": "resource-valid-root-invalid-resource",
+      "eligible": true,
+      "checks": {
+        "orderedHostEffects": true,
+        "exactOutcome": true
+      },
+      "typescript": {
+        "events": [
+          "length",
+          "toPrimitive:string",
+          "length"
+        ],
+        "stages": [],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      },
+      "wasm": {
+        "events": [
+          "length",
+          "toPrimitive:string",
+          "length"
+        ],
+        "stages": [
+          "begin",
+          "resource"
+        ],
+        "outcome": {
+          "kind": "throw",
+          "name": "TypeError",
+          "message": "source is not a string",
+          "code": null,
+          "sameObject": false,
+          "samePrimitive": false
+        }
+      }
+    }
+  ],
+  "status": "pass-with-explicit-profile-exclusions",
+  "qualification": "Direct current TypeScript and the private staged WASM import bridge ran in one real Chromium page. Only cases admitted by nonstring-string-source-oracle-v1 are parity claims. Nine fail-closed cases are exclusions, not parity. The result does not change the default route.",
+  "runtime": {
+    "bun": "1.4.3",
+    "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
+    "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+    "wasmBindgen": "wasm-bindgen 0.2.100",
+    "chromium": "153.0.8010.12"
+  },
+  "browserErrors": [],
+  "artifacts": {
+    "wasmSha256": "6e66605571a4d6a21c82af6e53da46d8f6a39d1d7f8452ff88576fb32c984d39",
+    "wasmGlueSha256": "3de6c711b7d81be6e755f00514f89d084845ec3e4f8f69c5bd4c90e52813e4f4",
+    "browserEntrySha256": "c8bef76b5e82dde966d972d8d10f2d00bdecb560ac953b5cf134be82968f66ab",
+    "runnerSha256": "e8273c7936a416b87facf9d6b8d027d5f9cf8af82ca401d5497b7f58d152cbfc",
+    "caseMatrixSha256": "a129b75a378e9fca31def9975dfeaad7148e307cacf7dc8a11cfa2795492aff4",
+    "directAdapterSha256": "f65807123b937c91d984a1c77d15b7941475ce9ef294f02770da991befdaf900",
+    "directNativeJsonSha256": "9f8402db883a0d211c86e4a5a00e037a40410a2bf2bbfa3cf1cc288772c205f7",
+    "directSourceRunnerSha256": "ecc7e0a3d9914e09cb390c6ec9ecd4e3e8ac0ab3c143023e6ebfd92528a0d4d7",
+    "bridgeEntrySha256": "2deb91df70a675011afe6e75769e373bf29f259abdafa027a09583d87d6ecc8b",
+    "wasmFacadeSha256": "c3f3aa3aebf4c525df0410e89a8fbba99bc5653548d78a1b9e3fc69efa572fb5",
+    "sharedBoundaryHelperSha256": "a880ce70c0dba2fe3958c63635090f03c0a91128fb2117706b32be52bb14af36"
+  },
+  "limits": [
+    "Private opt-in bridge only; public/default TypeScript import route unchanged.",
+    "The 4,000,000-character bound and non-allowlisted ToString results intentionally fail closed; excluded results do not assert predecessor parity."
+  ]
+}

@@ -1107,6 +1107,7 @@ export function createJsonSchemaEngine(module, options = {}) {
 }
 
 /** Private staged import profile; callers opt in and inputs are string-only. */
+import {finishJsonSchemaSourceObservation, stageJsonSchemaSource} from '../shared/json-schema-import-source.js';
 export const JSON_SCHEMA_STAGED_IMPORT_PROFILE = 'umf-r8-json-schema-staged-wasm-private/0.1.0';
 
 function stagedImportUri(uri) {
@@ -1126,6 +1127,16 @@ export function createJsonSchemaStagedImportEngine(module) {
   }
   return Object.freeze({
     importJsonSchema(source, options) {
+      return runStagedJsonSchemaImport(module, source, options, false);
+    },
+    /** Private opt-in ToString-compatible source profile; default import stays string-only. */
+    importJsonSchemaHostCoercion(source, options) {
+      return runStagedJsonSchemaImport(module, source, options, true);
+    },
+  });
+}
+
+function runStagedJsonSchemaImport(module, source, options, hostCoercion) {
       const session = new module.JsonSchemaImportSessionHandle();
       const dispatch = (stage, fields = {}) => {
         const response = JSON.parse(session.executeStage(encodeWire({stage, ...fields})));
@@ -1142,16 +1153,20 @@ export function createJsonSchemaStagedImportEngine(module) {
       const entries = Object.entries(options.resources || {});
       for (const [uri, resourceSource] of entries) {
         stagedImportUri(uri);
-        if (typeof resourceSource !== 'string') throw new TypeError('Staged JSON Schema import accepts string resource sources only');
-        dispatch('resource', {uri, source: resourceSource});
+        if (!hostCoercion && typeof resourceSource !== 'string') throw new TypeError('Staged JSON Schema import accepts string resource sources only');
+        const stagedResource = hostCoercion ? stageJsonSchemaSource(resourceSource) : {text: resourceSource, nonString: false};
+        dispatch('resource', {uri, source: stagedResource.text});
+        finishJsonSchemaSourceObservation(stagedResource);
       }
 
       const payloadBaseUri = options.baseUri;
       if (typeof payloadBaseUri !== 'string') throw new TypeError('Staged JSON Schema import accepts a string baseUri');
       dispatch('payloadBaseUri', {baseUri: payloadBaseUri});
 
-      if (typeof source !== 'string') throw new TypeError('Staged JSON Schema import accepts a string root source');
-      dispatch('root', {source});
+      if (!hostCoercion && typeof source !== 'string') throw new TypeError('Staged JSON Schema import accepts a string root source');
+      const stagedRoot = hostCoercion ? stageJsonSchemaSource(source) : {text: source, nonString: false};
+      dispatch('root', {source: stagedRoot.text});
+      finishJsonSchemaSourceObservation(stagedRoot);
 
       const id = options.id;
       if (typeof id !== 'string') throw new TypeError('Staged JSON Schema import accepts a string id');
@@ -1161,8 +1176,6 @@ export function createJsonSchemaStagedImportEngine(module) {
       if (typeof namespace !== 'string') throw new TypeError('Staged JSON Schema import accepts a string namespace');
       dispatch('namespace', {baseUri: namespace});
       return dispatch('finish');
-    },
-  });
 }
 
 /** Create the prepared opt-in JSON Schema adapter with a retained immutable Rust resource runtime. */

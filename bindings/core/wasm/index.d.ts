@@ -362,7 +362,11 @@ export declare function createIcebergSchemaEngine(module: any, options?: {profil
 export declare function createJsonSchemaEngine(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): JsonSchemaEngine;
 /** Private string-input staged import profile; the default route is unchanged. */
 export declare const JSON_SCHEMA_STAGED_IMPORT_PROFILE: 'umf-r8-json-schema-staged-wasm-private/0.1.0';
-export declare function createJsonSchemaStagedImportEngine(module: any): Pick<JsonSchemaEngine, 'importJsonSchema'>;
+export interface JsonSchemaStagedImportEngine extends Pick<JsonSchemaEngine, 'importJsonSchema'> {
+  /** Private finite host-coercion profile; unsupported non-string inputs fail closed. */
+  importJsonSchemaHostCoercion(source: unknown, options: {id: string; baseUri: string; resources?: Record<string, unknown>}): unknown;
+}
+export declare function createJsonSchemaStagedImportEngine(module: any): JsonSchemaStagedImportEngine;
 export declare function createPreparedJsonSchemaEngine(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): JsonSchemaEngine;
 export declare function initializeJsonSchemaWasm(loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<JsonSchemaEngine>;
 /** Initialize the opt-in standalone Iceberg schema JSON engine in a browser. */

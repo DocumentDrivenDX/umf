@@ -4,11 +4,13 @@ import {createJsonSchemaStagedImportSession} from '../src/json-schema-import-ses
 
 function fakeAddon({failStage} = {}) {
   const stages = [];
+  const requests = [];
   class Session {
     executeStage(requestText) {
       const {members} = JSON.parse(requestText);
       const object = Object.fromEntries(members.map(({key, value}) => [String.fromCharCode(...key), value.kind === 'string' ? String.fromCharCode(...value.units) : value]));
       stages.push(object.stage);
+      requests.push(object);
       if (object.stage === failStage) {
         const units = text => Array.from(text, c => c.charCodeAt(0));
         return JSON.stringify({profile: 'umf.core-wire/1', status: 'error', code: 'JSON_PARSE', pathUnits: [], messageUnits: units('Invalid JSON')});
@@ -16,7 +18,7 @@ function fakeAddon({failStage} = {}) {
       return JSON.stringify({profile: 'umf.core-wire/1', status: 'ok', wire: encodeWire(object.stage === 'finish' ? {id: 'result'} : true)});
     }
   }
-  return {addon: {JsonSchemaImportSessionHandle: Session, jsonSchemaImportSessionProfileVersion: () => 'umf-r8-json-schema-staged-node-private/0.1.0'}, stages};
+  return {addon: {JsonSchemaImportSessionHandle: Session, jsonSchemaImportSessionProfileVersion: () => 'umf-r8-json-schema-staged-node-private/0.1.0'}, stages, requests};
 }
 
 describe('private staged JSON Schema import session', () => {
@@ -118,4 +120,65 @@ test('preserves a control-failure envelope as a coded error', () => {
   expect(() => createJsonSchemaStagedImportSession(addon).importJsonSchema('{}', {
     baseUri: 'https://example.test/base',
   })).toThrow(expect.objectContaining({code: 'RESOURCE_LIMIT'}));
+});
+
+test('private host-coercion profile keeps ToString effects in order and Rust parse before YAML type refusal', () => {
+  const {addon, stages, requests} = fakeAddon();
+  const events = [];
+  const input = Object.defineProperties({}, {
+    length: {get() { events.push('length'); return 2; }},
+    [Symbol.toPrimitive]: {value(hint) { events.push(`toPrimitive:${hint}`); return '{}'; }},
+  });
+  expect(() => createJsonSchemaStagedImportSession(addon).importJsonSchemaHostCoercion(input, {
+    id: 'host-coercion', baseUri: 'https://example.test/root', resources: {},
+  })).toThrow(new TypeError('source is not a string'));
+  expect(events).toEqual(['length', 'toPrimitive:string', 'length']);
+  expect(stages).toEqual(['begin', 'payloadBaseUri', 'root']);
+  expect(requests.find(request => request.stage === 'root').source).toBe('{}');
+});
+
+test('private host-coercion profile lets Rust syntax refusal stop before the second length read', () => {
+  const {addon, stages} = fakeAddon({failStage: 'root'});
+  const events = [];
+  const input = Object.defineProperties({}, {
+    length: {get() { events.push('length'); return 2; }},
+    toString: {value() { events.push('toString'); return '{'; }},
+  });
+  expect(() => createJsonSchemaStagedImportSession(addon).importJsonSchemaHostCoercion(input, {
+    id: 'host-coercion', baseUri: 'https://example.test/root', resources: {},
+  })).toThrow('Invalid JSON');
+  expect(events).toEqual(['length', 'toString']);
+  expect(stages).toEqual(['begin', 'payloadBaseUri', 'root']);
+});
+
+test('private host-coercion profile maps native ToString failure to Rust syntax refusal', () => {
+  const {addon, requests} = fakeAddon({failStage: 'root'});
+  const input = Object.defineProperties({}, {
+    length: {get() { return 2; }},
+    [Symbol.toPrimitive]: {value() { throw new Error('coercion is caught by source JSON.parse'); }},
+  });
+  expect(() => createJsonSchemaStagedImportSession(addon).importJsonSchemaHostCoercion(input, {
+    id: 'host-coercion', baseUri: 'https://example.test/root', resources: {},
+  })).toThrow('Invalid JSON');
+  expect(requests.find(request => request.stage === 'root').source).toBe('{');
+});
+
+test('private host-coercion profile fails closed above its declared length bound', () => {
+  const {addon, stages} = fakeAddon();
+  const input = Object.defineProperties({}, {
+    length: {get() { return 4_000_001; }},
+    toString: {value() { throw new Error('must not coerce'); }},
+  });
+  expect(() => createJsonSchemaStagedImportSession(addon).importJsonSchemaHostCoercion(input, {
+    id: 'host-coercion', baseUri: 'https://example.test/root', resources: {},
+  })).toThrow(expect.objectContaining({code: 'JSON_SCHEMA_HOST_INPUT_PROFILE'}));
+  expect(stages).toEqual(['begin', 'payloadBaseUri']);
+});
+
+test('default private staged method retains its string-only admission', () => {
+  const {addon, stages} = fakeAddon();
+  expect(() => createJsonSchemaStagedImportSession(addon).importJsonSchema({}, {
+    id: 'host-coercion', baseUri: 'https://example.test/root', resources: {},
+  })).toThrow('Staged JSON Schema import accepts a string root source');
+  expect(stages).toEqual(['begin', 'payloadBaseUri']);
 });
