@@ -1,5 +1,5 @@
 {
-  "status": "TOOL_IDENTITY_SOURCE_ACCEPTED_AWAITING_CHANGED_RUN",
+  "status": "EXISTING_PREFIX_CORRECTION_SOURCE_ACCEPTED",
   "baseCommit": "d5022e37840329d351bcd6c27fe7d7aad4758544",
   "donorCommit": "f4a410c0522135065a0b20e8d2b69705fddcbac4",
   "extractionCommit": "ad5e59591",
@@ -63,5 +63,16 @@
   },
   "weftNextCohort": "Arras reports actual umf-weft pending publisher accepted by Stack. Use current qualified0.4.54 source retaining G02/current fixes; next renamed distribution0.4.55 subject owner availability confirmation and actual new qualification/archive handoff. All18/D5/four-cell/native gates rerun before consumer admission.",
   "toolIdentitySourceCommit": "0b006ad6e2c1e341af813d0c2d144694507da1d5",
-  "toolIdentityClosure": "sol-tool-version-source-closure001.md"
+  "toolIdentityClosure": "sol-tool-version-source-closure001.md",
+  "currentSourceFreeze": "integrated-reviewed-source-freeze006.json",
+  "fourthRegexRun": {
+    "id": 40412777274,
+    "sourceCommit": "bee06c5abae6f3b76652bc54bb052fc6f191c6e6",
+    "artifactId": 12693953143,
+    "artifactBytes": 2120,
+    "artifactSha256": "2b5b73487c6935202ef2f55553b518d668bf6081acaa7741e665c112418f0ad8",
+    "actualBoundary": "Tool guards PASS with recorded real payloads; archive size/full SHA guards reached and passed; exact44-byte digest identifies existing extraction directory refusal. No actual CPython3.14 runtime/generation/output adoption yet."
+  },
+  "existingPrefixSourceCommit": "8b6715d9a2a4e599518d8a8d09827921617fe209",
+  "existingPrefixSourceClosure": "sol-existing-runtime-prefix-closure001.md"
 }
