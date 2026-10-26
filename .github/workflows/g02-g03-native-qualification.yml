@@ -96,7 +96,8 @@ jobs:
           mkdir -p "$WORK" "$WORK/mini-racer" "$WORK/builder-wheels" "$WORK/installed" "$EVIDENCE/logs" "$EVIDENCE/reports"
 
           run_bounded() {
-            local name="$1" maximum="$2" now_ms deadline_ms remaining limit status log started_ms ended_ms
+            local name="$1" maximum="$2" now_ms deadline_ms remaining limit status capture_status log started_ms ended_ms log_bytes_before remaining_log_bytes
+            local -a pipeline_status
             shift 2
             now_ms="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
             deadline_ms="$(cat "$EVIDENCE/monotonic-deadline-ms")"
@@ -106,14 +107,15 @@ jobs:
               log="$EVIDENCE/logs/$name.log"
               printf '%s\n' "Original aggregate work deadline exhausted before $name" >"$log"
               ended_ms="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
-              python -I - "$EVIDENCE/command-records.jsonl" "$log" "$name" "$name" 124 "$((ended_ms - now_ms))" "$@" <<'PY'
+              python -I - "$EVIDENCE/command-records.jsonl" "$log" "$name" "$name" 124 0 "$((ended_ms - now_ms))" "$@" <<'PY'
           import hashlib, json, pathlib, sys
-          records, log_path, name, stage, raw_exit, duration, *argv = sys.argv[1:]
+          records, log_path, name, stage, raw_exit, capture_exit, duration, *argv = sys.argv[1:]
           payload = pathlib.Path(log_path).read_bytes()
           record = {"name": name, "stage": stage, "argv": argv,
                     "rawExit": int(raw_exit), "monotonicDurationMs": int(duration),
                     "logBytes": len(payload), "logSha256": hashlib.sha256(payload).hexdigest(),
-                    "truncated": False}
+                    "captureExit": int(capture_exit), "truncated": False,
+                    "truncationMarker": None}
           with pathlib.Path(records).open("a", encoding="utf-8") as stream:
               stream.write(json.dumps(record, sort_keys=True) + "\n")
           PY
@@ -122,24 +124,78 @@ jobs:
             limit="$maximum"
             if (( remaining < limit )); then limit="$remaining"; fi
             log="$EVIDENCE/logs/$name.log"
+            log_bytes_before="$(find "$EVIDENCE/logs" -type f -name '*.log' -exec wc -c {} + | awk 'END {print $1+0}')"
+            remaining_log_bytes=$((1048576 - log_bytes_before))
+            if (( remaining_log_bytes < 0 )); then remaining_log_bytes=0; fi
             started_ms="$now_ms"
+            : >"$log"
             set +e
-            (ulimit -f 2048; timeout --signal=TERM --kill-after=10s "${limit}s" "$@") >"$log" 2>&1
-            status=$?
+            # Drain the full child stream while persisting no more than the
+            # aggregate log budget remaining; never impose file limits on the child.
+            timeout --signal=TERM --kill-after=10s "${limit}s" "$@" 2>&1 | python -I -c '
+          import sys
+          path, cap = sys.argv[1], int(sys.argv[2])
+          marker = b"\n[LOG TRUNCATED: output exceeded aggregate capture cap]\n"
+          failed = False
+          truncated = False
+          stored = 0
+          try:
+              output = open(path, "wb", buffering=0)
+          except OSError:
+              output = None
+              failed = True
+          while True:
+              chunk = sys.stdin.buffer.read(65536)
+              if not chunk:
+                  break
+              if output is None:
+                  continue
+              available = max(0, cap - stored)
+              piece = chunk[:available]
+              if piece:
+                  try:
+                      output.write(piece)
+                      stored += len(piece)
+                  except OSError:
+                      failed = True
+                      try:
+                          output.close()
+                      except OSError:
+                          pass
+                      output = None
+              if len(chunk) > available:
+                  truncated = True
+          if output is not None:
+              try:
+                  if truncated:
+                      marker_bytes = marker[:cap]
+                      output.seek(max(0, cap - len(marker_bytes)))
+                      output.truncate()
+                      output.write(marker_bytes)
+                  output.close()
+              except OSError:
+                  failed = True
+          sys.exit(74 if failed else 75 if truncated else 0)
+          ' "$log" "$remaining_log_bytes"
+            pipeline_status=("${PIPESTATUS[@]}")
             set -e
+            status="${pipeline_status[0]}"
+            capture_status="${pipeline_status[1]}"
             ended_ms="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
-            if (( status != 0 )); then
+            if (( status != 0 || capture_status != 0 )); then
               head -c 4096 "$log" >&2 || true
-              echo "Command $name failed with status $status (limit ${limit}s)" >&2
+              echo "Command $name failed with command status $status, capture status $capture_status (limit ${limit}s)" >&2
             fi
-            python -I - "$EVIDENCE/command-records.jsonl" "$log" "$name" "$name" "$status" "$((ended_ms - started_ms))" "$@" <<'PY'
+            python -I - "$EVIDENCE/command-records.jsonl" "$log" "$name" "$name" "$status" "$capture_status" "$((ended_ms - started_ms))" "$@" <<'PY'
           import hashlib, json, pathlib, sys
-          records, log_path, name, stage, raw_exit, duration, *argv = sys.argv[1:]
+          records, log_path, name, stage, raw_exit, capture_exit, duration, *argv = sys.argv[1:]
           payload = pathlib.Path(log_path).read_bytes()
+          truncated = int(capture_exit) == 75
           record = {"name": name, "stage": stage, "argv": argv,
                     "rawExit": int(raw_exit), "monotonicDurationMs": int(duration),
                     "logBytes": len(payload), "logSha256": hashlib.sha256(payload).hexdigest(),
-                    "truncated": len(payload) >= 1048576}
+                    "captureExit": int(capture_exit), "truncated": truncated,
+                    "truncationMarker": "LOG TRUNCATED: output exceeded aggregate capture cap" if truncated else None}
           with pathlib.Path(records).open("a", encoding="utf-8") as stream:
               stream.write(json.dumps(record, sort_keys=True) + "\n")
           PY
@@ -150,6 +206,7 @@ jobs:
               return 1
             fi
             if (( status != 0 )); then return "$status"; fi
+            if (( capture_status != 0 )); then return 1; fi
           }
 
           run_bounded toolchain-identity 180 python -I - <<'PY'
