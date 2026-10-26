@@ -1,7 +1,91 @@
 {
   "cargo": {
     "activeCoreClosureByTarget": {
-      "aarch64-apple-darwin": [
+      "wasm32-unknown-unknown": [
+        "ahash@0.8.12",
+        "aho-corasick@1.1.5",
+        "base64@0.22.1",
+        "bit-set@0.8.0",
+        "bit-vec@0.8.0",
+        "block-buffer@0.10.4",
+        "borrow-or-share@0.2.4",
+        "bytecount@0.6.9",
+        "cfg-if@1.0.5",
+        "crypto-common@0.1.7",
+        "digest@0.10.7",
+        "displaydoc@0.2.7",
+        "email_address@0.2.9",
+        "fancy-regex@0.14.0",
+        "fluent-uri@0.3.2",
+        "fraction@0.15.4",
+        "generic-array@0.14.7",
+        "getrandom@0.3.4",
+        "icu_collections@2.3.0",
+        "icu_locale_core@2.3.0",
+        "icu_normalizer@2.3.0",
+        "icu_normalizer_data@2.3.0",
+        "icu_properties@2.3.0",
+        "icu_properties_data@2.3.0",
+        "icu_provider@2.3.1",
+        "idna@1.1.0",
+        "idna_adapter@1.2.2",
+        "itoa@1.0.18",
+        "jsonschema@0.29.1",
+        "lazy_static@1.5.1",
+        "litemap@0.8.3",
+        "lock_api@0.4.14",
+        "memchr@2.8.3",
+        "num-bigint@0.4.8",
+        "num-cmp@0.1.0",
+        "num-complex@0.4.6",
+        "num-integer@0.1.47",
+        "num-iter@0.1.46",
+        "num-rational@0.4.2",
+        "num-traits@0.2.19",
+        "num@0.4.3",
+        "once_cell@1.21.4",
+        "outref@0.5.2",
+        "parking_lot@0.12.5",
+        "parking_lot_core@0.9.12",
+        "percent-encoding@2.3.2",
+        "potential_utf@0.1.6",
+        "proc-macro2@1.0.107",
+        "quote@1.0.47",
+        "ref-cast-impl@1.0.27",
+        "ref-cast@1.0.27",
+        "referencing@0.29.1",
+        "regex-automata@0.4.18",
+        "regex-syntax@0.8.11",
+        "ryu@1.0.23",
+        "scopeguard@1.2.0",
+        "serde@1.0.219",
+        "serde_derive@1.0.219",
+        "serde_json@1.0.140",
+        "sha2@0.10.8",
+        "smallvec@1.16.3",
+        "stable_deref_trait@1.2.1",
+        "syn@2.0.119",
+        "syn@3.0.9",
+        "synstructure@0.14.0",
+        "tinystr@0.8.4",
+        "typenum@1.20.1",
+        "umf-rust-spike-core@0.1.0",
+        "unicode-ident@1.0.27",
+        "utf8_iter@1.0.4",
+        "uuid-simd@0.8.0",
+        "uuid@1.28.0",
+        "vsimd@0.8.0",
+        "writeable@0.6.4",
+        "yoke-derive@0.8.4",
+        "yoke@0.8.3",
+        "zerocopy@0.8.63",
+        "zerofrom-derive@0.1.8",
+        "zerofrom@0.1.8",
+        "zerotrie@0.2.5",
+        "zerovec-derive@0.11.6",
+        "zerovec@0.11.8"
+      ],
+      "x86_64-unknown-linux-gnu": [
         "ahash@0.8.12",
         "aho-corasick@1.1.5",
         "base64@0.22.1",
@@ -86,90 +170,6 @@
         "zerotrie@0.2.5",
         "zerovec-derive@0.11.6",
         "zerovec@0.11.8"
-      ],
-      "wasm32-unknown-unknown": [
-        "ahash@0.8.12",
-        "aho-corasick@1.1.5",
-        "base64@0.22.1",
-        "bit-set@0.8.0",
-        "bit-vec@0.8.0",
-        "block-buffer@0.10.4",
-        "borrow-or-share@0.2.4",
-        "bytecount@0.6.9",
-        "cfg-if@1.0.5",
-        "crypto-common@0.1.7",
-        "digest@0.10.7",
-        "displaydoc@0.2.7",
-        "email_address@0.2.9",
-        "fancy-regex@0.14.0",
-        "fluent-uri@0.3.2",
-        "fraction@0.15.4",
-        "generic-array@0.14.7",
-        "getrandom@0.3.4",
-        "icu_collections@2.3.0",
-        "icu_locale_core@2.3.0",
-        "icu_normalizer@2.3.0",
-        "icu_normalizer_data@2.3.0",
-        "icu_properties@2.3.0",
-        "icu_properties_data@2.3.0",
-        "icu_provider@2.3.1",
-        "idna@1.1.0",
-        "idna_adapter@1.2.2",
-        "itoa@1.0.18",
-        "jsonschema@0.29.1",
-        "lazy_static@1.5.1",
-        "litemap@0.8.3",
-        "lock_api@0.4.14",
-        "memchr@2.8.3",
-        "num-bigint@0.4.8",
-        "num-cmp@0.1.0",
-        "num-complex@0.4.6",
-        "num-integer@0.1.47",
-        "num-iter@0.1.46",
-        "num-rational@0.4.2",
-        "num-traits@0.2.19",
-        "num@0.4.3",
-        "once_cell@1.21.4",
-        "outref@0.5.2",
-        "parking_lot@0.12.5",
-        "parking_lot_core@0.9.12",
-        "percent-encoding@2.3.2",
-        "potential_utf@0.1.6",
-        "proc-macro2@1.0.107",
-        "quote@1.0.47",
-        "ref-cast-impl@1.0.27",
-        "ref-cast@1.0.27",
-        "referencing@0.29.1",
-        "regex-automata@0.4.18",
-        "regex-syntax@0.8.11",
-        "ryu@1.0.23",
-        "scopeguard@1.2.0",
-        "serde@1.0.219",
-        "serde_derive@1.0.219",
-        "serde_json@1.0.140",
-        "sha2@0.10.8",
-        "smallvec@1.16.3",
-        "stable_deref_trait@1.2.1",
-        "syn@2.0.119",
-        "syn@3.0.9",
-        "synstructure@0.14.0",
-        "tinystr@0.8.4",
-        "typenum@1.20.1",
-        "umf-rust-spike-core@0.1.0",
-        "unicode-ident@1.0.27",
-        "utf8_iter@1.0.4",
-        "uuid-simd@0.8.0",
-        "uuid@1.28.0",
-        "vsimd@0.8.0",
-        "writeable@0.6.4",
-        "yoke-derive@0.8.4",
-        "yoke@0.8.3",
-        "zerocopy@0.8.63",
-        "zerofrom-derive@0.1.8",
-        "zerofrom@0.1.8",
-        "zerotrie@0.2.5",
-        "zerovec-derive@0.11.6",
-        "zerovec@0.11.8"
       ]
     },
     "corePackages": [
@@ -183,24 +183,24 @@
       {
         "cargoCommands": [
           [
-            "/opt/homebrew/opt/rustup/bin/cargo",
+            "/home/runner/.cargo/bin/cargo",
             "metadata",
             "--format-version",
             "1",
             "--locked",
             "--offline",
             "--filter-platform",
-            "aarch64-apple-darwin"
+            "x86_64-unknown-linux-gnu"
           ],
           [
-            "/opt/homebrew/opt/rustup/bin/cargo",
+            "/home/runner/.cargo/bin/cargo",
             "--color",
             "never",
             "tree",
             "--locked",
             "--offline",
             "--target",
-            "aarch64-apple-darwin",
+            "x86_64-unknown-linux-gnu",
             "-p",
             "umf-rust-spike-core",
             "--edges",
@@ -302,12 +302,12 @@
           "zerovec@0.11.8"
         ],
         "status": "resolved",
-        "target": "aarch64-apple-darwin"
+        "target": "x86_64-unknown-linux-gnu"
       },
       {
         "cargoCommands": [
           [
-            "/opt/homebrew/opt/rustup/bin/cargo",
+            "/home/runner/.cargo/bin/cargo",
             "metadata",
             "--format-version",
             "1",
@@ -317,7 +317,7 @@
             "wasm32-unknown-unknown"
           ],
           [
-            "/opt/homebrew/opt/rustup/bin/cargo",
+            "/home/runner/.cargo/bin/cargo",
             "--color",
             "never",
             "tree",
@@ -474,7 +474,7 @@
       ],
       "featureTreeCommands": [
         [
-          "/opt/homebrew/opt/rustup/bin/cargo",
+          "/home/runner/.cargo/bin/cargo",
           "--color",
           "never",
           "tree",
@@ -490,7 +490,7 @@
           "ahash"
         ],
         [
-          "/opt/homebrew/opt/rustup/bin/cargo",
+          "/home/runner/.cargo/bin/cargo",
           "--color",
           "never",
           "tree",
@@ -539,28 +539,33 @@
       ]
     }
   },
-  "checkedSourceModules": 585,
+  "checkedSourceModules": 631,
   "findings": [],
   "generatedProvenance": [
     {
-      "marker": "Generated from spec/metamodel/umf.yaml; model 1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce; compiler e3088d5c9bb519953181fd236443a91e1bfa7b77e0b6c93ae1564031c3ae4f3e",
+      "marker": "Generated from spec/metamodel/umf.yaml; model 42144576e3b15da4945ca744623a31967e3b29efa54da8ba3961e446b1c0e34b; compiler d4d3a53295b173b24cbdc7f4ba5ea1cf0012f30c5c2b5665f6aaf4c7916ead76",
       "path": "python/umf_access/src/umf_access/generated_core.py",
-      "sha256": "85a6c567012677d92ffdf511f280317c9a148dd763cd3f956e113b0e76901471"
+      "sha256": "346d89b12be5d5343267c8aafffccdd23cf1c27c7ffe2d83f71440e02a383745"
     },
     {
       "marker": "Generated by scripts/build-codegen.ts",
       "path": "python/umf_codegen/src/umf_codegen/_release.py",
-      "sha256": "66a5a6eca9704dff7344435d1db736c0a3670d34ca18da2c93b9336c33217765"
+      "sha256": "e547adb26c94ba84df8ec53737081178e7b343e448bd6a634c3a0a417df65bbb"
     },
     {
-      "marker": "Generated from spec/metamodel/umf.yaml; model 1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce; compiler e3088d5c9bb519953181fd236443a91e1bfa7b77e0b6c93ae1564031c3ae4f3e",
+      "marker": "Generated from spec/metamodel/umf.yaml; model 42144576e3b15da4945ca744623a31967e3b29efa54da8ba3961e446b1c0e34b; compiler d4d3a53295b173b24cbdc7f4ba5ea1cf0012f30c5c2b5665f6aaf4c7916ead76",
       "path": "src/generated/core-model.ts",
-      "sha256": "afd43ffe02ffb64973cf95521991c142c54bb07151d68f018066a9b46108b911"
+      "sha256": "76d3dbbd2481564883c0c4fda7fa73856b2628be3970206404bcad2c20c704d9"
+    },
+    {
+      "marker": "Generated from the authored UMF metamodel. Do not edit.",
+      "path": "src/generated/core-validators-accounted.ts",
+      "sha256": "314cac8416711899285bc3f1a734765d557f7446f7ab0cf58d3dbd2a7dfdd81e"
     },
     {
       "marker": "Generated from the authored UMF metamodel. Do not edit.",
       "path": "src/generated/core-validators.ts",
-      "sha256": "88e4252883b595782c01d6b63fd86e7a5ba8492aa4fec953a628e32a051bbbc4"
+      "sha256": "4a88fd9bc398c56d71e535841322dcf10d2851e16b026c14679e2d79062e90a7"
     }
   ],
   "negativeControls": {
@@ -595,7 +600,7 @@
       ],
       "package": "umf-core",
       "status": "pass",
-      "target": "aarch64-apple-darwin"
+      "target": "x86_64-unknown-linux-gnu"
     },
     {
       "closure": [
@@ -607,7 +612,6 @@
         "digest@0.10.7",
         "generic-array@0.14.7",
         "itoa@1.0.18",
-        "libc@0.2.191",
         "memchr@2.8.3",
         "num-bigint@0.4.8",
         "num-integer@0.1.47",
@@ -634,7 +638,7 @@
       ],
       "package": "umf-core-wire",
       "status": "pass",
-      "target": "aarch64-apple-darwin"
+      "target": "x86_64-unknown-linux-gnu"
     },
     {
       "closure": [
@@ -657,7 +661,6 @@
         "idna@1.1.0",
         "idna_adapter@1.2.2",
         "itoa@1.0.18",
-        "libc@0.2.191",
         "litemap@0.8.3",
         "memchr@2.8.3",
         "num-bigint@0.4.8",
@@ -702,7 +705,7 @@
       ],
       "package": "umf-metamodel",
       "status": "pass",
-      "target": "aarch64-apple-darwin"
+      "target": "x86_64-unknown-linux-gnu"
     },
     {
       "closure": [
@@ -713,7 +716,6 @@
         "crypto-common@0.1.7",
         "digest@0.10.7",
         "generic-array@0.14.7",
-        "libc@0.2.191",
         "memchr@2.8.3",
         "num-bigint@0.4.8",
         "num-integer@0.1.47",
@@ -734,7 +736,7 @@
       ],
       "package": "umf-codegen",
       "status": "pass",
-      "target": "aarch64-apple-darwin"
+      "target": "x86_64-unknown-linux-gnu"
     },
     {
       "closure": [
