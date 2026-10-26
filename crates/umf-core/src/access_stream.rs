@@ -45,24 +45,24 @@ pub enum ReadFrameShapeFault<E> {
 pub fn validate_read_frame_shape_with<E>(
     kind: ReadFrameKind,
     output_count: usize,
-    row_count: usize,
-    mut read_width: impl FnMut(usize) -> Result<usize, E>,
+    read_count_row_count: impl FnOnce() -> Result<usize, E>,
+    read_count_width: impl FnOnce() -> Result<usize, E>,
+    mut next_row_width: impl FnMut() -> Result<Option<usize>, E>,
 ) -> Result<(), ReadFrameShapeFault<E>> {
     if kind == ReadFrameKind::Count {
-        if row_count != 1 {
+        if read_count_row_count().map_err(ReadFrameShapeFault::Host)? != 1 {
             return Err(ReadFrameShapeFault::Refusal(
                 ReadFrameError::CountCardinality,
             ));
         }
-        let width = read_width(0).map_err(ReadFrameShapeFault::Host)?;
+        let width = read_count_width().map_err(ReadFrameShapeFault::Host)?;
         if width != 1 {
             return Err(ReadFrameShapeFault::Refusal(
                 ReadFrameError::CountCardinality,
             ));
         }
     } else {
-        for index in 0..row_count {
-            let width = read_width(index).map_err(ReadFrameShapeFault::Host)?;
+        while let Some(width) = next_row_width().map_err(ReadFrameShapeFault::Host)? {
             if width != output_count {
                 return Err(ReadFrameShapeFault::Refusal(ReadFrameError::ResultArity));
             }
@@ -201,48 +201,98 @@ mod tests {
 
     #[test]
     fn post_host_read_frame_keeps_structural_refusal_order() {
+        let count_events = std::cell::RefCell::new(Vec::new());
         assert_eq!(
-            validate_read_frame_shape_with(ReadFrameKind::Count, 1, 2, |_| Ok::<_, ()>(1)),
+            validate_read_frame_shape_with(
+                ReadFrameKind::Count,
+                1,
+                || {
+                    count_events.borrow_mut().push("len rows");
+                    Ok::<_, ()>(2)
+                },
+                || {
+                    count_events.borrow_mut().push("len row");
+                    Ok(1)
+                },
+                || Ok(None),
+            ),
             Err(ReadFrameShapeFault::Refusal(
                 ReadFrameError::CountCardinality
             ))
         );
+        assert_eq!(*count_events.borrow(), ["len rows"]);
+
+        let mut observed = Vec::new();
+        let mut widths = [Some(2), Some(1), Some(2)].into_iter();
         assert_eq!(
-            validate_read_frame_shape_with(ReadFrameKind::Many, 2, 2, |index| {
-                Ok::<_, ()>(if index == 0 { 2 } else { 1 })
-            }),
+            validate_read_frame_shape_with(
+                ReadFrameKind::Many,
+                2,
+                || Ok::<_, ()>(99),
+                || Ok(99),
+                || {
+                    let next = widths.next().flatten();
+                    observed.push(next);
+                    Ok(next)
+                },
+            ),
             Err(ReadFrameShapeFault::Refusal(ReadFrameError::ResultArity))
         );
+        assert_eq!(observed, [Some(2), Some(1)]);
         assert_eq!(
-            validate_read_frame_shape_with(ReadFrameKind::Count, 1, 1, |_| Ok::<_, ()>(1)),
+            validate_read_frame_shape_with(
+                ReadFrameKind::Count,
+                1,
+                || Ok::<_, ()>(1),
+                || Ok(1),
+                || Ok(None),
+            ),
             Ok(())
         );
+        let mut one_width = [Some(0)].into_iter();
         assert_eq!(
-            validate_read_frame_shape_with(ReadFrameKind::Page, 0, 1, |_| Ok::<_, ()>(0)),
+            validate_read_frame_shape_with(
+                ReadFrameKind::Page,
+                0,
+                || Ok::<_, ()>(99),
+                || Ok(99),
+                || Ok(one_width.next().flatten()),
+            ),
             Ok(())
         );
     }
 
     #[test]
     fn read_frame_shape_short_circuits_later_host_observations() {
-        let mut observed = Vec::new();
-        let result = validate_read_frame_shape_with(ReadFrameKind::Many, 2, 3, |index| {
-            observed.push(index);
-            if index == 2 {
-                Err("later host failure")
-            } else {
-                Ok(if index == 1 { 1 } else { 2 })
-            }
-        });
+        let mut observed = 0;
+        let mut widths = [Some(2), Some(1), Some(2)].into_iter();
+        let result = validate_read_frame_shape_with(
+            ReadFrameKind::Many,
+            2,
+            || Ok::<_, &str>(99),
+            || Ok(99),
+            || {
+                observed += 1;
+                if observed == 3 {
+                    Err("later host failure")
+                } else {
+                    Ok(widths.next().flatten())
+                }
+            },
+        );
         assert_eq!(
             result,
             Err(ReadFrameShapeFault::Refusal(ReadFrameError::ResultArity))
         );
-        assert_eq!(observed, [0, 1]);
+        assert_eq!(observed, 2);
 
-        let result = validate_read_frame_shape_with(ReadFrameKind::Many, 2, 1, |_| {
-            Err::<usize, _>("opaque host failure")
-        });
+        let result = validate_read_frame_shape_with(
+            ReadFrameKind::Many,
+            2,
+            || Ok::<_, &str>(99),
+            || Ok(99),
+            || Err("opaque host failure"),
+        );
         assert_eq!(
             result,
             Err(ReadFrameShapeFault::Host("opaque host failure"))

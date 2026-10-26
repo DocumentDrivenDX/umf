@@ -1153,6 +1153,88 @@ fn access_stream_page_size_profile_version() -> &'static str {
 }
 
 #[pyfunction]
+fn access_stream_read_frame_profile_version() -> &'static str {
+    umf_core::access_stream::READ_FRAME_PROFILE
+}
+
+fn access_stream_read_frame_kind(value: &str) -> PyResult<umf_core::access_stream::ReadFrameKind> {
+    use umf_core::access_stream::ReadFrameKind;
+    match value {
+        "count" => Ok(ReadFrameKind::Count),
+        "one" => Ok(ReadFrameKind::One),
+        "optional" => Ok(ReadFrameKind::Optional),
+        "many" => Ok(ReadFrameKind::Many),
+        "page" => Ok(ReadFrameKind::Page),
+        _ => Err(PyValueError::new_err("unsupported read-frame kind")),
+    }
+}
+
+fn access_stream_read_frame_error(error: umf_core::access_stream::ReadFrameError) -> &'static str {
+    use umf_core::access_stream::ReadFrameError;
+    match error {
+        ReadFrameError::CountCardinality => "count_cardinality",
+        ReadFrameError::ResultArity => "result_arity",
+        ReadFrameError::RequiredRowMissing => "required_row_missing",
+        ReadFrameError::SingleRowExceeded => "single_row_exceeded",
+        ReadFrameError::RowBoundExceeded => "row_bound_exceeded",
+        ReadFrameError::PageBoundExceeded => "page_bound_exceeded",
+    }
+}
+
+#[pyfunction]
+fn access_stream_read_frame_shape(
+    kind: &str,
+    output_count: usize,
+    rows: &Bound<'_, PyAny>,
+) -> PyResult<&'static str> {
+    use umf_core::access_stream::{
+        validate_read_frame_shape_with, ReadFrameKind, ReadFrameShapeFault,
+    };
+    let kind = access_stream_read_frame_kind(kind)?;
+    let result = if kind == ReadFrameKind::Count {
+        validate_read_frame_shape_with(
+            kind,
+            output_count,
+            || rows.len(),
+            || rows.get_item(0)?.len(),
+            || Ok(None),
+        )
+    } else {
+        let mut iterator = rows.try_iter()?;
+        validate_read_frame_shape_with(
+            kind,
+            output_count,
+            || Err(PyValueError::new_err("unexpected count row-count read")),
+            || Err(PyValueError::new_err("unexpected count row-width read")),
+            || match std::iter::Iterator::next(&mut iterator) {
+                Some(row) => Ok(Some(row?.len()?)),
+                None => Ok(None),
+            },
+        )
+    };
+    match result {
+        Ok(()) => Ok("admitted"),
+        Err(ReadFrameShapeFault::Refusal(error)) => Ok(access_stream_read_frame_error(error)),
+        Err(ReadFrameShapeFault::Host(error)) => Err(error),
+    }
+}
+
+#[pyfunction]
+fn access_stream_read_frame_cardinality(
+    kind: &str,
+    row_count: usize,
+    bound: usize,
+) -> PyResult<&'static str> {
+    let kind = access_stream_read_frame_kind(kind)?;
+    Ok(
+        match umf_core::access_stream::validate_read_frame_cardinality(kind, row_count, bound) {
+            Ok(()) => "admitted",
+            Err(error) => access_stream_read_frame_error(error),
+        },
+    )
+}
+
+#[pyfunction]
 fn access_stream_page_size_request_valid(requested: &Bound<'_, PyAny>) -> bool {
     if requested.is_none() {
         return true;
@@ -4209,6 +4291,15 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     )?)?;
     module.add_function(wrap_pyfunction!(
         access_stream_page_size_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_read_frame_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(access_stream_read_frame_shape, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_read_frame_cardinality,
         module
     )?)?;
     module.add_function(wrap_pyfunction!(

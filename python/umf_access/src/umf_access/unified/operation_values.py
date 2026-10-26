@@ -13,6 +13,15 @@ from uuid import UUID
 from .session_policy import SessionError
 
 MAX_FRAME=8*1024*1024
+_READ_FRAME_PROFILE='umf-python-read-frame/0.1.0'
+_READ_FRAME_REFUSALS={
+    'count_cardinality':'native count cardinality differs',
+    'result_arity':'native result arity differs',
+    'required_row_missing':'required row not found',
+    'single_row_exceeded':'native single-row cardinality exceeded',
+    'row_bound_exceeded':'native result row bound exceeded',
+    'page_bound_exceeded':'native page bound exceeded',
+}
 
 
 def _json_input(value):
@@ -299,3 +308,58 @@ def result_frame(program,rows,scope,secret):
                      'sourceDigest':program['binding']['modelSha256']})
     bounded_size(response)
     return response
+
+
+def _read_frame_rust():
+    try:
+        from umf import rust_values
+    except ImportError as error:
+        raise SessionError('native read-frame capability unavailable') from error
+
+    try:
+        profile = rust_values.access_stream_read_frame_profile_version
+    except AttributeError as error:
+        raise SessionError('native read-frame capability unavailable') from error
+    try:
+        version = profile()
+    except AttributeError as error:
+        raise SessionError('native read-frame capability unavailable') from error
+    if version != _READ_FRAME_PROFILE:
+        raise SessionError('native read-frame capability profile mismatch')
+    return rust_values
+
+
+def _read_frame_shape_rust(kind, outputs, rows):
+    """Private post-host shape seam; host row reads and failures stay in Python."""
+    native = _read_frame_rust()
+    try:
+        operation = native.access_stream_read_frame_shape
+    except AttributeError as error:
+        raise SessionError('native read-frame capability unavailable') from error
+    result = operation(kind, outputs, rows)
+    if type(result) is not str:
+        raise SessionError('native read-frame capability returned an invalid result')
+    if result == 'admitted':
+        return
+    refusal = _READ_FRAME_REFUSALS.get(result)
+    if refusal is None:
+        raise SessionError('native read-frame capability returned an invalid result')
+    raise SessionError(refusal)
+
+
+def _read_frame_cardinality_rust(kind, row_count, bound):
+    """Private post-decode seam; callers must decode all rows before invoking."""
+    native = _read_frame_rust()
+    try:
+        operation = native.access_stream_read_frame_cardinality
+    except AttributeError as error:
+        raise SessionError('native read-frame capability unavailable') from error
+    result = operation(kind, row_count, bound)
+    if type(result) is not str:
+        raise SessionError('native read-frame capability returned an invalid result')
+    if result == 'admitted':
+        return
+    refusal = _READ_FRAME_REFUSALS.get(result)
+    if refusal is None:
+        raise SessionError('native read-frame capability returned an invalid result')
+    raise SessionError(refusal)

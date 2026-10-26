@@ -5,8 +5,6 @@ from . import _rust
 
 _PROFILE = "umf-access-values/0.1.0"
 _FLOAT32_PROFILE = "umf-access-float32/0.1.0"
-
-
 def access_float32_profile_version() -> str:
     return _rust._rust_core.access_float32_profile_version()
 
@@ -45,6 +43,19 @@ def access_values_validate_decimal(
     return _rust._rust_core.access_values_validate_decimal(
         digits, exponent, precision, scale
     )
+
+
+def access_stream_read_frame_profile_version() -> str:
+    return _rust._rust_core.access_stream_read_frame_profile_version()
+
+
+def access_stream_read_frame_shape(kind: str, output_count: int, rows: object) -> str:
+    """Ask Rust for ordered shape checks while the host owns each row read."""
+    return _rust._rust_core.access_stream_read_frame_shape(kind, output_count, rows)
+
+
+def access_stream_read_frame_cardinality(kind: str, row_count: int, bound: int) -> str:
+    return _rust._rust_core.access_stream_read_frame_cardinality(kind, row_count, bound)
 
 
 def access_range_profile_version() -> str:
