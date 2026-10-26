@@ -1,0 +1,30 @@
+{
+  "sourceBase": "937dcd04b365dafe8ebec4565aff392fa67126d8",
+  "overlayManifestSha256": "28734f56ddac5f74c91125424ca13c827ec0a388352424ced881b60bf88cafe3",
+  "argv": [
+    "/Users/erik/.cache/uv/builds-v0/.tmpcmd7Gt/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "python/tests/test_distribution_artifact.py",
+    "python/tests/test_python_artifact_custody.py",
+    "python/tests/test_python_sdist.py",
+    "python/tests/test_python_artifact_version.py"
+  ],
+  "exit": -15,
+  "seconds": 55.10504787496757,
+  "output": "...................................................                      [100%]\n51 passed in 43.33s\n",
+  "scope": "source synthetic artifact checks only; no native build",
+  "cleanup": {
+    "ownedPids": [
+      82479,
+      82491,
+      83598
+    ],
+    "pytestProcessGroup": 83598,
+    "independentlyAbsent": true
+  }
+}

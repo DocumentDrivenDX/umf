@@ -1,0 +1,34 @@
+{
+  "profile": "umf.core0102.independent-source-review/1",
+  "manifestSha256": "583c21ed168a099a94f7ef672962579f3918beaafddde9d36c5dd7e701e8615d",
+  "baseCommit": "b4f2eafbcb3f0a5e72c1ba88ffcc85e49451ec35",
+  "candidateTestSha256": "719fd41eeb78829609e167e08e56622c964e48dd99e6cbd952f23a4d40634aa8",
+  "exactPacketMembers": 10,
+  "baselineConfigVerifierProjectMatchGit": true,
+  "astEquivalence": "Equal after sorting only leading stdlib imports and flattening nested single-body With nodes preserving entry/exit order; assertions/verifier behavior unchanged",
+  "actualControls": {
+    "baseline": {
+      "exit": 1,
+      "codes": [
+        "I001",
+        "SIM117"
+      ]
+    },
+    "candidate": {
+      "exit": 0,
+      "codes": []
+    },
+    "pytest": {
+      "exit": 0,
+      "stdout": "...                                                                      [100%]\n3 passed in 0.06s\n"
+    },
+    "manifestSha256": "583c21ed168a099a94f7ef672962579f3918beaafddde9d36c5dd7e701e8615d"
+  },
+  "status": "accepted-narrow-test-formatting-source-only",
+  "limits": [
+    "No new native build/installed cohort/CI or public artifact qualification",
+    "Source/inventory update must be freshly full-checked for changed source commit",
+    "b4 actual316 test body pass followed by Ruff job failure remains preserved",
+    "Original packet001 omitted explicit repository config; fresh002 and this independent control use exact b4 config and reproduce both baseline failures"
+  ]
+}

@@ -300,6 +300,19 @@ def test_exact_source_and_archive_inventory_returns_canonical_manifest(
     assert result["sha256"] == hashlib.sha256(canonical).hexdigest()
 
 
+def test_action_runtime_helper_map_must_match_build_declarations(
+    tmp_path: Path,
+) -> None:
+    checkout, _archive, _files = _fixture(tmp_path)
+    helper = checkout / "python/src/umf/_action_runtime_manifest.py"
+    helper.write_text("RESOURCES = ()\n", encoding="utf-8")
+
+    with pytest.raises(
+        sdist.SdistInputError, match="action-resource-helper-map-differs"
+    ):
+        sdist._source_inventory(checkout)
+
+
 def test_rust_include_str_authorities_are_in_sdist_closure() -> None:
     """Ensure production Rust spec assets exist and enter the archive hook closure."""
     repository = Path(__file__).resolve().parents[2]

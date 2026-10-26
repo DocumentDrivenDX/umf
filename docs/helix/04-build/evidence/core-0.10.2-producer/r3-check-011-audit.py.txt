@@ -1,0 +1,64 @@
+"""Independent read-only audit of one terminal, specifically approved Core check."""
+from pathlib import Path
+import argparse,datetime,hashlib,json,os,signal,subprocess,time
+ap=argparse.ArgumentParser();ap.add_argument('--receipt-sha256',required=True);ap.add_argument('--controller-pid',type=int,required=True);ap.add_argument('--session-id',type=int,required=True);ap.add_argument('--session-exit',type=int,required=True);args=ap.parse_args()
+assert args.session_exit==0 and args.controller_pid>1 and args.session_id>0
+signal.alarm(45)
+start=time.monotonic();p=Path('/private/tmp/umf-core0102-r3-attempt011-check001');raw=(p/'receipt.json').read_bytes();d=json.loads(raw);sha=lambda b:hashlib.sha256(b).hexdigest()
+assert sha(raw)==args.receipt_sha256
+assert d['status']=='check-completed-review-pending' and d['mode']=='check-only'
+assert d['revision']=='2a76a8e8213ec64334408ec49edadc3b6e765cce'
+assert d['controllerSha256']=='0c48a1834f8c54d9a0f4a1f6acc92edd0da282b58d2690c5edf05ef2a5332ff6'
+assert d['controllerPid']==d['controllerPgid']==args.controller_pid
+assert d['deadlineSeconds']==300 and d['elapsedSeconds']<300
+assert d['worktreeCleaned'] and d['nodeModulesUnchanged']
+assert not d.get('activeChild') and not d.get('spawnOutcomeUnknown') and not d.get('spawnIntent')
+assert not d.get('unexpectedChangedInventory') and not d.get('inventoryMissingAfterCheck')
+started=datetime.datetime.fromisoformat(d['startedUtc'].replace('Z','+00:00'))
+def within_original_budget():
+ assert (datetime.datetime.now(datetime.timezone.utc)-started).total_seconds()<300,'original aggregate budget exhausted'
+within_original_budget()
+assert d['check']['returncode']==0 and d['check']['timedOut'] is False and d['check']['unchanged']
+assert d['generationInput']['seedOrOverwritePerformed'] is False
+assert d['generationInput']['committedRevision']==d['revision']
+assert all(c.get('returncode')==0 and c.get('terminalObserved') and c.get('groupAbsent') and not c.get('timedOut') for c in d['children'])
+commands=[c for c in d['children'] if 'scripts/rust-inventory.py' in c['argv']]
+assert len(commands)==1 and commands[0]['argv']==['/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12','scripts/rust-inventory.py','--check']
+assert commands[0]['endedElapsedSeconds']-commands[0]['startedElapsedSeconds']<180
+for role,status in [('root','approved'),('sol','approved'),('coordinator','go')]:
+ row=d['approvalReceipts'][role];b=Path(row['path']).read_bytes();assert sha(b)==row['sha256'];a=json.loads(b)
+ assert a['role']==role and a['status']==status and a['revision']==d['revision'] and a['mode']=='check-only' and a['controllerSha256']==d['controllerSha256']
+rows=[]
+for pid,pgid in [(args.controller_pid,args.controller_pid)]+[(c['pid'],c['pgid']) for c in d['children']]:
+ assert pid>1 and pgid>1
+ for kind,value in [('pid',pid),('pgid',pgid)]:
+  try:os.kill(value,0) if kind=='pid' else os.killpg(value,0)
+  except ProcessLookupError:continue
+  else:raise AssertionError((kind,value,'still exists'))
+ rows.append({'pid':pid,'pgid':pgid,'independentlyAbsent':True})
+work=Path(d['worktree']);assert str(work)==str(p/'worktree') and not work.exists()
+registry=subprocess.check_output(['/usr/bin/git','worktree','list','--porcelain'],cwd='/Users/erik/.codex/worktrees/eb69/umf',text=True,timeout=10)
+assert ('worktree '+str(work)+'\n') not in registry
+before=(p/'node-modules-before.json').read_bytes();after=(p/'node-modules-after.json').read_bytes();assert before==after
+assert sha(before)==d['nodeModulesBefore']['inventoryFileSha256']==d['nodeModulesAfter']['inventoryFileSha256']=='492dd2e85a4cc03706c350d44624295f5f0c392d441c4b36185000c8489f5e49'
+entries=[];root=Path('/Users/erik/.codex/worktrees/eb69/umf/node_modules');assert str(root)==d['nodeModulesBefore']['root']==d['nodeModulesAfter']['root']
+for current,dirs,files in os.walk(root,topdown=True,followlinks=False):
+ within_original_budget();base=Path(current);keep=[]
+ for name in sorted(dirs):
+  q=base/name
+  if q.is_symlink():entries.append({'path':q.relative_to(root).as_posix(),'kind':'symlink-dir','target':os.readlink(q)})
+  else:keep.append(name)
+ dirs[:]=keep
+ for name in sorted(files):
+  within_original_budget();q=base/name;rel=q.relative_to(root).as_posix()
+  if q.is_symlink():entries.append({'path':rel,'kind':'symlink-file','target':os.readlink(q)})
+  elif q.is_file():entries.append({'path':rel,'kind':'file','bytes':q.stat().st_size,'sha256':sha(q.read_bytes())})
+entries.sort(key=lambda x:x['path']);encoded=json.dumps(entries,sort_keys=True,separators=(',',':')).encode();digest=sha(encoded)
+assert len(entries)==19517 and digest==d['nodeModulesAfter']['sha256']=='f97d9a3f77efe220f3b5f11473d81755ee14f9beb7007968c795187794433cdf'
+inv=(p/'inventory.committed-input.json').read_bytes();assert len(inv)==2607211 and sha(inv)=='90ecd7dc3c7461660d67aa42358d8c339534cb9618d6b68b6b8c336cb843e35c'
+committed=subprocess.check_output(['/usr/bin/git','show',d['revision']+':docs/helix/04-build/evidence/rust-migration/r3/inventory.json'],cwd='/Users/erik/.codex/worktrees/eb69/umf',timeout=10)
+assert committed==inv
+for value in [d['check']['inventorySha256Before'],d['check']['inventorySha256After'],d['inventoryAfterCheckSha256'],d['inventoryAfterCleanupCheck']['sha256']]:assert value==sha(inv)
+within_original_budget()
+out={'profile':'umf.core011.independent-check-handback/1','status':'pass','observedUtc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'controllerReceiptSha256':sha(raw),'controllerPid':args.controller_pid,'controllerPgid':args.controller_pid,'actualStartedUtc':d['startedUtc'],'actualEndedUtc':d['endedUtc'],'controllerElapsedSeconds':d['elapsedSeconds'],'auditElapsedSeconds':round(time.monotonic()-start,3),'withinOriginal300SecondAggregate':True,'unifiedExecSession':args.session_id,'actualSessionExit':args.session_exit,'independentProcessAbsence':rows,'worktreeFilesystemAndGitRegistryAbsent':True,'freshIndependentNodeModules':{'entryCount':len(entries),'sha256':digest,'matchesBothRetainedSnapshots':True},'committedInputByteCorrespondence':True,'inventorySha256':sha(inv),'inventoryBytes':len(inv),'scope':'Full committed-source inventory check and owned cleanup only; no website/build/package/native/CI/release/publication or global quiet claim'}
+q=Path('/private/tmp/core011-check-independent-handback.json');assert not q.exists();q.write_text(json.dumps(out,indent=2)+'\n');print(json.dumps(out,indent=2))

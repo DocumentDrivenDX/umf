@@ -33,6 +33,22 @@ export interface ReferenceCommittedResult {
  verification:({kind:'recipe';effects:{effect:string;status:'verified';outcome:'changed'|'no-op'}[];postconditions:{condition:string;status:'satisfied'}[];frames:'enforced';constraints:'verified'}|{kind:'handler';deployment:{id:string;version:string;build:string};postconditions:{condition:string;status:'satisfied'}[];frames:'enforced';constraints:'verified';outputs:'verified'});
 }
 export type ReferenceRecipeCommittedResult=ReferenceCommittedResult&{verification:Extract<ReferenceCommittedResult['verification'],{kind:'recipe'}>};
+type HandlerLimitReason='launch-observation'|'launch-ownership'|'container-create'|'handler-deadline'|'protocol-bound'|'output-bound'|'cleanup-timeout'|'cleanup-verification'|'memory-bound'|'unclassified-limit';
+function handlerLimitReason(error:unknown):HandlerLimitReason|undefined{
+ if(!(error instanceof UmfError)||error.code!=='LIMIT')return undefined;
+ switch(error.message){
+  case 'Docker installation observation timed out':return 'launch-observation';
+  case 'Owned handler launch is pending operator reconciliation':case 'Creation ownership requires operator reconciliation':return 'launch-ownership';
+  case 'Handler creation acknowledgement unavailable':return 'container-create';
+  case 'Qualified handler time bound required':case 'Handler absolute time bound exceeded':case 'Handler time bound exceeded':return 'handler-deadline';
+  case 'Supervisor message exceeds bound':case 'Handler stderr exceeds bound':case 'Handler channel exceeds bound':case 'Handler message exceeds bound':case 'Handler operation bound exceeded':return 'protocol-bound';
+  case 'Handler outputs do not satisfy declared types':return 'output-bound';
+  case 'Owned handler cleanup command timed out':case 'Owned handler cleanup timed out':return 'cleanup-timeout';
+  case 'Owned handler state could not be verified':case 'Owned handler removal could not be confirmed':return 'cleanup-verification';
+  case 'Native handler memory bound exceeded':return 'memory-bound';
+  default:return 'unclassified-limit';
+ }
+}
 /** Native graph-write execution with bounded known-abort retries and explicit uncertain acknowledgement. */
 export class ReferenceActionExecutor {
  readonly admission:ReferenceActionAdmission;
@@ -100,7 +116,7 @@ export class ReferenceActionExecutor {
    if(error instanceof ReferenceCommitUncertain){await observe('observed','indeterminate',undefined,context);return {status:'indeterminate'};}
    // These callback failures are classified only after begin() has rolled back.
    // Other unexpected SQL and host failures remain visible; do not invent outcomes.
-   const failure=referenceFailure(error,stage);if(failure){await observe('observed',failure.status,failure.code,context);return failure;}
+   const failure=referenceFailure(error,stage);if(failure){const reason=handlerLimitReason(error);await observe('observed',failure.status,failure.code,reason?{...context,limitDiagnostic:{profile:'umf.actions.limit-diagnostic/1',stage,reason}}:context);return failure;}
    await observe('observed','host-error',undefined,context);throw error;
   }
   await observe('observed',result.status,'code' in result?result.code:undefined,context);return result;

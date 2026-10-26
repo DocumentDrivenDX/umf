@@ -1,0 +1,37 @@
+{
+  "profile": "umf.core011.independent-full-check-result-review/1",
+  "status": "actual-fresh-full-check-source-inventory-and-retained-owned-handback-accepted",
+  "revision": "2a76a8e8213ec64334408ec49edadc3b6e765cce",
+  "controllerSha256": "0c48a1834f8c54d9a0f4a1f6acc92edd0da282b58d2690c5edf05ef2a5332ff6",
+  "inventorySha256": "90ecd7dc3c7461660d67aa42358d8c339534cb9618d6b68b6b8c336cb843e35c",
+  "inventoryBytes": 2607211,
+  "sourceCohortSha256": "bd93c3bc8e49ff23851628f36e525c8cbfb9e934f74cb5ba79308d70ab9b36d6",
+  "actualCheckExit": 0,
+  "actualControllerElapsedSeconds": 168.328,
+  "checkerPid": 26462,
+  "checkerRecordedDurationSeconds": 103.087,
+  "topLevelOwnedChildrenVerified": 14,
+  "allChildOutputHashesVerified": true,
+  "controllerReceiptSha256": "50b86ad4fa8c6ea24ab04da8a6b282f39f18bd641ce9469342b0e1c0f9d4305a",
+  "rootIndependentHandbackSha256": "9afb745fa6b99c526b8de059162bc83b1a90de0661cc5949ade12184b35670b8",
+  "actualRootSession": 68256,
+  "rootIndependentProcessAbsenceCount": 15,
+  "freshIndependentRootNodeModules": {
+    "entryCount": 19517,
+    "sha256": "f97d9a3f77efe220f3b5f11473d81755ee14f9beb7007968c795187794433cdf",
+    "matchesBothRetainedSnapshots": true
+  },
+  "nodeModulesSnapshotFilesByteIdentical": true,
+  "sourceCorrespondencePriorReviewSha256": "34c810037ee51b4f0201aabc8f8879d3063881d09ee70f1dc41b2dc927c5d750",
+  "qualification": "Only exact source/inventory/full --check gate accepted. This reviewer audited actual controller/child/log/approval/input/dependency and retained independent root kernel/Git-registry handback evidence; the root performed the real check/process scan, not a new reviewer native or OS campaign. All3623 exact e527 source blobs/37693373 bytes were independently verified before this inventory-only commit.",
+  "remainingGates": [
+    "Current-source fresh hosted CI including website and platform native artifacts",
+    "Final G02 consumer/installed/source/browser/native cohort and complete public package correspondence",
+    "PR merge/release and immutable public artifact/download verification"
+  ],
+  "notAuthorized": [
+    "No new product run or resource GO",
+    "No old ebce artifact relabel or native/managed/website acceptance",
+    "No merge/publication approval inferred"
+  ]
+}

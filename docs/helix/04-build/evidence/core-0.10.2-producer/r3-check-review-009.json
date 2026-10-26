@@ -1,0 +1,61 @@
+{
+  "actualControls": {
+    "cases": [
+      "timeout-zero-exit-stays-failure",
+      "interrupt-after-real-spawn-preserves-unknown-and-worktree",
+      "communicate-interrupt-retains-child-handle-and-reaps-before-cleanup",
+      "preexisting-output-refusal-does-not-mutate-or-hash"
+    ],
+    "communicateInterruptedChild": {
+      "cleanupAssertionsPassed": true,
+      "pgid": 16295,
+      "pid": 16295
+    },
+    "count": 4,
+    "exitCode": 0,
+    "flags": [
+      "-I",
+      "-B"
+    ],
+    "python": "/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12",
+    "session": 90617,
+    "timeoutZeroExitChild": {
+      "groupAbsent": true,
+      "pgid": 16282,
+      "pid": 16282,
+      "returncode": 0,
+      "terminalObserved": true,
+      "timedOut": true
+    }
+  },
+  "controllerSha256": "bdd777716cc14e5a4d819238d70969aff6352c92a72ed9f903f5061b98c92ffb",
+  "controlsSha256": "db15c1dabe49d24bbc37eb795fc76e677c255e0cbb794150cf38cdded5eb3427",
+  "coordinatorResourceGoRequired": true,
+  "findings": [],
+  "generationInventorySha256": "a2609b45cd6131aae1211a764405912472f4ccdd998d021807d65948b53f939b",
+  "generationReceiptSha256": "c512727c5a37463d8baa9e038e610da162c2f5cc4b9c7ef70289f6e4fc0c9891",
+  "independentInventoryAudit": {
+    "actualTerminalSession": 89125,
+    "coreSectionUniquePaths": 3618,
+    "exitCode": 0,
+    "helperPath": "/private/tmp/umf-core0102-r3-attempt009-check-prep/sol_inventory_audit.py",
+    "helperSha256": "f838ce2de5cc7738cb3e0e576ca915adceca84f4ec465625b15aca38157381e2",
+    "path": "/private/tmp/umf-core0102-r3-attempt009-check-prep/sol-inventory-audit.json",
+    "recordRowsIncludingDependencies": 3738,
+    "sha256": "983891f22d79dd3a9b917586124d388ea2278bbc8d2409a59d5cec3132c4a131",
+    "sourceCohortSha256": "16a55b5946a9868775b2b3afc5b0078f9fcfae132aed3fde5310ef891710c6ca",
+    "uniqueRecordedGitBytes": 37730376,
+    "uniqueRecordedGitPaths": 3624
+  },
+  "manifestSha256": "5e50207cd482b3ada78c9d8561edd681410a5ba27527706a0848056bf91ce862",
+  "mode": "check-only",
+  "planSha256": "30608fc4f1f32453e887010eb243f191e37066ef1a7928502d669cf7d4596fc4",
+  "review": "Independently read complete check controller and delta against generation rev4. Check-only source command is precisely the unmodified pinned rust-inventory.py --check, which rebuilds complete census payload and compares exact serialized inventory rather than hashing the seeded file alone. Exact source/parent/three-file delta, generator/helper/lock and tools are pinned. Completed predecessor receipt and candidate are checked before ownership; candidate bytes verified before and after command. Closed environment, inherited bounded spawn/known and unknown interruption custody, process-group terminal absence, 600-second overall budget with child <=500 seconds and 95-second cleanup reserve, full shared node_modules snapshots, isolated worktree cleanup and output ownership controls retained. Manifest closure and tool binary hashes independently verified; predecessor copies are byte-identical to retained generation output.",
+  "reviewedGenerationControllerSha256": "6ce3ef32e248cd0935f273789d2761ade5fb2f8c683e956884311a5823d5692e",
+  "reviewedUtc": "2026-10-24T06:10:53.752015+00:00",
+  "revision": "091aea5d111045fe70b229bc72fb47ef95febb9d",
+  "role": "sol",
+  "rootReviewSha256": "31cabc40243f003da89ac92e630eb656fa753ad51be86cc49f99be3b8ab52508",
+  "scope": "Approval of this exact prepared check-only controller tuple. Actual local controls and read-only inventory Git-blob audit only. No product --check, generation, build, native, database, service, publication or worktree operation launched by this reviewer. No launch authorization or resource reservation supplied. Full --check outcome and any native/public support claims remain pending.",
+  "status": "approved"
+}

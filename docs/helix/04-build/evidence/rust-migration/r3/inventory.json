@@ -16,6 +16,8 @@
       "python/tests/test_action_runtime_generated_client.py",
       "python/tests/test_action_runtime_resources.py",
       "python/tests/test_core.py",
+      "python/tests/test_extension_kinds.py",
+      "python/tests/test_python_artifact_version.py",
       "python/tests/test_rust_core.py",
       "python/umf_access/src/umf_access/build/catalog.py",
       "python/umf_access/src/umf_access/lifecycle/cli.py",
@@ -41,6 +43,7 @@
       "scripts/actions-docs/render-diagrams.py",
       "scripts/actions-docs/render-negative-control.py",
       "scripts/actions-docs/rule-example.ts",
+      "scripts/actions-reference/executor.ts",
       "scripts/artifact-collections-browser.ts",
       "scripts/audit-extension-packages.ts",
       "scripts/audit-json-schemas.ts",
@@ -66,6 +69,7 @@
       "scripts/check-unified-client-boundaries.ts",
       "scripts/codegen-corpus.ts",
       "scripts/conformance.ts",
+      "scripts/dispatch_core_pypi_release.py",
       "scripts/domain-pack-family.ts",
       "scripts/domain-packs/ontology.ts",
       "scripts/domain-packs/qualify-sec-acquisition.py",
@@ -79,6 +83,7 @@
       "scripts/postgresql-catalog-oracle.ts",
       "scripts/praxis-p1-compatibility.ts",
       "scripts/prepare-action-tests.ts",
+      "scripts/publish_core_pypi_release.py",
       "scripts/reference/browser.ts",
       "scripts/reference/build.ts",
       "scripts/reference/check-boundaries.ts",
@@ -87,6 +92,7 @@
       "scripts/row-scope-codegen-corpus.ts",
       "scripts/run-tests.ts",
       "scripts/rust-core/conformance.ts",
+      "scripts/rust-inventory-typescript.ts",
       "scripts/rust-inventory.py",
       "scripts/rust-migration/r3/extract-native-clients.py",
       "scripts/rust-migration/r3/native-replay.py",
@@ -107,6 +113,7 @@
       "tests/access-unified-generation.test.ts",
       "tests/access-unified-sync.test.ts",
       "tests/access-unified.test.ts",
+      "tests/actions-reference/handler-executor.test.ts",
       "tests/binding/table-deployment.test.ts",
       "tests/binding/table-domains.test.ts",
       "tests/binding/table-migration.test.ts",
@@ -173,6 +180,7 @@
       "tests/reference/reader.test.ts",
       "tests/reference/reference.test.ts",
       "tests/reference/self-model.test.ts",
+      "tests/reference/stage.test.ts",
       "tests/rust-inventory/test_boundaries.py",
       "tests/rust-inventory/test_inventory.py",
       "tests/table-authoring/row-scope.test.ts",
@@ -195,16 +203,16 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "dfd0a3e47e6ba71820f0573d6d452ca0affee1a607f3c858dbe03a0253aab533",
+    "sourceCohortSha256": "4b7d8b4e17ae7ccb43c4b0dbbeeeb1a4ef7ddec458e0451550b15c5d1d853867",
     "typescriptApi": "5.9.3"
   },
   "counts": {
-    "activeScriptFiles": 340,
-    "algorithmSymbols": 10319,
+    "activeScriptFiles": 349,
+    "algorithmSymbols": 10375,
     "pythonModules": 105,
     "rustBuildInputs": 76,
     "rustModules": 127,
-    "scriptFiles": 2950,
+    "scriptFiles": 2957,
     "sourceModules": 578,
     "typescriptModules": 473
   },
@@ -5480,8 +5488,8 @@
       "projects": [
         {
           "path": "python/pyproject.toml",
-          "sha256": "549aa96689b1884144107a632c82860ae9ac8a73202e7d339a8c8f663722bafd",
-          "text": "[build-system]\nrequires = [\"hatchling>=1.27,<2\"]\nbuild-backend = \"hatchling.build\"\n\n[project]\nlicense = \"MIT OR Apache-2.0\"\nlicense-files = [\"LICENSE.md\", \"LICENSE-MIT\", \"LICENSE-APACHE\"]\nname = \"umf-core\"\nversion = \"0.10.1\"\ndescription = \"Official Python document models and extension machinery for UMF\"\nreadme = \"README.md\"\nrequires-python = \">=3.11\"\ndependencies = [\"pydantic>=2.11,<3\"]\n\n[project.urls]\nRepository = \"https://github.com/DocumentDrivenDX/umf\"\n\n[tool.hatch.build.targets.wheel]\npackages = [\"src/umf\"]\n\n[tool.hatch.build.targets.sdist.force-include]\n\"../spec/extensions/tables/operation.schema.json\" = \"spec/extensions/tables/operation.schema.json\"\n\"../spec/core/schema.json\" = \"spec/core/schema.json\"\n\"../spec/core/semantic-type-reference.schema.json\" = \"spec/core/semantic-type-reference.schema.json\"\n\"../spec/core/extension-package.schema.json\" = \"spec/core/extension-package.schema.json\"\n\"../spec/metamodel/generated\" = \"spec/metamodel/generated\"\n\"../spec/extensions/domain-pack\" = \"spec/extensions/domain-pack\"\n\"../spec/extensions/dataset-source\" = \"spec/extensions/dataset-source\"\n\"../fixtures/metamodel/current-conformance.json\" = \"fixtures/metamodel/current-conformance.json\"\n\"../fixtures/actions-binding\" = \"fixtures/actions-binding\"\n\n[dependency-groups]\ndev = [\"pytest>=8.4,<10\", \"ruff>=0.13\", \"hatchling>=1.27,<2\"]\n\n[tool.hatch.build.hooks.custom]\n\n[tool.pytest.ini_options]\ntestpaths = [\"tests\"]\n"
+          "sha256": "dea18d8019a736568fc12416044217dacaf7555dc9ab9ea258cbd2316de09605",
+          "text": "[build-system]\nrequires = [\"hatchling>=1.27,<2\"]\nbuild-backend = \"hatchling.build\"\n\n[project]\nlicense = \"MIT OR Apache-2.0\"\nlicense-files = [\"LICENSE.md\", \"LICENSE-MIT\", \"LICENSE-APACHE\"]\nname = \"umf-core\"\nversion = \"0.10.2\"\ndescription = \"Official Python document models and extension machinery for UMF\"\nreadme = \"README.md\"\nrequires-python = \">=3.11\"\ndependencies = [\"pydantic>=2.11,<3\"]\n\n[project.urls]\nRepository = \"https://github.com/DocumentDrivenDX/umf\"\n\n[tool.hatch.build.targets.wheel]\npackages = [\"src/umf\"]\n\n[tool.hatch.build.targets.sdist.force-include]\n\"../spec/extensions/tables/operation.schema.json\" = \"spec/extensions/tables/operation.schema.json\"\n\"../spec/core/schema.json\" = \"spec/core/schema.json\"\n\"../spec/core/semantic-type-reference.schema.json\" = \"spec/core/semantic-type-reference.schema.json\"\n\"../spec/core/extension-package.schema.json\" = \"spec/core/extension-package.schema.json\"\n\"../spec/metamodel/generated\" = \"spec/metamodel/generated\"\n\"../spec/extensions/domain-pack\" = \"spec/extensions/domain-pack\"\n\"../spec/extensions/dataset-source\" = \"spec/extensions/dataset-source\"\n\"../fixtures/metamodel/current-conformance.json\" = \"fixtures/metamodel/current-conformance.json\"\n\"../fixtures/actions-binding\" = \"fixtures/actions-binding\"\n\n[dependency-groups]\ndev = [\"pytest>=8.4,<10\", \"ruff>=0.13\", \"hatchling>=1.27,<2\"]\n\n[tool.hatch.build.hooks.custom]\n\n[tool.pytest.ini_options]\ntestpaths = [\"tests\"]\n"
         },
         {
           "path": "python/umf_access/pyproject.toml",
@@ -8724,7 +8732,7 @@
       "language": "py",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "python/src/umf/__init__.py",
-      "sha256": "2735b46551ecdcdc0a2a7754718a7e08a6e1d5ba5bfae8c6471cbfe951e6e5a6"
+      "sha256": "5c6f478e65626135f596d412fafe903b611102e12578c7cfa11505aca55e991e"
     },
     {
       "activationEvidence": [
@@ -9125,7 +9133,7 @@
       "language": "py",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "python/tests/test_core.py",
-      "sha256": "b6fcc980d6275732325fc511feb06c410c8c51063933688f93b9b71360e618a1"
+      "sha256": "122707d7cf351097f7de779281be27e6dbda555c947b4134735e27d5431e8c60"
     },
     {
       "activationEvidence": [],
@@ -9158,12 +9166,12 @@
         "test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels",
         "test_workflow_independently_installs_and_qualifies_both_native_artifacts"
       ],
-      "bytes": 26953,
+      "bytes": 26994,
       "disposition": "unreferenced-test-source",
       "language": "py",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "python/tests/test_distribution_artifact.py",
-      "sha256": "93d4731fc86df55c78e6657cd38bd70759fa71d548efaa4ca97b341fabf93fa2"
+      "sha256": "59b4dd5d2bcba4ee76d1aa55bd56133bd89e17e0c536327b35fa57e3d10b509a"
     },
     {
       "activationEvidence": [],
@@ -9181,17 +9189,19 @@
       "sha256": "5bdc0fbbbf2639ea0f40611299ac1d4bd6b24044a415c69cf72f7b4bf8433591"
     },
     {
-      "activationEvidence": [],
-      "active": false,
+      "activationEvidence": [
+        "transitive-import-closure"
+      ],
+      "active": true,
       "algorithmSymbols": [
         "test_full_manifest_snapshot_and_atomic_catalog_admission",
         "test_generic_kind_corpus",
         "test_kind_errors_suppress_callback_and_legacy_registration_stays_opaque"
       ],
       "bytes": 3108,
-      "disposition": "unreferenced-test-source",
+      "disposition": "test-oracle-fixture-algorithm",
       "language": "py",
-      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "python/tests/test_extension_kinds.py",
       "sha256": "69258167b0386cacd2b39ea33d6a3c75b03210fb7a8d7c5070b3b0c627456c18"
     },
@@ -9213,7 +9223,27 @@
       "language": "py",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "python/tests/test_python_artifact_custody.py",
-      "sha256": "2a198bbfeec408f48349d16fcc529354705624168efe03cbc8bc65cabc1beb11"
+      "sha256": "9af1b29e43e0637a9868475402c8adfe97051b60d561ae27d4b385042a4577c3"
+    },
+    {
+      "activationEvidence": [
+        ".github/workflows/python-action-runtime.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "ExpectedVersionTests",
+        "make_repo",
+        "make_wheel",
+        "test_cli_source_mode_forwards_selected_version",
+        "test_installed_mode_enforces_explicit_version_before_payload_check",
+        "test_verify_defaults_to_historical_profile_and_explicit_version_is_propagated"
+      ],
+      "bytes": 3740,
+      "disposition": "test-oracle-fixture-algorithm",
+      "language": "py",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
+      "path": "python/tests/test_python_artifact_version.py",
+      "sha256": "719fd41eeb78829609e167e08e56622c964e48dd99e6cbd952f23a4d40634aa8"
     },
     {
       "activationEvidence": [],
@@ -9239,7 +9269,7 @@
       "language": "py",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "python/tests/test_python_sdist.py",
-      "sha256": "8cae69f25810c6658898702ec01df72ddc3b643c91c1c04a82acdd585946cacc"
+      "sha256": "698a3688a1b60fdc40245275f0cac80e29b6a5a6df64b7d404ebe529f71c346d"
     },
     {
       "activationEvidence": [],
@@ -17805,6 +17835,7 @@
     {
       "activationEvidence": [
         "scripts/actions-reference/executor.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -17863,6 +17894,7 @@
         "scripts/actions-reference/outcomes.ts",
         "scripts/actions-reference/policy.ts",
         "scripts/actions-reference/preview.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -17885,6 +17917,7 @@
         "scripts/actions-reference/executor.ts",
         "scripts/actions-reference/gateway.ts",
         "scripts/actions-reference/graph.ts",
+        "scripts/actions-reference/handler-catalog.ts",
         "scripts/actions-reference/intent.ts",
         "scripts/actions-reference/outcomes.ts",
         "scripts/actions-reference/policy.ts",
@@ -17893,6 +17926,7 @@
         "scripts/actions-reference/state.ts",
         "scripts/actions-reference/store.ts",
         "scripts/actions-reference/versions.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -17942,21 +17976,23 @@
     },
     {
       "activationEvidence": [
+        ".github/workflows/core-0102-inventory-generation.yml",
         "scripts/actions-docs/native-example.ts",
         "scripts/actions-reference/outcomes.ts",
-        "transitive-import-closure"
+        "tests/actions-reference/handler-executor.test.ts"
       ],
       "active": true,
       "algorithmSymbols": [
         "attribution",
+        "handlerLimitReason",
         "observe"
       ],
-      "bytes": 16165,
+      "bytes": 17799,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/actions-reference/executor.ts",
-      "sha256": "1f31514be254fd85bd698313af67b8e6dc81852cb93770b56dae69fdda15508c"
+      "sha256": "2fc6849548220155e70a25e0dfb87ace7a5047a57aa7a1bd1579564920cfe95a"
     },
     {
       "activationEvidence": [
@@ -17980,6 +18016,7 @@
         "scripts/actions-reference/handler-execution.ts",
         "scripts/actions-reference/preconditions.ts",
         "scripts/actions-reference/recipe.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -18027,13 +18064,16 @@
       "sha256": "def4b14d324f649388c20300f6a428887e2535b3caa6cf18d4987435e0c2f3d8"
     },
     {
-      "activationEvidence": [],
-      "active": false,
+      "activationEvidence": [
+        "tests/actions-reference/handler-executor.test.ts",
+        "transitive-import-closure"
+      ],
+      "active": true,
       "algorithmSymbols": [],
       "bytes": 3096,
-      "disposition": "unreferenced-script-source",
+      "disposition": "active-host-tooling-algorithm",
       "language": "ts",
-      "migrationObligation": "No current package/workflow/import activation edge discovered",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/actions-reference/handler-catalog.ts",
       "sha256": "5c5492cd3ad63443118b5f716e755d953deb263f98d70cce65aed2905ac03b40"
     },
@@ -18075,10 +18115,12 @@
         "scripts/actions-reference/admission.ts",
         "scripts/actions-reference/attribution.ts",
         "scripts/actions-reference/executor.ts",
+        "scripts/actions-reference/handler-catalog.ts",
         "scripts/actions-reference/handler-execution.ts",
         "scripts/actions-reference/preparation.ts",
         "scripts/actions-reference/preview.ts",
         "scripts/actions-reference/state.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -18189,6 +18231,7 @@
         "scripts/actions-reference/outcomes.ts",
         "scripts/actions-reference/preview.ts",
         "scripts/actions-reference/projection.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -18228,6 +18271,7 @@
         "scripts/actions-reference/preconditions.ts",
         "scripts/actions-reference/recipe.ts",
         "scripts/actions-reference/state.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -18413,9 +18457,11 @@
     {
       "activationEvidence": [
         "scripts/actions-browser.ts",
+        "scripts/actions-reference/handler-catalog.ts",
         "scripts/actions-reference/handler-execution.ts",
         "scripts/actions-reference/handlers.ts",
         "scripts/prepare-action-tests.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -18454,6 +18500,7 @@
         "scripts/actions-reference/preview.ts",
         "scripts/actions-reference/projection.ts",
         "scripts/actions-reference/recipe.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -18476,6 +18523,7 @@
         "scripts/actions-reference/admission.ts",
         "scripts/actions-reference/audit.ts",
         "scripts/actions-reference/graph.ts",
+        "scripts/actions-reference/handler-catalog.ts",
         "scripts/actions-reference/handlers.ts",
         "scripts/actions-reference/outcomes.ts",
         "scripts/actions-reference/policy.ts",
@@ -18483,6 +18531,7 @@
         "scripts/actions-reference/revisions.ts",
         "scripts/actions-reference/state.ts",
         "scripts/actions-reference/versions.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "tests/actions-reference/native-harness.ts",
         "transitive-import-closure"
       ],
@@ -26888,6 +26937,23 @@
       "sha256": "df66a58fc03776a5672b96ea6c0ae2d81b238949c4ad6a0180cd419f1da36fa7"
     },
     {
+      "activationEvidence": [
+        ".github/workflows/pypi.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "core_release",
+        "main",
+        "select_release"
+      ],
+      "bytes": 3597,
+      "disposition": "active-host-tooling-algorithm",
+      "language": "py",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
+      "path": "scripts/dispatch_core_pypi_release.py",
+      "sha256": "db65816b600846b91571ae1884e1551673397c75fbe5f84215d55f72df7f382c"
+    },
+    {
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
@@ -31718,6 +31784,34 @@
       "sha256": "bc3d10b47603f9fbd4b2a3e3e835bc8b4614681d96fe89d31b82d1b6edf5d64f"
     },
     {
+      "activationEvidence": [
+        ".github/workflows/publish-pypi.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "ReleaseError",
+        "_metadata",
+        "_require",
+        "_sha",
+        "check",
+        "check_pypi",
+        "load",
+        "main",
+        "parse_sums",
+        "prepare_release",
+        "read_asset",
+        "resolve_tag_commit",
+        "validate_archive",
+        "wait_for_pypi"
+      ],
+      "bytes": 18795,
+      "disposition": "active-host-tooling-algorithm",
+      "language": "py",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
+      "path": "scripts/publish_core_pypi_release.py",
+      "sha256": "eee1cf0064071b8f1115b1534ec23c022bd26a8908fec078f80adaa982524ca5"
+    },
+    {
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [],
@@ -32183,12 +32277,12 @@
         "files",
         "validate"
       ],
-      "bytes": 15400,
+      "bytes": 15398,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/reference/build.ts",
-      "sha256": "40b0f0b925c988b835b6e8b7e564832a5ccad0a10e69d85f7dd2f32e7b3eb8e3"
+      "sha256": "aaeedc6730998ace98912668a70840dfb256087567e5871c3c30356e3d9069a5"
     },
     {
       "activationEvidence": [
@@ -32281,19 +32375,25 @@
     },
     {
       "activationEvidence": [
+        ".github/workflows/core-0102-inventory-generation.yml",
         "package.json"
       ],
       "active": true,
       "algorithmSymbols": [
         "assert",
-        "ontology"
+        "assertFullGraph",
+        "assertNeighborhood",
+        "assertRelationshipRoutes",
+        "expectedNeighborhood",
+        "ontology",
+        "sameStrings"
       ],
-      "bytes": 23069,
+      "bytes": 25985,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/reference/ontology-browser.ts",
-      "sha256": "8b8b9e4997b822a9d7ec77fbc8598dd2984eb9d5907f399c4f57bd895e1752b3"
+      "sha256": "21f4425b258f425a20edd7b83f123bfaa8e4e214bccfcb70ee7d91d043f5dd2c"
     },
     {
       "activationEvidence": [
@@ -32422,6 +32522,23 @@
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/reference/self-model.ts",
       "sha256": "05bbf39bbc75b3bd52a98dfa01fbba104155c4e1e6ef8849c2dffb684e07e087"
+    },
+    {
+      "activationEvidence": [
+        "scripts/reference/build.ts",
+        "tests/reference/stage.test.ts",
+        "transitive-import-closure"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "referenceBuildStage"
+      ],
+      "bytes": 538,
+      "disposition": "active-host-tooling-algorithm",
+      "language": "ts",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
+      "path": "scripts/reference/stage.ts",
+      "sha256": "643444163933985948888623ce7e0a271daf8464c6613e86824bfbbd18127130"
     },
     {
       "activationEvidence": [],
@@ -33140,18 +33257,21 @@
       "sha256": "a897c918702266a8b79912f72d7b367df0e9533775565ee3a9c1edec854395cc"
     },
     {
-      "activationEvidence": [],
-      "active": false,
+      "activationEvidence": [
+        ".github/workflows/core-0102-inventory-generation.yml"
+      ],
+      "active": true,
       "algorithmSymbols": [],
       "bytes": 3184,
-      "disposition": "unreferenced-script-source",
+      "disposition": "active-host-tooling-algorithm",
       "language": "ts",
-      "migrationObligation": "No current package/workflow/import activation edge discovered",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/rust-inventory-typescript.ts",
       "sha256": "e9cd4ec974b629d262bc73ca73b39cd479732fd14674e72b0810c571d56acccd"
     },
     {
       "activationEvidence": [
+        ".github/workflows/core-0102-inventory-generation.yml",
         "package.json"
       ],
       "active": true,
@@ -34980,6 +35100,25 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
+        "DispatchTests",
+        "setUp",
+        "test_checksum_collision_and_foreign_repository_fail_closed",
+        "test_core_version_is_independent_of_sdk_release_tag",
+        "test_noncore_releases_and_unpublished_events_do_not_dispatch",
+        "test_standalone_core_release_is_dispatched_without_sdk_version_inference",
+        "test_token_created_release_binds_successful_producer_window"
+      ],
+      "bytes": 3392,
+      "disposition": "unreferenced-script-source",
+      "language": "py",
+      "migrationObligation": "No current package/workflow/import activation edge discovered",
+      "path": "scripts/test_dispatch_core_pypi_release.py",
+      "sha256": "fa48b70f090ce0617ebeb6fcfde20eac24303863b4cbdd215710de2a8bf0e11b"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
         "Connection",
         "Controls",
         "example",
@@ -35070,6 +35209,37 @@
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/test_pg_runtime_utility_provenance.py",
       "sha256": "477a63b2d9443dc07e71844d37f5642ce2cc61d81011a8ed39698db89ada3626"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
+        "PublishPypiReleaseTests",
+        "Response",
+        "__enter__",
+        "__exit__",
+        "__init__",
+        "prepare",
+        "read",
+        "sdist",
+        "setUp",
+        "tearDown",
+        "test_prepare_binds_public_assets_tag_source_and_package_metadata",
+        "test_prepare_refuses_direct_url_metadata_and_wrong_distribution",
+        "test_prepare_refuses_source_movement_and_github_digest_mismatch",
+        "test_raw_linux_wheel_is_refused_before_any_upload",
+        "test_registry_check_accepts_only_exact_public_file_bytes",
+        "test_sdk_profile_refuses_multiple_wheels_without_a_selected_file_map",
+        "test_standalone_core_profile_binds_source_and_explicit_file_map",
+        "test_visibility_wait_retries_absence_but_propagates_errors",
+        "wheel"
+      ],
+      "bytes": 11912,
+      "disposition": "unreferenced-script-source",
+      "language": "py",
+      "migrationObligation": "No current package/workflow/import activation edge discovered",
+      "path": "scripts/test_publish_core_pypi_release.py",
+      "sha256": "992df6711ea7ffc7950e37295399142c8c9e52d0a578cb0c50d9fc83fc8a7008"
     },
     {
       "activationEvidence": [],
@@ -36427,20 +36597,22 @@
       "sha256": "a86424e548e51adc94d64dd1cb81aa0b8a908d0755b3c3c13213b24e6356f18c"
     },
     {
-      "activationEvidence": [],
-      "active": false,
+      "activationEvidence": [
+        ".github/workflows/core-0102-inventory-generation.yml"
+      ],
+      "active": true,
       "algorithmSymbols": [
         "install",
         "notify",
         "setup",
         "source"
       ],
-      "bytes": 30928,
-      "disposition": "unreferenced-test-source",
+      "bytes": 32561,
+      "disposition": "test-oracle-fixture-algorithm",
       "language": "ts",
-      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/actions-reference/handler-executor.test.ts",
-      "sha256": "db1a66e2119ca418f46373fc53d65731ac94a9f087f1e5e25f2c2c71b1fcb0b0"
+      "sha256": "92f1114d74f2b3f1e75699f66e91fa5414298e86c7afc55dcbdfcb636e927954"
     },
     {
       "activationEvidence": [],
@@ -36537,6 +36709,7 @@
     {
       "activationEvidence": [
         "scripts/actions-docs/native-example.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -44430,6 +44603,19 @@
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/reference/self-model.test.ts",
       "sha256": "a5ab1411acf4876d411995755032d31a7ad22822a62bbdb590faece19605abb5"
+    },
+    {
+      "activationEvidence": [
+        "transitive-import-closure"
+      ],
+      "active": true,
+      "algorithmSymbols": [],
+      "bytes": 1561,
+      "disposition": "test-oracle-fixture-algorithm",
+      "language": "ts",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
+      "path": "tests/reference/stage.test.ts",
+      "sha256": "afded496e6e769f7444da1fd759b7b4b1ecfaebe6a3ecc6640e31893d714deb2"
     },
     {
       "activationEvidence": [],
@@ -53598,7 +53784,6 @@
     },
     {
       "activationEvidence": [
-        ".github/workflows/pypi.yml",
         ".github/workflows/python-action-runtime.yml"
       ],
       "active": true,
@@ -53622,12 +53807,12 @@
         "main",
         "verify"
       ],
-      "bytes": 35998,
+      "bytes": 36449,
       "disposition": "active-host-tooling-algorithm",
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "tools/verify_python_artifacts.py",
-      "sha256": "7892ab07d78abc0fc368046aa3435728a4d107300798d14ad6287c95e4f836a5"
+      "sha256": "628bc0ea00eabca17e976b537ba2534c00a6fe53b09acb46399f74f3c0c85fb3"
     }
   ],
   "sourceModules": [
@@ -53670,7 +53855,7 @@
         "write_json_value"
       ],
       "resolvedInternalImports": [],
-      "sha256": "2735b46551ecdcdc0a2a7754718a7e08a6e1d5ba5bfae8c6471cbfe951e6e5a6"
+      "sha256": "5c6f478e65626135f596d412fafe903b611102e12578c7cfa11505aca55e991e"
     },
     {
       "bytes": 13793,

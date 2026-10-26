@@ -1,19 +1,53 @@
-name: PyPI publisher (disabled pending coordinated R8 release)
-
+name: Dispatch released UMF core publication
 on:
-  workflow_dispatch:
-
+  release:
+    types: [published]
+  workflow_run:
+    workflows: ["*"]
+    types: [completed]
 permissions:
   contents: read
-
-# This legacy single-package publisher bypassed the required six-cohort
-# umf-core/umf-codegen qualification. Publication must be reintroduced only as
-# a reviewed job consuming an aggregate receipt from the same workflow run.
 jobs:
-  blocked:
+  dispatch:
+    if: >-
+      github.event_name == 'release' ||
+      (github.event.workflow_run.conclusion == 'success' && startsWith(github.event.workflow_run.path, '.github/workflows/release'))
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: write
     steps:
-      - name: Fail closed until coordinated publication is reviewed
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - name: Select one published core release and dispatch the main-only driver
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          echo "PyPI publication is disabled pending the same-run R8 aggregate gate."
-          exit 1
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" > releases.json
+          python scripts/dispatch_core_pypi_release.py --event-name "$GITHUB_EVENT_NAME" \
+            --event-json "$GITHUB_EVENT_PATH" --releases-json releases.json --output selected.json
+          if [[ "$(cat selected.json)" == null ]]; then exit 0; fi
+          TAG="$(jq -r .tag selected.json)"
+          SUMS="$(jq -r .sums_sha256 selected.json)"
+          gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" > tag-ref.json
+          if [[ "$(jq -r .object.type tag-ref.json)" == tag ]]; then
+            OBJECT="$(jq -r .object.sha tag-ref.json)"
+            gh api "repos/$GITHUB_REPOSITORY/git/tags/$OBJECT" > tag-object.json
+          fi
+          SOURCE="$(python - <<'PY'
+          import json,sys
+          from pathlib import Path
+          sys.path.insert(0, 'scripts')
+          from publish_core_pypi_release import resolve_tag_commit
+          ref=json.loads(Path('tag-ref.json').read_text())
+          obj=json.loads(Path('tag-object.json').read_text()) if Path('tag-object.json').exists() else None
+          print(resolve_tag_commit(ref,obj,json.loads(Path('selected.json').read_text())['tag']))
+          PY
+          )"
+          DEFAULT_BRANCH="$(jq -r .repository.default_branch "$GITHUB_EVENT_PATH")"
+          gh workflow run publish-pypi.yml --ref "$DEFAULT_BRANCH" \
+            -f "tag=$TAG" -f "source_sha=$SOURCE" -f "expected_sums_sha256=$SUMS"

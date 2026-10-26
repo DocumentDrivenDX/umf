@@ -803,7 +803,9 @@ def test_sdist_extraction_selects_the_single_top_level_project_with_nested_proje
             member.size = len(payload)
             archive.addfile(member, io.BytesIO(payload))
 
-    root = verifier._extract_sdist(archive_path, tmp_path / "source")
+    root = verifier._extract_sdist(
+        archive_path, tmp_path / "source", expected_version="0.11.0"
+    )
 
     assert root.name == "umf_core-0.11.0"
     assert (root / "nested/pyproject.toml").is_file()

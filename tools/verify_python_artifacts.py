@@ -778,16 +778,17 @@ def verify(
     expected_platform: str,
     sdist_path: Path | None,
     rebuilt_wheel_directory: Path | None = None,
+    expected_version: str = "0.11.0",
 ) -> dict[str, Any]:
     repository = repository.resolve()
     project = tomllib.loads((repository / "python/pyproject.toml").read_text())
     distribution_version = project["project"]["version"]
-    if distribution_version != "0.11.0":
-        raise ValueError("The SDK distribution source is not version 0.11.0")
+    if distribution_version != expected_version:
+        raise ValueError("The SDK distribution source does not match the expected version")
     init_source = (repository / "python/src/umf/__init__.py").read_text(
         encoding="utf-8"
     )
-    if '__version__ = "0.11.0"' not in init_source:
+    if f'__version__ = "{expected_version}"' not in init_source:
         raise ValueError(
             "The Python package version does not match distribution metadata"
         )
@@ -871,6 +872,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--wheel", type=Path, required=True)
     parser.add_argument(
+        "--expected-version",
+        default="0.11.0",
+        help="Expected umf-core distribution/package version",
+    )
+    parser.add_argument(
         "--verify-installed-wheel",
         action="store_true",
         help="Compare the current installation and RECORD to the exact wheel",
@@ -902,6 +908,8 @@ def main() -> int:
             if metadata.get("Name", "").lower().replace("_", "-") != "umf-core":
                 raise ValueError("Wheel distribution name is not umf-core")
             distribution_version = metadata.get("Version", "")
+        if distribution_version != args.expected_version:
+            raise ValueError("Wheel distribution version does not match the expected version")
         installed = _validate_installed_wheel(
             args.wheel,
             Path(sysconfig.get_path("platlib")),
@@ -919,6 +927,7 @@ def main() -> int:
         args.expected_platform,
         args.sdist,
         args.rebuilt_wheel_directory,
+        args.expected_version,
     )
     encoded = json.dumps(receipt, sort_keys=True, separators=(",", ":")) + "\n"
     if args.receipt is not None:

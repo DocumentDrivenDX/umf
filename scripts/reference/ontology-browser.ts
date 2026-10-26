@@ -2,7 +2,7 @@
 import {chromium} from 'playwright';
 import {resolve,join} from 'node:path';
 import {mkdir} from 'node:fs/promises';
-import {canonical} from '../../docs/helix/05-deploy/reference/model';
+import {canonical,selfModelGraph,type SelfModelCatalog} from '../../docs/helix/05-deploy/reference/model';
 import {readDocument} from '../../src/index';
 import {parse as parseYaml} from 'yaml';
 const site=resolve('docs/helix/05-deploy/microsite/dist'),live=process.env.UMF_SITE_URL;
@@ -13,7 +13,45 @@ const page=await browser.newPage({viewport:{width:1280,height:960}}),errors:stri
 page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(!r.url().startsWith(new URL(origin).origin)&&!r.url().startsWith('blob:')&&!r.url().startsWith('data:')&&!/^https:\/\/(fonts.googleapis.com|fonts.gstatic.com)\//.test(r.url()))external.push(r.url());});
 const assert=(ok:unknown,message:string)=>{if(!ok)throw Error(message);};
 const ontology=async(hash='')=>{await page.goto(origin+'reference/core.html'+hash);await page.locator('#load-status').filter({hasText:'assets verified'}).waitFor();await page.locator('#ontology-detail h3').waitFor();};
+const sameStrings=(actual:string[],expected:string[])=>JSON.stringify([...actual].sort())===JSON.stringify([...expected].sort());
+let expectedRecordIds:string[]=[],expectedEdges:ReturnType<typeof selfModelGraph>['edges']=[];
+async function assertFullGraph(label:string){
+ const actualRecords=await page.locator('#ontology-map svg [aria-label^="Inspect record "]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-model-id')??''));
+ const actualEdges=await page.locator('#ontology-map svg [aria-label^="Inspect relationship "]').evaluateAll(nodes=>nodes.map(node=>node.querySelector('title')?.textContent??''));
+ assert(sameStrings(actualRecords,expectedRecordIds),label+' record identities differ from authored source');
+ assert(sameStrings(actualEdges,expectedEdges.map(edge=>edge.label)),label+' relationship labels differ from source projection');
+}
+async function assertRelationshipRoutes(){
+ await ontology();
+ for(const [index,edge] of expectedEdges.entries()){
+  await page.locator('.ontology-connections').evaluate(node=>{(node as HTMLDetailsElement).open=true;});
+  assert(await page.locator('.ontology-connections button').count()===expectedEdges.length,'Relationship identity list has the wrong count');
+  await page.locator('.ontology-connections button').nth(index).click();
+  await page.waitForFunction(expected=>new URLSearchParams(location.hash.slice(1)).get('edge')===expected,edge.id);
+  await page.getByRole('button',{name:'Show full model',exact:true}).click();
+  await page.waitForFunction(()=>!new URLSearchParams(location.hash.slice(1)).has('edge'));
+ }
+}
+function expectedNeighborhood(focus:string){
+ const edges=expectedEdges.filter(edge=>edge.source===focus||edge.target===focus),ids=new Set([focus,...edges.flatMap(edge=>[edge.source,edge.target])]);
+ return {records:expectedRecordIds.filter(id=>ids.has(id)),edges};
+}
+async function assertNeighborhood(focus:string,label:string){
+ const expected=expectedNeighborhood(focus),actualRecords=await page.locator('#ontology-map svg [aria-label^="Inspect record "]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-model-id')??'')),actualEdges=await page.locator('#ontology-map svg [aria-label^="Inspect relationship "]').evaluateAll(nodes=>nodes.map(node=>node.querySelector('title')?.textContent??''));
+ assert(expected.records.length<expectedRecordIds.length&&expected.records.includes(focus),label+' source neighborhood is not a proper focus subset');
+ assert(sameStrings(actualRecords,expected.records),label+' record neighborhood differs from authored source');
+ assert(sameStrings(actualEdges,expected.edges.map(edge=>edge.label)),label+' relationship neighborhood differs from source projection');
+}
 try{
+ const authoredDocument=readDocument(await Bun.file(resolve('spec/metamodel/umf.yaml')).text(),'yaml'),assetResponse=await page.request.get(origin+'reference/metamodel.json');
+ assert(assetResponse.ok(),'Generated metamodel asset unavailable');
+ const selfModelCatalog=await assetResponse.json() as SelfModelCatalog;
+ assert(canonical(selfModelCatalog.document)===canonical(authoredDocument),'Generated metamodel document differs from authored source');
+ expectedRecordIds=authoredDocument.modules.flatMap(module=>module.elements.filter(element=>element.kind==='record').map(element=>JSON.stringify([module.id,element.id])));
+ const projected=selfModelGraph(selfModelCatalog);expectedEdges=projected.edges;
+ assert(sameStrings(projected.records.map(record=>record.id),expectedRecordIds),'Self-model projection omitted or added authored Record identities');
+ assert(expectedRecordIds.length===24,'Expected the complete authored 24-Record source model');
+ assert(expectedRecordIds.filter(id=>JSON.parse(id)[1].startsWith('extensionKind')).length===9,'Expected all nine authored extension-kind Record identities');
  // The default is the whole model, fitted into a substantial graph viewport.
  for(const [width,height] of [[1440,900],[1280,800],[798,900],[390,844]] as const){
   await page.setViewportSize({width,height});await ontology();
@@ -25,8 +63,7 @@ try{
   assert(layout.svg.height<=layout.graph.height&&layout.svg.width<=layout.graph.width,'Default graph is not fitted '+width);
   assert(layout.svg.width>=layout.graph.width*.8||layout.svg.height>=layout.graph.height*.8,'Graph wastes the available viewport '+width);
   assert(await page.locator('#ontology-map svg').evaluate((node:SVGSVGElement)=>{const b=node.getBBox(),v=node.viewBox.baseVal;return b.x>=v.x&&b.y>=v.y&&b.x+b.width<=v.x+v.width&&b.y+b.height<=v.y+v.height;}),'Graph geometry clipped '+width);
-  assert(await page.locator('#ontology-map [aria-label^="Inspect record "]').count()===15,'Default graph missing records '+width);
-  assert(await page.locator('#ontology-map [aria-label^="Inspect relationship "]').count()===17,'Default graph missing relationships '+width);
+  await assertFullGraph('Default graph '+width);
   const geometry=await page.locator('#ontology-map svg').evaluate((svg:SVGSVGElement)=>{
    const nodes=Array.from(svg.querySelectorAll<SVGAElement>('[data-model-id]')).map(node=>({id:node.dataset.modelId,box:node.querySelector('rect')!.getBoundingClientRect(),label:node.querySelector('text')!.getBoundingClientRect()}));
    const overlaps=nodes.flatMap((a,i)=>nodes.slice(i+1).filter(b=>Math.min(a.box.right,b.box.right)-Math.max(a.box.left,b.box.left)>1&&Math.min(a.box.bottom,b.box.bottom)-Math.max(a.box.top,b.box.top)>1));
@@ -40,7 +77,7 @@ try{
   });assert(geometry.overlaps===0&&geometry.labels===0&&geometry.endpointErrors===0&&geometry.edgeCollisions===0,'Balanced graph geometry invalid '+width+': '+JSON.stringify(geometry));
   if(width>=1001){assert(layout.detail.top<height/2,'Desktop details buried '+width);assert(layout.detail.left>layout.graph.left,'Desktop graph and details must be side by side');}
   await page.getByRole('button',{name:'Show full model',exact:true}).click();await viewport.waitFor();
-  assert(await page.locator('#ontology-map [aria-label^="Inspect record " ]').count()===15,'Repeated full-model action lost nodes '+width);
+  await assertFullGraph('Repeated full-model action '+width);
   await page.screenshot({path:join(evidence,'first-screen-'+width+'.png')});
   await page.getByRole('button',{name:'100%',exact:true}).click();
   for(let i=0;i<3;i++)await page.getByRole('button',{name:'Zoom in',exact:true}).click();
@@ -49,23 +86,23 @@ try{
   await page.getByRole('button',{name:'Zoom in',exact:true}).click();await page.getByRole('button',{name:'Zoom out',exact:true}).click();
   await page.getByRole('button',{name:'Fit graph',exact:true}).click();assert(await viewport.evaluate(n=>n.scrollTop)===0,'Fit did not reset pan '+width);
   await ontology('#'+new URLSearchParams({view:'ontology',node:JSON.stringify(['umf','element.scalarType'])}));
-  assert(await page.locator('#ontology-map [aria-label^="Inspect record "]').count()===15,'Field route hides the full model '+width);
+  await assertFullGraph('Field route '+width);
   await page.locator('#ontology-detail').scrollIntoViewIfNeeded();await page.screenshot({path:join(evidence,'field-first-screen-'+width+'.png')});
  }
  checks.push('Balanced nodes do not overlap; labels fit their cards and routed edges avoid other cards and meet their authored source and target at all four sizes');
- checks.push('All 15 records and 17 relationships fit by default at 1440/1280/798/390px; zoom and local panning work; desktop details remain adjacent');
+ checks.push('All '+expectedRecordIds.length+' authored records and '+expectedEdges.length+' projected relationships fit at 1440/1280/798/390px; zoom and local panning work; desktop details remain adjacent');
  await page.setViewportSize({width:1280,height:960});
  // @covers US-089-AC17 @covers US-089-AC18
  await ontology();assert(await page.locator('#ontology-detail h3').innerText()==='Document','Cold landing not Document ontology');assert(await page.locator('.workspace').isHidden(),'Competing browser remains visible');assert(await page.getByRole('navigation',{name:'Main navigation'}).getByRole('link',{name:'Schemas',exact:true}).getAttribute('href')==='core.html#view=ontology','Primary entry differs');
  assert(await page.locator('#ontology details[open]').count()===0,'Self-model starts expanded: '+await page.locator('#ontology details[open]').evaluateAll(nodes=>nodes.map(n=>n.outerHTML).join('\n')));await page.screenshot({path:join(evidence,'ontology-desktop.png'),fullPage:true});checks.push('Cold Schemas landing opens the full model with collapsed definition groups');
- const moduleRoute='#'+new URLSearchParams({view:'ontology',node:JSON.stringify(['umf','module'])});const moduleNode=page.getByRole('link',{name:'Inspect record Module · unchanged',exact:true});await moduleNode.focus();await moduleNode.press('Enter');await page.locator('#ontology-detail h3').filter({hasText:/^Module$/}).waitFor();assert(new URL(page.url()).hash===moduleRoute,'Keyboard node missing route');assert(await page.locator('#ontology-map [aria-label^="Inspect record "]').count()===15,'Selecting a node implicitly filtered the full graph');await page.reload();await page.locator('#ontology-detail h3').filter({hasText:/^Module$/}).waitFor();await page.goBack();await page.locator('#ontology-detail h3').filter({hasText:/^Document$/}).waitFor();checks.push('Graph node keyboard activation, exact refresh and Back retain context');
+ const moduleRoute='#'+new URLSearchParams({view:'ontology',node:JSON.stringify(['umf','module'])});const moduleNode=page.getByRole('link',{name:'Inspect record Module · unchanged',exact:true});await moduleNode.focus();await moduleNode.press('Enter');await page.locator('#ontology-detail h3').filter({hasText:/^Module$/}).waitFor();assert(new URL(page.url()).hash===moduleRoute,'Keyboard node missing route');await assertFullGraph('Selecting a node');await page.reload();await page.locator('#ontology-detail h3').filter({hasText:/^Module$/}).waitFor();await page.goBack();await page.locator('#ontology-detail h3').filter({hasText:/^Document$/}).waitFor();checks.push('Graph node keyboard activation, exact refresh and Back retain context');
  await page.locator('.ontology-connections summary').click();await page.getByRole('button',{name:'1. modules',exact:true}).click();await page.locator('#ontology-detail h3').filter({hasText:/^Connection: Document$/}).waitFor();assert(await page.locator('#ontology-detail').getByRole('link',{name:'Module',exact:true}).getAttribute('href')===moduleRoute,'Connection target link wrong');await page.getByRole('combobox',{name:'Focus record'}).selectOption(JSON.stringify(['umf','element']));await page.locator('#ontology-detail h3').filter({hasText:/^Element$/}).waitFor();assert(!new URL(page.url()).hash.includes('edge='),'Old connection retained after selecting a different type');await page.getByRole('complementary',{name:'UMF language definitions'}).getByText(/^Records ·/).click();await page.getByRole('complementary',{name:'UMF language definitions'}).getByRole('link',{name:'Module',exact:true}).click();await page.locator('#ontology-detail h3').filter({hasText:/^Module$/}).waitFor();checks.push('Labeled graph connections expose their source and navigable target');
- await page.getByRole('button',{name:'Show full model',exact:true}).click();assert(await page.locator('#ontology-map [aria-label^="Inspect record "]').count()===15,'Full graph missing records');await page.reload();await page.locator('#ontology-detail h3').filter({hasText:/^Module$/}).waitFor();assert(await page.locator('#ontology-map [aria-label^="Inspect record "]').count()===15,'Full graph lost after refresh');
- await page.getByRole('combobox',{name:'Focus record'}).selectOption(JSON.stringify(['umf','element']));await page.locator('#ontology-detail h3').filter({hasText:/^Element$/}).waitFor();assert(await page.locator('#ontology-map [aria-label^="Inspect record "]').count()<15,'Neighborhood did not filter');await page.reload();await page.locator('#ontology-detail h3').filter({hasText:/^Element$/}).waitFor();assert(await page.locator('#ontology-map [aria-label^="Inspect record "]').count()<15,'Explicit neighborhood lost after refresh');
- await page.getByRole('button',{name:'Show full model',exact:true}).click();await page.waitForFunction(()=>!location.hash.includes('focus='));await page.reload();await page.locator('#ontology-detail h3').filter({hasText:/^Element$/}).waitFor();assert(await page.locator('#ontology-map [aria-label^="Inspect record "]').count()===15,'Full model not retained after refresh');checks.push('Selection keeps the full model; explicit neighborhood and full-model routes survive refresh');
- await page.getByRole('combobox',{name:'Focus record'}).selectOption(JSON.stringify(['umf','element']));await page.waitForFunction(()=>location.hash.includes('focus='));const neighborhoodCount=await page.locator('#ontology-map [aria-label^="Inspect record "]').count();
- await page.locator('#ontology-detail').getByRole('link',{name:'scalarType',exact:true}).click();await page.locator('#ontology-detail h3').filter({hasText:/^scalarType$/}).waitFor();assert(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('focus')===JSON.stringify(['umf','element']),'Field link dropped explicit focus');assert(await page.locator('#ontology-map [aria-label^="Inspect record "]').count()===neighborhoodCount,'Field link changed explicit neighborhood');
- await page.locator('#ontology-detail').getByRole('link',{name:'Owned by Record Element',exact:true}).click();await page.locator('#ontology-detail h3').filter({hasText:/^Element$/}).waitFor();assert(await page.locator('#ontology-map [aria-label^="Inspect record "]').count()===neighborhoodCount,'Owner link changed explicit neighborhood');
+ await page.getByRole('button',{name:'Show full model',exact:true}).click();await assertFullGraph('Full graph');await page.reload();await page.locator('#ontology-detail h3').filter({hasText:/^Module$/}).waitFor();await assertFullGraph('Full graph after refresh');
+ const elementFocus=JSON.stringify(['umf','element']);await page.getByRole('combobox',{name:'Focus record'}).selectOption(elementFocus);await page.locator('#ontology-detail h3').filter({hasText:/^Element$/}).waitFor();await assertNeighborhood(elementFocus,'Explicit neighborhood');await page.reload();await page.locator('#ontology-detail h3').filter({hasText:/^Element$/}).waitFor();await assertNeighborhood(elementFocus,'Explicit neighborhood after refresh');
+ await page.getByRole('button',{name:'Show full model',exact:true}).click();await page.waitForFunction(()=>!location.hash.includes('focus='));await page.reload();await page.locator('#ontology-detail h3').filter({hasText:/^Element$/}).waitFor();await assertFullGraph('Full model retained after refresh');checks.push('Selection keeps the full model; exact explicit neighborhood and full-model routes survive refresh');
+ await page.getByRole('combobox',{name:'Focus record'}).selectOption(elementFocus);await page.waitForFunction(()=>location.hash.includes('focus='));
+ await page.locator('#ontology-detail').getByRole('link',{name:'scalarType',exact:true}).click();await page.locator('#ontology-detail h3').filter({hasText:/^scalarType$/}).waitFor();assert(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('focus')===elementFocus,'Field link dropped explicit focus');await assertNeighborhood(elementFocus,'Field link');
+ await page.locator('#ontology-detail').getByRole('link',{name:'Owned by Record Element',exact:true}).click();await page.locator('#ontology-detail h3').filter({hasText:/^Element$/}).waitFor();await assertNeighborhood(elementFocus,'Owner link');
  await page.setViewportSize({width:1440,height:900});await page.getByRole('combobox',{name:'Focus record'}).selectOption(JSON.stringify(['umf','semanticType']));await page.locator('#ontology-detail h3').filter({hasText:/^Semantic type reference$/}).waitFor();await page.getByRole('button',{name:'Fit graph',exact:true}).click();const zoom=()=>page.locator('.graph-zoom output').innerText().then(Number.parseFloat);const fitted=await zoom();await page.getByRole('button',{name:'Zoom in',exact:true}).click();const bigger=await zoom();assert(bigger>fitted,'Zoom in shrinks an isolated fitted node');await page.getByRole('button',{name:'Zoom out',exact:true}).click();assert(await zoom()<bigger,'Zoom out enlarges an isolated node');
  await page.getByRole('combobox',{name:'Focus record'}).selectOption(JSON.stringify(['umf','element']));await page.locator('#ontology-detail h3').filter({hasText:/^Element$/}).waitFor();await page.getByRole('button',{name:'Fit graph',exact:true}).click();await page.getByRole('button',{name:'Show full model',exact:true}).click();await page.waitForFunction(()=>!location.hash.includes('focus='));checks.push('Explicit focus survives field and owner links; isolated-node zoom remains monotonic above 300%');
  await page.locator('#ontology-detail').getByRole('link',{name:'itemType',exact:true}).click();await page.locator('#ontology-detail h3').filter({hasText:/^itemType$/}).waitFor();await page.locator('#ontology-detail').getByRole('link',{name:/Open generated object reference/}).click();await page.locator('#inspector h2').filter({hasText:/^itemType$/}).waitFor();assert(await page.locator('#inspector details[open]').count()===0,'Object disclosures start open');const text=await page.locator('#inspector').innerText();for(const word of ['array','map','module','element'])assert(text.includes(word),'itemType missing '+word);await page.goBack();await page.locator('#ontology-detail h3').filter({hasText:/^itemType$/}).waitFor();await page.goBack();await page.locator('#ontology-detail h3').filter({hasText:/^Element$/}).waitFor();await page.locator('#ontology-detail').getByRole('link',{name:'scalarType',exact:true}).click();await page.locator('#ontology-detail h3').filter({hasText:/^scalarType$/}).waitFor();await page.locator('#ontology-detail').getByRole('link',{name:/Open generated object reference/}).click();await page.locator('#inspector h2').filter({hasText:/^scalarType$/}).waitFor();const scalarText=await page.locator('#inspector').innerText();assert(scalarText.includes('Any of: boolean'),'Known scalar values are unavailable');assert(scalarText.includes('Other nonempty strings are structurally accepted'),'Open string behavior is not summarized');checks.push('Field reference shows known scalar values and open-string behavior once');
@@ -80,6 +117,7 @@ try{
  await page.goto(origin+'reference/workbench.html');await page.locator('#load-status').filter({hasText:'assets verified'}).waitFor();await page.locator('#source').waitFor();await page.waitForFunction(()=>!document.getElementById('run')?.hasAttribute('disabled'));
  await page.locator('#open-file').setInputFiles({name:'umf.yaml',mimeType:'application/yaml',buffer:Buffer.from(yaml)});await page.waitForFunction((length:number)=>(document.getElementById('source') as HTMLTextAreaElement)?.value.length===length,yaml.length);await page.locator('#run').click();await page.locator('#run-status').filter({hasText:'Completed'}).waitFor();assert(parseYaml(await page.locator('#output pre').first().innerText()).valid===true,'Self-model fails browser validation');await page.locator('#source-json').click();await page.waitForFunction(()=>document.getElementById('source-json')?.getAttribute('aria-pressed')==='true');assert(canonical(readDocument(await page.locator('#source').inputValue(),'json'))===canonical(readDocument(yaml,'yaml')),'Workbench toggle changes self-model');checks.push('Actual self-model validates in browser workbench and survives YAML/JSON conversion');
  await page.route('**/metamodel.json',route=>route.fulfill({body:'{}',contentType:'application/json'}));await page.goto(origin+'reference/core.html');await page.locator('#ontology').getByText(/REFERENCE_INTEGRITY changed metamodel.json/).waitFor();await page.getByRole('link',{name:'Open object reference',exact:true}).click();await page.locator('#inspector h2').filter({hasText:/^Document$/}).waitFor();await page.unroute('**/metamodel.json');checks.push('Tampered self-model asset is refused with usable object-reference recovery');
+ await assertRelationshipRoutes();checks.push('Every projected relationship identity navigates to its exact authored edge');
  assert(errors.length===0,'Page errors '+errors.join(';'));assert(external.length===0,'Unexpected external requests '+external.join(';'));
  const receipt={target:origin,browserVersion:browser.version(),checks,passed:checks.length,pageErrors:errors,unexpectedExternalRequests:external};await Bun.write(join(evidence,'verification.json'),JSON.stringify(receipt,null,2)+'\n');console.log(JSON.stringify(receipt,null,2));
 }catch(error){await page.screenshot({path:join(evidence,'failure.png'),fullPage:true});throw error;}finally{await browser.close();server?.stop(true);}

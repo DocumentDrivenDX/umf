@@ -69,7 +69,7 @@ def test_extracted_sdist_helper_pin_accepts_exact_source_and_rejects_drift(
     _, pinned_path = verifier._sdist_helper(repository)
     assert pinned_path == helper_path
 
-    helper_path.write_bytes(helper_path.read_bytes() + b"\\n# drift\\n")
+    helper_path.write_bytes(helper_path.read_bytes() + b"\n# drift\n")
     with pytest.raises(ValueError, match="differs from its source pin"):
         verifier._sdist_helper(repository)
 

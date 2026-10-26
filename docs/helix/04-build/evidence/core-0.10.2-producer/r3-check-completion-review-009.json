@@ -1,0 +1,49 @@
+{
+  "actualCheckTerminal": {
+    "parentReportedExitCode": 0,
+    "parentReportedSession": 39531,
+    "productCheckPidPgid": 22831,
+    "productCheckSeconds": 237.423,
+    "receiptElapsedSeconds": 427.137,
+    "returncode": 0,
+    "stdout": "Rust inventory current: 578 source modules; 342 active scripts\n",
+    "timedOut": false
+  },
+  "checkReceiptSha256": "bb5b848369d7bbc15343eadc6df206339402b5fcca584ed573d743671760e180",
+  "controllerSha256": "bdd777716cc14e5a4d819238d70969aff6352c92a72ed9f903f5061b98c92ffb",
+  "findings": [],
+  "generationReceiptSha256": "c512727c5a37463d8baa9e038e610da162c2f5cc4b9c7ef70289f6e4fc0c9891",
+  "independentCustodyChecks": {
+    "allThreeApprovalBindingsAndToolBinaryHashesVerified": true,
+    "gitRegistrationAbsent": true,
+    "nodeModulesBeforeAfterByteIdentical": true,
+    "nodeModulesCanonicalSnapshotSha256": "f97d9a3f77efe220f3b5f11473d81755ee14f9beb7007968c795187794433cdf",
+    "nodeModulesSnapshotEntriesEach": 19517,
+    "ownedIdentities": [
+      22379,
+      22393,
+      22394,
+      22395,
+      22665,
+      22666,
+      22670,
+      22674,
+      22824,
+      22831,
+      25289
+    ],
+    "pidAndPgidAbsenceProbes": 22,
+    "retainedChildOutputPairsVerified": 10,
+    "worktreeAbsent": true
+  },
+  "inventorySha256": "a2609b45cd6131aae1211a764405912472f4ccdd998d021807d65948b53f939b",
+  "mode": "check-only",
+  "priorSolSourceBlobAuditSha256": "983891f22d79dd3a9b917586124d388ea2278bbc8d2409a59d5cec3132c4a131",
+  "reviewedUtc": "2026-10-24T06:25:49.245845+00:00",
+  "role": "sol",
+  "rootIndependentCleanupSha256": "5d9d15856d4f3129f29f98c97ed550dd25aa55f9fa8d7e359c95628ae75efa4e",
+  "scope": "Accept completed unmodified source091 inventory --check and exact generation/source custody as evidence supporting the next review of a nonexecutable inventory/evidence overlay. No product command rerun by reviewer. No native/public/whole-migration/release qualification and no commit, push or publication approval. Overlay content and commit remain separate review steps.",
+  "sourceCommit": "091aea5d111045fe70b229bc72fb47ef95febb9d",
+  "status": "approved-for-inventory-evidence-review",
+  "stderrQualification": "Checker emitted a 306-byte CPython SyntaxWarning while parsing the existing pg-old-snapshot-admission-probe.py invalid escape. Exact stderr digest/event verified; no process failure or skipped-source diagnostic observed. This warning does not represent execution of that native probe."
+}

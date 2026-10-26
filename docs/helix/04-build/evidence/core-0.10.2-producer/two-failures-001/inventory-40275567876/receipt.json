@@ -1,0 +1,120 @@
+{
+  "aggregateArtifactLimitBytes": 16777216,
+  "aggregateDeadlineSeconds": 600,
+  "aggregateLogBytes": 1461,
+  "aggregateLogLimitBytes": 1048576,
+  "artifactBytesIncludingReceiptReserve": 2680332,
+  "childMaximumSeconds": 500,
+  "claims": {
+    "checkOrQualification": false,
+    "generatedInventoryArtifact": true,
+    "inventoryCurrentness": false,
+    "release": false,
+    "sourceAdoption": false
+  },
+  "cleanupReserveSeconds": 95,
+  "commandRecords": [
+    {
+      "argv": [
+        "python",
+        "-I",
+        "-"
+      ],
+      "captureExit": 0,
+      "limitSeconds": 180,
+      "logBytes": 0,
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "monotonicDurationMs": 1020,
+      "name": "source-and-tool-identities",
+      "rawExit": 0,
+      "stage": "source-and-tool-identities",
+      "truncated": false,
+      "truncationMarker": null
+    },
+    {
+      "argv": [
+        "bun",
+        "install",
+        "--frozen-lockfile"
+      ],
+      "captureExit": 0,
+      "limitSeconds": 180,
+      "logBytes": 1052,
+      "logSha256": "5e5f9694eedd509200d6cfa93a1f73c3c7925ba3865214d13d7f492babeb446f",
+      "monotonicDurationMs": 3300,
+      "name": "bun-install",
+      "rawExit": 0,
+      "stage": "bun-install",
+      "truncated": false,
+      "truncationMarker": null
+    },
+    {
+      "argv": [
+        "python",
+        "-I",
+        "-c",
+        "import subprocess; p=subprocess.run([\"git\",\"status\",\"--porcelain\",\"--untracked-files=all\"],check=True,text=True,stdout=subprocess.PIPE); print(p.stdout,end=\"\"); raise SystemExit(bool(p.stdout))"
+      ],
+      "captureExit": 0,
+      "limitSeconds": 30,
+      "logBytes": 0,
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "monotonicDurationMs": 190,
+      "name": "source-clean-after-install",
+      "rawExit": 0,
+      "stage": "source-clean-after-install",
+      "truncated": false,
+      "truncationMarker": null
+    },
+    {
+      "argv": [
+        "python",
+        "scripts/rust-inventory.py"
+      ],
+      "captureExit": 0,
+      "limitSeconds": 461,
+      "logBytes": 409,
+      "logSha256": "19fe192804e4aad89097508919e587e5b5f3a766985063d492b1cb6172d4e173",
+      "monotonicDurationMs": 157240,
+      "name": "r3-inventory-generation",
+      "rawExit": 0,
+      "stage": "r3-inventory-generation",
+      "truncated": false,
+      "truncationMarker": null
+    }
+  ],
+  "commandRecordsSha256": "ebd42fc457c55d1d8b56090797b5cf3ab4e9bfb4b0bb9f37ee438f8137837fad",
+  "failureOnlyReceipt": false,
+  "output": {
+    "bytes": 2609044,
+    "counts": {
+      "activeScriptFiles": 347,
+      "algorithmSymbols": 10332,
+      "pythonModules": 105,
+      "rustBuildInputs": 76,
+      "rustModules": 127,
+      "scriptFiles": 2953,
+      "sourceModules": 578,
+      "typescriptModules": 473
+    },
+    "path": "docs/helix/04-build/evidence/rust-migration/r3/inventory.json",
+    "sha256": "cc6f8343fe4c210b1120495151ec6bb38fe048b515886198573329873b621a67",
+    "sourceCohortSha256": "c3cba73ee9ebd123f759c411531b3250d563cf11e7317412b00841faba58a6f2"
+  },
+  "outputAllowlist": [
+    "docs/helix/04-build/evidence/rust-migration/r3/inventory.json"
+  ],
+  "profile": "umf.core-0102-r3-inventory-generation/1",
+  "rawLogUpload": false,
+  "reason": "The exact source inventory generator completed successfully.",
+  "ref": "refs/heads/codex/core-0102-inventory-generation",
+  "runAttempt": "1",
+  "runId": "40275567876",
+  "scope": "R3 inventory generation artifact only; no currentness or release claim",
+  "sourceCommit": "12cd098d76f095be00b892bc84f7b1b919d1d38e",
+  "sourceInputsSha256": "6702eb461a744aa3bcf042f1156cee20a97b5d758b86c5d174987865e1bc1b4d",
+  "sourceTree": "32615d5e273613a48e8f562a1ecba8565b8a3940",
+  "status": "GENERATION_PASS_ARTIFACT_ONLY",
+  "toolchainSha256": "ecf9133f68b6ea7728281491a9d8eeaf16d664afe9b8a153681a7f3d66f9028c",
+  "workflow": "Core 0.10.2 R3 inventory generation"
+}

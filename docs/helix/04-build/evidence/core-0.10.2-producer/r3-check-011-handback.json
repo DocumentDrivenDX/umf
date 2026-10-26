@@ -1,0 +1,102 @@
+{
+  "profile": "umf.core011.independent-check-handback/1",
+  "status": "pass",
+  "observedUtc": "2026-10-24T10:37:22.866396+00:00",
+  "controllerReceiptSha256": "50b86ad4fa8c6ea24ab04da8a6b282f39f18bd641ce9469342b0e1c0f9d4305a",
+  "controllerPid": 26206,
+  "controllerPgid": 26206,
+  "actualStartedUtc": "2026-10-24T10:33:51Z",
+  "actualEndedUtc": "2026-10-24T10:36:40Z",
+  "controllerElapsedSeconds": 168.328,
+  "auditElapsedSeconds": 23.631,
+  "withinOriginal300SecondAggregate": true,
+  "unifiedExecSession": 68256,
+  "actualSessionExit": 0,
+  "independentProcessAbsence": [
+    {
+      "pid": 26206,
+      "pgid": 26206,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 26253,
+      "pgid": 26253,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 26254,
+      "pgid": 26254,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 26255,
+      "pgid": 26255,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 26256,
+      "pgid": 26256,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 26257,
+      "pgid": 26257,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 26390,
+      "pgid": 26390,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 26392,
+      "pgid": 26392,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 26395,
+      "pgid": 26395,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 26396,
+      "pgid": 26396,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 26458,
+      "pgid": 26458,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 26459,
+      "pgid": 26459,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 26462,
+      "pgid": 26462,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 28015,
+      "pgid": 28015,
+      "independentlyAbsent": true
+    },
+    {
+      "pid": 28019,
+      "pgid": 28019,
+      "independentlyAbsent": true
+    }
+  ],
+  "worktreeFilesystemAndGitRegistryAbsent": true,
+  "freshIndependentNodeModules": {
+    "entryCount": 19517,
+    "sha256": "f97d9a3f77efe220f3b5f11473d81755ee14f9beb7007968c795187794433cdf",
+    "matchesBothRetainedSnapshots": true
+  },
+  "committedInputByteCorrespondence": true,
+  "inventorySha256": "90ecd7dc3c7461660d67aa42358d8c339534cb9618d6b68b6b8c336cb843e35c",
+  "inventoryBytes": 2607211,
+  "scope": "Full committed-source inventory check and owned cleanup only; no website/build/package/native/CI/release/publication or global quiet claim"
+}
