@@ -639,21 +639,17 @@ def auditwheel_json_report(text: str, expected_filename: str) -> dict:
         "version", "wheel", "pure", "overall_tag", "sym_tag", "pyfpe", "ucs2",
         "unsupported_isa", "versioned_symbols", "external_libs", "policy_upgrades",
     }
-    reports = []
-    for line in text.splitlines():
-        candidate = line.strip()
-        if not candidate.startswith("{"):
-            continue
-        try:
-            value = json.loads(candidate)
-        except json.JSONDecodeError as error:
-            raise ValueError("auditwheel JSON output is malformed") from error
-        if not isinstance(value, dict):
-            raise ValueError("auditwheel JSON result is not an object")
-        reports.append(value)
-    if len(reports) != 1:
-        raise ValueError("auditwheel did not emit exactly one structured policy result")
-    report = reports[0]
+    start = text.find("{")
+    if start < 0 or "}" in text[:start]:
+        raise ValueError("auditwheel output has no unambiguous structured policy result")
+    try:
+        report, end = json.JSONDecoder().raw_decode(text, start)
+    except json.JSONDecodeError as error:
+        raise ValueError("auditwheel JSON output is malformed or incomplete") from error
+    if text[end:].strip():
+        raise ValueError("auditwheel output has trailing or multiple JSON results")
+    if not isinstance(report, dict):
+        raise ValueError("auditwheel JSON result is not an object")
     if set(report) != expected:
         raise ValueError("auditwheel JSON fields are incomplete or differ from the pinned version-1 profile")
     if (type(report["version"]) is not int or report["version"] != 1
