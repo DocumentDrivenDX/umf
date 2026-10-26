@@ -6,6 +6,7 @@ import {compileTableDeployment} from '../../src/table-deployment';
 import {compileTableMigration,compileTableInventoryMigration,discoverTableInventoryMigrationChanges,irreversiblePurgeDisclosure,serializeTableInventoryMigration,verifyTableInventoryMigration} from '../../src/table-migration';
 import {compileG10InventoryPlan,createHistoricalG10Verifier} from '../../src/table-migration/inventory';
 import {partitionRendererDependencies,verifySourcePublicationCoverage} from '../../src/table-migration/inventory-effects';
+import {scheduleTypedInventoryEffects,type EffectNode} from '../../src/table-migration/inventory-graph';
 import {deriveInventorySeedLineage} from '../../src/table-migration/inventory-history';
 import {R2WorkLimitError,R2WorkMeter,R2_WORK_EVENT_UNITS} from '../../src/table-migration/inventory-r2-context';
 import {inspectR2InventorySourceContext,prepareR2InventorySourceContext} from '../../src/table-migration/inventory';
@@ -27,6 +28,8 @@ const deployWithConfiguration=(document:unknown,configuration:typeof config)=>{
  return result.bundle;
 };
 const emptyHistory:TableInventorySourceHistory={profile:'umf.table-inventory-source-history/0.1',plans:[],executions:[]};
+type GraphTestJson=null|boolean|number|string|GraphTestJson[]|{[key:string]:GraphTestJson};
+const emptyPrefixCatalog=():Record<string,GraphTestJson[]>=>({tables:[],columns:[],keys:[],checks:[],foreignKeys:[],indexes:[],policies:[],grants:[],comments:[]});
 const options=(tableIntents:TableInventoryMigrationOptions['tableIntents'],reviewedChanges:TableInventoryMigrationOptions['reviewedChanges'],retiredSeedSets:string[]=[]):TableInventoryMigrationOptions=>({
  version:'umf.table-inventory-migration-options/0.1',tableIntents,backfills:[],defaultChanges:[],conversions:[],concurrentIndexes:[],validations:[],reviewedChanges,seedSets:[],retiredSeedSets,retirements:[],restorations:[],archiveSources:[],
 });
@@ -161,6 +164,43 @@ test('G10 dependency projection claims every raw edge as physical work or a comp
   (copy:any)=>{const edge=copy.dependencies.find((item:any)=>item.reason==='operation-requires-table');if(!edge)throw new Error('Test fixture lacks an operation-to-table edge.');const alternate=copy.catalog.tables.find((row:any)=>hashCanonical(row.identity)!==edge.to);if(!alternate||hashCanonical(alternate.identity)===edge.to)throw new Error('Test fixture lacks an alternate source table.');edge.to=hashCanonical(alternate.identity);},
   (copy:any)=>{copy.dependencies.push({from:'f'.repeat(64),to:copy.dependencies[0]!.to,reason:'owned-by-table',sourcePath:copy.dependencies[0]!.sourcePath,state:'present'});},
  ]){const changed=structuredClone(projection);mutate(changed);expect(()=>partitionRendererDependencies(bundle,changed)).toThrow();}
+});
+
+test('scheduler prefixes preserve final frames for zero and multiple groups with or without metadata IDs',()=>{
+ const makeCreate=(table:string,sourceOrder:number):{effect:EffectNode;identity:GraphTestJson}=>{
+  const record={module:'graph_snapshot',element:`${table}_record`},identity:GraphTestJson={kind:'table',table,subject:record},meaning:GraphTestJson={tableMeaning:{},embeddedCatalog:{columns:[],keys:[],checks:[]}};
+  return {identity,effect:{id:`create-${table}`,kind:'table',operation:'create-table',subject:{kind:'table',table,record},sourcePath:`/tables/${table}`,sql:`CREATE TABLE ${table} ()`,transaction:'required',recovery:'rollback-transaction',sourceOrder,atomicGroup:null,transition:{action:'add',collection:'tables',meaning}}};
+ };
+ const initial=()=>({profile:'umf.table-inventory-prefix/0.1' as const,index:0,completedSteps:[],tableStates:[],catalog:emptyPrefixCatalog(),metadata:{profile:'umf.table-inventory-metadata/0.1' as const,state:'pristine' as const},seedStates:[]});
+ const assertFrames=(result:ReturnType<typeof scheduleTypedInventoryEffects>,groupCount:number,metadata:boolean)=>{
+  expect(result.prefixes).toHaveLength(groupCount+4);
+  expect(result.phases).toHaveLength(groupCount+3);
+  expect(result.prefixes.map(frame=>frame.metadata.state)).toEqual(['pristine',...Array<string>(groupCount+2).fill('pending'),'published']);
+  for(let index=0;index<result.prefixes.length;index++){
+   const frame=result.prefixes[index]!,{digest,...body}=frame;
+   expect(frame.index).toBe(index);
+   expect(frame.completedSteps).toEqual(result.phases.slice(0,index).flatMap(phase=>phase.steps));
+   expect(digest).toBe(hashCanonical(body));
+  }
+  expect(result.prefixes.at(-1)!.metadata.state).toBe('published');
+  if(metadata){expect(result.prefixes[1]!.completedSteps).toEqual(['prepare']);expect(result.prefixes[2]!.completedSteps).toEqual(['prepare','approval']);expect(result.prefixes.at(-1)!.completedSteps.at(-1)).toBe('publication');}
+  else expect(result.prefixes.every(frame=>!frame.completedSteps.some(step=>['prepare','approval','publication'].includes(step)))).toBe(true);
+ };
+ for(const metadataStepIds of [undefined,{prepare:'prepare',approval:'approval',publication:'publication'}]){
+  const empty=scheduleTypedInventoryEffects(initial(),[],[],emptyPrefixCatalog(),metadataStepIds,[]);
+  assertFrames(empty,0,metadataStepIds!==undefined);
+  const first=makeCreate('first',1),second=makeCreate('second',2),target=emptyPrefixCatalog();
+  target.tables.push({identity:first.identity,meaning:{},state:'present'},{identity:second.identity,meaning:{},state:'present'});
+  const edges=[{dependent:hashCanonical(second.identity),prerequisite:hashCanonical(first.identity),sourcePath:'/tests/create-order',reason:'source-create-order',state:'present' as const}];
+  const grouped=scheduleTypedInventoryEffects(initial(),[first.effect,second.effect],edges,target,metadataStepIds,[]);
+  assertFrames(grouped,2,metadataStepIds!==undefined);
+  const firstGroup=grouped.prefixes[3]!,secondGroup=grouped.prefixes[4]!;
+  expect(firstGroup.completedSteps.at(-1)).toBe(first.effect.id);expect(secondGroup.completedSteps.at(-1)).toBe(second.effect.id);
+  expect(secondGroup.catalog).not.toBe(firstGroup.catalog);expect(secondGroup.catalog.tables).not.toBe(firstGroup.catalog.tables);
+  expect(secondGroup.tableStates).not.toBe(firstGroup.tableStates);expect(secondGroup.seedStates).not.toBe(firstGroup.seedStates);expect(secondGroup.completedSteps).not.toBe(firstGroup.completedSteps);
+  const firstBefore=structuredClone(firstGroup);secondGroup.catalog.tables.push({extra:true});secondGroup.tableStates.push({extra:true});secondGroup.seedStates.push({extra:true});secondGroup.completedSteps.push('later-only');
+  expect(firstGroup).toEqual(firstBefore);
+ }
 });
 
 test('legacy seed history requires exact source-derived reported outcomes and remains explicitly non-native',()=>{
@@ -451,6 +491,13 @@ describe('G10 appended CREATE plus G02 compiled fixture',()=>{
 
  test('retains source, marker, grant, field, phase, seed and operation ordering assertions',()=>{
  const {candidates,request,plan}=structuredClone(completed);
+ expect(plan.prefixes).toHaveLength(plan.phases.length+1);
+ for(let index=0;index<plan.prefixes.length;index++){
+  const prefix=plan.prefixes[index]!,{digest,...body}=prefix;
+  expect(prefix.index).toBe(index);
+  expect(prefix.completedSteps).toEqual(plan.phases.slice(0,index).flatMap(phase=>phase.steps));
+  expect(digest).toBe(hashCanonical(body));
+ }
  const originalSeeds=(legalSource() as any).modules[0]!.extensions['umf.tables'].seedSets;
  expect(JSON.parse(request.next.source.utf8).modules[0]!.extensions['umf.tables'].seedSets.slice(0,originalSeeds.length)).toEqual(originalSeeds);
  expect(candidates.some(candidate=>candidate.kind==='create-table'&&(candidate.newValue as any).table==='matter_review_groups')).toBe(true);
