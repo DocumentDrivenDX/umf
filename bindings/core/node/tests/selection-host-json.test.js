@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect, setDefaultTimeout, test} from 'bun:test';
 import {createRequire} from 'node:module';
-import {coreElementSelectionHostInput, coreOpaqueReturnHostInput} from '../src/host-json.js';
+import {coreElementSelectionHostInput, coreOpaqueReturnHostInput, kindRuntimeValidationHostInput} from '../src/host-json.js';
 import {UmfCoreError} from '../index.js';
+import {validateDocument as typescriptValidateDocument} from '../../../../dist/umf-node.js';
 import {encodeWire} from '../src/wire.js';
 import {directTypescriptWarningSelection} from '../../../../scripts/rust-migration/r8/selection-private-host-direct.mjs';
 import {readFileSync} from 'node:fs';
@@ -48,6 +49,88 @@ test('private opaque return carrier rejects handles outside the live invocation'
   }};
   expect(() => coreOpaqueReturnHostInput(fakeAddon, () => ({}), {}, {}, UmfCoreError))
     .toThrow('Malformed opaque host return carrier');
+});
+
+test('private kindRuntime stage matches caller delegation order, receivers, arguments, and result identity', () => {
+  const source = Object.freeze({document: true});
+  const registrations = Object.freeze([{name: 'owned'}]);
+  const result = Object.freeze({valid: false, diagnostics: []});
+  const trace = [];
+  const runtime = Object.defineProperty({}, 'validateDocument', {
+    get() {
+      trace.push('runtime.validateDocument:get');
+      return function(input, actualRegistrations) {
+        trace.push('runtime.validateDocument:call');
+        expect(this).toBe(runtime);
+        expect(input).toBe(source);
+        expect(actualRegistrations).toBe(registrations);
+        return result;
+      };
+    },
+  });
+  const registry = Object.defineProperties({}, {
+    kindRuntime: {get() { trace.push('registry.kindRuntime:get'); return runtime; }},
+    registrations: {get() {
+      trace.push('registry.registrations:get');
+      return function() {
+        trace.push('registry.registrations:call');
+        expect(this).toBe(registry);
+        return registrations;
+      };
+    }},
+  });
+
+  const referenceTrace = [];
+  const referenceRuntime = Object.defineProperty({}, 'validateDocument', {
+    get() {
+      referenceTrace.push('runtime.validateDocument:get');
+      return function(input, actualRegistrations) {
+        referenceTrace.push('runtime.validateDocument:call');
+        expect(this).toBe(referenceRuntime);
+        expect(input).toBe(source);
+        expect(actualRegistrations).toBe(registrations);
+        return result;
+      };
+    },
+  });
+  const referenceRegistry = Object.defineProperties({}, {
+    kindRuntime: {get() { referenceTrace.push('registry.kindRuntime:get'); return referenceRuntime; }},
+    registrations: {get() {
+      referenceTrace.push('registry.registrations:get');
+      return function() {
+        referenceTrace.push('registry.registrations:call');
+        expect(this).toBe(referenceRegistry);
+        return registrations;
+      };
+    }},
+  });
+
+  expect(typescriptValidateDocument(source, referenceRegistry)).toBe(result);
+  expect(kindRuntimeValidationHostInput(addon, source, registry, UmfCoreError)).toBe(result);
+  expect(trace).toEqual(referenceTrace);
+  expect(trace).toEqual([
+    'registry.kindRuntime:get', 'registry.kindRuntime:get',
+    'runtime.validateDocument:get', 'registry.registrations:get',
+    'registry.registrations:call', 'runtime.validateDocument:call',
+  ]);
+});
+
+test('private kindRuntime stage preserves the exact thrown value from caller callbacks', () => {
+  const source = {};
+  const sentinel = Object.freeze({validationFailure: true});
+  const runtime = {validateDocument() { throw sentinel; }};
+  const registry = {kindRuntime: runtime, registrations() { return []; }};
+  try {
+    kindRuntimeValidationHostInput(addon, source, registry, UmfCoreError);
+    throw new Error('expected validation callback to throw');
+  } catch (error) {
+    expect(error).toBe(sentinel);
+  }
+});
+
+test('private kindRuntime stage refuses a falsy runtime instead of entering a default route', () => {
+  expect(() => kindRuntimeValidationHostInput(addon, {}, {kindRuntime: null}, UmfCoreError))
+    .toThrow('Caller Registry has no truthy kindRuntime for the private delegation route');
 });
 
 

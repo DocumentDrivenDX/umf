@@ -31,23 +31,6 @@ def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def canonical_requirement(value: str) -> tuple[str, tuple[str, ...]]:
-    """Compare simple range requirements without depending on textual order."""
-    if ";" in value or "@" in value or "[" in value or "]" in value:
-        raise ValueError("unsupported marker, URL, or extra in access wheel requirement")
-    match = re.fullmatch(r"([A-Za-z0-9][A-Za-z0-9._-]*)(.*)", value.strip())
-    if match is None:
-        raise ValueError("malformed access wheel requirement")
-    name = re.sub(r"[-_.]+", "-", match.group(1)).lower()
-    clauses = []
-    for clause in match.group(2).split(",") if match.group(2) else ():
-        item = re.fullmatch(r"\s*(===|~=|==|!=|<=|>=|<|>)\s*([^\s,]+)\s*", clause)
-        if item is None:
-            raise ValueError("malformed access wheel requirement specifier")
-        clauses.append(item.group(1) + item.group(2))
-    return name, tuple(sorted(clauses))
-
-
 def inspect_core_wheel(path: Path) -> tuple[dict[str, bytes], str]:
     with zipfile.ZipFile(path) as archive:
         infos = archive.infolist()
@@ -78,7 +61,7 @@ def source_closure(source_root: Path, profile_path: Path) -> dict[str, str]:
         for path in source_files
         if path.is_file() and "__pycache__" not in path.parts
     }
-    result["compatibility-profile.json"] = digest(profile_path)
+    result[f"qualification-profile:{profile_path.name}"] = digest(profile_path)
     repository = source_root.resolve().parents[1]
     for path in (
         Path(__file__).resolve(),
@@ -106,6 +89,8 @@ def qualify(
             f"source={project['name']}=={project['version']}, "
             f"profile={pin['distribution']}=={pin['version']}"
         )
+    from packaging.requirements import Requirement
+
     if profile.get("runtimeDependencies", {}).get("umf-core") != "0.11.0":
         raise ValueError("compatibility profile lacks the exact umf-core==0.11.0 dependency pin")
     actual_core_sha256 = digest(core_wheel)
@@ -116,8 +101,13 @@ def qualify(
     members = inspect_wheel(wheel, pin)
     metadata_name = next(name for name in members if name.endswith(".dist-info/METADATA"))
     metadata = BytesParser().parsebytes(members[metadata_name])
-    wheel_requirements = [canonical_requirement(item) for item in metadata.get_all("Requires-Dist", [])]
-    source_requirements = [canonical_requirement(item) for item in project["dependencies"]]
+    wheel_requirements = [Requirement(item) for item in metadata.get_all("Requires-Dist", [])]
+    source_requirement_text = list(project["dependencies"])
+    for extra, requirements in project.get("optional-dependencies", {}).items():
+        source_requirement_text.extend(
+            f"{requirement}; extra == '{extra}'" for requirement in requirements
+        )
+    source_requirements = [Requirement(item) for item in source_requirement_text]
     if Counter(wheel_requirements) != Counter(source_requirements):
         raise ValueError("wheel dependency declarations differ from current source metadata")
     core_members, core_metadata = inspect_core_wheel(core_wheel)
@@ -161,6 +151,15 @@ def qualify(
     if not core_origin.is_relative_to(core_root / "umf"):
         raise ValueError("core import resolved outside installed core artifact")
     imported["umf"] = {"path": str(core_origin), "exports": []}
+    native_module = importlib.import_module("umf._rust_core")
+    native_origin = Path(native_module.__file__).resolve()
+    if native_origin.parent != core_root / "umf" or native_origin.name != "_rust_core.abi3.so":
+        raise ValueError("native core ABI import resolved outside installed abi3 artifact")
+    imported["umf._rust_core"] = {
+        "path": str(native_origin),
+        "exports": [],
+        "abi": "abi3",
+    }
     for module_name, exports in profile["requiredExports"].items():
         module = importlib.import_module(module_name)
         origin = Path(module.__file__).resolve()

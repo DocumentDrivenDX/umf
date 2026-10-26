@@ -44,14 +44,22 @@ wheel, then records a host receipt. Its current matrix is CPython 3.14.8 on
 Ubuntu 24.04 x86_64 and macOS 15 arm64. A successful receipt binds the access
 source file inventory, installed wheel members, core wheel digest, resolved
 versions and required import/export surface to one cohort. The checked-in
-compatibility profile is a historical dev0 profile and does not match source
-metadata at dev7. The gate refuses that mismatch explicitly; no receipt may be
-interpreted as a pass until the profile has been regenerated and reviewed
-against an installed dev7 artifact. For this one known mismatch it emits a
-`blocked` receipt with a nonzero result. The workflow is manual-only while
-this historical profile is stale, so it cannot make every access PR fail or
-appear qualified. Restore PR triggering only after reviewing a regenerated
-profile against the installed dev7 wheel.
+`compatibility-profile.json` remains the historical dev0 profile. The workflow
+uses the separate `compatibility-profile-dev7-local-candidate.json`; it is
+explicitly scoped to local CPython 3.14.8 macOS arm64 installed-artifact
+identity/import/export evidence and does not qualify hosted cohorts. The
+workflow remains `workflow_dispatch` only until its hosted matrix has run and
+those receipts are reviewed. The earlier dev0-versus-dev7 blocked receipt is
+retained as historical evidence in `local-build-attempt-20261026.json`.
+
+The local candidate was built from clean source archive commit `76aebded3`
+with pinned build tools and Rust 1.90.0, then installed in an isolated Python
+3.14.8 venv with exact runtime wheels. The candidate gate passed package
+identity, `Requires-Dist` (including the optional extra marker), installed
+core/access artifact origins and inventories, the exact core wheel digest,
+runtime dependency pins, ABI and required exports. The local receipt is
+`local-installed-artifact-candidate-20261026.json`. It is one local cohort and
+does not establish hosted parity or release eligibility.
 
 The gate is separate from the existing six-cohort `umf-core` plus `umf-codegen`
 aggregate. Those cohorts use CPython 3.11.17–3.13.16 and install the pair with
@@ -66,18 +74,19 @@ native driver behavior, all supported Python versions, release eligibility, or
 publication. The existing six-cohort pair manifest remains `releaseEligible:
 false`.
 
-No hosted workflow has run from this source revision. Source inspection predicts
-the current profile identity check will block (`0.1.0.dev0` versus
-`0.1.0.dev7`); this is a deliberate fail-closed blocker. Blocked workflow
-receipts include artifact hashes, source closure, host and toolchain identity,
-but are not installed-semantic evidence. Local source edits are not execution
-evidence.
+No hosted workflow has run from this source revision. The retained initial
+blocked receipt records the earlier dev0-versus-dev7 mismatch; the checked-in
+manual workflow now targets the separate dev7 candidate profile. Local
+evidence is not a hosted matrix receipt, installed semantic conformance, or
+release eligibility.
 
-The local verifier controls run with CPython 3.14.8: one synthetic pass checks
-canonicalized `Requires-Dist`, exact core wheel digest and installed/import
-origins; negative controls reject digest drift, wrong import origins and
-dependency declaration drift, duplicate/traversal core-wheel members and
-symlink members. A subprocess control invokes the verifier with
-isolated `-I` and confirms the real historical-profile mismatch is retained in
-a blocked receipt. These controls exercise gate logic, not a built package or a
-hosted cohort.
+The local verifier controls run with CPython 3.14.8: a synthetic pass checks
+canonicalized `Requires-Dist`, including reordered bounds and the optional
+extra marker; the verifier also imports `umf._rust_core.abi3.so` explicitly
+and binds its origin to the installed core wheel. Negative controls reject
+digest drift, wrong import origins, dependency and marker drift,
+duplicate/traversal core-wheel members and symlink members. A subprocess
+control invokes the verifier with isolated `-I` and confirms the real
+historical-profile mismatch is retained in a blocked receipt. Thirteen
+controls pass under the pinned qualification environment. These controls
+supplement, but do not extend, the single local installed-wheel cohort.

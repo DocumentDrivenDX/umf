@@ -44,6 +44,58 @@ fn canonical(a: &Value, b: &Value) -> bool {
         _ => a == b,
     }
 }
+fn json_string_bytes(value: &Utf16) -> usize {
+    let units = value.units();
+    let mut bytes = 2usize;
+    let mut index = 0usize;
+    while index < units.len() {
+        let unit = units[index];
+        bytes += match unit {
+            0x22 | 0x5c => 2,
+            0..=0x1f => 6,
+            0xd800..=0xdbff
+                if units
+                    .get(index + 1)
+                    .is_some_and(|next| (0xdc00..=0xdfff).contains(next)) =>
+            {
+                index += 1;
+                4
+            }
+            0xd800..=0xdfff => 6,
+            _ if unit <= 0x7f => 1,
+            _ if unit <= 0x7ff => 2,
+            _ => 3,
+        };
+        index += 1;
+    }
+    bytes
+}
+fn compact_json_bytes(value: &Value) -> usize {
+    match value {
+        Value::Null => 4,
+        Value::Bool(true) => 4,
+        Value::Bool(false) => 5,
+        Value::Number(number) => umf_core::ecma_number_to_string(*number).len(),
+        Value::String(string) => json_string_bytes(string),
+        Value::Array(items) => {
+            2 + items.len().saturating_sub(1) + items.iter().map(compact_json_bytes).sum::<usize>()
+        }
+        Value::Object(items) => {
+            2 + items.len().saturating_sub(1)
+                + items
+                    .iter()
+                    .map(|(key, child)| json_string_bytes(key) + 1 + compact_json_bytes(child))
+                    .sum::<usize>()
+        }
+    }
+}
+fn json_value_count(value: &Value) -> usize {
+    match value {
+        Value::Array(items) => 1 + items.iter().map(json_value_count).sum::<usize>(),
+        Value::Object(items) => 1 + items.iter().map(|(_, child)| json_value_count(child)).sum::<usize>(),
+        _ => 1,
+    }
+}
 fn engine() -> Engine {
     Engine::new(
         ResourceSet::new(
@@ -287,6 +339,131 @@ fn aggregate_value_and_input_byte_limits_cover_the_exact_preflight_edge() {
             &over_byte_limit,
             &over_byte_limit,
             &policy,
+            &mut Context::ordinary(),
+        )
+        .unwrap_err()
+        .code,
+        "LIMIT"
+    );
+}
+
+#[test]
+fn retained_receipt_value_and_byte_limits_cover_exact_edges() {
+    let (packet, engine) = cases();
+    let unchanged = get(get(&packet, "cases").unwrap(), "unchanged").unwrap();
+    let base = get(unchanged, "before").unwrap();
+    let after = get(unchanged, "after").unwrap();
+    let policy = get(unchanged, "policy").unwrap();
+
+    let mut value_before = base.clone();
+    if let Value::Object(fields) = &mut value_before {
+        fields.push((Utf16::from("opaque"), Value::Array(vec![])));
+    }
+    let baseline_receipt = inspect_core_evolution(
+        &engine,
+        &value_before,
+        after,
+        policy,
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    let baseline_values = json_value_count(policy)
+        + json_value_count(&value_before)
+        + json_value_count(after)
+        + json_value_count(&baseline_receipt);
+    let remaining_values = 100_000 - baseline_values;
+    assert_eq!(remaining_values % 2, 0);
+    let padding_values = remaining_values / 2;
+    let mut at_value_limit = base.clone();
+    if let Value::Object(fields) = &mut at_value_limit {
+        fields.push((
+            Utf16::from("opaque"),
+            Value::Array(vec![Value::Null; padding_values]),
+        ));
+    }
+    let receipt = inspect_core_evolution(
+        &engine,
+        &at_value_limit,
+        after,
+        policy,
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    assert_eq!(
+        json_value_count(policy)
+            + json_value_count(&at_value_limit)
+            + json_value_count(after)
+            + json_value_count(&receipt),
+        100_000
+    );
+    let mut over_value_limit = at_value_limit.clone();
+    if let Some(Value::Array(items)) = get_mut(&mut over_value_limit, "opaque") {
+        items.push(Value::Null);
+    }
+    assert_eq!(
+        inspect_core_evolution(
+            &engine,
+            &over_value_limit,
+            after,
+            policy,
+            &mut Context::ordinary(),
+        )
+        .unwrap_err()
+        .code,
+        "LIMIT"
+    );
+
+    let mut byte_before = base.clone();
+    if let Value::Object(fields) = &mut byte_before {
+        fields.push((Utf16::from("opaque"), Value::string_utf8("")));
+    }
+    let byte_receipt = inspect_core_evolution(
+        &engine,
+        &byte_before,
+        after,
+        policy,
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    let baseline_bytes = compact_json_bytes(policy)
+        + compact_json_bytes(&byte_before)
+        + compact_json_bytes(after)
+        + compact_json_bytes(&byte_receipt);
+    let remaining_bytes = 4_000_000 - baseline_bytes;
+    assert_eq!(remaining_bytes % 2, 0);
+    let padding_bytes = remaining_bytes / 2;
+    let mut at_byte_limit = base.clone();
+    if let Value::Object(fields) = &mut at_byte_limit {
+        fields.push((
+            Utf16::from("opaque"),
+            Value::string_utf8(&"x".repeat(padding_bytes)),
+        ));
+    }
+    let receipt = inspect_core_evolution(
+        &engine,
+        &at_byte_limit,
+        after,
+        policy,
+        &mut Context::ordinary(),
+    )
+    .unwrap();
+    assert_eq!(
+        compact_json_bytes(policy)
+            + compact_json_bytes(&at_byte_limit)
+            + compact_json_bytes(after)
+            + compact_json_bytes(&receipt),
+        4_000_000
+    );
+    let mut over_byte_limit = at_byte_limit.clone();
+    if let Some(Value::String(value)) = get_mut(&mut over_byte_limit, "opaque") {
+        *value = Utf16::from_utf8(&format!("{}x", value.to_utf8().unwrap()));
+    }
+    assert_eq!(
+        inspect_core_evolution(
+            &engine,
+            &over_byte_limit,
+            after,
+            policy,
             &mut Context::ordinary(),
         )
         .unwrap_err()

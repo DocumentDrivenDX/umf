@@ -1041,3 +1041,55 @@ pub fn verify_core_evolution(
     }
     Ok(expected)
 }
+
+#[cfg(test)]
+mod resource_boundary_tests {
+    use super::{charge_budget, preflight_one, Admission, MAX_SEMANTIC_WORK};
+    use crate::{Context, Utf16, Value};
+    use std::cell::Cell;
+
+    #[test]
+    fn semantic_work_budget_accepts_exact_limit_and_refuses_next_unit_before_host_meter() {
+        let observed = Cell::new(0usize);
+        let mut meter = |amount: usize| {
+            observed.set(observed.get().saturating_add(amount));
+            Ok(())
+        };
+        let mut ctx = Context::ordinary().with_meter(&mut meter);
+        let mut admission = Admission::default();
+        charge_budget(&mut ctx, &mut admission, MAX_SEMANTIC_WORK, "").unwrap();
+        assert_eq!(admission.work, MAX_SEMANTIC_WORK);
+        assert_eq!(observed.get(), MAX_SEMANTIC_WORK);
+
+        let error = charge_budget(&mut ctx, &mut admission, 1, "").unwrap_err();
+        assert_eq!(error.code, "LIMIT");
+        assert_eq!(observed.get(), MAX_SEMANTIC_WORK);
+    }
+
+    #[test]
+    fn crossed_depth_and_byte_controls_preserve_first_fault_order() {
+        let observed = Cell::new(0usize);
+        let mut meter = |amount: usize| {
+            observed.set(observed.get().saturating_add(amount));
+            Ok(())
+        };
+        let mut ctx = Context::ordinary().with_meter(&mut meter);
+        let mut too_deep = Value::Null;
+        for _ in 0..129 {
+            too_deep = Value::Array(vec![too_deep]);
+        }
+        let error = preflight_one(&too_deep, &mut ctx, &mut Admission::default()).unwrap_err();
+        assert_eq!(error.code, "LIMIT");
+        // The root and depth 1..128 were admitted; depth 129 refuses before
+        // charging that node to the host work meter.
+        assert_eq!(observed.get(), 129);
+
+        observed.set(0);
+        let oversized = Value::String(Utf16::from_utf8(&"x".repeat(4_000_001)));
+        let error = preflight_one(&oversized, &mut ctx, &mut Admission::default()).unwrap_err();
+        assert_eq!(error.code, "LIMIT");
+        // The string node is charged before its serialized bytes trigger the
+        // aggregate byte refusal.
+        assert_eq!(observed.get(), 1);
+    }
+}

@@ -1,0 +1,79 @@
+{
+  "schema": "umf.access-installed-artifact-local-build-attempt/1",
+  "date": "2026-10-26",
+  "status": "blocked",
+  "releaseEligible": false,
+  "publishing": false,
+  "sourceRevision": "76aebded3",
+  "worktree": "/Users/erik/.codex/worktrees/rust-binding-spike/umf",
+  "worktreeState": "dirty during build due to concurrent shared-worktree edits; native build is diagnostic only and not bound to a clean source revision",
+  "host": {
+    "python": "3.14.8",
+    "platform": "macOS arm64",
+    "rust": "rustc 1.90.0",
+    "cargo": "cargo 1.90.0"
+  },
+  "attempts": {
+    "offlineRustBuild": {
+      "result": "passed",
+      "command": "cargo build --locked --release --manifest-path Cargo.toml -p umf-core-python -p umf-cli --target aarch64-apple-darwin",
+      "environment": {
+        "CARGO_NET_OFFLINE": "true",
+        "CARGO_TARGET_DIR": "/private/tmp/umf-access-release-qual-20261026/target"
+      },
+      "outputs": {
+        "pythonExtensionSha256": "8b7e08bd6756e57f0eeefc4016c1d9ac37d6541014fc93425c9056d52703c486",
+        "cliSha256": "42f7920e84e10dbe5d21a9d95eaaf8dc53baf7df00b7fcfb8233720a8aef10ca"
+      },
+      "limitations": [
+        "No Python wheel was built or installed.",
+        "Shared worktree had uncommitted core source changes during the build.",
+        "This does not prove the wheel builder output or an installed-artifact cohort."
+      ]
+    },
+    "pythonWheelBuild": {
+      "result": "blocked",
+      "missingPinnedBuildRequirements": [
+        "build==1.3.0",
+        "hatchling==1.27.0"
+      ],
+      "offlineResolution": "uv pip install --offline reported build was not found in cache",
+      "networkResolution": "pip access to https://pypi.org/simple/hatchling/ failed because DNS resolution for pypi.org was unavailable",
+      "previousArtifactsFound": "Only historical umf_access dev0 and unrelated dev2 wheels were present in repository evidence; no dev7 access wheel or umf-core 0.11.0 wheel was found.",
+      "resultingProfile": "Historical compatibility-profile.json remains at umf_access 0.1.0.dev0; no dev7 profile was generated."
+    },
+    "sourceImportDiagnostic": {
+      "result": "passed",
+      "command": "PYTHONPATH=python/umf_access/src:python/src python3.14 -c '<import umf and access modules>'",
+      "modules": [
+        "umf",
+        "umf_access",
+        "umf_access.types",
+        "umf_access.values",
+        "umf_access.codec_support",
+        "umf_access.dsl",
+        "umf_access.capture"
+      ],
+      "limitations": [
+        "Imports resolve from the source checkout rather than installed wheels.",
+        "This is not package metadata, dependency resolution, origin, or release qualification evidence."
+      ]
+    },
+    "verifierTests": {
+      "result": "passed",
+      "command": "PYTHONPATH=python/umf_access/tests/packaging python3.14 -m unittest -v test_qualify_installed_artifact",
+      "tests": 11,
+      "scope": "Verifier controls include the known dev0-versus-dev7 blocked receipt and a synthetic passing installed-artifact/profile fixture; they test gate logic, not a built dev7 artifact."
+    }
+  },
+  "qualificationDisposition": "Keep the manual-only workflow and explicit blocked profile identity receipt. Do not add or endorse a dev7 compatibility profile until current dev7 and exact umf-core 0.11.0 wheels build, install in a clean host environment, and produce reviewed origin/dependency/ABI evidence.",
+  "historicalStatus": "This first attempt predates the approved pinned build/runtime wheelhouse. It remains an accurate record of that blocked attempt and is superseded as the latest local outcome by local-installed-artifact-candidate-20261026.json; it was not overwritten or converted to a pass.",
+  "scopeExclusions": [
+    "public capture",
+    "broader access semantics",
+    "native driver behavior",
+    "six-cohort integration",
+    "release eligibility",
+    "publication"
+  ]
+}

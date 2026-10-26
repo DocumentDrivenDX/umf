@@ -59,6 +59,7 @@ for (const path of [
   'bindings/core/node/src/host-json.js',
   'scripts/rust-migration/r8/selection-private-host-browser-entry.ts',
   'scripts/rust-migration/r8/selection-private-host-browser.mjs',
+  'dist/umf.js',
   'scripts/rust-migration/r8/selection-private-host-direct.mjs',
   'scripts/rust-migration/r8/selection-private-host-direct-child.mjs',
   'scripts/rust-migration/r8/selection-private-host-node.mjs',
@@ -114,6 +115,10 @@ try {
     ],
   });
   assert.deepEqual(result.registryThrow, {calls: 1, thrownIdentity: true});
+  assert.equal(result.kindRuntimeDelegation.equalTrace, true, 'kindRuntime getter/call trace differs from same-host TypeScript');
+  assert.equal(result.kindRuntimeDelegation.resultIdentity, true, 'kindRuntime return identity changed');
+  assert.equal(result.kindRuntimeDelegation.thrownIdentity, true, 'kindRuntime thrown-value identity changed');
+  assert.equal(result.kindRuntimeDelegation.falsyRuntimeRefused, true, 'private stage did not refuse falsy kindRuntime');
   const record = {
     profile: 'umf.r8.selection-private-host-route.chromium/1',
     status: 'pass-private-frozen-values-direct-warning-source-and-null-prototypes',
@@ -123,6 +128,7 @@ try {
     nestedPrototypes: {allNullObjectAndArrayPrototypes: true, checkedObjects: result.allPrototypes.length},
     ownProtoData: {preserved: result.protoKeyPreserved, prototypePollution: false},
     registryThrow: result.registryThrow,
+    kindRuntimeDelegation: result.kindRuntimeDelegation,
     successfulWarnings: {...result.successfulWarnings, directBaselineHost: 'Bun 1.4.3 direct TypeScript source'},
     resourceMeterControl: {host: 'Bun 1.4.3 Node addon', messageUnits: 4000001, outcome: 'LIMIT'},
     shapeFinding: 'Selection result projection recreates TypeScript copyJson null-prototype objects; own __proto__ remains data and cannot mutate the prototype.',
@@ -132,7 +138,7 @@ try {
       'fresh-wasm-bindgen-glue': sha(Buffer.from(glueSource)),
       'bundled-browser-entry': sha(Buffer.from(entrySource)),
     },
-    limits: ['Private route only; no public/default selection.', 'Seven frozen query cases, one own-__proto__ projection case, one Registry.get thrown-identity case, and one successful warning packet using a synthetic warning structure policy compared to direct TypeScript sourceValidation.', 'Resource-limit control is Node addon evidence, not a Chromium case. No semantic callbacks or installed package qualification.'],
+    limits: ['Private route only; no public/default selection.', 'Seven frozen query cases, one own-__proto__ projection case, one Registry.get thrown-identity case, and one successful warning packet using a synthetic warning structure policy compared to direct TypeScript sourceValidation.', 'The kindRuntime check covers the caller-owned validateDocument delegation sequence, getter/call trace, object result identity, thrown identity, and falsy-runtime refusal only; it does not establish general iterable, primitive-return, resource-accounting, or default-route parity.', 'Resource-limit control is Node addon evidence, not a Chromium case. No general Selection semantic callback parity or installed package qualification.'],
   };
   await mkdir(resolve(receiptPath, '..'), {recursive: true});
   await writeFile(receiptPath, JSON.stringify(record, null, 2) + '\n');

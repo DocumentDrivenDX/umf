@@ -1,0 +1,169 @@
+{
+  "profile": "umf.r8.selection-private-host-route.chromium/1",
+  "status": "pass-private-frozen-values-direct-warning-source-and-null-prototypes",
+  "runtime": {
+    "bun": "1.4.3",
+    "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
+    "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+    "wasmBindgen": "wasm-bindgen 0.2.100",
+    "chromium": "153.0.8010.12",
+    "browserUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36"
+  },
+  "operation": "executeCoreElementSelectionHostJson (private WASM export; no package-root selection)",
+  "cases": {
+    "all": {
+      "equal": true,
+      "prototype": "null"
+    },
+    "categoryAnd": {
+      "equal": true,
+      "prototype": "null"
+    },
+    "emptyCategory": {
+      "equal": true,
+      "prototype": "null"
+    },
+    "unknownScalar": {
+      "equal": true,
+      "prototype": "null"
+    },
+    "repeatedEdges": {
+      "equal": true,
+      "prototype": "null"
+    },
+    "cyclicTraversal": {
+      "equal": true,
+      "prototype": "null"
+    },
+    "emptyTraversal": {
+      "equal": true,
+      "prototype": "null"
+    }
+  },
+  "nestedPrototypes": {
+    "allNullObjectAndArrayPrototypes": true,
+    "checkedObjects": 56
+  },
+  "ownProtoData": {
+    "preserved": true,
+    "prototypePollution": false
+  },
+  "registryThrow": {
+    "calls": 1,
+    "thrownIdentity": true
+  },
+  "kindRuntimeDelegation": {
+    "typescript": {
+      "events": [
+        "registry.kindRuntime:get",
+        "registry.kindRuntime:get",
+        "runtime.validateDocument:get",
+        "registry.registrations:get",
+        "registry.registrations:call",
+        "runtime.validateDocument:call"
+      ],
+      "resultIdentity": true
+    },
+    "rust": {
+      "events": [
+        "registry.kindRuntime:get",
+        "registry.kindRuntime:get",
+        "runtime.validateDocument:get",
+        "registry.registrations:get",
+        "registry.registrations:call",
+        "runtime.validateDocument:call"
+      ],
+      "resultIdentity": true
+    },
+    "equalTrace": true,
+    "resultIdentity": true,
+    "thrownIdentity": true,
+    "falsyRuntimeRefused": true,
+    "falsyRuntimeError": "Error: HOST_JSON_UNSUPPORTED"
+  },
+  "successfulWarnings": {
+    "sourceValidation": {
+      "valid": true,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "EXTENSION_STRUCTURE",
+          "path": "/extensions/future/first",
+          "message": "first warning",
+          "severity": "warning"
+        },
+        {
+          "code": "EXTENSION_STRUCTURE",
+          "path": "/extensions/future/second",
+          "message": "second warning",
+          "severity": "warning"
+        },
+        {
+          "code": "EXTENSION_STRUCTURE",
+          "path": "/modules/0/elements/0/extensions/future/first",
+          "message": "first warning",
+          "severity": "warning"
+        },
+        {
+          "code": "EXTENSION_STRUCTURE",
+          "path": "/modules/0/elements/0/extensions/future/second",
+          "message": "second warning",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_CORE_FIELD",
+          "path": "/modules/0/elements/0/references/0/future",
+          "message": "Field retained without interpretation",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_SCALAR_TYPE",
+          "path": "/modules/1/elements/0/scalarType",
+          "message": "Scalar family retained without interpretation",
+          "severity": "warning"
+        }
+      ]
+    },
+    "crossHostDirectSourceBaselineEqual": true,
+    "nullPrototype": true,
+    "directBaselineHost": "Bun 1.4.3 direct TypeScript source"
+  },
+  "resourceMeterControl": {
+    "host": "Bun 1.4.3 Node addon",
+    "messageUnits": 4000001,
+    "outcome": "LIMIT"
+  },
+  "shapeFinding": "Selection result projection recreates TypeScript copyJson null-prototype objects; own __proto__ remains data and cannot mutate the prototype.",
+  "browserErrors": [],
+  "artifacts": {
+    "crates/umf-core/src/selection.rs": "35312a51bebc29acb3b441463c287f41409d9ba2c92b14f369f1f7b0dbe640b1",
+    "crates/umf-core/src/selection_host_json.rs": "6c0a648d8373e9f47daf79d31d8342495ff80ae9cf6574f24214c37cc3422c50",
+    "crates/umf-core/src/selection_diagnostics.rs": "c7989ce596cf2c7502bde079db53f6f3a41287728df593c9f815a277a6a1fd43",
+    "bindings/core/wasm/src/host_json.rs": "3487f6c393c346e96cdef4bb6df29d633a4e177f1cc8b6dc52c1a4339e97ba48",
+    "bindings/core/wasm/src/host-json.js": "b1450626b12fc285bc811254ef7cbc4d689714fd8d5ef2e93001ca5e06e3bb35",
+    "bindings/core/node/src/host-json.js": "b1450626b12fc285bc811254ef7cbc4d689714fd8d5ef2e93001ca5e06e3bb35",
+    "scripts/rust-migration/r8/selection-private-host-browser-entry.ts": "4c86a76f5ceae832b2b11fa2d27c1ae357a2ffdc073804f3b772da850b9c8ede",
+    "scripts/rust-migration/r8/selection-private-host-browser.mjs": "d89e15cbe1e68de3c5ad22095f6519488340b1af732b08090630d3ee77961d95",
+    "dist/umf.js": "b95916bdb6b4791b223bd04d84b34b4ff68ad7330658468a529005cefbad68b7",
+    "scripts/rust-migration/r8/selection-private-host-direct.mjs": "6525c1ea877d614f7641eb0ced8979172b354442aab58629186af3646d2154a4",
+    "scripts/rust-migration/r8/selection-private-host-direct-child.mjs": "09871517c3e4b71d50b8c9da967a16cc0060e45539b189768d1250358d644f86",
+    "scripts/rust-migration/r8/selection-private-host-node.mjs": "5e66a72e3b7132fb93e49fb51ba087608583e6a160d64a1343623913957b648e",
+    "bindings/core/node/tests/selection-host-json.test.js": "3c6b5625bde74f658d2bab8dd3d6d6752a70f6a77c7af7b270d821e4a07d95e6",
+    "scripts/rust-migration/r5/selection/input.json": "1d4bc67745d20df018a6275c820ed72c00c82d33caeb541596910d1254b67258",
+    "scripts/rust-migration/r5/selection/frozen-typescript.json": "2fb5429888f34d6bb2684553201f652a68424fc68125a457c6b5e01aeaa7817a",
+    "spec/core/schema.json": "36c25f861b3323041ad2d090573bf3993ee9faab3487722f06b4000fa0590d0e",
+    "spec/core/semantic-type-reference.schema.json": "527d30bc38f44fa91360c1b16431e967faac27206f6811cc20abc8abcc8f6c86",
+    "spec/core/extension-package.schema.json": "040c6ec9fb8389479dde4bd884c3c8d8914cec3b355ae2809b70ebc92c662b07",
+    "spec/metamodel/generated/core-constraints.json": "834566ec1add4ead34c94d2e4724519244e4bbaeb88d6b72cc7de2da5da22f77",
+    "spec/metamodel/generated/domain-policy.json": "b7d0e22a9584d7bce6529d304b1cb16fad6ff59137b3da64d325c7e6da5d8dc1",
+    "fresh-wasm32-artifact": "a1fc93190a2a08038ebd2fef6749dfa263a5bf565055a8c857b43b0be8a1c11e",
+    "fresh-wasm-bindgen-glue": "4a0d8cb8cfc92e62115cac9c4ab6ba64870048c6a4312ec222afd72ee37cb1cd",
+    "bundled-browser-entry": "23964afcf90b2cadf88f64c1a99ce0bb45dc7ea539f2527647c15bb30f97c0df"
+  },
+  "limits": [
+    "Private route only; no public/default selection.",
+    "Seven frozen query cases, one own-__proto__ projection case, one Registry.get thrown-identity case, and one successful warning packet using a synthetic warning structure policy compared to direct TypeScript sourceValidation.",
+    "The kindRuntime check covers the caller-owned validateDocument delegation sequence, getter/call trace, object result identity, thrown identity, and falsy-runtime refusal only; it does not establish general iterable, primitive-return, resource-accounting, or default-route parity.",
+    "Resource-limit control is Node addon evidence, not a Chromium case. No general Selection semantic callback parity or installed package qualification."
+  ]
+}

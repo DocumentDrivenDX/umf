@@ -426,10 +426,96 @@ pub fn invoke_opaque_object_return(
         }
         _ => return Err(protocol_error()),
     };
-    Ok(Value::Object(vec![
+    Ok(opaque_return_carrier(result))
+}
+
+fn opaque_return_carrier(handle: HostHandle) -> Value {
+    Value::Object(vec![
         (Utf16::from("__umf_host_opaque_return_v1"), Value::Bool(true)),
-        (Utf16::from("handle"), Value::Number(result as f64)),
-    ]))
+        (Utf16::from("handle"), Value::Number(handle as f64)),
+    ])
+}
+
+/// Private staged implementation of the caller-owned
+/// `registry.kindRuntime.validateDocument(input, registry.registrations())`
+/// branch. It intentionally does no source admission or JSON materialization:
+/// the predecessor delegates the original argument directly and returns the
+/// host result directly. A falsy runtime is outside this explicit branch and
+/// is refused so callers cannot mistake it for static validation.
+pub fn execute_kind_runtime_validate_document(
+    source: HostHandle,
+    registry: HostHandle,
+    host: &mut dyn HostJsonReflection,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let registry_value = HostOpaqueValue::Opaque {
+        handle: registry,
+        opaque_type: HostOpaqueType::Object,
+    };
+    // The TS predecessor reads kindRuntime once for the condition and again
+    // for the call expression. Keep both reads observable and un-memoized.
+    let first_runtime = get_property(host, ctx, &registry_value, "kindRuntime")?;
+    if !first_runtime.is_truthy() {
+        return Err(unsupported_error(
+            "Caller Registry has no truthy kindRuntime for the private delegation route",
+        ));
+    }
+    let runtime = get_property(host, ctx, &registry_value, "kindRuntime")?;
+    let validation_method = get_property(host, ctx, &runtime, "validateDocument")?;
+    let HostOpaqueValue::Opaque {
+        handle: validation_function,
+        opaque_type: HostOpaqueType::Function,
+    } = validation_method
+    else {
+        return Err(unsupported_error(
+            "Caller kindRuntime.validateDocument must be a host function",
+        ));
+    };
+    let registrations_method = get_property(host, ctx, &registry_value, "registrations")?;
+    let HostOpaqueValue::Opaque {
+        handle: registrations_function,
+        opaque_type: HostOpaqueType::Function,
+    } = registrations_method
+    else {
+        return Err(unsupported_error(
+            "Caller Registry.registrations must be a host function",
+        ));
+    };
+    ctx.charge_work(1, Utf16::default())?;
+    let registry_receiver = opaque_value(&registry_value, host)?;
+    let registrations = match host.reflect(HostJsonEvent::InvokeOpaque {
+        function: registrations_function,
+        receiver: registry_receiver,
+        args: Vec::new(),
+        semantic_catch: false,
+    })? {
+        HostJsonReply::Invocation(value) => value,
+        _ => return Err(protocol_error()),
+    };
+    let runtime_receiver = opaque_value(&runtime, host)?;
+    let registrations_argument = opaque_value(&registrations, host)?;
+    ctx.charge_work(1, Utf16::default())?;
+    let result = match host.reflect(HostJsonEvent::InvokeOpaque {
+        function: validation_function,
+        receiver: runtime_receiver,
+        args: vec![
+            HostInvokeValue::Opaque(source),
+            registrations_argument,
+        ],
+        semantic_catch: false,
+    })? {
+        HostJsonReply::Invocation(HostOpaqueValue::Opaque {
+            handle,
+            opaque_type: HostOpaqueType::Object | HostOpaqueType::Function,
+        }) => handle,
+        HostJsonReply::Invocation(_) => {
+            return Err(unsupported_error(
+                "Caller kindRuntime.validateDocument return must be an object or function",
+            ));
+        }
+        _ => return Err(protocol_error()),
+    };
+    Ok(opaque_return_carrier(result))
 }
 
 pub(crate) fn reject_host_semantics() -> EngineError {
@@ -490,5 +576,75 @@ mod opaque_return_tests {
         let (result, events) = run(HostJsonReply::Boolean(true));
         assert_eq!(result.unwrap_err().code, "HOST_JSON_PROTOCOL");
         assert_eq!(events.len(), 1);
+    }
+
+    struct SequenceHost {
+        replies: std::collections::VecDeque<Result<HostJsonReply, EngineError>>,
+        events: Vec<HostJsonEvent>,
+    }
+    impl HostJsonReflection for SequenceHost {
+        fn reflect(&mut self, event: HostJsonEvent) -> Result<HostJsonReply, EngineError> {
+            self.events.push(event);
+            self.replies.pop_front().expect("one scripted reply per event")
+        }
+        fn release_descriptor_snapshot(&mut self, _: u64) {}
+    }
+
+    fn object(handle: u64) -> HostJsonReply {
+        HostJsonReply::OpaqueValue(HostOpaqueValue::Opaque {
+            handle,
+            opaque_type: HostOpaqueType::Object,
+        })
+    }
+    fn function(handle: u64) -> HostJsonReply {
+        HostJsonReply::OpaqueValue(HostOpaqueValue::Opaque {
+            handle,
+            opaque_type: HostOpaqueType::Function,
+        })
+    }
+    fn invoked_object(handle: u64) -> HostJsonReply {
+        HostJsonReply::Invocation(HostOpaqueValue::Opaque {
+            handle,
+            opaque_type: HostOpaqueType::Object,
+        })
+    }
+
+    #[test]
+    fn kind_runtime_delegation_keeps_predecessor_get_and_call_order() {
+        let mut host = SequenceHost {
+            replies: [object(20), object(20), function(21), function(22), invoked_object(23), invoked_object(24)]
+                .into_iter()
+                .map(Ok)
+                .collect(),
+            events: Vec::new(),
+        };
+        let mut ctx = Context::ordinary();
+        let carrier = execute_kind_runtime_validate_document(11, 12, &mut host, &mut ctx).unwrap();
+        assert!(matches!(carrier, Value::Object(ref fields) if fields.contains(&(Utf16::from("handle"), Value::Number(24.0)))));
+        assert_eq!(host.events, vec![
+            HostJsonEvent::GetOpaqueProperty {
+                receiver: HostInvokeValue::Opaque(12),
+                key: HostOpaqueKey::String(Utf16::from("kindRuntime").into_units()), semantic_catch: false,
+            },
+            HostJsonEvent::GetOpaqueProperty {
+                receiver: HostInvokeValue::Opaque(12),
+                key: HostOpaqueKey::String(Utf16::from("kindRuntime").into_units()), semantic_catch: false,
+            },
+            HostJsonEvent::GetOpaqueProperty {
+                receiver: HostInvokeValue::Opaque(20),
+                key: HostOpaqueKey::String(Utf16::from("validateDocument").into_units()), semantic_catch: false,
+            },
+            HostJsonEvent::GetOpaqueProperty {
+                receiver: HostInvokeValue::Opaque(12),
+                key: HostOpaqueKey::String(Utf16::from("registrations").into_units()), semantic_catch: false,
+            },
+            HostJsonEvent::InvokeOpaque {
+                function: 22, receiver: HostInvokeValue::Opaque(12), args: Vec::new(), semantic_catch: false,
+            },
+            HostJsonEvent::InvokeOpaque {
+                function: 21, receiver: HostInvokeValue::Opaque(20),
+                args: vec![HostInvokeValue::Opaque(11), HostInvokeValue::Opaque(23)], semantic_catch: false,
+            },
+        ]);
     }
 }

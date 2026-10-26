@@ -1,0 +1,91 @@
+{
+  "id": "umf-access-dev7-local-installed-candidate",
+  "version": "0.1.0",
+  "scope": "Candidate profile for local CPython 3.14.8 macOS arm64 installed wheel identity and import/export qualification only; no hosted cohort, access semantics, public capture, native driver, release, or publication qualification",
+  "qualificationStatus": "local-single-cohort-candidate",
+  "runtimeAbi": {
+    "distribution": "umf_access",
+    "version": "0.1.0.dev7",
+    "abi": "umf-access-runtime/0.1"
+  },
+  "runtimeDependencies": {
+    "pydantic": "2.14.1",
+    "pydantic-core": "2.50.1",
+    "annotated-types": "0.8.0",
+    "typing-extensions": "4.16.0",
+    "typing-inspection": "0.4.4",
+    "umf-core": "0.11.0"
+  },
+  "buildDependencies": {
+    "build": "1.3.0",
+    "hatchling": "1.27.0",
+    "packaging": "26.3",
+    "pathspec": "1.1.1",
+    "pluggy": "1.7.0",
+    "pyproject-hooks": "1.3.3",
+    "trove-classifiers": "2026.9.21.13"
+  },
+  "requiredExports": {
+    "umf_access": [
+      "RUNTIME_ABI"
+    ],
+    "umf_access.types": [
+      "StrictModel",
+      "ActionRef"
+    ],
+    "umf_access.values": [
+      "validate_boolean",
+      "validate_integer",
+      "validate_decimal",
+      "validate_string",
+      "validate_binary",
+      "validate_date",
+      "validate_instant",
+      "validate_local",
+      "validate_length",
+      "validate_range",
+      "validate_allowed"
+    ],
+    "umf_access.codec_support": [
+      "revalidate_model",
+      "checked_row",
+      "CodecField",
+      "encode_model",
+      "decode_model"
+    ],
+    "umf_access.dsl": [
+      "Column",
+      "FieldRef",
+      "RecordRef",
+      "Query",
+      "Terminal",
+      "Related"
+    ],
+    "umf_access.capture": [
+      "ExpressionNode",
+      "ProjectionRef",
+      "CapturedKey",
+      "render_logical",
+      "capture"
+    ]
+  },
+  "forbiddenImports": [
+    "weft",
+    "truss",
+    "ashlar",
+    "umf",
+    "psycopg",
+    "databricks",
+    "pyspark"
+  ],
+  "nativeTargets": "UNTESTED; no driver extras or platform support selected",
+  "requiresPython": ">=3.11,<3.15",
+  "compatibilityRuntimes": [
+    "3.14.8"
+  ],
+  "qualifiedCohort": {
+    "python": "3.14.8",
+    "platform": "macOS arm64",
+    "scope": "local-only; hosted matrix has not run"
+  }
+}

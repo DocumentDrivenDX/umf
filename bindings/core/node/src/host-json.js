@@ -123,6 +123,11 @@ function coreOpaqueReturnHostInput(addon, fn, receiver, argument, ErrorType = Er
   return executeHostInput(addon, undefined, 'executeCoreOpaqueReturnHostJson', [fn, receiver, argument], ErrorType, undefined, [], undefined, true, false, fromRustWire, true);
 }
 
+// Private exact delegation stage for validateDocument's caller kindRuntime branch.
+function kindRuntimeValidationHostInput(addon, source, registry, ErrorType = Error) {
+  return executeHostInput(addon, undefined, 'executeCoreKindRuntimeValidationHostJson', [source, registry], ErrorType, undefined, [registry !== undefined], undefined, true, false, fromRustWire, true);
+}
+
 /** Private reusable engine facade for the R8 Selection host-input route. */
 function createCoreElementSelectionHostInputEngine(addon, resources, ErrorType = Error) {
   if (typeof addon?.executeCoreElementSelectionHostJson !== 'function') throw new ErrorType('RUST_BINDING_MISSING', 'Binding does not expose umf.host-json/1 Core Element Selection');
@@ -600,4 +605,4 @@ function fromUnits(units) {
   return result;
 }
 
-export {declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, cardinalityHostInput, coreElementSelectionHostInput, coreOpaqueReturnHostInput, createCoreElementSelectionHostInputEngine, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse};
+export {declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, cardinalityHostInput, coreElementSelectionHostInput, coreOpaqueReturnHostInput, kindRuntimeValidationHostInput, createCoreElementSelectionHostInputEngine, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse};

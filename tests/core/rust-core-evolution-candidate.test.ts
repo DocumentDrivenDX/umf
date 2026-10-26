@@ -5,6 +5,7 @@ import frozen from '../../docs/helix/04-build/evidence/rust-migration/r5-core-ev
 import {CORE_MODEL_RESOURCES} from '../../src/access/core-model-resources';
 import {bindCoreEvolutionRustCandidate} from '../../src/access/rust-core-evolution-candidate';
 import {inspectCoreEvolution as inspectTypeScriptCoreEvolution} from '../../src/model/evolution';
+import {ValueWork} from '../../src/model/internal/value-context';
 import {UmfError} from '../../src/model/errors';
 import type {Document} from '../../src/model/types';
 import type {CoreEvolutionPolicy} from '../../src/model/evolution';
@@ -114,3 +115,34 @@ test('private Rust candidate matches same-host TypeScript on core preservation c
   const rust=capture(()=>api.inspectCoreEvolution(wrongVersion,base,policy));
   expect(canonical(rust),'wrong-source-version').toBe(canonical(typescript));
 },60_000);
+
+test('Rust retained-output byte edge is exact and predecessor bounded calls remain local',()=>{
+  const api=bindCoreEvolutionRustCandidate(createCoreModelEngine(CORE_MODEL_RESOURCES),isNativeUmfCoreError);
+  const base=structuredClone(cases.unchanged!.before) as any;
+  const after=structuredClone(cases.unchanged!.after) as any;
+  const policy=cases.unchanged!.policy;
+  const byteLength=(value:unknown)=>new TextEncoder().encode(JSON.stringify(value)).length;
+  const baselineBefore={...base,opaque:''};
+  const baselineReceipt=api.inspectCoreEvolution(baselineBefore,after,policy);
+  const baselineBytes=[policy,baselineBefore,after,baselineReceipt].reduce((n,value)=>n+byteLength(value),0);
+  const remaining=4_000_000-baselineBytes;
+  expect(remaining%2).toBe(0);
+  const padding=remaining/2;
+  const atLimit={...base,opaque:'x'.repeat(padding)};
+  const receipt=api.inspectCoreEvolution(atLimit,after,policy);
+  expect([policy,atLimit,after,receipt].reduce((n,value)=>n+byteLength(value),0)).toBe(4_000_000);
+  const overLimit={...base,opaque:'x'.repeat(padding+1)};
+  const rustOver=capture(()=>api.inspectCoreEvolution(overLimit,after,policy));
+  expect(rustOver.ok).toBe(false);
+  if(rustOver.ok)throw new Error('Rust accepted aggregate receipt bytes above the limit');
+  expect(rustOver.error.code).toBe('LIMIT');
+  const predecessorOver=capture(()=>inspectTypeScriptCoreEvolution(overLimit,after,policy));
+  expect(predecessorOver.ok).toBe(true);
+},60_000);
+
+test('both source work counters accept 1,000,000 units and reject the next unit',()=>{
+  const work=new ValueWork();
+  work.charge('boundary',1_000_000);
+  expect(work.used).toBe(1_000_000);
+  expect(()=>work.charge('boundary',1)).toThrow('budget exceeded');
+});

@@ -6042,6 +6042,19 @@ uploads must execute in Actions; local builds and probes are qualification
 only. Verify the published registry/index bytes and clean installs before
 claiming the release.
 
+`umf_access` has a separate manual installed-wheel gate because its dev7 runtime
+requires Pydantic 2.13+ while the coordinated core/codegen six-cohort profile
+uses Pydantic 2.11.9. A local CPython 3.14.8 macOS arm64 run built and installed
+the exact dev7 access and core 0.11.0 wheels from clean source archive
+`76aebded3`, with pinned dependency wheels, and passed package metadata, core
+wheel digest/inventory, dependency pins, imports and required exports. Its
+separate candidate profile and exact local receipt are recorded in
+[R8 access installed-artifact evidence](evidence/rust-migration/r8-umf-access-installed-qualification/README.md).
+The historical dev0 profile remains unchanged. The candidate does not qualify
+hosted cohorts, public capture, broader access semantics, native drivers, or
+release eligibility; the workflow remains manual until hosted receipts are
+reviewed.
+
 ### R8 private callback and retained-runtime checkpoint — 2026-10-26
 
 The [private Selection semantic callback route](evidence/rust-migration/r8-selection-callback-trace/README.md)
@@ -6184,3 +6197,14 @@ factory and process-global cache are rejected. Local warm calls measured
 about 22.4 times TypeScript in Node and 34.1 times in Bun, so the performance
 gate also remains open. Fresh current-source Node/WASM builds, installed
 packages and source-coherent browser qualification precede any retirement.
+
+The [private caller `kindRuntime.validateDocument` delegation stage](evidence/rust-migration/r8-selection-kind-runtime-delegation/README.md)
+extends the opaque object/function return carrier through a Rust-directed
+host sequence. The Rust event test and 20/20 focused Bun binding tests pass;
+Node/Bun and real Chromium 153 compare the same-host TypeScript getter/call
+trace, method receivers, source/registration/result identity, thrown-value
+identity, and explicit refusal for a falsy runtime. This remains a private
+delegation primitive: arbitrary callback result/iterable handling, static
+validation behavior, resource-accounting parity and installed-package
+qualification remain open. Neither V4 default root changes, and no default
+route gap is retired.

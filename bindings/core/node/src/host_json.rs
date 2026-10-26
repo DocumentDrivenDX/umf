@@ -513,6 +513,33 @@ pub fn execute_core_opaque_return_host_json(
     umf_core_wire::result_envelope(result)
 }
 
+/// Private staged caller-owned Registry.kindRuntime validation delegation.
+#[napi(js_name = "executeCoreKindRuntimeValidationHostJson")]
+pub fn execute_core_kind_runtime_validation_host_json(
+    env: Env,
+    has_registry: bool,
+    source_handle: u32,
+    registry_handle: u32,
+    dispatcher: JsFunction,
+) -> String {
+    let mut host = NodeHostJson { env, dispatcher, string_lengths: BTreeMap::new() };
+    let result = (|| -> Result<String, EngineError> {
+        if !has_registry {
+            return Err(EngineError::new("HOST_JSON_UNSUPPORTED", Utf16::default(),
+                "Caller Registry is required for kindRuntime validation delegation"));
+        }
+        let mut ctx = Context::ordinary();
+        let value = umf_core::selection_host_json::execute_kind_runtime_validate_document(
+            source_handle as HostHandle,
+            registry_handle as HostHandle,
+            &mut host,
+            &mut ctx,
+        )?;
+        umf_core_wire::encode(&value, &mut ctx)
+    })();
+    umf_core_wire::result_envelope(result)
+}
+
 #[napi(js_name = "executeValidateCoreRecordValuesHostJson")]
 pub fn execute_validate_core_record_values_host_json(
     env: Env,

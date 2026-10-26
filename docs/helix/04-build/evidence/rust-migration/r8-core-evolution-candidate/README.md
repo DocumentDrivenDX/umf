@@ -74,8 +74,22 @@ cargo test --locked --offline -p umf-core --test r5_core_evolution
 Input preflight now tests the exact 100,000-value and 4,000,000-byte edges.
 At each edge, malformed source inputs proceed to `CORE_DATASET_SOURCE`; the
 first larger input refuses with `LIMIT`. This proves the aggregate input
-preflight boundary, not the retained receipt/output boundary. The exact
-1,000,000-unit semantic-work edge and complete crossed-control first-fault
-matrix remain untested. Existing package-level Node/Bun/Chromium receipts use an
-older source closure and are not current package evidence. The adapter remains private;
-neither V4 default route nor the 922-gap ledger count changes.
+preflight boundary. A retained-output probe also reaches exactly 100,000
+aggregate values and 4,000,000 aggregate compact-JSON bytes across policy,
+before, after, and receipt, then refuses the first added value/byte with
+`LIMIT`. A same-host Bun test confirms the Rust candidate's byte edge and
+records a predecessor difference: TypeScript's predecessor checks the four
+bounded inputs/copies locally, so it accepts that over-aggregate case. The
+Rust semantic-work admission primitive accepts exactly 1,000,000 units and
+refuses the next unit without another host meter call; this isolates the
+counter edge and does not claim a complete operation-level work-budget match.
+A crossed-control Rust probe confirms depth 129 refuses before charging that
+node, while a byte-overlimit string is host-meter charged before its byte
+refusal. These are scoped first-fault observations, not a complete matrix.
+
+The current TypeScript `ValueWork` counter likewise accepts 1,000,000 units
+and rejects the next unit. Existing package-level Node/Bun/Chromium receipts
+use an older source closure and are not current package evidence. The
+CONTRACT-058 duplicate identity and 0.8.0-governance/current-0.10.0-source
+mismatch remain unresolved, so the adapter remains private; neither V4
+default route nor the 922-gap ledger count changes.

@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 // @ts-expect-error The private JavaScript host bridge has no declaration file.
-import {coreElementSelectionHostInput} from '../../../bindings/core/wasm/src/host-json.js';
+import {coreElementSelectionHostInput, kindRuntimeValidationHostInput} from '../../../bindings/core/wasm/src/host-json.js';
+// @ts-expect-error The checked-in browser bundle is the same-host TS predecessor.
+import {validateDocument as typescriptValidateDocument} from '../../../dist/umf.js';
 
 type Payload = {
   resources: Record<string, unknown>;
@@ -75,9 +77,54 @@ export function runSelectionBrowserCases(payload: Payload) {
   } catch (error) {
     thrownIdentity = error === sentinel;
   }
+  const delegationTrace = (invoke: (source: unknown, registry: unknown) => unknown) => {
+    const events: string[] = [];
+    const sourceValue = Object.freeze({browserKindRuntimeSource: true});
+    const registrationsValue = Object.freeze([{id: 'caller-owned'}]);
+    const resultValue = Object.freeze({valid: true, diagnostics: []});
+    const runtime = Object.defineProperty({}, 'validateDocument', {get() {
+      events.push('runtime.validateDocument:get');
+      return function(this: unknown, input: unknown, registrations: unknown) {
+        events.push('runtime.validateDocument:call');
+        if (this !== runtime || input !== sourceValue || registrations !== registrationsValue) {
+          throw new Error('kindRuntime delegation identity changed');
+        }
+        return resultValue;
+      };
+    }});
+    const registry = Object.defineProperties({}, {
+      kindRuntime: {get() { events.push('registry.kindRuntime:get'); return runtime; }},
+      registrations: {get() {
+        events.push('registry.registrations:get');
+        return function(this: unknown) {
+          events.push('registry.registrations:call');
+          if (this !== registry) throw new Error('registrations receiver changed');
+          return registrationsValue;
+        };
+      }},
+    });
+    const result = invoke(sourceValue, registry);
+    return {events, resultIdentity: result === resultValue};
+  };
+  const typescriptDelegation = delegationTrace(typescriptValidateDocument as (source: unknown, registry: unknown) => unknown);
+  const rustDelegation = delegationTrace((sourceValue, registryValue) =>
+    kindRuntimeValidationHostInput(addon, sourceValue, registryValue, Error));
+  const throwSentinel = Object.freeze({kindRuntimeThrow: true});
+  let kindRuntimeThrowIdentity = false;
+  try {
+    kindRuntimeValidationHostInput(addon, {}, {kindRuntime: {validateDocument() { throw throwSentinel; }}, registrations() { return []; }}, Error);
+  } catch (error) { kindRuntimeThrowIdentity = error === throwSentinel; }
+  let falsyRuntimeRefused = false;
+  let falsyRuntimeError = '';
+  try { kindRuntimeValidationHostInput(addon, {}, {kindRuntime: null}, Error); }
+  catch (error) { falsyRuntimeError = String(error); falsyRuntimeRefused = falsyRuntimeError.includes('HOST_JSON_UNSUPPORTED'); }
   return {outcomes, allPrototypes, protoKeyPreserved,
     successfulWarnings: {sourceValidation: warningResult.sourceValidation,
       crossHostDirectSourceBaselineEqual: JSON.stringify(warningResult.sourceValidation) === JSON.stringify(payload.directWarningSourceValidation),
       nullPrototype: Object.getPrototypeOf(warningResult.sourceValidation) === null},
-    registryThrow: {calls, thrownIdentity}};
+    registryThrow: {calls, thrownIdentity},
+    kindRuntimeDelegation: {typescript: typescriptDelegation, rust: rustDelegation,
+      equalTrace: JSON.stringify(typescriptDelegation.events) === JSON.stringify(rustDelegation.events),
+      resultIdentity: rustDelegation.resultIdentity, thrownIdentity: kindRuntimeThrowIdentity,
+      falsyRuntimeRefused, falsyRuntimeError}};
 }

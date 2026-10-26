@@ -39,10 +39,11 @@ def _write_wheel(path: Path, distribution: str, version: str, requirements=(), *
             archive.writestr("umf_access/py.typed", b"")
         else:
             archive.writestr("umf/__init__.py", b"CORE = True\n")
+            archive.writestr("umf/_rust_core.abi3.so", b"native abi3 fixture\n")
 
 
 class QualificationTests(unittest.TestCase):
-    def _case(self, *, wrong_requires=False, outside_origin=False):
+    def _case(self, *, wrong_requires=False, wrong_optional_marker=False, outside_origin=False):
         temporary = tempfile.TemporaryDirectory(prefix="umf-access-gate-test-")
         self.addCleanup(temporary.cleanup)
         base = Path(temporary.name)
@@ -62,9 +63,12 @@ class QualificationTests(unittest.TestCase):
             "pydantic<3,>=2.13",
             "typing-extensions<5,>=4.16",
             "umf-core==0.11.0",
+            'pglast==7.20; extra == "sql-containment"',
         ]
         if wrong_requires:
-            wheel_dependencies[-1] = "umf-core==0.10.0"
+            wheel_dependencies[-2] = "umf-core==0.10.0"
+        if wrong_optional_marker:
+            wheel_dependencies[-1] = 'pglast==7.20; extra == "other-extra"'
         _write_wheel(wheel, "umf_access", "0.1.0.dev7", wheel_dependencies, module_bytes=module_bytes)
         with zipfile.ZipFile(wheel) as archive:
             for name in archive.namelist():
@@ -100,16 +104,18 @@ class QualificationTests(unittest.TestCase):
         module.RUNTIME_ABI = "umf-access-runtime/0.1"
         core_module = types.ModuleType("umf")
         core_module.__file__ = str(site / "umf/__init__.py")
+        native_core_module = types.ModuleType("umf._rust_core")
+        native_core_module.__file__ = str(site / "umf/_rust_core.abi3.so")
         versions = {"pydantic": "2.14.1", "pydantic-core": "2.50.1", "annotated-types": "0.8.0", "typing-extensions": "4.16.0", "typing-inspection": "0.4.4", "umf-core": "0.11.0"}
-        return base, site, wheel, core_wheel, profile_path, access_distribution, core_distribution, module, core_module, versions
+        return base, site, wheel, core_wheel, profile_path, access_distribution, core_distribution, module, core_module, native_core_module, versions
 
     def _qualify(self, case, expected_digest=None):
-        base, _site, wheel, core, profile, access_distribution, core_distribution, module, core_module, versions = case
+        base, _site, wheel, core, profile, access_distribution, core_distribution, module, core_module, native_core_module, versions = case
         with (
             patch.object(sys, "prefix", str(base)),
             patch.object(importlib.metadata, "distribution", side_effect=lambda name: core_distribution if name == "umf-core" else access_distribution),
             patch.object(importlib.metadata, "version", side_effect=lambda name: versions[name]),
-            patch.object(gate.importlib, "import_module", side_effect=lambda name: core_module if name == "umf" else module),
+            patch.object(gate.importlib, "import_module", side_effect=lambda name: core_module if name == "umf" else native_core_module if name == "umf._rust_core" else module),
         ):
             return gate.qualify(
                 wheel,
@@ -180,6 +186,7 @@ class QualificationTests(unittest.TestCase):
         self.assertEqual(result["status"], "passed")
         self.assertFalse(result["releaseEligible"])
         self.assertEqual(result["dependencies"]["umf-core"], "0.11.0")
+        self.assertEqual(result["imports"]["umf._rust_core"]["abi"], "abi3")
         self.assertIn("python/umf_access/tests/packaging/qualify_installed_artifact.py", result["sourceClosure"])
 
     def test_wrong_core_wheel_digest_refuses(self):
@@ -198,6 +205,15 @@ class QualificationTests(unittest.TestCase):
         outside.write_bytes(b"CORE = True\n")
         case[8].__file__ = str(outside)
         with self.assertRaisesRegex(ValueError, "core import resolved outside"):
+            self._qualify(case)
+
+    def test_native_core_loaded_outside_installed_wheel_refuses(self):
+        case = self._case()
+        outside = case[0] / "outside/umf/_rust_core.abi3.so"
+        outside.parent.mkdir(parents=True)
+        outside.write_bytes(b"native abi3 fixture\n")
+        case[9].__file__ = str(outside)
+        with self.assertRaisesRegex(ValueError, "native core ABI import resolved outside"):
             self._qualify(case)
 
     def test_installed_core_member_symlink_refuses(self):
@@ -249,6 +265,10 @@ class QualificationTests(unittest.TestCase):
     def test_requires_dist_drift_refuses(self):
         with self.assertRaisesRegex(ValueError, "dependency declarations"):
             self._qualify(self._case(wrong_requires=True))
+
+    def test_optional_extra_marker_drift_refuses(self):
+        with self.assertRaisesRegex(ValueError, "dependency declarations"):
+            self._qualify(self._case(wrong_optional_marker=True))
 
 
 if __name__ == "__main__":
