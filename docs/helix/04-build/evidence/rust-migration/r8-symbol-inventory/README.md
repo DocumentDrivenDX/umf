@@ -59,6 +59,52 @@ ddx:
 
 # R8 TypeScript public runtime export map
 
+**Current source recapture (2026-10-26):** The inventory and condition-aware
+gap ledger were regenerated from the current ten package conditions after the
+V4 Node/browser entries grew to 42 direct declarations each. The inventory
+contains 3,375 route-specific runtime declaration rows across 506 source files,
+1,126 unique export names, and 1,120 declarations in each Node, browser, and
+`./reference` root. Each default root has 922 executable declarations and 198
+JSON resource aliases spanning 189 distinct `spec/` files. The inventory SHA-256
+is `ab9199050e54d9ad11ce66788daad6cf4638ece97bd4875a03914d5e7bab274c`.
+
+The ledger contains 3,360 root rows, 922 logical executable default-route
+retirement gaps, 62 names with accepted opt-in Rust-operation mappings, and 860
+without such a mapping. Each V4 entry has 42 direct declarations; 41 per root
+are counted as Rust-selected source overrides by the ledger. The remaining
+direct entry binding, `verifyCoreKeyOperation`, still resolves to the TypeScript
+verifier, although its candidate Rust operation remains recorded for the
+separate `./reference` declaration.
+Its Node/browser declaration is a `BindingElement`, while its `./reference`
+declaration is a `FunctionDeclaration`; the ledger normalizes only this exact
+route-shape difference. That signature normalization does not change its
+implementation status, Rust ownership evidence, source selection, or retirement
+disposition. The ledger SHA-256 is
+`017147ecc68a15adae5031267f200476df3a30fabc3c6ea1cb2ae88050a5f19e`.
+
+The resource authority counts are 48 generated-known, 49 authored-known, 88
+candidate-generated, and 13 unresolved. Five unique executable names have
+bounded private installed binding routes in the current evidence; this does not
+establish complete host parity, declaration retirement, or release readiness.
+The metamodel generated-output fixed point was refreshed after the private
+Selection host route and passes `--check`; the inventory and ledger were then
+recaptured from that output cut. Both generators' `--check` modes pass. The focused route-shape regression passes
+(1/1); the complete ledger suite currently passes 43/45. Its two failures are
+the source-pinned installed-route tests, which reject the changed
+`bindings/core/node/src/host-json.js` against the recorded private archive
+cohort. The latest recorded aggregate points at `current-61cbaf0a`, but its
+source closure is stale for this current host source. Replaying its five
+families (24 operations total) would require a new package build, archive
+preflight, and fresh Node/Bun/Chromium receipts on a frozen source tree; the
+tree was still being edited during this recapture, so no archive replay was
+claimed. The strict source-bound assertion remains intact. Resource authority
+expectations now pin the current reviewed counts:
+48 generated-known, 49 authored-known, 88 candidate-generated, and 13
+unresolved, while retaining unresolved historical-schema negative controls.
+Inventory/ledger counts include the explicit
+TypeScript `./reference` route where stated; the 922 default-route gap count is
+logical and counts each export once.
+
 **Latest coordinated source recapture (2026-10-25):** After the JSON Schema
 boolean-true profile extension, opt-in Rust/Python catalog custody slice,
 native JSON parser audit, and five-resource direct-authority review, Sol

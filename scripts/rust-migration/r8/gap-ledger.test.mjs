@@ -23,7 +23,7 @@ const args = { inventory, packageJson: { scripts: { 'build:check': 'bun scripts/
 ], scriptFiles: [{ path: 'scripts/build.ts', sha256: 'e'.repeat(64) }] };
 const currentGeneratedLedger = () => JSON.parse(execFileSync('node', [
   'scripts/rust-migration/r8/gap-ledger.mjs', '--stdout', '--installed-route-evidence',
-  'docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-0e6de413/aggregate.json',
+  'docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-61cbaf0a/aggregate.json',
 ], {
   cwd: process.cwd(), maxBuffer: 64 * 1024 * 1024, encoding: 'utf8',
 }));
@@ -38,7 +38,7 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   const entries = new Map(inventoryReceipt.defaultRouteEntrySelections.map(selection => [selection.routeId, selection]));
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     const selection = entries.get(routeId);
-    assert.equal(selection.directExportCount, 37);
+    assert.equal(selection.directExportCount, 42);
     assert.ok(expected.every(name => selection.directExports.includes(name)), `${routeId} misses an override`);
     const rows = ledger.rows.filter(row => row.routeId === routeId && expected.includes(row.exportName));
     assert.equal(rows.length, expected.length);
@@ -203,7 +203,7 @@ test('TableSpec Cardinality projection schema pins its direct Field base and pac
     'the imported Field base is qualified independently, not promoted transitively');
   assert.ok(row.resourceOwnership.routes.some(route => route.id === 'sdk-archive'
     && route.artifactPath === 'package/dist/spec/core/cardinality-tablespec-projection.schema.json'));
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
 });
 
@@ -259,7 +259,7 @@ test('SQL Server Field and Cardinality projection schemas pin exact writer chain
   assert.equal(field.resourceOwnership.authority.status, 'generated-authority-known');
   assert.deepEqual(field.resourceOwnership.authority.generatorInputs, ['spec/core/field-postgresql-projection.schema.json']);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
 });
 
 test('SQL Server schema writer --check rejects stale output in an isolated project copy', async () => {
@@ -409,7 +409,7 @@ test('Parquet metadata schema outputs pin their exact multi-output writer and di
     assert.ok(row.resourceOwnership.routes.some(route => route.id === 'sdk-archive'
       && route.artifactPath === `package/dist/${resource}`));
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
 });
 
@@ -615,8 +615,6 @@ test('versioned core operation schemas pin direct authoring history without prom
     assert.equal(archive.installedQualification.status, 'not-installed-qualified');
   }
   const unresolved = new Map([
-    ['spec/core/cardinality-operation-v4.schema.json', 'c2562ad726b58306c18332512f2b5388ddc625abb7494c532794682492300d45'],
-    ['spec/core/facet-operation-v3.schema.json', '74c1ca75e2bac44afd0010292b82741618e9cb031cc37159667fa4f4ff95fd9f'],
     ['spec/core/key-operation-v2.schema.json', '67c35f417d940d9d3ff8c4fe7ca57ea29d319a1da4310ea3f9d2437160e9095b'],
     ['spec/core/kind-operation-v6.schema.json', 'e1de0aba1c3db6a09e85332a10441a0eec7a2dca0a4e4249fab67fcc491783b8'],
     ['spec/core/nullability-operation-v5.schema.json', '442cc69c8998da361b775251b2e8842cece0d700fb1fa59dad4bd3de03f13c92'],
@@ -628,9 +626,24 @@ test('versioned core operation schemas pin direct authoring history without prom
     assert.equal(row.resourceOwnership.authority.status, 'authority-unresolved', source);
     assert.equal(row.resourceOwnership.source.sha256, currentHash, `${source} current bytes`);
   }
+  for (const source of ['spec/core/cardinality-operation-v4.schema.json', 'spec/core/facet-operation-v3.schema.json']) {
+    const row = current.rows.find(item => item.source === source);
+    assert.ok(row, `missing metamodel-generated operation schema ${source}`);
+    const authority = row.resourceOwnership.authority;
+    assert.equal(authority.status, 'generated-authority-known', source);
+    assert.equal(authority.generatorKind, 'metamodel', source);
+    assert.deepEqual(authority.generator.entrypoints, ['scripts/metamodel/build.ts', 'crates/umf-metamodel/src/lib.rs']);
+    assert.ok(authority.sourceClosure.some(item => item.path === 'spec/metamodel/generated/manifest.json'));
+  }
   // The count includes the explicit resource families in the R8 authority map.
   const relationshipSelection = current.rows.find(item => item.source === 'spec/core/relationship-selection.schema.json');
   assert.equal(relationshipSelection.resourceOwnership.authority.status, 'authority-unresolved', 'one-off generated selection schema lacks a current reproducible writer');
+  assert.deepEqual(current.counts.resourceAuthorityByStatus, {
+    'generated-authority-known': 48,
+    'authored-authority-known': 49,
+    'candidate-generated': 88,
+    'authority-unresolved': 13,
+  });
   assert.equal(current.counts.resourceAuthorityByStatus['authored-authority-known'], 49);
 });
 
@@ -859,13 +872,12 @@ test('Delta log, Parquet framing and Spark datatype schemas pin current writers 
   const relationshipSelection = ledger.rows.find(item => item.source === 'spec/core/relationship-selection.schema.json');
   assert.equal(relationshipSelection.resourceOwnership.authority.status, 'authority-unresolved',
     'historical relationship-selection output without a live writer remains unresolved');
-  for (const resource of ['spec/core/cardinality-operation-v4.schema.json',
-    'spec/core/facet-operation-v3.schema.json', 'spec/core/key-operation-v2.schema.json']) {
+  for (const resource of ['spec/core/key-operation-v2.schema.json']) {
     const row = ledger.rows.find(item => item.source === resource);
     if (row) assert.equal(row.resourceOwnership.authority.status, 'authority-unresolved', `${resource} is a negative historical control`);
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
-  assert.equal(ledger.counts.resourceAuthorityByStatus['authority-unresolved'], 17);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['authority-unresolved'], 13);
 });
 
 test('dataset-value operation schemas pin direct authorship, consumer closure and archive limits', () => {
@@ -988,7 +1000,7 @@ test('domain-pack resources pin the schema builder, contract inputs and package 
   const archive = readFileSync('scripts/package-sdk.py', 'utf8');
   assert.match(build, /cp\(join\(root,'spec'\),join\(dist,'spec'\),\{recursive:true\}\)/);
   assert.match(archive, /\(root\s*\/\s*'dist'\)\.rglob\('\*'\)/);
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
 });
 
 test('Arrow IPC single-output schema writers have read-only check mode and pinned package closure', () => {
@@ -1022,7 +1034,7 @@ test('Arrow IPC single-output schema writers have read-only check mode and pinne
     const after = createHash('sha256').update(readFileSync(resource)).digest('hex');
     assert.equal(after, before, `${generator} --check changed ${resource}`);
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
 });
 
 test('Arrow base schemas pin PostgreSQL and vendored FlatBuffer generator inputs', () => {
@@ -1072,7 +1084,7 @@ test('Arrow base schemas pin PostgreSQL and vendored FlatBuffer generator inputs
     execFileSync('bun', [generator, '--check'], { stdio: 'pipe' });
     for (const resource of resources) assert.equal(createHash('sha256').update(readFileSync(resource)).digest('hex'), before.get(resource), `${generator} --check changed ${resource}`);
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
 });
 
 test('Delta action and checkpoint report schemas pin CONTRACT-018 composition and package closure', async () => {
@@ -1156,7 +1168,7 @@ test('Delta action and checkpoint report schemas pin CONTRACT-018 composition an
   } finally {
     await rm(generatedCheckpoint, { recursive: true, force: true });
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
 });
 
 test('native JSON tree schema is contract-attested and preserves its public source closure', () => {
@@ -1249,7 +1261,7 @@ test('PostgreSQL Key catalog schemas pin one exact contract-governed three-outpu
   } finally {
     await rm(isolated, { recursive: true, force: true });
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
 });
 
 test('Spark projection schemas pin US-017 clauses, composed input, public exports and package closure', () => {
@@ -1324,7 +1336,7 @@ test('Parquet level, physical, row and logical report schemas pin their input ch
     execFileSync('bun', [generator, '--check'], { stdio: 'pipe' });
     assert.equal(createHash('sha256').update(readFileSync(row.source)).digest('hex'), before, `${generator} --check changed ${row.source}`);
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
 });
 
 test('condition-aware routes count logical gaps once and classify each default separately', () => {
@@ -1341,7 +1353,7 @@ test('condition-aware routes count logical gaps once and classify each default s
       ['declareCoreRecordMembers', 'declare_core_record_members'],
       ['declareCoreKey', 'declare_core_key'],
     ].map(([exportName]) => ({ routeId, exportName, declarationName: exportName, declarationKind: routeId === 'package-reference' ? 'FunctionDeclaration' : 'BindingElement', source: routeId === 'package-root-node' ? 'src/index-node-v4.ts' : routeId === 'package-root-browser' ? 'src/index-browser-v4.ts' : 'src/model/keys.ts', line: 14, sourceSha256: '6'.repeat(64) })),
-    { routeId, exportName: 'verifyCoreKeyOperation', declarationName: 'verifyCoreKeyOperation', declarationKind: 'FunctionDeclaration', source: 'src/model/keys.ts', line: 16, sourceSha256: '5'.repeat(64) },
+    { routeId, exportName: 'verifyCoreKeyOperation', declarationName: 'verifyCoreKeyOperation', declarationKind: routeId === 'package-reference' ? 'FunctionDeclaration' : 'BindingElement', source: routeId === 'package-reference' ? 'src/model/keys.ts' : routeId === 'package-root-node' ? 'src/index-node-v4.ts' : 'src/index-browser-v4.ts', line: 16, sourceSha256: '5'.repeat(64) },
     { routeId, exportName: 'validateCoreDatasetValuesCompact', declarationName: 'validateCoreDatasetValuesCompact', declarationKind: routeId === 'package-reference' ? 'FunctionDeclaration' : 'BindingElement', source: routeId === 'package-root-node' ? 'src/index-node-v4.ts' : routeId === 'package-root-browser' ? 'src/index-browser-v4.ts' : 'src/model/dataset-values-compact.ts', line: 17, sourceSha256: '9'.repeat(64) },
     { routeId, exportName: 'verifyCoreDatasetValuesCompact', declarationName: 'verifyCoreDatasetValuesCompact', declarationKind: 'FunctionDeclaration', source: 'src/model/dataset-values-compact.ts', line: 18, sourceSha256: '8'.repeat(64) },
     ...[
@@ -1422,9 +1434,13 @@ test('condition-aware routes count logical gaps once and classify each default s
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     const verify = byRouteAndName.get(`${routeId}:verifyCoreKeyOperation`);
     assert.equal(verify.sourceSelectedImplementation, null);
-    assert.equal(verify.acceptedRustOperation, 'umf_core::core_keys::verify_core_key_operation');
+    assert.equal(verify.acceptedRustOperation, null);
     assert.equal(verify.implementationStatus, 'inherited TypeScript implementation remains default');
+    assert.equal(verify.declarationKind, 'BindingElement');
   }
+  const referenceVerify = byRouteAndName.get('package-reference:verifyCoreKeyOperation');
+  assert.equal(referenceVerify.acceptedRustOperation, 'umf_core::core_keys::verify_core_key_operation');
+  assert.equal(referenceVerify.implementationStatus, 'TypeScript reference implementation remains explicit');
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     const validate = byRouteAndName.get(`${routeId}:validateCoreDatasetValuesCompact`);
     const verify = byRouteAndName.get(`${routeId}:verifyCoreDatasetValuesCompact`);
@@ -2173,7 +2189,7 @@ test('Delta datatype and table-context schemas pin exact writers and isolated fu
   } finally {
     await rm(directory, { recursive: true, force: true });
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
 });
 
 test('Python source census walks nested package modules', async t => {

@@ -1696,13 +1696,16 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
 
 function logicalDeclarationSignature(row) {
   // These exact declarations intentionally differ by condition: the Node and
-  // browser roots select Rust-backed initializers/operations while ./reference
-  // retains the TypeScript declarations. Normalize only reviewed route switches.
-  // Cardinality exports have the same reviewed source-selection shape: a
-  // BindingElement in the Node/browser V4 entrypoints and a function in
-  // ./reference. Normalize only these exact three names; overload checks for
+  // browser roots expose V4 entry bindings while ./reference retains the
+  // TypeScript declarations. This normalizes declaration shape only; the row's
+  // operation owner, implementation status, and qualification are decided
+  // separately below.
+  // Normalize only the exact root-binding names below; overload checks for
   // every other declaration remain kind- and multiplicity-sensitive.
-  const selectedOperation = row.exportName === 'generatePythonClient'
+  const conditionBoundExport = row.exportName === 'generatePythonClient'
+    // Core Keys binds this legacy TypeScript verifier through the V4 entry,
+    // but does not select its Rust candidate implementation.
+    || row.exportName === 'verifyCoreKeyOperation'
     || ['declareCoreSchemaProperties', 'inspectCoreSchemaProperties', 'validateCoreFieldValue', 'resolveCoreDefault'].includes(row.exportName)
     || ['parseGregorianDate', 'truncateGregorianDate', 'parseRfc3339ExactInstant', 'sameRfc3339ExactInstant', 'inspectCoreRelationships', 'lookupCoreRelationship', 'declareCoreRelationship', 'verifyCoreRelationshipOperation'].includes(row.exportName)
     || row.exportName === 'validateCoreDatasetValuesCompact'
@@ -1710,9 +1713,9 @@ function logicalDeclarationSignature(row) {
     || ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName)
     || ['inspectCoreRecordMembers', 'inspectCoreReferenceLinks', 'inspectCoreScalarType', 'validateCsvBooleanLexical', 'verifyCsvBooleanLexical'].includes(row.exportName)
     || ['inspectCoreCardinality', 'declareCoreCardinality', 'verifyCoreCardinalityDeclaration', 'inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName);
-  const kind = selectedOperation
+  const kind = conditionBoundExport
     && ['package-root-node', 'package-root-browser', 'package-reference'].includes(row.routeId)
-    ? 'condition-selected-rust-operation'
+    ? 'condition-selected-root-binding'
     : row.declarationKind;
   return `${row.exportName}\0${row.declarationName}\0${kind}`;
 }
@@ -1836,7 +1839,7 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
     executableDefaultRouteGapsByRoute: routeCounts,
     sourceSelectedRustOverrides: Object.values(routeCounts).reduce((sum, route) => sum + route.rustSelectedSourceDeclarations, 0),
     bindingRoutesProven: new Set(rows.filter(row => row.rowKind === 'executable' && row.bindingRoute !== null).map(row => row.logicalDeclarationKey)).size,
-    sourceSelectedRustOverridesDefinition: 'Count of Node/browser declaration rows whose source resolves to the V4 root entry and has an exact Rust ownership mapping in this ledger. The entry declaration census is 37 per root in the current inventory; source selection does not remove any logical retirement gap. Temporal and relationship route receipts are private bounded cohorts, not release qualification.',
+    sourceSelectedRustOverridesDefinition: 'Count of Node/browser declaration rows whose source resolves to the V4 root entry and has an exact Rust ownership mapping in this ledger. The current entry declaration census is 42 per root; source selection does not remove any logical retirement gap. Temporal and relationship route receipts are private bounded cohorts, not release qualification.',
     bindingRoutesProvenDefinition: installedRouteEvidence
       ? `Count of unique logical executable names with a route proven by the gated ${installedRouteEvidence.boundedOperations}-operation R8 same-archive fixed-point receipt set; this is not complete host parity, declaration retirement or release qualification.`
       : 'Count of unique logical executable names with a binding route proven by a current fixed-point private installed archive. Existing bounded selections remain as recorded; this is not complete host parity, declaration retirement or release qualification.',

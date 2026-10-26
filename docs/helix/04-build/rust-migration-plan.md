@@ -5429,6 +5429,12 @@ remains Python-selected, while arbitrary subclass accessor behavior, broader
 capture parity, default selection and installed-package qualification remain
 open.
 
+The [two-hop aliased Join control](evidence/rust-migration/r8-captured-graph-validator-interface/README.md#two-hop-aliased-join-control--2026-10-26)
+now pins acceptance of an aliased second-Join source and the earlier
+`join source is absent` refusal before a later foreign-field fault. Sol reran
+36 focused Rust tests and 13 live Python graph-validator tests on CPython 3.11;
+public capture selection remains unchanged.
+
 Selection now has a crate-private lazy `RegistrationProvider` static adapter
 through constraints, admitted Engine validation and Selection. Focused
 provider tests cover repeated lookup and error stopping; the structural gate
@@ -5491,10 +5497,10 @@ local and core-schema link targets, a resource-only conditional fragment, and
 manifest provenance. Sol independently reran the metamodel crate tests (25
 unit and 5 integration tests); both generated operation schemas retain their
 frozen exact bytes and SHA-256 values. The generated-output fixed-point check
-passed before concurrent capture-source edits; a new source-bound check and R8
-ledger recapture are required once this moving tree settles. The last ledger's
-17 unresolved resource aliases and 922 retirement gaps are historical counts,
-not an updated authority or retirement claim for this source cut.
+passed again after the Selection host protocol and Python capture DTO commits.
+The previous ledger's 17 unresolved resource aliases were historical; the
+current source recapture below records 13. Neither ledger closes the 922
+logical default-route retirement gaps.
 
 The [bounded native spread-failure continuation](evidence/rust-migration/r8-next-route-queue/selection-provider-implementation-prep-20261026.md)
 now lets Rust request host-native TypeError text for `undefined`, `null`, and
@@ -5503,8 +5509,37 @@ the predecessor's spread expression without repeating the caller's getter;
 `String(error)` runs once and thrown identity is preserved. Sol independently
 reran the focused core, Node and WASM codec tests and the
 [20-assertion fake-addon probe](evidence/rust-migration/r8-selection-host-primitive-dispatch/README.md)
-in Node 26.12.1, Bun 1.4.3 and Chromium 153.0.8010.12. Frozen TypeScript
-reference receipts match each host's native message for those three inputs.
+in Node 26.12.1, Bun 1.4.3 and Chromium 153.0.8010.12. The rerun frozen
+TypeScript reference records 71 captured cases, 12 frozen comparisons and
+seven schema checks on Node and Bun, with matching Chromium host outcomes;
+its receipts match each host's native message for those three inputs.
 Malformed iterable stages outside this subset, complete host Selection,
 `kindRuntime`, final `UmfError` exposure, native-work metering and the default
 route remain open.
+
+The [current R8 inventory and ledger recapture](evidence/rust-migration/r8-symbol-inventory/README.md#r8-typescript-public-runtime-export-map)
+now checks against 3,375 route-specific declarations and 1,120 declarations
+in each of the Node, browser and reference roots. The V4 entries expose 42
+direct declarations each. A narrow declaration-shape normalization for
+`verifyCoreKeyOperation` restores route multiplicity without claiming its
+TypeScript default is Rust-owned. The ledger still records **922 logical
+executable retirement gaps**, **62 accepted opt-in Rust mappings**, **860
+unmapped executable names**, and resource authority counts of 48
+generated-known, 49 authored-known, 88 candidate-generated and **13
+unresolved**. The regenerated metamodel, inventory and ledger fixed-point
+checks pass. The ledger test suite passes 43/45; two source-bound installed
+archive tests correctly reject the changed Node host source. The five-family
+24-operation private archive and Node/Bun/Chromium receipts must be rebuilt on
+a frozen source cut before installed-route qualification can be renewed.
+
+The [private Selection host route](evidence/rust-migration/r8-selection-private-host-route/README.md)
+now admits host-owned source then query and consults `Registry.get` lazily at
+Rust's existing lookup sites. A found caller-owned registration is retained
+opaque and refused explicitly before structure or semantics field access. Sol
+reran the ten frozen R5 Selection tests and three Bun-driven Node-addon tests;
+an independent Node 26.12.1 probe matched the frozen JSON value and preserved
+lookup-throw identity. That probe also found a null-prototype decoded result
+where the TypeScript reference returns ordinary objects, so full JS shape
+parity remains open. The WASM target compiles, but this new export has no real
+Chromium runtime receipt because the local bindgen tooling is unavailable.
+No public/default route or retirement claim follows from this checkpoint.
