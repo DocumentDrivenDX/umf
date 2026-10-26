@@ -1,5 +1,39 @@
 # Public PyPI publication
 
+## Current required route — 2026-10-26
+
+Owner direction requires `pip install 'arras[truss,umf]'` to resolve wholly from
+public PyPI, with future dependency releases published automatically. This
+repository publishes the existing qualified `umf-core` archives; Truss and Weft
+own their separate packages and workflows. The initial exact-byte backfill is
+core 0.10.0 from SDK tag `umf-v0.5.4`, wheel SHA-256
+`49633924b45a3c8499d4fcc1a24c30d5a8fcb34d974ab019bbda987cb47da0f9`.
+SDK/tag and core package versions are separate identities.
+
+`pypi.yml` now dispatches `publish-pypi.yml` on the default branch when a
+core-bearing SDK release is published. A completed owned `release*.yml`
+producer is also observed for releases created with GitHub's workflow token.
+The latter route selects exactly one matching published release in that run's
+publication window; missing releases do nothing and ambiguity fails. Unrelated
+component releases are ignored. The former manual rebuild/upload trigger is
+retired so it cannot create competing bytes under an existing package version.
+
+`publish-pypi.yml` requires an exact tag, resolved commit and SHA256SUMS pin,
+validates GitHub digests and the SDK/core release pins, then stages only the
+unchanged core wheel and sdist. The `pypi` environment permits only the `main`
+driver with no reviewer per release. Register the exact PyPI trusted publisher
+for `DocumentDrivenDX/umf`, workflow `publish-pypi.yml`, environment `pypi`.
+No stored publishing token is used. A version must be absent or have identical
+files and bytes; conflicts and registry errors fail immediately.
+
+A subsequent job without OIDC checks a clean public-PyPI install and installed
+origin. Source-validation, upload, byte and consumer receipts remain separate.
+Initial grants and actual backfill publication are pending; configuration alone
+is not publication evidence. Historical package namespaces and support limits
+remain unchanged. Core0.10.2 runtime/producer work is a separate release lane.
+
+## Historical preparation and observations
+
 UMF Python distribution: `umf-core`; import namespace: `umf`. Release 0.8.1
 retains core document versions through 0.8.0. TableSpec release 0.0.7 currently
 uses a pinned Git dependency on UMF, so its existing GitHub release and Pages

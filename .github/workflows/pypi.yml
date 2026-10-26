@@ -1,47 +1,52 @@
-name: Publish UMF Python to PyPI
+name: Dispatch released UMF core publication
 on:
-  workflow_dispatch:
+  release:
+    types: [published]
+  workflow_run:
+    types: [completed]
 permissions:
   contents: read
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - uses: dtolnay/rust-toolchain@stable
-        with:
-          toolchain: 1.90.0
-      - run: python -m pip install build twine
-      - run: python -m build python
-      - run: python -m twine check python/dist/*
-      - name: Verify the exact wheel payload against current sources
-        run: >-
-          python tools/verify_python_artifacts.py
-          --wheel python/dist/*.whl
-          --repository .
-          --expected-platform auto
-      - name: Test the built wheel in an isolated installation
-        run: |
-          python -m venv /tmp/umf-core-release
-          /tmp/umf-core-release/bin/python -m pip install pytest python/dist/*.whl
-          /tmp/umf-core-release/bin/python -I -c 'import importlib.metadata, pathlib, sysconfig, tomllib, umf; assert pathlib.Path(umf.__file__).is_relative_to(sysconfig.get_path("platlib")); assert importlib.metadata.version("umf-core") == tomllib.loads(pathlib.Path("python/pyproject.toml").read_text())["project"]["version"]; assert umf.__version__ == importlib.metadata.version("umf-core"); print(umf.__file__)'
-          /tmp/umf-core-release/bin/python -I -m pytest python/tests -q
-      - uses: actions/upload-artifact@v4
-        with:
-          name: pypi-dist
-          path: python/dist/*
-  publish:
-    needs: build
-    runs-on: ubuntu-latest
-    environment: pypi
+  dispatch:
+    if: >-
+      github.event_name == 'release' ||
+      (github.event.workflow_run.conclusion == 'success' && startsWith(github.event.workflow_run.path, '.github/workflows/release'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
     permissions:
-      id-token: write
+      contents: read
+      actions: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v6
         with:
-          name: pypi-dist
-          path: dist/
-      - uses: pypa/gh-action-pypi-publish@release/v1
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - name: Select one published core release and dispatch the main-only driver
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" > releases.json
+          python scripts/dispatch_core_pypi_release.py --event-name "$GITHUB_EVENT_NAME" \
+            --event-json "$GITHUB_EVENT_PATH" --releases-json releases.json --output selected.json
+          if [[ "$(cat selected.json)" == null ]]; then exit 0; fi
+          TAG="$(jq -r .tag selected.json)"
+          SUMS="$(jq -r .sums_sha256 selected.json)"
+          gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" > tag-ref.json
+          if [[ "$(jq -r .object.type tag-ref.json)" == tag ]]; then
+            OBJECT="$(jq -r .object.sha tag-ref.json)"
+            gh api "repos/$GITHUB_REPOSITORY/git/tags/$OBJECT" > tag-object.json
+          fi
+          SOURCE="$(python - <<'PY'
+          import json,sys
+          from pathlib import Path
+          sys.path.insert(0, 'scripts')
+          from publish_core_pypi_release import resolve_tag_commit
+          ref=json.loads(Path('tag-ref.json').read_text())
+          obj=json.loads(Path('tag-object.json').read_text()) if Path('tag-object.json').exists() else None
+          print(resolve_tag_commit(ref,obj,json.loads(Path('selected.json').read_text())['tag']))
+          PY
+          )"
+          DEFAULT_BRANCH="$(jq -r .repository.default_branch "$GITHUB_EVENT_PATH")"
+          gh workflow run publish-pypi.yml --ref "$DEFAULT_BRANCH" \
+            -f "tag=$TAG" -f "source_sha=$SOURCE" -f "expected_sums_sha256=$SUMS"
