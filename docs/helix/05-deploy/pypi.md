@@ -11,7 +11,7 @@ core 0.10.0 from SDK tag `umf-v0.5.4`, wheel SHA-256
 SDK/tag and core package versions are separate identities.
 
 `pypi.yml` now dispatches `publish-pypi.yml` on the default branch when a
-core-bearing SDK release is published. A completed owned `release*.yml`
+core-bearing SDK or standalone `python-vX.Y.Z` release is published. A completed owned `release*.yml`
 producer is also observed for releases created with GitHub's workflow token.
 The latter route selects exactly one matching published release in that run's
 publication window; missing releases do nothing and ambiguity fails. Unrelated
@@ -20,7 +20,12 @@ retired so it cannot create competing bytes under an existing package version.
 
 `publish-pypi.yml` requires an exact tag, resolved commit and SHA256SUMS pin,
 validates GitHub digests and the SDK/core release pins, then stages only the
-unchanged core wheel and sdist. The `pypi` environment permits only the `main`
+unchanged core wheel cohort and sdist. Standalone releases bind `tag`, `commit`,
+`distribution`, `version` and the selected filename-to-SHA256 `files` map in
+`release-pins.json`. Every released core archive must appear in the checksum
+cohort. Unsupported raw `linux_x86_64` native wheels are refused before upload;
+they must never be renamed to imply manylinux qualification. A future native
+PyPI release requires genuinely built and tested compatible bytes. The `pypi` environment permits only the `main`
 driver with no reviewer per release. Register the exact PyPI trusted publisher
 for `DocumentDrivenDX/umf`, workflow `publish-pypi.yml`, environment `pypi`.
 No stored publishing token is used. A version must be absent or have identical
@@ -28,9 +33,10 @@ files and bytes; conflicts and registry errors fail immediately.
 
 A subsequent job without OIDC checks a clean public-PyPI install and installed
 origin. Source-validation, upload, byte and consumer receipts remain separate.
-Initial grants and actual backfill publication are pending; configuration alone
-is not publication evidence. Historical package namespaces and support limits
-remain unchanged. Core0.10.2 runtime/producer work is a separate release lane.
+The approved environment and trusted publisher are configured. Actual backfill
+publication remains pending; configuration alone is not publication evidence. Historical package namespaces and support limits
+remain unchanged. Core0.10.2 runtime/producer work is a separate release lane; its currently
+qualified raw Linux wheel is GitHub-only and does not establish PyPI compatibility.
 
 ## Historical preparation and observations
 

@@ -105,6 +105,27 @@ class PublishPypiReleaseTests(unittest.TestCase):
             (self.output / self.whl_name).read_bytes(), self.payloads[self.whl_name]
         )
 
+    def test_sdk_profile_refuses_multiple_wheels_without_a_selected_file_map(
+        self,
+    ) -> None:
+        extra = "umf_core-0.10.0-cp311-cp311-manylinux_2_17_x86_64.whl"
+        payload = self.payloads[self.whl_name]
+        self.payloads[extra] = payload
+        (self.assets / extra).write_bytes(payload)
+        self.sums = "".join(
+            f"{hashlib.sha256(data).hexdigest()}  {name}\n"
+            for name, data in self.payloads.items()
+        ).encode()
+        (self.assets / "SHA256SUMS").write_bytes(self.sums)
+        self.release["assets"] = [
+            {**item, "digest": "sha256:" + hashlib.sha256(self.sums).hexdigest()}
+            if item["name"] == "SHA256SUMS"
+            else item
+            for item in self.release["assets"]
+        ] + [{"name": extra, "digest": "sha256:" + hashlib.sha256(payload).hexdigest()}]
+        with self.assertRaisesRegex(publisher.ReleaseError, "wheel inventory"):
+            self.prepare(wheel_count=None)
+
     def test_prepare_refuses_source_movement_and_github_digest_mismatch(self) -> None:
         with self.assertRaisesRegex(publisher.ReleaseError, "pinned source"):
             self.prepare(source_sha="b" * 40)
@@ -152,6 +173,60 @@ class PublishPypiReleaseTests(unittest.TestCase):
             publisher.validate_archive(
                 self.assets / self.sdist_name, "other-package", "0.10.0"
             )
+
+    def test_standalone_core_profile_binds_source_and_explicit_file_map(self) -> None:
+        tag = "python-v0.10.0"
+        pins = {
+            "tag": tag,
+            "commit": "a" * 40,
+            "distribution": "umf-core",
+            "version": "0.10.0",
+            "files": {
+                name: hashlib.sha256(data).hexdigest()
+                for name, data in self.payloads.items()
+            },
+        }
+        raw = json.dumps(pins).encode()
+        (self.assets / "release-pins.json").write_bytes(raw)
+        release = {
+            **self.release,
+            "tag_name": tag,
+            "assets": [
+                {**a, "digest": "sha256:" + hashlib.sha256(raw).hexdigest()}
+                if a["name"] == "release-pins.json"
+                else a
+                for a in self.release["assets"]
+            ],
+        }
+        ref = {**self.ref, "ref": "refs/tags/" + tag}
+        receipt = self.prepare(tag=tag, release=release, tag_ref=ref, wheel_count=None)
+        self.assertEqual(receipt["version"], "0.10.0")
+        pins["files"][self.whl_name] = "f" * 64
+        changed = json.dumps(pins).encode()
+        (self.assets / "release-pins.json").write_bytes(changed)
+        release["assets"] = [
+            {**a, "digest": "sha256:" + hashlib.sha256(changed).hexdigest()}
+            if a["name"] == "release-pins.json"
+            else a
+            for a in release["assets"]
+        ]
+        with self.assertRaisesRegex(publisher.ReleaseError, "selected file hashes"):
+            self.prepare(
+                tag=tag,
+                release=release,
+                tag_ref=ref,
+                output_dir=self.root / "refused",
+                wheel_count=None,
+            )
+
+    def test_raw_linux_wheel_is_refused_before_any_upload(self) -> None:
+        raw = self.assets / "umf_core-0.10.0-cp311-cp311-linux_x86_64.whl"
+        raw.write_bytes(self.payloads[self.whl_name])
+        with self.assertRaisesRegex(publisher.ReleaseError, "not accepted by PyPI"):
+            publisher.validate_archive(raw, "umf-core", "0.10.0")
+        accepted = self.assets / "umf_core-0.10.0-cp311-cp311-manylinux_2_28_x86_64.whl"
+        accepted.write_bytes(self.payloads[self.whl_name])
+        publisher.validate_archive(accepted, "umf-core", "0.10.0")
 
     def test_registry_check_accepts_only_exact_public_file_bytes(self) -> None:
         payload = self.payloads[self.whl_name]

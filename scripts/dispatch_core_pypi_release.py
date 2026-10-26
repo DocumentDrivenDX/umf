@@ -11,7 +11,7 @@ from typing import Any
 
 from publish_core_pypi_release import ReleaseError
 
-TAG = re.compile(r"umf-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\Z")
+TAG = re.compile(r"(?:umf|python)-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\Z")
 
 
 def core_release(release: dict[str, Any]) -> bool:

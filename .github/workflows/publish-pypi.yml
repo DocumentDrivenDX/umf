@@ -47,7 +47,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          [[ "$TARGET_TAG" =~ ^umf-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]
+          [[ "$TARGET_TAG" =~ ^(umf|python)-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]
           [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
           [[ "$MANUAL_SUMS_SHA256" =~ ^[0-9a-f]{64}$ ]]
           printf 'tag=%s\nsource_sha=%s\nsums_sha256=%s\n' \
@@ -79,7 +79,7 @@ jobs:
           set -euo pipefail
           ARGS=(prepare --repository "$GITHUB_REPOSITORY" --tag "$TAG" --source-sha "$SOURCE_SHA"
             --expected-sums-sha256 "$EXPECTED_SUMS_SHA256" --distribution umf-core
-            --wheel-prefix "umf_core-" --wheel-count 1 --require-sdist
+            --wheel-prefix "umf_core-" --require-sdist
             --release-json incoming/release.json --tag-ref-json incoming/tag-ref.json
             --assets-dir incoming/assets --output-dir dist --receipt dist/source-receipt.json)
           if [[ -f incoming/tag-object.json ]]; then ARGS+=(--tag-object-json incoming/tag-object.json); fi
@@ -174,7 +174,7 @@ jobs:
         run: |
           set -euo pipefail
           python -m venv "$RUNNER_TEMP/pypi-consumer"
-          "$RUNNER_TEMP/pypi-consumer/bin/python" -m pip --isolated install --disable-pip-version-check --no-cache-dir \
+          "$RUNNER_TEMP/pypi-consumer/bin/python" -m pip --isolated install --disable-pip-version-check --no-cache-dir --only-binary=umf-core \
             --index-url https://pypi.org/simple "umf-core==$VERSION"
           "$RUNNER_TEMP/pypi-consumer/bin/python" -m pip --isolated check
           cd "$RUNNER_TEMP"

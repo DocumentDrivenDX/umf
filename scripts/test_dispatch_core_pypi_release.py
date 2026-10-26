@@ -33,6 +33,14 @@ class DispatchTests(unittest.TestCase):
             {"tag": "umf-v0.5.4", "sums_sha256": "a" * 64},
         )
 
+    def test_standalone_core_release_is_dispatched_without_sdk_version_inference(
+        self,
+    ) -> None:
+        self.release["tag_name"] = "python-v0.10.2"
+        self.assertEqual(
+            select_release("release", self.event, [])["tag"], "python-v0.10.2"
+        )
+
     def test_noncore_releases_and_unpublished_events_do_not_dispatch(self) -> None:
         self.event["action"] = "edited"
         self.assertIsNone(select_release("release", self.event, []))

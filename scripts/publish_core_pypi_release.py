@@ -19,7 +19,7 @@ from typing import Any
 
 SHA = re.compile(r"[0-9a-f]{64}\Z")
 COMMIT = re.compile(r"[0-9a-f]{40}\Z")
-TAG = re.compile(r"umf-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\Z")
+TAG = re.compile(r"(?:umf|python)-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\Z")
 
 
 class ReleaseError(ValueError):
@@ -66,6 +66,18 @@ def _metadata(raw: bytes, distribution: str, version: str) -> None:
 
 
 def validate_archive(path: Path, distribution: str, version: str) -> None:
+    if path.name.endswith(".whl"):
+        platform_tags = path.name[:-4].rsplit("-", 1)[-1].split(".")
+        _require(
+            all(
+                re.fullmatch(
+                    r"(?:any|manylinux_[A-Za-z0-9_]+|manylinux[0-9]+_[A-Za-z0-9_]+|musllinux_[A-Za-z0-9_]+|macosx_[A-Za-z0-9_]+|win32|win_amd64|win_arm64)",
+                    tag,
+                )
+                for tag in platform_tags
+            ),
+            "wheel platform is not accepted by PyPI; qualify genuine portable wheel bytes before publication",
+        )
     if path.name.endswith(".whl"):
         try:
             with zipfile.ZipFile(path) as archive:
@@ -152,10 +164,13 @@ def prepare_release(
     expected_sums_sha256: str,
     distribution: str,
     wheel_prefix: str,
-    wheel_count: int,
+    wheel_count: int | None,
     require_sdist: bool,
 ) -> dict[str, Any]:
-    _require(TAG.fullmatch(tag) is not None, "tag must be numeric umf-vX.Y.Z")
+    _require(
+        TAG.fullmatch(tag) is not None,
+        "tag must be numeric umf-vX.Y.Z or python-vX.Y.Z",
+    )
     _require(COMMIT.fullmatch(source_sha) is not None, "source SHA is invalid")
     _require(
         SHA.fullmatch(expected_sums_sha256) is not None, "SHA256SUMS pin is invalid"
@@ -170,7 +185,7 @@ def prepare_release(
         resolve_tag_commit(tag_ref, tag_object, tag) == source_sha,
         "tag does not resolve to the pinned source",
     )
-    sdk_version = tag[5:]
+    sdk_version = tag[5:] if tag.startswith("umf-v") else None
     raw_assets = release.get("assets")
     _require(isinstance(raw_assets, list), "release asset inventory is missing")
     assets: dict[str, dict[str, Any]] = {}
@@ -215,23 +230,37 @@ def prepare_release(
         repository == "DocumentDrivenDX/umf"
         and distribution == "umf-core"
         and wheel_prefix == "umf_core-"
-        and wheel_count == 1
         and require_sdist,
         "publisher is restricted to the official umf-core wheel and source archive",
     )
+    if sdk_version is not None:
+        _require(
+            isinstance(pins, dict) and pins.get("sdk") == sdk_version,
+            "release pins do not identify this SDK tag",
+        )
+        version = pins.get("umf_core")
+    else:
+        version = tag.removeprefix("python-v")
+        _require(
+            isinstance(pins, dict)
+            and pins.get("tag") == tag
+            and pins.get("commit") == source_sha
+            and pins.get("distribution") == distribution
+            and pins.get("version") == version,
+            "standalone core release pins differ from tag, source or distribution",
+        )
     _require(
-        isinstance(pins, dict)
-        and pins.get("sdk") == sdk_version
-        and isinstance(pins.get("umf_core"), str)
-        and re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", pins["umf_core"]) is not None,
-        "release pins do not identify this SDK tag and its core version",
+        isinstance(version, str)
+        and re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", version) is not None,
+        "release pins do not identify a numeric core version",
     )
-    version = pins["umf_core"]
     archives = sorted(
         name for name in sums if name.startswith(wheel_prefix) and name.endswith(".whl")
     )
     _require(
-        len(archives) == wheel_count,
+        1 <= len(archives) <= 32
+        and (sdk_version is None or len(archives) == 1)
+        and (wheel_count is None or len(archives) == wheel_count),
         "SHA256SUMS wheel inventory differs from the expected cohort",
     )
     sdist_prefix = wheel_prefix.rstrip("-")
@@ -245,6 +274,21 @@ def prepare_release(
         "SHA256SUMS source archive inventory differs",
     )
     selected = archives + sdists
+    published_archives = {
+        name
+        for name in assets
+        if name.startswith(wheel_prefix)
+        and (name.endswith(".whl") or name.endswith(".tar.gz"))
+    }
+    _require(
+        set(selected) == published_archives,
+        "release archive inventory differs from checksum cohort",
+    )
+    if sdk_version is None:
+        _require(
+            pins.get("files") == {name: sums[name] for name in selected},
+            "standalone core selected file hashes differ from release pins",
+        )
     _require(not output_dir.exists(), "verified distribution output path must be new")
     output_dir.mkdir(parents=True)
     files: dict[str, str] = {}
@@ -397,7 +441,6 @@ def main() -> int:
             args.expected_sums_sha256,
             args.distribution,
             args.wheel_prefix,
-            args.wheel_count,
         )
         _require(
             all(value is not None for value in required),
