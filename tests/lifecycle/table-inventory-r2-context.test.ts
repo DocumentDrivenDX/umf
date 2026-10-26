@@ -263,6 +263,7 @@ test('R2 descriptor admission enforces depth and numeric limits while preserving
 test('R2 owned history canonical spans bind exact frozen roots and members',()=>{
  const raw={profile:'umf.table-inventory-source-history/0.1',plans:[{id:'p-λ',ratio:1.25,extension:{zero:0,negativeZero:0}}],executions:[{planDigest:'a'.repeat(64),entryDigest:'b'.repeat(64),seedOutcomes:[]}]};
  const meter=new R2WorkMeter(),owned=snapshotR2HistoryJson(raw,meter);
+ expect(Object.getPrototypeOf(owned.value)).toBeNull();
  expect(owned.canonical).toBe(canonical(raw));expect(ownedR2HistoryByteLength(owned.value,meter)).toBe(new TextEncoder().encode(canonical(raw)).byteLength);
  const plan=ownedR2HistoryMember(owned.value.plans[0],meter,'/history/plans/0');expect(plan?.text).toBe(canonical(owned.value.plans[0]));expect(plan?.byteLength).toBe(new TextEncoder().encode(plan!.text).byteLength);
  expect(ownedR2HistoryMember(raw.plans[0],meter,'/mutable-caller/plans/0')).toBeUndefined();raw.plans[0]!.extension.zero=9;expect((owned.value.plans[0] as any).extension.zero).toBe(0);
