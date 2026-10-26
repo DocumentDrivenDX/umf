@@ -6,7 +6,7 @@ import {consumeVerifiedG10Deployment,verifyAndRememberG10Deployment} from '../..
 import {validateG10RequestShape} from '../../src/table-migration/inventory-options';
 import {R2WorkMeter} from '../../src/table-migration/inventory-r2-context';
 import fixture from '../binding/fixtures/table-lifecycle-note.json';
-import {verifyG10BundleForLineage,verifyG10BundleForShape,withVerifiedG10BundleScope} from '../../src/table-migration/inventory-verified-deployment';
+import {verifyG10BundleForLineage,verifyG10BundleForShape,verifyScopedG10SourceBundle,withVerifiedG10BundleScope} from '../../src/table-migration/inventory-verified-deployment';
 
 const configuration={module:'demo',schema:'verified_demo',ownerRole:'verified_owner',personRole:'verified_person',batchRole:'verified_batch',groupRoles:{}};
 function bundle(){
@@ -109,6 +109,28 @@ test('failed lineage verification does not seed a later retry',()=>{
   expect(()=>verifyG10BundleForLineage(invalid,meter,'/failed-first')).toThrow();
   expect(()=>verifyG10BundleForLineage(invalid,meter,'/failed-retry')).toThrow();
  });
+});
+
+test('fixed G02 source reuse is exact, meter-local, and falls back to full verification',()=>{
+ const valid=bundle(),meter=new R2WorkMeter(),foreignMeter=new R2WorkMeter();let resident:ReturnType<typeof verifyScopedG10SourceBundle>|undefined,foreign:ReturnType<typeof verifyScopedG10SourceBundle>|undefined;
+ withVerifiedG10BundleScope(meter,()=>{
+  verifyAndRememberG10Deployment(valid,meter);
+  const sameScope=verifyScopedG10SourceBundle(structuredClone(valid),meter,'/g02/previous');resident=sameScope;
+  expect(Object.isFrozen(sameScope)).toBe(true);
+  expect(Object.hasOwn(sameScope,'document')).toBe(false);
+  expect(Object.hasOwn(sameScope,'operations')).toBe(false);
+  expect(consumeVerifiedG10Deployment(sameScope,meter,'/g02/previous')).toBeUndefined();
+  const changed=structuredClone(valid);changed.source.utf8+=' ';
+  expect(()=>verifyScopedG10SourceBundle(changed,meter,'/g02/changed')).toThrow();
+  foreign=withVerifiedG10BundleScope(foreignMeter,()=>verifyScopedG10SourceBundle(structuredClone(valid),foreignMeter,'/g02/foreign'));
+  expect(foreign).not.toBe(sameScope);expect(foreign.bundleDigest).toBe(valid.bundleDigest);
+ });
+ if(!resident)throw new Error('same-scope verified bundle missing');
+ if(!foreign)throw new Error('foreign-meter full verification missing');
+ const outside=verifyScopedG10SourceBundle(structuredClone(valid),new R2WorkMeter(),'/g02/outside-scope');
+ expect(outside.bundleDigest).toBe(valid.bundleDigest);expect(outside).not.toBe(resident);
+ const invalid=structuredClone(valid);invalid.bundleDigest='0'.repeat(64);
+ expect(()=>verifyScopedG10SourceBundle(invalid,new R2WorkMeter(),'/g02/invalid-outside')).toThrow();
 });
 
 

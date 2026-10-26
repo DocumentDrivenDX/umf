@@ -118,8 +118,8 @@ export function verifyG10BundleForShape(input:TableDeploymentBundle,accounting:A
  return verifyAndRememberG10Deployment(owned as unknown as TableDeploymentBundle,accounting);
 }
 
-/** Lineage-only exact-content reuse. Every miss runs the complete source verifier. */
-export function verifyG10BundleForLineage(input:TableDeploymentBundle,accounting:AccountingContext,path:string):TableDeploymentBundle{
+/** Fixed source-use verifier. Cache hits expose only the independently frozen bundle. */
+export function verifyScopedG10SourceBundle(input:TableDeploymentBundle,accounting:AccountingContext,path:string):TableDeploymentBundle{
  const owned=ownCanonicalComponent(input,path,BUNDLE_COPY_BYTES,accounting);
  const claimedDigest=owned!==null&&typeof owned==='object'&&!Array.isArray(owned)?(owned as Record<string,InventoryComponentJson>).bundleDigest:undefined;
  const bucket=cachedBundleBucket(claimedDigest,accounting,path);
@@ -132,4 +132,9 @@ export function verifyG10BundleForLineage(input:TableDeploymentBundle,accounting
  // or any caller-owned object, and is private to this lineage call.
  const stored=cachedBundleBucket(result.bundle.bundleDigest,accounting,path);
  return stored?cachedBundle(result.inputCanonical,stored,accounting,path)??result.bundle:result.bundle;
+}
+
+/** Lineage-only exact-content reuse. Every miss runs the complete source verifier. */
+export function verifyG10BundleForLineage(input:TableDeploymentBundle,accounting:AccountingContext,path:string):TableDeploymentBundle{
+ return verifyScopedG10SourceBundle(input,accounting,path);
 }

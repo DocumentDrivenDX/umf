@@ -6,10 +6,11 @@ import type {AccountingContext} from '../model/internal/accounting-context';
 import {copyJsonCharged} from '../model/json';
 import {readJsonDocumentWithAccounting} from '../model/document-accounting';
 import {migrationOptionsForInventoryComposition,refKey,type TableMigrationOptions} from './options';
-import {verifyTableDeployment,verifyTableDeploymentWithAccounting,type TableDeploymentBundle} from '../table-deployment';
+import {verifyTableDeployment,type TableDeploymentBundle} from '../table-deployment';
 import {readDocument} from '../model/document';
 import {tableMigrationFieldOperationTag} from './internal-operations';
 import {renderG02FieldEffect,type G02FieldEffect,type G02FieldEffectRole} from './g02-field-effects';
+import {verifyScopedG10SourceBundle} from './inventory-verified-deployment';
 
 const roleByPhase={
  'add-column':'add-column','backfill':'backfill','target-check':'target-check','install-default':'install-default',
@@ -91,7 +92,7 @@ export function compileTableMigrationWithOperations(input:TableMigrationRequest)
  */
 export function compileG02FieldEffects(input:{previous:TableDeploymentBundle;next:TableDeploymentBundle;options:TableMigrationOptions;createdTables:readonly string[];accounting?:AccountingContext}):G02FieldEffect[]{
  const accounting=input.accounting;accounting?.visit('g02-field-effects-inputs','/g02',4);if(accounting){hashCanonicalCharged(input.previous,accounting,'/g02/previous');hashCanonicalCharged(input.next,accounting,'/g02/next');hashCanonicalCharged(input.options,accounting,'/g02/options');hashCanonicalCharged(input.createdTables,accounting,'/g02/createdTables');}
- const previous=accounting?verifyTableDeploymentWithAccounting(input.previous,accounting).bundle:verifyTableDeployment(input.previous),next=accounting?verifyTableDeploymentWithAccounting(input.next,accounting).bundle:verifyTableDeployment(input.next);
+ const previous=accounting?verifyScopedG10SourceBundle(input.previous,accounting,'/g02/previous'):verifyTableDeployment(input.previous),next=accounting?verifyScopedG10SourceBundle(input.next,accounting,'/g02/next'):verifyTableDeployment(input.next);
  const copiedOptions:unknown=accounting?copyJsonCharged(input.options,n=>accounting.visit('g02-options-copy','/g02/options',n),{beforeProperty:(key,path,isArray)=>{accounting.visit('g02-options-copy-property',path);if(!isArray)accounting.scanUtf8(key,path);},retainText:(text,path)=>accounting.scanUtf8(text,path)}):structuredClone(input.options);
  if(!copiedOptions||typeof copiedOptions!=='object'||Array.isArray(copiedOptions))throw new Error('table-migration-internal-g02-options');
  const options=copiedOptions as TableMigrationOptions;
