@@ -61,17 +61,24 @@ ddx:
 
 **Current source recapture (2026-10-26):** The inventory and condition-aware
 gap ledger were regenerated from the current ten package conditions after the
-V4 Node/browser entries grew to 42 direct declarations each. The inventory
+V4 Node/browser entries grew to 45 direct declarations each. The inventory
 contains 3,375 route-specific runtime declaration rows across 506 source files,
 1,126 unique export names, and 1,120 declarations in each Node, browser, and
 `./reference` root. Each default root has 922 executable declarations and 198
 JSON resource aliases spanning 189 distinct `spec/` files. The inventory SHA-256
-is `c468064a7a003dd72568facad4834d34a0e2c7cf07ca2fd16d3be9c655fc99b2`.
+is `2af651f479bb9b40583009844962c79bd472042dfad67b987a8d02833d679974`.
 
 The ledger contains 3,360 root rows, 922 logical executable default-route
-retirement gaps, 62 names with accepted opt-in Rust-operation mappings, and 860
-without such a mapping. Each V4 entry has 42 direct declarations; all 42 per
-root are counted as Rust-selected source overrides by the ledger.
+retirement gaps, 67 names with accepted opt-in Rust-operation mappings, and 855
+without such a mapping. Each V4 entry has 45 direct declarations; all 45 per
+root are counted as source-selected Rust overrides by the ledger. The new
+guarded `securityNot` root override maps to
+`umf_core::security_logic::security_not` while `./reference` remains TypeScript.
+Its private installed archive replay matched 14 cases in Node, Bun, and
+Chromium, but the archive manifest records a derived source-drifted snapshot;
+the ledger records this as provisional route evidence, not current fixed-point,
+release qualification, or retirement. The explicit `./reference` declaration
+remains TypeScript; no declaration is retired by this provisional route.
 `verifyCoreKeyOperation` is the fifth Core Key operation and uses the staged
 Rust host route in the V4 Node and browser roots. Its private fixed-point
 archive has passing installed Node, Bun, and Chromium receipts for its captured
@@ -83,37 +90,31 @@ declaration is a `FunctionDeclaration`; the ledger normalizes only this exact
 route-shape difference. That signature normalization does not change its
 implementation status, Rust ownership evidence, route selection, or retirement
 disposition. The ledger SHA-256 is
-`3e3826a7c4a126ea78d106248af0743e85a1b49ec96edd66901477dbfcfac680`.
+`ec5657b61f8adafc9b4165009c9fd3f186a50dcda53b5f602b400b8d563c2a1a`.
 
-The resource authority counts are 52 generated-known, 49 authored-known, 88
-candidate-generated, and 9 unresolved. Kind v6 and Nullability v5 now have
+The resource authority counts are 56 generated-known, 49 authored-known, 88
+candidate-generated, and 5 unresolved. Kind v6 and Nullability v5 now have
 authored metamodel bindings with exact current-byte outputs; these bindings do
 not reconstruct their historical edits. Six unique executable names have
 bounded private installed routes across the combined aggregate and the separate
 Core Key verifier archive receipt. These
 bounded receipts do not establish complete host parity, declaration retirement,
-current-source qualification for the verifier, or release readiness.
-The metamodel generated-output fixed point was refreshed after the private
-Selection host route and passes `--check`; the inventory and ledger were then
-recaptured from that output cut. The ledger now records 42 Rust-selected source
-overrides per default root, including the staged Core Key verifier. Both
-generators' `--check` modes pass. The focused route-shape regression passes
-(1/1); the complete ledger suite currently passes 43/45. Its two failures are
-the source-pinned installed-route tests, which reject the changed
-`bindings/core/node/src/host-json.js` against the recorded private archive
-cohort. At this 2026-10-25 checkpoint, the recorded aggregate pointed at
-`current-61cbaf0a`, but its source closure was stale for the host source then
-under review. Replaying its five
-families (24 operations total) would require a new package build, archive
-preflight, and fresh Node/Bun/Chromium receipts on a frozen source tree; the
-tree was still being edited during this recapture, so no archive replay was
-claimed. The strict source-bound assertion remains intact. Resource authority
-expectations now pin the current reviewed counts:
-52 generated-known, 49 authored-known, 88 candidate-generated, and 9
-unresolved, while retaining unresolved historical-schema negative controls.
-Inventory/ledger counts include the explicit
-TypeScript `./reference` route where stated; the 922 default-route gap count is
-logical and counts each export once.
+current-source qualification for the verifier, or release readiness. The
+provisional `securityNot` receipt is separate and does not increase the five
+current-source routes proven by the fixed-point aggregate.
+
+The inventory and ledger were recaptured from the current V4 source cut after
+the private Selection host route. The metamodel check currently reports stale
+output at `spec/core/schema.json`; regeneration is pending and will require a
+fresh inventory/ledger capture. The ledger records 45 source-selected overrides
+per default root, including `securityNot`; that route is provisional and does
+not contribute to the five fixed-point-proven routes. Both inventory and ledger
+`--check` modes pass at this pre-regeneration cut. The exact-shape regression
+and full ledger suite pass (48/48). All 922 logical gaps remain open. Current
+resource authority counts are 56 generated-known, 49 authored-known, 88
+candidate-generated, and 5 unresolved; historical-schema negative controls
+remain in the suite. Counts include the explicit `./reference` route where
+stated; 922 is the logical default-route gap count, counted once per export.
 
 **Coordinated source recapture (2026-10-25):** After the JSON Schema
 boolean-true profile extension, opt-in Rust/Python catalog custody slice,

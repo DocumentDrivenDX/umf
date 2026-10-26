@@ -326,7 +326,7 @@ function acceptedOperationEvidence(mapping, routeStatus = 'legacy-fixture') {
   };
 }
 
-function sourceSelectedImplementation(routeId, exportName, source = null, qualifiedRouteOperations = null) {
+function sourceSelectedImplementation(routeId, exportName, source = null, qualifiedRouteOperations = null, declaration = null) {
   if (!['package-root-node', 'package-root-browser'].includes(routeId)) return null;
   const browser = routeId === 'package-root-browser';
   const defaultEntry = browser ? 'src/index-browser-v4.ts' : 'src/index-node-v4.ts';
@@ -374,6 +374,43 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
       sourceClosure: closure(sourcePaths),
       qualificationEvidenceClosure: closure([evidencePath]),
       qualificationStatus: 'Staged Rust Core Key verifier selected at this V4 root. A fixed-point private archive has passing installed Node, Bun and Chromium receipts for the captured source closure; current worktree drift means this is not current-source or release qualification. The logical retirement gap remains open.',
+    };
+  }
+  if (exportName === 'securityNot'
+      && declaration?.declarationName === 'securityNot'
+      && declaration.declarationKind === 'VariableDeclaration'
+      && declaration.initializerShape === 'call-expression') {
+    const rustSource = 'crates/umf-core/src/security_logic.rs';
+    const evidencePaths = [
+      'docs/helix/04-build/evidence/rust-migration/r8-security-not-admission-adapter/README.md',
+      'docs/helix/04-build/evidence/rust-migration/r8-security-not-default-cutover/README.md',
+      'docs/helix/04-build/evidence/rust-migration/r8-security-not-direct-binding/README.md',
+      'docs/helix/04-build/evidence/rust-migration/r8-security-not-direct-binding/node.json',
+      'docs/helix/04-build/evidence/rust-migration/r8-security-not-direct-binding/bun.json',
+      'docs/helix/04-build/evidence/rust-migration/r8-security-not-direct-binding/chromium.json',
+      'docs/helix/04-build/evidence/rust-migration/r8-security-not-direct-binding/installed-route.json',
+    ];
+    const sourcePaths = [
+      defaultEntry, 'src/extensions/security/rust-not-adapter.ts', 'src/extensions/security/logic.ts',
+      'bindings/core/node/index.js', 'bindings/core/node/src/security-logic.js',
+      'bindings/core/node/src/lib.rs', 'bindings/core/wasm/index.js',
+      'bindings/core/wasm/src/security-logic.js', 'bindings/core/wasm/src/lib.rs',
+      'crates/umf-core-wire/src/security_logic_binding.rs', 'crates/umf-core-wire/src/lib.rs',
+      rustSource, 'crates/umf-core-wire/tests/security_logic_wire.rs',
+      'bindings/core/node/tests/security-logic.test.js',
+      'scripts/rust-migration/r8/security-not-v4-installed-route.mjs',
+      ...evidencePaths,
+    ];
+    return {
+      status: 'source-selected-installed-private-provisional',
+      rustOwner: 'umf_core::security_logic::security_not',
+      wireOperation: 'security-logic/1.0.0:securityNot',
+      bindingRoute: browser
+        ? 'V4 browser root -> guarded securityNot adapter -> WASM security-logic binding -> Rust'
+        : 'V4 Node root -> guarded securityNot adapter -> Node security-logic binding -> Rust',
+      sourceClosure: closure(sourcePaths),
+      qualificationEvidenceClosure: closure(evidencePaths),
+      qualificationStatus: 'A private installed SDK archive replay matched all 14 securityNot cases in Node, Bun and Chromium, with the browser WASM asset loaded and Node globals absent. The archive receipt records a derived private snapshot with source drift, not a clean fixed-point build; treat this as provisional installed-route evidence only. The ./reference route remains TypeScript, broader security operations are unchanged, complete parity and release qualification remain open, and the logical retirement gap remains open.',
     };
   }
   if (['declareCoreRecordType', 'verifyCoreRecordTypeDeclaration'].includes(exportName)) {
@@ -680,6 +717,10 @@ function operationMapping(row) {
   if (direct) return direct;
   if (['package-root-node', 'package-root-browser'].includes(row.routeId)
       && ['src/index-node-v4.ts', 'src/index-browser-v4.ts'].includes(row.source)) {
+    if (row.exportName === 'securityNot' && row.declarationName === 'securityNot'
+        && row.declarationKind === 'VariableDeclaration' && row.initializerShape === 'call-expression') {
+      return accepted.get(`src/extensions/security/logic.ts#securityNot`) ?? null;
+    }
     if (['declareCoreSchemaProperties', 'inspectCoreSchemaProperties', 'validateCoreFieldValue', 'resolveCoreDefault'].includes(row.exportName)) {
       return accepted.get(`src/model/schema-properties.ts#${row.exportName}`) ?? null;
     }
@@ -1701,7 +1742,7 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
   return rootRows.map((row, index) => {
     const inert = row.source.startsWith('spec/') && row.source.endsWith('.json');
     const mapping = operationMapping(row);
-    const sourceSelection = sourceSelectedImplementation(row.routeId, row.exportName, row.source, qualifiedRouteOperations);
+    const sourceSelection = sourceSelectedImplementation(row.routeId, row.exportName, row.source, qualifiedRouteOperations, row);
     const selectedBySource = sourceSelection !== null;
     const selectedCardinality = mapping && ['package-root-node', 'package-root-browser'].includes(row.routeId)
       && ['inspectCoreCardinality', 'declareCoreCardinality', 'verifyCoreCardinalityDeclaration'].includes(row.exportName);
@@ -1722,6 +1763,7 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
           : ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName) ? 'Rust facets operation selected by source route; installed qualification pending'
           : row.exportName === 'validateCoreDatasetValuesCompact' ? 'Rust compact Dataset validation selected by source route; installed qualification pending'
           : row.exportName === 'verifyCoreKeyOperation' ? 'Staged Rust Core Key verifier selected by source route; private Node/Bun/Chromium archive receipt is source-pinned; current-source qualification pending'
+          : row.exportName === 'securityNot' && selectedBySource ? 'Guarded Rust securityNot adapter selected by V4 source route; provisional private installed Node/Bun/Chromium evidence is source-drifted; fixed-point, broader parity, release qualification and retirement remain open'
           : ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName) ? 'Rust Core Keys operation selected by source route; aggregate installed qualification pending for current worktree'
           : selectedBit128 ? 'Rust Bit128/UUID operation selected by source route; installed qualification pending'
           : ['inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'].includes(row.exportName) && selectedBySource ? 'Rust core inspector selected by source route; current private installed archive passed 26 frozen cases, while selected host-error envelopes differ; retirement open'
@@ -1739,6 +1781,7 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
           : ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName) ? 'Rust facets operation selected by source route; installed qualification pending'
           : row.exportName === 'validateCoreDatasetValuesCompact' ? 'Rust compact Dataset validation selected by source route; installed qualification pending'
           : row.exportName === 'verifyCoreKeyOperation' ? 'Staged Rust Core Key verifier selected by source route; private Node/Bun/Chromium archive receipt is source-pinned; current-source qualification pending'
+          : row.exportName === 'securityNot' && selectedBySource ? 'Guarded Rust securityNot adapter selected by V4 source route; provisional private installed Node/Bun/Chromium evidence is source-drifted; fixed-point, broader parity, release qualification and retirement remain open'
           : ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName) ? 'Rust Core Keys operation selected by source route; aggregate installed qualification pending for current worktree'
           : selectedBit128 ? 'Rust Bit128/UUID operation selected by source route; installed qualification pending'
           : ['inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'].includes(row.exportName) && selectedBySource ? 'Rust core inspector selected by source route; current private installed archive passed 26 frozen cases, while selected host-error envelopes differ; retirement open'
@@ -1763,6 +1806,8 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
         ? 'explicit TypeScript reference declaration remains available; not a Node/browser default-route claim'
         : row.exportName === 'generatePythonClient' && ['package-root-node', 'package-root-browser'].includes(row.routeId)
           ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust V4 implementation selected by source route; installed qualification pending; TypeScript retirement gap remains open`
+          : row.exportName === 'securityNot' && sourceSelection && ['package-root-node', 'package-root-browser'].includes(row.routeId)
+            ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} guarded Rust securityNot adapter selected by V4 source route; provisional private installed Node/Bun/Chromium evidence is source-drifted and not fixed-point/release qualification; retirement gap remains open`
           : ['declareCoreRecordType', 'verifyCoreRecordTypeDeclaration'].includes(row.exportName) && ['package-root-node', 'package-root-browser'].includes(row.routeId)
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust Core Record Type v6 operation selected by V4 source route; separate same-archive Node/Bun/Chromium private receipt passed; aggregate gate excludes this family and retirement remains open`
           : selectedCardinality
@@ -1808,8 +1853,8 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
       operationOwnership: operation,
       ...(inert ? { resourceOwnership: resourceOwnership(row, aliasNamesBySource.get(row.source).size, scans) } : {}),
       evidence: mapping ? mapping.evidencePaths[0] : null,
-      bindingRoute: sourceSelection?.status === 'source-selected-installed-private-current-cohort' ? sourceSelection.bindingRoute : null,
-      bindingRouteStatus: sourceSelection?.status === 'source-selected-installed-private-current-cohort' ? 'installed-private-current-cohort' : sourceSelection?.status === 'source-selected-installed-private-source-pinned' ? 'installed-private-source-pinned-not-current' : 'unproven',
+      bindingRoute: ['source-selected-installed-private-current-cohort', 'source-selected-installed-private-provisional'].includes(sourceSelection?.status) ? sourceSelection.bindingRoute : null,
+      bindingRouteStatus: sourceSelection?.status === 'source-selected-installed-private-current-cohort' ? 'installed-private-current-cohort' : sourceSelection?.status === 'source-selected-installed-private-source-pinned' ? 'installed-private-source-pinned-not-current' : sourceSelection?.status === 'source-selected-installed-private-provisional' ? 'installed-private-provisional-not-current' : 'unproven',
       disposition,
     };
   });
@@ -1837,7 +1882,19 @@ function logicalDeclarationSignature(row) {
     || ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName)
     || ['inspectCoreRecordMembers', 'inspectCoreReferenceLinks', 'inspectCoreScalarType', 'validateCsvBooleanLexical', 'verifyCsvBooleanLexical'].includes(row.exportName)
     || ['inspectCoreCardinality', 'declareCoreCardinality', 'verifyCoreCardinalityDeclaration', 'inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName);
-  const kind = conditionBoundExport
+  // Only securityNot's exact V4 root binding shape is normalized to the
+  // reference function declaration. Any other shape/name/source remains
+  // multiplicity-sensitive, so this cannot hide a broader route drift.
+  const securityNotConditionShape = row.exportName === 'securityNot'
+    && row.declarationName === 'securityNot'
+    && (row.routeId === 'package-root-node'
+      ? row.source === 'src/index-node-v4.ts' && row.declarationKind === 'VariableDeclaration' && row.initializerShape === 'call-expression'
+      : row.routeId === 'package-root-browser'
+        ? row.source === 'src/index-browser-v4.ts' && row.declarationKind === 'VariableDeclaration' && row.initializerShape === 'call-expression'
+        : row.routeId === 'package-reference'
+          ? row.source === 'src/extensions/security/logic.ts' && row.declarationKind === 'FunctionDeclaration' && row.initializerShape === 'not-applicable'
+          : false);
+  const kind = (conditionBoundExport || securityNotConditionShape)
     && ['package-root-node', 'package-root-browser', 'package-reference'].includes(row.routeId)
     ? 'condition-selected-root-binding'
     : row.declarationKind;

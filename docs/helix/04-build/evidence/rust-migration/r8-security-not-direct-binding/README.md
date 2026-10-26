@@ -63,12 +63,14 @@ matched all 14 cases in freshly built `dist/umf-node.js` against unchanged
 `dist/umf.js` under Node 26.12.1 and Bun 1.4.3. The
 [installed archive replay](installed-route.json) also matched all 14 cases in
 Node, Bun and Chromium while exercising the package's actual Node/browser
-exports and loading its WASM asset. This receipt is provisional: the builder
-manifest marks the archive
-`private-r7-default-route-qualification-source-drift-not-publishable` because
-the private snapshot included concurrent uncommitted capture-tail source.
-Rebuild from the clean committed cohort and rerun the installed replay before
-treating this as final package evidence or release qualification.
+exports and loading its WASM asset. The receipt was refreshed after committing
+the capture-tail source. The clean-source rebuild produced archive SHA-256
+`45be4faa7ebe57a59aa27fd1a0f87b58a41a0012e05191b0958c1bc5109b233a`
+and again matched all 14 cases on each host. It is still provisional: the
+private builder changed 11 generated inputs inside its snapshot and marks the
+archive `private-r7-default-route-qualification-source-drift-not-publishable`.
+The installed route is source-pinned to that derived snapshot, not a release
+fixed point.
 
 All three valid tokens reach Rust through the guard. Invalid values with meter,
 cancellation and clock controls enabled call none of those callbacks. A valid
@@ -123,11 +125,11 @@ bun scripts/rust-migration/r8/security-not-browser.mjs docs/helix/04-build/evide
 The table below is the original direct-binding slice's source cohort.
 [`chromium.json`](chromium.json) pins the fresh browser comparison and the
 installed archive manifest pins its compiled source closure. The V4 root files
-in that provisional archive were `src/index-node-v4.ts`
+in the refreshed provisional archive were `src/index-node-v4.ts`
 (`931fd947592cda93687e9a967f8a19614046b609c82b0f4885c19ede82f86aee`) and
 `src/index-browser-v4.ts`
 (`2b0514befb028aa7410b27a9638d606d0b5e59560353517844a10842aded4c1d`). A
-clean-source rebuild and replay will supersede these installed-route pins.
+fixed-point build and replay must supersede these installed-route pins.
 
 | File | SHA-256 |
 | --- | --- |
@@ -144,4 +146,4 @@ clean-source rebuild and replay will supersede these installed-route pins.
 The Chromium receipt carries exact hashes for its current execution cohort,
 including the guarded adapter and browser harness. The installed-route receipt
 records the archive and package-manifest hashes plus host/runtime versions. A
-clean-source rebuild and replay remain required for final package qualification.
+fixed-point build and replay remain required for final package qualification.

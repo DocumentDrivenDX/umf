@@ -3,9 +3,9 @@
   "status": "pass",
   "archive": {
     "path": ".cache/sdk-distribution/umf-sdk.tgz",
-    "sha256": "f41668177749948cbd5358e9a2fbfb5feb818fea5d897ffaef43b4df8b7fcee2",
-    "bytes": 43624774,
-    "manifestSha256": "de4609626096445a8c6d86bbc76f3ddd2f6617590420268eeaa3be8321b8ce2b"
+    "sha256": "45be4faa7ebe57a59aa27fd1a0f87b58a41a0012e05191b0958c1bc5109b233a",
+    "bytes": 43624762,
+    "manifestSha256": "37ef97fd9f0879c630ff469fe2ad3a4fc9bcc547be2a977d323ae0fee4b621bc"
   },
   "packageRoutes": {
     "node": "./dist/umf-node.js",
@@ -31,7 +31,10 @@
   "buildQualification": {
     "status": "private-r7-default-route-qualification-source-drift-not-publishable",
     "sourceTransformStatus": "derived-private-snapshot-not-release-fixed-point",
-    "note": "The build snapshot contained the concurrent uncommitted capture-tail source. This installed replay is provisional current-tree evidence, not release-eligible source qualification. Rebuild from a clean committed source cohort before relying on it as final evidence."
+    "capturedLiveSourceTreeSha256": "39595238bad9124533920ee7b7717da2a2a91174247a5aa016ba7bc42ae6a5dc",
+    "derivedSourceTreeSha256": "29d042c63c4e1ca53b8d93a3352970becc7e3bf0e32dbc2cdae0c50206708c34",
+    "generatedInputCount": 11,
+    "note": "Rebuilt after the capture-tail source was committed. The private builder still changes 11 generated inputs in its snapshot, so the installed replay is source-pinned to a derived build and is not release-eligible fixed-point qualification."
   },
   "qualification": "Private installed archive root-only securityNot parity; TypeScript reference root remains unchanged. No publication or full security migration qualification."
 }

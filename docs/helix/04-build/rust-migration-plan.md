@@ -6210,13 +6210,19 @@ The measured guarded-route overhead over the raw direct binding is small
 accepted to preserve the predecessor's admission contract. Fresh Chromium
 source parity and freshly built V4 Node/Bun root comparisons each cover all 14
 cases. A private installed archive replay also passes 14 cases in Node, Bun and
-Chromium with WASM loaded and Node globals absent. Its manifest marks the
-archive source-drifted/private because the source snapshot contained concurrent
-uncommitted capture-tail changes; this evidence is provisional, not release
-eligible, and must be replaced by a clean committed-source rebuild and replay.
+Chromium with WASM loaded and Node globals absent. The archive was rebuilt and
+replayed after the capture-tail source was committed; the refreshed archive
+SHA-256 is `45be4faa7ebe57a59aa27fd1a0f87b58a41a0012e05191b0958c1bc5109b233a`.
+Its manifest still marks the build private and source-drifted because the
+snapshot generator changed 11 inputs. This source-pinned installed replay is
+provisional, not release eligible, and needs a fixed-point build and replay.
 The override is limited to the `securityNot` export at V4 roots: `src/index.ts`,
 internal TypeScript imports, AND/OR/composition, and broader security logic are
-unchanged. No R8 ledger regeneration or complete security migration is claimed.
+unchanged. The current-source R8 inventory/ledger recapture now records the
+guarded Node and browser bindings as provisional installed-route evidence, with
+the TypeScript `./reference` route intact. It retains all 922 logical default
+route retirement gaps and does not claim current fixed-point qualification,
+release readiness, or complete security migration.
 
 The [raw-host JSON-number packet](evidence/rust-migration/r8-json-number-predecessor/README.md#r8-raw-host-default-route-gate--blocked)
 now records ten untyped JavaScript values. Fresh Node, Bun and real Chromium

@@ -33,11 +33,12 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   const expected = [
     'parseGregorianDate', 'truncateGregorianDate', 'parseRfc3339ExactInstant', 'sameRfc3339ExactInstant',
     'inspectCoreRelationships', 'lookupCoreRelationship', 'declareCoreRelationship', 'verifyCoreRelationshipOperation',
+    'securityNot',
   ];
   const entries = new Map(inventoryReceipt.defaultRouteEntrySelections.map(selection => [selection.routeId, selection]));
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     const selection = entries.get(routeId);
-    assert.equal(selection.directExportCount, 44);
+    assert.equal(selection.directExportCount, 45);
     assert.ok(expected.every(name => selection.directExports.includes(name)), `${routeId} misses an override`);
     const rows = ledger.rows.filter(row => row.routeId === routeId && expected.includes(row.exportName));
     assert.equal(rows.length, expected.length);
@@ -54,11 +55,64 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   assert.equal(reference.length, expected.length);
   assert.ok(reference.every(row => row.sourceSelectedImplementation === null));
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 88);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 90);
   const archivedGate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/gate-result.json', 'utf8'));
   assert.equal(archivedGate.status, 'pass');
   assert.equal(archivedGate.archive.sourceClosureSha256, '6f4f21c1dfbdde5959f6e5386419c0c2f90b3a8f0512d148b60825e93afce593');
   assert.equal(archivedGate.boundedOperations, 24);
+});
+
+test('securityNot normalizes only the exact V4 binding and TypeScript reference declaration shapes', () => {
+  const installed = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-security-not-direct-binding/installed-route.json', 'utf8'));
+  assert.equal(installed.format, 'umf-r8-security-not-v4-installed-route/1');
+  assert.equal(installed.status, 'pass');
+  assert.equal(installed.buildQualification.sourceTransformStatus, 'derived-private-snapshot-not-release-fixed-point');
+  assert.match(installed.qualification, /No publication or full security migration qualification/);
+  const symbols = [
+    { routeId: 'package-root-node', exportName: 'securityNot', declarationName: 'securityNot', declarationKind: 'VariableDeclaration', initializerShape: 'call-expression', source: 'src/index-node-v4.ts', line: 28, sourceSha256: 'a'.repeat(64) },
+    { routeId: 'package-root-browser', exportName: 'securityNot', declarationName: 'securityNot', declarationKind: 'VariableDeclaration', initializerShape: 'call-expression', source: 'src/index-browser-v4.ts', line: 23, sourceSha256: 'b'.repeat(64) },
+    { routeId: 'package-reference', exportName: 'securityNot', declarationName: 'securityNot', declarationKind: 'FunctionDeclaration', initializerShape: 'not-applicable', source: 'src/extensions/security/logic.ts', line: 24, sourceSha256: 'c'.repeat(64) },
+  ];
+  const ledger = buildLedger({ ...args, inventory: { symbols } });
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 1);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 1);
+  for (const routeId of ['package-root-node', 'package-root-browser']) {
+    const row = ledger.rows.find(item => item.routeId === routeId);
+    assert.equal(row.acceptedRustOperation, 'umf_core::security_logic::security_not');
+    assert.equal(row.sourceSelectedImplementation.status, 'source-selected-installed-private-provisional');
+    assert.match(row.sourceSelectedImplementation.bindingRoute, /guarded securityNot adapter/);
+    assert.equal(row.bindingRouteStatus, 'installed-private-provisional-not-current');
+    assert.equal(row.bindingRoute, row.sourceSelectedImplementation.bindingRoute);
+    assert.match(row.sourceSelectedImplementation.qualificationStatus, /provisional installed-route evidence only/);
+    assert.ok(row.sourceSelectedImplementation.qualificationEvidenceClosure.some(item =>
+      item.path === 'docs/helix/04-build/evidence/rust-migration/r8-security-not-direct-binding/installed-route.json'));
+    assert.match(row.implementationStatus, /provisional private installed Node\/Bun\/Chromium evidence is source-drifted/);
+    assert.match(row.disposition, /retirement gap remains open/);
+  }
+  const reference = ledger.rows.find(item => item.routeId === 'package-reference');
+  assert.equal(reference.sourceSelectedImplementation, null);
+  assert.equal(reference.acceptedRustOperation, 'umf_core::security_logic::security_not');
+  assert.equal(reference.bindingRouteStatus, 'unproven');
+
+  const negativeRows = [
+    { routeId: 'package-root', exportName: 'securityNotAlias', declarationName: 'securityNotAlias', declarationKind: 'FunctionDeclaration', source: 'src/extensions/security/logic.ts', line: 24, sourceSha256: 'd'.repeat(64) },
+    { routeId: 'package-root', exportName: 'securityNot', declarationName: 'securityNot', declarationKind: 'FunctionDeclaration', source: 'src/index.ts', line: 24, sourceSha256: 'e'.repeat(64) },
+  ];
+  for (const symbol of negativeRows) {
+    const negative = buildLedger({ ...args, inventory: { symbols: [symbol] } });
+    assert.equal(negative.rows[0].acceptedRustOperation, null);
+    assert.equal(negative.rows[0].sourceSelectedImplementation, null);
+  }
+
+  for (const mutation of [
+    row => ({ ...row, declarationKind: 'FunctionDeclaration', initializerShape: 'not-applicable' }),
+    row => ({ ...row, source: 'src/index.ts' }),
+    row => ({ ...row, initializerShape: 'arrow-function' }),
+    row => ({ ...row, exportName: 'securityNotAlias', declarationName: 'securityNotAlias' }),
+  ]) {
+    const changed = symbols.map(row => row.routeId === 'package-root-node' ? mutation(row) : row);
+    assert.throws(() => buildLedger({ ...args, inventory: { symbols: changed } }), /declaration multiplicity differs/);
+  }
 });
 
 test('superseded a2552db0 route aggregate stays rejected after its captured source drifts', () => {
