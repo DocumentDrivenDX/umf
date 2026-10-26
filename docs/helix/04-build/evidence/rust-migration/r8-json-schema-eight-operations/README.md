@@ -290,3 +290,10 @@ receipt and the 18-case browser profile. The matrix receipt compares the three
 profiles and pins their source, runner and artifact hashes. Its direct adapter
 hash covers the entry module only; this evidence does not establish transitive
 source closure or general Draft 2020-12 parity.
+
+The [non-string host observation](import-host-nonstring-decision.md) adds nine
+direct-source root/resource cases with identical traces and outcomes in Bun,
+Node, and real Chromium. These cases expose repeated `length` reads and
+`JSON.parse` coercion before a later YAML parser TypeError for some objects.
+The private staged import remains string-only until a host/Rust protocol can
+preserve that ordering without moving semantic parsing out of Rust.
