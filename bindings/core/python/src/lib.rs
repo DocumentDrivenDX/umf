@@ -4,7 +4,7 @@ use num_bigint::BigInt;
 use pyo3::{
     exceptions::PyValueError,
     prelude::*,
-    types::{PyBool, PyBytes, PyDict, PyFloat, PyInt, PyList, PyString, PyTuple},
+    types::{PyBool, PyBytes, PyDict, PyFloat, PyInt, PyIterator, PyList, PyString, PyTuple},
 };
 use umf_core::{
     Capabilities, CapabilityError, Context, Diagnostic, Engine, EngineError, PythonDiagnosticText,
@@ -1841,6 +1841,28 @@ struct PythonFieldRefObserver<'py> {
     py: Python<'py>,
     field: PyObject,
     host_error: Option<PyErr>,
+    conversion_error: Option<PyErr>,
+}
+
+fn python_exact_str_utf16(value: &Bound<'_, PyAny>) -> PyResult<Utf16> {
+    if !value.is_exact_instance_of::<PyString>() {
+        return Err(pyo3::exceptions::PyTypeError::new_err(
+            "captured graph text must be an exact str",
+        ));
+    }
+    let encoded = value.call_method1("encode", ("utf-16-le", "surrogatepass"))?;
+    let bytes = encoded.extract::<Vec<u8>>()?;
+    if bytes.len() % 2 != 0 {
+        return Err(pyo3::exceptions::PyValueError::new_err(
+            "UTF-16 encoding returned an odd byte count",
+        ));
+    }
+    Ok(Utf16::new(
+        bytes
+            .chunks_exact(2)
+            .map(|pair| u16::from_le_bytes([pair[0], pair[1]]))
+            .collect(),
+    ))
 }
 
 impl umf_core::access_graph_host_observation::FieldRefObserver
@@ -1864,12 +1886,11 @@ impl umf_core::access_graph_host_observation::FieldRefObserver
         if !value.is_exact_instance_of::<PyString>() {
             return Err(ObservationError::UnsupportedValue);
         }
-        value
-            .extract::<String>()
+        python_exact_str_utf16(&value)
             .map(ObservedField::Text)
             .map_err(|error| {
-                self.host_error = Some(error);
-                ObservationError::HostException
+                self.conversion_error = Some(error);
+                ObservationError::ConversionFailure
             })
     }
 }
@@ -1884,22 +1905,25 @@ fn access_field_owner_observation_profile_version() -> &'static str {
 fn access_validate_field_owner_observed(
     py: Python<'_>,
     field: PyObject,
-    module: String,
-    element: String,
-    alias: Option<String>,
+    module: PyObject,
+    element: PyObject,
+    alias: Option<PyObject>,
 ) -> PyResult<bool> {
     use umf_core::access_graph_host_observation::{
         field_owner_matches, ExpectedOwner, ObservationError,
     };
     let expected = ExpectedOwner {
-        module,
-        element,
-        alias,
+        module: python_exact_str_utf16(module.bind(py))?,
+        element: python_exact_str_utf16(element.bind(py))?,
+        alias: alias
+            .map(|value| python_exact_str_utf16(value.bind(py)))
+            .transpose()?,
     };
     let mut observer = PythonFieldRefObserver {
         py,
         field,
         host_error: None,
+        conversion_error: None,
     };
     match field_owner_matches(&mut observer, &expected) {
         Ok(matches) => Ok(matches),
@@ -1907,10 +1931,248 @@ fn access_validate_field_owner_observed(
             .host_error
             .take()
             .expect("host observation error retains original PyErr")),
+        Err(ObservationError::ConversionFailure) => Err(observer
+            .conversion_error
+            .take()
+            .expect("conversion failure retains its conversion PyErr")),
         Err(ObservationError::UnsupportedValue) => Err(pyo3::exceptions::PyTypeError::new_err(
             "captured FieldRef owner fields must be exact str or None",
         )),
+        Err(_) => Err(pyo3::exceptions::PyTypeError::new_err(
+            "unsupported captured FieldRef observation",
+        )),
     }
+}
+
+struct PythonCaptureGraphObserver<'py> {
+    py: Python<'py>,
+    objects: Vec<PyObject>,
+    node_type: PyObject,
+    record_ref_type: PyObject,
+    host_error: Option<PyErr>,
+    conversion_error: Option<PyErr>,
+}
+
+impl<'py> PythonCaptureGraphObserver<'py> {
+    fn object(&self, handle: u32) -> PyResult<Bound<'py, PyAny>> {
+        self.objects
+            .get(handle as usize)
+            .map(|value| value.bind(self.py).clone())
+            .ok_or_else(|| pyo3::exceptions::PyIndexError::new_err("invalid graph handle"))
+    }
+
+    fn keep(&mut self, value: Bound<'py, PyAny>) -> Result<u32, PyErr> {
+        let handle = u32::try_from(self.objects.len())
+            .map_err(|_| pyo3::exceptions::PyOverflowError::new_err("graph handle limit exceeded"))?;
+        self.objects.push(value.unbind());
+        Ok(handle)
+    }
+
+    fn host_failure(&mut self, error: PyErr) -> umf_core::access_graph_host_observation::ObservationError {
+        self.host_error = Some(error);
+        umf_core::access_graph_host_observation::ObservationError::HostException
+    }
+}
+
+impl umf_core::access_graph_host_observation::CaptureGraphHostObserver
+    for PythonCaptureGraphObserver<'_>
+{
+    type Handle = u32;
+
+    fn get_attr(
+        &mut self,
+        object: u32,
+        name: &'static str,
+    ) -> Result<umf_core::access_graph_host_observation::ObservedValue<u32>, umf_core::access_graph_host_observation::ObservationError> {
+        use umf_core::access_graph_host_observation::{ObservationError, ObservedValue};
+        let value = self
+            .object(object)
+            .and_then(|object| object.getattr(name))
+            .map_err(|error| self.host_failure(error))?;
+        if value.is_none() {
+            return Ok(ObservedValue::None);
+        }
+        if value.is_exact_instance_of::<PyString>() {
+            return python_exact_str_utf16(&value)
+                .map(ObservedValue::Text)
+                .map_err(|error| {
+                    self.conversion_error = Some(error);
+                    ObservationError::ConversionFailure
+                });
+        }
+        self.keep(value)
+            .map(ObservedValue::Object)
+            .map_err(|error| self.host_failure(error))
+    }
+
+    fn truthy(&mut self, value: u32) -> Result<bool, umf_core::access_graph_host_observation::ObservationError> {
+        self.object(value)
+            .and_then(|value| value.is_truthy())
+            .map_err(|error| self.host_failure(error))
+    }
+
+    fn get_item(
+        &mut self,
+        sequence: u32,
+        index: usize,
+    ) -> Result<u32, umf_core::access_graph_host_observation::ObservationError> {
+        self.object(sequence)
+            .and_then(|sequence| sequence.get_item(index))
+            .and_then(|item| self.keep(item))
+            .map_err(|error| self.host_failure(error))
+    }
+
+    fn is_instance(
+        &mut self,
+        value: u32,
+        kind: umf_core::access_graph_host_observation::GraphType,
+    ) -> Result<bool, umf_core::access_graph_host_observation::ObservationError> {
+        let class = match kind {
+            umf_core::access_graph_host_observation::GraphType::Node => &self.node_type,
+            umf_core::access_graph_host_observation::GraphType::RecordRef => &self.record_ref_type,
+        };
+        self.object(value)
+            .and_then(|value| value.is_instance(class.bind(self.py)))
+            .map_err(|error| self.host_failure(error))
+    }
+
+    fn iter(
+        &mut self,
+        sequence: u32,
+    ) -> Result<u32, umf_core::access_graph_host_observation::ObservationError> {
+        self.object(sequence)
+            .and_then(|sequence| sequence.try_iter())
+            .and_then(|iterator| self.keep(iterator.into_any()))
+            .map_err(|error| self.host_failure(error))
+    }
+
+    fn next(
+        &mut self,
+        iterator: u32,
+    ) -> Result<Option<u32>, umf_core::access_graph_host_observation::ObservationError> {
+        let iterator = self
+            .object(iterator)
+            .map_err(|error| self.host_failure(error))?;
+        let mut iterator = iterator
+            .downcast::<PyIterator>()
+            .map_err(|_| umf_core::access_graph_host_observation::ObservationError::UnsupportedValue)?
+            .clone();
+        let result = iterator
+            .next()
+            .transpose()
+            .map_err(|error| self.host_failure(error))?;
+        result
+            .map(|value| self.keep(value))
+            .transpose()
+            .map_err(|error| self.host_failure(error))
+    }
+}
+
+fn python_utf16_to_str(py: Python<'_>, value: &Utf16) -> PyResult<PyObject> {
+    let bytes: Vec<u8> = value
+        .units()
+        .iter()
+        .flat_map(|unit| unit.to_le_bytes())
+        .collect();
+    let encoded = PyBytes::new_bound(py, &bytes);
+    Ok(encoded
+        .call_method1("decode", ("utf-16-le", "surrogatepass"))?
+        .unbind())
+}
+
+fn capture_graph_error(
+    py: Python<'_>,
+    observer: &mut PythonCaptureGraphObserver<'_>,
+    error: umf_core::access_graph_host_observation::ObservationError,
+) -> PyErr {
+    use umf_core::access_graph_host_observation::ObservationError;
+    match error {
+        ObservationError::HostException => observer
+            .host_error
+            .take()
+            .expect("host observation error retains original PyErr"),
+        ObservationError::ConversionFailure => observer
+            .conversion_error
+            .take()
+            .expect("text conversion failure retains its conversion PyErr"),
+        ObservationError::TerminalUnsupported => graph_capture_error(
+            py,
+            "CAPTURE_UNSUPPORTED",
+            "unsupported terminal form",
+        ),
+        ObservationError::MissingRecordIdentity => graph_capture_error(
+            py,
+            "CAPTURE_UNSUPPORTED",
+            "terminal has no record identity",
+        ),
+        ObservationError::GroupNeedsSelection => graph_capture_error(
+            py,
+            "CAPTURE_UNSUPPORTED",
+            "grouped query requires explicit selection or count",
+        ),
+        ObservationError::ScalarTerminalDenied => graph_capture_error(
+            py,
+            "CAPTURE_UNSUPPORTED",
+            "scalar aggregate/bucket projection does not admit this terminal",
+        ),
+        ObservationError::JoinSourceAbsent => {
+            graph_capture_error(py, "CAPTURE_UNSUPPORTED", "join source is absent")
+        }
+        ObservationError::UnsupportedValue => {
+            pyo3::exceptions::PyTypeError::new_err("unsupported captured graph shape")
+        }
+        ObservationError::Budget => {
+            pyo3::exceptions::PyRuntimeError::new_err("captured graph observation budget exceeded")
+        }
+    }
+}
+
+fn graph_capture_error(py: Python<'_>, code: &str, message: &str) -> PyErr {
+    py.import_bound("umf_access.capture")
+        .and_then(|module| module.getattr("CaptureError"))
+        .and_then(|class| class.call1((code, message)))
+        .map(PyErr::from_value_bound)
+        .unwrap_or_else(|error| error)
+}
+
+#[pyfunction]
+fn access_observe_capture_terminal_join_owners(
+    py: Python<'_>,
+    node: PyObject,
+    node_type: PyObject,
+    record_ref_type: PyObject,
+) -> PyResult<PyObject> {
+    use umf_core::access_graph_host_observation::observe_terminal_join_owners;
+    let mut observer = PythonCaptureGraphObserver {
+        py,
+        objects: vec![node],
+        node_type,
+        record_ref_type,
+        host_error: None,
+        conversion_error: None,
+    };
+    let mut context = Context::ordinary();
+    let observed = observe_terminal_join_owners(&mut context, &mut observer, 0)
+        .map_err(|error| capture_graph_error(py, &mut observer, error))?;
+    let output = PyDict::new_bound(py);
+    output.set_item("terminalOp", python_utf16_to_str(py, &observed.terminal_op)?)?;
+    let owners = PyList::empty_bound(py);
+    let mut sorted = observed.owners.into_iter().collect::<Vec<_>>();
+    sorted.sort_by(|left, right| {
+        (&left.module, &left.element, &left.alias).cmp(&(&right.module, &right.element, &right.alias))
+    });
+    for owner in sorted {
+        let row = PyDict::new_bound(py);
+        row.set_item("module", python_utf16_to_str(py, &owner.module)?)?;
+        row.set_item("element", python_utf16_to_str(py, &owner.element)?)?;
+        match owner.alias {
+            Some(alias) => row.set_item("alias", python_utf16_to_str(py, &alias)?)?,
+            None => row.set_item("alias", py.None())?,
+        }
+        owners.append(row)?;
+    }
+    output.set_item("owners", owners)?;
+    Ok(output.unbind().into_any())
 }
 
 #[pyfunction]
@@ -3731,6 +3993,10 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     )?)?;
     module.add_function(wrap_pyfunction!(
         access_validate_field_owner_observed,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_observe_capture_terminal_join_owners,
         module
     )?)?;
     module.add_function(wrap_pyfunction!(access_orchestrate_capture_pair, module)?)?;

@@ -1,15 +1,20 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
-"""Narrow Rust-directed host observation for captured FieldRef ownership.
+"""Private Rust-directed host observation for capture graph prefix fixtures.
 
-This is an opt-in prototype. It does not select or replace the public capture
-validator.
+This opt-in prototype covers FieldRef ownership and a bounded terminal/root/
+Join observation prefix. It does not implement complete graph validation,
+serialization, the legacy DTO budget, or select the public capture route.
+The private graph profile admits exact text values and the known Node and
+RecordRef graph shape. Other shapes fail closed; arbitrary subclass accessor
+effects are observed in order, but subclass-produced non-text values are not
+part of the supported profile.
 """
 
 from __future__ import annotations
 
 from typing import Any
 
-_PROFILE = "umf-access-field-owner-observation/0.1.0"
+_PROFILE = "umf-access-capture-graph-observation/0.1.0"
 
 
 class FieldOwnerObservationUnavailable(RuntimeError):
@@ -26,13 +31,14 @@ def _native() -> Any:
     core = getattr(_rust, "_rust_core", None)
     version = getattr(core, "access_field_owner_observation_profile_version", None)
     observe = getattr(core, "access_validate_field_owner_observed", None)
+    observe_terminal = getattr(core, "access_observe_capture_terminal_join_owners", None)
     try:
         available = callable(version) and version() == _PROFILE
     except Exception:
         available = False
-    if not (available and callable(observe)):
+    if not (available and callable(observe) and callable(observe_terminal)):
         raise FieldOwnerObservationUnavailable(
-            "installed umf-core lacks the FieldRef observation profile"
+            "installed umf-core lacks the capture graph observation profile"
         )
     return core
 
@@ -55,3 +61,32 @@ def validate_field_owner(field: object, expected: tuple[str, str, str | None]) -
         raise RuntimeError("Rust FieldRef observer returned an invalid result")
     if not matches:
         raise TypeError("expression column belongs to another Record")
+
+
+def observe_terminal_join_owners(node: object) -> dict[str, object]:
+    """Observe terminal structure and ordered RecordRef/Join owner reads.
+
+    This is a private prefix-walker prototype. A successful result does not
+    claim complete captured-graph validation and must not select the public
+    capture route.
+    """
+    from umf_access.dsl._nodes import Node, RecordRef
+
+    core = _native()
+    result = core.access_observe_capture_terminal_join_owners(node, Node, RecordRef)
+    if (
+        type(result) is not dict
+        or set(result) != {"terminalOp", "owners"}
+        or type(result["terminalOp"]) is not str
+        or type(result["owners"]) is not list
+        or any(
+            type(owner) is not dict
+            or set(owner) != {"module", "element", "alias"}
+            or type(owner["module"]) is not str
+            or type(owner["element"]) is not str
+            or (owner["alias"] is not None and type(owner["alias"]) is not str)
+            for owner in result["owners"]
+        )
+    ):
+        raise RuntimeError("Rust graph observer returned an invalid result")
+    return result
