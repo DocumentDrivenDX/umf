@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 """The private graph-validator seam is opt-in and translates closed replies."""
 
+import json
 from copy import deepcopy
 from datetime import datetime
 from typing import ClassVar
@@ -18,6 +19,7 @@ from umf_access.dsl import (
     Param,
     Query,
     RecordRef,
+    RequiredJoin,
     SearchLeg,
     Terminal,
     VectorIndex,
@@ -711,8 +713,7 @@ def test_rust_pair_comparison_precedes_terminal_dto_admission():
         return Terminal(UnsupportedNode("all", (owner, (Node("limit", (count,)),))))
 
     # Isolate orchestration precedence from the preceding per-invocation graph
-    # validator, which correctly rejects this custom Node subtype at its DTO
-    # boundary. Once a pair reaches Rust, differing canonical bytes win before
+    # validator. Once a pair reaches Rust, differing canonical bytes win before
     # terminal shape inspection.
     with patch.object(
         rust_catalog_render, "_validate_graph_variant", return_value=None
@@ -723,3 +724,81 @@ def test_rust_pair_comparison_precedes_terminal_dto_admission():
         "CAPTURE_NONDETERMINISTIC: two captures differ",
     )
     assert count == 2
+
+
+def test_graph_validator_admits_real_subclasses_with_canonical_trusted_tags():
+    class FieldSubclass(FieldRef):
+        pass
+
+    class RecordSubclass(RecordRef):
+        pass
+
+    class NodeSubclass(Node):
+        pass
+
+    class JoinSubclass(RequiredJoin):
+        pass
+
+    class SearchLegSubclass(SearchLeg):
+        pass
+
+    owner_field = FieldSubclass("demo", "Owner", "id")
+    owner = RecordSubclass("demo", "Owner", (owner_field,))
+    target_field = FieldSubclass("demo", "Target", "id")
+    target = RecordSubclass("demo", "Target", (target_field,))
+    relation_ref = FieldSubclass("demo", "Owner", "target_id")
+    relation = JoinSubclass(relation_ref, target)
+
+    @query
+    def joined():
+        return Query(owner).join(relation).all()
+
+    assert rust_catalog_render.capture_with_rust_graph_validator(joined) == capture(joined)
+    dto = _encode_capture(capture(joined).variants[0], _EncodingBudget())
+    joined_wire = json.dumps(dto)
+    assert '"$type": "umf_access.dsl._nodes.Node"' in joined_wire
+    assert '"$type": "umf_access.dsl._nodes.RecordRef"' in joined_wire
+    assert '"$type": "umf_access.dsl._nodes.FieldRef"' in joined_wire
+    assert '"$type": "umf_access.dsl._expressions.Join"' in joined_wire
+
+    @query
+    def search(text: Param[str]):
+        ordinary = KeywordIndex(owner, '{"kind":"keyword"}').matches(text)
+        leg = SearchLegSubclass(
+            ordinary.record,
+            ordinary.kind,
+            ordinary.index_json,
+            ordinary.value,
+            ordinary.legs,
+            ordinary.fusion,
+        )
+        return Query(owner).search(leg).top(5)
+
+    assert rust_catalog_render.capture_with_rust_graph_validator(search) == capture(search)
+    search_dto = _encode_capture(capture(search).variants[0], _EncodingBudget())
+    assert "umf_access.dsl.search.SearchLeg" in json.dumps(search_dto)
+
+    @query
+    def node_subclass():
+        return Terminal(NodeSubclass("all", (owner, ())))
+
+    assert rust_catalog_render.capture_with_rust_graph_validator(node_subclass) == capture(node_subclass)
+
+    Spoof = type(
+        "Node",
+        (),
+        {"__module__": "umf_access.dsl._nodes", "__qualname__": "Node"},
+    )
+    from dataclasses import dataclass
+
+    Spoof = dataclass(Spoof)
+    spoof = Spoof()
+    with pytest.raises(TypeError, match="not backed by a trusted base class"):
+        _encode_capture(spoof, _EncodingBudget())
+
+    class AmbiguousGraphValue(Node, FieldRef):
+        pass
+
+    ambiguous = AmbiguousGraphValue("all", ())
+    with pytest.raises(TypeError, match="inherits unrelated trusted bases"):
+        _encode_capture(ambiguous, _EncodingBudget())

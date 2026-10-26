@@ -326,9 +326,21 @@ def _encode_capture(value: object, budget: _EncodingBudget, depth: int = 0) -> o
     if isinstance(value, Decimal):
         budget.preflight_output(len(value.as_tuple().digits))
         return {"$decimal": str(value)}
-    if is_dataclass(value) and not isinstance(value, type):
+    graph_base = _captured_graph_base(value)
+    if graph_base is not None:
         return {
-            "$type": f"{type(value).__module__}.{type(value).__qualname__}",
+            "$type": f"{graph_base.__module__}.{graph_base.__qualname__}",
+            "fields": {
+                field.name: encode(getattr(value, field.name))
+                for field in fields(graph_base)
+            },
+        }
+    if is_dataclass(value) and not isinstance(value, type):
+        tag = f"{type(value).__module__}.{type(value).__qualname__}"
+        if tag in _CAPTURED_GRAPH_TAGS:
+            raise TypeError("captured graph class tag is not backed by a trusted base class")
+        return {
+            "$type": tag,
             "fields": {field.name: encode(getattr(value, field.name)) for field in fields(value)},
         }
     if isinstance(value, type):
@@ -356,6 +368,65 @@ def _encode_capture(value: object, budget: _EncodingBudget, depth: int = 0) -> o
             )
         }
     raise TypeError(f"no captured DTO representation for {type(value).__module__}.{type(value).__qualname__}")
+
+
+_CAPTURED_GRAPH_TAGS = frozenset(
+    {
+        "umf_access.dsl._nodes.Node",
+        "umf_access.dsl._nodes.FieldRef",
+        "umf_access.dsl._nodes.RecordRef",
+        "umf_access.dsl.search.SearchLeg",
+        "umf_access.dsl._expressions.Join",
+        "umf_access.dsl.navigation.RequiredNavigation",
+        "umf_access.dsl.navigation.OptionalNavigation",
+        "umf_access.dsl.navigation.ManyNavigation",
+    }
+)
+
+
+def _captured_graph_base(value: object) -> type | None:
+    """Return a known graph base only for real Python subclasses.
+
+    The Rust profile consumes canonical DTO tags. Deriving those tags from
+    ``type.__mro__`` admits real subclasses while refusing spoofable module or
+    class-name metadata and ``isinstance``-style ``__class__`` masquerades.
+    """
+    from umf_access.dsl._expressions import Join
+    from umf_access.dsl._nodes import FieldRef, Node, RecordRef
+    from umf_access.dsl.navigation import (
+        ManyNavigation,
+        OptionalNavigation,
+        RequiredNavigation,
+    )
+    from umf_access.dsl.search import SearchLeg
+
+    # Navigation classes precede their Join ancestry so Rust retains the
+    # closed navigation family and its selected source/target roots.
+    known = (
+        Node,
+        FieldRef,
+        RecordRef,
+        SearchLeg,
+        RequiredNavigation,
+        OptionalNavigation,
+        ManyNavigation,
+        Join,
+    )
+    mro = type.__getattribute__(type(value), "__mro__")
+    matched = [base for base in known if base in mro]
+    if not matched:
+        return None
+    most_specific = [
+        candidate
+        for candidate in matched
+        if all(
+            other in type.__getattribute__(candidate, "__mro__")
+            for other in matched
+        )
+    ]
+    if len(most_specific) != 1:
+        raise TypeError("captured graph class inherits unrelated trusted bases")
+    return most_specific[0]
 
 
 def render_declaration(declaration: object) -> dict[str, Any]:

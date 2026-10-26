@@ -446,3 +446,28 @@ and the Python adapter raises the same `CaptureError` envelope. An unadapted
 `get` DTO is explicitly recorded as outside-profile `CAPTURE_DTO_INVALID`;
 `page` is not replayed. Public `capture()` remains Python-selected and is not
 qualified or changed by this receipt.
+
+## Trusted subclass DTO admission — 2026-10-26
+
+The private encoder now maps real subclasses of the known graph classes to
+canonical base tags and serializes the fields declared by that trusted base.
+The admitted bases are `Node`, `FieldRef`, `RecordRef`, `SearchLeg`, `Join`,
+`RequiredNavigation`, `OptionalNavigation`, and `ManyNavigation`. Navigation
+classes are resolved before their `Join` ancestor so the closed navigation
+family and source/target roots required by Rust survive encoding. Membership
+comes from the concrete type's actual MRO, read through `type.__getattribute__`;
+caller-controlled module/qualname strings do not establish admission.
+
+When a concrete type inherits multiple unrelated trusted bases, encoding
+refuses with `TypeError: captured graph class inherits unrelated trusted
+bases` instead of selecting one tag and dropping the other meaning. A
+dataclass that spoofs a trusted module and class name is also refused. The
+focused control covers both refusal boundaries alongside real subclasses of
+Node, FieldRef, RecordRef, RequiredJoin, and SearchLeg.
+
+Sol's CPython 3.11 temporary native-extension overlay rerun passes 31 focused
+tests plus three subtests across the graph-validator, capture, and predecessor
+suites. This confirms the exercised opt-in DTO cases only. Python still owns
+public `capture()`, constructor behavior, arbitrary subclass accessor effects,
+full graph ownership, and installed-package qualification; no public/default
+route changed.

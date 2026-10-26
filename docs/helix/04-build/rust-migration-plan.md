@@ -5179,10 +5179,11 @@ branch distinction, caller-owned registration accessors and callbacks, and
 thrown-value identity before default selection. The
 [captured-graph validator packet](evidence/rust-migration/r8-captured-graph-validator-interface/README.md)
 pins nine direct Python outcomes plus accepted tagged DTO and optional-variant
-examples. A `FieldRef` subclass is accepted and retains its concrete tag and
-extra content, so an exact-tag Rust DTO parser cannot be selected for Python
-capture without an explicit compatible admission rule. Both routes remain
-opt-in interface work.
+examples. A `FieldRef` subclass is accepted and retains its concrete type and
+extra content under Python capture. The current opt-in Rust DTO adapter now
+uses trusted MRO-derived base tags and base fields for the exercised graph
+families; see the subtype addendum below. The Rust validator and Python
+capture remain opt-in, and public capture is still Python-selected.
 
 The [resource-authority closure review](evidence/rust-migration/r8-symbol-inventory/resource-authority-closure-decision-20261026.md)
 keeps 17 aliases (51 route rows, 11 files) unresolved: six versioned Core
@@ -5393,9 +5394,9 @@ Join/Many `related` expressions using the original relationship and full
 serialized `RecordRef` equality. Its 27 focused Rust tests and three Python
 seam tests, including four live navigation variants, pass with a temporary
 extension. Python constructors and `navigation_parts` still own relationship
-metadata and alias preconditions; arbitrary synthetic DTOs, subclass
-admission, installed-wheel qualification and public `capture()` selection
-remain open. A following private SearchLeg slice admits `search_top` keyword,
+metadata and alias preconditions; arbitrary synthetic DTOs, broader subclass
+accessor behavior, installed-wheel qualification and public `capture()`
+selection remain open. A following private SearchLeg slice admits `search_top` keyword,
 vector and nested hybrid legs. A genuine `Param[Vector]` crosses the DTO
 boundary with an explicit Ellipsis tag. Foreign Record, unbound parameter and
 carrier mismatch refusals retain Python's ordering. Subsequent private checks
@@ -5414,6 +5415,19 @@ The private capture-orchestration follow-up passed 35 focused Rust tests and
 11 live Python parity tests after Sol's independent rerun. Public `capture()`,
 command authority, mutation execution, subclass behavior and installed-wheel
 qualification remain open.
+
+The [captured-graph subtype DTO addendum](evidence/rust-migration/r8-captured-graph-validator-interface/README.md#trusted-subclass-dto-admission--2026-10-26)
+now admits real Python subclasses of the known graph bases through actual MRO
+membership and canonical base tags/fields. Navigation bases are resolved
+before their `Join` ancestor so Rust retains the required/optional/many
+navigation family and selected roots. Class-name spoofing and ambiguous
+multiple-inheritance across unrelated trusted bases are explicit DTO-boundary
+refusals. Sol's CPython 3.11 live-overlay rerun passes 31 focused tests plus
+three subtests across graph validation, capture and predecessor suites. This
+qualifies only the exercised opt-in DTO admission cases; public `capture()`
+remains Python-selected, while arbitrary subclass accessor behavior, broader
+capture parity, default selection and installed-package qualification remain
+open.
 
 Selection now has a crate-private lazy `RegistrationProvider` static adapter
 through constraints, admitted Engine validation and Selection. Focused
@@ -5449,7 +5463,7 @@ diagnostic stringification and an opaque native Error carrier without reading
 an inherited `.message` getter early. Sol independently reran 23 focused core
 host tests, seven Node and five WASM binding tests. Final `UmfError`
 construction/exposure, complete Selection materialization and native
-noniterable spread errors remain unresolved. The protocol does not select the route. The host
+noniterable spread errors remained unresolved at that checkpoint. The protocol does not select the route. The host
 provider lookup seam now accepts the live Rust Context at each lazy demand
 site; a future host provider must charge work through it. No host Selection
 route, `kindRuntime` behavior, default-root switch or retirement
@@ -5481,3 +5495,16 @@ passed before concurrent capture-source edits; a new source-bound check and R8
 ledger recapture are required once this moving tree settles. The last ledger's
 17 unresolved resource aliases and 922 retirement gaps are historical counts,
 not an updated authority or retirement claim for this source cut.
+
+The [bounded native spread-failure continuation](evidence/rust-migration/r8-next-route-queue/selection-provider-implementation-prep-20261026.md)
+now lets Rust request host-native TypeError text for `undefined`, `null`, and
+an already-read non-callable `Symbol.iterator` method. The dispatcher reuses
+the predecessor's spread expression without repeating the caller's getter;
+`String(error)` runs once and thrown identity is preserved. Sol independently
+reran the focused core, Node and WASM codec tests and the
+[20-assertion fake-addon probe](evidence/rust-migration/r8-selection-host-primitive-dispatch/README.md)
+in Node 26.12.1, Bun 1.4.3 and Chromium 153.0.8010.12. Frozen TypeScript
+reference receipts match each host's native message for those three inputs.
+Malformed iterable stages outside this subset, complete host Selection,
+`kindRuntime`, final `UmfError` exposure, native-work metering and the default
+route remain open.
