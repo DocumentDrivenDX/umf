@@ -8,7 +8,7 @@ use umf_core::{
     host_json::{
         HostDescriptorSnapshot, HostDescriptorValue, HostDiagnosticArrayItem, HostHandle, HostInvokeValue, HostJsonEvent,
         HostJsonKind, HostJsonReflection, HostJsonReply, HostOpaqueKey, HostOpaqueValue,
-        HostPropertyDescriptor, HostPrototype, HostStringRef,
+        HostPropertyDescriptor, HostPrototype, HostSpreadFailureTarget, HostStringRef,
     },
     record_values, schema_properties, Context, Engine, EngineError, ResourceSet, Utf16, Value,
 };
@@ -530,6 +530,13 @@ fn event_json(event: &HostJsonEvent) -> String {
         HostJsonEvent::CloseOpaqueIterator { iterator } => format!(
             r#"{{"event":"close-opaque-iterator","iterator":{iterator}}}"#,
         ),
+        HostJsonEvent::MaterializeSpreadFailure { target } => {
+            let target = match target {
+                HostSpreadFailureTarget::Nullish(value) => format!(r#"{{"kind":"nullish","value":{}}}"#, host_invoke_value_wire_json(value)),
+                HostSpreadFailureTarget::IteratorMethod(value) => format!(r#"{{"kind":"iterator-method","value":{}}}"#, host_invoke_value_wire_json(value)),
+            };
+            format!(r#"{{"event":"materialize-spread-failure","target":{target}}}"#)
+        },
         HostJsonEvent::ReadProperty { handle, key } => {
             let units = key.iter().map(u16::to_string).collect::<Vec<_>>().join(",");
             format!(r#"{{"event":"read-property","handle":{handle},"keyUnits":[{units}]}}"#)
@@ -670,6 +677,7 @@ fn decode_reply(
         | HostJsonEvent::StringifyDiagnosticArray { .. }
         | HostJsonEvent::ConstructErrorCarrier { .. } => matches!(kind.as_str(), "opaque-value" | "host-exception"),
         HostJsonEvent::CloseOpaqueIterator { .. } => kind == "iterator-closed",
+        HostJsonEvent::MaterializeSpreadFailure { .. } => kind == "spread-failure",
     };
     if !kind_is_valid_for_event {
         return Err(protocol_error());
@@ -683,6 +691,7 @@ fn decode_reply(
             ))
         }
         "iterator-closed" => HostJsonReply::IteratorClosed,
+        "spread-failure" => HostJsonReply::SpreadFailure(string_ref(object_field(&value, "message").ok_or_else(protocol_error)?, string_lengths)?),
         "opaque-value" => HostJsonReply::OpaqueValue(decode_opaque_value(
             object_field(&value, "value").ok_or_else(protocol_error)?,
             string_lengths,
@@ -1128,6 +1137,18 @@ mod opaque_reply_tests {
             }),
             r#"{"event":"construct-error-carrier","value":{"kind":"opaque","handle":91}}"#,
         );
+    }
+
+    #[test]
+    fn native_spread_failure_codec_preserves_target_kind() {
+        let nullish = HostJsonEvent::MaterializeSpreadFailure { target: HostSpreadFailureTarget::Nullish(HostInvokeValue::Undefined) };
+        assert_eq!(event_json(&nullish), r#"{"event":"materialize-spread-failure","target":{"kind":"nullish","value":{"kind":"undefined"}}}"#);
+        let method = HostJsonEvent::MaterializeSpreadFailure { target: HostSpreadFailureTarget::IteratorMethod(HostInvokeValue::Json(Value::Bool(false))) };
+        assert_eq!(event_json(&method), r#"{"event":"materialize-spread-failure","target":{"kind":"iterator-method","value":{"kind":"json","value":{"kind":"boolean","value":false}}}}"#);
+        let reply = Value::Object(vec![(Utf16::from("kind"), Value::String(Utf16::from("spread-failure"))), (Utf16::from("message"), Value::Object(vec![(Utf16::from("token"), Value::Number(1.0)), (Utf16::from("units"), Value::Number(4.0))]))]);
+        assert!(decode_reply(&nullish, reply, &mut BTreeMap::new()).is_ok());
+        let malformed = Value::Object(vec![(Utf16::from("kind"), Value::String(Utf16::from("iterator-closed")))]);
+        assert!(decode_reply(&nullish, malformed, &mut BTreeMap::new()).is_err());
     }
 
     #[test]

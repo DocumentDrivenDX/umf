@@ -215,6 +215,16 @@ pub enum HostJsonEvent {
     ConstructErrorCarrier { value: HostInvokeValue },
     /// Complete IteratorClose for an already-thrown loop-body completion. The host suppresses any `return` failure so the original throw remains authoritative.
     CloseOpaqueIterator { iterator: HostHandle },
+    /// Ask the host for the engine-native TypeError text of a semantic spread failure.
+    MaterializeSpreadFailure { target: HostSpreadFailureTarget },
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub enum HostSpreadFailureTarget {
+    /// The callback result itself was null or undefined; no property read is repeated.
+    Nullish(HostInvokeValue),
+    /// The callback result's already-read Symbol.iterator value was not callable.
+    IteratorMethod(HostInvokeValue),
 }
 
 /// One entry in a Rust-assembled refusal diagnostics array.
@@ -240,6 +250,7 @@ pub enum HostJsonReply {
     Invocation(HostOpaqueValue),
     SemanticThrow(HostStringRef),
     IteratorClosed,
+    SpreadFailure(HostStringRef),
 }
 
 /// A host adapter must implement only primitive reflection for one live
@@ -914,6 +925,19 @@ fn materialize_semantic_value(
     }
 }
 
+fn native_spread_failure_message(
+    target: HostSpreadFailureTarget,
+    host: &mut dyn HostJsonReflection,
+    ctx: &mut Context<'_>,
+    path: &Utf16,
+) -> Result<Utf16, EngineError> {
+    ctx.charge_work(1, path.clone())?;
+    match host.reflect(HostJsonEvent::MaterializeSpreadFailure { target })? {
+        HostJsonReply::SpreadFailure(message) => read_host_string_value(host, message, path),
+        _ => Err(wrong_reply(path)),
+    }
+}
+
 /// Rust-owned equivalent of the semantic callback result's array spread.
 /// Iterator gets/calls request semantic catch individually. Values remain
 /// opaque until the later final Selection `copyJson` stage, which is outside
@@ -925,7 +949,9 @@ pub(crate) fn collect_semantic_iterable(
     path: &Utf16,
 ) -> Result<HostSemanticIterableOutcome, EngineError> {
     if result.is_nullish() {
-        return Ok(HostSemanticIterableOutcome::NativeSpreadFailureUnresolved);
+        let target = HostSpreadFailureTarget::Nullish(opaque_invoke_value_charged(result, host, ctx, path)?);
+        let message = native_spread_failure_message(target, host, ctx, path)?;
+        return Ok(HostSemanticIterableOutcome::SemanticThrow(message));
     }
     let iterator_method = match semantic_get(
         result.clone(),
@@ -936,8 +962,13 @@ pub(crate) fn collect_semantic_iterable(
         SemanticHostStep::Thrown(message) => return Ok(HostSemanticIterableOutcome::SemanticThrow(message)),
         SemanticHostStep::Value(value) => value,
     };
-    let HostOpaqueValue::Opaque { handle: iterator_function, opaque_type: HostOpaqueType::Function } = iterator_method else {
-        return Ok(HostSemanticIterableOutcome::NativeSpreadFailureUnresolved);
+    let iterator_function = match iterator_method {
+        HostOpaqueValue::Opaque { handle, opaque_type: HostOpaqueType::Function } => handle,
+        method => {
+            let method = opaque_invoke_value_charged(method, host, ctx, path)?;
+            let message = native_spread_failure_message(HostSpreadFailureTarget::IteratorMethod(method), host, ctx, path)?;
+            return Ok(HostSemanticIterableOutcome::SemanticThrow(message));
+        }
     };
     let iterator = match semantic_invoke(iterator_function, result, Vec::new(), host, path)? {
         SemanticHostStep::Thrown(message) => return Ok(HostSemanticIterableOutcome::SemanticThrow(message)),
@@ -1555,12 +1586,41 @@ mod tests {
 
     #[test]
     fn semantic_iterable_spread_stops_on_native_and_semantic_failures() {
-        let mut no_host_events = ScriptedHost::new(Vec::new());
+        let null_error = hs("native null spread");
+        let mut null_host = ScriptedHost::new(vec![event(
+            HostJsonEvent::MaterializeSpreadFailure { target: HostSpreadFailureTarget::Nullish(HostInvokeValue::Json(Value::Null)) },
+            HostJsonReply::SpreadFailure(null_error.clone()),
+        )]);
+        null_host.strings.insert(null_error.token, null_error.test_units.to_vec());
         assert_eq!(
-            collect_semantic_iterable(HostOpaqueValue::Null, &mut no_host_events, &mut Context::ordinary(), &k("/diagnostics")).unwrap(),
-            HostSemanticIterableOutcome::NativeSpreadFailureUnresolved,
+            collect_semantic_iterable(HostOpaqueValue::Null, &mut null_host, &mut Context::ordinary(), &k("/diagnostics")).unwrap(),
+            HostSemanticIterableOutcome::SemanticThrow(k("native null spread")),
         );
-        no_host_events.done();
+        null_host.done();
+
+        let undefined_error = hs("native undefined spread");
+        let mut undefined_host = ScriptedHost::new(vec![event(
+            HostJsonEvent::MaterializeSpreadFailure { target: HostSpreadFailureTarget::Nullish(HostInvokeValue::Undefined) },
+            HostJsonReply::SpreadFailure(undefined_error.clone()),
+        )]);
+        undefined_host.strings.insert(undefined_error.token, undefined_error.test_units.to_vec());
+        assert_eq!(
+            collect_semantic_iterable(HostOpaqueValue::Undefined, &mut undefined_host, &mut Context::ordinary(), &k("/diagnostics")).unwrap(),
+            HostSemanticIterableOutcome::SemanticThrow(k("native undefined spread")),
+        );
+        undefined_host.done();
+
+        let method_error = hs("native method spread");
+        let mut method_host = ScriptedHost::new(vec![
+            event(HostJsonEvent::GetOpaqueProperty { receiver: HostInvokeValue::Opaque(1), key: HostOpaqueKey::IteratorSymbol, semantic_catch: true }, HostJsonReply::OpaqueValue(HostOpaqueValue::Number(1.0))),
+            event(HostJsonEvent::MaterializeSpreadFailure { target: HostSpreadFailureTarget::IteratorMethod(HostInvokeValue::Json(Value::Number(1.0))) }, HostJsonReply::SpreadFailure(method_error.clone())),
+        ]);
+        method_host.strings.insert(method_error.token, method_error.test_units.to_vec());
+        assert_eq!(
+            collect_semantic_iterable(HostOpaqueValue::Opaque { handle: 1, opaque_type: HostOpaqueType::Object }, &mut method_host, &mut Context::ordinary(), &k("/diagnostics")).unwrap(),
+            HostSemanticIterableOutcome::SemanticThrow(k("native method spread")),
+        );
+        method_host.done();
 
         let message = hs("iterator getter failed");
         let mut host = ScriptedHost::new(vec![event(

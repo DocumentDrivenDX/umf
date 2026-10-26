@@ -97,15 +97,16 @@ with an unknown BigInt field instead completes validation and then fails the
 final Selection copy with `NON_JSON` at
 `/sourceValidation/diagnostics/0/unknown` on all three hosts.
 
-Returning `undefined`, a number, or a plain object is not treated uniformly.
+Returning `undefined`, `null`, a number, a plain object, or an object with a
+non-callable `Symbol.iterator` is not treated uniformly.
 All become `VALIDATOR_FAILURE` entries and a `CORE_SELECTION_SOURCE` refusal.
 Node 26.12.1 and Chromium 153 report
 `TypeError: entry.semantics(...) is not iterable (cannot read property undefined)`
-for `undefined`; Bun 1.4.3 reports
+for `undefined`, and the same text ending in `null` for `null`; Bun 1.4.3 reports
 `TypeError: Spread syntax requires ...iterable not be null or undefined`.
 All three report
 `TypeError: Spread syntax requires ...iterable[Symbol.iterator] to be a function`
-for numbers and plain objects. Receipts retain the complete refusal strings,
+for numbers, plain objects, and a non-callable iterator method. Receipts retain the complete refusal strings,
 including both affected extension paths and the other source warnings.
 
 For structure-false results, `structure.errors` is read at that stage and its

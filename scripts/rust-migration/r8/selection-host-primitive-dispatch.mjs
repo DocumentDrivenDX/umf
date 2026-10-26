@@ -44,6 +44,21 @@ function runProbe(api, assert) {
   const key = text => ({ kind: 'string', units: Array.from({ length: text.length }, (_, i) => text.charCodeAt(i)) });
   const encodeString = text => ({ kind: 'string', units: Array.from({ length: text.length }, (_, i) => text.charCodeAt(i)) });
   const trace = [];
+  function referenceSpreadFailure(candidate, iteratorMethod = false) {
+    const entry = { semantics() {
+      if (!iteratorMethod) return candidate;
+      const value = Object.create(null);
+      Object.defineProperty(value, Symbol.iterator, { value: candidate });
+      return value;
+    } };
+    const out = { push() {} };
+    try { out.push(...entry.semantics()); throw new Error('reference unexpectedly iterated'); }
+    catch (error) { return String(error); }
+  }
+  function readString(send, token) {
+    const chunk = send({ event: 'read-utf16-chunk', token, offset: 0, maxUnits: 512 });
+    return String.fromCharCode(...chunk.units);
+  }
   const root = {
     get get() { trace.push(['get', this === root]); return function (scope) { trace.push(['method', this === root, scope]); return function (answer) { trace.push(['callback', this === root, answer]); return true; }; }; },
     get zero() { return 0n; },
@@ -55,6 +70,7 @@ function runProbe(api, assert) {
     get fallbackValue() { return { valueOf() { trace.push(['fallback:valueOf']); return {}; }, toString() { trace.push(['fallback:toString']); return 12; } }; },
     get symbolValue() { return { [Symbol.toPrimitive]() { return Symbol('cannot concatenate'); } }; },
     get coercionThrows() { const marker = {}; return { [Symbol.toPrimitive](hint) { trace.push(['coercionThrows', hint]); throw marker; } }; },
+    get nonCallableIteratorMethod() { trace.push(['iterator-method:get']); return 0; },
   };
   function addon(input, script) {
     return { executeCoreSchemaPropertiesHostJson(_resources, _operation, inputHandle, dispatch) {
@@ -100,11 +116,23 @@ function runProbe(api, assert) {
     const fallbackResult = send({ event: 'string-concat', prefix: key('/fallback/').units, value: { kind: 'opaque', handle: fallbackHandle } });
     const fallbackChunk = send({ event: 'read-utf16-chunk', token: fallbackResult.value.token, offset: 0, maxUnits: 64 });
     assert.equal(String.fromCharCode(...fallbackChunk.units), '/fallback/12');
+    for (const candidate of [undefined, null]) {
+      const target = { kind: 'nullish', value: candidate === null ? { kind: 'json', value: { kind: 'null' } } : { kind: 'undefined' } };
+      const result = send({ event: 'materialize-spread-failure', target });
+      if (result.kind !== 'spread-failure') throw new Error(`spread failure event returned ${JSON.stringify(result)}`);
+      assert.equal(readString(send, result.message.token), referenceSpreadFailure(candidate));
+    }
+    const methodValue = send({ event: 'get-opaque-property', receiver: { kind: 'opaque', handle: 1 }, key: key('nonCallableIteratorMethod'), semanticCatch: false });
+    assert.equal(methodValue.kind, 'opaque-value');
+    const methodFailure = send({ event: 'materialize-spread-failure', target: { kind: 'iterator-method', value: { kind: 'json', value: { kind: 'number', bits: '0000000000000000' } } } });
+    assert.equal(methodFailure.kind, 'spread-failure');
+    assert.equal(readString(send, methodFailure.message.token), referenceSpreadFailure(0, true));
   }), null, 'inspectCoreSchemaProperties', [input]);
   assert.deepEqual(callbackResult, { kind: 'invocation', value: { kind: 'boolean', value: true } });
   assert.deepEqual(trace.slice(0, 3), [['get', true], ['method', true, 'registered'], ['callback', true, true]]);
-  assert.deepEqual(trace.slice(-3), [['toPrimitive', 'default'], ['fallback:valueOf'], ['fallback:toString']]);
+  assert.deepEqual(trace.slice(-4), [['toPrimitive', 'default'], ['fallback:valueOf'], ['fallback:toString'], ['iterator-method:get']]);
   assert.equal(trace.filter(item => item[0] === 'stringify').length, 2);
+  assert.equal(trace.filter(item => item[0] === 'iterator-method:get').length, 1);
 
   const stringifyMarker = {};
   const failing = { get stringifyThrows() { return function () { throw { toString() { throw stringifyMarker; } }; }; } };
@@ -252,7 +280,7 @@ function runProbe(api, assert) {
   iteratorCloseCase('getter');
   iteratorCloseCase('call');
   iteratorCloseCase('primitive');
-  return { callbackReceiverAndOrder: true, bigintZeroAndOne: true, semanticCatchAndStringOnce: true, stringifyThrowIdentity: true, malformedHandleFailsClosed: true, nullPropertyAccessThrows: true, stringConcatDefaultHintAndBigInt: true, stringConcatFallbackOrder: true, stringConcatThrowIdentity: true, stringConcatSymbolTypeError: true, iteratorCloseReturnGetterThrowIdentity: true, iteratorCloseReturnCallThrowIdentity: true, iteratorClosePrimitiveReturnIdentity: true, diagnosticArrayMixedStaticOpaqueOrder: true, liveJSONStringifyReceiverAndNonStringReturn: true, inheritedObjectToJSONOnArrayAndEntries: true, diagnosticGetterThrowIdentity: true, delayedErrorMessageGetter: true };
+  return { callbackReceiverAndOrder: true, bigintZeroAndOne: true, semanticCatchAndStringOnce: true, stringifyThrowIdentity: true, malformedHandleFailsClosed: true, nullPropertyAccessThrows: true, stringConcatDefaultHintAndBigInt: true, stringConcatFallbackOrder: true, stringConcatThrowIdentity: true, stringConcatSymbolTypeError: true, iteratorCloseReturnGetterThrowIdentity: true, iteratorCloseReturnCallThrowIdentity: true, iteratorClosePrimitiveReturnIdentity: true, diagnosticArrayMixedStaticOpaqueOrder: true, liveJSONStringifyReceiverAndNonStringReturn: true, inheritedObjectToJSONOnArrayAndEntries: true, diagnosticGetterThrowIdentity: true, delayedErrorMessageGetter: true, spreadFailureMatchesNativeNullishAndNonCallable: true, spreadMethodGetterReadOnce: true };
 }
 
 const nodeResult = runProbe({ schemaPropertiesHostInput }, assert);

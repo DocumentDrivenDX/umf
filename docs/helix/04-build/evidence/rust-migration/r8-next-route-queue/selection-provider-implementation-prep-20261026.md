@@ -355,12 +355,29 @@ diagnostics with unknown own fields and order, plus a returned iterable whose
 `Symbol.iterator`, `next`, `done`, and `value` getters/calls have observable
 effects. Include a negative control where a value cannot be faithfully copied;
 do not silently normalize it into the fixed Rust `Diagnostic` shape.
-Also unresolved is the predecessor's `...semanticResult` failure for a
-non-iterable value (`undefined`, number, or plain object): its native TypeError
-message is converted to a diagnostic inside the same semantic catch. The
-Node, Bun, and Chromium messages are pinned in the reference receipts;
-a Rust-owned reproduction strategy remains required before selecting that
-behavior.
+The bounded nullish/non-callable semantic-spread branch now has a private
+`materialize-spread-failure` host event. Rust supplies either the already-read
+nullish value or the already-read non-callable `Symbol.iterator` method; the
+dispatcher evaluates `out.push(...entry.semantics())` to obtain that host's
+native TypeError text, then applies `String(error)` once. The event does not
+repeat caller property reads and sends a thrown `String(error)` value through
+the existing exact-identity channel. Frozen TypeScript receipts and the
+fake-addon probe agree for undefined, null, and non-callable iterator methods
+in Node 26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12. Node and Chromium
+distinguish undefined (`cannot read property undefined`) from null (`cannot
+read property null`); Bun uses its same nullish-spread message for both. All
+three use `Spread syntax requires ...iterable[Symbol.iterator] to be a
+function` for the non-callable method. The regenerated reference receipts are
+`r8-selection-reference-host-baseline/{node,bun,chromium}.json`; the focused
+primitive probe reports both spread-message and single-getter-read assertions
+passing on all three hosts. Core scripted-host, Node codec, and WASM codec
+tests each pass.
+
+This event only supplies the native refusal text for those bounded input
+shapes. Other malformed iterable stages remain unresolved, and it does not
+construct or expose the final `UmfError` through a Selection route. Callback
+diagnostic materialization, resource charging, and default-route parity remain
+integration gates; no Selection/default route is wired or proven.
 
 The focused fake-addon probe passed in Bun 1.4.3 against both the Node host
 module and the bundled WASM host module in real Chromium (unsandboxed
@@ -370,12 +387,13 @@ one-time stringification, stringification-throw identity, malformed-handle
 rejection, native null-property access, string-concat default hint and BigInt
 conversion, ordinary `valueOf` then `toString` fallback order, coercion-throw
 identity, and Symbol TypeError. This was the earlier bounded host-dispatch
-checkpoint. The later [18-assertion primitive packet](../r8-selection-host-primitive-dispatch/README.md)
+checkpoint. The later [20-assertion primitive packet](../r8-selection-host-primitive-dispatch/README.md)
 passes independently in Node 26.12.1, Bun 1.4.3 and real Chromium
 153.0.8010.12. It additionally covers ordered mixed static/opaque diagnostic
 serialization, live `JSON.stringify`, deferred inherited Error-message reads,
-and IteratorClose preserving the first body throw through return-getter/call
-faults. It still does not exercise a Selection route, complete callback-result
+IteratorClose preserving the first body throw through return-getter/call
+faults, and the bounded native spread-failure messages above. It still does not
+exercise a Selection route, complete callback-result
 materialization, or Rust Selection parity. Rust `host_json` tests and
 Node/WASM codec tests remain separate code-level checks for this foundation.
 

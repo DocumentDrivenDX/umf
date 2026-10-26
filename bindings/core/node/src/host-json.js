@@ -333,6 +333,35 @@ function executeHostInput(addon, resources, operation, inputs, ErrorType, contro
           reply = {kind: 'opaque-value', value: opaqueValue(new NativeError(value))};
           break;
         }
+        case 'materialize-spread-failure': {
+          const target = request.target;
+          if (!target || typeof target !== 'object') throw new HostProtocolError('Malformed spread-failure target');
+          let candidate;
+          if (target.kind === 'nullish') {
+            candidate = invocationValue(target.value);
+            if (candidate !== null && candidate !== undefined) throw new HostProtocolError('Nullish spread target is not nullish');
+          } else if (target.kind === 'iterator-method') {
+            const method = invocationValue(target.value);
+            if (typeof method === 'function') throw new HostProtocolError('Iterator method target is callable');
+            candidate = NativeObjectCreate(null);
+            defineProperty(candidate, iteratorSymbol, {value: method, writable: true, enumerable: true, configurable: true});
+          } else throw new HostProtocolError('Unknown spread-failure target');
+          const entry = NativeObjectCreate(null);
+          defineProperty(entry, 'semantics', {value: function semantics() { return candidate; }, writable: true, enumerable: true, configurable: true});
+          const out = NativeObjectCreate(null);
+          defineProperty(out, 'push', {value: function push() {}, writable: true, enumerable: true, configurable: true});
+          try {
+            out.push(...entry.semantics());
+            throw new HostProtocolError('Spread-failure target unexpectedly iterated');
+          } catch (error) {
+            if (error instanceof HostProtocolError) throw error;
+            let message;
+            try { message = String(error); }
+            catch (stringError) { return recordThrown(stringError); }
+            reply = {kind: 'spread-failure', message: putString(message)};
+          }
+          break;
+        }
         case 'close-opaque-iterator': {
           if (!hasThrown) throw new HostProtocolError('IteratorClose requires a pending thrown completion');
           try {

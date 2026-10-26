@@ -2284,6 +2284,15 @@
         "message": "[{\"code\":\"VALIDATOR_FAILURE\",\"path\":\"/extensions/future\",\"message\":\"TypeError: entry.semantics(...) is not iterable (cannot read property undefined)\",\"severity\":\"error\"},{\"code\":\"VALIDATOR_FAILURE\",\"path\":\"/modules/0/elements/0/extensions/future\",\"message\":\"TypeError: entry.semantics(...) is not iterable (cannot read property undefined)\",\"severity\":\"error\"},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/0/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"},{\"code\":\"UNKNOWN_SCALAR_TYPE\",\"path\":\"/modules/1/elements/0/scalarType\",\"message\":\"Scalar family retained without interpretation\",\"severity\":\"warning\"}]"
       }
     },
+    "callback:spread-null": {
+      "ok": false,
+      "error": {
+        "name": "UmfError",
+        "code": "CORE_SELECTION_SOURCE",
+        "path": "",
+        "message": "[{\"code\":\"VALIDATOR_FAILURE\",\"path\":\"/extensions/future\",\"message\":\"TypeError: entry.semantics(...) is not iterable (cannot read property null)\",\"severity\":\"error\"},{\"code\":\"VALIDATOR_FAILURE\",\"path\":\"/modules/0/elements/0/extensions/future\",\"message\":\"TypeError: entry.semantics(...) is not iterable (cannot read property null)\",\"severity\":\"error\"},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/0/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"},{\"code\":\"UNKNOWN_SCALAR_TYPE\",\"path\":\"/modules/1/elements/0/scalarType\",\"message\":\"Scalar family retained without interpretation\",\"severity\":\"warning\"}]"
+      }
+    },
     "callback:spread-number": {
       "ok": false,
       "error": {
@@ -2294,6 +2303,15 @@
       }
     },
     "callback:spread-plain-object": {
+      "ok": false,
+      "error": {
+        "name": "UmfError",
+        "code": "CORE_SELECTION_SOURCE",
+        "path": "",
+        "message": "[{\"code\":\"VALIDATOR_FAILURE\",\"path\":\"/extensions/future\",\"message\":\"TypeError: Spread syntax requires ...iterable[Symbol.iterator] to be a function\",\"severity\":\"error\"},{\"code\":\"VALIDATOR_FAILURE\",\"path\":\"/modules/0/elements/0/extensions/future\",\"message\":\"TypeError: Spread syntax requires ...iterable[Symbol.iterator] to be a function\",\"severity\":\"error\"},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/0/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"},{\"code\":\"UNKNOWN_SCALAR_TYPE\",\"path\":\"/modules/1/elements/0/scalarType\",\"message\":\"Scalar family retained without interpretation\",\"severity\":\"warning\"}]"
+      }
+    },
+    "callback:spread-noncallable-method": {
       "ok": false,
       "error": {
         "name": "UmfError",
@@ -3274,6 +3292,6 @@
     }
   },
   "errors": [],
-  "bundleSha256": "6d1062c403746061b79a3587adc1b995facfeb0afebf660cb58b7f6b347d5d8f",
+  "bundleSha256": "3a30729846b1d808e7b019dc76816b0cd0df46beae0bbe78a65133cead521cf4",
   "entry": "src/index.ts (explicit TypeScript reference; Bun browser bundle)"
 }
