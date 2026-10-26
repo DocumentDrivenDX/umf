@@ -414,6 +414,42 @@ pub fn execute_core_schema_properties_host_json(
     umf_core_wire::result_envelope(result)
 }
 
+/// Private opt-in host route for R8 Selection. Kept outside the package roots.
+#[napi(js_name = "executeCoreElementSelectionHostJson")]
+pub fn execute_core_element_selection_host_json(
+    env: Env,
+    resources_wire: String,
+    has_registry: bool,
+    source_handle: u32,
+    query_handle: u32,
+    registry_handle: u32,
+    dispatcher: JsFunction,
+) -> String {
+    let mut host = NodeHostJson { env, dispatcher, string_lengths: BTreeMap::new() };
+    let result = (|| -> Result<String, EngineError> {
+        let resources = umf_core_wire::decode(&resources_wire, &mut umf_core_wire::transport_context())?;
+        let resource = |name: &str| object_field(&resources, name).cloned().ok_or_else(|| {
+            EngineError::new("REQUEST", Utf16::from(name), "Explicit resource is required")
+        });
+        let engine = {
+            let mut catalog = Context::catalog();
+            Engine::new(ResourceSet::new(
+                resource("coreSchema")?, resource("referenceSchema")?,
+                resource("packageSchema")?, resource("constraints")?,
+                resource("domainPolicy")?,
+            ), &mut catalog)?
+        };
+        let mut ctx = Context::ordinary();
+        let value = umf_core::selection_host_json::execute(
+            source_handle as HostHandle, query_handle as HostHandle,
+            has_registry.then_some(registry_handle as HostHandle),
+            &mut host, &engine, &mut ctx,
+        )?;
+        umf_core_wire::encode(&value, &mut ctx)
+    })();
+    umf_core_wire::result_envelope(result)
+}
+
 #[napi(js_name = "executeValidateCoreRecordValuesHostJson")]
 pub fn execute_validate_core_record_values_host_json(
     env: Env,

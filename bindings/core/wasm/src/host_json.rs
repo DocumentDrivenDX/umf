@@ -390,6 +390,41 @@ pub fn execute_core_schema_properties_host_json(
     umf_core_wire::result_envelope(result)
 }
 
+/// Private opt-in host route for R8 Selection. Kept outside the package roots.
+#[wasm_bindgen(js_name = executeCoreElementSelectionHostJson)]
+pub fn execute_core_element_selection_host_json(
+    resources_wire: &str,
+    has_registry: bool,
+    source_handle: u32,
+    query_handle: u32,
+    registry_handle: u32,
+    dispatcher: &Function,
+) -> String {
+    let result = (|| -> Result<String, EngineError> {
+        let resources = umf_core_wire::decode(resources_wire, &mut umf_core_wire::transport_context())?;
+        let resource = |name: &str| field(&resources, name).cloned().ok_or_else(|| {
+            EngineError::new("REQUEST", Utf16::from(name), "Explicit resource is required")
+        });
+        let engine = {
+            let mut catalog = Context::catalog();
+            Engine::new(ResourceSet::new(
+                resource("coreSchema")?, resource("referenceSchema")?,
+                resource("packageSchema")?, resource("constraints")?,
+                resource("domainPolicy")?,
+            ), &mut catalog)?
+        };
+        let mut host = WasmHostJson { dispatcher: dispatcher.clone(), string_lengths: BTreeMap::new() };
+        let mut ctx = Context::ordinary();
+        let value = umf_core::selection_host_json::execute(
+            source_handle as HostHandle, query_handle as HostHandle,
+            has_registry.then_some(registry_handle as HostHandle),
+            &mut host, &engine, &mut ctx,
+        )?;
+        umf_core_wire::encode(&value, &mut ctx)
+    })();
+    umf_core_wire::result_envelope(result)
+}
+
 fn event_json(event: &HostJsonEvent) -> String {
     match event {
         HostJsonEvent::UnicodeCount { value } => format!(

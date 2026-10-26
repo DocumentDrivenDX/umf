@@ -303,6 +303,17 @@ pub(crate) fn select_core_elements_with_provider(
     let source = copy_json(input, ctx)?;
     check_selection_copy_limits(query_input, ctx)?;
     let query = copy_json(query_input, ctx)?;
+    select_core_elements_after_copy(source, query, engine, provider, capabilities, ctx)
+}
+
+fn select_core_elements_after_copy(
+    source: Value,
+    query: Value,
+    engine: &Engine,
+    provider: &dyn crate::registry::RegistrationProvider,
+    capabilities: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
     let (transitive, filters, identities) = parse_query(&query)?;
     let source_validation = engine.validate_document_observed_fallible_with_provider(
         &source,
@@ -548,6 +559,20 @@ pub(crate) fn select_core_elements_with_provider(
     ]);
     check_selection_copy_limits(&result, ctx)?;
     copy_json(&result, ctx)
+}
+
+/// Host-admitted counterpart. The host has already performed the one
+/// predecessor copy of source and query; keep the semantic selection stages
+/// shared without charging a second input copy.
+pub(crate) fn select_core_elements_admitted_with_provider(
+    source: Value,
+    query: Value,
+    engine: &Engine,
+    provider: &dyn crate::registry::RegistrationProvider,
+    capabilities: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    select_core_elements_after_copy(source, query, engine, provider, capabilities, ctx)
 }
 
 fn boundary_entry(

@@ -2364,8 +2364,12 @@ fn extension_errors(
             out.push(model_diag(policy, "undeclared", &at, None, ctx)?);
             continue;
         };
-        let Some(entry) = crate::registry::require_borrowed(registry.lookup(id, &version, ctx)?)? else {
-            continue;
+        let entry = match registry.lookup(id, &version, ctx)? {
+            None => continue,
+            Some(crate::registry::RegistrationLookup::Borrowed(entry)) => entry,
+            Some(crate::registry::RegistrationLookup::HostHandle(handle)) => {
+                return Err(crate::selection_host_json::reject_host_registration(handle));
+            }
         };
         let (kind_invalid, mut kind_diagnostics) =
             crate::kinds::occurrence(entry, payload, scope, &at, policy, ctx)?;
