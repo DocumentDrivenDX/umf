@@ -101,7 +101,7 @@ function schemaPropertiesHostInput(addon, resources, operation, inputs, ErrorTyp
 
 // Private route probe. It does not alter either V4 package root selection.
 function coreElementSelectionHostInput(addon, resources, source, query, registry, ErrorType = Error) {
-  return executeHostInput(addon, resources, 'executeCoreElementSelectionHostJson', [source, query, registry], ErrorType, undefined, [registry !== undefined]);
+  return executeHostInput(addon, resources, 'executeCoreElementSelectionHostJson', [source, query, registry], ErrorType, undefined, [registry !== undefined], undefined, false, false, fromRustWireOrdinary);
 }
 
 function validateCoreRecordValuesHostInput(addon, resources, source, identity, values, ErrorType = Error, controlBridge) {
@@ -128,7 +128,7 @@ function coreProtobufSourceHostResponse(runtime, operation, value, ErrorType = E
   return executeHostInput(runtime, undefined, operation, [value], ErrorType, controlBridge, [], undefined, true, true);
 }
 
-function executeHostInput(addon, resources, operation, inputs, ErrorType, controlBridge, operationArgs = [], preparedResourcesWire, retainedRuntime = false, includeBinary = false) {
+function executeHostInput(addon, resources, operation, inputs, ErrorType, controlBridge, operationArgs = [], preparedResourcesWire, retainedRuntime = false, includeBinary = false, resultProjection = fromRustWire) {
   const handles = new NativeMap();
   const objectHandles = new NativeWeakMap();
   const primitiveOpaqueHandles = new NativeMap();
@@ -469,7 +469,7 @@ function executeHostInput(addon, resources, operation, inputs, ErrorType, contro
     const result = parse(response.wire);
     // The result is Rust-produced umf.core-wire/1. Convert it without passing
     // any original argument through the existing eager host serializer.
-    const value = fromRustWire(result);
+    const value = resultProjection(result);
     return includeBinary ? {value, binary} : value;
   } finally {
     mapClear(handles);

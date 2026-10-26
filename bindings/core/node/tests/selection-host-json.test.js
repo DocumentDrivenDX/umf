@@ -20,6 +20,25 @@ setDefaultTimeout(30_000);
 test('private host Selection route matches the complete frozen R5 result with an omitted Registry', () => {
   const output = coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, undefined, UmfCoreError);
   expect(output).toEqual(frozen.cases.all);
+  expect(Object.getPrototypeOf(output)).toBe(Object.prototype);
+  expect(Object.getPrototypeOf(output.source)).toBe(Object.prototype);
+  expect(Object.getPrototypeOf(output.source.modules[0])).toBe(Object.prototype);
+});
+
+test('private host Selection returns ordinary nested objects and preserves __proto__ as own data', () => {
+  const source = structuredClone(packet.source);
+  Object.defineProperty(source.extensions.future.opaque, '__proto__', {
+    value: {retained: true}, writable: true, enumerable: true, configurable: true,
+  });
+  const output = coreElementSelectionHostInput(addon, resources, source, packet.queries.all, undefined, UmfCoreError);
+  const opaque = output.source.extensions.future.opaque;
+  expect(Object.getPrototypeOf(output)).toBe(Object.prototype);
+  expect(Object.getPrototypeOf(output.source.extensions)).toBe(Object.prototype);
+  expect(Object.getPrototypeOf(opaque)).toBe(Object.prototype);
+  expect(Object.hasOwn(opaque, '__proto__')).toBe(true);
+  expect(opaque.__proto__).toEqual({retained: true});
+  expect(Object.getPrototypeOf(opaque.__proto__)).toBe(Object.prototype);
+  expect(Object.prototype.retained).toBeUndefined();
 });
 
 test('private host Selection defers Registry.get until source admission and preserves lookup throw identity', () => {

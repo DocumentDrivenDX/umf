@@ -24,8 +24,20 @@ const packet = read('scripts/rust-migration/r5/selection/input.json');
 const frozen = read('scripts/rust-migration/r5/selection/frozen-typescript.json');
 const result = coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, undefined, Error);
 assert.equal(JSON.stringify(result), JSON.stringify(frozen.cases.all));
-const outputPrototype = Object.getPrototypeOf(result) === null ? 'null' : 'ordinary';
-assert.equal(outputPrototype, 'null'); // Explicit unresolved predecessor shape difference.
+const outputPrototype = Object.getPrototypeOf(result) === Object.prototype ? 'ordinary' : 'other';
+assert.equal(outputPrototype, 'ordinary');
+assert.equal(Object.getPrototypeOf(result.source), Object.prototype);
+
+const protoSource = structuredClone(packet.source);
+Object.defineProperty(protoSource.extensions.future.opaque, '__proto__', {
+  value: {retained: true}, writable: true, enumerable: true, configurable: true,
+});
+const protoResult = coreElementSelectionHostInput(addon, resources, protoSource, packet.queries.all, undefined, Error);
+const opaque = protoResult.source.extensions.future.opaque;
+assert.equal(Object.getPrototypeOf(opaque), Object.prototype);
+assert.equal(Object.hasOwn(opaque, '__proto__'), true);
+assert.deepEqual(opaque.__proto__, {retained: true});
+assert.equal(Object.prototype.retained, undefined);
 
 const sentinel = {identity: true};
 let calls = 0;
@@ -36,4 +48,4 @@ try {
   assert.equal(error, sentinel);
 }
 assert.equal(calls, 1);
-console.log(JSON.stringify({status: 'json-value-pass', host: process.version, cases: 2, outputPrototype}));
+console.log(JSON.stringify({status: 'json-value-and-shape-pass', host: process.version, cases: 3, outputPrototype, ownProtoKey: true}));
