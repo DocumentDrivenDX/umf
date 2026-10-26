@@ -858,14 +858,69 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                 domain = scenario.removeprefix("domain-") if scenario.startswith("domain-") else None
                 semantic = scenario.removeprefix("semantic-") if scenario.startswith("semantic-") else None
                 if domain == "uuid":
-                    connection.execute(sql.SQL("CREATE SCHEMA {} AUTHORIZATION {}").format(
-                        sql.Identifier(shadow_schema), sql.Identifier(owner)))
-                    connection.execute(sql.SQL("SET ROLE {}").format(sql.Identifier(owner)))
+                    # Keep the adversarial shadow present during privilege verification, but
+                    # outside the plugin-role authority set; Alice alone can resolve its sentinel.
+                    connection.execute(sql.SQL("CREATE SCHEMA {}").format(
+                        sql.Identifier(shadow_schema)))
                     connection.execute(sql.SQL(
                         "CREATE FUNCTION {}.gen_random_uuid() RETURNS pg_catalog.uuid "
                         "LANGUAGE sql IMMUTABLE AS 'SELECT ''00000000-0000-4000-8000-000000000001''::pg_catalog.uuid'"
                     ).format(sql.Identifier(shadow_schema)))
-                    connection.execute("RESET ROLE")
+                    connection.execute(sql.SQL("REVOKE ALL ON SCHEMA {} FROM PUBLIC").format(
+                        sql.Identifier(shadow_schema)))
+                    connection.execute(sql.SQL(
+                        "REVOKE ALL ON FUNCTION {}.gen_random_uuid() FROM PUBLIC"
+                    ).format(sql.Identifier(shadow_schema)))
+                    connection.execute(sql.SQL("GRANT USAGE ON SCHEMA {} TO {}").format(
+                        sql.Identifier(shadow_schema), sql.Identifier(alice)))
+                    connection.execute(sql.SQL(
+                        "GRANT EXECUTE ON FUNCTION {}.gen_random_uuid() TO {}"
+                    ).format(sql.Identifier(shadow_schema), sql.Identifier(alice)))
+                    admin_oid = connection.execute(
+                        "SELECT oid::pg_catalog.text FROM pg_catalog.pg_roles WHERE rolname=current_user"
+                    ).fetchone()[0]
+                    if admin_oid != target_identity_row[9]:
+                        raise RuntimeError("owned connection identity differs from the observed administrative role")
+                    root_oids = [made_role_oids[name] for name in (owner, person, batch)]
+                    shadow_acl = connection.execute("""SELECT
+                        n.nspowner::pg_catalog.text,p.proowner::pg_catalog.text,
+                        NOT EXISTS(SELECT FROM pg_catalog.aclexplode(
+                            COALESCE(n.nspacl,pg_catalog.acldefault('n',n.nspowner))) a WHERE a.grantee=0),
+                        NOT EXISTS(SELECT FROM pg_catalog.aclexplode(
+                            COALESCE(p.proacl,pg_catalog.acldefault('f',p.proowner))) a WHERE a.grantee=0),
+                        NOT EXISTS(SELECT FROM pg_catalog.aclexplode(
+                            COALESCE(n.nspacl,pg_catalog.acldefault('n',n.nspowner))) a
+                            WHERE a.grantee::pg_catalog.text=ANY(%s::pg_catalog.text[])),
+                        NOT EXISTS(SELECT FROM pg_catalog.aclexplode(
+                            COALESCE(p.proacl,pg_catalog.acldefault('f',p.proowner))) a
+                            WHERE a.grantee::pg_catalog.text=ANY(%s::pg_catalog.text[])),
+                        pg_catalog.has_schema_privilege(%s::pg_catalog.oid,n.oid,'USAGE'),
+                        pg_catalog.has_function_privilege(%s::pg_catalog.oid,p.oid,'EXECUTE'),
+                        pg_catalog.has_schema_privilege(%s::pg_catalog.oid,n.oid,'USAGE'),
+                        pg_catalog.has_function_privilege(%s::pg_catalog.oid,p.oid,'EXECUTE'),
+                        pg_catalog.has_schema_privilege(%s::pg_catalog.oid,n.oid,'USAGE'),
+                        pg_catalog.has_function_privilege(%s::pg_catalog.oid,p.oid,'EXECUTE'),
+                        pg_catalog.has_schema_privilege(%s::pg_catalog.oid,n.oid,'USAGE'),
+                        pg_catalog.has_function_privilege(%s::pg_catalog.oid,p.oid,'EXECUTE')
+                        FROM pg_catalog.pg_namespace n JOIN pg_catalog.pg_proc p
+                          ON p.pronamespace=n.oid
+                        WHERE n.nspname=%s AND p.proname='gen_random_uuid' AND p.pronargs=0""",
+                        (root_oids,root_oids,root_oids[0],root_oids[0],root_oids[1],root_oids[1],
+                         root_oids[2],root_oids[2],made_role_oids[alice],made_role_oids[alice],
+                         shadow_schema)).fetchone()
+                    expected_shadow_acl = (admin_oid,admin_oid,True,True,True,True,
+                                           False,False,False,False,False,False,True,True)
+                    if shadow_acl != expected_shadow_acl:
+                        raise RuntimeError("UUID shadow authority differs from the exact owner/person/batch/Alice fixture")
+                    connection.execute(sql.SQL("SET ROLE {}").format(sql.Identifier(alice)))
+                    try:
+                        connection.execute(sql.SQL("SET search_path TO {},pg_catalog").format(
+                            sql.Identifier(shadow_schema)))
+                        shadow_value = connection.execute("SELECT gen_random_uuid()").fetchone()[0]
+                    finally:
+                        connection.execute("RESET ROLE")
+                    if str(shadow_value) != "00000000-0000-4000-8000-000000000001":
+                        raise RuntimeError("Alice could not resolve the exact UUID shadow sentinel")
                 connection.execute(sql.SQL("CREATE SCHEMA {} AUTHORIZATION {}").format(
                     sql.Identifier(schema), sql.Identifier(owner)))
                 created_schema = connection.execute(
