@@ -7,7 +7,7 @@ from umf import rust_values
 from umf_access.unified.operation_values import (
     _read_frame_cardinality_rust,
     _read_frame_shape_rust,
-    value_from_native,
+    result_frame,
 )
 from umf_access.unified.session_policy import SessionError
 
@@ -100,22 +100,38 @@ class RustReadFrame(unittest.TestCase):
         self.assertEqual(events, [("decode", 0), ("decode", 1)])
 
     def test_all_rows_decode_before_a_cardinality_refusal(self):
-        output = {"nullable": False, "carrier": "integer"}
+        program = {
+            "module": "demo",
+            "operation": "read",
+            "binding": {"modelSha256": "a" * 64},
+            "outputs": [{
+                "field": {"module": "demo", "element": "value"},
+                "nullable": False,
+                "carrier": "integer",
+            }],
+            "result": {"kind": "many", "maxRows": 1},
+        }
         with self.assertRaisesRegex(SessionError, "native result value differs"):
-            [value_from_native(token, output) for token in ("1", "invalid")]
+            result_frame(program, [("1",), ("invalid",)], {}, b"x" * 32)
 
     def test_profile_mismatch_and_unavailable_remain_distinct(self):
-        with patch.object(rust_values, "access_stream_read_frame_profile_version", return_value="other"):
-            with self.assertRaisesRegex(SessionError, "capability profile mismatch"):
-                _read_frame_shape_rust("many", 1, [])
+        with (
+            patch.object(rust_values, "access_stream_read_frame_profile_version", return_value="other"),
+            self.assertRaisesRegex(SessionError, "capability profile mismatch"),
+        ):
+            _read_frame_shape_rust("many", 1, [])
 
-        with patch.object(rust_values, "access_stream_read_frame_profile_version", side_effect=AttributeError("missing")):
-            with self.assertRaisesRegex(SessionError, "capability unavailable"):
-                _read_frame_shape_rust("many", 1, [])
+        with (
+            patch.object(rust_values, "access_stream_read_frame_profile_version", side_effect=AttributeError("missing")),
+            self.assertRaisesRegex(SessionError, "capability unavailable"),
+        ):
+            _read_frame_shape_rust("many", 1, [])
 
-        with patch.object(rust_values, "access_stream_read_frame_profile_version", side_effect=RuntimeError("native failure")):
-            with self.assertRaisesRegex(RuntimeError, "native failure"):
-                _read_frame_shape_rust("many", 1, [])
+        with (
+            patch.object(rust_values, "access_stream_read_frame_profile_version", side_effect=RuntimeError("native failure")),
+            self.assertRaisesRegex(RuntimeError, "native failure"),
+        ):
+            _read_frame_shape_rust("many", 1, [])
 
 
 if __name__ == "__main__":

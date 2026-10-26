@@ -52,7 +52,8 @@ A fresh `umf-core-python` extension was built with
 /private/tmp/umf-read-frame-target`. Its SHA-256 is
 `c8c087b490c8d97d652b75db19760bc2c8b12c8e5cd34e9a3d23870bb05b5316`.
 Using that extension in a temporary overlay on CPython 3.14.8, Darwin 27
-arm64, the focused Python suite passed **7/7**. It covers predecessor error
+arm64, the focused Python suite passed **7/7**; Ruff also passed on the focused
+test file. It covers predecessor error
 messages, count host-read order, later-row short circuit, identity-preserving
 row and iterator failures, separate decode/cardinality stages, a decode failure
 preceding cardinality refusal, and profile mismatch/unavailability.
@@ -65,7 +66,7 @@ Source SHA-256 values at this receipt are:
 | `bindings/core/python/src/lib.rs` | `bcddb360102144677c026bf0a3e026f7192dd6a6887b9e23ab9a95e61303d7cc` |
 | `python/src/umf/rust_values.py` | `bf277688876f2fcd43a3a80202f74d340778d4f70db4f587a97db3a4602dbab1` |
 | `python/umf_access/src/umf_access/unified/operation_values.py` | `5fffac946bb01f16d2667e4f4fd7eb757fc3ca538bba54726634684e0e2a6d4e` |
-| `python/umf_access/tests/test_rust_read_frame.py` | `540437a9b0d88c0b300aa91071f653a3baad5632a75e6b859e7407a78dc3f5b0` |
+| `python/umf_access/tests/test_rust_read_frame.py` | `30eab6aa1ca9c4d1e95fb2458135c021807313d3172da50d10f4fabf01d1c613` |
 
 The private predicate has no shared `Context` charge, and cardinality accepts
 caller-supplied `usize` row count and bound. It cannot be exposed on a public
