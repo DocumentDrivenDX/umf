@@ -58,6 +58,8 @@ class _FakeDatabase:
         self.ddl = []
         self.absence_queries = []
         self.namespace_queries = []
+        self.connect_options = []
+        self.readonly_connect_options = []
 
     def maintenance(self, name):
         self.roles[name] = (self.next_oid, True, True, False, False, False, False, False)
@@ -369,9 +371,19 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                                  ['host', ['all'], ['all'], '0.0.0.0', '0.0.0.0', 'reject', [], None],
                                  ['host', ['all'], ['all'], '::', '0', 'reject', [], None]],
                 }
+            original_connect_maintenance = native.LocalPostgresSupervisor._connect_maintenance
             @contextmanager
-            def connect_maintenance(_self, _database_name, **_kwargs):
-                yield _FakeConnection(db)
+            def connect_maintenance(_self, database_name, **kwargs):
+                readonly_budget = kwargs.get('readonly_budget')
+                if readonly_budget is None:
+                    yield _FakeConnection(db)
+                    return
+                with patch.dict(sys.modules, {'psycopg': psycopg_fixture}):
+                    connection = original_connect_maintenance(
+                        _self, database_name, **kwargs)
+                db.readonly_connect_options.append(
+                    (readonly_budget, db.connect_options[-1]))
+                yield connection
             def run_child(_self, argv, _log_path, _timeout, **_kwargs):
                 data_path = Path(argv[2])
                 (data_path / 'global').mkdir()
@@ -642,7 +654,11 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     self.assertEqual(public_reference, reference)
                     self.assertIsNone(restarted_supervisor.custody_handle)
                     caller_connection = _FakeConnection(db)
-                    psycopg_fixture = SimpleNamespace(Connection=_FakeConnection)
+                    def fake_psycopg_connect(**kwargs):
+                        db.connect_options.append(kwargs['options'])
+                        return _FakeConnection(db)
+                    psycopg_fixture = SimpleNamespace(
+                        Connection=_FakeConnection, connect=fake_psycopg_connect)
                     with patch.dict(sys.modules, {'psycopg': psycopg_fixture}):
                         recovery_provider = restarted_supervisor.open_originals_store_recovery(
                             caller_connection, provider_id=provider_id)
@@ -660,6 +676,7 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                             raise
                     absence_queries_before = len(db.absence_queries)
                     namespace_queries_before = len(db.namespace_queries)
+                    readonly_connects_before = len(db.readonly_connect_options)
                     with (patch.dict(sys.modules, {'psycopg': psycopg_fixture}),
                           patch.object(native, '_execute_original_store_sql',
                                        _execute_journal_recovery_control_transport),
@@ -672,6 +689,16 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                             recovery_provider.recover_creation()
                     self.assertEqual(recovery_codes, [
                         'local-postgresql-store-recovery-noncommit-unproven'])
+                    first_readonly_connects = db.readonly_connect_options[readonly_connects_before:]
+                    self.assertEqual(len(first_readonly_connects), 1)
+                    for budget, options in first_readonly_connects:
+                        self.assertEqual(options,
+                            "-c search_path=pg_catalog -c row_security=on "
+                            "-c session_replication_role=origin "
+                            "-c default_transaction_read_only=off "
+                            "-c 'default_transaction_isolation=read committed' "
+                            f"-c statement_timeout={budget._timeout_state['startupStatementTimeoutMs']}ms "
+                            f"-c lock_timeout={budget._timeout_state['startupLockTimeoutMs']}ms")
                     self.assertGreater(len(db.absence_queries), absence_queries_before)
                     self.assertTrue(all(
                         'FROM pg_catalog.pg_database d WHERE d.datname=pg_catalog.current_database()'
@@ -772,6 +799,7 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     before_retry_observations = len(readonly_observations)
                     before_retry_absence_queries = len(db.absence_queries)
                     before_retry_namespace_queries = len(db.namespace_queries)
+                    before_retry_readonly_connects = len(db.readonly_connect_options)
                     with after_pending_supervisor._original_control_lease(
                             operation_kind='store'):
                         before_retry_events = after_pending_supervisor._journal.read()['events']
@@ -796,6 +824,17 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                             pending_provider.recover_creation()
                     self.assertEqual(second_recovery_codes, [
                         'local-postgresql-store-recovery-noncommit-unproven'])
+                    second_readonly_connects = db.readonly_connect_options[
+                        before_retry_readonly_connects:]
+                    self.assertEqual(len(second_readonly_connects), 1)
+                    for budget, options in second_readonly_connects:
+                        self.assertEqual(options,
+                            "-c search_path=pg_catalog -c row_security=on "
+                            "-c session_replication_role=origin "
+                            "-c default_transaction_read_only=off "
+                            "-c 'default_transaction_isolation=read committed' "
+                            f"-c statement_timeout={budget._timeout_state['startupStatementTimeoutMs']}ms "
+                            f"-c lock_timeout={budget._timeout_state['startupLockTimeoutMs']}ms")
                     self.assertGreater(len(db.absence_queries), before_retry_absence_queries)
                     self.assertTrue(all(
                         'FROM pg_catalog.pg_database d WHERE d.datname=pg_catalog.current_database()'
