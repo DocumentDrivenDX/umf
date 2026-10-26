@@ -1,0 +1,285 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
+name: Core 0.10.2 exact manylinux repair qualification
+
+on:
+  push:
+    branches:
+      - codex/core-0102-manylinux-qualification
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  repair-and-qualify:
+    name: Ubuntu 24.04 x86_64 repaired wheel, Python 3.11.17
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Start original monotonic deadline and seed failure receipt
+        if: always()
+        timeout-minutes: 1
+        env:
+          EVIDENCE_DIR: ${{ runner.temp }}/core-0102-manylinux
+          UPLOAD_DIR: ${{ runner.temp }}/core-0102-manylinux-upload
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_RUN_ATTEMPT: ${{ github.run_attempt }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_WORKFLOW: ${{ github.workflow }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR/logs" "$UPLOAD_DIR"
+          start_ms="$(awk '{printf "%.0f", $1 * 1000}' /proc/uptime)"
+          printf '%s\n' "$((start_ms + 1200000))" > "$EVIDENCE_DIR/deadline-ms"
+          cat > "$UPLOAD_DIR/receipt.json" <<JSON
+          {
+            "profile": "umf.core-0102-manylinux-repair-qualification/1",
+            "status": "FAIL_OR_UNKNOWN",
+            "reasonType": "NotCompleted",
+            "harnessCommit": "$GITHUB_SHA",
+            "runId": "$GITHUB_RUN_ID",
+            "runAttempt": "$GITHUB_RUN_ATTEMPT",
+            "ref": "$GITHUB_REF",
+            "workflow": "$GITHUB_WORKFLOW",
+            "immutableSourceCommit": "a1b909d4f92da6604aeb21d3ea60e9a9943a7f87",
+            "aggregateDeadlineSeconds": 1200,
+            "cleanupAndEvidenceReserveSeconds": 120,
+            "maximumChildSeconds": 180,
+            "aggregateLogLimitBytes": 1048576,
+            "evidenceLimitBytes": 4194304,
+            "wheelLimitBytes": 16777216,
+            "artifactFamilyLimitBytes": 16777216,
+            "failureOnlyReceipt": true,
+            "claims": {"repairedArtifactPayload": false, "installedBytes": false, "sixModuleSuite": false, "publication": false}
+          }
+          JSON
+
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
+        timeout-minutes: 2
+        with:
+          ref: ${{ github.sha }}
+          path: harness
+          persist-credentials: false
+
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
+        timeout-minutes: 2
+        with:
+          ref: a1b909d4f92da6604aeb21d3ea60e9a9943a7f87
+          path: source
+          persist-credentials: false
+
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v5.6.0
+        timeout-minutes: 2
+        with:
+          python-version: '3.11.17'
+
+      - name: Verify frozen inputs, repair, and qualify exact installed bytes
+        id: qualify
+        timeout-minutes: 17
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          evidence="$RUNNER_TEMP/core-0102-manylinux"
+          deadline_ms="$(cat "$evidence/deadline-ms")"
+          now_ms="$(awk '{printf "%.0f", $1 * 1000}' /proc/uptime)"
+          remaining="$(((deadline_ms - now_ms - 120000) / 1000))"
+          if (( remaining <= 0 )); then
+            echo 'The original deadline leaves no bounded work time' >&2
+            exit 124
+          fi
+          timeout --signal=TERM --kill-after=10s "${remaining}s" \
+            python -I "$GITHUB_WORKSPACE/harness/tools/qualify_core_0102_manylinux.py" run
+
+      - name: Finalize exact allowlisted artifact family
+        if: always()
+        timeout-minutes: 1
+        env:
+          EVIDENCE_DIR: ${{ runner.temp }}/core-0102-manylinux
+          UPLOAD_DIR: ${{ runner.temp }}/core-0102-manylinux-upload
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_RUN_ATTEMPT: ${{ github.run_attempt }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_WORKFLOW: ${{ github.workflow }}
+          QUALIFICATION_STEP_OUTCOME: ${{ steps.qualify.outcome }}
+        run: |
+          set -euo pipefail
+          python -I - <<'PY'
+          import hashlib, json, os, pathlib, shutil, sys
+          evidence = pathlib.Path(os.environ["EVIDENCE_DIR"])
+          upload = pathlib.Path(os.environ["UPLOAD_DIR"])
+          receipt_path = upload / "receipt.json"
+          failure = {
+              "profile": "umf.core-0102-manylinux-repair-qualification/1",
+              "status": "FAIL_OR_UNKNOWN", "reasonType": "FinalizerFailure",
+              "harnessCommit": os.environ["GITHUB_SHA"], "runId": os.environ["GITHUB_RUN_ID"],
+              "runAttempt": os.environ["GITHUB_RUN_ATTEMPT"], "ref": os.environ["GITHUB_REF"],
+              "workflow": os.environ["GITHUB_WORKFLOW"],
+              "immutableSourceCommit": "a1b909d4f92da6604aeb21d3ea60e9a9943a7f87",
+              "claims": {"repairedArtifactPayload": False, "installedBytes": False,
+                         "sixModuleSuite": False, "publication": False},
+              "failureOnlyReceipt": True,
+          }
+          try:
+              known = {
+                  "qualification.json", "source-identities.json", "original-input.json", "tool-downloads.json",
+                  "tool-requirements.txt", "tool-install-report.json", "tool-versions.json", "host-tools.json",
+                  "test-install-report.json", "deadline-ms", "direct-elf.json",
+                  "repaired-elf.json", "payload-before-tests.json", "payload-after-tests.json",
+                  "installed-payload-before-tests.json",
+                  "installed-before-tests.json", "installed-after-tests.json", "six-module-tests.xml",
+                  "command-records.jsonl",
+              }
+              if not evidence.is_dir():
+                  raise ValueError("EvidenceDirectoryMissing")
+              files = [p for p in evidence.rglob("*") if p.is_file()]
+              rels = {p.relative_to(evidence).as_posix() for p in files}
+              log_names = {p.name for p in (evidence / "logs").glob("*.log")} if (evidence / "logs").is_dir() else set()
+              expected_logs = {
+                  "create-tool-environment.log", "install-locked-tools.log", "auditwheel-version.log", "patchelf-version.log",
+                  "auditwheel-show-direct.log", "inspect-direct-elf.log", "auditwheel-repair-auto.log",
+                  "auditwheel-show-repaired.log", "inspect-repaired-elf.log", "verify-repaired-payload.log",
+                  "create-test-environment.log", "install-original-test-tools.log", "install-repaired-wheel.log",
+                  "installed-identity-before-tests.log", "verify-installed-before-tests.log", "installed-six-module-suite.log",
+                  "verify-repaired-payload-after-tests.log", "installed-identity-after-tests.log",
+              }
+              if rels - known - {f"logs/{name}" for name in expected_logs}:
+                  raise ValueError("UnexpectedEvidencePath")
+              if log_names - expected_logs:
+                  raise ValueError("UnexpectedLogPath")
+              qualification_path = evidence / "qualification.json"
+              qualification_size = qualification_path.stat().st_size if qualification_path.is_file() else 0
+              logs = [evidence / "logs" / name for name in sorted(log_names)]
+              wheel_dir = pathlib.Path(os.environ["RUNNER_TEMP"]) / "core-0102-manylinux-repaired"
+              wheel_paths = sorted(wheel_dir.glob("*.whl")) if wheel_dir.is_dir() else []
+              if len(wheel_paths) > 1:
+                  raise ValueError("UnexpectedRepairWheelCount")
+              wheel = wheel_paths[0] if wheel_paths else None
+              # Stat the complete allowlisted source family before reading, hashing, parsing, or copying.
+              evidence_paths = [evidence / rel for rel in sorted(known) if (evidence / rel).is_file()] + logs
+              evidence_bytes = sum(path.stat().st_size for path in evidence_paths) + 65536
+              wheel_bytes = wheel.stat().st_size if wheel else 0
+              if (sum(path.stat().st_size for path in logs) > 1048576 or evidence_bytes > 4194304
+                      or wheel_bytes > 16777216 or evidence_bytes + wheel_bytes > 16777216):
+                  raise ValueError("AllowlistedArtifactFamilyCapExceeded")
+              qualification = json.loads(qualification_path.read_text(encoding="utf-8")) if qualification_size else {}
+              wheel_sha = None
+              if wheel:
+                  with wheel.open("rb") as stream:
+                      wheel_sha = __import__("hashlib").file_digest(stream, "sha256").hexdigest()
+              rows = []
+              records_path = evidence / "command-records.jsonl"
+              if records_path.is_file():
+                  rows = [json.loads(line) for line in records_path.read_text(encoding="utf-8").splitlines()]
+              expected_commands = [
+                  "create-tool-environment", "install-locked-tools", "auditwheel-version", "patchelf-version",
+                  "auditwheel-show-direct", "inspect-direct-elf", "auditwheel-repair-auto", "auditwheel-show-repaired",
+                  "inspect-repaired-elf", "verify-repaired-payload", "create-test-environment",
+                  "install-original-test-tools", "install-repaired-wheel", "installed-identity-before-tests",
+                  "verify-installed-before-tests", "installed-six-module-suite",
+                  "verify-repaired-payload-after-tests", "installed-identity-after-tests",
+              ]
+              records_ok = [row.get("name") for row in rows] == expected_commands
+              for row in rows:
+                  log_path = evidence / "logs" / f"{row['name']}.log"
+                  payload = log_path.read_bytes()
+                  records_ok = records_ok and row.get("rawExit") == 0 and row.get("captureExit") == 0
+                  records_ok = records_ok and row.get("truncated") is False and row.get("captureError") is False
+                  records_ok = records_ok and row.get("timedOut") is False
+                  records_ok = records_ok and 0 < row.get("limitSeconds", 0) <= 180
+                  records_ok = records_ok and len(payload) == row.get("logBytes")
+                  records_ok = records_ok and hashlib.sha256(payload).hexdigest() == row.get("logSha256")
+              if sum(row.get("logBytes", 0) for row in rows) > 1048576:
+                  records_ok = False
+              passed = (qualification.get("profile") == "umf.core-0102-manylinux-repair-qualification/1"
+                        and os.environ.get("QUALIFICATION_STEP_OUTCOME") == "success"
+                        and qualification.get("status") == "QUALIFIED_REPAIRED_LINUX_WHEEL"
+                        and wheel is not None and qualification.get("repairedWheel", {}).get("filename") == wheel.name
+                        and qualification.get("repairedWheel", {}).get("bytes") == wheel_bytes
+                        and qualification.get("repairedWheel", {}).get("sha256") == wheel_sha
+                        and qualification.get("repairedWheel", {}).get("tag", "").startswith("cp311-abi3-manylinux_2_")
+                        and qualification.get("tests", {}).get("counts") == {
+                            "tests": 254, "errors": 0, "failures": 0, "skipped": 0}
+                        and qualification.get("qualificationClaims") == {
+                            "repairedArtifactPayload": True, "installedBytes": True,
+                            "sixModuleSuite": True, "publication": False}
+                        and qualification.get("distributionVersion") == "0.10.2"
+                        and qualification.get("semanticCoreVersion") == "0.10.0"
+                        and records_ok)
+              if not passed:
+                  receipt = {
+                      "profile": "umf.core-0102-manylinux-repair-qualification/1",
+                      "status": "FAIL_OR_UNKNOWN", "reasonType": qualification.get("reasonType", "QualificationDidNotPass"),
+                      "harnessCommit": os.environ["GITHUB_SHA"], "runId": os.environ["GITHUB_RUN_ID"],
+                      "runAttempt": os.environ["GITHUB_RUN_ATTEMPT"], "ref": os.environ["GITHUB_REF"],
+                      "workflow": os.environ["GITHUB_WORKFLOW"],
+                      "sourceCommit": "a1b909d4f92da6604aeb21d3ea60e9a9943a7f87",
+                      "qualificationSha256": __import__("hashlib").sha256(qualification_path.read_bytes()).hexdigest(),
+                      "evidencePaths": [p.relative_to(evidence).as_posix() for p in evidence_paths],
+                      "evidenceBytes": sum(path.stat().st_size for path in evidence_paths),
+                      "wheelBytes": 0, "artifactFamilyBytes": sum(path.stat().st_size for path in evidence_paths),
+                      "claims": {"repairedArtifactPayload": False, "installedBytes": False,
+                                 "sixModuleSuite": False, "publication": False},
+                      "failureOnlyReceipt": False,
+                  }
+              else:
+                  receipt = {
+                      "profile": "umf.core-0102-manylinux-repair-qualification/1",
+                      "status": "QUALIFIED_REPAIRED_LINUX_WHEEL",
+                      "harnessCommit": os.environ["GITHUB_SHA"], "runId": os.environ["GITHUB_RUN_ID"],
+                      "runAttempt": os.environ["GITHUB_RUN_ATTEMPT"], "ref": os.environ["GITHUB_REF"],
+                      "workflow": os.environ["GITHUB_WORKFLOW"],
+                      "sourceCommit": "a1b909d4f92da6604aeb21d3ea60e9a9943a7f87",
+                      "qualificationSha256": __import__("hashlib").sha256(qualification_path.read_bytes()).hexdigest(),
+                      "repairedWheel": qualification["repairedWheel"], "testCounts": qualification["tests"]["counts"],
+                      "evidencePaths": [p.relative_to(evidence).as_posix() for p in evidence_paths],
+                      "evidenceBytes": sum(path.stat().st_size for path in evidence_paths),
+                      "wheelBytes": wheel_bytes,
+                      "artifactFamilyBytes": sum(path.stat().st_size for path in evidence_paths) + wheel_bytes,
+                      "claims": qualification["qualificationClaims"], "failureOnlyReceipt": False,
+                  }
+              selected_wheel_bytes = wheel_bytes if passed else 0
+              receipt_bytes = (json.dumps(receipt, indent=2, sort_keys=True) + "\n").encode()
+              receipt["artifactFamilyBytes"] = sum(path.stat().st_size for path in evidence_paths) + len(receipt_bytes) + selected_wheel_bytes
+              receipt_bytes = (json.dumps(receipt, indent=2, sort_keys=True) + "\n").encode()
+              if sum(path.stat().st_size for path in evidence_paths) + len(receipt_bytes) > 4194304:
+                  raise ValueError("EvidenceLimitIncludingReceiptExceeded")
+              if sum(path.stat().st_size for path in evidence_paths) + len(receipt_bytes) + selected_wheel_bytes > 16777216:
+                  raise ValueError("ArtifactFamilyLimitIncludingReceiptExceeded")
+              for path in upload.iterdir():
+                  if path.is_file(): path.unlink()
+              for path in evidence_paths:
+                  dest = upload / path.relative_to(evidence)
+                  dest.parent.mkdir(parents=True, exist_ok=True)
+                  shutil.copyfile(path, dest)
+              if passed and wheel is not None:
+                  shutil.copyfile(wheel, upload / wheel.name)
+              receipt_path.write_bytes(receipt_bytes)
+              if sum(path.stat().st_size for path in upload.rglob("*") if path.is_file()) > 16777216:
+                  raise ValueError("FinalArtifactFamilyLimitExceeded")
+          except Exception as error:
+              for path in upload.rglob("*"):
+                  if path.is_file(): path.unlink()
+              for path in sorted(upload.rglob("*"), reverse=True):
+                  if path.is_dir(): path.rmdir()
+              upload.mkdir(parents=True, exist_ok=True)
+              failure["reasonType"] = type(error).__name__
+              receipt_path.write_text(json.dumps(failure, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+              raise SystemExit("bounded qualification artifact finalizer failed")
+          if receipt.get("status") != "QUALIFIED_REPAIRED_LINUX_WHEEL":
+              raise SystemExit("repaired manylinux qualification did not pass")
+          PY
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        timeout-minutes: 1
+        with:
+          name: core-0.10.2-manylinux-repair-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/core-0102-manylinux-upload/
+          if-no-files-found: error
+          retention-days: 7

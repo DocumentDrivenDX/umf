@@ -1,0 +1,44 @@
+{
+  "profile": "umf.core-0102-manylinux-tools/1",
+  "source": "PyPI JSON API release metadata, read 2026-10-26",
+  "artifacts": [
+    {
+      "distribution": "auditwheel",
+      "version": "6.8.2",
+      "filename": "auditwheel-6.8.2-py3-none-any.whl",
+      "bytes": 65324,
+      "sha256": "05fd2dd4b743217cd5f66066adc95b03a079424b1f0a878ad1e40fe2cdea4704",
+      "url": "https://files.pythonhosted.org/packages/78/33/475398f5eb069aa20910ec8486bdc62a87deadd8229494cbc80a1ddbf740/auditwheel-6.8.2-py3-none-any.whl",
+      "requires": ["packaging>=20.9", "pyelftools>=0.24"]
+    },
+    {
+      "distribution": "packaging",
+      "version": "25.0",
+      "filename": "packaging-25.0-py3-none-any.whl",
+      "bytes": 66469,
+      "sha256": "29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484",
+      "url": "https://files.pythonhosted.org/packages/20/12/38679034af332785aac8774540895e234f4d07f7545804097de4b666afd8/packaging-25.0-py3-none-any.whl",
+      "requires": []
+    },
+    {
+      "distribution": "pyelftools",
+      "version": "0.32",
+      "filename": "pyelftools-0.32-py3-none-any.whl",
+      "bytes": 188525,
+      "sha256": "013df952a006db5e138b1edf6d8a68ecc50630adbd0d83a2d41e7f846163d738",
+      "url": "https://files.pythonhosted.org/packages/af/43/700932c4f0638c3421177144a2e8648c0d75dbaee2c7936bda3f9fd0878/pyelftools-0.32-py3-none-any.whl",
+      "requires": []
+    },
+    {
+      "distribution": "patchelf",
+      "version": "0.17.2.4",
+      "filename": "patchelf-0.17.2.4-py3-none-manylinux1_x86_64.manylinux_2_5_x86_64.musllinux_1_1_x86_64.whl",
+      "bytes": 482846,
+      "sha256": "d9b35ebfada70c02679ad036407d9724ffe1255122ba4ac5e4be5868618a5689",
+      "url": "https://files.pythonhosted.org/packages/7e/19/f7821ef31aab01fa7dc8ebe697ece88ec4f7a0fdd3155dab2dfee4b00e5c/patchelf-0.17.2.4-py3-none-manylinux1_x86_64.manylinux_2_5_x86_64.musllinux_1_1_x86_64.whl",
+      "requires": []
+    }
+  ],
+  "install": "wheelhouse only; pip --no-index --no-deps --only-binary=:all: --require-hashes",
+  "noResolverFallback": true
+}
