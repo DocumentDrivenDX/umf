@@ -1,0 +1,7 @@
+# Core manylinux structured-output framing failure
+
+Run 40358882622, attempt 1, harness ca6a6d009af847687b568ff84b58197d40e49bc7, frozen product a1b909d4f92da6604aeb21d3ea60e9a9943a7f87: FAIL_OR_UNKNOWN. Artifact 12665744992, ZIP SHA-256 4533ea6e28481c6b9476f0eb42e4878e4ae46e45936b0222ec110a38de5d5f57, 14,819 bytes.
+
+All four exact tool downloads and their locked hashes succeeded. The six recorded commands (environment, locked installation, two versions, raw auditwheel inspection, raw ELF inspection) exited zero, with bounded untruncated logs and no timeout/capture errors. The native member hash remained the frozen input hash. Actual pinned auditwheel output contains one pretty-printed multiline version-1 JSON object after an INFO diagnostic. It reports overall_tag and sym_tag manylinux_2_34_x86_64, empty external_libs and policy_upgrades, and false incompatibility flags. This is inspection evidence only, not a qualified compatibility support claim.
+
+The harness incorrectly attempts JSON decoding on each line beginning with an opening brace, so it rejects the standalone opening brace before processing the complete object. Repair was not invoked and no installed tests ran. All qualification and publication claims remain false. The next correction is limited to complete-object framing while retaining exact field/type/filename/policy checks, rejection of incomplete/multiple/trailing JSON, strict payload rules and original limits.

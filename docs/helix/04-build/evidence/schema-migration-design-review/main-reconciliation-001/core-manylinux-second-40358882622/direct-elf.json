@@ -1,0 +1,80 @@
+{
+  "bytes": 3580729,
+  "elfClass": 64,
+  "elfMachine": "EM_X86_64",
+  "elfType": "ET_DYN",
+  "filename": "umf_core-0.10.2-cp311-abi3-linux_x86_64.whl",
+  "gnuPropertyNotes": [],
+  "memberCount": 40,
+  "membersSha256": "40055a6b39ba31339eecbb58325aa50842841e325bdb0186e41288069fa2c2f3",
+  "nativeBytes": 9858720,
+  "nativeSha256": "78dd1542f723b4f4d8c336c137caa478974a981ed759ada171a5877d7e0368a8",
+  "neededLibraries": [
+    "libgcc_s.so.1",
+    "libm.so.6",
+    "libc.so.6",
+    "ld-linux-x86-64.so.2"
+  ],
+  "sha256": "64e98887068563221070e3f265ae24d6871099cd5922f49f6be83eff944a5805",
+  "versionedSymbols": [
+    {
+      "library": "ld-linux-x86-64.so.2",
+      "version": "GLIBC_2.3"
+    },
+    {
+      "library": "libc.so.6",
+      "version": "GLIBC_2.14"
+    },
+    {
+      "library": "libc.so.6",
+      "version": "GLIBC_2.18"
+    },
+    {
+      "library": "libc.so.6",
+      "version": "GLIBC_2.2.5"
+    },
+    {
+      "library": "libc.so.6",
+      "version": "GLIBC_2.25"
+    },
+    {
+      "library": "libc.so.6",
+      "version": "GLIBC_2.28"
+    },
+    {
+      "library": "libc.so.6",
+      "version": "GLIBC_2.3"
+    },
+    {
+      "library": "libc.so.6",
+      "version": "GLIBC_2.3.4"
+    },
+    {
+      "library": "libc.so.6",
+      "version": "GLIBC_2.33"
+    },
+    {
+      "library": "libc.so.6",
+      "version": "GLIBC_2.34"
+    },
+    {
+      "library": "libgcc_s.so.1",
+      "version": "GCC_3.0"
+    },
+    {
+      "library": "libgcc_s.so.1",
+      "version": "GCC_3.3"
+    },
+    {
+      "library": "libgcc_s.so.1",
+      "version": "GCC_4.2.0"
+    },
+    {
+      "library": "libm.so.6",
+      "version": "GLIBC_2.29"
+    }
+  ],
+  "wheelTags": [
+    "cp311-abi3-linux_x86_64"
+  ]
+}
