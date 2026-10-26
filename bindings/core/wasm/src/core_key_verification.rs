@@ -45,8 +45,8 @@ fn run<T>(
 
 #[wasm_bindgen]
 pub struct PreparedCoreKeyVerificationHandle {
-    inner: Option<PreparedCoreKeyVerification>,
-    usage: Option<TransportUsage>,
+    pub(crate) inner: Option<PreparedCoreKeyVerification>,
+    pub(crate) usage: Option<TransportUsage>,
 }
 #[wasm_bindgen]
 pub struct CoreKeyVerificationRuntime {

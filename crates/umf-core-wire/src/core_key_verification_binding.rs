@@ -88,11 +88,17 @@ impl CoreKeyVerificationRuntime {
             let registry = engine.registry(catalog)?;
             Ok::<_, EngineError>((engine, registry))
         })?;
-        Ok(Self {
-            engine: Arc::new(engine),
-            registry: Arc::new(registry),
+        Ok(Self::from_shared(Arc::new(engine), Arc::new(registry)))
+    }
+
+    /// Bind staged Core Key verification to an already admitted model engine.
+    /// This avoids decoding and admitting the resource catalog a second time.
+    pub fn from_shared(engine: Arc<Engine>, registry: Arc<Registry>) -> Self {
+        Self {
+            engine,
+            registry,
             owner: Arc::new(()),
-        })
+        }
     }
 
     pub fn prepare(
@@ -236,6 +242,42 @@ mod tests {
         assert_eq!(
             runtime
                 .finish(prepared, current, &mut Context::ordinary())
+                .unwrap(),
+            receipt
+        );
+    }
+
+    #[test]
+    fn staged_verifier_can_share_the_model_engine_and_registry() {
+        let mut setup = Context::ordinary();
+        let (engine, registry) = setup
+            .with_catalog_value_limit(|catalog| {
+                let resources = resources();
+                let Value::Object(mut fields) = resources else { unreachable!() };
+                let take = |fields: &mut Vec<(Utf16, Value)>, name: &str| {
+                    let index = fields.iter().position(|(key, _)| key == &Utf16::from(name)).unwrap();
+                    fields.remove(index).1
+                };
+                let engine = Engine::new(
+                    ResourceSet::new(
+                        take(&mut fields, "coreSchema"),
+                        take(&mut fields, "referenceSchema"),
+                        take(&mut fields, "packageSchema"),
+                        take(&mut fields, "constraints"),
+                        take(&mut fields, "domainPolicy"),
+                    ),
+                    catalog,
+                )?;
+                let registry = engine.registry(catalog)?;
+                Ok::<_, EngineError>((Arc::new(engine), Arc::new(registry)))
+            })
+            .unwrap();
+        let runtime = CoreKeyVerificationRuntime::from_shared(engine, registry);
+        let receipt = receipt();
+        let prepared = runtime.prepare(&receipt, &mut Context::ordinary()).unwrap();
+        assert_eq!(
+            runtime
+                .finish(prepared, get(&receipt, "target"), &mut Context::ordinary())
                 .unwrap(),
             receipt
         );

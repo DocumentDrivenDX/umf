@@ -2,7 +2,8 @@
 // Native Node replay of the retained R5 Kind/Nullability success and refusal packets.
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {createCoreKindNullabilityHostInputEngine, createCoreModelRootKindNullabilityEngine} from '../../../../bindings/core/node/index.js';
+const binding = await import(process.env.UMF_R8_NODE_BINDING ?? '../../../../bindings/core/node/index.js');
+const {createCoreKindNullabilityHostInputEngine, createCoreModelRootKindNullabilityEngine} = binding;
 
 const read = async path => JSON.parse(await readFile(path, 'utf8'));
 const normalize = value => JSON.parse(JSON.stringify(value));
@@ -12,7 +13,7 @@ const capture = run => {
     return {ok: false, error: {code: error?.code ?? '', message: error?.message ?? String(error), path: error?.path ?? ''}};
   }
 };
-const [source, surrogate, successOracle, refusalOracle, coreSchema, referenceSchema, packageSchema, constraints, domainPolicy] = await Promise.all([
+const [source, surrogate, successOracle, refusalOracle, coreSchema, referenceSchema, packageSchema, constraints, domainPolicy, keyPacket] = await Promise.all([
   read('scripts/rust-migration/r5/kind-nullability/input.json'),
   read('scripts/rust-migration/r5/kind-nullability/surrogate-input.json'),
   read('scripts/rust-migration/r5/kind-nullability/frozen-typescript.json'),
@@ -22,11 +23,12 @@ const [source, surrogate, successOracle, refusalOracle, coreSchema, referenceSch
   read('spec/core/extension-package.schema.json'),
   read('spec/metamodel/generated/core-constraints.json'),
   read('spec/metamodel/generated/domain-policy.json'),
+  read('docs/helix/04-build/evidence/rust-migration/r5-core-keys/frozen-typescript.json'),
 ]);
 const makeMeter = () => ({calls:0, work:0, hash:2166136261, first:null, last:null});
 const resourceMeter = makeMeter();
 const stagedMeter = makeMeter();
-const combinedSetupMeter = {calls:20_990_852, work:832_477_520, hash:1_107_312_751, first:1, last:7};
+const combinedSetupMeter = {calls:10_980_797, work:432_197_359, hash:1_335_351_220, first:1, last:7};
 const countMeter = meter => amount => {
   meter.calls++;
   meter.work += amount;
@@ -53,7 +55,12 @@ assert.deepEqual(combinedResources.counts, {prototype:6, ownKeys:1, descriptors:
 assert.deepEqual(combinedResources.events, stagedResources.events, 'combined factory matches staged resource reflection order');
 // One prototype trap validates the root; each of the five data-property
 // checks also confirms that its source remains a plain object.
-assert.deepEqual(resourceMeter, combinedSetupMeter, 'combined setup meter fixture drifted; recapture the exact staged-plus-Core-Key-runtime baseline for the current resource/source cohort before changing this expected trace');
+assert.deepEqual(resourceMeter, combinedSetupMeter, 'combined setup meter fixture drifted; recapture exact shared-runtime setup accounting before changing this expected trace');
+const cutoffOrder = [];
+assert.throws(() => createCoreModelRootKindNullabilityEngine({coreSchema, referenceSchema, packageSchema, constraints, domainPolicy}, {
+  resourceControls:{meter(){cutoffOrder.push('meter');throw new Error('setup cutoff')}, isCancelled(){cutoffOrder.push('cancel');return false}, now(){cutoffOrder.push('clock');return 1}, deadlineMs:0},
+}), error => error?.code === 'METER_FAILURE');
+assert.deepEqual(cutoffOrder, ['meter'], 'setup cutoff preserves meter-before-cancellation/clock order');
 const sharedStagedResult = shared.inspectCoreElementKind(source, {module:'m',element:'known'});
 assert.deepEqual(combinedResources.events, setupReflection, 'staged operation does not re-reflect caller resources');
 const independentStagedResult = engine.inspectCoreElementKind(source, {module:'m',element:'known'});
@@ -63,6 +70,23 @@ const sharedModelResult = shared.inspectCoreKind(source, 'm', 'known');
 assert.deepEqual(combinedResources.events, setupReflection, 'model operation does not re-reflect caller resources');
 assert.deepEqual(normalize(sharedModelResult), normalize(shared.inspectCoreElementKind(source, {module:'m',element:'known'})), 'shared retained runtime model route');
 assert.deepEqual(combinedResources.events, setupReflection, 'subsequent staged operation does not re-reflect caller resources');
+
+const keyCase = keyPacket.cases.declare_key_explicit_primary;
+const combinedKeyReceipt = shared.declareCoreKey(keyCase.source, keyCase.identity, keyCase.request);
+assert.deepEqual(normalize(shared.verifyCoreKeyOperation(combinedKeyReceipt, combinedKeyReceipt.target)), normalize(combinedKeyReceipt), 'combined factory Core Key verifier shares retained runtime');
+let currentReadsBeforeMalformedReceipt = 0;
+const currentGuard = new Proxy({}, new Proxy({}, {get(_target, trap) { return () => { currentReadsBeforeMalformedReceipt++; throw new Error(`current observed before receipt via ${String(trap)}`); }; }}));
+assert.throws(() => shared.verifyCoreKeyOperation({operation:'declare-core-key', version:'2.0.0'}, currentGuard));
+assert.equal(currentReadsBeforeMalformedReceipt, 0, 'malformed receipt refuses before current admission');
+let guardSelfCheck = 0;
+const activeGuard = new Proxy({}, new Proxy({}, {get() { return () => { guardSelfCheck++; throw new Error('current guard activated'); }; }}));
+assert.throws(() => Object.getPrototypeOf(activeGuard), /current guard activated/);
+assert.equal(guardSelfCheck, 1, 'current guard traps prototype reflection');
+const pending = shared.prepareCoreKeyVerification(combinedKeyReceipt);
+const otherShared = createCoreModelRootKindNullabilityEngine({coreSchema, referenceSchema, packageSchema, constraints, domainPolicy});
+assert.throws(() => otherShared.finishCoreKeyVerification(pending, combinedKeyReceipt.target), TypeError, 'facade handles are engine-bound');
+shared.discardCoreKeyVerification(pending);
+assert.throws(() => shared.finishCoreKeyVerification(pending, combinedKeyReceipt.target), TypeError, 'discarded handles cannot be reused');
 
 let getterCalls = 0;
 const accessorResources = {referenceSchema, packageSchema, constraints, domainPolicy};

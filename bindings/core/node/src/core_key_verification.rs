@@ -46,8 +46,8 @@ fn failure(error: EngineError) -> Error {
 
 #[napi]
 pub struct PreparedCoreKeyVerificationHandle {
-    inner: Option<PreparedCoreKeyVerification>,
-    usage: Option<TransportUsage>,
+    pub(crate) inner: Option<PreparedCoreKeyVerification>,
+    pub(crate) usage: Option<TransportUsage>,
 }
 #[napi]
 pub struct CoreKeyVerificationRuntime {

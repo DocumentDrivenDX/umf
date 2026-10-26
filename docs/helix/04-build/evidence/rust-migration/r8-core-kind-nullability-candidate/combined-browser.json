@@ -2,20 +2,20 @@
   "format": "umf-r8-kind-nullability-combined-browser/1",
   "status": "pass",
   "command": "bun scripts/rust-migration/r8/core-kind-nullability/combined-browser.mjs",
-  "scope": "Fresh private combined WASM factory in real Chromium; no installed SDK, default route, or release qualification.",
+  "scope": "Fresh private combined WASM factory in real Chromium; Core Key staged verification shares the retained Engine and Registry. No installed SDK, default route, or release qualification.",
   "tools": {
     "bun": "1.4.3",
     "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
     "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
     "wasmBindgen": "wasm-bindgen 0.2.100",
     "chromium": "153.0.8010.12",
-    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36"
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36"
   },
   "build": {
-    "wasmSha256": "b210a8a974bbd9d4b60ae0ad0e6ca0b21ddfc8ec8e69806e298d7335785de14a",
-    "wasmBytes": 13485257,
-    "wasmBindgenGlueSha256": "fa7bb350e3054b43ca17f274bbeebb5cecaa95349b7cae76cb6f520f595f6a73",
-    "browserBundleSha256": "c221f2dae9cada7b8caf70eba60889f0969f6fefdbc7e5e014b68cabc50796ba"
+    "wasmSha256": "40673ec4bf91789d8f6392ff19fa8a885eda806826a589b3a5af87ddf19a8198",
+    "wasmBytes": 13495012,
+    "wasmBindgenGlueSha256": "dd99cdc66ebe799234fbf322261e5f46629a6d9db2b895e7a263a6a724956846",
+    "browserBundleSha256": "3a091dc50843dfd0994903f5e6d990ca06754292e54afb4f19a5c86f7e5fac9a"
   },
   "checks": {
     "operations": [
@@ -25,13 +25,17 @@
       "kind/verify",
       "nullability/inspect",
       "nullability/declare",
-      "nullability/verify"
+      "nullability/verify",
+      "core-key/declare",
+      "core-key/verify"
     ],
     "modelKind": "field",
     "stagedKind": "field",
     "modelStagedParity": true,
     "kindReceiptVerified": true,
     "nullabilityReceiptVerified": true,
+    "keyReceiptVerified": true,
+    "keyMalformedReceiptBeforeCurrent": true,
     "refusal": {
       "code": "CORE_KIND_MISSING",
       "message": "Element identity is absent"
@@ -47,29 +51,30 @@
     "pageErrors": 0,
     "externalRequests": 0
   },
-  "nodeCombinedSetupMeterBaseline": {
+  "nodeCombinedSetupMeter": {
     "file": "scripts/rust-migration/r8/core-kind-nullability/node-frozen-parity.mjs",
     "fixture": {
-      "calls": 20990852,
-      "work": 832477520,
-      "fnv1a32": 1107312751,
+      "calls": 10980797,
+      "work": 432197359,
+      "fnv1a32": 1335351220,
       "first": 1,
       "last": 7
     },
-    "sourceHash": "19bda0156e730f761974d0927d14757bf56e9182eeed76c9cbda5d4d74c9b546",
-    "provenance": "Expected trace combines staged resource setup and the separately metered eager Core Key verification runtime; sourceHash pins the exact regression fixture and source cohort."
+    "sourceHash": "893bcd45032d3c1d19cb5e8b4a5b480842ca7767de25bdadc7bc3c49039a6fc2",
+    "provenance": "Observed combined setup trace with one retained Rust Engine/Registry and one host resource snapshot; fixture pins exact source and resource cohort."
   },
   "sourceHashes": {
     "Cargo.lock": "6af562f46c271dc5c185b29b4ee8c87f19352616afab58a731d0d466d17dc445",
-    "bindings/core/node/index.js": "0dee7658d090be02800f823ae6a00e9e69b16e5a6016677d2548fc1245a80fe4",
+    "bindings/core/node/index.js": "bdf1fdb4a54031ac4362fc832eb969dcb08a05f3759a8513df78a1b31cb41229",
+    "bindings/core/node/src/core_key_verification.rs": "1d50ae67843465e01c6c7d78a22a434ee66ca5b9d66b8ccdde85c6ecac01610f",
+    "bindings/core/node/src/host_json.rs": "d2fb5bfc1249d2adc8c18d68b63cf5491c8462fae6aa5442abd09ed125513f92",
     "bindings/core/wasm/Cargo.toml": "5633ccb692f4cc80b9fe55a1ab9ca2ceb99642c9132d986b8f850cc4a67633c3",
-    "bindings/core/wasm/index.js": "a4dc08af33a226ea7a0c6121065b65391c4ea58cf0c877256caa3e23861a14fc",
+    "bindings/core/wasm/index.js": "5ba4eeb6a521367cf75a7928d9372475d64334d8021f8abaaceaa44521e84ccd",
     "bindings/core/wasm/src/avro.rs": "e273e152daf18d24b5f051674a327e85688a008fd8a47f9c05f1aaa4c4cbad09",
     "bindings/core/wasm/src/core_key_tuple.rs": "63ca8e2247eeb3176c1100b5b5a0897f49fb5295f8f5aeb4283c9143b36a1e72",
-    "bindings/core/wasm/src/core_key_verification.rs": "f73a121275c2e56f2e2e154ebe95330dcedcdfa8818316be361e1ce0326e63cd",
+    "bindings/core/wasm/src/core_key_verification.rs": "b3f8205875993bb49211ef6a9ada7cddefcd1d59b8213eb2ca2bb15819574027",
     "bindings/core/wasm/src/core_record_type_verification.rs": "f5deca37675e92d3146cdc3e13f4ac47c2d109fcf74cfefee2c543c3c6340935",
-    "bindings/core/wasm/src/host-json.js": "3a95847391904a5090e5a75667e6ee9f8ef07ded3393f7f089f8942633414c79",
-    "bindings/core/wasm/src/host_json.rs": "010f6ffa1cd80caa921f402575e9e3ba3cf1060ae60366ac22457320191e81c8",
+    "bindings/core/wasm/src/host_json.rs": "29682fa9d437880e7fd4cce8b8e4f1a1e9d7cb5ad246b6a344dfcbd5014afbe9",
     "bindings/core/wasm/src/javascript_numeric_runtime.rs": "b8f18a9fe1c73651238b75f36574cc75361e898e240bf26353e88159a88fa385",
     "bindings/core/wasm/src/json_schema_import_session.rs": "2f57bf5577b1dac03025e6d89b11fc80561ab743d13623f81078cf190a340454",
     "bindings/core/wasm/src/json_schema_runtime.rs": "0eca85f728a4838158940cc79870525a4109b1336be5815254d04e46e07d3261",
@@ -77,12 +82,11 @@
     "bindings/core/wasm/src/protobuf_document.rs": "726befcd2c13fee606f2e03e820353b37634223e2da55e75d625114cedeae545",
     "bindings/core/wasm/src/protobuf_source.rs": "094ea3064b9642e609376d88c2961062f84bafde14a5a0d7d079acab538230e8",
     "bindings/core/wasm/src/record_members_inspection.rs": "a0644756994f7e0df63a690eb5a60a6dd740a991bdcb527aa05a91cf7c363581",
-    "bindings/core/wasm/src/wire.js": "5a59889a7484b69554b628aa45c58bad6f71bb4c47679ae63d72f2e8a8e0daea",
     "crates/umf-core-wire/Cargo.toml": "b37090d28cc8aec419bca6eb908492bdadca17c2822619c04e25458cd21751dc",
     "crates/umf-core-wire/src/access_temporal_binding.rs": "58e1646f764200dd1befb602ff932053f016c508f8f22f7f303374a1a42039a0",
     "crates/umf-core-wire/src/codegen.rs": "524dcfd72e60461ab1b8fede43aef42af62ce631bae02a97e66dec085e1faf47",
     "crates/umf-core-wire/src/core_key_tuple_binding.rs": "b8500e05faacab7a6649d8f949d88139f94b6dfbc3a11a84c27bcb87ca2f0d8f",
-    "crates/umf-core-wire/src/core_key_verification_binding.rs": "b97ae5c8a205ef839492c4ab9ecc34f62fde97389a31d3cd77c29465e2c9db4d",
+    "crates/umf-core-wire/src/core_key_verification_binding.rs": "6fd9dc3ca33812c8f3d978ec7561009c323b092cc4b9446a6eb9869e6d7b3210",
     "crates/umf-core-wire/src/core_record_type_verification_binding.rs": "7142e2c4ac3dfd6641cef54fe7dd93d5d81171280fe1a05db9f0b53c3788e620",
     "crates/umf-core-wire/src/delta_log_binding.rs": "f6472e9f0a522cfb23ddf4855552ea991fec3bbf5ced77d15d7bda1f0d1db08e",
     "crates/umf-core-wire/src/delta_schema_table.rs": "f5528cda08af27732eea7c27405425f67ddaed39c46ce44a709deaef1c2ebd8f",
@@ -215,13 +219,15 @@
     "crates/umf-core/src/serialization.rs": "6dcb0ec4fb47e0aa6d5cb545b0cd925b9a1b23838a3782f435386af5a497c392",
     "crates/umf-core/src/structural_diff.rs": "d2928282351c037a98781509e6e9d53b705f3b994cde2f2030a0f571fd0a1d57",
     "crates/umf-core/src/value.rs": "903665fd1ca375175715caf6e63f633040b508dd7ddeaf700dcf5f0e5818b0a0",
+    "docs/helix/04-build/evidence/rust-migration/r5-core-keys/frozen-typescript.json": "b6e976136750ed0112e9830d24b6e7e41d41485ed172f8a059954a12c413dd8f",
+    "scripts/rust-migration/r5/kind-nullability-default-route/host-json-parity.mjs": "b36bccc7281be2cd55269934cd25eb28a175fa277946fb7c99c05fcee6a52a70",
     "scripts/rust-migration/r5/kind-nullability/input.json": "10d2d84110156373571ab7e9c5b06268671c5fa9018d287a52857ae7cb0b0e0e",
-    "scripts/rust-migration/r8/core-kind-nullability/combined-browser.mjs": "f40fbdbacd6a291ac34865ebc6dd5448df806efd3897e1bf46b2f1df77c44067",
-    "scripts/rust-migration/r8/core-kind-nullability/node-frozen-parity.mjs": "19bda0156e730f761974d0927d14757bf56e9182eeed76c9cbda5d4d74c9b546",
-    "spec/core/extension-package.schema.json": "5d2c162140e61c2d972e5489e89dd1ceec954affaf9e1233b065cbb2e936ba38",
-    "spec/core/schema.json": "013e337a150e5e9b2d7dab58f7e2e4b6e41b462857174b96fcf0b995ef8b056b",
-    "spec/core/semantic-type-reference.schema.json": "e0ea53780c257a2d2389ebb3b3d9eb4ab3648280f4490e672d134b26c1ee4686",
-    "spec/metamodel/generated/core-constraints.json": "b09aebe90d7fa74ca13187992140d45cdd8b7cad399263dd0cf52873f831bcd8",
-    "spec/metamodel/generated/domain-policy.json": "9d4a5cb7a64c6d739aa9bb37aaab18398686300fbd6bc548eb97c4f6c721da2b"
+    "scripts/rust-migration/r8/core-kind-nullability/combined-browser.mjs": "6c2dce98eb5e97fd8ffedfd442d801986bf43b5d1b184de5ed5cc0d06980f251",
+    "scripts/rust-migration/r8/core-kind-nullability/node-frozen-parity.mjs": "893bcd45032d3c1d19cb5e8b4a5b480842ca7767de25bdadc7bc3c49039a6fc2",
+    "spec/core/extension-package.schema.json": "14de0398f96fe5b1f505fb6dd5228affbada59550ecab70835b2db75b5ca34a9",
+    "spec/core/schema.json": "93f54d8bd8e8232b7120dbe63bdfe536ca4186e45ff650e0ef9ce7fd51af6314",
+    "spec/core/semantic-type-reference.schema.json": "bd7ecc159a01f9f4ac60279ec61aaf36c32ea65eee22f749b231da4fda9a6180",
+    "spec/metamodel/generated/core-constraints.json": "4e302ec2aa0fda0448fba08c15c0f92b659f8aaa1d8dc364ded6780600b63b9e",
+    "spec/metamodel/generated/domain-policy.json": "1f2cb299afb9115079a8350bae36dfe920a305c5c12e4508c018a21db0193b0a"
   }
 }

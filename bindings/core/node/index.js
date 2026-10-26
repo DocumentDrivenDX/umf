@@ -458,10 +458,13 @@ function createNativeKeyTupleOperations(addon, resources, controls, setup = {}) 
 }
 
 function createNativeCoreKeyVerificationOperations(addon, resources, controls, setup = {}) {
-  if (typeof addon.CoreKeyVerificationRuntime !== 'function' ||
-      typeof addon.CoreKeyVerificationRuntime.prototype?.prepareVerification !== 'function' ||
-      typeof addon.CoreKeyVerificationRuntime.prototype?.finishVerification !== 'function' ||
-      typeof addon.CoreKeyVerificationRuntime.prototype?.discardVerification !== 'function') {
+  const sharedRuntime = setup.runtime;
+  if (sharedRuntime
+      ? typeof sharedRuntime.prepareVerification !== 'function' || typeof sharedRuntime.finishVerification !== 'function' || typeof sharedRuntime.discardVerification !== 'function'
+      : typeof addon.CoreKeyVerificationRuntime !== 'function' ||
+        typeof addon.CoreKeyVerificationRuntime.prototype?.prepareVerification !== 'function' ||
+        typeof addon.CoreKeyVerificationRuntime.prototype?.finishVerification !== 'function' ||
+        typeof addon.CoreKeyVerificationRuntime.prototype?.discardVerification !== 'function') {
     const missing = () => { throw new Error('RUST_BINDING_MISSING'); };
     return {prepare: missing, finish: missing, discard: missing};
   }
@@ -469,7 +472,7 @@ function createNativeCoreKeyVerificationOperations(addon, resources, controls, s
   try {
     const resourcesWire = setup.resourcesWire ?? encodeWire(resources, {maxDepth: 128, maxValues: 1_000_000, work: setup.work});
     if (setup.resourcesWire === undefined) setup.work?.(resourcesWire.length);
-    runtime = new addon.CoreKeyVerificationRuntime(resourcesWire, setup.bridge);
+    runtime = sharedRuntime ?? new addon.CoreKeyVerificationRuntime(resourcesWire, setup.bridge);
   } catch (error) { nativeKeyTupleFailure(error); }
   return {
     prepare(receipt) {
@@ -648,7 +651,7 @@ export function createCoreModelRootEngine(resources, options = {}) {
 /** Private opt-in retained model and Kind/Nullability dispatcher. */
 export function createCoreModelRootKindNullabilityEngine(resources, options = {}) {
   const staged = createCoreKindNullabilityHostInputEngine(resources, options);
-  const model = createEngineInternal(resources, options, true, true, false, false, false, false, staged[CORE_KIND_NULLABILITY_RUNTIME], staged[CORE_KIND_NULLABILITY_PREPARED]);
+  const model = createEngineInternal(resources, options, true, true, false, false, false, false, staged[CORE_KIND_NULLABILITY_RUNTIME], staged[CORE_KIND_NULLABILITY_PREPARED], staged[CORE_KIND_NULLABILITY_RUNTIME]);
   const api = {...model};
   for (const name of ['inspectCoreElementKind','declareCoreElementKind','verifyCoreKindDeclaration','inspectCoreNullability','declareCoreNullability','verifyCoreNullabilityDeclaration']) api[name] = staged[name];
   return Object.freeze(api);
@@ -1113,7 +1116,7 @@ export function createAvroFieldsEngine(options = {}) {
   }});
 }
 
-function createEngineInternal(resources, options, withModel, withSchemaPropertiesHostInput = false, includeKeyTuple = withModel, includeRecordType = false, recordTypeOnly = false, withCardinalityHostInput = false, retainedRuntime = undefined, preparedResources = undefined) {
+function createEngineInternal(resources, options, withModel, withSchemaPropertiesHostInput = false, includeKeyTuple = withModel, includeRecordType = false, recordTypeOnly = false, withCardinalityHostInput = false, retainedRuntime = undefined, preparedResources = undefined, coreKeyRuntime = undefined) {
   const {profile, controls} = preparedResources ?? codegenOptions(options);
   const rawResourceControls = preparedResources ? undefined : dataProperty(options, 'resourceControls', false);
   const resourceControls = preparedResources ? undefined : rawResourceControls === undefined ? controls : codegenOptions({controls: rawResourceControls}).controls;
@@ -1210,7 +1213,7 @@ function createEngineInternal(resources, options, withModel, withSchemaPropertie
     } else {
       Object.assign(api, createCoreModelOperations(call, {ErrorType: JsonSchemaUmfError}));
       if (includeKeyTuple) Object.assign(api, createCoreKeyTupleOperations(call, createNativeKeyTupleOperations(addon, fixedResources, controls, {bridge: resourceBridge, work: hostWork})));
-      Object.assign(api, createCoreKeysOperations(call, createNativeCoreKeyVerificationOperations(addon, fixedResources, controls, {bridge: resourceBridge, work: hostWork, resourcesWire: preparedResources?.resourcesWire})));
+      Object.assign(api, createCoreKeysOperations(call, createNativeCoreKeyVerificationOperations(addon, fixedResources, controls, {bridge: resourceBridge, work: hostWork, resourcesWire: preparedResources?.resourcesWire, runtime: coreKeyRuntime})));
       if (includeRecordType) Object.assign(api, createCoreRecordTypeOperations(call, createNativeCoreRecordTypeVerificationOperations(addon, fixedResources, controls, {bridge: resourceBridge, work: hostWork}), {ErrorType:UmfCoreError}));
       Object.assign(api, createCompactDatasetValueOperations(call));
       Object.assign(api, createDatasetValueOperations(call, {ErrorType: JsonSchemaUmfError}));

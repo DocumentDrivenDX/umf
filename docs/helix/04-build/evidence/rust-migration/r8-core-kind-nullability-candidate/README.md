@@ -139,29 +139,31 @@ work is carried into the operation Context, and a substituted witness refuses
 with `REQUEST`. Closed Record Type and Record Members request shapes retain
 their mandatory resource witness.
 
-The retained model dispatcher and six Kind/Nullability operations share one
-retained Rust runtime. The generic model facade also eagerly creates a separate
-Core Key verification runtime, which decodes and admits the same catalog under
-the shared setup control bridge. Its Rust catalog work remains separately
-metered. The combined setup meter is pinned to the staged setup plus this
-required Core Key helper baseline; it is not a single-ledger or one-Rust-Engine
-claim. The original resources container is reflected once, and the prepared
-wire snapshot is reused for Core Key runtime setup to avoid a second JavaScript
-serialization pass. Generic retained calls omit duplicate resource witnesses;
-explicit witnesses are Context-metered before catalog admission and may refuse
-earlier than the former unmetered comparison. Stateless calls still require
-resources. The route remains private opt-in and does not establish
-default-cutover compatibility, installed-package behavior or an acceptable
-warm-call performance gate.
+The retained model dispatcher, six Kind/Nullability operations, and staged Core
+Key verification now share one retained Rust `Engine` and `Registry` in Node
+and WASM. The private combined factory reflects and snapshots the five caller
+resources once. Its setup keeps the order Engine construction under the catalog
+limit, Kind/Nullability schema preparation under the ordinary factory context,
+then Registry preparation under the catalog limit. The resulting exact setup
+meter is 10,980,797 callbacks, 432,197,359 work units, FNV-1a `1335351220`,
+first charge 1 and last charge 7 for the pinned Darwin-arm64 resource cohort.
+The previous separate eager Key verifier baseline was 20,990,852 callbacks and
+832,477,520 work units. A throwing setup meter stops before cancellation and
+clock callbacks. Generic retained calls still omit duplicate resource
+witnesses; explicit witnesses are Context-metered before registry/catalog
+admission. Stateless calls still require resources. This remains private opt-in
+and does not establish default-cutover compatibility, installed-package
+behavior, or an acceptable warm-call performance gate.
 
 A fresh real-Chromium replay of the private combined WASM factory passed in
 Chromium 153.0.8010.12 with a freshly built Rust 1.90 / wasm-bindgen 0.2.100
-module. It exercised one generic model operation plus all six staged
-Kind/Nullability operations, checked the expected `CORE_KIND_MISSING` refusal,
-and confirmed the caller resource Proxy saw exactly six prototype checks, one
-own-key check and five property-descriptor checks during setup, with no later
-reflection. This validates the private browser binding slice only; it does not
-qualify an installed SDK or default route.
+module. It exercised a generic model operation, all six staged Kind/Nullability
+operations, Core Key declaration and staged verification, and malformed
+receipt refusal before the current operand was touched. It checked the expected
+`CORE_KIND_MISSING` refusal and confirmed the caller resource Proxy saw exactly
+six prototype checks, one own-key check and five property-descriptor checks
+during setup, with no later reflection. This validates the private browser
+binding slice only; it does not qualify an installed SDK or default route.
 The reproducible harness is
 `scripts/rust-migration/r8/core-kind-nullability/combined-browser.mjs`; its
 source-hashed receipt is `combined-browser.json` in this evidence directory.
@@ -172,22 +174,21 @@ The focused checks were:
 cargo test -p umf-core-wire --lib retained_engine_dispatch_rejects_resource_substitution --locked
 bun scripts/rust-migration/r5/kind-nullability-default-route/host-json-parity.mjs
 node scripts/rust-migration/r8/core-kind-nullability/node-frozen-parity.mjs
-# Prior staged-route Chromium replay; combined-factory Chromium replay was run
-# with a fresh WASM build in a temporary focused harness.
+bun scripts/rust-migration/r8/core-kind-nullability/combined-browser.mjs
 ```
 
 The Node 26.12.1 / Darwin arm64 replay reports 11 success and 13 refusal
-vectors; the Bun host-admission replay reports six semantic cases and ten
-negative controls. The replay scripts include a combined-factory check showing
-both the model and staged operation surfaces return the same known Kind result.
-The predecessor Chromium replay reports six staged operations and nine
-negative controls for its earlier route. The separate fresh combined-factory
-Chromium replay passed the focused cases described above. The full Node frozen
-parity replay passed 11 successes and 13 refusals on Node 26.12.1 / Darwin
-arm64. Rust 1.90 checks passed for `umf-core-wire` and `umf-core-node`; the
-fresh WASM build and Chromium replay passed. The focused resource substitution
-regression passed 1/1. These checks do not establish installed-package
-behavior, resource-order equivalence or acceptable warm-call performance.
+vectors, compares the combined Core Key verification result, confirms malformed
+receipt-before-current order, and checks cross-factory, discard and reuse
+refusals. The Bun host-admission replay reports six semantic cases and ten
+negative controls. Focused Rust Core Key verifier tests pass 5/5, including
+shared Engine/Registry verification and existing standalone cross-runtime,
+discard and unknown-content cases. Node and WASM binding checks pass with Rust
+1.90.0. The fresh Chromium replay passes on Chromium 153.0.8010.12 with
+`keyReceiptVerified` and `keyMalformedReceiptBeforeCurrent`; its source and
+artifact hashes are recorded in `combined-browser.json`. These checks do not
+establish installed-package behavior, default-route compatibility or acceptable
+warm-call performance.
 
 The earlier focused Node replay's rebuilt Darwin arm64 addon SHA-256 was
 `4a2437d8f2124bb9f35ff6a6b1b69a84b17accf07099ef359e23e0075a9e0285`.

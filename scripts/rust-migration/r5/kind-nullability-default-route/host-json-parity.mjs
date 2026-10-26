@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {createCoreKindNullabilityHostInputEngine, createCoreModelRootKindNullabilityEngine} from '../../../../bindings/core/node/index.js';
+const binding = await import(process.env.UMF_R8_NODE_BINDING ?? '../../../../bindings/core/node/index.js');
+const {createCoreKindNullabilityHostInputEngine, createCoreModelRootKindNullabilityEngine} = binding;
 import {CORE_MODEL_RESOURCES} from '../../../../src/access/core-model-resources.ts';
 import {inspectCoreElementKind, declareCoreElementKind, verifyCoreKindDeclaration} from '../../../../src/model/field-kind.ts';
 import {inspectCoreNullability, declareCoreNullability, verifyCoreNullabilityDeclaration} from '../../../../src/model/nullability.ts';

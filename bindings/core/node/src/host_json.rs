@@ -3,6 +3,7 @@
 use napi::{Env, JsFunction, JsString, ValueType};
 use napi_derive::napi;
 use std::collections::BTreeMap;
+use std::sync::Arc;
 use std::fmt::Write as _;
 use umf_core::{
     host_json::{
@@ -12,6 +13,8 @@ use umf_core::{
     },
     cardinality_host_json, record_values, schema_properties, Context, Engine, EngineError, ResourceSet, Utf16, Value,
 };
+use umf_core_wire::core_key_verification_binding::CoreKeyVerificationRuntime;
+use crate::core_key_verification::PreparedCoreKeyVerificationHandle;
 
 fn kind_nullability_operation(
     name: &str,
@@ -37,7 +40,8 @@ fn kind_nullability_operation(
 /// Construction admits resources once; each method gets a fresh operation Context.
 #[napi]
 pub struct CoreKindNullabilityRuntime {
-    engine: Engine,
+    engine: Arc<Engine>,
+    key_verification: CoreKeyVerificationRuntime,
     kind_schemas: umf_core::core_kind::OperationSchemas,
     nullability_schemas: umf_core::nullability::OperationSchemas,
 }
@@ -70,9 +74,9 @@ impl CoreKindNullabilityRuntime {
                     )
                 })?;
                 let kind_schemas = umf_core::core_kind::prepare_operation_schemas(&mut ctx)?;
-                let nullability_schemas =
-                    umf_core::nullability::prepare_operation_schemas(&mut ctx)?;
-                Ok((engine, kind_schemas, nullability_schemas))
+                let nullability_schemas = umf_core::nullability::prepare_operation_schemas(&mut ctx)?;
+                let registry = ctx.with_catalog_value_limit(|catalog| engine.registry(catalog))?;
+                Ok((Arc::new(engine), registry, kind_schemas, nullability_schemas))
             })
         } else {
             let mut ctx = Context::ordinary();
@@ -92,18 +96,108 @@ impl CoreKindNullabilityRuntime {
                     )
                 })?;
                 let kind_schemas = umf_core::core_kind::prepare_operation_schemas(&mut ctx)?;
-                let nullability_schemas =
-                    umf_core::nullability::prepare_operation_schemas(&mut ctx)?;
-                Ok((engine, kind_schemas, nullability_schemas))
+                let nullability_schemas = umf_core::nullability::prepare_operation_schemas(&mut ctx)?;
+                let registry = ctx.with_catalog_value_limit(|catalog| engine.registry(catalog))?;
+                Ok((Arc::new(engine), registry, kind_schemas, nullability_schemas))
             })
         };
         result
-            .map(|(engine, kind_schemas, nullability_schemas)| Self {
+            .map(|(engine, registry, kind_schemas, nullability_schemas)| Self {
+                key_verification: CoreKeyVerificationRuntime::from_shared(engine.clone(), Arc::new(registry)),
                 engine,
                 kind_schemas,
                 nullability_schemas,
             })
             .map_err(|error| napi::Error::from_reason(umf_core_wire::error_envelope(error)))
+    }
+
+    /// Stage receipt-first Core Key verification on this runtime's retained Engine.
+    #[napi]
+    pub fn prepare_verification(
+        &self,
+        env: Env,
+        receipt_wire: String,
+        dispatcher: Option<JsFunction>,
+    ) -> napi::Result<PreparedCoreKeyVerificationHandle> {
+        let mut usage = umf_core::context::TransportUsage::default();
+        let result = if let Some(dispatcher) = dispatcher {
+            let mut control = super::NodeControl { env, dispatcher };
+            let mut hook = |amount| control.check(amount);
+            let mut ctx = Context::ordinary().with_host_control(&mut hook);
+            usage.seed(&mut ctx);
+            let result = (|| {
+                let receipt = ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(&receipt_wire, ctx))?;
+                self.key_verification.prepare(&receipt, &mut ctx)
+            })();
+            usage.capture(&ctx);
+            result
+        } else {
+            let mut ctx = Context::ordinary();
+            usage.seed(&mut ctx);
+            let result = (|| {
+                let receipt = ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(&receipt_wire, ctx))?;
+                self.key_verification.prepare(&receipt, &mut ctx)
+            })();
+            usage.capture(&ctx);
+            result
+        };
+        result.map(|inner| PreparedCoreKeyVerificationHandle { inner: Some(inner), usage: Some(usage) })
+            .map_err(|error| napi::Error::from_reason(umf_core_wire::error_envelope(error)))
+    }
+
+    /// Finish the one-use stage; consuming it before decoding current preserves refusal semantics.
+    #[napi]
+    pub fn finish_verification(
+        &self,
+        env: Env,
+        handle: &mut PreparedCoreKeyVerificationHandle,
+        current_wire: String,
+        dispatcher: Option<JsFunction>,
+    ) -> napi::Result<String> {
+        let (Some(stage), Some(mut usage)) = (handle.inner.take(), handle.usage.take()) else {
+            return Err(napi::Error::from_reason(umf_core_wire::error_envelope(EngineError::new(
+                "CORE_KEY_STAGE", Utf16::default(), "Prepared verification stage was already consumed",
+            ))));
+        };
+        let result = if let Some(dispatcher) = dispatcher {
+            let mut control = super::NodeControl { env, dispatcher };
+            let mut hook = |amount| control.check(amount);
+            let mut ctx = Context::ordinary().with_host_control(&mut hook);
+            usage.seed(&mut ctx);
+            let result = (|| {
+                let current = ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(&current_wire, ctx))?;
+                let verified = self.key_verification.finish(stage, &current, &mut ctx);
+                let encoded = verified.and_then(|value| ctx.with_tagged_transport_limit(|ctx| umf_core_wire::encode(&value, ctx)));
+                Ok::<_, EngineError>(umf_core_wire::result_envelope(encoded))
+            })();
+            usage.capture(&ctx);
+            result
+        } else {
+            let mut ctx = Context::ordinary();
+            usage.seed(&mut ctx);
+            let result = (|| {
+                let current = ctx.with_tagged_transport_limit(|ctx| umf_core_wire::decode(&current_wire, ctx))?;
+                let verified = self.key_verification.finish(stage, &current, &mut ctx);
+                let encoded = verified.and_then(|value| ctx.with_tagged_transport_limit(|ctx| umf_core_wire::encode(&value, ctx)));
+                Ok::<_, EngineError>(umf_core_wire::result_envelope(encoded))
+            })();
+            usage.capture(&ctx);
+            result
+        };
+        result.map_err(|error| napi::Error::from_reason(umf_core_wire::error_envelope(error)))
+    }
+
+    #[napi]
+    pub fn discard_verification(
+        &self,
+        handle: &mut PreparedCoreKeyVerificationHandle,
+    ) -> napi::Result<()> {
+        let (Some(stage), Some(_usage)) = (handle.inner.take(), handle.usage.take()) else {
+            return Err(napi::Error::from_reason(umf_core_wire::error_envelope(EngineError::new(
+                "CORE_KEY_STAGE", Utf16::default(), "Prepared verification stage was already consumed",
+            ))));
+        };
+        self.key_verification.discard(stage).map_err(|error| napi::Error::from_reason(umf_core_wire::error_envelope(error)))
     }
 
     #[napi]
