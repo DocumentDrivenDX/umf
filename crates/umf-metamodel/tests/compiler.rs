@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 // @covers US-089-AC20, US-089-AC24
+use sha2::{Digest, Sha256};
 use umf_core::{
     context::Context,
     engine::{Capabilities, ResourceSet, SemanticContext},
@@ -118,7 +119,7 @@ fn operation_resources_match_frozen_bytes_and_follow_declaration_order() {
         .iter()
         .filter(|output| output.path.contains("operation-v"))
         .collect();
-    assert_eq!(operation.len(), 2);
+    assert_eq!(operation.len(), 4);
     assert_eq!(
         operation[0].path,
         "spec/core/facet-operation-v3.schema.json"
@@ -135,6 +136,27 @@ fn operation_resources_match_frozen_bytes_and_follow_declaration_order() {
         operation[1].contents,
         include_str!("../../../spec/core/cardinality-operation-v4.schema.json")
     );
+    assert_eq!(operation[2].path, "spec/core/kind-operation-v6.schema.json");
+    assert_eq!(
+        operation[2].contents,
+        include_str!("../../../spec/core/kind-operation-v6.schema.json")
+    );
+    assert_eq!(
+        format!("{:x}", Sha256::digest(operation[2].contents.as_bytes())),
+        "e1de0aba1c3db6a09e85332a10441a0eec7a2dca0a4e4249fab67fcc491783b8"
+    );
+    assert_eq!(
+        operation[3].path,
+        "spec/core/nullability-operation-v5.schema.json"
+    );
+    assert_eq!(
+        operation[3].contents,
+        include_str!("../../../spec/core/nullability-operation-v5.schema.json")
+    );
+    assert_eq!(
+        format!("{:x}", Sha256::digest(operation[3].contents.as_bytes())),
+        "442cc69c8998da361b775251b2e8842cece0d700fb1fa59dad4bd3de03f13c92"
+    );
 
     let mut reversed = model;
     resources_mut(&mut reversed).reverse();
@@ -145,10 +167,15 @@ fn operation_resources_match_frozen_bytes_and_follow_declaration_order() {
         .collect();
     assert_eq!(
         operation[0].path,
+        "spec/core/nullability-operation-v5.schema.json"
+    );
+    assert_eq!(operation[1].path, "spec/core/kind-operation-v6.schema.json");
+    assert_eq!(
+        operation[2].path,
         "spec/core/cardinality-operation-v4.schema.json"
     );
     assert_eq!(
-        operation[1].path,
+        operation[3].path,
         "spec/core/facet-operation-v3.schema.json"
     );
 }

@@ -54,3 +54,33 @@ The route remains private. Caller-owned `structure` and `semantics` execution,
 callback diagnostic materialization, final `UmfError` construction, native
 resource charging, real browser parity, public default selection, installed
 archive qualification, and semantic retirement remain open.
+
+## Bounded caller-registration structure stage — 2026-10-26
+
+The private host route now advances a found registration through the
+predecessor-observed `manifest.scopes.includes(scope)` check and, when in scope,
+the `structure(payload)` call. Both reads and calls use the opaque host protocol
+at the Rust validation demand site; `includes` receives the scopes value as its
+receiver and `structure` receives the registration object as its receiver.
+Manifest and structure properties are reread at the predecessor's later stages.
+An out-of-scope result produces the existing scope diagnostic without reading
+`structure`. A structurally valid non-semantic registration produces the
+existing unchecked diagnostic. Empty structure-error iteration follows the
+predecessor's no-diagnostic continuation. A non-empty structure-error sequence
+is fully observed in iterator order, then stops because mixed structure
+diagnostic materialization is not yet implemented. A semantic registration
+stops after reading its semantic callback property; the callback is never
+invoked. Caller-owned getter, Proxy, call, or iterator throws continue through
+the existing exact-identity host slot.
+
+Focused Node binding controls cover scope-before-structure order, receiver
+preservation, malformed-structure iteration, structure getter identity, and the
+semantic callback boundary. `cargo check --locked --offline -p umf-core`,
+`cargo test --locked --offline -p umf-core --test r5_selection` (10/10), and
+`cargo check --locked --offline --target wasm32-unknown-unknown -p umf-core-wasm`
+pass on Rust 1.90.0. The Node addon was rebuilt to a temporary target directory
+and the focused file passes 7/7 on Bun 1.4.3. The independent Node 26.12.1
+private-route probe passes its two frozen-value and thrown-identity cases.
+Chromium did not run this Selection route; the existing Chromium receipts remain
+host-primitive evidence only. This checkpoint does not establish complete
+Selection parity, default-route selection, or release qualification.

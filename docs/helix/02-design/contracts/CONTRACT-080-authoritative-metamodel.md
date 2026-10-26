@@ -11,6 +11,10 @@ ddx:
       kind: informed_by
     - id: CONTRACT-001
       kind: references
+    - id: CONTRACT-040
+      kind: informed_by
+    - id: CONTRACT-076
+      kind: informed_by
     - id: CONTRACT-077
       kind: references
     - id: CONTRACT-078
@@ -56,22 +60,25 @@ generated `spec/metamodel/package.json` vocabulary manifest, and shared
 `spec/metamodel/generated/{core-constraints,domain-policy}.json`. Exact export
 names and program grammar MUST be frozen here before delegated integration.
 
-### Versioned Core operation-resource outputs (2026-10-26 amendment)
+### Versioned Core operation-resource outputs (2026-10-26 amendments)
 
 The canonical output inventory above is preserved. The metamodel additionally
 declares operation-resource outputs through a closed `umf.metamodel.resources`
-sequence. This amendment initially authorizes only these two outputs:
+sequence. Version 1.1.0 authorized Facets v3 and Cardinality v4; version
+1.2.0 additionally authorizes Kind v6 and Nullability v5:
 
 | Model binding path | Schema `$id` | Title |
 |---|---|---|
 | `spec/core/facet-operation-v3.schema.json` | `urn:umf:core:facet-operation:3.0.0` | `Facet inspection and authoring receipts (Key envelope) (Relationship envelope)` |
 | `spec/core/cardinality-operation-v4.schema.json` | `urn:umf:core:cardinality-operation:4.0.0` | `Core cardinality inspection and explicit author declaration results (Key envelope) (Relationship envelope)` |
+| `spec/core/kind-operation-v6.schema.json` | `urn:umf:core:kind-operation:6.0.0` | `Core kind author declaration receipt` |
+| `spec/core/nullability-operation-v5.schema.json` | `urn:umf:core:nullability-operation:5.0.0` | `Core nullability inspection and explicit author declaration results (Key envelope) (Relationship envelope)` |
 
 Each resource declaration has exactly `path`, `id`, `title`, ordered
 `externalResourceIds`, ordered `definitions`, and `root` fields.
 `externalResourceIds` lists the only permitted external resource targets in
 that resource, in first-use order; entries must name a declared output ID and
-must be unique. For both resources authorized here, the list contains exactly
+must be unique. For all four resources authorized here, the list contains exactly
 `urn:umf:core:0.10.0`, the ID of the generated `spec/core/schema.json` output.
 The core schema is a canonical output and is therefore available as a declared
 target without adding another operation-resource declaration. Resource-local
@@ -84,7 +91,7 @@ sequence of unique `{name, shape}` declarations, and `root` is one shape from
 the frozen neutral grammar. No resource declaration accepts raw JSON Schema
 or arbitrary keywords.
 
-For these two resources, emitted document members are ordered `$schema`, `$id`,
+For these four resources, emitted document members are ordered `$schema`, `$id`,
 `title`, `$defs`, followed by root-shape keywords. `$defs` member order is the
 declaration order. Object shapes accept the existing closed fields plus the
 optional nonnegative integer `minProperties`; it is emitted only when present.
@@ -105,18 +112,21 @@ reference, package, constraint, and domain declarations. This preserves the
 existing Cardinality conditional fragments without widening the normal
 `object` shape.
 
-The two operation-resource paths are additional outputs in the metamodel's
+The four operation-resource paths are additional outputs in the metamodel's
 generated manifest. Each path/hash entry is bound to that manifest's model and
 compiler source hashes. The compiler does not inject `$comment` or other
 provenance keywords into these resources; the manifest is their provenance
-record. Generation MUST preserve the current resource bytes exactly and reach
-the same clean-tree fixed point required above. No other operation-resource
-path or unresolved resource alias is authorized or resolved by this amendment.
+record. The Kind v6 and Nullability v5 declarations establish authority for the
+current resource bytes from this amendment forward. They do not reconstruct or
+validate the historical edits that produced those bytes. Generation MUST
+preserve all four current resource byte sequences exactly and reach the same
+clean-tree fixed point required above. No other operation-resource path or
+unresolved resource alias is authorized or resolved by these amendments.
 
-The vocabulary manifest advances to `umf.metamodel` 1.1.0 for the added
-resource declaration and `minProperties` grammar. The 1.0.0 grammar remains
-closed as previously specified; consumers MUST reject declarations outside
-the version they advertise.
+The vocabulary manifest advanced to `umf.metamodel` 1.1.0 for Facets v3,
+Cardinality v4, and their resource grammar, then to 1.2.0 for Kind v6 and
+Nullability v5. Each grammar remains closed as specified for its version;
+consumers MUST reject declarations outside the version they advertise.
 
 ## Portable rule execution
 

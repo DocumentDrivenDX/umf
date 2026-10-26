@@ -126,7 +126,7 @@ pub fn compile_model(model: &Value, ctx: &mut Context<'_>) -> Result<CompiledMod
         .unwrap_or(&Value::Null),
     )
     .as_deref()
-        != Some("1.1.0")
+        != Some("1.2.0")
     {
         return Err(shape_error(
             "METAMODEL_VOCABULARY_VERSION",
@@ -465,7 +465,7 @@ pub fn render_outputs_with_context(
     let annotation_schema = annotation_schema();
     let package = obj(vec![
         ("id", Value::string_utf8("umf.metamodel")),
-        ("version", Value::string_utf8("1.1.0")),
+        ("version", Value::string_utf8("1.2.0")),
         (
             "coreVersion",
             clone_metered(
@@ -589,10 +589,10 @@ fn compile_operation_resources(
             "resources must be an array",
         ));
     };
-    if declarations.len() != 2 {
+    if declarations.len() != 4 {
         return Err(shape_error(
             "METAMODEL_RESOURCE_DECLARATIONS",
-            "this vocabulary version requires the Facets v3 and Cardinality v4 resources",
+            "this vocabulary version requires the Facets v3, Cardinality v4, Kind v6, and Nullability v5 resources",
         ));
     }
     let mut paths = BTreeSet::new();
@@ -647,6 +647,16 @@ fn compile_operation_resources(
                 "spec/core/cardinality-operation-v4.schema.json",
                 "urn:umf:core:cardinality-operation:4.0.0",
                 "Core cardinality inspection and explicit author declaration results (Key envelope) (Relationship envelope)",
+            ),
+            (
+                "spec/core/kind-operation-v6.schema.json",
+                "urn:umf:core:kind-operation:6.0.0",
+                "Core kind author declaration receipt",
+            ),
+            (
+                "spec/core/nullability-operation-v5.schema.json",
+                "urn:umf:core:nullability-operation:5.0.0",
+                "Core nullability inspection and explicit author declaration results (Key envelope) (Relationship envelope)",
             ),
         ];
         if !permitted

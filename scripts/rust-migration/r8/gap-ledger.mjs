@@ -301,6 +301,24 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
     const currentInstalled = qualifiedRouteOperations?.has(exportName) ?? false;
     return { status: currentInstalled ? 'source-selected-installed-private-current-cohort' : 'installed-private-fixed-point-cohort', rustOwner: `umf_core::core_relationships::${relationships.get(exportName)}`, wireOperation: `model/${exportName}`, bindingRoute: browser ? 'V4 browser root -> WASM relationship wrapper -> Rust wire' : 'V4 Node root -> Node-API relationship wrapper -> Rust wire', sourceClosure: closure(sourcePaths), qualificationStatus: currentInstalled ? 'One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. This is private route evidence only; ./reference parity, declaration retirement and release qualification remain open.' : 'Prior private fixed-point package replay passed 11 cases in Bun, bundled Node, and real Chromium; artifact is private/nonpublishable. This records bounded route evidence only; ./reference and declaration retirement remain open.' };
   }
+  if (exportName === 'verifyCoreKeyOperation') {
+    const evidencePath = 'docs/helix/04-build/evidence/rust-migration/r8-core-keys-default-boundary/final-key-null-verification-installed-20261026.json';
+    const sourcePaths = [
+      defaultEntry, 'src/access/rust-keys-default.ts', 'bindings/core/node/src/core-keys.js',
+      'bindings/core/wasm/src/core-keys.js', 'bindings/core/node/src/lib.rs',
+      'bindings/core/wasm/src/lib.rs', 'crates/umf-core-wire/src/lib.rs',
+      'crates/umf-core/src/core_keys.rs', evidencePath,
+    ];
+    return {
+      status: 'source-selected-installed-private-source-pinned',
+      rustOwner: 'umf_core::core_keys::verify_core_key_operation',
+      wireOperation: 'model/verifyCoreKeyOperation',
+      bindingRoute: browser ? 'V4 browser root -> WASM Core Keys wrapper -> Rust wire' : 'V4 Node root -> Node-API Core Keys wrapper -> Rust wire',
+      sourceClosure: closure(sourcePaths),
+      qualificationEvidenceClosure: closure([evidencePath]),
+      qualificationStatus: 'Staged Rust Core Key verifier selected at this V4 root. A fixed-point private archive has passing installed Node, Bun and Chromium receipts for the captured source closure; current worktree drift means this is not current-source or release qualification. The logical retirement gap remains open.',
+    };
+  }
   const schemaProperties = new Map([
     ['declareCoreSchemaProperties', 'schema_properties::declare_core_schema_properties'],
     ['inspectCoreSchemaProperties', 'schema_properties::inspect_core_schema_properties'],
@@ -498,7 +516,7 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
         'crates/umf-core-wire/src/lib.rs',
         'crates/umf-core/src/core_keys.rs',
       ].sort().map(file => ({ path: file, sha256: digest(read(file)) })),
-      qualificationStatus: qualifiedRouteOperations?.has(exportName) ? 'One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. verifyCoreKeyOperation remains TypeScript; retirement and release qualification remain open.' : 'These four Rust Core Keys operations are source-selected at this Node/browser root. Installed qualification is pending, verifyCoreKeyOperation remains TypeScript, and declaration retirement remains open.',
+      qualificationStatus: qualifiedRouteOperations?.has(exportName) ? 'One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open.' : 'These four Rust Core Keys operations are source-selected at this Node/browser root. The aggregate installed-route gate is pending for the current worktree; declaration retirement remains open. The fifth verifier has separate source-pinned evidence.',
     };
   }
   if (exportName === 'validateCoreDatasetValuesCompact') {
@@ -589,7 +607,7 @@ function operationMapping(row) {
     if (['parseUuid', 'uuidFromBits128', 'uuidToBits128'].includes(row.exportName)) {
       return accepted.get(`src/model/uuid.ts#${row.exportName}`) ?? null;
     }
-    if (['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName)) {
+    if (['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey', 'verifyCoreKeyOperation'].includes(row.exportName)) {
       return accepted.get(`src/model/keys.ts#${row.exportName}`) ?? null;
     }
     if (row.exportName === 'validateCoreDatasetValuesCompact') {
@@ -1607,7 +1625,8 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
           : selectedSchemaProperties ? 'Rust Schema Properties operation selected by source route; separate same-archive private receipt passed; aggregate route gate pending'
           : ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName) ? 'Rust facets operation selected by source route; installed qualification pending'
           : row.exportName === 'validateCoreDatasetValuesCompact' ? 'Rust compact Dataset validation selected by source route; installed qualification pending'
-          : ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName) ? 'Rust Core Keys operation selected by source route; installed qualification pending'
+          : row.exportName === 'verifyCoreKeyOperation' ? 'Staged Rust Core Key verifier selected by source route; private Node/Bun/Chromium archive receipt is source-pinned; current-source qualification pending'
+          : ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName) ? 'Rust Core Keys operation selected by source route; aggregate installed qualification pending for current worktree'
           : selectedBit128 ? 'Rust Bit128/UUID operation selected by source route; installed qualification pending'
           : ['inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'].includes(row.exportName) && selectedBySource ? 'Rust core inspector selected by source route; current private installed archive passed 26 frozen cases, while selected host-error envelopes differ; retirement open'
           : ['validateCsvBooleanLexical', 'verifyCsvBooleanLexical'].includes(row.exportName) && selectedBySource ? 'Rust CSV Boolean lexical operation selected by source route; current private installed archive passed 14 frozen and 18 adversarial cases; retirement open'
@@ -1622,7 +1641,8 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
           : selectedSchemaProperties ? 'Rust Schema Properties operation selected by source route; separate same-archive private receipt passed; aggregate route gate pending'
           : ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName) ? 'Rust facets operation selected by source route; installed qualification pending'
           : row.exportName === 'validateCoreDatasetValuesCompact' ? 'Rust compact Dataset validation selected by source route; installed qualification pending'
-          : ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName) ? 'Rust Core Keys operation selected by source route; installed qualification pending'
+          : row.exportName === 'verifyCoreKeyOperation' ? 'Staged Rust Core Key verifier selected by source route; private Node/Bun/Chromium archive receipt is source-pinned; current-source qualification pending'
+          : ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName) ? 'Rust Core Keys operation selected by source route; aggregate installed qualification pending for current worktree'
           : selectedBit128 ? 'Rust Bit128/UUID operation selected by source route; installed qualification pending'
           : ['inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'].includes(row.exportName) && selectedBySource ? 'Rust core inspector selected by source route; current private installed archive passed 26 frozen cases, while selected host-error envelopes differ; retirement open'
           : ['validateCsvBooleanLexical', 'verifyCsvBooleanLexical'].includes(row.exportName) && selectedBySource ? 'Rust CSV Boolean lexical operation selected by source route; current private installed archive passed 14 frozen and 18 adversarial cases; retirement open'
@@ -1654,8 +1674,10 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust facets operation selected by source route; installed qualification pending; retirement gap remains open`
           : row.exportName === 'validateCoreDatasetValuesCompact' && ['package-root-node', 'package-root-browser'].includes(row.routeId)
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust compact Dataset validation selected by source route; installed qualification pending; verification remains TypeScript and retirement gap remains open`
+          : row.exportName === 'verifyCoreKeyOperation' && ['package-root-node', 'package-root-browser'].includes(row.routeId)
+            ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} staged Rust Core Key verifier selected by source route; private Node/Bun/Chromium receipt is bound to its captured archive closure; current-source, retirement and release qualification remain open`
           : ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName) && ['package-root-node', 'package-root-browser'].includes(row.routeId)
-            ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust Core Keys operation selected by source route; installed qualification pending; verifyCoreKeyOperation remains TypeScript and retirement gap remains open`
+            ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust Core Keys operation selected by source route; current-worktree aggregate installed qualification pending and retirement gap remains open`
           : ['inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks'].includes(row.exportName) && selectedBySource
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust core inspector selected by source route; current private archive passed 26 installed Node/Bun/Chromium frozen cases; selected host-error parity and retirement remain open`
           : ['validateCsvBooleanLexical', 'verifyCsvBooleanLexical'].includes(row.exportName) && selectedBySource
@@ -1688,7 +1710,7 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
       ...(inert ? { resourceOwnership: resourceOwnership(row, aliasNamesBySource.get(row.source).size, scans) } : {}),
       evidence: mapping ? mapping.evidencePaths[0] : null,
       bindingRoute: sourceSelection?.status === 'source-selected-installed-private-current-cohort' ? sourceSelection.bindingRoute : null,
-      bindingRouteStatus: sourceSelection?.status === 'source-selected-installed-private-current-cohort' ? 'installed-private-current-cohort' : 'unproven',
+      bindingRouteStatus: sourceSelection?.status === 'source-selected-installed-private-current-cohort' ? 'installed-private-current-cohort' : sourceSelection?.status === 'source-selected-installed-private-source-pinned' ? 'installed-private-source-pinned-not-current' : 'unproven',
       disposition,
     };
   });
@@ -1838,11 +1860,11 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
     executableDefaultRouteGapDefinition: 'Unique logical executable export names unresolved for retirement from default Node/browser roots; each root has its own route count. Rust-selected entries remain gaps until complete required parity and retirement review; bounded current private-archive qualification is reported separately, and ./reference is reported separately.',
     executableDefaultRouteGapsByRoute: routeCounts,
     sourceSelectedRustOverrides: Object.values(routeCounts).reduce((sum, route) => sum + route.rustSelectedSourceDeclarations, 0),
-    bindingRoutesProven: new Set(rows.filter(row => row.rowKind === 'executable' && row.bindingRoute !== null).map(row => row.logicalDeclarationKey)).size,
+    bindingRoutesProven: new Set(rows.filter(row => row.rowKind === 'executable' && row.bindingRouteStatus === 'installed-private-current-cohort').map(row => row.logicalDeclarationKey)).size,
     sourceSelectedRustOverridesDefinition: 'Count of Node/browser declaration rows whose source resolves to the V4 root entry and has an exact Rust ownership mapping in this ledger. The current entry declaration census is 42 per root; source selection does not remove any logical retirement gap. Temporal and relationship route receipts are private bounded cohorts, not release qualification.',
     bindingRoutesProvenDefinition: installedRouteEvidence
       ? `Count of unique logical executable names with a route proven by the gated ${installedRouteEvidence.boundedOperations}-operation R8 same-archive fixed-point receipt set; this is not complete host parity, declaration retirement or release qualification.`
-      : 'Count of unique logical executable names with a binding route proven by a current fixed-point private installed archive. Existing bounded selections remain as recorded; this is not complete host parity, declaration retirement or release qualification.',
+      : 'Count of unique logical executable names with a route proven by the gated current-source R8 fixed-point cohort. Historical/source-pinned receipts remain visible in per-route evidence but do not contribute to this count or prove current-source parity. This is not complete host parity, declaration retirement or release qualification.',
     ownerFamilies: groups.length,
     adapterOwnershipRows: logical.filter(row => row.operationOwnership !== null).length,
     adapterOwnershipByStatus: Object.fromEntries(['accepted-opt-in-subset', 'candidate-core', 'partial-host-boundary', 'unported', 'data-or-constant'].map(status => [status, logical.filter(row => row.operationOwnership?.status === status).length])),

@@ -2368,7 +2368,19 @@ fn extension_errors(
             None => continue,
             Some(crate::registry::RegistrationLookup::Borrowed(entry)) => entry,
             Some(crate::registry::RegistrationLookup::HostHandle(handle)) => {
-                return Err(crate::selection_host_json::reject_host_registration(handle));
+                match registry.host_registration_stage(handle, payload, scope, ctx)? {
+                    crate::registry::HostRegistrationStage::OutOfScope => {
+                        out.push(model_diag(policy, "scope", &at, None, ctx)?);
+                    }
+                    crate::registry::HostRegistrationStage::NoDiagnostics => {}
+                    crate::registry::HostRegistrationStage::Unchecked => {
+                        out.push(model_diag(policy, "unchecked", &at, None, ctx)?);
+                    }
+                    crate::registry::HostRegistrationStage::Unsupported => {
+                        return Err(crate::selection_host_json::reject_host_semantics());
+                    }
+                }
+                continue;
             }
         };
         let (kind_invalid, mut kind_diagnostics) =

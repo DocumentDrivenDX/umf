@@ -47,16 +47,106 @@ test('private host Selection defers Registry.get until source admission and pres
   expect(calls).toBe(1);
 });
 
-test('private host Selection refuses an opaque registration before reading caller-owned fields', () => {
-  let reads = 0;
-  const registration = new Proxy({}, {get() { reads++; throw new Error('must stay opaque'); }});
-  const registry = {get() { return registration; }};
+test('private host Selection checks scope before structure and preserves receiver/order', () => {
+  const events = [];
+  const scopes = {includes(scope) {
+    events.push(`includes:${scope}:${this === scopes}`);
+    return false;
+  }};
+  const manifest = {get scopes() { events.push('scopes'); return scopes; }};
+  const registration = {
+    get manifest() {
+      events.push('manifest');
+      return manifest;
+    },
+    get structure() {
+      events.push('structure');
+      throw new Error('out of scope must not inspect structure');
+    },
+  };
+  const registry = {get() { events.push('get'); return registration; }};
+  expect(() => coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, registry, UmfCoreError))
+    .toThrow(expect.objectContaining({code: 'CORE_SELECTION_SOURCE'}));
+  expect(events).toEqual([
+    'get', 'get', 'manifest', 'scopes', 'includes:document:true',
+    'get', 'manifest', 'scopes', 'includes:element:true',
+  ]);
+});
+
+test('private host Selection drains structure errors then stops before semantic callbacks', () => {
+  const events = [];
+  const structure = function(payload) {
+    events.push(`structure:${this === registration}:${payload === packet.source.extensions.future.opaque}`);
+    return false;
+  };
+  structure.errors = [{instancePath: '/bad', message: 'bad'}];
+  const registration = {
+    manifest: {scopes: {includes(scope) { events.push(`includes:${scope}:${this === registration.manifest.scopes}`); return true; }}, capabilities: {validation: 'semantic'}},
+    structure,
+    get semantics() { events.push('semantics'); throw new Error('must not inspect semantics after invalid structure'); },
+  };
+  const registry = {get() { events.push('get'); return registration; }};
   try {
     coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, registry, UmfCoreError);
-    throw new Error('expected staged-registration boundary');
+    throw new Error('expected structure diagnostic materialization boundary');
   } catch (error) {
     expect(error).toBeInstanceOf(UmfCoreError);
     expect(error.code).toBe('HOST_JSON_UNSUPPORTED');
   }
-  expect(reads).toBe(0);
+  expect(events).toEqual(['get', 'get', 'includes:document:true', 'structure:true:false']);
+});
+
+test('private host Selection preserves structure getter throws by identity', () => {
+  const sentinel = {structureGetter: true};
+  const registration = {
+    manifest: {scopes: {includes() { return true; }}, capabilities: {validation: 'none'}},
+    get structure() { throw sentinel; },
+  };
+  try {
+    coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, {get() { return registration; }}, UmfCoreError);
+    throw new Error('expected structure getter throw');
+  } catch (error) {
+    expect(error).toBe(sentinel);
+  }
+});
+
+test('private host Selection reaches the explicit semantic-callback boundary without invoking it', () => {
+  let calls = 0;
+  const registration = {
+    manifest: {scopes: {includes() { return true; }}, capabilities: {validation: 'semantic'}},
+    structure() { return true; },
+    semantics() { calls++; return []; },
+  };
+  expect(() => coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all,
+    {get() { return registration; }}, UmfCoreError))
+    .toThrow(expect.objectContaining({code: 'HOST_JSON_UNSUPPORTED'}));
+  expect(calls).toBe(0);
+});
+
+test('private host Selection preserves structure iterator throws by identity and order', () => {
+  const events = [];
+  const sentinel = {structureIterator: true};
+  const errors = {
+    [Symbol.iterator]() {
+      events.push('iterator');
+      return {next() { events.push('next'); throw sentinel; }};
+    },
+  };
+  const structure = function() { events.push(`structure:${this === registration}`); return false; };
+  Object.defineProperty(structure, 'errors', {get() { events.push('errors'); return errors; }});
+  const registration = {
+    manifest: {scopes: {includes() { events.push(`includes:${this === registration.manifest.scopes}`); return true; }}},
+    get structure() { events.push('structure-property'); return structure; },
+  };
+  try {
+    coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all,
+      {get() { events.push('get'); return registration; }}, UmfCoreError);
+    throw new Error('expected structure iterator throw');
+  } catch (error) {
+    expect(error).toBe(sentinel);
+  }
+  expect(events).toEqual([
+    'get', 'get', 'includes:true', 'structure-property', 'structure:true',
+    'structure-property', 'errors', 'iterator', 'next',
+  ]);
 });

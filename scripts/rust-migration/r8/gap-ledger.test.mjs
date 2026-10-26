@@ -55,7 +55,7 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   assert.equal(reference.length, expected.length);
   assert.ok(reference.every(row => row.sourceSelectedImplementation === null));
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 82);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 84);
 });
 
 test('Schema Properties source selections keep exact CONTRACT-049 mappings separate from the five-family aggregate gate', () => {
@@ -203,7 +203,7 @@ test('TableSpec Cardinality projection schema pins its direct Field base and pac
     'the imported Field base is qualified independently, not promoted transitively');
   assert.ok(row.resourceOwnership.routes.some(route => route.id === 'sdk-archive'
     && route.artifactPath === 'package/dist/spec/core/cardinality-tablespec-projection.schema.json'));
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
 });
 
@@ -259,7 +259,7 @@ test('SQL Server Field and Cardinality projection schemas pin exact writer chain
   assert.equal(field.resourceOwnership.authority.status, 'generated-authority-known');
   assert.deepEqual(field.resourceOwnership.authority.generatorInputs, ['spec/core/field-postgresql-projection.schema.json']);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
 });
 
 test('SQL Server schema writer --check rejects stale output in an isolated project copy', async () => {
@@ -409,7 +409,7 @@ test('Parquet metadata schema outputs pin their exact multi-output writer and di
     assert.ok(row.resourceOwnership.routes.some(route => route.id === 'sdk-archive'
       && route.artifactPath === `package/dist/${resource}`));
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
 });
 
@@ -616,8 +616,6 @@ test('versioned core operation schemas pin direct authoring history without prom
   }
   const unresolved = new Map([
     ['spec/core/key-operation-v2.schema.json', '67c35f417d940d9d3ff8c4fe7ca57ea29d319a1da4310ea3f9d2437160e9095b'],
-    ['spec/core/kind-operation-v6.schema.json', 'e1de0aba1c3db6a09e85332a10441a0eec7a2dca0a4e4249fab67fcc491783b8'],
-    ['spec/core/nullability-operation-v5.schema.json', '442cc69c8998da361b775251b2e8842cece0d700fb1fa59dad4bd3de03f13c92'],
     ['spec/core/record-type-operation-v6.schema.json', '2b40d2be0562794f918738d96ee8f974f7133f26ee8476583b944c9f676a255d'],
   ]);
   for (const [source, currentHash] of unresolved) {
@@ -626,7 +624,8 @@ test('versioned core operation schemas pin direct authoring history without prom
     assert.equal(row.resourceOwnership.authority.status, 'authority-unresolved', source);
     assert.equal(row.resourceOwnership.source.sha256, currentHash, `${source} current bytes`);
   }
-  for (const source of ['spec/core/cardinality-operation-v4.schema.json', 'spec/core/facet-operation-v3.schema.json']) {
+  for (const source of ['spec/core/cardinality-operation-v4.schema.json', 'spec/core/facet-operation-v3.schema.json',
+    'spec/core/kind-operation-v6.schema.json', 'spec/core/nullability-operation-v5.schema.json']) {
     const row = current.rows.find(item => item.source === source);
     assert.ok(row, `missing metamodel-generated operation schema ${source}`);
     const authority = row.resourceOwnership.authority;
@@ -639,10 +638,10 @@ test('versioned core operation schemas pin direct authoring history without prom
   const relationshipSelection = current.rows.find(item => item.source === 'spec/core/relationship-selection.schema.json');
   assert.equal(relationshipSelection.resourceOwnership.authority.status, 'authority-unresolved', 'one-off generated selection schema lacks a current reproducible writer');
   assert.deepEqual(current.counts.resourceAuthorityByStatus, {
-    'generated-authority-known': 48,
+    'generated-authority-known': 52,
     'authored-authority-known': 49,
     'candidate-generated': 88,
-    'authority-unresolved': 13,
+    'authority-unresolved': 9,
   });
   assert.equal(current.counts.resourceAuthorityByStatus['authored-authority-known'], 49);
 });
@@ -876,8 +875,8 @@ test('Delta log, Parquet framing and Spark datatype schemas pin current writers 
     const row = ledger.rows.find(item => item.source === resource);
     if (row) assert.equal(row.resourceOwnership.authority.status, 'authority-unresolved', `${resource} is a negative historical control`);
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
-  assert.equal(ledger.counts.resourceAuthorityByStatus['authority-unresolved'], 13);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['authority-unresolved'], 9);
 });
 
 test('dataset-value operation schemas pin direct authorship, consumer closure and archive limits', () => {
@@ -1000,7 +999,7 @@ test('domain-pack resources pin the schema builder, contract inputs and package 
   const archive = readFileSync('scripts/package-sdk.py', 'utf8');
   assert.match(build, /cp\(join\(root,'spec'\),join\(dist,'spec'\),\{recursive:true\}\)/);
   assert.match(archive, /\(root\s*\/\s*'dist'\)\.rglob\('\*'\)/);
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
 });
 
 test('Arrow IPC single-output schema writers have read-only check mode and pinned package closure', () => {
@@ -1034,7 +1033,7 @@ test('Arrow IPC single-output schema writers have read-only check mode and pinne
     const after = createHash('sha256').update(readFileSync(resource)).digest('hex');
     assert.equal(after, before, `${generator} --check changed ${resource}`);
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
 });
 
 test('Arrow base schemas pin PostgreSQL and vendored FlatBuffer generator inputs', () => {
@@ -1084,7 +1083,7 @@ test('Arrow base schemas pin PostgreSQL and vendored FlatBuffer generator inputs
     execFileSync('bun', [generator, '--check'], { stdio: 'pipe' });
     for (const resource of resources) assert.equal(createHash('sha256').update(readFileSync(resource)).digest('hex'), before.get(resource), `${generator} --check changed ${resource}`);
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
 });
 
 test('Delta action and checkpoint report schemas pin CONTRACT-018 composition and package closure', async () => {
@@ -1168,7 +1167,7 @@ test('Delta action and checkpoint report schemas pin CONTRACT-018 composition an
   } finally {
     await rm(generatedCheckpoint, { recursive: true, force: true });
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
 });
 
 test('native JSON tree schema is contract-attested and preserves its public source closure', () => {
@@ -1261,7 +1260,7 @@ test('PostgreSQL Key catalog schemas pin one exact contract-governed three-outpu
   } finally {
     await rm(isolated, { recursive: true, force: true });
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
 });
 
 test('Spark projection schemas pin US-017 clauses, composed input, public exports and package closure', () => {
@@ -1336,7 +1335,7 @@ test('Parquet level, physical, row and logical report schemas pin their input ch
     execFileSync('bun', [generator, '--check'], { stdio: 'pipe' });
     assert.equal(createHash('sha256').update(readFileSync(row.source)).digest('hex'), before, `${generator} --check changed ${row.source}`);
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
 });
 
 test('condition-aware routes count logical gaps once and classify each default separately', () => {
@@ -1379,8 +1378,8 @@ test('condition-aware routes count logical gaps once and classify each default s
   assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-browser'].executableDefaultRouteGaps, 18);
   assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-reference'].executableDefaultRouteGaps, null);
   assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-reference'].retainedReferenceExecutableRows, 18);
-  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-node'].rustSelectedSourceDeclarations, 13);
-  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-browser'].rustSelectedSourceDeclarations, 13);
+  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-node'].rustSelectedSourceDeclarations, 14);
+  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-browser'].rustSelectedSourceDeclarations, 14);
   assert.equal(ledger.counts.resourceExportAliases, 1);
   assert.equal(ledger.counts.routeResourceExportAliases, 3);
   assert.equal(ledger.counts.uniqueResourceFiles, 1);
@@ -1426,17 +1425,22 @@ test('condition-aware routes count logical gaps once and classify each default s
       const row = byRouteAndName.get(`${routeId}:${name}`);
       assert.equal(row.acceptedRustOperation, `umf_core::core_keys::${rustName}`);
       assert.equal(row.sourceSelectedImplementation.status, 'unqualified-current-route');
-      assert.match(row.disposition, /Core Keys operation selected by source route; installed qualification pending/);
-      assert.match(row.disposition, /verifyCoreKeyOperation remains TypeScript/);
+      assert.match(row.disposition, /Core Keys operation selected by source route; current-worktree aggregate installed qualification pending/);
     }
     assert.equal(byRouteAndName.get(`package-reference:${name}`).sourceSelectedImplementation, null);
   }
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     const verify = byRouteAndName.get(`${routeId}:verifyCoreKeyOperation`);
-    assert.equal(verify.sourceSelectedImplementation, null);
-    assert.equal(verify.acceptedRustOperation, null);
-    assert.equal(verify.implementationStatus, 'inherited TypeScript implementation remains default');
+    assert.equal(verify.sourceSelectedImplementation.status, 'source-selected-installed-private-source-pinned');
+    assert.equal(verify.sourceSelectedImplementation.rustOwner, 'umf_core::core_keys::verify_core_key_operation');
+    assert.equal(verify.acceptedRustOperation, 'umf_core::core_keys::verify_core_key_operation');
+    assert.equal(verify.implementationStatus, 'Staged Rust Core Key verifier selected by source route; private Node/Bun/Chromium archive receipt is source-pinned; current-source qualification pending');
     assert.equal(verify.declarationKind, 'BindingElement');
+    assert.equal(verify.bindingRoute, null);
+    assert.equal(verify.bindingRouteStatus, 'installed-private-source-pinned-not-current');
+    assert.doesNotMatch(verify.bindingRouteStatus, /current-cohort/);
+    assert.match(verify.disposition, /retirement and release qualification remain open/);
+    assert.ok(verify.sourceSelectedImplementation.qualificationEvidenceClosure.some(item => item.path.endsWith('final-key-null-verification-installed-20261026.json')));
   }
   const referenceVerify = byRouteAndName.get('package-reference:verifyCoreKeyOperation');
   assert.equal(referenceVerify.acceptedRustOperation, 'umf_core::core_keys::verify_core_key_operation');
@@ -1461,7 +1465,7 @@ test('condition-aware routes count logical gaps once and classify each default s
     }
     assert.equal(byRouteAndName.get(`package-reference:${name}`).sourceSelectedImplementation, null);
   }
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 26);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 28);
   assert.match(byRouteAndName.get('package-reference:inspectCoreSemanticTypes').acceptedOperationEvidence.defaultRouteStatus, /^Explicit \.\/reference/);
   assert.match(byRouteAndName.get('package-root-browser:inspectCoreSemanticTypes').acceptedOperationEvidence.defaultRouteStatus, /^Browser default route/);
   const overloadRows = ledger.rows.filter(row => row.routeId === 'package-root-node' && row.exportName === 'futureAlgorithm');
@@ -2189,7 +2193,7 @@ test('Delta datatype and table-context schemas pin exact writers and isolated fu
   } finally {
     await rm(directory, { recursive: true, force: true });
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 48);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
 });
 
 test('Python source census walks nested package modules', async t => {

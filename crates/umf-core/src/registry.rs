@@ -51,11 +51,22 @@ pub struct Registry {
 }
 
 /// A registration discovered by an invocation-local provider. Host handles
-/// deliberately remain opaque until a later staged host protocol is added.
+/// remain opaque and are inspected only by the private staged Selection path.
 #[derive(Clone, Copy, Debug)]
 pub(crate) enum RegistrationLookup<'a> {
     Borrowed(&'a Registration),
     HostHandle(u64),
+}
+
+/// Result of the bounded host-owned registration structure stage used only by
+/// the private Selection host route. Semantic callback execution remains a
+/// separate, explicit boundary.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(crate) enum HostRegistrationStage {
+    OutOfScope,
+    NoDiagnostics,
+    Unchecked,
+    Unsupported,
 }
 
 /// Demand-driven registration access used by the shared interpreter. Calls
@@ -67,6 +78,20 @@ pub(crate) trait RegistrationProvider {
         version: &Utf16,
         _ctx: &mut Context<'_>,
     ) -> Result<Option<RegistrationLookup<'a>>, EngineError>;
+
+    fn host_registration_stage(
+        &self,
+        _handle: u64,
+        _payload: &Value,
+        _scope: &Utf16,
+        _ctx: &mut Context<'_>,
+    ) -> Result<HostRegistrationStage, EngineError> {
+        Err(EngineError::new(
+            "HOST_JSON_UNSUPPORTED",
+            Utf16::default(),
+            "Caller-owned Selection registration requires a host-aware provider",
+        ))
+    }
 }
 
 pub(crate) struct StaticRegistrationProvider<'a>(pub(crate) &'a Registry);

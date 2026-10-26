@@ -5521,25 +5521,47 @@ The [current R8 inventory and ledger recapture](evidence/rust-migration/r8-symbo
 now checks against 3,375 route-specific declarations and 1,120 declarations
 in each of the Node, browser and reference roots. The V4 entries expose 42
 direct declarations each. A narrow declaration-shape normalization for
-`verifyCoreKeyOperation` restores route multiplicity without claiming its
-TypeScript default is Rust-owned. The ledger still records **922 logical
+`verifyCoreKeyOperation` restores route multiplicity. Source tracing now
+classifies its staged Rust Core Key verifier as selected in both default roots;
+the prior private Node/Bun/Chromium archive receipt is source-pinned and does
+not qualify the current worktree. The ledger records 84 source-selected Rust
+declarations across those roots and still records **922 logical
 executable retirement gaps**, **62 accepted opt-in Rust mappings**, **860
-unmapped executable names**, and resource authority counts of 48
-generated-known, 49 authored-known, 88 candidate-generated and **13
+unmapped executable names**, and resource authority counts of 52
+generated-known, 49 authored-known, 88 candidate-generated and **9
 unresolved**. The regenerated metamodel, inventory and ledger fixed-point
 checks pass. The ledger test suite passes 43/45; two source-bound installed
 archive tests correctly reject the changed Node host source. The five-family
 24-operation private archive and Node/Bun/Chromium receipts must be rebuilt on
 a frozen source cut before installed-route qualification can be renewed.
 
+Kind v6 and Nullability v5 now join Facets v3 and Cardinality v4 as exact
+current-byte Rust metamodel outputs under CONTRACT-080 vocabulary 1.2.0. The
+compiler and generated-output checks pass; this authority starts at the
+current bytes and does not reconstruct the two older schemas' edits. The
+resource ledger therefore moves four aliases to generated-known authority
+without changing the 922 executable retirement gaps.
+
+The [extension identifier data receipt](evidence/rust-migration/r8-extension-id-data/README.md)
+identifies 63 direct string-literal `_EXTENSION` exports whose values each
+match an authored package ID. A zero-transform private SDK build and Node
+26.12.1, Bun 1.4.3 and Chromium 153.0.8010.12 captures show exact values on
+the default and reference routes. This is an evidence-only static-data
+candidate: no export, route or Rust owner changes, and no retirement gap is
+removed. The receipt preserves all package matches for repeated IDs and
+excludes generated vocabulary, profile constants and executable factories.
+
 The [private Selection host route](evidence/rust-migration/r8-selection-private-host-route/README.md)
 now admits host-owned source then query and consults `Registry.get` lazily at
-Rust's existing lookup sites. A found caller-owned registration is retained
-opaque and refused explicitly before structure or semantics field access. Sol
-reran the ten frozen R5 Selection tests and three Bun-driven Node-addon tests;
+Rust's existing lookup sites. The private host provider now evaluates
+`manifest.scopes.includes`, invokes `structure` with the caller's receiver,
+and reads false-result error entries in predecessor order. It preserves
+host-thrown identity. Semantic callbacks and nonempty structure-diagnostic
+materialization still stop at explicit boundaries. Sol reran the ten frozen R5
+Selection tests and seven Bun-driven Node-addon tests;
 an independent Node 26.12.1 probe matched the frozen JSON value and preserved
 lookup-throw identity. That probe also found a null-prototype decoded result
 where the TypeScript reference returns ordinary objects, so full JS shape
-parity remains open. The WASM target compiles, but this new export has no real
-Chromium runtime receipt because the local bindgen tooling is unavailable.
+parity remains open. The WASM target compiles, but this new Selection export
+has no real Chromium runtime receipt yet.
 No public/default route or retirement claim follows from this checkpoint.
