@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {beforeAll,describe,expect,test} from 'bun:test';
-import {hashCanonical} from '../../src/compilation/bundle/hash';
+import {canonical,hashCanonical,sha256Text,sha256TextChunksCharged} from '../../src/compilation/bundle/hash';
 import {UmfError} from '../../src/model/errors';
 import {compileTableDeployment} from '../../src/table-deployment';
 import {compileTableMigration,compileTableInventoryMigration,discoverTableInventoryMigrationChanges,irreversiblePurgeDisclosure,serializeTableInventoryMigration,verifyTableInventoryMigration} from '../../src/table-migration';
@@ -8,7 +8,7 @@ import {compileG10InventoryPlan,createHistoricalG10Verifier} from '../../src/tab
 import {partitionRendererDependencies,verifySourcePublicationCoverage} from '../../src/table-migration/inventory-effects';
 import {scheduleTypedInventoryEffects,type CatalogMutation,type EffectNode,type PrefixFrame} from '../../src/table-migration/inventory-graph';
 import {deriveInventorySeedLineage} from '../../src/table-migration/inventory-history';
-import {R2WorkLimitError,R2WorkMeter,R2_WORK_EVENT_UNITS} from '../../src/table-migration/inventory-r2-context';
+import {R2_CONTEXT_BYTE_LIMIT,R2WorkLimitError,R2WorkMeter,R2_WORK_EVENT_UNITS} from '../../src/table-migration/inventory-r2-context';
 import {inspectR2InventorySourceContext,prepareR2InventorySourceContext} from '../../src/table-migration/inventory';
 import {projectG10Bundle} from '../../src/table-migration/inventory-source';
 import {partitionInventoryMarkersForG02,sameSourceExceptG02AndCreates} from '../../src/table-migration/inventory-g02-source';
@@ -31,6 +31,19 @@ const emptyHistory:TableInventorySourceHistory={profile:'umf.table-inventory-sou
 type GraphTestJson=null|boolean|number|string|GraphTestJson[]|{[key:string]:GraphTestJson};
 type GraphTableIdentity={kind:'table';table:string;subject:{module:string;element:string}};
 const emptyPrefixCatalog=():Record<string,GraphTestJson[]>=>({tables:[],columns:[],keys:[],checks:[],foreignKeys:[],indexes:[],policies:[],grants:[],comments:[]});
+class PrefixCanonicalCountingMeter extends R2WorkMeter{
+ rowCanonicalMisses=0;failBeforeRowCanonical=false;bytesAtRowFailure:number|null=null;
+ override visit(category:string,path:string,count=1):void{if(category==='graph-canonical-row-retention'){if(this.failBeforeRowCanonical){this.bytesAtRowFailure=this.snapshot().bytes;throw new Error('CONTROLLED_ROW_CANONICAL_RETENTION_FAILURE');}this.rowCanonicalMisses+=count;}super.visit(category,path,count);}
+}
+test('charged chunk hashing preserves UTF-8 bytes and refuses before later chunks on budget exhaustion',()=>{
+ const chunks=['prefix','snowman ☃','quote" backslash\\ and newline\n'],meter=new R2WorkMeter();
+ const digest=sha256TextChunksCharged(append=>chunks.forEach((chunk,index)=>append(chunk,`/chunks/${index}`)),meter,'/chunks');
+ expect(digest).toBe(sha256Text(chunks.join('')));expect(meter.snapshot().bytes).toBe(new TextEncoder().encode(chunks.join('')).byteLength);
+ const nearLimit=new R2WorkMeter();nearLimit.retainBytes('test-prefill',R2_CONTEXT_BYTE_LIMIT-1,'/prefill');let laterChunkReached=false;
+ expect(()=>sha256TextChunksCharged(append=>{append('☃','/chunks/over-limit');laterChunkReached=true;},nearLimit,'/chunks')).toThrow(`R2_CONTEXT_BYTES_LIMIT:/chunks/over-limit`);
+ expect(laterChunkReached).toBe(false);expect(nearLimit.snapshot().bytes).toBe(R2_CONTEXT_BYTE_LIMIT-1);
+ const retryMeter=new R2WorkMeter();expect(sha256TextChunksCharged(append=>{append('☃','/retry');},retryMeter,'/retry')).toBe(sha256Text('☃'));expect(retryMeter.snapshot().bytes).toBe(3);
+});
 const definitionDigestCollections=['tables','columns','keys','checks','foreignKeys','indexes','policies','grants','comments'] as const;
 function assertNormativeTableDefinitionDigests(frame:PrefixFrame):void{
  for(const raw of frame.tableStates){if(!raw||typeof raw!=='object'||Array.isArray(raw))throw new Error('Frame table state is malformed.');const state=raw as Record<string,GraphTestJson>,table=state.table;
@@ -225,8 +238,9 @@ test('scheduler prefixes preserve final frames for zero and multiple groups with
  }
  const oldTable=makeCreate('old',3),keptTable=makeCreate('kept',1),changedTable=makeCreate('changed',2),stableTable=makeCreate('stable',4),initialCatalog=emptyPrefixCatalog();
  const oldMeaning:GraphTestJson={},keptBeforeMeaning:GraphTestJson={rls:{enabled:false,forced:false}},keptAfterMeaning:GraphTestJson={rls:{enabled:true,forced:false}},changedBeforeMeaning:GraphTestJson={rls:{enabled:false,forced:false}},changedAfterMeaning:GraphTestJson={rls:{enabled:true,forced:false}};
- const oldRow:GraphTestJson={identity:oldTable.identity,meaning:oldMeaning,state:'present'},keptRow:GraphTestJson={identity:keptTable.identity,meaning:keptBeforeMeaning,state:'present'},changedRow:GraphTestJson={identity:changedTable.identity,meaning:changedBeforeMeaning,state:'present'},stableRow:GraphTestJson={identity:stableTable.identity,meaning:{},state:'present'};
- const targetKeptRow:GraphTestJson={identity:keptTable.identity,meaning:keptAfterMeaning,state:'present'},targetChangedRow:GraphTestJson={identity:changedTable.identity,meaning:changedAfterMeaning,state:'present'},targetStableRow:GraphTestJson={identity:stableTable.identity,meaning:{},state:'present'};
+ const stableMeaning:GraphTestJson={extensions:{'vendor.未知':{unicode:'snowman ☃ / café',quoted:'quote" backslash\\ line\n',nested:{z:1,a:2}},large:'x'.repeat(1024)}};
+ const oldRow:GraphTestJson={identity:oldTable.identity,meaning:oldMeaning,state:'present'},keptRow:GraphTestJson={identity:keptTable.identity,meaning:keptBeforeMeaning,state:'present'},changedRow:GraphTestJson={identity:changedTable.identity,meaning:changedBeforeMeaning,state:'present'},stableRow:GraphTestJson={identity:stableTable.identity,meaning:stableMeaning,state:'present'};
+ const targetKeptRow:GraphTestJson={identity:keptTable.identity,meaning:keptAfterMeaning,state:'present'},targetChangedRow:GraphTestJson={identity:changedTable.identity,meaning:changedAfterMeaning,state:'present'},targetStableRow:GraphTestJson={identity:stableTable.identity,meaning:stableMeaning,state:'present'};
  const oldCheckIdentity:GraphTestJson={kind:'check',table:'old',subject:'old-check'},oldCheckBefore:GraphTestJson={identity:oldCheckIdentity,meaning:{check:'before'},state:'present'},oldCheckAfter:GraphTestJson={identity:oldCheckIdentity,meaning:{check:'after'},state:'present'};
  const oldCommentIdentity:GraphTestJson={kind:'comment',table:'old',subject:'old-comment'},oldComment:GraphTestJson={identity:oldCommentIdentity,meaning:{text:'old'},state:'present'},oldCommentAfter:GraphTestJson={identity:oldCommentIdentity,meaning:{text:'updated'},state:'present'};
  const stableColumnA:GraphTestJson={identity:{kind:'column',table:'stable',subject:{module:'graph_snapshot',element:'stable_a'}},meaning:{name:'a'},state:'present'},stableColumnB:GraphTestJson={identity:{kind:'column',table:'stable',subject:{module:'graph_snapshot',element:'stable_b'}},meaning:{name:'b'},state:'present'};
@@ -253,6 +267,11 @@ test('scheduler prefixes preserve final frames for zero and multiple groups with
  expect(ordered.prefixes[3]!.catalog.grants!.map(row=>(row as {identity:{table:string|null}}).identity.table)).toEqual(['stable',null,'stable']);
  expect(ordered.prefixes[4]!.catalog.comments!.some(row=>(row as {identity:{table:string|null}}).identity.table==='old')).toBe(true);
  expect(ordered.prefixes[5]!.tableStates.find(state=>!!state&&typeof state==='object'&&!Array.isArray(state)&&(state as Record<string,GraphTestJson>).table==='old')).toMatchObject({state:'absent',definitionDigest:hashCanonical(null)});
+ const countedMeter=new PrefixCanonicalCountingMeter(),counted=scheduleTypedInventoryEffects(populated,[enableKept,changeOldCheck,removeOld],[{dependent:hashCanonical(changedTable.identity),prerequisite:hashCanonical(keptTable.identity),sourcePath:'/tests/change-after-kept',reason:'source-update-order',state:'present'},{dependent:hashCanonical(oldTable.identity),prerequisite:hashCanonical(changedTable.identity),sourcePath:'/tests/remove-after-change',reason:'source-remove-order',state:'present'}],target,undefined,provenance,countedMeter);
+ expect(counted.prefixes.map(frame=>frame.digest)).toEqual(ordered.prefixes.map(frame=>frame.digest));expect(countedMeter.rowCanonicalMisses).toBe(15);
+ const fullPrefixBytes=counted.prefixes.reduce((total,frame)=>{const {digest,...body}=frame;return total+new TextEncoder().encode(canonical(body)).byteLength;},0);expect(countedMeter.snapshot().bytes).toBeGreaterThanOrEqual(fullPrefixBytes);
+ const failedMeter=new PrefixCanonicalCountingMeter();failedMeter.failBeforeRowCanonical=true;expect(()=>scheduleTypedInventoryEffects(populated,[enableKept,changeOldCheck,removeOld],[{dependent:hashCanonical(changedTable.identity),prerequisite:hashCanonical(keptTable.identity),sourcePath:'/tests/change-after-kept',reason:'source-update-order',state:'present'},{dependent:hashCanonical(oldTable.identity),prerequisite:hashCanonical(changedTable.identity),sourcePath:'/tests/remove-after-change',reason:'source-remove-order',state:'present'}],target,undefined,provenance,failedMeter)).toThrow('CONTROLLED_ROW_CANONICAL_RETENTION_FAILURE');expect(failedMeter.bytesAtRowFailure).toBe(failedMeter.snapshot().bytes);expect(failedMeter.rowCanonicalMisses).toBe(0);
+ const retryMeter=new PrefixCanonicalCountingMeter(),retried=scheduleTypedInventoryEffects(populated,[enableKept,changeOldCheck,removeOld],[{dependent:hashCanonical(changedTable.identity),prerequisite:hashCanonical(keptTable.identity),sourcePath:'/tests/change-after-kept',reason:'source-update-order',state:'present'},{dependent:hashCanonical(oldTable.identity),prerequisite:hashCanonical(changedTable.identity),sourcePath:'/tests/remove-after-change',reason:'source-remove-order',state:'present'}],target,undefined,provenance,retryMeter);expect(retried.prefixes.map(frame=>frame.digest)).toEqual(ordered.prefixes.map(frame=>frame.digest));expect(retryMeter.rowCanonicalMisses).toBe(15);
  const duplicateTarget=emptyPrefixCatalog();duplicateTarget.tables!.push(targetKeptRow,structuredClone(targetKeptRow));
  expect(()=>scheduleTypedInventoryEffects(populated,[enableKept],[],duplicateTarget)).toThrow('G10_SCHEDULE_TARGET_CATALOG_DUPLICATE');
  const unknownIdentity:GraphTestJson={kind:'check',table:'ghost',subject:'unowned-check'},unknownRow:GraphTestJson={identity:unknownIdentity,meaning:{},state:'present'};

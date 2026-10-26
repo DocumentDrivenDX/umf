@@ -94,6 +94,10 @@ class Sha256 {
 export function sha256Text(text:string,maximum=33554432):string{return sha256TextImpl(text,maximum);}
 /** Private metered kernel; public callers retain sha256Text(text, maximum). */
 export function sha256TextCharged(text:string,maximum:number,accounting:AccountingContext,path='/'):string{return sha256TextImpl(text,maximum,accounting,path);}
+/** Internal streaming text-hash leaf for fixed canonical writers; never a public precharged switch. */
+export function sha256TextChunksCharged(write:(append:(text:string,path?:string)=>void)=>void,accounting:AccountingContext,path='/'):string{
+ const hash=new Sha256();write((text,chunkPath=path)=>{validateUnicode(text);hash.update(text,accounting,chunkPath);});return hash.finish();
+}
 function utf8ByteLength(text:string):number{let bytes=0;for(let index=0;index<text.length;index++){const code=text.charCodeAt(index);if(code<0x80)bytes++;else if(code<0x800)bytes+=2;else if(code>=0xd800&&code<=0xdbff){bytes+=4;index++;}else bytes+=3;}return bytes;}
 function sha256TextImpl(text:string,maximum:number,accounting?:AccountingContext,path='/'):string {validateUnicode(text);const byteLength=accounting?accounting.scanUtf8(text,path):utf8ByteLength(text);if(byteLength>maximum)throw new Error('LIMIT');const hash=new Sha256();hash.update(text);return hash.finish();}
 /** Exact JCS identity, streamed across admitted source strings. No extra 64MiB cap. */
