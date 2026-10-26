@@ -1837,6 +1837,82 @@ fn access_validate_captured_graph_variant(
     python_value::to_python(py, &response, &mut context)
 }
 
+struct PythonFieldRefObserver<'py> {
+    py: Python<'py>,
+    field: PyObject,
+    host_error: Option<PyErr>,
+}
+
+impl umf_core::access_graph_host_observation::FieldRefObserver
+    for PythonFieldRefObserver<'_>
+{
+    fn read(
+        &mut self,
+        field_name: &'static str,
+    ) -> Result<umf_core::access_graph_host_observation::ObservedField, umf_core::access_graph_host_observation::ObservationError> {
+        use umf_core::access_graph_host_observation::{ObservedField, ObservationError};
+        let value = match self.field.bind(self.py).getattr(field_name) {
+            Ok(value) => value,
+            Err(error) => {
+                self.host_error = Some(error);
+                return Err(ObservationError::HostException);
+            }
+        };
+        if value.is_none() {
+            return Ok(ObservedField::None);
+        }
+        if !value.is_exact_instance_of::<PyString>() {
+            return Err(ObservationError::UnsupportedValue);
+        }
+        value
+            .extract::<String>()
+            .map(ObservedField::Text)
+            .map_err(|error| {
+                self.host_error = Some(error);
+                ObservationError::HostException
+            })
+    }
+}
+
+#[pyfunction]
+fn access_field_owner_observation_profile_version() -> &'static str {
+    umf_core::access_graph_host_observation::PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (field, module, element, alias=None))]
+fn access_validate_field_owner_observed(
+    py: Python<'_>,
+    field: PyObject,
+    module: String,
+    element: String,
+    alias: Option<String>,
+) -> PyResult<bool> {
+    use umf_core::access_graph_host_observation::{
+        field_owner_matches, ExpectedOwner, ObservationError,
+    };
+    let expected = ExpectedOwner {
+        module,
+        element,
+        alias,
+    };
+    let mut observer = PythonFieldRefObserver {
+        py,
+        field,
+        host_error: None,
+    };
+    match field_owner_matches(&mut observer, &expected) {
+        Ok(matches) => Ok(matches),
+        Err(ObservationError::HostException) => Err(observer
+            .host_error
+            .take()
+            .expect("host observation error retains original PyErr")),
+        Err(ObservationError::UnsupportedValue) => Err(pyo3::exceptions::PyTypeError::new_err(
+            "captured FieldRef owner fields must be exact str or None",
+        )),
+    }
+}
+
 #[pyfunction]
 fn access_orchestrate_capture_pair(py: Python<'_>, input: &Bound<'_, PyAny>) -> PyResult<PyObject> {
     if !input.is_exact_instance_of::<PyDict>() {
@@ -3647,6 +3723,14 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     )?)?;
     module.add_function(wrap_pyfunction!(
         access_validate_captured_graph_variant,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_field_owner_observation_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_validate_field_owner_observed,
         module
     )?)?;
     module.add_function(wrap_pyfunction!(access_orchestrate_capture_pair, module)?)?;

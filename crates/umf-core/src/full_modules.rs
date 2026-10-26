@@ -2,6 +2,7 @@
 // Historical full core module graph; selected unless the compiler-only feature is active.
 pub mod access_catalog_custody;
 pub mod access_graph_validate;
+pub mod access_graph_host_observation;
 pub mod access_constraints;
 pub mod access_logical_render;
 pub mod access_related_keys;
