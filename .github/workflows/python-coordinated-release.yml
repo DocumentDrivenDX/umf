@@ -63,6 +63,9 @@ jobs:
             expected-platform: macos_arm64
     runs-on: ${{ matrix.runs-on }}
     steps:
+      - name: Require a fresh workflow run for artifact custody
+        if: ${{ github.run_attempt != 1 }}
+        run: exit 1
       - uses: actions/checkout@v4
       - name: Isolate Rust build state
         run: |
@@ -170,6 +173,9 @@ jobs:
     needs: build-verify-pair
     runs-on: ubuntu-24.04
     steps:
+      - name: Require a fresh workflow run for artifact custody
+        if: ${{ github.run_attempt != 1 }}
+        run: exit 1
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
@@ -179,7 +185,8 @@ jobs:
           python -m pip install 'pytest==8.4.2'
           python -m pytest -q \
             python/tests/test_coordinated_python_release.py \
-            python/tests/test_python_release_matrix.py
+            python/tests/test_python_release_matrix.py \
+            python/tests/test_rust_pair_custody.py
       - uses: actions/download-artifact@v4
         with:
           pattern: python-release-*
@@ -192,8 +199,22 @@ jobs:
             --source-revision "$GITHUB_SHA" \
             --run-id "$GITHUB_RUN_ID" \
             --receipt "$RUNNER_TEMP/umf-python-release-matrix.json"
+      - name: Prepare Rust-pair artifact custody manifest
+        run: |
+          python tools/prepare_rust_pair_release.py \
+            --artifacts "$RUNNER_TEMP/umf-release-cohorts" \
+            --aggregate-receipt "$RUNNER_TEMP/umf-python-release-matrix.json" \
+            --repository . \
+            --source-revision "$GITHUB_SHA" \
+            --run-id "$GITHUB_RUN_ID" \
+            --run-attempt "$GITHUB_RUN_ATTEMPT" \
+            --workflow-ref "$GITHUB_WORKFLOW_REF" \
+            --repository-slug "$GITHUB_REPOSITORY" \
+            --manifest "$RUNNER_TEMP/umf-rust-pair-custody.json"
       - uses: actions/upload-artifact@v4
         with:
-          name: python-release-aggregate-${{ github.run_id }}
-          path: ${{ runner.temp }}/umf-python-release-matrix.json
+          name: python-release-aggregate-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/umf-python-release-matrix.json
+            ${{ runner.temp }}/umf-rust-pair-custody.json
           if-no-files-found: error

@@ -61,11 +61,11 @@ native/WASM artifact hashes.
 
 ## Results and limits
 
-Node 26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12 each passed 18/18 outcome
+Node 26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12 each passed 21/21 outcome
 and exact host-trace comparisons with zero mismatches. The native addon SHA-256
 is `fd34bf7828d4e27bb0340db303d66effb557cdf38a5aa4238006dc858ace39f1`; the
 fresh WASM binary SHA-256 is
-`9e3799b2f8393f5aa674f117f7b44189c937733dbd6111b4e352116855695eec`. Exact
+`fc9ae0be48fa2bda7073a9a4d63f2f82a4185b3feaba923bbaab00efd415e8c5`. Exact
 source and artifact pins are in [node.json](./node.json), [bun.json](./bun.json),
 and [chromium.json](./chromium.json).
 
@@ -88,10 +88,10 @@ replay now exercises the reusable Node/WASM engine factory; updated receipts
 pin its host adapter and harness sources.
 
 The [spread-failure extension](../r8-selection-spread-boundary/README.md)
-adds `undefined`, non-callable iterator-method and throwing iterator-getter
-cases, including observable error string conversion. These pass in all three
-hosts under the same private route; iterator step/close behavior and broader
-native spread failures remain outside this receipt.
+also covers abrupt failures from iterator `next`, the step's `done` getter and
+the step's `value` getter. In all three hosts these failures propagate after the
+same reads, and array spread leaves the iterator's `return` getter untouched.
+Broader native spread TypeError wording remains unqualified.
 
 This is still an opt-in implementation seam. The receipts do not qualify full
 raw-host parity, `Registry.kindRuntime`, all proxy/accessor cases, final

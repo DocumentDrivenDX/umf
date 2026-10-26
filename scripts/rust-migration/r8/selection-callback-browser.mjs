@@ -62,7 +62,7 @@ try {
     return entry.runSelectionCallbackBrowser(module, {resources});
   }, {glueSource: glueBytes.toString('utf8'), wasmBase64: wasmBytes.toString('base64'), entrySource: entryBytes.toString('utf8'), resources});
   assert.deepEqual(browserErrors, []);
-  assert.equal(result.caseCount, 18);
+  assert.equal(result.caseCount, 21);
   assert.equal(result.summary.exactOutcomeMatches, result.caseCount, JSON.stringify(result.summary.mismatches));
   assert.equal(result.summary.exactHostTraceMatches, result.caseCount, JSON.stringify(result.summary.mismatches));
   const sourcePaths = [
@@ -88,7 +88,7 @@ try {
   const sourceHashes = Object.fromEntries(await Promise.all(sourcePaths.map(async path => [path, sha(await read(path))])));
   const record = {
     profile: 'umf.r8.selection-semantic-callback.private.chromium/1',
-    status: 'pass-private-same-browser-direct-typescript-18-case-outcomes-and-host-traces',
+    status: 'pass-private-same-browser-direct-typescript-21-case-outcomes-and-host-traces',
     runtime: {bun: Bun.version, cargo: await run(`${toolchain}/cargo`, ['--version']), rustc: await run(`${toolchain}/rustc`, ['--version']), wasmBindgen: bindgenVersion, chromium: browser.version(), userAgent: await page.evaluate(() => navigator.userAgent)},
     operation: 'executeCoreElementSelectionHostJson (private WASM export; package-root selection unchanged)',
     reference: 'dist/umf.js TypeScript Selection implementation, imported in the same Chromium page and run against the same registry setup',
@@ -99,7 +99,7 @@ try {
     limits: [
       'Private opt-in Selection host route only; no default/root route or release qualification.',
       'Covers bounded callback invocation, order, receiver/context prototypes, iterable callback diagnostics, emit field order, malformed/null/undefined/primitive results, thrown conversion, severity short-circuit and source-validation materialization.',
-      'The added spread boundary is limited to undefined return, non-callable Symbol.iterator, and a throwing Symbol.iterator getter with String(error) side effects; other native iterator protocol failures and kindRuntime remain unsupported.',
+      'Spread coverage includes undefined return, non-callable Symbol.iterator, a throwing Symbol.iterator getter, and next/done/value abrupt completions; broader native TypeError wording, kindRuntime and default routing remain unqualified.',
       'Pins the browser/reference bundles and live source files listed in artifacts; this is not a whole SDK archive/source-closure qualification.',
     ],
   };

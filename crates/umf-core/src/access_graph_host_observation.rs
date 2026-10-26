@@ -8,7 +8,7 @@
 use crate::Utf16;
 use std::collections::HashSet;
 
-pub const PROFILE: &str = "umf-access-capture-graph-observation/0.3.0";
+pub const PROFILE: &str = "umf-access-capture-graph-observation/0.4.0";
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct ExpectedOwner {
@@ -173,6 +173,7 @@ pub fn observe_keyword_search_leg<H: Copy>(
     root_record: H,
     declared_name: &Utf16,
     string_carrier: bool,
+    vector_carrier: bool,
 ) -> Result<(), ObservationError> {
     if budgeted(context, || {
         host.is_exact_structural(value, StructuralType::FieldRef)
@@ -213,10 +214,12 @@ pub fn observe_keyword_search_leg<H: Copy>(
     let arg0 = budgeted(context, || host.get_item(args, 0))?;
     let argument_name = budgeted(context, || host.exact_text(arg0))?;
     let kind = text(attr(context, host, value, "kind")?)?;
-    if kind != Utf16::from("keyword") {
-        return Err(ObservationError::UnsupportedValue);
-    }
-    if argument_name != *declared_name || !string_carrier {
+    let carrier_matches_kind = match kind {
+        value if value == Utf16::from("keyword") => string_carrier,
+        value if value == Utf16::from("vector") => vector_carrier,
+        _ => return Err(ObservationError::UnsupportedValue),
+    };
+    if argument_name != *declared_name || !carrier_matches_kind {
         return Err(ObservationError::SearchParameterCarrier);
     }
     let node = object(attr(context, host, value, "value")?)?;
@@ -684,6 +687,8 @@ mod tests {
         iterators: HashMap<u32, (Vec<u32>, usize)>,
         kinds: HashSet<(u32, GraphType)>,
         structural_kinds: HashSet<(u32, StructuralType)>,
+        exact_kinds: HashSet<(u32, GraphType)>,
+        exact_structural_kinds: HashSet<(u32, StructuralType)>,
         next_handle: u32,
         events: Vec<String>,
     }
@@ -743,6 +748,32 @@ mod tests {
             Ok(self.structural_kinds.contains(&(value, kind)))
         }
 
+        fn is_exact_instance(
+            &mut self,
+            value: u32,
+            kind: GraphType,
+        ) -> Result<bool, ObservationError> {
+            self.events.push(format!("exact:{value}:{kind:?}"));
+            Ok(self.exact_kinds.contains(&(value, kind)))
+        }
+
+        fn is_exact_structural(
+            &mut self,
+            value: u32,
+            kind: StructuralType,
+        ) -> Result<bool, ObservationError> {
+            self.events.push(format!("exact:{value}:{kind:?}"));
+            Ok(self.exact_structural_kinds.contains(&(value, kind)))
+        }
+
+        fn exact_text(&mut self, value: u32) -> Result<Utf16, ObservationError> {
+            self.events.push(format!("text:{value}"));
+            match self.attrs.get(&(value, "__text")).cloned() {
+                Some(MockValue::Text(value)) => Ok(Utf16::from(value)),
+                _ => Err(ObservationError::UnsupportedValue),
+            }
+        }
+
         fn iter(&mut self, sequence: u32) -> Result<u32, ObservationError> {
             self.events.push(format!("iter:{sequence}"));
             let items = self
@@ -799,6 +830,8 @@ mod tests {
             iterators: HashMap::new(),
             kinds: HashSet::from([(3, GraphType::RecordRef)]),
             structural_kinds: HashSet::new(),
+            exact_kinds: HashSet::new(),
+            exact_structural_kinds: HashSet::new(),
             next_handle: 100,
             events: Vec::new(),
         }
@@ -1004,6 +1037,65 @@ mod tests {
                 "next:100",
             ]
         );
+    }
+
+    #[test]
+    fn vector_search_leg_accepts_only_the_resolved_vector_carrier() {
+        let mut host = graph_fixture();
+        host.exact_structural_kinds
+            .insert((2, StructuralType::SearchLeg));
+        host.exact_kinds.insert((4, GraphType::Node));
+        for (object, field, value) in [
+            (1, "module", MockValue::Text("demo")),
+            (1, "element", MockValue::Text("Thing")),
+            (3, "module", MockValue::Text("demo")),
+            (3, "element", MockValue::Text("Thing")),
+            (4, "op", MockValue::Text("param")),
+        ] {
+            host.attrs.insert((object, field), value);
+        }
+        host.attrs.insert((2, "record"), MockValue::Object(3));
+        host.attrs.insert((2, "value"), MockValue::Object(4));
+        host.attrs.insert((2, "kind"), MockValue::Text("vector"));
+        host.attrs.insert((2, "legs"), MockValue::Object(7));
+        host.attrs.insert((4, "args"), MockValue::Object(5));
+        host.attrs
+            .insert((6, "__text"), MockValue::Text("embedding"));
+        host.sequences.insert(5, vec![6]);
+        host.sequences.insert(7, vec![]);
+        let mut context = crate::Context::ordinary();
+
+        assert_eq!(
+            observe_keyword_search_leg(
+                &mut context,
+                &mut host,
+                2,
+                1,
+                &Utf16::from("embedding"),
+                false,
+                true,
+            ),
+            Ok(())
+        );
+        let kinds = host
+            .events
+            .iter()
+            .filter(|event| event.as_str() == "get:2.kind")
+            .count();
+        assert_eq!(kinds, 1);
+        let value_reads = host
+            .events
+            .iter()
+            .enumerate()
+            .filter_map(|(index, event)| (event == "get:2.value").then_some(index))
+            .collect::<Vec<_>>();
+        assert_eq!(value_reads.len(), 4);
+        let kind_read = host
+            .events
+            .iter()
+            .position(|event| event == "get:2.kind")
+            .unwrap();
+        assert!(value_reads[2] < kind_read && kind_read < value_reads[3]);
     }
 
     #[test]

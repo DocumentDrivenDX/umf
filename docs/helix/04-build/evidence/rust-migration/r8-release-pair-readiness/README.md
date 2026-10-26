@@ -77,7 +77,8 @@ python3 -m pytest -q -p no:cacheprovider \
   python/tests/test_distribution_artifact.py \
   python/tests/test_python_artifact_custody.py \
   python/tests/test_coordinated_python_release.py \
-  python/tests/test_python_release_matrix.py
+  python/tests/test_python_release_matrix.py \
+  python/tests/test_rust_pair_custody.py
 ```
 
 The two mirror commands should be adjusted to the generator's supported
@@ -119,6 +120,30 @@ must pass the receipt-verifier tests and accept exactly the six receipts from
 that same revision and workflow run with matching hashes and source/resource/
 sdist-input closures. This produces qualification artifacts only; it does not
 publish.
+
+## Same-run custody gate
+
+The coordinated workflow now prepares a deterministic
+`umf.rust-port-pair-custody/1` manifest after the six-cohort aggregate passes.
+It wraps the existing artifact verification and binds the source revision,
+workflow run ID, first run attempt, workflow ref and workflow-file digest to the
+aggregate receipt digest and its exact artifact hashes. Cohort jobs and the
+aggregate reject rerun attempts; a fresh workflow dispatch is required so old
+and rerun artifacts cannot share a custody identity. The aggregate upload name
+includes both run ID and attempt. The job retains `contents: read`, has no
+registry or OIDC write permission, and creates a qualification artifact only.
+
+The custody scope is exactly the `umf-core` 0.11.0 and `umf-codegen` 0.2.0
+distribution pair. The repository also contains the separate `umf-access`
+0.1.0.dev7 distribution, which is not built or tested by this matrix. Its
+qualification and coordinated release decision remain independent R8 blockers.
+`workflowOnMain` records the workflow ref; `releaseEligible` remains false
+until full release review. No hosted run has been executed for this change, so
+there is no six-cohort qualification result or release-ready manifest yet.
+Sol ran the repository virtual environment against the new custody tests,
+release-preparation tests and matrix verifier tests: 34/34 passed, with five
+additional subtests. The coordinated-workflow tests passed 5/5. These are
+local synthetic and structural checks, not hosted cohort evidence.
 
 ## Current blockers and evidence boundary
 

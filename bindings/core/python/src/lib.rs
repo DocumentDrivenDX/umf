@@ -2524,6 +2524,7 @@ fn access_observe_capture_keyword_search_leg(
     root_record: PyObject,
     declared_name: &Bound<'_, PyString>,
     string_carrier: bool,
+    vector_carrier: bool,
     node_type: PyObject,
     record_ref_type: PyObject,
     field_ref_type: PyObject,
@@ -2550,6 +2551,7 @@ fn access_observe_capture_keyword_search_leg(
         1,
         &declared_name,
         string_carrier,
+        vector_carrier,
     )
     .map_err(|error| capture_graph_error(py, &mut observer, error))
 }

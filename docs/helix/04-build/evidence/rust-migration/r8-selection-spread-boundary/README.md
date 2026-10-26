@@ -22,33 +22,35 @@ ddx:
 # Private Selection spread failure cohort
 
 This cohort extends the private `executeCoreElementSelectionHostJson` callback
-comparison with three completion cases: a callback returning `undefined`, a
-non-callable `Symbol.iterator`, and a throwing `Symbol.iterator` getter whose
-thrown object has an observable `toString`. Rust performs the spread-stage
-decisions under the same operation `Context`; the Node and WASM bindings each
-create one `Context` per route invocation. The direct TypeScript predecessor
-and candidate are run in the same host, and both the final refusal and callback
-event trace must match exactly.
+comparison with spread failure cases for an `undefined` result, a non-callable
+`Symbol.iterator`, a throwing iterator getter, and abrupt failures at iterator
+`next`, step `done`, and step `value`. Each abrupt failure has a throwing
+`return` getter; the same-host TypeScript predecessor and Rust-stage candidate
+both leave it untouched. Rust performs the spread-stage decisions under the
+same operation `Context`; each binding creates one `Context` per route call.
+Final outcome and callback event trace must match exactly.
 
-Node 26.12.1 and Bun 1.4.3 each pass all 18 cases with 18/18 exact outcome and
+Node 26.12.1 and Bun 1.4.3 each pass all 21 cases with 21/21 exact outcome and
 event-trace matches. The fresh Rust 1.90.0 Node addon is shared by both runs.
 The Bun binding suite additionally passes 14/14 focused tests, including the
 full direct Selection trace for the throwing getter, exactly-once
 `String(error)` conversion, final `CORE_SELECTION_SOURCE`, and source/refusal
 diagnostic order. Rust diagnostic materialization unit tests pass 6/6 and the
-frozen R5 Selection suite passes 10/10. `wasm32-unknown-unknown` compiles.
+frozen R5 Selection suite passes 10/10. A focused Rust regression suite passes
+3/3, including explicit next/done/value throw propagation with no iterator
+close event. `wasm32-unknown-unknown` compiles.
 
-Real Chromium 153.0.8010.12 passes the same 18 cases with 18/18 exact outcomes
+Real Chromium 153.0.8010.12 passes the same 21 cases with 21/21 exact outcomes
 and host traces, zero page errors, and a fresh WASM artifact. Its receipt is
 `chromium.json`; the WASM SHA-256 is
-`9e3799b2f8393f5aa674f117f7b44189c937733dbd6111b4e352116855695eec`.
+`fc9ae0be48fa2bda7073a9a4d63f2f82a4185b3feaba923bbaab00efd415e8c5`.
 
-This evidence is limited to the three added callback completion cases and the
-preexisting 15-case callback suite. It does not qualify iterator `next`,
-`done`/`value` access, iterator closing, all native spread TypeErrors, opaque
-callback diagnostic materialization, `kindRuntime`, installed packages,
-default route selection, or release readiness. The V4 public route is
-unchanged.
+This evidence covers the 21 pinned callback and spread cases only. It does not
+qualify all native spread TypeErrors, opaque callback diagnostic
+materialization, `kindRuntime`, installed packages, default route selection, or
+release readiness. The V4 public route is unchanged. ECMAScript array spread
+does not perform IteratorClose for these abrupt `next`/`done`/`value` failures;
+the tested guarantee is that the host never reads or invokes `return` here.
 
 Reproduce the Node and Bun callback comparisons with:
 

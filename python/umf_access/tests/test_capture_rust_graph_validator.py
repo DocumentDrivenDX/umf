@@ -1208,6 +1208,81 @@ def test_private_keyword_search_observer_preserves_live_read_order(monkeypatch):
     assert events == predecessor_trace
 
 
+def test_private_vector_search_observer_preserves_resolved_carrier_and_read_order(monkeypatch):
+    from umf_access.dsl.search import SearchLeg as SearchLegBase
+    from umf_access.types import Vector
+
+    owner = RecordRef(module="demo", element="Thing", key=(_ID,))
+    leg = SearchLeg(owner, "vector", "{}", Node("param", ("embedding",)), ())
+    events = []
+    original_record = owner
+    original_node = leg.value
+    original_legs = ()
+    terminal_node = Node("search_top", (owner, (), leg, 5, False))
+
+    def prop(cls, field, getter):
+        monkeypatch.setattr(cls, field, property(getter), raising=False)
+
+    prop(SearchLegBase, "record", lambda self: events.append("leg.record") or original_record)
+    prop(SearchLegBase, "value", lambda self: events.append("leg.value") or original_node)
+    prop(SearchLegBase, "kind", lambda self: events.append("leg.kind") or "vector")
+    prop(SearchLegBase, "legs", lambda self: events.append("leg.legs") or original_legs)
+    prop(RecordRef, "module", lambda self: events.append("record.module") or "demo")
+    prop(RecordRef, "element", lambda self: events.append("record.element") or "Thing")
+    prop(
+        Node,
+        "op",
+        lambda self: events.append("node.op")
+        or ("search_top" if self is terminal_node else "param"),
+    )
+    prop(
+        Node,
+        "args",
+        lambda self: events.append("node.args")
+        or (terminal_node.__dict__["args"] if self is terminal_node else ("embedding",)),
+    )
+
+    parameter = CapturedParameter("embedding", Vector, False)
+    _validate_node(terminal_node, (parameter,))
+    predecessor_trace = events[events.index("leg.record") :]
+    events.clear()
+    rust_capture_observe.observe_keyword_search_leg(leg, owner, parameter)
+    assert events == predecessor_trace
+
+
+def test_private_vector_search_observer_refuses_wrong_resolved_carrier_before_legs():
+    owner = RecordRef(module="demo", element="Thing", key=(_ID,))
+    leg = SearchLeg(owner, "vector", "{}", Node("param", ("embedding",)), ())
+    with pytest.raises(CaptureError) as caught:
+        rust_capture_observe.observe_keyword_search_leg(
+            leg, owner, CapturedParameter("embedding", str, False)
+        )
+    assert (caught.value.code, str(caught.value)) == (
+        "CAPTURE_SIGNATURE",
+        "CAPTURE_SIGNATURE: search parameter carrier differs from selected leg",
+    )
+
+
+def test_private_vector_search_observer_preserves_kind_exception_identity(monkeypatch):
+    from umf_access.dsl.search import SearchLeg as SearchLegBase
+    from umf_access.types import Vector
+
+    owner = RecordRef(module="demo", element="Thing", key=(_ID,))
+    leg = SearchLeg(owner, "vector", "{}", Node("param", ("embedding",)), ())
+    failure = LookupError("vector kind sentinel")
+    monkeypatch.setattr(
+        SearchLegBase,
+        "kind",
+        property(lambda self: (_ for _ in ()).throw(failure)),
+        raising=False,
+    )
+    with pytest.raises(LookupError) as caught:
+        rust_capture_observe.observe_keyword_search_leg(
+            leg, owner, CapturedParameter("embedding", Vector, False)
+        )
+    assert caught.value is failure
+
+
 def test_private_keyword_search_observer_preserves_exception_identity(monkeypatch):
     from umf_access.dsl.search import SearchLeg as SearchLegBase
 

@@ -105,6 +105,24 @@ export function runSelectionCallbackSuite({Registry, selectCoreElements, candida
     {name: 'callback-undefined-result-native-spread-failure', make: events => ({source: documentFor(), query: {references: 'none'}, registry: makeRegistry(Registry, events, {
       alpha: () => { events.push('diagnostics:return-undefined'); return undefined; },
     })})},
+    ...['next', 'done', 'value'].map(stage => ({
+      name: `callback-iterator-${stage}-throws-without-close`,
+      make: events => ({source: documentFor(), query: {references: 'none'}, registry: makeRegistry(Registry, events, {
+        alpha: () => ({[Symbol.iterator]() {
+          events.push('diagnostics:iterator');
+          return {
+            next() {
+              events.push('diagnostics:next');
+              if (stage === 'next') throw {toString() { events.push('diagnostics:throw-toString'); return `${stage} failed`; }};
+              return stage === 'done'
+                ? {get done() { events.push('diagnostics:done'); throw {toString() { events.push('diagnostics:throw-toString'); return `${stage} failed`; }}; }}
+                : {done: false, get value() { events.push('diagnostics:value'); throw {toString() { events.push('diagnostics:throw-toString'); return `${stage} failed`; }}; }};
+            },
+            get return() { events.push('diagnostics:return-get'); throw new Error('spread must not close'); },
+          };
+        }}),
+      })}),
+    })),
     {name: 'callback-noncallable-iterator-native-spread-failure', make: events => ({source: documentFor(), query: {references: 'none'}, registry: makeRegistry(Registry, events, {
       alpha: () => ({[Symbol.iterator]: 17}),
     })})},

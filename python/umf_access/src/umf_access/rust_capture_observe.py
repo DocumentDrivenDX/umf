@@ -13,7 +13,7 @@ from __future__ import annotations
 
 from typing import Any
 
-_PROFILE = "umf-access-capture-graph-observation/0.3.0"
+_PROFILE = "umf-access-capture-graph-observation/0.4.0"
 
 
 class FieldOwnerObservationUnavailable(RuntimeError):
@@ -191,12 +191,14 @@ def observe_keyword_search_leg(
     root_record: object,
     parameter: object,
 ) -> None:
-    """Observe one exact keyword leg against a resolved declaration parameter."""
+    """Observe one exact keyword/vector leg against its resolved parameter."""
     from umf_access.capture import CapturedParameter
+    from umf_access.types import Vector
 
     if type(parameter) is not CapturedParameter or type(parameter.name) is not str:
         raise TypeError("keyword search observation requires a captured parameter")
     string_carrier = parameter.carrier is str
+    vector_carrier = parameter.carrier is Vector
     from umf_access.dsl._nodes import FieldRef, Node, RecordRef
     from umf_access.dsl._expressions import Join
     from umf_access.dsl.search import SearchLeg
@@ -212,6 +214,7 @@ def observe_keyword_search_leg(
         root_record,
         parameter.name,
         string_carrier,
+        vector_carrier,
         Node,
         RecordRef,
         FieldRef,

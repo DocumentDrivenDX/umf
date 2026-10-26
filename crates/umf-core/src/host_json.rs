@@ -1657,6 +1657,117 @@ mod tests {
     }
 
     #[test]
+    fn semantic_spread_step_failures_propagate_without_iterator_close() {
+        for stage in ["next", "done", "value"] {
+            let message = hs(&format!("{stage} failed"));
+            let mut script = vec![
+                event(
+                    HostJsonEvent::GetOpaqueProperty {
+                        receiver: HostInvokeValue::Opaque(1),
+                        key: HostOpaqueKey::IteratorSymbol,
+                        semantic_catch: true,
+                    },
+                    HostJsonReply::OpaqueValue(HostOpaqueValue::Opaque {
+                        handle: 2,
+                        opaque_type: HostOpaqueType::Function,
+                    }),
+                ),
+                event(
+                    HostJsonEvent::InvokeOpaque {
+                        function: 2,
+                        receiver: HostInvokeValue::Opaque(1),
+                        args: vec![],
+                        semantic_catch: true,
+                    },
+                    HostJsonReply::Invocation(HostOpaqueValue::Opaque {
+                        handle: 3,
+                        opaque_type: HostOpaqueType::Object,
+                    }),
+                ),
+                event(
+                    HostJsonEvent::GetOpaqueProperty {
+                        receiver: HostInvokeValue::Opaque(3),
+                        key: HostOpaqueKey::String("next".encode_utf16().collect()),
+                        semantic_catch: true,
+                    },
+                    HostJsonReply::OpaqueValue(HostOpaqueValue::Opaque {
+                        handle: 4,
+                        opaque_type: HostOpaqueType::Function,
+                    }),
+                ),
+            ];
+            if stage == "next" {
+                script.push(event(
+                    HostJsonEvent::InvokeOpaque {
+                        function: 4,
+                        receiver: HostInvokeValue::Opaque(3),
+                        args: vec![],
+                        semantic_catch: true,
+                    },
+                    HostJsonReply::SemanticThrow(message.clone()),
+                ));
+            } else {
+                script.extend([
+                    event(
+                        HostJsonEvent::InvokeOpaque {
+                            function: 4,
+                            receiver: HostInvokeValue::Opaque(3),
+                            args: vec![],
+                            semantic_catch: true,
+                        },
+                        HostJsonReply::Invocation(HostOpaqueValue::Opaque {
+                            handle: 5,
+                            opaque_type: HostOpaqueType::Object,
+                        }),
+                    ),
+                    event(
+                        HostJsonEvent::GetOpaqueProperty {
+                            receiver: HostInvokeValue::Opaque(5),
+                            key: HostOpaqueKey::String("done".encode_utf16().collect()),
+                            semantic_catch: true,
+                        },
+                        if stage == "done" {
+                            HostJsonReply::SemanticThrow(message.clone())
+                        } else {
+                            HostJsonReply::OpaqueValue(HostOpaqueValue::Boolean(false))
+                        },
+                    ),
+                ]);
+                if stage == "value" {
+                    script.push(event(
+                        HostJsonEvent::GetOpaqueProperty {
+                            receiver: HostInvokeValue::Opaque(5),
+                            key: HostOpaqueKey::String("value".encode_utf16().collect()),
+                            semantic_catch: true,
+                        },
+                        HostJsonReply::SemanticThrow(message.clone()),
+                    ));
+                }
+            }
+            let mut host = ScriptedHost::new(script);
+            host.strings.insert(message.token, message.test_units.to_vec());
+            assert_eq!(
+                collect_semantic_iterable(
+                    HostOpaqueValue::Opaque {
+                        handle: 1,
+                        opaque_type: HostOpaqueType::Object,
+                    },
+                    &mut host,
+                    &mut Context::ordinary(),
+                    &k("/diagnostics"),
+                )
+                .unwrap(),
+                HostSemanticIterableOutcome::SemanticThrow(k(&format!("{stage} failed"))),
+            );
+            assert!(host.seen.iter().all(|event| !matches!(
+                event,
+                HostJsonEvent::CloseOpaqueIterator { .. }
+            )));
+            host.done();
+        }
+    }
+
+    #[test]
     fn deferred_diagnostic_copy_reports_nested_non_json_path() {
         let diagnostic = 51;
         let snapshot = 52;

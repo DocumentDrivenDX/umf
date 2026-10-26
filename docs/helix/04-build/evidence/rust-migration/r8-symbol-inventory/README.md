@@ -990,3 +990,17 @@ unresolved resource aliases. Separate Schema Properties, Facets and
 Cardinality gates preserve their narrower scopes. Previous archive and ledger
 cohorts remain historical; no declaration is retired or release qualified by
 this private archive evidence.
+
+## Integrated Rust-port source refresh (2026-10-26)
+
+After merging main's schema-browser npm publisher and Core 0.10.2 PyPI
+publication receipts, the current source and generated resource closure was
+rebuilt. The condition-aware [inventory](inventory.json) has SHA-256
+`ae64e464126dc2a7c92fcc76a33f6f59a0e271c0fd0add7aaeb3669f6050fffe`;
+the [ledger](gap-ledger.json) has SHA-256
+`189c19968d25619ca038e62413e9341cdff816c0216e13dbea57801164a13f54`.
+The ledger's fixed-point check and 47 tests pass. It records 67 accepted
+opt-in Rust operation mappings, 855 executable names without an accepted
+mapping, five bounded binding routes, and all 922 logical default-route
+retirement gaps. The new private Selection, captured-graph and release-custody
+slices do not change the default route or qualify a release.
