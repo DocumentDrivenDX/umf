@@ -1,0 +1,23 @@
+Collecting pydantic@ https://files.pythonhosted.org/packages/eb/47/c95ffc2009878c7aac0c5e08528022dcb885933252a88b5f170058014464/pydantic-2.13.5-py3-none-any.whl (from -r python/umf_access/qualification-requirements.lock (line 2))
+  Downloading pydantic-2.13.5-py3-none-any.whl (472 kB)
+Collecting pydantic-core@ https://files.pythonhosted.org/packages/c0/a4/eb9409ec0736e50aa70a412f16c204ed149516846912f7e6724d4c73ee53/pydantic_core-2.46.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (from -r python/umf_access/qualification-requirements.lock (line 3))
+  Downloading pydantic_core-2.46.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 5.6 MB/s eta 0:00:00
+Collecting typing-extensions@ https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl (from -r python/umf_access/qualification-requirements.lock (line 4))
+  Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+Collecting annotated-types@ https://files.pythonhosted.org/packages/78/b6/6307fbef88d9b5ee7421e68d78a9f162e0da4900bc5f5793f6d3d0e34fb8/annotated_types-0.7.0-py3-none-any.whl (from -r python/umf_access/qualification-requirements.lock (line 5))
+  Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Collecting typing-inspection@ https://files.pythonhosted.org/packages/dc/9b/47798a6c91d8bdb567fe2698fe81e0c6b7cb7ef4d13da4114b41d239f65d/typing_inspection-0.4.2-py3-none-any.whl (from -r python/umf_access/qualification-requirements.lock (line 6))
+  Downloading typing_inspection-0.4.2-py3-none-any.whl (14 kB)
+Collecting cryptography@ https://files.pythonhosted.org/packages/4f/87/ef344a9e616871f2519c22d6afcda79ddd5d35e9592d95eb6e677608d055/cryptography-50.0.2-cp39-abi3-manylinux_2_28_x86_64.whl (from -r python/umf_access/qualification-requirements.lock (line 7))
+  Downloading cryptography-50.0.2-cp39-abi3-manylinux_2_28_x86_64.whl (4.8 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.8/4.8 MB 15.1 MB/s eta 0:00:00
+Collecting cffi@ https://files.pythonhosted.org/packages/78/2d/7fa73dfa841b5ac06c7b8855cfc18622132e365f5b81d02230333ff26e9e/cffi-2.0.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (from -r python/umf_access/qualification-requirements.lock (line 8))
+  Downloading cffi-2.0.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (219 kB)
+Collecting pycparser@ https://files.pythonhosted.org/packages/a0/e3/59cd50310fc9b59512193629e1984c1f95e5c8ae6e5d8c69532ccc65a7fe/pycparser-2.23-py3-none-any.whl (from -r python/umf_access/qualification-requirements.lock (line 9))
+  Downloading pycparser-2.23-py3-none-any.whl (118 kB)
+Installing collected packages: typing-inspection, typing-extensions, pydantic-core, pydantic, pycparser, cryptography, cffi, annotated-types
+Successfully installed annotated-types-0.7.0 cffi-2.0.0 cryptography-50.0.2 pycparser-2.23 pydantic-2.13.5 pydantic-core-2.46.5 typing-extensions-4.16.0 typing-inspection-0.4.2
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.2
+[notice] To update, run: python -m pip install --upgrade pip
