@@ -14,6 +14,7 @@ from __future__ import annotations
 from typing import Any
 
 _PROFILE = "umf-access-capture-graph-observation/0.6.0"
+_EXACT_ALL_EMPTY_PROFILE = "umf-access-capture-exact-all-empty/0.1.0"
 
 
 class FieldOwnerObservationUnavailable(RuntimeError):
@@ -160,6 +161,43 @@ def observe_all_empty_capture_profile(node: object, session: object | None = Non
         or not result["stepsExactTuple"]
     ):
         raise TypeError("capture profile requires exact all terminal with empty steps")
+
+
+def validate_exact_all_empty_profile(
+    node: object,
+    session: object,
+    node_type: type[object],
+    record_ref_type: type[object],
+) -> bool:
+    """Validate the exact empty-``all`` graph without constructing a DTO.
+
+    Rust performs raw, side-effect-free admission first. ``False`` means the
+    graph is outside this closed profile and may proceed through the existing
+    DTO route; ``True`` is returned only after Rust completes the predecessor
+    header, owner and recursive visit-tail reads under the supplied session.
+    """
+    from umf import _rust
+
+    core = getattr(_rust, "_rust_core", None)
+    validate = getattr(
+        core, "access_validate_capture_exact_all_empty_with_session", None
+    )
+    session_type = getattr(core, "CaptureResourceSession", None)
+    if not callable(validate) or not callable(session_type) or type(session) is not session_type:
+        return False
+    result = validate(node, node_type, record_ref_type, session)
+    if (
+        type(result) is not dict
+        or set(result) != {"profile", "outcome"}
+        or result["profile"] != _EXACT_ALL_EMPTY_PROFILE
+        or type(result["outcome"]) is not str
+    ):
+        raise RuntimeError("Rust exact capture validator returned an invalid response")
+    if result["outcome"] == "accepted":
+        return True
+    if result["outcome"] == "outside-profile":
+        return False
+    raise RuntimeError("Rust exact capture validator returned an invalid outcome")
 
 
 def observe_field_join_tuple(

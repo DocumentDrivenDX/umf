@@ -172,6 +172,28 @@ def capture_with_rust_graph_validator(function: object) -> object:
     def validate(
         node: object, parameters: tuple[object, ...], presence: frozenset[str]
     ) -> None:
+        from umf_access.rust_capture_observe import validate_exact_all_empty_profile
+
+        session_type = getattr(_rust._rust_core, "CaptureResourceSession", None)
+        # `_validate_node` first builds a parameter map by reading every
+        # parameter's `.name`; only an exact empty tuple makes that pass inert.
+        # Use the classes bound in the predecessor's globals so monkeypatched
+        # module exports cannot widen the accepted profile.
+        capture_globals = _validate_node.__globals__
+        node_type = capture_globals.get("Node")
+        record_ref_type = capture_globals.get("RecordRef")
+        if (
+            type(parameters) is tuple
+            and len(parameters) == 0
+            and callable(session_type)
+            and isinstance(node_type, type)
+            and isinstance(record_ref_type, type)
+        ):
+            session = session_type((1 << 64) - 1)
+            if validate_exact_all_empty_profile(
+                node, session, node_type, record_ref_type
+            ):
+                return
         budget = _EncodingBudget()
         ordered_presence = tuple(
             parameter.name for parameter in parameters if parameter.name in presence

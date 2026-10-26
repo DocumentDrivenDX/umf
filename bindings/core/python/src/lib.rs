@@ -2796,6 +2796,250 @@ fn access_observe_capture_terminal_join_owners_with_session(
     )
 }
 
+const CAPTURE_EXACT_ALL_EMPTY_PROFILE: &str = "umf-access-capture-exact-all-empty/0.1.0";
+
+fn capture_exact_all_empty_response(py: Python<'_>, outcome: &str) -> PyResult<PyObject> {
+    let result = PyDict::new_bound(py);
+    result.set_item("profile", CAPTURE_EXACT_ALL_EMPTY_PROFILE)?;
+    result.set_item("outcome", outcome)?;
+    Ok(result.into())
+}
+
+/// Validate one DTO-free live graph profile. Admission reads exact-instance
+/// dictionaries through `object.__getattribute__`, rejecting arbitrary dict
+/// keys before lookup so custom `__hash__`/`__eq__` hooks cannot run. Only an
+/// admitted exact graph reaches the predecessor-ordered attribute reads.
+#[pyfunction]
+fn access_validate_capture_exact_all_empty_with_session(
+    py: Python<'_>,
+    node: PyObject,
+    node_type: PyObject,
+    record_ref_type: PyObject,
+    mut session: PyRefMut<'_, CaptureResourceSession>,
+) -> PyResult<PyObject> {
+    macro_rules! charge {
+        () => {
+            session.charge_work(1)?
+        };
+    }
+    let node = node.bind(py);
+    let node_type = node_type.bind(py);
+    let record_ref_type = record_ref_type.bind(py);
+    let outside = || capture_exact_all_empty_response(py, "outside-profile");
+
+    // The raw gate is deliberately side-effect free with respect to graph
+    // accessors. All dictionary keys are checked as exact strings before any
+    // string-key lookup is performed.
+    let builtins = py.import_bound("builtins")?;
+    let builtin_type = builtins.getattr("type")?;
+    let builtin_getset_descriptor_type = py
+        .import_bound("types")?
+        .getattr("GetSetDescriptorType")?;
+    charge!();
+    if node.get_type().as_ptr() != node_type.as_ptr()
+        || !node_type.get_type().is(&builtin_type)
+    {
+        return outside();
+    }
+    let object_type = builtins.getattr("object")?;
+    let object_getattribute = object_type.getattr("__getattribute__")?;
+    let has_builtin_instance_dict = |class: &Bound<'_, PyAny>| -> PyResult<bool> {
+        let class_dict = class.getattr("__dict__")?;
+        let descriptor = class_dict.get_item("__dict__")?;
+        if !descriptor.get_type().is(&builtin_getset_descriptor_type) {
+            return Ok(false);
+        }
+        Ok(descriptor.getattr("__name__")?.extract::<String>()? == "__dict__"
+            && descriptor.getattr("__objclass__")?.is(class))
+    };
+    charge!();
+    if !node_type
+        .getattr("__getattribute__")?
+        .is(&object_getattribute)
+        || !has_builtin_instance_dict(node_type)?
+    {
+        return outside();
+    }
+    let node_class_dict = node_type.getattr("__dict__")?;
+    charge!();
+    if node_class_dict.contains("op")? || node_class_dict.contains("args")? {
+        return outside();
+    }
+    charge!();
+    let node_fields = object_getattribute.call1((node, "__dict__"))?;
+    if !node_fields.is_exact_instance_of::<PyDict>() {
+        return outside();
+    }
+    let node_fields = node_fields.downcast::<PyDict>()?;
+    let mut node_keys = Vec::new();
+    for key in node_fields.keys().iter() {
+        charge!();
+        if !key.is_exact_instance_of::<PyString>() {
+            return outside();
+        }
+        let Ok(key) = key.extract::<String>() else {
+            return outside();
+        };
+        node_keys.push(key);
+    }
+    if node_keys.len() != 2
+        || !node_keys.iter().any(|key| key == "op")
+        || !node_keys.iter().any(|key| key == "args")
+    {
+        return outside();
+    }
+    charge!();
+    let Some(op) = node_fields.get_item("op")? else {
+        return outside();
+    };
+    if !op.is_exact_instance_of::<PyString>()
+        || op.extract::<String>().ok().as_deref() != Some("all")
+    {
+        return outside();
+    }
+    charge!();
+    let Some(args) = node_fields.get_item("args")? else {
+        return outside();
+    };
+    if !args.is_exact_instance_of::<PyTuple>() {
+        return outside();
+    }
+    let args = args.downcast::<PyTuple>()?;
+    if args.len() != 2 {
+        return outside();
+    }
+    let record = args.get_item(0)?;
+    let steps = args.get_item(1)?;
+    if record.get_type().as_ptr() != record_ref_type.as_ptr()
+        || !steps.is_exact_instance_of::<PyTuple>()
+        || steps.len()? != 0
+    {
+        return outside();
+    }
+    charge!();
+    if !record_ref_type.get_type().is(&builtin_type)
+        || !record_ref_type
+            .getattr("__getattribute__")?
+            .is(&object_getattribute)
+        || !has_builtin_instance_dict(record_ref_type)?
+    {
+        return outside();
+    }
+    let record_class_dict = record_ref_type.getattr("__dict__")?;
+    for name in ["module", "element", "alias"] {
+        charge!();
+        if record_class_dict.contains(name)? {
+            let value = record_class_dict.get_item(name)?;
+            if name != "alias" || !value.is_none() {
+                return outside();
+            }
+        }
+    }
+    charge!();
+    let record_fields = object_getattribute.call1((&record, "__dict__"))?;
+    if !record_fields.is_exact_instance_of::<PyDict>() {
+        return outside();
+    }
+    let record_fields = record_fields.downcast::<PyDict>()?;
+    let mut has_module = false;
+    let mut has_element = false;
+    let mut has_alias = false;
+    for key in record_fields.keys().iter() {
+        charge!();
+        if !key.is_exact_instance_of::<PyString>() {
+            return outside();
+        }
+        let Ok(key) = key.extract::<String>() else {
+            return outside();
+        };
+        has_module |= key == "module";
+        has_element |= key == "element";
+        has_alias |= key == "alias";
+    }
+    if !(has_module && has_element && has_alias) {
+        return outside();
+    }
+    for name in ["module", "element"] {
+        charge!();
+        let Some(value) = record_fields.get_item(name)? else {
+            return outside();
+        };
+        if !value.is_exact_instance_of::<PyString>() {
+            return outside();
+        }
+    }
+    charge!();
+    let Some(alias) = record_fields.get_item("alias")? else {
+        return outside();
+    };
+    if !alias.is_none() && !alias.is_exact_instance_of::<PyString>() {
+        return outside();
+    }
+
+    // `_validate_node`'s observable header pass. The admitted exact classes and
+    // tuple make these reads non-dispatching, but retain their order and count.
+    charge!();
+    if node.getattr("op")?.extract::<String>()? != "all" {
+        return outside();
+    }
+    charge!();
+    let truth_args = node.getattr("args")?;
+    if !truth_args.is_truthy()? {
+        return outside();
+    }
+    charge!();
+    let root_args = node.getattr("args")?;
+    charge!();
+    if root_args.get_item(0)?.get_type().as_ptr() != record_ref_type.as_ptr() {
+        return outside();
+    }
+    charge!();
+    let record_args = node.getattr("args")?;
+    let record = record_args.get_item(0)?;
+    charge!();
+    let steps_args = node.getattr("args")?;
+    let steps = steps_args.get_item(1)?;
+
+    // Empty selection/group/join passes still create and exhaust their
+    // iterators in the Python predecessor; account for those work steps.
+    for _ in 0..4 {
+        charge!();
+        if !steps.is_exact_instance_of::<PyTuple>() || steps.len()? != 0 {
+            return outside();
+        }
+    }
+    // Root owner tuple construction reads module, element, alias in that order.
+    for name in ["module", "element", "alias"] {
+        charge!();
+        let _ = record.getattr(name)?;
+    }
+
+    // Full `visit(node)` tail: type-dispatch, op rules, args read, then visit
+    // the RecordRef and empty steps children in tuple order.
+    for _ in 0..4 {
+        charge!();
+    }
+    charge!();
+    if node.getattr("op")?.extract::<String>()? != "all" {
+        return outside();
+    }
+    charge!();
+    let visit_args = node.getattr("args")?;
+    for child_index in 0..visit_args.len()? {
+        charge!();
+        let child = visit_args.get_item(child_index)?;
+        for _ in 0..4 {
+            charge!();
+        }
+        if child_index == 0 {
+            charge!();
+        } else if !child.is_exact_instance_of::<PyTuple>() {
+            return outside();
+        }
+    }
+    capture_exact_all_empty_response(py, "accepted")
+}
+
 fn observe_capture_terminal_join_owners(
     py: Python<'_>,
     node: PyObject,
@@ -4721,6 +4965,10 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     )?)?;
     module.add_function(wrap_pyfunction!(
         access_observe_capture_terminal_join_owners_with_session,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_validate_capture_exact_all_empty_with_session,
         module
     )?)?;
     module.add_class::<CaptureResourceSession>()?;

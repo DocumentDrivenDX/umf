@@ -239,3 +239,57 @@ Build output included existing unrelated Rust/PyO3 warnings. No Cargo lockfile
 was intentionally edited by this slice; the shared worktree contains other
 concurrent changes, so the parent task owns reconciliation of unrelated
 working-tree state.
+
+## DTO-free exact empty-`.all()` validator — 2026-10-26
+
+A separate private PyO3 operation now validates the exact built-in
+`Node("all", (RecordRef, ()))` shape without constructing the tagged graph
+DTO. It returns only `accepted` after checking the closed profile and running
+the predecessor's ordered header, root-owner, and recursive visit-tail reads
+under one `CaptureResourceSession`. Raw admission requires exact built-in
+classes, exact tuples, and exact string instance-dictionary keys before keyed
+lookups. It also checks the original built-in instance-dictionary descriptors
+before using `object.__getattribute__`. Anything outside this profile returns
+`outside-profile` before graph reads and continues through the unchanged
+private DTO validator.
+
+Admission compares the metaclass by pointer identity with `builtins.type`, and
+the instance-dictionary descriptor type by pointer identity with
+`types.GetSetDescriptorType`. It does not trust displayed type names; a custom
+metaclass named `type` is rejected before its class-attribute getter can run.
+
+The opt-in wrapper calls this operation only when `_validate_node`'s current
+bound `Node` and `RecordRef` globals are available and the parameter collection
+is an exact empty tuple. That preserves the predecessor's earlier
+`parameter_map` `.name` reads for nonempty parameters and prevents monkeypatched
+DSL module exports from changing the admitted classes. Public `capture()` is
+unchanged. The profile does not claim general graph validation, complete
+resource-limit parity, or support for subclasses and nonempty operation
+variants.
+
+The current-source extension built offline with Rust 1.90.0 in the isolated
+`/private/tmp/umf-capture-all-empty-target` target directory. Using its copied
+overlay (rather than the stale `/private/tmp/umf` addon), the focused
+`test_capture_rust_graph_validator.py` and `test_capture_field_observation.py`
+suite passed **81/81** on CPython 3.13.16. Ruff still reports the pre-existing
+`BLE001` broad exception warning in `rust_capture_observe.py`; the added test
+imports were sorted, and `git diff --check` passes.
+
+The parent review then ran the wider seven-file CPython overlay cohort against
+the same current-source addon: **109 passed, 3 subtests passed** in 1.62s. The
+exact command was:
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 DYLD_LIBRARY_PATH=/private/tmp/umf-capture-all-empty-overlay/umf PYTHONPATH=/private/tmp/umf-capture-all-empty-overlay:python/umf_access/src:python/src python/.venv/bin/python -m pytest -p no:cacheprovider -q python/umf_access/tests/test_capture.py python/umf_access/tests/test_capture_resource_budget.py python/umf_access/tests/test_capture_field_observation.py python/umf_access/tests/test_capture_rust_graph_validator.py python/umf_access/tests/test_captured_declaration_predecessor.py python/umf_access/tests/test_captured_logical_render_predecessor.py python/umf_access/tests/test_captured_logical_render_positive.py
+```
+
+SHA-256 pins for the extension and changed implementation sources used by this
+cohort:
+
+| Artifact | SHA-256 |
+| --- | --- |
+| Isolated overlay `_rust_core.abi3.so` | `86e3c76c4a1e81b599bac2e6dd8ea6fa585d250ca66cdd33e9a9b001527b62d3` |
+| `bindings/core/python/src/lib.rs` | `73fe399cca75f9148b3270974dbf3935eb7dc5288fa588a435b39ff4ae9a7c67` |
+| `python/umf_access/src/umf_access/rust_capture_observe.py` | `d4a5b4eb71a60d1e3ee98a14d55d6765123b53038d1dd5aa24cf7436fd38ad06` |
+| `python/umf_access/src/umf_access/rust_catalog_render.py` | `ed085d8605e2f7c61247af1866c0bd24dfa7929edd673a1c7cf12b42d515c9fa` |
+| `python/umf_access/tests/test_capture_rust_graph_validator.py` | `99eaa1feda3daf4779deee2972a3c1a9819c5aa13a175e669cab80a9c1eaecb1` |

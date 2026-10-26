@@ -10,9 +10,14 @@ from unittest.mock import patch
 import pytest
 from pydantic import BaseModel
 from umf import _rust
-from umf_access import rust_catalog_render
-from umf_access import rust_capture_observe
-from umf_access.capture import CapturedParameter, CapturedVariant, CaptureError, _validate_node, capture
+from umf_access import rust_capture_observe, rust_catalog_render
+from umf_access.capture import (
+    CapturedParameter,
+    CapturedVariant,
+    CaptureError,
+    _validate_node,
+    capture,
+)
 from umf_access.dsl import (
     Column,
     FieldRef,
@@ -95,11 +100,16 @@ def test_private_opt_in_capture_accepts_closed_rust_response():
                 {"profile": "umf-access-capture-orchestration/0.1.0", "outcome": "accepted", "presences": []},
             ),
             create=True,
-    ) as orchestrate:
+    ) as orchestrate, patch.object(
+        _rust._rust_core,
+        "access_validate_capture_exact_all_empty_with_session",
+        wraps=_rust._rust_core.access_validate_capture_exact_all_empty_with_session,
+    ) as exact_validate:
         captured = rust_catalog_render.capture_with_rust_graph_validator(declaration)
     assert len(captured.variants) == 1
     assert validate.call_count == 4
     assert orchestrate.call_count == 2
+    assert exact_validate.call_count == 4
 
 
 def test_private_opt_in_capture_maps_rust_signature_refusal():
@@ -126,6 +136,176 @@ def test_private_opt_in_capture_maps_rust_signature_refusal():
         str(caught.value)
         == "CAPTURE_SIGNATURE: expression references an undeclared parameter"
     )
+
+
+def test_dto_free_exact_empty_all_matches_python_predecessor(monkeypatch):
+    session = _rust._rust_core.CaptureResourceSession(100_000)
+    node = Node("all", (RecordRef("demo", "Thing", (_ID,)), ()))
+    result = _rust._rust_core.access_validate_capture_exact_all_empty_with_session(
+        node, Node, RecordRef, session
+    )
+    assert result == {
+        "profile": "umf-access-capture-exact-all-empty/0.1.0",
+        "outcome": "accepted",
+    }
+    assert session.charged_work > 0
+    _validate_node(node, ())
+
+    @query
+    def declaration():
+        return Terminal(node)
+
+    def no_dto(*_args, **_kwargs):
+        raise AssertionError("accepted exact profile must not encode a tagged DTO")
+
+    monkeypatch.setattr(rust_catalog_render, "_encode_capture", no_dto)
+    captured = rust_catalog_render.capture_with_rust_graph_validator(declaration)
+    assert captured.variants[0].node == node
+
+
+def test_dto_free_validator_returns_outside_profile_before_graph_reads(monkeypatch):
+    node = Node("all", (RecordRef("demo", "Thing", (_ID,)), (Node("limit", (1,)),)))
+    session = _rust._rust_core.CaptureResourceSession(100_000)
+    result = _rust._rust_core.access_validate_capture_exact_all_empty_with_session(
+        node, Node, RecordRef, session
+    )
+    assert result == {
+        "profile": "umf-access-capture-exact-all-empty/0.1.0",
+        "outcome": "outside-profile",
+    }
+
+
+def test_dto_free_validator_rejects_mutated_class_accessors_before_reads(monkeypatch):
+    node = Node("all", (RecordRef("demo", "Thing", (_ID,)), ()))
+    reads: list[str] = []
+    original = Node.__getattribute__
+    sentinel = LookupError("graph accessor must stay untouched during admission")
+
+    def patched_getattribute(instance, name):
+        if instance is node:
+            reads.append(name)
+            raise sentinel
+        return original(instance, name)
+
+    monkeypatch.setattr(Node, "__getattribute__", patched_getattribute)
+    session = _rust._rust_core.CaptureResourceSession(100_000)
+    result = _rust._rust_core.access_validate_capture_exact_all_empty_with_session(
+        node, Node, RecordRef, session
+    )
+    assert result["outcome"] == "outside-profile"
+    assert reads == []
+
+
+def test_dto_free_admission_rejects_custom_instance_dict_descriptor_before_getter():
+    calls: list[str] = []
+
+    class TrapMeta(type):
+        @property
+        def __dict__(cls):
+            calls.append("class-__dict__")
+            raise AssertionError("custom class dictionary descriptor must not run")
+
+    class TrapNode(metaclass=TrapMeta):
+        pass
+
+    node = object.__new__(TrapNode)
+    session = _rust._rust_core.CaptureResourceSession(100_000)
+    result = _rust._rust_core.access_validate_capture_exact_all_empty_with_session(
+        node, TrapNode, RecordRef, session
+    )
+    assert result["outcome"] == "outside-profile"
+    assert calls == []
+
+
+def test_dto_free_admission_rejects_metaclass_spoof_named_type_before_getter():
+    calls: list[str] = []
+
+    class SpoofMeta(type):
+        def __getattribute__(cls, name):
+            calls.append(name)
+            raise AssertionError("spoof metaclass lookup must not run")
+
+    SpoofMeta.__name__ = "type"
+    spoof_node_type = SpoofMeta("SpoofNode", (), {})
+    node = object.__new__(spoof_node_type)
+    session = _rust._rust_core.CaptureResourceSession(100_000)
+    result = _rust._rust_core.access_validate_capture_exact_all_empty_with_session(
+        node, spoof_node_type, RecordRef, session
+    )
+    assert result["outcome"] == "outside-profile"
+    assert calls == []
+
+
+def test_dto_free_raw_key_admission_never_hashes_custom_dict_keys():
+    class TrapKey:
+        armed = False
+
+        def __hash__(self):
+            if self.armed:
+                raise AssertionError("raw admission must not hash custom keys")
+            return 17
+
+        def __eq__(self, other):
+            if self.armed:
+                raise AssertionError("raw admission must not compare custom keys")
+            return self is other
+
+    node = Node("all", (RecordRef("demo", "Thing", (_ID,)), ()))
+    key = TrapKey()
+    vars(node)[key] = "ignored by Python validator"
+    key.armed = True
+    session = _rust._rust_core.CaptureResourceSession(100_000)
+    result = _rust._rust_core.access_validate_capture_exact_all_empty_with_session(
+        node, Node, RecordRef, session
+    )
+    assert result["outcome"] == "outside-profile"
+
+
+def test_dto_free_validator_resource_limit_precedes_graph_accessor_reads(monkeypatch):
+    node = Node("all", (RecordRef("demo", "Thing", (_ID,)), ()))
+    reads: list[str] = []
+    original = Node.__getattribute__
+
+    def trapped_getattribute(instance, name):
+        if instance is node:
+            reads.append(name)
+            raise AssertionError("resource cap must stop before graph reads")
+        return original(instance, name)
+
+    monkeypatch.setattr(Node, "__getattribute__", trapped_getattribute)
+    session = _rust._rust_core.CaptureResourceSession(0)
+    with pytest.raises(ValueError, match="capture resource limit exceeded"):
+        _rust._rust_core.access_validate_capture_exact_all_empty_with_session(
+            node, Node, RecordRef, session
+        )
+    assert reads == []
+    assert session.charged_work == 0
+
+
+def test_private_opt_in_nonempty_parameters_fall_back_before_parameter_reads(monkeypatch):
+    @query
+    def declaration(parameter: Param[int]):
+        return _QUERY.all()
+
+    def forbidden(*_args, **_kwargs):
+        raise AssertionError("nonempty parameters must use the original DTO path")
+
+    monkeypatch.setattr(
+        _rust._rust_core,
+        "access_validate_capture_exact_all_empty_with_session",
+        forbidden,
+        raising=False,
+    )
+    encode = rust_catalog_render._encode_capture
+    calls = []
+
+    def tracked_encode(*args, **kwargs):
+        calls.append(args[0])
+        return encode(*args, **kwargs)
+
+    monkeypatch.setattr(rust_catalog_render, "_encode_capture", tracked_encode)
+    rust_catalog_render.capture_with_rust_graph_validator(declaration)
+    assert calls
 
 
 def test_live_rust_validator_matches_get_page_selected_key_preflight_order():
