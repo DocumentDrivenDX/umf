@@ -32,3 +32,11 @@ def logical_render_profile_version() -> str:
 
 def render_logical_variant(value: dict[str, Any]) -> dict[str, Any]:
     return _rust._rust_core.access_catalog_render_logical_variant(value)
+
+
+def logical_render_full_profile_version() -> str:
+    return _rust._rust_core.access_catalog_logical_render_full_profile_version()
+
+
+def render_logical_full_variant(value: dict[str, Any]) -> dict[str, Any]:
+    return _rust._rust_core.access_catalog_render_logical_full_variant(value)

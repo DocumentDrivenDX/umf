@@ -1911,6 +1911,74 @@ fn access_catalog_render_logical_variant(
 }
 
 #[pyfunction]
+fn access_catalog_logical_render_full_profile_version() -> &'static str {
+    umf_core::access_logical_render::FULL_PROFILE
+}
+
+#[pyfunction]
+fn access_catalog_render_logical_full_variant(
+    py: Python<'_>,
+    input: &Bound<'_, PyAny>,
+) -> PyResult<PyObject> {
+    if !input.is_exact_instance_of::<PyDict>() {
+        return Err(PyValueError::new_err(
+            "captured logical render input must be an exact dict",
+        ));
+    }
+    let mut context = Context::ordinary();
+    let mut count = 0usize;
+    let input =
+        python_value::from_python(py, input, &mut context, 0, &mut count).map_err(py_error)?;
+    let response = match umf_core::access_logical_render::full::render_captured_variant(
+        &input,
+        &mut context,
+    ) {
+        Ok(logical_request) => PythonConsumerValue::Object(vec![
+            (
+                umf_core::PyText::from_utf8("profile"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(
+                    umf_core::access_logical_render::FULL_PROFILE,
+                )),
+            ),
+            (
+                umf_core::PyText::from_utf8("outcome"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8("rendered")),
+            ),
+            (
+                umf_core::PyText::from_utf8("logicalRequest"),
+                PythonConsumerValue::String(umf_core::PyText::from_utf8(&logical_request)),
+            ),
+        ]),
+        Err(umf_core::access_logical_render::LogicalRenderError::Refused(refusal)) => {
+            PythonConsumerValue::Object(vec![
+                (
+                    umf_core::PyText::from_utf8("profile"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8(
+                        umf_core::access_logical_render::FULL_PROFILE,
+                    )),
+                ),
+                (
+                    umf_core::PyText::from_utf8("outcome"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8("refused")),
+                ),
+                (
+                    umf_core::PyText::from_utf8("code"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.code)),
+                ),
+                (
+                    umf_core::PyText::from_utf8("message"),
+                    PythonConsumerValue::String(umf_core::PyText::from_utf8(&refusal.message)),
+                ),
+            ])
+        }
+        Err(umf_core::access_logical_render::LogicalRenderError::Resource(error)) => {
+            return Err(py_error(error));
+        }
+    };
+    python_value::to_python(py, &response, &mut context)
+}
+
+#[pyfunction]
 fn access_validate_captured_graph_variant(
     py: Python<'_>,
     input: &Bound<'_, PyAny>,
@@ -4211,6 +4279,14 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     )?)?;
     module.add_function(wrap_pyfunction!(
         access_catalog_render_logical_variant,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_catalog_logical_render_full_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_catalog_render_logical_full_variant,
         module
     )?)?;
     module.add_function(wrap_pyfunction!(
