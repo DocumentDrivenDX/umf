@@ -6238,8 +6238,10 @@ only after the installed wheel identity gate passes. The earlier dev7 receipt
 predates this source-to-wheel closure check and is historical. The fresh
 clean-source CPython 3.14.8 macOS arm64 artifact receipt passes at `f82845498`;
 the dependent semantic receipt matches four public `capture()` cases with the
-pinned source predecessor. Hosted cohorts, full capture semantics and native
-drivers remain unqualified.
+pinned source predecessor. A separate semantic extension matches six cases,
+adding ordered projection and a compound bound predicate while reusing the
+same source-pinned installed wheel. Hosted cohorts, full capture semantics and
+native drivers remain unqualified.
 
 The regenerated [R8 inventory and gap ledger](evidence/rust-migration/r8-symbol-inventory/README.md)
 still record 922 logical executable default-route retirement gaps: 67 have an

@@ -77,6 +77,32 @@ class CaptureQualificationControls(unittest.TestCase):
                     cohort="macos-arm64-cpython-314-local",
                 )
 
+    def test_installed_receipt_requires_full_source_revision_identity(self):
+        receipt = {
+            "schema": "umf.access-installed-artifact-qualification/1",
+            "status": "passed",
+            "cohort": "macos-arm64-cpython-314-local",
+            "wheelSha256": "a" * 64,
+            "wheelMembers": {"umf_access/capture.py": "d" * 64},
+            "profileEvidence": {"receiptCohortMatchesLocalEvidence": True},
+            "sourceClosure": {"source-revision:git-head": "b" * 40},
+        }
+        for revision in ("b" * 39, "g" * 40, ""):
+            with self.subTest(revision=revision), self.assertRaisesRegex(
+                ValueError, "source closure is unavailable"
+            ):
+                QUALIFIER.validate_installed_artifact_receipt(
+                    {**receipt, "sourceClosure": {"source-revision:git-head": revision}},
+                    wheel_sha256="a" * 64,
+                    cohort="macos-arm64-cpython-314-local",
+                )
+
+    def test_bounded_semantic_case_census_is_explicit(self):
+        self.assertEqual(
+            set(QUALIFIER.declarations()),
+            {"direct", "filtered", "optional", "refusal", "projected", "compound"},
+        )
+
     def test_capture_origin_must_be_inside_installed_distribution(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

@@ -86,6 +86,17 @@ refusal outcomes against the exact predecessor source SHA-256
 Both receipts set `releaseEligible: false`; they do not qualify other capture
 shapes or hosted cohorts.
 
+The separate [semantic extension receipt](local-capture-semantic-extension-20261026.json)
+adds ordered multi-field projection and a compound, two-parameter predicate with
+scalar projection to the original four-case comparison. It records successful
+capture outcomes for the five positive shapes and the expected unsupported-carrier
+refusal, with exact installed/predecessor structural equality. The extension used
+the already installed dev7 wheel from the recorded `f828454…` source cohort and
+the frozen predecessor digest above; its updated qualifier/control hashes belong
+to the current checkout and do not constitute a new wheel build or clean-source
+installed receipt. It remains one local CPython 3.14.8 macOS arm64 semantic
+comparison, with `releaseEligible: false`.
+
 The gate is separate from the existing six-cohort `umf-core` plus `umf-codegen`
 aggregate. Those cohorts use CPython 3.11.17–3.13.16 and install the pair with
 Pydantic 2.11.9; access requires Pydantic 2.13 or newer. Access's fixed

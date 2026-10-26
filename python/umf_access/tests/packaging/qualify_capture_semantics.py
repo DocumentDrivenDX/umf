@@ -1,8 +1,6 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 """Compare installed public capture behavior with a pinned source predecessor."""
 
-from __future__ import annotations
-
 import argparse
 import hashlib
 import importlib
@@ -12,6 +10,9 @@ import json
 from pathlib import Path
 import platform
 import sys
+from types import UnionType
+from typing import Union, get_args, get_origin
+from umf_access.types import MISSING
 
 
 PREDECESSOR_REVISION = "bf8bf6031^"
@@ -51,6 +52,12 @@ def observation(function, capture_module) -> dict:
 
 
 def _normalize_modules(value):
+    if value is MISSING:
+        return ("umf_access.types", "MISSING")
+    if isinstance(value, type):
+        return (value.__module__, value.__qualname__)
+    if get_origin(value) in (Union, UnionType):
+        return ("typing-union", tuple(_normalize_modules(item) for item in get_args(value)))
     if isinstance(value, (list, tuple)):
         result = [_normalize_modules(item) for item in value]
         if result and result[0] in {
@@ -86,7 +93,10 @@ def validate_installed_artifact_receipt(
     ) is not True:
         raise ValueError("installed-artifact receipt does not match local evidence scope")
     closure = receipt.get("sourceClosure")
-    if not isinstance(closure, dict) or not closure or not closure.get("source-revision:git-head"):
+    source_revision = closure.get("source-revision:git-head") if isinstance(closure, dict) else None
+    if not isinstance(source_revision, str) or len(source_revision) != 40 or any(
+        char not in "0123456789abcdef" for char in source_revision
+    ):
         raise ValueError("installed-artifact receipt source closure is unavailable")
     members = receipt.get("wheelMembers")
     capture_hash = members.get("umf_access/capture.py") if isinstance(members, dict) else None
@@ -114,7 +124,9 @@ def declarations():
         pass
 
     identity = FieldRef("billing", "Invoice", "id")
+    id_column = Column[Invoice, int](identity)
     status = Column[Invoice, str](FieldRef("billing", "Invoice", "status"))
+    amount = Column[Invoice, int](FieldRef("billing", "Invoice", "amount"))
     records = Query[Invoice, Invoice, int](RecordRef("billing", "Invoice", (identity,)))
 
     @query
@@ -133,7 +145,30 @@ def declarations():
     def refusal(value: Param[object]):
         return records.limit(4).all()
 
-    return {item.__name__: item for item in (direct, filtered, optional, refusal)}
+    @query
+    def projected():
+        return records.select(id_column, status).order_by(id_column.asc()).limit(3).all()
+
+    @query
+    def compound(value: Param[str], minimum: Param[int]):
+        return records.filter((status == value) & (amount >= minimum)).select(
+            id_column
+        ).order_by(id_column.asc()).limit(5).all()
+
+    return {
+        item.__name__: item
+        for item in (direct, filtered, optional, refusal, projected, compound)
+    }
+
+
+EXPECTED_CASE_STATUSES = {
+    "direct": "pass",
+    "filtered": "pass",
+    "optional": "pass",
+    "refusal": "refused",
+    "projected": "pass",
+    "compound": "pass",
+}
 
 
 def main() -> int:
@@ -177,6 +212,10 @@ def main() -> int:
             "modulePath": str(module_path),
             "distributionRoot": str(distribution_root),
         },
+        "harnessEvidence": {
+            "qualifierSha256": sha(Path(__file__).resolve()),
+            "controlsSha256": sha(Path(__file__).with_name("test_qualify_capture_semantics.py")),
+        },
         "cases": {},
         "publishing": False,
         "releaseEligible": False,
@@ -190,6 +229,8 @@ def main() -> int:
         for name, declaration in declarations().items():
             expected = observation(declaration, predecessor_capture)
             actual = observation(declaration, installed_capture)
+            if expected["status"] != EXPECTED_CASE_STATUSES[name]:
+                raise ValueError(f"source predecessor did not exercise {name} as expected")
             report["cases"][name] = {
                 "status": "match" if expected == actual else "mismatch",
                 "predecessor": expected,
@@ -198,8 +239,9 @@ def main() -> int:
             compare(expected, actual)
         report["status"] = "pass"
         report["scope"] = (
-            "four public capture declaration cases (direct, bound parameter, optional "
-            "parameter variants, unsupported carrier refusal); one installed "
+            "six public capture declaration cases (direct, bound parameter, optional "
+            "parameter variants, unsupported carrier refusal, ordered multi-field "
+            "projection, compound bound predicate with scalar projection); one installed "
             "CPython/macOS cohort only"
         )
     except Exception as error:  # noqa: BLE001 - retain failed qualification evidence
