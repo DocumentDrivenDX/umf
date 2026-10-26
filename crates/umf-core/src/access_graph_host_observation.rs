@@ -8,7 +8,7 @@
 use crate::Utf16;
 use std::collections::HashSet;
 
-pub const PROFILE: &str = "umf-access-capture-graph-observation/0.1.0";
+pub const PROFILE: &str = "umf-access-capture-graph-observation/0.2.0";
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct ExpectedOwner {

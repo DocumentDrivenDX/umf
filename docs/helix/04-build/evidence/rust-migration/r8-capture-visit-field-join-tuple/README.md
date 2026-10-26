@@ -22,7 +22,9 @@ the capture migration: terminal/root/sequential-Join observation, and the
 bounded `FieldRef`/`Join`/tuple branch of `_validate_node.visit`. Both preserve
 the observable order of the covered live reads and retain accessor exceptions.
 Neither changes public `capture()` routing or establishes complete captured
-graph validation.
+graph validation. The installed capability identity is
+`umf-access-capture-graph-observation/0.2.0`; this version requires the
+FieldRef owner, terminal/Join, and bounded visit operations.
 
 ## Bounded visit branch
 

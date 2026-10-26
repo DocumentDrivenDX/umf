@@ -158,6 +158,29 @@ def test_missing_native_profile_fails_before_touching_field(monkeypatch):
     assert touched == []
 
 
+def test_prior_graph_profile_is_rejected_before_field_access(monkeypatch):
+    touched: list[str] = []
+
+    class UntouchedField:
+        def __getattribute__(self, name: str):
+            touched.append(name)
+            raise AssertionError("profile version check touched the graph")
+
+    old_core = SimpleNamespace(
+        access_field_owner_observation_profile_version=lambda: "umf-access-capture-graph-observation/0.1.0",
+        access_validate_field_owner_observed=lambda *_args: True,
+        access_observe_capture_terminal_join_owners=lambda *_args: {},
+        access_observe_capture_field_join_tuple=lambda *_args: None,
+    )
+    fake_umf = ModuleType("umf")
+    fake_umf._rust = SimpleNamespace(_rust_core=old_core)
+    monkeypatch.setitem(sys.modules, "umf", fake_umf)
+
+    with pytest.raises(RuntimeError, match="lacks the capture graph observation profile"):
+        observe_field_join_tuple(UntouchedField(), ())
+    assert touched == []
+
+
 def test_field_join_tuple_visit_preserves_dfs_and_owner_component_order():
     reads: list[str] = []
     armed = False

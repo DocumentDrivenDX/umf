@@ -14,7 +14,7 @@ from __future__ import annotations
 
 from typing import Any
 
-_PROFILE = "umf-access-capture-graph-observation/0.1.0"
+_PROFILE = "umf-access-capture-graph-observation/0.2.0"
 
 
 class FieldOwnerObservationUnavailable(RuntimeError):
