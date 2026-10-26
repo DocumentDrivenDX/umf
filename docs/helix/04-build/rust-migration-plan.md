@@ -6004,3 +6004,14 @@ One focused Rust test, a fresh PyO3 build and four CPython overlay tests pass.
 The public `result_frame` does not call the predicate; its row acquisition,
 shared budget, authenticated cursor and installed-wheel/database matrix remain
 open, so this is no default-route retirement.
+
+The [private Python logical-render v0.2 bridge](evidence/rust-migration/r8-python-logical-render-v02-bridge/README.md)
+now exposes the existing full Rust renderer through an exact-profile PyO3
+envelope. The live-object helper preflights the installed capability before
+captured-object encoding; missing or mismatched profiles fail closed. Sol
+independently reran 22 focused Python tests with 15 subtests against the fresh
+extension. The accepted packet covers direct, equality-filter and
+optional-filter requests. Separate Python encoder/output budgets and the
+native Context do not establish the predecessor's resource first-fault order.
+Related, mutation, joins, group/search, Weft and installed-release replay
+remain open; Python's public renderer and catalog defaults stay selected.
