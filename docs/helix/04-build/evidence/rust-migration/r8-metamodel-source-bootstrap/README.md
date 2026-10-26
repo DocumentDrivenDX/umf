@@ -63,3 +63,25 @@ unrelated files and is not used as a clean result.
 This evidence establishes a local source-bound bootstrap and feature-isolation
 behavior; it does not establish a cross-platform release build or completion of
 the broader metamodel retirement work.
+
+## Current-source fixed point after 2026-10-26 commits
+
+After commits `2b953bfec`, `e3de811e6`, and `38b572c60`, the generated
+metamodel manifest was regenerated from the current source cohort. Its
+SHA-256 is `d4da2844bdfd30aea908eddfd362a69954e19bbbaa600cba6c4d075e1ace2bd6`.
+The generated action-plan producer identity was also refreshed; its source
+file SHA-256 is `3f7f629e9ef96f9d423bcefa3850279f863e686d9ab3aad6d1f6e8e7d33bb86f`.
+
+The current-source checks passed on macOS arm64 with Bun 1.4.3:
+
+| Check | Result |
+| --- | --- |
+| `bun run build:metamodel` | Pass; authored model validates against generated current enforcement |
+| `bun run check:metamodel` | Pass; metamodel outputs current |
+| `bun scripts/actions-plan-identity.ts --check` | Pass after identity regeneration |
+| `bun test tests/metamodel` | Pass; 61 tests, 484 assertions |
+| `bun scripts/metamodel-browser.ts` | Pass; Chromium 153.0.8010.12, receipts 138 + 1, no page errors |
+
+This is a current-source fixed-point and scoped compiler/browser result. It
+does not qualify the Rust migration as complete or change any runtime support
+claim.
