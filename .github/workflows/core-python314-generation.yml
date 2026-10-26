@@ -267,15 +267,96 @@ jobs:
           expected_cpython={"implementation":"CPython","version":"3.14.8","unicodeVersion":"16.0.0","releaseTag":"3.14.8-36806082737","releaseId":400609475,"releaseApiSha256":"d7d8d41851a6a6489a9fc5b6b51e601e708cca26f1b0fe1791751371dc7cf0a0","assetApiUrl":"https://api.github.com/repos/actions/python-versions/releases/assets/602296995","assetApiSha256":"bd1ade7f0c55dc6f8ac8ecc3af88d6d66646e8c09841dede5b0d73922ede7d00","downloadUrl":"https://github.com/actions/python-versions/releases/download/3.14.8-36806082737/python-3.14.8-linux-24.04-x64.tar.gz","archiveName":"python-3.14.8-linux-24.04-x64.tar.gz","archiveBytes":110382248,"archiveSha256":"fa74abc70a55c10f6631967784878704eef81bbde9b8ec27469534f6ba997cb3","executableMember":"./bin/python3.14","executableBytes":17752,"executableSha256":"a5230d8adbd26c2185d77fb003597c4ee9c44c2369fc179122ff7c3a3a58ae59","installationPrefix":"/opt/hostedtoolcache/Python/3.14.8/x64","libpythonRelativePath":"lib/libpython3.14.so.1.0","stdlibRelativePath":"lib/python3.14","extensionModulesRelativePath":"lib/python3.14/lib-dynload"}
           if lock["cpython"]!=expected_cpython: raise SystemExit("CPython acquisition identity differs from frozen primary metadata")
           if pathlib.Path("python/pyproject.toml").read_text().find('version = "0.10.3"')<0: raise SystemExit("distribution version is not 0.10.3")
-          tools={}
-          for name in ("bun","python","cargo","rustc","curl","timeout"):
-              binary=pathlib.Path(shutil.which(name)).resolve(strict=True)
-              result=subprocess.run([str(binary),"--version"],check=True,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=10)
-              with binary.open("rb") as stream: binary_sha=hashlib.file_digest(stream,"sha256").hexdigest()
-              tools[name]={"path":str(binary),"version":result.stdout.strip(),"binarySha256":binary_sha}
-          if not tools["bun"]["version"].endswith("1.4.3") or not tools["python"]["version"].endswith("3.12.15") or not tools["rustc"]["version"].startswith("rustc 1.90.0"):
-              raise SystemExit("unexpected Bun, Python, or Rust tool version")
-          pathlib.Path(os.environ["EVIDENCE_DIR"],"tools.json").write_text(json.dumps(tools,indent=2,sort_keys=True)+"\n")
+          tool_names=("bun","python","cargo","rustc","curl","timeout")
+          tool_codes={"TOOL_EXECUTABLE_UNAVAILABLE","TOOL_IDENTITY_FAILED","TOOL_IDENTITY_TOO_LARGE","TOOL_VERSION_COMMAND_FAILED","TOOL_VERSION_COMMAND_TIMED_OUT","TOOL_VERSION_OUTPUT_INVALID","TOOL_VERSION_OUTPUT_TOO_LARGE","TOOL_VERSION_MISMATCH","RUSTUP_EXECUTABLE_UNAVAILABLE","RUSTUP_IDENTITY_FAILED","RUSTUP_SELECTION_FAILED","RUSTUP_SELECTION_AMBIGUOUS","RUST_PAYLOAD_UNAVAILABLE","RUST_PAYLOAD_IDENTITY_FAILED","RUST_PAYLOAD_VERSION_FAILED","RUST_PAYLOAD_VERSION_TIMED_OUT","RUST_PAYLOAD_VERSION_MISMATCH","TOOL_OBSERVATION_TOO_LARGE"}
+          def tool_record(): return {"status":"pending","code":None,"invocationPath":None,"resolvedPath":None,"resolvedBinarySha256":None,"returnStatus":None,"versionText":None,"versionBytes":None}
+          def status_code(value): return int(value) if int(value)>=0 else min(255,128-int(value))
+          tools_doc={"profile":"umf.core-python314-tool-observations/1","status":"IN_PROGRESS","tools":{name:tool_record() for name in tool_names},"rustSelection":{"status":"pending","code":None,"rustupInvocationPath":None,"rustupResolvedPath":None,"rustupBinarySha256":None,"cargoPayloadPath":None,"cargoPayloadSha256":None,"cargoPayloadVersion":None,"rustcPayloadPath":None,"rustcPayloadSha256":None,"rustcPayloadVersion":None}}
+          tools_path=pathlib.Path(os.environ["EVIDENCE_DIR"],"tools.json")
+          def write_tools():
+              encoded=(json.dumps(tools_doc,indent=2,sort_keys=True)+"\n").encode()
+              if len(encoded)>8192: fail("TOOL_OBSERVATION_TOO_LARGE","tool-summary",0)
+              tools_path.write_bytes(encoded)
+          def tool_failure(code, component, status):
+              name=component.removeprefix("tool-")
+              tools_doc["status"]="FAILED"
+              if name in tools_doc["tools"]:
+                  tools_doc["tools"][name]["status"]="failed"; tools_doc["tools"][name]["code"]=code; tools_doc["tools"][name]["returnStatus"]=status_code(status)
+              if component.startswith("rustup") or component.startswith("rust-payload"):
+                  tools_doc["rustSelection"]["status"]="failed"; tools_doc["rustSelection"]["code"]=code
+              write_tools(); fail(code,component,status)
+          write_tools()
+          for name in tool_names:
+              component="tool-"+name
+              found=shutil.which(name)
+              if found is None: tool_failure("TOOL_EXECUTABLE_UNAVAILABLE",component,127)
+              invocation=os.path.abspath(found)
+              if len(invocation)>512: tool_failure("TOOL_IDENTITY_TOO_LARGE",component,1)
+              record=tools_doc["tools"][name]; record["invocationPath"]=invocation
+              try:
+                  resolved=pathlib.Path(invocation).resolve(strict=True)
+                  if not resolved.is_file(): tool_failure("TOOL_IDENTITY_FAILED",component,1)
+                  resolved_path=str(resolved)
+                  if len(resolved_path)>512: tool_failure("TOOL_IDENTITY_TOO_LARGE",component,1)
+                  with resolved.open("rb") as stream: binary_sha=hashlib.file_digest(stream,"sha256").hexdigest()
+              except OSError: tool_failure("TOOL_IDENTITY_FAILED",component,1)
+              record.update({"resolvedPath":resolved_path,"resolvedBinarySha256":binary_sha})
+              try: result=subprocess.run([invocation,"--version"],check=False,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=10)
+              except subprocess.TimeoutExpired: tool_failure("TOOL_VERSION_COMMAND_TIMED_OUT",component,124)
+              except OSError: tool_failure("TOOL_VERSION_COMMAND_FAILED",component,126)
+              record["returnStatus"]=status_code(result.returncode); record["versionBytes"]=len(result.stdout)
+              if result.returncode!=0: tool_failure("TOOL_VERSION_COMMAND_FAILED",component,status_code(result.returncode))
+              if len(result.stdout)>1024: tool_failure("TOOL_VERSION_OUTPUT_TOO_LARGE",component,result.returncode)
+              try: version=result.stdout.decode("utf-8").strip()
+              except UnicodeDecodeError: tool_failure("TOOL_VERSION_OUTPUT_INVALID",component,result.returncode)
+              record["versionText"]=version
+              record["status"]="observed"; write_tools()
+          rustup_found=shutil.which("rustup")
+          if rustup_found is None: tool_failure("RUSTUP_EXECUTABLE_UNAVAILABLE","rustup",127)
+          rustup_invocation=os.path.abspath(rustup_found); selection=tools_doc["rustSelection"]
+          if len(rustup_invocation)>512: tool_failure("RUSTUP_IDENTITY_FAILED","rustup",1)
+          try:
+              rustup_resolved=pathlib.Path(rustup_invocation).resolve(strict=True)
+              if not rustup_resolved.is_file(): tool_failure("RUSTUP_IDENTITY_FAILED","rustup",1)
+              rustup_resolved_path=str(rustup_resolved)
+              if len(rustup_resolved_path)>512: tool_failure("RUSTUP_IDENTITY_FAILED","rustup",1)
+              with rustup_resolved.open("rb") as stream: rustup_sha=hashlib.file_digest(stream,"sha256").hexdigest()
+          except OSError: tool_failure("RUSTUP_IDENTITY_FAILED","rustup",1)
+          selection.update({"rustupInvocationPath":rustup_invocation,"rustupResolvedPath":rustup_resolved_path,"rustupBinarySha256":rustup_sha})
+          for name in ("cargo","rustc"):
+              component="rustup-"+name
+              try: selected=subprocess.run([rustup_invocation,"which",name],check=False,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=10)
+              except subprocess.TimeoutExpired: tool_failure("RUSTUP_SELECTION_FAILED",component,124)
+              except OSError: tool_failure("RUSTUP_SELECTION_FAILED",component,126)
+              if selected.returncode!=0: tool_failure("RUSTUP_SELECTION_FAILED",component,status_code(selected.returncode))
+              if len(selected.stdout)>1024: tool_failure("RUSTUP_SELECTION_AMBIGUOUS",component,selected.returncode)
+              try: selected_text=selected.stdout.decode("utf-8")
+              except UnicodeDecodeError: tool_failure("RUSTUP_SELECTION_AMBIGUOUS",component,selected.returncode)
+              lines=selected_text.splitlines()
+              if len(lines)!=1 or not lines[0].startswith("/") or lines[0].strip()!=lines[0]: tool_failure("RUSTUP_SELECTION_AMBIGUOUS",component,selected.returncode)
+              try:
+                  payload=pathlib.Path(lines[0]).resolve(strict=True)
+                  if not payload.is_file(): tool_failure("RUST_PAYLOAD_UNAVAILABLE","rust-payload-"+name,1)
+                  payload_path=str(payload)
+                  if len(payload_path)>512: tool_failure("RUST_PAYLOAD_IDENTITY_FAILED","rust-payload-"+name,1)
+                  with payload.open("rb") as stream: payload_sha=hashlib.file_digest(stream,"sha256").hexdigest()
+              except OSError: tool_failure("RUST_PAYLOAD_IDENTITY_FAILED","rust-payload-"+name,1)
+              try: payload_version=subprocess.run([payload_path,"--version"],check=False,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=10)
+              except subprocess.TimeoutExpired: tool_failure("RUST_PAYLOAD_VERSION_TIMED_OUT","rust-payload-"+name,124)
+              except OSError: tool_failure("RUST_PAYLOAD_VERSION_FAILED","rust-payload-"+name,126)
+              if payload_version.returncode!=0: tool_failure("RUST_PAYLOAD_VERSION_FAILED","rust-payload-"+name,status_code(payload_version.returncode))
+              if len(payload_version.stdout)>1024: tool_failure("TOOL_VERSION_OUTPUT_TOO_LARGE","rust-payload-"+name,payload_version.returncode)
+              try: payload_text=payload_version.stdout.decode("utf-8").strip()
+              except UnicodeDecodeError: tool_failure("TOOL_VERSION_OUTPUT_INVALID","rust-payload-"+name,payload_version.returncode)
+              invocation_text=tools_doc["tools"][name]["versionText"]
+              if payload_text!=invocation_text: tool_failure("RUST_PAYLOAD_VERSION_MISMATCH","rust-payload-"+name,0)
+              selection[name+"PayloadPath"]=payload_path; selection[name+"PayloadSha256"]=payload_sha; selection[name+"PayloadVersion"]=payload_text
+              write_tools()
+          selection["status"]="observed"; tools_doc["status"]="OBSERVATIONS_COMPLETE"; write_tools()
+          version_guards=(("bun",tools_doc["tools"]["bun"]["versionText"]=="1.4.3"),("python",tools_doc["tools"]["python"]["versionText"]=="Python 3.12.15"),("cargo",tools_doc["tools"]["cargo"]["versionText"].split()[:2]==["cargo","1.90.0"]),("rustc",tools_doc["tools"]["rustc"]["versionText"].split()[:2]==["rustc","1.90.0"]))
+          for name, valid in version_guards:
+              if not valid: tool_failure("TOOL_VERSION_MISMATCH","tool-"+name,0)
+          tools_doc["status"]="VERSION_GUARDS_PASS"; write_tools()
           pathlib.Path(os.environ["EVIDENCE_DIR"],"phase").write_text(phase+"\n")
           PY
 
@@ -470,21 +551,60 @@ jobs:
                       last_command={key:row[key] for key in keys if key in row}
               except (OSError,UnicodeDecodeError,json.JSONDecodeError): last_command=None
           preflight_diagnostic=None; diagnostic_path=evidence/"preflight-diagnostic.json"
-          diagnostic_codes={"SOURCE_EVENT_REF_MISMATCH","SOURCE_HEAD_MISMATCH","SOURCE_WORKTREE_NOT_CLEAN","SOURCE_REPOSITORY_MISMATCH","SOURCE_LOCK_UNAVAILABLE","SOURCE_LOCK_COMMIT_MISMATCH","SOURCE_WORKTREE_CHANGED_DURING_FETCH","PREIMAGE_COMMIT_FETCH_FAILED","PREIMAGE_FETCH_HEAD_MISMATCH","PREIMAGE_COMMIT_UNAVAILABLE","SOURCE_PHASE_MISMATCH","SOURCE_INPUT_UNAVAILABLE","SOURCE_INPUT_SHA_MISMATCH","PREIMAGE_BLOB_UNAVAILABLE","PREIMAGE_SHA_MISMATCH","SOURCE_ADOPTION_STATE_MISMATCH","REGEX_PREIMAGE_UNAVAILABLE","REGEX_PREIMAGE_SHA_MISMATCH"}
-          diagnostic_components={"generation-ref","generation-head","generation-worktree","origin-repository","generation-lock","main-preimage-commit","generation-phase","regex-adoption","metamodel-adoption","crates/umf-core/tools/generate_python_re_tables.py","crates/umf-core/tools/extend_python_re_314.py","crates/umf-core/tools/generate_independent_python_re_boundaries.py","crates/umf-core/tools/generate_independent_python_re_hex.py","crates/umf-core/tools/generate_independent_python_re_info.py","crates/umf-core/tools/unicode/NameAliases-16.0.0.txt","crates/umf-core/src/python_re_tables.LICENSE","crates/umf-core/tests/fixtures/cpython-re/re_tests.py","crates/umf-core/tests/fixtures/cpython-re/test_re-3.11.14.py","crates/umf-core/tests/fixtures/cpython-re/PSF-LICENSE.txt","crates/umf-core/src/python_re_tables.rs","crates/umf-core/src/python_re_names.dat","crates/umf-core/tests/fixtures/cpython-re/independent-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-outcomes.tsv","crates/umf-core/tests/fixtures/cpython-re/independent-hex-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-hex-outcomes.tsv","crates/umf-core/tests/fixtures/cpython-re/independent-info-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-info-outcomes.tsv"}
+          tool_codes={"TOOL_EXECUTABLE_UNAVAILABLE","TOOL_IDENTITY_FAILED","TOOL_IDENTITY_TOO_LARGE","TOOL_VERSION_COMMAND_FAILED","TOOL_VERSION_COMMAND_TIMED_OUT","TOOL_VERSION_OUTPUT_INVALID","TOOL_VERSION_OUTPUT_TOO_LARGE","TOOL_VERSION_MISMATCH","RUSTUP_EXECUTABLE_UNAVAILABLE","RUSTUP_IDENTITY_FAILED","RUSTUP_SELECTION_FAILED","RUSTUP_SELECTION_AMBIGUOUS","RUST_PAYLOAD_UNAVAILABLE","RUST_PAYLOAD_IDENTITY_FAILED","RUST_PAYLOAD_VERSION_FAILED","RUST_PAYLOAD_VERSION_TIMED_OUT","RUST_PAYLOAD_VERSION_MISMATCH","TOOL_OBSERVATION_TOO_LARGE","TOOL_OBSERVATION_INVALID"}
+          diagnostic_codes={"SOURCE_EVENT_REF_MISMATCH","SOURCE_HEAD_MISMATCH","SOURCE_WORKTREE_NOT_CLEAN","SOURCE_REPOSITORY_MISMATCH","SOURCE_LOCK_UNAVAILABLE","SOURCE_LOCK_COMMIT_MISMATCH","SOURCE_WORKTREE_CHANGED_DURING_FETCH","PREIMAGE_COMMIT_FETCH_FAILED","PREIMAGE_FETCH_HEAD_MISMATCH","PREIMAGE_COMMIT_UNAVAILABLE","SOURCE_PHASE_MISMATCH","SOURCE_INPUT_UNAVAILABLE","SOURCE_INPUT_SHA_MISMATCH","PREIMAGE_BLOB_UNAVAILABLE","PREIMAGE_SHA_MISMATCH","SOURCE_ADOPTION_STATE_MISMATCH","REGEX_PREIMAGE_UNAVAILABLE","REGEX_PREIMAGE_SHA_MISMATCH"}|tool_codes
+          diagnostic_components={"generation-ref","generation-head","generation-worktree","origin-repository","generation-lock","main-preimage-commit","generation-phase","regex-adoption","metamodel-adoption","tool-summary","tool-bun","tool-python","tool-cargo","tool-rustc","tool-curl","tool-timeout","rustup","rustup-cargo","rustup-rustc","rust-payload-cargo","rust-payload-rustc","crates/umf-core/tools/generate_python_re_tables.py","crates/umf-core/tools/extend_python_re_314.py","crates/umf-core/tools/generate_independent_python_re_boundaries.py","crates/umf-core/tools/generate_independent_python_re_hex.py","crates/umf-core/tools/generate_independent_python_re_info.py","crates/umf-core/tools/unicode/NameAliases-16.0.0.txt","crates/umf-core/src/python_re_tables.LICENSE","crates/umf-core/tests/fixtures/cpython-re/re_tests.py","crates/umf-core/tests/fixtures/cpython-re/test_re-3.11.14.py","crates/umf-core/tests/fixtures/cpython-re/PSF-LICENSE.txt","crates/umf-core/src/python_re_tables.rs","crates/umf-core/src/python_re_names.dat","crates/umf-core/tests/fixtures/cpython-re/independent-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-outcomes.tsv","crates/umf-core/tests/fixtures/cpython-re/independent-hex-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-hex-outcomes.tsv","crates/umf-core/tests/fixtures/cpython-re/independent-info-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-info-outcomes.tsv"}
           if not diagnostic_path.is_symlink() and diagnostic_path.is_file() and diagnostic_path.stat().st_size<=4096:
               try:
                   diagnostic=json.loads(diagnostic_path.read_text())
                   if isinstance(diagnostic,dict) and set(diagnostic)=={"profile","reasonCode","component","pinnedCommit","actualStatus"} and diagnostic.get("profile")=="umf.core-python314-preflight-diagnostic/1" and diagnostic.get("reasonCode") in diagnostic_codes and diagnostic.get("component") in diagnostic_components and diagnostic.get("pinnedCommit")=="d5022e37840329d351bcd6c27fe7d7aad4758544" and type(diagnostic.get("actualStatus")) is int and 0<=diagnostic["actualStatus"]<=255:
                       preflight_diagnostic=diagnostic
               except (OSError,UnicodeDecodeError,json.JSONDecodeError,TypeError): preflight_diagnostic=None
+          tool_observation=None; tool_observation_error=None; tools_path=evidence/"tools.json"
+          def bounded_text(value,limit=512): return value is None or (isinstance(value,str) and len(value)<=limit)
+          def valid_hash(value): return value is None or (isinstance(value,str) and len(value)==64 and all(char in "0123456789abcdef" for char in value))
+          if tools_path.exists() or tools_path.is_symlink():
+              if tools_path.is_symlink() or not tools_path.is_file(): tool_observation_error="TOOL_OBSERVATION_INVALID"
+              elif tools_path.stat().st_size>8192: tool_observation_error="TOOL_OBSERVATION_TOO_LARGE"
+              else:
+                  try:
+                      observation=json.loads(tools_path.read_text())
+                      names=("bun","python","cargo","rustc","curl","timeout")
+                      record_keys={"status","code","invocationPath","resolvedPath","resolvedBinarySha256","returnStatus","versionText","versionBytes"}
+                      selection_keys={"status","code","rustupInvocationPath","rustupResolvedPath","rustupBinarySha256","cargoPayloadPath","cargoPayloadSha256","cargoPayloadVersion","rustcPayloadPath","rustcPayloadSha256","rustcPayloadVersion"}
+                      valid=isinstance(observation,dict) and set(observation)=={"profile","status","tools","rustSelection"} and observation.get("profile")=="umf.core-python314-tool-observations/1" and observation.get("status") in {"IN_PROGRESS","OBSERVATIONS_COMPLETE","VERSION_GUARDS_PASS","FAILED"} and isinstance(observation.get("tools"),dict) and set(observation["tools"])==set(names)
+                      if valid:
+                          for name in names:
+                              row=observation["tools"][name]
+                              if not isinstance(row,dict) or set(row)!=record_keys or row.get("status") not in {"pending","observed","failed"} or row.get("code") is not None and row.get("code") not in tool_codes or not bounded_text(row.get("invocationPath")) or not bounded_text(row.get("resolvedPath")) or not valid_hash(row.get("resolvedBinarySha256")) or row.get("returnStatus") is not None and (type(row["returnStatus"]) is not int or not 0<=row["returnStatus"]<=255) or not bounded_text(row.get("versionText"),1024) or row.get("versionBytes") is not None and (type(row["versionBytes"]) is not int or not 0<=row["versionBytes"]<=4096): valid=False; break
+                              if row.get("status")=="observed" and (row.get("code") is not None or row.get("invocationPath") is None or row.get("resolvedPath") is None or row.get("resolvedBinarySha256") is None or row.get("returnStatus")!=0 or row.get("versionText") is None): valid=False; break
+                              if row.get("status")=="failed" and row.get("code") is None: valid=False; break
+                      if valid:
+                          selection=observation["rustSelection"]
+                          if not isinstance(selection,dict) or set(selection)!=selection_keys or selection.get("status") not in {"pending","observed","failed"} or selection.get("code") is not None and selection.get("code") not in tool_codes: valid=False
+                          else:
+                              for key,value in selection.items():
+                                  if key.endswith("Path") and not bounded_text(value): valid=False
+                                  if key.endswith("Sha256") and not valid_hash(value): valid=False
+                                  if key.endswith("Version") and not bounded_text(value,1024): valid=False
+                              if selection.get("status")=="observed" and any(selection.get(key) is None for key in ("rustupInvocationPath","rustupResolvedPath","rustupBinarySha256","cargoPayloadPath","cargoPayloadSha256","cargoPayloadVersion","rustcPayloadPath","rustcPayloadSha256","rustcPayloadVersion")): valid=False
+                      if valid and observation.get("status")=="VERSION_GUARDS_PASS" and (any(observation["tools"][name].get("status")!="observed" for name in names) or observation["rustSelection"].get("status")!="observed"): valid=False
+                      if valid: tool_observation=observation
+                      else: tool_observation_error="TOOL_OBSERVATION_INVALID"
+                  except (OSError,UnicodeDecodeError,json.JSONDecodeError,TypeError,KeyError): tool_observation_error="TOOL_OBSERVATION_INVALID"
+          if tool_observation_error is not None and preflight_diagnostic is None:
+              preflight_diagnostic={"profile":"umf.core-python314-preflight-diagnostic/1","reasonCode":tool_observation_error,"component":"tool-summary","pinnedCommit":"d5022e37840329d351bcd6c27fe7d7aad4758544","actualStatus":1}
           def fail(reason_code):
               shutil.rmtree(upload,ignore_errors=True); upload.mkdir(parents=True)
-              fail_receipt={"profile":"umf.core-python314-generation/1","status":"FAIL_OR_UNKNOWN","reasonCode":reason_code,"sourceCommit":os.environ["SOURCE_COMMIT"],"runId":os.environ["RUN_ID"],"runAttempt":os.environ["RUN_ATTEMPT"],"ref":os.environ["SOURCE_REF"],"event":os.environ["EVENT_NAME"],"generationStepOutcome":os.environ.get("GENERATION_OUTCOME"),"lastCommand":last_command,"preflightDiagnostic":preflight_diagnostic,"aggregateDeadlineSeconds":1800,"childMaximumSeconds":180,"timeoutKillGraceSeconds":10,"cleanupReserveSeconds":60,"aggregateLogLimitBytes":1048576,"aggregateArtifactLimitBytes":16777216,"failureOnlyReceipt":True,"rawLogsUploaded":False,"qualificationClaim":False}
+              fail_receipt={"profile":"umf.core-python314-generation/1","status":"FAIL_OR_UNKNOWN","reasonCode":reason_code,"sourceCommit":os.environ["SOURCE_COMMIT"],"runId":os.environ["RUN_ID"],"runAttempt":os.environ["RUN_ATTEMPT"],"ref":os.environ["SOURCE_REF"],"event":os.environ["EVENT_NAME"],"generationStepOutcome":os.environ.get("GENERATION_OUTCOME"),"lastCommand":last_command,"preflightDiagnostic":preflight_diagnostic,"toolObservation":tool_observation,"toolObservationError":tool_observation_error,"aggregateDeadlineSeconds":1800,"childMaximumSeconds":180,"timeoutKillGraceSeconds":10,"cleanupReserveSeconds":60,"aggregateLogLimitBytes":1048576,"aggregateArtifactLimitBytes":16777216,"failureOnlyReceipt":True,"rawLogsUploaded":False,"qualificationClaim":False}
               (upload/"receipt.json").write_text(json.dumps(fail_receipt,indent=2,sort_keys=True)+"\n")
               (evidence/"finalizer.status").write_text("failed\n")
+          if tool_observation_error is not None:
+              fail("tool_observation_invalid"); raise SystemExit(1)
           if os.environ.get("GENERATION_OUTCOME")!="success":
               fail("generation_step_failed"); raise SystemExit(1)
+          if tool_observation is None or tool_observation.get("status")!="VERSION_GUARDS_PASS":
+              fail("tool_observation_invalid"); raise SystemExit(1)
           try:
               if success_output.is_symlink() or not success_output.is_dir(): raise ValueError("success output directory missing")
               allowed={"generated-source.tar.gz","outputs.json","receipt.json"}
@@ -505,6 +625,7 @@ jobs:
               receipt_path=success_output/"receipt.json"; manifest_path=success_output/"outputs.json"; archive=success_output/"generated-source.tar.gz"
               receipt=json.loads(receipt_path.read_text()); manifest=json.loads(manifest_path.read_text())
               if receipt.get("sourceCommit")!=os.environ["SOURCE_COMMIT"] or receipt.get("runId")!=os.environ["RUN_ID"] or receipt.get("runAttempt")!=os.environ["RUN_ATTEMPT"] or receipt.get("ref")!=os.environ["SOURCE_REF"] or receipt.get("event")!=os.environ["EVENT_NAME"]: raise ValueError("generation receipt identity mismatch")
+              if receipt.get("tools")!=tool_observation: raise ValueError("generation receipt tool identity mismatch")
               phase=receipt.get("phase"); statuses={"regex-artifacts":"PASS_REGEX_GENERATION_ARTIFACTS_ONLY","metamodel-artifacts":"PASS_METAMODEL_GENERATION_ARTIFACTS_ONLY","dependent-artifacts":"PASS_DEPENDENT_GENERATION_ARTIFACTS_ONLY"}
               if phase not in statuses or receipt.get("status")!=statuses[phase] or receipt.get("outputManifestSha256")!=hashlib.sha256(manifest_path.read_bytes()).hexdigest(): raise ValueError("generation receipt or manifest mismatch")
               if manifest.get("sourceCommit")!=receipt["sourceCommit"] or manifest.get("phase")!=phase or type(manifest.get("outputs")) is not list or receipt.get("outputCount")!=len(manifest["outputs"]): raise ValueError("output manifest identity or roster mismatch")
