@@ -1,5 +1,5 @@
 {
-  "status": "REVIEWED_REGEX_OUTPUTS_ADOPTED_METAMODEL_GENERATION_PENDING",
+  "status": "METAMODEL_GENERATOR_FAILED_BOUNDED_DIAGNOSTIC_REPAIR_IN_PROGRESS",
   "baseCommit": "d5022e37840329d351bcd6c27fe7d7aad4758544",
   "donorCommit": "f4a410c0522135065a0b20e8d2b69705fddcbac4",
   "extractionCommit": "ad5e59591",
@@ -77,5 +77,16 @@
   "existingPrefixSourceClosure": "sol-existing-runtime-prefix-closure001.md",
   "successfulRegexEvidence": "regex-artifact-40414089598",
   "successfulRegexEvidenceCustodySha256": "a2a3da45afe855bc62317ee639c3ca56ce5ceba692fa188132a1a3c1eed9427c",
-  "regexOutputAdoptionReviewSha256": "cd19115e37a89c55a979b13ed2c65e25e61ca11509439df364708e831891f2b0"
+  "regexOutputAdoptionReviewSha256": "cd19115e37a89c55a979b13ed2c65e25e61ca11509439df364708e831891f2b0",
+  "metamodelFailureEvidence": "metamodel-failure-40415380967",
+  "metamodelFailureCustodySha256": "29d9331c02a720f2b5a7b5e2a73946ddf609d4cf080af5b5233d0e554885aec2",
+  "failureVisibilityCorrection": {
+    "status": "SOURCE_ACCEPTED_AWAITING_ONE_HOSTED_DIAGNOSTIC_RUN",
+    "workflowSha256": "c868f0f634d7bb211283031c45d90c696f9f970809cbe8ff0d7dcf3de946488a",
+    "closure": "sol-metamodel-failure-visibility-closure002.md",
+    "closureSha256": "8aa8169bb9239b4c4ae986364ff51164324142839bdf4b5093e4aa8eb6ff8a99",
+    "actualCompilerCause": null,
+    "phase": "metamodel-artifacts",
+    "outputAdoption": null
+  }
 }
