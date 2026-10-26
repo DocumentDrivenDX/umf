@@ -5611,3 +5611,13 @@ Record Type, and explicit authorization for the Record Type link to the Kind
 v6 resource. Only after the metamodel fixed point and pinned hashes pass can
 the ledger move their four aliases from unresolved to generated-known. This
 resource decision does not alter executable route or release status.
+
+The [live selected-Key parity control](evidence/rust-migration/r8-captured-graph-validator-interface/README.md#live-selected-key-get-and-page-parity--2026-10-26)
+confirms that the existing private Rust captured-graph validator accepts
+genuine `get` and `page` declarations and matches Python's exact selected-Key
+refusal before a later foreign-expression fault. A fresh PyO3 extension replay
+passes 31 capture/validator tests plus three subtests on CPython 3.13.16; 36
+focused Rust graph-validator tests pass. This closes the earlier bounded
+selected-Key preflight evidence gap, but public Python capture selection,
+arbitrary subclass accessors, wider graph admission and installed-wheel
+qualification remain open.

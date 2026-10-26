@@ -8,9 +8,10 @@ from typing import ClassVar
 from unittest.mock import patch
 
 import pytest
+from pydantic import BaseModel
 from umf import _rust
 from umf_access import rust_catalog_render
-from umf_access.capture import CaptureError, capture
+from umf_access.capture import CaptureError, _validate_node, capture
 from umf_access.dsl import (
     Column,
     FieldRef,
@@ -32,6 +33,7 @@ from umf_access.dsl import (
     sum_,
 )
 from umf_access.dsl._nodes import GeneratedSource, Node
+from umf_access.dsl._expressions import operand
 from umf_access.dsl.navigation import RequiredNavigation
 from umf_access.rust_catalog_render import (
     _encode_capture,
@@ -42,6 +44,32 @@ from umf_access.types import MISSING, ActionRef, ActionSource, StrictModel, Vect
 
 _ID = FieldRef(module="demo", element="Thing", field="id")
 _QUERY = Query(RecordRef(module="demo", element="Thing", key=(_ID,)))
+
+
+_GRAPH_SOURCE = GeneratedSource(
+    "graph-validator-test", "0.10.0", "a" * 64, "b" * 64, "umf-access-runtime/0.1"
+)
+
+
+class ThingKey(BaseModel):
+    id: int
+    KEY_IDENTITY: ClassVar[dict[str, str]] = {
+        "documentId": "graph-validator-test",
+        "coreVersion": "0.10.0",
+        "module": "demo",
+        "element": "Thing",
+        "key": "thing_id",
+    }
+    UMF_SOURCE: ClassVar[GeneratedSource] = _GRAPH_SOURCE
+
+
+class OtherThingKey(BaseModel):
+    id: int
+    KEY_IDENTITY: ClassVar[dict[str, str]] = {
+        **ThingKey.KEY_IDENTITY,
+        "key": "other_id",
+    }
+    UMF_SOURCE: ClassVar[GeneratedSource] = _GRAPH_SOURCE
 
 
 def test_private_opt_in_capture_accepts_closed_rust_response():
@@ -97,6 +125,92 @@ def test_private_opt_in_capture_maps_rust_signature_refusal():
         str(caught.value)
         == "CAPTURE_SIGNATURE: expression references an undeclared parameter"
     )
+
+
+def test_live_rust_validator_matches_get_page_selected_key_preflight_order():
+    identifier = FieldRef("demo", "Thing", "id", source=_GRAPH_SOURCE)
+    foreign_field = FieldRef("foreign", "Elsewhere", "value")
+    owner = RecordRef(
+        "demo", "Thing", (identifier,), source=_GRAPH_SOURCE, key_id="thing_id"
+    )
+
+    @query
+    def get_valid(key: Param[ThingKey]):
+        return Query(owner).get(key)
+
+    @query
+    def page_valid(key: Param[ThingKey | None]):
+        return Query(owner).page(size=10, after=key)
+
+    for declaration in (get_valid, page_valid):
+        assert rust_catalog_render.capture_with_rust_graph_validator(
+            declaration
+        ) == capture(declaration)
+
+    wrong_selected_identity = tuple(
+        sorted({**ThingKey.KEY_IDENTITY, "key": "other_id"}.items())
+    )
+    foreign_identity = tuple(
+        sorted({**ThingKey.KEY_IDENTITY, "element": "Elsewhere"}.items())
+    )
+
+    def crossed(variant, op: str, key_node: Node):
+        args = variant.node.args
+        steps = args[1] + (
+            Node(
+                "filter",
+                (
+                    Node(
+                        "=",
+                        (Node("column", (foreign_field,)), Node("literal", ("x",))),
+                    ),
+                ),
+            ),
+        )
+        if op == "get":
+            node_args = (args[0], steps, key_node)
+        else:
+            node_args = (
+                args[0],
+                steps,
+                args[2],
+                key_node,
+            )
+        return Node(op, node_args)
+
+    for declaration, op in ((get_valid, "get"), (page_valid, "page")):
+        variant = capture(declaration).variants[0]
+        params = variant.parameters
+        for key_node, code, message in (
+            (
+                Node("key_param", ("key", ("id",), wrong_selected_identity)),
+                "CAPTURE_SIGNATURE",
+                "Key differs from selected Record Key",
+            ),
+            (
+                Node("key_param", ("key", ("id",), foreign_identity)),
+                "CAPTURE_SIGNATURE",
+                "Key belongs to another Record",
+            ),
+            (
+                operand(OtherThingKey(id=7)),
+                "CAPTURE_SIGNATURE",
+                "Key differs from selected Record Key",
+            ),
+        ):
+            node = crossed(variant, op, key_node)
+            dto = _encode_capture(
+                type(variant)(variant.presence, node, params), _EncodingBudget()
+            )
+            failures = []
+            for validate in (
+                lambda: _validate_node(node, params),
+                lambda: _validate_graph_variant(dto),
+            ):
+                with pytest.raises(CaptureError) as caught:
+                    validate()
+                failures.append((caught.value.code, str(caught.value)))
+            assert failures[0] == failures[1] == (code, f"{code}: {message}")
 
 
 def test_live_rust_validator_matches_python_capture_for_join_and_many_navigation():

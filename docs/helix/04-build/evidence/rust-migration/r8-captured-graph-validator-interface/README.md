@@ -482,3 +482,23 @@ absent`. Sol independently reran 36 focused Rust graph-validator tests and 13
 Python graph-validator tests with a native extension overlay on CPython 3.11.
 This extends opt-in ordering evidence only; public `capture()` still uses its
 Python validator.
+
+## Live selected-Key `get` and `page` parity — 2026-10-26
+
+The existing private Rust validator already runs selected-Key preflight for
+`get` and `page` after join-owner closure and before expression traversal. A
+new live Python control now compares that Rust seam directly with Python's
+`_validate_node` on genuine captured `get`/`page` declarations. Both accept
+valid Key parameters. Crossed graphs with a later foreign-field expression
+first refuse the wrong selected Key: both paths return the same
+`CAPTURE_SIGNATURE` code and exact message for a different selected Key or a
+Key belonging to another Record. A genuine Key-literal operand also exercises
+the selected-Key mismatch path. The test asserts the accepted private capture
+result equals the Python capture result.
+
+Sol independently reran 36 focused `umf-core` graph-validator tests with Rust
+1.90.0 and the capture plus private-validator suites with a freshly built PyO3
+extension overlay on CPython 3.13.16: 31 tests and three subtests passed.
+This is source-tree opt-in parity for the exercised shapes. Arbitrary subclass
+accessor behavior, wider capture admission and resource-limit parity,
+installed-wheel qualification, and public `capture()` selection remain open.
