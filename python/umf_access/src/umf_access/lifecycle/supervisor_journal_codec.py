@@ -607,7 +607,8 @@ class _Replay:
         creation_finalized: dict[str, Any] | None = None
         initdb_receipt: dict[str, Any] | None = None
         current_launch: dict[str, Any] | None = None
-        registration_done = authority_done = store_intent = store_done = False
+        registration_done = authority_done = principal_authority_done = False
+        store_intent = store_done = False
         registration_request: dict[str, Any] | None = None
         registration_signature_verified = False
         principal_request: dict[str, Any] | None = None
@@ -939,7 +940,7 @@ class _Replay:
                                     'nativeAuthorityEvidenceDigest', 'configurationDigest',
                                     'custodySequence'}
                 if (self.profile != JOURNAL_PROFILE_02 or not running
-                        or not registration_done or not authority_done
+                        or not registration_done or not principal_authority_done
                         or creation_finalized is None
                         or pending_original_store_effect is not None
                         or any(item.get('nativeEffectOutcome') != 'confirmed'
@@ -1102,6 +1103,16 @@ class _Replay:
                         and (principal_request is None
                              or principal_request['requestDigest'] != payload['requestDigest'])):
                     raise SupervisorJournalCodecError('supervisor-journal-order-invalid')
+                if (self.profile == JOURNAL_PROFILE_02
+                        and payload['scope'] == 'native-principal-preparation'
+                        and (principal_request['approvalId'] != payload['requestId']
+                             or principal_request['approvalId'] != payload['approvalId']
+                             or payload['purpose'] != creation['purpose']
+                             or payload['stage'] != 'native-principal-preparation'
+                             or payload['effectKey'] != [
+                                 'native-principal-preparation', self.supervisor_id,
+                                 principal_request['intent']['preparationId']])):
+                    raise SupervisorJournalCodecError('supervisor-journal-order-invalid')
                 if (payload['scope'] == 'local-target-registration'
                         and (registration_request is None
                              or not registration_signature_verified
@@ -1218,6 +1229,22 @@ class _Replay:
                             or receipt['creationApprovalDigest'] != creation['approvalDigest']
                             or receipt['initdbReceiptDigest'] != initdb_receipt['initdbReceiptDigest']):
                         raise SupervisorJournalCodecError('supervisor-journal-origin-mismatch')
+                    principal_effects = [item for item in native_effects.values()
+                                         if item['intent'].get('scope')
+                                            == 'native-principal-preparation']
+                    principal_outcome = (principal_effects[0].get('outcome')
+                                         if len(principal_effects) == 1 else None)
+                    if (principal_request is None or len(principal_effects) != 1
+                            or type(principal_outcome) is not tuple
+                            or not principal_outcome
+                            or principal_outcome[0] != 'confirmed'
+                            or receipt['principalPreparationRequestDigest']
+                                != principal_effects[0]['intent']['requestDigest']
+                            or receipt['principalPreparationApprovalDigest']
+                                != principal_effects[0]['intent']['approvalDigest']):
+                        raise SupervisorJournalCodecError(
+                            'supervisor-journal-origin-mismatch')
+                    principal_authority_done = True
                     creation_finalized = payload
             else:
                 raise SupervisorJournalCodecError('supervisor-journal-corrupt')

@@ -706,7 +706,7 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                                             if (Path(frame.tb_frame.f_code.co_filename).name
                                                     == 'supervisor_journal_codec.py'
                                                     and frame.tb_frame.f_code.co_name == '_replay'
-                                                    and 931 <= frame.tb_lineno <= 979):
+                                                    and 931 <= frame.tb_lineno <= 980):
                                                 replay_locals = frame.tb_frame.f_locals
                                                 break
                                             frame = frame.tb_next
@@ -752,8 +752,8 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                                             failed('running', not replay_locals.get('running'))
                                             failed('registration',
                                                    not replay_locals.get('registration_done'))
-                                            failed('authority',
-                                                   not replay_locals.get('authority_done'))
+                                            failed('principal_authority', not replay_locals.get(
+                                                'principal_authority_done'))
                                             failed('finalized',
                                                    replay_locals.get('creation_finalized') is None)
                                             failed('pending', replay_locals.get(

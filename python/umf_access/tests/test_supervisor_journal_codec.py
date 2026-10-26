@@ -721,6 +721,52 @@ class SupervisorJournalCodecTests(unittest.TestCase):
                             'argv': argv, 'startToken': 'native-start-token'},
                 'nativeObservationDigest': 'b' * 64, 'endpointReceiptDigest': 'c' * 64,
             }, birth['anchorDigest'])
+            principal_preparation_id = 'abababab-abab-4bab-8bab-abababababac'
+            principal_approval_id = 'bcbcbcbc-bcbc-4bcb-8bcb-bcbcbcbcbcbc'
+            principal_approval_digest = 'd' * 64
+            principal_intent = {
+                'profile': 'umf.local-postgresql-principal-preparation/0.1',
+                'preparationId': principal_preparation_id,
+            }
+            principal_request_digest = hashlib.sha256(
+                codec.canonical(principal_intent)).hexdigest()
+            _append(events, 'principal-request-prepared', {
+                'preparationId': principal_preparation_id,
+                'approvalId': principal_approval_id,
+                'intent': principal_intent,
+                'requestDigest': principal_request_digest,
+            }, birth['anchorDigest'])
+            principal_effect_id = 'cdcdcdcd-cdcd-4dcd-8dcd-cdcdcdcdcdce'
+            _append(events, 'native-effect-intent', {
+                'reservationId': principal_effect_id,
+                'scope': 'native-principal-preparation',
+                'effectKey': ['native-principal-preparation', birth['supervisorId'],
+                              principal_preparation_id],
+                'purpose': creation['purpose'],
+                'requestId': principal_approval_id,
+                'requestDigest': principal_request_digest,
+                'approvalId': principal_approval_id,
+                'approvalDigest': principal_approval_digest,
+                'stage': 'native-principal-preparation',
+                'payloadDigest': 'e' * 64,
+            }, birth['anchorDigest'])
+            _append(events, 'principal-roles-intent', {
+                'reservationId': principal_effect_id,
+                'preparationId': principal_preparation_id,
+            }, birth['anchorDigest'])
+            _append(events, 'principal-roles-confirmed', {
+                'reservationId': principal_effect_id, 'observationDigest': 'f' * 64,
+            }, birth['anchorDigest'])
+            _append(events, 'principal-database-intent', {
+                'reservationId': principal_effect_id, 'databaseName': 'appdb',
+            }, birth['anchorDigest'])
+            _append(events, 'principal-database-confirmed', {
+                'reservationId': principal_effect_id, 'databaseOid': 42,
+                'systemIdentifier': '181818181818',
+            }, birth['anchorDigest'])
+            _append(events, 'native-effect-confirmed', {
+                'reservationId': principal_effect_id, 'receiptDigest': '8' * 64,
+            }, birth['anchorDigest'])
             creation_receipt = {
                 'profile': 'umf.local-supervisor-creation-receipt/0.1',
                 'supervisorId': birth['supervisorId'], 'clusterId': creation['clusterId'],
@@ -728,8 +774,8 @@ class SupervisorJournalCodecTests(unittest.TestCase):
                 'creationRequestDigest': creation['requestDigest'],
                 'creationApprovalDigest': creation['approvalDigest'],
                 'initdbReceiptDigest': 'a' * 64, 'initialLaunchReceiptDigest': '2' * 64,
-                'principalPreparationRequestDigest': '3' * 64,
-                'principalPreparationApprovalDigest': '4' * 64,
+                'principalPreparationRequestDigest': principal_request_digest,
+                'principalPreparationApprovalDigest': principal_approval_digest,
                 'principalPreparationReceiptDigest': '5' * 64,
                 'applicationDatabase': {'name': 'appdb'},
             }
@@ -774,11 +820,6 @@ class SupervisorJournalCodecTests(unittest.TestCase):
                 'approvalId': registration_approval_id,
                 'approvalDigest': registration_approval_digest,
             }, birth['anchorDigest'])
-            _append(events, 'authority-preparation-approved', {
-                'installationId': creation['installationId'], 'payloadDigest': '8' * 64,
-                'approvalId': 'efefefef-efef-4fef-8fef-efefefefefef',
-                'approvalDigest': '9' * 64,
-            }, birth['anchorDigest'])
             target_custody = {
                 'profile': 'umf.native-target-custody/0.1',
                 'custodianId': custodian_id, 'registrationId': registration_id,
@@ -798,6 +839,46 @@ class SupervisorJournalCodecTests(unittest.TestCase):
                 'configurationDigest': 'e' * 64, 'custodySequence': 1,
             }
             reservation_digest = hashlib.sha256(codec.canonical(reservation)).hexdigest()
+            for field, replacement in (
+                    ('effectKey', ['native-principal-preparation',
+                                   birth['supervisorId'], 'ffffffff-ffff-4fff-8fff-ffffffffffff']),
+                    ('approvalId', 'cccccccc-cccc-4ccc-8ccc-cccccccccccc'),
+                    ('purpose', 'production')):
+                candidate = copy.deepcopy(events)
+                principal_effect = next(
+                    event['payload'] for event in candidate
+                    if event['kind'] == 'native-effect-intent'
+                    and event['payload'].get('scope') == 'native-principal-preparation')
+                principal_effect[field] = replacement
+                candidate = _rechain(candidate, birth['anchorDigest'])
+                with self.subTest(principalEffectField=field), self.assertRaisesRegex(
+                        codec.SupervisorJournalCodecError,
+                        'supervisor-journal-order-invalid'):
+                    codec.validate_record(
+                        _record(candidate, birth), birth=birth,
+                        owner_bootstrap_context_digest=owner_context_digest,
+                        generation_root_policy_digest=root_policy_digest,
+                        root_replay_context=root_context)
+            missing_principal_authority = [event for event in events if event['kind'] not in {
+                'principal-request-prepared', 'native-effect-intent',
+                'principal-roles-intent', 'principal-roles-confirmed',
+                'principal-database-intent', 'principal-database-confirmed',
+                'native-effect-confirmed'}]
+            _append(missing_principal_authority, 'originals-store-creation-intent', {
+                'purpose': creation['purpose'], 'reservation': reservation,
+                'reservationDigest': reservation_digest,
+                'custodianReservedEventDigest': '1' * 64,
+                'creationRequestDigest': reservation['creationRequestDigest'],
+                'creationApprovalDigest': reservation['creationApprovalDigest'],
+                'nativeAuthorityEvidenceDigest': reservation[
+                    'nativeAuthorityEvidenceDigest'],
+            }, birth['anchorDigest'])
+            with self.assertRaises(codec.SupervisorJournalCodecError):
+                codec.validate_record(
+                    _record(_rechain(missing_principal_authority, birth['anchorDigest']), birth),
+                    birth=birth, owner_bootstrap_context_digest=owner_context_digest,
+                    generation_root_policy_digest=root_policy_digest,
+                    root_replay_context=root_context)
             ingress_reservation = dict(reservation)
             ingress_reservation['store'] = {
                 'profile': 'umf.pg-generation-ingress-store/0.1',
