@@ -39,10 +39,15 @@ The approved environment and trusted publisher are configured. The exact
 `umf-core==0.10.0` backfill passed source verification, OIDC publication,
 PyPI-served byte verification, and a clean public-index consumer install; see
 [the run evidence](evidence/pypi-0.10.0/README.md). This evidence covers the
-core package only. It does not yet establish end-to-end installation of
-`arras[truss,umf]`, or successful automatic publication of a later release.
-Historical package namespaces and support limits remain unchanged. Native
-producer qualification is a separate release lane.
+core package only, and its SDK release metadata points to reused unchanged core
+archives rather than asserting that those archives were rebuilt from the SDK
+commit. The `python-v0.10.2` release event then exercised the automatic
+dispatcher and main-only publisher successfully: OIDC publication, exact
+PyPI-served bytes, and a clean public Linux consumer all passed. See [the
+0.10.2 evidence](evidence/pypi-0.10.2/README.md). This does not establish
+end-to-end installation of `arras[truss,umf]` or broaden native/platform
+qualification. Historical package namespaces and support limits remain
+unchanged. Native producer qualification is a separate release lane.
 Only its genuinely compatible, qualified wheel cohort may be selected for PyPI;
 registry publication does not broaden that cohort’s platform or runtime claims.
 
