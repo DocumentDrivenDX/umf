@@ -43,6 +43,7 @@
       "scripts/actions-docs/render-diagrams.py",
       "scripts/actions-docs/render-negative-control.py",
       "scripts/actions-docs/rule-example.ts",
+      "scripts/actions-reference/executor.ts",
       "scripts/artifact-collections-browser.ts",
       "scripts/audit-extension-packages.ts",
       "scripts/audit-json-schemas.ts",
@@ -89,6 +90,7 @@
       "scripts/row-scope-codegen-corpus.ts",
       "scripts/run-tests.ts",
       "scripts/rust-core/conformance.ts",
+      "scripts/rust-inventory-typescript.ts",
       "scripts/rust-inventory.py",
       "scripts/rust-migration/r3/extract-native-clients.py",
       "scripts/rust-migration/r3/native-replay.py",
@@ -109,6 +111,7 @@
       "tests/access-unified-generation.test.ts",
       "tests/access-unified-sync.test.ts",
       "tests/access-unified.test.ts",
+      "tests/actions-reference/handler-executor.test.ts",
       "tests/binding/table-deployment.test.ts",
       "tests/binding/table-domains.test.ts",
       "tests/binding/table-migration.test.ts",
@@ -198,12 +201,12 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "bd93c3bc8e49ff23851628f36e525c8cbfb9e934f74cb5ba79308d70ab9b36d6",
+    "sourceCohortSha256": "c3cba73ee9ebd123f759c411531b3250d563cf11e7317412b00841faba58a6f2",
     "typescriptApi": "5.9.3"
   },
   "counts": {
-    "activeScriptFiles": 344,
-    "algorithmSymbols": 10326,
+    "activeScriptFiles": 347,
+    "algorithmSymbols": 10332,
     "pythonModules": 105,
     "rustBuildInputs": 76,
     "rustModules": 127,
@@ -17830,6 +17833,7 @@
     {
       "activationEvidence": [
         "scripts/actions-reference/executor.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -17888,6 +17892,7 @@
         "scripts/actions-reference/outcomes.ts",
         "scripts/actions-reference/policy.ts",
         "scripts/actions-reference/preview.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -17910,6 +17915,7 @@
         "scripts/actions-reference/executor.ts",
         "scripts/actions-reference/gateway.ts",
         "scripts/actions-reference/graph.ts",
+        "scripts/actions-reference/handler-catalog.ts",
         "scripts/actions-reference/intent.ts",
         "scripts/actions-reference/outcomes.ts",
         "scripts/actions-reference/policy.ts",
@@ -17918,6 +17924,7 @@
         "scripts/actions-reference/state.ts",
         "scripts/actions-reference/store.ts",
         "scripts/actions-reference/versions.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -17967,21 +17974,23 @@
     },
     {
       "activationEvidence": [
+        ".github/workflows/core-0102-inventory-generation.yml",
         "scripts/actions-docs/native-example.ts",
         "scripts/actions-reference/outcomes.ts",
-        "transitive-import-closure"
+        "tests/actions-reference/handler-executor.test.ts"
       ],
       "active": true,
       "algorithmSymbols": [
         "attribution",
+        "handlerLimitReason",
         "observe"
       ],
-      "bytes": 16165,
+      "bytes": 17799,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/actions-reference/executor.ts",
-      "sha256": "1f31514be254fd85bd698313af67b8e6dc81852cb93770b56dae69fdda15508c"
+      "sha256": "2fc6849548220155e70a25e0dfb87ace7a5047a57aa7a1bd1579564920cfe95a"
     },
     {
       "activationEvidence": [
@@ -18005,6 +18014,7 @@
         "scripts/actions-reference/handler-execution.ts",
         "scripts/actions-reference/preconditions.ts",
         "scripts/actions-reference/recipe.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -18052,13 +18062,16 @@
       "sha256": "def4b14d324f649388c20300f6a428887e2535b3caa6cf18d4987435e0c2f3d8"
     },
     {
-      "activationEvidence": [],
-      "active": false,
+      "activationEvidence": [
+        "tests/actions-reference/handler-executor.test.ts",
+        "transitive-import-closure"
+      ],
+      "active": true,
       "algorithmSymbols": [],
       "bytes": 3096,
-      "disposition": "unreferenced-script-source",
+      "disposition": "active-host-tooling-algorithm",
       "language": "ts",
-      "migrationObligation": "No current package/workflow/import activation edge discovered",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/actions-reference/handler-catalog.ts",
       "sha256": "5c5492cd3ad63443118b5f716e755d953deb263f98d70cce65aed2905ac03b40"
     },
@@ -18100,10 +18113,12 @@
         "scripts/actions-reference/admission.ts",
         "scripts/actions-reference/attribution.ts",
         "scripts/actions-reference/executor.ts",
+        "scripts/actions-reference/handler-catalog.ts",
         "scripts/actions-reference/handler-execution.ts",
         "scripts/actions-reference/preparation.ts",
         "scripts/actions-reference/preview.ts",
         "scripts/actions-reference/state.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -18214,6 +18229,7 @@
         "scripts/actions-reference/outcomes.ts",
         "scripts/actions-reference/preview.ts",
         "scripts/actions-reference/projection.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -18253,6 +18269,7 @@
         "scripts/actions-reference/preconditions.ts",
         "scripts/actions-reference/recipe.ts",
         "scripts/actions-reference/state.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -18438,9 +18455,11 @@
     {
       "activationEvidence": [
         "scripts/actions-browser.ts",
+        "scripts/actions-reference/handler-catalog.ts",
         "scripts/actions-reference/handler-execution.ts",
         "scripts/actions-reference/handlers.ts",
         "scripts/prepare-action-tests.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -18479,6 +18498,7 @@
         "scripts/actions-reference/preview.ts",
         "scripts/actions-reference/projection.ts",
         "scripts/actions-reference/recipe.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
@@ -18501,6 +18521,7 @@
         "scripts/actions-reference/admission.ts",
         "scripts/actions-reference/audit.ts",
         "scripts/actions-reference/graph.ts",
+        "scripts/actions-reference/handler-catalog.ts",
         "scripts/actions-reference/handlers.ts",
         "scripts/actions-reference/outcomes.ts",
         "scripts/actions-reference/policy.ts",
@@ -18508,6 +18529,7 @@
         "scripts/actions-reference/revisions.ts",
         "scripts/actions-reference/state.ts",
         "scripts/actions-reference/versions.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "tests/actions-reference/native-harness.ts",
         "transitive-import-closure"
       ],
@@ -32306,19 +32328,25 @@
     },
     {
       "activationEvidence": [
+        ".github/workflows/core-0102-inventory-generation.yml",
         "package.json"
       ],
       "active": true,
       "algorithmSymbols": [
         "assert",
-        "ontology"
+        "assertFullGraph",
+        "assertNeighborhood",
+        "assertRelationshipRoutes",
+        "expectedNeighborhood",
+        "ontology",
+        "sameStrings"
       ],
-      "bytes": 23069,
+      "bytes": 25985,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/reference/ontology-browser.ts",
-      "sha256": "8b8b9e4997b822a9d7ec77fbc8598dd2984eb9d5907f399c4f57bd895e1752b3"
+      "sha256": "21f4425b258f425a20edd7b83f123bfaa8e4e214bccfcb70ee7d91d043f5dd2c"
     },
     {
       "activationEvidence": [
@@ -33182,18 +33210,21 @@
       "sha256": "a897c918702266a8b79912f72d7b367df0e9533775565ee3a9c1edec854395cc"
     },
     {
-      "activationEvidence": [],
-      "active": false,
+      "activationEvidence": [
+        ".github/workflows/core-0102-inventory-generation.yml"
+      ],
+      "active": true,
       "algorithmSymbols": [],
       "bytes": 3184,
-      "disposition": "unreferenced-script-source",
+      "disposition": "active-host-tooling-algorithm",
       "language": "ts",
-      "migrationObligation": "No current package/workflow/import activation edge discovered",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/rust-inventory-typescript.ts",
       "sha256": "e9cd4ec974b629d262bc73ca73b39cd479732fd14674e72b0810c571d56acccd"
     },
     {
       "activationEvidence": [
+        ".github/workflows/core-0102-inventory-generation.yml",
         "package.json"
       ],
       "active": true,
@@ -36469,20 +36500,22 @@
       "sha256": "a86424e548e51adc94d64dd1cb81aa0b8a908d0755b3c3c13213b24e6356f18c"
     },
     {
-      "activationEvidence": [],
-      "active": false,
+      "activationEvidence": [
+        ".github/workflows/core-0102-inventory-generation.yml"
+      ],
+      "active": true,
       "algorithmSymbols": [
         "install",
         "notify",
         "setup",
         "source"
       ],
-      "bytes": 30928,
-      "disposition": "unreferenced-test-source",
+      "bytes": 32561,
+      "disposition": "test-oracle-fixture-algorithm",
       "language": "ts",
-      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/actions-reference/handler-executor.test.ts",
-      "sha256": "db1a66e2119ca418f46373fc53d65731ac94a9f087f1e5e25f2c2c71b1fcb0b0"
+      "sha256": "92f1114d74f2b3f1e75699f66e91fa5414298e86c7afc55dcbdfcb636e927954"
     },
     {
       "activationEvidence": [],
@@ -36579,6 +36612,7 @@
     {
       "activationEvidence": [
         "scripts/actions-docs/native-example.ts",
+        "tests/actions-reference/handler-executor.test.ts",
         "transitive-import-closure"
       ],
       "active": true,
