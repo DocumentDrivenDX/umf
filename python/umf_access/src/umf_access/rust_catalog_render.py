@@ -82,6 +82,15 @@ class _DtoBudgetExceeded(ValueError):
     """DTO encoding crossed a private bridge resource limit."""
 
 
+def _capture_budget_call(method: Any, *args: int) -> None:
+    try:
+        method(*args)
+    except ValueError as error:
+        if str(error) == "captured declaration exceeds Rust bridge resource limits":
+            raise _DtoBudgetExceeded(str(error)) from None
+        raise
+
+
 def _validate_graph_variant(value: object) -> None:
     """Opt-in validator for the narrow captured-DTO graph profile."""
     if type(value) is not dict:
@@ -318,42 +327,66 @@ class _EncodingBudget:
     def __init__(self, session: object | None = None) -> None:
         self.nodes = 0
         self.utf8_bytes = 0
+        self.output_chars = 0
         self.output_bytes = 0
         self.session = session
 
     def charge(self, value: object, depth: int) -> None:
         if self.session is not None:
-            self.session.charge_work(1)
-        self.nodes += 1
-        if self.nodes > _MAX_CAPTURE_NODES or depth > _MAX_CAPTURE_DEPTH:
-            raise _DtoBudgetExceeded("captured declaration exceeds Rust bridge resource limits")
+            _capture_budget_call(self.session.charge_capture_node, depth)
+        else:
+            self.nodes += 1
+            if self.nodes > _MAX_CAPTURE_NODES or depth > _MAX_CAPTURE_DEPTH:
+                raise _DtoBudgetExceeded("captured declaration exceeds Rust bridge resource limits")
         if type(value) is str:
             remaining = _MAX_CAPTURE_UTF8_BYTES - self.utf8_bytes
             if len(value) > remaining:
                 raise _DtoBudgetExceeded("captured declaration exceeds Rust bridge resource limits")
+            if self.session is not None:
+                _capture_budget_call(self.session.check_capture_text_chars, len(value))
             encoded_bytes = len(value.encode("utf-8", errors="strict"))
             if encoded_bytes > remaining:
                 raise _DtoBudgetExceeded("captured declaration exceeds Rust bridge resource limits")
+            if self.session is not None:
+                _capture_budget_call(self.session.charge_capture_text_bytes, encoded_bytes)
             self.utf8_bytes += encoded_bytes
 
     def charge_output(self, value: object) -> None:
-        measured = 0
+        measured_chars = 0
+        measured_bytes = 0
         encoder = json.JSONEncoder(
             ensure_ascii=False, allow_nan=False, sort_keys=True, separators=(",", ":")
         )
         for chunk in encoder.iterencode(value):
-            remaining = _MAX_CAPTURE_UTF8_BYTES - self.output_bytes - measured
-            if len(chunk) > remaining:
+            remaining_chars = _MAX_CAPTURE_UTF8_BYTES - self.output_chars - measured_chars
+            remaining_bytes = _MAX_CAPTURE_UTF8_BYTES - self.output_bytes - measured_bytes
+            if len(chunk) > remaining_chars or len(chunk) > remaining_bytes:
                 raise _DtoBudgetExceeded("captured declaration exceeds Rust bridge resource limits")
+            if self.session is not None:
+                _capture_budget_call(
+                    self.session.check_capture_output_chars, len(chunk), measured_chars
+                )
             encoded_bytes = len(chunk.encode("utf-8", errors="strict"))
-            if encoded_bytes > remaining:
+            if encoded_bytes > remaining_bytes:
                 raise _DtoBudgetExceeded("captured declaration exceeds Rust bridge resource limits")
-            measured += encoded_bytes
-        self.output_bytes += measured
+            if self.session is not None:
+                _capture_budget_call(
+                    self.session.check_capture_output_bytes, encoded_bytes, measured_bytes
+                )
+            measured_chars += len(chunk)
+            measured_bytes += encoded_bytes
+        if self.session is not None:
+            _capture_budget_call(
+                self.session.commit_capture_output, measured_chars, measured_bytes
+            )
+        self.output_chars += measured_chars
+        self.output_bytes += measured_bytes
 
     def preflight_output(self, minimum_chars: int) -> None:
         if minimum_chars > _MAX_CAPTURE_UTF8_BYTES - self.output_bytes:
             raise _DtoBudgetExceeded("captured declaration exceeds Rust bridge resource limits")
+        if self.session is not None:
+            _capture_budget_call(self.session.preflight_capture_output_chars, minimum_chars)
 
 
 def _encode_capture(value: object, budget: _EncodingBudget, depth: int = 0) -> object:

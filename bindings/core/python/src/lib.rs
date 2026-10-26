@@ -2159,6 +2159,20 @@ struct PythonCaptureGraphObserver<'py> {
 struct CaptureResourceSession {
     charged_work: u64,
     max_work: u64,
+    dto_nodes: usize,
+    dto_utf8_bytes: usize,
+    output_chars: usize,
+    output_utf8_bytes: usize,
+}
+
+const CAPTURE_DTO_MAX_NODES: usize = 50_000;
+const CAPTURE_DTO_MAX_DEPTH: usize = 64;
+const CAPTURE_DTO_MAX_TEXT: usize = 8 * 1024 * 1024;
+
+fn capture_dto_limit_error() -> PyErr {
+    pyo3::exceptions::PyValueError::new_err(
+        "captured declaration exceeds Rust bridge resource limits",
+    )
 }
 
 #[pymethods]
@@ -2168,6 +2182,10 @@ impl CaptureResourceSession {
         Self {
             charged_work: 0,
             max_work,
+            dto_nodes: 0,
+            dto_utf8_bytes: 0,
+            output_chars: 0,
+            output_utf8_bytes: 0,
         }
     }
 
@@ -2189,6 +2207,101 @@ impl CaptureResourceSession {
     #[getter]
     fn charged_work(&self) -> u64 {
         self.charged_work
+    }
+
+    /// Charge one encoder visit. Shared work fails before DTO-specific limits.
+    fn charge_capture_node(&mut self, depth: usize) -> PyResult<()> {
+        self.charge_work(1)?;
+        let Some(nodes) = self.dto_nodes.checked_add(1) else {
+            return Err(capture_dto_limit_error());
+        };
+        self.dto_nodes = nodes;
+        if nodes > CAPTURE_DTO_MAX_NODES || depth > CAPTURE_DTO_MAX_DEPTH {
+            return Err(capture_dto_limit_error());
+        }
+        Ok(())
+    }
+
+    #[getter]
+    fn dto_nodes(&self) -> usize {
+        self.dto_nodes
+    }
+
+    /// Character preflight deliberately precedes Python's strict UTF-8 encode.
+    fn check_capture_text_chars(&self, chars: usize) -> PyResult<()> {
+        if chars > CAPTURE_DTO_MAX_TEXT.saturating_sub(self.dto_utf8_bytes) {
+            return Err(capture_dto_limit_error());
+        }
+        Ok(())
+    }
+
+    fn charge_capture_text_bytes(&mut self, bytes: usize) -> PyResult<()> {
+        let Some(total) = self.dto_utf8_bytes.checked_add(bytes) else {
+            return Err(capture_dto_limit_error());
+        };
+        if total > CAPTURE_DTO_MAX_TEXT {
+            return Err(capture_dto_limit_error());
+        }
+        self.dto_utf8_bytes = total;
+        Ok(())
+    }
+
+    #[getter]
+    fn dto_utf8_bytes(&self) -> usize {
+        self.dto_utf8_bytes
+    }
+
+    fn check_capture_output_chars(&self, chars: usize, pending: usize) -> PyResult<()> {
+        let Some(total) = self.output_chars.checked_add(pending).and_then(|n| n.checked_add(chars)) else {
+            return Err(capture_dto_limit_error());
+        };
+        if total > CAPTURE_DTO_MAX_TEXT {
+            return Err(capture_dto_limit_error());
+        }
+        Ok(())
+    }
+
+    fn check_capture_output_bytes(&self, bytes: usize, pending: usize) -> PyResult<()> {
+        let Some(total) = self.output_utf8_bytes.checked_add(pending).and_then(|n| n.checked_add(bytes)) else {
+            return Err(capture_dto_limit_error());
+        };
+        if total > CAPTURE_DTO_MAX_TEXT {
+            return Err(capture_dto_limit_error());
+        }
+        Ok(())
+    }
+
+    /// Commit output only after the complete JSON iteration succeeds.
+    fn commit_capture_output(&mut self, chars: usize, bytes: usize) -> PyResult<()> {
+        let Some(total_chars) = self.output_chars.checked_add(chars) else {
+            return Err(capture_dto_limit_error());
+        };
+        let Some(total_bytes) = self.output_utf8_bytes.checked_add(bytes) else {
+            return Err(capture_dto_limit_error());
+        };
+        if total_chars > CAPTURE_DTO_MAX_TEXT || total_bytes > CAPTURE_DTO_MAX_TEXT {
+            return Err(capture_dto_limit_error());
+        }
+        self.output_chars = total_chars;
+        self.output_utf8_bytes = total_bytes;
+        Ok(())
+    }
+
+    fn preflight_capture_output_chars(&self, minimum_chars: usize) -> PyResult<()> {
+        if minimum_chars > CAPTURE_DTO_MAX_TEXT.saturating_sub(self.output_utf8_bytes) {
+            return Err(capture_dto_limit_error());
+        }
+        Ok(())
+    }
+
+    #[getter]
+    fn output_chars(&self) -> usize {
+        self.output_chars
+    }
+
+    #[getter]
+    fn output_utf8_bytes(&self) -> usize {
+        self.output_utf8_bytes
     }
 }
 
