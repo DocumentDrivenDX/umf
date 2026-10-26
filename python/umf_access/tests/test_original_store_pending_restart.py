@@ -178,8 +178,16 @@ class _FakeConnection:
         return self.db.execute(sql, params)
 
 
-def _execute_journal_recovery_control_transport(_issuer, _budget, connection, query, params=None, **_kwargs):
+def _execute_journal_recovery_control_transport(_issuer, budget, connection, query, params=None, **_kwargs):
     """Journal/recovery-control transport seam, not bounded-I/O qualification."""
+    text = ' '.join(query.split())
+    if text == ("SELECT name, setting::pg_catalog.int8 FROM pg_catalog.pg_settings "
+                "WHERE name IN ('statement_timeout','lock_timeout')"):
+        startup = budget._timeout_state
+        return _Cursor([
+            ('statement_timeout', startup['startupStatementTimeoutMs']),
+            ('lock_timeout', startup['startupLockTimeoutMs']),
+        ])
     return connection.execute(query, params)
 
 
