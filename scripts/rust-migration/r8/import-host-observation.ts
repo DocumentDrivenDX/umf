@@ -92,7 +92,7 @@ const source = resolve('src/adapters/json-schema/index.ts');
 const hash = createHash('sha256').update(readFileSync(source)).digest('hex');
 const receipt = {
   title:'R8 direct TypeScript import host-observation oracle',
-  status:'observed', scope:'Seven direct-call cases covering success getter order and selected stage 1-5 refusal/coercion boundaries.',
+  status:'observed', scope:'Nine direct-call cases covering success getter order, distinct URI reads, and selected stage 1-6 refusal/coercion boundaries.',
   source:{path:'src/adapters/json-schema/index.ts', sha256:hash, hashScope:'This hashes only the entry module; imported files and generated inputs are not included.'},
   runtime:{bun:process.versions.bun ?? null, node:process.versions.node, platform:process.platform, arch:process.arch},
   negativeControls:{baseUriThrowPreservesObjectIdentity:cases.find(c=>c.id==='base-uri-getter-throws-original-object')?.outcome.sameObject===true,

@@ -180,5 +180,13 @@ resolved by CONTRACT-002 authority or remain excluded from routing; (4) all
 eight operations are requalified together with raw host/control boundaries;
 (5) result-copy and exact-number preservation pass; and (6) setup and per-call
 work budgets, cancellation/deadline/meter exceptions, and performance are
-accepted for the intended default call pattern. Sol's interface review is a
-pre-implementation gate; this draft records the proposed decision only.
+accepted for the intended default call pattern. Sol reviewed the owned
+per-stage Context and tagged-wire interface before private binding exposure.
+The direct TypeScript [nine-case host trace](import-host-observation.json),
+the [six-case real-browser private WASM receipt](staged-import-browser.json),
+and the [18-case source-bound parity matrix](import-host-parity-matrix.json)
+cover bounded subsets. The latter matches direct TypeScript host effects and
+exact outcomes across a fresh Node addon and real Chromium WASM, with matching
+Node/WASM dispatch stages. Non-string source coercion, the complete effect
+matrix, installed package parity, cross-stage cancellation/deadline controls,
+and all default-route gates remain open.

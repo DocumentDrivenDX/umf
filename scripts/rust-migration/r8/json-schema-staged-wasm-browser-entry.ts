@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {createJsonSchemaStagedImportEngine, JSON_SCHEMA_STAGED_IMPORT_PROFILE} from '../../../bindings/core/wasm/index.js';
+import {matrixCases} from './json-schema-import-stage-matrix-cases.mjs';
 
 function stageFromWire(wire: string): string {
   const request = JSON.parse(wire) as {members: {key: number[]; value: {kind: string; units: number[]}}[]};
@@ -60,3 +61,33 @@ runCase('root-parse-refusal-precedes-id-and-third-uri-read', () => {
 });
 
 (globalThis as any).stagedImportResult = observations;
+
+const matrixObservations: any[] = [];
+for (const fixture of matrixCases()) {
+  const stages: string[] = [];
+  const events: string[] = [];
+  const module = (globalThis as any).stagedWasmModule;
+  const CountingSession = class extends module.JsonSchemaImportSessionHandle {
+    executeStage(wire: string) {
+      stages.push(stageFromWire(wire));
+      return super.executeStage(wire);
+    }
+  };
+  const engine = createJsonSchemaStagedImportEngine({
+    JsonSchemaImportSessionHandle: CountingSession,
+    jsonSchemaImportSessionProfileVersion: () => JSON_SCHEMA_STAGED_IMPORT_PROFILE,
+  });
+  const sentinel = Object.assign(new Error('matrix host sentinel'), {code: 'HOST_SENTINEL'});
+  const options = fixture.makeOptions(events, sentinel);
+  try {
+    // Fixtures deliberately probe missing and throwing option properties.
+    const document = engine.importJsonSchema(fixture.source, options as Parameters<typeof engine.importJsonSchema>[1]);
+    matrixObservations.push({id: fixture.id, events, stages, outcome: {kind: 'return', document}});
+  } catch (error: any) {
+    matrixObservations.push({id: fixture.id, events, stages, outcome: {
+      kind: 'throw', name: error?.name ?? typeof error, message: error?.message ?? String(error),
+      code: error?.code ?? null, path: error?.path ?? null, sameObject: error === sentinel,
+    }});
+  }
+}
+(globalThis as any).stagedImportMatrixResult = matrixObservations;

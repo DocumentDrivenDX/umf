@@ -235,7 +235,7 @@ receipt is [here](import-host-observation.json). The same source was bundled
 with Bun and run under Node 26.12.1; its receipt is
 [here](import-host-observation-node.json). Both pin the same
 `src/adapters/json-schema/index.ts` SHA-256 and record outcomes/events rather
-than predicted traces. Real Chromium 153.0.8010.12 ran the same seven calls
+than predicted traces. Real Chromium 153.0.8010.12 ran the same nine calls
 from a browser-targeted bundle served over loopback; its separate receipt is
 [here](import-host-observation-chromium.json). All three cohorts have identical
 case traces and outcomes, including the root `toString` event immediately
@@ -257,9 +257,36 @@ For Node, bundle that entrypoint with the repository's Bun 1.4.3 toolchain
 --outfile=/tmp/r8-import-host-observation.mjs`), then run the generated module
 with Node and pass an output path. Run the browser cohort from the repository
 root with `bun scripts/rust-migration/r8/import-host-observation-chromium.ts`.
-This is a partial oracle only: it does not
-cover all refusal boundaries, descriptor/get traps, symbols/non-enumerable
-properties, three distinct changing URI values, parser coercion hooks, or the
-required staged-binding dispatch counts. The source hash covers only the
+This is a partial oracle only: it does not cover all refusal boundaries,
+descriptor/get traps, symbols/non-enumerable properties, general parser
+coercion hooks, or the required staged-binding dispatch counts. The source hash covers only the
 `index.ts` entry module, not transitive imports. It adds no Rust binding
 evidence and does not support route changes; the default remains TypeScript.
+
+The [staged string-input parity matrix](import-host-parity-matrix.json) now runs
+18 source-bound cases against direct TypeScript, a fresh Node 26 native addon,
+and fresh WASM in real Chromium 153.0.8010.12. Host-effect traces, Node/WASM
+stage sequences, and exact outcomes match in all 18 cases. A focused Rust
+correction preserves the source's three ordered Ajv details for the bounded
+unsupported string `type` case; the core staged-import regression passes 8/8.
+The full required matrix,
+control-failure injection at every stage boundary, non-string parser effects,
+installed-package parity, and route gates remain open.
+
+Reproduce the macOS arm64 matrix from the repository root with pinned Rust
+1.90, the current source, Node 26.12.1, Bun 1.4.3 and Chromium 153:
+
+```sh
+CARGO_TARGET_DIR=/private/tmp/umf-r8-json-stage-node-cargo RUSTC=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/rustc /Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo build --locked --offline --release --manifest-path bindings/core/node/Cargo.toml
+cp /private/tmp/umf-r8-json-stage-node-cargo/release/libumf_core_node.dylib /private/tmp/umf-core-node-r8-fresh.node
+UMF_IMPORT_MATRIX_PROFILE=typescript bun scripts/rust-migration/r8/json-schema-import-stage-matrix-runner.mjs /private/tmp/umf-import-matrix-ts.json
+UMF_IMPORT_MATRIX_PROFILE=node-native UMF_NODE_ADDON_PATH=/private/tmp/umf-core-node-r8-fresh.node node scripts/rust-migration/r8/json-schema-import-stage-matrix-runner.mjs /private/tmp/umf-import-matrix-node.json
+bun scripts/rust-migration/r8/json-schema-staged-wasm-browser.mjs
+node scripts/rust-migration/r8/json-schema-import-stage-matrix-receipt.mjs
+```
+
+The browser runner builds WASM offline and writes both its focused six-case
+receipt and the 18-case browser profile. The matrix receipt compares the three
+profiles and pins their source, runner and artifact hashes. Its direct adapter
+hash covers the entry module only; this evidence does not establish transitive
+source closure or general Draft 2020-12 parity.

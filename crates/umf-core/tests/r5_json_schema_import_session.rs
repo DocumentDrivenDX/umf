@@ -270,3 +270,23 @@ fn one_shot_import_keeps_payload_and_namespace_equal() {
     };
     assert_eq!(string_field(&modules[0], "namespace"), &uri);
 }
+
+#[test]
+fn invalid_string_type_import_preserves_ordered_ajv_diagnostics() {
+    let base_uri = Utf16::from("https://example.test/read-1");
+    let mut ctx = Context::ordinary();
+    let error = js::import_json_schema(
+        &units(r#"{"type":"nonsense"}"#),
+        &Utf16::from("schema-invalid"),
+        &base_uri,
+        &[],
+        &mut ctx,
+    )
+    .unwrap_err();
+
+    assert_eq!(error.code, "JSON_SCHEMA_INVALID");
+    assert_eq!(
+        error.message.to_utf8().unwrap(),
+        r##"[{"code":"JSON_SCHEMA_META","path":"/modules/0/elements/0/extensions/umf.json-schema","message":"Resource https://example.test/read-1: [{\"instancePath\":\"/type\",\"schemaPath\":\"#/$defs/simpleTypes/enum\",\"keyword\":\"enum\",\"params\":{\"allowedValues\":[\"array\",\"boolean\",\"integer\",\"null\",\"number\",\"object\",\"string\"]},\"message\":\"must be equal to one of the allowed values\"},{\"instancePath\":\"/type\",\"schemaPath\":\"#/properties/type/anyOf/1/type\",\"keyword\":\"type\",\"params\":{\"type\":\"array\"},\"message\":\"must be array\"},{\"instancePath\":\"/type\",\"schemaPath\":\"#/properties/type/anyOf\",\"keyword\":\"anyOf\",\"params\":{},\"message\":\"must match a schema in anyOf\"}]","severity":"error"}]"##
+    );
+}

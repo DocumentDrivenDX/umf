@@ -55,6 +55,8 @@ try {
   }, {glueSource, wasmBase64, entrySource});
   await page.waitForFunction(() => Array.isArray(window.stagedImportResult), undefined, {timeout: 30000});
   const cases = await page.evaluate(() => window.stagedImportResult);
+  await page.waitForFunction(() => Array.isArray(window.stagedImportMatrixResult), undefined, {timeout: 30000});
+  const matrixCases = await page.evaluate(() => window.stagedImportMatrixResult);
   const get = id => cases.find(item => item.id === id);
   assert.deepEqual(get('success-preserves-three-uri-reads-and-resource-getter-order').stages, ['begin', 'resource', 'payloadBaseUri', 'root', 'id', 'namespace', 'finish']);
   assert.deepEqual(get('success-preserves-three-uri-reads-and-resource-getter-order').events, ['baseUri#1', 'resources', 'resource:get', 'baseUri#2', 'id', 'baseUri#3']);
@@ -77,6 +79,7 @@ try {
     tools: {bun: Bun.version, cargo: (await run(`${toolchain}/cargo`, ['--version'])).stdout, rustc: (await run(`${toolchain}/rustc`, ['--version'])).stdout, wasmBindgen: bindgenVersion.stdout, chromium: browser.version()},
     controls: {orderedGetterStages: true, threeBaseUriReadsRemainDistinct: true, baseGetterThrowsBeforeDispatch: true, resourceGetterAndProxyThrowsPreserveIdentity: true, resourceParseStopsLaterStages: true, rootParseStopsIdAndThirdUriRead: true, wasmExecutedInChromium: true, pageErrors: pageErrors.length},
     cases,
+    stringInputStageMatrix: matrixCases,
     artifacts: {
       wasmSha256: sha(await readFile(`${wasmOut}/umf_core_wasm_bg.wasm`)),
       wasmGlueSha256: sha(await readFile(`${wasmOut}/umf_core_wasm.js`)),
@@ -90,7 +93,9 @@ try {
   assert(Object.values(record.controls).every(value => value === true || value === 0));
   await mkdir(dirname(evidencePath), {recursive: true});
   await writeFile(evidencePath, JSON.stringify(record, null, 2) + '\n');
-  console.log(JSON.stringify({evidencePath, cases: cases.length, chromium: browser.version(), controls: record.controls}, null, 2));
+  const matrixPath = resolve('docs/helix/04-build/evidence/rust-migration/r8-json-schema-eight-operations/import-host-parity-matrix-wasm.json');
+  await writeFile(matrixPath, JSON.stringify({profile: 'wasm-chromium', runtime: {chromium: browser.version(), bun: Bun.version}, artifacts: record.artifacts, cases: matrixCases}, null, 2) + '\n');
+  console.log(JSON.stringify({evidencePath, matrixPath, cases: cases.length, matrixCases: matrixCases.length, chromium: browser.version(), controls: record.controls}, null, 2));
 } finally {
   await browser?.close();
 }

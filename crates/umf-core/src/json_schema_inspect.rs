@@ -661,9 +661,9 @@ fn compile_payload(payload: &JsonSchemaPayload, ctx: &mut Context<'_>) -> Result
     Ok(())
 }
 
-/// Compose the pinned Ajv 8.20 error sequence for the exact `{"type":12}`
-/// shape in the R5 host replay contract. This does not claim general Ajv
-/// parity; all other compiler errors keep their native bounded diagnostic.
+/// Compose the pinned Ajv 8.20 error sequence for a scalar `type` value rejected
+/// by Draft 2020-12's simpleTypes enum. This does not claim general Ajv parity;
+/// all other compiler errors keep their native bounded diagnostic.
 fn invalid_type_ajv_detail(error: &EngineError, schema: &Value, uri: &Utf16) -> Option<String> {
     if error.path != Utf16::from("/type")
         || error.message != Utf16::from("must be equal to one of the allowed values")
@@ -671,7 +671,16 @@ fn invalid_type_ajv_detail(error: &EngineError, schema: &Value, uri: &Utf16) -> 
         return None;
     }
     let type_value = get_value(schema, "type")?;
-    if !matches!(type_value, Value::Number(value) if *value == 12.0) {
+    let invalid_simple_type = match type_value {
+        Value::Number(value) => *value == 12.0,
+        Value::String(value) => ![
+            "array", "boolean", "integer", "null", "number", "object", "string",
+        ]
+        .iter()
+        .any(|allowed| value == &Utf16::from(*allowed)),
+        _ => false,
+    };
+    if !invalid_simple_type {
         return None;
     }
     // Admit only this single semantic field plus the compiler's safe retrieval
