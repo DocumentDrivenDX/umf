@@ -1,0 +1,523 @@
+{
+  "sourceCommit": "cdebbc26896b9ed597ef0c7e634f674b2a5e09e3",
+  "scope": "Completed normal CI checkpoint before source DBAPI toolchain correction; not a passing release gate.",
+  "counts": {
+    "success": 62,
+    "failure": 1,
+    "skipped": 1
+  },
+  "checks": [
+    {
+      "name": "deploy",
+      "id": 121423561966,
+      "status": "completed",
+      "conclusion": "skipped",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461321/job/121423561966",
+      "completedAt": "2026-10-26T06:03:13Z"
+    },
+    {
+      "name": "python-codegen (ubuntu-24.04, Python 3.11)",
+      "id": 121420137904,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461382/job/121420137904",
+      "completedAt": "2026-10-26T06:02:45Z"
+    },
+    {
+      "name": "table-declarations",
+      "id": 121420137878,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461382/job/121420137878",
+      "completedAt": "2026-10-26T06:02:37Z"
+    },
+    {
+      "name": "portable-adoption (3.11)",
+      "id": 121420137866,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461382/job/121420137866",
+      "completedAt": "2026-10-26T06:01:09Z"
+    },
+    {
+      "name": "portable-adoption (3.14)",
+      "id": 121420137835,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461382/job/121420137835",
+      "completedAt": "2026-10-26T05:59:43Z"
+    },
+    {
+      "name": "portable-adoption (3.12)",
+      "id": 121420137808,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461382/job/121420137808",
+      "completedAt": "2026-10-26T06:00:25Z"
+    },
+    {
+      "name": "python-codegen (ubuntu-24.04, Python 3.14)",
+      "id": 121420137799,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461382/job/121420137799",
+      "completedAt": "2026-10-26T05:59:37Z"
+    },
+    {
+      "name": "p1-compatibility (2.13.5)",
+      "id": 121420137784,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461382/job/121420137784",
+      "completedAt": "2026-10-26T06:01:21Z"
+    },
+    {
+      "name": "portable-adoption (3.13)",
+      "id": 121420137782,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461382/job/121420137782",
+      "completedAt": "2026-10-26T06:01:07Z"
+    },
+    {
+      "name": "native-sessions (source-dbapi)",
+      "id": 121420137781,
+      "status": "completed",
+      "conclusion": "failure",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461382/job/121420137781",
+      "completedAt": "2026-10-26T06:00:19Z"
+    },
+    {
+      "name": "python-codegen (macos-14, Python 3.14)",
+      "id": 121420137771,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461382/job/121420137771",
+      "completedAt": "2026-10-26T06:10:44Z"
+    },
+    {
+      "name": "p1-compatibility (2.14.1)",
+      "id": 121420137767,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461382/job/121420137767",
+      "completedAt": "2026-10-26T06:00:14Z"
+    },
+    {
+      "name": "boundaries",
+      "id": 121420137762,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461382/job/121420137762",
+      "completedAt": "2026-10-26T05:59:09Z"
+    },
+    {
+      "name": "native-client-types",
+      "id": 121420137750,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461382/job/121420137750",
+      "completedAt": "2026-10-26T05:57:53Z"
+    },
+    {
+      "name": "native-sessions (published044)",
+      "id": 121420137697,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461382/job/121420137697",
+      "completedAt": "2026-10-26T05:55:46Z"
+    },
+    {
+      "name": "python-codegen (macos-14, Python 3.11)",
+      "id": 121420137671,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461382/job/121420137671",
+      "completedAt": "2026-10-26T06:06:39Z"
+    },
+    {
+      "name": "installed-parser (macos-14, 3.14)",
+      "id": 121420137653,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461305/job/121420137653",
+      "completedAt": "2026-10-26T06:02:09Z"
+    },
+    {
+      "name": "production-conformance (macos-latest, 3.13.16)",
+      "id": 121420137643,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461345/job/121420137643",
+      "completedAt": "2026-10-26T08:19:43Z"
+    },
+    {
+      "name": "commands",
+      "id": 121420137592,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461462/job/121420137592",
+      "completedAt": "2026-10-26T06:02:27Z"
+    },
+    {
+      "name": "installed-parser (macos-14, 3.11)",
+      "id": 121420137581,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461305/job/121420137581",
+      "completedAt": "2026-10-26T06:00:34Z"
+    },
+    {
+      "name": "installed-parser (ubuntu-24.04, 3.11)",
+      "id": 121420137579,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461305/job/121420137579",
+      "completedAt": "2026-10-26T05:56:54Z"
+    },
+    {
+      "name": "rust-stage-one-runtime",
+      "id": 121420137528,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461382/job/121420137528",
+      "completedAt": "2026-10-26T05:54:25Z"
+    },
+    {
+      "name": "production-conformance (macos-latest, 3.12.15)",
+      "id": 121420137516,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461345/job/121420137516",
+      "completedAt": "2026-10-26T07:22:45Z"
+    },
+    {
+      "name": "production-conformance (macos-latest, 3.11.17)",
+      "id": 121420137503,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461345/job/121420137503",
+      "completedAt": "2026-10-26T07:05:45Z"
+    },
+    {
+      "name": "production-conformance (ubuntu-latest, 3.11.17)",
+      "id": 121420137454,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461345/job/121420137454",
+      "completedAt": "2026-10-26T07:13:23Z"
+    },
+    {
+      "name": "production-conformance (ubuntu-latest, 3.13.16)",
+      "id": 121420137441,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461345/job/121420137441",
+      "completedAt": "2026-10-26T07:13:46Z"
+    },
+    {
+      "name": "build",
+      "id": 121420137385,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461321/job/121420137385",
+      "completedAt": "2026-10-26T06:03:13Z"
+    },
+    {
+      "name": "production-conformance (ubuntu-latest, 3.12.15)",
+      "id": 121420137363,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461345/job/121420137363",
+      "completedAt": "2026-10-26T06:44:27Z"
+    },
+    {
+      "name": "installed-parser (ubuntu-24.04, 3.14)",
+      "id": 121420137266,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461305/job/121420137266",
+      "completedAt": "2026-10-26T05:56:31Z"
+    },
+    {
+      "name": "python",
+      "id": 121420137214,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461339/job/121420137214",
+      "completedAt": "2026-10-26T05:56:43Z"
+    },
+    {
+      "name": "qualify-installed-artifact (linux-x86_64, ubuntu-24.04, x64, 3.11.17, x86_64, linux_x86_64)",
+      "id": 121420137156,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461311/job/121420137156",
+      "completedAt": "2026-10-26T05:55:33Z"
+    },
+    {
+      "name": "qualify-installed-artifact (macos-arm64, macos-15, arm64, 3.11.9, arm64, macos_arm64)",
+      "id": 121420137090,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461311/job/121420137090",
+      "completedAt": "2026-10-26T05:57:11Z"
+    },
+    {
+      "name": "inventory-boundaries",
+      "id": 121420137015,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276461287/job/121420137015",
+      "completedAt": "2026-10-26T05:56:38Z"
+    },
+    {
+      "name": "table-declarations",
+      "id": 121420125056,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456758/job/121420125056",
+      "completedAt": "2026-10-26T06:01:30Z"
+    },
+    {
+      "name": "p1-compatibility (2.13.5)",
+      "id": 121420125048,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456758/job/121420125048",
+      "completedAt": "2026-10-26T05:55:58Z"
+    },
+    {
+      "name": "portable-adoption (3.13)",
+      "id": 121420125042,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456758/job/121420125042",
+      "completedAt": "2026-10-26T05:58:26Z"
+    },
+    {
+      "name": "native-sessions (published044)",
+      "id": 121420125034,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456758/job/121420125034",
+      "completedAt": "2026-10-26T05:58:03Z"
+    },
+    {
+      "name": "portable-adoption (3.14)",
+      "id": 121420125030,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456758/job/121420125030",
+      "completedAt": "2026-10-26T05:57:42Z"
+    },
+    {
+      "name": "portable-adoption (3.12)",
+      "id": 121420125019,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456758/job/121420125019",
+      "completedAt": "2026-10-26T05:58:50Z"
+    },
+    {
+      "name": "rust-stage-one-runtime",
+      "id": 121420125003,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456758/job/121420125003",
+      "completedAt": "2026-10-26T05:58:59Z"
+    },
+    {
+      "name": "python-codegen (macos-14, Python 3.14)",
+      "id": 121420124993,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456758/job/121420124993",
+      "completedAt": "2026-10-26T05:59:28Z"
+    },
+    {
+      "name": "python-codegen (ubuntu-24.04, Python 3.11)",
+      "id": 121420124952,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456758/job/121420124952",
+      "completedAt": "2026-10-26T05:54:55Z"
+    },
+    {
+      "name": "native-sessions (source-dbapi)",
+      "id": 121420124948,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456758/job/121420124948",
+      "completedAt": "2026-10-26T06:21:01Z"
+    },
+    {
+      "name": "qualify-installed-artifact (macos-arm64, macos-15, arm64, 3.11.9, arm64, macos_arm64)",
+      "id": 121420124933,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456750/job/121420124933",
+      "completedAt": "2026-10-26T05:55:24Z"
+    },
+    {
+      "name": "native-client-types",
+      "id": 121420124918,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456758/job/121420124918",
+      "completedAt": "2026-10-26T05:52:41Z"
+    },
+    {
+      "name": "p1-compatibility (2.14.1)",
+      "id": 121420124912,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456758/job/121420124912",
+      "completedAt": "2026-10-26T05:52:26Z"
+    },
+    {
+      "name": "python-codegen (ubuntu-24.04, Python 3.14)",
+      "id": 121420124907,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456758/job/121420124907",
+      "completedAt": "2026-10-26T05:56:05Z"
+    },
+    {
+      "name": "portable-adoption (3.11)",
+      "id": 121420124891,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456758/job/121420124891",
+      "completedAt": "2026-10-26T05:51:59Z"
+    },
+    {
+      "name": "python-codegen (macos-14, Python 3.11)",
+      "id": 121420124860,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456758/job/121420124860",
+      "completedAt": "2026-10-26T05:54:41Z"
+    },
+    {
+      "name": "installed-parser (macos-14, 3.14)",
+      "id": 121420124732,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456722/job/121420124732",
+      "completedAt": "2026-10-26T05:52:18Z"
+    },
+    {
+      "name": "installed-parser (macos-14, 3.11)",
+      "id": 121420124725,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456722/job/121420124725",
+      "completedAt": "2026-10-26T05:52:42Z"
+    },
+    {
+      "name": "installed-parser (ubuntu-24.04, 3.11)",
+      "id": 121420124712,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456722/job/121420124712",
+      "completedAt": "2026-10-26T05:51:55Z"
+    },
+    {
+      "name": "qualify-installed-artifact (linux-x86_64, ubuntu-24.04, x64, 3.11.17, x86_64, linux_x86_64)",
+      "id": 121420124676,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456750/job/121420124676",
+      "completedAt": "2026-10-26T05:54:32Z"
+    },
+    {
+      "name": "boundaries",
+      "id": 121420124665,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456758/job/121420124665",
+      "completedAt": "2026-10-26T05:52:06Z"
+    },
+    {
+      "name": "inventory-boundaries",
+      "id": 121420124654,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456798/job/121420124654",
+      "completedAt": "2026-10-26T05:55:50Z"
+    },
+    {
+      "name": "production-conformance (macos-latest, 3.11.17)",
+      "id": 121420124603,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456705/job/121420124603",
+      "completedAt": "2026-10-26T07:06:07Z"
+    },
+    {
+      "name": "production-conformance (ubuntu-latest, 3.12.15)",
+      "id": 121420124550,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456705/job/121420124550",
+      "completedAt": "2026-10-26T07:10:34Z"
+    },
+    {
+      "name": "production-conformance (macos-latest, 3.12.15)",
+      "id": 121420124537,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456705/job/121420124537",
+      "completedAt": "2026-10-26T06:58:24Z"
+    },
+    {
+      "name": "production-conformance (macos-latest, 3.13.16)",
+      "id": 121420124523,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456705/job/121420124523",
+      "completedAt": "2026-10-26T07:08:02Z"
+    },
+    {
+      "name": "installed-parser (ubuntu-24.04, 3.14)",
+      "id": 121420124508,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456722/job/121420124508",
+      "completedAt": "2026-10-26T05:51:58Z"
+    },
+    {
+      "name": "production-conformance (ubuntu-latest, 3.11.17)",
+      "id": 121420124491,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456705/job/121420124491",
+      "completedAt": "2026-10-26T06:52:47Z"
+    },
+    {
+      "name": "python",
+      "id": 121420124448,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456736/job/121420124448",
+      "completedAt": "2026-10-26T05:53:31Z"
+    },
+    {
+      "name": "production-conformance (ubuntu-latest, 3.13.16)",
+      "id": 121420124359,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456705/job/121420124359",
+      "completedAt": "2026-10-26T07:12:12Z"
+    },
+    {
+      "name": "commands",
+      "id": 121420124353,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40276456699/job/121420124353",
+      "completedAt": "2026-10-26T06:01:03Z"
+    }
+  ]
+}
