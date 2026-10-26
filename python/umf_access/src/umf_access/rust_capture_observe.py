@@ -14,7 +14,7 @@ from __future__ import annotations
 from typing import Any
 
 _PROFILE = "umf-access-capture-graph-observation/0.6.0"
-_EXACT_EMPTY_TERMINAL_PROFILE = "umf-access-capture-exact-empty-terminal/0.2.0"
+_EXACT_EMPTY_TERMINAL_PROFILE = "umf-access-capture-exact-empty-terminal/0.3.0"
 _SELECTED_KEY_PROFILE = "umf-access-capture-selected-key-observation/0.1.0"
 
 

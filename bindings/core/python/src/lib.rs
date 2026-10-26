@@ -2796,7 +2796,7 @@ fn access_observe_capture_terminal_join_owners_with_session(
     )
 }
 
-const CAPTURE_EXACT_EMPTY_TERMINAL_PROFILE: &str = "umf-access-capture-exact-empty-terminal/0.2.0";
+const CAPTURE_EXACT_EMPTY_TERMINAL_PROFILE: &str = "umf-access-capture-exact-empty-terminal/0.3.0";
 // `Node` has two instance fields and `RecordRef` has eight. The profile scans
 // exact instance dictionaries to reject arbitrary Python keys before any
 // string-key lookup. Keep that scan bounded; larger dictionaries fall back
@@ -2907,7 +2907,7 @@ fn access_validate_capture_exact_empty_terminal_with_session(
     }
     if !matches!(
         op.extract::<String>().ok().as_deref(),
-        Some("all" | "first" | "one" | "count" | "exists")
+        Some("all" | "first" | "one" | "count" | "exists" | "group_count")
     ) {
         return outside();
     }
@@ -2998,7 +2998,7 @@ fn access_validate_capture_exact_empty_terminal_with_session(
     charge!();
     if !matches!(
         node.getattr("op")?.extract::<String>()?.as_str(),
-        "all" | "first" | "one" | "count" | "exists"
+        "all" | "first" | "one" | "count" | "exists" | "group_count"
     ) {
         return outside();
     }
@@ -3042,7 +3042,7 @@ fn access_validate_capture_exact_empty_terminal_with_session(
     charge!();
     if !matches!(
         node.getattr("op")?.extract::<String>()?.as_str(),
-        "all" | "first" | "one" | "count" | "exists"
+        "all" | "first" | "one" | "count" | "exists" | "group_count"
     ) {
         return outside();
     }

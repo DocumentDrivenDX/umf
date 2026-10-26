@@ -149,7 +149,7 @@ def test_dto_free_exact_empty_all_matches_python_predecessor(monkeypatch):
         node, Node, RecordRef, session
     )
     assert result == {
-        "profile": "umf-access-capture-exact-empty-terminal/0.2.0",
+        "profile": "umf-access-capture-exact-empty-terminal/0.3.0",
         "outcome": "accepted",
     }
     assert session.charged_work > 0
@@ -167,7 +167,7 @@ def test_dto_free_exact_empty_all_matches_python_predecessor(monkeypatch):
     assert captured.variants[0].node == node
 
 
-@pytest.mark.parametrize("op", ["first", "one", "count", "exists"])
+@pytest.mark.parametrize("op", ["first", "one", "count", "exists", "group_count"])
 def test_dto_free_exact_empty_terminal_matches_python_predecessor(monkeypatch, op):
     node = Node(op, (RecordRef("demo", "Thing", (_ID,)), ()))
     session = _rust._rust_core.CaptureResourceSession(100_000)
@@ -175,7 +175,7 @@ def test_dto_free_exact_empty_terminal_matches_python_predecessor(monkeypatch, o
         node, Node, RecordRef, session
     )
     assert result == {
-        "profile": "umf-access-capture-exact-empty-terminal/0.2.0",
+        "profile": "umf-access-capture-exact-empty-terminal/0.3.0",
         "outcome": "accepted",
     }
     assert session.charged_work > 0
@@ -193,7 +193,7 @@ def test_dto_free_exact_empty_terminal_matches_python_predecessor(monkeypatch, o
     assert captured.variants[0].node.op == op
 
 
-@pytest.mark.parametrize("op", ["all", "first", "one", "count", "exists"])
+@pytest.mark.parametrize("op", ["all", "first", "one", "count", "exists", "group_count"])
 def test_public_capture_selects_exact_empty_terminal_profile(monkeypatch, op):
     record = RecordRef("demo", "Thing", (_ID,))
     node = Node(op, (record, ()))
@@ -420,7 +420,7 @@ def test_dto_free_validator_returns_outside_profile_before_graph_reads(monkeypat
         node, Node, RecordRef, session
     )
     assert result == {
-        "profile": "umf-access-capture-exact-empty-terminal/0.2.0",
+        "profile": "umf-access-capture-exact-empty-terminal/0.3.0",
         "outcome": "outside-profile",
     }
 
@@ -448,7 +448,7 @@ def test_dto_free_validator_refuses_nonempty_steps_before_step_accessors():
     )
 
     assert result == {
-        "profile": "umf-access-capture-exact-empty-terminal/0.2.0",
+        "profile": "umf-access-capture-exact-empty-terminal/0.3.0",
         "outcome": "outside-profile",
     }
     assert reads == []
