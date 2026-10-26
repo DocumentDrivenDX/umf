@@ -9,6 +9,7 @@ import math
 import sys
 import threading
 import time
+import traceback
 from datetime import date, datetime, timezone
 from decimal import Decimal
 from uuid import UUID
@@ -47,7 +48,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--scenario", required=True, choices=(
         "transitions", "empty", "required", "rollback", "commit-observation", "finalize-observation",
         "finalize-before-publication", "unknown-no-commit",
-        "writer-barrier", "tampering", "admission-refusal", "domains", "semantics", "ordinary", "campaign"
+        "writer-barrier", "tampering", "admission-refusal", "domains", "domain-uuid",
+        "semantics", "ordinary", "campaign"
     ))
     return parser.parse_args()
 
@@ -757,6 +759,7 @@ def domain_future_writes(connection: object, schema: str, role: str, case: str,
 
 def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: str,
               campaign_id: str | None = None) -> dict[str, object]:
+    failure_checkpoint = "create-and-verify-owned-target"
     configuration = dict(fixture["configuration"])
     tag = uuid4().hex[:10] if campaign_id is None else _campaign_tag(campaign_id, scenario)
     database = "g03_" + tag
@@ -880,13 +883,16 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                 initial_key = ("requiredSet5" if scenario == "required" else
                                domain+"Absent" if domain else
                                ("decimal" if semantic == "decimal" else "absent"))
+                failure_checkpoint = "compile-initial-native-bundle"
                 initial_bundle = compile_bundle(fixture["variants"][initial_key], configuration)
+                failure_checkpoint = "compile-initial-native-plan"
                 initial_result = compile_table_migration(
                     migration_id="g03-"+tag+"-000", predecessor=None,
                     previous_bundle=None, next_bundle=initial_bundle)
                 if initial_result.get("status") != "compiled":
                     raise AssertionError({"stage": "initial-plan", "diagnostics": initial_result.get("diagnostics")})
                 initial_plan = initial_result["plan"]
+                failure_checkpoint = "apply-initial-table-migration"
                 with connection.transaction():
                     connection.execute(sql.SQL("SET LOCAL ROLE {}").format(sql.Identifier(owner)))
                     connection.execute("SET LOCAL search_path=pg_catalog")
@@ -906,6 +912,7 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                 table_oid = table_identity[0]
                 report["createdTableIdentity"] = {"oid": table_oid, "name": "notes",
                                                     "ownerOid": table_identity[2], "schemaOid": schema_oid}
+                failure_checkpoint = "seed-initial-native-rows"
                 connection.execute("RESET ROLE")
                 if scenario == "empty" or semantic:
                     initial_rows = []
@@ -990,6 +997,7 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                 elif semantic == "decimal":
                     stages = (("decimalExponent", "set"),)
                 for index, (variant, _) in enumerate(stages, start=1):
+                    failure_checkpoint = "compile-selected-native-transition"
                     next_bundle = compile_bundle(fixture["variants"][variant], configuration)
                     found = [item for item in discover_table_migration_changes(
                         current_bundle, next_bundle,
@@ -1068,6 +1076,7 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                         "dsn": target_dsn, "schema": schema, "role": alice,
                         "id": "g03_writer_"+tag,
                     }, runtime)
+                    failure_checkpoint = "apply-selected-native-transition"
                     dispatches_before = report.get("defaultStatementDispatches", 0)
                     try:
                         invocation = apply_migration_on_host(fault_host, plan, expected_head=current_head,
@@ -1209,6 +1218,7 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                         future_probes.append({"kind": suffix, "expected": expected_value, "actual": observed_value})
                     step_report["futureWritesAsPerson"] = future_probes
                     if domain:
+                        failure_checkpoint = "verify-selected-native-domain-write"
                         step_report["nativeDomainFutureWritesAsPerson"] = domain_future_writes(
                             connection, schema, alice, domain, shadow_schema)
                     current_head = invocation["headDigest"]
@@ -1239,7 +1249,14 @@ def run_chain(args: argparse.Namespace, fixture: dict[str, object], scenario: st
                 report["futureWriteProbes"] = "run for selected integer/required/domain scenario; other selectors remain separate"
         except Exception as error:
             report["status"] = "FAIL"
-            report["error"] = {"type": type(error).__name__}
+            report["error"] = {
+                "type": type(error).__name__,
+                "checkpoint": failure_checkpoint,
+                "sourceFrames": [
+                    {"file": Path(frame.filename).name, "line": frame.lineno, "function": frame.name}
+                    for frame in traceback.extract_tb(error.__traceback__)[-6:]
+                ],
+            }
         finally:
             # Retain cleanup errors in the report; never report a clean case if ownership is uncertain.
             cleanup_errors: list[str] = []
@@ -1405,6 +1422,13 @@ def main() -> int:
         selected_pass = all(item["status"].startswith("PASS_SELECTED_NATIVE_SUBCASE") for item in results)
         report["status"] = "PASS_SELECTED_NATIVE_SUBCASES_FULL_CASE_OPEN" if selected_pass else "FAIL"
         mark(("G03-N10", "G03-N11", "G03-N14"), "PARTIAL_SUBCASE_PASS_FULL_CASE_OPEN" if selected_pass else "FAIL")
+        result = 0 if selected_pass else 2
+    elif args.scenario == "domain-uuid":
+        case = run_chain(args, fixture, "domain-uuid")
+        report["domainResults"] = [case]
+        selected_pass = case["status"].startswith("PASS_SELECTED_NATIVE_SUBCASE")
+        report["status"] = "PASS_G03_N11_UUID_DIAGNOSTIC_SUBCASE_ONLY_FINAL_COMBINED_GATE_OPEN" if selected_pass else "FAIL"
+        mark(("G03-N11",), "UUID_DIAGNOSTIC_SUBCASE_PASS_FULL_CASE_OPEN" if selected_pass else "FAIL")
         result = 0 if selected_pass else 2
     elif args.scenario == "semantics":
         results = [run_chain(args, fixture, "semantic-null"), run_chain(args, fixture, "semantic-decimal")]

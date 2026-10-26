@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
-name: G03 remaining selected native qualification (intermediate)
+name: G03 UUID native diagnostic (intermediate)
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   selected-native:
-    name: Bounded remaining G03 PostgreSQL 18.6 qualification (intermediate)
+    name: Bounded G03 UUID PostgreSQL 18.6 diagnostic (intermediate)
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     services:
@@ -349,13 +349,11 @@ jobs:
                  "g03DefaultsCaseIds": list(defaults_fixture["caseStatus"])})
           PY
 
-          # Intermediate source-repair phase only. The original all-scope roster
-          # remains pinned; prior G02 and first three G03 receipts are historical
-          # evidence and are not requalified by this changed source/cohort.
-          G03_REMAINING_PHASE=(admission-refusal semantics rollback \
-            commit-observation finalize-observation finalize-before-publication unknown-no-commit \
-            writer-barrier domains tampering)
-          for scenario in "${G03_REMAINING_PHASE[@]}"; do
+          # UUID diagnostic phase only. The complete selected roster remains
+          # pinned; historical scopes are separate evidence and are not
+          # requalified at this changed runner/cohort.
+          G03_UUID_DIAGNOSTIC_PHASE=(domain-uuid)
+          for scenario in "${G03_UUID_DIAGNOSTIC_PHASE[@]}"; do
             run_bounded "g03-$scenario" 180 "$WORK/installed/bin/python" tests/lifecycle/g03-defaults-native.py \
               --dsn "$PG_DSN" --fixture /tmp/g02-g03-defaults-fixture.json \
               --scenario "$scenario" --report "$EVIDENCE/reports/g03-$scenario.json"
@@ -371,49 +369,41 @@ jobs:
           evidence = pathlib.Path(os.environ["QUALIFICATION_DIR"])
           pins = json.loads(pathlib.Path("docs/helix/04-build/evidence/mig-g02-g03/native-qualification-source-pins.json").read_text())
           reports = evidence / "reports"
-          full_scenarios = pins["selectedNativeScope"]["g03ScenarioArguments"]
-          prior_scenarios = ("transitions", "empty", "required")
-          scenarios = tuple(scenario for scenario in full_scenarios if scenario not in prior_scenarios)
-          expected_remaining = ("admission-refusal", "semantics", "rollback", "commit-observation",
-                                "finalize-observation", "finalize-before-publication", "unknown-no-commit",
-                                "writer-barrier", "domains", "tampering")
-          assert scenarios == expected_remaining, scenarios
-          statuses = {}
-          for scenario in scenarios:
-              item = json.loads((reports / f"g03-{scenario}.json").read_text())
-              status = item["status"]
-              if scenario == "admission-refusal":
-                  assert status == "PASS_SOURCE_REFUSAL_AND_NATIVE_NO_EFFECTS", status
-              else:
-                  assert status.startswith(("PASS_SELECTED_NATIVE_SUBCASE", "PASS_EXPECTED_FENCED_SUBCASE")), (scenario, status)
-              statuses[scenario] = status
+          diagnostic_scenarios = ("domain-uuid",)
+          assert diagnostic_scenarios == ("domain-uuid",)
+          fixture = json.loads((evidence / "g03-defaults-fixture.json").read_text())
+          n11 = next(entry for entry in fixture["campaignRoster"] if entry["caseId"] == "G03-N11")
+          assert "domain-uuid" in n11["scenarios"]
+          item = json.loads((reports / "g03-domain-uuid.json").read_text())
+          assert item["status"] == "PASS_G03_N11_UUID_DIAGNOSTIC_SUBCASE_ONLY_FINAL_COMBINED_GATE_OPEN", item["status"]
+          uuid_result = item["domainResults"][0]
+          assert uuid_result["scenario"] == "domain-uuid"
+          assert uuid_result["status"] == "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN"
           artifact_files = [path for path in evidence.rglob("*") if path.is_file()]
           total_bytes = sum(path.stat().st_size for path in artifact_files)
           log_bytes = sum(path.stat().st_size for path in (evidence / "logs").glob("*.log"))
           assert total_bytes <= pins["evidenceLimits"]["capturedRunArtifactsMaximumBytes"], total_bytes
           assert log_bytes <= pins["evidenceLimits"]["capturedCommandLogsMaximumBytes"], log_bytes
           prior_run = {
-              "runId": "40254973634",
-              "sourceCommit": "6f3acadaaa03e4833631064fe415b4b6a9d20f17",
-              "artifactSha256": "cd257cdc667c9a0c03c6f662504f627201a707e4be90176e750805df868ea5ed",
+              "runId": "40256054045",
+              "sourceCommit": "bfc5575e4096cb550a80fd5f13eea686b1b8ebd2",
+              "artifactSha256": "a2197a49bfb038ed75d1f82929b9e238c0b66d517377786a269ef28cea1c22f7",
               "evidenceRelationship": "separate historical evidence only; no source or cohort trust inheritance",
-              "g02HistoricalStatus": "PASS_G02_TEMPORAL_FIVE_CASES at the historical source/cohort",
-              "g03HistoricalStatuses": {
-                  "transitions": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
-                  "empty": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
-                  "required": "PASS_SELECTED_NATIVE_SUBCASE_FULL_CASE_OPEN",
-                  "admission-refusal": "FAIL_OR_UNKNOWN; corrected source is rerun in this phase"
-              }
+              "historicalStatus": "FAIL_OR_UNKNOWN; UUID domain subcase was CatalogError, so tampering was not reached",
+              "otherSelectedScopesWereHistoricalOnly": true
           }
-          prior_case_ids = {"G03-N01", "G03-N02", "G03-N03"}
-          current_case_ids = [case_id for case_id in pins["selectedNativeScope"]["g03CaseIds"]
-                              if case_id not in prior_case_ids]
-          target_version = json.loads((reports / "g03-admission-refusal.json").read_text())[
-              "result"]["targetAfter"]["target"]["serverVersion"]
+          current_case_ids = ["G03-N11"]
+          assert "G03-N11" in pins["selectedNativeScope"]["g03CaseIds"]
+          target_version = uuid_result["targetIdentity"]["serverVersion"]
+          current_case_status = {
+              case_id: ("UUID_DIAGNOSTIC_SUBCASE_ONLY; broader G03-N11 remains OPEN"
+                        if case_id == "G03-N11" else "NOT_REQUALIFIED_AT_THIS_SOURCE_OR_COHORT")
+              for case_id in pins["selectedNativeScope"]["g03CaseIds"]
+          }
           outputs = {
               "profile": "umf.g02-g03-selected-native-qualification/1",
-              "status": "PASS_REMAINING_G03_SELECTED_SUBCASES_ONLY_PRIOR_EVIDENCE_SEPARATE_FINAL_COMBINED_GATE_OPEN",
-              "qualificationPhase": "remaining-g03-selected-scenarios-after-native-005/1",
+              "status": "PASS_G03_N11_UUID_DIAGNOSTIC_SUBCASE_ONLY_FINAL_COMBINED_GATE_OPEN",
+              "qualificationPhase": "g03-n11-uuid-diagnostic-only/1",
               "sourceCommit": os.environ["GITHUB_SHA"],
               "runId": os.environ["GITHUB_RUN_ID"],
               "runAttempt": os.environ["GITHUB_RUN_ATTEMPT"],
@@ -421,12 +411,9 @@ jobs:
               "workflow": os.environ["GITHUB_WORKFLOW"],
               "postgresqlServerVersion": target_version,
               "g02CurrentSourceQualification": "NOT_REQUALIFIED_AT_THIS_SOURCE_OR_COHORT",
-              "g03PriorCaseCurrentSourceQualification": {
-                  case_id: "NOT_REQUALIFIED_AT_THIS_SOURCE_OR_COHORT"
-                  for case_id in sorted(prior_case_ids)
-              },
-              "priorNative005Evidence": prior_run,
-              "g03SelectedScenarios": statuses,
+              "g03CaseCurrentSourceQualification": current_case_status,
+              "g03UuidDiagnostic": item["status"],
+              "priorNative006Evidence": prior_run,
               "g03SelectedCaseIds": current_case_ids,
               "g03N12": "UNQUALIFIED pending compatible Weft .2 cohort",
               "g03N14AndFullCampaign": "OPEN; campaign selector was not invoked",
@@ -438,7 +425,7 @@ jobs:
               "capturedCommandLogBytes": log_bytes,
               "capturedArtifactBytes": total_bytes,
               "limits": pins["target"]["dsnBounds"],
-              "nativeQualification": "remaining selected G03 subcases only; prior native-005 evidence is separate; final combined all-five-G02 plus all-13-G03 gate remains OPEN"
+              "nativeQualification": "G03-N11 UUID diagnostic subcase only; prior native-006 evidence is separate; final combined all-five-G02 plus all-thirteen-selected-G03 gate remains OPEN"
           }
           (evidence / "run-manifest.json").write_text(json.dumps(outputs, indent=2, sort_keys=True) + "\n")
           (evidence / "receipt.json").write_text(json.dumps({
@@ -447,10 +434,10 @@ jobs:
               "runId": outputs["runId"], "runAttempt": outputs["runAttempt"],
               "ref": outputs["ref"], "workflow": outputs["workflow"],
               "g02CurrentSourceQualification": outputs["g02CurrentSourceQualification"],
-              "g03PriorCaseCurrentSourceQualification": outputs["g03PriorCaseCurrentSourceQualification"],
-              "priorNative005Evidence": prior_run,
-              "remainingG03ScenarioCount": len(statuses),
-              "selectedG03ScenarioCount": len(statuses),
+              "g03CaseCurrentSourceQualification": outputs["g03CaseCurrentSourceQualification"],
+              "g03UuidDiagnostic": outputs["g03UuidDiagnostic"],
+              "priorNative006Evidence": prior_run,
+              "diagnosticScenarioCount": len(diagnostic_scenarios),
               "finalCombinedGate": "OPEN; requires all five G02 cases and all thirteen selected G03 scenarios at one final stable source and cohort",
               "g03N12": outputs["g03N12"],
               "g03N14AndFullCampaign": outputs["g03N14AndFullCampaign"]
