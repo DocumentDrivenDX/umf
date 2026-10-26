@@ -59,6 +59,20 @@ test('the Record Type facade cannot restore a predecessor value import', () => {
 		.toContain('rust-record-type-default.ts: value re-export from type-only module ../model/record-type');
 });
 
+test('the Core Evolution candidate keeps predecessor declarations type-only', () => {
+	const allowed = checkAccessSource(
+		'rust-core-evolution-candidate.ts',
+		"import type {CoreEvolutionPolicy} from '../model/evolution';\n",
+	);
+	const denied = checkAccessSource(
+		'rust-core-evolution-candidate.ts',
+		"import {inspectCoreEvolution} from '../model/evolution';\n",
+	);
+
+	expect(allowed).toEqual([]);
+	expect(denied).toContain('rust-core-evolution-candidate.ts: value import from type-only module ../model/evolution');
+});
+
 test('a per-file allowlist also governs re-export module references', () => {
 	const errors = checkAccessSource(
 		'rust-facets-default.ts',
