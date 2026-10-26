@@ -2,7 +2,7 @@ import {canonicalCharged,hashCanonical,hashCanonicalCharged,sha256Text,sha256Tex
 import {verifyTableDeployment,type TableDeploymentBundle} from '../table-deployment';
 import {verifyTableMigration} from './index';
 import type {AccountingContext} from '../model/internal/accounting-context';
-import {ownedR2HistoryMember,ownedR2HistoryPlanBundle,R2WorkMeter} from './inventory-r2-context';
+import {ownedR2CurrentSourceCanonical,ownedR2HistoryMember,ownedR2HistoryPlanBundle,R2WorkMeter} from './inventory-r2-context';
 import {lookupVerifiedG10Bundle,verifyG10BundleForLineage,withVerifiedG10BundleScope} from './inventory-verified-deployment';
 
 type Json=null|boolean|number|string|Json[]|{[key:string]:Json};
@@ -50,6 +50,26 @@ function verifiedPlanBundle(plan:Record<string,unknown>,side:'previous'|'next',a
   }
  }
  const value=plan[side];
+ if(value===null&&side==='previous')return null;
+ return verifiedBundle(value,accounting);
+}
+function verifiedCurrentBundle(value:unknown,side:'next',accounting?:AccountingContext):TableDeploymentBundle;
+function verifiedCurrentBundle(value:unknown,side:'previous',accounting?:AccountingContext):TableDeploymentBundle|null;
+function verifiedCurrentBundle(value:unknown,side:'previous'|'next',accounting?:AccountingContext):TableDeploymentBundle|null{
+ if(accounting instanceof R2WorkMeter){
+  const canonical=ownedR2CurrentSourceCanonical(value,side,accounting,`/current/${side}-root-owner`);
+  if(canonical===null&&side==='previous'&&value===null)return null;
+  if(typeof canonical==='string'&&value!==null&&typeof value==='object'&&!Array.isArray(value)){
+   accounting.visit('r2-current-root-bundle-digest-read',`/current/${side}/bundleDigest`);
+   const descriptor=Object.getOwnPropertyDescriptor(value,'bundleDigest');
+   if(descriptor&&descriptor.enumerable&&Object.hasOwn(descriptor,'value')&&typeof descriptor.value==='string'){
+    const digest=descriptor.value;
+    accounting.scanUtf8(digest,`/current/${side}/bundleDigest`);
+    const matched=lookupVerifiedG10Bundle(digest,canonical,accounting,`/current/${side}/cache-match`);
+    if(matched.bundle){accounting.visit('r2-current-root-bundle-cache-hit',`/current/${side}`);return matched.bundle;}
+   }
+  }
+ }
  if(value===null&&side==='previous')return null;
  return verifiedBundle(value,accounting);
 }
@@ -185,7 +205,7 @@ function deriveInventorySeedLineageCore(history:InventoryHistory,current:Current
   priorPlan=plan;priorBundle=next;
  }
  if(accounting){hashCanonicalCharged(current.options,accounting,'/current/options');}
- const previous=current.previous===null?null:verifiedBundle(current.previous,accounting),next=verifiedBundle(current.next,accounting);
+ const previous=verifiedCurrentBundle(current.previous,'previous',accounting),next=verifiedCurrentBundle(current.next,'next',accounting);
  if(priorPlan===null){if(previous!==null)return fail('HISTORY_REQUIRED_FOR_PREVIOUS');}
  else if(!previous||!priorBundle||previous.bundleDigest!==priorBundle.bundleDigest)return fail('HISTORY_TERMINAL');
  const selected=readIds(current.options.seedSets,'CURRENT_SELECTED',accounting,'/current/options/seedSets'),retired=readIds(current.options.retiredSeedSets,'CURRENT_RETIRED',accounting,'/current/options/retiredSeedSets'),nextSeeds=seedMap(next,accounting,'/current/next/seedSets');

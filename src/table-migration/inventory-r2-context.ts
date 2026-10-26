@@ -58,6 +58,9 @@ const registerOwnedHistory=Symbol('r2-register-owned-history');
 const lookupOwnedHistory=Symbol('r2-lookup-owned-history');
 const associateOwnedHistoryMember=Symbol('r2-associate-owned-history-member');
 const associateOwnedHistoryRoot=Symbol('r2-associate-owned-history-root');
+const ownedCurrentRootsToken=Symbol('r2-owned-current-roots');
+const associateOwnedCurrentRoots=Symbol('r2-associate-owned-current-roots');
+const lookupOwnedCurrentRoot=Symbol('r2-lookup-owned-current-root');
 type OwnedHistoryDocument=CanonicalHistoryDocument&{readonly materialized:WeakMap<CanonicalHistoryMemberSpan,string>};
 /**
  * Frozen deterministic work-event table for the D1 admission primitives.
@@ -87,6 +90,7 @@ export class R2WorkMeter implements AccountingContext {
  #ownedShapeMetadata=new WeakMap<object,readonly string[]>();
  #ownedHistoryMetadata=new WeakMap<object,OwnedHistoryDocument>();
  #ownedHistoryMembers=new WeakMap<object,{document:OwnedHistoryDocument;span:CanonicalHistoryMemberSpan}>();
+ #ownedCurrentRoots:{readonly previous:object|null;readonly previousCanonical:string|null;readonly next:object;readonly nextCanonical:string}|undefined=undefined;
  [registerOwnedShape](token:typeof ownedShapeRegistrationToken,owner:object,keys:readonly string[]):void{
   if(token!==ownedShapeRegistrationToken)throw new TypeError('R2_CONTEXT_SHAPE_OWNER');
   this.#ownedShapeMetadata.set(owner,keys);
@@ -102,6 +106,19 @@ export class R2WorkMeter implements AccountingContext {
  }
  [lookupOwnedHistory](token:typeof ownedHistoryRegistrationToken,value:object):{root:OwnedHistoryDocument|undefined;member:{document:OwnedHistoryDocument;span:CanonicalHistoryMemberSpan}|undefined}{
   if(token!==ownedHistoryRegistrationToken)throw new TypeError('R2_CONTEXT_HISTORY_OWNER');return {root:this.#ownedHistoryMetadata.get(value),member:this.#ownedHistoryMembers.get(value)};
+ }
+ [associateOwnedCurrentRoots](token:typeof ownedCurrentRootsToken,previous:object|null,previousCanonical:string|null,next:object,nextCanonical:string):void{
+  if(token!==ownedCurrentRootsToken)throw new TypeError('R2_CONTEXT_CURRENT_ROOT_OWNER');
+  this.visit('r2-current-root-record-retention','/current',previous===null?3:4);
+  this.#ownedCurrentRoots=Object.freeze({previous,previousCanonical,next,nextCanonical});
+ }
+ [lookupOwnedCurrentRoot](token:typeof ownedCurrentRootsToken,value:unknown,side:'previous'|'next',path:string):string|null|undefined{
+  if(token!==ownedCurrentRootsToken)throw new TypeError('R2_CONTEXT_CURRENT_ROOT_OWNER');
+  this.visit('r2-current-root-record-lookup',path);
+  const roots=this.#ownedCurrentRoots;
+  if(!roots||(side==='previous'?value!==roots.previous:value!==roots.next))return undefined;
+  this.visit('r2-current-root-canonical-reference',path);
+  return side==='previous'?roots.previousCanonical:roots.nextCanonical;
  }
  [associateOwnedHistoryMember](token:typeof ownedHistoryRegistrationToken,source:object,copy:object):void{
   if(token!==ownedHistoryRegistrationToken||!Object.isFrozen(copy))throw new TypeError('R2_CONTEXT_HISTORY_OWNER');this.visit('r2-history-normalized-member-lookup','/history/executions');const found=this.#ownedHistoryMembers.get(source);if(found){this.visit('r2-history-normalized-member-map-retention','/history/executions');this.#ownedHistoryMembers.set(copy,found);}
@@ -207,6 +224,12 @@ export function ownedR2HistoryPlanBundle(plan:unknown,side:'previous'|'next',met
  if(!descriptor||!descriptor.enumerable||!Object.hasOwn(descriptor,'value'))return undefined;
  meter.visit('r2-history-plan-bundle-result-retention',`${path}/${side}`);
  return Object.freeze({value:descriptor.value});
+}
+
+/** Exact current-root canonical text retained by the fixed source owner only. */
+export function ownedR2CurrentSourceCanonical(value:unknown,side:'previous'|'next',meter:R2WorkMeter,path='/current'):string|null|undefined{
+ if(side!=='previous'&&side!=='next')return undefined;
+ return meter[lookupOwnedCurrentRoot](ownedCurrentRootsToken,value,side,path);
 }
 
 /** Fixed validator-constructor propagation for normalized execution wrappers. */
@@ -384,13 +407,15 @@ export function ownR2SourceComponents(input:unknown,meter=new R2WorkMeter()):R2O
  const selectorSnapshot={value:selector as unknown as DeepReadonly<R2DiscoverySelector>,canonical:selectorInputSnapshot.canonical};
  if(previousSnapshot!==null&&!isSourceBundleEnvelope(previousSnapshot.value))throw new TypeError('R2_BUNDLE_ENVELOPE:/previous');
  if(!isSourceBundleEnvelope(nextSnapshot.value))throw new TypeError('R2_BUNDLE_ENVELOPE:/next');
- return Object.freeze({
+ const result=Object.freeze({
   previous:(previousSnapshot===null?null:previousSnapshot.value) as DeepReadonly<TableDeploymentBundle>|null,
   next:nextSnapshot.value as DeepReadonly<TableDeploymentBundle>,
   history:historySnapshot.value as unknown as DeepReadonly<TableInventorySourceHistory>,
   selector:selectorSnapshot.value,meter,
   canonicalInputs:Object.freeze({previous:previousSnapshot?.canonical??null,next:nextSnapshot.canonical,history:historySnapshot.canonical,selector:selectorSnapshot.canonical}),
  });
+ meter[associateOwnedCurrentRoots](ownedCurrentRootsToken,result.previous as object|null,result.canonicalInputs.previous,result.next as object,result.canonicalInputs.next);
+ return result;
 }
 function isSourceBundleEnvelope(value:unknown):value is Record<string,unknown>{
  return exactRecord(value,['version','canonicalization','source','sourceDigest','configuration','configurationDigest','module','profile','steps','expectedCatalog','seedSets','bundleDigest','nativeQualified']);

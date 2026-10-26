@@ -2,14 +2,14 @@
 import {beforeAll,describe,expect,test} from 'bun:test';
 import {canonical,canonicalChargedMeasuredBounded,hashCanonical,sha256Text,sha256TextChunksCharged} from '../../src/compilation/bundle/hash';
 import {UmfError} from '../../src/model/errors';
-import {compileTableDeployment} from '../../src/table-deployment';
+import {compileTableDeployment,type TableDeploymentBundle} from '../../src/table-deployment';
 import {compileTableMigration,compileTableInventoryMigration,discoverTableInventoryMigrationChanges,irreversiblePurgeDisclosure,serializeTableInventoryMigration,verifyTableInventoryMigration} from '../../src/table-migration';
 import {compileG10InventoryPlan,compileInventoryPlan,createHistoricalG10Verifier,deriveInitialRendererEffects,deriveG10ProvenanceMutations,type InventoryPlanInput} from '../../src/table-migration/inventory';
 import {partitionRendererDependencies,verifySourcePublicationCoverage} from '../../src/table-migration/inventory-effects';
 import {initialInventoryPrefix,scheduleTypedInventoryEffects,scheduleTypedInventoryEffectsForCompiler,scheduleTypedInventoryEffectsForCompilerCanonical,type CatalogMutation,type EffectNode,type InventoryMetadataStepIds,type PrefixFrame,type ScheduledInventoryEffects} from '../../src/table-migration/inventory-graph';
 import {deriveInventorySeedLineage} from '../../src/table-migration/inventory-history';
 import type {InventoryDelta} from '../../src/table-migration/inventory-projection';
-import {ownR2HistoryComponent,ownedR2HistoryPlanBundle,R2_CONTEXT_BYTE_LIMIT,R2WorkLimitError,R2WorkMeter,R2_WORK_EVENT_UNITS} from '../../src/table-migration/inventory-r2-context';
+import {ownedR2CurrentSourceCanonical,ownR2HistoryComponent,ownedR2HistoryPlanBundle,ownR2SourceComponents,R2_CONTEXT_BYTE_LIMIT,R2WorkLimitError,R2WorkMeter,R2_WORK_EVENT_UNITS,snapshotR2Json} from '../../src/table-migration/inventory-r2-context';
 import {inspectR2InventorySourceContext,prepareR2InventorySourceContext} from '../../src/table-migration/inventory';
 import {projectG10Bundle} from '../../src/table-migration/inventory-source';
 import {partitionInventoryMarkersForG02,sameSourceExceptG02AndCreates} from '../../src/table-migration/inventory-g02-source';
@@ -392,7 +392,7 @@ function installOneFixtureR2MeterDiagnostic(){
  const byPhase=(labels:readonly string[])=>Object.fromEntries(phases.map(phase=>[phase,Object.fromEntries(labels.map(label=>[label,zero()]))])) as Record<(typeof phases)[number],Record<string,Total>>;
  const phaseTotals=Object.fromEntries(phases.map(phase=>[phase,zero()])) as Record<(typeof phases)[number],Total>,categoryTotals=byPhase(categories),pathTotals=byPhase(paths);
  const checkpoints:{work:number;subjects:number;bytes:number}[]=[];let meter:R2WorkMeter|undefined,activeCategory:string|undefined,unexpectedMeters=0,incomplete=false;
- const cache={hit:0,miss:0,reuse:0,historyBundleHit:0};let rejection:{leaf:string;dimension:string;path:string;callsite?:string}|undefined;
+ const cache={hit:0,miss:0,reuse:0,historyBundleHit:0,currentBundleHit:0};let rejection:{leaf:string;dimension:string;path:string;callsite?:string}|undefined;
  const dimension=(error:unknown,fallback:string)=>error instanceof R2WorkLimitError?error.dimension:fallback;
  const observe=(candidate:unknown)=>{if(!candidate||typeof candidate!=='object')return;const value=candidate as R2WorkMeter;if(!meter){meter=value;return;}if(value!==meter){unexpectedMeters++;incomplete=true;}};
  const categoryOf=(label:string|undefined,event:string|undefined,pathBucket:string):string=>{
@@ -429,7 +429,7 @@ function installOneFixtureR2MeterDiagnostic(){
   chargeWorkBytes:function(this:R2WorkMeter,count:number,path:string){observe(this);try{const result=Reflect.apply(originals.chargeWorkBytes,this,[count,path]);add(undefined,path,Math.ceil(count/4096),0,0);return result;}catch(error){reject('chargeWorkBytes',dimension(error,'work'),path);throw error;}},
   retainSubject:function(this:R2WorkMeter,identityOrPath:unknown,path?:string){observe(this);try{const result=Reflect.apply(originals.retainSubject,this,[identityOrPath,path]);add(undefined,path,1,0,1);return result;}catch(error){reject('retainSubject',dimension(error,'subjects-or-work'),path);throw error;}},
   snapshot:function(this:R2WorkMeter){observe(this);const result=Reflect.apply(originals.snapshot,this,[]);if(checkpoints.length<5)checkpoints.push(result);else{unexpectedMeters++;incomplete=true;}return result;},
-  visit:function(this:R2WorkMeter,label:string,path:string,count=1){observe(this);if(label.endsWith('cache-hit'))cache.hit++;else if(label.endsWith('cache-miss'))cache.miss++;else if(label.endsWith('core-reuse'))cache.reuse++;if(label==='r2-history-owned-bundle-cache-hit')cache.historyBundleHit++;const previous=activeCategory;activeCategory=label;try{return Reflect.apply(originals.visit,this,[label,path,count]);}finally{activeCategory=previous;}},
+  visit:function(this:R2WorkMeter,label:string,path:string,count=1){observe(this);if(label.endsWith('cache-hit'))cache.hit++;else if(label.endsWith('cache-miss'))cache.miss++;else if(label.endsWith('core-reuse'))cache.reuse++;if(label==='r2-history-owned-bundle-cache-hit')cache.historyBundleHit++;if(label==='r2-current-root-bundle-cache-hit')cache.currentBundleHit++;const previous=activeCategory;activeCategory=label;try{return Reflect.apply(originals.visit,this,[label,path,count]);}finally{activeCategory=previous;}},
  };
  const installed:string[]=[];
  try{for(const name of leaves){Object.defineProperty(proto,name,{...saved.get(name)!,value:wrappers[name]});installed.push(name);}}
@@ -467,6 +467,7 @@ test('R2 metered context reuses exact source cores for a seeded Note history and
  try{handle=prepareR2InventorySourceContext({previous:fixture.next,next:fixture.next,history:mixedHistory,selector:selector02});}catch(error){failed=true;originalFailure=error;}finally{diagnostic.restore();}
  if(failed){try{const report=diagnostic.report(),text=JSON.stringify(report);if(text.length<=16_384)console.error('[R2_ONE_FIXTURE_METER_DIAGNOSTIC] '+text);else console.error('[R2_ONE_FIXTURE_METER_DIAGNOSTIC] '+JSON.stringify({profile:report.profile,incomplete:report.incomplete,checkpointNames:['owned','history','projection','lineage','lineage-final'],checkpoints:report.checkpoints,consumed:report.consumed,phaseNames:R2_DIAGNOSTIC_PHASES,phases:R2_DIAGNOSTIC_PHASES.map(name=>report.phases[name]),categoryNames:R2_DIAGNOSTIC_CATEGORIES,categories:R2_DIAGNOSTIC_PHASES.map(name=>R2_DIAGNOSTIC_CATEGORIES.map(category=>report.categories[name][category]!)),pathNames:R2_DIAGNOSTIC_PATHS,paths:R2_DIAGNOSTIC_PHASES.map(name=>R2_DIAGNOSTIC_PATHS.map(path=>report.paths[name][path]!)),cache:report.cache,unexpectedMeters:report.unexpectedMeters,rejection:report.rejection,reconciliation:report.reconciliation}));}catch{/* diagnostics must not replace the original failure */}throw originalFailure;}
  expect(diagnostic.report().cache.historyBundleHit).toBeGreaterThan(0);
+ expect(diagnostic.report().cache.currentBundleHit).toBeGreaterThan(0);
  if(!handle)throw new Error('R2 context preparation returned no handle.');const state=inspectR2InventorySourceContext(handle);
  expect(state.history.plans).toHaveLength(2);expect(state.history.plans[1]).toEqual(compiled.plan);expect(state.history.executions[1]).toEqual(seedExecution(compiled.plan,fixture.next,'e'.repeat(64)));expect(state.seedLineage).toMatchObject([{id:'initial-note-seed',execution:'confirmed'}]);
  const current={previous:fixture.next,next:fixture.next,options:{seedSets:[],retiredSeedSets:[]}},recoveryMeter=new R2WorkMeter();expect(()=>deriveInventorySeedLineage(mixedHistory,current,createHistoricalG10Verifier(recoveryMeter),recoveryMeter)).not.toThrow();
@@ -487,6 +488,31 @@ test('R2 metered context reuses exact source cores for a seeded Note history and
  const changedPhaseMeter=new R2WorkMeter();expect(()=>deriveInventorySeedLineage(changedPhase,current,createHistoricalG10Verifier(changedPhaseMeter),changedPhaseMeter)).toThrow();
  expect(()=>deriveInventorySeedLineage(originalHistory(fixture.next),current,undefined,new R2WorkMeter())).toThrow(/UNSUPPORTED_METERED_LEGACY_HISTORY/);
  const originalNextSource=fixture.next.source.utf8;fixture.next.source.utf8='caller mutation after registration';expect(state.owned.next?.source.utf8).toBe(originalNextSource);
+});
+test('R2 current-root canonical reuse requires the exact same-meter source-owner association',()=>{
+ const fixture=smallNoteMixedG02Source(),meter=new R2WorkMeter(),selector02={version:'umf.table-inventory-discovery/0.2' as const,tableIntents:[],conversions:[],retiredSeedSets:[],retirements:[],restorations:[],archiveSources:[],tableArchiveSources:[]};
+ const roots=ownR2SourceComponents({previous:fixture.previous,next:fixture.next,history:emptyHistory,selector:selector02},meter);
+ expect(ownedR2CurrentSourceCanonical(roots.previous,'previous',meter)).toBe(roots.canonicalInputs.previous);
+ expect(ownedR2CurrentSourceCanonical(roots.next,'next',meter)).toBe(roots.canonicalInputs.next);
+ expect(ownedR2CurrentSourceCanonical(roots.previous,'next',meter)).toBeUndefined();
+ expect(ownedR2CurrentSourceCanonical(Object.freeze({...roots.next}),'next',meter)).toBeUndefined();
+ expect(ownedR2CurrentSourceCanonical(structuredClone(roots.next),'next',meter)).toBeUndefined();
+ expect(ownedR2CurrentSourceCanonical(roots.next.source,'next',meter)).toBeUndefined();
+ expect(ownedR2CurrentSourceCanonical(roots.next,'next',new R2WorkMeter())).toBeUndefined();
+ const snapshotOnly=snapshotR2Json(roots.next as unknown as import('../../src/table-migration/inventory-r2-context').R2Json,meter,'/snapshot-control').value;
+ expect(ownedR2CurrentSourceCanonical(snapshotOnly,'next',meter)).toBeUndefined();
+ let getterReads=0;const accessor=Object.defineProperty({},'bundleDigest',{enumerable:true,get(){getterReads++;return roots.next.bundleDigest;}});
+ expect(ownedR2CurrentSourceCanonical(accessor,'next',meter)).toBeUndefined();expect(getterReads).toBe(0);
+ const failedMeter=new R2WorkMeter(),priorRoots=ownR2SourceComponents({previous:fixture.previous,next:fixture.next,history:emptyHistory,selector:selector02},failedMeter);
+ expect(()=>ownR2SourceComponents({previous:null,next:fixture.next,history:emptyHistory,selector:{}},failedMeter)).toThrow();
+ expect(ownedR2CurrentSourceCanonical(priorRoots.previous,'previous',failedMeter)).toBe(priorRoots.canonicalInputs.previous);
+ expect(ownedR2CurrentSourceCanonical(priorRoots.next,'next',failedMeter)).toBe(priorRoots.canonicalInputs.next);
+ expect(ownedR2CurrentSourceCanonical(fixture.next,'next',failedMeter)).toBeUndefined();
+ const nullMeter=new R2WorkMeter(),nullPrevious=ownR2SourceComponents({previous:null,next:fixture.next,history:emptyHistory,selector:selector02},nullMeter);
+ expect(nullPrevious.previous).toBeNull();expect(nullPrevious.canonicalInputs.previous).toBeNull();
+ expect(deriveInventorySeedLineage(nullPrevious.history as unknown as TableInventorySourceHistory,{previous:null,next:nullPrevious.next as unknown as TableDeploymentBundle,options:{seedSets:[],retiredSeedSets:[]}},undefined,nullMeter)).toMatchObject([{id:'initial-note-seed',disposition:'retain-definition'}]);
+ const badNext={...fixture.next,bundleDigest:'0'.repeat(64)},failedVerificationMeter=new R2WorkMeter(),failedOwned=ownR2SourceComponents({previous:null,next:badNext,history:emptyHistory,selector:selector02},failedVerificationMeter);
+ expect(()=>deriveInventorySeedLineage(failedOwned.history as unknown as TableInventorySourceHistory,{previous:null,next:failedOwned.next as unknown as TableDeploymentBundle,options:{seedSets:[],retiredSeedSets:[]}},undefined,failedVerificationMeter)).toThrow();
 });
 test('R2 final-plan retention failure returns no history context and a fresh invocation succeeds',()=>{
  const fixture=smallNoteMixedG02Source(),compiled=compileTableInventoryMigration(fixture.request);expect(compiled.status).toBe('compiled');if(compiled.status!=='compiled'){compileG10InventoryPlan(fixture.request);throw new Error(JSON.stringify(compiled.diagnostics));}
