@@ -100,11 +100,12 @@ the native Error carrier's message. A nonstring structure message refuses at
 constraint `emit` as `CONSTRAINT_DIAGNOSTIC`, before later registrations.
 The public static `Validation` route continues to require static diagnostics.
 
-A fresh Node addon passes the nine focused Bun-driven binding tests. The
+A fresh Node addon passes the ten focused Bun-driven binding tests. The
 invalid-source fixture contains two structure errors at each of two extension
 sites followed by two static warnings; its exact serialized message and single
 host stringify are pinned. The suite also covers proxy getter and iterator
-throw identity and nonstring early-stop order. The Node 26.12.1 private probe,
+throw identity, nonstring early-stop order, and a lone-surrogate native refusal
+message. The Node 26.12.1 private probe,
 six focused Rust packet tests, ten frozen R5 Selection tests, Node/WASM event
 serializer tests, and a `wasm32-unknown-unknown` compile check pass. Real
 Chromium execution of this Selection route, successful results containing

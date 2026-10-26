@@ -356,13 +356,6 @@ fn select_core_elements_after_copy_with_host_refusal(
     if !source_validation.static_is_valid()? {
         if let Some(materialize) = host_refusal.as_deref_mut() {
             let message = materialize(&source_validation, ctx)?;
-            let message = message.to_utf8().map_err(|_| {
-                EngineError::new(
-                    "HOST_JSON_PROTOCOL",
-                    Utf16::default(),
-                    "Host JSON refusal message is not scalar UTF-16",
-                )
-            })?;
             return Err(EngineError::new("CORE_SELECTION_SOURCE", Utf16::default(), message));
         }
         let diagnostics = source_validation.into_static_diagnostics()?;

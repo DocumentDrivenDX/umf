@@ -60,9 +60,10 @@ getters and proxies, nonstring message refusal, severity short-circuit, one
 aggregate stringify,
 iterator closure, native thrown identity, and the final result prototype.
 Rust unit tests prove the insertion at `emit` and static-route nonregression.
-The fresh Node addon binding suite passes 9/9, including two structure errors
+The fresh Node addon binding suite passes 10/10, including two structure errors
 followed by two static warnings, exact serialized refusal, proxy getter throw
-identity and a nonstring-message early stop. The Node 26.12.1 private probe
+identity, a nonstring-message early stop, and preservation of a lone-surrogate
+native refusal string. The Node 26.12.1 private probe
 passes, the frozen R5 Selection suite passes 10/10, and the WASM target check
 passes. These tests establish only this invalid-source Node/Bun subset, not
 browser parity or complete Selection behavior. Semantic callback invocation

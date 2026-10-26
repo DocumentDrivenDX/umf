@@ -135,6 +135,36 @@ test('private host Selection preserves structure getter throws by identity', () 
   }
 });
 
+test('private host Selection retains lone-surrogate native refusal messages', () => {
+  const structure = () => false;
+  structure.errors = [{instancePath: '/bad', message: 'bad'}];
+  const registration = {
+    manifest: {scopes: {includes() { return true; }}, capabilities: {validation: 'none'}},
+    structure,
+  };
+  const originalStringify = JSON.stringify;
+  let aggregateCalls = 0;
+  JSON.stringify = function(value, ...args) {
+    if (Array.isArray(value) && value[0]?.code === 'EXTENSION_STRUCTURE') {
+      aggregateCalls++;
+      return '\ud800';
+    }
+    return Reflect.apply(originalStringify, this, [value, ...args]);
+  };
+  try {
+    coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all,
+      {get() { return registration; }}, UmfCoreError);
+    throw new Error('expected invalid source refusal');
+  } catch (error) {
+    expect(error).toBeInstanceOf(UmfCoreError);
+    expect(error.code).toBe('CORE_SELECTION_SOURCE');
+    expect(error.message).toBe('\ud800');
+  } finally {
+    JSON.stringify = originalStringify;
+  }
+  expect(aggregateCalls).toBe(1);
+});
+
 test('private host Selection preserves proxy errors getter throws by identity', () => {
   const sentinel = {errorsProxy: true};
   const structure = new Proxy(function() { return false; }, {
