@@ -165,21 +165,76 @@ jobs:
             fi
           }
 
-          run_bounded source-preflight 180 python -I - "$GITHUB_SHA" "$GITHUB_REF" "$GITHUB_EVENT_NAME" <<'PY'
+          run_bounded fetch-pinned-main-preimage 60 python -I - "$GITHUB_SHA" "$GITHUB_REF" "$GITHUB_EVENT_NAME" "$EVIDENCE" <<'PY'
+          import json, pathlib, subprocess, sys
+          from urllib.parse import urlsplit
+          checkout, ref, event, evidence = sys.argv[1:]
+          pinned = "d5022e37840329d351bcd6c27fe7d7aad4758544"
+          diagnostic = pathlib.Path(evidence) / "preflight-diagnostic.json"
+          def fail(code, component, status):
+              payload = {"profile":"umf.core-python314-preflight-diagnostic/1","reasonCode":code,"component":component,"pinnedCommit":pinned,"actualStatus":int(status)}
+              diagnostic.write_text(json.dumps(payload,sort_keys=True,separators=(",",":"))+"\n")
+              print("SOURCE_PREFLIGHT_FAILURE="+code+" component="+component+" status="+str(int(status)),file=sys.stderr)
+              raise SystemExit(1)
+          if event != "push" or ref != "refs/heads/codex/core-python314-generation": fail("SOURCE_EVENT_REF_MISMATCH","generation-ref",1)
+          result=subprocess.run(["git","rev-parse","HEAD"],capture_output=True,text=True)
+          if result.returncode or result.stdout.strip()!=checkout: fail("SOURCE_HEAD_MISMATCH","generation-head",result.returncode or 1)
+          result=subprocess.run(["git","status","--porcelain"],capture_output=True,text=True)
+          if result.returncode or result.stdout: fail("SOURCE_WORKTREE_NOT_CLEAN","generation-worktree",result.returncode or 1)
+          remote=subprocess.run(["git","remote","get-url","origin"],capture_output=True,text=True)
+          parsed=urlsplit(remote.stdout.strip())
+          remote_path=parsed.path.rstrip("/")
+          if remote_path.endswith(".git"): remote_path=remote_path[:-4]
+          if remote.returncode or parsed.scheme!="https" or parsed.hostname!="github.com" or remote_path!="/DocumentDrivenDX/umf" or parsed.username or parsed.password or parsed.query or parsed.fragment:
+              fail("SOURCE_REPOSITORY_MISMATCH","origin-repository",remote.returncode or 1)
+          try: lock=json.loads(pathlib.Path("qualification-inputs/core-python314-generation.json").read_text())
+          except (OSError,UnicodeDecodeError,json.JSONDecodeError): fail("SOURCE_LOCK_UNAVAILABLE","generation-lock",1)
+          if not isinstance(lock,dict): fail("SOURCE_LOCK_UNAVAILABLE","generation-lock",1)
+          if lock.get("sourceCommit")!=pinned: fail("SOURCE_LOCK_COMMIT_MISMATCH","generation-lock",1)
+          fetched=subprocess.run(["git","fetch","--no-tags","--no-recurse-submodules","--depth=1","origin",pinned],capture_output=True)
+          if fetched.returncode: fail("PREIMAGE_COMMIT_FETCH_FAILED","main-preimage-commit",fetched.returncode)
+          fetched_head=subprocess.run(["git","rev-parse","FETCH_HEAD^{commit}"],capture_output=True,text=True)
+          if fetched_head.returncode or fetched_head.stdout.strip()!=pinned: fail("PREIMAGE_FETCH_HEAD_MISMATCH","main-preimage-commit",fetched_head.returncode or 1)
+          object_check=subprocess.run(["git","cat-file","-e",pinned+"^{commit}"],capture_output=True)
+          if object_check.returncode: fail("PREIMAGE_COMMIT_UNAVAILABLE","main-preimage-commit",object_check.returncode)
+          result=subprocess.run(["git","status","--porcelain"],capture_output=True,text=True)
+          if result.returncode or result.stdout: fail("SOURCE_WORKTREE_CHANGED_DURING_FETCH","generation-worktree",result.returncode or 1)
+          PY
+
+          run_bounded source-preflight 180 python -I - "$GITHUB_SHA" "$GITHUB_REF" "$GITHUB_EVENT_NAME" "$EVIDENCE" <<'PY'
           import hashlib, json, os, pathlib, shutil, subprocess, sys
-          commit, ref, event = sys.argv[1:]
-          if event != "push" or ref != "refs/heads/codex/core-python314-generation": raise SystemExit("unexpected event/ref")
-          if subprocess.run(["git", "rev-parse", "HEAD"], check=True, text=True, capture_output=True).stdout.strip() != commit: raise SystemExit("checkout/source commit mismatch")
-          if subprocess.run(["git", "status", "--porcelain"], check=True, text=True, capture_output=True).stdout: raise SystemExit("generation checkout is not clean")
-          lock=json.loads(pathlib.Path("qualification-inputs/core-python314-generation.json").read_text())
+          commit, ref, event, evidence = sys.argv[1:]
+          pinned = "d5022e37840329d351bcd6c27fe7d7aad4758544"
+          diagnostic = pathlib.Path(evidence) / "preflight-diagnostic.json"
+          component = "generation-lock"
+          def fail(code, label, status=1):
+              payload = {"profile":"umf.core-python314-preflight-diagnostic/1","reasonCode":code,"component":label,"pinnedCommit":pinned,"actualStatus":int(status)}
+              diagnostic.write_text(json.dumps(payload,sort_keys=True,separators=(",",":"))+"\n")
+              print("SOURCE_PREFLIGHT_FAILURE="+code+" component="+label+" status="+str(int(status)),file=sys.stderr)
+              raise SystemExit(1)
+          if event != "push" or ref != "refs/heads/codex/core-python314-generation": fail("SOURCE_EVENT_REF_MISMATCH","generation-ref")
+          head=subprocess.run(["git", "rev-parse", "HEAD"],text=True,capture_output=True)
+          if head.returncode or head.stdout.strip()!=commit: fail("SOURCE_HEAD_MISMATCH","generation-head",head.returncode or 1)
+          status=subprocess.run(["git", "status", "--porcelain"],text=True,capture_output=True)
+          if status.returncode or status.stdout: fail("SOURCE_WORKTREE_NOT_CLEAN","generation-worktree",status.returncode or 1)
+          try: lock=json.loads(pathlib.Path("qualification-inputs/core-python314-generation.json").read_text())
+          except (OSError,UnicodeDecodeError,json.JSONDecodeError): fail("SOURCE_LOCK_UNAVAILABLE","generation-lock")
+          if not isinstance(lock,dict): fail("SOURCE_LOCK_UNAVAILABLE","generation-lock")
+          if lock.get("sourceCommit")!=pinned: fail("SOURCE_LOCK_COMMIT_MISMATCH","generation-lock")
           phase=lock.get("phase")
-          if phase not in {"regex-artifacts","metamodel-artifacts","dependent-artifacts"}: raise SystemExit("unknown generation phase")
+          if phase not in {"regex-artifacts","metamodel-artifacts","dependent-artifacts"}: fail("SOURCE_PHASE_MISMATCH","generation-phase")
           for name, expected in lock["inputs"].items():
+              component=name
               path=pathlib.Path(name)
-              if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=expected: raise SystemExit("source input hash mismatch: "+name)
+              try: actual=hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() and not path.is_symlink() else None
+              except OSError: actual=None
+              if actual is None: fail("SOURCE_INPUT_UNAVAILABLE",name)
+              if actual!=expected: fail("SOURCE_INPUT_SHA_MISMATCH",name,0)
           for name, expected in lock["mainPreimages"].items():
-              raw=subprocess.run(["git","show",lock["sourceCommit"]+":"+name],check=True,capture_output=True).stdout
-              if hashlib.sha256(raw).hexdigest()!=expected: raise SystemExit("MAIN preimage hash mismatch: "+name)
+              component=name
+              result=subprocess.run(["git","show",pinned+":"+name],capture_output=True)
+              if result.returncode: fail("PREIMAGE_BLOB_UNAVAILABLE",name,result.returncode)
+              if hashlib.sha256(result.stdout).hexdigest()!=expected: fail("PREIMAGE_SHA_MISMATCH",name,0)
           regex_paths={"crates/umf-core/src/python_re_tables.rs","crates/umf-core/src/python_re_names.dat","crates/umf-core/tests/fixtures/cpython-re/outcomes-3.14.tsv","crates/umf-core/tests/fixtures/cpython-re/independent-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-outcomes.tsv","crates/umf-core/tests/fixtures/cpython-re/independent-hex-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-hex-outcomes.tsv","crates/umf-core/tests/fixtures/cpython-re/independent-info-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-info-outcomes.tsv"}
           metamodel_paths={"spec/core/schema.json","spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json","spec/metamodel/package.json","spec/metamodel/generated/core-constraints.json","spec/metamodel/generated/domain-policy.json","spec/metamodel/generated/python-shapes.json","python/umf_access/src/umf_access/generated_core.py","src/generated/core-model.ts","src/generated/core-validators.ts","spec/metamodel/generated/manifest.json"}
           def require_adoption(outputs, adoption, expected_paths, status, label):
@@ -190,13 +245,18 @@ jobs:
               for name in ("sourceCommit","runId","runAttempt","artifactSha256","receiptSha256"):
                   if not isinstance(adoption.get(name),str) or not adoption[name]: raise SystemExit("incomplete "+label+" provenance: "+name)
           if phase=="regex-artifacts":
-              if lock.get("adoptedRegexOutputs") is not None or lock.get("adoption") is not None: raise SystemExit("regex phase cannot consume adoption claims")
-              if lock.get("adoptedMetamodelOutputs") is not None or lock.get("metamodelAdoption") is not None: raise SystemExit("regex phase cannot consume metamodel adoption claims")
+              if lock.get("adoptedRegexOutputs") is not None or lock.get("adoption") is not None: fail("SOURCE_ADOPTION_STATE_MISMATCH","regex-adoption")
+              if lock.get("adoptedMetamodelOutputs") is not None or lock.get("metamodelAdoption") is not None: fail("SOURCE_ADOPTION_STATE_MISMATCH","metamodel-adoption")
               for name, expected in lock["regexPreimages"].items():
+                  component=name
                   path=pathlib.Path(name)
-                  if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=expected: raise SystemExit("frozen regex preimage mismatch: "+name)
-                  raw=subprocess.run(["git","show",lock["sourceCommit"]+":"+name],check=True,capture_output=True).stdout
-                  if hashlib.sha256(raw).hexdigest()!=expected: raise SystemExit("MAIN independent baseline mismatch: "+name)
+                  try: actual=hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() and not path.is_symlink() else None
+                  except OSError: actual=None
+                  if actual is None: fail("REGEX_PREIMAGE_UNAVAILABLE",name)
+                  if actual!=expected: fail("REGEX_PREIMAGE_SHA_MISMATCH",name,0)
+                  result=subprocess.run(["git","show",pinned+":"+name],capture_output=True)
+                  if result.returncode: fail("PREIMAGE_BLOB_UNAVAILABLE",name,result.returncode)
+                  if hashlib.sha256(result.stdout).hexdigest()!=expected: fail("PREIMAGE_SHA_MISMATCH",name,0)
           else:
               require_adoption(lock.get("adoptedRegexOutputs"),lock.get("adoption"),regex_paths,"PASS_REGEX_GENERATION_ARTIFACTS_ONLY","regex generation")
               if phase=="metamodel-artifacts":
@@ -409,9 +469,18 @@ jobs:
                       row=json.loads(rows[-1]); keys=("name","rawExit","captureExit","monotonicStartMs","monotonicEndMs","monotonicDurationMs","startedAtUtc","endedAtUtc","limitSeconds","logBytes","logSha256","truncated")
                       last_command={key:row[key] for key in keys if key in row}
               except (OSError,UnicodeDecodeError,json.JSONDecodeError): last_command=None
+          preflight_diagnostic=None; diagnostic_path=evidence/"preflight-diagnostic.json"
+          diagnostic_codes={"SOURCE_EVENT_REF_MISMATCH","SOURCE_HEAD_MISMATCH","SOURCE_WORKTREE_NOT_CLEAN","SOURCE_REPOSITORY_MISMATCH","SOURCE_LOCK_UNAVAILABLE","SOURCE_LOCK_COMMIT_MISMATCH","SOURCE_WORKTREE_CHANGED_DURING_FETCH","PREIMAGE_COMMIT_FETCH_FAILED","PREIMAGE_FETCH_HEAD_MISMATCH","PREIMAGE_COMMIT_UNAVAILABLE","SOURCE_PHASE_MISMATCH","SOURCE_INPUT_UNAVAILABLE","SOURCE_INPUT_SHA_MISMATCH","PREIMAGE_BLOB_UNAVAILABLE","PREIMAGE_SHA_MISMATCH","SOURCE_ADOPTION_STATE_MISMATCH","REGEX_PREIMAGE_UNAVAILABLE","REGEX_PREIMAGE_SHA_MISMATCH"}
+          diagnostic_components={"generation-ref","generation-head","generation-worktree","origin-repository","generation-lock","main-preimage-commit","generation-phase","regex-adoption","metamodel-adoption","crates/umf-core/tools/generate_python_re_tables.py","crates/umf-core/tools/extend_python_re_314.py","crates/umf-core/tools/generate_independent_python_re_boundaries.py","crates/umf-core/tools/generate_independent_python_re_hex.py","crates/umf-core/tools/generate_independent_python_re_info.py","crates/umf-core/tools/unicode/NameAliases-16.0.0.txt","crates/umf-core/src/python_re_tables.LICENSE","crates/umf-core/tests/fixtures/cpython-re/re_tests.py","crates/umf-core/tests/fixtures/cpython-re/test_re-3.11.14.py","crates/umf-core/tests/fixtures/cpython-re/PSF-LICENSE.txt","crates/umf-core/src/python_re_tables.rs","crates/umf-core/src/python_re_names.dat","crates/umf-core/tests/fixtures/cpython-re/independent-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-outcomes.tsv","crates/umf-core/tests/fixtures/cpython-re/independent-hex-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-hex-outcomes.tsv","crates/umf-core/tests/fixtures/cpython-re/independent-info-boundaries.json","crates/umf-core/tests/fixtures/cpython-re/independent-info-outcomes.tsv"}
+          if not diagnostic_path.is_symlink() and diagnostic_path.is_file() and diagnostic_path.stat().st_size<=4096:
+              try:
+                  diagnostic=json.loads(diagnostic_path.read_text())
+                  if isinstance(diagnostic,dict) and set(diagnostic)=={"profile","reasonCode","component","pinnedCommit","actualStatus"} and diagnostic.get("profile")=="umf.core-python314-preflight-diagnostic/1" and diagnostic.get("reasonCode") in diagnostic_codes and diagnostic.get("component") in diagnostic_components and diagnostic.get("pinnedCommit")=="d5022e37840329d351bcd6c27fe7d7aad4758544" and type(diagnostic.get("actualStatus")) is int and 0<=diagnostic["actualStatus"]<=255:
+                      preflight_diagnostic=diagnostic
+              except (OSError,UnicodeDecodeError,json.JSONDecodeError,TypeError): preflight_diagnostic=None
           def fail(reason_code):
               shutil.rmtree(upload,ignore_errors=True); upload.mkdir(parents=True)
-              fail_receipt={"profile":"umf.core-python314-generation/1","status":"FAIL_OR_UNKNOWN","reasonCode":reason_code,"sourceCommit":os.environ["SOURCE_COMMIT"],"runId":os.environ["RUN_ID"],"runAttempt":os.environ["RUN_ATTEMPT"],"ref":os.environ["SOURCE_REF"],"event":os.environ["EVENT_NAME"],"generationStepOutcome":os.environ.get("GENERATION_OUTCOME"),"lastCommand":last_command,"aggregateDeadlineSeconds":1800,"childMaximumSeconds":180,"timeoutKillGraceSeconds":10,"cleanupReserveSeconds":60,"aggregateLogLimitBytes":1048576,"aggregateArtifactLimitBytes":16777216,"failureOnlyReceipt":True,"rawLogsUploaded":False,"qualificationClaim":False}
+              fail_receipt={"profile":"umf.core-python314-generation/1","status":"FAIL_OR_UNKNOWN","reasonCode":reason_code,"sourceCommit":os.environ["SOURCE_COMMIT"],"runId":os.environ["RUN_ID"],"runAttempt":os.environ["RUN_ATTEMPT"],"ref":os.environ["SOURCE_REF"],"event":os.environ["EVENT_NAME"],"generationStepOutcome":os.environ.get("GENERATION_OUTCOME"),"lastCommand":last_command,"preflightDiagnostic":preflight_diagnostic,"aggregateDeadlineSeconds":1800,"childMaximumSeconds":180,"timeoutKillGraceSeconds":10,"cleanupReserveSeconds":60,"aggregateLogLimitBytes":1048576,"aggregateArtifactLimitBytes":16777216,"failureOnlyReceipt":True,"rawLogsUploaded":False,"qualificationClaim":False}
               (upload/"receipt.json").write_text(json.dumps(fail_receipt,indent=2,sort_keys=True)+"\n")
               (evidence/"finalizer.status").write_text("failed\n")
           if os.environ.get("GENERATION_OUTCOME")!="success":
