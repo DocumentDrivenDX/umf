@@ -129,3 +129,9 @@ The codegen resource manifest pins these nine JSON resources:
 | `schema.json` | `9060f66bba81dc7cefb20d6212251fa32a6e6c0499e73d0a2c258d79e2b8bcb4` |
 | `stable-binding.json` | `0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e` |
 | `tables.json` | `beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d` |
+
+The [CPython 3.13 successful-verifier follow-up](cpython-3.13-successful-verifiers-20261026.md)
+now records successful installed `verify_table_deployment`, migration compilation,
+and `verify_table_migration` calls with runtime tooling absent from `PATH`. It is
+limited to the recorded Darwin arm64 wheel pair and does not establish ledger,
+database or release qualification.
