@@ -6370,8 +6370,84 @@ Inventory and ledger `--check` modes and the 48-case ledger suite pass. All
 922 logical default-route retirement gaps remain open, with 67 accepted Rust
 mappings and 855 without one.
 
-Next, remove or deliberately scope the extra eager Core Key runtime, prove
-resource and warm-call parity for any proposed Kind/Nullability default route,
-and continue public capture semantics without a lossy DTO boundary. The
-remaining Rust mappings, installed Python/Node/browser cohorts, coordinated
-release gates and publication must be completed before a full-port claim.
+### R8 shared verifier and private capture continuation — 2026-10-26
+
+The [combined Core Kind/Nullability candidate](evidence/rust-migration/r8-core-kind-nullability-candidate/README.md)
+now shares one retained Rust Engine and Registry across the generic model
+dispatcher, six staged operations, and Core Key verification. Sol reviewed the
+setup ordering and corrected an intermediate limit drift: Engine construction
+uses catalog limits, Kind/Nullability schema preparation retains ordinary
+limits, and Registry preparation uses catalog limits. Independent focused Rust
+tests pass 5/5; a rebuilt Node addon passes eleven frozen successes and
+thirteen refusals, and Bun's host-admission replay passes six semantic cases
+and ten negative controls. The fresh Chromium 153 receipt pins 165 source
+inputs, nine private operations, malformed-receipt-before-current refusal,
+single caller-resource reflection, and zero page errors or external requests.
+Setup work for the pinned resource cohort fell from 832,477,520 to 432,197,359
+metered units. This is setup work, not a warm-call performance qualification.
+The combined factory remains opt-in; neither V4 default route changes.
+
+The [current-source Node/Bun default-route gate](evidence/rust-migration/r8-core-kind-nullability-candidate/default-route-qualification.json)
+passes exact caller-resource reflection, first-fault, and same-host TypeScript
+operation-trace controls, but warm calls remain much slower. Across five
+setup-separated rounds of 30 calls, the pinned receipt's median Rust/TypeScript
+ratio is 22.76 in Node 26.12.1 and 33.50 in Bun 1.4.3. Sol independently
+reran the same harness and source cohort: the controls passed and the median
+ratios were 20.77 and 32.01. These local timings are not a cross-platform
+benchmark; they keep default selection open rather than justify a cutover.
+
+The [private capture budget evidence](evidence/rust-migration/r8-capture-dto-budget/README.md)
+now includes session-aware Python-to-Rust graph DTO admission. Sol independently
+reran the rebuilt CPython overlay cohort: 101 tests and three subtests pass.
+The response envelope, Python traversal, DTO encoding, and `_validate_node`
+remain outside that Rust admission slice. A separate
+[private exact empty-terminal validator](evidence/rust-migration/r8-python-captured-graph-selected-key/search-leg-graph-validation-20261026.md)
+now admits exact built-in `Node(op, (RecordRef, ()))` shapes for `all`,
+`first`, `one`, `count`, and `exists` directly in PyO3, with no tagged graph
+DTO. Its side-effect-safe gate rejects custom
+metaclasses, descriptors and dictionary keys before graph reads; unsupported
+shapes continue through the existing private DTO route. Sol independently ran
+the rebuilt seven-file CPython overlay cohort: 113 tests and three subtests
+pass. The public `capture()` route and general graph families remain Python;
+these closed profiles do not establish complete first-fault or resource parity.
+
+The [private Selection host evidence](evidence/rust-migration/r8-selection-private-host-route/README.md)
+now proves the existing registration provider's 47-event, seven-lookup
+callback interleaving against same-host TypeScript in Bun with the Node addon
+and in a fresh Chromium WASM replay. This slice changed tests and evidence,
+not Selection runtime code. Arbitrary semantic iterables and default Selection
+routing remain open.
+
+A further [transparent-Proxy parity probe](evidence/rust-migration/r8-selection-private-host-route/proxy-admission-blocker-20261026.md)
+matches the TypeScript source/query reflection trace and complete Selection
+result in Bun with the private Node addon. An initial probe falsely reported a
+result mismatch because its TypeScript baseline omitted the returned value;
+independent review found and corrected that test error. The source-first
+exception-identity control also passes. This is a bounded successful-host
+probe, not complete arbitrary callback or installed default-route
+qualification. The focused binding and facade suite passes 30/30;
+`selectCoreElements` remains opt-in pending those gates.
+
+The generated metamodel manifest and action-plan identity were refreshed to a
+fixed point after the DTO-free PyO3 extension, Selection test correction and
+latest `origin/main` merge. Metamodel and identity checks, repository typecheck,
+and 139 real-Chromium metamodel receipts pass. The earlier 61 metamodel unit
+tests/484 assertions passed before the latest source-only digest refresh;
+generated schema outputs did not change.
+The Rust boundary gate still reports zero V8 debt, and the strict unified-client
+and core-authority checks pass. Sol's post-binding full core-wire suite passes
+62/62 tests. The final [R8 inventory and ledger recapture](evidence/rust-migration/r8-symbol-inventory/README.md)
+passes both generator checks and the 48-case ledger suite against the settled
+source. It records 922 logical default-route gaps, 67 accepted opt-in Rust
+mappings, 855 unmapped names, 90 Node/browser source-selected declarations,
+and five current fixed-point routes. None of the private work in this section
+retires a gap.
+
+Next, establish resource-order and warm-call parity before any Kind/Nullability
+default selection, extend DTO-free capture semantics beyond the five closed
+terminal profiles while retaining side-effect-safe outside-profile handling,
+complete Selection callback and installed-host parity, and retire the remaining
+executable default routes.
+Installed Python/Node/browser cohorts, coordinated release gates and publication
+must pass before a full-port or release claim. The current R8 census remains
+922 logical gaps (67 accepted opt-in Rust mappings, 855 unowned).
