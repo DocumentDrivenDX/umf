@@ -570,8 +570,8 @@ pub fn security_not_scalar(value: &str, control_dispatcher: Option<Function>) ->
     }
 }
 
-struct WasmControl {
-    dispatcher: Function,
+pub(crate) struct WasmControl {
+    pub(crate) dispatcher: Function,
 }
 
 impl WasmControl {
@@ -810,8 +810,8 @@ fn host_read_frame_error(message: &str) -> EngineError {
     EngineError::new("HOST_READ_BRIDGE", Utf16::default(), message)
 }
 
-struct WasmCapabilities {
-    dispatcher: Function,
+pub(crate) struct WasmCapabilities {
+    pub(crate) dispatcher: Function,
 }
 
 impl WasmCapabilities {

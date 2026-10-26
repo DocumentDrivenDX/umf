@@ -1428,6 +1428,20 @@ pub fn execute_request_with_control(
     capabilities: &mut dyn Capabilities,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
 ) -> String {
+    execute_request_with_engine_and_control(wire_json, profile, capabilities, control, None)
+}
+
+/// Private opt-in variant that reuses a caller-owned Engine while preserving
+/// the ordinary request decoder, registry admission, callbacks, and contexts.
+/// The request still carries its five resources as an exact identity witness;
+/// they are validated structurally and discarded before registry admission.
+pub fn execute_request_with_engine_and_control(
+    wire_json: &str,
+    profile: ResourceProfile,
+    capabilities: &mut dyn Capabilities,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+    retained_engine: Option<&Engine>,
+) -> String {
     if profile == ResourceProfile::HardIsolated {
         return error_envelope(EngineError::new(
             "RESOURCE_PROFILE_UNAVAILABLE",
@@ -1435,7 +1449,7 @@ pub fn execute_request_with_control(
             "HardIsolated resource profile is unavailable",
         ));
     }
-    let result = execute_request_inner(wire_json, capabilities, control);
+    let result = execute_request_inner(wire_json, capabilities, control, retained_engine);
     result_envelope(result)
 }
 
@@ -1481,6 +1495,7 @@ fn execute_request_inner(
     wire_json: &str,
     capabilities: &mut dyn Capabilities,
     control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+    retained_engine: Option<&Engine>,
 ) -> Result<String, EngineError> {
     // The outer request/result envelope adds transport tags and wrapper
     // members around independently bounded catalog resources and an ordinary
@@ -1568,9 +1583,24 @@ fn execute_request_inner(
     }
     let mut resources = take_field(&mut request, "resources")
         .ok_or_else(|| fail("REQUEST", "Explicit resources are required"))?;
+    if let Some(engine) = retained_engine {
+        if !has_exact_members(
+            &resources,
+            &["coreSchema", "referenceSchema", "packageSchema", "constraints", "domainPolicy"],
+        ) || !engine.matches_resource_values(
+            field(&resources, "coreSchema").unwrap_or(&Value::Null),
+            field(&resources, "referenceSchema").unwrap_or(&Value::Null),
+            field(&resources, "packageSchema").unwrap_or(&Value::Null),
+            field(&resources, "constraints").unwrap_or(&Value::Null),
+            field(&resources, "domainPolicy").unwrap_or(&Value::Null),
+        ) {
+            return Err(fail("REQUEST", "Retained model resources do not match the admitted runtime"));
+        }
+    }
     let registry_value = take_field(&mut request, "registry");
     let mut operation = Context::ordinary().with_host_control(control);
-    let (engine, registry) = operation.with_catalog_value_limit(|catalog| {
+    let mut owned_engine: Option<Engine> = None;
+    let registry = operation.with_catalog_value_limit(|catalog| {
         let resource = |resources: &mut Value, name: &str| {
             take_field(resources, name).ok_or_else(|| {
                 EngineError::new(
@@ -1580,16 +1610,19 @@ fn execute_request_inner(
                 )
             })
         };
-        let engine = Engine::new(
-            ResourceSet::new(
-                resource(&mut resources, "coreSchema")?,
-                resource(&mut resources, "referenceSchema")?,
-                resource(&mut resources, "packageSchema")?,
-                resource(&mut resources, "constraints")?,
-                resource(&mut resources, "domainPolicy")?,
-            ),
-            catalog,
-        )?;
+        if retained_engine.is_none() {
+            owned_engine = Some(Engine::new(
+                ResourceSet::new(
+                    resource(&mut resources, "coreSchema")?,
+                    resource(&mut resources, "referenceSchema")?,
+                    resource(&mut resources, "packageSchema")?,
+                    resource(&mut resources, "constraints")?,
+                    resource(&mut resources, "domainPolicy")?,
+                ),
+                catalog,
+            )?);
+        }
+        let engine = retained_engine.or(owned_engine.as_ref()).expect("engine selected");
         let mut registry = engine.registry(catalog)?;
         if let Some(Value::Array(extensions)) = registry_value {
             let schema_resources = engine.schema_resources_with_context(catalog)?;
@@ -1679,8 +1712,9 @@ fn execute_request_inner(
                 )?;
             }
         }
-        Ok::<_, EngineError>((engine, registry))
+        Ok::<_, EngineError>(registry)
     })?;
+    let engine = retained_engine.or(owned_engine.as_ref()).expect("engine selected");
     let value = {
         match op.as_str() {
             "model/inspectCoreCardinality"
@@ -2852,6 +2886,44 @@ mod tests {
             }
             other => other.clone(),
         }
+    }
+
+    #[test]
+    fn retained_engine_dispatch_rejects_resource_substitution() {
+        let mut catalog = Context::catalog();
+        let resources = object(vec![
+            ("coreSchema", parse_wire_source(include_str!("../../../spec/core/schema.json"), &mut catalog)),
+            ("referenceSchema", parse_wire_source(include_str!("../../../spec/core/semantic-type-reference.schema.json"), &mut catalog)),
+            ("packageSchema", parse_wire_source(include_str!("../../../spec/core/extension-package.schema.json"), &mut catalog)),
+            ("constraints", parse_wire_source(include_str!("../../../spec/metamodel/generated/core-constraints.json"), &mut catalog)),
+            ("domainPolicy", parse_wire_source(include_str!("../../../spec/metamodel/generated/domain-policy.json"), &mut catalog)),
+        ]);
+        let mut admitted = resources.clone();
+        let engine = catalog.with_catalog_value_limit(|ctx| Engine::new(ResourceSet::new(
+            take_field(&mut admitted, "coreSchema").unwrap(),
+            take_field(&mut admitted, "referenceSchema").unwrap(),
+            take_field(&mut admitted, "packageSchema").unwrap(),
+            take_field(&mut admitted, "constraints").unwrap(),
+            take_field(&mut admitted, "domainPolicy").unwrap(),
+        ), ctx)).unwrap();
+        let mut substituted = resources;
+        if let Value::Object(members) = &mut substituted {
+            members.iter_mut().find(|(key, _)| key == &Utf16::from("coreSchema")).unwrap().1 = Value::Bool(false);
+        }
+        let request = comparison_request(vec![
+            ("op", Value::String(Utf16::from("model/inspectCoreKind"))),
+            ("resources", substituted),
+            ("registry", Value::Array(vec![])),
+            ("source", object(vec![("modules", Value::Array(vec![]))])),
+            ("identity", object(vec![("module", Value::String(Utf16::from("m"))), ("element", Value::String(Utf16::from("e")))])),
+        ]);
+        let mut capabilities = NumericNoCapabilities;
+        let response = execute_request_with_engine_and_control(
+            &request, ResourceProfile::Cooperative, &mut capabilities, &mut |_| Ok(()), Some(&engine),
+        );
+        let envelope: serde_json::Value = serde_json::from_str(&response).unwrap();
+        assert_eq!(envelope["status"], "error");
+        assert_eq!(envelope["code"], "REQUEST");
     }
 
     #[test]

@@ -270,6 +270,22 @@ impl Capabilities for FieldValueNoCapabilities {
     }
 }
 impl Engine {
+    /// Compare a complete caller-supplied resource set with this engine's
+    /// immutable admitted resources. Used only by retained private dispatch.
+    pub fn matches_resource_values(
+        &self,
+        core_schema: &Value,
+        reference_schema: &Value,
+        package_schema: &Value,
+        constraints: &Value,
+        domain_policy: &Value,
+    ) -> bool {
+        &self.resources.core_schema == core_schema
+            && &self.resources.reference_schema == reference_schema
+            && &self.resources.package_schema == package_schema
+            && &self.resources.constraints == constraints
+            && &self.resources.domain_policy == domain_policy
+    }
     /// Resolve a declared core Field default without mutating its source.
     /// This is the Rust-owned CONTRACT-049 operation used by the opt-in
     /// model binding; missing and present-null remain distinct states.

@@ -243,6 +243,15 @@ export interface PreparedCoreKeyTuples {readonly profile: 'umf.core.key-tuples.p
 export declare function createCoreModelEngine(module: any, resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): UmfCoreEngine & UmfCoreModelEngine;
 /** @internal Default-root facade while Key tuple exports remain on TypeScript. */
 export declare function createCoreModelRootEngine(module: any, resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): UmfCoreEngine & UmfCoreRootModelEngine;
+/** Private opt-in shared retained Engine for model and Kind/Nullability operations. */
+export declare function initializeCoreModelRootKindNullabilityWasm(resources: UmfCoreResources, loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): Promise<UmfCoreEngine & UmfCoreRootModelEngine & {
+  inspectCoreElementKind(source: unknown, identity: unknown): unknown;
+  declareCoreElementKind(source: unknown, identity: unknown, kind: unknown): unknown;
+  verifyCoreKindDeclaration(receipt: unknown, current: unknown): unknown;
+  inspectCoreNullability(source: unknown, identity: unknown): unknown;
+  declareCoreNullability(source: unknown, identity: unknown, nullability: unknown): unknown;
+  verifyCoreNullabilityDeclaration(receipt: unknown, current: unknown): unknown;
+}>;
 /** Create the private Rust-owned umf.host-json/1 Core Cardinality admission engine. */
 export declare function createCoreCardinalityHostInputEngine(module: any, resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): {
   inspectCoreCardinality(source: unknown, identity: unknown): unknown;

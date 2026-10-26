@@ -268,6 +268,15 @@ export declare function createCoreRecordMembersEngine(resources: UmfCoreResource
 };
 /** @internal Default-root facade while Key tuple exports remain on TypeScript. */
 export declare function createCoreModelRootEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): UmfCoreEngine & UmfCoreRootModelEngine;
+/** Private opt-in shared retained Engine for model and Kind/Nullability operations. */
+export declare function createCoreModelRootKindNullabilityEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): UmfCoreEngine & UmfCoreRootModelEngine & {
+  inspectCoreElementKind(source: unknown, identity: unknown): unknown;
+  declareCoreElementKind(source: unknown, identity: unknown, kind: unknown): unknown;
+  verifyCoreKindDeclaration(receipt: unknown, current: unknown): unknown;
+  inspectCoreNullability(source: unknown, identity: unknown): unknown;
+  declareCoreNullability(source: unknown, identity: unknown, nullability: unknown): unknown;
+  verifyCoreNullabilityDeclaration(receipt: unknown, current: unknown): unknown;
+};
 export declare function createCoreKeyTupleEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls; resourceControls?: UmfCoreControls}): Pick<UmfCoreModelEngine, 'encodeCoreKeyTuple' | 'verifyCoreKeyTuple' | 'readCoreKeyTupleBytes' | 'prepareCoreKeyTuples'>;
 /** Create the opt-in Rust-owned umf.host-json/1 schema-property declaration route. */
 export declare function createCoreSchemaPropertiesHostInputEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): UmfCoreEngine & UmfCoreModelEngine;

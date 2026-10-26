@@ -15,6 +15,7 @@ import {createJsonSchemaOperations, JSON_SCHEMA_PROFILE, UmfError as JsonSchemaU
 import {createDocumentComparisonOperations, DOCUMENT_COMPARISON_PROFILE} from './src/document-comparison.js';
 import {schemaPropertiesHostInput, cardinalityHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse} from './src/host-json.js';
 import {createSemanticTypeRegistry as createSemanticTypeRegistryWithWire} from './src/semantic-value.js';
+const CORE_KIND_NULLABILITY_RUNTIME = Symbol('core-kind-nullability-runtime');
 export {isWireAdmissionError} from './src/wire.js';
 export {isBit128EngineError};
 const nativeUmfCoreErrors = new WeakSet();
@@ -217,6 +218,7 @@ export async function initializeCoreKindNullabilityHostInputWasm(resources, load
     return coreKindNullabilityHostInput(runtime, operation, inputs, JsonSchemaUmfError, controlBridge);
   };
   return Object.freeze({
+    [CORE_KIND_NULLABILITY_RUNTIME]: runtime,
     inspectCoreElementKind(source, identity) { return call('inspectCoreKind', [source, identity, undefined]); },
     declareCoreElementKind(source, identity, kind) { return call('declareCoreKind', [source, identity, kind]); },
     verifyCoreKindDeclaration(receipt, current) { return call('verifyCoreKindDeclaration', [receipt, current, undefined]); },
@@ -626,7 +628,7 @@ function callbackFailureText(error) {
   return 'Host callback failed';
 }
 
-function invoke(module, request, callbacks, profile, controls, accountHost = false, sharedControlBridge = undefined, sharedHostWork = undefined) {
+function invoke(module, request, callbacks, profile, controls, accountHost = false, sharedControlBridge = undefined, sharedHostWork = undefined, retainedRuntime = undefined) {
   if (profile === 'hard-isolated') throw new UmfCoreError('RESOURCE_PROFILE_UNAVAILABLE', 'HardIsolated resource profile is unavailable');
   const dispatcher = (token, requestWire) => {
     const callback = callbacks.get(token);
@@ -642,7 +644,10 @@ function invoke(module, request, callbacks, profile, controls, accountHost = fal
   };
   const controlBridge = sharedControlBridge ?? (hasControls(controls) ? createControlBridge(controls) : undefined);
   const hostWork = accountHost ? (sharedHostWork ?? admissionWork(controlBridge)) : undefined;
-  const responseText = module.executeRequestWire(encodeRequestWire(request, hostWork), profile, dispatcher, controlBridge);
+  const requestWire = encodeRequestWire(request, hostWork);
+  const responseText = retainedRuntime
+    ? retainedRuntime.executeModelRequestWire(requestWire, profile, dispatcher, controlBridge)
+    : module.executeRequestWire(requestWire, profile, dispatcher, controlBridge);
   hostWork?.(responseText.length);
   const response = JSON.parse(responseText);
   const failure = resultError(response);
@@ -691,6 +696,18 @@ export function createCoreModelEngine(module, resources, options = {}) {
 /** @internal Create the default-root model facade without tuple admission while tuple exports remain TypeScript. */
 export function createCoreModelRootEngine(module, resources, options = {}) {
   return createEngineInternal(module, resources, options, true, false, true);
+}
+
+/** Private opt-in retained model and Kind/Nullability dispatcher. */
+export async function initializeCoreModelRootKindNullabilityWasm(resources, loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+  if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
+  const module = await loader();
+  if (typeof module.default === 'function') await module.default();
+  const staged = await initializeCoreKindNullabilityHostInputWasm(resources, async () => module, host, options);
+  const model = createEngineInternal(module, resources, options, true, false, false, false, staged[CORE_KIND_NULLABILITY_RUNTIME]);
+  const api = {...model};
+  for (const name of ['inspectCoreElementKind','declareCoreElementKind','verifyCoreKindDeclaration','inspectCoreNullability','declareCoreNullability','verifyCoreNullabilityDeclaration']) api[name] = staged[name];
+  return Object.freeze(api);
 }
 
 /** Create the private opt-in Rust-owned host-admission engine for Core Cardinality. */
@@ -1261,7 +1278,7 @@ export async function initializeAvroFieldsWasm(loader = () => import('./pkg/umf_
   return createAvroFieldsEngine(module, options);
 }
 
-function createEngineInternal(module, resources, options, withModel, includeKeyTuple = withModel, withSchemaPropertiesHostInput = false, withCardinalityHostInput = false) {
+function createEngineInternal(module, resources, options, withModel, includeKeyTuple = withModel, withSchemaPropertiesHostInput = false, withCardinalityHostInput = false, retainedRuntime = undefined) {
   const {profile, controls} = codegenOptions(options);
   const rawResourceControls = descriptor(options ?? Object.create(null), 'resourceControls', false);
   const resourceControls = rawResourceControls === undefined ? controls : codegenOptions({controls: rawResourceControls}).controls;
@@ -1350,7 +1367,7 @@ function createEngineInternal(module, resources, options, withModel, includeKeyT
       registry.push({id, version, scopes, schema, semantic: Boolean(semantics)});
     }
     hostWork?.(1);
-    return invoke(module, {op, resources: fixedResources, registry, ...args}, callbacks, profile, controls, withModel, controlBridge, hostWork);
+    return invoke(module, {op, resources: fixedResources, registry, ...args}, callbacks, profile, controls, withModel, controlBridge, hostWork, retainedRuntime);
   }
   const api = {...base,
     listKinds(registry = []) { return call('list-kinds', {}, registry); },

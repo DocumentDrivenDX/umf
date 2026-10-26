@@ -162,6 +162,35 @@ impl CoreKindNullabilityRuntime {
         };
         umf_core_wire::result_envelope(result)
     }
+
+    #[napi(js_name = "executeModelRequestWire")]
+    pub fn execute_model_request_wire(
+        &self,
+        env: Env,
+        wire_json: String,
+        profile: String,
+        dispatcher: JsFunction,
+        control_dispatcher: Option<JsFunction>,
+    ) -> String {
+        let profile = match profile.as_str() {
+            "cooperative" => umf_core::ResourceProfile::Cooperative,
+            "hard-isolated" => umf_core::ResourceProfile::HardIsolated,
+            _ => return umf_core_wire::error_envelope(EngineError::new("RESOURCE_PROFILE", Utf16::default(), "Unknown resource profile")),
+        };
+        let mut capabilities = super::NodeCapabilities { env: env.clone(), dispatcher };
+        if let Some(dispatcher) = control_dispatcher {
+            let mut control = super::NodeControl { env, dispatcher };
+            let mut hook = |amount| control.check(amount);
+            umf_core_wire::execute_request_with_engine_and_control(
+                &wire_json, profile, &mut capabilities, &mut hook, Some(&self.engine),
+            )
+        } else {
+            let mut hook = |_amount| Ok(());
+            umf_core_wire::execute_request_with_engine_and_control(
+                &wire_json, profile, &mut capabilities, &mut hook, Some(&self.engine),
+            )
+        }
+    }
 }
 
 #[napi(js_name = "executeCoreKindNullabilityHostJson")]

@@ -106,6 +106,34 @@ impl CoreKindNullabilityRuntime {
             .map_err(|error| Error::new(&umf_core_wire::error_envelope(error)).into())
     }
 
+    #[wasm_bindgen(js_name = executeModelRequestWire)]
+    pub fn execute_model_request_wire(
+        &self,
+        wire_json: &str,
+        profile: &str,
+        dispatcher: Function,
+        control_dispatcher: Option<Function>,
+    ) -> String {
+        let profile = match profile {
+            "cooperative" => umf_core::ResourceProfile::Cooperative,
+            "hard-isolated" => umf_core::ResourceProfile::HardIsolated,
+            _ => return umf_core_wire::error_envelope(EngineError::new("RESOURCE_PROFILE", Utf16::default(), "Unknown resource profile")),
+        };
+        let mut capabilities = super::WasmCapabilities { dispatcher };
+        if let Some(dispatcher) = control_dispatcher {
+            let mut control = super::WasmControl { dispatcher };
+            let mut hook = |amount| control.check(amount);
+            umf_core_wire::execute_request_with_engine_and_control(
+                wire_json, profile, &mut capabilities, &mut hook, Some(&self.engine),
+            )
+        } else {
+            let mut hook = |_amount| Ok(());
+            umf_core_wire::execute_request_with_engine_and_control(
+                wire_json, profile, &mut capabilities, &mut hook, Some(&self.engine),
+            )
+        }
+    }
+
     #[wasm_bindgen(js_name = execute)]
     pub fn execute_js(
         &self,

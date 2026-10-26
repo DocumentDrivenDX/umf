@@ -122,3 +122,59 @@ new browser instance, not a fresh build: the artifact itself is from October 24
 and must be rebuilt from the frozen source before any installed or default-route
 claim. This candidate changes neither V4 root, package exports, route inventory
 nor gap ledger.
+
+## Private shared-dispatcher implementation slice — 2026-10-26
+
+An additive opt-in factory now routes the existing six staged Kind/Nullability
+operations and generic model operations through one retained Rust `Engine` per
+factory in Node and WASM. It leaves `createCoreModelRootEngine`, V4 exports,
+route selection and package defaults unchanged. The generic Rust request path
+still decodes the same wire request, checks closed operation envelopes, admits
+the extension registry in its existing order and uses the existing fresh
+operation `Context`; only construction of the `Engine` is skipped for the
+private retained route. A five-resource value comparison refuses a request
+whose resources differ from the factory snapshot.
+
+This comparison traverses already-decoded bounded request values before the
+per-call catalog context. It does not allocate copies, and transport decode is
+still subject to the tagged-wire limits and caller control hook, but the
+comparison itself does not charge a separate work budget. Its fault/order and
+CPU accounting have not been shown equivalent to stateless Engine construction.
+The combined JavaScript factory also reflects and snapshots the caller's
+resources in both the staged factory and model facade, so setup getters and
+resource-control ledgers run twice even though Rust constructs only one
+semantic Engine. Neither limitation is qualified for a default cutover. The
+factory remains private opt-in and no warm-call performance gate is claimed.
+
+A fresh source-coherent WASM package was built and replayed in Chromium 153. The
+browser test covers all six existing staged operations, nine prior negative
+controls, and a shared-factory assertion that model and staged dispatch return
+the same known Kind result. This is focused browser evidence for the new
+dispatcher, not a full SDK release or default-route qualification.
+
+The focused checks were:
+
+```sh
+cargo test -p umf-core-wire --lib retained_engine_dispatch_rejects_resource_substitution --locked
+bun scripts/rust-migration/r5/kind-nullability-default-route/host-json-parity.mjs
+node scripts/rust-migration/r8/core-kind-nullability/node-frozen-parity.mjs
+bun scripts/rust-migration/r5/kind-nullability-default-route/host-json-browser.mjs
+```
+
+The Node 26.12.1 / Darwin arm64 replay reports 11 success and 13 refusal
+vectors; the Bun host-admission replay reports six semantic cases and ten
+negative controls. The replay scripts include a combined-factory check showing
+both the model and staged operation surfaces return the same known Kind result.
+The fresh Chromium replay reports six operations and nine negative controls.
+Rust 1.90 checks passed for `umf-core-wire`, `umf-core-node`, and
+`umf-core-wasm --target wasm32-unknown-unknown`. The focused resource
+substitution regression passed 1/1. These checks do not establish installed-
+package behavior, resource-order equivalence or acceptable warm-call performance.
+
+The rebuilt Darwin arm64 Node addon SHA-256 is
+`4a2437d8f2124bb9f35ff6a6b1b69a84b17accf07099ef359e23e0075a9e0285`.
+The fresh WASM-bindgen JavaScript and module hashes are
+`fa7bb350e3054b43ca17f274bbeebb5cecaa95349b7cae76cb6f520f595f6a73` and
+`44181f8aec1b4bf937ae765881811bc819d249c0537836b849df1efaa7025c89`,
+respectively. These hashes bind the focused local package used for the replay;
+they are not published artifacts.

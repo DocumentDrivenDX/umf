@@ -1,12 +1,13 @@
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {createCoreKindNullabilityHostInputEngine} from '../../../../bindings/core/node/index.js';
+import {createCoreKindNullabilityHostInputEngine, createCoreModelRootKindNullabilityEngine} from '../../../../bindings/core/node/index.js';
 import {CORE_MODEL_RESOURCES} from '../../../../src/access/core-model-resources.ts';
 import {inspectCoreElementKind, declareCoreElementKind, verifyCoreKindDeclaration} from '../../../../src/model/field-kind.ts';
 import {inspectCoreNullability, declareCoreNullability, verifyCoreNullabilityDeclaration} from '../../../../src/model/nullability.ts';
 
 const source = JSON.parse(await readFile('scripts/rust-migration/r5/kind-nullability/input.json', 'utf8'));
 const rust = createCoreKindNullabilityHostInputEngine(CORE_MODEL_RESOURCES);
+const shared = createCoreModelRootKindNullabilityEngine(CORE_MODEL_RESOURCES);
 const id = {module:'m', element:'known'};
 const normalize = value => JSON.parse(JSON.stringify(value));
 const result = run => {
@@ -30,6 +31,8 @@ for (const [name, [before, after]] of Object.entries(parity)) {
   assert.deepEqual(outcomes[name][1], outcomes[name][0], `${name} complete result envelope`);
 }
 assert.deepEqual(outcomes.inspectKind[1].value.source.modules[0].elements[0].extensions.future.opaque[1], {retain:true});
+assert.deepEqual(normalize(shared.inspectCoreElementKind(source, id)), normalize(rust.inspectCoreElementKind(source, id)), 'shared runtime retains staged Kind dispatch');
+assert.deepEqual(normalize(shared.inspectCoreKind(source, 'm', 'known')), normalize(shared.inspectCoreElementKind(source, id)), 'shared runtime serves model and staged Kind operations');
 
 const mutableResources = structuredClone(CORE_MODEL_RESOURCES);
 const pinned = createCoreKindNullabilityHostInputEngine(mutableResources);

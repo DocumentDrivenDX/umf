@@ -47,8 +47,9 @@ try {
   await page.goto(`http://127.0.0.1:${server.address().port}/`);
   const actual = await page.evaluate(async () => {
     const {resources,source,identity,kindReceipt,nullReceipt,expected} = await fetch('/inputs.json').then(r=>r.json());
-    const {initializeCoreKindNullabilityHostInputWasm} = await import('/bindings/core/wasm/index.js');
+    const {initializeCoreKindNullabilityHostInputWasm, initializeCoreModelRootKindNullabilityWasm} = await import('/bindings/core/wasm/index.js');
     const engine = await initializeCoreKindNullabilityHostInputWasm(resources,()=>import('/fresh/umf_core_wasm.js'));
+    const shared = await initializeCoreModelRootKindNullabilityWasm(resources,()=>import('/fresh/umf_core_wasm.js'));
     const normalize = value => JSON.parse(JSON.stringify(value));
     const capture = run => {
       try { return {ok:true,value:normalize(run())}; }
@@ -120,9 +121,11 @@ try {
     const badProxy=new Proxy({}, {getPrototypeOf(){throw sentinel;}});
     let threw;
     try { engine.inspectCoreElementKind(source,badProxy); } catch (error) { threw=error===sentinel; }
-    return {outcomes,expected,controls,threw,meterCalls,setupWork,repeatedSetupWork,repeatedSetupFailure,operationWork,setupFailure,setupGetterTouched,zeroWorkSetupFailure,boundedResult,resetWork,cancellationResult,pinnedResult};
+    const sharedDispatcher={staged:capture(()=>shared.inspectCoreElementKind(source,identity)),model:capture(()=>shared.inspectCoreKind(source,identity.module,identity.element))};
+    return {outcomes,expected,controls,threw,meterCalls,setupWork,repeatedSetupWork,repeatedSetupFailure,operationWork,setupFailure,setupGetterTouched,zeroWorkSetupFailure,boundedResult,resetWork,cancellationResult,pinnedResult,sharedDispatcher};
   });
   assert.deepEqual(actual.outcomes, actual.expected, 'Chromium results match frozen TypeScript envelopes');
+  assert.deepEqual(actual.sharedDispatcher.model,actual.sharedDispatcher.staged,'shared Rust Engine dispatches model and staged operations in Chromium');
   assert.equal(actual.controls.kindInspectSource.outcome.code,'NON_JSON');
   assert.deepEqual(actual.controls.kindInspectSource.trace,[]);
   assert.equal(actual.controls.kindDeclareRequest.outcome.code,'CORE_KIND_VALUE');

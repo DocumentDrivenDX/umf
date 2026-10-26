@@ -29,6 +29,7 @@ function nativeCoreError(failure) { const error = new UmfCoreError(failure.code,
 
 const require = createRequire(import.meta.url);
 const addon = require('./umf_core_node.node');
+const CORE_KIND_NULLABILITY_RUNTIME = Symbol('core-kind-nullability-runtime');
 
 export class UmfCoreError extends Error {
   constructor(code, message, path = '') {
@@ -201,7 +202,7 @@ function callbackFailureText(error) {
   return 'Host callback failed';
 }
 
-function runRequest(request, callbacks, profile, controls, accountHost = false, sharedControlBridge = undefined, sharedHostWork = undefined) {
+function runRequest(request, callbacks, profile, controls, accountHost = false, sharedControlBridge = undefined, sharedHostWork = undefined, retainedRuntime = undefined) {
   if (profile === 'hard-isolated') throw new UmfCoreError('RESOURCE_PROFILE_UNAVAILABLE', 'HardIsolated resource profile is unavailable');
   const callbackBridge = (token, requestWire) => {
     const callback = callbacks.get(token);
@@ -217,7 +218,10 @@ function runRequest(request, callbacks, profile, controls, accountHost = false, 
   };
   const controlBridge = sharedControlBridge ?? (hasControls(controls) ? createControlBridge(controls) : undefined);
   const hostWork = accountHost ? (sharedHostWork ?? admissionWork(controlBridge)) : undefined;
-  const responseText = addon.executeRequestWire(encodeRequestWire(request, hostWork), profile, callbackBridge, controlBridge);
+  const requestWire = encodeRequestWire(request, hostWork);
+  const responseText = retainedRuntime
+    ? retainedRuntime.executeModelRequestWire(requestWire, profile, callbackBridge, controlBridge)
+    : addon.executeRequestWire(requestWire, profile, callbackBridge, controlBridge);
   hostWork?.(responseText.length);
   const response = JSON.parse(responseText);
   const failure = resultError(response);
@@ -640,6 +644,15 @@ export function createCoreModelRootEngine(resources, options = {}) {
   return createEngineInternal(resources, options, true, true, false);
 }
 
+/** Private opt-in retained model and Kind/Nullability dispatcher. */
+export function createCoreModelRootKindNullabilityEngine(resources, options = {}) {
+  const staged = createCoreKindNullabilityHostInputEngine(resources, options);
+  const model = createEngineInternal(resources, options, true, true, false, false, false, false, staged[CORE_KIND_NULLABILITY_RUNTIME]);
+  const api = {...model};
+  for (const name of ['inspectCoreElementKind','declareCoreElementKind','verifyCoreKindDeclaration','inspectCoreNullability','declareCoreNullability','verifyCoreNullabilityDeclaration']) api[name] = staged[name];
+  return Object.freeze(api);
+}
+
 /** Create the opt-in retained Rust Core Key tuple engine. */
 export function createCoreKeyTupleEngine(resources, options = {}) {
   const runtimePrototype = addon.CoreKeyTupleRuntime?.prototype;
@@ -721,6 +734,7 @@ export function createCoreKindNullabilityHostInputEngine(resources, options = {}
     return coreKindNullabilityHostInput(runtime, operation, inputs, JsonSchemaUmfError, controlBridge);
   };
   return Object.freeze({
+    [CORE_KIND_NULLABILITY_RUNTIME]: runtime,
     inspectCoreElementKind(source, identity) { return call('inspectCoreKind', [source, identity, undefined]); },
     declareCoreElementKind(source, identity, kind) { return call('declareCoreKind', [source, identity, kind]); },
     verifyCoreKindDeclaration(receipt, current) { return call('verifyCoreKindDeclaration', [receipt, current, undefined]); },
@@ -1097,7 +1111,7 @@ export function createAvroFieldsEngine(options = {}) {
   }});
 }
 
-function createEngineInternal(resources, options, withModel, withSchemaPropertiesHostInput = false, includeKeyTuple = withModel, includeRecordType = false, recordTypeOnly = false, withCardinalityHostInput = false) {
+function createEngineInternal(resources, options, withModel, withSchemaPropertiesHostInput = false, includeKeyTuple = withModel, includeRecordType = false, recordTypeOnly = false, withCardinalityHostInput = false, retainedRuntime = undefined) {
   const {profile, controls} = codegenOptions(options);
   const rawResourceControls = dataProperty(options, 'resourceControls', false);
   const resourceControls = rawResourceControls === undefined ? controls : codegenOptions({controls: rawResourceControls}).controls;
@@ -1163,7 +1177,7 @@ function createEngineInternal(resources, options, withModel, withSchemaPropertie
     }
     hostWork?.(1);
     const request = {op, resources: fixedResources, registry, ...args};
-    return runRequest(request, callbackMap, profile, controls, withModel, controlBridge, hostWork);
+    return runRequest(request, callbackMap, profile, controls, withModel, controlBridge, hostWork, retainedRuntime);
   }
   const api = {
     engineVersion,

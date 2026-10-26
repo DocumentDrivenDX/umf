@@ -2,7 +2,7 @@
 // Native Node replay of the retained R5 Kind/Nullability success and refusal packets.
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {createCoreKindNullabilityHostInputEngine} from '../../../../bindings/core/node/index.js';
+import {createCoreKindNullabilityHostInputEngine, createCoreModelRootKindNullabilityEngine} from '../../../../bindings/core/node/index.js';
 
 const read = async path => JSON.parse(await readFile(path, 'utf8'));
 const normalize = value => JSON.parse(JSON.stringify(value));
@@ -24,6 +24,9 @@ const [source, surrogate, successOracle, refusalOracle, coreSchema, referenceSch
   read('spec/metamodel/generated/domain-policy.json'),
 ]);
 const engine = createCoreKindNullabilityHostInputEngine({coreSchema, referenceSchema, packageSchema, constraints, domainPolicy});
+const shared = createCoreModelRootKindNullabilityEngine({coreSchema, referenceSchema, packageSchema, constraints, domainPolicy});
+assert.deepEqual(normalize(shared.inspectCoreElementKind(source, {module:'m',element:'known'})), normalize(engine.inspectCoreElementKind(source, {module:'m',element:'known'})), 'shared retained runtime staged route');
+assert.deepEqual(normalize(shared.inspectCoreKind(source, 'm', 'known')), normalize(shared.inspectCoreElementKind(source, {module:'m',element:'known'})), 'shared retained runtime model route');
 const kindReceipt = engine.declareCoreElementKind(source, {module: 'm', element: 'missing'}, 'field');
 const nullReceipt = engine.declareCoreNullability(source, {module: 'm', element: 'missing'}, 'absent-allowed');
 const successes = {

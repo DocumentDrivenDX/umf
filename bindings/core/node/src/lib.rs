@@ -662,9 +662,9 @@ pub fn security_not_scalar(
     }
 }
 
-struct NodeControl {
-    env: Env,
-    dispatcher: JsFunction,
+pub(crate) struct NodeControl {
+    pub(crate) env: Env,
+    pub(crate) dispatcher: JsFunction,
 }
 
 impl NodeControl {
@@ -1026,9 +1026,9 @@ fn host_read_frame_error(message: &str) -> EngineError {
     EngineError::new("HOST_READ_BRIDGE", Utf16::default(), message)
 }
 
-struct NodeCapabilities {
-    env: Env,
-    dispatcher: JsFunction,
+pub(crate) struct NodeCapabilities {
+    pub(crate) env: Env,
+    pub(crate) dispatcher: JsFunction,
 }
 
 impl NodeCapabilities {
