@@ -294,11 +294,14 @@ jobs:
       - name: Install exact public package with isolated npm configuration
         env:
           VERSION: ${{ needs.verify-release.outputs.version }}
-          NPM_CONFIG_USERCONFIG: /dev/null
-          NPM_CONFIG_GLOBALCONFIG: /dev/null
+          NPM_CONFIG_USERCONFIG: ${{ runner.temp }}/schema-browser-user.npmrc
+          NPM_CONFIG_GLOBALCONFIG: ${{ runner.temp }}/schema-browser-global.npmrc
+          NPM_CONFIG_CACHE: ${{ runner.temp }}/schema-browser-npm-cache
           npm_config_registry: https://registry.npmjs.org/
         run: |
           set -euo pipefail
+          : > "$NPM_CONFIG_USERCONFIG"
+          : > "$NPM_CONFIG_GLOBALCONFIG"
           npm install --prefix "$RUNNER_TEMP/schema-browser-consumer" --ignore-scripts --no-audit --no-fund \
             --registry https://registry.npmjs.org/ \
             "@documentdrivendx/umf-schema-browser@$VERSION"
