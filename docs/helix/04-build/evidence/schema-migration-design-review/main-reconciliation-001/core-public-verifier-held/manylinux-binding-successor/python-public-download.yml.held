@@ -1,0 +1,438 @@
+name: Python public wheel download verification
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Published GitHub release tag (currently python-v0.10.2)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  verify-published-wheel:
+    name: ${{ matrix.cohort }} public wheel
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+          - cohort: linux-x86_64
+            runs-on: ubuntu-24.04
+            python-version: '3.11.17'
+            expected-machine: x86_64
+            expected-platform: linux_x86_64
+            expected-artifact-platform: auto
+            expected-wheel: umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl
+            expected-wheel-sha256: 708f967747b0539b9ca7b6a5f39d1017eea8ddb1d07cd62f4f46592e088f6f39
+            expected-native-sha256: 78dd1542f723b4f4d8c336c137caa478974a981ed759ada171a5877d7e0368a8
+          - cohort: macos-arm64
+            runs-on: macos-15
+            python-version: '3.11.9'
+            expected-machine: arm64
+            expected-platform: macos_arm64
+            expected-artifact-platform: macos_arm64
+            expected-wheel: umf_core-0.10.2-cp311-abi3-macosx_11_0_arm64.whl
+            expected-wheel-sha256: 99ff1d1250c613a7b65bdd4dc6cf3ee9fec647e02ec34f8dc5ffb84285b0ac59
+            expected-native-sha256: 49847a1e052e4337d414415e2e3fd3b752238df0238c20f936db7f7bebe7365a
+    runs-on: ${{ matrix.runs-on }}
+    env:
+      PACKAGE_VERSION: '0.10.2'
+      SEMANTIC_CORE_VERSION: '0.10.0'
+      BUILD_SOURCE_REVISION: a1b909d4f92da6604aeb21d3ea60e9a9943a7f87
+      EXPECTED_RELEASE_TAG: python-v0.10.2
+      EXPECTED_RELEASE_COMMIT: HELD_UNTIL_PUBLICATION
+      RELEASE_TAG: ${{ inputs.release_tag }}
+      COHORT: ${{ matrix.cohort }}
+      EXPECTED_PYTHON: ${{ matrix.python-version }}
+      EXPECTED_MACHINE: ${{ matrix.expected-machine }}
+      EXPECTED_PLATFORM: ${{ matrix.expected-platform }}
+      EXPECTED_ARTIFACT_PLATFORM: ${{ matrix.expected-artifact-platform }}
+      EXPECTED_WHEEL: ${{ matrix.expected-wheel }}
+      EXPECTED_WHEEL_SHA256: ${{ matrix.expected-wheel-sha256 }}
+      EXPECTED_NATIVE_SHA256: ${{ matrix.expected-native-sha256 }}
+    steps:
+      - name: Fail closed until the public release identity is pinned
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = "DocumentDrivenDX/umf"
+          [[ "$EXPECTED_RELEASE_COMMIT" =~ ^[0-9a-f]{40}$ ]] || {
+            echo "Public verification is held until the actual published tag commit is pinned." >&2
+            exit 1
+          }
+
+      - name: Check out the exact published release tag
+        uses: actions/checkout@v4
+        with:
+          ref: python-v0.10.2
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Set up the qualified Python version
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Verify the release tag, build-source ancestry, and runner architecture
+        id: release_source
+        run: |
+          set -euo pipefail
+          test "$RELEASE_TAG" = "$EXPECTED_RELEASE_TAG"
+          release_commit="$(git rev-parse "refs/tags/$EXPECTED_RELEASE_TAG^{commit}")"
+          test "$(git rev-parse HEAD)" = "$release_commit"
+          test "$release_commit" = "$EXPECTED_RELEASE_COMMIT"
+          git merge-base --is-ancestor "$BUILD_SOURCE_REVISION" "$release_commit"
+          printf 'release_commit=%s\n' "$release_commit" >> "$GITHUB_OUTPUT"
+          export RELEASE_COMMIT="$release_commit"
+          python - <<'PY'
+          import json
+          import os
+          import platform
+          import sys
+          import sysconfig
+          from pathlib import Path
+
+          machine = platform.machine().lower()
+          current = sysconfig.get_platform().replace('-', '_').replace('.', '_')
+          if machine != os.environ['EXPECTED_MACHINE']:
+              raise SystemExit(f"Expected {os.environ['EXPECTED_MACHINE']}; runner reported {machine}")
+          if os.environ['EXPECTED_PLATFORM'] == 'linux_x86_64' and (sys.platform != 'linux' or current != 'linux_x86_64'):
+              raise SystemExit(f'Unexpected Linux platform: {current}')
+          if os.environ['EXPECTED_PLATFORM'] == 'macos_arm64' and (sys.platform != 'darwin' or machine != 'arm64'):
+              raise SystemExit(f'Unexpected macOS platform: {current}')
+          Path(os.environ['RUNNER_TEMP'], 'release-identity.json').write_text(json.dumps({
+              'release_tag': os.environ['EXPECTED_RELEASE_TAG'],
+              'release_commit': os.environ['RELEASE_COMMIT'],
+              'build_source_revision': os.environ['BUILD_SOURCE_REVISION'],
+          }, sort_keys=True) + '\n', encoding='utf-8')
+          Path(os.environ['RUNNER_TEMP'], 'runner.json').write_text(json.dumps({
+              'python': platform.python_version(),
+              'python_platform': current,
+              'machine': machine,
+              'system': platform.platform(),
+          }, sort_keys=True) + '\n', encoding='utf-8')
+          PY
+      - name: Require the published public GitHub release
+        env:
+          RELEASE_COMMIT: ${{ steps.release_source.outputs.release_commit }}
+        run: |
+          set -euo pipefail
+          release_url="https://api.github.com/repos/$GITHUB_REPOSITORY/releases/tags/$EXPECTED_RELEASE_TAG"
+          curl --fail --silent --show-error --location --max-time 30 --max-filesize 1048576 \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            "$release_url" -o "$RUNNER_TEMP/public-release.json"
+          python - "$RUNNER_TEMP/public-release.json" "$RUNNER_TEMP/release-assets.json" <<'PY'
+          import json
+          import os
+          import sys
+          from pathlib import Path
+
+          release_path, output_path = map(Path, sys.argv[1:])
+          release = json.loads(release_path.read_text(encoding='utf-8'))
+          expected_tag = os.environ['EXPECTED_RELEASE_TAG']
+          if release.get('tag_name') != expected_tag or release.get('draft') is not False or not release.get('published_at'):
+              raise SystemExit('The expected GitHub release is not publicly published')
+          filename = os.environ['EXPECTED_WHEEL']
+          matches = [asset for asset in release.get('assets', []) if type(asset) is dict and asset.get('name') == filename]
+          expected_url = f"https://github.com/{os.environ['GITHUB_REPOSITORY']}/releases/download/{expected_tag}/{filename}"
+          if len(matches) != 1 or matches[0].get('browser_download_url') != expected_url or type(matches[0].get('size')) is not int or not 0 < matches[0]['size'] <= 16777216:
+              raise SystemExit('Expected public release asset is missing, ambiguous, or outside its size bound')
+          output_path.write_text(json.dumps({
+              'release_tag': expected_tag,
+              'release_commit': os.environ['RELEASE_COMMIT'],
+              'build_source_revision': os.environ['BUILD_SOURCE_REVISION'],
+              'asset_url': expected_url,
+              'asset_filename': filename,
+              'asset_size': matches[0]['size'],
+          }, sort_keys=True) + '\n', encoding='utf-8')
+          PY
+      - name: Download the exact public release asset
+        env:
+          RELEASE_COMMIT: ${{ steps.release_source.outputs.release_commit }}
+        run: |
+          set -euo pipefail
+          destination="$RUNNER_TEMP/public-wheel"
+          mkdir -p "$destination"
+          asset_url="https://github.com/$GITHUB_REPOSITORY/releases/download/$EXPECTED_RELEASE_TAG/$EXPECTED_WHEEL"
+          curl --fail --silent --show-error --location --max-time 120 --max-filesize 16777216 \
+            "$asset_url" -o "$destination/$EXPECTED_WHEEL"
+          python - "$destination/$EXPECTED_WHEEL" "$RUNNER_TEMP/release-assets.json" "$RUNNER_TEMP/public-wheel.json" <<'PY'
+          import hashlib
+          import json
+          import os
+          import sys
+          from pathlib import Path
+
+          wheel_path, asset_path, receipt_path = map(Path, sys.argv[1:])
+          if wheel_path.stat().st_size > 16777216:
+              raise SystemExit('Public release wheel exceeds the 16 MiB download bound')
+          asset = json.loads(asset_path.read_text(encoding='utf-8'))
+          if wheel_path.name != os.environ['EXPECTED_WHEEL'] or wheel_path.stat().st_size != asset.get('asset_size'):
+              raise SystemExit('Downloaded asset name or size differs from the published release metadata')
+          digest = hashlib.sha256(wheel_path.read_bytes()).hexdigest()
+          if digest != os.environ['EXPECTED_WHEEL_SHA256']:
+              raise SystemExit('Public release wheel bytes do not match the qualified direct artifact')
+          receipt_path.write_text(json.dumps({
+              **asset,
+              'version': os.environ['PACKAGE_VERSION'],
+              'sha256': digest,
+              'native_sha256': os.environ['EXPECTED_NATIVE_SHA256'],
+          }, sort_keys=True) + '\n', encoding='utf-8')
+          PY
+
+      - name: Verify the downloaded wheel against the qualified source payload
+        run: |
+          set -euo pipefail
+          wheels=("$RUNNER_TEMP"/public-wheel/*.whl)
+          test "${#wheels[@]}" -eq 1
+          python tools/verify_python_artifacts.py \
+            --wheel "${wheels[0]}" \
+            --expected-version "$PACKAGE_VERSION" \
+            --expected-platform "$EXPECTED_ARTIFACT_PLATFORM" \
+            --repository . \
+            --receipt "$RUNNER_TEMP/source-payload.json"
+          python - "$RUNNER_TEMP/source-payload.json" <<'PY'
+          import json
+          import os
+          import sys
+          from pathlib import Path
+          receipt = json.loads(Path(sys.argv[1]).read_text(encoding='utf-8'))
+          artifact = receipt.get('artifacts', {}).get('direct', {})
+          if receipt.get('source_payload_verification') != 'passed':
+              raise SystemExit('Public wheel does not match the qualified source payload')
+          if artifact.get('sha256') != os.environ['EXPECTED_WHEEL_SHA256']:
+              raise SystemExit('Source verifier observed a different public wheel digest')
+          if artifact.get('native_sha256') != os.environ['EXPECTED_NATIVE_SHA256']:
+              raise SystemExit('Public wheel native bytes differ from the qualified artifact')
+          PY
+
+      - name: Create a clean environment and install the downloaded wheel
+        run: |
+          set -euo pipefail
+          environment="$RUNNER_TEMP/public-wheel-venv"
+          python -m venv "$environment"
+          "$environment/bin/python" -m pip install \
+            --disable-pip-version-check --no-input --timeout 30 --retries 1 \
+            'pytest==8.4.2' 'hatchling==1.27.0' 'pydantic==2.11.9'
+          wheels=("$RUNNER_TEMP"/public-wheel/*.whl)
+          test "${#wheels[@]}" -eq 1
+          "$environment/bin/python" -m pip install \
+            --disable-pip-version-check --no-input --no-index --no-deps --no-compile \
+            "${wheels[0]}"
+          "$environment/bin/python" -I -B \
+            "$GITHUB_WORKSPACE/tools/verify_python_artifacts.py" \
+            --wheel "${wheels[0]}" --expected-version "$PACKAGE_VERSION" \
+            --verify-installed-wheel \
+            --receipt "$RUNNER_TEMP/installed-payload.json"
+          cd "$RUNNER_TEMP"
+          "$environment/bin/python" -I -B - "$RUNNER_TEMP/install.json" <<'PY'
+          import importlib.metadata
+          import json
+          import os
+          import platform
+          import sys
+          import sysconfig
+          from pathlib import Path
+          import umf
+          from umf import current_core_version
+          from umf._rust import _rust_core
+
+          package_root = Path(umf.__file__).resolve()
+          platlib = Path(sysconfig.get_path('platlib')).resolve()
+          extension = Path(_rust_core.__file__).resolve()
+          if not package_root.is_relative_to(platlib):
+              raise SystemExit('UMF imported outside the clean environment')
+          if not extension.is_relative_to(package_root.parent) or extension.suffix != '.so':
+              raise SystemExit('Native module is outside the installed package or has an unexpected suffix')
+          if platform.machine().lower() != os.environ['EXPECTED_MACHINE']:
+              raise SystemExit('Installed interpreter architecture differs from the selected cohort')
+          if importlib.metadata.version('umf-core') != os.environ['PACKAGE_VERSION']:
+              raise SystemExit('Installed distribution version mismatch')
+          if umf.__version__ != os.environ['PACKAGE_VERSION']:
+              raise SystemExit('Imported UMF version mismatch')
+          if current_core_version() != os.environ['SEMANTIC_CORE_VERSION']:
+              raise SystemExit('Semantic core version mismatch')
+          Path(sys.argv[1]).write_text(json.dumps({
+              'python': platform.python_version(),
+              'python_platform': sysconfig.get_platform(),
+              'machine': platform.machine(),
+              'system': platform.platform(),
+              'distribution_version': importlib.metadata.version('umf-core'),
+              'semantic_core_version': current_core_version(),
+              'installed_inside_environment': True,
+              'native_extension': extension.name,
+          }, sort_keys=True) + '\n', encoding='utf-8')
+          PY
+
+      - name: Run the qualified direct-wheel test set
+        id: installed_tests
+        run: |
+          set -euo pipefail
+          environment="$RUNNER_TEMP/public-wheel-venv"
+          cd "$RUNNER_TEMP"
+          "$environment/bin/python" -I -B -m pytest -q \
+            --junitxml="$RUNNER_TEMP/tests.xml" \
+            "$GITHUB_WORKSPACE/python/tests/test_action_runtime_generated_client.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_action_runtime_resources.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_action_fixture_vectors.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_core.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_rust_core.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_extension_kinds.py"
+
+      - name: Recheck the installed public wheel after tests
+        if: always()
+        run: |
+          set -euo pipefail
+          wheels=("$RUNNER_TEMP"/public-wheel/*.whl)
+          test "${#wheels[@]}" -eq 1
+          environment="$RUNNER_TEMP/public-wheel-venv"
+          test -x "$environment/bin/python"
+          "$environment/bin/python" -I -B \
+            "$GITHUB_WORKSPACE/tools/verify_python_artifacts.py" \
+            --wheel "${wheels[0]}" --expected-version "$PACKAGE_VERSION" \
+            --verify-installed-wheel \
+            --receipt "$RUNNER_TEMP/posttest-payload.json"
+
+      - name: Finalize bounded public verification receipt
+        if: always()
+        env:
+          TEST_OUTCOME: ${{ steps.installed_tests.outcome }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+          RELEASE_COMMIT: ${{ steps.release_source.outputs.release_commit }}
+        run: |
+          python - "$RUNNER_TEMP" <<'PY'
+          import hashlib
+          import json
+          import os
+          import sys
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          root = Path(sys.argv[1])
+          output = root / 'public-verification-evidence'
+          output.mkdir()
+          allowed = {
+              'release_identity': ('release-identity.json', 65536),
+              'runner': ('runner.json', 65536),
+              'release_metadata': ('release-assets.json', 65536),
+              'public_wheel': ('public-wheel.json', 65536),
+              'source_payload': ('source-payload.json', 262144),
+              'installed_payload': ('installed-payload.json', 262144),
+              'install': ('install.json', 65536),
+              'posttest_payload': ('posttest-payload.json', 262144),
+              'tests': ('tests.xml', 1048576),
+          }
+          evidence = {}
+          failures = []
+          total = 0
+          for name, (filename, limit) in allowed.items():
+              source = root / filename
+              if not source.is_file():
+                  failures.append(f'{name}:missing')
+                  continue
+              size = source.stat().st_size
+              if size > limit:
+                  failures.append(f'{name}:over_limit')
+                  continue
+              payload = source.read_bytes()
+              total += len(payload)
+              if total > 4194304:
+                  failures.append('evidence:aggregate_over_limit')
+                  break
+              (output / filename).write_bytes(payload)
+              evidence[name] = {'file': filename, 'bytes': len(payload), 'sha256': hashlib.sha256(payload).hexdigest()}
+
+          def read_json(name):
+              path = root / name
+              if not path.is_file() or path.stat().st_size > 262144:
+                  return None
+              try:
+                  value = json.loads(path.read_text(encoding='utf-8'))
+              except (OSError, UnicodeError, json.JSONDecodeError):
+                  return None
+              return value if type(value) is dict else None
+
+          public = read_json('public-wheel.json')
+          release = read_json('release-identity.json')
+          release_metadata = read_json('release-assets.json')
+          source_payload = read_json('source-payload.json')
+          installed = read_json('installed-payload.json')
+          installation = read_json('install.json')
+          posttest = read_json('posttest-payload.json')
+          counts = None
+          tests_path = root / 'tests.xml'
+          if tests_path.is_file() and tests_path.stat().st_size <= 1048576:
+              try:
+                  document = ET.parse(tests_path).getroot()
+                  suites = [document] if document.tag == 'testsuite' else list(document.findall('testsuite'))
+                  counts = {key: sum(int(suite.get(key, '0')) for suite in suites) for key in ('tests', 'errors', 'failures', 'skipped')}
+              except (OSError, ET.ParseError, ValueError):
+                  counts = None
+          if public is None or public.get('sha256') != os.environ.get('EXPECTED_WHEEL_SHA256') or public.get('asset_filename') != os.environ.get('EXPECTED_WHEEL'):
+              failures.append('public_wheel:pin_mismatch')
+          if release is None or release.get('release_tag') != os.environ.get('EXPECTED_RELEASE_TAG') or release.get('release_commit') != os.environ.get('RELEASE_COMMIT') or release.get('build_source_revision') != os.environ.get('BUILD_SOURCE_REVISION'):
+              failures.append('release:identity_mismatch')
+          if release_metadata is None or release_metadata.get('release_tag') != os.environ.get('EXPECTED_RELEASE_TAG') or release_metadata.get('release_commit') != os.environ.get('RELEASE_COMMIT') or release_metadata.get('asset_filename') != os.environ.get('EXPECTED_WHEEL') or release_metadata.get('asset_url') != f"https://github.com/{os.environ.get('GITHUB_REPOSITORY')}/releases/download/{os.environ.get('EXPECTED_RELEASE_TAG')}/{os.environ.get('EXPECTED_WHEEL')}":
+              failures.append('release_asset:identity_mismatch')
+          runner = read_json('runner.json')
+          if runner is None or runner.get('python') != os.environ.get('EXPECTED_PYTHON') or runner.get('machine', '').lower() != os.environ.get('EXPECTED_MACHINE'):
+              failures.append('runner:cohort_mismatch')
+          if source_payload is None or source_payload.get('source_payload_verification') != 'passed':
+              failures.append('source_payload:not_passed')
+          if installed is None or installed.get('status') != 'passed' or installed.get('wheel_sha256') != os.environ.get('EXPECTED_WHEEL_SHA256') or installed.get('native_sha256') != os.environ.get('EXPECTED_NATIVE_SHA256'):
+              failures.append('installed_payload:not_passed')
+          if installation is None or installation.get('python') != os.environ.get('EXPECTED_PYTHON') or installation.get('installed_inside_environment') is not True or installation.get('distribution_version') != os.environ.get('PACKAGE_VERSION') or installation.get('semantic_core_version') != os.environ.get('SEMANTIC_CORE_VERSION') or installation.get('machine', '').lower() != os.environ.get('EXPECTED_MACHINE'):
+              failures.append('installation:identity_mismatch')
+          if posttest is None or posttest.get('status') != 'passed' or posttest.get('wheel_sha256') != os.environ.get('EXPECTED_WHEEL_SHA256') or posttest.get('native_sha256') != os.environ.get('EXPECTED_NATIVE_SHA256'):
+              failures.append('posttest_payload:not_passed')
+          if counts != {'tests': 254, 'errors': 0, 'failures': 0, 'skipped': 0}:
+              failures.append('tests:count_or_outcome_mismatch')
+          if os.environ.get('TEST_OUTCOME') != 'success':
+              failures.append('tests:step_not_success')
+          receipt = {
+              'schema': 'umf.python-public-wheel-verification/1',
+              'release_tag': os.environ['EXPECTED_RELEASE_TAG'],
+              'release_commit': os.environ['RELEASE_COMMIT'],
+              'build_source_revision': os.environ['BUILD_SOURCE_REVISION'],
+              'run_id': os.environ['RUN_ID'],
+              'run_attempt': os.environ['RUN_ATTEMPT'],
+              'cohort': os.environ['COHORT'],
+              'expected_python': os.environ['EXPECTED_PYTHON'],
+              'package_version': os.environ['PACKAGE_VERSION'],
+              'expected_wheel': os.environ['EXPECTED_WHEEL'],
+              'expected_wheel_sha256': os.environ['EXPECTED_WHEEL_SHA256'],
+              'expected_native_sha256': os.environ['EXPECTED_NATIVE_SHA256'],
+              'test_outcome': os.environ.get('TEST_OUTCOME', 'not_run'),
+              'test_counts': counts,
+              'evidence': evidence,
+              'artifact_bytes': total,
+              'artifact_byte_limit': 4194304,
+              'failures': failures,
+              'qualification': 'passed' if not failures else 'failed_or_incomplete',
+          }
+          receipt_path = output / 'public-verification.json'
+          payload = (json.dumps(receipt, sort_keys=True) + '\n').encode('utf-8')
+          if len(payload) > 65536:
+              raise SystemExit('Final receipt exceeds the 64 KiB bound')
+          receipt_path.write_bytes(payload)
+          if not failures:
+              print('Public wheel verification passed for this cohort')
+          else:
+              print('Public wheel verification failed or is incomplete: ' + ','.join(failures))
+              raise SystemExit(1)
+          PY
+
+      - name: Upload bounded public verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: umf-python-public-wheel-${{ matrix.cohort }}
+          path: ${{ runner.temp }}/public-verification-evidence/
+          if-no-files-found: warn
+          retention-days: 30

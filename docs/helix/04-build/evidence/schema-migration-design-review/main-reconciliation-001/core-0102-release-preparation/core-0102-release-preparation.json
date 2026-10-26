@@ -89,38 +89,71 @@
       },
       "independent_review": "/private/tmp/core-0102-current-mac-sol-review.md",
       "review_sha256": "e74b6e24e40a4688e45ad6b9a1adb938b32189fcd26bde7b626b689386756e57"
+    },
+    "linux_manylinux_x86_64": {
+      "status": "hosted-qualification-passed-independent-artifact-review-accepted",
+      "evidence_directory": "/private/tmp/core-manylinux-40359647952",
+      "receipt": "/private/tmp/core-manylinux-40359647952/receipt.json",
+      "qualification": "/private/tmp/core-manylinux-40359647952/qualification.json",
+      "run_id": "40359647952",
+      "artifact_id": "12667128999",
+      "artifact_zip_sha256": "6951c2c2a3adffbadddb2cc0672d94b7d0fbd8a443251ee97a2113a573902eb1",
+      "source_commit": "a1b909d4f92da6604aeb21d3ea60e9a9943a7f87",
+      "harness_commit": "433bfebcba88107995a6a0552dd319d20eb20272",
+      "wheel": {
+        "filename": "umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl",
+        "sha256": "708f967747b0539b9ca7b6a5f39d1017eea8ddb1d07cd62f4f46592e088f6f39",
+        "bytes": 3582082,
+        "native_sha256": "78dd1542f723b4f4d8c336c137caa478974a981ed759ada171a5877d7e0368a8",
+        "tag": "cp311-abi3-manylinux_2_34_x86_64"
+      },
+      "tests": {
+        "tests": 254,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0
+      },
+      "claims": {
+        "repairedArtifactPayload": true,
+        "installedBytes": true,
+        "sixModuleSuite": true,
+        "publication": false
+      },
+      "policy_scope": "This exact artifact is tagged manylinux_2_34_x86_64; the draft makes no broader compatibility claim.",
+      "independent_artifact_review": "/private/tmp/core-0102-manylinux-artifact-sol-review.md",
+      "independent_artifact_review_sha256": "3c5930be60da1671b4a963a3a37669d72b137f21b1c18ff82faf39ac4608a2d7"
     }
   },
   "proposed_asset_roster": [
     {
+      "role": "linux-manylinux-direct-wheel",
+      "filename": "umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl",
+      "sha256": "708f967747b0539b9ca7b6a5f39d1017eea8ddb1d07cd62f4f46592e088f6f39",
+      "state": "hosted qualification and independent artifact review accepted; final source/tag binding and normal gates pending"
+    },
+    {
       "role": "macos-direct-wheel",
       "filename": "umf_core-0.10.2-cp311-abi3-macosx_11_0_arm64.whl",
       "sha256": "99ff1d1250c613a7b65bdd4dc6cf3ee9fec647e02ec34f8dc5ffb84285b0ac59",
-      "state": "current accepted artifact; final source/tag binding still pending"
-    },
-    {
-      "role": "linux-manylinux-direct-wheel",
-      "filename": null,
-      "sha256": null,
-      "state": "pending actual auditwheel output and 254-test qualification; raw linux_x86_64 excluded"
+      "state": "current PR artifact tests passed; normal Mac gate and final source/tag binding pending"
     },
     {
       "role": "source-distribution",
       "filename": "umf_core-0.10.2.tar.gz",
       "sha256": "90a107aaa507930e1d71c0cf208b77182d06c0bf2a1b13681fd5f7b6ed74cb9d",
-      "state": "matching source archive; refresh/rebind to final release source before publication"
+      "state": "candidate archive; refresh/rebind to final release source before publication"
     },
     {
       "role": "release-pins",
       "filename": "release-pins.json",
       "sha256": null,
-      "state": "pending final tag commit and complete selected-file hashes; include its digest in SHA256SUMS"
+      "state": "pending actual final tag commit and selected-file hashes; include its digest in SHA256SUMS"
     },
     {
       "role": "qualification.json",
       "filename": "qualification.json",
       "sha256": null,
-      "state": "pending final source + repaired Linux + Mac receipts"
+      "state": "pending final source and accepted platform receipts"
     },
     {
       "role": "current-source-ci.json",
@@ -132,7 +165,7 @@
       "role": "PUBLIC_ASSET_INVENTORY.json",
       "filename": "PUBLIC_ASSET_INVENTORY.json",
       "sha256": null,
-      "state": "pending final exact public file bytes"
+      "state": "pending exact final public file bytes"
     },
     {
       "role": "RELEASE_NOTES.md",
@@ -150,27 +183,28 @@
       "role": "qualification-evidence-archive",
       "filename": "umf-core-0.10.2-qualification-evidence.zip",
       "sha256": null,
-      "state": "pending selected evidence bundle; raw Linux proof retained only as evidence"
+      "state": "pending selected evidence bundle; raw linux_x86_64 proof stays evidence-only"
     }
   ],
   "holds": [
-    "Raw Linux linux_x86_64 wheel is retained as candidate proof only and excluded from the final top-level distribution files.",
-    "Linux manylinux auditwheel output, actual platform floor/tag, final filename/digest and 254-test qualification are pending; no policy floor is guessed.",
-    "macOS direct and sdist-rebuilt artifact qualification is accepted at source f4d22c6f0f9e308439e3646117e31239cf48bc07; final merged/tagged identity and publication remain pending.",
-    "No final merge commit or immutable release tag target exists; release-pins commit is null.",
-    "Fresh public PyPI/GitHub download and installed-byte verification have not run.",
-    "Typed migration SDK 0.5.7 remains separate; this Core package evidence does not qualify UMF migrations, Weft SQL behavior or managed-host execution."
+    "The repaired Linux manylinux_2_34_x86_64 wheel passed its hosted 254-test qualification and independent artifact review; this applies only to the exact recorded artifact.",
+    "The raw linux_x86_64 wheel is evidence-only and excluded from final top-level distribution files.",
+    "The macOS artifact tests passed on source f4d22c6f0f9e308439e3646117e31239cf48bc07, but the normal Mac gate remains open.",
+    "Publisher PR50 merge, final merged source identity and actual release-tag commit remain open; release-pins commit is null.",
+    "Public GitHub/PyPI publication and fresh public-download/installed-byte verification have not run.",
+    "Typed migration SDK 0.5.7 is separate; Core evidence does not qualify UMF migrations, Weft SQL behavior or managed-host execution."
   ],
   "draft_body_file": "/private/tmp/core-0102-release-body.md",
   "release_pins_asset": {
     "filename": "release-pins.json",
-    "state": "incomplete-until-manylinux-wheel-qualified; tag is proposed and commit remains null",
+    "state": "candidate asset hashes recorded; proposed tag, commit null; publication held for artifact review and normal gates",
     "payload_shape": {
       "tag": "python-v0.10.2",
       "distribution": "umf-core",
       "version": "0.10.2",
       "commit": null,
       "files": {
+        "umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl": "708f967747b0539b9ca7b6a5f39d1017eea8ddb1d07cd62f4f46592e088f6f39",
         "umf_core-0.10.2-cp311-abi3-macosx_11_0_arm64.whl": "99ff1d1250c613a7b65bdd4dc6cf3ee9fec647e02ec34f8dc5ffb84285b0ac59",
         "umf_core-0.10.2.tar.gz": "90a107aaa507930e1d71c0cf208b77182d06c0bf2a1b13681fd5f7b6ed74cb9d"
       }
@@ -178,15 +212,16 @@
     "sha256sums": "Must be listed and hashed in final SHA256SUMS; SHA256SUMS itself has no self-entry."
   },
   "final_distribution_selection": {
-    "state": "incomplete-until-manylinux-qualified",
+    "state": "candidate-files-hash-pinned; publication held for review/normal gates/final tag",
     "intended_files": {
+      "umf_core-0.10.2-cp311-abi3-manylinux_2_34_x86_64.whl": "708f967747b0539b9ca7b6a5f39d1017eea8ddb1d07cd62f4f46592e088f6f39",
       "umf_core-0.10.2-cp311-abi3-macosx_11_0_arm64.whl": "99ff1d1250c613a7b65bdd4dc6cf3ee9fec647e02ec34f8dc5ffb84285b0ac59",
       "umf_core-0.10.2.tar.gz": "90a107aaa507930e1d71c0cf208b77182d06c0bf2a1b13681fd5f7b6ed74cb9d"
     },
-    "pending_linux_manylinux": {
-      "filename": null,
-      "sha256": null,
-      "status": "await actual auditwheel repair output and 254-test qualification; no guessed policy/tag"
+    "excluded_raw_linux_candidate": {
+      "filename": "umf_core-0.10.2-cp311-abi3-linux_x86_64.whl",
+      "sha256": "64e98887068563221070e3f265ae24d6871099cd5922f49f6be83eff944a5805",
+      "reason": "Raw linux_x86_64 wheel is not selected for PyPI; preserve only as qualification evidence."
     }
   }
 }
