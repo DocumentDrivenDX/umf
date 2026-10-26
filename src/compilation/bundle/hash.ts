@@ -20,10 +20,18 @@ export function canonicalCharged(value:unknown,accounting:AccountingContext,path
 export type CanonicalHistoryMemberSpan={readonly kind:'plans'|'executions';readonly index:number;readonly value:object;readonly start:number;readonly end:number;readonly byteStart:number;readonly byteEnd:number};
 export type CanonicalHistoryDocument={readonly text:string;readonly byteLength:number;readonly members:readonly CanonicalHistoryMemberSpan[]};
 export type CanonicalText={readonly text:string;readonly byteLength:number};
-type CanonicalCollector={path:string;byteLength:number;members?:CanonicalHistoryMemberSpan[]};
+type CanonicalCollector={path:string;byteLength:number;members?:CanonicalHistoryMemberSpan[];maximumBytes?:number};
 /** Private metered canonical writer retaining the exact emitted UTF-8 extent. */
 export function canonicalChargedMeasured(value:unknown,accounting:AccountingContext,path='/'):CanonicalText{
  const collector:CanonicalCollector={path,byteLength:0};
+ const text=canonicalImpl(value,accounting,path,collector);
+ accounting.visit('canonical-measured-result-retention',path);
+ return Object.freeze({text,byteLength:collector.byteLength});
+}
+/** Internal bounded variant used while assembling a fixed-size plan. */
+export function canonicalChargedMeasuredBounded(value:unknown,accounting:AccountingContext,path:string,maximumBytes:number):CanonicalText{
+ if(!Number.isSafeInteger(maximumBytes)||maximumBytes<0)throw new Error('INPUT');
+ const collector:CanonicalCollector={path,byteLength:0,maximumBytes};
  const text=canonicalImpl(value,accounting,path,collector);
  accounting.visit('canonical-measured-result-retention',path);
  return Object.freeze({text,byteLength:collector.byteLength});
@@ -35,9 +43,10 @@ export function canonicalChargedHistory(value:unknown,accounting:AccountingConte
  accounting.visit('canonical-history-document-retention',path);
  return Object.freeze({text,byteLength:collector.byteLength,members:Object.freeze(members)});
 }
-function ownSortedKeys(value:object,accounting:AccountingContext,path:string,kind:'canonical'|'hash'):string[]{
- let count=0;
- for(const key in value)if(Object.hasOwn(value,key)){accounting.visit(`${kind}-object-key-enumeration`,path);count++;}
+function ownSortedKeys(value:object,accounting:AccountingContext,path:string,kind:'canonical'|'hash',collector?:CanonicalCollector):string[]{
+ let count=0,keyTokenBytes=0;
+ for(const key in value)if(Object.hasOwn(value,key)){accounting.visit(`${kind}-object-key-enumeration`,path);count++;if(collector?.maximumBytes!==undefined){validateUnicode(key);keyTokenBytes+=jsonStringTokenUtf8Bytes(key);}}
+ if(collector?.maximumBytes!==undefined&&collector.byteLength+keyTokenBytes+count*2+(count?count-1:0)+1>collector.maximumBytes)throw new Error('PLAN_SIZE');
  // Reserve the variable-length key-reference carrier before Object.keys
  // materializes it. Sorting then charges each comparison as actual work.
  accounting.visit(`${kind}-key-array-retention`,path,count);
@@ -54,14 +63,14 @@ function canonicalImpl(value:unknown,accounting?:AccountingContext,path='/',hist
   if(value&&typeof value==='object')return '{'+Object.keys(value).sort().map(k=>canonical(k)+':'+canonical((value as Record<string,unknown>)[k])).join(',')+'}';
   throw new Error('INPUT');
  }
- let output='',byteOffset=0;const append=(text:string,at:string)=>{byteOffset+=accounting.appendCanonicalChunk(text,at);output+=text;};
+ let output='',byteOffset=0;const ensure=(bytes:number):void=>{if(historyCollector?.maximumBytes!==undefined&&byteOffset+bytes>historyCollector.maximumBytes)throw new Error('PLAN_SIZE');};const append=(text:string,at:string)=>{if(historyCollector?.maximumBytes===undefined){byteOffset+=accounting.appendCanonicalChunk(text,at);output+=text;return;}const bytes=utf8ByteLength(text);ensure(bytes);byteOffset+=accounting.appendCanonicalChunk(text,at);output+=text;historyCollector.byteLength=byteOffset;};
  const visit=(item:unknown,at:string):void=>{
   accounting.visit('canonical-node',at);
-  if(typeof item==='string'){validateUnicode(item);const size=jsonStringTokenUtf8Bytes(item);accounting.retainBytes('canonical-token',size,at);const token=JSON.stringify(item);output+=token;byteOffset+=size;return;}
+  if(typeof item==='string'){validateUnicode(item);const size=jsonStringTokenUtf8Bytes(item);ensure(size);accounting.retainBytes('canonical-token',size,at);const token=JSON.stringify(item);output+=token;byteOffset+=size;if(historyCollector)historyCollector.byteLength=byteOffset;return;}
   if(item===null||typeof item==='boolean'){append(JSON.stringify(item),at);return;}
   if(typeof item==='number'){if(!Number.isFinite(item))throw new Error('INPUT');append(JSON.stringify(item),at);return;}
   if(Array.isArray(item)){append('[',at);for(let i=0;i<item.length;i++){if(i)append(',',at);accounting.visit('canonical-array-slot',`${at}/${i}`);visit(item[i],`${at}/${i}`);}append(']',at);return;}
-  if(item&&typeof item==='object'){append('{',at);const keys=ownSortedKeys(item,accounting,at,'canonical');for(let i=0;i<keys.length;i++){const key=keys[i]!;if(i)append(',',at);accounting.visit('canonical-object-key',`${at}/${key}`);const keyPath=`${at}/${key}`;validateUnicode(key);const size=jsonStringTokenUtf8Bytes(key);accounting.retainBytes('canonical-token',size,keyPath);const token=JSON.stringify(key);output+=token;byteOffset+=size;append(':',at);const child=(item as Record<string,unknown>)[key],kind=historyCollector?.members&&at===historyCollector.path&&Array.isArray(child)&&(key==='plans'||key==='executions')?key:undefined;if(kind){accounting.visit('canonical-node',`${at}/${key}`);append('[',`${at}/${key}`);const values=child as unknown[];for(let index=0;index<values.length;index++){if(index)append(',',`${at}/${key}`);accounting.visit('canonical-array-slot',`${at}/${key}/${index}`);const start=output.length,byteStart=byteOffset,member=values[index];visit(member,`${at}/${key}/${index}`);if(member!==null&&typeof member==='object'&&historyCollector!.members!.length<256){accounting.visit('canonical-history-span-retention',`${at}/${key}/${index}`);historyCollector!.members!.push(Object.freeze({kind,index,value:member,start,end:output.length,byteStart,byteEnd:byteOffset}));}}append(']',`${at}/${key}`);}else visit(child,`${at}/${key}`);}append('}',at);return;}
+  if(item&&typeof item==='object'){append('{',at);const keys=ownSortedKeys(item,accounting,at,'canonical',historyCollector);for(let i=0;i<keys.length;i++){const key=keys[i]!;if(i)append(',',at);accounting.visit('canonical-object-key',`${at}/${key}`);const keyPath=`${at}/${key}`;validateUnicode(key);const size=jsonStringTokenUtf8Bytes(key);ensure(size);accounting.retainBytes('canonical-token',size,keyPath);const token=JSON.stringify(key);output+=token;byteOffset+=size;if(historyCollector)historyCollector.byteLength=byteOffset;append(':',at);const child=(item as Record<string,unknown>)[key],kind=historyCollector?.members&&at===historyCollector.path&&Array.isArray(child)&&(key==='plans'||key==='executions')?key:undefined;if(kind){accounting.visit('canonical-node',`${at}/${key}`);append('[',`${at}/${key}`);const values=child as unknown[];for(let index=0;index<values.length;index++){if(index)append(',',`${at}/${key}`);accounting.visit('canonical-array-slot',`${at}/${key}/${index}`);const start=output.length,byteStart=byteOffset,member=values[index];visit(member,`${at}/${key}/${index}`);if(member!==null&&typeof member==='object'&&historyCollector!.members!.length<256){accounting.visit('canonical-history-span-retention',`${at}/${key}/${index}`);historyCollector!.members!.push(Object.freeze({kind,index,value:member,start,end:output.length,byteStart,byteEnd:byteOffset}));}}append(']',`${at}/${key}`);}else visit(child,`${at}/${key}`);}append('}',at);return;}
   throw new Error('INPUT');
  };visit(value,path);if(historyCollector)historyCollector.byteLength=byteOffset;return output;
 }

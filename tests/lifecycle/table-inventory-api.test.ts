@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {beforeAll,describe,expect,test} from 'bun:test';
-import {canonical,hashCanonical,sha256Text,sha256TextChunksCharged} from '../../src/compilation/bundle/hash';
+import {canonical,canonicalChargedMeasuredBounded,hashCanonical,sha256Text,sha256TextChunksCharged} from '../../src/compilation/bundle/hash';
 import {UmfError} from '../../src/model/errors';
 import {compileTableDeployment} from '../../src/table-deployment';
 import {compileTableMigration,compileTableInventoryMigration,discoverTableInventoryMigrationChanges,irreversiblePurgeDisclosure,serializeTableInventoryMigration,verifyTableInventoryMigration} from '../../src/table-migration';
 import {compileG10InventoryPlan,compileInventoryPlan,createHistoricalG10Verifier,deriveInitialRendererEffects,deriveG10ProvenanceMutations,type InventoryPlanInput} from '../../src/table-migration/inventory';
 import {partitionRendererDependencies,verifySourcePublicationCoverage} from '../../src/table-migration/inventory-effects';
-import {initialInventoryPrefix,scheduleTypedInventoryEffects,scheduleTypedInventoryEffectsForCompiler,type CatalogMutation,type EffectNode,type InventoryMetadataStepIds,type PrefixFrame,type ScheduledInventoryEffects} from '../../src/table-migration/inventory-graph';
+import {initialInventoryPrefix,scheduleTypedInventoryEffects,scheduleTypedInventoryEffectsForCompiler,scheduleTypedInventoryEffectsForCompilerCanonical,type CatalogMutation,type EffectNode,type InventoryMetadataStepIds,type PrefixFrame,type ScheduledInventoryEffects} from '../../src/table-migration/inventory-graph';
 import {deriveInventorySeedLineage} from '../../src/table-migration/inventory-history';
 import type {InventoryDelta} from '../../src/table-migration/inventory-projection';
 import {R2_CONTEXT_BYTE_LIMIT,R2WorkLimitError,R2WorkMeter,R2_WORK_EVENT_UNITS} from '../../src/table-migration/inventory-r2-context';
@@ -34,7 +34,7 @@ type GraphTableIdentity={kind:'table';table:string;subject:{module:string;elemen
 const emptyPrefixCatalog=():Record<string,GraphTestJson[]>=>({tables:[],columns:[],keys:[],checks:[],foreignKeys:[],indexes:[],policies:[],grants:[],comments:[]});
 class PrefixCanonicalCountingMeter extends R2WorkMeter{
  rowCanonicalMisses=0;failBeforeRowCanonical=false;bytesAtRowFailure:number|null=null;
- override visit(category:string,path:string,count=1):void{if(category==='graph-canonical-row-retention'){if(this.failBeforeRowCanonical){this.bytesAtRowFailure=this.snapshot().bytes;throw new Error('CONTROLLED_ROW_CANONICAL_RETENTION_FAILURE');}this.rowCanonicalMisses+=count;}super.visit(category,path,count);}
+ override visit(category:string,path:string,count=1):void{if(category==='graph-canonical-row-retention'||category==='graph-prefix-canonical-row-retention'){if(this.failBeforeRowCanonical){this.bytesAtRowFailure=this.snapshot().bytes;throw new Error('CONTROLLED_ROW_CANONICAL_RETENTION_FAILURE');}this.rowCanonicalMisses+=count;}super.visit(category,path,count);}
 }
 test('charged chunk hashing preserves UTF-8 bytes and refuses before later chunks on budget exhaustion',()=>{
  const chunks=['prefix','snowman ☃','quote" backslash\\ and newline\n'],meter=new R2WorkMeter();
@@ -44,6 +44,14 @@ test('charged chunk hashing preserves UTF-8 bytes and refuses before later chunk
  expect(()=>sha256TextChunksCharged(append=>{append('☃','/chunks/over-limit');laterChunkReached=true;},nearLimit,'/chunks')).toThrow(`R2_CONTEXT_BYTES_LIMIT:/chunks/over-limit`);
  expect(laterChunkReached).toBe(false);expect(nearLimit.snapshot().bytes).toBe(R2_CONTEXT_BYTE_LIMIT-1);
  const retryMeter=new R2WorkMeter();expect(sha256TextChunksCharged(append=>{append('☃','/retry');},retryMeter,'/retry')).toBe(sha256Text('☃'));expect(retryMeter.snapshot().bytes).toBe(3);
+});
+test('bounded canonical members account exact UTF-8 output and stop before oversized token/key emission',()=>{
+ const value={alpha:'snowman ☃',quote:'"\\\n'},expected=canonical(value),exactMeter=new R2WorkMeter(),exact=canonicalChargedMeasuredBounded(value,exactMeter,'/bounded',new TextEncoder().encode(expected).byteLength);
+ expect(exact).toEqual({text:expected,byteLength:new TextEncoder().encode(expected).byteLength});
+ const tokenMeter=new R2WorkMeter();expect(()=>canonicalChargedMeasuredBounded('x'.repeat(4096),tokenMeter,'/bounded/token',8)).toThrow('PLAN_SIZE');expect(tokenMeter.snapshot().bytes).toBe(0);
+ const keyMeter=new R2WorkMeter();expect(()=>canonicalChargedMeasuredBounded({a:'value'},keyMeter,'/bounded/key',2)).toThrow('PLAN_SIZE');expect(keyMeter.snapshot().bytes).toBe(1);
+ const nearWorkMeter=new R2WorkMeter();nearWorkMeter.charge('jsonNode',1_000_000,'/prefill');expect(()=>canonicalChargedMeasuredBounded({retry:'ok'},nearWorkMeter,'/bounded/work',64)).toThrow(R2WorkLimitError);
+ const retryMeter=new R2WorkMeter(),retry=canonicalChargedMeasuredBounded({retry:'ok'},retryMeter,'/bounded/retry',64);expect(retry.text).toBe(canonical({retry:'ok'}));expect(retry.byteLength).toBe(new TextEncoder().encode(retry.text).byteLength);expect(retryMeter.snapshot().bytes).toBe(retry.byteLength);
 });
 const definitionDigestCollections=['tables','columns','keys','checks','foreignKeys','indexes','policies','grants','comments'] as const;
 function assertNormativeTableDefinitionDigests(frame:PrefixFrame):void{
@@ -198,13 +206,16 @@ test('G10 public initial compile, full verification and serialization retain the
  expect(result.plan.steps.some(step=>step.operation==='apply-seeds')).toBe(false);
  expect((result.plan.prefixes.at(-1) as any).seedStates.every((seed:any)=>seed.execution==='not-run')).toBe(true);
  const serialized=serializeTableInventoryMigration(result.plan,emptyHistory);
- expect(JSON.parse(serialized)).toEqual(result.plan);
+ const digestPreimage=structuredClone(result.plan) as any,planDigest=digestPreimage.digest;delete digestPreimage.digest;
+ expect(planDigest).toBe(hashCanonical(digestPreimage));expect(serialized).toBe(canonical(result.plan));expect(JSON.parse(serialized)).toEqual(result.plan);
  expect(serialized.endsWith('\n')).toBe(false);
  const reordered={...request,options:{...request.options,reviewedChanges:[...request.options.reviewedChanges].reverse()}};
  expect(compileTableInventoryMigration(reordered).status).toBe('blocked');
  const rehashedMutation=structuredClone(result.plan) as any;rehashedMutation.review[0]!.newValue.table='forged';delete rehashedMutation.digest;rehashedMutation.digest=hashCanonical(rehashedMutation);
  expect(()=>verifyTableInventoryMigration(rehashedMutation,emptyHistory)).toThrow();
  expect(()=>serializeTableInventoryMigration(rehashedMutation,emptyHistory)).toThrow();
+ const changedPrefix=structuredClone(result.plan) as any;changedPrefix.prefixes[0]!.completedSteps.push('unbound-prefix-step');delete changedPrefix.digest;changedPrefix.digest=hashCanonical(changedPrefix);
+ expect(()=>verifyTableInventoryMigration(changedPrefix,emptyHistory)).toThrow();
 });
 
 test('G10 dependency projection claims every raw edge as physical work or a complete-source publication obligation',()=>{
@@ -309,6 +320,12 @@ test('scheduler prefixes preserve final frames for zero and multiple groups with
  expect(ordered.prefixes[5]!.tableStates.find(state=>!!state&&typeof state==='object'&&!Array.isArray(state)&&(state as Record<string,GraphTestJson>).table==='old')).toMatchObject({state:'absent',definitionDigest:hashCanonical(null)});
  const countedMeter=new PrefixCanonicalCountingMeter(),counted=scheduleTypedInventoryEffects(populated,[enableKept,changeOldCheck,removeOld],[{dependent:hashCanonical(changedTable.identity),prerequisite:hashCanonical(keptTable.identity),sourcePath:'/tests/change-after-kept',reason:'source-update-order',state:'present'},{dependent:hashCanonical(oldTable.identity),prerequisite:hashCanonical(changedTable.identity),sourcePath:'/tests/remove-after-change',reason:'source-remove-order',state:'present'}],target,undefined,provenance,countedMeter);
  expect(counted.prefixes.map(frame=>frame.digest)).toEqual(ordered.prefixes.map(frame=>frame.digest));expect(countedMeter.rowCanonicalMisses).toBe(15);
+ const finalTextMeter=new PrefixCanonicalCountingMeter(),finalTextSchedule=scheduleTypedInventoryEffectsForCompilerCanonical(populated,[enableKept,changeOldCheck,removeOld],[{dependent:hashCanonical(changedTable.identity),prerequisite:hashCanonical(keptTable.identity),sourcePath:'/tests/change-after-kept',reason:'source-update-order',state:'present'},{dependent:hashCanonical(oldTable.identity),prerequisite:hashCanonical(changedTable.identity),sourcePath:'/tests/remove-after-change',reason:'source-remove-order',state:'present'}],target,{prepare:'prepare',approval:'approval',publication:'publication'},provenance,finalTextMeter);
+ expect(finalTextSchedule.canonicalPrefixes.map(item=>item.text)).toEqual(finalTextSchedule.schedule.prefixes.map(frame=>canonical(frame)));
+ expect(finalTextSchedule.canonicalPrefixes.map(item=>item.byteLength)).toEqual(finalTextSchedule.schedule.prefixes.map(frame=>new TextEncoder().encode(canonical(frame)).byteLength));expect(finalTextMeter.rowCanonicalMisses).toBe(15);
+ const failedTextMeter=new class extends PrefixCanonicalCountingMeter{prefixChunks=0;override visit(category:string,path:string,count=1):void{if(category==='graph-prefix-canonical-text-retention'&&++this.prefixChunks===4)throw new Error('CONTROLLED_PREFIX_TEXT_RETENTION_FAILURE');super.visit(category,path,count);}};
+ expect(()=>scheduleTypedInventoryEffectsForCompilerCanonical(populated,[enableKept,changeOldCheck,removeOld],[{dependent:hashCanonical(changedTable.identity),prerequisite:hashCanonical(keptTable.identity),sourcePath:'/tests/change-after-kept',reason:'source-update-order',state:'present'},{dependent:hashCanonical(oldTable.identity),prerequisite:hashCanonical(changedTable.identity),sourcePath:'/tests/remove-after-change',reason:'source-remove-order',state:'present'}],target,{prepare:'prepare',approval:'approval',publication:'publication'},provenance,failedTextMeter)).toThrow('CONTROLLED_PREFIX_TEXT_RETENTION_FAILURE');expect(failedTextMeter.prefixChunks).toBe(4);
+ const freshTextRetry=scheduleTypedInventoryEffectsForCompilerCanonical(populated,[enableKept,changeOldCheck,removeOld],[{dependent:hashCanonical(changedTable.identity),prerequisite:hashCanonical(keptTable.identity),sourcePath:'/tests/change-after-kept',reason:'source-update-order',state:'present'},{dependent:hashCanonical(oldTable.identity),prerequisite:hashCanonical(changedTable.identity),sourcePath:'/tests/remove-after-change',reason:'source-update-order',state:'present'}],target,{prepare:'prepare',approval:'approval',publication:'publication'},provenance,new PrefixCanonicalCountingMeter());expect(freshTextRetry.canonicalPrefixes.map(item=>item.text)).toEqual(finalTextSchedule.canonicalPrefixes.map(item=>item.text));
  const fullPrefixBytes=counted.prefixes.reduce((total,frame)=>{const {digest,...body}=frame;return total+new TextEncoder().encode(canonical(body)).byteLength;},0);expect(countedMeter.snapshot().bytes).toBeGreaterThanOrEqual(fullPrefixBytes);
  const failedMeter=new PrefixCanonicalCountingMeter();failedMeter.failBeforeRowCanonical=true;expect(()=>scheduleTypedInventoryEffects(populated,[enableKept,changeOldCheck,removeOld],[{dependent:hashCanonical(changedTable.identity),prerequisite:hashCanonical(keptTable.identity),sourcePath:'/tests/change-after-kept',reason:'source-update-order',state:'present'},{dependent:hashCanonical(oldTable.identity),prerequisite:hashCanonical(changedTable.identity),sourcePath:'/tests/remove-after-change',reason:'source-remove-order',state:'present'}],target,undefined,provenance,failedMeter)).toThrow('CONTROLLED_ROW_CANONICAL_RETENTION_FAILURE');expect(failedMeter.bytesAtRowFailure).toBe(failedMeter.snapshot().bytes);expect(failedMeter.rowCanonicalMisses).toBe(0);
  const retryMeter=new PrefixCanonicalCountingMeter(),retried=scheduleTypedInventoryEffects(populated,[enableKept,changeOldCheck,removeOld],[{dependent:hashCanonical(changedTable.identity),prerequisite:hashCanonical(keptTable.identity),sourcePath:'/tests/change-after-kept',reason:'source-update-order',state:'present'},{dependent:hashCanonical(oldTable.identity),prerequisite:hashCanonical(changedTable.identity),sourcePath:'/tests/remove-after-change',reason:'source-remove-order',state:'present'}],target,undefined,provenance,retryMeter);expect(retried.prefixes.map(frame=>frame.digest)).toEqual(ordered.prefixes.map(frame=>frame.digest));expect(retryMeter.rowCanonicalMisses).toBe(15);
@@ -435,6 +452,7 @@ test('R2 metered context reuses exact source cores for a seeded Note history and
  expect(fixture.previous.seedSets).toEqual(fixture.next.seedSets);expect(fixture.history.executions[0]!.seedOutcomes).toHaveLength(1);
  expect(fixture.history.executions[0]!.seedOutcomes[0]).toMatchObject({id:'initial-note-seed',execution:'confirmed'});
  expect(compiled.plan.seedExecution).toBe('none');expect(compiled.plan.steps.some(step=>step.sourcePath.includes('backfills/0'))).toBe(true);
+ const digestPreimage=structuredClone(compiled.plan) as any,planDigest=digestPreimage.digest;delete digestPreimage.digest;expect(planDigest).toBe(hashCanonical(digestPreimage));
  const nextSource=JSON.parse(fixture.next.source.utf8);expect(nextSource.modules[0].extensions['umf.tables'].tables[0].columns.find((column:any)=>column.name==='summary').default).toEqual({kind:'literal',value:{string:'future summary'}});
  const summaryColumn=fixture.next.expectedCatalog.columns.find((column:any)=>column.table==='notes'&&column.field.element==='summary')!,summarySteps=compiled.plan.steps.filter(step=>step.sourcePath===summaryColumn.sourcePath||step.sourcePath==='/options/backfills/0'&&step.operation==='apply-backfill');
  expect(summarySteps.map(step=>step.operation)).toEqual(['add-column','apply-backfill','install-default','tighten-not-null']);
@@ -465,6 +483,17 @@ test('R2 metered context reuses exact source cores for a seeded Note history and
  expect(()=>deriveInventorySeedLineage(originalHistory(fixture.next),current,undefined,new R2WorkMeter())).toThrow(/UNSUPPORTED_METERED_LEGACY_HISTORY/);
  const originalNextSource=fixture.next.source.utf8;fixture.next.source.utf8='caller mutation after registration';expect(state.owned.next?.source.utf8).toBe(originalNextSource);
 });
+test('R2 final-plan retention failure returns no history context and a fresh invocation succeeds',()=>{
+ const fixture=smallNoteMixedG02Source(),compiled=compileTableInventoryMigration(fixture.request);expect(compiled.status).toBe('compiled');if(compiled.status!=='compiled'){compileG10InventoryPlan(fixture.request);throw new Error(JSON.stringify(compiled.diagnostics));}
+ const selector02={version:'umf.table-inventory-discovery/0.2' as const,tableIntents:[],conversions:[],retiredSeedSets:[],retirements:[],restorations:[],archiveSources:[],tableArchiveSources:[]};
+ const mixedHistory:TableInventorySourceHistory={profile:'umf.table-inventory-source-history/0.1',plans:[...fixture.history.plans,compiled.plan],executions:[...fixture.history.executions,seedExecution(compiled.plan,fixture.next,'e'.repeat(64))]};
+ const meterPrototype=R2WorkMeter.prototype,visitDescriptor=Object.getOwnPropertyDescriptor(meterPrototype,'visit');if(!visitDescriptor||typeof visitDescriptor.value!=='function')throw new Error('R2 meter visit method descriptor is missing.');const originalVisit=visitDescriptor.value as (this:R2WorkMeter,category:string,path:string,count?:number)=>void,finalRetentionFailure={sentinel:'FINAL_PLAN_TEXT_RETENTION_CONTROL'};let finalRetentionReached=false,failedHandle:ReturnType<typeof prepareR2InventorySourceContext>|undefined,finalRetentionError:unknown;
+ Object.defineProperty(meterPrototype,'visit',{...visitDescriptor,value:function(this:R2WorkMeter,category:string,path:string,count=1){if(category==='inventory-plan-final-text-result-retention'){finalRetentionReached=true;throw finalRetentionFailure;}return Reflect.apply(originalVisit,this,[category,path,count]);}});
+ try{try{failedHandle=prepareR2InventorySourceContext({previous:fixture.next,next:fixture.next,history:mixedHistory,selector:selector02});}catch(error){finalRetentionError=error;}}finally{Object.defineProperty(meterPrototype,'visit',visitDescriptor);}
+ expect(finalRetentionReached).toBe(true);expect(finalRetentionError).toBe(finalRetentionFailure);expect(failedHandle).toBeUndefined();
+ const retry=prepareR2InventorySourceContext({previous:fixture.next,next:fixture.next,history:mixedHistory,selector:selector02}),state=inspectR2InventorySourceContext(retry);
+ expect(state.history.plans).toHaveLength(2);expect(state.history.plans[1]).toEqual(compiled.plan);expect(state.history.executions[1]).toEqual(mixedHistory.executions[1]);expect(state.seedLineage).toMatchObject([{id:'initial-note-seed',execution:'confirmed'}]);
+},15_000);
 
 function installedCreateReviewFixture(){
  const previous=deploy(legalSource()),nextDocument=legalSource() as any;
