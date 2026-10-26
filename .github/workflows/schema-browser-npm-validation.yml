@@ -1,0 +1,42 @@
+name: Validate schema browser npm publisher
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/schema-browser-npm-validation.yml'
+      - '.github/workflows/dispatch-schema-browser-npm.yml'
+      - '.github/workflows/publish-schema-browser-npm.yml'
+      - 'scripts/dispatch_schema_browser_npm.py'
+      - 'scripts/verify_schema_browser_npm.py'
+      - 'scripts/test_dispatch_schema_browser_npm.py'
+      - 'scripts/test_verify_schema_browser_npm.py'
+      - 'docs/helix/05-deploy/schema-browser/README.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/schema-browser-npm-validation.yml'
+      - '.github/workflows/dispatch-schema-browser-npm.yml'
+      - '.github/workflows/publish-schema-browser-npm.yml'
+      - 'scripts/dispatch_schema_browser_npm.py'
+      - 'scripts/verify_schema_browser_npm.py'
+      - 'scripts/test_dispatch_schema_browser_npm.py'
+      - 'scripts/test_verify_schema_browser_npm.py'
+      - 'docs/helix/05-deploy/schema-browser/README.md'
+
+permissions:
+  contents: read
+
+jobs:
+  publisher-controls:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test release verification controls
+        run: python scripts/test_verify_schema_browser_npm.py
+      - name: Test automatic dispatch identity controls
+        run: python scripts/test_dispatch_schema_browser_npm.py
