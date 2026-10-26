@@ -24,7 +24,10 @@ jobs:
         run: |
           set -euo pipefail
           EVIDENCE="$RUNNER_TEMP/umf-merged-generation"
+          METAMODEL_STAGE="$RUNNER_TEMP/umf-metamodel-stage-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          test ! -e "$METAMODEL_STAGE"
           mkdir -p "$EVIDENCE/logs" "$EVIDENCE/outputs"
+          printf 'METAMODEL_STAGE_DIR=%s\n' "$METAMODEL_STAGE" >> "$GITHUB_ENV"
           START_MS="$(awk '{printf "%d", $1 * 1000}' /proc/uptime)"
           DEADLINE_MS="$((START_MS + 1800000))"
           printf '%s\n' "$START_MS" > "$EVIDENCE/monotonic-start-ms"
@@ -437,12 +440,76 @@ jobs:
               tools[name]={"path":str(resolved),"version":version,"binarySha256":digest}
           pathlib.Path(sys.argv[1]).write_text(json.dumps({"tools":tools},indent=2,sort_keys=True)+"\n")
           PY
-          run_bounded action-plan-identity 180 bun scripts/actions-plan-identity.ts
-          run_bounded codegen-assets 600 bun scripts/build-codegen.ts
-          run_bounded action-plan-identity-check 180 bun scripts/actions-plan-identity.ts --check
-          run_bounded codegen-assets-check 180 bun scripts/build-codegen.ts --check
-          run_bounded r3-inventory 600 python -I scripts/rust-inventory.py
-          run_bounded r3-boundary-check 900 python -I scripts/check-rust-boundaries.py
+          run_bounded prepare-metamodel-stage 30 python -I - "$METAMODEL_STAGE_DIR" <<'PY'
+          import hashlib,os,pathlib,shutil,sys
+          root=pathlib.Path.cwd(); stage=pathlib.Path(sys.argv[1]); expected='314cac8416711899285bc3f1a734765d557f7446f7ab0cf58d3dbd2a7dfdd81e'
+          source=root/'src/generated/core-validators-accounted.ts'
+          if stage.parent.resolve()!=pathlib.Path(os.environ['RUNNER_TEMP']).resolve() or stage.exists(): raise SystemExit('metamodel stage path is not fresh and runner-local')
+          info=source.lstat()
+          if not source.is_file() or source.is_symlink() or info.st_size!=1525352 or hashlib.sha256(source.read_bytes()).hexdigest()!=expected: raise SystemExit('separately owned accounted companion does not match Stage-A custody')
+          destination=stage/'src/generated/core-validators-accounted.ts'; destination.parent.mkdir(parents=True,mode=0o700); shutil.copyfile(source,destination)
+          if destination.stat().st_size!=info.st_size or hashlib.sha256(destination.read_bytes()).hexdigest()!=expected: raise SystemExit('staged companion byte custody mismatch')
+          PY
+          run_bounded metamodel-output-generation 600 bun scripts/metamodel/build.ts --output-root "$METAMODEL_STAGE_DIR"
+          run_bounded metamodel-output-stage-check 600 bun scripts/metamodel/build.ts --check --output-root "$METAMODEL_STAGE_DIR"
+          run_bounded metamodel-output-correspondence 45 python -I - "$METAMODEL_STAGE_DIR" "$EVIDENCE/metamodel-phase.json" "$EVIDENCE/metamodel-phase-ready" <<'PY'
+          import hashlib,json,os,pathlib,stat,sys
+          root=pathlib.Path.cwd(); stage=pathlib.Path(sys.argv[1]); receipt=pathlib.Path(sys.argv[2]); ready_path=pathlib.Path(sys.argv[3])
+          paths=["spec/core/schema.json","spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json",
+            "spec/metamodel/package.json","spec/metamodel/generated/core-constraints.json","spec/metamodel/generated/domain-policy.json",
+            "spec/metamodel/generated/python-shapes.json","python/umf_access/src/umf_access/generated_core.py",
+            "src/generated/core-model.ts","src/generated/core-validators.ts","spec/metamodel/generated/manifest.json"]
+          companion="src/generated/core-validators-accounted.ts"
+          def record(path):
+              info=path.lstat()
+              if not stat.S_ISREG(info.st_mode): raise ValueError("unsafe staged or committed metamodel output")
+              raw=path.read_bytes(); return {"sha256":hashlib.sha256(raw).hexdigest(),"bytes":len(raw)}
+          stage_sizes={name:(stage/name).lstat().st_size for name in paths}
+          if any(not stat.S_ISREG((stage/name).lstat().st_mode) for name in paths): raise SystemExit("unsafe staged metamodel output")
+          staged_total=sum(stage_sizes.values())
+          if staged_total>16777216: raise SystemExit("staged 11-output family exceeds the existing artifact cap")
+          stage_rows={name:record(stage/name) for name in paths}
+          root_rows={}
+          root_matches=True
+          for name,row in stage_rows.items():
+              target=root/name
+              try: root_rows[name]=record(target)
+              except (OSError,ValueError): root_rows[name]=None
+              if root_rows[name]!=row: root_matches=False
+          manifest=json.loads((stage/"spec/metamodel/generated/manifest.json").read_bytes())
+          separately=manifest.get("separatelyOwned",{}).get("accountedCompanion",{})
+          input_rows=separately.get("inputs",{})
+          expected_paths={"src/generated/core-validators.ts","spec/core/schema.json","spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json"}
+          output_for_input={"src/generated/core-validators.ts":"src/generated/core-validators.ts",
+            "spec/core/schema.json":"spec/core/schema.json","spec/core/semantic-type-reference.schema.json":"spec/core/semantic-type-reference.schema.json",
+            "spec/core/extension-package.schema.json":"spec/core/extension-package.schema.json"}
+          if set(input_rows)!=expected_paths: raise SystemExit("Stage-A companion input binding is not the exact four-file roster")
+          companion_match=True; emitted={}
+          for input_path,output_path in output_for_input.items():
+              expected=input_rows[input_path]; actual=stage_rows[output_path]
+              if set(expected)!={"sha256","bytes"} or actual!=expected: companion_match=False
+              emitted[input_path]=actual
+          phase="DEPENDENT_GENERATION_READY" if root_matches and companion_match else "METAMODEL_OUTPUTS_ARTIFACT_ONLY"
+          payload={"schema":"umf.merged-metamodel-phase/1","status":phase,"sourceCommit":os.environ["GITHUB_SHA"],
+            "runId":os.environ["GITHUB_RUN_ID"],"runAttempt":os.environ["GITHUB_RUN_ATTEMPT"],"ref":os.environ["GITHUB_REF"],
+            "stageRoster":stage_rows,"committedRoster":root_rows,"committedOutputsMatch":root_matches,
+            "companionInputBindings":input_rows,"emittedCompanionInputs":emitted,"companionInputsMatch":companion_match}
+          receipt.write_text(json.dumps(payload,sort_keys=True,indent=2)+"\n")
+          ready="true" if phase=="DEPENDENT_GENERATION_READY" else "false"
+          ready_path.write_text(ready+"\n")
+          PY
+          IFS= read -r METAMODEL_DEPENDENT_GENERATION_READY < "$EVIDENCE/metamodel-phase-ready"
+          printf 'dependent_generation=%s\n' "$METAMODEL_DEPENDENT_GENERATION_READY" >> "$GITHUB_OUTPUT"
+          printf 'METAMODEL_DEPENDENT_GENERATION_READY=%s\n' "$METAMODEL_DEPENDENT_GENERATION_READY" >> "$GITHUB_ENV"
+          if [[ "$METAMODEL_DEPENDENT_GENERATION_READY" == "true" ]]; then
+            run_bounded check-adopted-metamodel-and-self 600 bun run check:metamodel
+            run_bounded action-plan-identity 180 bun scripts/actions-plan-identity.ts
+            run_bounded codegen-assets 600 bun scripts/build-codegen.ts
+            run_bounded action-plan-identity-check 180 bun scripts/actions-plan-identity.ts --check
+            run_bounded codegen-assets-check 180 bun scripts/build-codegen.ts --check
+            run_bounded r3-inventory 600 python -I scripts/rust-inventory.py
+            run_bounded r3-boundary-check 900 python -I scripts/check-rust-boundaries.py
+          fi
           BOUNDED_GENERATION_WORK
 
       - name: Stage only current generated outputs and hash receipt
@@ -454,8 +521,108 @@ jobs:
           SOURCE_OUTCOME: ${{ steps.source.outcome }}
           DEPENDENCY_OUTCOME: ${{ steps.dependencies.outcome }}
           GENERATION_OUTCOME: ${{ steps.generate.outcome }}
+          METAMODEL_STAGE_DIR: ${{ runner.temp }}/umf-metamodel-stage-${{ github.run_id }}-${{ github.run_attempt }}
+          METAMODEL_DEPENDENT_GENERATION_READY: ${{ steps.generate.outputs.dependent_generation }}
           UPLOAD_DIR: ${{ runner.temp }}/umf-merged-generation-upload
         run: |
+          set -euo pipefail
+          if [[ "$METAMODEL_DEPENDENT_GENERATION_READY" == "false" ]]; then
+            python -I - <<'PY'
+          import hashlib,json,os,pathlib,shutil,stat
+          evidence=pathlib.Path(os.environ["EVIDENCE_DIR"]); stage=pathlib.Path(os.environ["METAMODEL_STAGE_DIR"])
+          upload=pathlib.Path(os.environ["UPLOAD_DIR"]); outputs=evidence/"outputs"
+          paths=["spec/core/schema.json","spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json",
+            "spec/metamodel/package.json","spec/metamodel/generated/core-constraints.json","spec/metamodel/generated/domain-policy.json",
+            "spec/metamodel/generated/python-shapes.json","python/umf_access/src/umf_access/generated_core.py",
+            "src/generated/core-model.ts","src/generated/core-validators.ts","spec/metamodel/generated/manifest.json"]
+          companion="src/generated/core-validators-accounted.ts"
+          def regular(path):
+              info=path.lstat()
+              if not stat.S_ISREG(info.st_mode): raise ValueError("unsafe artifact-only source")
+              return info.st_size
+          def digest(path): return hashlib.sha256(path.read_bytes()).hexdigest()
+          if os.environ.get("SOURCE_OUTCOME")!="success" or os.environ.get("DEPENDENCY_OUTCOME")!="success" or os.environ.get("GENERATION_OUTCOME")!="success": raise SystemExit("artifact-only phase prerequisites failed")
+          phase_path=evidence/"metamodel-phase.json"; phase=json.loads(phase_path.read_bytes())
+          if outputs.exists() and any(outputs.rglob("*")): raise SystemExit("artifact-only output directory is not empty")
+          if phase.get("schema")!="umf.merged-metamodel-phase/1" or phase.get("status")!="METAMODEL_OUTPUTS_ARTIFACT_ONLY" or phase.get("sourceCommit")!=os.environ["GITHUB_SHA"] or phase.get("runId")!=os.environ["GITHUB_RUN_ID"] or phase.get("runAttempt")!=os.environ["GITHUB_RUN_ATTEMPT"] or phase.get("ref")!=os.environ["GITHUB_REF"]: raise SystemExit("artifact-only phase identity mismatch")
+          stage_files=[]
+          for path in stage.rglob("*"):
+              if path.is_symlink(): raise SystemExit("symlink in staged metamodel family")
+              if path.is_file(): stage_files.append(path.relative_to(stage).as_posix())
+              elif not path.is_dir(): raise SystemExit("non-file staged metamodel entry")
+          if set(stage_files)!=set(paths)|{companion}: raise SystemExit("artifact-only stage roster mismatch")
+          output_rows=phase.get("stageRoster",{})
+          if set(output_rows)!=set(paths): raise SystemExit("phase record output roster mismatch")
+          stage_sizes={name:regular(stage/name) for name in paths}
+          if sum(stage_sizes.values())>16777216: raise SystemExit("11-output phase exceeds artifact cap")
+          stage_rows={name:{"sha256":digest(stage/name),"bytes":stage_sizes[name]} for name in paths}
+          if stage_rows!=output_rows: raise SystemExit("phase record hashes differ from staged output bytes")
+          committed_rows=phase.get("committedRoster",{})
+          committed_match=set(committed_rows)==set(paths) and committed_rows==stage_rows
+          if phase.get("committedOutputsMatch") is not committed_match: raise SystemExit("phase committed-output comparison is inconsistent")
+          metamodel_manifest=json.loads((stage/"spec/metamodel/generated/manifest.json").read_bytes())
+          expected_manifest_paths=set(paths)-{"spec/metamodel/generated/manifest.json"}
+          if metamodel_manifest.get("profile")!="umf.metamodel.outputs/1" or set(metamodel_manifest.get("outputs",{}))!=expected_manifest_paths: raise SystemExit("metamodel output manifest roster mismatch")
+          companion_inputs=metamodel_manifest.get("separatelyOwned",{}).get("accountedCompanion",{}).get("inputs",{})
+          if phase.get("companionInputBindings")!=companion_inputs or set(companion_inputs)!={"src/generated/core-validators.ts","spec/core/schema.json","spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json"}: raise SystemExit("artifact-only companion input binding roster mismatch")
+          emitted={name:stage_rows[name] for name in companion_inputs}
+          if phase.get("emittedCompanionInputs")!=emitted: raise SystemExit("artifact-only emitted companion input identity mismatch")
+          companion_match=emitted==companion_inputs
+          if phase.get("companionInputsMatch") is not companion_match or (phase.get("committedOutputsMatch") is True and companion_match): raise SystemExit("artifact-only stop reason is inconsistent")
+          for name,row in metamodel_manifest["outputs"].items():
+              if stage_rows[name]!={"sha256":row.get("sha256"),"bytes":row.get("bytes")}: raise SystemExit("metamodel manifest output custody mismatch")
+          source_inputs_path=evidence/"source-inputs.json"; source_inputs=json.loads(source_inputs_path.read_bytes())
+          source_inputs["metamodelGeneration"]={"phase":"METAMODEL_OUTPUTS_ARTIFACT_ONLY","phaseReceiptSha256":digest(phase_path),
+              "manifestPath":"spec/metamodel/generated/manifest.json","manifestSha256":stage_rows["spec/metamodel/generated/manifest.json"]["sha256"],
+              "modelSha256":metamodel_manifest.get("provenance",{}).get("modelSha256"),"compilerSha256":metamodel_manifest.get("provenance",{}).get("compilerSha256"),
+              "sources":metamodel_manifest.get("sources"),"compilerInputs":metamodel_manifest.get("compilerInputs"),
+              "workspaceInputs":metamodel_manifest.get("workspaceInputs"),"backend":metamodel_manifest.get("backend"),
+              "separatelyOwned":metamodel_manifest.get("separatelyOwned"),"outputRoster":stage_rows}
+          source_inputs_bytes=(json.dumps(source_inputs,indent=2,sort_keys=True)+"\n").encode()
+          receipt={"profile":"umf.merged-source-generation/1","status":"METAMODEL_OUTPUTS_ARTIFACT_ONLY","qualifiesMergedSource":False,
+              "sourceCommit":os.environ["GITHUB_SHA"],"runId":os.environ["GITHUB_RUN_ID"],"runAttempt":os.environ["GITHUB_RUN_ATTEMPT"],
+              "ref":os.environ["GITHUB_REF"],"workflow":os.environ["GITHUB_WORKFLOW"],"metamodelPhase":phase,
+              "sourceInputsSha256":hashlib.sha256(source_inputs_bytes).hexdigest(),"generatedFiles":stage_rows,
+              "scope":"Eleven metamodel outputs only for review/adoption. Dependent action, Codegen and R3 generation withheld; no qualification or automatic adoption.",
+              "limits":{"aggregateWorkSeconds":1800,"evidenceReserveSeconds":60,"capturedCommandLogsMaximumBytes":1048576,"artifactMaximumBytes":16777216}}
+          receipt_bytes=(json.dumps(receipt,indent=2,sort_keys=True)+"\n").encode()
+          if upload.exists(): shutil.rmtree(upload)
+          upload.mkdir(parents=True)
+          selected=[]; log_total=0
+          if not evidence.is_dir() or evidence.is_symlink(): raise SystemExit("unsafe artifact-only evidence root")
+          for path in evidence.rglob("*"):
+              if path.is_symlink(): raise SystemExit("symlink in artifact-only evidence")
+              if path.is_file():
+                  rel=path.relative_to(evidence)
+                  if rel.parts[0]=="outputs": continue
+                  if rel.parts[0]=="logs" and (len(rel.parts)!=2 or not path.name.endswith(".log")): raise SystemExit("unexpected artifact-only log path")
+                  selected.append((path,rel,regular(path)))
+              elif not path.is_dir(): raise SystemExit("non-file artifact-only evidence entry")
+          for _,rel,size in selected:
+              if rel.parts[0]=="logs": log_total+=size
+          if log_total>1048576: raise SystemExit("artifact-only raw logs exceed 1 MiB")
+          replacement_names={"source-inputs.json","generated-source-receipt.json"}
+          base_total=sum(size for _,rel,size in selected if not (len(rel.parts)==1 and rel.name in replacement_names))
+          if base_total+sum(stage_sizes.values())+len(source_inputs_bytes)+len(receipt_bytes)>16777216: raise SystemExit("complete artifact-only family exceeds 16 MiB")
+          for name in paths:
+              target=outputs/name; target.parent.mkdir(parents=True,exist_ok=True); shutil.copyfile(stage/name,target)
+              if regular(target)!=stage_rows[name]["bytes"] or digest(target)!=stage_rows[name]["sha256"]: raise SystemExit("staged metamodel output copy mismatch")
+          source_inputs_path.write_bytes(source_inputs_bytes)
+          receipt_path=evidence/"generated-source-receipt.json"; receipt_path.write_bytes(receipt_bytes)
+          selected=[]
+          for path in evidence.rglob("*"):
+              if path.is_symlink(): raise SystemExit("symlink after artifact-only staging")
+              if path.is_file(): selected.append((path,path.relative_to(evidence),regular(path)))
+          if sum(size for _,rel,size in selected if rel.parts[0]=="logs")>1048576 or sum(size for _,_,size in selected)>16777216: raise SystemExit("staged artifact-only family exceeds existing cap")
+          for source,rel,size in selected:
+              target=upload/rel; target.parent.mkdir(parents=True,exist_ok=True)
+              if regular(source)!=size: raise SystemExit("artifact-only source changed after stat")
+              shutil.copyfile(source,target)
+              if regular(target)!=size or digest(target)!=digest(source): raise SystemExit("artifact-only copy differs")
+          print(json.dumps({"status":receipt["status"],"generatedOutputs":11,"artifactBytes":sum(size for _,_,size in selected)},sort_keys=True))
+          PY
+            exit 0
+          fi
           python -I - <<'PY'
           import hashlib,json,os,pathlib,re,shutil
           root=pathlib.Path(os.environ["GITHUB_WORKSPACE"])
@@ -466,13 +633,18 @@ jobs:
           if upload.exists(): shutil.rmtree(upload)
           upload.mkdir(parents=True,exist_ok=True)
           def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
-          sources={
-            "src/extensions/actions/plan-identity.ts":"outputs/src/extensions/actions/plan-identity.ts",
+          metamodel_paths=[
+            "spec/core/schema.json","spec/core/semantic-type-reference.schema.json","spec/core/extension-package.schema.json",
+            "spec/metamodel/package.json","spec/metamodel/generated/core-constraints.json","spec/metamodel/generated/domain-policy.json",
+            "spec/metamodel/generated/python-shapes.json","python/umf_access/src/umf_access/generated_core.py",
+            "src/generated/core-model.ts","src/generated/core-validators.ts","spec/metamodel/generated/manifest.json",
+          ]
+          sources={"src/extensions/actions/plan-identity.ts":"outputs/src/extensions/actions/plan-identity.ts",
             "python/umf_codegen/src/umf_codegen/_release.py":"outputs/python/umf_codegen/src/umf_codegen/_release.py",
             "python/umf_codegen/src/umf_codegen/_assets/manifest.json":"outputs/python/umf_codegen/src/umf_codegen/_assets/manifest.json",
             "docs/helix/04-build/evidence/rust-migration/r3/inventory.json":"outputs/docs/helix/04-build/evidence/rust-migration/r3/inventory.json",
-            "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json":"outputs/docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json",
-          }
+            "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json":"outputs/docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json"}
+          sources.update({path:"outputs/"+path for path in metamodel_paths})
           receipt={"profile":"umf.merged-source-generation/1","status":"FAIL_OR_UNKNOWN","qualifiesMergedSource":False,
                    "sourceCommit":os.environ["GITHUB_SHA"],"runId":os.environ["GITHUB_RUN_ID"],"runAttempt":os.environ["GITHUB_RUN_ATTEMPT"],
                    "ref":os.environ["GITHUB_REF"],"workflow":os.environ["GITHUB_WORKFLOW"],"workflowOutcome":os.environ.get("GENERATION_OUTCOME"),
@@ -487,12 +659,27 @@ jobs:
           receipt["adoptedR2CompanionSha256"]="314cac8416711899285bc3f1a734765d557f7446f7ab0cf58d3dbd2a7dfdd81e"
           try:
               if os.environ["GITHUB_REF"]!="refs/heads/codex/migration-merged-generation": raise ValueError("unexpected qualification branch")
+              if os.environ.get("METAMODEL_DEPENDENT_GENERATION_READY")!="true": raise ValueError("full generation requires exact adopted metamodel correspondence")
               if os.environ.get("SOURCE_OUTCOME")!="success": raise ValueError("adopted source provenance guard did not pass")
               if os.environ.get("DEPENDENCY_OUTCOME")!="success" or os.environ.get("GENERATION_OUTCOME")!="success": raise ValueError("generation stages did not complete successfully")
               assets=root/"python/umf_codegen/src/umf_codegen/_assets"
               if assets.is_symlink() or not assets.is_dir(): raise ValueError("generated codegen asset directory is missing or unsafe")
-              output_sources=[root/source for source in sources]
-              if any(path.is_symlink() or not path.is_file() for path in output_sources): raise ValueError("generated fixed output is missing or unsafe")
+              metamodel_stage=pathlib.Path(os.environ["METAMODEL_STAGE_DIR"])
+              companion_rel="src/generated/core-validators-accounted.ts"
+              expected_stage_files=set(metamodel_paths)|{companion_rel}
+              actual_stage_files=set()
+              for path in metamodel_stage.rglob("*"):
+                  if path.is_symlink(): raise ValueError("staged metamodel output contains a symlink")
+                  if path.is_file(): actual_stage_files.add(path.relative_to(metamodel_stage).as_posix())
+                  elif not path.is_dir(): raise ValueError("staged metamodel output contains a non-file entry")
+              if actual_stage_files!=expected_stage_files: raise ValueError("staged metamodel file roster differs from the exact11 outputs plus separately owned companion")
+              companion=metamodel_stage/companion_rel
+              if companion.stat().st_size!=1525352: raise ValueError("staged separately owned companion size mismatch")
+              output_sources=[]
+              for source in sources:
+                  path=(metamodel_stage/source) if source in metamodel_paths else root/source
+                  if path.is_symlink() or not path.is_file(): raise ValueError("generated fixed output is missing or unsafe: "+source)
+                  output_sources.append(path)
               asset_files=[]
               for path in assets.rglob("*"):
                   if path.is_symlink(): raise ValueError("generated codegen asset contains a symlink")
@@ -500,9 +687,9 @@ jobs:
                   elif not path.is_dir(): raise ValueError("generated codegen asset family contains a non-file entry")
               generated_family=set(output_sources)|set(asset_files)
               generated_family_bytes=sum(path.stat().st_size for path in generated_family)
-              if generated_family_bytes>16*1024*1024: raise ValueError("generated output family exceeds the 16 MiB cap")
+              if generated_family_bytes>16*1024*1024: raise ValueError("exact generated output union exceeds the 16 MiB cap before reads or copies")
               for source,dest in sources.items():
-                  src=root/source
+                  src=(metamodel_stage/source) if source in metamodel_paths else root/source
                   destination=outputs/dest.removeprefix("outputs/")
                   destination.parent.mkdir(parents=True,exist_ok=True)
                   shutil.copyfile(src,destination)
@@ -541,7 +728,52 @@ jobs:
               companion=source_input_receipt.get("adoptedR2Companion",{})
               if companion.get("sha256")!=receipt["adoptedR2CompanionSha256"] or companion.get("adoptionCommit")!="63762c9ac233debf1cb6021a3db1fcdc763e64aa": raise ValueError("source roster companion adoption mismatch")
               receipt["generatedFiles"]["python/umf_codegen/src/umf_codegen/_assets/generator.js.gz"]={"sha256":sha(outputs/"python/umf_codegen/src/umf_codegen/_assets/generator.js.gz"),"bytes":(outputs/"python/umf_codegen/src/umf_codegen/_assets/generator.js.gz").stat().st_size}
+              metamodel_manifest_path=metamodel_stage/"spec/metamodel/generated/manifest.json"
+              metamodel_manifest=json.loads(metamodel_manifest_path.read_bytes())
+              expected_metamodel_outputs=set(metamodel_paths)-{"spec/metamodel/generated/manifest.json"}
+              if metamodel_manifest.get("profile")!="umf.metamodel.outputs/1" or set(metamodel_manifest.get("outputs",{}))!=expected_metamodel_outputs:
+                  raise ValueError("metamodel manifest does not bind the exact10 non-manifest generated outputs")
+              for name,row in metamodel_manifest["outputs"].items():
+                  path=metamodel_stage/name
+                  if path.stat().st_size!=row.get("bytes") or sha(path)!=row.get("sha256"): raise ValueError("metamodel generated output differs from its manifest: "+name)
+              source_map=metamodel_manifest.get("sources",{})
+              compiler_map=metamodel_manifest.get("compilerInputs",{})
+              workspace_map=metamodel_manifest.get("workspaceInputs",{})
+              backend_map=metamodel_manifest.get("backend",{}).get("inputs",{})
+              model_path="spec/metamodel/umf.yaml"
+              if not all(isinstance(value,dict) for value in (source_map,compiler_map,workspace_map,backend_map)) or model_path not in source_map:
+                  raise ValueError("metamodel source closure records are malformed")
+              shared_paths=set(workspace_map)&set(backend_map)
+              if model_path in workspace_map or model_path in backend_map or model_path in compiler_map or shared_paths-{"bindings/core/node/src/wire.js"}:
+                  raise ValueError("metamodel source ownership maps overlap outside the exact shared wire input")
+              if any(source_map.get(path)!=digest for mapping in (compiler_map,workspace_map,backend_map) for path,digest in mapping.items()):
+                  raise ValueError("metamodel compiler/workspace/backend source identity differs from the closed source map")
+              if any(workspace_map[path]!=backend_map[path] for path in shared_paths):
+                  raise ValueError("shared metamodel workspace/backend input digests differ")
+              if set(source_map)!=(set(compiler_map)|set(workspace_map)|set(backend_map)|{model_path}):
+                  raise ValueError("metamodel compiler source closure is incomplete")
+              compiler_material=(json.dumps(compiler_map,indent=2)+"\n").encode()
+              compiler_sha=hashlib.sha256(compiler_material).hexdigest()
+              for path,digest in source_map.items():
+                  source_file=root/path
+                  if source_file.is_symlink() or not source_file.is_file() or sha(source_file)!=digest:
+                      raise ValueError("metamodel source-map digest differs from the current source: "+path)
+              provenance=metamodel_manifest.get("provenance",{})
+              if provenance.get("modelSha256")!=source_map[model_path] or provenance.get("compilerSha256")!=compiler_sha:
+                  raise ValueError("metamodel model/compiler provenance digest mismatch")
+              source_inputs_path=evidence/"source-inputs.json"
+              source_inputs_record=json.loads(source_inputs_path.read_bytes())
+              source_inputs_record["metamodelGeneration"]={"manifestPath":"spec/metamodel/generated/manifest.json",
+                  "manifestSha256":sha(metamodel_manifest_path),"manifestBytes":metamodel_manifest_path.stat().st_size,
+                  "modelPath":model_path,"modelSha256":provenance["modelSha256"],
+                  "compilerSha256":provenance["compilerSha256"],"compilerInputs":compiler_map,
+                  "sources":source_map,"workspaceInputs":workspace_map,
+                  "backend":{"name":metamodel_manifest.get("backend",{}).get("name"),"ownership":metamodel_manifest.get("backend",{}).get("ownership"),"inputs":backend_map},
+                  "outputRoster":{name:{"sha256":sha(metamodel_stage/name),"bytes":(metamodel_stage/name).stat().st_size} for name in metamodel_paths}}
+              source_inputs_path.write_text(json.dumps(source_inputs_record,indent=2,sort_keys=True)+"\n")
               files=sorted(p for p in outputs.rglob("*") if p.is_file())
+              expected_output_paths={dest.removeprefix("outputs/") for dest in sources.values()}|{"python/umf_codegen/src/umf_codegen/_assets/"+name for name in expected}
+              if {p.relative_to(outputs).as_posix() for p in files}!=expected_output_paths or len(files)!=27: raise ValueError("artifact output roster is not the closed27-file metamodel plus action/codegen/R3 union")
               total=sum(p.stat().st_size for p in files)
               log_total=sum(p.stat().st_size for p in (evidence/"logs").glob("*.log"))
               if log_total>1048576 or total>16*1024*1024: raise ValueError("bounded generated-output or log cap exceeded")

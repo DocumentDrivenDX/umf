@@ -17,13 +17,18 @@ const owners:Record<string,readonly string[]>={
  'index.ts':['../../../spec/extensions/tables/package.json','../../model/types','../../model/json','../../registry/registry','../../validation/document','./context','./columns','./policies','./seeds','./operations','./types'],
 };
 const forbidden=new Set(['Bun','process','require','fetch','eval','Function','Buffer','XMLHttpRequest','WebSocket','Deno','globalThis','window','postMessage']);
+function exactAccountingTypeRoute(file:string,node:ts.Node):boolean{
+ if(!['context.ts','index.ts'].includes(file)||!ts.isImportDeclaration(node)||!ts.isStringLiteral(node.moduleSpecifier)||node.moduleSpecifier.text!=='../../model/internal/accounting-context')return false;
+ const clause=node.importClause,bindings=clause?.namedBindings;
+ return Boolean(clause?.isTypeOnly&&!clause.name&&bindings&&ts.isNamedImports(bindings)&&bindings.elements.length===1&&!bindings.elements[0]!.propertyName&&bindings.elements[0]!.name.text==='AccountingContext'&&!bindings.elements[0]!.isTypeOnly);
+}
 export function checkTableLifecycleBoundaries(sources:Record<string,string>):string[]{
  const errors:string[]=[];
  for(const[file,text]of Object.entries(sources)){
   if(!owners[file]){errors.push(file+': module has no declared owner');continue;}
   const source=ts.createSourceFile(file,text,ts.ScriptTarget.Latest,true);
   const visit=(node:ts.Node):void=>{
-   if((ts.isImportDeclaration(node)||ts.isExportDeclaration(node))&&node.moduleSpecifier&&ts.isStringLiteral(node.moduleSpecifier)&&!owners[file]!.includes(node.moduleSpecifier.text))errors.push(file+': unapproved dependency '+node.moduleSpecifier.text);
+   if((ts.isImportDeclaration(node)||ts.isExportDeclaration(node))&&node.moduleSpecifier&&ts.isStringLiteral(node.moduleSpecifier)&&!owners[file]!.includes(node.moduleSpecifier.text)&&!exactAccountingTypeRoute(file,node))errors.push(file+': unapproved dependency '+node.moduleSpecifier.text);
    if(ts.isCallExpression(node)&&node.expression.kind===ts.SyntaxKind.ImportKeyword)errors.push(file+': dynamic import');
    if(ts.isIdentifier(node)&&forbidden.has(node.text))errors.push(file+': host/executable hook '+node.text);
    ts.forEachChild(node,visit);
