@@ -5906,18 +5906,36 @@ separately pinned older glue. It is a diagnostic for callback, admission and
 `kindRuntime` work, not current integrated or installed-package qualification.
 
 The private Rust-directed Python capture observer now covers FieldRef owner
-reads and a terminal/root/Join prefix through opaque PyO3 handles. Focused
-tests exercise repeated `node.args` and relation getters, grouped-query pass
-order, iterator effects, UTF-16 owner text and original accessor exception
-identity. The focused Python suite passed 16/16 and four Rust core observer
-tests passed against the committed prototype. A separate structural field
-observer passed six Rust core tests but is not wired to PyO3; it cannot replace
-the ordered semantic branches of `_validate_node.visit`. Public `capture()`
-still calls `_validate_node`. The next review gate is an exact, ordered private
-FieldRef/Join/tuple visit subset, followed by SearchLeg, Node, navigation,
-aggregate, parameter and temporal semantics, resource reconciliation and an
-installed-wheel default-route replay. No Python fallback may hide an
-unadmitted graph or resource limit.
+reads, a terminal/root/Join prefix, and the ordered FieldRef/Join/tuple visit
+branch through opaque PyO3 handles. Focused tests exercise repeated
+`node.args` and relation getters, grouped-query pass order, iterator effects,
+UTF-16 owner text, foreign-field short circuit and original accessor exception
+identity. The committed 0.2.0 observer profile passed 23 focused Python tests
+and seven Rust core tests; the older 0.1.0 capability fails before graph
+observation. A separate structural field observer passed six Rust core tests
+but is not wired to PyO3; it cannot replace the ordered semantic branches of
+`_validate_node.visit`. Public `capture()` still calls `_validate_node`. A
+cutover audit limits the first candidate to exact base `.all()` with an empty
+steps tuple and no parameters. A [private exact-profile callback](evidence/rust-migration/r8-capture-visit-field-join-tuple/README.md#private-exact-all-empty-steps-callback-2026-10-26)
+now admits that shape, preflights the 0.2.0 capability before graph reads,
+and delegates its terminal/root checks to one native Context. Its focused
+Python observer suite passed 32/32. The callback remains outside public
+`capture()` because Python owns profile admission and the later DTO encoder
+uses a separate budget. A reconciled capture/encoder budget and installed-wheel
+replay remain gates before public selection. SearchLeg, Node, navigation,
+aggregate, parameter and temporal semantics remain outside the private
+visitor. No Python fallback may hide an unadmitted graph or resource limit.
+
+The separate [read-frame gate](evidence/rust-migration/r8-python-read-frame-core/README.md)
+now has a private PyO3 bridge. Rust asks for host `len`/index/iteration reads
+in predecessor order and owns post-host shape and post-decode cardinality
+decisions; original Python row/iterator errors pass through unchanged. The
+focused core tests passed 5/5, and a fresh extension passed seven focused
+CPython tests. Public `result_frame` is still Python-selected: Python acquires
+rows, decodes scalars, builds response objects, and enforces the existing
+bounded-size rule. The predicate has no shared Context charge, and its
+caller-supplied row count/bound is not sufficient for public routing or
+release qualification.
 
 The [Truss component predicate](evidence/rust-migration/r8-truss-component-profile/README.md)
 and [authenticated outcome effect-frame gate](evidence/rust-migration/r8-outcome-effect-frame/README.md)
@@ -5939,3 +5957,50 @@ same-run artifact hashes and trusted publishing where configured. Registry
 uploads must execute in Actions; local builds and probes are qualification
 only. Verify the published registry/index bytes and clean installs before
 claiming the release.
+
+### R8 private callback and retained-runtime checkpoint — 2026-10-26
+
+The [private Selection semantic callback route](evidence/rust-migration/r8-selection-callback-trace/README.md)
+now carries caller-owned diagnostics through Rust constraint evaluation as
+opaque handles. It checks diagnostic fields at the `emit` boundary, reads
+severity again in the later validity pass, and materializes unknown fields
+only when Selection needs the result or refusal. Fifteen pinned callback cases
+matched the same-host TypeScript predecessor in Node, Bun and real Chromium,
+including outcome and recorded host order; Chromium reported zero page errors.
+The Node binding suite passed 13 focused tests and the Rust runtime diagnostic
+suite passed 15. This is a private subset: arbitrary host iterables and
+`Registry.kindRuntime` behavior remain outside the route. It does not change
+either V4 default export or the 922-gap retirement count.
+
+The [extension-kind runtime disposition](evidence/rust-migration/r8-explicit-runtime-extension-kinds/README.md)
+records why `inspectExtensionKinds` remains caller-runtime-selected. CONTRACT-907
+requires explicit `new Registry(runtime)` and an unavailable-capability refusal
+even for an empty registry; the V4 root's initialized engine cannot be
+silently substituted. The existing facade delegates all inspection semantics
+to the caller's Rust-backed runtime, but this does not qualify as a package-root
+default-route retirement.
+
+The [Core Evolution candidate](evidence/rust-migration/r8-core-evolution-candidate/README.md)
+adds an opt-in binding over existing Rust inspect/verify operations. Its
+frozen seven-case packet, current/forged receipt checks and adapter error
+controls passed three Bun tests with 12 assertions; TypeScript typecheck and
+the Rust Core Evolution suite passed. Neither V4 root selects it. Before a
+default cutover, reconcile CONTRACT-058's 0.8.0 wording with the current
+0.10.0 source, run its full negative-control and exact resource-boundary
+matrix, and refresh Node/Bun/Chromium and installed-package provenance. These
+private results do not alter the last fixed-point 67/855/922 ledger counts.
+
+The strict unified-client checker now lists the private Core Evolution file
+with only its audited imports; its predecessor declaration imports are
+type-only. The full directory scan and ten focused negative controls pass.
+Adding a facade still requires its own exact entry and cannot inherit another
+file's grants. This boundary change does not select the candidate by default.
+
+The [private count-token predicate](evidence/rust-migration/r8-python-count-token/README.md)
+adds a Rust `NonnegativeInteger` token decision behind an exact PyO3 profile.
+It preserves decode-before-sign order for the narrow count token and refuses
+`-0` while ordinary integer classification still accepts signed tokens.
+One focused Rust test, a fresh PyO3 build and four CPython overlay tests pass.
+The public `result_frame` does not call the predicate; its row acquisition,
+shared budget, authenticated cursor and installed-wheel/database matrix remain
+open, so this is no default-route retirement.
