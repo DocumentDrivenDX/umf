@@ -1,7 +1,7 @@
 {
   "profile": "umf.core-python314-generation-inputs/1",
   "status": "source-pinned-hosted-generation-required",
-  "phase": "metamodel-artifacts",
+  "phase": "dependent-artifacts",
   "sourceCommit": "d5022e37840329d351bcd6c27fe7d7aad4758544",
   "mainPreimages": {
     "crates/umf-core/src/python_re_tables.rs": "84f931263193ce41a1459640f1a20182f61a9fe14bfd02c319f3609237248d2c",
@@ -50,8 +50,31 @@
     "outputManifestSha256": "57c74b67b7f1690f16a5d51e5f416da8a9d906e680f6363e48155e28e592b7df",
     "reviewSha256": "cd19115e37a89c55a979b13ed2c65e25e61ca11509439df364708e831891f2b0"
   },
-  "adoptedMetamodelOutputs": null,
-  "metamodelAdoption": null,
+  "adoptedMetamodelOutputs": {
+    "spec/core/schema.json": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d",
+    "spec/core/semantic-type-reference.schema.json": "207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9",
+    "spec/core/extension-package.schema.json": "4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766",
+    "spec/metamodel/package.json": "5930c77eaa8308d76761cd93d5a58bd5b0a7b3f30b5bc56fdc7db6d961fb0b89",
+    "spec/metamodel/generated/core-constraints.json": "e4e667c6a23ebcfe12a937730adfa60081475ad11d367b8986a9ea94429d5dcd",
+    "spec/metamodel/generated/domain-policy.json": "7827703fe00b4eb955e9a1d1632fec4e7b9e8c52df0d67eb700dbd7ce9a6d436",
+    "spec/metamodel/generated/python-shapes.json": "884fb5d09e1cd512e32b188144aa0f9ac55d396cc5a3b10341b3aeb06093fde7",
+    "python/umf_access/src/umf_access/generated_core.py": "5366ba6be1c2eb042b14f30723648686294e1f450d75a645e76806a4494593a1",
+    "src/generated/core-model.ts": "55485912b78640ef970244ffd8d4cbd6f186e035efccd77259aadff6120b7106",
+    "src/generated/core-validators.ts": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff",
+    "spec/metamodel/generated/manifest.json": "b3818a47b7753742a0bddb8a053ef54665f34c54ae4fb564126a498e78f8d871"
+  },
+  "metamodelAdoption": {
+    "status": "PASS_METAMODEL_GENERATION_ARTIFACTS_ONLY",
+    "sourceCommit": "507140afc6fc0e1eb0890899e975d016a88bcc3e",
+    "runId": "40417940313",
+    "runAttempt": "1",
+    "artifactId": "12696420476",
+    "artifactSha256": "19966eb0103cafbc335ae626486c51978b19b08e57273c3805301e437e4e4297",
+    "receiptSha256": "0eb12a2f7f41004b4d09af59a716f49797911aaa67ba32bd118b6232c754fa55",
+    "archiveSha256": "bb3e0d5812cc2b24313c2ab5c7f8575ab0448ad661ab5d55f6b246ade7bca31a",
+    "outputManifestSha256": "dba71bf8c4122779a8d9c293ee7618347ab80a15f38b4eb6d9172cba7fc9a162",
+    "reviewSha256": "5d1831535c0cd4b50a05e870ba64cebbdd0c68fed690e9617acbacf8e5bed51f"
+  },
   "cpython": {
     "implementation": "CPython",
     "version": "3.14.8",
