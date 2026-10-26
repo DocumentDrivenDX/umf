@@ -2377,8 +2377,8 @@ all other unqualified native subsets unless independently qualified.
       artifacts and clean installs against hashes. Distinguish prepared artifacts,
       publication and consumer adoption.
 
-The current manual `.github/workflows/pypi.yml` publishes only the `umf-core`
-project from one Ubuntu build. R8 must prepare and review a coordinated
+The former manual `.github/workflows/pypi.yml` published only the `umf-core`
+project from one Ubuntu build; it now fails closed. R8 must prepare and review a coordinated
 `umf-core`/`umf-codegen` release workflow and verified platform artifacts before
 using that publisher. The existing source-bound access workflow exercises both
 installed distributions, but a passing PR check is not a publication receipt.
@@ -5885,7 +5885,7 @@ The preservation-first implementation choice is a Rust-directed observation
 protocol. Python retains opaque live graph handles and exposes field/sequence
 reads only when the Rust validator asks in its existing traversal order; it
 must rethrow an original accessor `PyErr` without string conversion or
-reconstruction. The first private proof should cover `FieldRef` owner reads,
+reconstruction. The first private proof covers `FieldRef` owner reads,
 including early crossed-fault short circuit and repeated stateful getter
 visits. It does not authorize default `capture()` selection: Node, RecordRef,
 join, search, navigation and other graph families need the same ordered host
@@ -5894,3 +5894,48 @@ reconciled with Rust's ordinary Context limits. Do not add a Python semantic
 fallback to bypass resource refusal. A later installed-wheel replay must pin
 the exact `umf-core` wheel profile carried by `umf_access`'s runtime version
 requirement before cutover.
+
+### R8 private observation and release continuation — 2026-10-26
+
+The [Selection host trace](evidence/rust-migration/r8-selection-host-trace/README.md)
+compares 13 bounded cases in Node 26.12.1, Bun 1.4.3 and real Chromium
+153.0.8010.12. Each host has 2 exact value/error, 9 output-shape and 5
+host-trace matches. The receipt pins the selected live inputs against an
+earlier fixed-point distribution; Chromium uses manifest-pinned WASM with
+separately pinned older glue. It is a diagnostic for callback, admission and
+`kindRuntime` work, not current integrated or installed-package qualification.
+
+The private Rust-directed Python capture observer now covers FieldRef owner
+reads and a terminal/root/Join prefix through opaque PyO3 handles. Focused
+tests exercise repeated `node.args` and relation getters, grouped-query pass
+order, iterator effects, UTF-16 owner text and original accessor exception
+identity. The focused Python suite passed 16/16 and four Rust core observer
+tests passed against the committed prototype. A separate structural field
+observer passed six Rust core tests but is not wired to PyO3; it cannot replace
+the ordered semantic branches of `_validate_node.visit`. Public `capture()`
+still calls `_validate_node`. The next review gate is an exact, ordered private
+FieldRef/Join/tuple visit subset, followed by SearchLeg, Node, navigation,
+aggregate, parameter and temporal semantics, resource reconciliation and an
+installed-wheel default-route replay. No Python fallback may hide an
+unadmitted graph or resource limit.
+
+The [Truss component predicate](evidence/rust-migration/r8-truss-component-profile/README.md)
+and [authenticated outcome effect-frame gate](evidence/rust-migration/r8-outcome-effect-frame/README.md)
+are also private opt-ins. The former has 14 focused closed-component parity
+cases but no generated-Key integration run in this checkout. The latter has
+five focused CPython 3.14.8 tests after a capability-handshake correction;
+authentication, metadata equality, transaction custody and public routing
+remain Python/host-owned. These slices add bounded Rust rules without changing
+the last fixed-point ledger's 922 logical default-route retirement gaps.
+
+Release preparation must consume one immutable source revision and the
+complete reviewed qualification matrix. The existing coordinated Python
+workflow builds and aggregates core/codegen artifacts without publishing;
+it does not include `umf_access`. The SDK root remains `private: true`, the
+Node/WASM binding packages remain private, and the legacy PyPI workflow fails
+closed. Before publication, qualify the complete default routes and exact
+installed packages, then add tag/release-bound GitHub Actions publishers with
+same-run artifact hashes and trusted publishing where configured. Registry
+uploads must execute in Actions; local builds and probes are qualification
+only. Verify the published registry/index bytes and clean installs before
+claiming the release.
