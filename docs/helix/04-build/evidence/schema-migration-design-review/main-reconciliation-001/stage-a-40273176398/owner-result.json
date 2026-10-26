@@ -1,5 +1,5 @@
 {
-  "status": "GENERATION_PASS_ADOPTION_PENDING_SOURCE_REVIEW",
+  "status": "GENERATION_PASS_SOURCE_OUTPUT_ADOPTED",
   "runId": 40273176398,
   "sourceCommit": "85f4a645cd14e7673a83fc475d3dd66dcc629edc",
   "artifactId": 12629535479,
@@ -10,5 +10,7 @@
     "bytes": 1525352
   },
   "adoptionTarget": "src/generated/core-validators-accounted.ts",
-  "claims": "Function-only generator passed exact source/schema/lock pins. No output evaluation or merged candidate qualification performed."
+  "claims": "Exact hosted output byte-copied after source/provenance review. Reproduction, Bun, Chromium and merged candidate qualification remain pending.",
+  "outputSourceReviewSha256": "cb7a1e4141460b415665f561dbb395b188dcff623d2dfd8ebadf451ad797b757",
+  "adoptionParentCommit": "c7190cf4928416a0169257a07d88a775c186a19c"
 }
