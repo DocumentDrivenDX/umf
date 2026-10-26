@@ -6329,3 +6329,49 @@ The regenerated [R8 inventory and gap ledger](evidence/rust-migration/r8-symbol-
 still record 922 logical executable default-route retirement gaps: 67 have an
 accepted opt-in Rust mapping and 855 do not. These private/additive changes
 retire none. The Rust port and release gates remain open.
+
+### R8 retained-resource and capture-budget continuation — 2026-10-26
+
+The [private combined Core Kind/Nullability binding](evidence/rust-migration/r8-core-kind-nullability-candidate/README.md#private-shared-dispatcher-implementation-slice--2026-10-26)
+now snapshots caller resources once and sends generic model requests through
+the same retained Rust `Engine` as its six staged Kind/Nullability operations.
+Explicit resource witnesses are compared with the admitted values under the
+operation's work meter; stateless calls and closed Record Type shapes keep their
+required witnesses. The checked-in [fresh Chromium replay](evidence/rust-migration/r8-core-kind-nullability-candidate/combined-browser.json)
+passes one generic model call and the six staged operations with no later
+resource-proxy reflection or Node globals. A rebuilt Node addon passes all
+eleven frozen successes and thirteen refusals; the two focused Rust wire tests
+pass. The generic facade still eagerly constructs a separately metered Core
+Key verifier, and the previous warm-call performance gap remains open. This
+factory is opt-in and does not select either V4 root.
+
+The [private capture DTO budget](evidence/rust-migration/r8-capture-dto-budget/README.md)
+now keeps node, text and output counters in the PyO3 session while Python
+retains traversal and JSON encoding order. Its offline extension build and
+focused CPython overlay pass 100 tests and three subtests; Sol independently
+reran the budget and graph-validator subset (29/29). This does not change the
+public `capture()` route. Public cutover still needs DTO-free validation,
+first-fault parity and a decision on the bridge's 50,000-node/depth-64/8-MiB
+ceilings versus Rust `Context::ordinary()` and the predecessor's supported
+inputs.
+
+The metamodel and action-plan identity were regenerated to a fixed point after
+these Rust source changes; their checks, 61 unit tests/484 assertions and 139
+real-Chromium cases pass. The branch merged `origin/main` at `85627a2a4` and
+repaired a type-only assertion annotation in the newly merged schema-browser
+release qualifier so repository typecheck passes. The strict per-file
+unified-client checker still scans every access source and its eleven negative
+controls pass. The post-merge Rust boundary gate and core-authority check pass.
+The [recaptured R8 ledger](evidence/rust-migration/r8-symbol-inventory/README.md)
+labels the installed `securityNot` archive as fixed-point **at source commit
+`dc746ad53`**, not at the later merged tree: its 14-case Node/Bun/Chromium
+replay remains private and does not enter the five current-cohort proven routes.
+Inventory and ledger `--check` modes and the 48-case ledger suite pass. All
+922 logical default-route retirement gaps remain open, with 67 accepted Rust
+mappings and 855 without one.
+
+Next, remove or deliberately scope the extra eager Core Key runtime, prove
+resource and warm-call parity for any proposed Kind/Nullability default route,
+and continue public capture semantics without a lossy DTO boundary. The
+remaining Rust mappings, installed Python/Node/browser cohorts, coordinated
+release gates and publication must be completed before a full-port claim.
