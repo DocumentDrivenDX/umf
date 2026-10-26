@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-//! First host-observation primitive for Python captured graph validation.
+//! Host-observation primitives for Python captured graph validation.
 //!
 //! Rust directs live graph reads in Python expression order. The current
-//! profile remains limited to FieldRef owner membership; it is not a graph
+//! profile remains private observer infrastructure; it is not a graph
 //! validator or a public capture route.
 
 use crate::Utf16;
@@ -33,6 +33,7 @@ pub enum ObservationError {
     GroupNeedsSelection,
     ScalarTerminalDenied,
     JoinSourceAbsent,
+    ForeignField,
     Budget,
 }
 
@@ -62,6 +63,13 @@ pub trait CaptureGraphHostObserver {
         value: Self::Handle,
         kind: GraphType,
     ) -> Result<bool, ObservationError>;
+    fn is_instance_structural(
+        &mut self,
+        _value: Self::Handle,
+        _kind: StructuralType,
+    ) -> Result<bool, ObservationError> {
+        Ok(false)
+    }
     fn iter(&mut self, sequence: Self::Handle) -> Result<Self::Handle, ObservationError>;
     fn next(&mut self, iterator: Self::Handle) -> Result<Option<Self::Handle>, ObservationError>;
 }
@@ -70,6 +78,14 @@ pub trait CaptureGraphHostObserver {
 pub enum GraphType {
     Node,
     RecordRef,
+}
+
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+pub enum StructuralType {
+    FieldRef,
+    Join,
+    SearchLeg,
+    Tuple,
 }
 
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -91,6 +107,77 @@ pub struct Owner {
 pub struct TerminalJoinObservation {
     pub terminal_op: Utf16,
     pub owners: HashSet<Owner>,
+}
+
+/// Observe owner references in a node's structural child graph after the
+/// caller has completed that node's semantic checks. This deliberately does
+/// not read `op` or admit SearchLeg: `_validate_node.visit` performs several
+/// ordered, op-specific checks before child traversal, and SearchLeg has its
+/// own declaration and parameter semantics. It is therefore a scheduling
+/// primitive, not a standalone field validator.
+pub fn observe_structural_field_owners<H: Copy>(
+    context: &mut crate::Context<'_>,
+    host: &mut impl CaptureGraphHostObserver<Handle = H>,
+    value: H,
+    allowed: &HashSet<Owner>,
+) -> Result<(), ObservationError> {
+    observe_structural_value(context, host, value, allowed, 0)
+}
+
+fn observe_structural_value<H: Copy>(
+    context: &mut crate::Context<'_>,
+    host: &mut impl CaptureGraphHostObserver<Handle = H>,
+    value: H,
+    allowed: &HashSet<Owner>,
+    depth: usize,
+) -> Result<(), ObservationError> {
+    if depth >= 64 {
+        return Err(ObservationError::Budget);
+    }
+    if budgeted(context, || {
+        host.is_instance_structural(value, StructuralType::FieldRef)
+    })? {
+        return if allowed.contains(&owner(context, host, value)?) {
+            Ok(())
+        } else {
+            Err(ObservationError::ForeignField)
+        };
+    }
+    if budgeted(context, || {
+        host.is_instance_structural(value, StructuralType::SearchLeg)
+    })? {
+        return Err(ObservationError::UnsupportedValue);
+    }
+    if budgeted(context, || {
+        host.is_instance_structural(value, StructuralType::Join)
+    })? {
+        let source = object(attr(context, host, value, "ref")?)?;
+        return observe_structural_value(context, host, source, allowed, depth + 1);
+    }
+    if budgeted(context, || host.is_instance(value, GraphType::Node))? {
+        let args = object(attr(context, host, value, "args")?)?;
+        return observe_structural_sequence(context, host, args, allowed, depth + 1);
+    }
+    if budgeted(context, || {
+        host.is_instance_structural(value, StructuralType::Tuple)
+    })? {
+        return observe_structural_sequence(context, host, value, allowed, depth + 1);
+    }
+    Ok(())
+}
+
+fn observe_structural_sequence<H: Copy>(
+    context: &mut crate::Context<'_>,
+    host: &mut impl CaptureGraphHostObserver<Handle = H>,
+    sequence: H,
+    allowed: &HashSet<Owner>,
+    depth: usize,
+) -> Result<(), ObservationError> {
+    let iterator = budgeted(context, || host.iter(sequence))?;
+    while let Some(child) = budgeted(context, || host.next(iterator))? {
+        observe_structural_value(context, host, child, allowed, depth)?;
+    }
+    Ok(())
 }
 
 fn budgeted<T>(
@@ -386,6 +473,7 @@ mod tests {
         sequences: HashMap<u32, Vec<u32>>,
         iterators: HashMap<u32, (Vec<u32>, usize)>,
         kinds: HashSet<(u32, GraphType)>,
+        structural_kinds: HashSet<(u32, StructuralType)>,
         next_handle: u32,
         events: Vec<String>,
     }
@@ -434,6 +522,15 @@ mod tests {
         fn is_instance(&mut self, value: u32, kind: GraphType) -> Result<bool, ObservationError> {
             self.events.push(format!("is:{value}:{kind:?}"));
             Ok(self.kinds.contains(&(value, kind)))
+        }
+
+        fn is_instance_structural(
+            &mut self,
+            value: u32,
+            kind: StructuralType,
+        ) -> Result<bool, ObservationError> {
+            self.events.push(format!("is:{value}:{kind:?}"));
+            Ok(self.structural_kinds.contains(&(value, kind)))
         }
 
         fn iter(&mut self, sequence: u32) -> Result<u32, ObservationError> {
@@ -491,6 +588,7 @@ mod tests {
             sequences: HashMap::from([(2, vec![3, 4]), (4, vec![5]), (6, vec![7])]),
             iterators: HashMap::new(),
             kinds: HashSet::from([(3, GraphType::RecordRef)]),
+            structural_kinds: HashSet::new(),
             next_handle: 100,
             events: Vec::new(),
         }
@@ -544,5 +642,75 @@ mod tests {
             Err(ObservationError::JoinSourceAbsent)
         );
         assert!(!host.events.iter().any(|event| event == "get:7.target"));
+    }
+
+    #[test]
+    fn structural_field_observer_follows_node_tuple_and_join_ref_order() {
+        let mut host = graph_fixture();
+        host.attrs.insert((20, "args"), MockValue::Object(21));
+        host.attrs.insert((25, "args"), MockValue::Object(26));
+        for (object, module, element) in [(22, "root", "Record"), (27, "root", "Record")] {
+            host.attrs
+                .insert((object, "module"), MockValue::Text(module));
+            host.attrs
+                .insert((object, "element"), MockValue::Text(element));
+            host.attrs.insert((object, "alias"), MockValue::None);
+        }
+        host.attrs.insert((28, "ref"), MockValue::Object(22));
+        host.sequences.insert(21, vec![22, 23, 28]);
+        host.sequences.insert(23, vec![25]);
+        host.sequences.insert(26, vec![27]);
+        host.kinds
+            .extend([(20, GraphType::Node), (25, GraphType::Node)]);
+        host.structural_kinds.extend([
+            (22, StructuralType::FieldRef),
+            (23, StructuralType::Tuple),
+            (27, StructuralType::FieldRef),
+            (28, StructuralType::Join),
+        ]);
+        let allowed = HashSet::from([Owner {
+            module: Utf16::from("root"),
+            element: Utf16::from("Record"),
+            alias: None,
+        }]);
+        let mut context = crate::Context::ordinary();
+
+        assert_eq!(
+            observe_structural_field_owners(&mut context, &mut host, 20, &allowed),
+            Ok(())
+        );
+        let module_reads: Vec<_> = host
+            .events
+            .iter()
+            .filter(|event| event.ends_with(".module"))
+            .cloned()
+            .collect();
+        assert_eq!(
+            module_reads,
+            ["get:22.module", "get:27.module", "get:22.module"]
+        );
+    }
+
+    #[test]
+    fn structural_field_observer_fails_closed_for_foreign_field() {
+        let mut host = graph_fixture();
+        host.structural_kinds.insert((22, StructuralType::FieldRef));
+        for (name, value) in [
+            ("module", MockValue::Text("foreign")),
+            ("element", MockValue::Text("Record")),
+            ("alias", MockValue::None),
+        ] {
+            host.attrs.insert((22, name), value);
+        }
+        let allowed = HashSet::from([Owner {
+            module: Utf16::from("root"),
+            element: Utf16::from("Record"),
+            alias: None,
+        }]);
+        let mut context = crate::Context::ordinary();
+        assert_eq!(
+            observe_structural_field_owners(&mut context, &mut host, 22, &allowed),
+            Err(ObservationError::ForeignField)
+        );
     }
 }
