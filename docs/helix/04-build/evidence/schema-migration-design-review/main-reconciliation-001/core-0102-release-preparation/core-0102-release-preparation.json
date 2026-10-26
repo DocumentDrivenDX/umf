@@ -1,0 +1,152 @@
+{
+  "schema": "umf.core-python-release-preparation/1",
+  "status": "draft-held",
+  "publication": {
+    "provider": "GitHub Releases",
+    "tag": "python-v0.10.2",
+    "release_name": "UMF Core Python 0.10.2",
+    "pypi": false,
+    "release_created": false,
+    "assets_uploaded": false,
+    "pypi_reason": "The current qualified Linux wheel is tagged linux_x86_64, which PyPI does not accept; do not rename it. A future manylinux build belongs to a separate Rust/Stack lane."
+  },
+  "version_scope": {
+    "distribution": "umf-core",
+    "distribution_version": "0.10.2",
+    "semantic_core_version": "0.10.0",
+    "typed_migration_sdk": "0.5.7",
+    "typed_migration_sdk_included": false
+  },
+  "source": {
+    "current_candidate_commit": "a1b909d4f92da6604aeb21d3ea60e9a9943a7f87",
+    "current_candidate_tree": "f9f1655af59c4c030e58a19405fe22ae55db40bb",
+    "final_release_commit": null,
+    "tag_target_commit": null,
+    "note": "a1b is the producer candidate used by current Linux evidence; no merged/tagged release identity is established here."
+  },
+  "current_evidence": {
+    "linux_x86_64": {
+      "status": "passed-current-source",
+      "evidence_directory": "/private/tmp/core-a1b-linux-12659280057",
+      "qualification_receipt": "/private/tmp/core-a1b-linux-12659280057/_temp/umf-qualification.json",
+      "python": "3.11.17",
+      "distribution_version": "0.10.2",
+      "semantic_core_version": "0.10.0",
+      "direct_wheel": {
+        "filename": "umf_core-0.10.2-cp311-abi3-linux_x86_64.whl",
+        "sha256": "64e98887068563221070e3f265ae24d6871099cd5922f49f6be83eff944a5805",
+        "native_sha256": "78dd1542f723b4f4d8c336c137caa478974a981ed759ada171a5877d7e0368a8",
+        "tests": 254,
+        "skipped": 0
+      },
+      "sdist_rebuilt_wheel": {
+        "filename": "umf_core-0.10.2-cp311-abi3-linux_x86_64.whl",
+        "sha256": "8408b0b803871a390bc13eeed8cb91acca8e22e2d20ae5995a2374a56a8ed84d",
+        "native_sha256": "f3047d62c3194648fb84e617708686bb78963ae0955fca3638507d96566021f7",
+        "tests": 254,
+        "skipped": 0
+      },
+      "source_distribution": {
+        "filename": "umf_core-0.10.2.tar.gz",
+        "sha256": "90a107aaa507930e1d71c0cf208b77182d06c0bf2a1b13681fd5f7b6ed74cb9d"
+      },
+      "binary_identity": "Direct and sdist-rebuilt native binaries differ and have separate successful qualification records."
+    },
+    "macos_arm64": {
+      "status": "pending-current-run",
+      "current_artifact": null,
+      "current_qualification": null,
+      "historical_reference_not_for_release": {
+        "source": "cdebbc26896b9ed597ef0c7e634f674b2a5e09e3",
+        "direct_wheel_sha256": "99ff1d1250c613a7b65bdd4dc6cf3ee9fec647e02ec34f8dc5ffb84285b0ac59",
+        "note": "Historical evidence only; do not stage or represent it as proof for a1b."
+      }
+    }
+  },
+  "proposed_asset_roster": [
+    {
+      "role": "linux-direct-wheel",
+      "filename": "umf_core-0.10.2-cp311-abi3-linux_x86_64.whl",
+      "sha256": "64e98887068563221070e3f265ae24d6871099cd5922f49f6be83eff944a5805",
+      "state": "current-linux-proof-available; release staging held"
+    },
+    {
+      "role": "macos-direct-wheel",
+      "filename": "umf_core-0.10.2-cp311-abi3-macosx_11_0_arm64.whl",
+      "sha256": null,
+      "state": "pending-current-macos-build-and-qualification"
+    },
+    {
+      "role": "source-distribution",
+      "filename": "umf_core-0.10.2.tar.gz",
+      "sha256": "90a107aaa507930e1d71c0cf208b77182d06c0bf2a1b13681fd5f7b6ed74cb9d",
+      "state": "current-linux-build-input; refresh/rebind to final release source before staging"
+    },
+    {
+      "role": "release-pins",
+      "filename": "release-pins.json",
+      "sha256": null,
+      "state": "proposed; generate from actual final tag/commit and selected asset bytes, then include its hash in SHA256SUMS"
+    },
+    {
+      "role": "qualification.json",
+      "filename": "qualification.json",
+      "sha256": null,
+      "state": "pending-final-source-and-both-platform receipts"
+    },
+    {
+      "role": "current-source-ci.json",
+      "filename": "current-source-ci.json",
+      "sha256": null,
+      "state": "pending-final-source hosted CI receipt"
+    },
+    {
+      "role": "PUBLIC_ASSET_INVENTORY.json",
+      "filename": "PUBLIC_ASSET_INVENTORY.json",
+      "sha256": null,
+      "state": "pending-final exact asset bytes"
+    },
+    {
+      "role": "RELEASE_NOTES.md",
+      "filename": "RELEASE_NOTES.md",
+      "sha256": null,
+      "state": "drafted separately; finalize after all release gates"
+    },
+    {
+      "role": "SHA256SUMS",
+      "filename": "SHA256SUMS",
+      "sha256": null,
+      "state": "pending-final exact asset bytes"
+    },
+    {
+      "role": "qualification-evidence-archive",
+      "filename": "umf-core-0.10.2-qualification-evidence.zip",
+      "sha256": null,
+      "state": "pending final selected public evidence bundle"
+    }
+  ],
+  "holds": [
+    "Current macOS arm64 direct and sdist-rebuilt artifacts and qualification are pending; historical cde artifacts are excluded from the current roster.",
+    "No final merge commit, release tag target, or immutable GitHub release identity is established; release-pins uses the proposed tag name; its commit remains null until the release tag points to the actual merged commit.",
+    "Fresh public-download verification has not run and must use final public GitHub release assets.",
+    "GitHub-only: the truthful linux_x86_64 wheel tag is not accepted by PyPI; do not relabel it. Any manylinux build is a separate Rust/Stack lane.",
+    "Typed migration SDK 0.5.7 remains a separate release scope.",
+    "This Core package evidence does not qualify UMF migrations, Weft SQL behavior, or managed-host execution."
+  ],
+  "draft_body_file": "/private/tmp/core-0102-release-body.md",
+  "release_pins_asset": {
+    "filename": "release-pins.json",
+    "state": "proposed-inert-asset; finalize tag and tagged commit only after they exist",
+    "payload_shape": {
+      "tag": "python-v0.10.2",
+      "distribution": "umf-core",
+      "version": "0.10.2",
+      "selected_assets": {
+        "umf_core-0.10.2-cp311-abi3-linux_x86_64.whl": "64e98887068563221070e3f265ae24d6871099cd5922f49f6be83eff944a5805",
+        "umf_core-0.10.2.tar.gz": "90a107aaa507930e1d71c0cf208b77182d06c0bf2a1b13681fd5f7b6ed74cb9d"
+      },
+      "commit": null
+    },
+    "sha256sums": "Must be listed and hashed in final SHA256SUMS; SHA256SUMS itself has no self-entry."
+  }
+}
