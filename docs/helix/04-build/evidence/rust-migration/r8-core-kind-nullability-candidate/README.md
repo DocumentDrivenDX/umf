@@ -200,3 +200,68 @@ The fresh WASM-bindgen JavaScript and module hashes are
 `44181f8aec1b4bf937ae765881811bc819d249c0537836b849df1efaa7025c89`,
 respectively. These hashes bind the focused local package used for the replay;
 they are not published artifacts.
+
+## Warm-cost recheck — 2026-10-26
+
+No safe hot-path reduction was identified. A temporary probe around the
+staged host dispatcher counted about 289 JS dispatcher callbacks per Rust
+inspection, with about 0.96 ms spent executing those callbacks on average in
+Node; instrumentation changes timing, so that diagnostic is not used as a
+benchmark result. The callback sequence exists to preserve the live object's
+ordered reflection and first-fault behavior. Batching those reads would change
+that contract. The uninstrumented addon call remains about 5.3 ms per warm
+inspection, including native processing and repeated synchronous host
+protocol crossings. The current operation validates the source document and
+then validates its result against already-prepared operation schemas.
+
+Fresh five-round, thirty-call replays still pass the resource-reflection,
+first-fault and TypeScript trace controls. On Node 26.12.1 / Darwin arm64 the
+median Rust/TypeScript ratio is 21.92; on Bun 1.4.3 / Node 26.3.0 it is 39.82.
+The corresponding median Rust warm calls are 5.32 ms and 5.56 ms. Setup is
+separate: median factory setup is 566.87 ms on Node and 565.89 ms on Bun. Full
+measurements and source hashes are retained in
+[`warm-cost-node-20261026.json`](warm-cost-node-20261026.json) and
+[`warm-cost-bun-20261026.json`](warm-cost-bun-20261026.json).
+
+The shared setup receipt above records 10,980,797 meter callbacks and
+432,197,359 work units across Engine construction under catalog limits,
+Kind/Nullability schema preparation under ordinary limits, and Registry
+preparation under catalog limits. Each measured warm call creates a fresh
+`Context::ordinary()` (text 4,000,000 UTF-16 units, depth 128, 100,000 values,
+5,000,000 constraint steps, 4,000,000 coefficient digits). The benchmark
+configures no work-meter callback, so it adds zero observed host meter
+callbacks; the binding does not expose the operation context's accumulated
+`charged_work`, so that unit count is not claimed. Resource reflection remains
+the one setup snapshot, with no re-reflection on retained calls.
+
+The fresh addon was built from the live checkout with Rust 1.90.0 into the
+isolated `/private/tmp/umf-r8-kind-nullability-target`; its SHA-256 is
+`4467d91a21b98eafd0afb88a5af4b088cf888b6df2a51125070cf3d8a29c7c28`. The
+qualified TypeScript source hash is `a69f00bede03467e3a9ecce0ad00bcddf916e5e7c6341933be64e37e670177b7`, harness hash is
+`60d542a4bfb05be2621bac5128492e20564389ca17b225d7674dbae48d965ada`, Node
+facade hash is `bdf1fdb4a54031ac4362fc832eb969dcb08a05f3759a8513df78a1b31cb41229`,
+and staged host-input JavaScript hash is
+`d00519000b2a6d8bec00477915cda46c8150d485b9986c267e10ec623200a24e`. The
+working tree contained concurrent edits outside this evidence slice during
+qualification; receipts bind exact runtime inputs by hash and do not claim a
+clean-tree or installed-package result.
+
+To replay these receipts from the repository root, use the isolated binding
+entry point `/private/tmp/umf-r8-kind-node-binding/index.js` and the bundled
+TypeScript module `/private/tmp/umf-kind-field-current.js`:
+
+```sh
+UMF_R8_NODE_BINDING=/private/tmp/umf-r8-kind-node-binding/index.js UMF_KIND_TYPESCRIPT_MODULE=/private/tmp/umf-kind-field-current.js node scripts/rust-migration/r8/core-kind-nullability/default-route-qualification.mjs
+UMF_R8_NODE_BINDING=/private/tmp/umf-r8-kind-node-binding/index.js UMF_KIND_TYPESCRIPT_MODULE=/private/tmp/umf-kind-field-current.js bun scripts/rust-migration/r8/core-kind-nullability/default-route-qualification.mjs
+```
+
+The focused retained-dispatch Rust test passes, as do both fresh Node and Bun
+replays. This evidence does not close the warm-call performance gate; the
+TypeScript implementation remains the default route.
+
+Sol independently reran both commands against the same pinned addon and
+TypeScript bundle after reviewing the receipts. Resource order, first-fault,
+operation trace and success-envelope controls passed. The five-round median
+ratios were 22.33 in Node and 41.24 in Bun. These timings are local replays of
+the source-pinned candidate, not a qualification of later concurrent host
+bridge edits or an installed package.

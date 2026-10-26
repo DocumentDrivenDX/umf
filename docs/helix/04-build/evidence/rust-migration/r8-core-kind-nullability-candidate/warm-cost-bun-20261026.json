@@ -1,0 +1,157 @@
+{
+  "format": "umf-r8-kind-nullability-default-qualification/1",
+  "status": "pass",
+  "runtime": "Bun 1.4.3 / Node 26.3.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "resources": {
+    "order": [
+      "resource:prototype",
+      "resource:ownKeys",
+      "resource:prototype",
+      "resource:descriptor:coreSchema",
+      "resource:prototype",
+      "resource:descriptor:referenceSchema",
+      "resource:prototype",
+      "resource:descriptor:packageSchema",
+      "resource:prototype",
+      "resource:descriptor:constraints",
+      "resource:prototype",
+      "resource:descriptor:domainPolicy"
+    ],
+    "firstFault": {
+      "meter": [
+        "meter"
+      ],
+      "reflectedResources": []
+    },
+    "accessorGetterCalls": 0,
+    "unknownResource": [
+      "unknown-resource:prototype",
+      "unknown-resource:ownKeys"
+    ]
+  },
+  "operation": {
+    "typescriptFirstFault": {
+      "events": [
+        "source:prototype"
+      ],
+      "observed": {
+        "ok": false,
+        "error": {
+          "code": "",
+          "message": "source first fault",
+          "path": ""
+        }
+      }
+    },
+    "rustFirstFault": {
+      "events": [
+        "source:prototype"
+      ],
+      "observed": {
+        "ok": false,
+        "error": {
+          "code": "",
+          "message": "source first fault",
+          "path": ""
+        }
+      }
+    },
+    "tsReflection": [
+      "source:prototype",
+      "source:ownKeys",
+      "source:ownKeys",
+      "source:descriptor:umf",
+      "source:descriptor:id",
+      "source:descriptor:vocabularies",
+      "source:descriptor:modules",
+      "identity:prototype",
+      "identity:ownKeys",
+      "identity:ownKeys",
+      "identity:descriptor:module",
+      "identity:descriptor:element"
+    ],
+    "rustReflection": [
+      "source:prototype",
+      "source:ownKeys",
+      "source:ownKeys",
+      "source:descriptor:umf",
+      "source:descriptor:id",
+      "source:descriptor:vocabularies",
+      "source:descriptor:modules",
+      "identity:prototype",
+      "identity:ownKeys",
+      "identity:ownKeys",
+      "identity:descriptor:module",
+      "identity:descriptor:element"
+    ],
+    "successEnvelopeEqual": true
+  },
+  "benchmark": {
+    "rounds": 5,
+    "iterations": 30,
+    "medianRatio": 39.82,
+    "measurements": [
+      {
+        "order": "typescript-first",
+        "iterations": 30,
+        "setupMs": 660.779,
+        "typescriptMs": 11.841,
+        "rustWarmMs": 182.826,
+        "typescriptPerCallMs": 0.3947,
+        "rustWarmPerCallMs": 6.0942,
+        "ratio": 15.44
+      },
+      {
+        "order": "rust-first",
+        "iterations": 30,
+        "setupMs": 582.771,
+        "typescriptMs": 4.329,
+        "rustWarmMs": 172.355,
+        "typescriptPerCallMs": 0.1443,
+        "rustWarmPerCallMs": 5.7452,
+        "ratio": 39.82
+      },
+      {
+        "order": "typescript-first",
+        "iterations": 30,
+        "setupMs": 565.534,
+        "typescriptMs": 4.104,
+        "rustWarmMs": 163.03,
+        "typescriptPerCallMs": 0.1368,
+        "rustWarmPerCallMs": 5.4343,
+        "ratio": 39.73
+      },
+      {
+        "order": "rust-first",
+        "iterations": 30,
+        "setupMs": 562.86,
+        "typescriptMs": 4.166,
+        "rustWarmMs": 166.912,
+        "typescriptPerCallMs": 0.1389,
+        "rustWarmPerCallMs": 5.5637,
+        "ratio": 40.07
+      },
+      {
+        "order": "typescript-first",
+        "iterations": 30,
+        "setupMs": 565.891,
+        "typescriptMs": 3.862,
+        "rustWarmMs": 163.894,
+        "typescriptPerCallMs": 0.1287,
+        "rustWarmPerCallMs": 5.4631,
+        "ratio": 42.44
+      }
+    ]
+  },
+  "checksum": "known",
+  "sourceHashes": {
+    "scripts/rust-migration/r8/core-kind-nullability/default-route-qualification.mjs": "60d542a4bfb05be2621bac5128492e20564389ca17b225d7674dbae48d965ada",
+    "src/model/field-kind.ts": "a69f00bede03467e3a9ecce0ad00bcddf916e5e7c6341933be64e37e670177b7",
+    "bindings/core/node/index.js": "bdf1fdb4a54031ac4362fc832eb969dcb08a05f3759a8513df78a1b31cb41229",
+    "bindings/core/node/src/host-json.js": "d00519000b2a6d8bec00477915cda46c8150d485b9986c267e10ec623200a24e",
+    "rustBinding": "4467d91a21b98eafd0afb88a5af4b088cf888b6df2a51125070cf3d8a29c7c28",
+    "typescriptModule": "fc2f100a6df4126ec741fb290cd33a9d5e71a26d0092e5a59239bd6317c1f609"
+  }
+}
