@@ -33,6 +33,8 @@ def bundle(source,cfg):
     result=compile_table_deployment(text,configuration=cfg)
     assert result['status']=='compiled',result
     return result['bundle']
+def source_text(source):
+    return source['utf8'] if isinstance(source,dict) and set(source)=={'format','utf8'} else json.dumps(source,separators=(',',':'))
 
 column_order=('id','owner','birthDate','birthday','sourceInstant','occurredAt','sourceUuid','externalId','sourceActive','active')
 cast={'birthDate':'date','birthday':'date','sourceInstant':'timestamptz','occurredAt':'timestamptz','sourceUuid':'uuid','externalId':'uuid','sourceActive':'bool','active':'bool'}
@@ -71,26 +73,36 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
     server=admin.execute('SELECT pg_catalog.version()').fetchone()[0]
     server_num=admin.execute("SELECT current_setting('server_version_num')").fetchone()[0]
     assert 'PostgreSQL 18.' in server,server
-    for case in fixture['cases']:
-        tag=uuid4().hex[:9];db='g02t_'+tag
-        cfg={**fixture['configuration'],'ownerRole':'g02_to_'+tag,'personRole':'g02_tp_'+tag,'batchRole':'g02_tb_'+tag}
-        owner,person,batch=cfg['ownerRole'],cfg['personRole'],cfg['batchRole']
-        individuals=('g02_ta_'+tag,'g02_tz_'+tag)
-        role_by_fixture={'g02_alice':individuals[0],'g02_bob':individuals[1]}
-        roles=(owner,person,batch,*individuals);created_roles=[];made_db=False
-        try:
-            for role in roles:
-                admin.execute(sql.SQL('CREATE ROLE {} NOLOGIN NOSUPERUSER NOBYPASSRLS NOCREATEDB NOCREATEROLE NOREPLICATION').format(sql.Identifier(role)));created_roles.append(role)
-            for individual in individuals:
-                admin.execute(sql.SQL('GRANT {} TO {} WITH INHERIT TRUE,SET FALSE').format(sql.Identifier(person),sql.Identifier(individual)))
-            admin.execute(sql.SQL('CREATE DATABASE {}').format(sql.Identifier(db)));made_db=True
-            dsn=conninfo.make_conninfo(args.dsn,dbname=db)
-            with psycopg.connect(dsn,autocommit=True) as connection:
+    tag=uuid4().hex[:9]
+    cfg={**fixture['configuration'],'ownerRole':'g02_to_'+tag,'personRole':'g02_tp_'+tag,'batchRole':'g02_tb_'+tag}
+    owner,person,batch=cfg['ownerRole'],cfg['personRole'],cfg['batchRole']
+    individuals=('g02_ta_'+tag,'g02_tz_'+tag)
+    role_by_fixture={'g02_alice':individuals[0],'g02_bob':individuals[1]}
+    roles=(owner,person,batch,*individuals);created_roles=[]
+    try:
+        for role in roles:
+            admin.execute(sql.SQL('CREATE ROLE {} NOLOGIN NOSUPERUSER NOBYPASSRLS NOCREATEDB NOCREATEROLE NOREPLICATION').format(sql.Identifier(role)));created_roles.append(role)
+        for individual in individuals:
+            admin.execute(sql.SQL('GRANT {} TO {} WITH INHERIT TRUE,SET FALSE').format(sql.Identifier(person),sql.Identifier(individual)))
+
+        # Every reviewed case is compiled from this exact same initial source
+        # and configuration. Compile the shared initial artifacts once; each
+        # disposable database still independently installs and verifies them.
+        initial_texts=[source_text(case['initialSource']) for case in fixture['cases']]
+        assert initial_texts and all(text==initial_texts[0] for text in initial_texts), 'G02 cases do not share exact initial source bytes'
+        assert all(case['initialSource'] is not None for case in fixture['cases']), 'G02 case is missing its initial source'
+        initial_bundle=bundle(fixture['cases'][0]['initialSource'],cfg)
+        initial_result=compile_table_migration(migration_id='g02-temporal-initial-001',predecessor=None,previous_bundle=None,next_bundle=initial_bundle)
+        assert initial_result['status']=='compiled',initial_result
+        initial=initial_result['plan']
+
+        for case in fixture['cases']:
+            db='g02t_'+uuid4().hex[:9];made_db=False;connection=None
+            try:
+                admin.execute(sql.SQL('CREATE DATABASE {}').format(sql.Identifier(db)));made_db=True
+                dsn=conninfo.make_conninfo(args.dsn,dbname=db)
+                connection=psycopg.connect(dsn,autocommit=True)
                 connection.execute(sql.SQL('CREATE SCHEMA {} AUTHORIZATION {}').format(sql.Identifier(cfg['schema']),sql.Identifier(owner)))
-                initial_bundle=bundle(case['initialSource'],cfg)
-                initial_result=compile_table_migration(migration_id=case['id']+'-001',predecessor=None,previous_bundle=None,next_bundle=initial_bundle)
-                assert initial_result['status']=='compiled',initial_result
-                initial=initial_result['plan']
                 with connection.transaction():
                     connection.execute(sql.SQL('SET LOCAL ROLE {}').format(sql.Identifier(owner)))
                     connection.execute('SET LOCAL search_path=pg_catalog')
@@ -205,16 +217,23 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                 selected_columns=sql.SQL(',').join(sql.Identifier(name)+sql.SQL('::pg_catalog.text') for name in ('owner','birthday','occurredAt','externalId','active'))
                 observed_created_row=connection.execute(sql.SQL('SELECT {} FROM {} WHERE {}=%s').format(selected_columns,sql.Identifier(cfg['schema'],'people'),sql.Identifier('id')),('command-id',)).fetchone()
                 check(case['id']+'-ordinary-create-current-principal-and-explicit-targets',observed_created_row==(individuals[0],'2000-01-01','2000-01-02 03:04:05+00','00000000-0000-4000-8000-000000000001','false'))
-        finally:
-            cleanup_error=None
-            if made_db:
-                try:admin.execute(sql.SQL('DROP DATABASE {} WITH (FORCE)').format(sql.Identifier(db)))
-                except Exception as error:cleanup_error=error
-            for role in reversed(created_roles):
-                try:admin.execute(sql.SQL('DROP ROLE {}').format(sql.Identifier(role)))
-                except Exception as error:
-                    if cleanup_error is None:cleanup_error=error
-            if cleanup_error is not None:raise cleanup_error
+            finally:
+                cleanup_error=None
+                if connection is not None:
+                    try:connection.close()
+                    except Exception as error:cleanup_error=error
+                if made_db:
+                    try:admin.execute(sql.SQL('DROP DATABASE {} WITH (FORCE)').format(sql.Identifier(db)))
+                    except Exception as error:
+                        if cleanup_error is None:cleanup_error=error
+                if cleanup_error is not None:raise cleanup_error
+    finally:
+        cleanup_error=None
+        for role in reversed(created_roles):
+            try:admin.execute(sql.SQL('DROP ROLE {}').format(sql.Identifier(role)))
+            except Exception as error:
+                if cleanup_error is None:cleanup_error=error
+        if cleanup_error is not None:raise cleanup_error
 report={'server':server,'serverVersionNum':server_num,'cases':len(fixture['cases']),'fixtureSha256':fixture_sha,'runnerSha256':runner_sha,'provenance':fixture['provenance'],'packages':{name:version(name) for name in ('umf-access','umf-codegen','weft-sql','umf-core')},'checks':checks}
 args.report.write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps({'serverVersionNum':server_num,'cases':len(fixture['cases']),'checks':checks},separators=(',',':')))
