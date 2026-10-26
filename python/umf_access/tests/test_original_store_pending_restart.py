@@ -517,6 +517,18 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                      patch.object(native.LocalPostgresSupervisor, '_observe_native', native_observation), \
                      patch.object(native.LocalPostgresSupervisor, '_connect_maintenance', connect_maintenance):
                     restarted_target = restarted.reattach_original_target()
+                    with restarted_supervisor._original_control_lease(
+                            operation_kind='registration-recover'):
+                        creation_finalized = next(
+                            event['payload']
+                            for event in restarted_supervisor._journal.read()['events']
+                            if event['kind'] == 'creation-finalized')
+                    self.assertEqual(
+                        restarted_supervisor._owner_payloads['creationReceipt'],
+                        creation_finalized['receipt'])
+                    self.assertEqual(
+                        restarted_supervisor._owner_payloads['creationReceiptDigest'],
+                        creation_finalized['receiptDigest'])
                     registration_id = reference['registrationId']
                     handles_before_failure = dict(restarted_supervisor._handles)
                     payloads_before_failure = dict(restarted_supervisor._owner_payloads)

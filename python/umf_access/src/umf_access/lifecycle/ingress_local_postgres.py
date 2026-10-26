@@ -2753,6 +2753,13 @@ class LocalPostgresSupervisor:
         self._native_targets[id(target)] = target
         self._owner_payloads['creationRequest'] = json.loads(
             _canonical(_creation_request_fields(creation)))
+        finalized_event = next((event['payload'] for event in events
+                                if event['kind'] == 'creation-finalized'), None)
+        if finalized_event is not None:
+            # Reattach the exact creation receipt already committed to the
+            # validated supervisor journal; later authority checks consume it.
+            self._owner_payloads['creationReceipt'] = finalized_event['receipt']
+            self._owner_payloads['creationReceiptDigest'] = finalized_event['receiptDigest']
         return target
 
     def confirm_reattached_target_creation(
