@@ -12,6 +12,14 @@ def operation_values_profile_version() -> str:
     return _rust._rust_core.operation_values_profile_version()
 
 
+def operation_count_token_profile_version() -> str:
+    return _rust._rust_core.operation_count_token_profile_version()
+
+
+def operation_count_token_nonnegative(token: str) -> bool:
+    return _rust._rust_core.operation_count_token_nonnegative(token)
+
+
 def operation_canonical(json_text: str) -> str:
     return _rust._rust_core.operation_canonical(json_text)
 

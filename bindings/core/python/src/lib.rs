@@ -330,6 +330,23 @@ fn operation_values_profile_version() -> &'static str {
 }
 
 #[pyfunction]
+fn operation_count_token_profile_version() -> &'static str {
+    umf_core::operation_values::COUNT_TOKEN_PROFILE_VERSION
+}
+
+#[pyfunction]
+fn operation_count_token_nonnegative(token: &Bound<'_, PyAny>) -> PyResult<bool> {
+    if !token.is_exact_instance_of::<PyString>() {
+        return Err(PyValueError::new_err("exact count token required"));
+    }
+    let token = token.extract::<String>()?;
+    let mut context = Context::ordinary();
+    umf_core::operation_values::count_token_nonnegative(&mut context, &token)
+        .map(|decision| decision == umf_core::operation_values::NativeTokenDecision::Accepted)
+        .map_err(py_error)
+}
+
+#[pyfunction]
 fn avro_fields_profile_version() -> &'static str {
     "umf-r5-avro-fields/0.1.0"
 }
@@ -4234,6 +4251,11 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     )?)?;
     module.add_function(wrap_pyfunction!(access_values_validate_string, module)?)?;
     module.add_function(wrap_pyfunction!(operation_values_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        operation_count_token_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(operation_count_token_nonnegative, module)?)?;
     module.add_function(wrap_pyfunction!(avro_fields_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(iceberg_schema_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_iceberg_wire, module)?)?;

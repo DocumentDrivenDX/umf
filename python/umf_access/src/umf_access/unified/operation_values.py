@@ -85,6 +85,29 @@ def _native_result_classify(kind, token):
         raise _native_error(error, 'native result value differs from its declared carrier') from None
 
 
+def _count_token_nonnegative_rust(token):
+    """Private exact-token stage; the public result_frame route is unchanged."""
+    if type(token) is not str:
+        raise SessionError('exact native count token required')
+    try:
+        from umf import rust_operation_values
+    except ImportError as error:
+        raise SessionError('native count-token capability unavailable') from error
+    try:
+        profile = rust_operation_values.operation_count_token_profile_version()
+    except AttributeError as error:
+        raise SessionError('native count-token capability unavailable') from error
+    if profile != 'umf-operation-count-token/0.1.0':
+        raise SessionError('native count-token capability profile mismatch')
+    try:
+        decision = rust_operation_values.operation_count_token_nonnegative(token)
+    except AttributeError as error:
+        raise SessionError('native count-token capability unavailable') from error
+    if type(decision) is not bool:
+        raise RuntimeError('invalid native count-token decision')
+    return decision
+
+
 def canonical(value):
     try:
         return _rust_values().operation_canonical(_json_input(value))

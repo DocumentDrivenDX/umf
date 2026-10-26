@@ -4,11 +4,12 @@ use crate::{
     native_json::{NativeJsonNode, NativeJsonTree},
     value::Utf16,
 };
-use base64::{Engine as _, engine::general_purpose::URL_SAFE_NO_PAD};
+use base64::{engine::general_purpose::URL_SAFE_NO_PAD, Engine as _};
 use sha2::{Digest, Sha256};
 use std::{fmt, fmt::Write as _};
 
 pub const PROFILE_VERSION: &str = "umf-operation-values/0.1.0";
+pub const COUNT_TOKEN_PROFILE_VERSION: &str = "umf-operation-count-token/0.1.0";
 pub const MAX_CURSOR: usize = 16_384;
 const MAX_CURSOR_JSON: usize = 12_239;
 
@@ -44,6 +45,7 @@ pub enum KeyLiteralMode {
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum NativeTokenKind {
     Integer,
+    NonnegativeInteger,
     Decimal,
     Uuid,
     Bits128,
@@ -217,6 +219,11 @@ pub fn native_token_classify(
     context.charge_work(token.len(), Utf16::default())?;
     Ok(match kind {
         NativeTokenKind::Integer => decision(valid_integer_token(token)),
+        // Count results have the same exact integer grammar but additionally
+        // reject every leading minus, including the predecessor's `-0` case.
+        NativeTokenKind::NonnegativeInteger => {
+            decision(!token.starts_with('-') && valid_integer_token(token))
+        }
         NativeTokenKind::Decimal => valid_decimal_token(token),
         NativeTokenKind::Uuid => decision(valid_uuid_token(token)),
         NativeTokenKind::Bits128 => decision(
@@ -226,6 +233,15 @@ pub fn native_token_classify(
                     .all(|byte| byte.is_ascii_hexdigit() && !byte.is_ascii_uppercase()),
         ),
     })
+}
+
+/// Classify the exact nonnegative integer-token subset used by native count
+/// results. This deliberately rejects every leading minus, including `-0`.
+pub fn count_token_nonnegative(
+    context: &mut Context<'_>,
+    token: &str,
+) -> Result<NativeTokenDecision, crate::error::EngineError> {
+    native_token_classify(context, NativeTokenKind::NonnegativeInteger, token)
 }
 
 fn decision(valid: bool) -> NativeTokenDecision {
@@ -751,6 +767,11 @@ mod tests {
         for (kind, token) in [
             (NativeTokenKind::Integer, "0"),
             (NativeTokenKind::Integer, "-123456789012345678901234567890"),
+            (NativeTokenKind::NonnegativeInteger, "0"),
+            (
+                NativeTokenKind::NonnegativeInteger,
+                "123456789012345678901234567890",
+            ),
             (NativeTokenKind::Decimal, "-0.000e-123"),
             (NativeTokenKind::Decimal, "1e999999999999999999"),
             (NativeTokenKind::Decimal, "1.0e999999999999999999"),
@@ -770,6 +791,10 @@ mod tests {
         }
         for (kind, token) in [
             (NativeTokenKind::Integer, "01"),
+            (NativeTokenKind::NonnegativeInteger, "-0"),
+            (NativeTokenKind::NonnegativeInteger, "-1"),
+            (NativeTokenKind::NonnegativeInteger, "01"),
+            (NativeTokenKind::NonnegativeInteger, ""),
             (NativeTokenKind::Decimal, "01"),
             (
                 NativeTokenKind::Uuid,
