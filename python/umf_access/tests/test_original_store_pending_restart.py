@@ -668,6 +668,36 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                         recovery_provider.resume_creation()
                     recovery_codes = []
                     original_recover = native.LocalPostgresSupervisor.recover_originals_store_creation
+                    original_readonly_recovery = (
+                        native.LocalPostgresSupervisor._recover_originals_store_creation_readonly)
+                    def capture_readonly_recovery_failure(issuer, *args, **kwargs):
+                        try:
+                            return original_readonly_recovery(issuer, *args, **kwargs)
+                        except Exception as error:
+                            if (not isinstance(error, native.LocalPostgresError)
+                                    or error.code !=
+                                        'local-postgresql-store-recovery-noncommit-unproven'):
+                                diagnostic = ' '.join(str(error).split())[:256]
+                                frames = traceback.extract_tb(error.__traceback__)[-8:]
+                                trace = ' <- '.join(
+                                    f'{Path(frame.filename).name}:{frame.lineno}:{frame.name}'
+                                    for frame in frames)
+                                context = error.__context__
+                                context_trace = ''
+                                if context is not None:
+                                    context_frames = traceback.extract_tb(
+                                        context.__traceback__)[-8:]
+                                    context_trace = ' <- '.join(
+                                        f'{Path(frame.filename).name}:{frame.lineno}:{frame.name}'
+                                        for frame in context_frames)
+                                print(
+                                    'G04 readonly recovery: '
+                                    f'{type(error).__name__}: {diagnostic}; {trace}; '
+                                    f'context={type(context).__name__ if context is not None else "none"}; '
+                                    f'context-frames={context_trace}',
+                                    file=sys.stderr,
+                                )
+                            raise
                     def capture_recovery_code(issuer, *args, **kwargs):
                         try:
                             return original_recover(issuer, *args, **kwargs)
@@ -682,7 +712,10 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                                        _execute_journal_recovery_control_transport),
                           patch.object(native.LocalPostgresSupervisor,
                                        'recover_originals_store_creation',
-                                       capture_recovery_code)):
+                                       capture_recovery_code),
+                          patch.object(native.LocalPostgresSupervisor,
+                                       '_recover_originals_store_creation_readonly',
+                                       capture_readonly_recovery_failure)):
                         with self.assertRaisesRegex(
                                 Exception,
                                 r'^row-originals-store-recovery-invalid$'):
@@ -817,7 +850,10 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                                        _execute_journal_recovery_control_transport),
                           patch.object(native.LocalPostgresSupervisor,
                                        'recover_originals_store_creation',
-                                       capture_second_recovery_code)):
+                                       capture_second_recovery_code),
+                          patch.object(native.LocalPostgresSupervisor,
+                                       '_recover_originals_store_creation_readonly',
+                                       capture_readonly_recovery_failure)):
                         with self.assertRaisesRegex(
                                 Exception,
                                 r'^row-originals-store-recovery-invalid$'):
