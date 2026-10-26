@@ -1,0 +1,9 @@
+{
+  "status": "SOURCE_CORRECTION_REVIEWED_NORMAL_CI_PENDING",
+  "precedingSource": "cdebbc26896b9ed597ef0c7e634f674b2a5e09e3",
+  "failedJob": 121420137781,
+  "successfulTwinJob": 121420124948,
+  "workflowSha256": "53651fbc04b2a5883f5696bf9995289ac6de1c1c5a46490d0d130b4269d1e0ac",
+  "change": "Isolate only source-dbapi Rust component store and provision rustfmt explicitly; retain Rust 1.90.0 and all original gates.",
+  "scope": "Workflow-only source correction; no new runtime, qualification, merge or publication claim."
+}

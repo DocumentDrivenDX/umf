@@ -3,6 +3,10 @@ name: Typed access boundaries
 
 on:
   push:
+    branches-ignore:
+      - codex/core-0102-inventory-generation
+    tags:
+      - '**'
   pull_request:
 
 permissions:
@@ -344,10 +348,14 @@ jobs:
           repository: DocumentDrivenDX/weft
           ref: db1e0dc5b1ec6aec0f12646421cefc314989d974
           path: .ci-weft
+      - name: Isolate source DBAPI Rust toolchain from the runner image
+        if: matrix.weft-cohort == 'source-dbapi'
+        run: echo "RUSTUP_HOME=$RUNNER_TEMP/umf-native-sessions-rustup" >> "$GITHUB_ENV"
       - uses: dtolnay/rust-toolchain@stable
         if: matrix.weft-cohort == 'source-dbapi'
         with:
           toolchain: 1.90.0
+          components: rustfmt
       - name: Build and install exact DBAPI compiler source
         if: matrix.weft-cohort == 'source-dbapi'
         run: |

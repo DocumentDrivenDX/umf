@@ -1,0 +1,493 @@
+{
+  "approvalReceipts": {
+    "coordinator": {
+      "path": "/private/tmp/root-core011-generation-resource-go-20261024.json",
+      "sha256": "7792d354cbe9067b0a4911c71a4884c0f14908f9bef751e897e9909389df4af6"
+    },
+    "root": {
+      "path": "/private/tmp/root-core011-generation-prep-review002.json",
+      "sha256": "3ea04c55517bac455ab8d26a7247f79588f981946ec502e4977b4778b2251277"
+    },
+    "sol": {
+      "path": "/private/tmp/umf-core0102-r3-attempt011-sol-review-rev2/sol-review.json",
+      "sha256": "6e94fb8bd869fc6a014dad13bae5d9f9e8bb43271b16c3131bce2482ea90cddb"
+    }
+  },
+  "bunLockSha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+  "children": [
+    {
+      "argv": [
+        "/usr/bin/git",
+        "rev-parse",
+        "e527340c60c68c56ace12b9e0644e93211d3f792"
+      ],
+      "endedElapsedSeconds": 0.014,
+      "groupAbsent": true,
+      "pgid": 85528,
+      "pid": 85528,
+      "returncode": 0,
+      "startedElapsedSeconds": 0.003,
+      "terminalObserved": true,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/usr/bin/git",
+        "rev-parse",
+        "e527340c60c68c56ace12b9e0644e93211d3f792^"
+      ],
+      "endedElapsedSeconds": 0.028,
+      "groupAbsent": true,
+      "pgid": 85530,
+      "pid": 85530,
+      "returncode": 0,
+      "startedElapsedSeconds": 0.017,
+      "terminalObserved": true,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/usr/bin/git",
+        "diff",
+        "--name-only",
+        "ebce5444dfacf4cfda9cc93f1652d43f83e59d57..e527340c60c68c56ace12b9e0644e93211d3f792"
+      ],
+      "endedElapsedSeconds": 0.043,
+      "groupAbsent": true,
+      "pgid": 85531,
+      "pid": 85531,
+      "returncode": 0,
+      "startedElapsedSeconds": 0.03,
+      "terminalObserved": true,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12",
+        "--version"
+      ],
+      "endedElapsedSeconds": 5.0,
+      "groupAbsent": true,
+      "pgid": 85552,
+      "pid": 85552,
+      "returncode": 0,
+      "startedElapsedSeconds": 4.992,
+      "terminalObserved": true,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/bun",
+        "--version"
+      ],
+      "endedElapsedSeconds": 5.014,
+      "groupAbsent": true,
+      "pgid": 85553,
+      "pid": 85553,
+      "returncode": 0,
+      "startedElapsedSeconds": 5.01,
+      "terminalObserved": true,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/usr/bin/git",
+        "--version"
+      ],
+      "endedElapsedSeconds": 5.055,
+      "groupAbsent": true,
+      "pgid": 85555,
+      "pid": 85555,
+      "returncode": 0,
+      "startedElapsedSeconds": 5.045,
+      "terminalObserved": true,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/usr/bin/git",
+        "worktree",
+        "add",
+        "--detach",
+        "/private/tmp/umf-core0102-r3-attempt011/worktree",
+        "e527340c60c68c56ace12b9e0644e93211d3f792"
+      ],
+      "endedElapsedSeconds": 15.177,
+      "groupAbsent": true,
+      "pgid": 85558,
+      "pid": 85558,
+      "returncode": 0,
+      "startedElapsedSeconds": 5.06,
+      "terminalObserved": true,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/usr/bin/git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "endedElapsedSeconds": 15.189,
+      "groupAbsent": true,
+      "pgid": 85666,
+      "pid": 85666,
+      "returncode": 0,
+      "startedElapsedSeconds": 15.18,
+      "terminalObserved": true,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12",
+        "scripts/rust-inventory.py"
+      ],
+      "endedElapsedSeconds": 95.277,
+      "groupAbsent": true,
+      "pgid": 85671,
+      "pid": 85671,
+      "returncode": 0,
+      "startedElapsedSeconds": 15.232,
+      "terminalObserved": true,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/usr/bin/git",
+        "worktree",
+        "remove",
+        "--force",
+        "/private/tmp/umf-core0102-r3-attempt011/worktree"
+      ],
+      "endedElapsedSeconds": 99.218,
+      "groupAbsent": true,
+      "pgid": 87021,
+      "pid": 87021,
+      "returncode": 0,
+      "startedElapsedSeconds": 95.298,
+      "terminalObserved": true,
+      "timedOut": false
+    }
+  ],
+  "controllerPgid": 85526,
+  "controllerPid": 85526,
+  "controllerSha256": "1c1358603b3f1591cdedb5af6867f4509411b885be7b377af91f924d9173e629",
+  "deadlineSeconds": 600,
+  "elapsedSeconds": 103.764,
+  "endedUtc": "2026-10-24T09:45:35Z",
+  "events": [
+    {
+      "argv": [
+        "/usr/bin/git",
+        "rev-parse",
+        "e527340c60c68c56ace12b9e0644e93211d3f792"
+      ],
+      "elapsedSeconds": 0.003,
+      "event": "child-start",
+      "pgid": 85528,
+      "pid": 85528
+    },
+    {
+      "elapsedSeconds": 0.014,
+      "event": "child-end",
+      "groupAbsent": true,
+      "pgid": 85528,
+      "pid": 85528,
+      "returncode": 0,
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 41,
+      "stdoutSha256": "30fa8568bd59f0dd5d925e04861c6cfbe71bd7ba8a271933f14967b5b76c524d",
+      "terminalObserved": true,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/usr/bin/git",
+        "rev-parse",
+        "e527340c60c68c56ace12b9e0644e93211d3f792^"
+      ],
+      "elapsedSeconds": 0.017,
+      "event": "child-start",
+      "pgid": 85530,
+      "pid": 85530
+    },
+    {
+      "elapsedSeconds": 0.029,
+      "event": "child-end",
+      "groupAbsent": true,
+      "pgid": 85530,
+      "pid": 85530,
+      "returncode": 0,
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 41,
+      "stdoutSha256": "432922cf829a21bb8b05a26e765ce021708717edec14cd9d4204d63b9b1cdb44",
+      "terminalObserved": true,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/usr/bin/git",
+        "diff",
+        "--name-only",
+        "ebce5444dfacf4cfda9cc93f1652d43f83e59d57..e527340c60c68c56ace12b9e0644e93211d3f792"
+      ],
+      "elapsedSeconds": 0.03,
+      "event": "child-start",
+      "pgid": 85531,
+      "pid": 85531
+    },
+    {
+      "elapsedSeconds": 0.044,
+      "event": "child-end",
+      "groupAbsent": true,
+      "pgid": 85531,
+      "pid": 85531,
+      "returncode": 0,
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 84,
+      "stdoutSha256": "1fe32d66118c13ef2ec9845beb44d734e94922249842f5623002fe055e775705",
+      "terminalObserved": true,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12",
+        "--version"
+      ],
+      "elapsedSeconds": 4.992,
+      "event": "child-start",
+      "pgid": 85552,
+      "pid": 85552
+    },
+    {
+      "elapsedSeconds": 5.0,
+      "event": "child-end",
+      "groupAbsent": true,
+      "pgid": 85552,
+      "pid": 85552,
+      "returncode": 0,
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 15,
+      "stdoutSha256": "9bdce2f3bc127762fcb79db8faf0385c42e81e916436db64486d7162bc1d04e0",
+      "terminalObserved": true,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/bun",
+        "--version"
+      ],
+      "elapsedSeconds": 5.01,
+      "event": "child-start",
+      "pgid": 85553,
+      "pid": 85553
+    },
+    {
+      "elapsedSeconds": 5.015,
+      "event": "child-end",
+      "groupAbsent": true,
+      "pgid": 85553,
+      "pid": 85553,
+      "returncode": 0,
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 6,
+      "stdoutSha256": "bd31e8d9cf8d14a1e9e3fdf3b9f6a524819aed0d1b14627523c6765767c7d8f1",
+      "terminalObserved": true,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/usr/bin/git",
+        "--version"
+      ],
+      "elapsedSeconds": 5.045,
+      "event": "child-start",
+      "pgid": 85555,
+      "pid": 85555
+    },
+    {
+      "elapsedSeconds": 5.056,
+      "event": "child-end",
+      "groupAbsent": true,
+      "pgid": 85555,
+      "pid": 85555,
+      "returncode": 0,
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 35,
+      "stdoutSha256": "2aa6da9ca331dc6de6fe72460146b9d1ebc22c8df24f3eb2a4c4f7c3c41b93ca",
+      "terminalObserved": true,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/usr/bin/git",
+        "worktree",
+        "add",
+        "--detach",
+        "/private/tmp/umf-core0102-r3-attempt011/worktree",
+        "e527340c60c68c56ace12b9e0644e93211d3f792"
+      ],
+      "elapsedSeconds": 5.06,
+      "event": "child-start",
+      "pgid": 85558,
+      "pid": 85558
+    },
+    {
+      "elapsedSeconds": 15.178,
+      "event": "child-end",
+      "groupAbsent": true,
+      "pgid": 85558,
+      "pid": 85558,
+      "returncode": 0,
+      "stderrBytes": 3680,
+      "stderrSha256": "be7f4fb32954bdd3d23f77bacdc30ee786ee91c148068343c64c3bf74eb362e9",
+      "stdoutBytes": 72,
+      "stdoutSha256": "119433604eb51ab1aa7d42b73d9c744206138c7c5339436095c0148bdd0e1ae2",
+      "terminalObserved": true,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/usr/bin/git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "elapsedSeconds": 15.18,
+      "event": "child-start",
+      "pgid": 85666,
+      "pid": 85666
+    },
+    {
+      "elapsedSeconds": 15.189,
+      "event": "child-end",
+      "groupAbsent": true,
+      "pgid": 85666,
+      "pid": 85666,
+      "returncode": 0,
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 41,
+      "stdoutSha256": "30fa8568bd59f0dd5d925e04861c6cfbe71bd7ba8a271933f14967b5b76c524d",
+      "terminalObserved": true,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12",
+        "scripts/rust-inventory.py"
+      ],
+      "elapsedSeconds": 15.232,
+      "event": "child-start",
+      "pgid": 85671,
+      "pid": 85671
+    },
+    {
+      "elapsedSeconds": 95.277,
+      "event": "child-end",
+      "groupAbsent": true,
+      "pgid": 85671,
+      "pid": 85671,
+      "returncode": 0,
+      "stderrBytes": 300,
+      "stderrSha256": "3e8400f4799f07ff064bc81d890b22e5b75e0073364bf91f3d26b4517ccf6e35",
+      "stdoutBytes": 132,
+      "stdoutSha256": "7f50e5fe383a6d1a3c070c0a59fa8b8379793f13eceec3639867840efcbb9eec",
+      "terminalObserved": true,
+      "timedOut": false
+    },
+    {
+      "argv": [
+        "/usr/bin/git",
+        "worktree",
+        "remove",
+        "--force",
+        "/private/tmp/umf-core0102-r3-attempt011/worktree"
+      ],
+      "elapsedSeconds": 95.298,
+      "event": "child-start",
+      "pgid": 87021,
+      "pid": 87021
+    },
+    {
+      "elapsedSeconds": 99.219,
+      "event": "child-end",
+      "groupAbsent": true,
+      "pgid": 87021,
+      "pid": 87021,
+      "returncode": 0,
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "terminalObserved": true,
+      "timedOut": false
+    }
+  ],
+  "generation": {
+    "argv": [
+      "/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12",
+      "scripts/rust-inventory.py"
+    ],
+    "byteIdenticalCopy": true,
+    "committedOutputBytes": 2607211,
+    "committedOutputSha256": "90ecd7dc3c7461660d67aa42358d8c339534cb9618d6b68b6b8c336cb843e35c",
+    "inventoryBytes": 2607211,
+    "inventoryPath": "/private/tmp/umf-core0102-r3-attempt011/inventory.json",
+    "inventorySha256": "90ecd7dc3c7461660d67aa42358d8c339534cb9618d6b68b6b8c336cb843e35c",
+    "outputChangedFromBaseline": true,
+    "returncode": 0,
+    "stdout": "Wrote docs/helix/04-build/evidence/rust-migration/r3/inventory.json: 578 source modules; 344 active scripts; 244 JS locked packages\n",
+    "timedOut": false
+  },
+  "inventoryAfterGenerationSha256": "90ecd7dc3c7461660d67aa42358d8c339534cb9618d6b68b6b8c336cb843e35c",
+  "inventoryBeforeGeneration": {
+    "exists": true,
+    "sha256": "66166e441062358f3f8ba73943079e7bfcca964157f6076fcc754c4c21cdffea"
+  },
+  "mode": "generation-only",
+  "nodeModulesAfter": {
+    "entryCount": 19517,
+    "inventoryFileSha256": "492dd2e85a4cc03706c350d44624295f5f0c392d441c4b36185000c8489f5e49",
+    "inventoryPath": "/private/tmp/umf-core0102-r3-attempt011/node-modules-after.json",
+    "root": "/Users/erik/.codex/worktrees/eb69/umf/node_modules",
+    "sha256": "f97d9a3f77efe220f3b5f11473d81755ee14f9beb7007968c795187794433cdf"
+  },
+  "nodeModulesBefore": {
+    "entryCount": 19517,
+    "inventoryFileSha256": "492dd2e85a4cc03706c350d44624295f5f0c392d441c4b36185000c8489f5e49",
+    "inventoryPath": "/private/tmp/umf-core0102-r3-attempt011/node-modules-before.json",
+    "root": "/Users/erik/.codex/worktrees/eb69/umf/node_modules",
+    "sha256": "f97d9a3f77efe220f3b5f11473d81755ee14f9beb7007968c795187794433cdf"
+  },
+  "nodeModulesUnchanged": true,
+  "outputDirectory": "/private/tmp/umf-core0102-r3-attempt011",
+  "parentRevision": "ebce5444dfacf4cfda9cc93f1652d43f83e59d57",
+  "revision": "e527340c60c68c56ace12b9e0644e93211d3f792",
+  "startedUtc": "2026-10-24T09:43:51Z",
+  "status": "generation-completed-review-pending",
+  "tools": {
+    "bun": {
+      "path": "/opt/homebrew/bin/bun",
+      "sha256": "2d1f1e69a98217d7d573d8297aaac9b196a81c0ccb082724902d5be1f1cf27a2",
+      "version": "1.4.3"
+    },
+    "git": {
+      "path": "/usr/bin/git",
+      "sha256": "34129c71a01a74f7f3b2443521519b2e5447553fa187f5fcafaaf8c42cc192e2",
+      "version": "git version 2.54.0 (Apple Git-157)"
+    },
+    "python": {
+      "path": "/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12",
+      "sha256": "fe5e57e7f0dc374654e314d4e8f20cf2a345bda8a4e03032046f407027628a32",
+      "version": "Python 3.12.15"
+    }
+  },
+  "worktree": "/private/tmp/umf-core0102-r3-attempt011/worktree",
+  "worktreeCleaned": true,
+  "worktreeHead": "e527340c60c68c56ace12b9e0644e93211d3f792"
+}

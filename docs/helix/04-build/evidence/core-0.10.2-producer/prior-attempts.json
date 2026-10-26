@@ -1,0 +1,94 @@
+[
+  {
+    "attempt": "001",
+    "receiptPath": "/private/tmp/umf-core-0102-producer-7cc87-receipt.json",
+    "receiptSha256": "bb5474210eabd6dd2955b5c07bc60583fe7566f11a1464ee8adcc6bf93359703",
+    "status": "failed",
+    "elapsedSeconds": null,
+    "revision": null,
+    "failure": "TimeoutError: copy-locked-node-modules exceeded remaining bounded time",
+    "inventoryComparison": null,
+    "worktreeCleaned": null,
+    "scope": "Failed attempt; no overall qualification pass."
+  },
+  {
+    "attempt": "002",
+    "receiptPath": "/private/tmp/umf-core-0102-producer-7cc87-attempt-002-receipt.json",
+    "receiptSha256": "59805cef5c57bd5fd0e673ff81e6555ecea00e69bc8f636b7fa2349af36f4af1",
+    "status": "fail",
+    "elapsedSeconds": 2.989,
+    "revision": "7cc87c4b79999d4e240bc5c600ca32ce10b65b88",
+    "failure": "RuntimeError('typescript version 7.0.2 != 5.9.3')",
+    "inventoryComparison": null,
+    "worktreeCleaned": null,
+    "scope": "Failed attempt; no overall qualification pass."
+  },
+  {
+    "attempt": "003",
+    "receiptPath": "/private/tmp/umf-core-0102-producer-7cc87-attempt-003-receipt.json",
+    "receiptSha256": "392d80c5eac732ec8b6c22c1e6ab6ce0fff48c99bcf72c30b8d1d1bc30c77c3c",
+    "status": "fail",
+    "elapsedSeconds": 4.11,
+    "revision": "7cc87c4b79999d4e240bc5c600ca32ce10b65b88",
+    "failure": "RuntimeError(\"command rc=128: ['git', 'worktree', 'add', '--detach', '/private/tmp/umf-core-0102-producer-7cc87-attempt-003', '7cc87c4b79999d4e240bc5c600ca32ce10b65b88']\")",
+    "inventoryComparison": null,
+    "worktreeCleaned": false,
+    "scope": "Failed attempt; no overall qualification pass."
+  },
+  {
+    "attempt": "004",
+    "receiptPath": "/private/tmp/umf-core-0102-producer-7cc87-attempt-004-receipt.json",
+    "receiptSha256": "adf35c1d6734b5adb070023012518b03a4de596042b2b69ad7b114d574b1fd94",
+    "status": "fail",
+    "elapsedSeconds": 29.437,
+    "revision": "7cc87c4b79999d4e240bc5c600ca32ce10b65b88",
+    "failure": "RuntimeError('python3.12 unavailable')",
+    "inventoryComparison": null,
+    "worktreeCleaned": true,
+    "scope": "Failed attempt; no overall qualification pass."
+  },
+  {
+    "attempt": "005",
+    "receiptPath": "/private/tmp/umf-core-0102-producer-7cc87-attempt-005-receipt.json",
+    "receiptSha256": "301a7f5401c96d54b4f2b6d7a9b309dfdc0caa5cad6245b977616382868e5c47",
+    "status": "fail",
+    "elapsedSeconds": 258.813,
+    "revision": "7cc87c4b79999d4e240bc5c600ca32ce10b65b88",
+    "failure": "RuntimeError(\"command rc=-15: ['/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12', 'scripts/rust-inventory.py', '--check']\")",
+    "inventoryComparison": {
+      "baselineSha256": "9541287a1d5f4fc476a2230bb2e78dcaf567a327fced4e2e0d2803eabc17363b",
+      "counts": {
+        "activeScriptFiles": 340,
+        "algorithmSymbols": 10319,
+        "pythonModules": 105,
+        "rustBuildInputs": 76,
+        "rustModules": 127,
+        "scriptFiles": 2950,
+        "sourceModules": 578,
+        "typescriptModules": 473
+      },
+      "errors": [],
+      "generatedSha256": "0d1d1b632be4da4e65de3fa7aa8061257b06705db2f068b4921697dc5e351a19",
+      "sourceCohortSha256": "ad1e306d33a31288617cb50dffa0005a3be0597ae41afeca34c52f115d021f54"
+    },
+    "worktreeCleaned": true,
+    "scope": "Failed attempt; no overall qualification pass."
+  },
+  {
+    "attempt": "007",
+    "receiptPath": "/private/tmp/umf-core-0102-producer-5db979-attempt-007-receipt.json",
+    "receiptSha256": "cb3abfb397d27b55730af3852dc0518daa07ef1eb91891a9a1fa5ae5adbeab79",
+    "status": "fail",
+    "elapsedSeconds": 289.988,
+    "revision": "5db979425070dd01836bf7304dfca29003945673",
+    "failure": "RuntimeError(\"command rc=-15: ['/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12', 'scripts/rust-inventory.py']\")",
+    "inventoryComparison": null,
+    "worktreeCleaned": true,
+    "scope": "Failed attempt; no overall qualification pass."
+  },
+  {
+    "attempt": "006",
+    "status": "never-launched",
+    "reason": "Superseded before launch by installed extension-kind suite workflow change."
+  }
+]
