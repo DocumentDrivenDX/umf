@@ -6,13 +6,94 @@ from __future__ import annotations
 import pytest
 import sys
 from types import ModuleType, SimpleNamespace
-from umf_access.capture import CaptureError
-from umf_access.dsl import FieldRef, Node, RecordRef, RequiredJoin, Terminal
+from umf_access.capture import CaptureError, capture
+from umf_access.dsl import FieldRef, Node, Query, RecordRef, RequiredJoin, query
 from umf_access.rust_capture_observe import (
+    FieldOwnerObservationUnavailable,
+    observe_all_empty_capture_profile,
     observe_field_join_tuple,
     observe_terminal_join_owners,
     validate_field_owner,
 )
+
+
+def test_private_all_empty_profile_uses_native_terminal_observer():
+    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    observe_all_empty_capture_profile(Node("all", (root, ())))
+
+
+def test_public_capture_retains_four_body_invocations_for_no_parameter_query():
+    calls: list[str] = []
+    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    objects = Query(root)
+
+    @query
+    def declaration():
+        calls.append("body")
+        return objects.all()
+
+    captured = capture(declaration)
+    assert calls == ["body"] * 4
+    assert len(captured.variants) == 1
+
+
+@pytest.mark.parametrize(
+    "node",
+    [
+        Node("first", (RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),)), ())),
+        Node("all", (RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),)), (Node("join", ()),))),
+        Node("all", (RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),)),)),
+    ],
+)
+def test_private_all_empty_profile_refuses_outside_shapes(node):
+    with pytest.raises(TypeError, match="capture profile"):
+        observe_all_empty_capture_profile(node)
+
+
+def test_private_all_empty_profile_refuses_subclass_without_native_semantics():
+    reads: list[str] = []
+
+    class ObservedNode(Node):
+        def __getattribute__(self, name: str):
+            reads.append(name)
+            return super().__getattribute__(name)
+
+    node = ObservedNode(
+        "all", (RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),)), ())
+    )
+    with pytest.raises(TypeError, match="exact Node"):
+        observe_all_empty_capture_profile(node)
+    assert reads == []
+
+
+def test_private_all_empty_profile_capability_failure_precedes_graph_reads(monkeypatch):
+    reads: list[str] = []
+
+    class UntouchedNode:
+        def __getattribute__(self, name: str):
+            reads.append(name)
+            raise AssertionError("profile preflight must precede graph reads")
+
+    def missing_native():
+        raise FieldOwnerObservationUnavailable("missing observer")
+
+    monkeypatch.setattr(
+        "umf_access.rust_capture_observe._native", missing_native
+    )
+    with pytest.raises(FieldOwnerObservationUnavailable, match="missing observer"):
+        observe_all_empty_capture_profile(UntouchedNode())
+    assert reads == []
+
+
+def test_private_all_empty_profile_requires_exact_owner_text():
+    class TextSubclass(str):
+        pass
+
+    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    object.__setattr__(root, "module", TextSubclass("demo"))
+    node = Node("all", (root, ()))
+    with pytest.raises(TypeError, match="exact RecordRef owner text"):
+        observe_all_empty_capture_profile(node)
 
 
 def test_rust_observes_fieldref_owner_components_in_python_read_order():
@@ -394,6 +475,28 @@ def test_terminal_walker_refuses_non_text_terminal_op():
     with pytest.raises(CaptureError) as caught:
         observe_terminal_join_owners(node)
     assert caught.value.code == "CAPTURE_UNSUPPORTED"
+
+
+def test_terminal_op_refusal_precedes_malformed_record_owner_read():
+    sentinel = AttributeError("malformed root owner should be later")
+    reads: list[str] = []
+    armed = False
+
+    class ObservedRecordRef(RecordRef):
+        def __getattribute__(self, name: str):
+            if armed and name == "module":
+                reads.append(name)
+                raise sentinel
+            return super().__getattribute__(name)
+
+    root = ObservedRecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    node = Node("unsupported", (root, ()))
+    armed = True
+    with pytest.raises(CaptureError) as caught:
+        observe_terminal_join_owners(node)
+    assert caught.value.code == "CAPTURE_UNSUPPORTED"
+    assert str(caught.value) == "CAPTURE_UNSUPPORTED: unsupported terminal form"
+    assert reads == []
 
 
 def test_terminal_walker_uses_each_python_iterator_once_per_pass():

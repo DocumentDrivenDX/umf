@@ -104,3 +104,33 @@ python/.venv/bin/python -m pytest -q -p no:cacheprovider \
 These results qualify only the listed observer paths and fixtures. The module
 does not claim whole-package parity, default-route behavior, or an installed
 artifact cohort.
+
+## Private exact `.all()` empty-steps callback (2026-10-26)
+
+`observe_all_empty_capture_profile()` adds a private integrated callback for
+the exact base `Node("all", (RecordRef, ()))` shape. It checks native profile
+0.2.0 before touching the graph, admits exact base objects and exact owner
+text, then delegates the admitted terminal/root checks to the native terminal
+observer. That operation uses one Rust `Context`; there is no Python
+`_validate_node` call and no retry after native refusal. Subclasses,
+nonempty steps, other terminals, and malformed owner text are outside this
+private profile.
+
+The public `capture()` route remains unchanged. A focused test confirms a
+no-parameter query still executes its body four times. This callback is not
+ready for public selection: its admission check is Python-owned, the legacy
+DTO encoder has a separate node/depth/UTF-8 budget, and there is no shared
+end-to-end capture-plus-encoding Context or installed-wheel default-route
+replay.
+
+The focused Python observer suite passes 32 tests against the existing
+temporary overlay built with the 0.2.0 PyO3 capability:
+
+```sh
+PYTHONPATH=/private/tmp/umf-field-owner-observation-overlay:python/umf_access/src \
+python/.venv/bin/python -m pytest -q -p no:cacheprovider \
+  python/umf_access/tests/test_capture_field_observation.py
+```
+
+This result qualifies only the private exact-profile callback and its focused
+fixtures; it does not qualify public routing or package installation.
