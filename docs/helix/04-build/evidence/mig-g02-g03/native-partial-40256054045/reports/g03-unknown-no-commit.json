@@ -1,0 +1,277 @@
+{
+  "runner": "/home/runner/work/umf/umf/tests/lifecycle/g03-defaults-native.py",
+  "runnerSha256": "717958375e1f6d957d2c32aefff6b32b99d8ad3ee4246930a3e81b5126ce6ba4",
+  "fixture": "/tmp/g02-g03-defaults-fixture.json",
+  "fixtureSha256": "de8736519bcb9aa1bb3c59c62734d6f31035378e192e317295fdd766e513108f",
+  "scenario": "unknown-no-commit",
+  "sourceStatus": "SOURCE_ONLY_ALL_NATIVE_CASES_UNRUN",
+  "packages": {
+    "umf-access": "0.1.0.dev8",
+    "umf-codegen": "0.1.0a5",
+    "weft-sql": "0.4.53",
+    "umf-core": "0.10.0"
+  },
+  "caseStatus": {
+    "G03-N01": "TRANSITIONS_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N02": "EMPTY_TABLE_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N03": "REQUIRED_SET_REPLACE_DROP_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N04": "RETAINED_OMISSION_SOURCE_REFUSAL_AND_READONLY_NATIVE_ABSENCE_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N05": "NULL_AND_DECIMAL_SPELLING_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N06": "KNOWN_ABORT_RETRY_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N07": "COMMIT_AND_PREPUBLICATION_RECOVERY_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N08": "PARTIAL_SUBCASE_PASS_FULL_CASE_OPEN",
+    "G03-N09": "WRITER_BARRIER_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N10": "DATE_TEXT_DECIMAL_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N11": "UUID_AND_TRANSACTION_TIMESTAMP_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N12": "UNQUALIFIED_COMPATIBLE_WEFT_02_COHORT_REQUIRED",
+    "G03-N13": "FULL_PRE_EFFECT_TAMPERING_MATRIX_SOURCE_IMPLEMENTED_NATIVE_UNRUN",
+    "G03-N14": "PARTIAL_SUBCASE_PASS_FULL_CASE_OPEN"
+  },
+  "checks": [],
+  "result": {
+    "scenario": "unknown-no-commit",
+    "status": "PASS_EXPECTED_FENCED_SUBCASE_FULL_CASE_OPEN",
+    "database": "g03_cce1eb2394",
+    "schema": "g03s_cce1eb2394",
+    "roleNames": [
+      "g03o_cce1eb2394",
+      "g03p_cce1eb2394",
+      "g03b_cce1eb2394",
+      "g03a_cce1eb2394",
+      "g03z_cce1eb2394"
+    ],
+    "configurationSha256": "537ac0a4a4dc4dc496ddff4c2dc48aa38102cb9098522194a9e3085e37ccf6eb",
+    "steps": [],
+    "serverVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "targetIdentity": {
+      "serverVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+      "sessionUser": "postgres",
+      "currentUser": "postgres",
+      "observerSuperuser": true,
+      "maintenanceDatabase": "postgres",
+      "serverAddress": "172.18.0.2/32",
+      "serverPort": 5432,
+      "postmasterStart": "2026-10-26 01:49:21.707645+00",
+      "systemIdentifier": "7700787716888834092",
+      "observerOid": "10"
+    },
+    "createdRoleIdentities": [
+      {
+        "oid": "25963",
+        "name": "g03o_cce1eb2394",
+        "superuser": false,
+        "bypassRls": false,
+        "createDatabase": false,
+        "createRole": false,
+        "replication": false,
+        "login": false
+      },
+      {
+        "oid": "25964",
+        "name": "g03p_cce1eb2394",
+        "superuser": false,
+        "bypassRls": false,
+        "createDatabase": false,
+        "createRole": false,
+        "replication": false,
+        "login": false
+      },
+      {
+        "oid": "25965",
+        "name": "g03b_cce1eb2394",
+        "superuser": false,
+        "bypassRls": false,
+        "createDatabase": false,
+        "createRole": false,
+        "replication": false,
+        "login": false
+      },
+      {
+        "oid": "25966",
+        "name": "g03a_cce1eb2394",
+        "superuser": false,
+        "bypassRls": false,
+        "createDatabase": false,
+        "createRole": false,
+        "replication": false,
+        "login": false
+      },
+      {
+        "oid": "25967",
+        "name": "g03z_cce1eb2394",
+        "superuser": false,
+        "bypassRls": false,
+        "createDatabase": false,
+        "createRole": false,
+        "replication": false,
+        "login": false
+      }
+    ],
+    "createdDatabaseIdentity": {
+      "oid": "25970",
+      "name": "g03_cce1eb2394",
+      "ownerOid": "10"
+    },
+    "openedOwnedConnection": {
+      "sessionUser": "postgres",
+      "currentUser": "postgres",
+      "backendPid": 543,
+      "database": "g03_cce1eb2394",
+      "serverVersion": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+      "systemIdentifier": "7700787716888834092",
+      "postmasterStart": "2026-10-26 01:49:21.707645+00"
+    },
+    "createdSchemaIdentity": {
+      "oid": "25971",
+      "name": "g03s_cce1eb2394",
+      "ownerOid": "25963"
+    },
+    "createdTableIdentity": {
+      "oid": "25972",
+      "name": "notes",
+      "ownerOid": "25963",
+      "schemaOid": "25971"
+    },
+    "initialRowCount": 3,
+    "initialObservation": {
+      "observer": {
+        "sessionUser": "postgres",
+        "currentUser": "postgres",
+        "superuser": true
+      },
+      "rows": [
+        [
+          "a",
+          "g03a_cce1eb2394",
+          null,
+          "25972",
+          "1165",
+          "(0,1)"
+        ],
+        [
+          "b",
+          "g03z_cce1eb2394",
+          2,
+          "25972",
+          "1166",
+          "(0,2)"
+        ],
+        [
+          "c",
+          "g03a_cce1eb2394",
+          9,
+          "25972",
+          "1167",
+          "(0,3)"
+        ]
+      ],
+      "rowsDigest": "b0a29299fab3fa1e651013a172abb664f89aac6b1411e585ff07b16bf4983fcf",
+      "relationFileNode": 25972,
+      "columnDefault": null
+    },
+    "defaultStatementDispatches": 1,
+    "unknownInjected": "before-real-required-phase-commit",
+    "progressReads": [
+      {
+        "phaseIndex": 0,
+        "phaseDigest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "state": "ready",
+        "completedSteps": []
+      }
+    ],
+    "unknownNoCommit": {
+      "result": "FENCED_NO_AUTHENTICATED_PROGRESS",
+      "after": {
+        "observer": {
+          "sessionUser": "postgres",
+          "currentUser": "postgres",
+          "superuser": true
+        },
+        "rows": [
+          [
+            "a",
+            "g03a_cce1eb2394",
+            null,
+            "25972",
+            "1165",
+            "(0,1)"
+          ],
+          [
+            "b",
+            "g03z_cce1eb2394",
+            2,
+            "25972",
+            "1166",
+            "(0,2)"
+          ],
+          [
+            "c",
+            "g03a_cce1eb2394",
+            9,
+            "25972",
+            "1167",
+            "(0,3)"
+          ]
+        ],
+        "rowsDigest": "b0a29299fab3fa1e651013a172abb664f89aac6b1411e585ff07b16bf4983fcf",
+        "relationFileNode": 25972,
+        "columnDefault": null
+      },
+      "fence": {
+        "personCanReadHead": false,
+        "batchCanReadHead": false,
+        "personCanReadApproval": false,
+        "batchCanReadApproval": false,
+        "personCanReadProgress": false,
+        "batchCanReadProgress": false,
+        "personVisibleRows": 2,
+        "batchVisibleRows": 3,
+        "progress": [
+          0,
+          "ready",
+          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "[]"
+        ]
+      }
+    },
+    "historicalRows": [
+      [
+        "a",
+        "Alice",
+        null
+      ],
+      [
+        "b",
+        "Bob",
+        2
+      ],
+      [
+        "c",
+        "Alice",
+        9
+      ]
+    ],
+    "futureWriteProbes": "run for selected integer/required/domain scenario; other selectors remain separate",
+    "cleanupVerification": {
+      "ownedDatabaseAbsent": true,
+      "ownedDatabaseRemaining": null,
+      "ownedRolesAbsent": true,
+      "remainingRoleIdentities": [],
+      "targetIdentityUnchanged": true,
+      "schemaAndTableAbsentByOwnedDatabaseRemoval": true
+    },
+    "cleanup": {
+      "createdDatabase": true,
+      "createdRoles": [
+        "g03o_cce1eb2394",
+        "g03p_cce1eb2394",
+        "g03b_cce1eb2394",
+        "g03a_cce1eb2394",
+        "g03z_cce1eb2394"
+      ],
+      "errors": [],
+      "status": "PASS"
+    }
+  },
+  "status": "PASS_EXPECTED_FENCED_SUBCASE_FULL_CASE_OPEN"
+}
