@@ -5315,9 +5315,18 @@ here.
 That [selected-Key slice](evidence/rust-migration/r8-python-captured-graph-selected-key/README.md)
 now passes 20/20 focused Rust tests. A freshly built native Python extension
 passes 8/8 opt-in comparisons with public capture on CPython 3.13.16, Darwin
-27 arm64, including exact `get`/`page` refusal precedence. Full graph
-semantics, `type-error` wrapper translation, installed-wheel parity and the
-public capture switch remain open.
+27 arm64, including exact `get`/`page` refusal precedence. This paragraph
+records that earlier selected-Key checkpoint; later private graph slices below
+add related navigation, search legs, read terminals and `update`. The bridge
+translates the known foreign-field TypeError. A later private orchestration
+slice moves pair determinism, optional-variant scheduling, topology consistency
+and query/command terminal authority into Rust while Python still inspects
+signatures, invokes declarations, validates each graph, serializes canonical
+bytes and binds command actions. Sol independently reran 35/35 focused Rust
+checks and 11/11 live Python parity checks; the existing capture and predecessor
+suites passed 30 tests plus three subtests, and full Ruff checks passed on the
+changed Python files. General subclass admission, full Python capture
+ownership, installed-wheel parity and the public capture switch remain open.
 
 The later fixed-point SDK archive is
 `c1ecf9cea81c3767e281820a93294b85a45ab052862a9fcd8b0b493057302263`,
@@ -5360,3 +5369,89 @@ current source closure. Their focused gate suites pass 15/15. Each retains
 unresolved resource authority and no Chromium WASM/external-request claim.
 Cardinality records Chromium WASM loading and zero external requests. These
 separate gates do not expand the five-family aggregate or retire declarations.
+
+The [Selection provider interface direction](evidence/rust-migration/r8-next-route-queue/selection-provider-implementation-prep-20261026.md)
+now favors Rust-owned staged decisions over a JavaScript composite evaluator.
+The explicit TypeScript reference baseline pins seven lazy Registry lookups in
+an exact 47-event interleaving across Node, Bun and Chromium. The production
+host provider and a complete Node/WASM opaque-handle Selection path are not yet
+implemented; receiver, callback, error-identity and `kindRuntime` behavior
+remain release gates. Later paragraphs record the narrower primitive protocol
+foundation and its current limits.
+
+Checkpoint `bf8bf6031` preserves the `c1ecf9ce` installed-route cohort.
+Whitespace normalization of a Rust source input after the replay, followed by
+the ongoing captured-graph/Selection provider source edits, moved the live
+tree away from source closure `61cbaf0a`. The aggregate and separate gates
+remain historical evidence for that tested cut and must not be described as current
+qualification for the moving tree. The metamodel manifest and Rust-boundary
+live census must be regenerated and rechecked after source changes settle;
+a fresh fixed-point archive and host replays will then be required.
+
+The next private captured-graph slice accepts forward and inverse generated
+Join/Many `related` expressions using the original relationship and full
+serialized `RecordRef` equality. Its 27 focused Rust tests and three Python
+seam tests, including four live navigation variants, pass with a temporary
+extension. Python constructors and `navigation_parts` still own relationship
+metadata and alias preconditions; arbitrary synthetic DTOs, subclass
+admission, installed-wheel qualification and public `capture()` selection
+remain open. A following private SearchLeg slice admits `search_top` keyword,
+vector and nested hybrid legs. A genuine `Param[Vector]` crosses the DTO
+boundary with an explicit Ellipsis tag. Foreign Record, unbound parameter and
+carrier mismatch refusals retain Python's ordering. Subsequent private checks
+preserve Python's optional-filter placement and incompatible temporal-parameter
+profile refusals. A further private aggregate/bucket slice follows Python's
+scalar shape, operation, temporal-field and bounded average-scale checks;
+bucket width remains the public DSL builder's responsibility. The private
+read-terminal profile now covers exact `first`, `one`, `count`, `exists`, and
+`group_count` shapes, retaining Python's preflight refusal order. The private
+`update` terminal check now admits the exact
+`(RecordRef, steps, assignments)` shape and traverses assignment ownership
+before later parameter checks, matching a genuine generated `@command`
+declaration and refusal controls. It cannot reconstruct generated mutable-field
+metadata or check assignment value/field type compatibility from the DTO.
+The private capture-orchestration follow-up passed 35 focused Rust tests and
+11 live Python parity tests after Sol's independent rerun. Public `capture()`,
+command authority, mutation execution, subclass behavior and installed-wheel
+qualification remain open.
+
+Selection now has a crate-private lazy `RegistrationProvider` static adapter
+through constraints, admitted Engine validation and Selection. Focused
+provider tests cover repeated lookup and error stopping; the structural gate
+test and ten R5 Selection tests pass. Opaque host handles remain reserved and
+are explicitly refused at extension execution. The explicit TypeScript
+callback-result reference matrix now covers Node, Bun and Chromium: custom
+iterables retain ordered unknown diagnostic fields; semantic iterator faults
+become validator-failure diagnostics; structure-errors iterator faults escape
+by identity. The expanded 69-case matrix pins a first diagnostic severity
+read after each payload's iterable is drained, a second pass after all
+callbacks, and final descriptor copying only after Selection traversal.
+Structure-error path concatenation invokes JavaScript `Symbol.toPrimitive`
+with a default hint; path/coercion/message throws escape by identity.
+Returning `undefined` from semantics yields different native
+TypeError text in Bun than in Node/Chromium. The primitive opaque get/invoke
+protocol compiles for Node and WASM and passes focused Rust and a Bun Node-host
+fake-addon probe. Sol independently reran the matching fake-addon dispatch in
+Node, Bun and real Chromium; it now passes 18 bounded assertions in each,
+including native string-left concatenation, ordered mixed diagnostic
+serialization, live `JSON.stringify`, delayed native Error-message access,
+and IteratorClose on structure-error loop-body throws with original thrown
+identity. The separate reference baseline also passes 69 cases, 12 frozen
+comparisons and seven schema checks in all three hosts. This is dispatcher
+evidence only; JavaScript's internal coercion and stringify work are not metered
+by the current Rust Context, so resource parity remains open. A private
+Rust iterable helper retains yielded callback
+values as opaque handles until an explicit later copy; its focused tests pass.
+An internal diagnostic helper now retains opaque callback values while
+checking the predecessor's `emit` field order and the later short-circuiting
+severity pass; its focused tests pass. Private host events stage invalid-source
+diagnostic stringification and an opaque native Error carrier without reading
+an inherited `.message` getter early. Sol independently reran 23 focused core
+host tests, seven Node and five WASM binding tests. Final `UmfError`
+construction/exposure, complete Selection materialization and native
+noniterable spread errors remain unresolved. The protocol does not select the route. The host
+provider lookup seam now accepts the live Rust Context at each lazy demand
+site; a future host provider must charge work through it. No host Selection
+route, `kindRuntime` behavior, default-root switch or retirement
+claim follows from this static seam. Sol's full `umf-core --lib` regression
+run on this source packet passed 424/424 tests.

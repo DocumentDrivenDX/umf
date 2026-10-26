@@ -1327,7 +1327,7 @@ fn eval(
     env: &Env,
     doc: &Value,
     policy: &Value,
-    reg: &crate::registry::Registry,
+    reg: &dyn crate::registry::RegistrationProvider,
     caps: &mut dyn crate::engine::Capabilities,
     ctx: &mut Context<'_>,
     diagnostics: &mut Vec<Diagnostic>,
@@ -1945,7 +1945,7 @@ fn eval(
                         let yj = runtime_json_copy(&y, ctx)?;
                         let found = match (xj.as_ref(), yj.as_ref()) {
                             (Some(Value::String(id)), Some(Value::String(version))) => {
-                                reg.get(id, version).is_some()
+                                reg.lookup(id, version, ctx)?.is_some()
                             }
                             _ => false,
                         };
@@ -2314,7 +2314,7 @@ fn extension_errors(
     scope: &Utf16,
     path: &Utf16,
     policy: &Value,
-    registry: &crate::registry::Registry,
+    registry: &dyn crate::registry::RegistrationProvider,
     caps: &mut dyn crate::engine::Capabilities,
     ctx: &mut Context<'_>,
 ) -> Result<Vec<Diagnostic>, EngineError> {
@@ -2364,7 +2364,7 @@ fn extension_errors(
             out.push(model_diag(policy, "undeclared", &at, None, ctx)?);
             continue;
         };
-        let Some(entry) = registry.get(id, &version) else {
+        let Some(entry) = crate::registry::require_borrowed(registry.lookup(id, &version, ctx)?)? else {
             continue;
         };
         let (kind_invalid, mut kind_diagnostics) =
@@ -2531,7 +2531,7 @@ fn eval_bool(
     env: &Env,
     doc: &Value,
     p: &Value,
-    reg: &crate::registry::Registry,
+    reg: &dyn crate::registry::RegistrationProvider,
     caps: &mut dyn crate::engine::Capabilities,
     ctx: &mut Context<'_>,
     diagnostics: &mut Vec<Diagnostic>,
@@ -2554,7 +2554,7 @@ fn exec(
     env: &mut Env,
     doc: &Value,
     p: &Value,
-    reg: &crate::registry::Registry,
+    reg: &dyn crate::registry::RegistrationProvider,
     caps: &mut dyn crate::engine::Capabilities,
     ctx: &mut Context<'_>,
     diags: &mut Vec<Diagnostic>,
@@ -2827,7 +2827,8 @@ pub fn execute_constraints(
     if let Some(literal) = get(&policy, "literal") {
         prepare_policy(literal, ctx)?;
     }
-    execute_constraints_admitted(&document, program, &policy, registry, caps, ctx)
+    let provider = crate::registry::StaticRegistrationProvider(registry);
+    execute_constraints_admitted_with_provider(&document, program, &policy, &provider, caps, ctx)
 }
 
 /// Execute an interpreter operation whose document and policy have already
@@ -2840,14 +2841,30 @@ pub(crate) fn execute_constraints_admitted(
     caps: &mut dyn crate::engine::Capabilities,
     ctx: &mut Context<'_>,
 ) -> Result<Vec<Diagnostic>, EngineError> {
-    execute_constraints_admitted_observed(document, program, policy, registry, caps, ctx, None)
+    let provider = crate::registry::StaticRegistrationProvider(registry);
+    execute_constraints_admitted_observed_with_provider(
+        document, program, policy, &provider, caps, ctx, None,
+    )
 }
 
-pub(crate) fn execute_constraints_admitted_observed(
+pub(crate) fn execute_constraints_admitted_with_provider(
     document: &Value,
     program: &PreparedProgram,
     policy: &Value,
-    registry: &crate::registry::Registry,
+    provider: &dyn crate::registry::RegistrationProvider,
+    caps: &mut dyn crate::engine::Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    execute_constraints_admitted_observed_with_provider(
+        document, program, policy, provider, caps, ctx, None,
+    )
+}
+
+pub(crate) fn execute_constraints_admitted_observed_with_provider(
+    document: &Value,
+    program: &PreparedProgram,
+    policy: &Value,
+    registry: &dyn crate::registry::RegistrationProvider,
     caps: &mut dyn crate::engine::Capabilities,
     ctx: &mut Context<'_>,
     mut observer: Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
@@ -2899,6 +2916,150 @@ pub fn run_core_constraints(
 #[cfg(test)]
 mod runtime_diagnostic_tests {
     use super::*;
+
+    #[derive(Default)]
+    struct ScriptedProvider {
+        calls: std::cell::RefCell<Vec<(Utf16, Utf16)>>,
+        fail_at: Option<usize>,
+    }
+
+    impl crate::registry::RegistrationProvider for ScriptedProvider {
+        fn lookup<'a>(
+            &'a self,
+            id: &Utf16,
+            version: &Utf16,
+            _ctx: &mut Context<'_>,
+        ) -> Result<Option<crate::registry::RegistrationLookup<'a>>, EngineError> {
+            let mut calls = self.calls.borrow_mut();
+            calls.push((id.clone(), version.clone()));
+            if self.fail_at == Some(calls.len()) {
+                return Err(EngineError::new(
+                    "SCRIPTED_PROVIDER",
+                    Utf16::default(),
+                    "provider stopped",
+                ));
+            }
+            Ok(None)
+        }
+    }
+
+    #[test]
+    fn registration_provider_is_queried_at_each_interpreter_demand_site() {
+        let provider = ScriptedProvider::default();
+        let mut ctx = Context::ordinary();
+        let mut diagnostics = Vec::new();
+        let mut observer = None;
+        let env = vec![
+            (k("id"), Rc::new(Runtime::Json(Value::String(k("one"))))),
+            (
+                k("version"),
+                Rc::new(Runtime::Json(Value::String(k("1.0.0")))),
+            ),
+        ];
+        let expression = Value::Object(vec![
+            (k("op"), Value::String(k("registered"))),
+            (
+                k("args"),
+                Value::Array(vec![
+                    Value::Object(vec![(k("var"), Value::String(k("id")))]),
+                    Value::Object(vec![(k("var"), Value::String(k("version")))]),
+                ]),
+            ),
+        ]);
+        eval(
+            &expression,
+            &env,
+            &Value::Null,
+            &Value::Null,
+            &provider,
+            &mut NoCapabilities,
+            &mut ctx,
+            &mut diagnostics,
+            &mut observer,
+        )
+        .unwrap();
+        eval(
+            &expression,
+            &env,
+            &Value::Null,
+            &Value::Null,
+            &provider,
+            &mut NoCapabilities,
+            &mut ctx,
+            &mut diagnostics,
+            &mut observer,
+        )
+        .unwrap();
+
+        let document = Value::Object(vec![(
+            k("vocabularies"),
+            Value::Object(vec![(
+                k("two"),
+                Value::Object(vec![(k("version"), Value::String(k("2.0.0")))]),
+            )]),
+        )]);
+        let payloads = Value::Object(vec![(k("two"), Value::Null)]);
+        extension_errors(
+            &document,
+            &payloads,
+            &k("core"),
+            &Utf16::default(),
+            &Value::Null,
+            &provider,
+            &mut NoCapabilities,
+            &mut ctx,
+        )
+        .unwrap();
+
+        assert_eq!(
+            *provider.calls.borrow(),
+            vec![
+                (k("one"), k("1.0.0")),
+                (k("one"), k("1.0.0")),
+                (k("two"), k("2.0.0"))
+            ]
+        );
+    }
+
+    #[test]
+    fn registration_provider_errors_propagate_and_stop_constraint_evaluation() {
+        let provider = ScriptedProvider {
+            calls: std::cell::RefCell::new(Vec::new()),
+            fail_at: Some(1),
+        };
+        let mut ctx = Context::ordinary();
+        let env = vec![
+            (k("id"), Rc::new(Runtime::Json(Value::String(k("one"))))),
+            (
+                k("version"),
+                Rc::new(Runtime::Json(Value::String(k("1.0.0")))),
+            ),
+        ];
+        let expression = Value::Object(vec![
+            (k("op"), Value::String(k("registered"))),
+            (
+                k("args"),
+                Value::Array(vec![
+                    Value::Object(vec![(k("var"), Value::String(k("id")))]),
+                    Value::Object(vec![(k("var"), Value::String(k("version")))]),
+                ]),
+            ),
+        ]);
+        let error = eval(
+            &expression,
+            &env,
+            &Value::Null,
+            &Value::Null,
+            &provider,
+            &mut NoCapabilities,
+            &mut ctx,
+            &mut Vec::new(),
+            &mut None,
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "SCRIPTED_PROVIDER");
+        assert_eq!(provider.calls.borrow().len(), 1);
+    }
 
     struct NoCapabilities;
     impl crate::engine::Capabilities for NoCapabilities {

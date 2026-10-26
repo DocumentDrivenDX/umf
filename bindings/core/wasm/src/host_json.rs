@@ -6,8 +6,9 @@ use std::fmt::Write as _;
 use umf_core::{
     context::Context,
     host_json::{
-        HostDescriptorSnapshot, HostDescriptorValue, HostHandle, HostJsonEvent, HostJsonKind,
-        HostJsonReflection, HostJsonReply, HostPropertyDescriptor, HostPrototype, HostStringRef,
+        HostDescriptorSnapshot, HostDescriptorValue, HostDiagnosticArrayItem, HostHandle, HostInvokeValue, HostJsonEvent,
+        HostJsonKind, HostJsonReflection, HostJsonReply, HostOpaqueKey, HostOpaqueValue,
+        HostPropertyDescriptor, HostPrototype, HostStringRef,
     },
     record_values, Engine, EngineError, ResourceSet, Utf16, Value,
 };
@@ -395,6 +396,47 @@ fn event_json(event: &HostJsonEvent) -> String {
             r#"{{"event":"unicode-count","carrier":{}}}"#,
             rust_value_wire_json(value)
         ),
+        HostJsonEvent::GetOpaqueProperty { receiver, key, semantic_catch } => {
+            let key = match key {
+                HostOpaqueKey::String(units) => format!(
+                    r#"{{"kind":"string","units":[{}]}}"#,
+                    units.iter().map(u16::to_string).collect::<Vec<_>>().join(",")
+                ),
+                HostOpaqueKey::IteratorSymbol => r#"{"kind":"iterator-symbol"}"#.to_owned(),
+            };
+            format!(r#"{{"event":"get-opaque-property","receiver":{},"key":{key},"semanticCatch":{semantic_catch}}}"#, host_invoke_value_wire_json(receiver))
+        }
+        HostJsonEvent::InvokeOpaque { function, receiver, args, semantic_catch } => {
+            let args = args.iter().map(host_invoke_value_wire_json).collect::<Vec<_>>().join(",");
+            format!(
+                r#"{{"event":"invoke-opaque","function":{function},"receiver":{},"args":[{args}],"semanticCatch":{semantic_catch}}}"#,
+                host_invoke_value_wire_json(receiver)
+            )
+        }
+        HostJsonEvent::StringConcat { prefix, value } => format!(
+            r#"{{"event":"string-concat","prefix":[{}],"value":{}}}"#,
+            prefix.iter().map(u16::to_string).collect::<Vec<_>>().join(","),
+            host_invoke_value_wire_json(value),
+        ),
+        HostJsonEvent::StringifyDiagnosticArray { items } => {
+            let items = items.iter().map(|item| match item {
+                HostDiagnosticArrayItem::Static(value) => format!(
+                    r#"{{"kind":"static","value":{}}}"#,
+                    rust_value_wire_json(value),
+                ),
+                HostDiagnosticArrayItem::Opaque(handle) => {
+                    format!(r#"{{"kind":"opaque","handle":{handle}}}"#)
+                }
+            }).collect::<Vec<_>>().join(",");
+            format!(r#"{{"event":"stringify-diagnostic-array","items":[{items}]}}"#)
+        }
+        HostJsonEvent::ConstructErrorCarrier { value } => format!(
+            r#"{{"event":"construct-error-carrier","value":{}}}"#,
+            host_invoke_value_wire_json(value),
+        ),
+        HostJsonEvent::CloseOpaqueIterator { iterator } => format!(
+            r#"{{"event":"close-opaque-iterator","iterator":{iterator}}}"#,
+        ),
         HostJsonEvent::ReadProperty { handle, key } => {
             let units = key.iter().map(u16::to_string).collect::<Vec<_>>().join(",");
             format!(r#"{{"event":"read-property","handle":{handle},"keyUnits":[{units}]}}"#)
@@ -436,6 +478,17 @@ fn rust_value_wire_json(value: &Value) -> String {
     let mut output = String::new();
     write_rust_value_wire_json(value, &mut output);
     output
+}
+
+fn host_invoke_value_wire_json(value: &HostInvokeValue) -> String {
+    match value {
+        HostInvokeValue::Undefined => r#"{"kind":"undefined"}"#.to_owned(),
+        HostInvokeValue::Opaque(handle) => format!(r#"{{"kind":"opaque","handle":{handle}}}"#),
+        HostInvokeValue::Json(value) => format!(
+            r#"{{"kind":"json","value":{}}}"#,
+            rust_value_wire_json(value)
+        ),
+    }
 }
 
 fn write_rust_value_wire_json(value: &Value, output: &mut String) {
@@ -513,6 +566,18 @@ fn decode_reply(
             matches!(kind.as_str(), "utf16-chunk" | "host-exception")
         }
         HostJsonEvent::UnicodeCount { .. } => matches!(kind.as_str(), "count" | "host-exception"),
+        HostJsonEvent::GetOpaqueProperty { semantic_catch, .. } => {
+            matches!(kind.as_str(), "opaque-value" | "host-exception")
+                || (*semantic_catch && kind == "semantic-throw")
+        }
+        HostJsonEvent::InvokeOpaque { semantic_catch, .. } => {
+            matches!(kind.as_str(), "invocation" | "host-exception")
+                || (*semantic_catch && kind == "semantic-throw")
+        }
+        HostJsonEvent::StringConcat { .. }
+        | HostJsonEvent::StringifyDiagnosticArray { .. }
+        | HostJsonEvent::ConstructErrorCarrier { .. } => matches!(kind.as_str(), "opaque-value" | "host-exception"),
+        HostJsonEvent::CloseOpaqueIterator { .. } => kind == "iterator-closed",
     };
     if !valid {
         return Err(protocol_error());
@@ -524,7 +589,26 @@ fn decode_reply(
             "Host reflection threw",
         ));
     }
+    if kind == "opaque-value" {
+        return Ok(HostJsonReply::OpaqueValue(decode_opaque_value(
+            field(&value, "value").ok_or_else(protocol_error)?,
+            lengths,
+        )?));
+    }
+    if kind == "invocation" {
+        return Ok(HostJsonReply::Invocation(decode_opaque_value(
+            field(&value, "value").ok_or_else(protocol_error)?,
+            lengths,
+        )?));
+    }
+    if kind == "semantic-throw" {
+        return Ok(HostJsonReply::SemanticThrow(string_ref(
+            field(&value, "message").ok_or_else(protocol_error)?,
+            lengths,
+        )?));
+    }
     Ok(match kind.as_str() {
+        "iterator-closed" => HostJsonReply::IteratorClosed,
         "null" => HostJsonReply::Kind(HostJsonKind::Null),
         "boolean" => {
             let value = boolean(&value, "value").ok_or_else(protocol_error)?;
@@ -627,6 +711,37 @@ fn decode_reply(
         }
         _ => return Err(protocol_error()),
     })
+}
+
+fn decode_opaque_value(
+    value: &Value,
+    lengths: &mut BTreeMap<u64, usize>,
+) -> Result<HostOpaqueValue, EngineError> {
+    match text(value, "kind").and_then(|value| value.to_utf8().ok()).as_deref() {
+        Some("undefined") => Ok(HostOpaqueValue::Undefined),
+        Some("null") => Ok(HostOpaqueValue::Null),
+        Some("boolean") => Ok(HostOpaqueValue::Boolean(
+            boolean(value, "value").ok_or_else(protocol_error)?,
+        )),
+        Some("number") => Ok(HostOpaqueValue::Number(
+            number(value, "bits").ok_or_else(protocol_error)?,
+        )),
+        Some("string") => Ok(HostOpaqueValue::String(string_ref(value, lengths)?)),
+        Some("opaque") => Ok(HostOpaqueValue::Opaque {
+            handle: unsigned(value, "handle").ok_or_else(protocol_error)?,
+            opaque_type: match text(value, "opaqueType").and_then(|value| value.to_utf8().ok()).as_deref() {
+                Some("object") => umf_core::host_json::HostOpaqueType::Object,
+                Some("function") => umf_core::host_json::HostOpaqueType::Function,
+                Some("symbol") => umf_core::host_json::HostOpaqueType::Symbol,
+                _ => return Err(protocol_error()),
+            },
+        }),
+        Some("bigint") => Ok(HostOpaqueValue::BigInt {
+            handle: unsigned(value, "handle").ok_or_else(protocol_error)?,
+            is_zero: boolean(value, "isZero").ok_or_else(protocol_error)?,
+        }),
+        _ => Err(protocol_error()),
+    }
 }
 fn descriptor_value(
     v: &Value,
@@ -857,4 +972,98 @@ fn take_dataset_resource(resources: &mut Value, name: &str) -> Result<Value, Eng
         ));
     };
     Ok(members.remove(index).1)
+}
+
+#[cfg(test)]
+mod opaque_reply_tests {
+    use super::*;
+
+    fn opaque_reply(opaque_type: Option<&str>) -> Value {
+        let mut members = vec![
+            (Utf16::from("kind"), Value::String(Utf16::from("opaque"))),
+            (Utf16::from("handle"), Value::Number(1.0)),
+        ];
+        if let Some(opaque_type) = opaque_type {
+            members.push((Utf16::from("opaqueType"), Value::String(Utf16::from(opaque_type))));
+        }
+        Value::Object(members)
+    }
+
+    #[test]
+    fn opaque_reply_type_is_required_and_closed() {
+        for (tag, expected) in [
+            ("object", umf_core::host_json::HostOpaqueType::Object),
+            ("function", umf_core::host_json::HostOpaqueType::Function),
+            ("symbol", umf_core::host_json::HostOpaqueType::Symbol),
+        ] {
+            assert_eq!(
+                decode_opaque_value(&opaque_reply(Some(tag)), &mut BTreeMap::new()).unwrap(),
+                HostOpaqueValue::Opaque { handle: 1, opaque_type: expected },
+            );
+        }
+        assert!(decode_opaque_value(&opaque_reply(None), &mut BTreeMap::new()).is_err());
+        assert!(decode_opaque_value(&opaque_reply(Some("unknown")), &mut BTreeMap::new()).is_err());
+    }
+
+    #[test]
+    fn string_concat_event_codec_is_closed_and_utf16_tagged() {
+        assert_eq!(
+            event_json(&HostJsonEvent::StringConcat {
+                prefix: "/💾".encode_utf16().collect(),
+                value: HostInvokeValue::Opaque(9),
+            }),
+            r#"{"event":"string-concat","prefix":[47,55357,56510],"value":{"kind":"opaque","handle":9}}"#,
+        );
+    }
+
+    #[test]
+    fn stringify_diagnostic_array_event_preserves_mixed_item_order() {
+        let event = HostJsonEvent::StringifyDiagnosticArray {
+            items: vec![
+                HostDiagnosticArrayItem::Static(Value::Object(vec![
+                    (Utf16::from("code"), Value::String(Utf16::from("STATIC"))),
+                    (Utf16::from("severity"), Value::String(Utf16::from("warning"))),
+                ])),
+                HostDiagnosticArrayItem::Opaque(77),
+            ],
+        };
+        assert_eq!(
+            event_json(&event),
+            r#"{"event":"stringify-diagnostic-array","items":[{"kind":"static","value":{"kind":"object","members":[{"key":[99,111,100,101],"value":{"kind":"string","units":[83,84,65,84,73,67]}},{"key":[115,101,118,101,114,105,116,121],"value":{"kind":"string","units":[119,97,114,110,105,110,103]}}]}},{"kind":"opaque","handle":77}]}"#,
+        );
+        assert_eq!(
+            event_json(&HostJsonEvent::ConstructErrorCarrier {
+                value: HostInvokeValue::Opaque(91),
+            }),
+            r#"{"event":"construct-error-carrier","value":{"kind":"opaque","handle":91}}"#,
+        );
+    }
+
+    #[test]
+    fn iterator_close_event_codec_is_closed() {
+        let event = HostJsonEvent::CloseOpaqueIterator { iterator: 23 };
+        assert_eq!(event_json(&event), r#"{"event":"close-opaque-iterator","iterator":23}"#);
+        let reply = Value::Object(vec![(Utf16::from("kind"), Value::String(Utf16::from("iterator-closed")))]);
+        assert_eq!(decode_reply(&event, reply, &mut BTreeMap::new()).unwrap(), HostJsonReply::IteratorClosed);
+        let malformed = Value::Object(vec![(Utf16::from("kind"), Value::String(Utf16::from("opaque-value")))]);
+        assert!(decode_reply(&event, malformed, &mut BTreeMap::new()).is_err());
+    }
+
+    #[test]
+    fn semantic_throw_reply_is_rejected_when_catch_is_disabled() {
+        let reply = Value::Object(vec![(Utf16::from("kind"), Value::String(Utf16::from("semantic-throw")))]);
+        let get_event = HostJsonEvent::GetOpaqueProperty {
+            receiver: HostInvokeValue::Undefined,
+            key: HostOpaqueKey::IteratorSymbol,
+            semantic_catch: false,
+        };
+        assert!(decode_reply(&get_event, reply.clone(), &mut BTreeMap::new()).is_err());
+        let invoke_event = HostJsonEvent::InvokeOpaque {
+            function: 1,
+            receiver: HostInvokeValue::Undefined,
+            args: Vec::new(),
+            semantic_catch: false,
+        };
+        assert!(decode_reply(&invoke_event, reply, &mut BTreeMap::new()).is_err());
+    }
 }

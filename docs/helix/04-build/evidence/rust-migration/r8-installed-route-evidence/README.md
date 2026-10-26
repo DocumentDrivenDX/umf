@@ -53,6 +53,9 @@ retained-value control. The Core Inspectors current harness accepts a caller
 supplied expected closure and explicit local port; the direct checked-in
 harness receipt is used, rather than the preliminary temporary-copy probe.
 This remains a private evidence cohort, not full parity or release approval.
+Later Rust source changes and a post-replay whitespace correction mean this
+cohort is now historical relative to the moving worktree. Re-run the archive
+preflight, aggregate gate and host replays only on a new fixed-point cut.
 
 ## Required archive and receipt binding
 

@@ -25,9 +25,11 @@ ddx:
 
 # Core Selection provider implementation preparation
 
-This is a read-only file-level implementation proposal for a raw-host Rust
-Core Selection route. It does not authorize source edits while the coordinated
-source freeze remains active. The prior [Registry addendum](../r8-selection-reference-host-baseline/registry-provider-design-20261026.md#addendum-caller-owned-registration-behavior-2026-10-26)
+This file began as a read-only implementation proposal during a coordinated
+source freeze. That freeze has since been lifted for the reviewed scoped
+implementation work; the decisions below define interface and parity gates,
+not an authorization for default-route selection. The prior
+[Registry addendum](../r8-selection-reference-host-baseline/registry-provider-design-20261026.md#addendum-caller-owned-registration-behavior-2026-10-26)
 corrects the original schema-recompilation proposal: a JS `Registry.get` may
 return an arbitrary registration whose getters and structure function are
 part of the predecessor behavior.
@@ -185,3 +187,197 @@ The existing host-shape baseline already reports that arbitrary registration
 property access is observable and that structure false produces source
 validation diagnostics. Its Node/Bun/Chromium receipts are TypeScript
 predecessor evidence only. No Rust behavior is qualified by this packet.
+
+## Sol interface direction after the interleaved Registry baseline
+
+The later [reference baseline](../r8-selection-reference-host-baseline/README.md)
+pins an exact 47-event trace: three `registered` demand sites precede four
+document/element payload lookups, with seven `Registry.get` calls and no
+memoization. The Node, Bun and Chromium references agree. This still says
+nothing about Rust route parity.
+
+The production direction is a crate-private, invocation-local provider with
+lazy lookup at those same Rust evaluation sites. The static implementation
+borrows the existing `Registration`; the host implementation retains an
+opaque handle to each caller-owned JavaScript registration. It must not
+convert a host registration to Rust `Registration`, enumerate it early, or
+change the public `Registry` API. The Rust state machine will own scope,
+structure, capability, semantic and diagnostic branching. Node and WASM host
+dispatchers will expose only ordered property-get, call-with-receiver,
+truthiness/nullish and iteration operations on opaque handles. This keeps
+UMF's executable decision logic in Rust while preserving caller getter,
+Proxy, callback, receiver and thrown-value behavior. A single host-side
+`evaluate_registration` composite is rejected for this port because it would
+leave those UMF branches in JavaScript.
+
+The host adapter must materialize fresh predecessor-compatible payload and
+document copies from Rust-owned values at the exact predecessor stages: arrays
+retain the native array prototype and objects use null prototypes. Retain
+unknown callback diagnostic fields and iteration order. The semantic result
+spread catches the callback invocation and each iterator operation's first
+throw for one `String(error)` conversion; a failure in that conversion, and
+every Registry, structure, or `structure.errors` failure, propagates by exact
+identity through the shared thrown slot. An omitted Registry gets a
+fresh empty host Registry for each call; an explicit argument follows the
+TypeScript default-parameter rules. The ordinary no-`kindRuntime` path and
+the `kindRuntime.validateDocument` branch remain distinct. The latter is not
+eligible for the selected Rust route until separately specified and tested.
+
+This is a reviewed interface choice, not an implementation or release claim.
+The following closed primitive event/reply schema is the implementation
+foundation. It extends the private `umf.host-json/1` dispatcher; it does not add
+a wire operation or default route.
+
+### Opaque callback primitive protocol
+
+`get-opaque-property` has request fields `receiver`, `key`, and `semanticCatch`. The receiver
+uses the `invoke-opaque` receiver encoding below, so primitive property reads
+retain JavaScript boxing while null and undefined reads throw natively. `key`
+is either `{kind: "string", units: u16[]}` or `{kind: "iterator-symbol"}`.
+It performs one ordinary `receiver[key]` read with the original receiver. When
+`semanticCatch` is false, a throw uses the exact-identity `host-exception` slot.
+When true, the catch covers only that property access, stringifies the first
+thrown value exactly once, and returns `semantic-throw` with a StringRef; if
+stringification throws, that new thrown value uses the identity slot. Rust must
+set this only for the semantic result iterable's `Symbol.iterator`, iterator
+`next`, `done`, and `value` operations. Registry, structure, lookup, and
+`structure.errors` reads use false. Its ordinary success reply is
+`{kind: "opaque-value", value: V}`. `V` is one of `{kind: "undefined"}`,
+`{kind: "null"}`, `{kind: "boolean", value: bool}`,
+`{kind: "number", bits: 16-hex IEEE-754 bits}`,
+`{kind: "string", token: u64, units: usize}`, or
+`{kind: "opaque", handle: u64, opaqueType: "object"|"function"|"symbol"}`, or
+`{kind: "bigint", handle: u64, isZero: bool}`. Opaque handles refer to
+objects, functions or symbols; `opaqueType` is an inert `typeof` distinction,
+and missing or unknown values are protocol errors.
+bigint handles preserve identity and carry the zero bit needed for JavaScript
+truthiness (`0n` is falsy). Neither handle kind claims JSON compatibility or
+callability. `undefined`, `null`, all number bit patterns and UTF-16 string
+units remain distinct. No coercion is performed.
+
+`invoke-opaque` has fields `function`, `receiver`, `args`, and
+`semanticCatch`. A receiver/argument is `{kind: "undefined"}`,
+`{kind: "opaque", handle: u64}`, or `{kind: "json", value: TaggedJson}`;
+`TaggedJson` is the existing `umf.core-wire/1` tagged Value tree. Primitive
+values are rehydrated directly, preserving UTF-16 units and IEEE-754 bits,
+including NaN, infinities, and negative zero, without admission or coercion.
+Arrays and objects are materialized as fresh predecessor-compatible callback
+copies: arrays retain the native array prototype and objects use null
+prototypes. Arguments are an ordered array. The dispatcher uses
+`Reflect.apply(function, receiver, args)` once.
+With `semanticCatch: false`, a throw sets the existing invocation `thrown`
+slot and returns the ordinary `host-exception` marker. With
+`semanticCatch: true`, the catch is scoped only to that invocation: it runs
+`String(error)` exactly once and replies
+`{kind: "semantic-throw", message: StringRef}`. If string conversion throws,
+that new thrown value enters the existing exact-identity slot. Success replies
+`{kind: "invocation", value: V}` with the same `V` representation above.
+
+`string-concat` carries a UTF-16 `prefix` and one `value` using the same
+receiver/argument encoding. The prefix is reconstructed as a JavaScript string
+and the dispatcher performs exactly `prefix + value`; because the left operand
+is a string this invokes native ToPrimitive with hint `default`, followed by
+native string conversion. A successful reply is the existing
+`opaque-value`/StringRef form. Throws use the ordinary exact-identity host
+exception slot. Rust charges one host operation and the returned UTF-16 units
+before reading the result string. Native coercion work inside JavaScript cannot
+be metered by this primitive, so this does not establish resource parity. The
+primitive is intended for `at + error.instancePath`; it does not implement the
+enclosing structure diagnostic flow.
+
+The JS dispatcher does not implement truthiness, nullish tests, callback
+branching, or iteration. Rust evaluates truthiness/nullish from `V` (object,
+function and symbol handles are truthy; bigint carries its zero bit); it drives
+iterator use by reading `Symbol.iterator`, invoking it with its receiver,
+reading `next`, invoking it, and reading `done` and `value` in predecessor
+order. Semantic-result iteration requests semantic catch for each primitive
+get/invoke; other iteration requests do not. Every event remains synchronous.
+No unknown callback value is flattened or converted to a diagnostic by this
+foundation. How arbitrary callback diagnostic objects enter the
+existing Rust result model under one `Context` remains unresolved and blocks
+the provider implementation/default route until separately designed.
+
+The core iterable helper uses deferred `HostOpaqueValue` carriers: it must
+finish the semantic spread before invoking `copy_host_json` for yielded
+objects, because the TypeScript `copyJson` occurs after all callback/iterator
+effects. The current core `Validation`/`Diagnostic` types cannot retain
+unknown diagnostic members. The predecessor drains each semantic iterable,
+then `emit` reads `.severity` on its yielded diagnostics before the next
+payload callback. Once callbacks finish, `validateDocument` reads severity
+again in order through `.some`, short-circuiting at the first error; only then
+does final Selection copy reflect diagnostic descriptors. Provider integration
+must preserve those stages and timing with deferred opaque carriers, ordered
+severity reads, and a result model that preserves unknown fields. No final
+Selection result is implemented here.
+
+The path-aware copy helper now accepts an enclosing path and base depth, but
+whole-result value/depth accounting remains an integration gate. Diagnostics
+from multiple callbacks share one output array, while this private helper
+currently indexes each batch from zero; the caller must provide a global index
+offset or materialize the concatenated deferred array once. `string-concat`
+provides the native ToPrimitive/string-conversion primitive for
+`structure.errors`, and the private `collect_structure_errors` helper stages
+the preceding `instancePath` get, concatenation, and following `message` get.
+The helper treats nullish `errors` as an empty list; otherwise it drives
+`Symbol.iterator`, `next`, `done`, and `value` with ordinary uncaught host
+operations. Messages remain opaque for the later diagnostic emitter. Host
+throws stop immediately and use the existing exact-identity slot. Missing or
+noncallable iterator methods, primitive iterator results, and other native
+iterator TypeError cases return an explicit unresolved outcome; the helper
+does not manufacture their messages. Scripted tests cover successful order and
+coercion, nullish cases, unresolved iteration, and stop-on-throw. This remains
+helper-only qualification and does not establish provider or end-to-end
+structure-diagnostic parity.
+The helper uses the live `Context`, charging each property/invoke event and
+iterator step, along with primitive receiver, prefix, and result UTF-16 units.
+It cannot meter user code executed inside native ToPrimitive or iterator
+operations, so this is not a resource-equivalence claim.
+
+Loop-body abrupt completions now issue a private `close-opaque-iterator`
+host primitive only for `HOST_JSON_CALLBACK` from the `instancePath` read,
+string concatenation/ToPrimitive, or `message` read. The dispatcher performs
+`GetMethod(iterator, "return")` and calls it with the iterator as receiver;
+with the original throw pending, return getter/call errors and non-object return
+results are suppressed so the first thrown identity remains authoritative.
+Iterator acquisition, `next`, `done`, and `value` failures do not request close.
+The focused scripted core test and Node/WASM event-codec tests pass. The fake
+addon probe passes on the Node adapter under Bun 1.4.3 and real Chromium
+153.0.8010.12 for return-getter throw, return-call throw, primitive return, and
+malformed close-handle controls, each preserving the original body throw. This
+qualifies the cleanup primitive only: host-side user code remains unmetered,
+resource accounting is not equivalent, and no Selection/default route is wired
+or proven.
+
+This materialization issue is observable: successful Selection includes
+`sourceValidation` verbatim, while refusal construction stringifies the
+diagnostics. Before provider/default-route work, prove parity for semantic
+diagnostics with unknown own fields and order, plus a returned iterable whose
+`Symbol.iterator`, `next`, `done`, and `value` getters/calls have observable
+effects. Include a negative control where a value cannot be faithfully copied;
+do not silently normalize it into the fixed Rust `Diagnostic` shape.
+Also unresolved is the predecessor's `...semanticResult` failure for a
+non-iterable value (`undefined`, number, or plain object): its native TypeError
+message is converted to a diagnostic inside the same semantic catch. The
+Node, Bun, and Chromium messages are pinned in the reference receipts;
+a Rust-owned reproduction strategy remains required before selecting that
+behavior.
+
+The focused fake-addon probe passed in Bun 1.4.3 against both the Node host
+module and the bundled WASM host module in real Chromium (unsandboxed
+Playwright). All ten reported flags passed in both hosts: getter/call receiver
+and order, BigInt zero distinctions, semantic callback/getter catching and
+one-time stringification, stringification-throw identity, malformed-handle
+rejection, native null-property access, string-concat default hint and BigInt
+conversion, ordinary `valueOf` then `toString` fallback order, coercion-throw
+identity, and Symbol TypeError. This was the earlier bounded host-dispatch
+checkpoint. The later [18-assertion primitive packet](../r8-selection-host-primitive-dispatch/README.md)
+passes independently in Node 26.12.1, Bun 1.4.3 and real Chromium
+153.0.8010.12. It additionally covers ordered mixed static/opaque diagnostic
+serialization, live `JSON.stringify`, deferred inherited Error-message reads,
+and IteratorClose preserving the first body throw through return-getter/call
+faults. It still does not exercise a Selection route, complete callback-result
+materialization, or Rust Selection parity. Rust `host_json` tests and
+Node/WASM codec tests remain separate code-level checks for this foundation.
+
+This protocol is an internal foundation only. It does not implement a Registry
+provider, change the TypeScript API, or authorize a default route.

@@ -845,6 +845,24 @@ impl Engine {
         registry: &Registry,
         capabilities: &mut dyn Capabilities,
         ctx: &mut Context<'_>,
+        observer: Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
+    ) -> Result<Validation, EngineError> {
+        let provider = crate::registry::StaticRegistrationProvider(registry);
+        self.validate_document_observed_fallible_with_provider(
+            value,
+            &provider,
+            capabilities,
+            ctx,
+            observer,
+        )
+    }
+
+    pub(crate) fn validate_document_observed_fallible_with_provider(
+        &self,
+        value: &Value,
+        provider: &dyn crate::registry::RegistrationProvider,
+        capabilities: &mut dyn Capabilities,
+        ctx: &mut Context<'_>,
         mut observer: Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
     ) -> Result<Validation, EngineError> {
         let document = match copy_json(value, ctx) {
@@ -870,7 +888,7 @@ impl Engine {
         if let Some(observer) = observer.as_deref_mut() {
             observer("document-copy", crate::dataset_values::tree_values(value))?;
         }
-        self.validate_admitted_document(document, None, registry, capabilities, ctx, observer)
+        self.validate_admitted_document(document, None, provider, capabilities, ctx, observer)
     }
 
     /// Validate one value against an explicitly selected Field in the current
@@ -984,10 +1002,11 @@ impl Engine {
             }
             Err(error) => return Err(error),
         };
+        let provider = crate::registry::StaticRegistrationProvider(registry);
         self.validate_admitted_document(
             document,
             Some(Arc::new(source_snapshot)),
-            registry,
+            &provider,
             capabilities,
             ctx,
             None,
@@ -998,7 +1017,7 @@ impl Engine {
         &self,
         document: Value,
         source_document: Option<Arc<crate::python_value::PythonConsumerValue>>,
-        registry: &Registry,
+        registry: &dyn crate::registry::RegistrationProvider,
         capabilities: &mut dyn Capabilities,
         ctx: &mut Context<'_>,
         observer: Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
@@ -1020,7 +1039,7 @@ impl Engine {
                 ctx,
             )?
         } else {
-            crate::constraints::execute_constraints_admitted_observed(
+            crate::constraints::execute_constraints_admitted_observed_with_provider(
                 &document,
                 &self.program,
                 &self.resources.domain_policy,
@@ -1174,10 +1193,11 @@ impl Engine {
             ));
         }
         let (document, source_snapshot) = source.admit_core_snapshot(ctx)?;
+        let provider = crate::registry::StaticRegistrationProvider(registry);
         self.run_constraints_with_source(
             &document,
             Arc::new(source_snapshot),
-            registry,
+            &provider,
             capabilities,
             ctx,
         )
@@ -1187,7 +1207,7 @@ impl Engine {
         &self,
         document: &Value,
         source_document: Arc<crate::python_value::PythonConsumerValue>,
-        registry: &Registry,
+        registry: &dyn crate::registry::RegistrationProvider,
         capabilities: &mut dyn Capabilities,
         ctx: &mut Context<'_>,
     ) -> Result<Vec<Diagnostic>, EngineError> {
@@ -1195,7 +1215,7 @@ impl Engine {
             inner: capabilities,
             source_document,
         };
-        execute_constraints_admitted(
+        crate::constraints::execute_constraints_admitted_with_provider(
             document,
             &self.program,
             &self.resources.domain_policy,
@@ -1232,6 +1252,91 @@ impl Engine {
     }
     pub fn reference_schema(&self) -> &CompiledSchema {
         &self.reference
+    }
+}
+
+#[cfg(test)]
+mod registration_provider_tests {
+    use super::*;
+    use crate::{
+        serialization::{read_json_value, Format},
+        value::Utf16,
+    };
+    use std::cell::Cell;
+
+    struct RejectIfCalled(Cell<usize>);
+
+    impl crate::registry::RegistrationProvider for RejectIfCalled {
+        fn lookup<'a>(
+            &'a self,
+            _id: &Utf16,
+            _version: &Utf16,
+            _ctx: &mut Context<'_>,
+        ) -> Result<Option<crate::registry::RegistrationLookup<'a>>, EngineError> {
+            self.0.set(self.0.get() + 1);
+            Err(EngineError::new(
+                "UNEXPECTED_LOOKUP",
+                Utf16::default(),
+                "registration lookup must follow the structural gate",
+            ))
+        }
+    }
+
+    fn parse(source: &str) -> Value {
+        read_json_value(
+            &source.encode_utf16().collect::<Vec<_>>(),
+            Format::Json,
+            &mut Context::ordinary(),
+        )
+        .unwrap()
+    }
+
+    #[test]
+    fn admitted_validation_keeps_structural_refusal_before_provider_access() {
+        let engine = Engine::new(
+            ResourceSet::new(
+                parse(include_str!("../../../spec/core/schema.json")),
+                parse(include_str!(
+                    "../../../spec/core/semantic-type-reference.schema.json"
+                )),
+                parse(include_str!(
+                    "../../../spec/core/extension-package.schema.json"
+                )),
+                parse(include_str!(
+                    "../../../spec/metamodel/generated/core-constraints.json"
+                )),
+                parse(include_str!(
+                    "../../../spec/metamodel/generated/domain-policy.json"
+                )),
+            ),
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        let provider = RejectIfCalled(Cell::new(0));
+        let result = engine
+            .validate_document_observed_fallible_with_provider(
+                &Value::Null,
+                &provider,
+                &mut NoCapabilities,
+                &mut Context::ordinary(),
+                None,
+            )
+            .unwrap();
+        assert!(!result.valid);
+        assert_eq!(provider.0.get(), 0);
+    }
+
+    struct NoCapabilities;
+
+    impl Capabilities for NoCapabilities {
+        fn validate_extension(
+            &mut self,
+            _token: u64,
+            _payload: &Value,
+            _context: &SemanticContext,
+        ) -> Result<Vec<Diagnostic>, Utf16> {
+            Ok(Vec::new())
+        }
     }
 }
 

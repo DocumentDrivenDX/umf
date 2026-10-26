@@ -2137,6 +2137,1032 @@
     "thrownIdentity": true,
     "lookupCount": 2
   },
+  "callback:iterable-diagnostics": {
+    "ok": true,
+    "calls": 2,
+    "sourceValidation": {
+      "valid": true,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "ITERABLE_FIRST",
+          "path": "/extensions/future",
+          "message": "first",
+          "severity": "warning",
+          "origin": {
+            "ordinal": 1,
+            "keep": true
+          }
+        },
+        {
+          "code": "ITERABLE_SECOND",
+          "path": "/extensions/future",
+          "message": "second",
+          "severity": "warning",
+          "origin": {
+            "ordinal": 2,
+            "keep": true
+          }
+        },
+        {
+          "code": "ITERABLE_FIRST",
+          "path": "/modules/0/elements/0/extensions/future",
+          "message": "first",
+          "severity": "warning",
+          "origin": {
+            "ordinal": 1,
+            "keep": true
+          }
+        },
+        {
+          "code": "ITERABLE_SECOND",
+          "path": "/modules/0/elements/0/extensions/future",
+          "message": "second",
+          "severity": "warning",
+          "origin": {
+            "ordinal": 2,
+            "keep": true
+          }
+        },
+        {
+          "code": "UNKNOWN_CORE_FIELD",
+          "path": "/modules/0/elements/0/references/0/future",
+          "message": "Field retained without interpretation",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_SCALAR_TYPE",
+          "path": "/modules/1/elements/0/scalarType",
+          "message": "Scalar family retained without interpretation",
+          "severity": "warning"
+        }
+      ]
+    },
+    "selection": [
+      {
+        "module": "sales",
+        "namespace": "sales",
+        "path": "/modules/0/elements/0",
+        "element": {
+          "id": "customer",
+          "name": "Customer",
+          "scalarType": "integer",
+          "extensions": {
+            "future": {
+              "opaque": [
+                1,
+                {
+                  "retain": true
+                }
+              ]
+            }
+          },
+          "references": [
+            {
+              "role": "account",
+              "module": "billing",
+              "element": "account",
+              "future": "annotation"
+            },
+            {
+              "role": "account",
+              "module": "billing",
+              "element": "account"
+            }
+          ]
+        },
+        "includedBy": "match"
+      },
+      {
+        "module": "support",
+        "namespace": "support",
+        "path": "/modules/1/elements/0",
+        "element": {
+          "id": "customer",
+          "name": "Customer",
+          "scalarType": "future-scalar",
+          "extensions": {}
+        },
+        "includedBy": "match"
+      },
+      {
+        "module": "billing",
+        "namespace": "billing",
+        "path": "/modules/2/elements/0",
+        "element": {
+          "id": "account",
+          "name": "AccountHolder",
+          "scalarType": "string",
+          "extensions": {},
+          "references": [
+            {
+              "role": "owner",
+              "module": "sales",
+              "element": "customer"
+            }
+          ]
+        },
+        "includedBy": "match"
+      }
+    ],
+    "trace": [
+      "semantic0:iterator-get",
+      "semantic0:iterator-call",
+      "semantic0:next-get",
+      "semantic0:next-call:0",
+      "semantic0:done:0",
+      "semantic0:value:0",
+      "semantic0:next-call:1",
+      "semantic0:done:1",
+      "semantic0:value:1",
+      "semantic0:next-call:2",
+      "semantic0:done:2",
+      "semantic1:iterator-get",
+      "semantic1:iterator-call",
+      "semantic1:next-get",
+      "semantic1:next-call:0",
+      "semantic1:done:0",
+      "semantic1:value:0",
+      "semantic1:next-call:1",
+      "semantic1:done:1",
+      "semantic1:value:1",
+      "semantic1:next-call:2",
+      "semantic1:done:2"
+    ]
+  },
+  "callback:spread-undefined": {
+    "ok": false,
+    "error": {
+      "name": "UmfError",
+      "code": "CORE_SELECTION_SOURCE",
+      "path": "",
+      "message": "[{\"code\":\"VALIDATOR_FAILURE\",\"path\":\"/extensions/future\",\"message\":\"TypeError: Spread syntax requires ...iterable not be null or undefined\",\"severity\":\"error\"},{\"code\":\"VALIDATOR_FAILURE\",\"path\":\"/modules/0/elements/0/extensions/future\",\"message\":\"TypeError: Spread syntax requires ...iterable not be null or undefined\",\"severity\":\"error\"},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/0/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"},{\"code\":\"UNKNOWN_SCALAR_TYPE\",\"path\":\"/modules/1/elements/0/scalarType\",\"message\":\"Scalar family retained without interpretation\",\"severity\":\"warning\"}]"
+    }
+  },
+  "callback:spread-number": {
+    "ok": false,
+    "error": {
+      "name": "UmfError",
+      "code": "CORE_SELECTION_SOURCE",
+      "path": "",
+      "message": "[{\"code\":\"VALIDATOR_FAILURE\",\"path\":\"/extensions/future\",\"message\":\"TypeError: Spread syntax requires ...iterable[Symbol.iterator] to be a function\",\"severity\":\"error\"},{\"code\":\"VALIDATOR_FAILURE\",\"path\":\"/modules/0/elements/0/extensions/future\",\"message\":\"TypeError: Spread syntax requires ...iterable[Symbol.iterator] to be a function\",\"severity\":\"error\"},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/0/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"},{\"code\":\"UNKNOWN_SCALAR_TYPE\",\"path\":\"/modules/1/elements/0/scalarType\",\"message\":\"Scalar family retained without interpretation\",\"severity\":\"warning\"}]"
+    }
+  },
+  "callback:spread-plain-object": {
+    "ok": false,
+    "error": {
+      "name": "UmfError",
+      "code": "CORE_SELECTION_SOURCE",
+      "path": "",
+      "message": "[{\"code\":\"VALIDATOR_FAILURE\",\"path\":\"/extensions/future\",\"message\":\"TypeError: Spread syntax requires ...iterable[Symbol.iterator] to be a function\",\"severity\":\"error\"},{\"code\":\"VALIDATOR_FAILURE\",\"path\":\"/modules/0/elements/0/extensions/future\",\"message\":\"TypeError: Spread syntax requires ...iterable[Symbol.iterator] to be a function\",\"severity\":\"error\"},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/0/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"},{\"code\":\"UNKNOWN_SCALAR_TYPE\",\"path\":\"/modules/1/elements/0/scalarType\",\"message\":\"Scalar family retained without interpretation\",\"severity\":\"warning\"}]"
+    }
+  },
+  "callback:semantic-iterator-value-fault": {
+    "thrownIdentity": false,
+    "outcome": {
+      "name": "UmfError",
+      "code": "CORE_SELECTION_SOURCE",
+      "path": "",
+      "message": "[{\"code\":\"VALIDATOR_FAILURE\",\"path\":\"/extensions/future\",\"message\":\"[object Object]\",\"severity\":\"error\"},{\"code\":\"VALIDATOR_FAILURE\",\"path\":\"/modules/0/elements/0/extensions/future\",\"message\":\"[object Object]\",\"severity\":\"error\"},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/0/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"},{\"code\":\"UNKNOWN_SCALAR_TYPE\",\"path\":\"/modules/1/elements/0/scalarType\",\"message\":\"Scalar family retained without interpretation\",\"severity\":\"warning\"}]"
+    },
+    "trace": [
+      "semantic-fault:iterator-get",
+      "semantic-fault:iterator-call",
+      "semantic-fault:next-get",
+      "semantic-fault:next-call:0",
+      "semantic-fault:done:0",
+      "semantic-fault:value:0",
+      "semantic-fault:iterator-get",
+      "semantic-fault:iterator-call",
+      "semantic-fault:next-get",
+      "semantic-fault:next-call:0",
+      "semantic-fault:done:0",
+      "semantic-fault:value:0"
+    ]
+  },
+  "callback:non-json-diagnostic-member": {
+    "thrownIdentity": false,
+    "outcome": {
+      "name": "UmfError",
+      "code": "NON_JSON",
+      "path": "/sourceValidation/diagnostics/0/unknown",
+      "message": "Value is not JSON-compatible"
+    }
+  },
+  "callback:diagnostic-severity-timing": {
+    "ok": true,
+    "calls": 2,
+    "trace": [
+      "callback:0",
+      "timing0:iterator-get",
+      "timing0:iterator-call",
+      "timing0:next-get",
+      "timing0:next-call:0",
+      "timing0:done:0",
+      "timing0:value:0",
+      "timing0:next-call:1",
+      "timing0:done:1",
+      "timing0:value:1",
+      "timing0:next-call:2",
+      "timing0:done:2",
+      "severity:0",
+      "severity:1",
+      "callback:1",
+      "timing1:iterator-get",
+      "timing1:iterator-call",
+      "timing1:next-get",
+      "timing1:next-call:0",
+      "timing1:done:0",
+      "timing1:value:0",
+      "timing1:next-call:1",
+      "timing1:done:1",
+      "timing1:value:1",
+      "timing1:next-call:2",
+      "timing1:done:2",
+      "severity:2",
+      "severity:3",
+      "severity:0",
+      "severity:1",
+      "severity:2",
+      "severity:3",
+      "final-copy:ownKeys:0",
+      "final-copy:ownKeys:0",
+      "final-copy:descriptor:0:code",
+      "final-copy:descriptor:0:path",
+      "final-copy:descriptor:0:message",
+      "final-copy:descriptor:0:severity",
+      "final-copy:descriptor:0:unknown",
+      "final-copy:ownKeys:1",
+      "final-copy:ownKeys:1",
+      "final-copy:descriptor:1:code",
+      "final-copy:descriptor:1:path",
+      "final-copy:descriptor:1:message",
+      "final-copy:descriptor:1:severity",
+      "final-copy:descriptor:1:unknown",
+      "final-copy:ownKeys:2",
+      "final-copy:ownKeys:2",
+      "final-copy:descriptor:2:code",
+      "final-copy:descriptor:2:path",
+      "final-copy:descriptor:2:message",
+      "final-copy:descriptor:2:severity",
+      "final-copy:descriptor:2:unknown",
+      "final-copy:ownKeys:3",
+      "final-copy:ownKeys:3",
+      "final-copy:descriptor:3:code",
+      "final-copy:descriptor:3:path",
+      "final-copy:descriptor:3:message",
+      "final-copy:descriptor:3:severity",
+      "final-copy:descriptor:3:unknown"
+    ],
+    "diagnostics": [
+      {
+        "code": "TIMING_0",
+        "path": "/timing",
+        "message": "diag 0",
+        "severity": "warning",
+        "unknown": {
+          "ordinal": 0
+        }
+      },
+      {
+        "code": "TIMING_1",
+        "path": "/timing",
+        "message": "diag 1",
+        "severity": "warning",
+        "unknown": {
+          "ordinal": 1
+        }
+      },
+      {
+        "code": "TIMING_2",
+        "path": "/timing",
+        "message": "diag 2",
+        "severity": "warning",
+        "unknown": {
+          "ordinal": 2
+        }
+      },
+      {
+        "code": "TIMING_3",
+        "path": "/timing",
+        "message": "diag 3",
+        "severity": "warning",
+        "unknown": {
+          "ordinal": 3
+        }
+      }
+    ]
+  },
+  "callback:diagnostic-severity-short-circuit": {
+    "ok": false,
+    "calls": 2,
+    "trace": [
+      "callback:0",
+      "short0:iterator-get",
+      "short0:iterator-call",
+      "short0:next-get",
+      "short0:next-call:0",
+      "short0:done:0",
+      "short0:value:0",
+      "short0:next-call:1",
+      "short0:done:1",
+      "short0:value:1",
+      "short0:next-call:2",
+      "short0:done:2",
+      "severity:0",
+      "severity:1",
+      "callback:1",
+      "short1:iterator-get",
+      "short1:iterator-call",
+      "short1:next-get",
+      "short1:next-call:0",
+      "short1:done:0",
+      "short1:value:0",
+      "short1:next-call:1",
+      "short1:done:1",
+      "short1:value:1",
+      "short1:next-call:2",
+      "short1:done:2",
+      "severity:2",
+      "severity:3",
+      "severity:0",
+      "severity:1",
+      "refusal:ownKeys:0",
+      "refusal:descriptor:0:code",
+      "refusal:descriptor:0:path",
+      "refusal:descriptor:0:message",
+      "refusal:descriptor:0:severity",
+      "refusal:descriptor:0:unknown",
+      "severity:0",
+      "refusal:ownKeys:1",
+      "refusal:descriptor:1:code",
+      "refusal:descriptor:1:path",
+      "refusal:descriptor:1:message",
+      "refusal:descriptor:1:severity",
+      "refusal:descriptor:1:unknown",
+      "severity:1",
+      "refusal:ownKeys:2",
+      "refusal:descriptor:2:code",
+      "refusal:descriptor:2:path",
+      "refusal:descriptor:2:message",
+      "refusal:descriptor:2:severity",
+      "refusal:descriptor:2:unknown",
+      "severity:2",
+      "refusal:ownKeys:3",
+      "refusal:descriptor:3:code",
+      "refusal:descriptor:3:path",
+      "refusal:descriptor:3:message",
+      "refusal:descriptor:3:severity",
+      "refusal:descriptor:3:unknown",
+      "severity:3"
+    ],
+    "error": {
+      "name": "UmfError",
+      "code": "CORE_SELECTION_SOURCE",
+      "path": "",
+      "message": "[{\"code\":\"SHORT_0\",\"path\":\"/short\",\"message\":\"diag 0\",\"severity\":\"warning\",\"unknown\":0},{\"code\":\"SHORT_1\",\"path\":\"/short\",\"message\":\"diag 1\",\"severity\":\"error\",\"unknown\":1},{\"code\":\"SHORT_2\",\"path\":\"/short\",\"message\":\"diag 2\",\"severity\":\"warning\",\"unknown\":2},{\"code\":\"SHORT_3\",\"path\":\"/short\",\"message\":\"diag 3\",\"severity\":\"warning\",\"unknown\":3},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/0/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"},{\"code\":\"UNKNOWN_SCALAR_TYPE\",\"path\":\"/modules/1/elements/0/scalarType\",\"message\":\"Scalar family retained without interpretation\",\"severity\":\"warning\"}]"
+    }
+  },
+  "callback:live-json-stringify-on-refusal": {
+    "ok": false,
+    "error": {
+      "name": "UmfError",
+      "code": "CORE_SELECTION_SOURCE",
+      "path": "",
+      "message": "[{\"code\":\"LIVE_STRINGIFY\",\"path\":\"/live\",\"message\":\"error\",\"severity\":\"error\"},{\"code\":\"LIVE_STRINGIFY\",\"path\":\"/live\",\"message\":\"error\",\"severity\":\"error\"},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/0/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"},{\"code\":\"UNKNOWN_SCALAR_TYPE\",\"path\":\"/modules/1/elements/0/scalarType\",\"message\":\"Scalar family retained without interpretation\",\"severity\":\"warning\"}]"
+    },
+    "calls": 223,
+    "stringifyCalls": [
+      {
+        "receiverIsJson": true,
+        "isArray": true,
+        "codes": [
+          "LIVE_STRINGIFY",
+          "LIVE_STRINGIFY",
+          "UNKNOWN_CORE_FIELD",
+          "UNKNOWN_SCALAR_TYPE"
+        ]
+      }
+    ]
+  },
+  "callback:inherited-object-toJSON-on-refusal": {
+    "ok": false,
+    "error": {
+      "name": "UmfError",
+      "code": "CORE_SELECTION_SOURCE",
+      "path": "",
+      "message": "[{\"code\":\"INHERITED_TOJSON\",\"path\":\"/inherited\",\"message\":\"error\",\"severity\":\"error\"},{\"code\":\"INHERITED_TOJSON\",\"path\":\"/inherited\",\"message\":\"error\",\"severity\":\"error\"},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/0/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"},{\"code\":\"UNKNOWN_SCALAR_TYPE\",\"path\":\"/modules/1/elements/0/scalarType\",\"message\":\"Scalar family retained without interpretation\",\"severity\":\"warning\"}]"
+    },
+    "trace": [
+      "array:",
+      "object:INHERITED_TOJSON:0",
+      "object:INHERITED_TOJSON:1",
+      "object:UNKNOWN_CORE_FIELD:2",
+      "object:UNKNOWN_SCALAR_TYPE:3"
+    ]
+  },
+  "callback:diagnostic-json-stringify-order": {
+    "ok": false,
+    "error": {
+      "name": "UmfError",
+      "code": "CORE_SELECTION_SOURCE",
+      "path": "",
+      "message": "[{\"code\":\"STRINGIFY_ORDER\",\"path\":\"/stringify\",\"message\":\"error\",\"severity\":\"error\",\"unknown\":1},{\"code\":\"STRINGIFY_ORDER\",\"path\":\"/stringify\",\"message\":\"error\",\"severity\":\"error\",\"unknown\":1},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/0/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"},{\"code\":\"UNKNOWN_SCALAR_TYPE\",\"path\":\"/modules/1/elements/0/scalarType\",\"message\":\"Scalar family retained without interpretation\",\"severity\":\"warning\"}]"
+    },
+    "trace": [
+      "get:toJSON",
+      "ownKeys",
+      "descriptor:code",
+      "descriptor:path",
+      "descriptor:message",
+      "descriptor:severity",
+      "descriptor:unknown",
+      "get:code",
+      "get:path",
+      "get:message",
+      "get:severity",
+      "get:unknown",
+      "get:toJSON",
+      "ownKeys",
+      "descriptor:code",
+      "descriptor:path",
+      "descriptor:message",
+      "descriptor:severity",
+      "descriptor:unknown",
+      "get:code",
+      "get:path",
+      "get:message",
+      "get:severity",
+      "get:unknown"
+    ]
+  },
+  "callback:diagnostic-json-stringify-getter-throw": {
+    "thrownIdentity": true,
+    "trace": [
+      "get:toJSON",
+      "ownKeys",
+      "descriptor:code",
+      "descriptor:path",
+      "descriptor:message",
+      "descriptor:severity",
+      "get:code",
+      "get:path",
+      "get:message",
+      "get:severity"
+    ]
+  },
+  "registration:structure-error-coercions": {
+    "outcome": {
+      "name": "UmfError",
+      "code": "CORE_SELECTION_SOURCE",
+      "message": "[{\"code\":\"EXTENSION_STRUCTURE\",\"path\":\"/extensions/future/coerced\",\"message\":\"message string\",\"severity\":\"error\"},{\"code\":\"EXTENSION_STRUCTURE\",\"path\":\"/modules/0/elements/0/extensions/future/coerced\",\"message\":\"message string\",\"severity\":\"error\"},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/0/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"},{\"code\":\"UNKNOWN_SCALAR_TYPE\",\"path\":\"/modules/1/elements/0/scalarType\",\"message\":\"Scalar family retained without interpretation\",\"severity\":\"warning\"}]"
+    },
+    "trace": [
+      "errors:get",
+      "instancePath:get",
+      "instancePath:toPrimitive:default",
+      "message:get",
+      "errors:get",
+      "instancePath:get",
+      "instancePath:toPrimitive:default",
+      "message:get"
+    ],
+    "lookupCount": 3
+  },
+  "registration:structure-instancePath-getter-throws": {
+    "thrownIdentity": true,
+    "error": {
+      "name": "instancePath getter",
+      "code": "",
+      "path": "",
+      "message": "[object Object]"
+    },
+    "trace": [
+      "errors:get",
+      "instancePath:get"
+    ],
+    "lookupCount": 2
+  },
+  "registration:structure-instancePath-coercion-throws": {
+    "thrownIdentity": true,
+    "error": {
+      "name": "instancePath coercion",
+      "code": "",
+      "path": "",
+      "message": "[object Object]"
+    },
+    "trace": [
+      "errors:get",
+      "instancePath:get",
+      "instancePath:toPrimitive"
+    ],
+    "lookupCount": 2
+  },
+  "registration:structure-message-getter-throws": {
+    "thrownIdentity": true,
+    "error": {
+      "name": "message getter",
+      "code": "",
+      "path": "",
+      "message": "[object Object]"
+    },
+    "trace": [
+      "errors:get",
+      "message:get"
+    ],
+    "lookupCount": 2
+  },
+  "registration:structure-message-object-not-coerced": {
+    "thrownIdentity": false,
+    "error": {
+      "name": "UmfError",
+      "code": "CONSTRAINT_DIAGNOSTIC",
+      "path": "",
+      "message": "Malformed diagnostic"
+    },
+    "trace": [
+      "errors:get",
+      "message:get"
+    ],
+    "lookupCount": 2
+  },
+  "registration:structure-body-throw-closes-instancePath": {
+    "bodyIdentity": true,
+    "returnCalled": true,
+    "returnThrew": false,
+    "trace": [
+      "errors:get",
+      "iterator:get",
+      "iterator:call",
+      "next:get",
+      "next:0",
+      "done:0",
+      "value:0",
+      "instancePath:get",
+      "return:get",
+      "return:call"
+    ]
+  },
+  "registration:structure-body-throw-closes-coercion": {
+    "bodyIdentity": true,
+    "returnCalled": true,
+    "returnThrew": false,
+    "trace": [
+      "errors:get",
+      "iterator:get",
+      "iterator:call",
+      "next:get",
+      "next:0",
+      "done:0",
+      "value:0",
+      "instancePath:get",
+      "instancePath:toPrimitive:default",
+      "return:get",
+      "return:call"
+    ]
+  },
+  "registration:structure-body-throw-closes-message": {
+    "bodyIdentity": true,
+    "returnCalled": true,
+    "returnThrew": false,
+    "trace": [
+      "errors:get",
+      "iterator:get",
+      "iterator:call",
+      "next:get",
+      "next:0",
+      "done:0",
+      "value:0",
+      "instancePath:get",
+      "message:get",
+      "return:get",
+      "return:call"
+    ]
+  },
+  "registration:structure-body-throw-return-throws": {
+    "bodyIdentity": true,
+    "returnCalled": true,
+    "returnThrew": true,
+    "trace": [
+      "errors:get",
+      "iterator:get",
+      "iterator:call",
+      "next:get",
+      "next:0",
+      "done:0",
+      "value:0",
+      "instancePath:get",
+      "return:get",
+      "return:call"
+    ]
+  },
+  "registration:structure-body-throw-return-primitive": {
+    "bodyIdentity": true,
+    "returnCalled": true,
+    "returnThrew": false,
+    "trace": [
+      "errors:get",
+      "iterator:get",
+      "iterator:call",
+      "next:get",
+      "next:0",
+      "done:0",
+      "value:0",
+      "instancePath:get",
+      "message:get",
+      "return:get",
+      "return:call"
+    ]
+  },
+  "registration:structure-errors-iterator-fault": {
+    "thrownIdentity": true,
+    "trace": [
+      "errors:get",
+      "errors:iterator-get",
+      "errors:iterator-call",
+      "errors:next-get",
+      "errors:next-call:0"
+    ],
+    "lookupCount": 2
+  },
+  "registration:structure-errors-iterator-getter": {
+    "thrownIdentity": true,
+    "trace": [
+      "errors:get",
+      "iterator:get"
+    ],
+    "lookupCount": 2
+  },
+  "registration:structure-errors-next-getter": {
+    "thrownIdentity": true,
+    "trace": [
+      "errors:get",
+      "iterator:get",
+      "iterator:call",
+      "next:get"
+    ],
+    "lookupCount": 2
+  },
+  "registration:structure-errors-next-call": {
+    "thrownIdentity": true,
+    "trace": [
+      "errors:get",
+      "iterator:get",
+      "iterator:call",
+      "next:get",
+      "next:call"
+    ],
+    "lookupCount": 2
+  },
+  "registration:structure-errors-done-getter": {
+    "thrownIdentity": true,
+    "trace": [
+      "errors:get",
+      "iterator:get",
+      "iterator:call",
+      "next:get",
+      "next:call",
+      "result:done"
+    ],
+    "lookupCount": 2
+  },
+  "registration:structure-errors-value-getter": {
+    "thrownIdentity": true,
+    "trace": [
+      "errors:get",
+      "iterator:get",
+      "iterator:call",
+      "next:get",
+      "next:call",
+      "result:done",
+      "result:value"
+    ],
+    "lookupCount": 2
+  },
+  "registration:structure-errors-iterable": {
+    "ok": false,
+    "error": {
+      "name": "UmfError",
+      "code": "CORE_SELECTION_SOURCE",
+      "path": "",
+      "message": "[{\"code\":\"EXTENSION_STRUCTURE\",\"path\":\"/extensions/future/first\",\"message\":\"one\",\"severity\":\"error\"},{\"code\":\"EXTENSION_STRUCTURE\",\"path\":\"/extensions/future/second\",\"message\":\"two\",\"severity\":\"error\"},{\"code\":\"EXTENSION_STRUCTURE\",\"path\":\"/modules/0/elements/0/extensions/future/first\",\"message\":\"one\",\"severity\":\"error\"},{\"code\":\"EXTENSION_STRUCTURE\",\"path\":\"/modules/0/elements/0/extensions/future/second\",\"message\":\"two\",\"severity\":\"error\"},{\"code\":\"UNKNOWN_CORE_FIELD\",\"path\":\"/modules/0/elements/0/references/0/future\",\"message\":\"Field retained without interpretation\",\"severity\":\"warning\"},{\"code\":\"UNKNOWN_SCALAR_TYPE\",\"path\":\"/modules/1/elements/0/scalarType\",\"message\":\"Scalar family retained without interpretation\",\"severity\":\"warning\"}]"
+    },
+    "trace": [
+      "Registry.get:future@1.0.0",
+      "Registry.get:future@1.0.0",
+      "errors:get",
+      "structure-errors:iterator-get",
+      "structure-errors:iterator-call",
+      "structure-errors:next-get",
+      "structure-errors:next-call:0",
+      "structure-errors:done:0",
+      "structure-errors:value:0",
+      "structure-errors:next-call:1",
+      "structure-errors:done:1",
+      "structure-errors:value:1",
+      "structure-errors:next-call:2",
+      "structure-errors:done:2",
+      "Registry.get:future@1.0.0",
+      "errors:get",
+      "structure-errors:iterator-get",
+      "structure-errors:iterator-call",
+      "structure-errors:next-get",
+      "structure-errors:next-call:0",
+      "structure-errors:done:0",
+      "structure-errors:value:0",
+      "structure-errors:next-call:1",
+      "structure-errors:done:1",
+      "structure-errors:value:1",
+      "structure-errors:next-call:2",
+      "structure-errors:done:2"
+    ],
+    "lookupCount": 3
+  },
+  "registration:registered-interleaved-with-payloads": {
+    "ok": true,
+    "value": {
+      "scope": "core-elements",
+      "referenceScope": "explicit-core-references-item-types-members-and-keys",
+      "source": {
+        "umf": "0.10.0",
+        "id": "r5-selection",
+        "vocabularies": {
+          "future": {
+            "version": "1.0.0"
+          },
+          "alpha": {
+            "version": "2.0.0"
+          },
+          "beta": {
+            "version": "3.0.0"
+          }
+        },
+        "extensions": {
+          "alpha": {
+            "at": "document-alpha"
+          },
+          "future": {
+            "at": "document-future"
+          }
+        },
+        "modules": [
+          {
+            "id": "sales",
+            "namespace": "sales",
+            "elements": [
+              {
+                "id": "customer",
+                "name": "Customer",
+                "scalarType": "integer",
+                "extensions": {
+                  "beta": {
+                    "at": "element-beta"
+                  },
+                  "future": {
+                    "at": "element-future"
+                  }
+                },
+                "references": [
+                  {
+                    "role": "account",
+                    "module": "billing",
+                    "element": "account",
+                    "future": "annotation"
+                  },
+                  {
+                    "role": "account",
+                    "module": "billing",
+                    "element": "account"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "support",
+            "namespace": "support",
+            "elements": [
+              {
+                "id": "customer",
+                "name": "Customer",
+                "scalarType": "future-scalar",
+                "extensions": {}
+              }
+            ]
+          },
+          {
+            "id": "billing",
+            "namespace": "billing",
+            "elements": [
+              {
+                "id": "account",
+                "name": "AccountHolder",
+                "scalarType": "string",
+                "extensions": {},
+                "references": [
+                  {
+                    "role": "owner",
+                    "module": "sales",
+                    "element": "customer"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "query": {
+        "references": "none"
+      },
+      "sourceValidation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_CORE_FIELD",
+            "path": "/modules/0/elements/0/references/0/future",
+            "message": "Field retained without interpretation",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_SCALAR_TYPE",
+            "path": "/modules/1/elements/0/scalarType",
+            "message": "Scalar family retained without interpretation",
+            "severity": "warning"
+          }
+        ]
+      },
+      "selection": [
+        {
+          "module": "sales",
+          "namespace": "sales",
+          "path": "/modules/0/elements/0",
+          "element": {
+            "id": "customer",
+            "name": "Customer",
+            "scalarType": "integer",
+            "extensions": {
+              "beta": {
+                "at": "element-beta"
+              },
+              "future": {
+                "at": "element-future"
+              }
+            },
+            "references": [
+              {
+                "role": "account",
+                "module": "billing",
+                "element": "account",
+                "future": "annotation"
+              },
+              {
+                "role": "account",
+                "module": "billing",
+                "element": "account"
+              }
+            ]
+          },
+          "includedBy": "match"
+        },
+        {
+          "module": "support",
+          "namespace": "support",
+          "path": "/modules/1/elements/0",
+          "element": {
+            "id": "customer",
+            "name": "Customer",
+            "scalarType": "future-scalar",
+            "extensions": {}
+          },
+          "includedBy": "match"
+        },
+        {
+          "module": "billing",
+          "namespace": "billing",
+          "path": "/modules/2/elements/0",
+          "element": {
+            "id": "account",
+            "name": "AccountHolder",
+            "scalarType": "string",
+            "extensions": {},
+            "references": [
+              {
+                "role": "owner",
+                "module": "sales",
+                "element": "customer"
+              }
+            ]
+          },
+          "includedBy": "match"
+        }
+      ],
+      "boundaryReferences": [],
+      "boundaryItemTypes": [],
+      "boundaryMembers": [],
+      "boundaryKeyFields": []
+    },
+    "events": [
+      "get:future@1.0.0:receiver=true",
+      "get:alpha@2.0.0:receiver=true",
+      "get:beta@3.0.0:receiver=true",
+      "get:alpha@2.0.0:receiver=true",
+      "entry.manifest",
+      "manifest.scopes",
+      "scopes.includes:document:receiver=true",
+      "entry.structure",
+      "structure:document-alpha:receiver=true",
+      "entry.manifest",
+      "manifest.capabilities",
+      "entry.semantics",
+      "entry.semantics",
+      "semantics:document-alpha:document:receiver=true",
+      "get:future@1.0.0:receiver=true",
+      "entry.manifest",
+      "manifest.scopes",
+      "scopes.includes:document:receiver=true",
+      "entry.structure",
+      "structure:document-future:receiver=true",
+      "entry.manifest",
+      "manifest.capabilities",
+      "entry.semantics",
+      "entry.semantics",
+      "semantics:document-future:document:receiver=true",
+      "get:beta@3.0.0:receiver=true",
+      "entry.manifest",
+      "manifest.scopes",
+      "scopes.includes:element:receiver=true",
+      "entry.structure",
+      "structure:element-beta:receiver=true",
+      "entry.manifest",
+      "manifest.capabilities",
+      "entry.semantics",
+      "entry.semantics",
+      "semantics:element-beta:element:receiver=true",
+      "get:future@1.0.0:receiver=true",
+      "entry.manifest",
+      "manifest.scopes",
+      "scopes.includes:element:receiver=true",
+      "entry.structure",
+      "structure:element-future:receiver=true",
+      "entry.manifest",
+      "manifest.capabilities",
+      "entry.semantics",
+      "entry.semantics",
+      "semantics:element-future:element:receiver=true"
+    ],
+    "expectedEvents": [
+      "get:future@1.0.0:receiver=true",
+      "get:alpha@2.0.0:receiver=true",
+      "get:beta@3.0.0:receiver=true",
+      "get:alpha@2.0.0:receiver=true",
+      "entry.manifest",
+      "manifest.scopes",
+      "scopes.includes:document:receiver=true",
+      "entry.structure",
+      "structure:document-alpha:receiver=true",
+      "entry.manifest",
+      "manifest.capabilities",
+      "entry.semantics",
+      "entry.semantics",
+      "semantics:document-alpha:document:receiver=true",
+      "get:future@1.0.0:receiver=true",
+      "entry.manifest",
+      "manifest.scopes",
+      "scopes.includes:document:receiver=true",
+      "entry.structure",
+      "structure:document-future:receiver=true",
+      "entry.manifest",
+      "manifest.capabilities",
+      "entry.semantics",
+      "entry.semantics",
+      "semantics:document-future:document:receiver=true",
+      "get:beta@3.0.0:receiver=true",
+      "entry.manifest",
+      "manifest.scopes",
+      "scopes.includes:element:receiver=true",
+      "entry.structure",
+      "structure:element-beta:receiver=true",
+      "entry.manifest",
+      "manifest.capabilities",
+      "entry.semantics",
+      "entry.semantics",
+      "semantics:element-beta:element:receiver=true",
+      "get:future@1.0.0:receiver=true",
+      "entry.manifest",
+      "manifest.scopes",
+      "scopes.includes:element:receiver=true",
+      "entry.structure",
+      "structure:element-future:receiver=true",
+      "entry.manifest",
+      "manifest.capabilities",
+      "entry.semantics",
+      "entry.semantics",
+      "semantics:element-future:element:receiver=true"
+    ],
+    "exactEvents": true,
+    "registrationLookupCount": 7
+  },
   "hostCases": {
     "accessor": {
       "ok": false,

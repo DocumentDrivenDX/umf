@@ -315,6 +315,18 @@ pub fn select_core_elements(
     capabilities: &mut dyn Capabilities,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
+    let provider = crate::registry::StaticRegistrationProvider(registry);
+    select_core_elements_with_provider(input, query_input, engine, &provider, capabilities, ctx)
+}
+
+pub(crate) fn select_core_elements_with_provider(
+    input: &Value,
+    query_input: &Value,
+    engine: &Engine,
+    provider: &dyn crate::registry::RegistrationProvider,
+    capabilities: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
     // Match the predecessor ordering: copy both arguments, validate query, then
     // admit the entire source through the supplied engine and registry.
     check_selection_copy_limits(input, ctx)?;
@@ -322,7 +334,13 @@ pub fn select_core_elements(
     check_selection_copy_limits(query_input, ctx)?;
     let query = copy_json(query_input, ctx)?;
     let (transitive, filters, identities) = parse_query(&query)?;
-    let source_validation = engine.validate_document(&source, registry, capabilities, ctx)?;
+    let source_validation = engine.validate_document_observed_fallible_with_provider(
+        &source,
+        provider,
+        capabilities,
+        ctx,
+        None,
+    )?;
     if !source_validation.valid {
         let diagnostics = validation_value(source_validation);
         let message = stringify_compact_metered(get(&diagnostics, "diagnostics").unwrap(), ctx)?;

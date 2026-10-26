@@ -60,6 +60,7 @@ pub mod error;
 pub mod facets;
 pub mod gregorian_date;
 pub mod host_json;
+pub(crate) mod host_diagnostic;
 #[cfg(feature = "embedded-adapters")]
 pub mod iceberg_schema;
 pub mod javascript_numeric;

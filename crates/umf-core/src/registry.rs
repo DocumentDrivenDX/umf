@@ -49,6 +49,70 @@ pub struct Registry {
     entries: Vec<Registration>,
     kind_policy: Option<Value>,
 }
+
+/// A registration discovered by an invocation-local provider. Host handles
+/// deliberately remain opaque until a later staged host protocol is added.
+#[derive(Clone, Copy, Debug)]
+pub(crate) enum RegistrationLookup<'a> {
+    Borrowed(&'a Registration),
+    HostHandle(u64),
+}
+
+/// Demand-driven registration access used by the shared interpreter. Calls
+/// occur at the original `registered` and extension-payload evaluation sites.
+pub(crate) trait RegistrationProvider {
+    fn lookup<'a>(
+        &'a self,
+        id: &Utf16,
+        version: &Utf16,
+        _ctx: &mut Context<'_>,
+    ) -> Result<Option<RegistrationLookup<'a>>, EngineError>;
+}
+
+pub(crate) struct StaticRegistrationProvider<'a>(pub(crate) &'a Registry);
+
+impl RegistrationProvider for StaticRegistrationProvider<'_> {
+    fn lookup<'a>(
+        &'a self,
+        id: &Utf16,
+        version: &Utf16,
+        _ctx: &mut Context<'_>,
+    ) -> Result<Option<RegistrationLookup<'a>>, EngineError> {
+        Ok(self.0.get(id, version).map(RegistrationLookup::Borrowed))
+    }
+}
+
+// Internal tests and existing interpreter call sites can use the registry
+// directly; production public entry points still construct the explicit
+// adapter above to make the static binding boundary visible.
+impl RegistrationProvider for Registry {
+    fn lookup<'a>(
+        &'a self,
+        id: &Utf16,
+        version: &Utf16,
+        _ctx: &mut Context<'_>,
+    ) -> Result<Option<RegistrationLookup<'a>>, EngineError> {
+        Ok(self.get(id, version).map(RegistrationLookup::Borrowed))
+    }
+}
+
+fn opaque_lookup_error() -> EngineError {
+    EngineError::new(
+        "REGISTRY_PROVIDER_HANDLE",
+        Utf16::default(),
+        "Opaque host registration handles require a host-aware selection provider",
+    )
+}
+
+pub(crate) fn require_borrowed<'a>(
+    lookup: Option<RegistrationLookup<'a>>,
+) -> Result<Option<&'a Registration>, EngineError> {
+    match lookup {
+        None => Ok(None),
+        Some(RegistrationLookup::Borrowed(entry)) => Ok(Some(entry)),
+        Some(RegistrationLookup::HostHandle(_)) => Err(opaque_lookup_error()),
+    }
+}
 fn k(s: &str) -> Utf16 {
     Utf16::from(s)
 }

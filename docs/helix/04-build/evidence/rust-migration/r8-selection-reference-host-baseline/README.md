@@ -63,8 +63,91 @@ successes and five refusal envelopes). All twelve matched on Node, Bun, and
 Chromium. Node and Bun also validated all seven successful values against
 `spec/core/element-selection.schema.json` with the core and semantic-reference
 resources installed. The browser receipt independently reports all twelve
-frozen comparisons equal. Node and Bun raw-host/callback receipts are identical
-for the captured observations.
+frozen comparisons equal. Node, Bun and Chromium agree on the captured
+host-reflection and registration-order cases; the later spread probes record
+one runtime-specific TypeError wording difference described below.
+
+The explicit-reference harness also pins the exact 47-event Registry trace for
+three built-in `registered(id, version)` checks interleaved with four extension
+payload lookups: two at document scope and two at element scope. Each lookup
+records the `get` receiver; each payload records manifest/scopes access,
+`scopes.includes` receiver, structure access/call receiver, capability access,
+both semantic getter reads, and semantic callback receiver/context. Node, Bun,
+and Chromium each report `exactEvents: true` and seven total `Registry.get`
+calls. The trace preserves the built-in constraint program's current order and
+the TypeScript predecessor only; it does not qualify Rust provider behavior.
+
+## Callback result and iterator materialization — 2026-10-26
+
+The Node 26.12.1, Bun 1.4.3 (Node compatibility 26.3.0), and Chromium
+153.0.8010.12 receipts now include a callback returning a custom iterable with
+two diagnostics per invocation. `Symbol.iterator`, iterator `next`, each result
+`done`, and each result `value` access are recorded in order. All three hosts
+produce the same complete `sourceValidation` and `selection`: four warning
+diagnostics retain their relative order and unknown nested `origin` fields,
+followed by the existing core warnings; all three selected elements match.
+The returned diagnostics are spread into the source validation result before
+the full Selection is copied.
+
+Spread failures happen inside the semantic callback `try`. A returned iterable
+whose `value` getter throws becomes a `VALIDATOR_FAILURE` diagnostic with message
+`[object Object]`, then the same exact `CORE_SELECTION_SOURCE` refusal string on
+all three hosts; the sentinel does not escape by identity. Returning a member
+with an unknown BigInt field instead completes validation and then fails the
+final Selection copy with `NON_JSON` at
+`/sourceValidation/diagnostics/0/unknown` on all three hosts.
+
+Returning `undefined`, a number, or a plain object is not treated uniformly.
+All become `VALIDATOR_FAILURE` entries and a `CORE_SELECTION_SOURCE` refusal.
+Node 26.12.1 and Chromium 153 report
+`TypeError: entry.semantics(...) is not iterable (cannot read property undefined)`
+for `undefined`; Bun 1.4.3 reports
+`TypeError: Spread syntax requires ...iterable not be null or undefined`.
+All three report
+`TypeError: Spread syntax requires ...iterable[Symbol.iterator] to be a function`
+for numbers and plain objects. Receipts retain the complete refusal strings,
+including both affected extension paths and the other source warnings.
+
+For structure-false results, `structure.errors` is read at that stage and its
+custom iterable is visited in order; two errors create two ordered
+`EXTENSION_STRUCTURE` diagnostics and the same full `CORE_SELECTION_SOURCE`
+refusal string across hosts. Throws from the `errors` getter and from iterator
+`Symbol.iterator`, `next` getter/call, result `done`, or result `value` getters
+escape with the exact sentinel identity on Node, Bun and Chromium. This boundary
+differs from semantic-result iteration, which is inside the callback catch.
+The three receipts compare byte-for-byte for these success, refusal, event and
+identity observations apart from their host/runtime metadata.
+
+These observations constrain a Rust host protocol: preserve an opaque callback
+result until JavaScript spread materialization can produce its exact host error,
+preserve unknown fields in successful diagnostics, and distinguish structure
+error iteration faults from semantic callback/result-iteration failures. They
+remain TypeScript reference evidence only and make no Rust-route claim.
+
+## Invalid-source refusal serialization — 2026-10-26
+
+Additional Node 26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12 probes pin the
+`CORE_SELECTION_SOURCE` message stage. A semantic callback replacing global
+`JSON.stringify` is observed by later refusal serialization: the live function
+is called with `JSON` as receiver and the full mixed diagnostics array
+(callback entries followed by core warnings). The replacement also intercepts
+other later library stringify calls, so receipts separately record the array
+invocation. This establishes that refusal serialization consults the live
+global function rather than a module-captured intrinsic.
+
+When a callback installs `Object.prototype.toJSON`, serialization invokes it
+first on the diagnostics array with key `""`, then on each ordinary diagnostic
+object in array order with keys `"0"` through `"3"`. This includes callback
+diagnostics and static `UNKNOWN_CORE_FIELD` and `UNKNOWN_SCALAR_TYPE` entries.
+Static diagnostics therefore need ordinary-object prototypes in any host-created
+mixed array.
+
+For a callback diagnostic Proxy, refusal serialization reads `toJSON`, obtains
+own keys, reads every descriptor, then reads values in own-key order (`code`,
+`path`, `message`, `severity`, `unknown`). A severity getter throw at this stage
+escapes with exact thrown-object identity. Node, Bun, and Chromium agree on the
+traces and refusal strings. The descriptor-copy protocol does not invoke these
+getters, so it cannot implement this refusal branch by itself.
 
 ## Observed host and callback matrix
 
@@ -150,3 +233,45 @@ Node, Bun, and Chromium each pass these probes and retain all 12 frozen R5
 comparisons. See the [Registry provider design addendum](registry-provider-design-20261026.md#addendum-caller-owned-registration-behavior-2026-10-26)
 for the host protocol implications. This is TypeScript reference evidence only;
 it does not qualify a Rust implementation.
+
+## Callback diagnostic and structure-error reads — 2026-10-26
+
+The extended Node 26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12 probes
+agree on callback diagnostic read timing. The fixture invokes semantic callbacks
+for both document and element extension payloads, each returning two diagnostics
+from an observable iterable. For each payload, the iterator fully completes,
+then the constraint program's `emit` validation reads each yielded diagnostic's
+`severity`. The next payload callback follows. After all callbacks have
+completed, `validateDocument` computes `valid` with
+`diagnostics.some(d => d.severity === 'error')`, reading severity again in
+source order. For all-warning results, every severity is read a second time
+before Selection construction/traversal, and the final Selection `copyJson`
+then copies each diagnostic's enumerable data properties. Unknown JSON
+properties survive. The probe observes final descriptor enumeration after the
+validity check; Selection traversal lies between those phases in
+`selectCoreElements`' source order.
+
+With an error diagnostic, all callback invocations and per-emit checks still
+finish first. The final `.some` stops at the first error (so later diagnostic
+severities are not read in that phase). Selection then refuses with
+`CORE_SELECTION_SOURCE`; refusal `JSON.stringify` enumerates all diagnostics
+and reads their severities and other fields, including entries after the
+short-circuit point. This JSON serialization is a separate observable read
+phase. The full traces match across all three hosts.
+
+For `structure.errors`, all hosts read each error's `instancePath` before its
+`message`. The path is formed by JavaScript string concatenation: an object
+`instancePath` receives `Symbol.toPrimitive` with hint `default`, and its
+returned string is appended to the extension path. Its `toString` is not used
+when `Symbol.toPrimitive` succeeds. The `message` value is read but is not
+coerced: a string is retained as the diagnostic message, while an object
+message reaches the constraint diagnostic validity check and causes
+`CONSTRAINT_DIAGNOSTIC` (`Malformed diagnostic`); its `toString` and `toJSON`
+are not called. Getter throws from `instancePath` or `message`, and a throw
+from `instancePath` coercion, trigger `IteratorClose`: each host reads the
+iterator's `return` getter and calls the returned method before propagating the
+exact original body-throw object. If `return` itself throws or returns a
+primitive, the original body throw still wins. This ordering is now asserted by
+the Node, Bun, and Chromium harnesses and recorded in their receipts. All three
+receipts agree on traces, refusal text, and identity outcomes. This remains
+TypeScript reference evidence only; it makes no Rust route claim.

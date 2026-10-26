@@ -10,6 +10,7 @@ const keys = Object.keys;
 const reflectApply = Reflect.apply;
 const hasOwn = Function.call.bind(Object.prototype.hasOwnProperty);
 const isArray = Array.isArray;
+const iteratorSymbol = Symbol.iterator;
 const number = Number;
 const NativeArrayBuffer = ArrayBuffer;
 const NativeDataView = DataView;
@@ -19,6 +20,7 @@ const typedArrayPrototype = Object.getPrototypeOf(Uint8Array.prototype);
 const typedArrayBuffer = Function.call.bind(Object.getOwnPropertyDescriptor(typedArrayPrototype, 'buffer').get);
 const NativeUint8Array = Uint8Array;
 const NativeObjectCreate = Object.create;
+const defineProperty = Object.defineProperty;
 const setPrototypeOf = Object.setPrototypeOf;
 const nativeFromCharCode = String.fromCharCode;
 const arrayPrototype = Array.prototype;
@@ -34,12 +36,15 @@ const NativeArray = Array;
 const NativeMap = Map;
 const NativeWeakMap = WeakMap;
 const NativeTypeError = TypeError;
+const NativeError = Error;
 const arraySlice = Function.call.bind(Array.prototype.slice);
 const nativeParseInt = Number.parseInt;
 const safeInteger = Number.isSafeInteger.bind(Number);
 const stringSlice = Function.call.bind(String.prototype.slice);
 const HEX = '0123456789abcdef';
 const MAX_CHUNK = 8192;
+
+class HostProtocolError extends NativeTypeError {}
 
 function transportRecord() { return NativeObjectCreate(null); }
 
@@ -121,6 +126,7 @@ function coreProtobufSourceHostResponse(runtime, operation, value, ErrorType = E
 function executeHostInput(addon, resources, operation, inputs, ErrorType, controlBridge, operationArgs = [], preparedResourcesWire, retainedRuntime = false, includeBinary = false) {
   const handles = new NativeMap();
   const objectHandles = new NativeWeakMap();
+  const primitiveOpaqueHandles = new NativeMap();
   const strings = new NativeMap();
   const stringTokens = new NativeMap();
   const snapshots = new NativeMap();
@@ -165,6 +171,53 @@ function executeHostInput(addon, resources, operation, inputs, ErrorType, contro
     return handle;
   }
 
+  function putOpaqueHandle(value) {
+    if ((typeof value === 'object' && value !== null) || typeof value === 'function') return putHandle(value);
+    let handle = mapGet(primitiveOpaqueHandles, value);
+    if (handle !== undefined) return handle;
+    handle = nextHandle++;
+    mapSet(primitiveOpaqueHandles, value, handle);
+    mapSet(handles, handle, value);
+    return handle;
+  }
+
+  function requireHostHandle(handle) {
+    if (!safeInteger(handle) || handle <= 0 || !mapHas(handles, handle)) {
+      throw new HostProtocolError('Unknown opaque host handle');
+    }
+    return mapGet(handles, handle);
+  }
+
+  function recordThrown(error) {
+    hasThrown = true;
+    thrown = error;
+    return stringify(wire({kind: 'host-exception'}));
+  }
+
+  function opaqueValue(value) {
+    if (value === undefined) return {kind: 'undefined'};
+    if (value === null) return {kind: 'null'};
+    switch (typeof value) {
+      case 'boolean': return {kind: 'boolean', value};
+      case 'number': return {kind: 'number', bits: bits(value)};
+      case 'string': return {kind: 'string', ...putString(value)};
+      case 'bigint': return {kind: 'bigint', handle: putOpaqueHandle(value), isZero: value === 0n};
+      default: return {kind: 'opaque', handle: putOpaqueHandle(value), opaqueType: typeof value};
+    }
+  }
+
+  function invocationValue(value) {
+    if (!value || typeof value !== 'object') throw new HostProtocolError('Malformed opaque invocation value');
+    switch (value.kind) {
+      case 'undefined': return undefined;
+      case 'opaque': return requireHostHandle(value.handle);
+      case 'json':
+        try { return fromRustWire(value.value); }
+        catch { throw new HostProtocolError('Malformed tagged JSON invocation value'); }
+      default: throw new HostProtocolError('Malformed opaque invocation value');
+    }
+  }
+
   // Root identity assignment is inert: no getters, proxy traps or conversion.
   const handlesForInputs = new NativeArray(inputs.length);
   setPrototypeOf(handlesForInputs, null);
@@ -193,6 +246,109 @@ function executeHostInput(addon, resources, operation, inputs, ErrorType, contro
         case 'read-property': {
           const key = fromUnits(request.keyUnits);
           reply = classify(value[key]);
+          break;
+        }
+        case 'get-opaque-property': {
+          if (typeof request.semanticCatch !== 'boolean') throw new HostProtocolError('Malformed opaque property request');
+          const receiver = invocationValue(request.receiver);
+          let key = null;
+          if (request.key?.kind === 'iterator-symbol') key = iteratorSymbol;
+          else if (request.key?.kind === 'string' && isArray(request.key.units)) {
+            let valid = true;
+            for (let i = 0; i < request.key.units.length; i++) {
+              const unit = request.key.units[i];
+              if (!safeInteger(unit) || unit < 0 || unit > 65535) { valid = false; break; }
+            }
+            if (valid) key = fromUnits(request.key.units);
+          }
+          if (key === null) throw new HostProtocolError('Malformed opaque property key');
+          if (request.semanticCatch) {
+            let propertyValue;
+            try { propertyValue = receiver[key]; }
+            catch (error) {
+              let message;
+              try { message = String(error); }
+              catch (stringError) { return recordThrown(stringError); }
+              reply = {kind: 'semantic-throw', message: putString(message)};
+              break;
+            }
+            reply = {kind: 'opaque-value', value: opaqueValue(propertyValue)};
+          } else reply = {kind: 'opaque-value', value: opaqueValue(receiver[key])};
+          break;
+        }
+        case 'invoke-opaque': {
+          if (typeof request.semanticCatch !== 'boolean' || !isArray(request.args)) throw new HostProtocolError('Malformed opaque invocation');
+          const fn = requireHostHandle(request.function);
+          const receiver = invocationValue(request.receiver);
+          const args = new NativeArray(request.args.length);
+          for (let i = 0; i < args.length; i++) args[i] = invocationValue(request.args[i]);
+          if (request.semanticCatch) {
+            let returned;
+            try {
+              returned = reflectApply(fn, receiver, args);
+            } catch (error) {
+              let message;
+              try { message = String(error); }
+              catch (stringError) { return recordThrown(stringError); }
+              reply = {kind: 'semantic-throw', message: putString(message)};
+              break;
+            }
+            reply = {kind: 'invocation', value: opaqueValue(returned)};
+          } else {
+            reply = {kind: 'invocation', value: opaqueValue(reflectApply(fn, receiver, args))};
+          }
+          break;
+        }
+        case 'string-concat': {
+          if (!isArray(request.prefix)) throw new HostProtocolError('Malformed string concatenation request');
+          let valid = true;
+          for (let i = 0; i < request.prefix.length; i++) {
+            const unit = request.prefix[i];
+            if (!safeInteger(unit) || unit < 0 || unit > 65535) { valid = false; break; }
+          }
+          if (!valid) throw new HostProtocolError('Malformed string concatenation prefix');
+          const prefix = fromUnits(request.prefix);
+          reply = {kind: 'opaque-value', value: opaqueValue(prefix + invocationValue(request.value))};
+          break;
+        }
+        case 'stringify-diagnostic-array': {
+          if (!isArray(request.items)) throw new HostProtocolError('Malformed diagnostic serialization request');
+          const diagnostics = new NativeArray(request.items.length);
+          for (let index = 0; index < request.items.length; index++) {
+            const item = request.items[index];
+            if (item?.kind === 'opaque' && safeInteger(item.handle) && item.handle > 0) {
+              diagnostics[index] = requireHostHandle(item.handle);
+            } else if (item?.kind === 'static') {
+              diagnostics[index] = fromRustWireOrdinary(item.value);
+            } else {
+              throw new HostProtocolError('Malformed diagnostic serialization item');
+            }
+          }
+          const liveJson = globalThis.JSON;
+          reply = {kind: 'opaque-value', value: opaqueValue(liveJson.stringify(diagnostics))};
+          break;
+        }
+        case 'construct-error-carrier': {
+          const value = invocationValue(request.value);
+          reply = {kind: 'opaque-value', value: opaqueValue(new NativeError(value))};
+          break;
+        }
+        case 'close-opaque-iterator': {
+          if (!hasThrown) throw new HostProtocolError('IteratorClose requires a pending thrown completion');
+          try {
+            const iterator = requireHostHandle(request.iterator);
+            const closeMethod = iterator.return;
+            if (closeMethod !== null && closeMethod !== undefined) {
+              if (typeof closeMethod !== 'function') throw new NativeTypeError('Iterator return method is not callable');
+              const result = reflectApply(closeMethod, iterator, []);
+              if ((typeof result !== 'object' || result === null) && typeof result !== 'function') {
+                throw new NativeTypeError('Iterator return result is not an object');
+              }
+            }
+          } catch (_) {
+            // IteratorClose with a pending throw preserves that original throw.
+          }
+          reply = {kind: 'iterator-closed'};
           break;
         }
         case 'classify': reply = classify(value); break;
@@ -248,9 +404,8 @@ function executeHostInput(addon, resources, operation, inputs, ErrorType, contro
       }
       return stringify(wire(reply));
     } catch (error) {
-      hasThrown = true;
-      thrown = error;
-      return stringify(wire({kind: 'host-exception'}));
+      if (error instanceof HostProtocolError) return stringify(wire({kind: 'protocol-error'}));
+      return recordThrown(error);
     }
   }
 
@@ -311,6 +466,35 @@ function fromRustWire(value) {
     case 'object': {
       const result = NativeObjectCreate(null);
       for (const member of value.members) result[fromUnits(member.key)] = fromRustWire(member.value);
+      return result;
+    }
+    default: throw new NativeTypeError('Malformed Rust result wire');
+  }
+}
+
+// Refusal diagnostics are reconstructed as ordinary JavaScript values because
+// inherited toJSON and ordinary JSON.stringify semantics are observable here.
+function fromRustWireOrdinary(value) {
+  switch (value.kind) {
+    case 'null': return null;
+    case 'boolean': return value.value;
+    case 'number': {
+      if (typeof value.bits !== 'string' || value.bits.length !== 16) throw new NativeTypeError('Malformed Rust number wire');
+      const bytes = new NativeUint8Array(8);
+      for (let i = 0; i < 8; i++) bytes[i] = nativeParseInt(stringSlice(value.bits, i * 2, i * 2 + 2), 16);
+      return dataViewGetFloat64(new NativeDataView(typedArrayBuffer(bytes)), 0, false);
+    }
+    case 'string': return fromUnits(value.units);
+    case 'array': {
+      const result = new NativeArray(value.items.length);
+      for (let i = 0; i < result.length; i++) result[i] = fromRustWireOrdinary(value.items[i]);
+      return result;
+    }
+    case 'object': {
+      const result = NativeObjectCreate(objectPrototype);
+      for (const member of value.members) defineProperty(result, fromUnits(member.key), {
+        value: fromRustWireOrdinary(member.value), writable: true, enumerable: true, configurable: true,
+      });
       return result;
     }
     default: throw new NativeTypeError('Malformed Rust result wire');

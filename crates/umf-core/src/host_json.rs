@@ -23,12 +23,68 @@ pub struct HostStringRef {
     test_units: std::sync::Arc<[u16]>,
 }
 
+/// A JavaScript property key for the opaque callback protocol. The iterator
+/// variant lets Rust drive the native iterator protocol without converting a
+/// Symbol to text or letting JavaScript flatten callback results.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub enum HostOpaqueKey {
+    String(Vec<u16>),
+    IteratorSymbol,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum HostOpaqueType {
+    Object,
+    Function,
+    Symbol,
+}
+
+/// Invocation-local value crossing the opaque callback boundary. `Opaque`
+/// identifies an object, function or symbol. Bigints carry a separate zero
+/// bit because `0n` is falsy while nonzero bigints are truthy.
+#[derive(Clone, Debug, PartialEq)]
+pub enum HostOpaqueValue {
+    Undefined,
+    Null,
+    Boolean(bool),
+    Number(f64),
+    String(HostStringRef),
+    Opaque { handle: HostHandle, opaque_type: HostOpaqueType },
+    BigInt { handle: HostHandle, is_zero: bool },
+}
+
+impl HostOpaqueValue {
+    /// JavaScript ToBoolean for the closed representation.
+    pub fn is_truthy(&self) -> bool {
+        match self {
+            Self::Undefined | Self::Null => false,
+            Self::Boolean(value) => *value,
+            Self::Number(value) => *value != 0.0 && !value.is_nan(),
+            Self::String(value) => value.units != 0,
+            Self::Opaque { .. } => true,
+            Self::BigInt { is_zero, .. } => !is_zero,
+        }
+    }
+
+    pub fn is_nullish(&self) -> bool {
+        matches!(self, Self::Undefined | Self::Null)
+    }
+}
+
+/// Receiver or argument supplied to a primitive host invocation.
+#[derive(Clone, Debug, PartialEq)]
+pub enum HostInvokeValue {
+    Undefined,
+    Opaque(HostHandle),
+    Json(Value),
+}
+
 #[cfg(test)]
 impl HostStringRef {
-    fn fake(text: &str) -> Self {
+    pub(crate) fn fake(text: &str) -> Self {
         Self::fake_units(text.encode_utf16().collect())
     }
-    fn fake_units(units: Vec<u16>) -> Self {
+    pub(crate) fn fake_units(units: Vec<u16>) -> Self {
         use std::sync::atomic::{AtomicU64, Ordering};
         static NEXT: AtomicU64 = AtomicU64::new(1);
         let units: std::sync::Arc<[u16]> = units.into();
@@ -129,6 +185,46 @@ pub enum HostJsonEvent {
     /// Rust-owned admitted copy. Hosts must not resolve this value through an
     /// original input handle.
     UnicodeCount { value: Value },
+    /// Read exactly one caller-owned property and retain object/function/
+    /// symbol/bigint results as opaque handles. This is distinct from
+    /// `ReadProperty`, whose classifier rejects non-JSON values.
+    GetOpaqueProperty {
+        receiver: HostInvokeValue,
+        key: HostOpaqueKey,
+        semantic_catch: bool,
+    },
+    /// Invoke one caller-owned function with the exact receiver and ordered
+    /// arguments. Only semantic callbacks may request the special catch rule.
+    InvokeOpaque {
+        function: HostHandle,
+        receiver: HostInvokeValue,
+        args: Vec<HostInvokeValue>,
+        semantic_catch: bool,
+    },
+    /// Perform the predecessor's string-left `+` operation against one value.
+    /// This delegates only ECMAScript ToPrimitive/string conversion to JS.
+    StringConcat {
+        prefix: Vec<u16>,
+        value: HostInvokeValue,
+    },
+    /// Serialize the exact ordered mixture of Rust-authored diagnostics and
+    /// opaque callback diagnostics with the host's live JSON.stringify.
+    StringifyDiagnosticArray { items: Vec<HostDiagnosticArrayItem> },
+    /// Construct the native Error carrier for a JSON.stringify result without
+    /// reading its `message` property.
+    ConstructErrorCarrier { value: HostInvokeValue },
+    /// Complete IteratorClose for an already-thrown loop-body completion. The host suppresses any `return` failure so the original throw remains authoritative.
+    CloseOpaqueIterator { iterator: HostHandle },
+}
+
+/// One entry in a Rust-assembled refusal diagnostics array.
+#[derive(Clone, Debug, PartialEq)]
+pub enum HostDiagnosticArrayItem {
+    /// A Rust-owned JSON value, reconstructed by the host with ordinary object
+    /// prototypes so inherited `toJSON` behavior matches the predecessor.
+    Static(Value),
+    /// An original callback-owned diagnostic retained by invocation-local handle.
+    Opaque(HostHandle),
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -140,6 +236,10 @@ pub enum HostJsonReply {
     Snapshot(HostDescriptorSnapshot),
     Descriptor(HostPropertyDescriptor),
     Utf16Chunk { offset: usize, units: Vec<u16> },
+    OpaqueValue(HostOpaqueValue),
+    Invocation(HostOpaqueValue),
+    SemanticThrow(HostStringRef),
+    IteratorClosed,
 }
 
 /// A host adapter must implement only primitive reflection for one live
@@ -169,14 +269,27 @@ pub fn copy_host_json(
     host: &mut dyn HostJsonReflection,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
+    copy_host_json_at_path(root, host, ctx, &Utf16::default(), 0)
+}
+
+/// Copy an opaque host value at its final-result location. Callers provide the
+/// enclosing JSON path and depth so nested refusal paths and structural limits
+/// match the containing result rather than treating this value as a new root.
+pub(crate) fn copy_host_json_at_path(
+    root: HostHandle,
+    host: &mut dyn HostJsonReflection,
+    ctx: &mut Context<'_>,
+    path: &Utf16,
+    depth: usize,
+) -> Result<Value, EngineError> {
     let mut active = BTreeSet::new();
     let mut values = 0usize;
     visit(
         root,
         host,
         ctx,
-        &Utf16::default(),
-        0,
+        path,
+        depth,
         &mut values,
         &mut active,
     )
@@ -481,6 +594,422 @@ pub fn read_host_string_value(
     Ok(Utf16::new(units))
 }
 
+/// Reuse an opaque property result as the receiver of a later property read or
+/// invocation argument without coercion. Strings are fetched as exact UTF-16;
+/// numbers retain their IEEE-754 bits, including negative zero and NaN.
+pub(crate) fn opaque_invoke_value(
+    value: HostOpaqueValue,
+    host: &mut dyn HostJsonReflection,
+    path: &Utf16,
+) -> Result<HostInvokeValue, EngineError> {
+    Ok(match value {
+        HostOpaqueValue::Undefined => HostInvokeValue::Undefined,
+        HostOpaqueValue::Null => HostInvokeValue::Json(Value::Null),
+        HostOpaqueValue::Boolean(value) => HostInvokeValue::Json(Value::Bool(value)),
+        HostOpaqueValue::Number(value) => HostInvokeValue::Json(Value::Number(value)),
+        HostOpaqueValue::String(value) => {
+            HostInvokeValue::Json(Value::String(read_host_string_value(host, value, path)?))
+        }
+        HostOpaqueValue::Opaque { handle, .. } | HostOpaqueValue::BigInt { handle, .. } => {
+            HostInvokeValue::Opaque(handle)
+        }
+    })
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub(crate) enum HostSemanticIterableOutcome {
+    Values(Vec<HostOpaqueValue>),
+    SemanticThrow(Utf16),
+    /// The predecessor catches these native spread TypeErrors, but exact text
+    /// varies by runtime. Callers must stop rather than invent a diagnostic.
+    NativeSpreadFailureUnresolved,
+}
+
+enum SemanticHostStep<T> {
+    Value(T),
+    Thrown(Utf16),
+}
+
+fn semantic_get(
+    receiver: HostOpaqueValue,
+    key: HostOpaqueKey,
+    host: &mut dyn HostJsonReflection,
+    path: &Utf16,
+) -> Result<SemanticHostStep<HostOpaqueValue>, EngineError> {
+    let receiver = opaque_invoke_value(receiver, host, path)?;
+    match host.reflect(HostJsonEvent::GetOpaqueProperty {
+        receiver,
+        key,
+        semantic_catch: true,
+    })? {
+        HostJsonReply::OpaqueValue(value) => Ok(SemanticHostStep::Value(value)),
+        HostJsonReply::SemanticThrow(message) => Ok(SemanticHostStep::Thrown(
+            read_host_string_value(host, message, path)?,
+        )),
+        _ => Err(wrong_reply(path)),
+    }
+}
+
+fn semantic_invoke(
+    function: HostHandle,
+    receiver: HostOpaqueValue,
+    args: Vec<HostInvokeValue>,
+    host: &mut dyn HostJsonReflection,
+    path: &Utf16,
+) -> Result<SemanticHostStep<HostOpaqueValue>, EngineError> {
+    let receiver = opaque_invoke_value(receiver, host, path)?;
+    match host.reflect(HostJsonEvent::InvokeOpaque {
+        function,
+        receiver,
+        args,
+        semantic_catch: true,
+    })? {
+        HostJsonReply::Invocation(value) => Ok(SemanticHostStep::Value(value)),
+        HostJsonReply::SemanticThrow(message) => Ok(SemanticHostStep::Thrown(
+            read_host_string_value(host, message, path)?,
+        )),
+        _ => Err(wrong_reply(path)),
+    }
+}
+
+/// Apply JavaScript's string-left `+` to one opaque value. Keeping this as one
+/// host primitive preserves native ToPrimitive hint/order and exact thrown
+/// identity without moving Selection branching into the dispatcher.
+pub(crate) fn host_string_concat(
+    prefix: &Utf16,
+    value: HostOpaqueValue,
+    host: &mut dyn HostJsonReflection,
+    ctx: &mut Context<'_>,
+    path: &Utf16,
+) -> Result<Utf16, EngineError> {
+    let value = opaque_invoke_value_charged(value, host, ctx, path)?;
+    ctx.charge_work(prefix.len(), path.clone())?;
+    ctx.charge_work(1, path.clone())?;
+    match host.reflect(HostJsonEvent::StringConcat {
+        prefix: prefix.units().to_vec(),
+        value,
+    })? {
+        HostJsonReply::OpaqueValue(HostOpaqueValue::String(result)) => {
+            ctx.charge_work(result.units, path.clone())?;
+            read_host_string_value(host, result, path)
+        }
+        _ => Err(wrong_reply(path)),
+    }
+}
+
+fn close_opaque_iterator_after_throw(
+    iterator: HostHandle,
+    host: &mut dyn HostJsonReflection,
+    ctx: &mut Context<'_>,
+    path: &Utf16,
+) {
+    // Cleanup is attempted even when the work budget is exhausted by the body
+    // operation; preserving IteratorClose effects takes precedence over a new
+    // Rust-side refusal. The original body error remains the returned error.
+    let _ = ctx.charge_work(1, path.clone());
+    let _ = host.reflect(HostJsonEvent::CloseOpaqueIterator { iterator });
+}
+
+fn is_body_host_throw(error: &EngineError) -> bool {
+    error.code == "HOST_JSON_CALLBACK"
+}
+
+fn iterator_handle(iterator: &HostOpaqueValue) -> Option<HostHandle> {
+    match iterator {
+        HostOpaqueValue::Opaque { handle, opaque_type: HostOpaqueType::Object | HostOpaqueType::Function } => Some(*handle),
+        _ => None,
+    }
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub(crate) struct HostStructureErrorEntry {
+    pub path: Utf16,
+    pub message: HostOpaqueValue,
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub(crate) enum HostStructureErrorsOutcome {
+    Entries(Vec<HostStructureErrorEntry>),
+    /// Native iterator TypeErrors are observable but not yet reproduced by
+    /// Rust. Stop rather than inventing a constraint diagnostic.
+    NativeIterationFailureUnresolved,
+}
+
+fn ordinary_get(
+    receiver: HostOpaqueValue,
+    key: HostOpaqueKey,
+    host: &mut dyn HostJsonReflection,
+    ctx: &mut Context<'_>,
+    path: &Utf16,
+) -> Result<HostOpaqueValue, EngineError> {
+    let receiver = opaque_invoke_value_charged(receiver, host, ctx, path)?;
+    ctx.charge_work(1, path.clone())?;
+    match host.reflect(HostJsonEvent::GetOpaqueProperty {
+        receiver,
+        key,
+        semantic_catch: false,
+    })? {
+        HostJsonReply::OpaqueValue(value) => Ok(value),
+        _ => Err(wrong_reply(path)),
+    }
+}
+
+fn ordinary_invoke(
+    function: HostHandle,
+    receiver: HostOpaqueValue,
+    host: &mut dyn HostJsonReflection,
+    ctx: &mut Context<'_>,
+    path: &Utf16,
+) -> Result<HostOpaqueValue, EngineError> {
+    let receiver = opaque_invoke_value_charged(receiver, host, ctx, path)?;
+    ctx.charge_work(1, path.clone())?;
+    match host.reflect(HostJsonEvent::InvokeOpaque {
+        function,
+        receiver,
+        args: Vec::new(),
+        semantic_catch: false,
+    })? {
+        HostJsonReply::Invocation(value) => Ok(value),
+        _ => Err(wrong_reply(path)),
+    }
+}
+
+fn opaque_invoke_value_charged(
+    value: HostOpaqueValue,
+    host: &mut dyn HostJsonReflection,
+    ctx: &mut Context<'_>,
+    path: &Utf16,
+) -> Result<HostInvokeValue, EngineError> {
+    if let HostOpaqueValue::String(string) = &value {
+        ctx.charge_work(string.units, path.clone())?;
+    }
+    opaque_invoke_value(value, host, path)
+}
+
+/// Read and stage the valid `structure.errors` iterable path. This mirrors
+/// `errors ?? []`, native iterator order, then per-item `instancePath`, string
+/// concatenation, and `message` reads. Message values stay opaque for the
+/// later diagnostic emitter. Native iterator TypeErrors remain an explicit
+/// unresolved outcome; user throws propagate through the host identity slot.
+pub(crate) fn collect_structure_errors(
+    errors: HostOpaqueValue,
+    prefix: &Utf16,
+    host: &mut dyn HostJsonReflection,
+    ctx: &mut Context<'_>,
+    path: &Utf16,
+) -> Result<HostStructureErrorsOutcome, EngineError> {
+    if errors.is_nullish() {
+        return Ok(HostStructureErrorsOutcome::Entries(Vec::new()));
+    }
+    let iterator_method = ordinary_get(
+        errors.clone(),
+        HostOpaqueKey::IteratorSymbol,
+        host,
+        ctx,
+        path,
+    )?;
+    let HostOpaqueValue::Opaque { handle: iterator_function, opaque_type: HostOpaqueType::Function } = iterator_method else {
+        return Ok(HostStructureErrorsOutcome::NativeIterationFailureUnresolved);
+    };
+    let iterator = ordinary_invoke(iterator_function, errors, host, ctx, path)?;
+    if !matches!(iterator, HostOpaqueValue::Opaque { opaque_type: HostOpaqueType::Object | HostOpaqueType::Function, .. }) {
+        return Ok(HostStructureErrorsOutcome::NativeIterationFailureUnresolved);
+    }
+    let next_method = ordinary_get(
+        iterator.clone(),
+        HostOpaqueKey::String("next".encode_utf16().collect()),
+        host,
+        ctx,
+        path,
+    )?;
+    let HostOpaqueValue::Opaque { handle: next_function, opaque_type: HostOpaqueType::Function } = next_method else {
+        return Ok(HostStructureErrorsOutcome::NativeIterationFailureUnresolved);
+    };
+    let mut entries = Vec::new();
+    loop {
+        ctx.charge_work(1, path.clone())?;
+        let step = ordinary_invoke(next_function, iterator.clone(), host, ctx, path)?;
+        if !matches!(step, HostOpaqueValue::Opaque { opaque_type: HostOpaqueType::Object | HostOpaqueType::Function, .. }) {
+            return Ok(HostStructureErrorsOutcome::NativeIterationFailureUnresolved);
+        }
+        let done = ordinary_get(
+            step.clone(),
+            HostOpaqueKey::String("done".encode_utf16().collect()),
+            host,
+            ctx,
+            path,
+        )?;
+        if done.is_truthy() {
+            break;
+        }
+        let item = ordinary_get(
+            step,
+            HostOpaqueKey::String("value".encode_utf16().collect()),
+            host,
+            ctx,
+            path,
+        )?;
+        let close_handle = iterator_handle(&iterator).ok_or_else(|| wrong_reply(path))?;
+        let instance_path = match ordinary_get(
+            item.clone(),
+            HostOpaqueKey::String("instancePath".encode_utf16().collect()),
+            host,
+            ctx,
+            path,
+        ) {
+            Ok(value) => value,
+            Err(error) => {
+                if is_body_host_throw(&error) { close_opaque_iterator_after_throw(close_handle, host, ctx, path); }
+                return Err(error);
+            }
+        };
+        let full_path = match host_string_concat(prefix, instance_path, host, ctx, path) {
+            Ok(value) => value,
+            Err(error) => {
+                if is_body_host_throw(&error) { close_opaque_iterator_after_throw(close_handle, host, ctx, path); }
+                return Err(error);
+            }
+        };
+        let message = match ordinary_get(
+            item,
+            HostOpaqueKey::String("message".encode_utf16().collect()),
+            host,
+            ctx,
+            path,
+        ) {
+            Ok(value) => value,
+            Err(error) => {
+                if is_body_host_throw(&error) { close_opaque_iterator_after_throw(close_handle, host, ctx, path); }
+                return Err(error);
+            }
+        };
+        entries.push(HostStructureErrorEntry { path: full_path, message });
+    }
+    Ok(HostStructureErrorsOutcome::Entries(entries))
+}
+
+fn materialize_semantic_value(
+    value: HostOpaqueValue,
+    host: &mut dyn HostJsonReflection,
+    ctx: &mut Context<'_>,
+    path: &Utf16,
+    depth: usize,
+) -> Result<Value, EngineError> {
+    if !matches!(value, HostOpaqueValue::Opaque { opaque_type: HostOpaqueType::Object, .. }) {
+        ctx.charge_work(1, path.clone())?;
+    }
+    match value {
+        HostOpaqueValue::Null => Ok(Value::Null),
+        HostOpaqueValue::Boolean(value) => Ok(Value::Bool(value)),
+        HostOpaqueValue::Number(value) => admitted_number(value, path),
+        HostOpaqueValue::String(value) => Ok(Value::String(read_host_string_value(host, value, path)?)),
+        HostOpaqueValue::Opaque { handle, opaque_type: HostOpaqueType::Object } => {
+            copy_host_json_at_path(handle, host, ctx, path, depth)
+        }
+        HostOpaqueValue::Undefined
+        | HostOpaqueValue::BigInt { .. }
+        | HostOpaqueValue::Opaque { opaque_type: HostOpaqueType::Function | HostOpaqueType::Symbol, .. } => {
+            Err(error("NON_JSON", path, "Value is not JSON-compatible"))
+        }
+    }
+}
+
+/// Rust-owned equivalent of the semantic callback result's array spread.
+/// Iterator gets/calls request semantic catch individually. Values remain
+/// opaque until the later final Selection `copyJson` stage, which is outside
+/// that catch and must occur after the complete spread.
+pub(crate) fn collect_semantic_iterable(
+    result: HostOpaqueValue,
+    host: &mut dyn HostJsonReflection,
+    ctx: &mut Context<'_>,
+    path: &Utf16,
+) -> Result<HostSemanticIterableOutcome, EngineError> {
+    if result.is_nullish() {
+        return Ok(HostSemanticIterableOutcome::NativeSpreadFailureUnresolved);
+    }
+    let iterator_method = match semantic_get(
+        result.clone(),
+        HostOpaqueKey::IteratorSymbol,
+        host,
+        path,
+    )? {
+        SemanticHostStep::Thrown(message) => return Ok(HostSemanticIterableOutcome::SemanticThrow(message)),
+        SemanticHostStep::Value(value) => value,
+    };
+    let HostOpaqueValue::Opaque { handle: iterator_function, opaque_type: HostOpaqueType::Function } = iterator_method else {
+        return Ok(HostSemanticIterableOutcome::NativeSpreadFailureUnresolved);
+    };
+    let iterator = match semantic_invoke(iterator_function, result, Vec::new(), host, path)? {
+        SemanticHostStep::Thrown(message) => return Ok(HostSemanticIterableOutcome::SemanticThrow(message)),
+        SemanticHostStep::Value(value) => value,
+    };
+    if !matches!(iterator, HostOpaqueValue::Opaque { opaque_type: HostOpaqueType::Object | HostOpaqueType::Function, .. }) {
+        return Ok(HostSemanticIterableOutcome::NativeSpreadFailureUnresolved);
+    }
+    let next_method = match semantic_get(
+        iterator.clone(),
+        HostOpaqueKey::String("next".encode_utf16().collect()),
+        host,
+        path,
+    )? {
+        SemanticHostStep::Thrown(message) => return Ok(HostSemanticIterableOutcome::SemanticThrow(message)),
+        SemanticHostStep::Value(value) => value,
+    };
+    let HostOpaqueValue::Opaque { handle: next_function, opaque_type: HostOpaqueType::Function } = next_method else {
+        return Ok(HostSemanticIterableOutcome::NativeSpreadFailureUnresolved);
+    };
+    let mut values = Vec::new();
+    loop {
+        ctx.charge_work(1, path.clone())?;
+        let step = match semantic_invoke(next_function, iterator.clone(), Vec::new(), host, path)? {
+            SemanticHostStep::Thrown(message) => return Ok(HostSemanticIterableOutcome::SemanticThrow(message)),
+            SemanticHostStep::Value(value) => value,
+        };
+        if !matches!(step, HostOpaqueValue::Opaque { opaque_type: HostOpaqueType::Object | HostOpaqueType::Function, .. }) {
+            return Ok(HostSemanticIterableOutcome::NativeSpreadFailureUnresolved);
+        }
+        let done = match semantic_get(
+            step.clone(),
+            HostOpaqueKey::String("done".encode_utf16().collect()),
+            host,
+            path,
+        )? {
+            SemanticHostStep::Thrown(message) => return Ok(HostSemanticIterableOutcome::SemanticThrow(message)),
+            SemanticHostStep::Value(value) => value,
+        };
+        if done.is_truthy() {
+            break;
+        }
+        let value = match semantic_get(
+            step,
+            HostOpaqueKey::String("value".encode_utf16().collect()),
+            host,
+            path,
+        )? {
+            SemanticHostStep::Thrown(message) => return Ok(HostSemanticIterableOutcome::SemanticThrow(message)),
+            SemanticHostStep::Value(value) => value,
+        };
+        values.push(value);
+    }
+    Ok(HostSemanticIterableOutcome::Values(values))
+}
+
+/// Materialize deferred spread values at the final result-copy stage, after all
+/// iterator effects have completed. This preserves JSON-compatible unknown
+/// diagnostic fields and their own-key order through `copy_host_json`.
+pub(crate) fn materialize_semantic_iterable_values(
+    values: Vec<HostOpaqueValue>,
+    host: &mut dyn HostJsonReflection,
+    ctx: &mut Context<'_>,
+    path: &Utf16,
+    array_depth: usize,
+) -> Result<Vec<Value>, EngineError> {
+    values.into_iter().enumerate().map(|(index, value)| {
+        let item_path = append_pointer(path, &Utf16::from(index.to_string()));
+        materialize_semantic_value(value, host, ctx, &item_path, array_depth.saturating_add(1))
+    }).collect()
+}
+
 fn admitted_number(value: f64, path: &Utf16) -> Result<Value, EngineError> {
     if !value.is_finite()
         || (value == 0.0 && value.is_sign_negative())
@@ -608,6 +1137,7 @@ mod tests {
         chunks_seen: Vec<(u64, usize, usize, usize)>,
         chunk_fault: Option<ChunkFault>,
         released: Vec<u64>,
+        fault: Option<(HostJsonEvent, EngineError)>,
     }
     #[derive(Clone, Copy)]
     enum ChunkFault {
@@ -623,6 +1153,9 @@ mod tests {
                 }
                 match reply {
                     HostJsonReply::Kind(HostJsonKind::String(value)) => {
+                        strings.insert(value.token, value.test_units.to_vec());
+                    }
+                    HostJsonReply::OpaqueValue(HostOpaqueValue::String(value)) => {
                         strings.insert(value.token, value.test_units.to_vec());
                     }
                     HostJsonReply::Descriptor(value) => {
@@ -641,14 +1174,19 @@ mod tests {
                 chunks_seen: Vec::new(),
                 chunk_fault: None,
                 released: Vec::new(),
+                fault: None,
             }
         }
         fn done(&self) {
             assert!(
-                self.script.is_empty(),
-                "unconsumed host events: {:?}",
-                self.script
+                self.script.is_empty() && self.fault.is_none(),
+                "unconsumed host events/fault: {:?} {:?}",
+                self.script, self.fault
             );
+        }
+        fn with_fault(mut self, event: HostJsonEvent, error: EngineError) -> Self {
+            self.fault = Some((event, error));
+            self
         }
         fn with_chunk_fault(mut self, fault: ChunkFault) -> Self {
             self.chunk_fault = Some(fault);
@@ -685,9 +1223,18 @@ mod tests {
                 });
             }
             self.seen.push(event.clone());
-            let (expected, reply) = self.script.pop_front().expect("unexpected host event");
-            assert_eq!(event, expected, "host reflection event order changed");
-            Ok(reply)
+            if self.fault.as_ref().is_some_and(|(expected, _)| *expected == event) {
+                let (_, error) = self.fault.take().expect("matching scripted fault");
+                Err(error)
+            } else if let Some((expected, reply)) = self.script.pop_front() {
+                assert_eq!(event, expected, "host reflection event order changed");
+                Ok(reply)
+            } else if let Some((expected, error)) = self.fault.take() {
+                assert_eq!(event, expected, "host reflection fault order changed");
+                Err(error)
+            } else {
+                panic!("unexpected host event: {event:?}")
+            }
         }
         fn release_descriptor_snapshot(&mut self, token: u64) {
             self.released.push(token);
@@ -702,6 +1249,371 @@ mod tests {
     fn hs(text: &str) -> HostStringRef {
         HostStringRef::fake(text)
     }
+
+    #[test]
+    fn opaque_truthiness_and_nullishness_match_javascript_without_coercion() {
+        use HostOpaqueValue as Opaque;
+        let values = [
+            (Opaque::Undefined, false, true),
+            (Opaque::Null, false, true),
+            (Opaque::Boolean(false), false, false),
+            (Opaque::Boolean(true), true, false),
+            (Opaque::Number(0.0), false, false),
+            (Opaque::Number(-0.0), false, false),
+            (Opaque::Number(f64::NAN), false, false),
+            (Opaque::Number(f64::INFINITY), true, false),
+            (Opaque::String(hs("")), false, false),
+            (Opaque::String(hs("x")), true, false),
+            (Opaque::Opaque { handle: 3, opaque_type: HostOpaqueType::Object }, true, false),
+            (Opaque::Opaque { handle: 4, opaque_type: HostOpaqueType::Function }, true, false),
+            (Opaque::Opaque { handle: 6, opaque_type: HostOpaqueType::Symbol }, true, false),
+            (Opaque::BigInt { handle: 4, is_zero: true }, false, false), // 0n, including -0n
+            (Opaque::BigInt { handle: 5, is_zero: false }, true, false),
+        ];
+        for (value, truthy, nullish) in values {
+            assert_eq!(value.is_truthy(), truthy, "{value:?}");
+            assert_eq!(value.is_nullish(), nullish, "{value:?}");
+        }
+    }
+
+    #[test]
+    fn opaque_property_values_reenter_without_changing_string_units_or_number_bits() {
+        let string = HostStringRef::fake_units(vec![0xd800, 0x0061]);
+        let token = string.token;
+        let mut host = ScriptedHost::new(Vec::new());
+        host.strings.insert(token, vec![0xd800, 0x0061]);
+        let value = opaque_invoke_value(
+            HostOpaqueValue::String(string),
+            &mut host,
+            &Utf16::default(),
+        )
+        .unwrap();
+        assert_eq!(
+            value,
+            HostInvokeValue::Json(Value::String(Utf16::new(vec![0xd800, 0x0061])))
+        );
+        host.done();
+
+        for number in [-0.0, f64::NAN, f64::INFINITY] {
+            let HostInvokeValue::Json(Value::Number(returned)) = opaque_invoke_value(
+                HostOpaqueValue::Number(number),
+                &mut ScriptedHost::new(Vec::new()),
+                &Utf16::default(),
+            )
+            .unwrap()
+            else {
+                panic!("number should remain a tagged JSON primitive")
+            };
+            assert_eq!(returned.to_bits(), number.to_bits());
+        }
+    }
+
+    #[test]
+    fn opaque_host_events_keep_primitive_receiver_and_callback_order_explicit() {
+        let receiver = HostInvokeValue::Json(Value::String(k("scope")));
+        let function = 7;
+        let args = vec![HostInvokeValue::Opaque(8), HostInvokeValue::Json(Value::Bool(false))];
+        let mut host = ScriptedHost::new(vec![
+            event(
+                HostJsonEvent::GetOpaqueProperty {
+                    receiver: receiver.clone(),
+                    key: HostOpaqueKey::String("includes".encode_utf16().collect()),
+                    semantic_catch: false,
+                },
+                HostJsonReply::OpaqueValue(HostOpaqueValue::Opaque { handle: 9, opaque_type: HostOpaqueType::Function }),
+            ),
+            event(
+                HostJsonEvent::InvokeOpaque {
+                    function,
+                    receiver,
+                    args,
+                    semantic_catch: true,
+                },
+                HostJsonReply::SemanticThrow(HostStringRef::fake("callback failure")),
+            ),
+        ]);
+        assert!(matches!(
+            host.reflect(HostJsonEvent::GetOpaqueProperty {
+                receiver: HostInvokeValue::Json(Value::String(k("scope"))),
+                key: HostOpaqueKey::String("includes".encode_utf16().collect()),
+                semantic_catch: false,
+            }).unwrap(),
+            HostJsonReply::OpaqueValue(HostOpaqueValue::Opaque { handle: 9, opaque_type: HostOpaqueType::Function })
+        ));
+        assert!(matches!(
+            host.reflect(HostJsonEvent::InvokeOpaque {
+                function,
+                receiver: HostInvokeValue::Json(Value::String(k("scope"))),
+                args: vec![HostInvokeValue::Opaque(8), HostInvokeValue::Json(Value::Bool(false))],
+                semantic_catch: true,
+            }).unwrap(),
+            HostJsonReply::SemanticThrow(_)
+        ));
+        host.done();
+    }
+
+    #[test]
+    fn host_string_concat_uses_one_native_conversion_event_and_preserves_utf16() {
+        let prefix = k("/extensions/future");
+        let result = HostStringRef::fake("/extensions/future/💾");
+        let expected = HostJsonEvent::StringConcat {
+            prefix: prefix.units().to_vec(),
+            value: HostInvokeValue::Opaque(42),
+        };
+        let mut host = ScriptedHost::new(vec![event(
+            expected.clone(),
+            HostJsonReply::OpaqueValue(HostOpaqueValue::String(result)),
+        )]);
+        assert_eq!(
+            host_string_concat(
+                &prefix,
+                HostOpaqueValue::BigInt { handle: 42, is_zero: false },
+                &mut host,
+                &mut Context::ordinary(),
+                &k("/extensions/future"),
+            ).unwrap(),
+            k("/extensions/future/💾"),
+        );
+        assert_eq!(host.seen, vec![expected]);
+        host.done();
+    }
+
+    #[test]
+    fn structure_errors_stages_iteration_coercion_message_in_order() {
+        let key = |text: &str| HostOpaqueKey::String(text.encode_utf16().collect());
+        let errors = HostOpaqueValue::Opaque { handle: 1, opaque_type: HostOpaqueType::Object };
+        let item = HostOpaqueValue::Opaque { handle: 6, opaque_type: HostOpaqueType::Object };
+        let path_value = HostOpaqueValue::Opaque { handle: 7, opaque_type: HostOpaqueType::Object };
+        let full_path = HostStringRef::fake("/extensions/future/coerced");
+        let message = HostOpaqueValue::String(HostStringRef::fake("bad shape"));
+        let script = vec![
+            event(HostJsonEvent::GetOpaqueProperty { receiver: HostInvokeValue::Opaque(1), key: HostOpaqueKey::IteratorSymbol, semantic_catch: false }, HostJsonReply::OpaqueValue(HostOpaqueValue::Opaque { handle: 2, opaque_type: HostOpaqueType::Function })),
+            event(HostJsonEvent::InvokeOpaque { function: 2, receiver: HostInvokeValue::Opaque(1), args: vec![], semantic_catch: false }, HostJsonReply::Invocation(HostOpaqueValue::Opaque { handle: 3, opaque_type: HostOpaqueType::Object })),
+            event(HostJsonEvent::GetOpaqueProperty { receiver: HostInvokeValue::Opaque(3), key: key("next"), semantic_catch: false }, HostJsonReply::OpaqueValue(HostOpaqueValue::Opaque { handle: 4, opaque_type: HostOpaqueType::Function })),
+            event(HostJsonEvent::InvokeOpaque { function: 4, receiver: HostInvokeValue::Opaque(3), args: vec![], semantic_catch: false }, HostJsonReply::Invocation(HostOpaqueValue::Opaque { handle: 5, opaque_type: HostOpaqueType::Object })),
+            event(HostJsonEvent::GetOpaqueProperty { receiver: HostInvokeValue::Opaque(5), key: key("done"), semantic_catch: false }, HostJsonReply::OpaqueValue(HostOpaqueValue::Boolean(false))),
+            event(HostJsonEvent::GetOpaqueProperty { receiver: HostInvokeValue::Opaque(5), key: key("value"), semantic_catch: false }, HostJsonReply::OpaqueValue(item.clone())),
+            event(HostJsonEvent::GetOpaqueProperty { receiver: HostInvokeValue::Opaque(6), key: key("instancePath"), semantic_catch: false }, HostJsonReply::OpaqueValue(path_value.clone())),
+            event(HostJsonEvent::StringConcat { prefix: k("/extensions/future").units().to_vec(), value: HostInvokeValue::Opaque(7) }, HostJsonReply::OpaqueValue(HostOpaqueValue::String(full_path))),
+            event(HostJsonEvent::GetOpaqueProperty { receiver: HostInvokeValue::Opaque(6), key: key("message"), semantic_catch: false }, HostJsonReply::OpaqueValue(message.clone())),
+            event(HostJsonEvent::InvokeOpaque { function: 4, receiver: HostInvokeValue::Opaque(3), args: vec![], semantic_catch: false }, HostJsonReply::Invocation(HostOpaqueValue::Opaque { handle: 8, opaque_type: HostOpaqueType::Object })),
+            event(HostJsonEvent::GetOpaqueProperty { receiver: HostInvokeValue::Opaque(8), key: key("done"), semantic_catch: false }, HostJsonReply::OpaqueValue(HostOpaqueValue::Boolean(true))),
+        ];
+        let mut host = ScriptedHost::new(script.clone());
+        let outcome = collect_structure_errors(errors, &k("/extensions/future"), &mut host, &mut Context::ordinary(), &k("/extensions/future")).unwrap();
+        assert_eq!(outcome, HostStructureErrorsOutcome::Entries(vec![HostStructureErrorEntry {
+            path: k("/extensions/future/coerced"),
+            message,
+        }]));
+        assert_eq!(host.seen, script.iter().map(|(event, _)| event.clone()).collect::<Vec<_>>());
+        host.done();
+    }
+
+    #[test]
+    fn structure_errors_nullish_empty_and_native_iteration_failure_are_explicit() {
+        for errors in [HostOpaqueValue::Undefined, HostOpaqueValue::Null] {
+            let mut host = ScriptedHost::new(Vec::new());
+            assert_eq!(collect_structure_errors(errors, &k("/at"), &mut host, &mut Context::ordinary(), &k("/at")).unwrap(), HostStructureErrorsOutcome::Entries(Vec::new()));
+            host.done();
+        }
+        let mut host = ScriptedHost::new(vec![event(
+            HostJsonEvent::GetOpaqueProperty { receiver: HostInvokeValue::Opaque(1), key: HostOpaqueKey::IteratorSymbol, semantic_catch: false },
+            HostJsonReply::OpaqueValue(HostOpaqueValue::Undefined),
+        )]);
+        assert_eq!(collect_structure_errors(HostOpaqueValue::Opaque { handle: 1, opaque_type: HostOpaqueType::Object }, &k("/at"), &mut host, &mut Context::ordinary(), &k("/at")).unwrap(), HostStructureErrorsOutcome::NativeIterationFailureUnresolved);
+        host.done();
+    }
+
+    #[test]
+    fn structure_errors_propagate_host_throw_and_stop_before_message_read() {
+        let key = |text: &str| HostOpaqueKey::String(text.encode_utf16().collect());
+        let item = 6;
+        let prefix = vec![
+            event(HostJsonEvent::GetOpaqueProperty { receiver: HostInvokeValue::Opaque(1), key: HostOpaqueKey::IteratorSymbol, semantic_catch: false }, HostJsonReply::OpaqueValue(HostOpaqueValue::Opaque { handle: 2, opaque_type: HostOpaqueType::Function })),
+            event(HostJsonEvent::InvokeOpaque { function: 2, receiver: HostInvokeValue::Opaque(1), args: vec![], semantic_catch: false }, HostJsonReply::Invocation(HostOpaqueValue::Opaque { handle: 3, opaque_type: HostOpaqueType::Object })),
+            event(HostJsonEvent::GetOpaqueProperty { receiver: HostInvokeValue::Opaque(3), key: key("next"), semantic_catch: false }, HostJsonReply::OpaqueValue(HostOpaqueValue::Opaque { handle: 4, opaque_type: HostOpaqueType::Function })),
+            event(HostJsonEvent::InvokeOpaque { function: 4, receiver: HostInvokeValue::Opaque(3), args: vec![], semantic_catch: false }, HostJsonReply::Invocation(HostOpaqueValue::Opaque { handle: 5, opaque_type: HostOpaqueType::Object })),
+            event(HostJsonEvent::GetOpaqueProperty { receiver: HostInvokeValue::Opaque(5), key: key("done"), semantic_catch: false }, HostJsonReply::OpaqueValue(HostOpaqueValue::Boolean(false))),
+            event(HostJsonEvent::GetOpaqueProperty { receiver: HostInvokeValue::Opaque(5), key: key("value"), semantic_catch: false }, HostJsonReply::OpaqueValue(HostOpaqueValue::Opaque { handle: item, opaque_type: HostOpaqueType::Object })),
+        ];
+        let fault_event = HostJsonEvent::GetOpaqueProperty { receiver: HostInvokeValue::Opaque(item), key: key("instancePath"), semantic_catch: false };
+        let failure = EngineError::new("HOST_JSON_CALLBACK", k("/at"), "Host reflection threw");
+        let mut prefix = prefix;
+        prefix.push(event(HostJsonEvent::CloseOpaqueIterator { iterator: 3 }, HostJsonReply::IteratorClosed));
+        let mut host = ScriptedHost::new(prefix).with_fault(fault_event, failure);
+        let error = collect_structure_errors(HostOpaqueValue::Opaque { handle: 1, opaque_type: HostOpaqueType::Object }, &k("/at"), &mut host, &mut Context::ordinary(), &k("/at")).unwrap_err();
+        assert_eq!(error.code, "HOST_JSON_CALLBACK");
+        assert!(host.seen.iter().any(|event| matches!(event, HostJsonEvent::CloseOpaqueIterator { iterator: 3 })));
+        assert!(!host.seen.iter().any(|event| matches!(event, HostJsonEvent::GetOpaqueProperty { key: HostOpaqueKey::String(units), .. } if units == &"message".encode_utf16().collect::<Vec<_>>())));
+        host.done();
+    }
+
+    #[test]
+    fn semantic_iterable_spread_preserves_order_and_unknown_diagnostic_members() {
+        let diagnostic = 6;
+        let diagnostic_keys = ["code", "path", "message", "severity", "extensionDetail"];
+        let diagnostic_values = ["EXT", "/extensions/acme", "custom", "warning", "kept"];
+        let key = |text: &str| HostOpaqueKey::String(text.encode_utf16().collect());
+        let mut script = vec![
+            event(
+                HostJsonEvent::GetOpaqueProperty {
+                    receiver: HostInvokeValue::Opaque(1), key: HostOpaqueKey::IteratorSymbol, semantic_catch: true,
+                },
+                HostJsonReply::OpaqueValue(HostOpaqueValue::Opaque { handle: 2, opaque_type: HostOpaqueType::Function }),
+            ),
+            event(
+                HostJsonEvent::InvokeOpaque { function: 2, receiver: HostInvokeValue::Opaque(1), args: vec![], semantic_catch: true },
+                HostJsonReply::Invocation(HostOpaqueValue::Opaque { handle: 3, opaque_type: HostOpaqueType::Object }),
+            ),
+            event(
+                HostJsonEvent::GetOpaqueProperty { receiver: HostInvokeValue::Opaque(3), key: key("next"), semantic_catch: true },
+                HostJsonReply::OpaqueValue(HostOpaqueValue::Opaque { handle: 4, opaque_type: HostOpaqueType::Function }),
+            ),
+            event(
+                HostJsonEvent::InvokeOpaque { function: 4, receiver: HostInvokeValue::Opaque(3), args: vec![], semantic_catch: true },
+                HostJsonReply::Invocation(HostOpaqueValue::Opaque { handle: 5, opaque_type: HostOpaqueType::Object }),
+            ),
+            event(
+                HostJsonEvent::GetOpaqueProperty { receiver: HostInvokeValue::Opaque(5), key: key("done"), semantic_catch: true },
+                HostJsonReply::OpaqueValue(HostOpaqueValue::Boolean(false)),
+            ),
+            event(
+                HostJsonEvent::GetOpaqueProperty { receiver: HostInvokeValue::Opaque(5), key: key("value"), semantic_catch: true },
+                HostJsonReply::OpaqueValue(HostOpaqueValue::Opaque { handle: diagnostic, opaque_type: HostOpaqueType::Object }),
+            ),
+        ];
+        let snapshot_token = 20;
+        let mut copy_script = vec![
+            event(HostJsonEvent::Classify { handle: diagnostic }, HostJsonReply::Kind(HostJsonKind::Object(diagnostic))),
+            event(HostJsonEvent::GetPrototype { handle: diagnostic }, HostJsonReply::Prototype(HostPrototype::Null)),
+            event(HostJsonEvent::IsArray { handle: diagnostic }, HostJsonReply::Boolean(false)),
+            event(HostJsonEvent::OwnSymbolCount { handle: diagnostic }, HostJsonReply::Count(0)),
+            event(HostJsonEvent::DescriptorSnapshot { handle: diagnostic }, HostJsonReply::Snapshot(HostDescriptorSnapshot { token: snapshot_token, count: diagnostic_keys.len() })),
+            event(HostJsonEvent::IsArray { handle: diagnostic }, HostJsonReply::Boolean(false)),
+        ];
+        for (index, (member, value)) in diagnostic_keys.iter().zip(diagnostic_values).enumerate() {
+            copy_script.push(event(
+                HostJsonEvent::DescriptorAt { token: snapshot_token, index },
+                HostJsonReply::Descriptor(HostPropertyDescriptor {
+                    key: hs(member), enumerable: true, is_data: true, value: Some(HostDescriptorValue::String(hs(value))),
+                }),
+            ));
+            copy_script.push(event(
+                HostJsonEvent::IsArray { handle: diagnostic },
+                HostJsonReply::Boolean(false),
+            ));
+            copy_script.push(event(
+                HostJsonEvent::IsArray { handle: diagnostic },
+                HostJsonReply::Boolean(false),
+            ));
+        }
+        copy_script.push(event(
+            HostJsonEvent::IsArray { handle: diagnostic },
+            HostJsonReply::Boolean(false),
+        ));
+        script.extend([
+            event(
+                HostJsonEvent::InvokeOpaque { function: 4, receiver: HostInvokeValue::Opaque(3), args: vec![], semantic_catch: true },
+                HostJsonReply::Invocation(HostOpaqueValue::Opaque { handle: 7, opaque_type: HostOpaqueType::Object }),
+            ),
+            event(
+                HostJsonEvent::GetOpaqueProperty { receiver: HostInvokeValue::Opaque(7), key: key("done"), semantic_catch: true },
+                HostJsonReply::OpaqueValue(HostOpaqueValue::Boolean(true)),
+            ),
+        ]);
+        script.extend(copy_script);
+        let mut host = ScriptedHost::new(script);
+        let mut ctx = Context::ordinary();
+        let result = collect_semantic_iterable(
+            HostOpaqueValue::Opaque { handle: 1, opaque_type: HostOpaqueType::Object },
+            &mut host,
+            &mut ctx,
+            &k("/sourceValidation/diagnostics"),
+        ).unwrap();
+        assert_eq!(result, HostSemanticIterableOutcome::Values(vec![
+            HostOpaqueValue::Opaque { handle: diagnostic, opaque_type: HostOpaqueType::Object },
+        ]));
+        let HostSemanticIterableOutcome::Values(deferred) = result else { unreachable!() };
+        let copied = materialize_semantic_iterable_values(
+            deferred,
+            &mut host,
+            &mut ctx,
+            &k("/sourceValidation/diagnostics"),
+            2,
+        ).unwrap();
+        assert_eq!(copied, vec![Value::Object(
+            diagnostic_keys.iter().zip(diagnostic_values).map(|(key, value)| (k(key), Value::String(k(value)))).collect(),
+        )]);
+        let done_step = host.seen.iter().position(|event| match event {
+            HostJsonEvent::GetOpaqueProperty { receiver: HostInvokeValue::Opaque(7), key: HostOpaqueKey::String(key), .. } => key == &"done".encode_utf16().collect::<Vec<_>>(),
+            _ => false,
+        }).unwrap();
+        let final_copy = host.seen.iter().position(|event| *event == HostJsonEvent::Classify { handle: diagnostic }).unwrap();
+        assert!(done_step < final_copy, "diagnostic copying must wait until the iterator is exhausted");
+        host.done();
+    }
+
+    #[test]
+    fn semantic_iterable_spread_stops_on_native_and_semantic_failures() {
+        let mut no_host_events = ScriptedHost::new(Vec::new());
+        assert_eq!(
+            collect_semantic_iterable(HostOpaqueValue::Null, &mut no_host_events, &mut Context::ordinary(), &k("/diagnostics")).unwrap(),
+            HostSemanticIterableOutcome::NativeSpreadFailureUnresolved,
+        );
+        no_host_events.done();
+
+        let message = hs("iterator getter failed");
+        let mut host = ScriptedHost::new(vec![event(
+            HostJsonEvent::GetOpaqueProperty {
+                receiver: HostInvokeValue::Opaque(1),
+                key: HostOpaqueKey::IteratorSymbol,
+                semantic_catch: true,
+            },
+            HostJsonReply::SemanticThrow(message.clone()),
+        )]);
+        host.strings.insert(message.token, message.test_units.to_vec());
+        assert_eq!(
+            collect_semantic_iterable(
+                HostOpaqueValue::Opaque { handle: 1, opaque_type: HostOpaqueType::Object },
+                &mut host,
+                &mut Context::ordinary(),
+                &k("/diagnostics"),
+            ).unwrap(),
+            HostSemanticIterableOutcome::SemanticThrow(k("iterator getter failed")),
+        );
+        host.done();
+    }
+
+    #[test]
+    fn deferred_diagnostic_copy_reports_nested_non_json_path() {
+        let diagnostic = 51;
+        let snapshot = 52;
+        let mut host = ScriptedHost::new(vec![
+            event(object(diagnostic), HostJsonReply::Kind(HostJsonKind::Object(diagnostic))),
+            event(HostJsonEvent::GetPrototype { handle: diagnostic }, HostJsonReply::Prototype(HostPrototype::Null)),
+            event(HostJsonEvent::IsArray { handle: diagnostic }, HostJsonReply::Boolean(false)),
+            event(HostJsonEvent::OwnSymbolCount { handle: diagnostic }, HostJsonReply::Count(0)),
+            event(HostJsonEvent::DescriptorSnapshot { handle: diagnostic }, HostJsonReply::Snapshot(HostDescriptorSnapshot { token: snapshot, count: 1 })),
+            event(HostJsonEvent::IsArray { handle: diagnostic }, HostJsonReply::Boolean(false)),
+            event(HostJsonEvent::DescriptorAt { token: snapshot, index: 0 }, HostJsonReply::Descriptor(HostPropertyDescriptor {
+                key: hs("unknown"), enumerable: true, is_data: true, value: Some(HostDescriptorValue::Unsupported("bigint")),
+            })),
+            event(HostJsonEvent::IsArray { handle: diagnostic }, HostJsonReply::Boolean(false)),
+            event(HostJsonEvent::IsArray { handle: diagnostic }, HostJsonReply::Boolean(false)),
+        ]);
+        let mut ctx = Context::ordinary();
+        let error = materialize_semantic_iterable_values(
+            vec![HostOpaqueValue::Opaque { handle: diagnostic, opaque_type: HostOpaqueType::Object }],
+            &mut host,
+            &mut ctx,
+            &k("/sourceValidation/diagnostics"),
+            2,
+        ).unwrap_err();
+        assert_eq!(error.code, "NON_JSON");
+        assert_eq!(error.path, k("/sourceValidation/diagnostics/0/unknown"));
+        host.done();
+    }
+
     fn object(handle: HostHandle) -> HostJsonEvent {
         HostJsonEvent::Classify { handle }
     }
