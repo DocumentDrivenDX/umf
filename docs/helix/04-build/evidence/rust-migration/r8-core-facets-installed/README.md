@@ -169,3 +169,16 @@ resource aliases and 922 logical retirement gaps remain unchanged; the gate
 records `completeParity: false` and `releaseQualified: false`.
 The raw receipts preserve escaped isolated surrogate test values; inspect
 them with JavaScript `JSON.parse`, as the replay harness does.
+
+## Current fixed-point replay — 2026-10-26
+
+The [current fixed-point cohort](current-facets-20261026/README.md) is the
+latest installed replay for these four operations. It uses archive SHA-256
+`63c72d374aff9181837ef2286dd732e52626286c9b9b199a5c12b9f3b9c331d5` and
+closure SHA-256
+`5804c9072e5fa85a8c50b362ae4e4f1039a1b5f91ff44b740d2eea489a8fa78f` over
+3,450 live inputs, with zero transforms and all 1,789 listed member hashes
+verified. Node, Bun, and Chromium passed the frozen predecessor comparisons
+and the additional admission, host getter, proxy-order, and thrown-error
+identity controls. The linked cohort document records host versions, artifact
+hashes, and limitations.
