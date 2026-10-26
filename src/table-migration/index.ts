@@ -716,7 +716,7 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
         if(options?.version==='umf.table-migration-options/0.6'){
          const subject=g11DependencySubject(next,next.expectedCatalog.tables[tableIndex]!.id,'grant','',step.sourcePath);
          steps.push(internalGrantEffect({...grant,operation:'dependency-add',phaseOperation:'dependency-add',phaseDependency:subject},'grant-add',next,next.expectedCatalog.tables[tableIndex]!.id,step.sourcePath));
-        }else steps.push(options?.version==='umf.table-migration-options/0.4'?internalGrantEffect(grant as TableMigrationStep,'grant-add',next,next.expectedCatalog.tables[tableIndex]!.id,step.sourcePath):grant);
+        }else steps.push(options?.version==='umf.table-migration-options/0.4'?internalGrantEffect(grant as LegacyTableMigrationStep,'grant-add',next,next.expectedCatalog.tables[tableIndex]!.id,step.sourcePath):grant);
        }
        emittedGrantChanges.add(step.sourcePath);
       }

@@ -39,10 +39,11 @@ export function g04DiscoveryIntent(selection:G04ConversionSelection):Record<stri
 }
 type ConversionMeaning=Record<string,unknown>&{meaning:{physical:TableDeploymentBundle['expectedCatalog']['columns'][number];logical:any;mapping:any}};
 function conversionMeaning(bundle:TableDeploymentBundle,tableId:string,field:{module:string;element:string},side:'previous'|'next',intent:unknown):ConversionMeaning{
- const table=bundle.expectedCatalog.tables.find(item=>item.id===tableId),physical=bundle.expectedCatalog.columns.find(item=>item.table===tableId&&refKey(item.field)===refKey(field));
- const mapping=table?.columns.find(item=>refKey(item.field)===refKey(field));
+ const table=bundle.expectedCatalog.tables.find(item=>item.id===tableId)??fail('Conversion meaning is not bound to one existing table','/options/conversions');
+ const physical=bundle.expectedCatalog.columns.find(item=>item.table===tableId&&refKey(item.field)===refKey(field))??fail('Conversion meaning is not bound to one existing physical column','/options/conversions');
+ const mapping=table.columns.find(item=>refKey(item.field)===refKey(field))??fail('Conversion meaning is not bound to one existing source mapping','/options/conversions');
  const document=readDocument(bundle.source.utf8,bundle.source.format),logical=document.modules.find(module=>module.id===field.module)?.elements.find(element=>element.id===field.element);
- if(!table||!physical||!mapping||logical?.kind!=='field')fail('Conversion meaning is not bound to one existing physical and logical Field','/options/conversions');
+ if(logical?.kind!=='field')fail('Conversion meaning is not bound to one existing logical Field','/options/conversions');
  return {version:'umf.field-conversion-review/0.1',side,source:{format:'json',sha256:sha256Text(bundle.source.utf8)},configuration:bundle.configuration,table:tableId,field:{module:field.module,element:field.element},meaning:{physical,logical,mapping},conversionIntent:intent,effects:[]};
 }
 function effectsFor(selection:G04ConversionSelection,oldMeaning:any,newMeaning:any):string[]{

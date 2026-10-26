@@ -3,6 +3,7 @@ import {expect,test} from 'bun:test';
 import {compileTableDeployment} from '../../src/table-deployment';
 import {compileTableMigration,discoverTableMigrationChanges,verifyTableMigration} from '../../src/table-migration';
 import {createValidator} from '../../src/validation/schema';
+import tablesSchema from '../../spec/extensions/tables/schema.json';
 import deploymentSchema from '../../spec/extensions/tables/deployment.schema.json';
 import g04MigrationSchema from '../../spec/extensions/tables/migration-0.7.schema.json';
 import g04OptionsSchema from '../../spec/extensions/tables/migration-options-0.7.schema.json';
@@ -69,7 +70,7 @@ test('G04 rejects unsupported round-trip proof issuance, dependent native closur
 
 test('G04 .7 schemas describe the closed discovery, options, plan and phase carriers',()=>{
  const input=request('retained-originals'),result=compileTableMigration(input.request);if(result.status!=='compiled')throw new Error(JSON.stringify(result));
- const validator=createValidator(false);validator.addSchema(deploymentSchema);validator.addSchema(g04OptionsSchema);validator.addSchema(g04PhasesSchema);
+ const validator=createValidator(false);validator.addSchema(tablesSchema);validator.addSchema(deploymentSchema);validator.addSchema(g04OptionsSchema);validator.addSchema(g04PhasesSchema);
  expect(validator.compile(g04DiscoverySchema)(input.cycleFree)).toBe(true);
  expect(validator.compile(g04OptionsSchema)(result.plan.options)).toBe(true);
  expect(validator.compile(g04MigrationSchema)(result.plan)).toBe(true);
