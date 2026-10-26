@@ -177,12 +177,14 @@ original status; `schema-browser-v2.0.0` therefore uses the exact-pin manual
 backfill. See [GitHub's release settings](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/establish-provenance-and-integrity/prevent-release-changes).
 
 The main-only `npm` environment and exact package trusted publisher are now
-configured, including **Allow npm publish**. [Actions verification](../evidence/schema-browser-npm-2.0.0/README.md)
-passed release, registry and clean-consumer checks for the unchanged 2.0.0
-archive. Matching bytes skipped upload. The new trusted publisher remains
-**pending its first successful OIDC upload before 2026-10-28 19:22 UTC**;
-npm expires unvalidated configurations after two days. This run is not proof
-of a new OIDC upload. A genuinely qualified new release must close that gate.
+configured, including **Allow npm publish**. The
+[qualified 2.0.1 Actions publication](../evidence/schema-browser-npm-2.0.1/README.md)
+passed complete producer qualification, actual OIDC upload, exact public-byte
+verification and a fresh public-npm install/import. The successful upload at
+2026-10-26 22:35:51 UTC validated the pending publisher before its
+2026-10-28 19:22 UTC deadline. Independent npm signature and provenance checks
+also passed. The historical [2.0.0 verification](../evidence/schema-browser-npm-2.0.0/README.md)
+remains an unchanged matching-byte skip, not an OIDC upload claim.
 
 The workflow's only publishing identity is the main-only GitHub `npm`
 environment and the npm trusted publisher for `DocumentDrivenDX/umf`, workflow

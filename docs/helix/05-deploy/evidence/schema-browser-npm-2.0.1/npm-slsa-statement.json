@@ -1,0 +1,47 @@
+{
+  "_type": "https://in-toto.io/Statement/v1",
+  "subject": [
+    {
+      "name": "pkg:npm/%40documentdrivendx/umf-schema-browser@2.0.1",
+      "digest": {
+        "sha512": "74e8fcc66fc2a378d49c5b4006db637ea2d673db16c5c4d88d49d64690b14ceeda18ef1f50fb4b4b272bc2da53374c26c2601e811e405f546767d189bea6fd8f"
+      }
+    }
+  ],
+  "predicateType": "https://slsa.dev/provenance/v1",
+  "predicate": {
+    "buildDefinition": {
+      "buildType": "https://slsa-framework.github.io/github-actions-buildtypes/workflow/v1",
+      "externalParameters": {
+        "workflow": {
+          "ref": "refs/heads/main",
+          "repository": "https://github.com/DocumentDrivenDX/umf",
+          "path": ".github/workflows/publish-schema-browser-npm.yml"
+        }
+      },
+      "internalParameters": {
+        "github": {
+          "event_name": "workflow_dispatch",
+          "repository_id": "1382276802",
+          "repository_owner_id": "273466046"
+        }
+      },
+      "resolvedDependencies": [
+        {
+          "uri": "git+https://github.com/DocumentDrivenDX/umf@refs/heads/main",
+          "digest": {
+            "gitCommit": "82f1980cc2982119115a7e5fc2982d7bf4b93194"
+          }
+        }
+      ]
+    },
+    "runDetails": {
+      "builder": {
+        "id": "https://github.com/actions/runner/github-hosted"
+      },
+      "metadata": {
+        "invocationId": "https://github.com/DocumentDrivenDX/umf/actions/runs/40413333066/attempts/1"
+      }
+    }
+  }
+}

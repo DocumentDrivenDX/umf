@@ -1,0 +1,147 @@
+{
+  "schema": "umf.schema-browser.npm-evidence/1",
+  "version": "2.0.1",
+  "producer": {
+    "run": 40411767168,
+    "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40411767168",
+    "driver": "c0fbbbc56ea0df228aef4da51f58c30caab24114",
+    "selected_source": "ed130607edddc370dcc10ce48c82a1896d3824be",
+    "all_two_jobs_passed": true
+  },
+  "publisher": {
+    "run": 40413333066,
+    "url": "https://github.com/DocumentDrivenDX/umf/actions/runs/40413333066",
+    "driver": "82f1980cc2982119115a7e5fc2982d7bf4b93194",
+    "all_four_jobs_passed": true,
+    "publication_mode": "oidc_upload"
+  },
+  "release": {
+    "id": 424827174,
+    "tag": "schema-browser-v2.0.1",
+    "url": "https://github.com/DocumentDrivenDX/umf/releases/tag/schema-browser-v2.0.1",
+    "immutable": true,
+    "published_at": "2026-10-26T22:24:03Z",
+    "original_draft_assets_preserved": true,
+    "assets": [
+      {
+        "id": 679642509,
+        "name": "documentdrivendx-umf-schema-browser-2.0.1.tgz",
+        "size": 2200186,
+        "digest": "sha256:7b76f6912142f2b3f4d0324a2e7db53535f81f80974cb952a9211c2c32d8c542"
+      },
+      {
+        "id": 679642512,
+        "name": "receipt.json",
+        "size": 1111,
+        "digest": "sha256:2803c4619e226ed5c91dbaeab3f7d3450ad6b74335b2763e80d21369161af7b8"
+      },
+      {
+        "id": 679642510,
+        "name": "release-manifest.json",
+        "size": 7332,
+        "digest": "sha256:ad20a9381c075411a9cbc39f2810080793dea4b0f2d7f14d989d2cbb225d1e10"
+      },
+      {
+        "id": 679642508,
+        "name": "SHA256SUMS",
+        "size": 6620,
+        "digest": "sha256:83843478a73ebbbf066a5891c77810e39a1fd4c380d391db85a57b3f2cc5173b"
+      }
+    ]
+  },
+  "archive_sha256": "7b76f6912142f2b3f4d0324a2e7db53535f81f80974cb952a9211c2c32d8c542",
+  "artifact_api_checksums_verified": [
+    {
+      "digest": "sha256:196d22055718214084f94a1eb4ad1c519ed5d2e46b40ee109586cfabe9aeffdb",
+      "id": 12692643714,
+      "name": "schema-browser-qualified-2.0.1",
+      "size_in_bytes": 2193347
+    },
+    {
+      "digest": "sha256:ec7686c928f0b1a8bb49e31f996a6805439cee19b400a9dad8f7ccd35f5276ef",
+      "id": 12694510360,
+      "name": "schema-browser-npm-preflight-2.0.1",
+      "size_in_bytes": 164
+    },
+    {
+      "digest": "sha256:2ff02ec1f0548d2a98e5a1fd75a45286d41adbda3d45e54025c1514856fc2c86",
+      "id": 12694198621,
+      "name": "schema-browser-npm-publication-2.0.1",
+      "size_in_bytes": 499
+    },
+    {
+      "digest": "sha256:5635e9d8b28210837af3a31f782a6c7b4e27738d2e38299db95e83ad73a215b5",
+      "id": 12694024380,
+      "name": "schema-browser-npm-consumer-2.0.1",
+      "size_in_bytes": 318
+    },
+    {
+      "digest": "sha256:4ebf4d70aa99c34c22a3338f89c4c98c6c314bcd8e96292c2af718d046b393f3",
+      "id": 12693953690,
+      "name": "schema-browser-verified-2.0.1",
+      "size_in_bytes": 2189744
+    }
+  ],
+  "raw_file_sha256": {
+    "identity.json": "32461d86c286413fb536efdca360711a6d57ff572d757edfd101fc920d019962",
+    "producer-receipt.json": "2803c4619e226ed5c91dbaeab3f7d3450ad6b74335b2763e80d21369161af7b8",
+    "release-manifest.json": "ad20a9381c075411a9cbc39f2810080793dea4b0f2d7f14d989d2cbb225d1e10",
+    "SHA256SUMS": "83843478a73ebbbf066a5891c77810e39a1fd4c380d391db85a57b3f2cc5173b",
+    "npm-preflight.txt": "85d16ccb33ba694e7674ade9d0f672301b693b646b8eca29864742204e0642bc",
+    "npm-publication-receipt.json": "d48ec1769508f2f1f238780b8d5ad684b831e44657d80c99623964868ffbfa8d",
+    "npm-consumer-receipt.json": "fd2d0fa1e640753f0e38cda6d0aae0c83c428d760b050577eacd28af22f85eca",
+    "npm-attestations.json": "c47740f972a78badce7c560b919a5ac336f2c1c7f6cceb6c9d9e94183f31e2bc",
+    "npm-slsa-statement.json": "42dbb25444f1187ee41cb4a8ae77aa3a9d77d28926ccd0123ad0f6ef98838992",
+    "npm-publish-statement.json": "33bbd22a81e0838964c8693ae5600d02898ae455e7c718b8d3f6f94bb138a866",
+    "npm-signature-audit.txt": "d6c98d41303a1d4376e2bcaae38fbf34cdd05591f0902f99a4f485ac18f70c70"
+  },
+  "checks": {
+    "two_byte_identical_builds": true,
+    "exact_offline_installed_payload": true,
+    "strict_csp_chromium_no_external_requests_or_errors": true,
+    "registry_served_tarball_equals_qualified_archive": true,
+    "public_npm_clean_install_and_entrypoint_import": true,
+    "new_oidc_upload": true,
+    "npm_registry_signature_verified": true,
+    "npm_provenance_attestation_verified": true,
+    "signed_archive_sha512_repository_workflow_main_publisher_revision_and_run_match": true
+  },
+  "publisher_activation": {
+    "status": "validated_by_actual_successful_oidc_publication",
+    "upload_completed_at_utc": "2026-10-26T22:35:51Z",
+    "original_deadline_utc": "2026-10-28T19:22:00Z",
+    "original_deadline_precision": "minute in npm UI",
+    "completed_before_deadline": true,
+    "settings_ui_reread_after_upload": false,
+    "basis": "Actual Actions OIDC upload, exact public registry bytes, fresh public consumer and npm cryptographic signature/attestation verification. npm documents that the first successful publish validates the pending publisher.",
+    "rules": "https://docs.npmjs.com/trusted-publishers/#trusted-publisher-configuration-expiry"
+  },
+  "sdk_latest": {
+    "unchanged": true,
+    "id": 422134291,
+    "tag": "umf-v0.5.5"
+  },
+  "prior_attempts": [
+    {
+      "run": 40404099835,
+      "status": "cancelled-before-qualification",
+      "finding": "Logs show slow progressing Ubuntu package downloads; no Bun hang established."
+    },
+    {
+      "run": 40407904650,
+      "qualification": "passed",
+      "promotion": "failed: draft-by-tag404",
+      "original_four_assets_retained": true
+    },
+    {
+      "run": 40412131907,
+      "verification_and_absence": "passed",
+      "upload": "failed before publication: relative tarball parsed as GitHub shorthand"
+    }
+  ],
+  "limits": [
+    "This release qualifies the public browser package; private SDK, Core/native/platform and site-consumer adoption remain separate.",
+    "The signed npm SLSA provenance identifies publisher driver 82f1980c; selected product source ed130607 is independently bound by the qualified package provenance and immutable release pins.",
+    "Historical 2.0.0 matching-byte receipts remain unchanged and do not become an OIDC upload claim."
+  ]
+}
