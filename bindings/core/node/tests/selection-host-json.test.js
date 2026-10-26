@@ -304,6 +304,69 @@ test('private host Selection defers Registry.get until source admission and pres
   expect(calls).toBe(1);
 });
 
+test('private host Selection admits the complete source before reflecting the query', () => {
+  const sourceEvents = [];
+  const queryEvents = [];
+  const trace = [];
+  const traced = (value, label, events) => new Proxy(value, {
+    getPrototypeOf(target) { events.push(`${label}:prototype`); return Reflect.getPrototypeOf(target); },
+    ownKeys(target) { events.push(`${label}:keys`); return Reflect.ownKeys(target); },
+    getOwnPropertyDescriptor(target, key) {
+      events.push(`${label}:descriptor:${String(key)}`);
+      return Reflect.getOwnPropertyDescriptor(target, key);
+    },
+  });
+  const source = traced(packet.source, 'source', sourceEvents);
+  const query = traced(packet.queries.all, 'query', queryEvents);
+  const expected = typescriptSelectCoreElements(source, query);
+  trace.push(...sourceEvents, ...queryEvents);
+
+  sourceEvents.length = 0;
+  queryEvents.length = 0;
+  let actual;
+  let rawResponse;
+  const observedAddon = new Proxy(addon, {
+    get(target, key) {
+      const member = Reflect.get(target, key, target);
+      if (key !== 'executeCoreElementSelectionHostJson' || typeof member !== 'function') return member;
+      return function(...args) {
+        const response = Reflect.apply(member, target, args);
+        rawResponse = typeof response === 'string' ? JSON.parse(response) : response;
+        return response;
+      };
+    },
+  });
+  actual = coreElementSelectionHostInput(observedAddon, resources, source, query, undefined, UmfCoreError);
+  expect([...sourceEvents, ...queryEvents]).toEqual(trace);
+  expect(sourceEvents.length).toBeGreaterThan(0);
+  expect(queryEvents.length).toBeGreaterThan(0);
+  const rawWire = typeof rawResponse?.wire === 'string' ? JSON.parse(rawResponse.wire) : undefined;
+  expect(rawResponse?.status).toBe('ok');
+  expect(rawResponse?.code).toBeUndefined();
+  expect(rawWire?.kind).toBe('object');
+  expect(actual).toEqual(expected);
+});
+
+test('private host Selection source first-fault admission never reflects the query', () => {
+  const sentinel = Object.freeze({sourceAdmission: 'first fault'});
+  let queryReflections = 0;
+  const source = new Proxy(packet.source, {
+    getPrototypeOf() { throw sentinel; },
+  });
+  const query = new Proxy(packet.queries.all, {
+    getPrototypeOf(target) { queryReflections++; return Reflect.getPrototypeOf(target); },
+    ownKeys(target) { queryReflections++; return Reflect.ownKeys(target); },
+    getOwnPropertyDescriptor(target, key) { queryReflections++; return Reflect.getOwnPropertyDescriptor(target, key); },
+  });
+  try {
+    coreElementSelectionHostInput(addon, resources, source, query, undefined, UmfCoreError);
+    throw new Error('expected source reflection failure');
+  } catch (error) {
+    expect(error).toBe(sentinel);
+  }
+  expect(queryReflections).toBe(0);
+});
+
 test('private host Selection checks scope before structure and preserves receiver/order', () => {
   const events = [];
   const scopes = {includes(scope) {
