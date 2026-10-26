@@ -293,3 +293,44 @@ cohort:
 | `python/umf_access/src/umf_access/rust_capture_observe.py` | `d4a5b4eb71a60d1e3ee98a14d55d6765123b53038d1dd5aa24cf7436fd38ad06` |
 | `python/umf_access/src/umf_access/rust_catalog_render.py` | `ed085d8605e2f7c61247af1866c0bd24dfa7929edd673a1c7cf12b42d515c9fa` |
 | `python/umf_access/tests/test_capture_rust_graph_validator.py` | `99eaa1feda3daf4779deee2972a3c1a9819c5aa13a175e669cab80a9c1eaecb1` |
+
+## Exact empty-step terminal extension — 2026-10-26
+
+The private validator profile advanced to
+`umf-access-capture-exact-empty-terminal/0.2.0`. Its accepted operation set is
+now exactly `all`, `first`, `one`, `count`, and `exists`, each represented by
+an exact built-in `Node(op, (RecordRef, ()))` with exact built-in `RecordRef`,
+tuple arguments, and empty steps. The predecessor performs no operation-
+specific validation between its common root/owner pass and `visit(node)` for
+these terminals; the only terminal-specific tail preflight is for `get` and
+`page`, which are excluded. The shared visit tail reads and charges the same
+ordered terminal header and its two children. Focused tests call Python
+`_validate_node` for every added form and prove the opt-in route avoids DTO
+encoding for each.
+
+All other operations and shapes return `outside-profile` before graph reads and
+continue through the original private DTO validator. The wrapper remains
+limited to an exact empty parameter tuple, preserving `_validate_node`'s
+parameter-map `.name` reads otherwise. Public `capture()` is unchanged. The
+extension was rebuilt offline with Rust 1.90.0 into the separate
+`/private/tmp/umf-capture-extended-target`; the isolated overlay addon was
+refreshed from that build. Focused validator plus field-observation tests pass
+**85/85**. The seven-file CPython overlay cohort passes **113 passed, 3
+subtests passed** in 1.92s. The refreshed overlay root was
+`/private/tmp/umf-capture-all-empty-overlay/umf` (the
+`/private/tmp/umf-capture-extended-overlay` path was not used). The exact
+seven-file replay command was:
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 DYLD_LIBRARY_PATH=/private/tmp/umf-capture-all-empty-overlay/umf PYTHONPATH=/private/tmp/umf-capture-all-empty-overlay:python/umf_access/src:python/src python/.venv/bin/python -m pytest -p no:cacheprovider -q python/umf_access/tests/test_capture.py python/umf_access/tests/test_capture_resource_budget.py python/umf_access/tests/test_capture_field_observation.py python/umf_access/tests/test_capture_rust_graph_validator.py python/umf_access/tests/test_captured_declaration_predecessor.py python/umf_access/tests/test_captured_logical_render_predecessor.py python/umf_access/tests/test_captured_logical_render_positive.py
+```
+
+The cohort and addon/source pins are:
+
+| Artifact | SHA-256 |
+| --- | --- |
+| Isolated overlay `_rust_core.abi3.so` | `384f63ba50c735ce429aa88c1c5c8ba7b41990201de53fe1d5cf7ad45f1d2ec3` |
+| `bindings/core/python/src/lib.rs` | `acdc379c362f70e3b25ddf0870c6468a926e20aaa456846aa267b135e9816440` |
+| `python/umf_access/src/umf_access/rust_capture_observe.py` | `b07de9d3d865c8ed768fe3a267eaae41e8f1c3933919848cf8dd4f190d7bc181` |
+| `python/umf_access/src/umf_access/rust_catalog_render.py` | `52eafe2445e504ea8995a7c8f9112a55676c48e0075577084f9d209f1da021ce` |
+| `python/umf_access/tests/test_capture_rust_graph_validator.py` | `f9b942acddb6c7990029f5a1a3c95067e32bc45a470192c71a509ab319480014` |

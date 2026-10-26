@@ -172,7 +172,9 @@ def capture_with_rust_graph_validator(function: object) -> object:
     def validate(
         node: object, parameters: tuple[object, ...], presence: frozenset[str]
     ) -> None:
-        from umf_access.rust_capture_observe import validate_exact_all_empty_profile
+        from umf_access.rust_capture_observe import (
+            validate_exact_empty_terminal_profile,
+        )
 
         session_type = getattr(_rust._rust_core, "CaptureResourceSession", None)
         # `_validate_node` first builds a parameter map by reading every
@@ -190,7 +192,7 @@ def capture_with_rust_graph_validator(function: object) -> object:
             and isinstance(record_ref_type, type)
         ):
             session = session_type((1 << 64) - 1)
-            if validate_exact_all_empty_profile(
+            if validate_exact_empty_terminal_profile(
                 node, session, node_type, record_ref_type
             ):
                 return

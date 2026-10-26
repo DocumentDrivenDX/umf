@@ -102,8 +102,8 @@ def test_private_opt_in_capture_accepts_closed_rust_response():
             create=True,
     ) as orchestrate, patch.object(
         _rust._rust_core,
-        "access_validate_capture_exact_all_empty_with_session",
-        wraps=_rust._rust_core.access_validate_capture_exact_all_empty_with_session,
+        "access_validate_capture_exact_empty_terminal_with_session",
+        wraps=_rust._rust_core.access_validate_capture_exact_empty_terminal_with_session,
     ) as exact_validate:
         captured = rust_catalog_render.capture_with_rust_graph_validator(declaration)
     assert len(captured.variants) == 1
@@ -141,11 +141,11 @@ def test_private_opt_in_capture_maps_rust_signature_refusal():
 def test_dto_free_exact_empty_all_matches_python_predecessor(monkeypatch):
     session = _rust._rust_core.CaptureResourceSession(100_000)
     node = Node("all", (RecordRef("demo", "Thing", (_ID,)), ()))
-    result = _rust._rust_core.access_validate_capture_exact_all_empty_with_session(
+    result = _rust._rust_core.access_validate_capture_exact_empty_terminal_with_session(
         node, Node, RecordRef, session
     )
     assert result == {
-        "profile": "umf-access-capture-exact-all-empty/0.1.0",
+        "profile": "umf-access-capture-exact-empty-terminal/0.2.0",
         "outcome": "accepted",
     }
     assert session.charged_work > 0
@@ -163,14 +163,40 @@ def test_dto_free_exact_empty_all_matches_python_predecessor(monkeypatch):
     assert captured.variants[0].node == node
 
 
-def test_dto_free_validator_returns_outside_profile_before_graph_reads(monkeypatch):
-    node = Node("all", (RecordRef("demo", "Thing", (_ID,)), (Node("limit", (1,)),)))
+@pytest.mark.parametrize("op", ["first", "one", "count", "exists"])
+def test_dto_free_exact_empty_terminal_matches_python_predecessor(monkeypatch, op):
+    node = Node(op, (RecordRef("demo", "Thing", (_ID,)), ()))
     session = _rust._rust_core.CaptureResourceSession(100_000)
-    result = _rust._rust_core.access_validate_capture_exact_all_empty_with_session(
+    result = _rust._rust_core.access_validate_capture_exact_empty_terminal_with_session(
         node, Node, RecordRef, session
     )
     assert result == {
-        "profile": "umf-access-capture-exact-all-empty/0.1.0",
+        "profile": "umf-access-capture-exact-empty-terminal/0.2.0",
+        "outcome": "accepted",
+    }
+    assert session.charged_work > 0
+    _validate_node(node, ())
+
+    @query
+    def declaration():
+        return Terminal(node)
+
+    def no_dto(*_args, **_kwargs):
+        raise AssertionError("accepted exact profile must not encode a tagged DTO")
+
+    monkeypatch.setattr(rust_catalog_render, "_encode_capture", no_dto)
+    captured = rust_catalog_render.capture_with_rust_graph_validator(declaration)
+    assert captured.variants[0].node.op == op
+
+
+def test_dto_free_validator_returns_outside_profile_before_graph_reads(monkeypatch):
+    node = Node("all", (RecordRef("demo", "Thing", (_ID,)), (Node("limit", (1,)),)))
+    session = _rust._rust_core.CaptureResourceSession(100_000)
+    result = _rust._rust_core.access_validate_capture_exact_empty_terminal_with_session(
+        node, Node, RecordRef, session
+    )
+    assert result == {
+        "profile": "umf-access-capture-exact-empty-terminal/0.2.0",
         "outcome": "outside-profile",
     }
 
@@ -189,7 +215,7 @@ def test_dto_free_validator_rejects_mutated_class_accessors_before_reads(monkeyp
 
     monkeypatch.setattr(Node, "__getattribute__", patched_getattribute)
     session = _rust._rust_core.CaptureResourceSession(100_000)
-    result = _rust._rust_core.access_validate_capture_exact_all_empty_with_session(
+    result = _rust._rust_core.access_validate_capture_exact_empty_terminal_with_session(
         node, Node, RecordRef, session
     )
     assert result["outcome"] == "outside-profile"
@@ -210,7 +236,7 @@ def test_dto_free_admission_rejects_custom_instance_dict_descriptor_before_gette
 
     node = object.__new__(TrapNode)
     session = _rust._rust_core.CaptureResourceSession(100_000)
-    result = _rust._rust_core.access_validate_capture_exact_all_empty_with_session(
+    result = _rust._rust_core.access_validate_capture_exact_empty_terminal_with_session(
         node, TrapNode, RecordRef, session
     )
     assert result["outcome"] == "outside-profile"
@@ -229,7 +255,7 @@ def test_dto_free_admission_rejects_metaclass_spoof_named_type_before_getter():
     spoof_node_type = SpoofMeta("SpoofNode", (), {})
     node = object.__new__(spoof_node_type)
     session = _rust._rust_core.CaptureResourceSession(100_000)
-    result = _rust._rust_core.access_validate_capture_exact_all_empty_with_session(
+    result = _rust._rust_core.access_validate_capture_exact_empty_terminal_with_session(
         node, spoof_node_type, RecordRef, session
     )
     assert result["outcome"] == "outside-profile"
@@ -255,7 +281,7 @@ def test_dto_free_raw_key_admission_never_hashes_custom_dict_keys():
     vars(node)[key] = "ignored by Python validator"
     key.armed = True
     session = _rust._rust_core.CaptureResourceSession(100_000)
-    result = _rust._rust_core.access_validate_capture_exact_all_empty_with_session(
+    result = _rust._rust_core.access_validate_capture_exact_empty_terminal_with_session(
         node, Node, RecordRef, session
     )
     assert result["outcome"] == "outside-profile"
@@ -275,7 +301,7 @@ def test_dto_free_validator_resource_limit_precedes_graph_accessor_reads(monkeyp
     monkeypatch.setattr(Node, "__getattribute__", trapped_getattribute)
     session = _rust._rust_core.CaptureResourceSession(0)
     with pytest.raises(ValueError, match="capture resource limit exceeded"):
-        _rust._rust_core.access_validate_capture_exact_all_empty_with_session(
+        _rust._rust_core.access_validate_capture_exact_empty_terminal_with_session(
             node, Node, RecordRef, session
         )
     assert reads == []
@@ -292,7 +318,7 @@ def test_private_opt_in_nonempty_parameters_fall_back_before_parameter_reads(mon
 
     monkeypatch.setattr(
         _rust._rust_core,
-        "access_validate_capture_exact_all_empty_with_session",
+        "access_validate_capture_exact_empty_terminal_with_session",
         forbidden,
         raising=False,
     )

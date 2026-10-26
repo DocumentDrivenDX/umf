@@ -14,7 +14,7 @@ from __future__ import annotations
 from typing import Any
 
 _PROFILE = "umf-access-capture-graph-observation/0.6.0"
-_EXACT_ALL_EMPTY_PROFILE = "umf-access-capture-exact-all-empty/0.1.0"
+_EXACT_EMPTY_TERMINAL_PROFILE = "umf-access-capture-exact-empty-terminal/0.2.0"
 
 
 class FieldOwnerObservationUnavailable(RuntimeError):
@@ -163,13 +163,13 @@ def observe_all_empty_capture_profile(node: object, session: object | None = Non
         raise TypeError("capture profile requires exact all terminal with empty steps")
 
 
-def validate_exact_all_empty_profile(
+def validate_exact_empty_terminal_profile(
     node: object,
     session: object,
     node_type: type[object],
     record_ref_type: type[object],
 ) -> bool:
-    """Validate the exact empty-``all`` graph without constructing a DTO.
+    """Validate exact built-in empty-step terminals without constructing a DTO.
 
     Rust performs raw, side-effect-free admission first. ``False`` means the
     graph is outside this closed profile and may proceed through the existing
@@ -180,7 +180,7 @@ def validate_exact_all_empty_profile(
 
     core = getattr(_rust, "_rust_core", None)
     validate = getattr(
-        core, "access_validate_capture_exact_all_empty_with_session", None
+        core, "access_validate_capture_exact_empty_terminal_with_session", None
     )
     session_type = getattr(core, "CaptureResourceSession", None)
     if not callable(validate) or not callable(session_type) or type(session) is not session_type:
@@ -189,7 +189,7 @@ def validate_exact_all_empty_profile(
     if (
         type(result) is not dict
         or set(result) != {"profile", "outcome"}
-        or result["profile"] != _EXACT_ALL_EMPTY_PROFILE
+        or result["profile"] != _EXACT_EMPTY_TERMINAL_PROFILE
         or type(result["outcome"]) is not str
     ):
         raise RuntimeError("Rust exact capture validator returned an invalid response")

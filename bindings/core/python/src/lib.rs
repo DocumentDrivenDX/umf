@@ -2796,21 +2796,22 @@ fn access_observe_capture_terminal_join_owners_with_session(
     )
 }
 
-const CAPTURE_EXACT_ALL_EMPTY_PROFILE: &str = "umf-access-capture-exact-all-empty/0.1.0";
+const CAPTURE_EXACT_EMPTY_TERMINAL_PROFILE: &str = "umf-access-capture-exact-empty-terminal/0.2.0";
 
-fn capture_exact_all_empty_response(py: Python<'_>, outcome: &str) -> PyResult<PyObject> {
+fn capture_exact_empty_terminal_response(py: Python<'_>, outcome: &str) -> PyResult<PyObject> {
     let result = PyDict::new_bound(py);
-    result.set_item("profile", CAPTURE_EXACT_ALL_EMPTY_PROFILE)?;
+    result.set_item("profile", CAPTURE_EXACT_EMPTY_TERMINAL_PROFILE)?;
     result.set_item("outcome", outcome)?;
     Ok(result.into())
 }
 
-/// Validate one DTO-free live graph profile. Admission reads exact-instance
+/// Validate exact built-in terminals with empty steps without a graph DTO.
+/// Admission reads exact-instance
 /// dictionaries through `object.__getattribute__`, rejecting arbitrary dict
 /// keys before lookup so custom `__hash__`/`__eq__` hooks cannot run. Only an
 /// admitted exact graph reaches the predecessor-ordered attribute reads.
 #[pyfunction]
-fn access_validate_capture_exact_all_empty_with_session(
+fn access_validate_capture_exact_empty_terminal_with_session(
     py: Python<'_>,
     node: PyObject,
     node_type: PyObject,
@@ -2825,20 +2826,17 @@ fn access_validate_capture_exact_all_empty_with_session(
     let node = node.bind(py);
     let node_type = node_type.bind(py);
     let record_ref_type = record_ref_type.bind(py);
-    let outside = || capture_exact_all_empty_response(py, "outside-profile");
+    let outside = || capture_exact_empty_terminal_response(py, "outside-profile");
 
     // The raw gate is deliberately side-effect free with respect to graph
     // accessors. All dictionary keys are checked as exact strings before any
     // string-key lookup is performed.
     let builtins = py.import_bound("builtins")?;
     let builtin_type = builtins.getattr("type")?;
-    let builtin_getset_descriptor_type = py
-        .import_bound("types")?
-        .getattr("GetSetDescriptorType")?;
+    let builtin_getset_descriptor_type =
+        py.import_bound("types")?.getattr("GetSetDescriptorType")?;
     charge!();
-    if node.get_type().as_ptr() != node_type.as_ptr()
-        || !node_type.get_type().is(&builtin_type)
-    {
+    if node.get_type().as_ptr() != node_type.as_ptr() || !node_type.get_type().is(&builtin_type) {
         return outside();
     }
     let object_type = builtins.getattr("object")?;
@@ -2849,8 +2847,10 @@ fn access_validate_capture_exact_all_empty_with_session(
         if !descriptor.get_type().is(&builtin_getset_descriptor_type) {
             return Ok(false);
         }
-        Ok(descriptor.getattr("__name__")?.extract::<String>()? == "__dict__"
-            && descriptor.getattr("__objclass__")?.is(class))
+        Ok(
+            descriptor.getattr("__name__")?.extract::<String>()? == "__dict__"
+                && descriptor.getattr("__objclass__")?.is(class),
+        )
     };
     charge!();
     if !node_type
@@ -2893,7 +2893,10 @@ fn access_validate_capture_exact_all_empty_with_session(
         return outside();
     };
     if !op.is_exact_instance_of::<PyString>()
-        || op.extract::<String>().ok().as_deref() != Some("all")
+        || !matches!(
+            op.extract::<String>().ok().as_deref(),
+            Some("all" | "first" | "one" | "count" | "exists")
+        )
     {
         return outside();
     }
@@ -2979,7 +2982,10 @@ fn access_validate_capture_exact_all_empty_with_session(
     // `_validate_node`'s observable header pass. The admitted exact classes and
     // tuple make these reads non-dispatching, but retain their order and count.
     charge!();
-    if node.getattr("op")?.extract::<String>()? != "all" {
+    if !matches!(
+        node.getattr("op")?.extract::<String>()?.as_str(),
+        "all" | "first" | "one" | "count" | "exists"
+    ) {
         return outside();
     }
     charge!();
@@ -3020,7 +3026,10 @@ fn access_validate_capture_exact_all_empty_with_session(
         charge!();
     }
     charge!();
-    if node.getattr("op")?.extract::<String>()? != "all" {
+    if !matches!(
+        node.getattr("op")?.extract::<String>()?.as_str(),
+        "all" | "first" | "one" | "count" | "exists"
+    ) {
         return outside();
     }
     charge!();
@@ -3037,7 +3046,7 @@ fn access_validate_capture_exact_all_empty_with_session(
             return outside();
         }
     }
-    capture_exact_all_empty_response(py, "accepted")
+    capture_exact_empty_terminal_response(py, "accepted")
 }
 
 fn observe_capture_terminal_join_owners(
@@ -4968,7 +4977,7 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
         module
     )?)?;
     module.add_function(wrap_pyfunction!(
-        access_validate_capture_exact_all_empty_with_session,
+        access_validate_capture_exact_empty_terminal_with_session,
         module
     )?)?;
     module.add_class::<CaptureResourceSession>()?;
