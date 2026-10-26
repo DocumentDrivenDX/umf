@@ -8,7 +8,7 @@
 use crate::Utf16;
 use std::collections::HashSet;
 
-pub const PROFILE: &str = "umf-access-capture-graph-observation/0.5.0";
+pub const PROFILE: &str = "umf-access-capture-graph-observation/0.6.0";
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct ExpectedOwner {
@@ -606,12 +606,8 @@ pub fn observe_terminal_join_owners<H: Copy>(
         }
         owners.insert(owner_through_relation(context, host, relation, "target")?);
     }
-    if terminal_op == Utf16::from("all")
-        && steps_empty
-        && record_exact
-        && steps_exact_tuple
-    {
-        observe_all_empty_visit_tail(context, host, node)?;
+    if terminal_op == Utf16::from("all") && steps_empty && record_exact && steps_exact_tuple {
+        observe_all_empty_visit_tail(context, host, node, &owners)?;
     }
     Ok(TerminalJoinObservation {
         terminal_op,
@@ -630,6 +626,7 @@ fn observe_all_empty_visit_tail<H: Copy>(
     context: &mut crate::Context<'_>,
     host: &mut impl CaptureGraphHostObserver<Handle = H>,
     node: H,
+    allowed: &HashSet<Owner>,
 ) -> Result<(), ObservationError> {
     for _ in 0..6 {
         let _ = read_terminal_op(context, host, node)?;
@@ -637,12 +634,10 @@ fn observe_all_empty_visit_tail<H: Copy>(
     let args = object(attr(context, host, node, "args")?)?;
     let args_iter = budgeted(context, || host.iter(args))?;
     while let Some(child) = budgeted(context, || host.next(args_iter))? {
-        if budgeted(context, || {
-            host.is_exact_structural(child, StructuralType::Tuple)
-        })? {
-            let child_iter = budgeted(context, || host.iter(child))?;
-            while budgeted(context, || host.next(child_iter))?.is_some() {}
-        }
+        // Match `visit(node)`'s ordinary recursive dispatch for each root
+        // argument. Node and SearchLeg children remain explicitly refused by
+        // this prefix walker because their semantic checks precede recursion.
+        observe_field_join_tuple_value(context, host, child, allowed, 0)?;
     }
     Ok(())
 }

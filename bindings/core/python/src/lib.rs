@@ -2601,8 +2601,20 @@ fn access_observe_capture_terminal_join_owners(
     node: PyObject,
     node_type: PyObject,
     record_ref_type: PyObject,
+    field_ref_type: PyObject,
+    join_type: PyObject,
+    search_leg_type: PyObject,
 ) -> PyResult<PyObject> {
-    observe_capture_terminal_join_owners(py, node, node_type, record_ref_type, None)
+    observe_capture_terminal_join_owners(
+        py,
+        node,
+        node_type,
+        record_ref_type,
+        field_ref_type,
+        join_type,
+        search_leg_type,
+        None,
+    )
 }
 
 #[pyfunction]
@@ -2611,9 +2623,21 @@ fn access_observe_capture_terminal_join_owners_with_session(
     node: PyObject,
     node_type: PyObject,
     record_ref_type: PyObject,
+    field_ref_type: PyObject,
+    join_type: PyObject,
+    search_leg_type: PyObject,
     session: PyRefMut<'_, CaptureResourceSession>,
 ) -> PyResult<PyObject> {
-    observe_capture_terminal_join_owners(py, node, node_type, record_ref_type, Some(session))
+    observe_capture_terminal_join_owners(
+        py,
+        node,
+        node_type,
+        record_ref_type,
+        field_ref_type,
+        join_type,
+        search_leg_type,
+        Some(session),
+    )
 }
 
 fn observe_capture_terminal_join_owners(
@@ -2621,6 +2645,9 @@ fn observe_capture_terminal_join_owners(
     node: PyObject,
     node_type: PyObject,
     record_ref_type: PyObject,
+    field_ref_type: PyObject,
+    join_type: PyObject,
+    search_leg_type: PyObject,
     mut session: Option<PyRefMut<'_, CaptureResourceSession>>,
 ) -> PyResult<PyObject> {
     use umf_core::access_graph_host_observation::observe_terminal_join_owners;
@@ -2629,9 +2656,9 @@ fn observe_capture_terminal_join_owners(
         objects: vec![node],
         node_type,
         record_ref_type,
-        field_ref_type: py.None(),
-        join_type: py.None(),
-        search_leg_type: py.None(),
+        field_ref_type,
+        join_type,
+        search_leg_type,
         host_error: None,
         conversion_error: None,
     };

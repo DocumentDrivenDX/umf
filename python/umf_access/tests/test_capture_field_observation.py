@@ -87,6 +87,58 @@ def test_private_all_empty_callback_preserves_recursive_visit_read_trace():
     assert candidate == predecessor
 
 
+def test_private_all_empty_visit_dispatch_preserves_child_first_fault():
+    """The final live args read is recursively visited, with owner faults intact."""
+    from umf_access.capture import _validate_node
+
+    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    sentinel = LookupError("late child alias sentinel")
+    trace: list[tuple[str, str]] = []
+    armed = False
+    args_reads = 0
+    original_node = Node.__getattribute__
+
+    class ObservedField(FieldRef):
+        def __getattribute__(self, name: str):
+            if armed and name in {"module", "element", "alias"}:
+                trace.append(("FieldRef", name))
+                if name == "alias":
+                    raise sentinel
+            return super().__getattribute__(name)
+
+    late_field = ObservedField("demo", "Root", "late")
+    node = Node("all", (root, ()))
+
+    def observed_node(instance, name):
+        nonlocal args_reads
+        if instance is node and name in {"op", "args"}:
+            trace.append(("Node", name))
+        if instance is node and name == "args":
+            args_reads += 1
+            if args_reads == 5:
+                return (root, (late_field,))
+        return original_node(instance, name)
+
+    try:
+        Node.__getattribute__ = observed_node
+        armed = True
+        with pytest.raises(LookupError) as predecessor:
+            _validate_node(node, ())
+        predecessor_trace = tuple(trace)
+        assert predecessor.value is sentinel
+        assert args_reads == 5
+
+        trace.clear()
+        args_reads = 0
+        with pytest.raises(LookupError) as candidate:
+            observe_all_empty_capture_profile(node)
+        assert candidate.value is sentinel
+        assert args_reads == 5
+        assert tuple(trace) == predecessor_trace
+    finally:
+        Node.__getattribute__ = original_node
+
+
 def test_recursive_visit_op_fault_precedes_final_args_fault_in_both_paths():
     from umf_access.capture import _validate_node
 

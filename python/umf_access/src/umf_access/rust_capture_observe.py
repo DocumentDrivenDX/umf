@@ -13,7 +13,7 @@ from __future__ import annotations
 
 from typing import Any
 
-_PROFILE = "umf-access-capture-graph-observation/0.5.0"
+_PROFILE = "umf-access-capture-graph-observation/0.6.0"
 
 
 class FieldOwnerObservationUnavailable(RuntimeError):
@@ -80,7 +80,13 @@ def observe_terminal_join_owners(node: object) -> dict[str, object]:
     from umf_access.dsl._nodes import Node, RecordRef
 
     core = _native()
-    result = core.access_observe_capture_terminal_join_owners(node, Node, RecordRef)
+    from umf_access.dsl._expressions import Join
+    from umf_access.dsl._nodes import FieldRef
+    from umf_access.dsl.search import SearchLeg
+
+    result = core.access_observe_capture_terminal_join_owners(
+        node, Node, RecordRef, FieldRef, Join, SearchLeg
+    )
     if (
         type(result) is not dict
         or set(result)
@@ -125,14 +131,16 @@ def observe_all_empty_capture_profile(node: object, session: object | None = Non
         session = session_type((1 << 64) - 1)
     if type(session) is not session_type:
         raise TypeError("capture profile requires a native resource session")
-    from umf_access.dsl._nodes import Node, RecordRef
+    from umf_access.dsl._expressions import Join
+    from umf_access.dsl._nodes import FieldRef, Node, RecordRef
+    from umf_access.dsl.search import SearchLeg
 
     session.charge_work(1)
     if type(node) is not Node:
         raise TypeError("capture profile requires an exact Node")
     # Native observation owns all graph reads and preserves the predecessor's
     # distinct args accesses before RecordRef owner reads.
-    result = observe_session(node, Node, RecordRef, session)
+    result = observe_session(node, Node, RecordRef, FieldRef, Join, SearchLeg, session)
     if (
         type(result) is not dict
         or set(result)

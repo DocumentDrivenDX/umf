@@ -247,12 +247,39 @@ The broader focused capture set also passes 94 tests and three subtests,
 including the existing public capture, Rust DTO validator and predecessor
 replay files. The focused Rust observer unit suite passes 10/10.
 
+## Exact empty-all recursive child dispatch (2026-10-26)
+
+The private `.all()` empty-steps visitor tail now dispatches each item from its
+final live `node.args` read through the existing bounded FieldRef/Join/tuple
+visitor. The PyO3 observer receives the trusted FieldRef, Join and SearchLeg
+classes so its runtime probes follow `_validate_node.visit` order. Node and
+SearchLeg children still refuse at their semantic-check branches; this slice
+does not claim those branches. The capability is now
+`umf-access-capture-graph-observation/0.6.0`.
+
+The adversarial same-host regression makes the fifth `Node.args` read return
+`(root, (late_field,))` after the exact empty-steps admission has completed.
+Both predecessor and candidate then read `late_field.module`, `.element`, and
+`.alias` in that order and rethrow the identical alias `LookupError`. For the
+stable graph, the full trace remains `Node.op`, `Node.args` four times, root
+`RecordRef.module/element/alias`, six `Node.op` reads, then the fifth
+`Node.args` read and ordinary recursive dispatch of the root plus empty steps.
+
+A Rust 1.90.0 offline build of `umf-core-python` succeeded. On CPython 3.13.16,
+Darwin arm64, the observer file passes 49/49; Sol independently rebuilt the
+extension and ran the six-file public capture, observer, predecessor, and Rust
+DTO set with 95 tests and three subtests passing. The Rust observer unit suite
+passes 10/10. These remain local private source tests.
+Python `capture()` remains the selected route, and installed-wheel qualification
+is still required before any public cutover.
+
 Reproduce with the temporary extension overlay:
 
 ```sh
 PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH \
 CARGO_TARGET_DIR=/private/tmp/umf-capture-budget-target \
 cargo build --locked --offline -p umf-core-python
+cp -R python/src/umf /private/tmp/umf-capture-budget-overlay/
 cp /private/tmp/umf-capture-budget-target/debug/lib_rust_core.dylib \
   /private/tmp/umf-capture-budget-overlay/umf/_rust_core.abi3.so
 DYLD_LIBRARY_PATH=/private/tmp/umf-capture-budget-overlay/umf \
@@ -270,8 +297,8 @@ Current implementation pins (superseding the earlier audit's changed files):
 
 | Input | SHA-256 |
 |---|---|
-| `python/umf_access/src/umf_access/rust_capture_observe.py` | `51457d436b5183ecfed4382e8046b85464cdd227dda2734ff2d9fc66b54b5864` |
-| `python/umf_access/tests/test_capture_field_observation.py` | `83b738a36478ee606701fe6a74feca63a817acf12cba9812267d8fc85ee706ad` |
-| `crates/umf-core/src/access_graph_host_observation.rs` | `a8b9969a3499cbb087d164af03b408e9697b8a0516da4f926a307ed852ca9779` |
-| `bindings/core/python/src/lib.rs` | `07a6003e98417a35c8756bc53918c4417172bad74742528f94dba81ec6d44d2e` |
-| temporary `_rust_core.abi3.so` | `e2a92c52ba0a10827cf8c7f67dc115729f0dfe96de89d0264a49000e4d3db05e` |
+| `python/umf_access/src/umf_access/rust_capture_observe.py` | `65bf462ed05a02e1dbbdaebf6bcc42809491dfb1713388307fefbd730cc25170` |
+| `python/umf_access/tests/test_capture_field_observation.py` | `eb0ac0c23c6be6da8ebb0d06583b04bb5386befb5f314912a1269059448a5256` |
+| `crates/umf-core/src/access_graph_host_observation.rs` | `cc8d3e668080fdcdd348bf8131bc1eedd0a567463c2c5ae220a7ff7cf5e6665b` |
+| `bindings/core/python/src/lib.rs` | `451747f4b16e9017f021c1b0a3b9949feafa665a141c09e50c665bc17ae17eac` |
+| Sol-rebuilt temporary `_rust_core.abi3.so` | `0eb56d904c5c7d224e303a5edd7ddefa7751491486d0f258554082086e22d686` |
