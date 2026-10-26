@@ -119,13 +119,13 @@ jobs:
       - name: Publish only the verified archives through PyPI OIDC
         if: steps.preflight.outputs.status == 'absent'
         run: |
-          mkdir packages
-          cp dist/umf_core-*.whl dist/umf_core-*.tar.gz packages/
+          mkdir .verified-pypi-packages
+          cp dist/umf_core-*.whl dist/umf_core-*.tar.gz .verified-pypi-packages/
       - uses: pypa/gh-action-pypi-publish@release/v1
         id: pypi-upload
         if: steps.preflight.outputs.status == 'absent'
         with:
-          packages-dir: packages/
+          packages-dir: .verified-pypi-packages/
       - name: Verify PyPI-served bytes after publication
         id: postflight
         run: python scripts/publish_core_pypi_release.py check-pypi --receipt dist/source-receipt.json --dist-dir dist --wait --timeout 300
