@@ -147,7 +147,7 @@ def _outcome_effect_frame_admit_rust(value, items, max_rows):
         raise SessionError('native outcome effect-frame profile cannot encode exact JSON data') from None
     try:
         version=rust_outcome_values.effect_frame_profile_version()
-    except (AttributeError,ImportError,RuntimeError) as error:
+    except (AttributeError,ImportError) as error:
         raise SessionError('native outcome effect-frame capability unavailable') from error
     if version!=_EFFECT_FRAME_PROFILE:
         raise SessionError('native outcome effect-frame capability profile mismatch')
