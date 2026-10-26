@@ -2,7 +2,7 @@
 
 A reusable, framework-neutral browser for UMF documents, TableSpec tables,
 domain packs, source artifact collections and ontology diagrams. This is the
-same renderer used by the UMF microsite. Version 2.0.0 ships compiled browser
+same renderer used by the UMF microsite. Version 2.0.1 ships compiled browser
 ESM, TypeScript declarations and static assets. No Bun, Node runtime, framework,
 public corpus or network connection to the UMF microsite is required.
 
@@ -11,7 +11,7 @@ public corpus or network connection to the UMF microsite is required.
 Install the public npm package:
 
 ```sh
-npm install @documentdrivendx/umf-schema-browser@2.0.0
+npm install @documentdrivendx/umf-schema-browser@2.0.1
 ```
 
 For local release review, install from the built package directory. A site
@@ -103,7 +103,7 @@ Metadata-dependent details link to their source overview when it is not yet load
 
 ## Build
 
-The 2.0.0 producer uses Bun 1.4.2. Build an isolated
+The 2.0.1 producer uses Bun 1.4.2. Build an isolated
 package directory and pack it with:
 
 ```sh
@@ -116,6 +116,17 @@ The reusable package contains no sample dataset archives; users supply their
 catalog and original assets.
 
 ## npm release publication
+
+New releases use [`release-schema-browser.yml`](../../../../.github/workflows/release-schema-browser.yml)
+to qualify an exact committed source with frozen dependencies and Bun 1.4.2.
+It compares two clean builds, verifies the recorded source closure, installs the
+packed archive into a fresh consumer, checks both TypeScript module modes and
+runs the installed example in strict-CSP Chromium. Only after those gates pass
+does it attach the complete archive/manifest/checksum/receipt cohort to a draft
+GitHub release, publish that immutable release and dispatch the main npm
+publisher with exact source and archive pins. An explicit main-branch dispatch
+selects the source and new release tag; private SDKs and the site's separate
+installed-browser pin are outside this route.
 
 The public package `@documentdrivendx/umf-schema-browser` is published only by
 the Actions workflow [`publish-schema-browser-npm.yml`](../../../../.github/workflows/publish-schema-browser-npm.yml).

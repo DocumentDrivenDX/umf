@@ -85,6 +85,7 @@
       "scripts/praxis-p1-compatibility.ts",
       "scripts/prepare-action-tests.ts",
       "scripts/publish_core_pypi_release.py",
+      "scripts/qualify-schema-browser-release.ts",
       "scripts/reference/browser.ts",
       "scripts/reference/build.ts",
       "scripts/reference/check-boundaries.ts",
@@ -207,16 +208,16 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "8c3686920035a0a33e55cc43535b10e727ccdb2371e7fc09081a3011f06edf8d",
+    "sourceCohortSha256": "459027c887c26af68bd54f052aacb5561ba8e8de9e8710b107e6dbbefba7060e",
     "typescriptApi": "5.9.3"
   },
   "counts": {
-    "activeScriptFiles": 353,
-    "algorithmSymbols": 10424,
+    "activeScriptFiles": 354,
+    "algorithmSymbols": 10433,
     "pythonModules": 105,
     "rustBuildInputs": 76,
     "rustModules": 127,
-    "scriptFiles": 2961,
+    "scriptFiles": 2962,
     "sourceModules": 578,
     "typescriptModules": 473
   },
@@ -31886,6 +31887,29 @@
       "sha256": "3fb587fc85a9de7b99a9cec6ce474438d2041f3b16711a43188242be499a0900"
     },
     {
+      "activationEvidence": [
+        ".github/workflows/release-schema-browser.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "digest",
+        "hashFile",
+        "json",
+        "options",
+        "qualify",
+        "requireCleanSource",
+        "run",
+        "validateSourceClosure",
+        "verifyAssets"
+      ],
+      "bytes": 15947,
+      "disposition": "active-host-tooling-algorithm",
+      "language": "ts",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
+      "path": "scripts/qualify-schema-browser-release.ts",
+      "sha256": "c0111db270cc778037d2a260685fbcbdf0bc68f5d9fd04268e0a2fee9aa389e3"
+    },
+    {
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [],
@@ -42659,7 +42683,7 @@
     },
     {
       "activationEvidence": [
-        "transitive-import-closure"
+        ".github/workflows/release-schema-browser.yml"
       ],
       "active": true,
       "algorithmSymbols": [],
@@ -42672,7 +42696,7 @@
     },
     {
       "activationEvidence": [
-        "transitive-import-closure"
+        ".github/workflows/release-schema-browser.yml"
       ],
       "active": true,
       "algorithmSymbols": [],
@@ -42685,7 +42709,8 @@
     },
     {
       "activationEvidence": [
-        ".github/workflows/microsite.yml"
+        ".github/workflows/microsite.yml",
+        ".github/workflows/release-schema-browser.yml"
       ],
       "active": true,
       "algorithmSymbols": [
@@ -42703,7 +42728,7 @@
     },
     {
       "activationEvidence": [
-        "transitive-import-closure"
+        ".github/workflows/release-schema-browser.yml"
       ],
       "active": true,
       "algorithmSymbols": [
