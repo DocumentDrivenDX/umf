@@ -1,4 +1,4 @@
-import {encodeRequestWire, fromWire, resultError} from './wire.js';
+import {encodeRequestWire, encodeWire, fromWire, resultError} from './wire.js';
 
 export const SECURITY_LOGIC_PROFILE = 'umf.security-logic/1.0.0';
 
@@ -63,8 +63,32 @@ function admissionWork(bridge, ErrorType) {
   };
 }
 
+function directControlBridge(controls) {
+  let charged = 0;
+  return amount => {
+    charged += amount;
+    let failure;
+    if (controls.maxWork !== undefined && charged > controls.maxWork) {
+      failure = {code: 'RESOURCE_LIMIT', message: 'Host work budget exceeded', path: ''};
+    } else {
+      try {
+        controls.meter?.(amount);
+        if (controls.isCancelled?.()) failure = {code: 'CANCELLED', message: 'Operation cancelled by host', path: ''};
+        if (!failure && controls.deadlineMs !== undefined) {
+          const now = controls.now();
+          if (!Number.isFinite(now)) failure = {code: 'CLOCK_CAPABILITY_REQUIRED', message: 'Host clock did not return a finite millisecond value', path: ''};
+          else if (now > controls.deadlineMs) failure = {code: 'DEADLINE', message: 'Deadline elapsed', path: ''};
+        }
+      } catch {
+        failure = {code: 'HOST_CONTROL', message: 'Host control callback failed', path: ''};
+      }
+    }
+    return encodeWire(failure ? {ok: false, ...failure} : {ok: true});
+  };
+}
+
 /** Create an opt-in Rust engine for already-evaluated CONTRACT-062 rules. */
-export function createSecurityLogicEngine(execute, options = {}, ErrorType = Error) {
+export function createSecurityLogicEngine(execute, options = {}, ErrorType = Error, executeNotScalar) {
   if (typeof execute !== 'function') throw new Error('RUST_BINDING_MISSING');
   const controls = optionsControls(options);
   function invoke(op, args) {
@@ -76,7 +100,18 @@ export function createSecurityLogicEngine(execute, options = {}, ErrorType = Err
     return fromWire(JSON.parse(response.wire));
   }
   return Object.freeze({
-    securityNot(value) { return invoke('securityNot', {value}); },
+    securityNot(value) {
+      if (!executeNotScalar) return invoke('securityNot', {value});
+      if (value !== 'T' && value !== 'F' && value !== 'U') throw new ErrorType('SECURITY_TRUTH', 'Invalid security truth');
+      const bridge = Object.keys(controls).length ? directControlBridge(controls) : undefined;
+      const output = executeNotScalar(value, bridge);
+      if (output === 'T' || output === 'F' || output === 'U') return output;
+      let response;
+      try { response = JSON.parse(output); } catch { throw new ErrorType('ENGINE', 'Malformed Rust securityNot result'); }
+      const failure = resultError(response);
+      if (failure) throw new ErrorType(failure.code, failure.message, failure.path);
+      throw new ErrorType('ENGINE', 'Malformed Rust securityNot result');
+    },
     securityAnd(values) { return invoke('securityAnd', {values}); },
     securityOr(values) { return invoke('securityOr', {values}); },
     composeSecurityRules(rules, protectedFields = []) { return invoke('composeSecurityRules', {rules, protectedFields}); },

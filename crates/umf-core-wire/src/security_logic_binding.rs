@@ -7,6 +7,35 @@ use crate::{decode, encode, fail, field, result_envelope};
 
 pub const SECURITY_LOGIC_PROFILE: &str = "umf.security-logic/1.0.0";
 
+/// Execute the scalar CONTRACT-062 negation without the generic JSON wire.
+/// The host admits the raw value before calling this function; Rust still
+/// validates the token, owns the truth decision, and charges operation work.
+pub fn execute_security_not_scalar_with_control(
+    value: &str,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+) -> String {
+    let result = (|| {
+        let mut context = Context::ordinary().with_host_control(control);
+        context.charge_work(1, Utf16::default())?;
+        let input = Value::String(Utf16::from(value));
+        let output = security_logic::security_not(&input)?;
+        let Value::String(output) = output else {
+            return Err(fail("SECURITY_TRUTH", "Invalid security truth"));
+        };
+        output
+            .to_utf8()
+            .map_err(|_| fail("SECURITY_TRUTH", "Invalid security truth"))
+    })();
+    match result {
+        Ok(value) => value,
+        Err(error) => result_envelope(Err(error)),
+    }
+}
+
+pub fn execute_security_not_scalar(value: &str) -> String {
+    execute_security_not_scalar_with_control(value, &mut |_amount| Ok(()))
+}
+
 fn exact_members(value: &Value, required: &[&str], allowed: &[&str]) -> Result<(), EngineError> {
     let Value::Object(fields) = value else {
         return Err(fail(

@@ -88,6 +88,15 @@ assert.throws(() => metered({}), error => error.name === 'UmfError' && error.cod
 const invalidMeterDelta = meterCalls - meterBeforeInvalid;
 assert.equal(metered('T'), 'F');
 assert.ok(meterCalls > 0);
+let invalidControlCalls = 0;
+const invalidUnderControls = createSecurityNotRustAdapter(createSecurityLogicEngine({controls: {
+  meter() { invalidControlCalls++; },
+  isCancelled() { invalidControlCalls++; return true; },
+  now() { invalidControlCalls++; return Number.NaN; },
+  deadlineMs: 0,
+}}));
+assert.equal(outcome(invalidUnderControls, {}, []).code, 'SECURITY_TRUTH');
+assert.equal(invalidControlCalls, 0);
 const cancelled = createSecurityNotRustAdapter(createSecurityLogicEngine({controls: {
   isCancelled: () => true,
 }}));
@@ -135,6 +144,7 @@ process.stdout.write(`${JSON.stringify({
     validAtMaxWorkZero: validUnderLimit,
     meterAmount: meterCalls,
     invalidMeterDelta,
+    invalidUnderControls: {code: 'SECURITY_TRUTH', callbacks: invalidControlCalls},
     validWhenCancelled: {code: 'CANCELLED'},
   },
   benchmark: {

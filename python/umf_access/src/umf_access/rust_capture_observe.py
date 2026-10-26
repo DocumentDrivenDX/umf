@@ -4,17 +4,16 @@
 This opt-in prototype covers FieldRef ownership and a bounded terminal/root/
 Join observation prefix. It does not implement complete graph validation,
 serialization, the legacy DTO budget, or select the public capture route.
-The private graph profile admits exact text values and the bounded
-FieldRef/Join/tuple visit branch. Node and SearchLeg values are explicitly
-refused by that branch; subclass accessor effects on admitted objects are
-observed in order, but subclass-produced non-text values are unsupported.
+The private graph profile admits exact text values, the bounded
+FieldRef/Join/tuple visit branch, and an empty SearchLeg prefix. Node values
+and SearchLegs with a value or nested legs remain outside these branches.
 """
 
 from __future__ import annotations
 
 from typing import Any
 
-_PROFILE = "umf-access-capture-graph-observation/0.2.0"
+_PROFILE = "umf-access-capture-graph-observation/0.3.0"
 
 
 class FieldOwnerObservationUnavailable(RuntimeError):
@@ -33,6 +32,7 @@ def _native() -> Any:
     observe = getattr(core, "access_validate_field_owner_observed", None)
     observe_terminal = getattr(core, "access_observe_capture_terminal_join_owners", None)
     observe_field_join_tuple = getattr(core, "access_observe_capture_field_join_tuple", None)
+    observe_empty_search_leg = getattr(core, "access_observe_capture_empty_search_leg", None)
     try:
         available = callable(version) and version() == _PROFILE
     except Exception:
@@ -42,6 +42,7 @@ def _native() -> Any:
         and callable(observe)
         and callable(observe_terminal)
         and callable(observe_field_join_tuple)
+        and callable(observe_empty_search_leg)
     ):
         raise FieldOwnerObservationUnavailable(
             "installed umf-core lacks the capture graph observation profile"
@@ -170,4 +171,16 @@ def observe_field_join_tuple(
     core = _native()
     core.access_observe_capture_field_join_tuple(
         value, allowed_owners, Node, RecordRef, FieldRef, Join, SearchLeg
+    )
+
+
+def observe_empty_search_leg(value: object, root_record: object) -> None:
+    """Observe SearchLeg's empty-value, empty-legs predecessor branch."""
+    from umf_access.dsl._nodes import FieldRef, Node, RecordRef
+    from umf_access.dsl._expressions import Join
+    from umf_access.dsl.search import SearchLeg
+
+    core = _native()
+    core.access_observe_capture_empty_search_leg(
+        value, root_record, Node, RecordRef, FieldRef, Join, SearchLeg
     )

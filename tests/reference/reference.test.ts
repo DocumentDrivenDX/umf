@@ -121,6 +121,9 @@ test('reference renderer candidate arguments reject missing, repeated and unknow
  expect(allowed('scripts/reference/renderer-package.ts','scripts/schema-browser-integrity.ts')).toBe(true);
  expect(allowed('scripts/reference/build.ts','scripts/schema-browser-integrity.ts')).toBe(false);
  expect(allowed('docs/helix/05-deploy/microsite/reference/index.ts','scripts/schema-browser-integrity.ts')).toBe(false);
+ expect(allowed('scripts/reference/self-model.ts','scripts/metamodel/rust.ts')).toBe(true);
+ expect(allowed('scripts/reference/build.ts','scripts/metamodel/rust.ts')).toBe(false);
+ expect(allowed('scripts/reference/self-model.ts','scripts/metamodel/source-closure.ts')).toBe(false);
  expect(()=>assertRendererInputs([{path:'installed/index.js',sha256:'old'}],'mounted',{'index.js':'current'})).toThrow('REFERENCE_RENDERER');
  expect(()=>assertRendererInputs([{path:'mounted/index.js',sha256:'old'}],'mounted',{'index.js':'current'})).toThrow('REFERENCE_RENDERER');
  expect(()=>assertRendererInputs([{path:'mounted/index.js',sha256:'current'}],'mounted',{'index.js':'current'})).not.toThrow();

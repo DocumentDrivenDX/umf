@@ -557,6 +557,19 @@ pub fn execute_security_logic_wire(
     }
 }
 
+#[wasm_bindgen(js_name = securityNotScalar)]
+pub fn security_not_scalar(value: &str, control_dispatcher: Option<Function>) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::security_logic_binding::execute_security_not_scalar_with_control(
+            value, &mut hook,
+        )
+    } else {
+        umf_core_wire::security_logic_binding::execute_security_not_scalar(value)
+    }
+}
+
 struct WasmControl {
     dispatcher: Function,
 }

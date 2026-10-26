@@ -25,9 +25,8 @@ const resources = {
   constraints: read('spec/metamodel/generated/core-constraints.json'),
   domainPolicy: read('spec/metamodel/generated/domain-policy.json'),
 };
-const candidate = (source, query, registry) => hostJson.coreElementSelectionHostInput(
-  addon, resources, source, query, registry, UmfError,
-);
+const candidateEngine = hostJson.createCoreElementSelectionHostInputEngine(addon, resources, UmfError);
+const candidate = (source, query, registry) => candidateEngine.selectCoreElements(source, query, registry);
 const result = runSelectionCallbackSuite({Registry, selectCoreElements, candidate});
 assert.equal(result.summary.exactOutcomeMatches, result.caseCount, JSON.stringify(result.summary.mismatches));
 assert.equal(result.summary.exactHostTraceMatches, result.caseCount, JSON.stringify(result.summary.mismatches));
@@ -37,7 +36,7 @@ const pinned = [
   'crates/umf-core/src/constraints.rs', 'crates/umf-core/src/engine.rs',
   'crates/umf-core/src/host_json.rs', 'crates/umf-core/src/registry.rs',
   'crates/umf-core/src/selection_diagnostics.rs', 'crates/umf-core/src/selection_host_json.rs',
-  'bindings/core/node/src/host-json.js', 'bindings/core/node/src/host_json.rs',
+  'bindings/core/node/src/host-json.js', 'bindings/core/node/src/host_json.rs', 'src/access/rust-selection-default.ts',
   'bindings/core/wasm/src/host-json.js', 'bindings/core/wasm/src/host_json.rs',
   'bindings/core/node/tests/selection-host-json.test.js',
   'scripts/rust-migration/r8/selection-callback-suite.mjs',

@@ -645,6 +645,23 @@ pub fn execute_security_logic_wire(
     }
 }
 
+#[napi(js_name = "securityNotScalar")]
+pub fn security_not_scalar(
+    env: Env,
+    value: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::security_logic_binding::execute_security_not_scalar_with_control(
+            &value, &mut hook,
+        ))
+    } else {
+        Ok(umf_core_wire::security_logic_binding::execute_security_not_scalar(&value))
+    }
+}
+
 struct NodeControl {
     env: Env,
     dispatcher: JsFunction,

@@ -281,9 +281,34 @@ def test_matrix_rejects_wrong_semantic_core_version(tmp_path: Path) -> None:
         matrix.verify_matrix(root, REVISION, RUN_ID)
 
 
-def test_publisher_is_disabled_until_same_run_aggregate_exists() -> None:
-    workflow = (ROOT / ".github/workflows/pypi.yml").read_text()
-    assert "Fail closed until coordinated publication is reviewed" in workflow
+def test_existing_release_dispatcher_is_scoped_to_core_release_publisher() -> None:
+    dispatcher = (ROOT / ".github/workflows/pypi.yml").read_text()
+    assert "types: [published]" in dispatcher
+    assert 'workflows: ["*"]' in dispatcher
+    assert "scripts/dispatch_core_pypi_release.py" in dispatcher
+    assert "gh workflow run publish-pypi.yml" in dispatcher
+    assert "id-token: write" not in dispatcher
+    assert "pypa/gh-action-pypi-publish" not in dispatcher
+
+    publisher = (ROOT / ".github/workflows/publish-pypi.yml").read_text()
+    assert "workflow_dispatch:" in publisher
+    assert "Exact existing qualified release tag" in publisher
+    assert "Exact commit targeted by the immutable release tag" in publisher
+    assert "--distribution umf-core" in publisher
+    assert "--expected-sums-sha256" in publisher
+    assert "id-token: write" in publisher
+    assert "pypa/gh-action-pypi-publish@release/v1" in publisher
+
+
+def test_rust_pair_candidate_cannot_bypass_same_run_aggregate_for_publication() -> None:
+    workflow = (ROOT / ".github/workflows/python-coordinated-release.yml").read_text()
+    assert "aggregate-release-cohorts:" in workflow
+    assert "needs: build-verify-pair" in workflow
+    assert "pattern: python-release-*" in workflow
+    assert "tools/verify_python_release_matrix.py" in workflow
+    assert "python-release-aggregate" in workflow
+    assert "publish-pypi.yml" not in workflow
+    assert "gh workflow run" not in workflow
     assert "id-token: write" not in workflow
     assert "pypa/gh-action-pypi-publish" not in workflow
 

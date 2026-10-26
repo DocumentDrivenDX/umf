@@ -73,3 +73,20 @@ listed fixtures. It does not establish whole-SDK source closure, release
 qualification, arbitrary JavaScript host parity, `kindRuntime` support, or
 default V4 routing. Keep the package default route unchanged pending broader
 review and the remaining Selection boundary work.
+
+## Reusable engine and source facade — 2026-10-26
+
+The Node and WASM private host adapters now expose an invocation engine factory
+around the raw host dispatcher, and
+[`rust-selection-default.ts`](../../../../../../src/access/rust-selection-default.ts)
+provides the typed source facade with the predecessor's synchronous arity of
+two. The facade forwards the original source, query, and optional caller
+Registry references directly and preserves thrown-value identity. A focused
+Bun test passes 2/2 checks for those properties. The three-host 15-case parity
+replay now exercises the reusable Node/WASM engine factory; updated receipts
+pin its host adapter and harness sources.
+
+This is still an opt-in implementation seam. The receipts do not qualify full
+raw-host parity, `Registry.kindRuntime`, all proxy/accessor cases, final
+installed source closure, or public V4 routing. The R8 route decision's Sol
+review and remaining host/resource gates still apply.

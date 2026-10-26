@@ -17,14 +17,16 @@ ddx:
 
 # R8 private captured-graph observation prefixes
 
-This evidence records two private Rust-directed host-observation prefixes in
-the capture migration: terminal/root/sequential-Join observation, and the
-bounded `FieldRef`/`Join`/tuple branch of `_validate_node.visit`. Both preserve
+This evidence records three private Rust-directed host-observation prefixes in
+the capture migration: terminal/root/sequential-Join observation, the bounded
+`FieldRef`/`Join`/tuple branch of `_validate_node.visit`, and an empty
+SearchLeg prefix. They preserve
 the observable order of the covered live reads and retain accessor exceptions.
 Neither changes public `capture()` routing or establishes complete captured
 graph validation. The installed capability identity is
-`umf-access-capture-graph-observation/0.2.0`; this version requires the
-FieldRef owner, terminal/Join, and bounded visit operations.
+`umf-access-capture-graph-observation/0.3.0`; this version requires the
+FieldRef owner, terminal/Join, bounded visit, and empty SearchLeg prefix
+operations.
 
 ## Bounded visit branch
 
@@ -38,10 +40,11 @@ Tuples are iterated once and visited depth-first in yielded order. First
 foreign-field refusal stops before later tuple children. A passive value that
 matches none of those branches remains a no-op.
 
-`SearchLeg` and `Node` are refused by this slice. Their predecessor branches
-perform declaration, parameter, navigation, aggregate, temporal, and other
-semantic checks before recursing. The private observer does not report success
-for those shapes. Exact Python accessor `PyErr` objects are retained and
+`Node` and SearchLegs with a bound value or nested legs are refused by this
+slice. Other SearchLeg branches perform declaration, parameter, navigation,
+aggregate, temporal, and other semantic checks before recursing. The private
+observer does not report success for those shapes. Exact Python accessor
+`PyErr` objects are retained and
 re-raised; UTF-16 text conversion preserves lone-surrogate owner strings.
 Missing structural-probe capability fails closed. A single ordinary Rust
 `Context` is shared across all observations inside this route, with each host
@@ -70,13 +73,15 @@ The implementation is confined to
 `python/umf_access/tests/test_capture_field_observation.py`. It is private
 opt-in infrastructure. Public `capture()` continues to select the Python
 validator. The observer does not replace `_encode_capture`, serialize a DTO,
-admit Node/SearchLeg/related-navigation semantics in the new visit route, or
+admit Node, general SearchLeg, or related-navigation semantics in the new visit route, or
 reconcile the legacy 50,000-node, depth-64, and 8 MiB capture limits as one
 end-to-end budget. No installed-wheel or package-release claim is made.
 
 ## Verification
 
-The focused Rust core suite passed seven observer tests:
+The initial focused Rust core suite passed seven observer tests; the current
+0.3.0 suite passes nine, including SearchLeg read order and foreign-record
+short circuit:
 
 ```sh
 PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH \
@@ -105,11 +110,27 @@ These results qualify only the listed observer paths and fixtures. The module
 does not claim whole-package parity, default-route behavior, or an installed
 artifact cohort.
 
+## Private bounded empty SearchLeg prefix (2026-10-26)
+
+`observe_empty_search_leg` covers the predecessor branch for a SearchLeg
+whose value is `None` and whose legs iterator is empty. Rust requests the
+SearchLeg class probe, then reads `record` twice while evaluating
+`(value.record.module, value.record.element)`, followed by root record
+`module`/`element`, `value`, and `legs`. `kind` is not read when value is
+`None`. A foreign record refuses before value/legs reads. A
+non-None value or a yielded nested leg is refused; parameter, carrier, nested
+leg, and hybrid semantics remain outside this prefix. PyO3 preserves original
+accessor and iterator exceptions. A bumped 0.3.0 capability check requires the
+new entry point before the opt-in helper runs. Focused Python coverage passes
+40 tests against a fresh temporary extension build, including an untouched
+raising `kind` getter for empty values, a faulting `value` getter, and a second
+stateful `record` getter that rethrows its original exception.
+
 ## Private exact `.all()` empty-steps callback (2026-10-26)
 
 `observe_all_empty_capture_profile()` adds a private integrated callback for
 the exact base `Node("all", (RecordRef, ()))` shape. It checks native profile
-0.2.0 before touching the graph, admits exact base objects and exact owner
+0.3.0 before touching the graph, admits exact base objects and exact owner
 text, then delegates the admitted terminal/root checks to the native terminal
 observer. That operation uses one Rust `Context`; there is no Python
 `_validate_node` call and no retry after native refusal. Subclasses,
@@ -123,8 +144,8 @@ DTO encoder has a separate node/depth/UTF-8 budget, and there is no shared
 end-to-end capture-plus-encoding Context or installed-wheel default-route
 replay.
 
-The focused Python observer suite passes 32 tests against the existing
-temporary overlay built with the 0.2.0 PyO3 capability:
+The focused Python observer suite passes 40 tests against the fresh temporary
+overlay built with the 0.3.0 PyO3 capability:
 
 ```sh
 PYTHONPATH=/private/tmp/umf-field-owner-observation-overlay:python/umf_access/src \

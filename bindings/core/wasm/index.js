@@ -1404,8 +1404,8 @@ export function createJavascriptNumericEngine(module, resources, options = {}) {
 
 /** Create the opt-in Rust engine for bounded CONTRACT-062 truth/composition operations. */
 export function createSecurityLogicEngine(module, options = {}) {
-  if (typeof module?.executeSecurityLogicWire !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
-  return createSecurityLogicEngineWithWire((wire, control) => module.executeSecurityLogicWire(wire, control), options, UmfCoreError);
+  if (typeof module?.executeSecurityLogicWire !== 'function' || typeof module?.securityNotScalar !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  return createSecurityLogicEngineWithWire((wire, control) => module.executeSecurityLogicWire(wire, control), options, UmfCoreError, (value, control) => module.securityNotScalar(value, control));
 }
 
 function codegenOptions(options) {

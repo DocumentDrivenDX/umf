@@ -2341,6 +2341,9 @@ fn capture_graph_error(
         ObservationError::JoinSourceAbsent => {
             graph_capture_error(py, "CAPTURE_UNSUPPORTED", "join source is absent")
         }
+        ObservationError::SearchForeignRecord => {
+            graph_capture_error(py, "SEARCH_DECLARATION", "foreign search Record")
+        }
         ObservationError::ForeignField => {
             pyo3::exceptions::PyTypeError::new_err("expression column belongs to another Record")
         }
@@ -2420,6 +2423,34 @@ fn access_observe_capture_field_join_tuple(
     };
     let mut context = Context::ordinary();
     observe_field_join_tuple_prefix(&mut context, &mut observer, 0, &allowed)
+        .map_err(|error| capture_graph_error(py, &mut observer, error))
+}
+
+#[pyfunction]
+fn access_observe_capture_empty_search_leg(
+    py: Python<'_>,
+    value: PyObject,
+    root_record: PyObject,
+    node_type: PyObject,
+    record_ref_type: PyObject,
+    field_ref_type: PyObject,
+    join_type: PyObject,
+    search_leg_type: PyObject,
+) -> PyResult<()> {
+    use umf_core::access_graph_host_observation::{observe_empty_search_leg_prefix, Owner};
+    let mut observer = PythonCaptureGraphObserver {
+        py,
+        objects: vec![value, root_record],
+        node_type,
+        record_ref_type,
+        field_ref_type,
+        join_type,
+        search_leg_type,
+        host_error: None,
+        conversion_error: None,
+    };
+    let mut context = Context::ordinary();
+    observe_empty_search_leg_prefix(&mut context, &mut observer, 0, 1)
         .map_err(|error| capture_graph_error(py, &mut observer, error))
 }
 
@@ -4307,6 +4338,10 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     )?)?;
     module.add_function(wrap_pyfunction!(
         access_observe_capture_field_join_tuple,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_observe_capture_empty_search_leg,
         module
     )?)?;
     module.add_function(wrap_pyfunction!(access_orchestrate_capture_pair, module)?)?;

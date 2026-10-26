@@ -17,7 +17,7 @@ class DispatchTests(unittest.TestCase):
             "prerelease": False,
             "published_at": "2026-10-26T00:02:00Z",
             "assets": [
-                {"name": "umf_core-0.10.0-py3-none-any.whl"},
+                {"name": "umf_core-0.10.2-py3-none-any.whl"},
                 {"name": "SHA256SUMS", "digest": "sha256:" + "a" * 64},
             ],
         }
@@ -40,6 +40,10 @@ class DispatchTests(unittest.TestCase):
         self.assertEqual(
             select_release("release", self.event, [])["tag"], "python-v0.10.2"
         )
+
+    def test_unqualified_core_version_is_not_dispatched(self) -> None:
+        self.release["assets"][0]["name"] = "umf_core-0.11.0-py3-none-any.whl"
+        self.assertIsNone(select_release("release", self.event, []))
 
     def test_noncore_releases_and_unpublished_events_do_not_dispatch(self) -> None:
         self.event["action"] = "edited"

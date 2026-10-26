@@ -2377,10 +2377,16 @@ all other unqualified native subsets unless independently qualified.
       artifacts and clean installs against hashes. Distinguish prepared artifacts,
       publication and consumer adoption.
 
-The former manual `.github/workflows/pypi.yml` published only the `umf-core`
-project from one Ubuntu build; it now fails closed. R8 must prepare and review a coordinated
-`umf-core`/`umf-codegen` release workflow and verified platform artifacts before
-using that publisher. The existing source-bound access workflow exercises both
+The existing-release `.github/workflows/pypi.yml` dispatcher invokes a
+default-branch publisher for an immutable, published core-bearing release. That
+publisher verifies the tag's source commit, checksum manifest and Core package
+bytes, then publishes only the qualified `umf-core` 0.10.2 version. Both its
+automatic dispatcher and manual preparation path refuse the 0.11.0 Rust-port
+candidate; fifteen focused publisher tests pass. It is not the Rust port's coordinated
+pair publisher. R8's six-cohort `umf-core`/`umf-codegen` workflow remains a
+nonpublishing qualification gate. A Rust-port candidate cannot bypass it; a
+separately reviewed publisher must consume the aggregate receipt from that same
+workflow run. The existing source-bound access workflow exercises both
 installed distributions, but a passing PR check is not a publication receipt.
 The latest [published UMF SDK tag](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.5.6)
 observed before this work is `umf-v0.5.6`;
@@ -2406,10 +2412,10 @@ aggregate job downloads only artifacts from that workflow run and requires all
 six exact cohorts, one source revision/run, current source pins, matching host
 and wheel platforms, receipt-linked artifact hashes, and identical source,
 resource and sdist-input closures. It emits a non-publishing aggregate receipt;
-no publication job consumes it yet. The former independent
-`.github/workflows/pypi.yml` publisher now fails closed and has no registry
-credentials or publish action, so it cannot bypass the six-cohort gate. Sol
-independently reran the aggregate negative and positive tests (23/23 passed).
+no coordinated Rust-port publication job consumes it yet. The separate
+existing-release Core publisher does not consume this candidate matrix and
+cannot bypass the six-cohort gate. Sol independently reran the aggregate
+negative and positive tests (23/23 passed).
 Hosted execution of all six jobs, Windows, macOS x86_64, a reviewed coordinated
 publisher, registry artifact verification, rollback, and consumer adoption
 remain open. See the source-bound R8 release evidence directory for current
@@ -4112,8 +4118,9 @@ security opt-in source edits after this snapshot require another recapture.
 Milestone A is also open at its distribution gate. The Python production
 source no longer relies on V8, but the
 [coordinated release matrix](evidence/rust-migration/r8-python-coordinated-release/README.md)
-has not produced the six hosted wheel/sdist pair receipts. The legacy PyPI
-publisher is fail-closed, and the SDK archive is private. Do not merge or tag
+has not produced the six hosted wheel/sdist pair receipts. The existing-release
+publisher handles only exact-tag Core releases; a coordinated publisher for
+this Rust pair remains unqualified, and the SDK archive is private. Do not merge or tag
 this as a complete Rust port, or publish the Python pair, until the R8 checklist
 above and its actual hosted/consumer evidence pass on one reviewed source
 cohort. A release must name the remaining versioned platform/subset limits and
@@ -5922,9 +5929,23 @@ and delegates its terminal/root checks to one native Context. Its focused
 Python observer suite passed 32/32. The callback remains outside public
 `capture()` because Python owns profile admission and the later DTO encoder
 uses a separate budget. A reconciled capture/encoder budget and installed-wheel
-replay remain gates before public selection. SearchLeg, Node, navigation,
-aggregate, parameter and temporal semantics remain outside the private
-visitor. No Python fallback may hide an unadmitted graph or resource limit.
+replay remain gates before public selection. General SearchLeg and Node,
+navigation, aggregate, parameter and temporal semantics remain outside the
+private visitor. No Python fallback may hide an unadmitted graph or resource
+limit.
+
+The next bounded observer capability,
+`umf-access-capture-graph-observation/0.3.0`, adds a private SearchLeg prefix
+for legs with `value is None` and no yielded nested legs. Rust preserves the
+record identity comparison with two separate `record` getter calls, then reads
+`value` and `legs`; it leaves `kind` untouched when value is `None`. Foreign
+record refusal precedes value/legs reads, and PyO3 retains original
+accessor/iterator exceptions. Fixtures cover an untouched raising `kind`
+getter, a faulting `value` getter, and a second stateful `record` getter that
+rethrows its original exception. Nine focused core tests and 40 focused Python
+tests pass against a fresh temporary extension. Bound-value parameter/carrier
+checks, nested/hybrid legs, public routing, encoder-budget reconciliation, and
+installed-wheel qualification remain open.
 
 The separate [read-frame gate](evidence/rust-migration/r8-python-read-frame-core/README.md)
 now has a private PyO3 bridge. Rust asks for host `len`/index/iteration reads
@@ -6034,6 +6055,17 @@ valid tokens. The adapter is not selected by either V4 root. Its local call
 cost remains roughly 1,100–3,800 times the tiny TypeScript operation;
 real Chromium, installed-package and performance qualification remain open.
 The public inventory has no new adapter export reachable from a package root.
+
+The [direct scalar `securityNot` binding](evidence/rust-migration/r8-security-not-direct-binding/README.md)
+replaces the generic tagged-JSON call within that opt-in factory. A strict
+host guard preserves the predecessor's invalid-input error and callback order;
+Rust owns valid T/F/U decisions and charges one work unit. Node and Bun each
+match all 14 frozen outcome/host-effect cases. Local median calls fell to
+169 ns and 185 ns, respectively, from approximately 10 µs through the generic
+wire, though both remain materially slower than the tiny TypeScript function.
+The WASM module builds and passes a Node smoke check; real Chromium and
+installed-package qualification for this exact direct binding remain open.
+The V4 package roots still select TypeScript, so no retirement gap closes.
 
 The [raw-host JSON-number packet](evidence/rust-migration/r8-json-number-predecessor/README.md#r8-raw-host-default-route-gate--blocked)
 now records ten untyped JavaScript values. Fresh Node, Bun and real Chromium

@@ -70,6 +70,7 @@ try {
     'crates/umf-core/src/host_json.rs', 'crates/umf-core/src/registry.rs',
     'crates/umf-core/src/selection_diagnostics.rs', 'crates/umf-core/src/selection_host_json.rs',
     'bindings/core/node/src/host-json.js', 'bindings/core/node/src/host_json.rs',
+    'src/access/rust-selection-default.ts',
     'bindings/core/wasm/src/host-json.js', 'bindings/core/wasm/src/host_json.rs',
     'bindings/core/node/tests/selection-host-json.test.js',
     'scripts/rust-migration/r8/selection-callback-suite.mjs',

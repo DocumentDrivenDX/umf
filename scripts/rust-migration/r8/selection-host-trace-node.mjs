@@ -34,7 +34,8 @@ const resources = {
   constraints: await json('spec/metamodel/generated/core-constraints.json'),
   domainPolicy: await json('spec/metamodel/generated/domain-policy.json'),
 };
-const candidate = (source, query, registry) => hostJson.coreElementSelectionHostInput(addon, resources, source, query, registry, UmfError);
+const candidateEngine = hostJson.createCoreElementSelectionHostInputEngine(addon, resources, UmfError);
+const candidate = (source, query, registry) => candidateEngine.selectCoreElements(source, query, registry);
 const result = runSelectionHostSuite({Registry, selectCoreElements, createCandidate: candidate, candidateLabel: 'private-node-host-json'});
 
 const files = [

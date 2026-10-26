@@ -21,10 +21,14 @@ ddx:
 
 # R8 coordinated Python release validation
 
-This is a non-publishing validation path for the coordinated `umf-core` and
-`umf-codegen` distributions. It does not publish packages. The former manual
-`.github/workflows/pypi.yml` publisher is fail-closed until the required release
-cohort and a coordinated publication job are qualified.
+This is a non-publishing validation path for the coordinated Rust-port
+`umf-core` and `umf-codegen` distributions. It does not publish packages. The
+repository also has an exact-tag, Core-only publisher for existing qualified
+releases: `.github/workflows/pypi.yml` dispatches
+`.github/workflows/publish-pypi.yml` after a published core-bearing release or
+successful release workflow. That path verifies the immutable release tag,
+source commit, checksum manifest and Core package bytes. It does not consume
+the Rust pair matrix or authorize a Rust-port candidate.
 
 The workflow is
 `.github/workflows/python-coordinated-release.yml`. Its hosted matrix follows
@@ -83,9 +87,14 @@ and wheel OS/architecture, all wheel/sdist hashes, installed import/generation
 and CLI gates, core and codegen offline rebuilds, and shared source/resource/
 sdist-input closures; and rejects same-name artifacts with different bytes.
 It emits a qualification-only aggregate manifest and does not publish. The
-standalone `.github/workflows/pypi.yml` now fails closed without OIDC or a
-publish action. Publication still requires a separately reviewed job consuming
-an aggregate receipt from the same workflow run.
+existing-release Core publisher is a distinct path. Its dispatcher and manual
+preparation gate are fenced to the qualified `umf-core` 0.10.2 version; the
+0.11.0 Rust-port candidate is refused before upload. Fifteen focused
+dispatcher/publisher tests, including both 0.11.0 bypass controls, pass. The
+Rust pair remains
+unqualified for publication until a reviewed coordinated publisher consumes an
+aggregate receipt from the same workflow run. Candidate artifacts cannot
+satisfy that requirement by themselves.
 
 The synthetic positive and negative matrix tests pass 18/18; combined with the
 coordinated-pair helper tests they pass 23/23, independently rerun by Sol.

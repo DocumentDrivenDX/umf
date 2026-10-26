@@ -73,6 +73,22 @@ test('the Core Evolution candidate keeps predecessor declarations type-only', ()
 	expect(denied).toContain('rust-core-evolution-candidate.ts: value import from type-only module ../model/evolution');
 });
 
+test('the Selection facade grants only audited type imports and no host hooks', () => {
+	const allowed = checkAccessSource(
+		'rust-selection-default.ts',
+		"import type {CoreElementQuery} from '../model/selection';\nimport type {Registry} from '../registry/registry';\n",
+	);
+	const denied = checkAccessSource(
+		'rust-selection-default.ts',
+		"import {selectCoreElements} from '../model/selection';\nimport {readFile} from 'node:fs';\nconst environment = process.env;\n",
+	);
+
+	expect(allowed).toEqual([]);
+	expect(denied).toContain('rust-selection-default.ts: value import from type-only module ../model/selection');
+	expect(denied).toContain('rust-selection-default.ts: unapproved import node:fs');
+	expect(denied).toContain('rust-selection-default.ts: host or executable hook process');
+});
+
 test('a per-file allowlist also governs re-export module references', () => {
 	const errors = checkAccessSource(
 		'rust-facets-default.ts',

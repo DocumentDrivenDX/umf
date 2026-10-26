@@ -117,6 +117,16 @@ function coreElementSelectionHostInput(addon, resources, source, query, registry
   return executeHostInput(addon, resources, 'executeCoreElementSelectionHostJson', [source, query, registry], ErrorType, undefined, [registry !== undefined], undefined, false, false, fromRustWire);
 }
 
+/** Private reusable engine facade for the R8 Selection host-input route. */
+function createCoreElementSelectionHostInputEngine(addon, resources, ErrorType = Error) {
+  if (typeof addon?.executeCoreElementSelectionHostJson !== 'function') throw new ErrorType('RUST_BINDING_MISSING', 'Binding does not expose umf.host-json/1 Core Element Selection');
+  return Object.freeze({
+    selectCoreElements(source, query, registry) {
+      return coreElementSelectionHostInput(addon, resources, source, query, registry, ErrorType);
+    },
+  });
+}
+
 function validateCoreRecordValuesHostInput(addon, resources, source, identity, values, ErrorType = Error, controlBridge) {
   return executeHostInput(addon, resources, 'executeValidateCoreRecordValuesHostJson', [source, identity, values], ErrorType, controlBridge);
 }
@@ -577,4 +587,4 @@ function fromUnits(units) {
   return result;
 }
 
-export {declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, cardinalityHostInput, coreElementSelectionHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse};
+export {declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, cardinalityHostInput, coreElementSelectionHostInput, createCoreElementSelectionHostInputEngine, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse};

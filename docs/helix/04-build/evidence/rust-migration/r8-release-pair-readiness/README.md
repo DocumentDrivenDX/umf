@@ -49,13 +49,15 @@ The local Git description is `umf-v0.5.5-73-g23bf095b7` at HEAD
 remote not inspected here. The separate SDK tag/channel is governed by the
 migration plan and is not implied by these Python distribution versions.
 
-`.github/workflows/python-coordinated-release.yml` is the required
-non-publishing validation workflow. `.github/workflows/pypi.yml` is currently
-fail-closed: its only dispatch job prints that the same-run R8 aggregate gate
-is pending and exits 1. It grants only `contents: read` and contains no PyPI
-publishing action or OIDC publisher. No safe publishing path is enabled in
-this checkpoint. Do not manually dispatch the disabled workflow as a release
-attempt.
+`.github/workflows/python-coordinated-release.yml` is the non-publishing
+validation workflow for the Rust `umf-core`/`umf-codegen` pair. Separately,
+`.github/workflows/pypi.yml` dispatches the existing-release Core publisher for
+an exact published core-bearing tag or a successful release workflow. That
+publisher binds the immutable tag to its source commit, verifies release
+checksums and Core package bytes, and publishes only `umf-core` through PyPI
+OIDC. It does not consume Rust pair matrix artifacts. The six-cohort Rust pair
+matrix remains unqualified for publication, and candidate artifacts cannot
+bypass its required same-run aggregate receipt.
 
 ## Local fixed-point and pair gates
 

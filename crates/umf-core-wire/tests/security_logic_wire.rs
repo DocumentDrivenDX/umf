@@ -278,6 +278,38 @@ fn wire_security_logic_admission_rejects_unknown_or_missing_members() {
 }
 
 #[test]
+fn direct_security_not_keeps_rust_truth_and_host_control() {
+    use umf_core_wire::security_logic_binding::execute_security_not_scalar_with_control;
+
+    for (input, expected) in [("T", "F"), ("F", "T"), ("U", "U")] {
+        let mut charges = Vec::new();
+        let mut control = |amount| {
+            charges.push(amount);
+            Ok(())
+        };
+        assert_eq!(execute_security_not_scalar_with_control(input, &mut control), expected);
+        assert_eq!(charges, [1]);
+    }
+
+    let mut denied = |_amount| {
+        Err(umf_core::EngineError::new(
+            "RESOURCE_LIMIT",
+            Utf16::default(),
+            "Host work budget exceeded",
+        ))
+    };
+    let refusal = execute_security_not_scalar_with_control("T", &mut denied);
+    let refusal: serde_json::Value = serde_json::from_str(&refusal).unwrap();
+    assert_eq!(refusal["status"], "error");
+    assert_eq!(refusal["code"], "RESOURCE_LIMIT");
+
+    let invalid = execute_security_not_scalar_with_control("X", &mut |_amount| Ok(()));
+    let invalid: serde_json::Value = serde_json::from_str(&invalid).unwrap();
+    assert_eq!(invalid["status"], "error");
+    assert_eq!(invalid["code"], "SECURITY_TRUTH");
+}
+
+#[test]
 fn wire_composition_matches_frozen_predecessor_and_hand_oracle() {
     let packet = parse(include_str!(
         "../../../docs/helix/04-build/evidence/rust-migration/r8-security-truth-logic/compose-cases.json"

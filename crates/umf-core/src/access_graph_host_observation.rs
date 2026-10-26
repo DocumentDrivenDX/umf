@@ -8,7 +8,7 @@
 use crate::Utf16;
 use std::collections::HashSet;
 
-pub const PROFILE: &str = "umf-access-capture-graph-observation/0.2.0";
+pub const PROFILE: &str = "umf-access-capture-graph-observation/0.3.0";
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct ExpectedOwner {
@@ -33,6 +33,7 @@ pub enum ObservationError {
     GroupNeedsSelection,
     ScalarTerminalDenied,
     JoinSourceAbsent,
+    SearchForeignRecord,
     ForeignField,
     Budget,
 }
@@ -99,6 +100,48 @@ pub fn observe_field_join_tuple_prefix<H: Copy>(
     allowed: &HashSet<Owner>,
 ) -> Result<(), ObservationError> {
     observe_field_join_tuple_value(context, host, value, allowed, 0)
+}
+
+/// Observe the bounded SearchLeg branch for legs with no bound value and no
+/// nested legs. The full branch's parameter/carrier semantics remain outside
+/// this private prefix; this operation preserves the live owner and field
+/// reads before refusing any nonempty continuation.
+pub fn observe_empty_search_leg_prefix<H: Copy>(
+    context: &mut crate::Context<'_>,
+    host: &mut impl CaptureGraphHostObserver<Handle = H>,
+    value: H,
+    root_record: H,
+) -> Result<(), ObservationError> {
+    if budgeted(context, || {
+        host.is_instance_structural(value, StructuralType::FieldRef)
+    })? {
+        return Err(ObservationError::UnsupportedValue);
+    }
+    if !budgeted(context, || {
+        host.is_instance_structural(value, StructuralType::SearchLeg)
+    })? {
+        return Err(ObservationError::UnsupportedValue);
+    }
+    let first_search_record = object(attr(context, host, value, "record")?)?;
+    let search_module = text(attr(context, host, first_search_record, "module")?)?;
+    let second_search_record = object(attr(context, host, value, "record")?)?;
+    let search_element = text(attr(context, host, second_search_record, "element")?)?;
+    let root_module = text(attr(context, host, root_record, "module")?)?;
+    let root_element = text(attr(context, host, root_record, "element")?)?;
+    if search_module != root_module || search_element != root_element {
+        return Err(ObservationError::SearchForeignRecord);
+    }
+    // The predecessor reads kind only on the non-None value path.
+    let leg_value = attr(context, host, value, "value")?;
+    if !matches!(leg_value, ObservedValue::None) {
+        return Err(ObservationError::UnsupportedValue);
+    }
+    let legs = object(attr(context, host, value, "legs")?)?;
+    let iterator = budgeted(context, || host.iter(legs))?;
+    if budgeted(context, || host.next(iterator))?.is_some() {
+        return Err(ObservationError::UnsupportedValue);
+    }
+    Ok(())
 }
 
 fn observe_field_join_tuple_value<H: Copy>(
@@ -806,5 +849,71 @@ mod tests {
             host.is_instance_structural(1, StructuralType::FieldRef),
             Err(ObservationError::UnsupportedValue)
         );
+    }
+
+    #[test]
+    fn empty_search_leg_observes_repeated_record_then_value_and_legs_in_order() {
+        let mut host = graph_fixture();
+        host.structural_kinds.insert((2, StructuralType::SearchLeg));
+        for (object, module, element) in [(3, "root", "Record"), (1, "root", "Record")] {
+            host.attrs
+                .insert((object, "module"), MockValue::Text(module));
+            host.attrs
+                .insert((object, "element"), MockValue::Text(element));
+        }
+        host.attrs.insert((2, "record"), MockValue::Object(3));
+        host.attrs.insert((2, "value"), MockValue::None);
+        host.attrs.insert((2, "legs"), MockValue::Object(4));
+        host.sequences.insert(4, vec![]);
+        let mut context = crate::Context::ordinary();
+
+        assert_eq!(
+            observe_empty_search_leg_prefix(&mut context, &mut host, 2, 1),
+            Ok(())
+        );
+        assert!(host.events.iter().any(|event| event == "get:3.module"));
+        let tail = &host.events[host
+            .events
+            .iter()
+            .position(|event| event == "is:2:FieldRef")
+            .unwrap()..];
+        assert_eq!(
+            tail,
+            [
+                "is:2:FieldRef",
+                "is:2:SearchLeg",
+                "get:2.record",
+                "get:3.module",
+                "get:2.record",
+                "get:3.element",
+                "get:1.module",
+                "get:1.element",
+                "get:2.value",
+                "get:2.legs",
+                "iter:4",
+                "next:100",
+            ]
+        );
+    }
+
+    #[test]
+    fn foreign_search_record_refuses_before_kind_and_value() {
+        let mut host = graph_fixture();
+        host.structural_kinds.insert((2, StructuralType::SearchLeg));
+        for (object, module, element) in [(3, "foreign", "Record"), (1, "root", "Record")] {
+            host.attrs
+                .insert((object, "module"), MockValue::Text(module));
+            host.attrs
+                .insert((object, "element"), MockValue::Text(element));
+        }
+        host.attrs.insert((2, "record"), MockValue::Object(3));
+        let mut context = crate::Context::ordinary();
+
+        assert_eq!(
+            observe_empty_search_leg_prefix(&mut context, &mut host, 2, 1),
+            Err(ObservationError::SearchForeignRecord)
+        );
+        assert!(!host.events.iter().any(|event| event == "get:2.kind"));
+        assert!(!host.events.iter().any(|event| event == "get:2.value"));
     }
 }

@@ -82,8 +82,8 @@ export function createJavascriptNumericEngine(resources, options = {}) {
 
 /** Create the opt-in Rust engine for bounded CONTRACT-062 truth/composition operations. */
 export function createSecurityLogicEngine(options = {}) {
-  if (typeof addon.executeSecurityLogicWire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
-  return createSecurityLogicEngineWithWire((wire, control) => addon.executeSecurityLogicWire(wire, control), options, UmfCoreError);
+  if (typeof addon.executeSecurityLogicWire !== 'function' || typeof addon.securityNotScalar !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  return createSecurityLogicEngineWithWire((wire, control) => addon.executeSecurityLogicWire(wire, control), options, UmfCoreError, (value, control) => addon.securityNotScalar(value, control));
 }
 
 export const GREGORIAN_DATE_PROFILE = 'umf-gregorian-date/1.0.0';

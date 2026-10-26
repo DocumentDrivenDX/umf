@@ -12,6 +12,7 @@ from umf_access.rust_capture_observe import (
     FieldOwnerObservationUnavailable,
     observe_all_empty_capture_profile,
     observe_field_join_tuple,
+    observe_empty_search_leg,
     observe_terminal_join_owners,
     validate_field_owner,
 )
@@ -351,6 +352,183 @@ def test_field_join_tuple_visit_refuses_search_leg_before_nested_reads():
     leg = SearchLeg(root, "keyword", "{}", None)
     with pytest.raises(TypeError, match="unsupported captured graph shape"):
         observe_field_join_tuple((leg,), (("demo", "Root", None),))
+
+
+def test_empty_search_leg_observes_predecessor_field_order():
+    reads: list[str] = []
+    armed = False
+
+    class ObservedRecord(RecordRef):
+        def __getattribute__(self, name: str):
+            if armed and name in {"module", "element"}:
+                reads.append(f"record.{name}")
+            return super().__getattribute__(name)
+
+    from umf_access.dsl.search import SearchLeg
+
+    class ObservedLeg(SearchLeg):
+        def __getattribute__(self, name: str):
+            if armed and name in {"record", "kind", "value", "legs"}:
+                reads.append(f"leg.{name}")
+            return super().__getattribute__(name)
+
+    root = ObservedRecord("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    search_record = ObservedRecord("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    leg = ObservedLeg(search_record, "keyword", None, None)
+    armed = True
+    observe_empty_search_leg(leg, root)
+    assert reads == [
+        "leg.record",
+        "record.module",
+        "leg.record",
+        "record.element",
+        "record.module",
+        "record.element",
+        "leg.value",
+        "leg.legs",
+    ]
+
+
+def test_empty_search_leg_does_not_read_kind():
+    from umf_access.dsl.search import SearchLeg
+
+    class FaultingKind(SearchLeg):
+        def __getattribute__(self, name: str):
+            if name == "kind":
+                raise AssertionError("kind must not be read when value is None")
+            return super().__getattribute__(name)
+
+    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    observe_empty_search_leg(FaultingKind(root, "keyword", None, None), root)
+
+
+def test_empty_search_leg_foreign_record_refuses_before_kind():
+    reads: list[str] = []
+    armed = False
+    from umf_access.dsl.search import SearchLeg
+
+    class ObservedLeg(SearchLeg):
+        def __getattribute__(self, name: str):
+            if armed and name in {"record", "kind", "value", "legs"}:
+                reads.append(name)
+            return super().__getattribute__(name)
+
+    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    leg = ObservedLeg(
+        RecordRef("elsewhere", "Root", (FieldRef("elsewhere", "Root", "id"),)),
+        "keyword",
+        None,
+        None,
+    )
+    armed = True
+    with pytest.raises(CaptureError) as caught:
+        observe_empty_search_leg(leg, root)
+    assert caught.value.code == "SEARCH_DECLARATION"
+    assert reads == ["record", "record"]
+
+
+def test_empty_search_leg_accessor_exception_identity():
+    sentinel = LookupError("search record sentinel")
+    armed = False
+    from umf_access.dsl.search import SearchLeg
+
+    class FaultingLeg(SearchLeg):
+        def __getattribute__(self, name: str):
+            if armed and name == "record":
+                raise sentinel
+            return super().__getattribute__(name)
+
+    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    leg = FaultingLeg(root, "keyword", None, None)
+    armed = True
+    with pytest.raises(LookupError) as caught:
+        observe_empty_search_leg(leg, root)
+    assert caught.value is sentinel
+
+
+def test_empty_search_leg_value_accessor_exception_identity():
+    sentinel = RuntimeError("search value sentinel")
+    armed = False
+    from umf_access.dsl.search import SearchLeg
+
+    class FaultingLeg(SearchLeg):
+        def __getattribute__(self, name: str):
+            if armed and name == "value":
+                raise sentinel
+            return super().__getattribute__(name)
+
+    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    leg = FaultingLeg(root, "keyword", None, None)
+    armed = True
+    with pytest.raises(RuntimeError) as caught:
+        observe_empty_search_leg(leg, root)
+    assert caught.value is sentinel
+
+
+def test_search_leg_record_getter_is_read_twice_in_tuple_evaluation_order():
+    reads: list[str] = []
+    armed = False
+    from umf_access.dsl.search import SearchLeg
+
+    class TaggedRecord(RecordRef):
+        def __getattribute__(self, name: str):
+            if armed and name in {"module", "element"}:
+                reads.append(f"record.{name}")
+            return super().__getattribute__(name)
+
+    first = TaggedRecord("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    second = TaggedRecord("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    root = TaggedRecord("demo", "Root", (FieldRef("demo", "Root", "id"),))
+
+    class StatefulRecordLeg(SearchLeg):
+        def __getattribute__(self, name: str):
+            if name == "record" and armed:
+                reads.append("leg.record")
+                return first if reads.count("leg.record") == 1 else second
+            return super().__getattribute__(name)
+
+    armed = True
+    observe_empty_search_leg(StatefulRecordLeg(first, "keyword", None, None), root)
+    assert reads == [
+        "leg.record",
+        "record.module",
+        "leg.record",
+        "record.element",
+        "record.module",
+        "record.element",
+    ]
+
+
+def test_search_leg_second_record_getter_exception_identity():
+    sentinel = LookupError("second search record sentinel")
+    armed = False
+    reads: list[str] = []
+    from umf_access.dsl.search import SearchLeg
+
+    class FaultingLeg(SearchLeg):
+        def __getattribute__(self, name: str):
+            if name == "record" and armed:
+                reads.append(name)
+                if len(reads) == 2:
+                    raise sentinel
+            return super().__getattribute__(name)
+
+    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    leg = FaultingLeg(root, "keyword", None, None)
+    armed = True
+    with pytest.raises(LookupError) as caught:
+        observe_empty_search_leg(leg, root)
+    assert caught.value is sentinel
+    assert reads == ["record", "record"]
+
+
+def test_empty_search_leg_refuses_bound_value_before_legs():
+    from umf_access.dsl.search import SearchLeg
+
+    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    leg = SearchLeg(root, "keyword", "{}", Node("param", ("term",)))
+    with pytest.raises(TypeError, match="unsupported captured graph shape"):
+        observe_empty_search_leg(leg, root)
 
 
 def test_terminal_join_walker_observes_root_and_sequential_join_owners():
