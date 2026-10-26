@@ -62,7 +62,7 @@ test('retained Record Type convenience verification reads receipt before current
   const receipt = object('receipt', 1);
   const current = object('current', 2);
   engine.verifyCoreRecordTypeDeclaration(receipt, current);
-  expect(order).toEqual(['receipt', 'current']);
+  expect(order).toEqual(['receipt', 'receipt', 'current', 'current']);
   expect(log.map(([name]) => name).filter(name => name === 'prepare' || name === 'finish')).toEqual(['prepare', 'finish']);
   engine.dispose();
 });

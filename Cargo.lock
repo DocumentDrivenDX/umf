@@ -1058,6 +1058,17 @@ dependencies = [
  "serde_json",
  "umf-codegen",
  "umf-core",
+ "umf-tagged-wire",
+]
+
+[[package]]
+name = "umf-metamodel-cli"
+version = "0.1.0"
+dependencies = [
+ "sha2",
+ "umf-core",
+ "umf-metamodel",
+ "umf-tagged-wire",
 ]
 
 [[package]]
@@ -1067,8 +1078,15 @@ dependencies = [
  "regress",
  "sha2",
  "umf-core",
- "umf-core-wire",
  "url",
+]
+
+[[package]]
+name = "umf-tagged-wire"
+version = "0.1.0"
+dependencies = [
+ "serde_json",
+ "umf-core",
 ]
 
 [[package]]

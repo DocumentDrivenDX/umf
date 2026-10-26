@@ -22,12 +22,12 @@ ddx:
 ## Decision
 
 Do not retire the TypeScript default semantics for either
-`validateCsvBooleanLexical` or `verifyCsvBooleanLexical` yet. The installed
-archive qualifies a bounded 14-case semantic corpus for both selected Rust
-routes, but independent host-object admission exposes an observable request
-accessor mismatch. The two retirement rows therefore remain open pending a
-reviewed host-boundary correction and fresh installed replay. This decision
-applies only to these two exports and does not change broader CSV or SDK claims.
+`validateCsvBooleanLexical` or `verifyCsvBooleanLexical` based on this bounded
+qualification alone. The fresh private archive passes the 14-case frozen
+packet and has zero outcome mismatches across the 18-case host-object corpus
+in Node, Bun, and Chromium. Both retirement rows remain open pending the
+broader retirement evidence and review; this decision applies only to these
+two exports and does not change broader CSV or SDK claims.
 
 ## Authority and source route
 
@@ -39,66 +39,67 @@ as package defaults, with `./dist/umf.js` as the separate reference route.
 Source entries `src/index-node-v4.ts` and `src/index-browser-v4.ts` both bind
 these names with `bindCsvBooleanLexicalRust`.
 
-The installed replay receipt records the same 3,426-file source-closure hash
-before and after packaging (`1a28de92f1c2e0f51a0b9b2c63bb55afa202057096e2cc399feaa638a994f39f`),
-fixed-point transforms, and private archive SHA-256
-`3d2c6b3b154ff3ffc45d63919eee4572b491f242bea3976289c34f9cb63ceffc`.
-The frozen predecessor SHA-256 is
+The fresh installed replay records a 3,431-file source closure with matching
+captured/live hash
+`83730261e84c90533a4cf2b5710550c92655f1f9519961e04e718a86187851e9`, zero
+generated transform changes, and private archive SHA-256
+`bdd14aa62e09df465d784bb7889c4d7ddfc79c61f8186acf6eb2423ce35e8b3b`.
+Its manifest SHA-256 is
+`a1ac69114b97dbd2220eed12538e2f5a5d46b8f72f7a1ab99810d035b822810d`.
+This archive includes the metamodel bootstrap and measured-work Core Key tuple
+test boundary; its evidence is exact for that captured snapshot. The frozen predecessor SHA-256 is
 `b960bac93d6027b03808bb984381e0c78cc78f91b3e5d1012faf539ec3890470`.
 
 ## Passing bounded evidence
 
-`installed-replay.json` reports all 14 frozen cases equal through the installed
-default route in Node 26.12.1, Bun 1.4.3 and real Chromium 153.0.8010.12. The
-cases cover all four lexical tokens, allowed-value and unknown selected
-semantics, invalid field/token/request behavior, staged receipt verification
-and getter ordering, plus exact and over-limit 4,000,000-byte input/receipt
-boundaries. It also records that missing and corrupt native addons refuse in
-Node and Bun. The harness hash is
+[`installed-replay-20261025.json`](installed-replay-20261025.json) reports all
+14 frozen cases equal through the installed default route in Node 26.12.1,
+Bun 1.4.3, and real Chromium 153.0.8010.12. The cases cover all four lexical
+tokens, allowed-value and unknown selected semantics, invalid
+field/token/request behavior, staged receipt verification and getter ordering,
+plus exact and over-limit 4,000,000-byte input/receipt boundaries. Chromium
+requested the packaged WASM. Missing and corrupt native addons refused in Node
+and Bun. The baseline installed harness hash is
 `00b32f2b7034942107120f087df500500c9d82a3d1405216b92fad6f0bbc4ebd`.
 
-The additional review replay
-[`csv-boolean-retirement-reference.mjs`](../../../../../../scripts/rust-migration/r8/csv-boolean-retirement-reference.mjs)
-imports both installed package roots directly. In Node 26.12.1 and Bun 1.4.3,
-the reference root matches the frozen predecessor on the 12 non-large-boundary
-cases; the receipt's independent installed replay covers the other two boundary
-cases in all three environments. The new replay adds accessor-bearing source
-and request shapes and asserts that getters stay uncalled.
+The [comparative adversarial receipt](adversarial-replay-20261025.json) and
+[replay harness](adversarial-replay-20261025.mjs) compare both installed roots
+in all three environments over 18 cases. Single source and request accessors,
+single non-enumerable members, invalid-request/source-accessor precedence,
+ordinary proxy trap exceptions, changing proxy key lists, and malformed
+receipt-first verification match. Accessor getters stay uncalled. In matching
+single-member cases, each route returns an error that is an instance of its
+own exported `UmfError`.
 
-For an enumerable getter at source `umf`, both roots return
-`UmfError/NON_JSON` at `/umf`, with zero getter calls. For an enumerable getter
-at request `profile`, the reference returns
-`UmfError/NON_JSON` at `/profile`; the Rust default returns
-`AdmissionError/ACCESSOR_PROPERTY` at `/csvRequest`. Both leave the getter
-uncalled. The mismatch reproduces in Node and Bun.
-
-Sol's separate installed Node probe found the same boundary divergence for
-additional adversarial properties: a source `id` accessor produced Rust
-`NON_JSON` at `/umf` versus reference `NON_JSON` at `/id`; a nested source
-accessor produced Rust `AdmissionError/ACCESSOR_PROPERTY` at
-`/source/modules/0/elements/0` versus reference `UmfError/NON_JSON` at
-`/modules/0/elements/0/name`; request `token` and unknown-field accessors
-produced Rust `AdmissionError/ACCESSOR_PROPERTY` at `/csvRequest` versus
-reference `UmfError/NON_JSON` at `/token` or `/future`. Those getters also
-stayed uncalled.
-
-The existing Chromium replay exercises the Rust-selected default root against
-the frozen packet, and confirms the separate reference export is present. It
-does not compare the reference root's semantics in Chromium, and the new
-adversarial reference/default comparison is Node and Bun only. Browser parity
-for accessor-bearing host objects remains untested.
+All 18 cases have zero outcome mismatches in Node, Bun, and Chromium. The
+changed admission path preserves the reference's operation-local root for
+symbol keys and precise offending-member paths for competing invalid members.
+It snapshots descriptors once per member pass, so a changing proxy descriptor
+is read once. Proxy reflection order is exactly `ownKeys, ownKeys,
+descriptor:umf`; changing key lists are reflected twice and refuse at `/id`.
+The receipt records every outcome and trap observation for each runtime. Its harness SHA-256 is
+`38a12999a7e8957bc5cffea961a08c43c1df319cea41d61a025f042b2406b6c8`; the
+updated receipt SHA-256 is
+`6bebf6780e32f09de0eaee450faf9266c1af2bf99ab21cccd519a5cbf67b77b2`.
+The comparison remains bounded to these 18 shapes and does not exhaustively
+qualify all proxy behaviors or host objects. Focused shared-wire negative
+controls separately cover a second-snapshot symbol, `__proto__` data key, and
+receipt-before-input ordering.
 
 ## Reproduction
 
-The reference and adversarial comparison was run with Bun 1.4.3:
+The installed archive replay was run with Bun 1.4.3:
 
 ```sh
-bun scripts/rust-migration/r8/csv-boolean-retirement-reference.mjs \
-  /private/tmp/umf-r8-csv-boolean-default/umf-sdk.tgz
+bun scripts/rust-migration/r8/csv-boolean-default-route-installed.mjs \
+  /private/tmp/umf-r8-csv-admission-20261025/umf-sdk.tgz \
+  docs/helix/04-build/evidence/rust-migration/r8-csv-boolean-default-route/installed-replay-20261025.json
+
+bun docs/helix/04-build/evidence/rust-migration/r8-csv-boolean-default-route/adversarial-replay-20261025.mjs \
+  /private/tmp/umf-r8-csv-admission-20261025/umf-sdk.tgz \
+  docs/helix/04-build/evidence/rust-migration/r8-csv-boolean-default-route/adversarial-replay-20261025.json
 ```
 
-The script hash is
-`6e3b8a0e94ee369b10900f52e121828eb07719363beca28f2431c13990909f3c`.
-Its Node and Bun subprocesses both completed with the expected single
-adversarial mismatch and verified every frozen case it replays. No implementation
-or ledger files were changed for this review.
+The archive is private and non-publishable. This review does not retire either
+CSV row or change the shared migration ledger, plan, metamodel, or resource
+mirrors.

@@ -512,6 +512,20 @@ test('versioned core operation schemas pin direct authoring history without prom
       added: 'f69d1a7c7b7d62d4f2924217b813f8b58b07ecef',
       revisionHashes: ['ef753a57872076791c435ec2612efb3ce7259ed719baa2a2b28d7a6494c223ec', '01c2c812a06130abddb4ec78d8760537f18cff2eb6bfd96f09b87b748dd9192b'],
     }],
+    ['spec/core/kind-operation-v8.schema.json', {
+      id: 'urn:umf:core:kind-operation:8.0.0',
+      contracts: ['docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md', 'docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md'],
+      closure: ['src/model/field-kind.ts', 'src/index.ts'],
+      currentHash: '3f7cc27f133f0a242b42ae2f41b665d046d0e069668235c82b0b2cd38c8bd68c',
+      revisionHashes: ['b0ea478865567f2ee6c3b060df5eda10723cb4bdeaa4ff26eb7e0bba6d7b063e', '3f7cc27f133f0a242b42ae2f41b665d046d0e069668235c82b0b2cd38c8bd68c'],
+    }],
+    ['spec/core/nullability-operation-v7.schema.json', {
+      id: 'urn:umf:core:nullability-operation:7.0.0',
+      contracts: ['docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md', 'docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md'],
+      closure: ['src/model/nullability.ts', 'src/index.ts'],
+      currentHash: '6f0d20390165d2da79f22a69b3fec0126512c9f870a49445a5c33e55d68ff2d9',
+      revisionHashes: ['18bc5717486dd78997ba8b52ff9a24a5fa50166decdf6fe3226443f499030b17', '6f0d20390165d2da79f22a69b3fec0126512c9f870a49445a5c33e55d68ff2d9'],
+    }],
   ]);
   const refresh = '8706814a9';
   for (const [source, expectation] of expected) {
@@ -531,27 +545,34 @@ test('versioned core operation schemas pin direct authoring history without prom
     }
     const schema = JSON.parse(readFileSync(source, 'utf8'));
     assert.equal(schema.$id, expectation.id, source);
+    if (expectation.currentHash) assert.equal(row.resourceOwnership.source.sha256, expectation.currentHash, `${source} current bytes`);
     for (const file of [...expectation.contracts, ...expectation.closure,
       'scripts/build.ts', 'scripts/package-sdk-rust-default.ts', 'scripts/package-sdk.py']) {
       assert.ok(authority.sourceClosure.some(item => item.path === file && /^[a-f0-9]{64}$/.test(item.sha256)), `${source} closure omits ${file}`);
     }
+    if (expectation.currentHash) assert.ok(authority.sourceClosure.some(item => item.path === 'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/versioned-core-operation-resource-authority.md'), `${source} closure omits focused authority evidence`);
     const archive = row.resourceOwnership.routes.find(route => route.id === 'sdk-archive');
     assert.equal(archive.artifactPath, `package/dist/${source}`);
     assert.equal(archive.installedQualification.status, 'not-installed-qualified');
   }
-  for (const source of [
-    'spec/core/cardinality-operation-v4.schema.json',
-    'spec/core/facet-operation-v3.schema.json',
-    'spec/core/key-operation-v2.schema.json',
-  ]) {
+  const unresolved = new Map([
+    ['spec/core/cardinality-operation-v4.schema.json', 'c2562ad726b58306c18332512f2b5388ddc625abb7494c532794682492300d45'],
+    ['spec/core/facet-operation-v3.schema.json', '74c1ca75e2bac44afd0010292b82741618e9cb031cc37159667fa4f4ff95fd9f'],
+    ['spec/core/key-operation-v2.schema.json', '67c35f417d940d9d3ff8c4fe7ca57ea29d319a1da4310ea3f9d2437160e9095b'],
+    ['spec/core/kind-operation-v6.schema.json', 'e1de0aba1c3db6a09e85332a10441a0eec7a2dca0a4e4249fab67fcc491783b8'],
+    ['spec/core/nullability-operation-v5.schema.json', '442cc69c8998da361b775251b2e8842cece0d700fb1fa59dad4bd3de03f13c92'],
+    ['spec/core/record-type-operation-v6.schema.json', '2b40d2be0562794f918738d96ee8f974f7133f26ee8476583b944c9f676a255d'],
+  ]);
+  for (const [source, currentHash] of unresolved) {
     const row = current.rows.find(item => item.source === source);
     assert.ok(row, `missing retained older version ${source}`);
     assert.equal(row.resourceOwnership.authority.status, 'authority-unresolved', source);
+    assert.equal(row.resourceOwnership.source.sha256, currentHash, `${source} current bytes`);
   }
   // The count includes the explicit resource families in the R8 authority map.
   const relationshipSelection = current.rows.find(item => item.source === 'spec/core/relationship-selection.schema.json');
   assert.equal(relationshipSelection.resourceOwnership.authority.status, 'authority-unresolved', 'one-off generated selection schema lacks a current reproducible writer');
-  assert.equal(current.counts.resourceAuthorityByStatus['authored-authority-known'], 46);
+  assert.equal(current.counts.resourceAuthorityByStatus['authored-authority-known'], 49);
 });
 
 test('semantic-types selection has exact contract authorship while composite selection authorities stay open', () => {
@@ -565,6 +586,14 @@ test('semantic-types selection has exact contract authorship while composite sel
   assert.deepEqual(semantic.governingArtifacts, ['docs/helix/02-design/contracts/CONTRACT-078-semantic-types.md']);
   assert.equal(semantic.authoredRevisionClosure[0].sha256, '529d97cfd8ff7b5e201967c7156dc8c9439d5984ac1ee755bdb60a2d505bdead');
   assert.ok(semantic.sourceClosure.some(item => item.path === 'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/core-selection-schema-authority.md'));
+  const operation = authority('spec/core/semantic-types-operation.schema.json');
+  assert.equal(operation.status, 'authored-authority-known');
+  assert.deepEqual(operation.governingArtifacts, ['docs/helix/02-design/contracts/CONTRACT-078-semantic-types.md']);
+  assert.deepEqual(operation.authoredRevisionClosure.map(item => [item.commit, item.sha256]), [
+    ['f397e484727cc7405958c9ec40468cf6134e48e3', '3480029b4a635057a714da5c7eba26f669e84b6ea5f1ed852c63fd4f90558ea7'],
+    ['8706814a9605d7325eef32a5df3d05696de00b62', '021935d916e82ea471500dffadf2830469c782b28382d71aeea195df724fe727'],
+  ]);
+  assert.ok(operation.sourceClosure.some(item => item.path === 'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/semantic-types-operation-schema-authority.md'));
   for (const file of ['spec/core/key-selection.schema.json', 'spec/core/relationship-selection.schema.json', 'spec/core/schema-properties-selection.schema.json']) {
     assert.equal(authority(file).status, 'authority-unresolved', file);
   }
@@ -777,7 +806,7 @@ test('Delta log, Parquet framing and Spark datatype schemas pin current writers 
     if (row) assert.equal(row.resourceOwnership.authority.status, 'authority-unresolved', `${resource} is a negative historical control`);
   }
   assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 44);
-  assert.equal(ledger.counts.resourceAuthorityByStatus['authority-unresolved'], 20);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['authority-unresolved'], 17);
 });
 
 test('dataset-value operation schemas pin direct authorship, consumer closure and archive limits', () => {
@@ -834,7 +863,7 @@ test('dataset-value operation schemas pin direct authorship, consumer closure an
   }
   assert.match(archiveBuild, /cp\(join\(root,'spec'\),join\(dist,'spec'\),\{recursive:true\}\)/);
   assert.match(archive, /\(root\s*\/\s*'dist'\)\.rglob\('\*'\)/);
-  assert.equal(ledger.counts.resourceAuthorityByStatus['authored-authority-known'], 46);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['authored-authority-known'], 49);
 });
 
 test('OpenAPI result schemas pin their governing contracts and package data closure', () => {
@@ -1097,7 +1126,7 @@ test('native JSON tree schema is contract-attested and preserves its public sour
   assert.match(readFileSync('docs/helix/02-design/contracts/CONTRACT-001-core-envelope.md', 'utf8'), /spec\/core\/native-json\.schema\.json.*src\/model\/native-json\.ts/);
   assert.match(readFileSync('src/index.ts', 'utf8'), /nativeJsonSchema.*native-json\.schema\.json/);
   assert.equal(row.resourceOwnership.routes.find(route => route.id === 'sdk-archive').installedQualification.status, 'not-installed-qualified');
-  assert.equal(ledger.counts.resourceAuthorityByStatus['authored-authority-known'], 46);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['authored-authority-known'], 49);
 });
 
 test('PostgreSQL Key catalog schemas pin one exact contract-governed three-output writer', async () => {
@@ -1383,21 +1412,22 @@ test('five current R8 default selections retain exact source, wire, binder and b
   const ledger = buildLedger({...args, inventory: {symbols}});
   assert.equal(ledger.counts.executableDefaultRouteGaps, 5);
   assert.equal(ledger.counts.sourceSelectedRustOverrides, 10);
-  assert.equal(ledger.counts.bindingRoutesProven, 0);
+  assert.equal(ledger.counts.bindingRoutesProven, 5);
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     assert.equal(ledger.counts.executableDefaultRouteGapsByRoute[routeId].rustSelectedSourceDeclarations, 5);
     for (const name of names) {
       const row = ledger.rows.find(item => item.routeId === routeId && item.exportName === name);
       const selected = row.sourceSelectedImplementation;
-      assert.equal(selected.status, 'source-selected-only');
-      assert.equal(row.bindingRouteStatus, 'unproven');
+      assert.equal(selected.status, 'source-selected-installed-private-current-cohort');
+      assert.equal(row.bindingRouteStatus, 'installed-private-current-cohort');
+      assert.equal(row.bindingRoute, selected.bindingRoute);
       assert.equal(row.acceptedRustOperation, null);
       assert.ok(selected.sourceClosure.some(item => item.path === (routeId === 'package-root-node' ? 'src/index-node-v4.ts' : 'src/index-browser-v4.ts')));
       assert.ok(selected.sourceClosure.some(item => item.path === (selected.bindingMethod.includes('CsvBoolean') ? `bindings/core/${routeId.endsWith('browser') ? 'wasm' : 'node'}/src/csv-boolean-lexical.js` : `bindings/core/${routeId.endsWith('browser') ? 'wasm' : 'node'}/src/core-model.js`)));
       assert.ok(selected.sourceClosure.every(item => /^[a-f0-9]{64}$/.test(item.sha256)));
       assert.ok(selected.evidenceClosure.length >= 3);
-      assert.match(selected.qualificationStatus, /prior fixed-point private SDK archive/i);
-      assert.match(selected.qualificationStatus, /[Cc]urrent-cohort installed/);
+      assert.match(selected.qualificationStatus, /current 3,431-file fixed-point private SDK archive/i);
+      assert.match(selected.qualificationStatus, /retirement/);
     }
   }
   const csv = ledger.rows.find(item => item.routeId === 'package-root-node' && item.exportName === 'verifyCsvBooleanLexical').sourceSelectedImplementation;

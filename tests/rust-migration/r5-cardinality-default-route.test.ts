@@ -55,7 +55,7 @@ test('generic host admission is not predecessor-compatible for path-bearing JSON
  const cycleResult=probe(cyclic);
  const numberResult=probe(invalidNumber);
  expect(hiddenResult.predecessor).toMatchObject({name:'UmfError',code:'NON_JSON',path:'/hidden'});
- expect(hiddenResult.rustRoute).toMatchObject({name:'AdmissionError',code:'NON_ENUMERABLE_PROPERTY',path:'/source'});
+ expect(hiddenResult.rustRoute).toMatchObject({name:'AdmissionError',code:'NON_ENUMERABLE_PROPERTY',path:'/source/hidden'});
  expect(cycleResult.predecessor).toMatchObject({name:'UmfError',code:'CYCLE',path:'/extensions/self'});
  expect(cycleResult.rustRoute.code).toBe('RESOURCE_LIMIT');
  expect(numberResult.predecessor).toMatchObject({name:'UmfError',code:'NUMBER',path:'/extensions/future'});
@@ -64,6 +64,6 @@ test('generic host admission is not predecessor-compatible for path-bearing JSON
  const accessor=source(value=>Object.defineProperty(value,'future',{enumerable:true,get(){getterCalls++;return true;}}));
  const accessorResult=probe(accessor);
  expect(accessorResult.predecessor).toMatchObject({name:'UmfError',code:'NON_JSON',path:'/future'});
- expect(accessorResult.rustRoute).toMatchObject({name:'AdmissionError',code:'ACCESSOR_PROPERTY',path:'/source'});
+ expect(accessorResult.rustRoute).toMatchObject({name:'AdmissionError',code:'ACCESSOR_PROPERTY',path:'/source/future'});
  expect(getterCalls).toBe(0);
 });

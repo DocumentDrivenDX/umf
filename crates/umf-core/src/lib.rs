@@ -3,116 +3,39 @@
 //!
 //! This crate uses explicit owned values and capabilities. It has no ambient
 //! filesystem, network, process, clock, or JavaScript runtime.
-pub mod access_constraints;
-pub mod access_catalog_custody;
-pub mod access_logical_render;
-pub mod access_related_keys;
-pub mod access_stream;
-pub mod access_temporal;
-pub mod access_values;
-#[cfg(feature = "embedded-adapters")]
-pub mod avro_document;
-#[cfg(feature = "embedded-adapters")]
-pub mod avro_field_classifier;
-#[cfg(feature = "embedded-adapters")]
-pub mod avro_field_recovery;
-pub mod avro_fields;
-pub mod avro_record_declarations;
-#[cfg(feature = "embedded-adapters")]
-pub mod avro_record_classifier;
-#[cfg(feature = "embedded-adapters")]
-pub mod avro_record_recovery;
-#[cfg(feature = "embedded-adapters")]
-pub mod avro_record_type_classifier;
-pub mod avro_record_type_candidate;
-#[cfg(feature = "embedded-adapters")]
-pub mod avro_record_type_recovery;
-pub mod avro_record_fields;
-pub mod avro_semantics;
-pub mod binding_index_projection;
-pub mod binding_inspection;
-pub mod bit128;
-pub mod cardinality;
+#[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
+include!("full_modules.rs");
+
+// Source-bound metamodel compiler closure. Keep this list deliberately
+// independent of adapters and runtime services, whose compile-time resources
+// may be generated from the metamodel itself.
+#[cfg(all(feature = "metamodel-compiler", not(feature = "full-core")))]
 pub mod constraint_language;
-pub mod constraints;
+#[cfg(all(feature = "metamodel-compiler", not(feature = "full-core")))]
 pub mod context;
-pub mod core_evolution;
-pub mod core_key_tuple;
-pub mod core_keys;
-pub mod core_kind;
-pub mod core_record_type;
-pub mod core_kind_nullability_host_json;
-pub mod core_dataset_values_host_json;
-pub mod core_relationship_selection;
-pub mod core_relationships;
-pub mod core_semantic_types;
-pub mod csv_boolean_lexical;
-pub mod dataset_values;
-pub mod delta_spark_hash;
-pub mod delta_log;
-pub mod delta_actions;
-pub mod delta_reconcile;
-pub mod delta_schema;
-pub mod delta_table;
-pub mod document;
+#[cfg(all(feature = "metamodel-compiler", not(feature = "full-core")))]
 pub(crate) mod ecma_coercion;
-pub mod edit_extension;
-pub mod engine;
+#[cfg(all(feature = "metamodel-compiler", not(feature = "full-core")))]
 pub mod error;
-pub mod facets;
-pub mod gregorian_date;
-pub mod host_json;
-#[cfg(feature = "embedded-adapters")]
-pub mod iceberg_schema;
-pub mod javascript_numeric;
-pub mod json_number;
-#[cfg(feature = "embedded-adapters")]
-pub mod json_schema_adapter;
-#[cfg(feature = "embedded-adapters")]
-pub mod json_schema_inspect;
-pub mod kinds;
+#[cfg(all(feature = "metamodel-compiler", not(feature = "full-core")))]
 pub mod literal;
+#[cfg(all(feature = "metamodel-compiler", not(feature = "full-core")))]
 pub mod literal_policy;
+#[cfg(all(feature = "metamodel-compiler", not(feature = "full-core")))]
 pub mod native_json;
-pub mod nullability;
-pub mod operation_values;
-pub mod outcome_values;
-pub mod protobuf_descriptor;
-#[cfg(feature = "embedded-adapters")]
-pub mod protobuf_document;
-#[cfg(feature = "embedded-adapters")]
-pub mod protobuf_inspect;
-#[cfg(feature = "embedded-adapters")]
-pub mod protobuf_source;
-pub mod parquet_record_type_candidate;
-pub mod parquet_record_type_classifier;
-pub mod parquet_record_type_operation;
-pub mod parquet_record_type_recovery;
-pub mod parquet_record_classifier;
-pub mod parquet_record_recovery;
-pub mod parquet_document_capture;
-pub mod parquet_schema_decode;
+#[cfg(all(feature = "metamodel-compiler", not(feature = "full-core")))]
 pub mod python_regex;
+#[cfg(all(feature = "metamodel-compiler", not(feature = "full-core")))]
 pub mod python_value;
-pub mod record_members_inspection;
-pub mod record_values;
-pub mod reference_links_inspection;
-pub mod registry;
-pub mod reviewed_parameters;
-pub mod rfc3339_exact_instant;
-pub mod scalar_type_inspection;
+#[cfg(all(feature = "metamodel-compiler", not(feature = "full-core")))]
 pub mod schema;
-pub mod schema_properties;
-pub mod security_logic;
-pub mod security_domains;
-pub mod security_parameters;
-pub mod security_functions;
-pub mod selection;
-pub mod semantic_type_accessors;
+#[cfg(all(feature = "metamodel-compiler", not(feature = "full-core")))]
 pub mod serialization;
-pub mod structural_diff;
+#[cfg(all(feature = "metamodel-compiler", not(feature = "full-core")))]
 pub mod value;
+
 pub use context::{Context, Limits, ResourceProfile};
+#[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
 pub use engine::{Capabilities, CapabilityError, Engine, ResourceSet, SemanticContext};
 pub use error::{Diagnostic, EngineError, PythonDiagnosticText, Severity, Validation};
 pub use python_regex::{PythonReVersion, PythonRegex, PythonRegexError};
@@ -121,5 +44,6 @@ pub use python_value::{
     PythonConsumerValue, PythonSchemaEvaluation, PythonSchemaEvaluationMode,
     PythonSchemaPathSegment, PythonSchemaResources, PythonStructuralError,
 };
+#[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
 pub use registry::Registry;
 pub use value::{Utf16, Value, copy_json, ecma_number_to_string};

@@ -47,8 +47,12 @@ export function checkAccessSource(file:string,text:string):string[]{
 }
 if(import.meta.main){
  const errors:string[]=[];
- for(const file of await readdir(new URL('../src/access',import.meta.url))){
-  if(!file.endsWith('.ts'))continue;
+ for(const entry of await readdir(new URL('../src/access',import.meta.url),{withFileTypes:true})){
+  const file=entry.name;
+  if(!entry.isFile()||!file.endsWith('.ts')){
+   errors.push('src/access: unreviewed file or directory '+file);
+   continue;
+  }
   errors.push(...checkAccessSource(file,await readFile(new URL('../src/access/'+file,import.meta.url),'utf8')));
  }
  const imports=[...pythonRuntime.matchAll(/^[ \t]*(?:from|import) ([\w.]+)/gm)].map(m=>m[1]!.split('.')[0]);

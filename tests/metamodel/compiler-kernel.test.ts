@@ -17,8 +17,13 @@ import {validateDocument} from '../../src/validation/document';
 import {domainPolicy} from '../../src/generated/core-model';
 import {literalErrors,prepareLiteralPolicy} from '../../src/validation/literal-kernel';
 import {Registry} from '../../src/registry/registry';
-import {rustCompileResources} from '../../scripts/metamodel/source-closure';
+import {rustCompilePackages,rustCompileResources} from '../../scripts/metamodel/source-closure';
 const root=resolve(import.meta.dir,'../..'),authored=await Bun.file(join(root,'spec/metamodel/umf.yaml')).text(),model=()=>parseModel(authored);
+async function packageSources(directory:string):Promise<string[]>{
+ const files:string[]=[];
+ async function visit(path:string):Promise<void>{for(const entry of await readdir(join(root,path),{withFileTypes:true})){if(['target','node_modules','.git','__pycache__'].includes(entry.name))continue;const child=path+'/'+entry.name;if(entry.isDirectory())await visit(child);else if(entry.isFile())files.push(child);}}
+ await visit(directory);return files;
+}
 const doc:any={umf:'0.10.0',id:'x',vocabularies:{},modules:[]};
 const expr=(op:string,...args:any[])=>({op,args}),v=(name:string)=>({var:name});
 const program=(steps:any[])=>({profile:'umf.constraints/1',steps});
@@ -94,7 +99,10 @@ describe('clean source generation',()=>{
  beforeAll(async()=>{
   dir=await mkdtemp(join(tmpdir(),'umf-metamodel-clean-'));
   manifest=await Bun.file(join(root,'spec/metamodel/generated/manifest.json')).json();
-  const sourcePaths=[...new Set([...Object.keys(manifest.sources),...rustCompileResources,'scripts/metamodel/source-closure.ts'])];
+  const packageFiles=(await Promise.all(rustCompilePackages.map(packageSources))).flat();
+  const declaredSources=new Set(Object.keys(manifest.sources));
+  expect(packageFiles.filter((path:string)=>!declaredSources.has(path))).toEqual([]);
+  const sourcePaths=[...new Set([...declaredSources,...rustCompileResources])];
   const outputPaths=[...Object.keys(manifest.outputs),'spec/metamodel/generated/manifest.json'];
   expect(sourcePaths.filter((path:string)=>outputPaths.includes(path))).toEqual([]);
   for(const path of outputPaths)expect(await Bun.file(join(dir,path)).exists()).toBe(false);

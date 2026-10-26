@@ -4923,8 +4923,9 @@ remain unresolved. The [projection and Parquet review](evidence/rust-migration/r
 also pins three directly authored DDD/SQL Server schemas and the Parquet IDL
 writer with historical output equivalence; its fresh `thriftpy2==0.5.3`
 compiler reproduction remains unavailable and is qualified in the ledger.
-Resource authority is now 44 generated-known, 46 authored-known, 88
-candidate-generated and 20 unresolved. The ledger's 43 tests pass. Its 922
+The 198 exported resource aliases across 189 files now classify as 44
+generated-known, 46 authored-known, 88 candidate-generated and 20 unresolved.
+The ledger's 43 tests pass. Its 922
 logical retirement gaps and zero proven current-cohort binding routes remain
 unchanged.
 
@@ -4958,3 +4959,89 @@ inputs include generated spec outputs omitted from the clean authored-source
 fixture. `check:metamodel` passes in the full checkout, but the clean-source
 generation test fails; isolated bootstrap feature work is required before
 R8 can close.
+
+### R8 integrated-source continuation — 2026-10-25
+
+The [metamodel bootstrap repair](evidence/rust-migration/r8-metamodel-source-bootstrap/README.md)
+uses a dedicated compiler-only Rust CLI and one shared tagged-wire codec.
+The strengthened clean authored-source test passes after source-manifest
+regeneration, as do the full metamodel/self-model suite (71 tests, 518
+assertions), the normal CLI compile, feature-union/all-features checks,
+metamodel `--check`, and both Python resource-mirror checks. The strict Rust
+boundary gate passes across 702 source modules with zero V8 debt or findings.
+This closes the local clean-source bootstrap regression; release platform
+qualification remains separate.
+
+The [Avro Record Type full-matrix follow-up](evidence/rust-migration/r8-avro-record-type/full-matrix-parity.md)
+now has 30 complete receipt comparisons and ten exact recoveries in Rust,
+Bun's Node-API host, Node 26.12.1, and Chromium 153/WASM. These are fresh
+source-bound host replays, not an installed default-route retirement. The
+[current CSV Boolean installed replay](evidence/rust-migration/r8-csv-boolean-default-route/README.md)
+passes 14 frozen cases in Node/Bun/Chromium from a private archive, but its
+18-case adversarial comparison found symbol-key, competing-member and proxy
+trap differences in all three hosts. A shared wire admission correction has
+source-level Node/Bun/browser evidence; a new integrated-source installed
+archive and independent retirement review are still required. Both CSV
+Boolean retirement rows remain open.
+
+The [R8 resource ledger](evidence/rust-migration/r8-symbol-inventory/README.md)
+now pins 49 authored-known, 44 generated-known, 88 candidate-generated and
+17 unresolved exported resource aliases across 189 unique files. Three new
+direct-authorship findings concern the semantic-types operation, Kind 8 and
+Nullability 7 schemas. The refreshed inventory SHA-256 is
+`47d46f3a3fe2dd5c621d3c05a11590db2567b98f7e172f120d92554489d84cec`
+and ledger SHA-256 is
+`75ff82583c884d4351883e5644e83b320e693f8359e62ad0f1bfebc167495e77`;
+43/43 ledger tests pass. No additional executable route is retired: 58
+accepted opt-in mappings, 864 unmapped executable names, 922 logical
+default-route retirement gaps and zero proven current-cohort default binding
+routes remain. Next, finish the CSV installed counterexample replay and
+route review, then qualify other selected default families and the six-host
+Python release matrix before a complete-port PR, merge and release.
+
+### R8 private installed-route and Python closure checkpoint — 2026-10-25
+
+The final 3,431-file fixed-point private SDK archive (SHA-256
+`bdd14aa62e09df465d784bb7889c4d7ddfc79c61f8186acf6eb2423ce35e8b3b`)
+passes the [CSV Boolean installed replay](evidence/rust-migration/r8-csv-boolean-default-route/retirement-review.md):
+14 frozen cases and 18 adversarial host-object cases agree with the explicit
+TypeScript reference in Node 26.12.1, Bun 1.4.3, and Chromium 153. Sol
+independently reproduced the 18-case receipt byte for byte. The
+[three Core inspectors](evidence/rust-migration/r8-core-inspectors-installed/current-source-replay-20261025.md)
+pass 26 frozen installed cases on the same archive and hosts, but selected
+accessor, hidden-member, and symbol-key error envelopes differ in Node/Bun.
+The ledger now records five bounded current private installed binding routes,
+with all 922 logical default-route retirement gaps still open. The explicit
+`./reference` route remains TypeScript; neither the private archive nor this
+bounded comparison qualifies the complete SDK.
+
+The [current-source Python closure](evidence/rust-migration/r8-python-v8-closure-audit/current-source-installed-20261025.md)
+built all three sdists and wheels offline from one 2,146-file capture, rebuilt
+each extracted sdist, and passed isolated core/codegen generation and all four
+CLI help checks on macOS arm64 CPython 3.11 with Node, Bun, Cargo and rustc
+absent from `PATH`. Its complete capture included all eight access `build`
+package files; the earlier missing-module failure was a private capture-tool
+error, with no packaging change needed. The six hosted Python cohorts,
+full Python API closure, and coordinated publication remain open.
+
+The [remaining resource-authority review](evidence/rust-migration/r8-symbol-inventory/remaining-schema-authority-review.md)
+keeps five current schema files unresolved. The refreshed inventory SHA-256
+is `47d46f3a3fe2dd5c621d3c05a11590db2567b98f7e172f120d92554489d84cec`;
+the ledger SHA-256 is
+`035ce31bd7f69a2834f6434322a1a8115207b11289aeb6ca20b09ddd4f91671e`.
+The next production slice is to correct inspector host-error admission, then
+rebuild and replay a fresh archive. Separately, wrapper suites must load a
+source-current addon instead of the ignored stale checkout binary. After
+those route corrections, continue resolving the 864 unmapped executable
+names and remaining resource authority, then run the complete hosted
+CLI/SDK/Python release gates before PR, merge and publication.
+
+The complete Node wrapper suite subsequently passed against the source-current
+addon extracted from that fixed-point SDK archive: 132 tests, zero failures,
+892 assertions across 21 files on Node 26.12.1. The test shell restored the
+checkout's ignored addon afterward, verified at SHA-256
+`3a87eaccfae4f3dec3d2baae45befbe4138f2d8feb5b5659a047b54d757e784b`.
+The two earlier broad-suite failures belonged to that stale binary, as a
+private baseline replay and fresh-addon focused checks corroborated. This
+removes a local wrapper-test ambiguity; it does not close the installed
+default-route or release-platform gates.

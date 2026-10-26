@@ -86,6 +86,10 @@ the captured files above.
 Pinned Hatchling 1.27.0 and its four declared dependencies were downloaded to
 `/private/tmp/umf-r8-python-closure-20261025/wheelhouse`; the release
 workflow's `build==1.3.0` frontend and its dependency were added there too.
+The Hatchling wheel SHA-256 is
+`d3a2f3567c4f926ea39849cdf924c7e99e6686c9c8e288ae1037c8fa2a5d937b`;
+the `build` wheel SHA-256 is
+`7145f0b5061ba90a1500d60bd1b13ca0a8a4cebdd0cc16ed8adf1c0e739f43b4`.
 All subsequent sdist and wheel builds used `--offline --no-index` with that
 private wheelhouse and Rust 1.90.0. The 2,012-file captured source manifest
 still matched the worktree byte for byte after the builds.

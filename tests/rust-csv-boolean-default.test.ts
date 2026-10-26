@@ -90,3 +90,51 @@ test('host non-enumerable fields retain copyJson paths on source and request',()
   expect(actual.path).toBe(expectedPath);
  }
 });
+
+test('symbols and competing invalid members use the source descriptor snapshot once',()=>{
+ const symbolSource:any=JSON.parse(JSON.stringify(source));
+ Object.defineProperty(symbolSource,Symbol('private'),{value:true,enumerable:true});
+ const symbolExpected=outcome(()=>referenceValidateCsvBooleanLexical(symbolSource,request('true')));
+ expect(outcome(()=>route.validateCsvBooleanLexical(symbolSource,request('true')))).toEqual(symbolExpected);
+ expect(symbolExpected.code).toBe('NON_JSON');
+ expect(symbolExpected.path).toBe('');
+
+ const competing:any=JSON.parse(JSON.stringify(source));let getterReads=0;
+ Object.defineProperty(competing,'id',{enumerable:true,get(){getterReads++;return'hidden';}});
+ Object.defineProperty(competing,'private',{value:true,enumerable:false});
+ const competingExpected=outcome(()=>referenceValidateCsvBooleanLexical(competing,request('true')));
+ expect(outcome(()=>route.validateCsvBooleanLexical(competing,request('true')))).toEqual(competingExpected);
+ expect(competingExpected.path).toBe('/id');
+ expect(getterReads).toBe(0);
+
+ const events:string[]=[];
+ const changing=new Proxy({}, {
+  ownKeys(){events.push('ownKeys');return ['umf'];},
+  getOwnPropertyDescriptor(_target,key){events.push(`descriptor:${String(key)}`);return {get(){return'0.10.0';},enumerable:true,configurable:true};},
+ });
+ const expectedEvents:string[]=[];
+ const referenceProxy=new Proxy({}, {
+  ownKeys(){expectedEvents.push('ownKeys');return ['umf'];},
+  getOwnPropertyDescriptor(_target,key){expectedEvents.push(`descriptor:${String(key)}`);return {get(){return'0.10.0';},enumerable:true,configurable:true};},
+ });
+ const actual=outcome(()=>route.validateCsvBooleanLexical(changing as any,request('true')));
+ const expected=outcome(()=>referenceValidateCsvBooleanLexical(referenceProxy as any,request('true')));
+ expect(actual).toEqual(expected);
+ expect(events).toEqual(expectedEvents);
+ expect(events).toEqual(['ownKeys','ownKeys','descriptor:umf']);
+
+ const lateSymbol=Symbol('late');let keySnapshot=0;const lateEvents:string[]=[];
+ const changingKeys=new Proxy({}, {
+  ownKeys(){lateEvents.push('ownKeys');return keySnapshot++===0?['umf']:[lateSymbol];},
+  getOwnPropertyDescriptor(_target,key){lateEvents.push(`descriptor:${String(key)}`);return {value:'0.10.0',enumerable:true,configurable:true};},
+ });
+ let referenceKeySnapshot=0;const referenceLateEvents:string[]=[];
+ const referenceChangingKeys=new Proxy({}, {
+  ownKeys(){referenceLateEvents.push('ownKeys');return referenceKeySnapshot++===0?['umf']:[lateSymbol];},
+  getOwnPropertyDescriptor(_target,key){referenceLateEvents.push(`descriptor:${String(key)}`);return {value:'0.10.0',enumerable:true,configurable:true};},
+ });
+ expect(outcome(()=>route.validateCsvBooleanLexical(changingKeys as any,request('true'))))
+  .toEqual(outcome(()=>referenceValidateCsvBooleanLexical(referenceChangingKeys as any,request('true'))));
+ expect(lateEvents).toEqual(referenceLateEvents);
+ expect(lateEvents).toEqual(['ownKeys','ownKeys','descriptor:Symbol(late)']);
+});

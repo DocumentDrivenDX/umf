@@ -4,7 +4,7 @@ import {resolve,dirname} from 'node:path';
 import {existsSync,readFileSync,readdirSync,mkdirSync,writeFileSync,rmSync,mkdtempSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {encodeWire,fromWire} from '../../bindings/core/node/src/wire.js';
-import {rustCompileResources} from './source-closure';
+import {rustCompilePackages,rustCompileResources} from './source-closure';
 export const repositoryRoot=resolve(import.meta.dir,'../..');
 const hash=(bytes:string|Uint8Array)=>createHash('sha256').update(bytes).digest('hex');
 type Artifact={fingerprint:string;executable:string;binarySha256:string;sources:Record<string,string>};
@@ -12,7 +12,7 @@ let cached:Artifact|undefined;
 function snapshot():{fingerprint:string;sources:Record<string,string>} {
  const paths=['Cargo.toml','Cargo.lock','rust-toolchain.toml','.cargo/config.toml',...rustCompileResources];
  function visit(path:string):void {for(const entry of readdirSync(resolve(repositoryRoot,path),{withFileTypes:true})){if(['target','node_modules','.git','__pycache__'].includes(entry.name))continue;const child=path+'/'+entry.name;if(entry.isDirectory())visit(child);else if(entry.isFile())paths.push(child);}}
- for(const path of ['crates/umf-core','crates/umf-core-wire','crates/umf-codegen','crates/umf-metamodel','crates/umf-cli'])visit(path);
+ for(const path of rustCompilePackages)visit(path);
  const sources=Object.fromEntries(paths.sort().map(path=>[path,hash(readFileSync(resolve(repositoryRoot,path)))]));
  const env=Object.fromEntries(['RUSTFLAGS','CARGO_ENCODED_RUSTFLAGS','CARGO_BUILD_TARGET','RUSTUP_TOOLCHAIN'].map(name=>[name,process.env[name]??'']));
  return {sources,fingerprint:hash(JSON.stringify({features:['--no-default-features'],sources,env}))};
@@ -38,10 +38,10 @@ function sourceArtifact():Artifact {
  try{
   for(let attempt=0;attempt<3;attempt++){
    const inputs=snapshot();
-   const child=Bun.spawnSync([cargo,'build','--quiet','--locked','--offline','-p','umf-cli','--no-default-features','--message-format=json'],{cwd:repositoryRoot,env:{...process.env,CARGO_TARGET_DIR:resolve(cacheRoot,'build'),PATH:dirname(cargo)+':'+(process.env.PATH??'')},stdout:'pipe',stderr:'pipe'});
+   const child=Bun.spawnSync([cargo,'build','--quiet','--locked','--offline','-p','umf-metamodel-cli','--no-default-features','--message-format=json'],{cwd:repositoryRoot,env:{...process.env,CARGO_TARGET_DIR:resolve(cacheRoot,'build'),PATH:dirname(cargo)+':'+(process.env.PATH??'')},stdout:'pipe',stderr:'pipe'});
    const records=new TextDecoder().decode(child.stdout).split('\n').filter(Boolean).map(line=>{try{return JSON.parse(line);}catch{return {};}});
    if(child.exitCode!==0)throw Error(new TextDecoder().decode(child.stderr).trim()+'\n'+records.filter(item=>item.reason==='compiler-message').map(item=>item.message.rendered).join('\n'));
-   const built=records.find(item=>item.reason==='compiler-artifact'&&item.target?.name==='umf'&&item.executable)?.executable;
+   const built=records.find(item=>item.reason==='compiler-artifact'&&item.target?.name==='umf-metamodel'&&item.executable)?.executable;
    if(typeof built!=='string')throw Error('METAMODEL_MISSING_NATIVE_EXECUTABLE');
    const bytes=readFileSync(built);
    if(inputs.fingerprint!==snapshot().fingerprint)continue;

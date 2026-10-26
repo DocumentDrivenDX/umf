@@ -33,13 +33,17 @@ test('public model factory retains eager tuple admission while root-only factory
     }
   };
   try {
-    const rootModel = createCoreModelRootEngine(resources, {resourceControls: {maxWork: 5_000_000}});
+    let rootSetupWork = 0;
+    const rootModel = createCoreModelRootEngine(resources, {
+      resourceControls: {meter(amount) { rootSetupWork += amount; }},
+    });
+    expect(rootSetupWork).toBeGreaterThan(0);
     expect(runtimeConstructions).toBe(0);
     for (const name of ['encodeCoreKeyTuple', 'verifyCoreKeyTuple', 'readCoreKeyTupleBytes', 'prepareCoreKeyTuples']) {
       expect(Object.hasOwn(rootModel, name)).toBe(false);
     }
 
-    expect(() => createCoreModelEngine(resources, {resourceControls: {maxWork: 5_000_000}})).toThrow('Host work budget exceeded');
+    expect(() => createCoreModelEngine(resources, {resourceControls: {maxWork: rootSetupWork}})).toThrow('Host work budget exceeded');
     expect(runtimeConstructions).toBe(1);
     const publicModel = createCoreModelEngine(resources);
     expect(runtimeConstructions).toBe(2);
@@ -172,7 +176,7 @@ test('direct encode retains per-argument admission and source/identity/values/op
     ownKeys() { order.push(name); return Reflect.ownKeys(target); },
   });
   try { engine.encodeCoreKeyTuple(trace('source', item.source), trace('identity', item.identity), trace('values', item.values), trace('options', {profile: 'umf-key-tuple-v1'})); } catch {}
-  expect(order).toEqual(['source', 'identity', 'values', 'options']);
+  expect(order).toEqual(['source', 'source', 'identity', 'identity', 'values', 'options', 'options']);
 
   const valuesBelowLocalLimit = Array.from({length: 49_999}, () => ({string: 'x'}));
   let combined;

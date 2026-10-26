@@ -25,7 +25,7 @@ test('retained Record Members serializes source before identity and returns only
     getOwnPropertyDescriptor(_target, key) { return key === 'value' ? {value, enumerable: true, configurable: true, writable: true} : undefined; },
   });
   expect(engine.inspectCoreRecordMembers(input('source', 1), input('identity', 2))).toEqual({inspected: true});
-  expect(order).toEqual(['source', 'identity']);
+  expect(order).toEqual(['source', 'source', 'identity', 'identity']);
   expect(Object.keys(engine).sort()).toEqual(['dispose', 'inspectCoreRecordMembers']);
   engine.dispose();
 });

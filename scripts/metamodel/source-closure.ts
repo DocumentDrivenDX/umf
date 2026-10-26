@@ -10,3 +10,10 @@ export const rustCompileResources = [
   'spec/core/nullability-operation-v7.schema.json',
   'spec/extensions/tables/operation.schema.json',
 ];
+// Rust packages compiled into the source-bound bootstrap executable.
+export const rustCompilePackages = [
+  'crates/umf-core',
+  'crates/umf-metamodel',
+  'crates/umf-tagged-wire',
+  'crates/umf-metamodel-cli',
+];

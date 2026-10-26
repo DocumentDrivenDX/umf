@@ -156,7 +156,10 @@ pub fn compile_model(model: &Value, ctx: &mut Context<'_>) -> Result<CompiledMod
         ));
     }
     let constraints = umf_core::copy_json(get(root, "constraints").unwrap(), ctx)?;
-    umf_core::constraints::check_program(&constraints, ctx)?;
+    // The metamodel only needs the authored constraint-language validator.
+    // The higher-level `constraints::check_program` is a pass-through here,
+    // but compiling that runtime module pulls in unrelated adapter modules.
+    umf_core::constraint_language::check_program(&constraints, ctx)?;
 
     let mut fields: Vec<ModelField<'_>> = Vec::new();
     let mut definitions: Vec<ModelField<'_>> = Vec::new();
@@ -449,14 +452,42 @@ pub fn render_outputs_with_context(
         ("provenance", provenance_value(provenance)),
     ]);
     let annotation_schema = annotation_schema();
-    let package=obj(vec![
-        ("id",Value::string_utf8("umf.metamodel")),("version",Value::string_utf8("1.0.0")),
-        ("coreVersion",clone_metered(get(&compiled.language,"version").unwrap_or(&Value::Null),ctx)?),
-        ("description",Value::string_utf8("Authored UMF language definitions and inert ordered constraints")),
-        ("schema",annotation_schema),
-        ("semantics",Value::string_utf8("Closed declarations are interpreted by the independently bounded metamodel compiler; no raw JSON Schema or executable per-rule callbacks are accepted.")),
-        ("scopes",Value::Array(vec![Value::string_utf8("document"),Value::string_utf8("element")])),
-        ("capabilities",obj(vec![("validation",Value::string_utf8("structural")),("directions",Value::Array(vec![])),("evidence",Value::Array(vec![]))])),
+    let package = obj(vec![
+        ("id", Value::string_utf8("umf.metamodel")),
+        ("version", Value::string_utf8("1.0.0")),
+        (
+            "coreVersion",
+            clone_metered(
+                get(&compiled.language, "version").unwrap_or(&Value::Null),
+                ctx,
+            )?,
+        ),
+        (
+            "description",
+            Value::string_utf8("Authored UMF language definitions and inert ordered constraints"),
+        ),
+        ("schema", annotation_schema),
+        (
+            "semantics",
+            Value::string_utf8(
+                "Closed declarations are interpreted by the independently bounded metamodel compiler; no raw JSON Schema or executable per-rule callbacks are accepted.",
+            ),
+        ),
+        (
+            "scopes",
+            Value::Array(vec![
+                Value::string_utf8("document"),
+                Value::string_utf8("element"),
+            ]),
+        ),
+        (
+            "capabilities",
+            obj(vec![
+                ("validation", Value::string_utf8("structural")),
+                ("directions", Value::Array(vec![])),
+                ("evidence", Value::Array(vec![])),
+            ]),
+        ),
     ]);
     let version =
         text(get(&compiled.language, "version").unwrap_or(&Value::Null)).unwrap_or_default();
@@ -466,7 +497,11 @@ pub fn render_outputs_with_context(
         .saturating_add(version.len().saturating_mul(8))
         .saturating_add(256);
     ctx.charge_work(py_estimate, Utf16::default())?;
-    let model_py=format!("# SPDX-License-Identifier: MIT OR Apache-2.0\n# {comment}\nfrom typing import Final, Literal, TypeAlias\nCURRENT_CORE_VERSION: Final = {}\nCoreVersion: TypeAlias = Literal[{}]\n",json_compact(&Value::string_utf8(&version))?,json_compact(&Value::string_utf8(&version))?);
+    let model_py = format!(
+        "# SPDX-License-Identifier: MIT OR Apache-2.0\n# {comment}\nfrom typing import Final, Literal, TypeAlias\nCURRENT_CORE_VERSION: Final = {}\nCoreVersion: TypeAlias = Literal[{}]\n",
+        json_compact(&Value::string_utf8(&version))?,
+        json_compact(&Value::string_utf8(&version))?
+    );
     let json = |value: &Value, ctx: &mut Context<'_>| pretty_json_with_context(value, ctx);
     Ok(vec![
         Output {
@@ -567,13 +602,13 @@ fn check_annotation(
                 return Err(shape_error(
                     "METAMODEL_PRESENCE",
                     "presence must be required or optional",
-                ))
+                ));
             }
             "definition" if !text(v).is_some_and(|s| !s.is_empty()) => {
                 return Err(shape_error(
                     "METAMODEL_DEFINITION_NAME",
                     "definition must be a non-empty string",
-                ))
+                ));
             }
             "shape" => check_shape_with_context(v, ctx)?,
             _ => {}
@@ -1071,7 +1106,11 @@ fn render_typescript(
         ));
     }
     let vocab = vocabulary_entries.join(",");
-    let result=format!("// SPDX-License-Identifier: MIT OR Apache-2.0\n// {comment}\nexport const CURRENT_CORE_VERSION={} as const;\nexport {{default as coreSchema}} from '../../spec/core/schema.json';\nexport {{default as semanticTypeReferenceSchema}} from '../../spec/core/semantic-type-reference.schema.json';\nexport {{default as extensionPackageSchema}} from '../../spec/core/extension-package.schema.json';\nexport {{default as coreConstraints}} from '../../spec/metamodel/generated/core-constraints.json';\nexport {{default as domainPolicy}} from '../../spec/metamodel/generated/domain-policy.json';\nexport const coreVocabulary=Object.freeze({{{vocab}}});\nexport type Json=null|boolean|number|string|Json[]|{{[key:string]:Json}};\n{}\n",quote(&Value::string_utf8(version),ctx)?,types.join("\n"));
+    let result = format!(
+        "// SPDX-License-Identifier: MIT OR Apache-2.0\n// {comment}\nexport const CURRENT_CORE_VERSION={} as const;\nexport {{default as coreSchema}} from '../../spec/core/schema.json';\nexport {{default as semanticTypeReferenceSchema}} from '../../spec/core/semantic-type-reference.schema.json';\nexport {{default as extensionPackageSchema}} from '../../spec/core/extension-package.schema.json';\nexport {{default as coreConstraints}} from '../../spec/metamodel/generated/core-constraints.json';\nexport {{default as domainPolicy}} from '../../spec/metamodel/generated/domain-policy.json';\nexport const coreVocabulary=Object.freeze({{{vocab}}});\nexport type Json=null|boolean|number|string|Json[]|{{[key:string]:Json}};\n{}\n",
+        quote(&Value::string_utf8(version), ctx)?,
+        types.join("\n")
+    );
     Ok(result)
 }
 
@@ -1520,7 +1559,7 @@ fn check_shape_at(shape: &Value, path: &Utf16, ctx: &mut Context<'_>) -> Result<
             return Err(shape_error(
                 "METAMODEL_UNKNOWN_SHAPE",
                 format!("unknown shape {tag}"),
-            ))
+            ));
         }
     };
     for (key, _) in fields {
@@ -1661,7 +1700,7 @@ fn check_shape_at(shape: &Value, path: &Utf16, ctx: &mut Context<'_>) -> Result<
                 return Err(shape_error(
                     "METAMODEL_UNKNOWN_SHAPE",
                     "fields must be an object",
-                ))
+                ));
             }
         }
     }

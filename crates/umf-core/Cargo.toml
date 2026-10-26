@@ -10,8 +10,13 @@ name = "umf_core"
 path = "src/lib.rs"
 
 [features]
-default = ["embedded-adapters"]
+default = ["embedded-adapters", "full-core"]
 embedded-adapters = []
+full-core = []
+# A source-only compiler build can opt into just the core semantic modules
+# required by umf-metamodel. Normal users retain the historical full module
+# graph, including when default features are disabled.
+metamodel-compiler = []
 
 [dependencies]
 num-bigint = "=0.4.8"

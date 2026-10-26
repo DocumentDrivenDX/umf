@@ -4,7 +4,7 @@ import {resolve,dirname} from 'node:path';
 import {createHash} from 'node:crypto';
 import {rustMetamodel} from './rust';
 import {structuralSource} from './structural';
-import {rustCompileResources} from './source-closure';
+import {rustCompilePackages,rustCompileResources} from './source-closure';
 const root=resolve(import.meta.dir,'../..'),json=(v:any)=>JSON.stringify(v,null,2)+'\n',hash=(v:string|Uint8Array)=>createHash('sha256').update(v).digest('hex');
 // External compile-time inputs in the compiler-only Rust CLI dependency closure.
 // Production adapter resources are excluded by the embedded-adapters Cargo
@@ -13,7 +13,7 @@ const root=resolve(import.meta.dir,'../..'),json=(v:any)=>JSON.stringify(v,null,
 // It never executes inside the native core, CLI, Python wheel or WASM engine.
 async function compilerClosure():Promise<string[]>{
  const files=['Cargo.toml','Cargo.lock','rust-toolchain.toml','.cargo/config.toml',...rustCompileResources];
- for(const dir of ['crates/umf-core','crates/umf-core-wire','crates/umf-codegen','crates/umf-metamodel','crates/umf-cli']){
+ for(const dir of rustCompilePackages){
   async function visit(path:string):Promise<void>{for(const entry of await readdir(resolve(root,path),{withFileTypes:true})){if(['target','node_modules','.git','__pycache__'].includes(entry.name))continue;const child=path+'/'+entry.name;if(entry.isDirectory())await visit(child);else if(entry.isFile())files.push(child);}}
   await visit(dir);
  }

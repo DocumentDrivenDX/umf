@@ -1,6 +1,7 @@
 // Private umf.core-wire/1 admission for JavaScript hosts. Inspect before stringify.
 const hasOwn = Function.call.bind(Object.prototype.hasOwnProperty);
 const getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+const getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors;
 const defineProperty = Object.defineProperty;
 const getPrototypeOf = Object.getPrototypeOf;
 const ownKeys = Reflect.ownKeys;
@@ -163,16 +164,23 @@ function objectKeys(value, path, work) {
   if (proto !== Object.prototype && proto !== null) {
     fail('UNSUPPORTED_OBJECT', 'Only plain objects are accepted', path);
   }
-  const keys = Reflect.ownKeys(value);
-  work?.(keys.length);
+  // The first key snapshot preserves host work-control timing and performs the
+  // symbol check. copyJson then takes a second key snapshot while collecting
+  // descriptors; use that one descriptor snapshot for paths and values.
+  const keySnapshot = ownKeys(value);
+  work?.(keySnapshot.length);
+  for (const key of keySnapshot) {
+    if (typeof key !== 'string') fail('UNSUPPORTED_KEY', 'Symbol keys are not JSON values', path);
+  }
+  const descriptors = getOwnPropertyDescriptors(value);
+  const keys = Object.keys(descriptors);
   const members = [];
   for (const key of keys) {
-    if (typeof key !== 'string') fail('UNSUPPORTED_KEY', 'Symbol keys are not JSON values', path);
-    const descriptor = Object.getOwnPropertyDescriptor(value, key);
+    const descriptor = descriptors[key];
     if (!descriptor || !hasOwn(descriptor, 'value')) {
-      fail('ACCESSOR_PROPERTY', 'Accessor properties are not invoked during admission', path);
+      fail('ACCESSOR_PROPERTY', 'Accessor properties are not invoked during admission', `${path}/${escapePointer(key)}`);
     }
-    if (!descriptor.enumerable) fail('NON_ENUMERABLE_PROPERTY', 'Non-enumerable properties are not JSON values', path);
+    if (!descriptor.enumerable) fail('NON_ENUMERABLE_PROPERTY', 'Non-enumerable properties are not JSON values', `${path}/${escapePointer(key)}`);
     work?.(key.length + 1);
     members.push([key, descriptor.value]);
   }

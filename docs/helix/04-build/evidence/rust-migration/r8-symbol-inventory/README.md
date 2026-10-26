@@ -312,7 +312,7 @@ accepted opt-in Rust operation mappings, 879 executable names without an
 accepted Rust mapping, 58 Node/browser Rust source-selection rows, and zero
 binding routes proven against this current cohort. All 922 executable names
 retain default-route retirement gaps; zero declarations are retired. Resource
-authority remains unresolved for 82 of 189 files. These counts do not establish
+authority remains unresolved for 82 of 198 exported aliases. These counts do not establish
 full Rust parity, installed package behavior, or release readiness.
 
 Captured artifact hashes: inventory
@@ -731,7 +731,7 @@ authorities, Sol regenerated both source-bound snapshots. The inventory has
 3,375 route-specific declarations across 506 source files. The ledger records
 922 logical executable default-route retirement gaps, 54 accepted opt-in Rust
 operations, 868 executable names without an accepted mapping, and zero proven
-current-cohort default binding routes. Its 189 resource files classify as 39
+current-cohort default binding routes. Its 198 resource aliases across 189 files classify as 39
 generated-known, 36 authored-known, 88 candidate-generated and 35 unresolved;
 installed SDK archive bytes remain unqualified. `./reference` retains its
 separate TypeScript route.
@@ -800,7 +800,7 @@ metamodel and source-bound snapshots, the inventory SHA-256 is
 `1d7589b8bad71a50f1fdcebcc50bfa897af25d7dbd2cdfbdf452f6a5ae8aa3c2`
 and the ledger SHA-256 is
 `12485a87eb3aba1a6ca8f52aa1b4c196445b89d4b325af18da9ab6320b99368f`.
-The 189 resource files classify as 39 generated-known, 41 authored-known,
+The 198 resource aliases across 189 files classify as 39 generated-known, 41 authored-known,
 88 candidate-generated and 30 unresolved. All 922 logical default-route
 retirement gaps remain open; no installed SDK archive is qualified by this
 recapture.
@@ -820,7 +820,7 @@ After the metamodel and action-identity fixed point, inventory SHA-256 is
 `426057d73541807b4226181f56b49aeae4c845412faf0c9c48eef819a26f9447`
 and ledger SHA-256 is
 `ab924386439ee3de1abf76f8f91bea66cae8df9882002f7bb40370210800b289`.
-The 189 unique resource files now classify as 43 generated-known, 42
+The 198 resource aliases across 189 files now classify as 43 generated-known, 42
 authored-known, 88 candidate-generated and 25 unresolved. All 41 ledger
 tests, both snapshot `--check` modes, the metamodel check, typecheck and the
 strict Rust boundary gate pass. The ledger still records 922 logical default
@@ -832,9 +832,10 @@ relationship-selection schema remain unresolved.
 ## Current R8 source-bound recapture (2026-10-25)
 
 The [older operation authority reviews](core-operation-schema-authority.md)
-and [follow-up](older-core-operation-schema-authority.md) retain eight older
-schemas as unresolved: historical writers reproduce the previous bytes but
-no writer for the current bytes is proven. The [selection review](core-selection-schema-authority.md)
+and [follow-up](older-core-operation-schema-authority.md) found eight
+unresolved schemas at that checkpoint: historical writers reproduced previous
+bytes but did not establish current authority. The later versioned-operation
+review below resolves two of those eight. The [selection review](core-selection-schema-authority.md)
 pins exact CONTRACT-078 authorship for the semantic-types selection schema;
 three composite selections remain unresolved. The [projection, Parquet IDL,
 and SQL Server review](projection-parquet-sqlserver-resource-authority.md)
@@ -843,16 +844,59 @@ The Parquet compiler could not be freshly replayed because the pinned
 `thriftpy2==0.5.3` was unavailable; the ledger records that limitation and
 correctly identifies the writer as Python 3 build tooling.
 
-After rebuilding the metamodel and synchronizing the Python codegen and action
-runtime resource mirrors, the condition-aware inventory SHA-256 is
-`2939e6f766ce346cef109bdfa672a8e31c36c42704f62ce64328880bc80de9ca`;
+The [versioned operation follow-up](versioned-core-operation-resource-authority.md)
+establishes direct authorship of the current Kind 8 and Nullability 7
+inspection schemas while retaining six older operation schemas as unresolved.
+The [semantic-types operation review](semantic-types-operation-schema-authority.md)
+adds one exact CONTRACT-078 authored schema. These are source-authority
+findings, not installed-resource or runtime claims.
+
+After rebuilding the source-bound metamodel, synchronizing the Python codegen
+and action runtime mirrors, and refreshing action-plan identity, the
+condition-aware inventory SHA-256 is
+`47d46f3a3fe2dd5c621d3c05a11590db2567b98f7e172f120d92554489d84cec`;
 the ledger SHA-256 is
-`6446eef26ea664be200319215f3e13f3128a28f888b63dbdc3a3853b58bc8085`.
-The 189 unique resource files classify as 44 generated-known, 46
-authored-known, 88 candidate-generated, and 20 unresolved. All 43 ledger
+`75ff82583c884d4351883e5644e83b320e693f8359e62ad0f1bfebc167495e77`.
+The 198 resource aliases across 189 files classify as 44 generated-known, 49
+authored-known, 88 candidate-generated, and 17 unresolved. All 43 ledger
 tests pass, both snapshot `--check` modes pass, the metamodel fixed point and
 both Python resource-mirror checks pass, and the strict Rust boundary gate
 reports 702 source modules with zero V8 debt or findings. The executable
 ledger still has 58 accepted opt-in mappings, 864 unmapped names, 922 logical
 default-route retirement gaps, and no proven current-cohort default binding
-route. Installed SDK, Python wheel/sdist, and release closure remain open.
+route. Installed SDK, the full Python wheel/sdist matrix, and release closure
+remain open.
+
+## Current private installed-route recapture (2026-10-25)
+
+The [CSV Boolean replay](../r8-csv-boolean-default-route/retirement-review.md)
+uses a 3,431-file fixed-point private SDK archive (SHA-256
+`bdd14aa62e09df465d784bb7889c4d7ddfc79c61f8186acf6eb2423ce35e8b3b`,
+source closure
+`83730261e84c90533a4cf2b5710550c92655f1f9519961e04e718a86187851e9`).
+Its 14 frozen cases and 18 adversarial host-object cases match the installed
+TypeScript reference in Node 26.12.1, Bun 1.4.3, and Chromium 153. Sol
+independently reran the adversarial harness and obtained the byte-identical
+receipt SHA-256
+`6bebf6780e32f09de0eaee450faf9266c1af2bf99ab21cccd519a5cbf67b77b2`.
+The [three Core inspector replays](../r8-core-inspectors-installed/current-source-replay-20261025.md)
+pass 26 frozen installed cases on the same archive and hosts; selected
+accessor, hidden-member, and symbol-key errors still differ in Node/Bun.
+These five operations have bounded current private installed binding-route
+evidence, not complete host parity or retirement approval.
+
+The condition-aware inventory remains SHA-256
+`47d46f3a3fe2dd5c621d3c05a11590db2567b98f7e172f120d92554489d84cec`;
+the refreshed ledger is SHA-256
+`035ce31bd7f69a2834f6434322a1a8115207b11289aeb6ca20b09ddd4f91671e`.
+It records five unique executable names with current private binding routes,
+58 accepted opt-in Rust mappings, 864 unmapped executable names and 922
+logical default-route retirement gaps. The resource aliases remain 44
+generated-known, 49 authored-known, 88 candidate-generated and 17 unresolved.
+The [remaining five-schema review](remaining-schema-authority-review.md) keeps
+those selection, Parquet and SQL Server resources unresolved because their
+current writer or exact governing resource-path authority is unproven.
+The explicit `./reference` route still contains TypeScript executable
+semantics. The private SDK archive and the one-host
+[Python installed cohort](../r8-python-v8-closure-audit/current-source-installed-20261025.md)
+do not qualify a complete port or the six-cohort release matrix.

@@ -33,70 +33,68 @@ The archive wrapper rechecks the builder's captured source closure and writes
 only to the requested temporary output path:
 [`scripts/rust-migration/r8/csv-boolean-default-route-package.py`](../../../../../../scripts/rust-migration/r8/csv-boolean-default-route-package.py).
 
-After the source cohort is settled, run from the repository root with Rust
-1.90.0 and wasm-bindgen 0.2.100 on macOS arm64:
+The captured archive is at
+`/private/tmp/umf-r8-csv-admission-20261025/umf-sdk.tgz`.
+Replay that exact artifact from the repository root with:
 
 ```sh
-PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:/private/tmp/umf-wasm-bindgen-0.2.100/bin:/opt/homebrew/bin:/usr/bin:/bin \
-UMF_RUST_DEFAULT_BUILD_ONLY=1 \
-UMF_RUST_DEFAULT_DIST=/private/tmp/umf-r8-csv-boolean-default/dist \
-bun scripts/package-sdk-rust-default.ts
-
-python3 scripts/rust-migration/r8/csv-boolean-default-route-package.py \
-  /private/tmp/umf-r8-csv-boolean-default/dist \
-  /private/tmp/umf-r8-csv-boolean-default/umf-sdk.tgz
-
 bun scripts/rust-migration/r8/csv-boolean-default-route-installed.mjs \
-  /private/tmp/umf-r8-csv-boolean-default/umf-sdk.tgz \
-  docs/helix/04-build/evidence/rust-migration/r8-csv-boolean-default-route/installed-replay.json
+  /private/tmp/umf-r8-csv-admission-20261025/umf-sdk.tgz \
+  docs/helix/04-build/evidence/rust-migration/r8-csv-boolean-default-route/installed-replay-20261025.json
+
+bun docs/helix/04-build/evidence/rust-migration/r8-csv-boolean-default-route/adversarial-replay-20261025.mjs \
+  /private/tmp/umf-r8-csv-admission-20261025/umf-sdk.tgz \
+  docs/helix/04-build/evidence/rust-migration/r8-csv-boolean-default-route/adversarial-replay-20261025.json
 ```
+
+The archive was built with Rust 1.90.0 and wasm-bindgen 0.2.100 on macOS
+arm64. The canonical builder's final Bun directory copy hit sandbox `clonefile`
+EPERM, so a one-run temporary builder copy used `/bin/cp -R` for staging; the
+captured source closure still hashed the unchanged canonical builder. The
+temporary helper and worktree dist were removed after packaging. The package
+wrapper verified the fixed-point closure before archiving; later checkout
+changes mean that exact source closure is no longer the live tree.
 
 ## Current result
 
-The private archive [installed replay](installed-replay.json) passes all 14
-frozen predecessor cases through Node 26.12.1, Bun 1.4.3 and real Chromium
-153.0.8010.12. This includes both lexical operations, unknown selected
-semantics, receipt-first expected-source getter ordering, exact and over-limit
-4,000,000-byte inputs and receipts. The installed route resolves to
-`dist/umf-node.js` in Node/Bun and `dist/umf-browser.js` in Chromium; the
-reference route resolves separately to `dist/umf.js`. Chromium requested the
-packaged WASM artifact. Missing and corrupt native addons refused in both
-Node and Bun.
+The fresh private archive's [installed replay](installed-replay-20261025.json)
+passes all 14 frozen predecessor cases through Node 26.12.1, Bun 1.4.3, and
+real Chromium 153.0.8010.12. It covers both lexical operations, unknown
+selected semantics, receipt-first expected-source getter ordering, exact and
+over-limit 4,000,000-byte inputs and receipts. Node/Bun resolve the default to
+`dist/umf-node.js`; Chromium resolves it to `dist/umf-browser.js`; all three
+load the separate TypeScript reference at `dist/umf.js`. Chromium requested
+the packaged WASM. Missing and corrupt native addons refused in both Node and
+Bun.
 
 The archive SHA-256 is
-`3d2c6b3b154ff3ffc45d63919eee4572b491f242bea3976289c34f9cb63ceffc`;
-the manifest SHA-256 is
-`b6557028f549a867449fd13dd707474e2ad1949ab6e7d683f224ea6d4d82f948`.
-The builder and package wrapper independently checked a 3,426-file source
-closure at
-`1a28de92f1c2e0f51a0b9b2c63bb55afa202057096e2cc399feaa638a994f39f`.
-Generated transforms were a fixed point with zero changed inputs. The
-archive is marked `private-r7-default-route-qualification-not-publishable`.
+`bdd14aa62e09df465d784bb7889c4d7ddfc79c61f8186acf6eb2423ce35e8b3b`;
+the archive manifest SHA-256 is
+`a1ac69114b97dbd2220eed12538e2f5a5d46b8f72f7a1ab99810d035b822810d`.
+The builder and package wrapper independently checked 3,431 source files at
+`83730261e84c90533a4cf2b5710550c92655f1f9519961e04e718a86187851e9`;
+captured and live hashes match and generated transforms changed zero inputs.
+This archive includes the metamodel bootstrap and the measured-work Core Key
+tuple test boundary. The manifest marks the archive
+`private-r7-default-route-qualification-not-publishable`; it is not a release
+artifact.
 
-The packet is JSON, so the harness compares canonical JSON content rather
-than object prototype identity. Sol separately imported the archive's Rust
-default and TypeScript reference roots in Node. Accepted receipt, source,
-request, validation, field and source-context objects all had null
-prototypes in both routes; an unsupported-token error was `UmfError`, an
-instance of each route's exported `UmfError`, with code
-`CSV_BOOLEAN_LEXICAL` and an empty path. This is a selected shape check, not
-an exhaustive host-behavior proof.
+The [comparative adversarial replay](adversarial-replay-20261025.json) and its
+[harness](adversarial-replay-20261025.mjs) compare default and reference
+outcomes in Node 26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12 across 18
+cases. All three environments have zero outcome mismatches. This includes
+symbol roots, competing invalid members, changing proxy descriptors, key-list
+changes, trap order/counts, accessor non-invocation, and malformed-receipt-first
+verification. Symbol roots return `UmfError/NON_JSON` at the operation-local
+root; competing hidden/accessor members preserve the reference pointer; a
+changing key proxy reflects twice and refuses `/id`; and a stable proxy's
+traps are exactly `ownKeys, ownKeys, descriptor:umf`. The separate focused
+shared-wire tests also cover a late symbol returned by the second `ownKeys`
+snapshot and a `__proto__` data key.
 
-The first build refused a concurrent source change; another produced a
-derived private snapshot because generated files had not been refreshed after
-the Avro edit. Both were discarded before packaging. The final build followed
-the metamodel and action-identity fixed point. This receipt qualifies the
-two installed operations in this exact private archive, not the broader CSV
-adapter, all 922 default-route retirement decisions, or a publishable SDK
-release. The explicit retirement decision remains open.
-
-The [independent retirement review](retirement-review.md) compared the
-installed default against the installed TypeScript reference and found a
-request-accessor error mismatch, so neither CSV Boolean declaration is
-retired. A subsequent source-level CSV facade correction recovers the
-predecessor `NON_JSON` child path for one unambiguous accessor or hidden
-property without calling getters. Focused Bun tests cover source and request
-properties plus receipt-first behavior. The private archive above predates
-that correction; its Node/Bun/Chromium installed results cannot qualify the
-new source. Multiple hidden members, exotic proxy traps, competing invalid
-values, and the new source in an installed browser package remain open.
+These receipts qualify only the two selected operations in this archive. The
+18 adversarial shapes are a bounded corpus, not an exhaustive proxy or host
+object proof. The wider CSV adapter, all 922 default-route retirement
+decisions, and the publishable SDK release remain outside this qualification.
+No retirement decision is made by this bounded correction; the
+[retirement review](retirement-review.md) keeps both CSV Boolean rows open.
