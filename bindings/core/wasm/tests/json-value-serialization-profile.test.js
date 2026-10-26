@@ -69,7 +69,20 @@ test('WASM JSON-value writer charges host admission before proxy reflection and 
     getOwnPropertyDescriptor(target, key) { trapOrder.push(`descriptor:${String(key)}`); return Reflect.getOwnPropertyDescriptor(target, key); },
   });
   expect(() => limited.writeJsonValue(proxy)).toThrow(expect.objectContaining({code: 'RESOURCE_LIMIT'}));
-  expect(trapOrder).toEqual(['getPrototypeOf', 'ownKeys']);
+  expect(trapOrder).toEqual(['getPrototypeOf', 'ownKeys', 'ownKeys']);
   expect(limitedCalls.writeCalls).toBeUndefined();
   expect(limitedMeter).toEqual([1]);
+
+  const transportCalls = {};
+  const transportMeter = [];
+  const transportLimited = createEngine(stubModule(transportCalls), undefined, {
+    controls: {maxWork: 5, meter(amount) { transportMeter.push(amount); }},
+  });
+  expect(() => transportLimited.writeJsonValue({a: 1})).toThrow(expect.objectContaining({code: 'RESOURCE_LIMIT'}));
+  expect(transportMeter).toEqual([1, 1, 2, 1]);
+  expect(transportCalls.writeCalls).toBeUndefined();
 });
+
+// Live TypeScript host-oracle comparison lives in
+// scripts/rust-migration/r8/json-value-host-admission.test.js so the binding
+// boundary scan cannot gain a reference semantic import.

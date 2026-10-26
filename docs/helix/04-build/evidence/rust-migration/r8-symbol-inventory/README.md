@@ -804,3 +804,27 @@ The 189 resource files classify as 39 generated-known, 41 authored-known,
 88 candidate-generated and 30 unresolved. All 922 logical default-route
 retirement gaps remain open; no installed SDK archive is qualified by this
 recapture.
+
+## Exact writer and authored-resource recapture (2026-10-25)
+
+The [CSV Boolean and SQL Server nullability review](resource-authority-csv-boolean-sqlserver-nullability.md)
+pins one newly authored operation schema and one exact generated schema
+writer. The [Delta log, Parquet framing and Spark datatype review](resource-authority-delta-parquet-spark.md)
+pins three more exact writers with isolated byte-for-byte output checks and a
+Parquet writer-mutation negative control. These classifications concern source
+authority and package paths; only the separate
+[CSV Boolean installed-route packet](../r8-csv-boolean-default-route/README.md)
+qualifies two executable operations in one private archive.
+
+After the metamodel and action-identity fixed point, inventory SHA-256 is
+`426057d73541807b4226181f56b49aeae4c845412faf0c9c48eef819a26f9447`
+and ledger SHA-256 is
+`ab924386439ee3de1abf76f8f91bea66cae8df9882002f7bb40370210800b289`.
+The 189 unique resource files now classify as 43 generated-known, 42
+authored-known, 88 candidate-generated and 25 unresolved. All 41 ledger
+tests, both snapshot `--check` modes, the metamodel check, typecheck and the
+strict Rust boundary gate pass. The ledger still records 922 logical default
+route retirement gaps, 58 accepted opt-in mappings, 864 unmapped executable
+names and zero current-cohort binding routes promoted by an explicit
+retirement review. Older operation-version resources and the composite
+relationship-selection schema remain unresolved.

@@ -1781,10 +1781,16 @@ fn write_typescript_yaml_string<S: OutputSink>(
     ctx: &mut Context<'_>,
 ) -> Result<(), EngineError> {
     ctx.charge_work(value.len(), Utf16::default())?;
-    let text =
-        String::from_utf16(value.units()).map_err(|_| fail("SOURCE_ENCODING", "Invalid UTF-16"))?;
+    let text = match String::from_utf16(value.units()) {
+        Ok(text) => text,
+        Err(_) => return write_yaml_string(value, out, ctx),
+    };
+    let document_marker = text
+        .lines()
+        .any(|line| line.starts_with('%') || line.starts_with("---") || line.starts_with("..."));
+    let root_document_marker = block_indent == Some(0) && document_marker;
     if block_indent.is_some()
-        && text.contains('\n')
+        && (text.contains('\n') || root_document_marker)
         && text.chars().all(|ch| ch == '\n' || !ch.is_control())
     {
         // The TypeScript YAML package chooses literal block scalars for safe
@@ -1806,7 +1812,15 @@ fn write_typescript_yaml_string<S: OutputSink>(
                 out.push_char('\n');
             }
             if !line.is_empty() {
-                pad(out, block_indent.expect("block scalar indentation"), ' ');
+                pad(
+                    out,
+                    if root_document_marker {
+                        2
+                    } else {
+                        block_indent.expect("block scalar indentation")
+                    },
+                    ' ',
+                );
                 out.push_str(line);
             }
         }
@@ -1815,11 +1829,55 @@ fn write_typescript_yaml_string<S: OutputSink>(
                 out.push_char('\n');
             }
         }
-    } else if typescript_yaml_plain_string(&text) {
+    } else if (block_indent.is_some() || !document_marker) && typescript_yaml_plain_string(&text) {
         out.push_str(&text);
     } else {
-        write_yaml_string(value, out, ctx)?;
+        write_typescript_yaml_quoted(&text, out, ctx)?;
     }
+    Ok(())
+}
+
+fn write_typescript_yaml_quoted<S: OutputSink>(
+    value: &str,
+    out: &mut S,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let control = value
+        .chars()
+        .any(|ch| matches!(ch as u32, 0..=8 | 11..=31 | 127..=159));
+    if value.contains('"') && !value.contains('\'') && !value.contains('\n') && !control {
+        out.push_char('\'');
+        out.push_str(value);
+        out.push_char('\'');
+        return Ok(());
+    }
+    out.push_char('"');
+    for (index, ch) in value.chars().enumerate() {
+        if index % 1024 == 0 {
+            poll_output(ctx)?;
+        }
+        match ch {
+            '"' => out.push_str("\\\""),
+            '\\' => out.push_str("\\\\"),
+            '\0' => out.push_str("\\0"),
+            '\u{7}' => out.push_str("\\a"),
+            '\u{8}' => out.push_str("\\b"),
+            '\t' => out.push_str("\\t"),
+            '\n' => out.push_str("\\n"),
+            '\u{b}' => out.push_str("\\v"),
+            '\u{c}' => out.push_str("\\f"),
+            '\r' => out.push_str("\\r"),
+            '\u{1b}' => out.push_str("\\e"),
+            c if (c as u32) < 0x20 => {
+                let digits = b"0123456789abcdef";
+                out.push_str("\\x");
+                out.push_char(digits[(c as usize >> 4) & 0xf] as char);
+                out.push_char(digits[(c as usize) & 0xf] as char);
+            }
+            c => out.push_char(c),
+        }
+    }
+    out.push_char('"');
     Ok(())
 }
 
@@ -1830,16 +1888,49 @@ fn typescript_yaml_plain_string(value: &str) -> bool {
         && value.as_bytes()[5..7].iter().all(u8::is_ascii_digit)
         && value.as_bytes()[7] == b'-'
         && value.as_bytes()[8..].iter().all(u8::is_ascii_digit);
+    let bytes = value.as_bytes();
+    let first = bytes.first().copied().unwrap_or_default();
+    let yaml_radix_number = value.strip_prefix("0x").is_some_and(|digits| {
+        !digits.is_empty() && digits.bytes().all(|byte| byte.is_ascii_hexdigit())
+    }) || value.strip_prefix("0o").is_some_and(|digits| {
+        !digits.is_empty() && digits.bytes().all(|byte| matches!(byte, b'0'..=b'7'))
+    });
     if value.is_empty()
-        || value.trim() != value
-        || !value.chars().all(|ch| {
-            ch.is_alphanumeric()
-                || matches!(ch, '_' | '-' | '.')
-                || (!ch.is_ascii() && !ch.is_control())
-        })
-        || !value.chars().next().is_some_and(|ch| {
-            ch.is_alphabetic() || ch == '_' || (!ch.is_ascii() && !ch.is_control())
-        }) && !date_like
+        || value.contains('\n')
+        || value
+            .chars()
+            .any(|ch| matches!(ch as u32, 0..=8 | 11..=31 | 127..=159))
+        || matches!(
+            first,
+            b' ' | b'\t'
+                | b','
+                | b'['
+                | b']'
+                | b'{'
+                | b'}'
+                | b'#'
+                | b'&'
+                | b'*'
+                | b'!'
+                | b'|'
+                | b'>'
+                | b'\''
+                | b'"'
+                | b'%'
+                | b'@'
+                | b'`'
+        )
+        || matches!(bytes.last(), Some(&b' ' | &b'\t' | &b':'))
+        || matches!(first, b'?' | b'-')
+            && (bytes.len() == 1 || matches!(bytes.get(1), Some(&b' ' | &b'\t')))
+        || bytes
+            .windows(2)
+            .any(|pair| pair[0] == b':' && matches!(pair[1], b' ' | b'\t'))
+        || bytes
+            .windows(2)
+            .any(|pair| matches!(pair[0], b' ' | b'\t') && pair[1] == b'#')
+        || !date_like && (value.parse::<f64>().is_ok() || yaml_radix_number)
+        || value == "~"
     {
         return false;
     }
@@ -4285,10 +4376,42 @@ mod tests {
             (Value::String(Utf16::from("TRUE")), "\"TRUE\"\n"),
             (Value::String(Utf16::from("null")), "\"null\"\n"),
             (Value::String(Utf16::from("one # two")), "\"one # two\"\n"),
+            (Value::String(Utf16::from("a b")), "a b\n"),
+            (Value::String(Utf16::from("a:b")), "a:b\n"),
+            (Value::String(Utf16::from("foo/bar")), "foo/bar\n"),
+            (Value::String(Utf16::from("a,b")), "a,b\n"),
+            (Value::String(Utf16::from("a#b")), "a#b\n"),
+            (Value::String(Utf16::from("-leading")), "-leading\n"),
+            (Value::String(Utf16::from("?mark")), "?mark\n"),
+            (Value::String(Utf16::from("a\tb")), "a\tb\n"),
+            (Value::String(Utf16::from("a\0b")), "\"a\\0b\"\n"),
+            (Value::String(Utf16::from("a\u{1}b")), "\"a\\x01b\"\n"),
+            (Value::String(Utf16::from("a\u{1b}b")), "\"a\\eb\"\n"),
+            (Value::String(Utf16::from("a\" b:")), "'a\" b:'\n"),
+            (Value::String(Utf16::from("a: b")), "\"a: b\"\n"),
+            (Value::String(Utf16::from("a #b")), "\"a #b\"\n"),
+            (Value::String(Utf16::from("[foo]")), "\"[foo]\"\n"),
+            (Value::String(Utf16::from("~")), "\"~\"\n"),
+            (Value::String(Utf16::from("-1")), "\"-1\"\n"),
+            (Value::String(Utf16::from("+1")), "\"+1\"\n"),
+            (Value::String(Utf16::from(".1")), "\".1\"\n"),
+            (Value::String(Utf16::from("0x10")), "\"0x10\"\n"),
+            (Value::String(Utf16::from("0o10")), "\"0o10\"\n"),
+            (Value::String(Utf16::from("0b10")), "0b10\n"),
+            (Value::String(Utf16::from("1_000")), "1_000\n"),
+            (Value::String(Utf16::from("1abc")), "1abc\n"),
+            (Value::String(Utf16::from("---x")), "|-\n  ---x\n"),
+            (Value::String(Utf16::from("...x")), "|-\n  ...x\n"),
             (Value::String(Utf16::from("2024-01-01")), "2024-01-01\n"),
             (Value::String(Utf16::from("café")), "café\n"),
             (Value::String(Utf16::from("東京")), "東京\n"),
             (Value::String(Utf16::from("🙂")), "🙂\n"),
+            (Value::String(Utf16::new(vec![0xd800])), "\"\\ud800\"\n"),
+            (
+                Value::String(Utf16::new(vec![b'x' as u16, 0xd800, b'y' as u16])),
+                "\"x\\ud800y\"\n",
+            ),
+            (Value::String(Utf16::new(vec![0xdc00])), "\"\\udc00\"\n"),
             (Value::String(Utf16::from("x\ny")), "|-\nx\ny\n"),
             (Value::String(Utf16::from("x\n")), "|\nx\n"),
             (Value::String(Utf16::from("x\n\ny\n\n")), "|+\nx\n\ny\n\n"),
@@ -4310,6 +4433,10 @@ mod tests {
                 Value::Object(vec![(Utf16::from("x\ny"), Value::Number(1.0))]),
                 "\"x\\ny\": 1\n",
             ),
+            (
+                Value::Object(vec![(Utf16::from("---x"), Value::Number(1.0))]),
+                "\"---x\": 1\n",
+            ),
         ];
         for (value, expected) in cases {
             let actual =
@@ -4318,6 +4445,15 @@ mod tests {
                     .to_utf8()
                     .unwrap();
             assert_eq!(actual, expected);
+            if matches!(value, Value::String(_)) {
+                let decoded = read_json_value_typescript_order(
+                    &actual.encode_utf16().collect::<Vec<_>>(),
+                    Format::Yaml,
+                    &mut Context::ordinary(),
+                )
+                .unwrap();
+                assert_eq!(decoded, value);
+            }
         }
 
         let original = Value::Object(vec![(

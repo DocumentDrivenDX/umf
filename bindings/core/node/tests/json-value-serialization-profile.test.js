@@ -111,13 +111,13 @@ test('Node JSON-value writer meters host admission before reflection and never i
     getOwnPropertyDescriptor(target, key) { trapOrder.push(`descriptor:${String(key)}`); return Reflect.getOwnPropertyDescriptor(target, key); },
   });
   expect(() => limited.writeJsonValue(proxy)).toThrow(expect.objectContaining({code: 'RESOURCE_LIMIT'}));
-  expect(trapOrder).toEqual(['getPrototypeOf', 'ownKeys']);
+  expect(trapOrder).toEqual(['getPrototypeOf', 'ownKeys', 'ownKeys']);
   expect(metered).toEqual([1]);
 
   let getterCalls = 0;
   const accessor = {};
   Object.defineProperty(accessor, 'hiddenFromTraversal', {enumerable: true, get() { getterCalls++; return 1; }});
-  expect(() => engine.writeJsonValue(accessor)).toThrow(expect.objectContaining({code: 'ACCESSOR_PROPERTY'}));
+  expect(() => engine.writeJsonValue(accessor)).toThrow(expect.objectContaining({code: 'NON_JSON'}));
   expect(getterCalls).toBe(0);
 
   const shared = {value: 1};
@@ -125,3 +125,7 @@ test('Node JSON-value writer meters host admission before reflection and never i
     '{\n  "left": {\n    "value": 1\n  },\n  "right": {\n    "value": 1\n  }\n}\n',
   );
 });
+
+// Live TypeScript host-oracle comparison lives in
+// scripts/rust-migration/r8/json-value-host-admission.test.js so the binding
+// boundary scan cannot gain a reference semantic import.

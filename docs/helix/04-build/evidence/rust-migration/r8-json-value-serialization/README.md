@@ -27,7 +27,7 @@ the TypeScript functions defaulted to YAML. The opt-in profile below repairs
 those aliases; generic `readValue`/`writeValue` keep their JSON default.
 
 The direct TypeScript predecessor is frozen in [predecessor.json](predecessor.json),
-SHA-256 `3b720b959a934e9e0aad6f86a80d7dc9bc995a21a302f32448a73a39d599678e`.
+SHA-256 `76314beae043f3cb9136509bcacdb0d4d3b1920468d7b5d021ad1f1e07f0c60f`.
 Its capture script is
 [`serialization-predecessor.ts`](../../../../../../scripts/rust-migration/r8/serialization-predecessor.ts),
 SHA-256 `7cb755fcbedac15b38cc9335d3d284db117a0e89c00349a0043c9ce679c63df3`.
@@ -66,24 +66,32 @@ diagnostics now preserve TypeScript `SYNTAX`, source excerpt, line/column and
 path. The bounded event parser retains UTF-16 source offsets through its
 private-surrogate view, including quoted/escaped keys. Focused tests also
 cover multiline block scalars and selected Unicode/date-shaped YAML values.
-The packet's exactness qualifies only its 24 inputs. Broader YAML writer
-plain-scalar rules, tab/control-character escaping, arbitrary host values,
-proxy reflection order, invalid-value error names/codes/paths, and
-`instanceof UmfError` remain unqualified. These host and writer differences
-block default-route retirement.
+The packet's exactness qualifies only its 24 inputs. A separate Rust scalar
+corpus now covers selected YAML punctuation, whitespace, numeric-looking
+strings, document markers, control escapes, Unicode and lone UTF-16
+surrogates, with round trips through the Rust parser. The Node/WASM facades
+copy ordinary host JSON values before wire encoding. A live TypeScript
+comparison in
+[`json-value-host-admission.test.js`](../../../../../../scripts/rust-migration/r8/json-value-host-admission.test.js)
+passes refusal code/message/path and proxy reflection order in both hosts.
+It keeps the reference implementation outside the strict binding boundary.
+The scope is the ordinary 100,000-value profile; the larger synchronous
+catalog profile, full YAML writer behavior, arbitrary Proxy behavior and an
+installed package route remain unqualified. Neither export is retired.
 
 The checkout's ignored `.node` addon was stale. Sol temporarily replaced it
-with the fresh dylib, ran the Bun native 24/24 replay and 9/9 focused facade
-tests, then restored the original bytes. This is a local build check, not an
-installed package qualification.
+with the fresh dylib, ran Node and Bun native 24/24 replays and 13/13 focused
+facade/host-oracle tests, then restored the original SHA-256
+`3a87eaccfae4f3dec3d2baae45befbe4138f2d8feb5b5659a047b54d757e784b`.
+This is a local build check, not an installed package qualification.
 
 The browser replay also checked YAML-default profile reads, the format
 fallback, measured work and host-budget interruption, generic YAML alias
 behavior, generic YAML writer output, and absence of Node globals. Focused
-Node/WASM facade tests passed 9/9. The Rust serialization tests passed 21/21;
+Node/WASM facade and host-oracle tests passed 13/13. The Rust serialization tests passed 21/21;
 `umf-core-wire` focused tests passed 9/9. Rust 1.90.0 formatting and
 `git diff --check` passed. The frozen predecessor packet remains pinned at
-`3b720b959a934e9e0aad6f86a80d7dc9bc995a21a302f32448a73a39d599678e` and the
+`76314beae043f3cb9136509bcacdb0d4d3b1920468d7b5d021ad1f1e07f0c60f` and the
 selected TypeScript source file remains pinned at
 `027360ffd8bf77905f7d14a3d4d933035fe11d9f52ae28d54691cc607cb43586`. The
 packet's source closure is a selected input closure, not an entire crate or
@@ -125,16 +133,16 @@ Source and built-artifact SHA-256 pins for this replay:
 
 | Artifact | SHA-256 |
 | --- | --- |
-| `crates/umf-core/src/serialization.rs` | `4a0c1e7c380bc2bc10bf184d4d05c4489597d2c7029eb6bc4496a8f15d192d78` |
+| `crates/umf-core/src/serialization.rs` | `6dcb0ec4fb47e0aa6d5cb545b0cd925b9a1b23838a3782f435386af5a497c392` |
 | `crates/umf-core-wire/src/lib.rs` | `353b06139b6d0e221d4022a265a74afffb7041ba1678237199eab5ebc3bea667` |
 | `crates/umf-core-wire/tests/r8_json_value_serialization_wire.rs` | `2ba67ed399da67bca1dc191241e1d96b7df003b7ef405d1b61fde2089ac1a478` |
-| `bindings/core/node/index.js` | `1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2` |
+| `bindings/core/node/index.js` | `90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a` |
 | `bindings/core/node/src/lib.rs` | `70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f` |
 | `bindings/core/node/src/wire.js` | `d7687bae10505fea1295d841a73c174ddcda22ec49c534b2165033631fadfa1f` |
-| `bindings/core/wasm/index.js` | `5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146` |
+| `bindings/core/wasm/index.js` | `9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea` |
 | `bindings/core/wasm/src/lib.rs` | `3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc` |
 | `bindings/core/wasm/src/shared-sources.json` | `5173e6860f5783523333309e2201c6af993bacdfad47c8d3fd86bf59e1f8949c` |
-| Node addon `/private/tmp/umf-json-value-node-target/release/libumf_core_node.dylib` | `85f1d04e0741364d37e5fac7ff8957136f2192acf4981171f757c2f50a68ade0` |
-| WASM `/private/tmp/umf-json-value-wasm-package/umf_core_wasm_bg.wasm` | `84cb872c724bb0e0d08aa0170f12df55d8308a8163cac325407db6c14e41b748` |
+| Node addon `/private/tmp/umf-json-value-node-target/release/libumf_core_node.dylib` | `ffff1d2eb24d6129b7e7ea0cba68d08639b7823e5363cb56732f2bb57351b1ac` |
+| WASM `/private/tmp/umf-json-value-wasm-package/umf_core_wasm_bg.wasm` | `074b9d66e2bc2bde76f5cbf4eb5ae46870b7580f2ce77ab17b866dfe646ac87f` |
 | WASM glue `/private/tmp/umf-json-value-wasm-package/umf_core_wasm.js` | `548abebfb3c92b317cfa24ef4c23e7501f343cee7248f8f32df89784fc348bd0` |
-| Browser facade `/private/tmp/umf-json-value-wasm-package/facade.mjs` | `166fc0ec799d31661735b41257acf5f2072bacee5b3acb57ee1be8bf5e09375f` |
+| Browser facade `/private/tmp/umf-json-value-wasm-package/facade.mjs` | `642ddd1bdd898e3dd871d59cd41125f18c34673936922c826e1a896a03e02120` |

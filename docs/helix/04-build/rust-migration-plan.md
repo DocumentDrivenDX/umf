@@ -4848,3 +4848,43 @@ mappings, 864 unmapped names, 922 default-route retirement gaps, and zero
 proven current-cohort default binding routes are unchanged. Do not promote
 these slices to a default route or release until their host and installed
 qualification and the remaining R8 closure are complete.
+
+The next R8 source-bound checkpoint extends the opt-in JSON-value YAML writer
+over a selected scalar corpus and makes Node/WASM host admission match live
+TypeScript refusal code/message/path and proxy reflection order in the
+ordinary 100,000-value profile. The [serialization packet](evidence/rust-migration/r8-json-value-serialization/README.md)
+is now SHA-256
+`76314beae043f3cb9136509bcacdb0d4d3b1920468d7b5d021ad1f1e07f0c60f`;
+fresh Node/Bun native and Node/Bun/Chromium WASM replays each match 24/24.
+The Rust serialization suite passed 21/21, and the binding plus relocated
+live-oracle tests passed 13/13. The strict boundary gate passed across 702
+modules with zero V8 debt and zero findings. The bounded Avro Record Type
+classifier now matches full results for three selected strict cases, two
+recoveries, and the preserved 30-case exact ordered-mapping matrix. Full
+Avro result and host parity remain open.
+
+The [resource authority reviews](evidence/rust-migration/r8-symbol-inventory/README.md)
+pin one additional authored CSV Boolean schema and four more exact generated
+writers, including isolated full-output and negative-control checks. The
+coordinated inventory SHA-256 is
+`426057d73541807b4226181f56b49aeae4c845412faf0c9c48eef819a26f9447`;
+ledger SHA-256 is
+`ab924386439ee3de1abf76f8f91bea66cae8df9882002f7bb40370210800b289`.
+Its 41 tests pass. Resource authority is now 43 generated-known, 42
+authored-known, 88 candidate-generated and 25 unresolved. The 58 accepted
+opt-in operations, 864 unmapped executable names, 922 logical retirement
+gaps and zero ledger-proven current-cohort binding routes are unchanged.
+
+The [CSV Boolean installed-route receipt](evidence/rust-migration/r8-csv-boolean-default-route/README.md)
+adds a fixed-point private SDK archive, SHA-256
+`3d2c6b3b154ff3ffc45d63919eee4572b491f242bea3976289c34f9cb63ceffc`,
+with the same 3,426-file source closure before and after packaging. All 14
+frozen lexical validate/verify cases pass from the installed default roots in
+Node 26.12.1, Bun 1.4.3 and Chromium 153; missing/corrupt native addon
+controls refuse. A selected live-reference prototype and error-identity
+comparison also passes in Node. This evidence supports an explicit review of
+those two default-route retirement rows; it does not itself retire them or
+qualify the entire SDK release. The remaining R8 order is to review those
+rows, extend installed qualification to the next bounded inspectors and Key
+tuple operations, resolve the other executable/resource dispositions, then
+run a publishable integrated cohort before PR, merge and release.

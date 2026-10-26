@@ -344,33 +344,33 @@ pub fn classify_avro_record_type(
             dependency_id,
             ..
         } => (path, dependency_id),
-        Resolution::Ambiguous { .. } => {
-            return blocked_with_field_mapping(
-                &source,
-                &request,
-                &column,
-                "AVRO_RECORD_TYPE_AMBIGUOUS",
-                "Native record reference is ambiguous",
-                ctx,
+        Resolution::Ambiguous { .. }
+        | Resolution::Unresolved { .. }
+        | Resolution::Unsupported { .. } => {
+            let native_field = candidate
+                .field
+                .native_field
+                .tagged_value_preserving_extras(ctx)?;
+            let native_type = get(
+                get(&native_field, "members").unwrap_or(&Value::Null),
+                "type",
+            )
+            .map(|value| copy_json(value, ctx))
+            .transpose()?
+            .unwrap_or(Value::Null);
+            let native_path = format!(
+                "{}/type",
+                candidate.field.path.to_utf8().map_err(|_| error(
+                    "AVRO_RECORD_TYPE_NATIVE",
+                    "Selected field path is not UTF-8"
+                ))?
             );
-        }
-        Resolution::Unresolved { .. } => {
-            return blocked_with_field_mapping(
+            return blocked_unresolved_type(
                 &source,
                 &request,
                 &column,
-                "AVRO_RECORD_TYPE_UNRESOLVED",
-                "Native record reference has no declaration",
-                ctx,
-            );
-        }
-        Resolution::Unsupported { reason } => {
-            return blocked_with_field_mapping(
-                &source,
-                &request,
-                &column,
-                "AVRO_RECORD_TYPE_UNSUPPORTED",
-                reason,
+                &Utf16::from(native_path),
+                native_type,
                 ctx,
             );
         }
@@ -924,14 +924,26 @@ fn blocked(
     )
 }
 
-fn blocked_with_field_mapping(
+fn blocked_unresolved_type(
     source: &Value,
     request: &Value,
     column: &Utf16,
-    code: &str,
-    message: &str,
+    native_path: &Utf16,
+    native_type: Value,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
+    let authors = get(request, "authors").and_then(|value| match value {
+        Value::Array(items) => Some(items.as_slice()),
+        _ => None,
+    });
+    let selected_author = authors.and_then(|items| {
+        items.iter().find(|author| {
+            get(get(author, "identity").unwrap_or(&Value::Null), "module").and_then(string)
+                == Some(&k("avro.fields"))
+                && get(get(author, "identity").unwrap_or(&Value::Null), "element").and_then(string)
+                    == Some(column)
+        })
+    });
     let mut field_request = obj(vec![
         ("column", Value::String(copy_text(column, ctx)?)),
         (
@@ -956,28 +968,158 @@ fn blocked_with_field_mapping(
             fields.push((k("dependencies"), copy_json(dependencies, ctx)?));
         }
     }
+    if let Some(author) = selected_author {
+        if let Value::Object(fields) = &mut field_request {
+            fields.push((k("author"), copy_json(author, ctx)?));
+        }
+    }
     let field_result = avro_field_classifier::classify_field(source, &field_request, ctx)?;
-    let mappings = if let Some(Value::Array(items)) = get(&field_result, "mappings") {
-        items
+    let mappings = match get(&field_result, "mappings") {
+        Some(Value::Array(items)) => items
             .iter()
             .map(|item| copy_json(item, ctx))
-            .collect::<Result<Vec<_>, _>>()?
-    } else if let Some(mapping) = get(&field_result, "mapping") {
-        vec![copy_json(mapping, ctx)?]
-    } else {
-        Vec::new()
+            .collect::<Result<Vec<_>, _>>()?,
+        _ => get(&field_result, "mapping")
+            .map(|mapping| copy_json(mapping, ctx))
+            .transpose()?
+            .into_iter()
+            .collect(),
     };
-    let (_, _, element) = locate_field(source, column)?;
-    blocked_with_mappings(
-        source,
-        request,
-        column,
-        code,
-        message,
-        copy_json(element, ctx)?,
-        mappings,
-        ctx,
-    )
+    let (mi, ei, element) = locate_field(source, column)?;
+    let mut residuals = Vec::new();
+    if let Some(Value::Array(selected_residuals)) = get(&field_result, "residuals") {
+        for selected in selected_residuals {
+            residuals.push(obj(vec![
+                (
+                    "path",
+                    copy_json(get(selected, "path").ok_or_else(|| error("AVRO_RECORD_TYPE_RECEIPT", "Field residual path is missing"))?, ctx)?,
+                ),
+                (
+                    "value",
+                    copy_json(get(selected, "value").ok_or_else(|| error("AVRO_RECORD_TYPE_RECEIPT", "Field residual value is missing"))?, ctx)?,
+                ),
+                (
+                    "reason",
+                    copy_json(get(selected, "reason").ok_or_else(|| error("AVRO_RECORD_TYPE_RECEIPT", "Field residual reason is missing"))?, ctx)?,
+                ),
+                (
+                    "recovery",
+                    text("Source and native fragments retained; resolve conflict then recompute whole record classification"),
+                ),
+            ]));
+        }
+    }
+    let reason = "Native type is not a directly resolved record; scalar, union and container structure is retained";
+    residuals.push(obj(vec![
+        ("path", Value::String(copy_text(native_path, ctx)?)),
+        ("value", native_type),
+        ("reason", text(reason)),
+        (
+            "recovery",
+            text("Source and native fragments retained; resolve conflict then recompute whole record classification"),
+        ),
+    ]));
+    if get(element, "scalarType").is_some()
+        || get(element, "references").is_some_and(|refs| {
+            matches!(refs, Value::Array(items) if items.iter().any(|r| get(r, "role").and_then(string) == Some(&k("record-type"))))
+        })
+    {
+        residuals.push(obj(vec![
+            ("path", text(&format!("/modules/{mi}/elements/{ei}/kind"))),
+            ("value", copy_json(element, ctx)?),
+            ("reason", text("Scalar metadata or an existing record-type assertion prevents implicit reconciliation")),
+            (
+                "recovery",
+                text("Source and native fragments retained; resolve conflict then recompute whole record classification"),
+            ),
+        ]));
+    }
+    let mut seen = Vec::<Utf16>::new();
+    if let Some(authors) = authors {
+        for author in authors {
+            verify_author(author, source, ctx)?;
+            let identity = get(author, "identity").unwrap_or(&Value::Null);
+            let module = get(identity, "module").and_then(string);
+            let element_id = get(identity, "element").and_then(string);
+            let duplicate = element_id.is_some_and(|id| seen.contains(id));
+            if module != Some(&k("avro.fields")) || duplicate || element_id != Some(column) {
+                let provenance = get(author, "provenance").unwrap_or(&Value::Null);
+                residuals.push(obj(vec![
+                    (
+                        "path",
+                        copy_json(
+                            get(provenance, "idealPath").ok_or_else(|| error("AVRO_RECORD_TYPE_RECEIPT", "Author idealPath is missing"))?,
+                            ctx,
+                        )?,
+                    ),
+                    ("value", copy_json(author, ctx)?),
+                    ("reason", text("Duplicate or unrelated author receipt")),
+                    (
+                        "recovery",
+                        text("Source and native fragments retained; resolve conflict then recompute whole record classification"),
+                    ),
+                ]));
+            }
+            if let Some(id) = element_id {
+                seen.push(id.clone());
+            }
+        }
+    }
+    let diagnostics = residuals
+        .iter()
+        .map(|residual| {
+            Ok(obj(vec![
+                ("code", text("AVRO_RECORD_TYPE_UNRESOLVED")),
+                (
+                    "path",
+                    copy_json(
+                        get(residual, "path").ok_or_else(|| {
+                            error("AVRO_RECORD_TYPE_RECEIPT", "Residual path is missing")
+                        })?,
+                        ctx,
+                    )?,
+                ),
+                (
+                    "message",
+                    copy_json(
+                        get(residual, "reason").ok_or_else(|| {
+                            error("AVRO_RECORD_TYPE_RECEIPT", "Residual reason is missing")
+                        })?,
+                        ctx,
+                    )?,
+                ),
+                ("severity", text("error")),
+            ]))
+        })
+        .collect::<Result<Vec<_>, EngineError>>()?;
+    let output = obj(vec![
+        ("operation", text("classify-avro-record-type")),
+        ("version", text("1.0.0")),
+        ("status", text("blocked")),
+        ("source", copy_json(source, ctx)?),
+        ("request", copy_json(request, ctx)?),
+        (
+            "binding",
+            obj(vec![
+                ("id", text("umf.avro.record-type")),
+                ("version", text("1.0.0")),
+                ("nativeVersion", text("1.12.0")),
+                ("subset", text("Direct record/error definitions and qualified named record references; unions and containers require separate bindings")),
+            ]),
+        ),
+        ("mappings", Value::Array(mappings)),
+        ("residuals", Value::Array(residuals)),
+        ("diagnostics", Value::Array(diagnostics)),
+    ]);
+    let (schema, _) = result_schemas(ctx)?;
+    if let Some(issue) = schema.validate(&output, ctx)?.first() {
+        return Err(EngineError::new(
+            "AVRO_RECORD_TYPE_RESULT",
+            issue.instance_path.clone(),
+            issue.message.clone(),
+        ));
+    }
+    Ok(output)
 }
 
 fn blocked_with_mappings(
@@ -1521,6 +1663,128 @@ mod tests {
             get(&actual_conflicting, "diagnostics"),
             get(expected_conflicting, "diagnostics")
         );
+    }
+
+    #[test]
+    fn selected_predecessor_full_results_and_recoveries_match() {
+        fn canonical(value: &Value) -> Value {
+            match value {
+                Value::Array(items) => Value::Array(items.iter().map(canonical).collect()),
+                Value::Object(fields) => {
+                    let mut fields = fields
+                        .iter()
+                        .map(|(key, value)| (key.clone(), canonical(value)))
+                        .collect::<Vec<_>>();
+                    fields.sort_by(|a, b| a.0.cmp(&b.0));
+                    Value::Object(fields)
+                }
+                _ => value.clone(),
+            }
+        }
+        fn first_difference(a: &Value, b: &Value, path: &str) -> Option<String> {
+            match (a, b) {
+                (Value::Object(af), Value::Object(bf)) => {
+                    if af.len() != bf.len() {
+                        return Some(format!(
+                            "{path}: object lengths {} != {}",
+                            af.len(),
+                            bf.len()
+                        ));
+                    }
+                    for (key, av) in af {
+                        let Some((_, bv)) = bf.iter().find(|(other, _)| other == key) else {
+                            return Some(format!(
+                                "{path}/{}: key absent",
+                                key.to_utf8().unwrap_or_default()
+                            ));
+                        };
+                        if let Some(diff) = first_difference(
+                            av,
+                            bv,
+                            &format!("{path}/{}", key.to_utf8().unwrap_or_default()),
+                        ) {
+                            return Some(diff);
+                        }
+                    }
+                    None
+                }
+                (Value::Array(aa), Value::Array(ba)) => {
+                    if aa.len() != ba.len() {
+                        return Some(format!(
+                            "{path}: array lengths {} != {}",
+                            aa.len(),
+                            ba.len()
+                        ));
+                    }
+                    aa.iter()
+                        .zip(ba)
+                        .enumerate()
+                        .find_map(|(i, (av, bv))| first_difference(av, bv, &format!("{path}/{i}")))
+                }
+                _ if a == b => None,
+                _ => Some(format!("{path}: actual {a:?}; expected {b:?}")),
+            }
+        }
+        let mut ctx = Context::ordinary();
+        let packet = parse(
+            include_str!("../../../docs/helix/04-build/evidence/rust-migration/r8-avro-record-type/typescript-predecessor.json"),
+            &mut ctx,
+        )
+        .unwrap();
+        let outcomes = get(&packet, "outcomes").unwrap();
+        let Value::Object(cases) = outcomes else {
+            panic!("predecessor outcomes are not an object");
+        };
+        let mut compared = 0;
+        let mut differences = Vec::new();
+        for (name, case) in cases.iter().filter(|(name, _)| {
+            [
+                "matrix/nested/id/strict",
+                "matrix/dependencies/left/strict",
+                "matrix/direct/recursive/strict",
+            ]
+            .iter()
+            .any(|selected| name == &k(selected))
+        }) {
+            let expected = get(case, "result").expect("matrix case has result");
+            let source = get(expected, "source").expect("result has source");
+            let request = get(expected, "request").expect("result has request");
+            let actual = classify_avro_record_type(source, request, &mut Context::ordinary())
+                .unwrap_or_else(|error| panic!("{name:?}: {error:?}"));
+            assert_eq!(
+                get(&actual, "mappings"),
+                get(expected, "mappings"),
+                "ordered mapping array differs for {name:?}"
+            );
+            let expected = canonical(expected);
+            if let Some(diff) = first_difference(&canonical(&actual), &expected, "") {
+                differences.push(format!("{name:?}: {diff}"));
+            }
+            if get(&actual, "status").and_then(string) == Some(&k("classified")) {
+                let current = get(&actual, "target").expect("classified result has a target");
+                let recovered =
+                    recover_avro_record_type_bundle(&actual, current, &mut Context::ordinary())
+                        .unwrap_or_else(|error| panic!("{name:?}: recovery failed: {error:?}"));
+                let expected_recovery = get(
+                    get(case, "recovery").expect("matrix case has recovery"),
+                    "json",
+                )
+                .expect("matrix case has JSON recovery");
+                if let Some(diff) = first_difference(
+                    &canonical(&recovered),
+                    &canonical(expected_recovery),
+                    "/recovery",
+                ) {
+                    differences.push(format!("{name:?}: {diff}"));
+                }
+            }
+            compared += 1;
+        }
+        assert_eq!(
+            compared, 3,
+            "the selected full-result predecessor cases run"
+        );
+        assert!(differences.is_empty(), "{}", differences.join("\n"));
     }
 
     #[test]

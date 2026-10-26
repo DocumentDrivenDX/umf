@@ -327,3 +327,27 @@ cases with Apache Avro 1.12.0 and fastavro 1.12.2. Its native type and
 member-order observations agree with the predecessor's selected-case status;
 the TypeScript packet supplies the requests and labels. This does not prove
 Rust target or receipt parity, raw host behavior, or general Avro support.
+
+### R8 unresolved-type receipt and recovery follow-up
+
+The bounded Rust classifier now follows the TypeScript predecessor's generic
+unresolved-type branch for ambiguous, unresolved and unsupported selected
+native types. It keeps selected Field mappings and residuals, the native type
+fragment (including a missing type as `null`), existing scalar or record-type
+assertions, and duplicate or unrelated author receipts in the blocked result.
+The result remains schema-validated and recoverable only when classified.
+
+The recaptured [TypeScript predecessor packet](typescript-predecessor.json) is
+SHA-256
+`c032bb1886460c45659ec9e73ab2e3ca73c1a2ab5681c17d96a9e37644737fa9`.
+The Rust classifier source is SHA-256
+`ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667`.
+Its selected full-result comparison passes three strict cases: a nested
+scalar/union member, a dependency-backed named record, and a recursive direct
+record. The two classified cases also match frozen exact JSON recovery from
+the original receipts. The separate 30-case strict/report matrix passes exact
+ordered mapping arrays; that test took 319.20 seconds in the established
+temporary Cargo target. The packet's own `--check` passes with 10 classified,
+24 blocked and 20 recovered predecessor outcomes. Complete result-body parity
+for all 30 matrix cases, the broader author/control matrix, Node/Bun/WASM
+hosts, and default routing remain open.

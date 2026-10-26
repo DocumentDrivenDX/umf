@@ -3,7 +3,7 @@
   "scope": "Route-specific runtime export declarations for the default Node root, default browser root and explicit TypeScript reference route in the pinned condition-aware inventory. Logical default gaps are counted once, with per-route status; this is a gap census, not retirement approval.",
   "input": {
     "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json",
-    "sha256": "1d7589b8bad71a50f1fdcebcc50bfa897af25d7dbd2cdfbdf452f6a5ae8aa3c2"
+    "sha256": "426057d73541807b4226181f56b49aeae4c845412faf0c9c48eef819a26f9447"
   },
   "counts": {
     "packageRootRows": 3360,
@@ -60,10 +60,10 @@
     "routeResourceExportAliases": 594,
     "uniqueResourceFiles": 189,
     "resourceAuthorityByStatus": {
-      "generated-authority-known": 39,
-      "authored-authority-known": 41,
+      "generated-authority-known": 43,
+      "authored-authority-known": 42,
       "candidate-generated": 88,
-      "authority-unresolved": 30
+      "authority-unresolved": 25
     }
   },
   "runtimeExportDispositionSupplement": {
@@ -71,8 +71,8 @@
     "scope": "Per-export source authority and runtime classification for five src/model/types.ts exports. Supplemental classification does not alter executable row kinds, Rust route mappings, logical retirement gaps or installed-release qualification.",
     "generatedProvenance": {
       "modelSha256": "42144576e3b15da4945ca744623a31967e3b29efa54da8ba3961e446b1c0e34b",
-      "compilerSha256": "5241078e998a172d860ceeda1ce387d3a57ff4a0a3d502a627d4aa47820ab917",
-      "generatedCoreModelSha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba",
+      "compilerSha256": "0b2dee348cd4363240c8e9b86ec021d95aa0db3feacafc75572c135264e7d6eb",
+      "generatedCoreModelSha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a",
       "sourceClosure": [
         {
           "path": "crates/umf-metamodel/src/lib.rs",
@@ -96,7 +96,7 @@
         },
         {
           "path": "spec/metamodel/generated/manifest.json",
-          "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+          "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
         },
         {
           "path": "spec/metamodel/umf.yaml",
@@ -112,7 +112,7 @@
         },
         {
           "path": "src/generated/core-model.ts",
-          "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
+          "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
         },
         {
           "path": "src/index-browser-v4.ts",
@@ -10499,7 +10499,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -17657,7 +17657,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -18048,7 +18048,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -19968,7 +19968,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
+      "sourceSha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760",
       "ownerFamily": "resource:spec/core/schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from explicit TypeScript reference route",
@@ -19978,7 +19978,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/schema.json",
-          "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
+          "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760",
           "packageRootAliasCount": 2
         },
         "authority": {
@@ -20011,7 +20011,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+              "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
             }
           ]
         },
@@ -20030,7 +20030,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -20366,7 +20366,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
+                "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
               },
               {
                 "path": "src/index.ts",
@@ -20502,7 +20502,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -20728,7 +20728,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -20812,7 +20812,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -20836,7 +20836,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -20867,7 +20867,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -20902,7 +20902,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -20921,7 +20921,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+            "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -20948,7 +20948,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
+      "sourceSha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760",
       "ownerFamily": "resource:spec/core/schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from explicit TypeScript reference route",
@@ -20958,7 +20958,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/schema.json",
-          "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
+          "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760",
           "packageRootAliasCount": 2
         },
         "authority": {
@@ -20991,7 +20991,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+              "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
             }
           ]
         },
@@ -21010,7 +21010,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -21346,7 +21346,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
+                "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
               },
               {
                 "path": "src/index.ts",
@@ -21482,7 +21482,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -21708,7 +21708,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -21792,7 +21792,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -21816,7 +21816,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -21847,7 +21847,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -21882,7 +21882,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -21901,7 +21901,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+            "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -22054,7 +22054,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/semantic-type-reference.schema.json",
       "line": 1,
-      "sourceSha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23",
+      "sourceSha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a",
       "ownerFamily": "resource:spec/core/semantic-type-reference.schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from explicit TypeScript reference route",
@@ -22064,7 +22064,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/semantic-type-reference.schema.json",
-          "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23",
+          "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a",
           "packageRootAliasCount": 1
         },
         "authority": {
@@ -22097,7 +22097,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+              "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
             }
           ]
         },
@@ -22116,7 +22116,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+                "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -22128,7 +22128,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
+                "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
               },
               {
                 "path": "src/index.ts",
@@ -22176,7 +22176,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+                "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
               }
             ],
             "installedQualification": {
@@ -22390,7 +22390,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -22470,7 +22470,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+                "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
               }
             ],
             "installedQualification": {
@@ -22494,7 +22494,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+                "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
               }
             ],
             "installedQualification": {
@@ -22525,7 +22525,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+                "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
               }
             ],
             "installedQualification": {
@@ -22560,7 +22560,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+                "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
               }
             ],
             "installedQualification": {
@@ -22579,7 +22579,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+            "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -23086,18 +23086,65 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "authored-authority-known",
           "canonicalPath": "spec/core/csv-boolean-lexical-operation.schema.json",
-          "generatorKind": "unresolved",
+          "generatorKind": "authored-versioned-contract-schema",
           "generator": null,
           "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
+          "kind": "authored-versioned-contract-schema",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-053-domain-pack-profiles.md"
+          ],
           "governingClauses": [],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "authoredRevisionClosure": [
+            {
+              "commit": "8e76c74d14203225d1ef159c9132bb9e9b0cdffe",
+              "action": "added",
+              "sha256": "1c07d500c8dd6732ce814bdfb04a532a8df313c0df188f369faf7fcf0b2b85b0"
+            },
+            {
+              "commit": "8706814a9605d7325eef32a5df3d05696de00b62",
+              "action": "updated",
+              "sha256": "6548b442849a2a1246ea860ca5be22eecd98596c571d9c0b74ce1eba7780b791"
+            }
+          ],
+          "sourceClosureCompleteness": "direct versioned schema authorship and governing contract/current source/package closure are pinned; SDK archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-053-domain-pack-profiles.md",
+              "sha256": "07e7ce934061a4b8765664ec0d33535ecc3f0f641be7e667b5b70f9f56249126"
+            },
+            {
+              "path": "scripts/browser-csv-boolean-lexical.ts",
+              "sha256": "6ae3a936e0fb7eefd7bc1203156a3e3c9abec86a2b1ff622e293f3d0a6ea9472"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/csv-boolean-lexical.ts",
+              "sha256": "45d2516eca6f64e30b380e96853e28c7b7861f4aa2a9edd761ffdbf8d5639f4b"
+            },
+            {
+              "path": "tests/csv-boolean-lexical.test.ts",
+              "sha256": "b6c48d35d104dd0783b84f94131f5d0d4d7152aca845a4ebed7747aa499ccb42"
+            }
+          ]
         },
         "routes": [
           {
@@ -23176,7 +23223,7 @@
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -23198,7 +23245,7 @@
       "declarationKind": "VariableDeclaration",
       "source": "src/generated/core-model.ts",
       "line": 3,
-      "sourceSha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba",
+      "sourceSha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a",
       "ownerFamily": "generated-runtime",
       "rowKind": "executable",
       "defaultRoute": "explicit TypeScript reference declaration",
@@ -25904,7 +25951,7 @@
             },
             {
               "path": "spec/core/extension-package.schema.json",
-              "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+              "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
             },
             {
               "path": "spec/core/native-json.schema.json",
@@ -25912,11 +25959,11 @@
             },
             {
               "path": "spec/core/schema.json",
-              "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+              "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
             },
             {
               "path": "spec/core/semantic-type-reference.schema.json",
-              "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+              "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
             },
             {
               "path": "spec/extensions/delta/package.json",
@@ -25928,11 +25975,11 @@
             },
             {
               "path": "spec/metamodel/generated/core-constraints.json",
-              "sha256": "332a5ab39c83ba3b22fb3f124f982df8caad5b5bda358c0265f3ed1f9f98068c"
+              "sha256": "a7b05cdecc1d0cfbcc6e1715c90c542e5c1d1a0b5db024c96b4f044093caa9b6"
             },
             {
               "path": "spec/metamodel/generated/domain-policy.json",
-              "sha256": "348913d56fe96d3ff4f9a46c446a641f06d31758532f686277cd5d3208df5465"
+              "sha256": "650374337d88a5f1ed809f414be037004a778c284657f40670d79895d33f4b9f"
             },
             {
               "path": "src/adapters/delta/index.ts",
@@ -25944,7 +25991,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
+              "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
             },
             {
               "path": "src/index.ts",
@@ -26131,18 +26178,89 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "generated-authority-known",
           "canonicalPath": "spec/extensions/delta-log/inspection.schema.json",
-          "generatorKind": "unresolved",
-          "generator": null,
-          "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
-          "governingClauses": [],
-          "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "generatorKind": "generated-from-exact-contract-governed-delta-log-schema-writer",
+          "generator": {
+            "language": "TypeScript",
+            "runtime": "Bun",
+            "entrypoints": [
+              "scripts/delta-log-schema.ts"
+            ]
+          },
+          "executablePortDisposition": "Generator remains TypeScript/Python build tooling; Rust-port versus justified host-tool disposition is open",
+          "kind": "generated-from-exact-contract-governed-delta-log-schema-writer",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-018-delta.md",
+            "docs/helix/01-frame/user-stories/US-018-delta-schema.md"
+          ],
+          "governingClauses": [
+            "US-018-AC9",
+            "US-018-AC10"
+          ],
+          "generatorInputs": [
+            "spec/core/native-json.schema.json"
+          ],
+          "sourceClosureCompleteness": "exact generator, schema-builder inputs, governing contract, package exports and build/archive rules are hash-pinned; installed archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+              "sha256": "780fd911f642d167af76a61c72f45d9aa7bbccc0709ae741b9ff0a763ba95602"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-018-delta.md",
+              "sha256": "64d6342ce9ae4dbd898cca795a7a0862aed1427120544294a19c4a6bc0ba7f33"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/delta-log-schema.ts",
+              "sha256": "0055ace4aa840ec63a17a25e195f5ee185f2b5d66dee469015afb3e85303c8c7"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "spec/core/native-json.schema.json",
+              "sha256": "071e2dc97ffae0b8743b691ae4786c0b74eaa1ee54d881e1d8116dcb3f6a2839"
+            },
+            {
+              "path": "spec/extensions/delta-log/package.json",
+              "sha256": "052c7f012d38756713519719acd20b3f6164cbe9548641a98bd681dab409a7b6"
+            },
+            {
+              "path": "spec/extensions/delta-log/schema.json",
+              "sha256": "495afacf0a4daaefb2c7b2d191a6dab999f722cd585818a19f342ad53f1fb477"
+            },
+            {
+              "path": "src/generated/core-model.ts",
+              "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/types.ts",
+              "sha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c"
+            },
+            {
+              "path": "tests/delta/actions.test.ts",
+              "sha256": "4a61e7cf20b9445cdc0dc916bb7b9bcdb93cf7812ad80f94d5b962b20bb2c7d3"
+            },
+            {
+              "path": "tests/delta/log.test.ts",
+              "sha256": "8bf2cc49111f8de97cfb19b43afc1edf58a9a9519a3081a8386e583508f343f6"
+            }
+          ]
         },
         "routes": [
           {
@@ -26217,7 +26335,7 @@
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -27681,7 +27799,7 @@
             },
             {
               "path": "spec/core/extension-package.schema.json",
-              "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+              "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
             },
             {
               "path": "spec/core/native-json.schema.json",
@@ -27689,11 +27807,11 @@
             },
             {
               "path": "spec/core/schema.json",
-              "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+              "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
             },
             {
               "path": "spec/core/semantic-type-reference.schema.json",
-              "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+              "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
             },
             {
               "path": "spec/extensions/delta-table/package.json",
@@ -27705,11 +27823,11 @@
             },
             {
               "path": "spec/metamodel/generated/core-constraints.json",
-              "sha256": "332a5ab39c83ba3b22fb3f124f982df8caad5b5bda358c0265f3ed1f9f98068c"
+              "sha256": "a7b05cdecc1d0cfbcc6e1715c90c542e5c1d1a0b5db024c96b4f044093caa9b6"
             },
             {
               "path": "spec/metamodel/generated/domain-policy.json",
-              "sha256": "348913d56fe96d3ff4f9a46c446a641f06d31758532f686277cd5d3208df5465"
+              "sha256": "650374337d88a5f1ed809f414be037004a778c284657f40670d79895d33f4b9f"
             },
             {
               "path": "src/adapters/delta/index.ts",
@@ -27721,7 +27839,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
+              "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
             },
             {
               "path": "src/index.ts",
@@ -30486,7 +30604,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/extension-package.schema.json",
       "line": 1,
-      "sourceSha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7",
+      "sourceSha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea",
       "ownerFamily": "resource:spec/core/extension-package.schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from explicit TypeScript reference route",
@@ -30496,7 +30614,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/extension-package.schema.json",
-          "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7",
+          "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea",
           "packageRootAliasCount": 1
         },
         "authority": {
@@ -30529,7 +30647,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+              "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
             }
           ]
         },
@@ -30548,7 +30666,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+                "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -30560,7 +30678,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
+                "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
               },
               {
                 "path": "src/index.ts",
@@ -30600,7 +30718,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+                "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
               }
             ],
             "installedQualification": {
@@ -30790,7 +30908,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/binding_index_projection.rs",
@@ -30862,7 +30980,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+                "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
               }
             ],
             "installedQualification": {
@@ -30886,7 +31004,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+                "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
               }
             ],
             "installedQualification": {
@@ -30917,7 +31035,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+                "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
               }
             ],
             "installedQualification": {
@@ -30952,7 +31070,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+                "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
               }
             ],
             "installedQualification": {
@@ -30971,7 +31089,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+            "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
           }
         ],
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
@@ -43483,18 +43601,83 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "generated-authority-known",
           "canonicalPath": "spec/extensions/parquet/framing.schema.json",
-          "generatorKind": "unresolved",
-          "generator": null,
-          "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
-          "governingClauses": [],
+          "generatorKind": "generated-from-exact-contract-governed-parquet-schema-writer",
+          "generator": {
+            "language": "TypeScript",
+            "runtime": "Bun",
+            "entrypoints": [
+              "scripts/parquet-schema.ts"
+            ]
+          },
+          "executablePortDisposition": "Generator remains TypeScript/Python build tooling; Rust-port versus justified host-tool disposition is open",
+          "kind": "generated-from-exact-contract-governed-parquet-schema-writer",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-019-parquet.md",
+            "docs/helix/01-frame/user-stories/US-019-parquet.md"
+          ],
+          "governingClauses": [
+            "US-019-AC1",
+            "US-019-AC2"
+          ],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "sourceClosureCompleteness": "exact generator, schema-builder inputs, governing contract, package exports and build/archive rules are hash-pinned; installed archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+              "sha256": "6925e98cb2a61fe3bc7a674045786fcf96929977df0c5db2d3e6dd743ea0073f"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-019-parquet.md",
+              "sha256": "e47f7bf0ab24b0d3a65808c70a2c53867bbf24f9a992ce11485c10f078eab696"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "scripts/parquet-schema.ts",
+              "sha256": "b512da398d16f826f524862c348eacb2e5a73dd1a94261c5b1d9b27135615ce0"
+            },
+            {
+              "path": "spec/extensions/parquet/package.json",
+              "sha256": "eba2d6528e6c5345dc37c63678cba0564f8ab26aaa55c04dcaf4da761402a6ec"
+            },
+            {
+              "path": "spec/extensions/parquet/schema.json",
+              "sha256": "9600ee4599b65705a9eb186b751fb9fcbd712a813b5f5e32de6ff6e8abe1cfa7"
+            },
+            {
+              "path": "src/generated/core-model.ts",
+              "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/types.ts",
+              "sha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c"
+            },
+            {
+              "path": "tests/parquet/capture.test.ts",
+              "sha256": "d37e9631c144b17a2e808c081a528259289430b89af658f826dba63842fe4fdc"
+            },
+            {
+              "path": "tests/parquet/footer.test.ts",
+              "sha256": "e255b34a57e64f697493036284f72b680fcae684ee5357f5430150b4980e32c1"
+            }
+          ]
         },
         "routes": [
           {
@@ -43569,7 +43752,7 @@
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -61192,18 +61375,89 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "generated-authority-known",
           "canonicalPath": "spec/extensions/spark/datatype-schema.json",
-          "generatorKind": "unresolved",
-          "generator": null,
-          "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
-          "governingClauses": [],
-          "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "generatorKind": "generated-from-exact-contract-governed-spark-schema-writer",
+          "generator": {
+            "language": "TypeScript",
+            "runtime": "Bun",
+            "entrypoints": [
+              "scripts/spark-schema.ts"
+            ]
+          },
+          "executablePortDisposition": "Generator remains TypeScript/Python build tooling; Rust-port versus justified host-tool disposition is open",
+          "kind": "generated-from-exact-contract-governed-spark-schema-writer",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-017-spark.md",
+            "docs/helix/01-frame/user-stories/US-017-spark-schema.md"
+          ],
+          "governingClauses": [
+            "US-017-AC1",
+            "US-017-AC2"
+          ],
+          "generatorInputs": [
+            "spec/core/native-json.schema.json"
+          ],
+          "sourceClosureCompleteness": "exact generator, schema-builder inputs, governing contract, package exports and build/archive rules are hash-pinned; installed archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/01-frame/user-stories/US-017-spark-schema.md",
+              "sha256": "6d94d99d7a7eaa9ab06c5364368a13d06b60650043cdcce2458714f7290daa87"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-017-spark.md",
+              "sha256": "89cdf7998778ea07982019cb1916143edfa871a846c1689c80a629568bb69034"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "scripts/spark-schema.ts",
+              "sha256": "8079702c1858ef295cd992b95c11b80027d2f981c665df308e95493c191540e4"
+            },
+            {
+              "path": "spec/core/native-json.schema.json",
+              "sha256": "071e2dc97ffae0b8743b691ae4786c0b74eaa1ee54d881e1d8116dcb3f6a2839"
+            },
+            {
+              "path": "spec/extensions/spark/package.json",
+              "sha256": "a402b39a48a436641c5bc06d64ec94cb6611e793a53b738f1075d366ade2ad9f"
+            },
+            {
+              "path": "spec/extensions/spark/schema.json",
+              "sha256": "a3ccfaa40c06a2597b1491d9d26b102f2da41fa75141f5fb7203280d0c836349"
+            },
+            {
+              "path": "src/adapters/spark/index.ts",
+              "sha256": "2ab32f0e1117f7e17b776f53abbf0c37146cdb7214efd0adf9dfd8bb06dc4e5b"
+            },
+            {
+              "path": "src/generated/core-model.ts",
+              "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/types.ts",
+              "sha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c"
+            },
+            {
+              "path": "tests/spark/schema.test.ts",
+              "sha256": "48596b4aef85c046056cc99a9c4b6528ee0d4871b7e177fea4c119b983ed90f5"
+            }
+          ]
         },
         "routes": [
           {
@@ -61282,7 +61536,7 @@
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -62417,18 +62671,72 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "generated-authority-known",
           "canonicalPath": "spec/extensions/sqlserver-nullability/native.schema.json",
-          "generatorKind": "unresolved",
-          "generator": null,
-          "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
-          "governingClauses": [],
+          "generatorKind": "generated-from-exact-self-contained-native-evidence-schema-writer",
+          "generator": {
+            "language": "TypeScript",
+            "runtime": "Bun",
+            "entrypoints": [
+              "scripts/core-ideals/nullability-sqlserver-evidence-schema.ts"
+            ]
+          },
+          "executablePortDisposition": "Generator remains TypeScript/Python build tooling; Rust-port versus justified host-tool disposition is open",
+          "kind": "generated-from-exact-self-contained-native-evidence-schema-writer",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md",
+            "docs/helix/02-design/technical-designs/TD-041-core-nullability.md",
+            "docs/helix/01-frame/user-stories/US-041-core-nullability.md"
+          ],
+          "governingClauses": [
+            "US-041-AC2",
+            "US-041-AC6"
+          ],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "sourceClosureCompleteness": "exact generator, schema-builder inputs, governing contract, package exports and build/archive rules are hash-pinned; installed archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/01-frame/user-stories/US-041-core-nullability.md",
+              "sha256": "eadda31391acb90b2e17709f5df131e3fbf93a6b738edb0259adef218e63e977"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md",
+              "sha256": "58b5f07693618b91f73da98fba04ba14b222285e84b33b8639eb057bc7e3abd0"
+            },
+            {
+              "path": "docs/helix/02-design/technical-designs/TD-041-core-nullability.md",
+              "sha256": "03e487ff4003e1cd5f68869a08547dddd5b0d3197a9157f02150d3d6e4806334"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/core-ideals/nullability-sqlserver-evidence-schema.ts",
+              "sha256": "b56b2eadb48baa22009efa3dd28b8ec5e4cd885dd7ec973796c74bc81a324a43"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/core-ideals/nullability-sqlserver.ts",
+              "sha256": "7c3643aa91b831e5d63c43cb3567a4c91992ab25c7af7be21b2c15841cdd8e35"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "tests/core-ideals/nullability-sqlserver.test.ts",
+              "sha256": "7b2a7f70c0fabc166c25d37403519fcabad71723c1fe573d63532597a47ab90d"
+            }
+          ]
         },
         "routes": [
           {
@@ -62507,7 +62815,7 @@
         "defaultRouteStatus": "Explicit ./reference TypeScript resource route; not a default Node/browser route; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -71905,7 +72213,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -72451,7 +72759,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -72467,7 +72775,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -72590,7 +72898,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -72606,7 +72914,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -72729,7 +73037,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -72745,7 +73053,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -72868,7 +73176,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -72884,7 +73192,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -73007,7 +73315,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -73023,7 +73331,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -73146,7 +73454,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -73162,7 +73470,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -75271,7 +75579,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -75287,7 +75595,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -79686,7 +79994,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -80081,7 +80389,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -82045,7 +82353,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
+      "sourceSha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760",
       "ownerFamily": "resource:spec/core/schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from browser package root",
@@ -82055,7 +82363,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/schema.json",
-          "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
+          "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760",
           "packageRootAliasCount": 2
         },
         "authority": {
@@ -82088,7 +82396,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+              "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
             }
           ]
         },
@@ -82107,7 +82415,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -82443,7 +82751,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
+                "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
               },
               {
                 "path": "src/index-browser-v4.ts",
@@ -82583,7 +82891,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -82809,7 +83117,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -82893,7 +83201,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -82917,7 +83225,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -82948,7 +83256,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -82983,7 +83291,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -83002,7 +83310,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+            "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -83029,7 +83337,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
+      "sourceSha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760",
       "ownerFamily": "resource:spec/core/schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from browser package root",
@@ -83039,7 +83347,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/schema.json",
-          "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
+          "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760",
           "packageRootAliasCount": 2
         },
         "authority": {
@@ -83072,7 +83380,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+              "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
             }
           ]
         },
@@ -83091,7 +83399,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -83427,7 +83735,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
+                "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
               },
               {
                 "path": "src/index-browser-v4.ts",
@@ -83567,7 +83875,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -83793,7 +84101,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -83877,7 +84185,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -83901,7 +84209,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -83932,7 +84240,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -83967,7 +84275,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -83986,7 +84294,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+            "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -84143,7 +84451,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/semantic-type-reference.schema.json",
       "line": 1,
-      "sourceSha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23",
+      "sourceSha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a",
       "ownerFamily": "resource:spec/core/semantic-type-reference.schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from browser package root",
@@ -84153,7 +84461,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/semantic-type-reference.schema.json",
-          "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23",
+          "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a",
           "packageRootAliasCount": 1
         },
         "authority": {
@@ -84186,7 +84494,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+              "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
             }
           ]
         },
@@ -84205,7 +84513,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+                "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -84217,7 +84525,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
+                "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
               },
               {
                 "path": "src/index-browser-v4.ts",
@@ -84269,7 +84577,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+                "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
               }
             ],
             "installedQualification": {
@@ -84483,7 +84791,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -84563,7 +84871,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+                "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
               }
             ],
             "installedQualification": {
@@ -84587,7 +84895,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+                "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
               }
             ],
             "installedQualification": {
@@ -84618,7 +84926,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+                "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
               }
             ],
             "installedQualification": {
@@ -84653,7 +84961,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+                "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
               }
             ],
             "installedQualification": {
@@ -84672,7 +84980,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+            "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -85187,18 +85495,65 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "authored-authority-known",
           "canonicalPath": "spec/core/csv-boolean-lexical-operation.schema.json",
-          "generatorKind": "unresolved",
+          "generatorKind": "authored-versioned-contract-schema",
           "generator": null,
           "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
+          "kind": "authored-versioned-contract-schema",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-053-domain-pack-profiles.md"
+          ],
           "governingClauses": [],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "authoredRevisionClosure": [
+            {
+              "commit": "8e76c74d14203225d1ef159c9132bb9e9b0cdffe",
+              "action": "added",
+              "sha256": "1c07d500c8dd6732ce814bdfb04a532a8df313c0df188f369faf7fcf0b2b85b0"
+            },
+            {
+              "commit": "8706814a9605d7325eef32a5df3d05696de00b62",
+              "action": "updated",
+              "sha256": "6548b442849a2a1246ea860ca5be22eecd98596c571d9c0b74ce1eba7780b791"
+            }
+          ],
+          "sourceClosureCompleteness": "direct versioned schema authorship and governing contract/current source/package closure are pinned; SDK archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-053-domain-pack-profiles.md",
+              "sha256": "07e7ce934061a4b8765664ec0d33535ecc3f0f641be7e667b5b70f9f56249126"
+            },
+            {
+              "path": "scripts/browser-csv-boolean-lexical.ts",
+              "sha256": "6ae3a936e0fb7eefd7bc1203156a3e3c9abec86a2b1ff622e293f3d0a6ea9472"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/csv-boolean-lexical.ts",
+              "sha256": "45d2516eca6f64e30b380e96853e28c7b7861f4aa2a9edd761ffdbf8d5639f4b"
+            },
+            {
+              "path": "tests/csv-boolean-lexical.test.ts",
+              "sha256": "b6c48d35d104dd0783b84f94131f5d0d4d7152aca845a4ebed7747aa499ccb42"
+            }
+          ]
         },
         "routes": [
           {
@@ -85281,7 +85636,7 @@
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -85303,7 +85658,7 @@
       "declarationKind": "VariableDeclaration",
       "source": "src/generated/core-model.ts",
       "line": 3,
-      "sourceSha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba",
+      "sourceSha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a",
       "ownerFamily": "generated-runtime",
       "rowKind": "executable",
       "defaultRoute": "browser package root declaration",
@@ -88257,7 +88612,7 @@
             },
             {
               "path": "spec/core/extension-package.schema.json",
-              "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+              "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
             },
             {
               "path": "spec/core/native-json.schema.json",
@@ -88265,11 +88620,11 @@
             },
             {
               "path": "spec/core/schema.json",
-              "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+              "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
             },
             {
               "path": "spec/core/semantic-type-reference.schema.json",
-              "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+              "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
             },
             {
               "path": "spec/extensions/delta/package.json",
@@ -88281,11 +88636,11 @@
             },
             {
               "path": "spec/metamodel/generated/core-constraints.json",
-              "sha256": "332a5ab39c83ba3b22fb3f124f982df8caad5b5bda358c0265f3ed1f9f98068c"
+              "sha256": "a7b05cdecc1d0cfbcc6e1715c90c542e5c1d1a0b5db024c96b4f044093caa9b6"
             },
             {
               "path": "spec/metamodel/generated/domain-policy.json",
-              "sha256": "348913d56fe96d3ff4f9a46c446a641f06d31758532f686277cd5d3208df5465"
+              "sha256": "650374337d88a5f1ed809f414be037004a778c284657f40670d79895d33f4b9f"
             },
             {
               "path": "src/adapters/delta/index.ts",
@@ -88297,7 +88652,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
+              "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
             },
             {
               "path": "src/index.ts",
@@ -88488,18 +88843,89 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "generated-authority-known",
           "canonicalPath": "spec/extensions/delta-log/inspection.schema.json",
-          "generatorKind": "unresolved",
-          "generator": null,
-          "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
-          "governingClauses": [],
-          "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "generatorKind": "generated-from-exact-contract-governed-delta-log-schema-writer",
+          "generator": {
+            "language": "TypeScript",
+            "runtime": "Bun",
+            "entrypoints": [
+              "scripts/delta-log-schema.ts"
+            ]
+          },
+          "executablePortDisposition": "Generator remains TypeScript/Python build tooling; Rust-port versus justified host-tool disposition is open",
+          "kind": "generated-from-exact-contract-governed-delta-log-schema-writer",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-018-delta.md",
+            "docs/helix/01-frame/user-stories/US-018-delta-schema.md"
+          ],
+          "governingClauses": [
+            "US-018-AC9",
+            "US-018-AC10"
+          ],
+          "generatorInputs": [
+            "spec/core/native-json.schema.json"
+          ],
+          "sourceClosureCompleteness": "exact generator, schema-builder inputs, governing contract, package exports and build/archive rules are hash-pinned; installed archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+              "sha256": "780fd911f642d167af76a61c72f45d9aa7bbccc0709ae741b9ff0a763ba95602"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-018-delta.md",
+              "sha256": "64d6342ce9ae4dbd898cca795a7a0862aed1427120544294a19c4a6bc0ba7f33"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/delta-log-schema.ts",
+              "sha256": "0055ace4aa840ec63a17a25e195f5ee185f2b5d66dee469015afb3e85303c8c7"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "spec/core/native-json.schema.json",
+              "sha256": "071e2dc97ffae0b8743b691ae4786c0b74eaa1ee54d881e1d8116dcb3f6a2839"
+            },
+            {
+              "path": "spec/extensions/delta-log/package.json",
+              "sha256": "052c7f012d38756713519719acd20b3f6164cbe9548641a98bd681dab409a7b6"
+            },
+            {
+              "path": "spec/extensions/delta-log/schema.json",
+              "sha256": "495afacf0a4daaefb2c7b2d191a6dab999f722cd585818a19f342ad53f1fb477"
+            },
+            {
+              "path": "src/generated/core-model.ts",
+              "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/types.ts",
+              "sha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c"
+            },
+            {
+              "path": "tests/delta/actions.test.ts",
+              "sha256": "4a61e7cf20b9445cdc0dc916bb7b9bcdb93cf7812ad80f94d5b962b20bb2c7d3"
+            },
+            {
+              "path": "tests/delta/log.test.ts",
+              "sha256": "8bf2cc49111f8de97cfb19b43afc1edf58a9a9519a3081a8386e583508f343f6"
+            }
+          ]
         },
         "routes": [
           {
@@ -88578,7 +89004,7 @@
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -90062,7 +90488,7 @@
             },
             {
               "path": "spec/core/extension-package.schema.json",
-              "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+              "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
             },
             {
               "path": "spec/core/native-json.schema.json",
@@ -90070,11 +90496,11 @@
             },
             {
               "path": "spec/core/schema.json",
-              "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+              "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
             },
             {
               "path": "spec/core/semantic-type-reference.schema.json",
-              "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+              "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
             },
             {
               "path": "spec/extensions/delta-table/package.json",
@@ -90086,11 +90512,11 @@
             },
             {
               "path": "spec/metamodel/generated/core-constraints.json",
-              "sha256": "332a5ab39c83ba3b22fb3f124f982df8caad5b5bda358c0265f3ed1f9f98068c"
+              "sha256": "a7b05cdecc1d0cfbcc6e1715c90c542e5c1d1a0b5db024c96b4f044093caa9b6"
             },
             {
               "path": "spec/metamodel/generated/domain-policy.json",
-              "sha256": "348913d56fe96d3ff4f9a46c446a641f06d31758532f686277cd5d3208df5465"
+              "sha256": "650374337d88a5f1ed809f414be037004a778c284657f40670d79895d33f4b9f"
             },
             {
               "path": "src/adapters/delta/index.ts",
@@ -90102,7 +90528,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
+              "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
             },
             {
               "path": "src/index.ts",
@@ -92879,7 +93305,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/extension-package.schema.json",
       "line": 1,
-      "sourceSha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7",
+      "sourceSha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea",
       "ownerFamily": "resource:spec/core/extension-package.schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from browser package root",
@@ -92889,7 +93315,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/extension-package.schema.json",
-          "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7",
+          "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea",
           "packageRootAliasCount": 1
         },
         "authority": {
@@ -92922,7 +93348,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+              "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
             }
           ]
         },
@@ -92941,7 +93367,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+                "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -92953,7 +93379,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
+                "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
               },
               {
                 "path": "src/index-browser-v4.ts",
@@ -92997,7 +93423,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+                "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
               }
             ],
             "installedQualification": {
@@ -93187,7 +93613,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/binding_index_projection.rs",
@@ -93259,7 +93685,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+                "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
               }
             ],
             "installedQualification": {
@@ -93283,7 +93709,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+                "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
               }
             ],
             "installedQualification": {
@@ -93314,7 +93740,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+                "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
               }
             ],
             "installedQualification": {
@@ -93349,7 +93775,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+                "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
               }
             ],
             "installedQualification": {
@@ -93368,7 +93794,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+            "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
           }
         ],
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -99477,7 +99903,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/core-model.js",
@@ -99493,7 +99919,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -99622,7 +100048,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/core-model.js",
@@ -99638,7 +100064,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -99909,7 +100335,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/core-model.js",
@@ -99925,7 +100351,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -106773,18 +107199,83 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "generated-authority-known",
           "canonicalPath": "spec/extensions/parquet/framing.schema.json",
-          "generatorKind": "unresolved",
-          "generator": null,
-          "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
-          "governingClauses": [],
+          "generatorKind": "generated-from-exact-contract-governed-parquet-schema-writer",
+          "generator": {
+            "language": "TypeScript",
+            "runtime": "Bun",
+            "entrypoints": [
+              "scripts/parquet-schema.ts"
+            ]
+          },
+          "executablePortDisposition": "Generator remains TypeScript/Python build tooling; Rust-port versus justified host-tool disposition is open",
+          "kind": "generated-from-exact-contract-governed-parquet-schema-writer",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-019-parquet.md",
+            "docs/helix/01-frame/user-stories/US-019-parquet.md"
+          ],
+          "governingClauses": [
+            "US-019-AC1",
+            "US-019-AC2"
+          ],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "sourceClosureCompleteness": "exact generator, schema-builder inputs, governing contract, package exports and build/archive rules are hash-pinned; installed archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+              "sha256": "6925e98cb2a61fe3bc7a674045786fcf96929977df0c5db2d3e6dd743ea0073f"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-019-parquet.md",
+              "sha256": "e47f7bf0ab24b0d3a65808c70a2c53867bbf24f9a992ce11485c10f078eab696"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "scripts/parquet-schema.ts",
+              "sha256": "b512da398d16f826f524862c348eacb2e5a73dd1a94261c5b1d9b27135615ce0"
+            },
+            {
+              "path": "spec/extensions/parquet/package.json",
+              "sha256": "eba2d6528e6c5345dc37c63678cba0564f8ab26aaa55c04dcaf4da761402a6ec"
+            },
+            {
+              "path": "spec/extensions/parquet/schema.json",
+              "sha256": "9600ee4599b65705a9eb186b751fb9fcbd712a813b5f5e32de6ff6e8abe1cfa7"
+            },
+            {
+              "path": "src/generated/core-model.ts",
+              "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/types.ts",
+              "sha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c"
+            },
+            {
+              "path": "tests/parquet/capture.test.ts",
+              "sha256": "d37e9631c144b17a2e808c081a528259289430b89af658f826dba63842fe4fdc"
+            },
+            {
+              "path": "tests/parquet/footer.test.ts",
+              "sha256": "e255b34a57e64f697493036284f72b680fcae684ee5357f5430150b4980e32c1"
+            }
+          ]
         },
         "routes": [
           {
@@ -106863,7 +107354,7 @@
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -110276,7 +110767,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -110292,7 +110783,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -110422,7 +110913,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
@@ -110700,7 +111191,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
@@ -110819,7 +111310,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -110835,7 +111326,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -122620,7 +123111,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
@@ -125036,18 +125527,89 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "generated-authority-known",
           "canonicalPath": "spec/extensions/spark/datatype-schema.json",
-          "generatorKind": "unresolved",
-          "generator": null,
-          "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
-          "governingClauses": [],
-          "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "generatorKind": "generated-from-exact-contract-governed-spark-schema-writer",
+          "generator": {
+            "language": "TypeScript",
+            "runtime": "Bun",
+            "entrypoints": [
+              "scripts/spark-schema.ts"
+            ]
+          },
+          "executablePortDisposition": "Generator remains TypeScript/Python build tooling; Rust-port versus justified host-tool disposition is open",
+          "kind": "generated-from-exact-contract-governed-spark-schema-writer",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-017-spark.md",
+            "docs/helix/01-frame/user-stories/US-017-spark-schema.md"
+          ],
+          "governingClauses": [
+            "US-017-AC1",
+            "US-017-AC2"
+          ],
+          "generatorInputs": [
+            "spec/core/native-json.schema.json"
+          ],
+          "sourceClosureCompleteness": "exact generator, schema-builder inputs, governing contract, package exports and build/archive rules are hash-pinned; installed archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/01-frame/user-stories/US-017-spark-schema.md",
+              "sha256": "6d94d99d7a7eaa9ab06c5364368a13d06b60650043cdcce2458714f7290daa87"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-017-spark.md",
+              "sha256": "89cdf7998778ea07982019cb1916143edfa871a846c1689c80a629568bb69034"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "scripts/spark-schema.ts",
+              "sha256": "8079702c1858ef295cd992b95c11b80027d2f981c665df308e95493c191540e4"
+            },
+            {
+              "path": "spec/core/native-json.schema.json",
+              "sha256": "071e2dc97ffae0b8743b691ae4786c0b74eaa1ee54d881e1d8116dcb3f6a2839"
+            },
+            {
+              "path": "spec/extensions/spark/package.json",
+              "sha256": "a402b39a48a436641c5bc06d64ec94cb6611e793a53b738f1075d366ade2ad9f"
+            },
+            {
+              "path": "spec/extensions/spark/schema.json",
+              "sha256": "a3ccfaa40c06a2597b1491d9d26b102f2da41fa75141f5fb7203280d0c836349"
+            },
+            {
+              "path": "src/adapters/spark/index.ts",
+              "sha256": "2ab32f0e1117f7e17b776f53abbf0c37146cdb7214efd0adf9dfd8bb06dc4e5b"
+            },
+            {
+              "path": "src/generated/core-model.ts",
+              "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/types.ts",
+              "sha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c"
+            },
+            {
+              "path": "tests/spark/schema.test.ts",
+              "sha256": "48596b4aef85c046056cc99a9c4b6528ee0d4871b7e177fea4c119b983ed90f5"
+            }
+          ]
         },
         "routes": [
           {
@@ -125130,7 +125692,7 @@
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -126289,18 +126851,72 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "generated-authority-known",
           "canonicalPath": "spec/extensions/sqlserver-nullability/native.schema.json",
-          "generatorKind": "unresolved",
-          "generator": null,
-          "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
-          "governingClauses": [],
+          "generatorKind": "generated-from-exact-self-contained-native-evidence-schema-writer",
+          "generator": {
+            "language": "TypeScript",
+            "runtime": "Bun",
+            "entrypoints": [
+              "scripts/core-ideals/nullability-sqlserver-evidence-schema.ts"
+            ]
+          },
+          "executablePortDisposition": "Generator remains TypeScript/Python build tooling; Rust-port versus justified host-tool disposition is open",
+          "kind": "generated-from-exact-self-contained-native-evidence-schema-writer",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md",
+            "docs/helix/02-design/technical-designs/TD-041-core-nullability.md",
+            "docs/helix/01-frame/user-stories/US-041-core-nullability.md"
+          ],
+          "governingClauses": [
+            "US-041-AC2",
+            "US-041-AC6"
+          ],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "sourceClosureCompleteness": "exact generator, schema-builder inputs, governing contract, package exports and build/archive rules are hash-pinned; installed archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/01-frame/user-stories/US-041-core-nullability.md",
+              "sha256": "eadda31391acb90b2e17709f5df131e3fbf93a6b738edb0259adef218e63e977"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md",
+              "sha256": "58b5f07693618b91f73da98fba04ba14b222285e84b33b8639eb057bc7e3abd0"
+            },
+            {
+              "path": "docs/helix/02-design/technical-designs/TD-041-core-nullability.md",
+              "sha256": "03e487ff4003e1cd5f68869a08547dddd5b0d3197a9157f02150d3d6e4806334"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/core-ideals/nullability-sqlserver-evidence-schema.ts",
+              "sha256": "b56b2eadb48baa22009efa3dd28b8ec5e4cd885dd7ec973796c74bc81a324a43"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/core-ideals/nullability-sqlserver.ts",
+              "sha256": "7c3643aa91b831e5d63c43cb3567a4c91992ab25c7af7be21b2c15841cdd8e35"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "tests/core-ideals/nullability-sqlserver.test.ts",
+              "sha256": "7b2a7f70c0fabc166c25d37403519fcabad71723c1fe573d63532597a47ab90d"
+            }
+          ]
         },
         "routes": [
           {
@@ -126383,7 +126999,7 @@
         "defaultRouteStatus": "Browser default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -128518,7 +129134,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
@@ -129585,7 +130201,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -129601,7 +130217,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -129724,7 +130340,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -129740,7 +130356,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -130187,7 +130803,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/csv-boolean-lexical.js",
@@ -130203,7 +130819,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/csv-boolean-lexical.js",
@@ -131441,7 +132057,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/csv-boolean-lexical.js",
@@ -131457,7 +132073,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/csv-boolean-lexical.js",
@@ -136435,7 +137051,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -136981,7 +137597,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -136997,7 +137613,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -137120,7 +137736,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -137136,7 +137752,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -137259,7 +137875,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -137275,7 +137891,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -137398,7 +138014,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -137414,7 +138030,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -137537,7 +138153,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -137553,7 +138169,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -137676,7 +138292,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -137692,7 +138308,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -139801,7 +140417,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -139817,7 +140433,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -144216,7 +144832,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -144611,7 +145227,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -146575,7 +147191,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
+      "sourceSha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760",
       "ownerFamily": "resource:spec/core/schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from Node package root",
@@ -146585,7 +147201,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/schema.json",
-          "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
+          "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760",
           "packageRootAliasCount": 2
         },
         "authority": {
@@ -146618,7 +147234,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+              "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
             }
           ]
         },
@@ -146637,7 +147253,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -146973,7 +147589,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
+                "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
               },
               {
                 "path": "src/index-node-v4.ts",
@@ -147113,7 +147729,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -147339,7 +147955,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -147423,7 +148039,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -147447,7 +148063,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -147478,7 +148094,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -147513,7 +148129,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -147532,7 +148148,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+            "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -147559,7 +148175,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/schema.json",
       "line": 1,
-      "sourceSha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
+      "sourceSha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760",
       "ownerFamily": "resource:spec/core/schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from Node package root",
@@ -147569,7 +148185,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/schema.json",
-          "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970",
+          "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760",
           "packageRootAliasCount": 2
         },
         "authority": {
@@ -147602,7 +148218,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+              "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
             }
           ]
         },
@@ -147621,7 +148237,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -147957,7 +148573,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
+                "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
               },
               {
                 "path": "src/index-node-v4.ts",
@@ -148097,7 +148713,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -148323,7 +148939,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -148407,7 +149023,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -148431,7 +149047,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -148462,7 +149078,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -148497,7 +149113,7 @@
               },
               {
                 "path": "spec/core/schema.json",
-                "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+                "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
               }
             ],
             "installedQualification": {
@@ -148516,7 +149132,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+            "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -148673,7 +149289,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/semantic-type-reference.schema.json",
       "line": 1,
-      "sourceSha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23",
+      "sourceSha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a",
       "ownerFamily": "resource:spec/core/semantic-type-reference.schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from Node package root",
@@ -148683,7 +149299,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/semantic-type-reference.schema.json",
-          "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23",
+          "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a",
           "packageRootAliasCount": 1
         },
         "authority": {
@@ -148716,7 +149332,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+              "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
             }
           ]
         },
@@ -148735,7 +149351,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+                "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -148747,7 +149363,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
+                "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
               },
               {
                 "path": "src/index-node-v4.ts",
@@ -148799,7 +149415,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+                "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
               }
             ],
             "installedQualification": {
@@ -149013,7 +149629,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_recovery.rs",
@@ -149093,7 +149709,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+                "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
               }
             ],
             "installedQualification": {
@@ -149117,7 +149733,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+                "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
               }
             ],
             "installedQualification": {
@@ -149148,7 +149764,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+                "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
               }
             ],
             "installedQualification": {
@@ -149183,7 +149799,7 @@
               },
               {
                 "path": "spec/core/semantic-type-reference.schema.json",
-                "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+                "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
               }
             ],
             "installedQualification": {
@@ -149202,7 +149818,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+            "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -149717,18 +150333,65 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "authored-authority-known",
           "canonicalPath": "spec/core/csv-boolean-lexical-operation.schema.json",
-          "generatorKind": "unresolved",
+          "generatorKind": "authored-versioned-contract-schema",
           "generator": null,
           "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
+          "kind": "authored-versioned-contract-schema",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-053-domain-pack-profiles.md"
+          ],
           "governingClauses": [],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "authoredRevisionClosure": [
+            {
+              "commit": "8e76c74d14203225d1ef159c9132bb9e9b0cdffe",
+              "action": "added",
+              "sha256": "1c07d500c8dd6732ce814bdfb04a532a8df313c0df188f369faf7fcf0b2b85b0"
+            },
+            {
+              "commit": "8706814a9605d7325eef32a5df3d05696de00b62",
+              "action": "updated",
+              "sha256": "6548b442849a2a1246ea860ca5be22eecd98596c571d9c0b74ce1eba7780b791"
+            }
+          ],
+          "sourceClosureCompleteness": "direct versioned schema authorship and governing contract/current source/package closure are pinned; SDK archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-053-domain-pack-profiles.md",
+              "sha256": "07e7ce934061a4b8765664ec0d33535ecc3f0f641be7e667b5b70f9f56249126"
+            },
+            {
+              "path": "scripts/browser-csv-boolean-lexical.ts",
+              "sha256": "6ae3a936e0fb7eefd7bc1203156a3e3c9abec86a2b1ff622e293f3d0a6ea9472"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/csv-boolean-lexical.ts",
+              "sha256": "45d2516eca6f64e30b380e96853e28c7b7861f4aa2a9edd761ffdbf8d5639f4b"
+            },
+            {
+              "path": "tests/csv-boolean-lexical.test.ts",
+              "sha256": "b6c48d35d104dd0783b84f94131f5d0d4d7152aca845a4ebed7747aa499ccb42"
+            }
+          ]
         },
         "routes": [
           {
@@ -149811,7 +150474,7 @@
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -149833,7 +150496,7 @@
       "declarationKind": "VariableDeclaration",
       "source": "src/generated/core-model.ts",
       "line": 3,
-      "sourceSha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba",
+      "sourceSha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a",
       "ownerFamily": "generated-runtime",
       "rowKind": "executable",
       "defaultRoute": "Node package root declaration",
@@ -152787,7 +153450,7 @@
             },
             {
               "path": "spec/core/extension-package.schema.json",
-              "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+              "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
             },
             {
               "path": "spec/core/native-json.schema.json",
@@ -152795,11 +153458,11 @@
             },
             {
               "path": "spec/core/schema.json",
-              "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+              "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
             },
             {
               "path": "spec/core/semantic-type-reference.schema.json",
-              "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+              "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
             },
             {
               "path": "spec/extensions/delta/package.json",
@@ -152811,11 +153474,11 @@
             },
             {
               "path": "spec/metamodel/generated/core-constraints.json",
-              "sha256": "332a5ab39c83ba3b22fb3f124f982df8caad5b5bda358c0265f3ed1f9f98068c"
+              "sha256": "a7b05cdecc1d0cfbcc6e1715c90c542e5c1d1a0b5db024c96b4f044093caa9b6"
             },
             {
               "path": "spec/metamodel/generated/domain-policy.json",
-              "sha256": "348913d56fe96d3ff4f9a46c446a641f06d31758532f686277cd5d3208df5465"
+              "sha256": "650374337d88a5f1ed809f414be037004a778c284657f40670d79895d33f4b9f"
             },
             {
               "path": "src/adapters/delta/index.ts",
@@ -152827,7 +153490,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
+              "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
             },
             {
               "path": "src/index.ts",
@@ -153018,18 +153681,89 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "generated-authority-known",
           "canonicalPath": "spec/extensions/delta-log/inspection.schema.json",
-          "generatorKind": "unresolved",
-          "generator": null,
-          "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
-          "governingClauses": [],
-          "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "generatorKind": "generated-from-exact-contract-governed-delta-log-schema-writer",
+          "generator": {
+            "language": "TypeScript",
+            "runtime": "Bun",
+            "entrypoints": [
+              "scripts/delta-log-schema.ts"
+            ]
+          },
+          "executablePortDisposition": "Generator remains TypeScript/Python build tooling; Rust-port versus justified host-tool disposition is open",
+          "kind": "generated-from-exact-contract-governed-delta-log-schema-writer",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-018-delta.md",
+            "docs/helix/01-frame/user-stories/US-018-delta-schema.md"
+          ],
+          "governingClauses": [
+            "US-018-AC9",
+            "US-018-AC10"
+          ],
+          "generatorInputs": [
+            "spec/core/native-json.schema.json"
+          ],
+          "sourceClosureCompleteness": "exact generator, schema-builder inputs, governing contract, package exports and build/archive rules are hash-pinned; installed archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/01-frame/user-stories/US-018-delta-schema.md",
+              "sha256": "780fd911f642d167af76a61c72f45d9aa7bbccc0709ae741b9ff0a763ba95602"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-018-delta.md",
+              "sha256": "64d6342ce9ae4dbd898cca795a7a0862aed1427120544294a19c4a6bc0ba7f33"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/delta-log-schema.ts",
+              "sha256": "0055ace4aa840ec63a17a25e195f5ee185f2b5d66dee469015afb3e85303c8c7"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "spec/core/native-json.schema.json",
+              "sha256": "071e2dc97ffae0b8743b691ae4786c0b74eaa1ee54d881e1d8116dcb3f6a2839"
+            },
+            {
+              "path": "spec/extensions/delta-log/package.json",
+              "sha256": "052c7f012d38756713519719acd20b3f6164cbe9548641a98bd681dab409a7b6"
+            },
+            {
+              "path": "spec/extensions/delta-log/schema.json",
+              "sha256": "495afacf0a4daaefb2c7b2d191a6dab999f722cd585818a19f342ad53f1fb477"
+            },
+            {
+              "path": "src/generated/core-model.ts",
+              "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/types.ts",
+              "sha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c"
+            },
+            {
+              "path": "tests/delta/actions.test.ts",
+              "sha256": "4a61e7cf20b9445cdc0dc916bb7b9bcdb93cf7812ad80f94d5b962b20bb2c7d3"
+            },
+            {
+              "path": "tests/delta/log.test.ts",
+              "sha256": "8bf2cc49111f8de97cfb19b43afc1edf58a9a9519a3081a8386e583508f343f6"
+            }
+          ]
         },
         "routes": [
           {
@@ -153108,7 +153842,7 @@
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -154592,7 +155326,7 @@
             },
             {
               "path": "spec/core/extension-package.schema.json",
-              "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+              "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
             },
             {
               "path": "spec/core/native-json.schema.json",
@@ -154600,11 +155334,11 @@
             },
             {
               "path": "spec/core/schema.json",
-              "sha256": "77f3e5f96b1f4c3661b3541538676898d1d8b4afafa2d914223d9bdca51a4970"
+              "sha256": "0bc5c8f7004b0624445fdb5dbcb24600e5535c9414eaa91a5ee5696abba0d760"
             },
             {
               "path": "spec/core/semantic-type-reference.schema.json",
-              "sha256": "9db6feafd2cad9c2fde9039e529f5c4f379e2b6f1fd40b4458939503fa427d23"
+              "sha256": "91a5f714f9651610736b37ee3701676174dd7e8ec43e239702aac22dd57c4e9a"
             },
             {
               "path": "spec/extensions/delta-table/package.json",
@@ -154616,11 +155350,11 @@
             },
             {
               "path": "spec/metamodel/generated/core-constraints.json",
-              "sha256": "332a5ab39c83ba3b22fb3f124f982df8caad5b5bda358c0265f3ed1f9f98068c"
+              "sha256": "a7b05cdecc1d0cfbcc6e1715c90c542e5c1d1a0b5db024c96b4f044093caa9b6"
             },
             {
               "path": "spec/metamodel/generated/domain-policy.json",
-              "sha256": "348913d56fe96d3ff4f9a46c446a641f06d31758532f686277cd5d3208df5465"
+              "sha256": "650374337d88a5f1ed809f414be037004a778c284657f40670d79895d33f4b9f"
             },
             {
               "path": "src/adapters/delta/index.ts",
@@ -154632,7 +155366,7 @@
             },
             {
               "path": "src/generated/core-model.ts",
-              "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
+              "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
             },
             {
               "path": "src/index.ts",
@@ -157409,7 +158143,7 @@
       "declarationKind": "SourceFile",
       "source": "spec/core/extension-package.schema.json",
       "line": 1,
-      "sourceSha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7",
+      "sourceSha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea",
       "ownerFamily": "resource:spec/core/extension-package.schema.json",
       "rowKind": "generated-inert-json",
       "defaultRoute": "JSON resource export from Node package root",
@@ -157419,7 +158153,7 @@
       "resourceOwnership": {
         "source": {
           "path": "spec/core/extension-package.schema.json",
-          "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7",
+          "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea",
           "packageRootAliasCount": 1
         },
         "authority": {
@@ -157452,7 +158186,7 @@
             },
             {
               "path": "spec/metamodel/generated/manifest.json",
-              "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+              "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
             }
           ]
         },
@@ -157471,7 +158205,7 @@
             "sourceClosure": [
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+                "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
               },
               {
                 "path": "src/access/codegen-resources.ts",
@@ -157483,7 +158217,7 @@
               },
               {
                 "path": "src/generated/core-model.ts",
-                "sha256": "b9f9e4e9bb058e4c7aafa879bdda103de11f66aa39740fe2ee6a3a206de116ba"
+                "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
               },
               {
                 "path": "src/index-node-v4.ts",
@@ -157527,7 +158261,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+                "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
               }
             ],
             "installedQualification": {
@@ -157717,7 +158451,7 @@
               },
               {
                 "path": "crates/umf-core/src/avro_record_type_classifier.rs",
-                "sha256": "83e99aa326536a2249f84e213f82da259c6ae79583d640cfc1b99efcdd917451"
+                "sha256": "ac8408c0ec5ba9c922ab3d866b5551a1a996c01f555609ec47c382baec8ef667"
               },
               {
                 "path": "crates/umf-core/src/binding_index_projection.rs",
@@ -157789,7 +158523,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+                "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
               }
             ],
             "installedQualification": {
@@ -157813,7 +158547,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+                "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
               }
             ],
             "installedQualification": {
@@ -157844,7 +158578,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+                "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
               }
             ],
             "installedQualification": {
@@ -157879,7 +158613,7 @@
               },
               {
                 "path": "spec/core/extension-package.schema.json",
-                "sha256": "cd875aa9127cb8260e9a364049eec1b6a63b343ed9114ef040e5d6c3233e6fc7"
+                "sha256": "a5d9a6d27cdeb2180fbe8c5b78316c22e85c0cf7672c7f1e6f4f2c974a08a2ea"
               }
             ],
             "installedQualification": {
@@ -157898,7 +158632,7 @@
           },
           {
             "path": "spec/metamodel/generated/manifest.json",
-            "sha256": "eaf198631830cbbc86c6b98fab029eced2edaba238682f5e8384b111fd82c81f"
+            "sha256": "100bc7b1ff47e178be1aa8083650e5a59095242689284c52d9b9297cbe18f3aa"
           }
         ],
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
@@ -164007,7 +164741,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/core-model.js",
@@ -164023,7 +164757,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -164152,7 +164886,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/core-model.js",
@@ -164168,7 +164902,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -164439,7 +165173,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/core-model.js",
@@ -164455,7 +165189,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -171303,18 +172037,83 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "generated-authority-known",
           "canonicalPath": "spec/extensions/parquet/framing.schema.json",
-          "generatorKind": "unresolved",
-          "generator": null,
-          "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
-          "governingClauses": [],
+          "generatorKind": "generated-from-exact-contract-governed-parquet-schema-writer",
+          "generator": {
+            "language": "TypeScript",
+            "runtime": "Bun",
+            "entrypoints": [
+              "scripts/parquet-schema.ts"
+            ]
+          },
+          "executablePortDisposition": "Generator remains TypeScript/Python build tooling; Rust-port versus justified host-tool disposition is open",
+          "kind": "generated-from-exact-contract-governed-parquet-schema-writer",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-019-parquet.md",
+            "docs/helix/01-frame/user-stories/US-019-parquet.md"
+          ],
+          "governingClauses": [
+            "US-019-AC1",
+            "US-019-AC2"
+          ],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "sourceClosureCompleteness": "exact generator, schema-builder inputs, governing contract, package exports and build/archive rules are hash-pinned; installed archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/01-frame/user-stories/US-019-parquet.md",
+              "sha256": "6925e98cb2a61fe3bc7a674045786fcf96929977df0c5db2d3e6dd743ea0073f"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-019-parquet.md",
+              "sha256": "e47f7bf0ab24b0d3a65808c70a2c53867bbf24f9a992ce11485c10f078eab696"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "scripts/parquet-schema.ts",
+              "sha256": "b512da398d16f826f524862c348eacb2e5a73dd1a94261c5b1d9b27135615ce0"
+            },
+            {
+              "path": "spec/extensions/parquet/package.json",
+              "sha256": "eba2d6528e6c5345dc37c63678cba0564f8ab26aaa55c04dcaf4da761402a6ec"
+            },
+            {
+              "path": "spec/extensions/parquet/schema.json",
+              "sha256": "9600ee4599b65705a9eb186b751fb9fcbd712a813b5f5e32de6ff6e8abe1cfa7"
+            },
+            {
+              "path": "src/generated/core-model.ts",
+              "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/types.ts",
+              "sha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c"
+            },
+            {
+              "path": "tests/parquet/capture.test.ts",
+              "sha256": "d37e9631c144b17a2e808c081a528259289430b89af658f826dba63842fe4fdc"
+            },
+            {
+              "path": "tests/parquet/footer.test.ts",
+              "sha256": "e255b34a57e64f697493036284f72b680fcae684ee5357f5430150b4980e32c1"
+            }
+          ]
         },
         "routes": [
           {
@@ -171393,7 +172192,7 @@
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -174806,7 +175605,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -174822,7 +175621,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -174952,7 +175751,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
@@ -175230,7 +176029,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
@@ -175349,7 +176148,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -175365,7 +176164,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -187150,7 +187949,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
@@ -189566,18 +190365,89 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "generated-authority-known",
           "canonicalPath": "spec/extensions/spark/datatype-schema.json",
-          "generatorKind": "unresolved",
-          "generator": null,
-          "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
-          "governingClauses": [],
-          "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "generatorKind": "generated-from-exact-contract-governed-spark-schema-writer",
+          "generator": {
+            "language": "TypeScript",
+            "runtime": "Bun",
+            "entrypoints": [
+              "scripts/spark-schema.ts"
+            ]
+          },
+          "executablePortDisposition": "Generator remains TypeScript/Python build tooling; Rust-port versus justified host-tool disposition is open",
+          "kind": "generated-from-exact-contract-governed-spark-schema-writer",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-017-spark.md",
+            "docs/helix/01-frame/user-stories/US-017-spark-schema.md"
+          ],
+          "governingClauses": [
+            "US-017-AC1",
+            "US-017-AC2"
+          ],
+          "generatorInputs": [
+            "spec/core/native-json.schema.json"
+          ],
+          "sourceClosureCompleteness": "exact generator, schema-builder inputs, governing contract, package exports and build/archive rules are hash-pinned; installed archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/01-frame/user-stories/US-017-spark-schema.md",
+              "sha256": "6d94d99d7a7eaa9ab06c5364368a13d06b60650043cdcce2458714f7290daa87"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-017-spark.md",
+              "sha256": "89cdf7998778ea07982019cb1916143edfa871a846c1689c80a629568bb69034"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "scripts/spark-schema.ts",
+              "sha256": "8079702c1858ef295cd992b95c11b80027d2f981c665df308e95493c191540e4"
+            },
+            {
+              "path": "spec/core/native-json.schema.json",
+              "sha256": "071e2dc97ffae0b8743b691ae4786c0b74eaa1ee54d881e1d8116dcb3f6a2839"
+            },
+            {
+              "path": "spec/extensions/spark/package.json",
+              "sha256": "a402b39a48a436641c5bc06d64ec94cb6611e793a53b738f1075d366ade2ad9f"
+            },
+            {
+              "path": "spec/extensions/spark/schema.json",
+              "sha256": "a3ccfaa40c06a2597b1491d9d26b102f2da41fa75141f5fb7203280d0c836349"
+            },
+            {
+              "path": "src/adapters/spark/index.ts",
+              "sha256": "2ab32f0e1117f7e17b776f53abbf0c37146cdb7214efd0adf9dfd8bb06dc4e5b"
+            },
+            {
+              "path": "src/generated/core-model.ts",
+              "sha256": "f77f60cb12984f88b02c0b20f4aa1ffc99afb36fa1e2cc4825ec87f8768c100a"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "src/model/types.ts",
+              "sha256": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c"
+            },
+            {
+              "path": "tests/spark/schema.test.ts",
+              "sha256": "48596b4aef85c046056cc99a9c4b6528ee0d4871b7e177fea4c119b983ed90f5"
+            }
+          ]
         },
         "routes": [
           {
@@ -189660,7 +190530,7 @@
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -190819,18 +191689,72 @@
           "packageRootAliasCount": 1
         },
         "authority": {
-          "status": "authority-unresolved",
+          "status": "generated-authority-known",
           "canonicalPath": "spec/extensions/sqlserver-nullability/native.schema.json",
-          "generatorKind": "unresolved",
-          "generator": null,
-          "executablePortDisposition": "No exact executable generator identified; authority/source provenance review remains open",
-          "kind": null,
-          "governingArtifacts": [],
-          "governingClauses": [],
+          "generatorKind": "generated-from-exact-self-contained-native-evidence-schema-writer",
+          "generator": {
+            "language": "TypeScript",
+            "runtime": "Bun",
+            "entrypoints": [
+              "scripts/core-ideals/nullability-sqlserver-evidence-schema.ts"
+            ]
+          },
+          "executablePortDisposition": "Generator remains TypeScript/Python build tooling; Rust-port versus justified host-tool disposition is open",
+          "kind": "generated-from-exact-self-contained-native-evidence-schema-writer",
+          "governingArtifacts": [
+            "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md",
+            "docs/helix/02-design/technical-designs/TD-041-core-nullability.md",
+            "docs/helix/01-frame/user-stories/US-041-core-nullability.md"
+          ],
+          "governingClauses": [
+            "US-041-AC2",
+            "US-041-AC6"
+          ],
           "generatorInputs": [],
-          "sourceClosureCompleteness": "no generator source closure established",
+          "sourceClosureCompleteness": "exact generator, schema-builder inputs, governing contract, package exports and build/archive rules are hash-pinned; installed archive bytes remain unqualified",
           "historicalGeneratorReceipt": null,
-          "sourceClosure": []
+          "sourceClosure": [
+            {
+              "path": "docs/helix/01-frame/user-stories/US-041-core-nullability.md",
+              "sha256": "eadda31391acb90b2e17709f5df131e3fbf93a6b738edb0259adef218e63e977"
+            },
+            {
+              "path": "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md",
+              "sha256": "58b5f07693618b91f73da98fba04ba14b222285e84b33b8639eb057bc7e3abd0"
+            },
+            {
+              "path": "docs/helix/02-design/technical-designs/TD-041-core-nullability.md",
+              "sha256": "03e487ff4003e1cd5f68869a08547dddd5b0d3197a9157f02150d3d6e4806334"
+            },
+            {
+              "path": "scripts/build.ts",
+              "sha256": "1f7f0c0a983dcf4629afb9f957379dbfcc23981eb2fa9c510734b12d94b85783"
+            },
+            {
+              "path": "scripts/core-ideals/nullability-sqlserver-evidence-schema.ts",
+              "sha256": "b56b2eadb48baa22009efa3dd28b8ec5e4cd885dd7ec973796c74bc81a324a43"
+            },
+            {
+              "path": "scripts/package-sdk-rust-default.ts",
+              "sha256": "64212fd7c0d00123d34ab5b86046b9d78b7e656b39a041685cc96c96d81f5731"
+            },
+            {
+              "path": "scripts/package-sdk.py",
+              "sha256": "18aff024e8e27e559ded225fb783aaba2a5b2d54326a9cff7947de901e47f2d4"
+            },
+            {
+              "path": "src/core-ideals/nullability-sqlserver.ts",
+              "sha256": "7c3643aa91b831e5d63c43cb3567a4c91992ab25c7af7be21b2c15841cdd8e35"
+            },
+            {
+              "path": "src/index.ts",
+              "sha256": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da"
+            },
+            {
+              "path": "tests/core-ideals/nullability-sqlserver.test.ts",
+              "sha256": "7b2a7f70c0fabc166c25d37403519fcabad71723c1fe573d63532597a47ab90d"
+            }
+          ]
         },
         "routes": [
           {
@@ -190913,7 +191837,7 @@
         "defaultRouteStatus": "Node default route inherits the TypeScript resource/data leg; installed route and bytes unqualified; zero resource rows retired",
         "reviewStatus": "Machine source/route census; per-resource authority and exact installed-artifact review pending",
         "knownGaps": [
-          "Exact authoring authority or generator input/write relation is not established by the current static source map",
+          "Source authority and package build closure are pinned; installed archive byte qualification remains open",
           "No current production SDK archive receipt binds this resource byte hash to an installed artifact"
         ]
       },
@@ -193048,7 +193972,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
@@ -194115,7 +195039,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -194131,7 +195055,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -194254,7 +195178,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -194270,7 +195194,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -194717,7 +195641,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/csv-boolean-lexical.js",
@@ -194733,7 +195657,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/csv-boolean-lexical.js",
@@ -195971,7 +196895,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "1f73934eecc97165f3cc4c8da3e303824a73475ca025437dcf1fd923e760e7e2"
+            "sha256": "90613c3367d6dc02e3740cbd3159b55a92b86bea76c7d681e0bbd37614a9269a"
           },
           {
             "path": "bindings/core/node/src/csv-boolean-lexical.js",
@@ -195987,7 +196911,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "5819565327d4ce4f32e70bbe9e47487326299cccfd33a5c5740158ed06354146"
+            "sha256": "9a20ef27a2726aa8e30c8883986955a00744faf2152fc04fed7e8c07117457ea"
           },
           {
             "path": "bindings/core/wasm/src/csv-boolean-lexical.js",
@@ -209125,6 +210049,22 @@
         "disposition": "tooling closure; not part of package-root symbol rows"
       },
       {
+        "source": "scripts/rust-migration/r8/csv-boolean-default-route-installed.mjs",
+        "sourceSha256": "00b32f2b7034942107120f087df500500c9d82a3d1405216b92fad6f0bbc4ebd",
+        "packageScriptEntrypoints": [],
+        "activity": "package-entrypoint-reachability-unresolved",
+        "role": "support-tool",
+        "disposition": "tooling closure; not part of package-root symbol rows"
+      },
+      {
+        "source": "scripts/rust-migration/r8/csv-boolean-default-route-package.py",
+        "sourceSha256": "1ceba4b9ac2742f05ceb4b83fc3baaa572946dcc6c0355abaca133b3694be1ec",
+        "packageScriptEntrypoints": [],
+        "activity": "package-entrypoint-reachability-unresolved",
+        "role": "support-tool",
+        "disposition": "tooling closure; not part of package-root symbol rows"
+      },
+      {
         "source": "scripts/rust-migration/r8/declaration-shapes.mjs",
         "sourceSha256": "bf242911e0215c0ab99615648e749f381011362b4651c5383275e08951525cc6",
         "packageScriptEntrypoints": [],
@@ -209182,7 +210122,7 @@
       },
       {
         "source": "scripts/rust-migration/r8/gap-ledger.mjs",
-        "sourceSha256": "f8e266c9abc07c7c86eb6478b2ec6c8f20453595ffaa043dc89625697a5f1ad0",
+        "sourceSha256": "c62387d311548b3756e5dd3dca7794f858117ce9497fd3146d531d4b54b5f4ac",
         "packageScriptEntrypoints": [],
         "activity": "package-entrypoint-reachability-unresolved",
         "role": "support-tool",
@@ -209190,7 +210130,7 @@
       },
       {
         "source": "scripts/rust-migration/r8/gap-ledger.test.mjs",
-        "sourceSha256": "e97ab73155f31a111a651817b00219d0961c9a88f1a8df95313192472f2f75db",
+        "sourceSha256": "a9919a65aa58fc419682fe239d61abe45f59255a7afb8a765386221d46e0d057",
         "packageScriptEntrypoints": [],
         "activity": "package-entrypoint-reachability-unresolved",
         "role": "support-tool",
@@ -209207,6 +210147,14 @@
       {
         "source": "scripts/rust-migration/r8/json-number-binding-node.mjs",
         "sourceSha256": "9a4db4e17d00ae13c8a8ccc9ec9619b6f36bb6be4d3d7884a0c30efc1a94b5ec",
+        "packageScriptEntrypoints": [],
+        "activity": "package-entrypoint-reachability-unresolved",
+        "role": "support-tool",
+        "disposition": "tooling closure; not part of package-root symbol rows"
+      },
+      {
+        "source": "scripts/rust-migration/r8/json-value-host-admission.test.js",
+        "sourceSha256": "7aa4fc425c65afec5bcafde545dc0e52dc089fa0abf1ba706e8d4802f5d58515",
         "packageScriptEntrypoints": [],
         "activity": "package-entrypoint-reachability-unresolved",
         "role": "support-tool",
@@ -212130,7 +213078,7 @@
           },
           {
             "source": "python/umf_access/src/umf_access/generated_core.py",
-            "sourceSha256": "825f5d8576d5ca7522177c0f08c3f6e97f984b1e7d65c1c5ab4a960c3f86bd3e",
+            "sourceSha256": "780df4181beade8484bd8c4ebd61deb1d41f2e75917855278a090566dfa2cdaa",
             "publicCallableNames": [],
             "disposition": "module-level public-by-convention surface; exact contract and Rust route remain unreviewed"
           },

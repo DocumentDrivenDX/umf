@@ -304,12 +304,8 @@ function runRawValue(module, nativeFunction, input, format, controls) {
 function runRawJsonValue(module, nativeFunction, input, format, controls, encodeOptions) {
   const bridge = hasControls(controls) ? createControlBridge(controls) : undefined;
   const hostWork = admissionWork(bridge);
-  let wire;
-  try { wire = encodeWire(input, {...encodeOptions, work: hostWork}); }
-  catch (error) {
-    if (error?.code === 'CYCLE') throw new JsonSchemaUmfError(error.code, error.message, error.path);
-    throw error;
-  }
+  const admitted = copyTypescriptJsonHostValue(input, hostWork);
+  const wire = encodeWire(admitted, {...encodeOptions, work: hostWork});
   const response = JSON.parse(nativeFunction(wire, format, bridge));
   const failure = resultError(response);
   if (failure) {
@@ -319,6 +315,61 @@ function runRawJsonValue(module, nativeFunction, input, format, controls, encode
     throw new JsonSchemaUmfError(failure.code, failure.message, failure.path);
   }
   return fromWire(JSON.parse(response.wire));
+}
+
+// Match src/model/json.ts copyJson admission before converting host values to wire.
+function copyTypescriptJsonHostValue(input, work) {
+  const active = new Set();
+  let values = 0;
+  function visit(value, path, depth) {
+    work?.(1);
+    if (++values > 100_000 || depth > 128) throw new JsonSchemaUmfError('LIMIT', 'JSON structural limit exceeded', path);
+    if (value === null || typeof value === 'string' || typeof value === 'boolean') {
+      if (typeof value === 'string') work?.(value.length);
+      return value;
+    }
+    if (typeof value === 'number') {
+      if (!Number.isFinite(value) || Object.is(value, -0) || (Number.isInteger(value) && !Number.isSafeInteger(value))) {
+        throw new JsonSchemaUmfError('NUMBER', 'Number outside the core interoperable numeric profile', path);
+      }
+      return value;
+    }
+    if (typeof value !== 'object') throw new JsonSchemaUmfError('NON_JSON', 'Value is not JSON-compatible', path);
+    if (active.has(value)) throw new JsonSchemaUmfError('CYCLE', 'Cyclic value', path);
+    const array = Array.isArray(value);
+    const proto = Object.getPrototypeOf(value);
+    if (array ? proto !== Array.prototype : proto !== Object.prototype && proto !== null) {
+      throw new JsonSchemaUmfError('NON_JSON', 'Custom object prototype', path);
+    }
+    if (Object.getOwnPropertySymbols(value).length) throw new JsonSchemaUmfError('NON_JSON', 'Symbol keys are not JSON-compatible', path);
+    active.add(value);
+    const descriptors = Object.create(null);
+    const ownKeys = Reflect.ownKeys(value);
+    work?.(ownKeys.length);
+    for (const key of ownKeys) {
+      const property = Object.getOwnPropertyDescriptor(value, key);
+      if (property) Object.defineProperty(descriptors, key, {value: property, enumerable: true, writable: true, configurable: true});
+    }
+    const result = array ? [] : Object.create(null);
+    const keys = Object.keys(descriptors);
+    for (const key of keys) {
+      const property = descriptors[key];
+      if (array && key === 'length') continue;
+      if (!property.enumerable || !Object.hasOwn(property, 'value')) {
+        throw new JsonSchemaUmfError('NON_JSON', 'Hidden fields and accessors cannot be serialized faithfully', `${path}/${key.replaceAll('~', '~0').replaceAll('/', '~1')}`);
+      }
+      if (array && (!/^(0|[1-9][0-9]*)$/.test(key) || Number(key) >= 0xffff_ffff || Number(key) >= value.length)) {
+        throw new JsonSchemaUmfError('NON_JSON', 'Non-index array property', path);
+      }
+      work?.(key.length + 1);
+      const childPath = `${path}/${key.replaceAll('~', '~0').replaceAll('/', '~1')}`;
+      Object.defineProperty(result, key, {value: visit(property.value, childPath, depth + 1), enumerable: true, writable: true, configurable: true});
+    }
+    if (array && Object.keys(value).length !== value.length) throw new JsonSchemaUmfError('NON_JSON', 'Sparse arrays are not JSON values', path);
+    active.delete(value);
+    return result;
+  }
+  return visit(input, '', 0);
 }
 
 function nativeKeyTupleFailure(error) {
