@@ -6034,6 +6034,19 @@ fresh CPython run passes the focused capture group at 93 tests plus three
 subtests; the dedicated observer file passes 47/47. This remains source-level
 evidence, not installed-wheel qualification.
 
+The [empty-all recursive visitor tail](evidence/rust-migration/r8-capture-visit-field-join-tuple/README.md#native-args-before-owner-correction-2026-10-26)
+now extends that private exact-profile observer through six live `Node.op`
+branch reads and the final `Node.args` iteration. Same-host regression pins
+the full stable-graph trace equal to `_validate_node` and verifies that a
+seventh `Node.op` fault wins over a competing final-args fault with exception
+identity preserved. The dedicated observer file passes 48/48 and the broader
+focused capture group passes 94 tests plus three subtests against a fresh
+extension overlay. This does not qualify state-changing getters, other graph
+shapes or full validator parity. Python DTO limits remain 50,000 values,
+depth 64 and 8 MiB text/output, separate from Rust Context limits and absent
+from public Python-object capture; public route remains unchanged. Installed-
+wheel and public cutover qualification remain open.
+
 The separate [read-frame gate](evidence/rust-migration/r8-python-read-frame-core/README.md)
 now has a private PyO3 bridge. Rust asks for host `len`/index/iteration reads
 in predecessor order and owns post-host shape and post-decode cardinality

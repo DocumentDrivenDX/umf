@@ -224,14 +224,15 @@ prefix. It reports whether the observed steps were empty, the root was an
 exact `RecordRef`, and the steps container was an exact tuple; the callback
 admits only the exact empty-steps profile.
 
-The pinned regression compares that complete prefix on the same CPython host
-and injects competing faults at the fourth `Node.args` read and root-owner
-`module` read; both paths rethrow the original `Node.args` exception and never
-touch the owner. It also records that the observer stops after owner/Join
-admission, while the predecessor continues into `visit(node)` with six
-further `Node.op` reads and one `Node.args` read. This fixes the `Node.args`
-versus owner first-fault divergence; it does not qualify full `_validate_node` parity or public
-selection. Existing Python DTO encoding still has separate 50,000-node,
+The pinned regression now compares the full observed trace on the same CPython
+host: `Node.op`, `Node.args` four times, root `RecordRef.module/element/alias`,
+six further `Node.op` reads, then `Node.args`. The native observer continues
+through the recursive visitor's nonmatching operation checks and final args
+iteration for this exact empty-step leaf. Competing-fault tests pin identity
+and order at the fourth args read before owner access and the seventh op read
+before the final args read. These observations qualify only this stable exact
+base `.all()` graph; they do not qualify state-changing getters, full
+`_validate_node` parity or public selection. Existing Python DTO encoding still has separate 50,000-node,
 depth-64 and 8-MiB text/output ceilings, while Python `capture()` has no DTO
 encoder. Those limits should not be imposed by a public capture route that
 returns Python objects; a Rust-owned public route must avoid that encoder or
@@ -240,9 +241,9 @@ the remaining visitor semantics still block cutover.
 
 The observer capability is now
 `umf-access-capture-graph-observation/0.5.0`. A fresh Rust 1.90.0 build and
-the focused CPython 3.13.16 Darwin arm64 file pass 47/47. Public `capture()`
+the focused CPython 3.13.16 Darwin arm64 file pass 48/48. Public `capture()`
 remains Python-selected; no installed-wheel or release claim is made.
-The broader focused capture set also passes 93 tests and three subtests,
+The broader focused capture set also passes 94 tests and three subtests,
 including the existing public capture, Rust DTO validator and predecessor
 replay files. The focused Rust observer unit suite passes 10/10.
 
@@ -270,7 +271,7 @@ Current implementation pins (superseding the earlier audit's changed files):
 | Input | SHA-256 |
 |---|---|
 | `python/umf_access/src/umf_access/rust_capture_observe.py` | `51457d436b5183ecfed4382e8046b85464cdd227dda2734ff2d9fc66b54b5864` |
-| `python/umf_access/tests/test_capture_field_observation.py` | `d82589b7ad97437298d11b8ce8d92984669b88591af6c546137b8868b8b75bea` |
-| `crates/umf-core/src/access_graph_host_observation.rs` | `49d2e0b28482c83e9575a560a09156202d052831f367fb564931e3be306aa021` |
+| `python/umf_access/tests/test_capture_field_observation.py` | `83b738a36478ee606701fe6a74feca63a817acf12cba9812267d8fc85ee706ad` |
+| `crates/umf-core/src/access_graph_host_observation.rs` | `a8b9969a3499cbb087d164af03b408e9697b8a0516da4f926a307ed852ca9779` |
 | `bindings/core/python/src/lib.rs` | `07a6003e98417a35c8756bc53918c4417172bad74742528f94dba81ec6d44d2e` |
-| temporary `_rust_core.abi3.so` | `d263405ef4ec30870ea338a253a1f23754beb743730142859b933a93ba0766b9` |
+| temporary `_rust_core.abi3.so` | `e2a92c52ba0a10827cf8c7f67dc115729f0dfe96de89d0264a49000e4d3db05e` |

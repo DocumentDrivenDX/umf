@@ -606,6 +606,13 @@ pub fn observe_terminal_join_owners<H: Copy>(
         }
         owners.insert(owner_through_relation(context, host, relation, "target")?);
     }
+    if terminal_op == Utf16::from("all")
+        && steps_empty
+        && record_exact
+        && steps_exact_tuple
+    {
+        observe_all_empty_visit_tail(context, host, node)?;
+    }
     Ok(TerminalJoinObservation {
         terminal_op,
         owners,
@@ -613,6 +620,31 @@ pub fn observe_terminal_join_owners<H: Copy>(
         record_exact,
         steps_exact_tuple,
     })
+}
+
+/// Continue the recursive visitor read schedule for the exact empty `all`
+/// profile after terminal and owner checks. On this leaf, each op-specific
+/// branch is a non-match; preserve all six live op reads, then iterate the
+/// terminal args and the empty steps tuple as Python `visit(node)` does.
+fn observe_all_empty_visit_tail<H: Copy>(
+    context: &mut crate::Context<'_>,
+    host: &mut impl CaptureGraphHostObserver<Handle = H>,
+    node: H,
+) -> Result<(), ObservationError> {
+    for _ in 0..6 {
+        let _ = read_terminal_op(context, host, node)?;
+    }
+    let args = object(attr(context, host, node, "args")?)?;
+    let args_iter = budgeted(context, || host.iter(args))?;
+    while let Some(child) = budgeted(context, || host.next(args_iter))? {
+        if budgeted(context, || {
+            host.is_exact_structural(child, StructuralType::Tuple)
+        })? {
+            let child_iter = budgeted(context, || host.iter(child))?;
+            while budgeted(context, || host.next(child_iter))?.is_some() {}
+        }
+    }
+    Ok(())
 }
 
 /// Ask the host for all owner components before comparing, matching Python's

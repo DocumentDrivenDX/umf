@@ -35,8 +35,8 @@ def test_private_all_empty_observation_and_dto_encoding_share_work_session():
     assert encoding_work > 0
 
 
-def test_private_all_empty_callback_preserves_args_before_owner_read_prefix():
-    """Pin the first-fault prefix without claiming complete validator parity."""
+def test_private_all_empty_callback_preserves_recursive_visit_read_trace():
+    """Pin the observed host-read trace without claiming full validator parity."""
     from umf_access.capture import _validate_node
 
     root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
@@ -84,14 +84,48 @@ def test_private_all_empty_callback_preserves_args_before_owner_read_prefix():
         ("Node", "op"),
         ("Node", "args"),
     )
-    assert candidate == predecessor[:8]
-    assert candidate[4:8] == (
-        ("Node", "args"),
-        ("RecordRef", "module"),
-        ("RecordRef", "element"),
-        ("RecordRef", "alias"),
-    )
-    assert candidate != predecessor  # the private observer still ends before `visit(node)`
+    assert candidate == predecessor
+
+
+def test_recursive_visit_op_fault_precedes_final_args_fault_in_both_paths():
+    from umf_access.capture import _validate_node
+
+    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    node = Node("all", (root, ()))
+    original_node = Node.__getattribute__
+    op_reads = 0
+    args_reads = 0
+    op_fault = LookupError("seventh op read")
+    args_fault = RuntimeError("final args read must remain later")
+
+    def observed_node(instance, name):
+        nonlocal op_reads, args_reads
+        if instance is node and name == "op":
+            op_reads += 1
+            if op_reads == 7:
+                raise op_fault
+        if instance is node and name == "args":
+            args_reads += 1
+            if args_reads == 5:
+                raise args_fault
+        return original_node(instance, name)
+
+    try:
+        Node.__getattribute__ = observed_node
+        with pytest.raises(LookupError) as predecessor:
+            _validate_node(node, ())
+        assert predecessor.value is op_fault
+        assert op_reads == 7
+        assert args_reads == 4
+
+        op_reads = args_reads = 0
+        with pytest.raises(LookupError) as candidate:
+            observe_all_empty_capture_profile(node)
+        assert candidate.value is op_fault
+        assert op_reads == 7
+        assert args_reads == 4
+    finally:
+        Node.__getattribute__ = original_node
 
 
 def test_fourth_args_fault_precedes_root_owner_fault_in_both_paths():
