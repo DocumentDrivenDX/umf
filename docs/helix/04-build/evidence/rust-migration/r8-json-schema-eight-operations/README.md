@@ -204,3 +204,21 @@ work limits, and setup/operation callback separation. They do not qualify all
 host mutation, cancellation timing, or resource-size behavior. The adapter
 remains opt-in; complete support outside the recorded narrow profile and
 default-route budget compatibility are unresolved.
+
+## Non-string pointer wrapper correction
+
+The Node and WASM operation façades now evaluate the source expression
+`pointer.startsWith('/')` for non-string pointers to `getJsonSchemaNode` and
+`editJsonSchemaNode`. Numeric, null, undefined, and a plain object therefore
+produce the runtime's native `TypeError`; 16 wrapper probes compare the wrapper
+message with the same expression and assert zero dispatches. A method-bearing
+object also preserves its `startsWith` call and proceeds to the existing
+opt-in dispatch if that call returns. For `edit`, the pointer expression
+precedes host preflight, matching the source operation's
+pointer-before-document/replacement order. For `get`, host preflight still
+precedes the pointer expression. The TypeScript source validates the document
+before checking the pointer, while the Rust wire decoder requires the pointer
+before decoding the document; malformed-document plus non-string-pointer
+precedence therefore remains unresolved. This correction does not qualify a
+default route, general exotic-object parity, schema-profile expansion, or Draft
+2020-12 parity.

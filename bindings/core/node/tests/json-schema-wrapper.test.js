@@ -87,6 +87,46 @@ for (const [host, factory] of [['Node', createNodeOperations], ['WASM', createWa
         ['editJsonSchemaNode', {document: {id: 'doc'}, pointer: '/properties/x', replacement: 'false'}],
       ]);
     });
+
+    test('keeps non-string node pointers as native TypeErrors before Rust dispatch', () => {
+      for (const pointer of [7, null, undefined, {}]) {
+        for (const operation of ['getJsonSchemaNode', 'editJsonSchemaNode']) {
+          let dispatches = 0;
+          let preflights = 0;
+          const api = factory(() => { dispatches++; throw new Error('dispatch must not run'); }, () => { preflights++; return {}; });
+          const invoke = () => operation === 'getJsonSchemaNode'
+            ? api.getJsonSchemaNode({}, pointer)
+            : api.editJsonSchemaNode({}, pointer, 'false');
+
+          let sourceError;
+          try { pointer.startsWith('/'); } catch (error) { sourceError = error; }
+          expect(sourceError).toBeInstanceOf(TypeError);
+          try { invoke(); throw new Error('expected native TypeError'); } catch (error) {
+            expect(error).toBeInstanceOf(TypeError);
+            expect(error.message).toBe(sourceError.message);
+          }
+          expect(dispatches).toBe(0);
+          // edit validates the pointer before any document/replacement admission;
+          // get performs the opt-in host preflight before its pointer guard.
+          expect(preflights).toBe(operation === 'getJsonSchemaNode' ? 1 : 0);
+        }
+      }
+    });
+
+    test('preserves a non-string pointer startsWith method call before dispatch', () => {
+      for (const operation of ['getJsonSchemaNode', 'editJsonSchemaNode']) {
+        const trace = [];
+        let dispatches = 0;
+        const pointer = {startsWith(prefix) { trace.push(prefix); return true; }};
+        const api = factory(() => { dispatches++; return 'dispatched'; }, () => ({}));
+        const result = operation === 'getJsonSchemaNode'
+          ? api.getJsonSchemaNode({}, pointer)
+          : api.editJsonSchemaNode({}, pointer, 'false');
+        expect(result).toBe('dispatched');
+        expect(trace).toEqual(['/']);
+        expect(dispatches).toBe(1);
+      }
+    });
   });
 }
 
