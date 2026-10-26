@@ -5702,10 +5702,12 @@ closes after stage failures. The private tagged-wire session owns cumulative
 transport work across calls and preserves UTF-16 units; a future binding must
 reattach cancellation and deadline controls on every call. The focused core
 session suite passes 8/8 and the focused wire suite passes 4/4 with Rust 1.90.
-The full `cargo test -p umf-core --locked --offline` Rust 1.90 run passed
-before the focused diagnostic correction; a full rerun remains required.
-That earlier full run included
-including existing JSON Schema adapter, edit, inspection, and operation suites.
+The full `cargo test -p umf-core --locked --offline --quiet` Rust 1.90 run
+passed after the focused diagnostic correction, including all 433 core unit
+tests and the integration suites. Explicitly ignored external-oracle tests
+remain outside this run. This result predates the separate private Cardinality
+host-admission edit, which requires its own current-source rerun. The run
+includes existing JSON Schema adapter, edit, inspection, and operation suites.
 The existing JSON Schema wire regression suite passes 8/8. The private Node
 facade now passes eight focused Bun controls against a fresh native addon,
 including the control-error envelope, plus an independent Node 26.12.1
@@ -5724,6 +5726,19 @@ installed-package parity and default-route admission remain open.
 The TypeScript default route and all 922 retirement gaps
 remain unchanged. String-only opt-in handling does not qualify the direct
 source API's non-string coercion and parser edges.
+The [nine-case direct-source non-string observation](evidence/rust-migration/r8-json-schema-eight-operations/import-host-nonstring-observation.json)
+matches across Bun 1.4.3, Node 26.12.1 and real Chromium 153.0.8010.12.
+It captures length getter and `JSON.parse` coercion order, thrown identities,
+repeated length access and the native YAML parser TypeError. These are
+predecessor observations, not private-binding parity; the staged method
+remains string-only.
+The additive [private host-coercion bridge](evidence/rust-migration/r8-json-schema-eight-operations/import-host-nonstring-bridge-decision.md)
+now admits a finite two-text profile while leaving that string-only method
+and the default TypeScript route unchanged. Direct source and fresh Rust-backed
+Node 26, Bun 1.4.3 and Chromium 153/WASM runs match host effects and exact
+outcomes for 20/20 admitted cases on each host; nine further cases are
+explicitly excluded by the profile. This advances the host protocol, but
+general non-string input and default-route parity remain open.
 
 The authored `umf-codegen` resource sync gate exposed five stale canonical
 resource copies and its manifest/release pin. Running the existing sync writer
@@ -5735,9 +5750,14 @@ hashing the exact macOS arm64 CPython 3.13 `pydantic-core==2.33.2` wheel, a
 [clean installed smoke](evidence/rust-migration/r8-python-v8-closure-audit/cpython-3.13-installed-smoke-20261026.md)
 passes on CPython 3.13.16 with Node, Bun, Cargo, and rustc absent from `PATH`.
 It covers core read/validate/write, one codegen generation fixture, compiler
-dispatch/refusal, and CLI help. Successful deployment/migration verification,
-the broader Python API, source-cleanliness proof and release matrix remain
-open; no release claim follows from this smoke.
+dispatch/refusal, and CLI help. The subsequent
+[successful verifier follow-up](evidence/rust-migration/r8-python-v8-closure-audit/cpython-3.13-successful-verifiers-20261026.md)
+passes installed `verify_table_deployment` for an 18-step bundle and
+`compile_table_migration` plus `verify_table_migration` for a 13-step plan
+under the same V8-free CPython 3.13 runtime constraint. The wheel pair came
+from the recorded post-resource-sync source snapshot, not an exact current
+worktree capture. Broader Python API coverage, source-cleanliness proof and
+the release matrix remain open; these local receipts are not a release claim.
 
 The R8 ledger now accepts three additional exact opt-in mappings: the existing
 `inspectCoreRecordMembers` Rust core/wire/Node/WASM operation, plus
@@ -5753,9 +5773,124 @@ YAML/Proxy surface are not established by these mapping additions.
 The [private Selection Chromium receipt](evidence/rust-migration/r8-selection-private-host-route/chromium.json)
 now runs the source-frozen seven-query cohort against fresh Rust 1.90 WASM in
 Chromium 153.0.8010.12. It matches the frozen JSON values and Registry thrown
-object identity. A Selection-only result projection closes the observed
-null-prototype mismatch for the captured nested object/array shapes, and an
-own `__proto__` data key survives without prototype pollution. Node 26 and Bun
-focused probes pass. Semantic callbacks, successful host-warning diagnostics,
-complete event/resource-control parity, installed package qualification and
+object identity. A direct TypeScript source check established that Selection's
+final `copyJson` gives the root and nested objects null prototypes; the
+earlier ordinary-prototype interpretation was wrong. The private projection
+now preserves the observed null prototypes, arrays, and an own `__proto__`
+data key without prototype pollution. A synthetic warning-policy case matches
+six ordered direct TypeScript `sourceValidation` diagnostics in Bun and the
+same cross-host baseline in Chromium; the checked-in policy remains an error
+policy. Node 26 and Bun focused probes pass. Semantic callbacks, complete
+event/resource-control parity, installed package qualification and
 public/default Selection remain open.
+
+### R8 source-closure and private host-admission checkpoint — 2026-10-26
+
+The exact per-file unified-client import policy remains in force across every
+`src/access` source. Its checker and nine negative/control tests pass. The
+Node binding package now includes its statically imported helper modules in
+the package file allowlist; `check:rust-node-package-closure` independently
+checks the `npm pack` member set and all 30 relative static import edges, with
+missing-member and side-effect-import negative controls. The WASM helper is a
+generated package-local source twin. This closes a package-closure defect for
+the private JSON Schema bridge, not general import parity.
+
+The [private Core Cardinality host route](evidence/rust-migration/r8-cardinality-private-host-route/chromium.json)
+now lets Rust order opaque host reflection and semantic work through one
+invocation context for inspect, declare, and verify. The existing tagged route
+retains its early identity refusal. The private route rejects operation and
+resource controls it cannot honor, and its ordinary-Context profile keeps
+custom Registry/capability behavior out of scope. Focused Rust Cardinality
+tests pass 18/18; focused Node binding tests pass 5/5. A fresh Rust 1.90/WASM
+and wasm-bindgen 0.2.100 run in Chromium 153.0.8010.12 matches the frozen
+semantic cases, confirms request-before-source and receipt-before-current
+ordering, preserves a thrown host identity, and reports no page errors. The
+receipt was refreshed against the current generated resources and all 20
+repository-source hashes in it were rechecked. Default Cardinality routing,
+full control semantics, and installed-package qualification remain open.
+
+`build:metamodel` refreshed compiler-provenance fields in generated outputs;
+there was no schema-body change. The five codegen resource mirrors and their
+manifest pin now match the canonical generated resources. The fixed-point
+`check:metamodel`, `check:rust-boundaries`, `check:rust-node-package-closure`,
+`typecheck`, and `test:metamodel` gates pass. `test:metamodel` includes 61 tests
+and 484 assertions plus real Chromium 153 browser profiles with zero page
+errors. The Rust boundary check reports zero V8 dependency findings. The
+private JSON Schema non-string Chromium bridge was also rebuilt after this
+resource sync: its 20 admitted cases match direct current TypeScript effects
+and exact outcomes, with nine explicit exclusions and zero page errors. Its
+eight source-path hashes and the boundary matrix's nine local artifact hashes
+were rechecked against this tree.
+
+The first isolated SDK package attempt exposed a stale generated
+`src/extensions/actions/plan-identity.ts` producer hash; the builder correctly
+marked that private snapshot non-fixed-point and refused package publication.
+Refreshing the generated hash to the current source bytes made the identity
+`--check`, metamodel fixed-point, typecheck and Rust boundary gates pass again.
+The [fresh installed Core Facets cohort](evidence/rust-migration/r8-core-facets-installed/current-facets-20261026/README.md)
+then passed independent archive preflight and installed Node 26.12.1, Bun
+1.4.3 and Chromium 153.0.8010.12 replay against one zero-transform,
+3,450-input source closure (`5804c9072e5fa85a8c50b362ae4e4f1039a1b5f91ff44b740d2eea489a8fa78f`).
+The archive SHA-256 is
+`63c72d374aff9181837ef2286dd732e52626286c9b9b199a5c12b9f3b9c331d5`;
+all 1,789 member hashes were verified. Four bounded Facets operations,
+six historical cases, ten exact refusals, host admission order, proxy trap
+order and caller-thrown object identity match the same-host TypeScript
+reference. Chromium requested WASM with no Node globals or external requests.
+This does not qualify public resource controls, other routes, complete
+TypeScript retirement or a release.
+
+The complete current-source Rust 1.90 `cargo test -p umf-core --locked
+--offline --quiet` run now passes: 434/434 core unit tests and every executed
+integration group. External-oracle tests explicitly ignored by the default
+command remain outside this result. This run includes the private Cardinality
+host-admission edit;
+the subsequent action-plan identity refresh changes only generated TypeScript
+provenance. The refreshed R8 ledger has 67 accepted opt-in Rust mappings,
+855 executable names without an accepted mapping, 44 directly Rust-selected
+executable declarations in each Node/browser root and **all 922 logical
+default-route retirement gaps** still open. The ledger's source and script
+closure was regenerated after the package/checker changes; its fixed-point
+check and all 47 ledger tests pass. Next implementation work
+should address the public Python captured-graph routing seam. A read-only
+branch census found no defensible missing Rust validator branch for ordinary
+closed DTOs: `capture()` still injects `_validate_node`, whereas the native
+validator is private opt-in. `umf_access` already depends on `umf-core`, but
+the public route must check the installed extension operation and exact
+`umf-access-captured-graph-validation/0.1.0` profile before executing a
+declaration body. Missing or mismatched capability must fail explicitly rather
+than invoke Python validation. The opt-in bridge currently falls back to
+`_validate_node` for accessor-bearing subclasses and its stricter DTO budgets;
+these are real public-route blockers. Preserve their observed semantics with a
+Rust-directed host observation protocol or make a separately reviewed contract
+and versioned support-boundary decision before any default switch. A focused
+installed-wheel matrix must cover crossed-fault order, exception class and
+message, subclass accessors, limit boundaries, and a sentinel proving the
+default path no longer calls `_validate_node`. The 922 default-route retirement
+gaps and release qualification remain open.
+
+For the Node/browser default route, `selectCoreElements` is the next bounded
+candidate with an existing Rust core, wire operation and opt-in bindings. It
+cannot be selected yet: the predecessor takes a caller `Registry`, copies
+source before query, validates the full source even for empty matches, and
+invokes semantic callbacks at constraint traversal points. The opt-in wrapper
+instead accepts an extension array and indexes callbacks before Rust sees the
+request. Freeze and compare callback order, diagnostics, thrown-value string
+conversion and raw host admission in Node, Bun and Chromium, then use a
+single staged Rust invocation with one cumulative context before changing V4
+exports. This is one logical export and does not by itself retire the 922-gap
+ledger.
+
+The preservation-first implementation choice is a Rust-directed observation
+protocol. Python retains opaque live graph handles and exposes field/sequence
+reads only when the Rust validator asks in its existing traversal order; it
+must rethrow an original accessor `PyErr` without string conversion or
+reconstruction. The first private proof should cover `FieldRef` owner reads,
+including early crossed-fault short circuit and repeated stateful getter
+visits. It does not authorize default `capture()` selection: Node, RecordRef,
+join, search, navigation and other graph families need the same ordered host
+behavior, and the current bridge's 50,000-node/depth-64/8-MiB limits must be
+reconciled with Rust's ordinary Context limits. Do not add a Python semantic
+fallback to bypass resource refusal. A later installed-wheel replay must pin
+the exact `umf-core` wheel profile carried by `umf_access`'s runtime version
+requirement before cutover.
