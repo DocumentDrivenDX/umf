@@ -692,17 +692,156 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                                     for frame in frames)
                                 context = error.__context__
                                 context_trace = ''
+                                predicate_diagnostic = ''
                                 if context is not None:
                                     context_frames = traceback.extract_tb(
                                         context.__traceback__)[-8:]
                                     context_trace = ' <- '.join(
                                         f'{Path(frame.filename).name}:{frame.lineno}:{frame.name}'
                                         for frame in context_frames)
+                                    try:
+                                        frame = context.__traceback__
+                                        replay_locals = None
+                                        while frame is not None:
+                                            if (Path(frame.tb_frame.f_code.co_filename).name
+                                                    == 'supervisor_journal_codec.py'
+                                                    and frame.tb_frame.f_code.co_name == '_replay'
+                                                    and 931 <= frame.tb_lineno <= 979):
+                                                replay_locals = frame.tb_frame.f_locals
+                                                break
+                                            frame = frame.tb_next
+                                        if (type(context) is codec.SupervisorJournalCodecError
+                                                and replay_locals is not None):
+                                            failed_predicates = []
+
+                                            def failed(label, condition):
+                                                if condition:
+                                                    failed_predicates.append(label)
+
+                                            expected_payload_keys = {
+                                                'purpose', 'reservation', 'reservationDigest',
+                                                'custodianReservedEventDigest',
+                                                'creationRequestDigest',
+                                                'creationApprovalDigest',
+                                                'nativeAuthorityEvidenceDigest'}
+                                            expected_reservation_keys = {
+                                                'profile', 'reservationId', 'providerId',
+                                                'installationId', 'targetCustody', 'store',
+                                                'creationRequestDigest',
+                                                'creationApprovalDigest',
+                                                'nativeAuthorityEvidenceDigest',
+                                                'configurationDigest', 'custodySequence'}
+                                            expected_custody_keys = {
+                                                'profile', 'custodianId', 'registrationId',
+                                                'resourceId', 'incarnation',
+                                                'registrationDigest'}
+                                            expected_store_keys = {
+                                                'profile', 'storeId', 'schemaName'}
+                                            payload_local = replay_locals.get('payload')
+                                            reservation_local = replay_locals.get('reservation')
+                                            payload_is_dict = type(payload_local) is dict
+                                            reservation_is_dict = type(reservation_local) is dict
+                                            custody_local = (reservation_local.get('targetCustody')
+                                                             if reservation_is_dict else None)
+                                            store_local = (reservation_local.get('store')
+                                                           if reservation_is_dict else None)
+                                            custody_is_dict = type(custody_local) is dict
+                                            store_is_dict = type(store_local) is dict
+                                            failed('profile', replay_locals.get('self').profile
+                                                   != codec.JOURNAL_PROFILE_02)
+                                            failed('running', not replay_locals.get('running'))
+                                            failed('registration',
+                                                   not replay_locals.get('registration_done'))
+                                            failed('authority',
+                                                   not replay_locals.get('authority_done'))
+                                            failed('finalized',
+                                                   replay_locals.get('creation_finalized') is None)
+                                            failed('pending', replay_locals.get(
+                                                'pending_original_store_effect') is not None)
+                                            failed('priorstores', any(
+                                                item.get('nativeEffectOutcome') != 'confirmed'
+                                                for item in replay_locals.get(
+                                                    'original_stores', {}).values()))
+                                            failed('payloadkeys', not payload_is_dict
+                                                   or set(payload_local) != expected_payload_keys)
+                                            failed('reservationdict', not reservation_is_dict)
+                                            failed('reservationkeys', reservation_is_dict
+                                                   and set(reservation_local)
+                                                   != expected_reservation_keys)
+                                            if reservation_is_dict:
+                                                failed('reservationprofile', reservation_local.get(
+                                                    'profile')
+                                                    != 'umf.row-originals-store-reservation/0.1')
+                                                failed('purpose', not payload_is_dict
+                                                       or payload_local.get('purpose')
+                                                       not in ('production', 'native-acceptance'))
+                                                failed('custodydigest', not payload_is_dict
+                                                       or type(payload_local.get(
+                                                           'custodianReservedEventDigest'))
+                                                       is not str
+                                                       or not codec._HEX.fullmatch(
+                                                           payload_local.get(
+                                                               'custodianReservedEventDigest', '')))
+                                                failed('reservationdigest', not payload_is_dict
+                                                       or payload_local.get('reservationDigest')
+                                                       != codec._digest(reservation_local))
+                                                failed('digestbindings', not payload_is_dict
+                                                       or any(payload_local.get(key)
+                                                              != reservation_local.get(key)
+                                                              for key in (
+                                                                  'creationRequestDigest',
+                                                                  'creationApprovalDigest',
+                                                                  'nativeAuthorityEvidenceDigest')))
+                                                failed('reservationuuid',
+                                                       type(reservation_local.get(
+                                                           'reservationId')) is not str
+                                                       or not codec._UUID.fullmatch(
+                                                           reservation_local.get(
+                                                               'reservationId', '')))
+                                                failed('reservationdigests', any(
+                                                    type(reservation_local.get(name)) is not str
+                                                    or not codec._HEX.fullmatch(
+                                                        reservation_local.get(name, ''))
+                                                    for name in (
+                                                        'creationRequestDigest',
+                                                        'creationApprovalDigest',
+                                                        'nativeAuthorityEvidenceDigest',
+                                                        'configurationDigest')))
+                                                failed('provideruuid',
+                                                       type(reservation_local.get('providerId'))
+                                                       is not str or not codec._UUID.fullmatch(
+                                                           reservation_local.get('providerId', '')))
+                                                failed('installation', reservation_local.get(
+                                                    'installationId') != replay_locals.get(
+                                                        'creation', {}).get('installationId'))
+                                                failed('custodydict', not custody_is_dict)
+                                                failed('custodykeys', custody_is_dict
+                                                       and set(custody_local)
+                                                       != expected_custody_keys)
+                                                failed('custodyprofile', custody_is_dict
+                                                       and custody_local.get('profile')
+                                                       != 'umf.native-target-custody/0.1')
+                                                failed('storedict', not store_is_dict)
+                                                failed('storekeys', store_is_dict
+                                                       and set(store_local) != expected_store_keys)
+                                                failed('sequencetype', type(
+                                                    reservation_local.get('custodySequence'))
+                                                    is not int)
+                                                failed('sequencepositive', type(
+                                                    reservation_local.get('custodySequence'))
+                                                    is int and reservation_local.get(
+                                                        'custodySequence') < 1)
+                                            if failed_predicates:
+                                                predicate_diagnostic = (
+                                                    '; codec-predicates='
+                                                    + ','.join(failed_predicates[:32]))[:2048]
+                                    except Exception:  # noqa: BLE001 -- diagnostics never replace the original error.
+                                        predicate_diagnostic = ''
                                 print(
                                     'G04 readonly recovery: '
                                     f'{type(error).__name__}: {diagnostic}; {trace}; '
                                     f'context={type(context).__name__ if context is not None else "none"}; '
-                                    f'context-frames={context_trace}',
+                                    f'context-frames={context_trace}{predicate_diagnostic}',
                                     file=sys.stderr,
                                 )
                             raise
