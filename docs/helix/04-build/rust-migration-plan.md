@@ -6210,19 +6210,22 @@ The measured guarded-route overhead over the raw direct binding is small
 accepted to preserve the predecessor's admission contract. Fresh Chromium
 source parity and freshly built V4 Node/Bun root comparisons each cover all 14
 cases. A private installed archive replay also passes 14 cases in Node, Bun and
-Chromium with WASM loaded and Node globals absent. The archive was rebuilt and
-replayed after the capture-tail source was committed; the refreshed archive
-SHA-256 is `45be4faa7ebe57a59aa27fd1a0f87b58a41a0012e05191b0958c1bc5109b233a`.
-Its manifest still marks the build private and source-drifted because the
-snapshot generator changed 11 inputs. This source-pinned installed replay is
-provisional, not release eligible, and needs a fixed-point build and replay.
+Chromium with WASM loaded and Node globals absent. The first archive was
+source-drifted because the private snapshot generator changed eleven stale
+outputs. After regenerating and checking those outputs, the fixed-point private
+archive from commit `dc746ad53` (SHA-256
+`8b1d5ad2e57fa33487752b0116211b7628df201359cbd2a13a75912e0e08e60e`)
+reported zero transforms and equal live/packaged source closure hashes. Its
+installed replay again passed all 14 cases in each host. The result is
+source-pinned to that committed cohort and is not a release or full-security
+qualification; subsequent edits require a fresh archive replay.
 The override is limited to the `securityNot` export at V4 roots: `src/index.ts`,
 internal TypeScript imports, AND/OR/composition, and broader security logic are
-unchanged. The current-source R8 inventory/ledger recapture now records the
-guarded Node and browser bindings as provisional installed-route evidence, with
-the TypeScript `./reference` route intact. It retains all 922 logical default
-route retirement gaps and does not claim current fixed-point qualification,
-release readiness, or complete security migration.
+unchanged. The R8 inventory/ledger recapture records the guarded Node and
+browser bindings with the TypeScript `./reference` route intact. Its ledger
+receipt predates the fixed-point archive above and needs recapture; all 922
+logical default-route retirement gaps remain open. Neither receipt establishes
+release readiness or complete security migration.
 
 The [raw-host JSON-number packet](evidence/rust-migration/r8-json-number-predecessor/README.md#r8-raw-host-default-route-gate--blocked)
 now records ten untyped JavaScript values. Fresh Node, Bun and real Chromium

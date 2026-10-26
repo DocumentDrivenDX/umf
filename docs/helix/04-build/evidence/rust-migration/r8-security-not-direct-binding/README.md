@@ -63,14 +63,14 @@ matched all 14 cases in freshly built `dist/umf-node.js` against unchanged
 `dist/umf.js` under Node 26.12.1 and Bun 1.4.3. The
 [installed archive replay](installed-route.json) also matched all 14 cases in
 Node, Bun and Chromium while exercising the package's actual Node/browser
-exports and loading its WASM asset. The receipt was refreshed after committing
-the capture-tail source. The clean-source rebuild produced archive SHA-256
-`45be4faa7ebe57a59aa27fd1a0f87b58a41a0012e05191b0958c1bc5109b233a`
-and again matched all 14 cases on each host. It is still provisional: the
-private builder changed 11 generated inputs inside its snapshot and marks the
-archive `private-r7-default-route-qualification-source-drift-not-publishable`.
-The installed route is source-pinned to that derived snapshot, not a release
-fixed point.
+exports and loading its WASM asset. After refreshing the eleven stale generated
+inputs and action-plan identity, the SDK builder produced a fixed-point private
+archive from commit `dc746ad53` with SHA-256
+`8b1d5ad2e57fa33487752b0116211b7628df201359cbd2a13a75912e0e08e60e`.
+It reported zero generated-input transforms and equal live and packaged source
+closure hashes. The installed replay again matched all 14 cases on each host.
+This is a source-pinned private route result; it does not qualify later source
+edits, the full security API, or publication.
 
 All three valid tokens reach Rust through the guard. Invalid values with meter,
 cancellation and clock controls enabled call none of those callbacks. A valid
@@ -111,7 +111,7 @@ Rust 1.90.0 built the release `wasm32-unknown-unknown` target with wasm-bindgen
 0.2.100. The NodeJS WASM smoke check returned T/F/U, invoked a successful
 control callback once with amount 1, and preserved a `CANCELLED` refusal. The
 fresh Chromium receipt adds browser source parity for the guarded route;
-`installed-route.json` records provisional installed Node/Bun and Chromium
+`installed-route.json` records fixed-point private installed Node/Bun and Chromium
 package-root parity. This does not change `src/index.ts` or internal TypeScript
 callers and does not establish complete security support. Reproduce the
 source-level browser cohort with:
@@ -125,11 +125,11 @@ bun scripts/rust-migration/r8/security-not-browser.mjs docs/helix/04-build/evide
 The table below is the original direct-binding slice's source cohort.
 [`chromium.json`](chromium.json) pins the fresh browser comparison and the
 installed archive manifest pins its compiled source closure. The V4 root files
-in the refreshed provisional archive were `src/index-node-v4.ts`
+in the fixed-point private archive were `src/index-node-v4.ts`
 (`931fd947592cda93687e9a967f8a19614046b609c82b0f4885c19ede82f86aee`) and
 `src/index-browser-v4.ts`
 (`2b0514befb028aa7410b27a9638d606d0b5e59560353517844a10842aded4c1d`). A
-fixed-point build and replay must supersede these installed-route pins.
+later source edits require a new build and replay to supersede these pins.
 
 | File | SHA-256 |
 | --- | --- |
@@ -145,5 +145,5 @@ fixed-point build and replay must supersede these installed-route pins.
 
 The Chromium receipt carries exact hashes for its current execution cohort,
 including the guarded adapter and browser harness. The installed-route receipt
-records the archive and package-manifest hashes plus host/runtime versions. A
-fixed-point build and replay remain required for final package qualification.
+records the archive and package-manifest hashes plus host/runtime versions.
+Broader compatibility and release qualification remain open.
