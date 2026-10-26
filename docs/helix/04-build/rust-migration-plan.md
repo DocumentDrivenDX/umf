@@ -6015,3 +6015,47 @@ optional-filter requests. Separate Python encoder/output budgets and the
 native Context do not establish the predecessor's resource first-fault order.
 Related, mutation, joins, group/search, Weft and installed-release replay
 remain open; Python's public renderer and catalog defaults stay selected.
+
+The [direct `securityNot` cutover comparison](evidence/rust-migration/r8-security-not-default-cutover/README.md)
+matched the three valid T/F/U inputs but only 3 of 14 same-host cases in
+both Node 26.12.1 and Bun 1.4.3. Invalid inputs change `UmfError` to
+`UmfCoreError`; accessor and Proxy cases also change host effects during
+generic wire admission. The public TypeScript export remains selected. A
+reviewed host-boundary admission adapter, fresh browser comparison and
+installed-package replay are required before retirement. The attempted fresh
+Chromium launch was blocked by the recorded local browser policy, so no new
+browser parity is claimed for this raw-host packet.
+
+The [guarded private `securityNot` adapter](evidence/rust-migration/r8-security-not-admission-adapter/README.md)
+now preflights only the three exact scalar truth tokens and delegates valid
+NOT decisions to Rust. Direct Node and Bun comparisons match all 14 outcomes
+and host-effect traces, with Rust work/cancellation controls retained for
+valid tokens. The adapter is not selected by either V4 root. Its local call
+cost remains roughly 1,100–3,800 times the tiny TypeScript operation;
+real Chromium, installed-package and performance qualification remain open.
+The public inventory has no new adapter export reachable from a package root.
+
+The [raw-host JSON-number packet](evidence/rust-migration/r8-json-number-predecessor/README.md#r8-raw-host-default-route-gate--blocked)
+now records ten untyped JavaScript values. Fresh Node, Bun and real Chromium
+each find ten candidate mismatches: Rust's string-only admission runs before
+the predecessor's `Number` and later string coercions, losing host effect and
+exception identity. Node and Bun also show a 4,000,001-character zero token
+accepted by TypeScript but refused by Rust's 4,000,000-unit Context cap.
+Sol independently reran the frozen predecessor check, focused test and
+Node/Bun candidate probes, and caught a source-hash drift that was corrected
+and rechecked. The default export remains TypeScript-selected; its resource
+and host boundary need a reviewed decision before cutover.
+
+The [Core Kind + Nullability six-operation candidate](evidence/rust-migration/r8-core-kind-nullability-candidate/README.md)
+has accepted Rust owners for six logical executable names and twelve Node/
+browser route rows, but no V4 selection. The focused Rust test passed 6/6;
+frozen Node replay passed eleven successes and thirteen refusals. Existing
+Bun source parity and a historically built Chromium artifact remain scoped to
+their recorded source cohorts. The V4 model facade currently dispatches
+stateless wire requests, while the staged Kind/Nullability path owns a second
+retained Engine and prepared schemas. A per-runtime shared dispatcher must
+unify them without changing host-read or resource order. A second eager
+factory and process-global cache are rejected. Local warm calls measured
+about 22.4 times TypeScript in Node and 34.1 times in Bun, so the performance
+gate also remains open. Fresh current-source Node/WASM builds, installed
+packages and source-coherent browser qualification precede any retirement.
