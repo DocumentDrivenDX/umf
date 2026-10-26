@@ -1,0 +1,8 @@
+{
+  "status": "blocked",
+  "browser": "Chrome extension-backed Chromium session",
+  "attempt": "Open local self-contained parity page at file:///private/tmp/security-not-parity.html",
+  "result": "Browser URL policy rejected the file: protocol and stated that local-server, indirect execution, raw CDP, and alternate-browser workarounds are prohibited.",
+  "priorPlaywrightAttempt": "The bundled Chromium headless shell exited with SIGTRAP when macOS denied bootstrap_check_in for its MachPortRendezvousServer.",
+  "consequence": "No new direct TypeScript-versus-WASM result was captured in real Chromium. Existing source-level Chromium WASM evidence remains only the opt-in fixture replay recorded in r8-security-truth-logic-binding/README.md."
+}
