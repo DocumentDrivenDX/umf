@@ -535,7 +535,7 @@ def observe_admission_resources(connection: object, database: str, roles: list[s
         "pg_catalog.inet_server_addr()::pg_catalog.text,pg_catalog.inet_server_port(),"
         "pg_catalog.pg_postmaster_start_time()::pg_catalog.text,"
         "(SELECT system_identifier::pg_catalog.text FROM pg_catalog.pg_control_system()),"
-        "pg_catalog.current_setting('server_version') "
+        "pg_catalog.version() "
         "FROM pg_catalog.pg_roles AS r WHERE r.rolname=current_user"
     ).fetchone()
     database_row = connection.execute(
