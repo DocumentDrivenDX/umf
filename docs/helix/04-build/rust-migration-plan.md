@@ -6010,6 +6010,16 @@ remains private; public routing,
 the installed wheel, encoder-budget reconciliation and broader search support
 remain unqualified.
 
+The [all-empty capture first-fault audit](evidence/rust-migration/r8-capture-visit-field-join-tuple/README.md#capturedto-budget-and-first-fault-reconciliation-2026-10-26)
+blocks a public Rust cutover: the predecessor's third host read is `Node.args`,
+while the candidate reads `RecordRef.module`. A fresh Rust 1.90.0 PyO3 build
+and CPython 3.13.16 focused suite pass 46/46, including the pinned divergent
+trace. The shared work session does not reconcile the Rust Context's 100,000-
+value/depth-128/4M-text limits with Python DTO encoding's 50,000-value/
+depth-64/8-MiB ceilings or the predecessor's lack of those DTO limits. Public
+`capture()` remains on Python until ordered admission and first-fault/resource
+behavior are resolved.
+
 The separate [read-frame gate](evidence/rust-migration/r8-python-read-frame-core/README.md)
 now has a private PyO3 bridge. Rust asks for host `len`/index/iteration reads
 in predecessor order and owns post-host shape and post-decode cardinality

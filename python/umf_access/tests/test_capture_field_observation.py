@@ -35,6 +35,74 @@ def test_private_all_empty_observation_and_dto_encoding_share_work_session():
     assert encoding_work > 0
 
 
+def test_private_all_empty_callback_does_not_match_predecessor_read_trace():
+    """Pin the remaining first-fault blocker before any public route selection."""
+    from umf_access.capture import _validate_node
+
+    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    node = Node("all", (root, ()))
+    trace: list[tuple[str, str]] = []
+    node_getattribute = Node.__getattribute__
+    record_getattribute = RecordRef.__getattribute__
+
+    def observed_node(instance, name):
+        if instance is node and name in {"op", "args"}:
+            trace.append(("Node", name))
+        return node_getattribute(instance, name)
+
+    def observed_record(instance, name):
+        if instance is root and name in {"module", "element", "alias"}:
+            trace.append(("RecordRef", name))
+        return record_getattribute(instance, name)
+
+    try:
+        Node.__getattribute__ = observed_node
+        RecordRef.__getattribute__ = observed_record
+        _validate_node(node, ())
+        predecessor = tuple(trace)
+        trace.clear()
+        observe_all_empty_capture_profile(node)
+        candidate = tuple(trace)
+    finally:
+        Node.__getattribute__ = node_getattribute
+        RecordRef.__getattribute__ = record_getattribute
+
+    assert predecessor == (
+        ("Node", "op"),
+        ("Node", "args"),
+        ("Node", "args"),
+        ("Node", "args"),
+        ("Node", "args"),
+        ("RecordRef", "module"),
+        ("RecordRef", "element"),
+        ("RecordRef", "alias"),
+        ("Node", "op"),
+        ("Node", "op"),
+        ("Node", "op"),
+        ("Node", "op"),
+        ("Node", "op"),
+        ("Node", "op"),
+        ("Node", "args"),
+    )
+    assert candidate == (
+        ("Node", "op"),
+        ("Node", "args"),
+        ("RecordRef", "module"),
+        ("RecordRef", "element"),
+        ("RecordRef", "alias"),
+        ("Node", "op"),
+        ("Node", "args"),
+        ("Node", "args"),
+        ("Node", "args"),
+        ("RecordRef", "module"),
+        ("RecordRef", "element"),
+        ("RecordRef", "alias"),
+    )
+    assert candidate[:2] == predecessor[:2]
+    assert candidate[2] != predecessor[2]
+    assert candidate != predecessor
+
+
 def test_capture_session_limit_stops_admission_before_graph_read():
     from umf import _rust
 

@@ -155,3 +155,53 @@ python/.venv/bin/python -m pytest -q -p no:cacheprovider \
 
 This result qualifies only the private exact-profile callback and its focused
 fixtures; it does not qualify public routing or package installation.
+
+## Capture/DTO budget and first-fault reconciliation (2026-10-26)
+
+The current callback now passes one `CaptureResourceSession` through Python
+profile admission, Rust terminal observation and DTO encoding. This shares a
+work counter only. The ceilings remain separate: Rust `Context::ordinary()`
+allows 100,000 values, depth 128 and 4,000,000 text units; the Python DTO
+encoder independently allows 50,000 visited values, depth 64 and 8 MiB each
+for encoded text and final DTO output. The callback seeds the shared session
+with `u64::MAX`, so it does not reconcile those profile limits. The Python
+predecessor `_validate_node` has no matching DTO ceiling. A DTO-only limit can
+therefore reject a graph accepted by public `capture()`, and a finite shared
+work budget can refuse before a predecessor accessor would be read.
+
+A same-host CPython 3.13.16 trace against the exact empty `.all()` graph also
+shows the callback is not yet a predecessor-order substitute. `_validate_node`
+reads `Node.op`, `Node.args` four times, root owner `module/element/alias`, six
+more `Node.op` values, then `Node.args` once. The candidate admission reads
+`op`, `args`, owner text, and then native observation reads `op`, `args` three
+times and owner text again. These schedules differ in both count and fault
+position. The focused regression pins both sequences and prevents treating
+the shared counter as sufficient first-fault parity. Exact base-type checks do
+not eliminate class-level `__getattribute__` behavior on Python objects.
+
+The first divergence is after the shared initial `Node.op` and `Node.args`
+reads: the predecessor reads `Node.args` again, while candidate admission
+reads `RecordRef.module`. The regression asserts this first differing event.
+
+Fresh `umf-core-python` was built with Rust 1.90.0 into
+`/private/tmp/umf-capture-budget-target`; its extension was loaded through a
+temporary overlay with current Python source. The focused file passed 46/46
+under CPython 3.13.16 on Darwin arm64. This is local same-host source evidence
+only. Public routing remains unjustified until Rust owns the ordered profile
+admission without extra Python reads and the bridge either preserves the
+predecessor's no-limit behavior or the public support contract explicitly
+qualifies a narrower resource profile. Installed-wheel qualification remains
+open.
+
+The source base is commit `1377fcfa8d083cb6a88315f0525f5cf552149a76`; the
+working-tree inputs and built extension are pinned here:
+
+| Input | SHA-256 |
+|---|---|
+| `python/umf_access/src/umf_access/capture.py` | `712d2e2cb96e3c53bc6f3dd3efb26768d6b3f22d5edb6d2c5d897a2e1cdaa19f` |
+| `python/umf_access/src/umf_access/rust_capture_observe.py` | `1ffd812d3c3c5648fdbf97d3e18386608b65ef320495da01c74da48065e4e29e` |
+| `python/umf_access/src/umf_access/rust_catalog_render.py` | `370abb8078e13845a3d67e43493181a2630c4416a287bc9fdfc1352bc9129716` |
+| `python/umf_access/tests/test_capture_field_observation.py` | `0a9b3b4f4614fb2e8b2ccf88b7d11574501635bfc9658f65c90a3c0c6eec157b` |
+| `crates/umf-core/src/access_graph_host_observation.rs` | `fde0a1214cd0c96acac24b597c790cc7916365358bb021b804a4babafff67f56` |
+| `bindings/core/python/src/lib.rs` | `095600d725e468ffaa4cfad13b9bade97a1adc2cbbeda83d705208f5a8ab4a71` |
+| temporary `_rust_core.abi3.so` | `861581781aa7aff972985595ac69b72411fdbbd15931be431ee49cb3c5a92d0d` |
