@@ -5,6 +5,7 @@ on:
   push:
     branches-ignore:
       - codex/core-0102-inventory-generation
+      - codex/core-0102-public-download-qualification
     tags:
       - '**'
   pull_request:
