@@ -5329,7 +5329,7 @@ suites passed 30 tests plus three subtests, and full Ruff checks passed on the
 changed Python files. General subclass admission, full Python capture
 ownership, installed-wheel parity and the public capture switch remain open.
 
-The later fixed-point SDK archive is
+At the 2026-10-26 prior-archive checkpoint, the fixed-point SDK archive was
 `c1ecf9cea81c3767e281820a93294b85a45ab052862a9fcd8b0b493057302263`,
 with [separate current-source preflight](evidence/rust-migration/r8-installed-route-evidence/current-61cbaf0a/preflight.json)
 for source closure
@@ -5343,8 +5343,8 @@ not exercise `verifyCoreDatasetValuesCompact`, retire a declaration, or
 qualify a public release. The other installed route families were then
 replayed and gated on this exact archive, as recorded below.
 
-The five-family [current-archive aggregate](evidence/rust-migration/r8-installed-route-evidence/current-61cbaf0a/aggregate.json)
-now passes its fail-closed gate for 24 bounded installed operations. Raw
+The five-family [prior-cohort aggregate](evidence/rust-migration/r8-installed-route-evidence/current-61cbaf0a/aggregate.json)
+passed its fail-closed gate for 24 bounded installed operations. Raw
 Node/Bun/Chromium receipts are bound to the exact archive and source closure;
 the Bit128 Node/Bun wrapper also observed the loaded archive-adjacent native
 addon in each process. The gate separately reopens every hash-pinned raw
@@ -5354,14 +5354,13 @@ the archive itself. Core Keys current replay omits the historical 700,000-unit
 retained-value control. Schema Properties, Facets and Cardinality replays
 remain separate bounded gates, and the 922 logical retirement gaps remain
 open. The previous `0e6de413` aggregate and ledger are historical; the ledger
-was regenerated after the current gate-script changes settled. The
-[current ledger](evidence/rust-migration/r8-symbol-inventory/gap-ledger.json)
-still records 922 logical retirement gaps, 860 executable names without an
+was regenerated after the current gate-script changes settled. The ledger at
+this checkpoint recorded 922 logical retirement gaps, 860 executable names without an
 accepted Rust mapping, 62 accepted opt-in mappings, 24 aggregate-proven
 bounded routes, and 17 unresolved resource aliases. No declaration was
 retired by the replay.
 
-Separate [Schema Properties](evidence/rust-migration/r8-installed-route-evidence/schema-properties-route-gate-current-61cbaf0a.json),
+At that checkpoint, separate [Schema Properties](evidence/rust-migration/r8-installed-route-evidence/schema-properties-route-gate-current-61cbaf0a.json),
 [Core Facets](evidence/rust-migration/r8-installed-route-evidence/core-facets-route-gate-current-61cbaf0a.json),
 and [Core Cardinality](evidence/rust-migration/r8-installed-route-evidence/core-cardinality-route-gate-current-61cbaf0a.json)
 gates now pass on the same fixed-point archive and independently recompute its
@@ -5383,11 +5382,32 @@ foundation and its current limits.
 Checkpoint `bf8bf6031` preserves the `c1ecf9ce` installed-route cohort.
 Whitespace normalization of a Rust source input after the replay, followed by
 the ongoing captured-graph/Selection provider source edits, moved the live
-tree away from source closure `61cbaf0a`. The aggregate and separate gates
-remain historical evidence for that tested cut and must not be described as current
-qualification for the moving tree. The metamodel manifest and Rust-boundary
-live census must be regenerated and rechecked after source changes settle;
-a fresh fixed-point archive and host replays will then be required.
+tree away from source closure `61cbaf0a`. Those aggregate and separate gates
+were historical evidence for that tested cut, not qualification for the moving
+tree. A fresh fixed-point archive and host replay was required after source
+changes settled; the new cohort below records that replay.
+
+### R8 five-family current-source archive replay — 2026-10-26
+
+The [current cohort record](evidence/rust-migration/r8-installed-route-evidence/current-a2552db0/README.md)
+documents a fixed-point archive built from commit
+`a2552db04c3553ce852f017eaee029f4574b323a` with Rust 1.90.0 and
+`wasm-bindgen` 0.2.100. Its archive SHA-256 is
+`6adacc2f019d6cf73c856c9002ba75fb1d33ca22cb56182e63806296983661e`; its exact
+source closure is
+`6a6bef1345e9f90e0d26dd8841ed27ba2ca6f3db8e6dfd330fb78dd9f42cb14c` across
+3,439 inputs with zero generated transforms. Independent preflight verified
+1,788 of 1,788 package payload members. Fresh Node 26.12.1, Bun 1.4.3 and
+Chromium 153.0.8010.12 receipts pass for CSV Boolean (2), Core Inspectors (3),
+Core Relationships (4), Bit128/UUID (11), and Core Keys (4): 24 bounded
+operations. The fail-closed aggregate recomputes the current source closure and
+reopens pinned receipts; archive bytes are verified by the separate preflight.
+The current [ledger](evidence/rust-migration/r8-symbol-inventory/gap-ledger.json)
+records 922 logical retirement gaps, 860 executable names without an accepted
+Rust mapping, 62 accepted opt-in mappings, 24 aggregate-proven bounded routes,
+and 9 unresolved resource aliases. The Core Keys replay omits the historical
+700,000-unit retained-value control. Other route families, complete parity,
+declaration retirement, and release qualification remain outside this evidence.
 
 The next private captured-graph slice accepts forward and inverse generated
 Join/Many `related` expressions using the original relationship and full

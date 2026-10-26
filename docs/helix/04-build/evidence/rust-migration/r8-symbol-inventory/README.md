@@ -101,8 +101,9 @@ generators' `--check` modes pass. The focused route-shape regression passes
 (1/1); the complete ledger suite currently passes 43/45. Its two failures are
 the source-pinned installed-route tests, which reject the changed
 `bindings/core/node/src/host-json.js` against the recorded private archive
-cohort. The latest recorded aggregate points at `current-61cbaf0a`, but its
-source closure is stale for this current host source. Replaying its five
+cohort. At this 2026-10-25 checkpoint, the recorded aggregate pointed at
+`current-61cbaf0a`, but its source closure was stale for the host source then
+under review. Replaying its five
 families (24 operations total) would require a new package build, archive
 preflight, and fresh Node/Bun/Chromium receipts on a frozen source tree; the
 tree was still being edited during this recapture, so no archive replay was
@@ -114,7 +115,7 @@ Inventory/ledger counts include the explicit
 TypeScript `./reference` route where stated; the 922 default-route gap count is
 logical and counts each export once.
 
-**Latest coordinated source recapture (2026-10-25):** After the JSON Schema
+**Coordinated source recapture (2026-10-25):** After the JSON Schema
 boolean-true profile extension, opt-in Rust/Python catalog custody slice,
 native JSON parser audit, and five-resource direct-authority review, Sol
 regenerated and checked the metamodel, Python resource mirrors, WASM shared
@@ -974,17 +975,18 @@ not retire a logical gap.
 
 ## Current fixed-point R8 aggregate ledger (2026-10-26)
 
-The [current private installed-route aggregate](../r8-installed-route-evidence/current-61cbaf0a/aggregate.json)
-passes its separate [gate](../r8-installed-route-evidence/current-61cbaf0a/gate-result.json)
+The [current private installed-route aggregate](../r8-installed-route-evidence/current-a2552db0/aggregate.json)
+passes its separate [gate](../r8-installed-route-evidence/current-a2552db0/gate-result.json)
 for 24 bounded Node/Bun/Chromium operations on archive SHA-256
-`c1ecf9cea81c3767e281820a93294b85a45ab052862a9fcd8b0b493057302263`
-and exact source closure
-`61cbaf0ae7a0359e9ae49d2aa4c436727f2122e4174d84999efb20f42d2c3b01`.
-The current ledger SHA-256 is
-`632d608c8e56eae84d36a54fc4dcf02bca0f9f6b8b51b2de73f76dfcc3986689`.
+`6adacc2f019d6cf73c856c9002ba75fb1d33ca22cb56182e63806296983661e` and exact
+source closure
+`6a6bef1345e9f90e0d26dd8841ed27ba2ca6f3db8e6dfd330fb78dd9f42cb14c` across
+3,439 inputs with zero generated transforms. Independent preflight verified
+1,788 of 1,788 package payload members. The current ledger SHA-256 is
+`fec93cab8b0825ae66af096ad166012465a9c1edf07c77c484335d82b61f73df`.
 It records 62 accepted opt-in Rust mappings, 860 unmapped executable names,
-24 bounded aggregate-proven routes, all 922 logical retirement gaps, and 17
+24 bounded aggregate-proven routes, all 922 logical retirement gaps, and 9
 unresolved resource aliases. Separate Schema Properties, Facets and
-Cardinality gates preserve their narrower scopes. The previous aggregate
-and ledger cohorts remain historical; no declaration is retired or release
-qualified by this private archive evidence.
+Cardinality gates preserve their narrower scopes. Previous archive and ledger
+cohorts remain historical; no declaration is retired or release qualified by
+this private archive evidence.

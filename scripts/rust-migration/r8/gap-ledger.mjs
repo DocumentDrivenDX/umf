@@ -598,6 +598,9 @@ function operationMapping(row) {
   if (direct) return direct;
   if (['package-root-node', 'package-root-browser'].includes(row.routeId)
       && ['src/index-node-v4.ts', 'src/index-browser-v4.ts'].includes(row.source)) {
+    if (['declareCoreSchemaProperties', 'inspectCoreSchemaProperties', 'validateCoreFieldValue', 'resolveCoreDefault'].includes(row.exportName)) {
+      return accepted.get(`src/model/schema-properties.ts#${row.exportName}`) ?? null;
+    }
     if (['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName)) {
       return accepted.get(`src/model/facets.ts#${row.exportName}`) ?? null;
     }

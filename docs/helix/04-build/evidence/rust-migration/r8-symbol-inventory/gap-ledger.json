@@ -5,6 +5,212 @@
     "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json",
     "sha256": "c468064a7a003dd72568facad4834d34a0e2c7cf07ca2fd16d3be9c655fc99b2"
   },
+  "installedRouteEvidence": {
+    "status": "pass",
+    "qualificationScope": "Cross-checked pinned installed-route evidence with current-source recomputation; this gate does not independently reopen the SDK archive bytes.",
+    "archiveVerification": {
+      "mode": "pinned-preflight-attestation",
+      "independentArchiveRead": false,
+      "memberCount": 1788,
+      "memberHashManifestSha256": "3383f6f4620770d2dde71e24cdcbdac43247908dc4c8801cecf440e55f75cb07"
+    },
+    "archive": {
+      "sha256": "6adacc2f019d6cf73c856c9002ba75fb1d33ca22cb56182e63806296983661e9",
+      "sourceClosureSha256": "6a6bef1345e9f90e0d26dd8841ed27ba2ca6f3db8e6dfd330fb78dd9f42cb14c",
+      "sourceInputCount": 3439,
+      "generatedTransformCount": 0
+    },
+    "families": {
+      "csvBoolean": [
+        {
+          "runtime": "node",
+          "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-a2552db0/raw/csv-boolean.json",
+          "rawSha256": "b5a8ddce3c4e637f5f5adff7f3b0a893a8f6d6816fd9a55de7d5256279017870",
+          "archiveBinding": "raw-aggregate-claim-and-manifest",
+          "verifiedArtifacts": {}
+        },
+        {
+          "runtime": "bun",
+          "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-a2552db0/raw/csv-boolean.json",
+          "rawSha256": "b5a8ddce3c4e637f5f5adff7f3b0a893a8f6d6816fd9a55de7d5256279017870",
+          "archiveBinding": "raw-aggregate-claim-and-manifest",
+          "verifiedArtifacts": {}
+        },
+        {
+          "runtime": "chromium",
+          "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-a2552db0/raw/csv-boolean.json",
+          "rawSha256": "b5a8ddce3c4e637f5f5adff7f3b0a893a8f6d6816fd9a55de7d5256279017870",
+          "archiveBinding": "raw-aggregate-claim-and-manifest",
+          "verifiedArtifacts": {}
+        }
+      ],
+      "coreInspectors": [
+        {
+          "runtime": "node",
+          "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-a2552db0/raw/core-inspectors.json",
+          "rawSha256": "8202f1c3e262803c80b032584b26b1ed4185d375b01d1fe0b628807c1bd2fce9",
+          "archiveBinding": "raw-aggregate-claim-and-manifest",
+          "verifiedArtifacts": {
+            "dist/umf-node.js": "1328636ae3d22310f476ecba26ab2fdf0c1d9bae18d22195a7ce2150a2eaec0a",
+            "dist/umf-browser.js": "3b8ba8444a048117e2b55ce7527854c8a99cee2a9d633a56f78d01b610e7f27b",
+            "dist/umf_core_node.node": "1be4903421eb668b20b805b8932b92e12c2ac55031b8d87422abfdfdcf9cc894",
+            "dist/umf_core_wasm_bg.wasm": "b2e84d55ae71ccb8fb76474024b0935495ef8af2dd75ab81e3ea0612ebbb40eb"
+          }
+        },
+        {
+          "runtime": "bun",
+          "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-a2552db0/raw/core-inspectors.json",
+          "rawSha256": "8202f1c3e262803c80b032584b26b1ed4185d375b01d1fe0b628807c1bd2fce9",
+          "archiveBinding": "raw-aggregate-claim-and-manifest",
+          "verifiedArtifacts": {
+            "dist/umf-node.js": "1328636ae3d22310f476ecba26ab2fdf0c1d9bae18d22195a7ce2150a2eaec0a",
+            "dist/umf-browser.js": "3b8ba8444a048117e2b55ce7527854c8a99cee2a9d633a56f78d01b610e7f27b",
+            "dist/umf_core_node.node": "1be4903421eb668b20b805b8932b92e12c2ac55031b8d87422abfdfdcf9cc894",
+            "dist/umf_core_wasm_bg.wasm": "b2e84d55ae71ccb8fb76474024b0935495ef8af2dd75ab81e3ea0612ebbb40eb"
+          }
+        },
+        {
+          "runtime": "chromium",
+          "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-a2552db0/raw/core-inspectors.json",
+          "rawSha256": "8202f1c3e262803c80b032584b26b1ed4185d375b01d1fe0b628807c1bd2fce9",
+          "archiveBinding": "raw-aggregate-claim-and-manifest",
+          "verifiedArtifacts": {
+            "dist/umf-node.js": "1328636ae3d22310f476ecba26ab2fdf0c1d9bae18d22195a7ce2150a2eaec0a",
+            "dist/umf-browser.js": "3b8ba8444a048117e2b55ce7527854c8a99cee2a9d633a56f78d01b610e7f27b",
+            "dist/umf_core_node.node": "1be4903421eb668b20b805b8932b92e12c2ac55031b8d87422abfdfdcf9cc894",
+            "dist/umf_core_wasm_bg.wasm": "b2e84d55ae71ccb8fb76474024b0935495ef8af2dd75ab81e3ea0612ebbb40eb"
+          }
+        }
+      ],
+      "coreRelationships": [
+        {
+          "runtime": "node",
+          "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-a2552db0/raw/relationships-node.json",
+          "rawSha256": "ccf0f0767d4d0ce433f0d2aa661938b3c33b4202d7701ae7decce545611c9e02",
+          "archiveBinding": "exact-installed-member-hashes",
+          "verifiedArtifacts": {
+            "dist/umf-node.js": "1328636ae3d22310f476ecba26ab2fdf0c1d9bae18d22195a7ce2150a2eaec0a",
+            "dist/umf_core_node.node": "1be4903421eb668b20b805b8932b92e12c2ac55031b8d87422abfdfdcf9cc894"
+          }
+        },
+        {
+          "runtime": "bun",
+          "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-a2552db0/raw/relationships-bun.json",
+          "rawSha256": "af50d2cf486206468918e2948aa5b3857a05a532c4722dbccda61c678d3587f1",
+          "archiveBinding": "exact-installed-member-hashes",
+          "verifiedArtifacts": {
+            "dist/umf-node.js": "1328636ae3d22310f476ecba26ab2fdf0c1d9bae18d22195a7ce2150a2eaec0a",
+            "dist/umf_core_node.node": "1be4903421eb668b20b805b8932b92e12c2ac55031b8d87422abfdfdcf9cc894"
+          }
+        },
+        {
+          "runtime": "chromium",
+          "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-a2552db0/raw/relationships-chromium.json",
+          "rawSha256": "d6c8f0f45bb460700b3182d4e29763be8e489d5e51dbbacffdca93dd113ac0f3",
+          "archiveBinding": "exact-installed-member-hashes",
+          "verifiedArtifacts": {
+            "dist/umf-browser.js": "3b8ba8444a048117e2b55ce7527854c8a99cee2a9d633a56f78d01b610e7f27b",
+            "dist/umf_core_wasm_bg.wasm": "b2e84d55ae71ccb8fb76474024b0935495ef8af2dd75ab81e3ea0612ebbb40eb"
+          }
+        }
+      ],
+      "bit128Uuid": [
+        {
+          "runtime": "node",
+          "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-a2552db0/raw/bit128-process-bound.json",
+          "rawSha256": "1f2d2353945947f49421553534939a545046554e36d91a431a1d981fa0dd2bb7",
+          "archiveBinding": "raw-aggregate-claim-and-manifest",
+          "verifiedArtifacts": {
+            "dist/umf-node.js": "1328636ae3d22310f476ecba26ab2fdf0c1d9bae18d22195a7ce2150a2eaec0a",
+            "dist/umf_core_node.node": "1be4903421eb668b20b805b8932b92e12c2ac55031b8d87422abfdfdcf9cc894"
+          }
+        },
+        {
+          "runtime": "bun",
+          "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-a2552db0/raw/bit128-process-bound.json",
+          "rawSha256": "1f2d2353945947f49421553534939a545046554e36d91a431a1d981fa0dd2bb7",
+          "archiveBinding": "raw-aggregate-claim-and-manifest",
+          "verifiedArtifacts": {
+            "dist/umf-node.js": "1328636ae3d22310f476ecba26ab2fdf0c1d9bae18d22195a7ce2150a2eaec0a",
+            "dist/umf_core_node.node": "1be4903421eb668b20b805b8932b92e12c2ac55031b8d87422abfdfdcf9cc894"
+          }
+        },
+        {
+          "runtime": "chromium",
+          "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-a2552db0/raw/bit128-chromium.json",
+          "rawSha256": "bf29ff73d2d2aaf88c45f0339e49c5009410bac8d91d9fbbad00f8a05c71a3e7",
+          "archiveBinding": "exact-installed-member-hashes",
+          "verifiedArtifacts": {
+            "dist/umf-browser.js": "3b8ba8444a048117e2b55ce7527854c8a99cee2a9d633a56f78d01b610e7f27b",
+            "dist/umf_core_wasm_bg.wasm": "b2e84d55ae71ccb8fb76474024b0935495ef8af2dd75ab81e3ea0612ebbb40eb"
+          }
+        }
+      ],
+      "coreKeys": [
+        {
+          "runtime": "node",
+          "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-a2552db0/raw/core-keys.json",
+          "rawSha256": "466e47fd2ce54d173e11705de40cfa838dea9e0e24169dc6b143a071db66269b",
+          "archiveBinding": "raw-aggregate-claim-and-manifest",
+          "verifiedArtifacts": {}
+        },
+        {
+          "runtime": "bun",
+          "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-a2552db0/raw/core-keys.json",
+          "rawSha256": "466e47fd2ce54d173e11705de40cfa838dea9e0e24169dc6b143a071db66269b",
+          "archiveBinding": "raw-aggregate-claim-and-manifest",
+          "verifiedArtifacts": {}
+        },
+        {
+          "runtime": "chromium",
+          "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-a2552db0/raw/core-keys.json",
+          "rawSha256": "466e47fd2ce54d173e11705de40cfa838dea9e0e24169dc6b143a071db66269b",
+          "archiveBinding": "raw-aggregate-claim-and-manifest",
+          "verifiedArtifacts": {}
+        }
+      ]
+    },
+    "boundedOperations": 24,
+    "operationNames": [
+      "validateCsvBooleanLexical",
+      "verifyCsvBooleanLexical",
+      "inspectCoreScalarType",
+      "inspectCoreRecordMembers",
+      "inspectCoreReferenceLinks",
+      "inspectCoreRelationships",
+      "lookupCoreRelationship",
+      "declareCoreRelationship",
+      "verifyCoreRelationshipOperation",
+      "parseBits128",
+      "parseUuid",
+      "bits128FromBytes",
+      "bits128ToBytes",
+      "uuidFromBits128",
+      "uuidToBits128",
+      "compareBits128",
+      "bits128ToWords",
+      "bits128FromWords",
+      "bits128ToInteger",
+      "bits128FromInteger",
+      "inspectCoreKeys",
+      "lookupCoreKey",
+      "declareCoreRecordMembers",
+      "declareCoreKey"
+    ],
+    "logicalRetirementGaps": 922,
+    "pendingOperations": [
+      "verifyCoreKeyOperation",
+      "inspectCoreFacets",
+      "declareCoreFacets",
+      "verifyCoreFacetDeclaration",
+      "historicalCoreFacetPatch",
+      "inspectCoreCardinality",
+      "declareCoreCardinality",
+      "verifyCoreCardinalityDeclaration",
+      "validateCoreDatasetValuesCompact",
+      "verifyCoreDatasetValuesCompact"
+    ]
+  },
   "counts": {
     "packageRootRows": 3360,
     "routeDeclarationRows": 3360,
@@ -44,9 +250,9 @@
       }
     },
     "sourceSelectedRustOverrides": 84,
-    "bindingRoutesProven": 5,
+    "bindingRoutesProven": 24,
     "sourceSelectedRustOverridesDefinition": "Count of Node/browser declaration rows whose source resolves to the V4 root entry and has an exact Rust ownership mapping in this ledger. The current entry declaration census is 42 per root; source selection does not remove any logical retirement gap. Temporal and relationship route receipts are private bounded cohorts, not release qualification.",
-    "bindingRoutesProvenDefinition": "Count of unique logical executable names with a route proven by the gated current-source R8 fixed-point cohort. Historical/source-pinned receipts remain visible in per-route evidence but do not contribute to this count or prove current-source parity. This is not complete host parity, declaration retirement or release qualification.",
+    "bindingRoutesProvenDefinition": "Count of unique logical executable names with a route proven by the gated 24-operation R8 same-archive fixed-point receipt set; this is not complete host parity, declaration retirement or release qualification.",
     "ownerFamilies": 334,
     "adapterOwnershipRows": 26,
     "adapterOwnershipByStatus": {
@@ -6887,8 +7093,8 @@
       "total": 42,
       "executable": 42,
       "inertJson": 0,
-      "mappedOptInRust": 32,
-      "unportedExecutable": 10,
+      "mappedOptInRust": 36,
+      "unportedExecutable": 6,
       "rows": [
         "package-root-browser-1180",
         "package-root-browser-1181",
@@ -6939,8 +7145,8 @@
       "total": 42,
       "executable": 42,
       "inertJson": 0,
-      "mappedOptInRust": 32,
-      "unportedExecutable": 10,
+      "mappedOptInRust": 36,
+      "unportedExecutable": 6,
       "rows": [
         "package-root-node-2300",
         "package-root-node-2301",
@@ -73689,7 +73895,7 @@
       "routeStatus": "default-browser",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::bits128_from_bytes",
         "wireOperation": "umf-128/1:bits128FromBytes",
@@ -73760,7 +73966,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "bits128FromBytes\u0000bits128FromBytes\u0000condition-selected-root-binding\u00000",
       "exportName": "bits128FromBytes",
@@ -73817,8 +74023,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "browser WASM source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "browser Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -73828,7 +74034,7 @@
       "routeStatus": "default-browser",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::bits128_from_integer",
         "wireOperation": "umf-128/1:bits128FromInteger",
@@ -73899,7 +74105,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "bits128FromInteger\u0000bits128FromInteger\u0000condition-selected-root-binding\u00000",
       "exportName": "bits128FromInteger",
@@ -73956,8 +74162,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "browser WASM source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "browser Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -73967,7 +74173,7 @@
       "routeStatus": "default-browser",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::bits128_from_words",
         "wireOperation": "umf-128/1:bits128FromWords",
@@ -74038,7 +74244,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "bits128FromWords\u0000bits128FromWords\u0000condition-selected-root-binding\u00000",
       "exportName": "bits128FromWords",
@@ -74095,8 +74301,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "browser WASM source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "browser Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -74106,7 +74312,7 @@
       "routeStatus": "default-browser",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::bits128_to_bytes",
         "wireOperation": "umf-128/1:bits128ToBytes",
@@ -74177,7 +74383,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "bits128ToBytes\u0000bits128ToBytes\u0000condition-selected-root-binding\u00000",
       "exportName": "bits128ToBytes",
@@ -74234,8 +74440,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "browser WASM source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "browser Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -74245,7 +74451,7 @@
       "routeStatus": "default-browser",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::bits128_to_integer",
         "wireOperation": "umf-128/1:bits128ToInteger",
@@ -74316,7 +74522,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "bits128ToInteger\u0000bits128ToInteger\u0000condition-selected-root-binding\u00000",
       "exportName": "bits128ToInteger",
@@ -74373,8 +74579,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "browser WASM source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "browser Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -74384,7 +74590,7 @@
       "routeStatus": "default-browser",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::bits128_to_words",
         "wireOperation": "umf-128/1:bits128ToWords",
@@ -74455,7 +74661,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "bits128ToWords\u0000bits128ToWords\u0000condition-selected-root-binding\u00000",
       "exportName": "bits128ToWords",
@@ -74512,8 +74718,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "browser WASM source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "browser Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -76509,7 +76715,7 @@
       "routeStatus": "default-browser",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::compare_bits128",
         "wireOperation": "umf-128/1:compareBits128",
@@ -76580,7 +76786,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "compareBits128\u0000compareBits128\u0000condition-selected-root-binding\u00000",
       "exportName": "compareBits128",
@@ -76637,8 +76843,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "browser WASM source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "browser Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -88733,7 +88939,7 @@
       "routeStatus": "default-browser",
       "implementationStatus": "Rust Core Keys operation selected by source route; aggregate installed qualification pending for current worktree",
       "sourceSelectedImplementation": {
-        "status": "unqualified-current-route",
+        "status": "source-selected-installed-private-current-cohort",
         "rustOwner": "umf_core::core_keys::declare_core_key",
         "wireOperation": "model/declareCoreKey",
         "bindingRoute": "browser WASM source-selected route; installed qualification pending",
@@ -88771,7 +88977,7 @@
             "sha256": "905f978e6960ec68a5d633aa51dcc700e9a60cd317daa55ceafce2b9854bd1ba"
           }
         ],
-        "qualificationStatus": "These four Rust Core Keys operations are source-selected at this Node/browser root. The aggregate installed-route gate is pending for the current worktree; declaration retirement remains open. The fifth verifier has separate source-pinned evidence."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "declareCoreKey\u0000declareCoreKey\u0000condition-selected-root-binding\u00000",
       "exportName": "declareCoreKey",
@@ -88812,8 +89018,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-core-keys/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "browser WASM source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "browser Rust Core Keys operation selected by source route; current-worktree aggregate installed qualification pending and retirement gap remains open"
     },
     {
@@ -88885,7 +89091,7 @@
       "routeStatus": "default-browser",
       "implementationStatus": "Rust Core Keys operation selected by source route; aggregate installed qualification pending for current worktree",
       "sourceSelectedImplementation": {
-        "status": "unqualified-current-route",
+        "status": "source-selected-installed-private-current-cohort",
         "rustOwner": "umf_core::core_keys::declare_core_record_members",
         "wireOperation": "model/declareCoreRecordMembers",
         "bindingRoute": "browser WASM source-selected route; installed qualification pending",
@@ -88923,7 +89129,7 @@
             "sha256": "905f978e6960ec68a5d633aa51dcc700e9a60cd317daa55ceafce2b9854bd1ba"
           }
         ],
-        "qualificationStatus": "These four Rust Core Keys operations are source-selected at this Node/browser root. The aggregate installed-route gate is pending for the current worktree; declaration retirement remains open. The fifth verifier has separate source-pinned evidence."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "declareCoreRecordMembers\u0000declareCoreRecordMembers\u0000condition-selected-root-binding\u00000",
       "exportName": "declareCoreRecordMembers",
@@ -88964,8 +89170,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-core-keys/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "browser WASM source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "browser Rust Core Keys operation selected by source route; current-worktree aggregate installed qualification pending and retirement gap remains open"
     },
     {
@@ -89000,7 +89206,7 @@
       "routeStatus": "default-browser",
       "implementationStatus": "inherited TypeScript implementation remains default",
       "sourceSelectedImplementation": {
-        "status": "installed-private-fixed-point-cohort",
+        "status": "source-selected-installed-private-current-cohort",
         "rustOwner": "umf_core::core_relationships::declare_core_relationship",
         "wireOperation": "model/declareCoreRelationship",
         "bindingRoute": "V4 browser root -> WASM relationship wrapper -> Rust wire",
@@ -89074,7 +89280,7 @@
             "sha256": "66b15764cb80059de8e98adb9741b9314a1966674f22ef4f114306e679d5e547"
           }
         ],
-        "qualificationStatus": "Prior private fixed-point package replay passed 11 cases in Bun, bundled Node, and real Chromium; artifact is private/nonpublishable. This records bounded route evidence only; ./reference and declaration retirement remain open."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. This is private route evidence only; ./reference parity, declaration retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "declareCoreRelationship\u0000declareCoreRelationship\u0000condition-selected-root-binding\u00000",
       "exportName": "declareCoreRelationship",
@@ -89127,8 +89333,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "V4 browser root -> WASM relationship wrapper -> Rust wire",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "bounded opt-in Rust core operation exists; browser TypeScript implementation remains in route; zero declarations retired"
     },
     {
@@ -89136,7 +89342,7 @@
       "routeId": "package-root-browser",
       "route": ".",
       "routeStatus": "default-browser",
-      "implementationStatus": "inherited TypeScript implementation remains default",
+      "implementationStatus": "Rust Schema Properties operation selected by source route; separate same-archive private receipt passed; aggregate route gate pending",
       "sourceSelectedImplementation": {
         "status": "source-selected-installed-private-schema-properties-cohort",
         "rustOwner": "umf_core::schema_properties::declare_core_schema_properties",
@@ -89266,13 +89472,86 @@
       "ownerFamily": "src:index-browser-v4.ts",
       "rowKind": "executable",
       "defaultRoute": "browser package root declaration",
-      "acceptedRustOperation": null,
-      "acceptedOperationEvidence": null,
+      "acceptedRustOperation": "umf_core::schema_properties::declare_core_schema_properties",
+      "acceptedOperationEvidence": {
+        "rustSourceClosure": [
+          {
+            "path": "crates/umf-core/src/engine.rs",
+            "sha256": "6b32b109582b38423802367fb19e791fc22ef65b791cbf33d3614f36f4467cb0"
+          },
+          {
+            "path": "crates/umf-core/src/schema_properties.rs",
+            "sha256": "4bf59b02d8edea4eb91c9472af8b8124715b3e6ca4d0daab82446541d493af14"
+          }
+        ],
+        "evidenceClosure": [
+          {
+            "path": "docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md",
+            "sha256": "6ced1294f64710b4a70edcaec1d470b17834b5b1a63c10ed3df70e07be1bd9f1"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-field-value/README.md",
+            "sha256": "2c4f9ddbaecd11a2343745ff05bb2316814ec9a2c2d1901005a82a2bc2dd5aa5"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-field-value/frozen-typescript.json",
+            "sha256": "c5b0d980a561ffd751c411e9f9745f6b091d34cf337214910debfe352ef6d014"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/README.md",
+            "sha256": "c29f659792fb31402184d2b24224527a265a691127fb0364eec2d446c976dbe0"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/frozen-typescript.json",
+            "sha256": "0660e22312a38875cd3f850f4c6caaf5558a4bf4d4f4bb01463cb1c80487125c"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-properties/README.md",
+            "sha256": "b01a7e391779fe46de4edde33c97fd2ef8347c6cf6008ab00fb9ee9b5d707a78"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-properties/frozen-typescript.json",
+            "sha256": "2427c2eb140226a93ac32e25d49a1f60a91582758c620d238dcdd9aaf8506e4a"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/README.md",
+            "sha256": "f5f6c2a706271f6af9bbd6dd65ea4026c05adc839b7c7e5d72e15246570b5796"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/receipt-current-b2f816d7.json",
+            "sha256": "92674964b92dab16cdc20ede84afe62f899f2aba6ed0cf19972cbfac1aa1d460"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/route-gate-current-b2f816d7.json",
+            "sha256": "b268e06697d1f325c3e2a65d388569c0070c12939e5def917b2c3e4f9ea020ae"
+          }
+        ],
+        "focusedTestClosure": [
+          {
+            "path": "crates/umf-core-wire/tests/r5_schema_defaults.rs",
+            "sha256": "563a84f303133f062e87f251c0f8f17b3ccde2a8a53ee5c7bdf92bd0135100be"
+          },
+          {
+            "path": "crates/umf-core-wire/tests/r5_schema_properties_wire.rs",
+            "sha256": "ef2af909e77c7ac4663787882a4392ca44e68f4c99f35b4858833235c5d32292"
+          },
+          {
+            "path": "crates/umf-core/tests/r5_field_value.rs",
+            "sha256": "e8a8dfca0eb74a365aaa81edf08f0607088881f72ab3609f5447daeffec28880"
+          },
+          {
+            "path": "tests/rust-migration/r8-schema-properties-host-boundary.test.ts",
+            "sha256": "d9fb8f50cabd4453025d7626787a5a68cfc430418e0f7b1139ec3f293220a3f7"
+          }
+        ],
+        "scopeRule": "Source/evidence hashes pin identity only; the linked R5 packet defines the bounded operation subset and its remaining gates.",
+        "defaultRouteStatus": "Browser default route source selection is recorded per V4 entry declaration. Installed qualification and all retirement remain open unless a row's bounded evidence says otherwise"
+      },
       "operationOwnership": null,
-      "evidence": null,
+      "evidence": "docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md",
       "bindingRoute": null,
       "bindingRouteStatus": "unproven",
-      "disposition": "browser route remains TypeScript; exact Rust operation and retirement disposition unresolved"
+      "disposition": "browser Rust Schema Properties operation selected by source route; separate same-archive Node/Bun/Chromium private receipt passed, while the aggregate five-family route gate excludes this family; retirement gap remains open"
     },
     {
       "id": "package-root-browser-1328",
@@ -101312,7 +101591,7 @@
       "routeStatus": "default-browser",
       "implementationStatus": "Rust Core Keys operation selected by source route; aggregate installed qualification pending for current worktree",
       "sourceSelectedImplementation": {
-        "status": "unqualified-current-route",
+        "status": "source-selected-installed-private-current-cohort",
         "rustOwner": "umf_core::core_keys::inspect_core_keys",
         "wireOperation": "model/inspectCoreKeys",
         "bindingRoute": "browser WASM source-selected route; installed qualification pending",
@@ -101350,7 +101629,7 @@
             "sha256": "905f978e6960ec68a5d633aa51dcc700e9a60cd317daa55ceafce2b9854bd1ba"
           }
         ],
-        "qualificationStatus": "These four Rust Core Keys operations are source-selected at this Node/browser root. The aggregate installed-route gate is pending for the current worktree; declaration retirement remains open. The fifth verifier has separate source-pinned evidence."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "inspectCoreKeys\u0000inspectCoreKeys\u0000condition-selected-root-binding\u00000",
       "exportName": "inspectCoreKeys",
@@ -101391,8 +101670,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-core-keys/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "browser WASM source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "browser Rust Core Keys operation selected by source route; current-worktree aggregate installed qualification pending and retirement gap remains open"
     },
     {
@@ -101886,7 +102165,7 @@
       "routeStatus": "default-browser",
       "implementationStatus": "inherited TypeScript implementation remains default",
       "sourceSelectedImplementation": {
-        "status": "installed-private-fixed-point-cohort",
+        "status": "source-selected-installed-private-current-cohort",
         "rustOwner": "umf_core::core_relationships::inspect_core_relationships",
         "wireOperation": "model/inspectCoreRelationships",
         "bindingRoute": "V4 browser root -> WASM relationship wrapper -> Rust wire",
@@ -101960,7 +102239,7 @@
             "sha256": "66b15764cb80059de8e98adb9741b9314a1966674f22ef4f114306e679d5e547"
           }
         ],
-        "qualificationStatus": "Prior private fixed-point package replay passed 11 cases in Bun, bundled Node, and real Chromium; artifact is private/nonpublishable. This records bounded route evidence only; ./reference and declaration retirement remain open."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. This is private route evidence only; ./reference parity, declaration retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "inspectCoreRelationships\u0000inspectCoreRelationships\u0000condition-selected-root-binding\u00000",
       "exportName": "inspectCoreRelationships",
@@ -102013,8 +102292,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "V4 browser root -> WASM relationship wrapper -> Rust wire",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "bounded opt-in Rust core operation exists; browser TypeScript implementation remains in route; zero declarations retired"
     },
     {
@@ -102223,7 +102502,7 @@
       "routeId": "package-root-browser",
       "route": ".",
       "routeStatus": "default-browser",
-      "implementationStatus": "inherited TypeScript implementation remains default",
+      "implementationStatus": "Rust Schema Properties operation selected by source route; separate same-archive private receipt passed; aggregate route gate pending",
       "sourceSelectedImplementation": {
         "status": "source-selected-installed-private-schema-properties-cohort",
         "rustOwner": "umf_core::schema_properties::inspect_core_schema_properties",
@@ -102353,13 +102632,86 @@
       "ownerFamily": "src:index-browser-v4.ts",
       "rowKind": "executable",
       "defaultRoute": "browser package root declaration",
-      "acceptedRustOperation": null,
-      "acceptedOperationEvidence": null,
+      "acceptedRustOperation": "umf_core::schema_properties::inspect_core_schema_properties",
+      "acceptedOperationEvidence": {
+        "rustSourceClosure": [
+          {
+            "path": "crates/umf-core/src/engine.rs",
+            "sha256": "6b32b109582b38423802367fb19e791fc22ef65b791cbf33d3614f36f4467cb0"
+          },
+          {
+            "path": "crates/umf-core/src/schema_properties.rs",
+            "sha256": "4bf59b02d8edea4eb91c9472af8b8124715b3e6ca4d0daab82446541d493af14"
+          }
+        ],
+        "evidenceClosure": [
+          {
+            "path": "docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md",
+            "sha256": "6ced1294f64710b4a70edcaec1d470b17834b5b1a63c10ed3df70e07be1bd9f1"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-field-value/README.md",
+            "sha256": "2c4f9ddbaecd11a2343745ff05bb2316814ec9a2c2d1901005a82a2bc2dd5aa5"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-field-value/frozen-typescript.json",
+            "sha256": "c5b0d980a561ffd751c411e9f9745f6b091d34cf337214910debfe352ef6d014"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/README.md",
+            "sha256": "c29f659792fb31402184d2b24224527a265a691127fb0364eec2d446c976dbe0"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/frozen-typescript.json",
+            "sha256": "0660e22312a38875cd3f850f4c6caaf5558a4bf4d4f4bb01463cb1c80487125c"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-properties/README.md",
+            "sha256": "b01a7e391779fe46de4edde33c97fd2ef8347c6cf6008ab00fb9ee9b5d707a78"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-properties/frozen-typescript.json",
+            "sha256": "2427c2eb140226a93ac32e25d49a1f60a91582758c620d238dcdd9aaf8506e4a"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/README.md",
+            "sha256": "f5f6c2a706271f6af9bbd6dd65ea4026c05adc839b7c7e5d72e15246570b5796"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/receipt-current-b2f816d7.json",
+            "sha256": "92674964b92dab16cdc20ede84afe62f899f2aba6ed0cf19972cbfac1aa1d460"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/route-gate-current-b2f816d7.json",
+            "sha256": "b268e06697d1f325c3e2a65d388569c0070c12939e5def917b2c3e4f9ea020ae"
+          }
+        ],
+        "focusedTestClosure": [
+          {
+            "path": "crates/umf-core-wire/tests/r5_schema_defaults.rs",
+            "sha256": "563a84f303133f062e87f251c0f8f17b3ccde2a8a53ee5c7bdf92bd0135100be"
+          },
+          {
+            "path": "crates/umf-core-wire/tests/r5_schema_properties_wire.rs",
+            "sha256": "ef2af909e77c7ac4663787882a4392ca44e68f4c99f35b4858833235c5d32292"
+          },
+          {
+            "path": "crates/umf-core/tests/r5_field_value.rs",
+            "sha256": "e8a8dfca0eb74a365aaa81edf08f0607088881f72ab3609f5447daeffec28880"
+          },
+          {
+            "path": "tests/rust-migration/r8-schema-properties-host-boundary.test.ts",
+            "sha256": "d9fb8f50cabd4453025d7626787a5a68cfc430418e0f7b1139ec3f293220a3f7"
+          }
+        ],
+        "scopeRule": "Source/evidence hashes pin identity only; the linked R5 packet defines the bounded operation subset and its remaining gates.",
+        "defaultRouteStatus": "Browser default route source selection is recorded per V4 entry declaration. Installed qualification and all retirement remain open unless a row's bounded evidence says otherwise"
+      },
       "operationOwnership": null,
-      "evidence": null,
+      "evidence": "docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md",
       "bindingRoute": null,
       "bindingRouteStatus": "unproven",
-      "disposition": "browser route remains TypeScript; exact Rust operation and retirement disposition unresolved"
+      "disposition": "browser Rust Schema Properties operation selected by source route; separate same-archive Node/Bun/Chromium private receipt passed, while the aggregate five-family route gate excludes this family; retirement gap remains open"
     },
     {
       "id": "package-root-browser-1586",
@@ -105437,7 +105789,7 @@
       "routeStatus": "default-browser",
       "implementationStatus": "Rust Core Keys operation selected by source route; aggregate installed qualification pending for current worktree",
       "sourceSelectedImplementation": {
-        "status": "unqualified-current-route",
+        "status": "source-selected-installed-private-current-cohort",
         "rustOwner": "umf_core::core_keys::lookup_core_key",
         "wireOperation": "model/lookupCoreKey",
         "bindingRoute": "browser WASM source-selected route; installed qualification pending",
@@ -105475,7 +105827,7 @@
             "sha256": "905f978e6960ec68a5d633aa51dcc700e9a60cd317daa55ceafce2b9854bd1ba"
           }
         ],
-        "qualificationStatus": "These four Rust Core Keys operations are source-selected at this Node/browser root. The aggregate installed-route gate is pending for the current worktree; declaration retirement remains open. The fifth verifier has separate source-pinned evidence."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "lookupCoreKey\u0000lookupCoreKey\u0000condition-selected-root-binding\u00000",
       "exportName": "lookupCoreKey",
@@ -105516,8 +105868,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-core-keys/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "browser WASM source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "browser Rust Core Keys operation selected by source route; current-worktree aggregate installed qualification pending and retirement gap remains open"
     },
     {
@@ -105527,7 +105879,7 @@
       "routeStatus": "default-browser",
       "implementationStatus": "inherited TypeScript implementation remains default",
       "sourceSelectedImplementation": {
-        "status": "installed-private-fixed-point-cohort",
+        "status": "source-selected-installed-private-current-cohort",
         "rustOwner": "umf_core::core_relationships::lookup_core_relationship",
         "wireOperation": "model/lookupCoreRelationship",
         "bindingRoute": "V4 browser root -> WASM relationship wrapper -> Rust wire",
@@ -105601,7 +105953,7 @@
             "sha256": "66b15764cb80059de8e98adb9741b9314a1966674f22ef4f114306e679d5e547"
           }
         ],
-        "qualificationStatus": "Prior private fixed-point package replay passed 11 cases in Bun, bundled Node, and real Chromium; artifact is private/nonpublishable. This records bounded route evidence only; ./reference and declaration retirement remain open."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. This is private route evidence only; ./reference parity, declaration retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "lookupCoreRelationship\u0000lookupCoreRelationship\u0000condition-selected-root-binding\u00000",
       "exportName": "lookupCoreRelationship",
@@ -105654,8 +106006,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "V4 browser root -> WASM relationship wrapper -> Rust wire",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "bounded opt-in Rust core operation exists; browser TypeScript implementation remains in route; zero declarations retired"
     },
     {
@@ -112722,7 +113074,7 @@
       "routeStatus": "default-browser",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::parse_bits128",
         "wireOperation": "umf-128/1:parseBits128",
@@ -112793,7 +113145,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "parseBits128\u0000parseBits128\u0000condition-selected-root-binding\u00000",
       "exportName": "parseBits128",
@@ -112850,8 +113202,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "browser WASM source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "browser Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -113265,7 +113617,7 @@
       "routeStatus": "default-browser",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::parse_uuid",
         "wireOperation": "umf-128/1:parseUuid",
@@ -113336,7 +113688,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "parseUuid\u0000parseUuid\u0000condition-selected-root-binding\u00000",
       "exportName": "parseUuid",
@@ -113393,8 +113745,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "browser WASM source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "browser Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -124757,7 +125109,7 @@
       "routeId": "package-root-browser",
       "route": ".",
       "routeStatus": "default-browser",
-      "implementationStatus": "inherited TypeScript implementation remains default",
+      "implementationStatus": "Rust Schema Properties operation selected by source route; separate same-archive private receipt passed; aggregate route gate pending",
       "sourceSelectedImplementation": {
         "status": "source-selected-installed-private-schema-properties-cohort",
         "rustOwner": "umf_core::Engine::resolve_core_default_public",
@@ -124887,13 +125239,86 @@
       "ownerFamily": "src:index-browser-v4.ts",
       "rowKind": "executable",
       "defaultRoute": "browser package root declaration",
-      "acceptedRustOperation": null,
-      "acceptedOperationEvidence": null,
+      "acceptedRustOperation": "umf_core::Engine::resolve_core_default_public",
+      "acceptedOperationEvidence": {
+        "rustSourceClosure": [
+          {
+            "path": "crates/umf-core/src/engine.rs",
+            "sha256": "6b32b109582b38423802367fb19e791fc22ef65b791cbf33d3614f36f4467cb0"
+          },
+          {
+            "path": "crates/umf-core/src/schema_properties.rs",
+            "sha256": "4bf59b02d8edea4eb91c9472af8b8124715b3e6ca4d0daab82446541d493af14"
+          }
+        ],
+        "evidenceClosure": [
+          {
+            "path": "docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md",
+            "sha256": "6ced1294f64710b4a70edcaec1d470b17834b5b1a63c10ed3df70e07be1bd9f1"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-field-value/README.md",
+            "sha256": "2c4f9ddbaecd11a2343745ff05bb2316814ec9a2c2d1901005a82a2bc2dd5aa5"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-field-value/frozen-typescript.json",
+            "sha256": "c5b0d980a561ffd751c411e9f9745f6b091d34cf337214910debfe352ef6d014"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/README.md",
+            "sha256": "c29f659792fb31402184d2b24224527a265a691127fb0364eec2d446c976dbe0"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/frozen-typescript.json",
+            "sha256": "0660e22312a38875cd3f850f4c6caaf5558a4bf4d4f4bb01463cb1c80487125c"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-properties/README.md",
+            "sha256": "b01a7e391779fe46de4edde33c97fd2ef8347c6cf6008ab00fb9ee9b5d707a78"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-properties/frozen-typescript.json",
+            "sha256": "2427c2eb140226a93ac32e25d49a1f60a91582758c620d238dcdd9aaf8506e4a"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/README.md",
+            "sha256": "f5f6c2a706271f6af9bbd6dd65ea4026c05adc839b7c7e5d72e15246570b5796"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/receipt-current-b2f816d7.json",
+            "sha256": "92674964b92dab16cdc20ede84afe62f899f2aba6ed0cf19972cbfac1aa1d460"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/route-gate-current-b2f816d7.json",
+            "sha256": "b268e06697d1f325c3e2a65d388569c0070c12939e5def917b2c3e4f9ea020ae"
+          }
+        ],
+        "focusedTestClosure": [
+          {
+            "path": "crates/umf-core-wire/tests/r5_schema_defaults.rs",
+            "sha256": "563a84f303133f062e87f251c0f8f17b3ccde2a8a53ee5c7bdf92bd0135100be"
+          },
+          {
+            "path": "crates/umf-core-wire/tests/r5_schema_properties_wire.rs",
+            "sha256": "ef2af909e77c7ac4663787882a4392ca44e68f4c99f35b4858833235c5d32292"
+          },
+          {
+            "path": "crates/umf-core/tests/r5_field_value.rs",
+            "sha256": "e8a8dfca0eb74a365aaa81edf08f0607088881f72ab3609f5447daeffec28880"
+          },
+          {
+            "path": "tests/rust-migration/r8-schema-properties-host-boundary.test.ts",
+            "sha256": "d9fb8f50cabd4453025d7626787a5a68cfc430418e0f7b1139ec3f293220a3f7"
+          }
+        ],
+        "scopeRule": "Source/evidence hashes pin identity only; the linked R5 packet defines the bounded operation subset and its remaining gates.",
+        "defaultRouteStatus": "Browser default route source selection is recorded per V4 entry declaration. Installed qualification and all retirement remain open unless a row's bounded evidence says otherwise"
+      },
       "operationOwnership": null,
-      "evidence": null,
+      "evidence": "docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md",
       "bindingRoute": null,
       "bindingRouteStatus": "unproven",
-      "disposition": "browser route remains TypeScript; exact Rust operation and retirement disposition unresolved"
+      "disposition": "browser Rust Schema Properties operation selected by source route; separate same-archive Node/Bun/Chromium private receipt passed, while the aggregate five-family route gate excludes this family; retirement gap remains open"
     },
     {
       "id": "package-root-browser-2040",
@@ -132323,7 +132748,7 @@
       "routeStatus": "default-browser",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::uuid_from_bits128",
         "wireOperation": "umf-128/1:uuidFromBits128",
@@ -132394,7 +132819,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "uuidFromBits128\u0000uuidFromBits128\u0000condition-selected-root-binding\u00000",
       "exportName": "uuidFromBits128",
@@ -132451,8 +132876,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "browser WASM source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "browser Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -132462,7 +132887,7 @@
       "routeStatus": "default-browser",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::uuid_to_bits128",
         "wireOperation": "umf-128/1:uuidToBits128",
@@ -132533,7 +132958,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "uuidToBits128\u0000uuidToBits128\u0000condition-selected-root-binding\u00000",
       "exportName": "uuidToBits128",
@@ -132590,8 +133015,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "browser WASM source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "browser Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -132797,7 +133222,7 @@
       "routeId": "package-root-browser",
       "route": ".",
       "routeStatus": "default-browser",
-      "implementationStatus": "inherited TypeScript implementation remains default",
+      "implementationStatus": "Rust Schema Properties operation selected by source route; separate same-archive private receipt passed; aggregate route gate pending",
       "sourceSelectedImplementation": {
         "status": "source-selected-installed-private-schema-properties-cohort",
         "rustOwner": "umf_core::Engine::validate_core_field_value_public",
@@ -132927,13 +133352,86 @@
       "ownerFamily": "src:index-browser-v4.ts",
       "rowKind": "executable",
       "defaultRoute": "browser package root declaration",
-      "acceptedRustOperation": null,
-      "acceptedOperationEvidence": null,
+      "acceptedRustOperation": "umf_core::Engine::validate_core_field_value_public",
+      "acceptedOperationEvidence": {
+        "rustSourceClosure": [
+          {
+            "path": "crates/umf-core/src/engine.rs",
+            "sha256": "6b32b109582b38423802367fb19e791fc22ef65b791cbf33d3614f36f4467cb0"
+          },
+          {
+            "path": "crates/umf-core/src/schema_properties.rs",
+            "sha256": "4bf59b02d8edea4eb91c9472af8b8124715b3e6ca4d0daab82446541d493af14"
+          }
+        ],
+        "evidenceClosure": [
+          {
+            "path": "docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md",
+            "sha256": "6ced1294f64710b4a70edcaec1d470b17834b5b1a63c10ed3df70e07be1bd9f1"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-field-value/README.md",
+            "sha256": "2c4f9ddbaecd11a2343745ff05bb2316814ec9a2c2d1901005a82a2bc2dd5aa5"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-field-value/frozen-typescript.json",
+            "sha256": "c5b0d980a561ffd751c411e9f9745f6b091d34cf337214910debfe352ef6d014"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/README.md",
+            "sha256": "c29f659792fb31402184d2b24224527a265a691127fb0364eec2d446c976dbe0"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/frozen-typescript.json",
+            "sha256": "0660e22312a38875cd3f850f4c6caaf5558a4bf4d4f4bb01463cb1c80487125c"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-properties/README.md",
+            "sha256": "b01a7e391779fe46de4edde33c97fd2ef8347c6cf6008ab00fb9ee9b5d707a78"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-properties/frozen-typescript.json",
+            "sha256": "2427c2eb140226a93ac32e25d49a1f60a91582758c620d238dcdd9aaf8506e4a"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/README.md",
+            "sha256": "f5f6c2a706271f6af9bbd6dd65ea4026c05adc839b7c7e5d72e15246570b5796"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/receipt-current-b2f816d7.json",
+            "sha256": "92674964b92dab16cdc20ede84afe62f899f2aba6ed0cf19972cbfac1aa1d460"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/route-gate-current-b2f816d7.json",
+            "sha256": "b268e06697d1f325c3e2a65d388569c0070c12939e5def917b2c3e4f9ea020ae"
+          }
+        ],
+        "focusedTestClosure": [
+          {
+            "path": "crates/umf-core-wire/tests/r5_schema_defaults.rs",
+            "sha256": "563a84f303133f062e87f251c0f8f17b3ccde2a8a53ee5c7bdf92bd0135100be"
+          },
+          {
+            "path": "crates/umf-core-wire/tests/r5_schema_properties_wire.rs",
+            "sha256": "ef2af909e77c7ac4663787882a4392ca44e68f4c99f35b4858833235c5d32292"
+          },
+          {
+            "path": "crates/umf-core/tests/r5_field_value.rs",
+            "sha256": "e8a8dfca0eb74a365aaa81edf08f0607088881f72ab3609f5447daeffec28880"
+          },
+          {
+            "path": "tests/rust-migration/r8-schema-properties-host-boundary.test.ts",
+            "sha256": "d9fb8f50cabd4453025d7626787a5a68cfc430418e0f7b1139ec3f293220a3f7"
+          }
+        ],
+        "scopeRule": "Source/evidence hashes pin identity only; the linked R5 packet defines the bounded operation subset and its remaining gates.",
+        "defaultRouteStatus": "Browser default route source selection is recorded per V4 entry declaration. Installed qualification and all retirement remain open unless a row's bounded evidence says otherwise"
+      },
       "operationOwnership": null,
-      "evidence": null,
+      "evidence": "docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md",
       "bindingRoute": null,
       "bindingRouteStatus": "unproven",
-      "disposition": "browser route remains TypeScript; exact Rust operation and retirement disposition unresolved"
+      "disposition": "browser Rust Schema Properties operation selected by source route; separate same-archive Node/Bun/Chromium private receipt passed, while the aggregate five-family route gate excludes this family; retirement gap remains open"
     },
     {
       "id": "package-root-browser-2159",
@@ -134222,7 +134720,7 @@
       "routeStatus": "default-browser",
       "implementationStatus": "inherited TypeScript implementation remains default",
       "sourceSelectedImplementation": {
-        "status": "installed-private-fixed-point-cohort",
+        "status": "source-selected-installed-private-current-cohort",
         "rustOwner": "umf_core::core_relationships::verify_core_relationship_operation",
         "wireOperation": "model/verifyCoreRelationshipOperation",
         "bindingRoute": "V4 browser root -> WASM relationship wrapper -> Rust wire",
@@ -134296,7 +134794,7 @@
             "sha256": "66b15764cb80059de8e98adb9741b9314a1966674f22ef4f114306e679d5e547"
           }
         ],
-        "qualificationStatus": "Prior private fixed-point package replay passed 11 cases in Bun, bundled Node, and real Chromium; artifact is private/nonpublishable. This records bounded route evidence only; ./reference and declaration retirement remain open."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. This is private route evidence only; ./reference parity, declaration retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "verifyCoreRelationshipOperation\u0000verifyCoreRelationshipOperation\u0000condition-selected-root-binding\u00000",
       "exportName": "verifyCoreRelationshipOperation",
@@ -134349,8 +134847,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "V4 browser root -> WASM relationship wrapper -> Rust wire",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "bounded opt-in Rust core operation exists; browser TypeScript implementation remains in route; zero declarations retired"
     },
     {
@@ -140015,7 +140513,7 @@
       "routeStatus": "default-node",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::bits128_from_bytes",
         "wireOperation": "umf-128/1:bits128FromBytes",
@@ -140086,7 +140584,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "bits128FromBytes\u0000bits128FromBytes\u0000condition-selected-root-binding\u00000",
       "exportName": "bits128FromBytes",
@@ -140143,8 +140641,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "Node native source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "Node Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -140154,7 +140652,7 @@
       "routeStatus": "default-node",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::bits128_from_integer",
         "wireOperation": "umf-128/1:bits128FromInteger",
@@ -140225,7 +140723,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "bits128FromInteger\u0000bits128FromInteger\u0000condition-selected-root-binding\u00000",
       "exportName": "bits128FromInteger",
@@ -140282,8 +140780,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "Node native source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "Node Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -140293,7 +140791,7 @@
       "routeStatus": "default-node",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::bits128_from_words",
         "wireOperation": "umf-128/1:bits128FromWords",
@@ -140364,7 +140862,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "bits128FromWords\u0000bits128FromWords\u0000condition-selected-root-binding\u00000",
       "exportName": "bits128FromWords",
@@ -140421,8 +140919,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "Node native source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "Node Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -140432,7 +140930,7 @@
       "routeStatus": "default-node",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::bits128_to_bytes",
         "wireOperation": "umf-128/1:bits128ToBytes",
@@ -140503,7 +141001,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "bits128ToBytes\u0000bits128ToBytes\u0000condition-selected-root-binding\u00000",
       "exportName": "bits128ToBytes",
@@ -140560,8 +141058,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "Node native source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "Node Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -140571,7 +141069,7 @@
       "routeStatus": "default-node",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::bits128_to_integer",
         "wireOperation": "umf-128/1:bits128ToInteger",
@@ -140642,7 +141140,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "bits128ToInteger\u0000bits128ToInteger\u0000condition-selected-root-binding\u00000",
       "exportName": "bits128ToInteger",
@@ -140699,8 +141197,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "Node native source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "Node Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -140710,7 +141208,7 @@
       "routeStatus": "default-node",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::bits128_to_words",
         "wireOperation": "umf-128/1:bits128ToWords",
@@ -140781,7 +141279,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "bits128ToWords\u0000bits128ToWords\u0000condition-selected-root-binding\u00000",
       "exportName": "bits128ToWords",
@@ -140838,8 +141336,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "Node native source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "Node Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -142835,7 +143333,7 @@
       "routeStatus": "default-node",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::compare_bits128",
         "wireOperation": "umf-128/1:compareBits128",
@@ -142906,7 +143404,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "compareBits128\u0000compareBits128\u0000condition-selected-root-binding\u00000",
       "exportName": "compareBits128",
@@ -142963,8 +143461,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "Node native source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "Node Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -155059,7 +155557,7 @@
       "routeStatus": "default-node",
       "implementationStatus": "Rust Core Keys operation selected by source route; aggregate installed qualification pending for current worktree",
       "sourceSelectedImplementation": {
-        "status": "unqualified-current-route",
+        "status": "source-selected-installed-private-current-cohort",
         "rustOwner": "umf_core::core_keys::declare_core_key",
         "wireOperation": "model/declareCoreKey",
         "bindingRoute": "Node native source-selected route; installed qualification pending",
@@ -155097,7 +155595,7 @@
             "sha256": "332dc347e3395c5492fc8ddd1a6215db29a5143d8dab0938f49131b404eadff9"
           }
         ],
-        "qualificationStatus": "These four Rust Core Keys operations are source-selected at this Node/browser root. The aggregate installed-route gate is pending for the current worktree; declaration retirement remains open. The fifth verifier has separate source-pinned evidence."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "declareCoreKey\u0000declareCoreKey\u0000condition-selected-root-binding\u00000",
       "exportName": "declareCoreKey",
@@ -155138,8 +155636,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-core-keys/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "Node native source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "Node Rust Core Keys operation selected by source route; current-worktree aggregate installed qualification pending and retirement gap remains open"
     },
     {
@@ -155211,7 +155709,7 @@
       "routeStatus": "default-node",
       "implementationStatus": "Rust Core Keys operation selected by source route; aggregate installed qualification pending for current worktree",
       "sourceSelectedImplementation": {
-        "status": "unqualified-current-route",
+        "status": "source-selected-installed-private-current-cohort",
         "rustOwner": "umf_core::core_keys::declare_core_record_members",
         "wireOperation": "model/declareCoreRecordMembers",
         "bindingRoute": "Node native source-selected route; installed qualification pending",
@@ -155249,7 +155747,7 @@
             "sha256": "332dc347e3395c5492fc8ddd1a6215db29a5143d8dab0938f49131b404eadff9"
           }
         ],
-        "qualificationStatus": "These four Rust Core Keys operations are source-selected at this Node/browser root. The aggregate installed-route gate is pending for the current worktree; declaration retirement remains open. The fifth verifier has separate source-pinned evidence."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "declareCoreRecordMembers\u0000declareCoreRecordMembers\u0000condition-selected-root-binding\u00000",
       "exportName": "declareCoreRecordMembers",
@@ -155290,8 +155788,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-core-keys/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "Node native source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "Node Rust Core Keys operation selected by source route; current-worktree aggregate installed qualification pending and retirement gap remains open"
     },
     {
@@ -155326,7 +155824,7 @@
       "routeStatus": "default-node",
       "implementationStatus": "inherited TypeScript implementation remains default",
       "sourceSelectedImplementation": {
-        "status": "installed-private-fixed-point-cohort",
+        "status": "source-selected-installed-private-current-cohort",
         "rustOwner": "umf_core::core_relationships::declare_core_relationship",
         "wireOperation": "model/declareCoreRelationship",
         "bindingRoute": "V4 Node root -> Node-API relationship wrapper -> Rust wire",
@@ -155400,7 +155898,7 @@
             "sha256": "66b15764cb80059de8e98adb9741b9314a1966674f22ef4f114306e679d5e547"
           }
         ],
-        "qualificationStatus": "Prior private fixed-point package replay passed 11 cases in Bun, bundled Node, and real Chromium; artifact is private/nonpublishable. This records bounded route evidence only; ./reference and declaration retirement remain open."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. This is private route evidence only; ./reference parity, declaration retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "declareCoreRelationship\u0000declareCoreRelationship\u0000condition-selected-root-binding\u00000",
       "exportName": "declareCoreRelationship",
@@ -155453,8 +155951,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "V4 Node root -> Node-API relationship wrapper -> Rust wire",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "bounded opt-in Rust core operation exists; Node TypeScript implementation remains in route; zero declarations retired"
     },
     {
@@ -155462,7 +155960,7 @@
       "routeId": "package-root-node",
       "route": ".",
       "routeStatus": "default-node",
-      "implementationStatus": "inherited TypeScript implementation remains default",
+      "implementationStatus": "Rust Schema Properties operation selected by source route; separate same-archive private receipt passed; aggregate route gate pending",
       "sourceSelectedImplementation": {
         "status": "source-selected-installed-private-schema-properties-cohort",
         "rustOwner": "umf_core::schema_properties::declare_core_schema_properties",
@@ -155592,13 +156090,86 @@
       "ownerFamily": "src:index-node-v4.ts",
       "rowKind": "executable",
       "defaultRoute": "Node package root declaration",
-      "acceptedRustOperation": null,
-      "acceptedOperationEvidence": null,
+      "acceptedRustOperation": "umf_core::schema_properties::declare_core_schema_properties",
+      "acceptedOperationEvidence": {
+        "rustSourceClosure": [
+          {
+            "path": "crates/umf-core/src/engine.rs",
+            "sha256": "6b32b109582b38423802367fb19e791fc22ef65b791cbf33d3614f36f4467cb0"
+          },
+          {
+            "path": "crates/umf-core/src/schema_properties.rs",
+            "sha256": "4bf59b02d8edea4eb91c9472af8b8124715b3e6ca4d0daab82446541d493af14"
+          }
+        ],
+        "evidenceClosure": [
+          {
+            "path": "docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md",
+            "sha256": "6ced1294f64710b4a70edcaec1d470b17834b5b1a63c10ed3df70e07be1bd9f1"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-field-value/README.md",
+            "sha256": "2c4f9ddbaecd11a2343745ff05bb2316814ec9a2c2d1901005a82a2bc2dd5aa5"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-field-value/frozen-typescript.json",
+            "sha256": "c5b0d980a561ffd751c411e9f9745f6b091d34cf337214910debfe352ef6d014"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/README.md",
+            "sha256": "c29f659792fb31402184d2b24224527a265a691127fb0364eec2d446c976dbe0"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/frozen-typescript.json",
+            "sha256": "0660e22312a38875cd3f850f4c6caaf5558a4bf4d4f4bb01463cb1c80487125c"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-properties/README.md",
+            "sha256": "b01a7e391779fe46de4edde33c97fd2ef8347c6cf6008ab00fb9ee9b5d707a78"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-properties/frozen-typescript.json",
+            "sha256": "2427c2eb140226a93ac32e25d49a1f60a91582758c620d238dcdd9aaf8506e4a"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/README.md",
+            "sha256": "f5f6c2a706271f6af9bbd6dd65ea4026c05adc839b7c7e5d72e15246570b5796"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/receipt-current-b2f816d7.json",
+            "sha256": "92674964b92dab16cdc20ede84afe62f899f2aba6ed0cf19972cbfac1aa1d460"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/route-gate-current-b2f816d7.json",
+            "sha256": "b268e06697d1f325c3e2a65d388569c0070c12939e5def917b2c3e4f9ea020ae"
+          }
+        ],
+        "focusedTestClosure": [
+          {
+            "path": "crates/umf-core-wire/tests/r5_schema_defaults.rs",
+            "sha256": "563a84f303133f062e87f251c0f8f17b3ccde2a8a53ee5c7bdf92bd0135100be"
+          },
+          {
+            "path": "crates/umf-core-wire/tests/r5_schema_properties_wire.rs",
+            "sha256": "ef2af909e77c7ac4663787882a4392ca44e68f4c99f35b4858833235c5d32292"
+          },
+          {
+            "path": "crates/umf-core/tests/r5_field_value.rs",
+            "sha256": "e8a8dfca0eb74a365aaa81edf08f0607088881f72ab3609f5447daeffec28880"
+          },
+          {
+            "path": "tests/rust-migration/r8-schema-properties-host-boundary.test.ts",
+            "sha256": "d9fb8f50cabd4453025d7626787a5a68cfc430418e0f7b1139ec3f293220a3f7"
+          }
+        ],
+        "scopeRule": "Source/evidence hashes pin identity only; the linked R5 packet defines the bounded operation subset and its remaining gates.",
+        "defaultRouteStatus": "Node default route source selection is recorded per V4 entry declaration. Installed qualification and all retirement remain open unless a row's bounded evidence says otherwise"
+      },
       "operationOwnership": null,
-      "evidence": null,
+      "evidence": "docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md",
       "bindingRoute": null,
       "bindingRouteStatus": "unproven",
-      "disposition": "Node route remains TypeScript; exact Rust operation and retirement disposition unresolved"
+      "disposition": "Node Rust Schema Properties operation selected by source route; separate same-archive Node/Bun/Chromium private receipt passed, while the aggregate five-family route gate excludes this family; retirement gap remains open"
     },
     {
       "id": "package-root-node-2448",
@@ -167638,7 +168209,7 @@
       "routeStatus": "default-node",
       "implementationStatus": "Rust Core Keys operation selected by source route; aggregate installed qualification pending for current worktree",
       "sourceSelectedImplementation": {
-        "status": "unqualified-current-route",
+        "status": "source-selected-installed-private-current-cohort",
         "rustOwner": "umf_core::core_keys::inspect_core_keys",
         "wireOperation": "model/inspectCoreKeys",
         "bindingRoute": "Node native source-selected route; installed qualification pending",
@@ -167676,7 +168247,7 @@
             "sha256": "332dc347e3395c5492fc8ddd1a6215db29a5143d8dab0938f49131b404eadff9"
           }
         ],
-        "qualificationStatus": "These four Rust Core Keys operations are source-selected at this Node/browser root. The aggregate installed-route gate is pending for the current worktree; declaration retirement remains open. The fifth verifier has separate source-pinned evidence."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "inspectCoreKeys\u0000inspectCoreKeys\u0000condition-selected-root-binding\u00000",
       "exportName": "inspectCoreKeys",
@@ -167717,8 +168288,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-core-keys/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "Node native source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "Node Rust Core Keys operation selected by source route; current-worktree aggregate installed qualification pending and retirement gap remains open"
     },
     {
@@ -168212,7 +168783,7 @@
       "routeStatus": "default-node",
       "implementationStatus": "inherited TypeScript implementation remains default",
       "sourceSelectedImplementation": {
-        "status": "installed-private-fixed-point-cohort",
+        "status": "source-selected-installed-private-current-cohort",
         "rustOwner": "umf_core::core_relationships::inspect_core_relationships",
         "wireOperation": "model/inspectCoreRelationships",
         "bindingRoute": "V4 Node root -> Node-API relationship wrapper -> Rust wire",
@@ -168286,7 +168857,7 @@
             "sha256": "66b15764cb80059de8e98adb9741b9314a1966674f22ef4f114306e679d5e547"
           }
         ],
-        "qualificationStatus": "Prior private fixed-point package replay passed 11 cases in Bun, bundled Node, and real Chromium; artifact is private/nonpublishable. This records bounded route evidence only; ./reference and declaration retirement remain open."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. This is private route evidence only; ./reference parity, declaration retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "inspectCoreRelationships\u0000inspectCoreRelationships\u0000condition-selected-root-binding\u00000",
       "exportName": "inspectCoreRelationships",
@@ -168339,8 +168910,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "V4 Node root -> Node-API relationship wrapper -> Rust wire",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "bounded opt-in Rust core operation exists; Node TypeScript implementation remains in route; zero declarations retired"
     },
     {
@@ -168549,7 +169120,7 @@
       "routeId": "package-root-node",
       "route": ".",
       "routeStatus": "default-node",
-      "implementationStatus": "inherited TypeScript implementation remains default",
+      "implementationStatus": "Rust Schema Properties operation selected by source route; separate same-archive private receipt passed; aggregate route gate pending",
       "sourceSelectedImplementation": {
         "status": "source-selected-installed-private-schema-properties-cohort",
         "rustOwner": "umf_core::schema_properties::inspect_core_schema_properties",
@@ -168679,13 +169250,86 @@
       "ownerFamily": "src:index-node-v4.ts",
       "rowKind": "executable",
       "defaultRoute": "Node package root declaration",
-      "acceptedRustOperation": null,
-      "acceptedOperationEvidence": null,
+      "acceptedRustOperation": "umf_core::schema_properties::inspect_core_schema_properties",
+      "acceptedOperationEvidence": {
+        "rustSourceClosure": [
+          {
+            "path": "crates/umf-core/src/engine.rs",
+            "sha256": "6b32b109582b38423802367fb19e791fc22ef65b791cbf33d3614f36f4467cb0"
+          },
+          {
+            "path": "crates/umf-core/src/schema_properties.rs",
+            "sha256": "4bf59b02d8edea4eb91c9472af8b8124715b3e6ca4d0daab82446541d493af14"
+          }
+        ],
+        "evidenceClosure": [
+          {
+            "path": "docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md",
+            "sha256": "6ced1294f64710b4a70edcaec1d470b17834b5b1a63c10ed3df70e07be1bd9f1"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-field-value/README.md",
+            "sha256": "2c4f9ddbaecd11a2343745ff05bb2316814ec9a2c2d1901005a82a2bc2dd5aa5"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-field-value/frozen-typescript.json",
+            "sha256": "c5b0d980a561ffd751c411e9f9745f6b091d34cf337214910debfe352ef6d014"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/README.md",
+            "sha256": "c29f659792fb31402184d2b24224527a265a691127fb0364eec2d446c976dbe0"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/frozen-typescript.json",
+            "sha256": "0660e22312a38875cd3f850f4c6caaf5558a4bf4d4f4bb01463cb1c80487125c"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-properties/README.md",
+            "sha256": "b01a7e391779fe46de4edde33c97fd2ef8347c6cf6008ab00fb9ee9b5d707a78"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-properties/frozen-typescript.json",
+            "sha256": "2427c2eb140226a93ac32e25d49a1f60a91582758c620d238dcdd9aaf8506e4a"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/README.md",
+            "sha256": "f5f6c2a706271f6af9bbd6dd65ea4026c05adc839b7c7e5d72e15246570b5796"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/receipt-current-b2f816d7.json",
+            "sha256": "92674964b92dab16cdc20ede84afe62f899f2aba6ed0cf19972cbfac1aa1d460"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/route-gate-current-b2f816d7.json",
+            "sha256": "b268e06697d1f325c3e2a65d388569c0070c12939e5def917b2c3e4f9ea020ae"
+          }
+        ],
+        "focusedTestClosure": [
+          {
+            "path": "crates/umf-core-wire/tests/r5_schema_defaults.rs",
+            "sha256": "563a84f303133f062e87f251c0f8f17b3ccde2a8a53ee5c7bdf92bd0135100be"
+          },
+          {
+            "path": "crates/umf-core-wire/tests/r5_schema_properties_wire.rs",
+            "sha256": "ef2af909e77c7ac4663787882a4392ca44e68f4c99f35b4858833235c5d32292"
+          },
+          {
+            "path": "crates/umf-core/tests/r5_field_value.rs",
+            "sha256": "e8a8dfca0eb74a365aaa81edf08f0607088881f72ab3609f5447daeffec28880"
+          },
+          {
+            "path": "tests/rust-migration/r8-schema-properties-host-boundary.test.ts",
+            "sha256": "d9fb8f50cabd4453025d7626787a5a68cfc430418e0f7b1139ec3f293220a3f7"
+          }
+        ],
+        "scopeRule": "Source/evidence hashes pin identity only; the linked R5 packet defines the bounded operation subset and its remaining gates.",
+        "defaultRouteStatus": "Node default route source selection is recorded per V4 entry declaration. Installed qualification and all retirement remain open unless a row's bounded evidence says otherwise"
+      },
       "operationOwnership": null,
-      "evidence": null,
+      "evidence": "docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md",
       "bindingRoute": null,
       "bindingRouteStatus": "unproven",
-      "disposition": "Node route remains TypeScript; exact Rust operation and retirement disposition unresolved"
+      "disposition": "Node Rust Schema Properties operation selected by source route; separate same-archive Node/Bun/Chromium private receipt passed, while the aggregate five-family route gate excludes this family; retirement gap remains open"
     },
     {
       "id": "package-root-node-2706",
@@ -171763,7 +172407,7 @@
       "routeStatus": "default-node",
       "implementationStatus": "Rust Core Keys operation selected by source route; aggregate installed qualification pending for current worktree",
       "sourceSelectedImplementation": {
-        "status": "unqualified-current-route",
+        "status": "source-selected-installed-private-current-cohort",
         "rustOwner": "umf_core::core_keys::lookup_core_key",
         "wireOperation": "model/lookupCoreKey",
         "bindingRoute": "Node native source-selected route; installed qualification pending",
@@ -171801,7 +172445,7 @@
             "sha256": "332dc347e3395c5492fc8ddd1a6215db29a5143d8dab0938f49131b404eadff9"
           }
         ],
-        "qualificationStatus": "These four Rust Core Keys operations are source-selected at this Node/browser root. The aggregate installed-route gate is pending for the current worktree; declaration retirement remains open. The fifth verifier has separate source-pinned evidence."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "lookupCoreKey\u0000lookupCoreKey\u0000condition-selected-root-binding\u00000",
       "exportName": "lookupCoreKey",
@@ -171842,8 +172486,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-core-keys/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "Node native source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "Node Rust Core Keys operation selected by source route; current-worktree aggregate installed qualification pending and retirement gap remains open"
     },
     {
@@ -171853,7 +172497,7 @@
       "routeStatus": "default-node",
       "implementationStatus": "inherited TypeScript implementation remains default",
       "sourceSelectedImplementation": {
-        "status": "installed-private-fixed-point-cohort",
+        "status": "source-selected-installed-private-current-cohort",
         "rustOwner": "umf_core::core_relationships::lookup_core_relationship",
         "wireOperation": "model/lookupCoreRelationship",
         "bindingRoute": "V4 Node root -> Node-API relationship wrapper -> Rust wire",
@@ -171927,7 +172571,7 @@
             "sha256": "66b15764cb80059de8e98adb9741b9314a1966674f22ef4f114306e679d5e547"
           }
         ],
-        "qualificationStatus": "Prior private fixed-point package replay passed 11 cases in Bun, bundled Node, and real Chromium; artifact is private/nonpublishable. This records bounded route evidence only; ./reference and declaration retirement remain open."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. This is private route evidence only; ./reference parity, declaration retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "lookupCoreRelationship\u0000lookupCoreRelationship\u0000condition-selected-root-binding\u00000",
       "exportName": "lookupCoreRelationship",
@@ -171980,8 +172624,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "V4 Node root -> Node-API relationship wrapper -> Rust wire",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "bounded opt-in Rust core operation exists; Node TypeScript implementation remains in route; zero declarations retired"
     },
     {
@@ -179048,7 +179692,7 @@
       "routeStatus": "default-node",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::parse_bits128",
         "wireOperation": "umf-128/1:parseBits128",
@@ -179119,7 +179763,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "parseBits128\u0000parseBits128\u0000condition-selected-root-binding\u00000",
       "exportName": "parseBits128",
@@ -179176,8 +179820,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "Node native source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "Node Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -179591,7 +180235,7 @@
       "routeStatus": "default-node",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::parse_uuid",
         "wireOperation": "umf-128/1:parseUuid",
@@ -179662,7 +180306,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "parseUuid\u0000parseUuid\u0000condition-selected-root-binding\u00000",
       "exportName": "parseUuid",
@@ -179719,8 +180363,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "Node native source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "Node Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -191083,7 +191727,7 @@
       "routeId": "package-root-node",
       "route": ".",
       "routeStatus": "default-node",
-      "implementationStatus": "inherited TypeScript implementation remains default",
+      "implementationStatus": "Rust Schema Properties operation selected by source route; separate same-archive private receipt passed; aggregate route gate pending",
       "sourceSelectedImplementation": {
         "status": "source-selected-installed-private-schema-properties-cohort",
         "rustOwner": "umf_core::Engine::resolve_core_default_public",
@@ -191213,13 +191857,86 @@
       "ownerFamily": "src:index-node-v4.ts",
       "rowKind": "executable",
       "defaultRoute": "Node package root declaration",
-      "acceptedRustOperation": null,
-      "acceptedOperationEvidence": null,
+      "acceptedRustOperation": "umf_core::Engine::resolve_core_default_public",
+      "acceptedOperationEvidence": {
+        "rustSourceClosure": [
+          {
+            "path": "crates/umf-core/src/engine.rs",
+            "sha256": "6b32b109582b38423802367fb19e791fc22ef65b791cbf33d3614f36f4467cb0"
+          },
+          {
+            "path": "crates/umf-core/src/schema_properties.rs",
+            "sha256": "4bf59b02d8edea4eb91c9472af8b8124715b3e6ca4d0daab82446541d493af14"
+          }
+        ],
+        "evidenceClosure": [
+          {
+            "path": "docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md",
+            "sha256": "6ced1294f64710b4a70edcaec1d470b17834b5b1a63c10ed3df70e07be1bd9f1"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-field-value/README.md",
+            "sha256": "2c4f9ddbaecd11a2343745ff05bb2316814ec9a2c2d1901005a82a2bc2dd5aa5"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-field-value/frozen-typescript.json",
+            "sha256": "c5b0d980a561ffd751c411e9f9745f6b091d34cf337214910debfe352ef6d014"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/README.md",
+            "sha256": "c29f659792fb31402184d2b24224527a265a691127fb0364eec2d446c976dbe0"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/frozen-typescript.json",
+            "sha256": "0660e22312a38875cd3f850f4c6caaf5558a4bf4d4f4bb01463cb1c80487125c"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-properties/README.md",
+            "sha256": "b01a7e391779fe46de4edde33c97fd2ef8347c6cf6008ab00fb9ee9b5d707a78"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-properties/frozen-typescript.json",
+            "sha256": "2427c2eb140226a93ac32e25d49a1f60a91582758c620d238dcdd9aaf8506e4a"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/README.md",
+            "sha256": "f5f6c2a706271f6af9bbd6dd65ea4026c05adc839b7c7e5d72e15246570b5796"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/receipt-current-b2f816d7.json",
+            "sha256": "92674964b92dab16cdc20ede84afe62f899f2aba6ed0cf19972cbfac1aa1d460"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/route-gate-current-b2f816d7.json",
+            "sha256": "b268e06697d1f325c3e2a65d388569c0070c12939e5def917b2c3e4f9ea020ae"
+          }
+        ],
+        "focusedTestClosure": [
+          {
+            "path": "crates/umf-core-wire/tests/r5_schema_defaults.rs",
+            "sha256": "563a84f303133f062e87f251c0f8f17b3ccde2a8a53ee5c7bdf92bd0135100be"
+          },
+          {
+            "path": "crates/umf-core-wire/tests/r5_schema_properties_wire.rs",
+            "sha256": "ef2af909e77c7ac4663787882a4392ca44e68f4c99f35b4858833235c5d32292"
+          },
+          {
+            "path": "crates/umf-core/tests/r5_field_value.rs",
+            "sha256": "e8a8dfca0eb74a365aaa81edf08f0607088881f72ab3609f5447daeffec28880"
+          },
+          {
+            "path": "tests/rust-migration/r8-schema-properties-host-boundary.test.ts",
+            "sha256": "d9fb8f50cabd4453025d7626787a5a68cfc430418e0f7b1139ec3f293220a3f7"
+          }
+        ],
+        "scopeRule": "Source/evidence hashes pin identity only; the linked R5 packet defines the bounded operation subset and its remaining gates.",
+        "defaultRouteStatus": "Node default route source selection is recorded per V4 entry declaration. Installed qualification and all retirement remain open unless a row's bounded evidence says otherwise"
+      },
       "operationOwnership": null,
-      "evidence": null,
+      "evidence": "docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md",
       "bindingRoute": null,
       "bindingRouteStatus": "unproven",
-      "disposition": "Node route remains TypeScript; exact Rust operation and retirement disposition unresolved"
+      "disposition": "Node Rust Schema Properties operation selected by source route; separate same-archive Node/Bun/Chromium private receipt passed, while the aggregate five-family route gate excludes this family; retirement gap remains open"
     },
     {
       "id": "package-root-node-3160",
@@ -198649,7 +199366,7 @@
       "routeStatus": "default-node",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::uuid_from_bits128",
         "wireOperation": "umf-128/1:uuidFromBits128",
@@ -198720,7 +199437,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "uuidFromBits128\u0000uuidFromBits128\u0000condition-selected-root-binding\u00000",
       "exportName": "uuidFromBits128",
@@ -198777,8 +199494,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "Node native source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "Node Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -198788,7 +199505,7 @@
       "routeStatus": "default-node",
       "implementationStatus": "Rust Bit128/UUID operation selected by source route; installed qualification pending",
       "sourceSelectedImplementation": {
-        "status": "source-selected-only",
+        "status": "source-selected-installed-private-current-cohort",
         "supportProfile": "umf-128/1",
         "rustOwner": "umf_core::bit128::uuid_to_bits128",
         "wireOperation": "umf-128/1:uuidToBits128",
@@ -198859,7 +199576,7 @@
             "sha256": "b4edd18579fa1c03167a9cd1b8a4086ee6954d339ab39ce5ae5572aa8569f788"
           }
         ],
-        "qualificationStatus": "This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "uuidToBits128\u0000uuidToBits128\u0000condition-selected-root-binding\u00000",
       "exportName": "uuidToBits128",
@@ -198916,8 +199633,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/04-build/evidence/rust-migration/r5-bit128/README.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "Node native source-selected route; installed qualification pending",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "Node Rust Bit128/UUID operation source-selected only; installed Node/Bun/Chromium qualification pending; zero declarations retired"
     },
     {
@@ -199123,7 +199840,7 @@
       "routeId": "package-root-node",
       "route": ".",
       "routeStatus": "default-node",
-      "implementationStatus": "inherited TypeScript implementation remains default",
+      "implementationStatus": "Rust Schema Properties operation selected by source route; separate same-archive private receipt passed; aggregate route gate pending",
       "sourceSelectedImplementation": {
         "status": "source-selected-installed-private-schema-properties-cohort",
         "rustOwner": "umf_core::Engine::validate_core_field_value_public",
@@ -199253,13 +199970,86 @@
       "ownerFamily": "src:index-node-v4.ts",
       "rowKind": "executable",
       "defaultRoute": "Node package root declaration",
-      "acceptedRustOperation": null,
-      "acceptedOperationEvidence": null,
+      "acceptedRustOperation": "umf_core::Engine::validate_core_field_value_public",
+      "acceptedOperationEvidence": {
+        "rustSourceClosure": [
+          {
+            "path": "crates/umf-core/src/engine.rs",
+            "sha256": "6b32b109582b38423802367fb19e791fc22ef65b791cbf33d3614f36f4467cb0"
+          },
+          {
+            "path": "crates/umf-core/src/schema_properties.rs",
+            "sha256": "4bf59b02d8edea4eb91c9472af8b8124715b3e6ca4d0daab82446541d493af14"
+          }
+        ],
+        "evidenceClosure": [
+          {
+            "path": "docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md",
+            "sha256": "6ced1294f64710b4a70edcaec1d470b17834b5b1a63c10ed3df70e07be1bd9f1"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-field-value/README.md",
+            "sha256": "2c4f9ddbaecd11a2343745ff05bb2316814ec9a2c2d1901005a82a2bc2dd5aa5"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-field-value/frozen-typescript.json",
+            "sha256": "c5b0d980a561ffd751c411e9f9745f6b091d34cf337214910debfe352ef6d014"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/README.md",
+            "sha256": "c29f659792fb31402184d2b24224527a265a691127fb0364eec2d446c976dbe0"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/frozen-typescript.json",
+            "sha256": "0660e22312a38875cd3f850f4c6caaf5558a4bf4d4f4bb01463cb1c80487125c"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-properties/README.md",
+            "sha256": "b01a7e391779fe46de4edde33c97fd2ef8347c6cf6008ab00fb9ee9b5d707a78"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-schema-properties/frozen-typescript.json",
+            "sha256": "2427c2eb140226a93ac32e25d49a1f60a91582758c620d238dcdd9aaf8506e4a"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/README.md",
+            "sha256": "f5f6c2a706271f6af9bbd6dd65ea4026c05adc839b7c7e5d72e15246570b5796"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/receipt-current-b2f816d7.json",
+            "sha256": "92674964b92dab16cdc20ede84afe62f899f2aba6ed0cf19972cbfac1aa1d460"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/route-gate-current-b2f816d7.json",
+            "sha256": "b268e06697d1f325c3e2a65d388569c0070c12939e5def917b2c3e4f9ea020ae"
+          }
+        ],
+        "focusedTestClosure": [
+          {
+            "path": "crates/umf-core-wire/tests/r5_schema_defaults.rs",
+            "sha256": "563a84f303133f062e87f251c0f8f17b3ccde2a8a53ee5c7bdf92bd0135100be"
+          },
+          {
+            "path": "crates/umf-core-wire/tests/r5_schema_properties_wire.rs",
+            "sha256": "ef2af909e77c7ac4663787882a4392ca44e68f4c99f35b4858833235c5d32292"
+          },
+          {
+            "path": "crates/umf-core/tests/r5_field_value.rs",
+            "sha256": "e8a8dfca0eb74a365aaa81edf08f0607088881f72ab3609f5447daeffec28880"
+          },
+          {
+            "path": "tests/rust-migration/r8-schema-properties-host-boundary.test.ts",
+            "sha256": "d9fb8f50cabd4453025d7626787a5a68cfc430418e0f7b1139ec3f293220a3f7"
+          }
+        ],
+        "scopeRule": "Source/evidence hashes pin identity only; the linked R5 packet defines the bounded operation subset and its remaining gates.",
+        "defaultRouteStatus": "Node default route source selection is recorded per V4 entry declaration. Installed qualification and all retirement remain open unless a row's bounded evidence says otherwise"
+      },
       "operationOwnership": null,
-      "evidence": null,
+      "evidence": "docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md",
       "bindingRoute": null,
       "bindingRouteStatus": "unproven",
-      "disposition": "Node route remains TypeScript; exact Rust operation and retirement disposition unresolved"
+      "disposition": "Node Rust Schema Properties operation selected by source route; separate same-archive Node/Bun/Chromium private receipt passed, while the aggregate five-family route gate excludes this family; retirement gap remains open"
     },
     {
       "id": "package-root-node-3279",
@@ -200548,7 +201338,7 @@
       "routeStatus": "default-node",
       "implementationStatus": "inherited TypeScript implementation remains default",
       "sourceSelectedImplementation": {
-        "status": "installed-private-fixed-point-cohort",
+        "status": "source-selected-installed-private-current-cohort",
         "rustOwner": "umf_core::core_relationships::verify_core_relationship_operation",
         "wireOperation": "model/verifyCoreRelationshipOperation",
         "bindingRoute": "V4 Node root -> Node-API relationship wrapper -> Rust wire",
@@ -200622,7 +201412,7 @@
             "sha256": "66b15764cb80059de8e98adb9741b9314a1966674f22ef4f114306e679d5e547"
           }
         ],
-        "qualificationStatus": "Prior private fixed-point package replay passed 11 cases in Bun, bundled Node, and real Chromium; artifact is private/nonpublishable. This records bounded route evidence only; ./reference and declaration retirement remain open."
+        "qualificationStatus": "One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. This is private route evidence only; ./reference parity, declaration retirement and release qualification remain open."
       },
       "logicalDeclarationKey": "verifyCoreRelationshipOperation\u0000verifyCoreRelationshipOperation\u0000condition-selected-root-binding\u00000",
       "exportName": "verifyCoreRelationshipOperation",
@@ -200675,8 +201465,8 @@
       },
       "operationOwnership": null,
       "evidence": "docs/helix/02-design/contracts/CONTRACT-041-relationship.md",
-      "bindingRoute": null,
-      "bindingRouteStatus": "unproven",
+      "bindingRoute": "V4 Node root -> Node-API relationship wrapper -> Rust wire",
+      "bindingRouteStatus": "installed-private-current-cohort",
       "disposition": "bounded opt-in Rust core operation exists; Node TypeScript implementation remains in route; zero declarations retired"
     },
     {
@@ -214172,7 +214962,7 @@
       },
       {
         "source": "scripts/rust-migration/r8/gap-ledger.mjs",
-        "sourceSha256": "d222f2aa6a0c060f9603b04dfc5fc8324fd44b878582c32c6e533678ff491278",
+        "sourceSha256": "bc5ce364f574d543e470980ec7c0263aa1f8b69dc764786099ec818e86fb41ba",
         "packageScriptEntrypoints": [],
         "activity": "package-entrypoint-reachability-unresolved",
         "role": "support-tool",
@@ -214180,7 +214970,7 @@
       },
       {
         "source": "scripts/rust-migration/r8/gap-ledger.test.mjs",
-        "sourceSha256": "d29d6e27c9a12634bb52b360c85c5e6c1cd0da188d5d5b3e29ab0688510dd500",
+        "sourceSha256": "19180a29bb7fb92e77fa1245281ffa98e0f7537963ad348710d542a622423cfa",
         "packageScriptEntrypoints": [],
         "activity": "package-entrypoint-reachability-unresolved",
         "role": "support-tool",

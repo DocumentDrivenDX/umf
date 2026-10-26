@@ -34,13 +34,13 @@ and the [gate result](current-0e6de413/gate-result.json) records the accepted
 24-operation scope. The gate reopens the hashed receipt and source evidence;
 the separate preflight is the step that reopened the archive bytes.
 
-The later [current-source preflight](current-61cbaf0a/preflight.json) passed
+The [2026-10-26 prior cohort](current-61cbaf0a/preflight.json) passed
 for private archive SHA-256
 `c1ecf9cea81c3767e281820a93294b85a45ab052862a9fcd8b0b493057302263`
 and source closure
 `61cbaf0ae7a0359e9ae49d2aa4c436727f2122e4174d84999efb20f42d2c3b01`.
 It verified 1,788 package payload members, 3,435 live source inputs, and
-zero generated transforms. The [current adapter input](current-61cbaf0a/adapter-input.json),
+zero generated transforms. The [prior-cohort adapter input](current-61cbaf0a/adapter-input.json),
 [aggregate](current-61cbaf0a/aggregate.json), and
 [gate result](current-61cbaf0a/gate-result.json) bind fresh Node 26.12.1,
 Bun 1.4.3, and Chromium 153.0.8010.12 receipts for the five required
@@ -56,6 +56,26 @@ This remains a private evidence cohort, not full parity or release approval.
 Later Rust source changes and a post-replay whitespace correction mean this
 cohort is now historical relative to the moving worktree. Re-run the archive
 preflight, aggregate gate and host replays only on a new fixed-point cut.
+
+## Current fixed-point archive cohort (2026-10-26)
+
+The [current cohort record](current-a2552db0/README.md) documents the rebuilt
+archive, independent member-hash preflight, current-source closure, host
+receipts, aggregate and gate. The archive SHA-256 is
+`6adacc2f019d6cf73c856c9002ba75fb1d33ca22cb56182e63806296983661e`; its
+manifest SHA-256 is
+`c86c84bc6468f51495be1664d9c2bda53e3e5732ad8d6e2f25019bfc61e9acad`.
+The fixed-point source closure is
+`6a6bef1345e9f90e0d26dd8841ed27ba2ca6f3db8e6dfd330fb78dd9f42cb14c` across
+3,439 inputs with zero generated transforms. Independent preflight verified
+1,788 of 1,788 package payload members. Fresh Node 26.12.1, Bun 1.4.3 and
+Chromium 153.0.8010.12 receipts pass for CSV Boolean (2), Core Inspectors (3),
+Core Relationships (4), Bit128/UUID (11), and Core Keys (4): 24 bounded
+operations total. The gate independently reopens pinned receipts and checks
+the live source closure; archive bytes are verified by the separate preflight.
+All 922 logical retirement gaps remain open. This private cohort omits the
+historical Core Keys 700,000-unit retained-value control and does not establish
+complete parity, declaration retirement, or release qualification.
 
 ## Required archive and receipt binding
 

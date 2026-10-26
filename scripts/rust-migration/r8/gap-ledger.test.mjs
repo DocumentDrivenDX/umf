@@ -23,7 +23,7 @@ const args = { inventory, packageJson: { scripts: { 'build:check': 'bun scripts/
 ], scriptFiles: [{ path: 'scripts/build.ts', sha256: 'e'.repeat(64) }] };
 const currentGeneratedLedger = () => JSON.parse(execFileSync('node', [
   'scripts/rust-migration/r8/gap-ledger.mjs', '--stdout', '--installed-route-evidence',
-  'docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-61cbaf0a/aggregate.json',
+  'docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-a2552db0/aggregate.json',
 ], {
   cwd: process.cwd(), maxBuffer: 64 * 1024 * 1024, encoding: 'utf8',
 }));
@@ -70,7 +70,7 @@ test('Schema Properties source selections keep exact CONTRACT-049 mappings separ
     for (const [name, rustOwner] of expected) {
       const row = ledger.rows.find(item => item.routeId === routeId && item.exportName === name);
       assert.ok(row, `${routeId}:${name} is absent`);
-      assert.equal(row.source, 'src/model/schema-properties.ts');
+      assert.equal(row.source, routeId === 'package-root-node' ? 'src/index-node-v4.ts' : 'src/index-browser-v4.ts');
       assert.equal(row.acceptedRustOperation, rustOwner);
       assert.equal(row.sourceSelectedImplementation.status, 'source-selected-installed-private-schema-properties-cohort');
       assert.equal(row.sourceSelectedImplementation.rustOwner, rustOwner);
