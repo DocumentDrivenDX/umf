@@ -1,0 +1,326 @@
+name: Publish schema browser to npm
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Exact published schema-browser release tag to backfill.
+        required: true
+        type: string
+      source_sha:
+        description: Exact commit peeled from the release tag and package provenance.
+        required: true
+        type: string
+      expected_sums_sha256:
+        description: SHA-256 of the public release SHA256SUMS asset.
+        required: true
+        type: string
+      expected_tarball_sha256:
+        description: SHA-256 of the exact public npm tarball asset.
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: schema-browser-npm-${{ inputs.tag || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  verify-release:
+    if: github.repository == 'DocumentDrivenDX/umf' && github.event_name == 'workflow_dispatch' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      version: ${{ steps.identity.outputs.version }}
+      tag: ${{ steps.identity.outputs.tag }}
+      source_sha: ${{ steps.identity.outputs.source_sha }}
+      archive_sha256: ${{ steps.identity.outputs.archive_sha256 }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - name: Assert checked-out publisher driver matches the workflow SHA
+        env:
+          EXPECTED_DRIVER_SHA: ${{ github.workflow_sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_DRIVER_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test release, dispatcher and registry validators
+        run: |
+          python scripts/test_verify_schema_browser_npm.py
+          python scripts/test_dispatch_schema_browser_npm.py
+      - name: Select immutable release identity and manual pins
+        id: request
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_TAG: ${{ inputs.tag }}
+          INPUT_SOURCE: ${{ inputs.source_sha }}
+          INPUT_SUMS: ${{ inputs.expected_sums_sha256 }}
+          INPUT_TARBALL: ${{ inputs.expected_tarball_sha256 }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$EVENT_NAME" == workflow_dispatch ]]
+          [[ "$INPUT_TAG" =~ ^schema-browser-v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]
+          [[ "$INPUT_SOURCE" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$INPUT_SUMS" =~ ^[0-9a-f]{64}$ ]]
+          [[ "$INPUT_TARBALL" =~ ^[0-9a-f]{64}$ ]]
+          printf 'tag=%s\nsource_sha=%s\nsums_sha256=%s\ntarball_sha256=%s\n' \
+            "$INPUT_TAG" "$INPUT_SOURCE" "$INPUT_SUMS" "$INPUT_TARBALL" >> "$GITHUB_OUTPUT"
+      - name: Fetch release, tag reference and annotated tag metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ steps.request.outputs.tag }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p incoming
+          gh api "repos/$GH_REPO/releases/tags/$TAG" > incoming/release.json
+          gh api "repos/$GH_REPO/git/ref/tags/$TAG" > incoming/tag-ref.json
+          if [[ "$(jq -r .object.type incoming/tag-ref.json)" == tag ]]; then
+            OBJECT_SHA="$(jq -r .object.sha incoming/tag-ref.json)"
+            gh api "repos/$GH_REPO/git/tags/$OBJECT_SHA" > incoming/tag-object.json
+          fi
+      - name: Download only the four exact public release assets anonymously
+        env:
+          TAG: ${{ steps.request.outputs.tag }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION="${TAG#schema-browser-v}"
+          mkdir -p incoming/assets
+          BASE="https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG"
+          for name in SHA256SUMS receipt.json release-manifest.json "documentdrivendx-umf-schema-browser-$VERSION.tgz"; do
+            curl --disable --fail --silent --show-error --location \
+              --proto '=https' --proto-redir '=https' --max-time 90 \
+              --output "incoming/assets/$name" "$BASE/$name"
+          done
+      - name: Verify tag, release API asset digests, package metadata and every archive hash
+        id: identity
+        env:
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ steps.request.outputs.tag }}
+          MANUAL_SOURCE: ${{ steps.request.outputs.source_sha }}
+          MANUAL_SUMS: ${{ steps.request.outputs.sums_sha256 }}
+          MANUAL_TARBALL: ${{ steps.request.outputs.tarball_sha256 }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(prepare --repository "$GH_REPO" --release-json incoming/release.json \
+            --tag-ref-json incoming/tag-ref.json --assets-dir incoming/assets --output-dir verified)
+          if [[ -f incoming/tag-object.json ]]; then args+=(--tag-object-json incoming/tag-object.json); fi
+          if [[ -n "$MANUAL_SOURCE" ]]; then args+=(--expected-source-sha "$MANUAL_SOURCE"); fi
+          if [[ -n "$MANUAL_SUMS" ]]; then args+=(--expected-sums-sha256 "$MANUAL_SUMS"); fi
+          if [[ -n "$MANUAL_TARBALL" ]]; then args+=(--expected-tarball-sha256 "$MANUAL_TARBALL"); fi
+          args+=(--expected-tag "$TAG")
+          if [[ "${{ github.event_name }}" == workflow_dispatch ]]; then args+=(--manual-backfill); fi
+          python scripts/verify_schema_browser_npm.py "${args[@]}"
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          from pathlib import Path
+          identity = json.loads(Path("verified/identity.json").read_text(encoding="utf-8"))
+          print(f"version={identity['version']}")
+          print(f"tag={identity['tag']}")
+          print(f"source_sha={identity['source_sha']}")
+          print(f"archive_sha256={identity['archive_sha256']}")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: schema-browser-verified-${{ steps.identity.outputs.version }}
+          path: verified/*
+          if-no-files-found: error
+          retention-days: 365
+
+  npm-preflight:
+    needs: verify-release
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      status: ${{ steps.registry.outputs.status }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - name: Assert checked-out publisher driver matches the workflow SHA
+        env:
+          EXPECTED_DRIVER_SHA: ${{ github.workflow_sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_DRIVER_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: schema-browser-verified-${{ needs.verify-release.outputs.version }}
+          path: verified
+      - name: Refuse npm version collisions against the exact release tarball
+        id: registry
+        env:
+          VERSION: ${{ needs.verify-release.outputs.version }}
+          EXPECTED_ARCHIVE_SHA256: ${{ needs.verify-release.outputs.archive_sha256 }}
+        run: |
+          set -euo pipefail
+          python scripts/verify_schema_browser_npm.py verify-downloaded-artifact \
+            --directory verified --version "$VERSION" --expected-sha256 "$EXPECTED_ARCHIVE_SHA256"
+          DIGEST="$EXPECTED_ARCHIVE_SHA256"
+          python scripts/verify_schema_browser_npm.py check-npm --version "$VERSION" --sha256 "$DIGEST" | tee npm-preflight.txt | tee -a "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: schema-browser-npm-preflight-${{ needs.verify-release.outputs.version }}
+          path: npm-preflight.txt
+          if-no-files-found: error
+          retention-days: 365
+
+  npm-publish:
+    needs: [verify-release, npm-preflight]
+    if: needs.npm-preflight.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - name: Assert checked-out publisher driver matches the workflow SHA
+        env:
+          EXPECTED_DRIVER_SHA: ${{ github.workflow_sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_DRIVER_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: schema-browser-verified-${{ needs.verify-release.outputs.version }}
+          path: verified
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Require npm trusted-publishing support
+        run: |
+          python - <<'PY'
+          import re, subprocess
+          value = subprocess.check_output(["npm", "--version"], text=True).strip()
+          match = re.fullmatch(r"(\d+)\.(\d+)\.(\d+)(?:[-+].*)?", value)
+          if match is None or tuple(map(int, match.groups())) < (11, 5, 1):
+              raise SystemExit("npm 11.5.1 or later is required for OIDC trusted publishing")
+          print(f"npm {value} supports trusted publishing")
+          PY
+      - name: Recheck npm absence or exact bytes before OIDC upload
+        id: upload-check
+        env:
+          VERSION: ${{ needs.verify-release.outputs.version }}
+          EXPECTED_ARCHIVE_SHA256: ${{ needs.verify-release.outputs.archive_sha256 }}
+        run: |
+          set -euo pipefail
+          TARBALL="verified/documentdrivendx-umf-schema-browser-$VERSION.tgz"
+          python scripts/verify_schema_browser_npm.py verify-downloaded-artifact \
+            --directory verified --version "$VERSION" --expected-sha256 "$EXPECTED_ARCHIVE_SHA256"
+          DIGEST="$(sha256sum "$TARBALL" | cut -d' ' -f1)"
+          [[ "$DIGEST" == "$EXPECTED_ARCHIVE_SHA256" ]]
+          python scripts/verify_schema_browser_npm.py check-npm --version "$VERSION" --sha256 "$DIGEST" | tee npm-upload-check.txt | tee -a "$GITHUB_OUTPUT"
+      - name: Publish only the verified GitHub release tarball with OIDC
+        id: publish
+        if: steps.upload-check.outputs.status == 'absent'
+        env:
+          VERSION: ${{ needs.verify-release.outputs.version }}
+        run: |
+          npm publish "verified/documentdrivendx-umf-schema-browser-$VERSION.tgz" \
+            --ignore-scripts --access public --provenance --registry https://registry.npmjs.org/
+      - name: Verify npm-served bytes and retain a safe publication receipt
+        env:
+          VERSION: ${{ needs.verify-release.outputs.version }}
+          SOURCE_SHA: ${{ needs.verify-release.outputs.source_sha }}
+          TAG: ${{ needs.verify-release.outputs.tag }}
+          ARCHIVE_SHA256: ${{ needs.verify-release.outputs.archive_sha256 }}
+          PUBLISH_OUTCOME: ${{ steps.publish.outcome }}
+          DRIVER_SHA: ${{ github.workflow_sha }}
+        run: |
+          set -euo pipefail
+          python scripts/verify_schema_browser_npm.py check-npm --version "$VERSION" \
+            --sha256 "$ARCHIVE_SHA256" --wait --timeout 600
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          receipt = {
+              "schema": "umf.schema-browser.npm-publication/1",
+              "status": "passed",
+              "registry": "https://registry.npmjs.org",
+              "package": "@documentdrivendx/umf-schema-browser",
+              "version": os.environ["VERSION"],
+              "tag": os.environ["TAG"],
+              "source_sha": os.environ["SOURCE_SHA"],
+              "archive_sha256": os.environ["ARCHIVE_SHA256"],
+              "publisher_workflow_sha": os.environ["DRIVER_SHA"],
+              "publication_mode": "oidc_upload" if os.environ["PUBLISH_OUTCOME"] == "success" else "existing_exact_bytes",
+              "oidc_trusted_publisher": os.environ["PUBLISH_OUTCOME"] == "success",
+              "registry_bytes_verified": True,
+          }
+          Path("npm-publication-receipt.json").write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: schema-browser-npm-publication-${{ needs.verify-release.outputs.version }}
+          path: npm-publication-receipt.json
+          if-no-files-found: error
+          retention-days: 365
+
+  npm-consumer:
+    needs: [verify-release, npm-publish]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - name: Assert checked-out publisher driver matches the workflow SHA
+        env:
+          EXPECTED_DRIVER_SHA: ${{ github.workflow_sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_DRIVER_SHA"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Install exact public package with isolated npm configuration
+        env:
+          VERSION: ${{ needs.verify-release.outputs.version }}
+          NPM_CONFIG_USERCONFIG: ${{ runner.temp }}/schema-browser-user.npmrc
+          NPM_CONFIG_GLOBALCONFIG: ${{ runner.temp }}/schema-browser-global.npmrc
+          NPM_CONFIG_CACHE: ${{ runner.temp }}/schema-browser-npm-cache
+          npm_config_registry: https://registry.npmjs.org/
+        run: |
+          set -euo pipefail
+          : > "$NPM_CONFIG_USERCONFIG"
+          : > "$NPM_CONFIG_GLOBALCONFIG"
+          npm install --prefix "$RUNNER_TEMP/schema-browser-consumer" --ignore-scripts --no-audit --no-fund \
+            --registry https://registry.npmjs.org/ \
+            "@documentdrivendx/umf-schema-browser@$VERSION"
+          node --input-type=module - <<'JS'
+          import { createRequire } from 'node:module';
+          import { join } from 'node:path';
+          import { pathToFileURL } from 'node:url';
+          const root = join(process.env.RUNNER_TEMP, 'schema-browser-consumer/node_modules/@documentdrivendx/umf-schema-browser');
+          const require = createRequire(import.meta.url);
+          const manifest = require(join(root, 'package.json'));
+          if (manifest.name !== '@documentdrivendx/umf-schema-browser' || manifest.version !== process.env.VERSION) throw new Error('consumer installed unexpected package identity');
+          const api = await import(pathToFileURL(join(root, 'index.js')).href);
+          if (typeof api.mountSchemaBrowser !== 'function') throw new Error('consumer entrypoint is missing mountSchemaBrowser');
+          const receipt = {schema:'umf.schema-browser.npm-consumer/1', status:'passed', registry:'https://registry.npmjs.org', package:manifest.name, version:manifest.version, entrypoint:'index.js', import:'passed'};
+          await import('node:fs/promises').then(({writeFile}) => writeFile('npm-consumer-receipt.json', JSON.stringify(receipt, null, 2) + '\n'));
+          JS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: schema-browser-npm-consumer-${{ needs.verify-release.outputs.version }}
+          path: npm-consumer-receipt.json
+          if-no-files-found: error
+          retention-days: 365

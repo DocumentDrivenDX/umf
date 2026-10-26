@@ -1,0 +1,21 @@
+{
+  "sourceBatchCommit": "d0322b1f3",
+  "reviewSha256": "64f8349998375290210ffbd71c45ddbedc0b541a03d571921fad5756cedb1d33",
+  "reviewedSourceHashes": {
+    "tests/codegen/acquire_offline_cohort.py": "3fce50c241afd5ef3e5dfa3ea2736c1fbe5b98f8788b98ac296db476395f8503",
+    "python/packaging/embedder-wheel-lock.template.json": "5ce1f5a5f69132737d3710126921c085e4dadc751b20d827dd9d4f59c62c8c0f",
+    "package.json": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b",
+    ".github/workflows/access-boundaries.yml": "e94235c9e027748fecfa218350ed82684ba5f6e33cf978728e4064125b01f50a",
+    ".github/workflows/g02-g03-native-qualification.yml": "9d0d92c26eab0fd19c000073d46c1c70d1b959115bd52f7b43e669d0222040c8",
+    "docs/helix/04-build/evidence/mig-g02-g03/native-qualification-source-pins.json": "88a9de55e8d0134451a20e508ff60315ba4fd6844fcbc4abb472bfda7054bd7f"
+  },
+  "main51Integrated": "2cf73fa400135619cf197b120e748826e52c8bc3",
+  "main51ChangeScope": "Eight publisher scripts/workflows/runbook paths, plus conflicted generated inventory; no product/runtime changes",
+  "conflictResolution": "Prior candidate inventory retained unchanged as historical seed; required canonical generation follows final source freeze",
+  "generationBranch": "codex/migration-merged-generation",
+  "previousRemoteAncestor": "55c6a8957fd42b3272bcd08d255df8db4db0b330",
+  "generationWorkflowChanged": false,
+  "generationExecution": "NOT_YET_DISPATCHED",
+  "nativeExecution": "NOT_DISPATCHED",
+  "fourCellSDKAcceptance": "OPEN"
+}

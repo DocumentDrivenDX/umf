@@ -115,6 +115,33 @@ npm pack
 The reusable package contains no sample dataset archives; users supply their
 catalog and original assets.
 
+## npm release publication
+
+The public package `@documentdrivendx/umf-schema-browser` is published only by
+the Actions workflow [`publish-schema-browser-npm.yml`](../../../../.github/workflows/publish-schema-browser-npm.yml).
+Publishing verifies the exact public GitHub release, immutable tag target,
+package provenance, `SHA256SUMS`, release manifest and archive bytes before
+using npm OIDC. It accepts an automatic run after an immutable published release
+or a default-branch manual backfill with explicit source and digest pins. Legacy
+releases without GitHub's immutable flag require all manual tag, source,
+`SHA256SUMS` and tarball pins. A registry version must be absent or contain the
+identical tarball; an already matching version skips upload and is recorded as
+existing exact bytes. A separate clean consumer installs from public npm and
+imports the package entrypoint.
+
+GitHub release immutability is currently disabled for this repository, so the
+existing `schema-browser-v2.0.0` release uses the exact-pin manual backfill.
+Enabling immutability affects future releases only, as described in
+[GitHub's release settings](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/establish-provenance-and-integrity/prevent-release-changes).
+
+The workflow's only publishing identity is the main-only GitHub `npm`
+environment and the npm trusted publisher for `DocumentDrivenDX/umf`, workflow
+`publish-schema-browser-npm.yml`. Enable the trusted publisher's **Allow npm
+publish** permission; npm treats it separately from staged publishing. See
+[npm trusted publishing](https://docs.npmjs.com/trusted-publishers/). No npm
+token is stored. The private `@umf/core` development package and its GitHub SDK
+archive are not part of this publication.
+
 To reproduce a candidate, build it twice into separate output directories with
 Bun 1.4.2, then compare `release-manifest.json` and `asset-manifest.json` byte
 for byte. Each output's `provenance.json` records hashes for the actual source,
