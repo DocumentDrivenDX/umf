@@ -7,6 +7,91 @@ use num_traits::ToPrimitive;
 pub const MIN_PAGE_SIZE: u16 = 1;
 pub const MAX_PAGE_SIZE: u16 = 1000;
 
+/// Private structural post-host result-frame rules from CONTRACT-079/081.
+///
+/// This profile is intentionally independent of database drivers: Python still
+/// acquires rows and decodes each native scalar before applying cardinality.
+/// It has no shared Context charge; callers must establish bounded row counts
+/// and a cumulative budget before any public routing could use it.
+pub const READ_FRAME_PROFILE: &str = "umf-python-read-frame/0.1.0";
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum ReadFrameKind {
+    Count,
+    One,
+    Optional,
+    Many,
+    Page,
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum ReadFrameError {
+    CountCardinality,
+    ResultArity,
+    RequiredRowMissing,
+    SingleRowExceeded,
+    RowBoundExceeded,
+    PageBoundExceeded,
+}
+
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub enum ReadFrameShapeFault<E> {
+    Refusal(ReadFrameError),
+    Host(E),
+}
+
+/// Ask the host for row widths only in the predecessor's left-to-right order.
+/// A host failure stays opaque, and a structural refusal stops later host reads.
+pub fn validate_read_frame_shape_with<E>(
+    kind: ReadFrameKind,
+    output_count: usize,
+    row_count: usize,
+    mut read_width: impl FnMut(usize) -> Result<usize, E>,
+) -> Result<(), ReadFrameShapeFault<E>> {
+    if kind == ReadFrameKind::Count {
+        if row_count != 1 {
+            return Err(ReadFrameShapeFault::Refusal(
+                ReadFrameError::CountCardinality,
+            ));
+        }
+        let width = read_width(0).map_err(ReadFrameShapeFault::Host)?;
+        if width != 1 {
+            return Err(ReadFrameShapeFault::Refusal(
+                ReadFrameError::CountCardinality,
+            ));
+        }
+    } else {
+        for index in 0..row_count {
+            let width = read_width(index).map_err(ReadFrameShapeFault::Host)?;
+            if width != output_count {
+                return Err(ReadFrameShapeFault::Refusal(ReadFrameError::ResultArity));
+            }
+        }
+    }
+    Ok(())
+}
+
+/// Preserve the predecessor's post-decode cardinality order.
+pub fn validate_read_frame_cardinality(
+    kind: ReadFrameKind,
+    row_count: usize,
+    bound: usize,
+) -> Result<(), ReadFrameError> {
+    match kind {
+        ReadFrameKind::Count => Ok(()),
+        ReadFrameKind::One if row_count == 0 => Err(ReadFrameError::RequiredRowMissing),
+        ReadFrameKind::One | ReadFrameKind::Optional if row_count > 1 => {
+            Err(ReadFrameError::SingleRowExceeded)
+        }
+        ReadFrameKind::Many if row_count > bound => Err(ReadFrameError::RowBoundExceeded),
+        ReadFrameKind::Page if row_count > bound => match bound.checked_add(1) {
+            Some(lookahead) if row_count == lookahead => Ok(()),
+            _ => Err(ReadFrameError::PageBoundExceeded),
+        },
+        _ => Ok(()),
+    }
+}
+
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum StreamPageSizeError {
     InvalidRequest,
@@ -113,6 +198,84 @@ pub fn effective_page_size(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn post_host_read_frame_keeps_structural_refusal_order() {
+        assert_eq!(
+            validate_read_frame_shape_with(ReadFrameKind::Count, 1, 2, |_| Ok::<_, ()>(1)),
+            Err(ReadFrameShapeFault::Refusal(
+                ReadFrameError::CountCardinality
+            ))
+        );
+        assert_eq!(
+            validate_read_frame_shape_with(ReadFrameKind::Many, 2, 2, |index| {
+                Ok::<_, ()>(if index == 0 { 2 } else { 1 })
+            }),
+            Err(ReadFrameShapeFault::Refusal(ReadFrameError::ResultArity))
+        );
+        assert_eq!(
+            validate_read_frame_shape_with(ReadFrameKind::Count, 1, 1, |_| Ok::<_, ()>(1)),
+            Ok(())
+        );
+        assert_eq!(
+            validate_read_frame_shape_with(ReadFrameKind::Page, 0, 1, |_| Ok::<_, ()>(0)),
+            Ok(())
+        );
+    }
+
+    #[test]
+    fn read_frame_shape_short_circuits_later_host_observations() {
+        let mut observed = Vec::new();
+        let result = validate_read_frame_shape_with(ReadFrameKind::Many, 2, 3, |index| {
+            observed.push(index);
+            if index == 2 {
+                Err("later host failure")
+            } else {
+                Ok(if index == 1 { 1 } else { 2 })
+            }
+        });
+        assert_eq!(
+            result,
+            Err(ReadFrameShapeFault::Refusal(ReadFrameError::ResultArity))
+        );
+        assert_eq!(observed, [0, 1]);
+
+        let result = validate_read_frame_shape_with(ReadFrameKind::Many, 2, 1, |_| {
+            Err::<usize, _>("opaque host failure")
+        });
+        assert_eq!(
+            result,
+            Err(ReadFrameShapeFault::Host("opaque host failure"))
+        );
+    }
+
+    #[test]
+    fn post_host_read_frame_preserves_terminal_cardinality_rules() {
+        assert_eq!(
+            validate_read_frame_cardinality(ReadFrameKind::One, 0, 1),
+            Err(ReadFrameError::RequiredRowMissing)
+        );
+        assert_eq!(
+            validate_read_frame_cardinality(ReadFrameKind::Optional, 0, 1),
+            Ok(())
+        );
+        assert_eq!(
+            validate_read_frame_cardinality(ReadFrameKind::Optional, 2, 1),
+            Err(ReadFrameError::SingleRowExceeded)
+        );
+        assert_eq!(
+            validate_read_frame_cardinality(ReadFrameKind::Many, 2, 1),
+            Err(ReadFrameError::RowBoundExceeded)
+        );
+        assert_eq!(
+            validate_read_frame_cardinality(ReadFrameKind::Page, 2, 1),
+            Ok(())
+        );
+        assert_eq!(
+            validate_read_frame_cardinality(ReadFrameKind::Page, 3, 1),
+            Err(ReadFrameError::PageBoundExceeded)
+        );
+    }
 
     #[test]
     fn request_and_owner_maximum_use_closed_integer_domain() {
