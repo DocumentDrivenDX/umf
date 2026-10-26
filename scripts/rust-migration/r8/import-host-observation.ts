@@ -18,8 +18,8 @@ function run(id: string, build: () => {text: unknown; options: any}, expectedThr
   try {
     const {text, options} = build();
     const document = importJsonSchema(text as string, options);
-    const payload = document.modules[0].elements[0].extensions['umf.json-schema'] as any;
-    return {id, events:[...trace], outcome:{kind:'return', documentId:document.id, namespace:document.modules[0].namespace, baseUri:payload.baseUri, resources:Object.keys(payload.resources)}};
+    const payload = document.modules[0]!.elements[0]!.extensions['umf.json-schema'] as any;
+    return {id, events:[...trace], outcome:{kind:'return', documentId:document.id, namespace:document.modules[0]!.namespace, baseUri:payload.baseUri, resources:Object.keys(payload.resources)}};
   } catch (error) { return {id, events:[...trace], outcome:{...thrown(error), ...(expectedThrow ? {sameObject:error===expectedThrow} : {})}}; }
 }
 const cases: CaseResult[] = [];

@@ -8,8 +8,8 @@ const run = (id:string, text:unknown, options:any, expected?:object) => {
   events.length=0;
   try {
     const doc=importJsonSchema(text as string, options);
-    const p=doc.modules[0].elements[0].extensions['umf.json-schema'] as any;
-    return {id,events:[...events],outcome:{kind:'return',documentId:doc.id,namespace:doc.modules[0].namespace,baseUri:p.baseUri,resources:Object.keys(p.resources)}};
+    const p=doc.modules[0]!.elements[0]!.extensions['umf.json-schema'] as any;
+    return {id,events:[...events],outcome:{kind:'return',documentId:doc.id,namespace:doc.modules[0]!.namespace,baseUri:p.baseUri,resources:Object.keys(p.resources)}};
   } catch(e) {
     const x=e as any;
     return {id,events:[...events],outcome:{kind:'throw',name:x?.name??typeof e,message:x?.message??String(e),code:x?.code??null,...(expected?{sameObject:e===expected}:{})}};
