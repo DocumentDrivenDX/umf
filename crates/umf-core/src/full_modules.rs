@@ -108,6 +108,7 @@ pub mod security_functions;
 pub mod security_logic;
 pub mod security_parameters;
 pub mod selection;
+pub(crate) mod selection_diagnostics;
 pub mod semantic_type_accessors;
 pub mod serialization;
 pub mod structural_diff;

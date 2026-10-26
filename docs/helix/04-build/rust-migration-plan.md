@@ -5455,3 +5455,16 @@ site; a future host provider must charge work through it. No host Selection
 route, `kindRuntime` behavior, default-root switch or retirement
 claim follows from this static seam. Sol's full `umf-core --lib` regression
 run on this source packet passed 424/424 tests.
+
+The [Selection diagnostic-materialization stage](evidence/rust-migration/r8-selection-diagnostic-materialization/README.md)
+now keeps ordered static diagnostics and a reserved opaque callback-diagnostic
+representation behind a crate-private materializer. The static Selection path
+preserves Engine's existing `Validation.valid`, including structural
+invalidity that may be reported with warning severity, and retains the
+existing completeness, diagnostic order, refusal envelope and successful
+`sourceValidation` shape. The focused materializer tests pass 5/5 and the R5
+Selection frozen suite passes 10/10. This is a static refactor plus an internal
+staged value model only: callback diagnostics are still refused by the static
+conversion, final UmfError construction/exposure remains open, and no host
+Selection route, `kindRuntime` behavior, default-root switch, host parity or
+retirement claim is established.

@@ -4,10 +4,10 @@
 use crate::{
     context::Context,
     engine::{Capabilities, Engine},
-    error::{EngineError, Severity},
+    error::EngineError,
     registry::Registry,
     serialization::stringify_compact_metered,
-    value::{Utf16, Value, copy_json},
+    value::{copy_json, Utf16, Value},
 };
 use std::collections::HashSet;
 
@@ -216,36 +216,6 @@ fn push_refs<'a>(element: &'a Value, out: &mut Vec<&'a Value>) {
         }
     }
 }
-fn validation_value(validation: crate::error::Validation) -> Value {
-    obj(vec![
-        ("valid", Value::Bool(validation.valid)),
-        ("complete", Value::Bool(validation.complete)),
-        (
-            "diagnostics",
-            Value::Array(
-                validation
-                    .diagnostics
-                    .into_iter()
-                    .map(|d| {
-                        obj(vec![
-                            ("code", Value::String(d.code)),
-                            ("path", Value::String(d.path)),
-                            ("message", Value::String(d.message)),
-                            (
-                                "severity",
-                                text(match d.severity {
-                                    Severity::Error => "error",
-                                    Severity::Warning => "warning",
-                                }),
-                            ),
-                        ])
-                    })
-                    .collect(),
-            ),
-        ),
-    ])
-}
-
 /// Preserve the TypeScript selection refusal location while retaining the
 /// shared copy's early allocation checks. The shared copy may reject a wide
 /// container at its parent before visiting the first over-limit child; this
@@ -341,9 +311,13 @@ pub(crate) fn select_core_elements_with_provider(
         ctx,
         None,
     )?;
-    if !source_validation.valid {
-        let diagnostics = validation_value(source_validation);
-        let message = stringify_compact_metered(get(&diagnostics, "diagnostics").unwrap(), ctx)?;
+    let source_validation =
+        crate::selection_diagnostics::SelectionDiagnosticMaterialization::from_static_validation(
+            source_validation,
+        );
+    if !source_validation.static_is_valid()? {
+        let diagnostics = source_validation.into_static_diagnostics()?;
+        let message = stringify_compact_metered(&Value::Array(diagnostics), ctx)?;
         return Err(EngineError::new(
             "CORE_SELECTION_SOURCE",
             Utf16::default(),
@@ -562,7 +536,10 @@ pub(crate) fn select_core_elements_with_provider(
         ),
         ("source", source),
         ("query", query),
-        ("sourceValidation", validation_value(source_validation)),
+        (
+            "sourceValidation",
+            source_validation.into_static_source_value()?,
+        ),
         ("selection", Value::Array(selection)),
         ("boundaryReferences", Value::Array(boundary_references)),
         ("boundaryItemTypes", Value::Array(boundary_item_types)),
