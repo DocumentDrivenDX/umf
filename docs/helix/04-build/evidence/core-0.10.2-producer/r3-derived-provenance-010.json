@@ -1,0 +1,40 @@
+{
+  "status": "derived-candidate-only-not-generated-or-current",
+  "derivation": "one-file source record plus exact rust-inventory.py sourceCohortSha256 formula",
+  "commit": "14cc001d8944cb3ed61da720c7795b8b521d496e",
+  "parent": "b4f2eafbcb3f0a5e72c1ba88ffcc85e49451ec35",
+  "target": "python/tests/test_python_artifact_version.py",
+  "baselineTestSha256": "629b6303a22c08a1ca4af68aadc3448d0f30e0ed9b6dbbb9134e39004e7e8d57",
+  "candidateTestSha256": "719fd41eeb78829609e167e08e56622c964e48dd99e6cbd952f23a4d40634aa8",
+  "baselineInventorySha256": "a2609b45cd6131aae1211a764405912472f4ccdd998d021807d65948b53f939b",
+  "derivedInventorySha256": "66166e441062358f3f8ba73943079e7bfcca964157f6076fcc754c4c21cdffea",
+  "baselineSourceCohortSha256": "16a55b5946a9868775b2b3afc5b0078f9fcfae132aed3fde5310ef891710c6ca",
+  "derivedSourceCohortSha256": "e8c99668761d72bb8a1be840d93d883b83c5ec5b2f72b5e81d7c1d98e61e31f2",
+  "changedJsonPaths": [
+    "$.capture.sourceCohortSha256",
+    "$.scripts[51].bytes",
+    "$.scripts[51].sha256"
+  ],
+  "algorithmSymbolsUnchanged": true,
+  "algorithmSymbols": [
+    "ExpectedVersionTests",
+    "make_repo",
+    "make_wheel",
+    "test_cli_source_mode_forwards_selected_version",
+    "test_installed_mode_enforces_explicit_version_before_payload_check",
+    "test_verify_defaults_to_historical_profile_and_explicit_version_is_propagated"
+  ],
+  "activationUnchanged": true,
+  "countsUnchanged": true,
+  "otherJsonValuesUnchanged": true,
+  "sourceCommitDiffPaths": [
+    "python/tests/test_python_artifact_version.py"
+  ],
+  "formulaGitInputs": {
+    "Cargo.lock": "e12048f6e1141dd742974ab3c5924dc0d7f025bf063f6aca90fbead32388a34f",
+    "Cargo.toml": "89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f",
+    "package.json": "031bdb38c663c33804c02de06906c9c4fdd7bbf32728204cd4c8d30959c324ed",
+    "bun.lock": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4"
+  },
+  "caveat": "Only a later authorized run of the unmodified product inventory --check can establish currentness. This derivation is not a generated inventory or product check result."
+}

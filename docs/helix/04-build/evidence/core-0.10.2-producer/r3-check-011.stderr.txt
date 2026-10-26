@@ -1,0 +1,2 @@
+/private/tmp/umf-core0102-r3-attempt011-check001/worktree/tools/security/pg-old-snapshot-admission-probe.py:30: SyntaxWarning: invalid escape sequence '\w'
+  self.process.stdin.write((text+';\n\\echo '+marker+' :SQLSTATE :LAST_ERROR_MESSAGE\n\warn STDERR_'+marker+'\n').encode());deadline=time.monotonic()+10

@@ -1,0 +1,25 @@
+{
+  "baselineInventoryPath": "/private/tmp/umf-core-0102-f5f4-baseline-inventory.json",
+  "baselineInventorySha256": "9541287a1d5f4fc476a2230bb2e78dcaf567a327fced4e2e0d2803eabc17363b",
+  "canonicalJson": "json.dumps(ensure_ascii=False, sort_keys=True, indent=2) followed by LF",
+  "createdUtc": "2026-10-24T04:43:47Z",
+  "derivedDelta": {
+    "activationEvidence": "transitive-import-closure",
+    "newActiveRoot": "python/tests/test_extension_kinds.py",
+    "newActiveScriptCount": 1,
+    "unchangedSourceCohortSha256": "ad1e306d33a31288617cb50dffa0005a3be0597ae41afeca34c52f115d021f54"
+  },
+  "inventoryCandidateBytes": 2605110,
+  "inventoryCandidatePath": "/private/tmp/umf-core-0102-producer-5db979-attempt-008-candidate/inventory-candidate.json",
+  "inventoryCandidateSha256": "ae037fca7be042c501d65130c6d5f9fde983b4b5d2ddd9eb5c3e8f7ebbd472bf",
+  "parentCommit": "7cc87c4b79999d4e240bc5c600ca32ce10b65b88",
+  "parentInventoryBytes": 2604971,
+  "parentInventoryPath": "/private/tmp/umf-core-0102-producer-7cc87-attempt-005-diagnostic/inventory-after-generation.json",
+  "parentInventorySha256": "0d1d1b632be4da4e65de3fa7aa8061257b06705db2f068b4921697dc5e351a19",
+  "producerCommit": "5db979425070dd01836bf7304dfca29003945673",
+  "producerTree": "22fee2ca58aee1fa33d9040a45dce70aa7c5e667",
+  "statement": "This inventory is derived from the 7cc87 captured inventory by the single reviewed activation delta; it is not a generator output or passing qualification. Only a fresh unmodified rust-inventory.py --check at the exact producer checkout can validate it against a newly computed full inventory.",
+  "status": "derived-unverified-candidate",
+  "workflowPath": ".github/workflows/python-action-runtime.yml",
+  "workflowSha256AtProducer": "e53d602a209f10596ab8b60b01074db314f8e6f510e992c18a63a851c3a83180"
+}

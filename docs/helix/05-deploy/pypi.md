@@ -28,15 +28,18 @@ they must never be renamed to imply manylinux qualification. A future native
 PyPI release requires genuinely built and tested compatible bytes. The `pypi` environment permits only the `main`
 driver with no reviewer per release. Register the exact PyPI trusted publisher
 for `DocumentDrivenDX/umf`, workflow `publish-pypi.yml`, environment `pypi`.
-No stored publishing token is used. A version must be absent or have identical
+Registry uploads run exclusively in GitHub Actions and bind the published tag,
+source commit and release archive hashes. Local scripts may prepare or verify
+archives, but must not upload to PyPI. No stored publishing token is used. A version must be absent or have identical
 files and bytes; conflicts and registry errors fail immediately.
 
 A subsequent job without OIDC checks a clean public-PyPI install and installed
 origin. Source-validation, upload, byte and consumer receipts remain separate.
 The approved environment and trusted publisher are configured. Actual backfill
 publication remains pending; configuration alone is not publication evidence. Historical package namespaces and support limits
-remain unchanged. Core0.10.2 runtime/producer work is a separate release lane; its currently
-qualified raw Linux wheel is GitHub-only and does not establish PyPI compatibility.
+remain unchanged. Native producer qualification is a separate release lane.
+Only its genuinely compatible, qualified wheel cohort may be selected for PyPI;
+registry publication does not broaden that cohort’s platform or runtime claims.
 
 ## Historical preparation and observations
 

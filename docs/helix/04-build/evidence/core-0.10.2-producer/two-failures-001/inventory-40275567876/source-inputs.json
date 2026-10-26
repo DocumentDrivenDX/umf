@@ -1,0 +1,53 @@
+{
+  "commit": "12cd098d76f095be00b892bc84f7b1b919d1d38e",
+  "correctedPR49Inputs": {
+    "scripts/actions-reference/executor.ts": "2fc6849548220155e70a25e0dfb87ace7a5047a57aa7a1bd1579564920cfe95a",
+    "scripts/reference/ontology-browser.ts": "21f4425b258f425a20edd7b83f123bfaa8e4e214bccfcb70ee7d91d043f5dd2c",
+    "tests/actions-reference/handler-executor.test.ts": "92f1114d74f2b3f1e75699f66e91fa5414298e86c7afc55dcbdfcb636e927954"
+  },
+  "event": "push",
+  "inputs": {
+    ".github/workflows/core-0102-inventory-generation.yml": {
+      "bytes": 21167,
+      "sha256": "b7a28a02f63a0da5fb4a3da8685a6a97fc6f290530ad2e54a7651c6ded7555e8"
+    },
+    "bun.lock": {
+      "bytes": 59024,
+      "sha256": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4"
+    },
+    "package.json": {
+      "bytes": 5380,
+      "sha256": "031bdb38c663c33804c02de06906c9c4fdd7bbf32728204cd4c8d30959c324ed"
+    },
+    "scripts/actions-reference/executor.ts": {
+      "bytes": 17799,
+      "sha256": "2fc6849548220155e70a25e0dfb87ace7a5047a57aa7a1bd1579564920cfe95a"
+    },
+    "scripts/reference/ontology-browser.ts": {
+      "bytes": 25985,
+      "sha256": "21f4425b258f425a20edd7b83f123bfaa8e4e214bccfcb70ee7d91d043f5dd2c"
+    },
+    "scripts/rust-inventory-typescript.ts": {
+      "bytes": 3184,
+      "sha256": "e9cd4ec974b629d262bc73ca73b39cd479732fd14674e72b0810c571d56acccd"
+    },
+    "scripts/rust-inventory.py": {
+      "bytes": 54917,
+      "sha256": "2ddc70900350dfdd613196e3e8a319150a2b5421fe4f2c0b41da6365777e8f85"
+    },
+    "tests/actions-reference/handler-executor.test.ts": {
+      "bytes": 32561,
+      "sha256": "92f1114d74f2b3f1e75699f66e91fa5414298e86c7afc55dcbdfcb636e927954"
+    }
+  },
+  "inventoryPath": "docs/helix/04-build/evidence/rust-migration/r3/inventory.json",
+  "priorInventory": {
+    "bytes": 2607211,
+    "sha256": "90ecd7dc3c7461660d67aa42358d8c339534cb9618d6b68b6b8c336cb843e35c"
+  },
+  "priorInventoryRole": "seed only; not a generated or current result",
+  "profile": "umf.core-0102-r3-inventory-source/1",
+  "ref": "refs/heads/codex/core-0102-inventory-generation",
+  "trackedSourceClosure": "bound by the exact Git commit and inventory sourceCohortSha256",
+  "tree": "32615d5e273613a48e8f562a1ecba8565b8a3940"
+}
