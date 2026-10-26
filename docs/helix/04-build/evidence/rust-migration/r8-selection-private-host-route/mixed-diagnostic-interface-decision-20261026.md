@@ -21,44 +21,52 @@ ddx:
 
 # Selection mixed-diagnostic interface decision
 
-The private host Selection route already reads nonempty caller-owned
-`structure.errors` in iterator order, including each `instancePath` before its
-`message`. It deliberately stops before returning a result. The current
-`HostRegistrationStage` can report only an enum outcome. The constraint
-interpreter appends ordinary Rust `Diagnostic` values at its `extension-errors`
-evaluation site, `Engine` returns `Validation { diagnostics: Vec<Diagnostic> }`,
-and Selection converts that static vector before checking validity and forming
-`CORE_SELECTION_SOURCE`. Those interfaces cannot carry an opaque host message
-at its exact position among ordinary diagnostics.
+The private host Selection route reads nonempty caller-owned `structure.errors`
+in iterator order, including each `instancePath` before its `message`. The
+first typed carrier slice now passes the original host string token through
+`extension-errors` and the actual constraint `emit` operation as
+`ConstraintDiagnostic::HostStructure`. Static diagnostics use a separate typed
+variant, and the public static `Validation` path refuses a host variant with
+`HOST_JSON_UNSUPPORTED`. A nonstring structure message refuses at `emit` as
+`CONSTRAINT_DIAGNOSTIC`. The provider receives the exact extension path.
+The private Engine packet now retains that ordered carrier through Selection.
+It repeats Engine's existing second source copy and model-admission conversion
+before structure and constraint checks. On invalid source, Selection asks the
+Node host to construct the mixed diagnostic objects and call one aggregate
+`JSON.stringify`; the original host string token is resolved only inside that
+call. Selection then reads the native Error carrier's message and returns
+`CORE_SELECTION_SOURCE`. These claims are limited to the private Node route.
 
-The next implementation must introduce an invocation-local, ordered mixed
-diagnostic carrier at the constraint emission site and preserve it through the
-private host validation path to Selection. An entry must distinguish a static
-Rust diagnostic from a generated structure diagnostic with static code, path,
-and severity plus the original opaque host message, and from a future
-callback-returned opaque diagnostic. The existing static `Validation` API and
-default package routes must retain their current results. The carrier's
-transport through the constraint interpreter and Engine is unresolved: a
-sentinel inside `Vec<Diagnostic>` risks collision or reordering, while a
-separate journal needs a proven insertion index through generated constraint
-operations. No marker encoding is authorized by this note.
+The public Engine API still returns `Validation { diagnostics: Vec<Diagnostic> }`
+and is unchanged. The private packet uses typed entries, with no sentinel
+encoding. The callback-returned opaque diagnostic variant has an internal
+materializer but is not yet connected to Selection's semantic callback flow.
+Successful host-warning `sourceValidation` results are also unqualified; the
+current generated structure policy emits errors. Default package routes remain
+unchanged.
 
 On invalid source, Selection must run the predecessor's ordered validity
 accesses, then request **one** host `JSON.stringify` of the whole mixed
 diagnostic array. Per-entry stringification, eager `String(message)`, or a Rust
-`Value` copy would change unknown fields, accessor timing, object identity,
-undefined handling, and thrown-value behavior. On successful source
+`Value` copy would change accessor timing, host string handling, and
+thrown-value behavior. Future callback-returned diagnostic objects additionally
+require preserving unknown fields and object identity. On successful source
 validation, the same ordered entries must survive into `sourceValidation`
-without premature host copying. Existing native host events and the staged
-`SelectionDiagnosticMaterialization` are partial building blocks, not a
-complete route.
+without premature host copying. That successful-result branch remains a gate.
 
 The implementation gate is a focused Node, Bun, and real Chromium matrix for
 multiple structure errors interleaved with static diagnostics, message
-getters and proxies, severity short-circuit, one aggregate stringify,
+getters and proxies, nonstring message refusal, severity short-circuit, one
+aggregate stringify,
 iterator closure, native thrown identity, and the final result prototype.
-Rust unit tests must demonstrate the carrier's exact insertion point and
-static-route nonregression. Semantic callback invocation adds a separate
+Rust unit tests prove the insertion at `emit` and static-route nonregression.
+The fresh Node addon binding suite passes 9/9, including two structure errors
+followed by two static warnings, exact serialized refusal, proxy getter throw
+identity and a nonstring-message early stop. The Node 26.12.1 private probe
+passes, the frozen R5 Selection suite passes 10/10, and the WASM target check
+passes. These tests establish only this invalid-source Node/Bun subset, not
+browser parity or complete Selection behavior. Semantic callback invocation
+adds a separate
 two-pass diagnostic protocol and remains outside this structure-only gate.
 Native host work also needs resource accounting before default selection.
 This decision makes no parity, default-route, retirement, or release claim.

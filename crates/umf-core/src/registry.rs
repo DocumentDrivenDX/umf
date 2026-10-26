@@ -61,10 +61,11 @@ pub(crate) enum RegistrationLookup<'a> {
 /// Result of the bounded host-owned registration structure stage used only by
 /// the private Selection host route. Semantic callback execution remains a
 /// separate, explicit boundary.
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq)]
 pub(crate) enum HostRegistrationStage {
     OutOfScope,
     NoDiagnostics,
+    StructureErrors(Vec<crate::host_json::HostStructureErrorEntry>),
     Unchecked,
     Unsupported,
 }
@@ -84,6 +85,7 @@ pub(crate) trait RegistrationProvider {
         _handle: u64,
         _payload: &Value,
         _scope: &Utf16,
+        _path: &Utf16,
         _ctx: &mut Context<'_>,
     ) -> Result<HostRegistrationStage, EngineError> {
         Err(EngineError::new(

@@ -19,6 +19,14 @@ impl PreparedProgram {
 #[derive(Clone, Debug)]
 enum Runtime {
     Json(Value),
+    /// A host-owned structure message stays opaque until its enclosing
+    /// diagnostic is checked at the constraint `emit` site.
+    HostStructureDiagnostic {
+        code: Utf16,
+        path: Utf16,
+        severity: Severity,
+        message: crate::host_json::HostOpaqueValue,
+    },
     Array(Vec<Runtime>),
     Object(Vec<(Utf16, Runtime)>),
     CopiedObject(Vec<(Utf16, Runtime)>),
@@ -30,9 +38,24 @@ enum Runtime {
     Missing,
     Map(Rc<RefCell<Vec<(Vec<u16>, Runtime)>>>),
 }
+
+/// Invocation-local constraint output. Static callers still receive the
+/// established `Diagnostic` API; the private Selection path can retain a
+/// structure message as its original host string token.
+#[derive(Clone, Debug, PartialEq)]
+pub(crate) enum ConstraintDiagnostic {
+    Static(Diagnostic),
+    HostStructure {
+        code: Utf16,
+        path: Utf16,
+        severity: Severity,
+        message: crate::host_json::HostOpaqueValue,
+    },
+}
 fn runtime_tree_nodes(value: &Runtime) -> usize {
     1 + match value {
         Runtime::Json(value) => crate::dataset_values::tree_values(value).saturating_sub(1),
+        Runtime::HostStructureDiagnostic { .. } => 0,
         Runtime::Array(items) => items.iter().map(runtime_tree_nodes).sum(),
         Runtime::Object(items) | Runtime::CopiedObject(items) => items
             .iter()
@@ -426,6 +449,7 @@ fn canonical_runtime(
         ctx.charge_work(1, Utf16::default())?;
         match value {
             Runtime::Missing => Ok(false),
+            Runtime::HostStructureDiagnostic { .. } => Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
             Runtime::Json(value) => {
                 let encoded = canonical(value, ctx)?;
                 ctx.charge_work(encoded.len(), Utf16::default())?;
@@ -599,6 +623,49 @@ fn runtime_diagnostics(
     }
     Ok(Runtime::Array(values))
 }
+
+fn runtime_constraint_diagnostics(
+    diagnostics: &[ConstraintDiagnostic],
+    ctx: &mut Context<'_>,
+) -> Result<Runtime, EngineError> {
+    ctx.charge_work(diagnostics.len(), Utf16::default())?;
+    let mut values = Vec::with_capacity(diagnostics.len());
+    for diagnostic in diagnostics {
+        values.push(match diagnostic {
+            ConstraintDiagnostic::Static(diagnostic) => runtime_object(diagnostic, ctx)?,
+            ConstraintDiagnostic::HostStructure {
+                code,
+                path,
+                severity,
+                message,
+            } => {
+                ctx.charge_work(code.len().saturating_add(path.len()), path.clone())?;
+                Runtime::HostStructureDiagnostic {
+                    code: code.clone(),
+                    path: path.clone(),
+                    severity: *severity,
+                    message: message.clone(),
+                }
+            }
+        });
+    }
+    Ok(Runtime::Array(values))
+}
+
+fn static_diagnostics(
+    diagnostics: Vec<ConstraintDiagnostic>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    diagnostics
+        .into_iter()
+        .map(|diagnostic| match diagnostic {
+            ConstraintDiagnostic::Static(diagnostic) => Ok(diagnostic),
+            ConstraintDiagnostic::HostStructure { .. } => Err(err(
+                "HOST_JSON_UNSUPPORTED",
+                "Opaque host diagnostics require the private Selection materializer",
+            )),
+        })
+        .collect()
+}
 fn diagnostic_text_origin<'a>(
     diagnostic: &'a Diagnostic,
     field: &str,
@@ -636,6 +703,10 @@ fn diagnostic_cost(diagnostic: &Diagnostic) -> usize {
 fn runtime_copy(v: &Runtime, ctx: &mut Context<'_>) -> Result<Runtime, EngineError> {
     Ok(match v {
         Runtime::Json(value) => Runtime::Json(clone_private(value, ctx)?),
+        Runtime::HostStructureDiagnostic { code, path, severity, message } => {
+            ctx.charge_work(code.len().saturating_add(path.len()).saturating_add(1), path.clone())?;
+            Runtime::HostStructureDiagnostic { code: code.clone(), path: path.clone(), severity: *severity, message: message.clone() }
+        }
         Runtime::Array(items) => {
             ctx.charge_work(items.len(), Utf16::default())?;
             Runtime::Array(
@@ -756,6 +827,7 @@ fn truth(v: &Runtime) -> bool {
         Runtime::Json(Value::Number(n)) => *n != 0.0 && !n.is_nan(),
         Runtime::Json(Value::String(s)) => !s.is_empty(),
         Runtime::Json(Value::Array(_) | Value::Object(_)) => true,
+        Runtime::HostStructureDiagnostic { .. } => true,
     }
 }
 fn runtime_text_codepoint_origin(
@@ -809,6 +881,7 @@ fn runtime_text_codepoint_origin(
     ) -> Result<(), EngineError> {
         match value {
             Runtime::Missing => out.extend("undefined".chars().map(|c| c as u32)),
+            Runtime::HostStructureDiagnostic { .. } => return Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
             Runtime::Map(_) => out.extend("[object Map]".chars().map(|c| c as u32)),
             Runtime::Text {
                 python_origin: Some(origin),
@@ -978,6 +1051,7 @@ fn runtime_string_into(value: &Runtime, out: &mut Vec<u16>) {
     }
     match value {
         Runtime::Missing => out.extend("undefined".encode_utf16()),
+        Runtime::HostStructureDiagnostic { .. } => return,
         Runtime::Map(_) => out.extend("[object Map]".encode_utf16()),
         Runtime::Text {
             value,
@@ -1013,6 +1087,7 @@ fn runtime_primitive<'a>(
     }
     let primitive = match value {
         Runtime::Missing => Primitive::Undefined,
+        Runtime::HostStructureDiagnostic { .. } => return Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
         Runtime::Map(_) => {
             *scratch = Some(Utf16::from("[object Map]"));
             Primitive::String(scratch.as_ref().unwrap())
@@ -1149,6 +1224,7 @@ fn runtime_string_cost(value: &Runtime, ctx: &mut Context<'_>) -> Result<usize, 
             Utf16::default(),
             "Object cannot be converted to a primitive",
         )),
+        Runtime::HostStructureDiagnostic { .. } => Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
     }
 }
 
@@ -1216,6 +1292,7 @@ fn runtime_property(
             let _ = (value, key, ctx);
             Ok(None)
         }
+        Runtime::HostStructureDiagnostic { .. } => Ok(None),
         _ => Ok(None),
     }
 }
@@ -1272,6 +1349,7 @@ fn clone_private(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineEr
 fn as_json(v: &Runtime, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     match v {
         Runtime::Json(v) => clone_private(v, ctx),
+        Runtime::HostStructureDiagnostic { .. } => Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
         Runtime::Array(items) => {
             ctx.charge_work(items.len(), Utf16::default())?;
             Ok(Value::Array(
@@ -1330,7 +1408,7 @@ fn eval(
     reg: &dyn crate::registry::RegistrationProvider,
     caps: &mut dyn crate::engine::Capabilities,
     ctx: &mut Context<'_>,
-    diagnostics: &mut Vec<Diagnostic>,
+    diagnostics: &mut Vec<ConstraintDiagnostic>,
     observer: &mut Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
 ) -> Result<Runtime, EngineError> {
     ctx.charge_constraint_step(Utf16::default())?;
@@ -2045,7 +2123,7 @@ fn eval(
                             caps,
                             ctx,
                         )?;
-                        runtime_diagnostics(&errors, ctx)
+                        runtime_constraint_diagnostics(&errors, ctx)
                     }
                     "filter" | "map" | "find" | "some" | "every" | "index" => {
                         let list = as_values(x, ctx)?;
@@ -2245,6 +2323,7 @@ fn runtime_to_value(v: Runtime, ctx: &mut Context<'_>) -> Result<Value, EngineEr
             )?;
             Ok(Value::String(value))
         }
+        Runtime::HostStructureDiagnostic { .. } => Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
         Runtime::Missing => Ok(Value::Null),
         Runtime::Map(_) => Ok(Value::Array(vec![])),
     }
@@ -2317,7 +2396,7 @@ fn extension_errors(
     registry: &dyn crate::registry::RegistrationProvider,
     caps: &mut dyn crate::engine::Capabilities,
     ctx: &mut Context<'_>,
-) -> Result<Vec<Diagnostic>, EngineError> {
+) -> Result<Vec<ConstraintDiagnostic>, EngineError> {
     fn child(base: &Utf16, segment: &Utf16, ctx: &mut Context<'_>) -> Result<Utf16, EngineError> {
         let escaped = segment
             .units()
@@ -2351,7 +2430,7 @@ fn extension_errors(
         let mut at = child(path, &Utf16::from("extensions"), ctx)?;
         at = child(&at, id, ctx)?;
         let Some(decl) = get_key(vocab, id) else {
-            out.push(model_diag(policy, "undeclared", &at, None, ctx)?);
+            out.push(ConstraintDiagnostic::Static(model_diag(policy, "undeclared", &at, None, ctx)?));
             continue;
         };
         let Some(version) = get(decl, "version").and_then(|v| {
@@ -2361,20 +2440,38 @@ fn extension_errors(
                 None
             }
         }) else {
-            out.push(model_diag(policy, "undeclared", &at, None, ctx)?);
+            out.push(ConstraintDiagnostic::Static(model_diag(policy, "undeclared", &at, None, ctx)?));
             continue;
         };
         let entry = match registry.lookup(id, &version, ctx)? {
             None => continue,
             Some(crate::registry::RegistrationLookup::Borrowed(entry)) => entry,
             Some(crate::registry::RegistrationLookup::HostHandle(handle)) => {
-                match registry.host_registration_stage(handle, payload, scope, ctx)? {
+                match registry.host_registration_stage(handle, payload, scope, &at, ctx)? {
                     crate::registry::HostRegistrationStage::OutOfScope => {
-                        out.push(model_diag(policy, "scope", &at, None, ctx)?);
+                        out.push(ConstraintDiagnostic::Static(model_diag(policy, "scope", &at, None, ctx)?));
                     }
                     crate::registry::HostRegistrationStage::NoDiagnostics => {}
+                    crate::registry::HostRegistrationStage::StructureErrors(errors) => {
+                        let rule = get(policy, "structure").ok_or_else(|| err("CONSTRAINT_PROGRAM", "Missing model diagnostic"))?;
+                        let code = get(rule, "code").and_then(utf16).ok_or_else(|| err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic"))?.clone();
+                        let severity = match get(rule, "severity").and_then(utf16).and_then(|value| value.to_utf8().ok()).as_deref() {
+                            Some("error") => Severity::Error,
+                            Some("warning") => Severity::Warning,
+                            _ => return Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
+                        };
+                        for entry in errors {
+                            ctx.charge_work(code.len().saturating_add(entry.path.len()), entry.path.clone())?;
+                            out.push(ConstraintDiagnostic::HostStructure {
+                                code: code.clone(),
+                                path: entry.path,
+                                severity,
+                                message: entry.message,
+                            });
+                        }
+                    }
                     crate::registry::HostRegistrationStage::Unchecked => {
-                        out.push(model_diag(policy, "unchecked", &at, None, ctx)?);
+                        out.push(ConstraintDiagnostic::Static(model_diag(policy, "unchecked", &at, None, ctx)?));
                     }
                     crate::registry::HostRegistrationStage::Unsupported => {
                         return Err(crate::selection_host_json::reject_host_semantics());
@@ -2385,13 +2482,13 @@ fn extension_errors(
         };
         let (kind_invalid, mut kind_diagnostics) =
             crate::kinds::occurrence(entry, payload, scope, &at, policy, ctx)?;
-        out.append(&mut kind_diagnostics);
+        out.extend(kind_diagnostics.drain(..).map(ConstraintDiagnostic::Static));
         if !entry
             .scopes()
             .iter()
             .any(|s| Utf16::from(s.as_str()) == *scope)
         {
-            out.push(model_diag(policy, "scope", &at, None, ctx)?);
+                out.push(ConstraintDiagnostic::Static(model_diag(policy, "scope", &at, None, ctx)?));
             continue;
         }
         let errors = if let Some(source_document) = caps.python_source_document() {
@@ -2432,7 +2529,7 @@ fn extension_errors(
                         message: None,
                     });
                 }
-                out.push(diagnostic);
+                out.push(ConstraintDiagnostic::Static(diagnostic));
             }
             continue;
         }
@@ -2440,11 +2537,11 @@ fn extension_errors(
             continue;
         }
         if !entry.semantic() {
-            out.push(model_diag(policy, "unchecked", &at, None, ctx)?);
+            out.push(ConstraintDiagnostic::Static(model_diag(policy, "unchecked", &at, None, ctx)?));
             continue;
         }
         let Some(token) = entry.token() else {
-            out.push(model_diag(policy, "unchecked", &at, None, ctx)?);
+            out.push(ConstraintDiagnostic::Static(model_diag(policy, "unchecked", &at, None, ctx)?));
             continue;
         };
         let context = crate::engine::SemanticContext {
@@ -2456,9 +2553,9 @@ fn extension_errors(
         };
         let payload_copy = clone_private(payload, ctx)?;
         match caps.validate_extension_with_context(token, &payload_copy, &context, ctx) {
-            Ok(mut diagnostics) => out.append(&mut diagnostics),
+            Ok(diagnostics) => out.extend(diagnostics.into_iter().map(ConstraintDiagnostic::Static)),
             Err(crate::engine::CapabilityError::Host(message)) => {
-                out.push(model_diag(policy, "failure", &at, Some(message), ctx)?)
+                out.push(ConstraintDiagnostic::Static(model_diag(policy, "failure", &at, Some(message), ctx)?))
             }
             Err(crate::engine::CapabilityError::HostPython { message, source }) => {
                 let mut diagnostic = model_diag(policy, "failure", &at, Some(message), ctx)?;
@@ -2467,7 +2564,7 @@ fn extension_errors(
                     path: None,
                     message: Some(source),
                 });
-                out.push(diagnostic);
+                out.push(ConstraintDiagnostic::Static(diagnostic));
             }
             Err(crate::engine::CapabilityError::Engine(error)) => return Err(error),
         }
@@ -2550,7 +2647,7 @@ fn eval_bool(
     reg: &dyn crate::registry::RegistrationProvider,
     caps: &mut dyn crate::engine::Capabilities,
     ctx: &mut Context<'_>,
-    diagnostics: &mut Vec<Diagnostic>,
+    diagnostics: &mut Vec<ConstraintDiagnostic>,
     observer: &mut Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
 ) -> Result<bool, EngineError> {
     Ok(truth(&eval(
@@ -2573,7 +2670,7 @@ fn exec(
     reg: &dyn crate::registry::RegistrationProvider,
     caps: &mut dyn crate::engine::Capabilities,
     ctx: &mut Context<'_>,
-    diags: &mut Vec<Diagnostic>,
+    diags: &mut Vec<ConstraintDiagnostic>,
     observer: &mut Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
 ) -> Result<(), EngineError> {
     for step in arr(body).unwrap_or(&[]) {
@@ -2746,7 +2843,16 @@ fn exec(
     }
     Ok(())
 }
-fn diagnostic_from_runtime(v: Runtime, ctx: &mut Context<'_>) -> Result<Diagnostic, EngineError> {
+fn diagnostic_from_runtime(v: Runtime, ctx: &mut Context<'_>) -> Result<ConstraintDiagnostic, EngineError> {
+    let v = match v {
+        Runtime::HostStructureDiagnostic { code, path, severity, message } => {
+            if !matches!(&message, crate::host_json::HostOpaqueValue::String(_)) {
+                return Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic"));
+            }
+            return Ok(ConstraintDiagnostic::HostStructure { code, path, severity, message });
+        }
+        value => value,
+    };
     let fields = match v {
         Runtime::Json(Value::Object(fields)) => {
             ctx.charge_work(fields.len(), Utf16::default())?;
@@ -2810,7 +2916,7 @@ fn diagnostic_from_runtime(v: Runtime, ctx: &mut Context<'_>) -> Result<Diagnost
         Some(severity) if severity == "warning" => Severity::Warning,
         _ => return Err(err("CONSTRAINT_DIAGNOSTIC", "Malformed diagnostic")),
     };
-    Ok(Diagnostic {
+    Ok(ConstraintDiagnostic::Static(Diagnostic {
         code,
         path,
         python_source_path,
@@ -2828,7 +2934,7 @@ fn diagnostic_from_runtime(v: Runtime, ctx: &mut Context<'_>) -> Result<Diagnost
         } else {
             None
         },
-    })
+    }))
 }
 pub fn execute_constraints(
     document: &Value,
@@ -2883,9 +2989,23 @@ pub(crate) fn execute_constraints_admitted_observed_with_provider(
     registry: &dyn crate::registry::RegistrationProvider,
     caps: &mut dyn crate::engine::Capabilities,
     ctx: &mut Context<'_>,
-    mut observer: Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
+    observer: Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
 ) -> Result<Vec<Diagnostic>, EngineError> {
-    let mut diags = Vec::new();
+    static_diagnostics(execute_constraints_admitted_observed_with_provider_mixed(
+        document, program, policy, registry, caps, ctx, observer,
+    )?)
+}
+
+pub(crate) fn execute_constraints_admitted_observed_with_provider_mixed(
+    document: &Value,
+    program: &PreparedProgram,
+    policy: &Value,
+    registry: &dyn crate::registry::RegistrationProvider,
+    caps: &mut dyn crate::engine::Capabilities,
+    ctx: &mut Context<'_>,
+    mut observer: Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
+) -> Result<Vec<ConstraintDiagnostic>, EngineError> {
+    let mut diags: Vec<ConstraintDiagnostic> = Vec::new();
     if let Some(observer) = observer.as_deref_mut() {
         observer(
             "constraint-copy",
@@ -2957,6 +3077,122 @@ mod runtime_diagnostic_tests {
             }
             Ok(None)
         }
+    }
+
+    struct StructureProvider {
+        entries: Vec<crate::host_json::HostStructureErrorEntry>,
+        seen_path: std::cell::RefCell<Option<Utf16>>,
+    }
+    impl crate::registry::RegistrationProvider for StructureProvider {
+        fn lookup<'a>(
+            &'a self,
+            _id: &Utf16,
+            _version: &Utf16,
+            _ctx: &mut Context<'_>,
+        ) -> Result<Option<crate::registry::RegistrationLookup<'a>>, EngineError> {
+            Ok(Some(crate::registry::RegistrationLookup::HostHandle(7)))
+        }
+        fn host_registration_stage(
+            &self,
+            _handle: u64,
+            _payload: &Value,
+            _scope: &Utf16,
+            path: &Utf16,
+            _ctx: &mut Context<'_>,
+        ) -> Result<crate::registry::HostRegistrationStage, EngineError> {
+            *self.seen_path.borrow_mut() = Some(path.clone());
+            Ok(crate::registry::HostRegistrationStage::StructureErrors(self.entries.clone()))
+        }
+    }
+
+    fn static_diagnostic_expr(code: &str) -> Value {
+        object(vec![
+            ("code", Value::string_utf8(code)),
+            ("path", Value::string_utf8("/static")),
+            ("message", Value::string_utf8("static")),
+            ("severity", Value::string_utf8("warning")),
+        ])
+    }
+
+    fn structure_program() -> PreparedProgram {
+        let extension_errors = operation(
+            "extension-errors",
+            vec![
+                variable("doc"),
+                object(vec![("future", object(vec![]))]),
+                Value::string_utf8("document"),
+                Value::string_utf8(""),
+                variable("policy"),
+            ],
+        );
+        let input = object(vec![
+            ("profile", Value::string_utf8("umf.constraints/1")),
+            ("steps", Value::Array(vec![
+                object(vec![("op", Value::string_utf8("emit")), ("diagnostic", static_diagnostic_expr("BEFORE"))]),
+                object(vec![
+                    ("op", Value::string_utf8("for")),
+                    ("each", extension_errors),
+                    ("as", Value::string_utf8("item")),
+                    ("body", Value::Array(vec![object(vec![
+                        ("op", Value::string_utf8("emit")),
+                        ("diagnostic", variable("item")),
+                    ])])),
+                ]),
+                object(vec![("op", Value::string_utf8("emit")), ("diagnostic", static_diagnostic_expr("AFTER"))]),
+            ])),
+        ]);
+        prepare_program(&input, &mut Context::ordinary()).unwrap()
+    }
+
+    fn structure_provider(message: crate::host_json::HostOpaqueValue) -> StructureProvider {
+        StructureProvider {
+            entries: vec![crate::host_json::HostStructureErrorEntry {
+                path: Utf16::from("/extensions/future/first"),
+                message: message.clone(),
+            }, crate::host_json::HostStructureErrorEntry {
+                path: Utf16::from("/extensions/future/second"),
+                message,
+            }],
+            seen_path: std::cell::RefCell::new(None),
+        }
+    }
+
+    fn host_structure_policy() -> Value {
+        object(vec![("structure", object(vec![
+            ("code", Value::string_utf8("EXTENSION_STRUCTURE")),
+            ("severity", Value::string_utf8("error")),
+            ("message", Value::string_utf8("Invalid payload")),
+        ]))])
+    }
+
+    #[test]
+    fn constraint_execution_preserves_static_and_host_structure_insertion_order() {
+        let provider = structure_provider(crate::host_json::HostOpaqueValue::String(
+            crate::host_json::HostStringRef::fake("opaque message"),
+        ));
+        let document = object(vec![("vocabularies", object(vec![("future", object(vec![("version", Value::string_utf8("1.0.0"))]))]))]);
+        let mut ctx = Context::ordinary();
+        let diagnostics = execute_constraints_admitted_observed_with_provider_mixed(
+            &document, &structure_program(), &host_structure_policy(), &provider,
+            &mut NoCapabilities, &mut ctx, None,
+        ).unwrap();
+        assert_eq!(provider.seen_path.borrow().as_ref(), Some(&Utf16::from("/extensions/future")));
+        assert!(matches!(&diagnostics[0], ConstraintDiagnostic::Static(d) if d.code == k("BEFORE")));
+        assert!(matches!(&diagnostics[1], ConstraintDiagnostic::HostStructure { path, message: crate::host_json::HostOpaqueValue::String(_), .. } if path == &k("/extensions/future/first")));
+        assert!(matches!(&diagnostics[2], ConstraintDiagnostic::HostStructure { path, .. } if path == &k("/extensions/future/second")));
+        assert!(matches!(&diagnostics[3], ConstraintDiagnostic::Static(d) if d.code == k("AFTER")));
+    }
+
+    #[test]
+    fn nonstring_host_structure_message_is_refused_at_emit() {
+        let provider = structure_provider(crate::host_json::HostOpaqueValue::Number(4.0));
+        let document = object(vec![("vocabularies", object(vec![("future", object(vec![("version", Value::string_utf8("1.0.0"))]))]))]);
+        let mut ctx = Context::ordinary();
+        let error = execute_constraints_admitted_observed_with_provider_mixed(
+            &document, &structure_program(), &host_structure_policy(), &provider,
+            &mut NoCapabilities, &mut ctx, None,
+        ).unwrap_err();
+        assert_eq!(error.code, "CONSTRAINT_DIAGNOSTIC");
     }
 
     #[test]
@@ -3121,6 +3357,12 @@ mod runtime_diagnostic_tests {
                 path: None,
                 message: Some(paired_origin),
             }),
+        }
+    }
+    fn static_diagnostic(diagnostic: ConstraintDiagnostic) -> Diagnostic {
+        match diagnostic {
+            ConstraintDiagnostic::Static(diagnostic) => diagnostic,
+            ConstraintDiagnostic::HostStructure { .. } => panic!("expected static diagnostic"),
         }
     }
     fn run_expr<T>(expression: &Value, env: &[(Utf16, T)], ctx: &mut Context<'_>) -> Runtime
@@ -3375,8 +3617,7 @@ mod runtime_diagnostic_tests {
             }
         ));
         assert!(
-            !diagnostic_from_runtime(host_marker, &mut ctx)
-                .unwrap()
+            !static_diagnostic(diagnostic_from_runtime(host_marker, &mut ctx).unwrap())
                 .python_source_path
         );
         marker_path.python_source_path = true;
@@ -3392,8 +3633,7 @@ mod runtime_diagnostic_tests {
             }
         ));
         assert!(
-            diagnostic_from_runtime(source_marker, &mut ctx)
-                .unwrap()
+            static_diagnostic(diagnostic_from_runtime(source_marker, &mut ctx).unwrap())
                 .python_source_path
         );
 
@@ -3413,7 +3653,7 @@ mod runtime_diagnostic_tests {
             ("severity", Value::string_utf8("warning")),
         ]);
         let result = run_expr(&reconstructed, &env, &mut ctx);
-        let diagnostic = diagnostic_from_runtime(result, &mut ctx).unwrap();
+        let diagnostic = static_diagnostic(diagnostic_from_runtime(result, &mut ctx).unwrap());
         assert_eq!(
             diagnostic
                 .python_text_origin
@@ -3648,7 +3888,7 @@ mod runtime_diagnostic_tests {
         let Runtime::Array(sorted) = sorted else {
             panic!("sort preserves generic array shape")
         };
-        let reconstructed = diagnostic_from_runtime(sorted[0].clone(), &mut ctx).unwrap();
+        let reconstructed = static_diagnostic(diagnostic_from_runtime(sorted[0].clone(), &mut ctx).unwrap());
         assert_eq!(
             reconstructed
                 .python_text_origin

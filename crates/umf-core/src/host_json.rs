@@ -235,6 +235,14 @@ pub enum HostDiagnosticArrayItem {
     Static(Value),
     /// An original callback-owned diagnostic retained by invocation-local handle.
     Opaque(HostHandle),
+    /// Rust-authored structure diagnostic whose message remains a host-owned
+    /// primitive string through the single aggregate JSON.stringify call.
+    Structure {
+        code: Utf16,
+        path: Utf16,
+        message: HostStringRef,
+        severity: Utf16,
+    },
 }
 
 #[derive(Clone, Debug, PartialEq)]

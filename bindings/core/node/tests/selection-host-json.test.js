@@ -73,27 +73,52 @@ test('private host Selection checks scope before structure and preserves receive
   ]);
 });
 
-test('private host Selection drains structure errors then stops before semantic callbacks', () => {
+test('private host Selection stringifies ordered structure diagnostics once before refusing', () => {
   const events = [];
   const structure = function(payload) {
     events.push(`structure:${this === registration}:${payload === packet.source.extensions.future.opaque}`);
     return false;
   };
-  structure.errors = [{instancePath: '/bad', message: 'bad'}];
+  structure.errors = [
+    {instancePath: '/bad', message: 'bad "first" ✨'},
+    {instancePath: '/second', message: 'second'},
+  ];
   const registration = {
     manifest: {scopes: {includes(scope) { events.push(`includes:${scope}:${this === registration.manifest.scopes}`); return true; }}, capabilities: {validation: 'semantic'}},
     structure,
     get semantics() { events.push('semantics'); throw new Error('must not inspect semantics after invalid structure'); },
   };
   const registry = {get() { events.push('get'); return registration; }};
+  const originalStringify = JSON.stringify;
+  let diagnosticStringifies = 0;
+  JSON.stringify = function(value, ...args) {
+    if (Array.isArray(value) && value.length === 6 && value[0]?.code === 'EXTENSION_STRUCTURE') {
+      diagnosticStringifies++;
+    }
+    return Reflect.apply(originalStringify, this, [value, ...args]);
+  };
   try {
     coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, registry, UmfCoreError);
     throw new Error('expected structure diagnostic materialization boundary');
   } catch (error) {
     expect(error).toBeInstanceOf(UmfCoreError);
-    expect(error.code).toBe('HOST_JSON_UNSUPPORTED');
+    expect(error.code).toBe('CORE_SELECTION_SOURCE');
+    expect(error.message).toBe(Reflect.apply(originalStringify, JSON, [[
+      {code: 'EXTENSION_STRUCTURE', path: '/extensions/future/bad', message: 'bad "first" ✨', severity: 'error'},
+      {code: 'EXTENSION_STRUCTURE', path: '/extensions/future/second', message: 'second', severity: 'error'},
+      {code: 'EXTENSION_STRUCTURE', path: '/modules/0/elements/0/extensions/future/bad', message: 'bad "first" ✨', severity: 'error'},
+      {code: 'EXTENSION_STRUCTURE', path: '/modules/0/elements/0/extensions/future/second', message: 'second', severity: 'error'},
+      {code: 'UNKNOWN_CORE_FIELD', path: '/modules/0/elements/0/references/0/future', message: 'Field retained without interpretation', severity: 'warning'},
+      {code: 'UNKNOWN_SCALAR_TYPE', path: '/modules/1/elements/0/scalarType', message: 'Scalar family retained without interpretation', severity: 'warning'},
+    ]]));
+  } finally {
+    JSON.stringify = originalStringify;
   }
-  expect(events).toEqual(['get', 'get', 'includes:document:true', 'structure:true:false']);
+  expect(diagnosticStringifies).toBe(1);
+  expect(events).toEqual([
+    'get', 'get', 'includes:document:true', 'structure:true:false',
+    'get', 'includes:element:true', 'structure:true:false',
+  ]);
 });
 
 test('private host Selection preserves structure getter throws by identity', () => {
@@ -108,6 +133,48 @@ test('private host Selection preserves structure getter throws by identity', () 
   } catch (error) {
     expect(error).toBe(sentinel);
   }
+});
+
+test('private host Selection preserves proxy errors getter throws by identity', () => {
+  const sentinel = {errorsProxy: true};
+  const structure = new Proxy(function() { return false; }, {
+    get(target, key, receiver) {
+      if (key === 'errors') throw sentinel;
+      return Reflect.get(target, key, receiver);
+    },
+  });
+  const registration = {
+    manifest: {scopes: {includes() { return true; }}, capabilities: {validation: 'none'}},
+    structure,
+  };
+  try {
+    coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all,
+      {get() { return registration; }}, UmfCoreError);
+    throw new Error('expected proxy errors getter throw');
+  } catch (error) {
+    expect(error).toBe(sentinel);
+  }
+});
+
+test('private host Selection refuses nonstring structure messages before later registrations', () => {
+  let registryCalls = 0;
+  const structure = () => false;
+  structure.errors = [{instancePath: '/bad', message: 17}];
+  const registration = {
+    manifest: {scopes: {includes() { return true; }}, capabilities: {validation: 'none'}},
+    structure,
+  };
+  try {
+    coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, {
+      get() { registryCalls++; return registration; },
+    }, UmfCoreError);
+    throw new Error('expected malformed structure diagnostic refusal');
+  } catch (error) {
+    expect(error).toBeInstanceOf(UmfCoreError);
+    expect(error.code).toBe('CONSTRAINT_DIAGNOSTIC');
+    expect(error.message).toBe('Malformed diagnostic');
+  }
+  expect(registryCalls).toBe(2);
 });
 
 test('private host Selection reaches the explicit semantic-callback boundary without invoking it', () => {

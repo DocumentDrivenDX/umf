@@ -86,6 +86,28 @@ host-primitive evidence only. This checkpoint does not establish complete
 Selection parity, default-route selection, or release qualification.
 
 The [mixed-diagnostic interface decision](mixed-diagnostic-interface-decision-20261026.md)
-records why nonempty structure errors cannot yet pass through Engine's static
-`Validation` result, and the exact ordered host carrier and qualification gate
-required before that private route can advance.
+records the earlier static `Validation` limitation and the ordered host carrier
+gate subsequently implemented in the private invalid-source branch below.
+
+## Private invalid-source mixed diagnostics — 2026-10-26
+
+The private Node route now carries nonempty structure errors through a typed
+constraint result and a private Engine packet. It preserves host message string
+tokens and exact insertion order beside static diagnostics. Selection runs the
+ordered validity check, then asks the host for one aggregate
+`JSON.stringify` of the mixed array and returns `CORE_SELECTION_SOURCE` with
+the native Error carrier's message. A nonstring structure message refuses at
+constraint `emit` as `CONSTRAINT_DIAGNOSTIC`, before later registrations.
+The public static `Validation` route continues to require static diagnostics.
+
+A fresh Node addon passes the nine focused Bun-driven binding tests. The
+invalid-source fixture contains two structure errors at each of two extension
+sites followed by two static warnings; its exact serialized message and single
+host stringify are pinned. The suite also covers proxy getter and iterator
+throw identity and nonstring early-stop order. The Node 26.12.1 private probe,
+six focused Rust packet tests, ten frozen R5 Selection tests, Node/WASM event
+serializer tests, and a `wasm32-unknown-unknown` compile check pass. Real
+Chromium execution of this Selection route, successful results containing
+host-owned warning diagnostics, semantic callbacks, the successful-result
+prototype, and installed package qualification remain open. The route is
+private and does not retire a default export.

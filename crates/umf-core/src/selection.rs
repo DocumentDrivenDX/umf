@@ -314,19 +314,57 @@ fn select_core_elements_after_copy(
     capabilities: &mut dyn Capabilities,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
-    let (transitive, filters, identities) = parse_query(&query)?;
-    let source_validation = engine.validate_document_observed_fallible_with_provider(
-        &source,
+    select_core_elements_after_copy_with_host_refusal(
+        source,
+        query,
+        engine,
         provider,
         capabilities,
         ctx,
         None,
-    )?;
-    let source_validation =
+    )
+}
+
+fn select_core_elements_after_copy_with_host_refusal(
+    source: Value,
+    query: Value,
+    engine: &Engine,
+    provider: &dyn crate::registry::RegistrationProvider,
+    capabilities: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+    mut host_refusal: Option<
+        &mut dyn FnMut(
+            &crate::selection_diagnostics::SelectionDiagnosticMaterialization,
+            &mut Context<'_>,
+        ) -> Result<Utf16, EngineError>,
+    >,
+) -> Result<Value, EngineError> {
+    let (transitive, filters, identities) = parse_query(&query)?;
+    let source_validation = if host_refusal.is_some() {
+        engine.selection_diagnostic_packet_with_provider(&source, provider, capabilities, ctx)?
+    } else {
         crate::selection_diagnostics::SelectionDiagnosticMaterialization::from_static_validation(
-            source_validation,
-        );
+            engine.validate_document_observed_fallible_with_provider(
+                &source,
+                provider,
+                capabilities,
+                ctx,
+                None,
+            )?,
+        )
+    };
     if !source_validation.static_is_valid()? {
+        if let Some(materialize) = host_refusal.as_deref_mut() {
+            let message = materialize(&source_validation, ctx)?;
+            let message = message.to_utf8().map_err(|_| {
+                EngineError::new(
+                    "HOST_JSON_PROTOCOL",
+                    Utf16::default(),
+                    "Host JSON refusal message is not scalar UTF-16",
+                )
+            })?;
+            return Err(EngineError::new("CORE_SELECTION_SOURCE", Utf16::default(), message));
+        }
         let diagnostics = source_validation.into_static_diagnostics()?;
         let message = stringify_compact_metered(&Value::Array(diagnostics), ctx)?;
         return Err(EngineError::new(
@@ -561,18 +599,27 @@ fn select_core_elements_after_copy(
     copy_json(&result, ctx)
 }
 
-/// Host-admitted counterpart. The host has already performed the one
-/// predecessor copy of source and query; keep the semantic selection stages
-/// shared without charging a second input copy.
-pub(crate) fn select_core_elements_admitted_with_provider(
+pub(crate) fn select_core_elements_admitted_with_host_refusal(
     source: Value,
     query: Value,
     engine: &Engine,
     provider: &dyn crate::registry::RegistrationProvider,
     capabilities: &mut dyn Capabilities,
     ctx: &mut Context<'_>,
+    refusal: &mut dyn FnMut(
+        &crate::selection_diagnostics::SelectionDiagnosticMaterialization,
+        &mut Context<'_>,
+    ) -> Result<Utf16, EngineError>,
 ) -> Result<Value, EngineError> {
-    select_core_elements_after_copy(source, query, engine, provider, capabilities, ctx)
+    select_core_elements_after_copy_with_host_refusal(
+        source,
+        query,
+        engine,
+        provider,
+        capabilities,
+        ctx,
+        Some(refusal),
+    )
 }
 
 fn boundary_entry(

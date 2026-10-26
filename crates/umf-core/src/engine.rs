@@ -891,6 +891,99 @@ impl Engine {
         self.validate_admitted_document(document, None, provider, capabilities, ctx, observer)
     }
 
+    /// Selection-only admission that retains host-owned structure messages
+    /// until its private host refusal materializer. The established public
+    /// Validation API continues to require static diagnostics.
+    pub(crate) fn selection_diagnostic_packet_with_provider(
+        &self,
+        document: &Value,
+        provider: &dyn crate::registry::RegistrationProvider,
+        capabilities: &mut dyn Capabilities,
+        ctx: &mut Context<'_>,
+    ) -> Result<crate::selection_diagnostics::SelectionDiagnosticMaterialization, EngineError> {
+        // Match the public observed provider path's second admission copy and
+        // its model-error conversion before structural validation.
+        let document = match copy_json(document, ctx) {
+            Ok(document) => document,
+            Err(error) => {
+                if error.is_control_failure() || !is_model_admission_error(&error.code) {
+                    return Err(error);
+                }
+                return Ok(
+                    crate::selection_diagnostics::SelectionDiagnosticMaterialization::from_static_validation(
+                        Validation {
+                            valid: false,
+                            complete: false,
+                            diagnostics: vec![Diagnostic {
+                                code: Utf16::from(error.code),
+                                path: error.path,
+                                python_source_path: false,
+                                message: error.message,
+                                severity: Severity::Error,
+                                python_text_origin: None,
+                            }],
+                        },
+                    ),
+                );
+            }
+        };
+        let structural = self.core_structure_diagnostics(&document, ctx)?;
+        if !structural.is_empty() {
+            return Ok(
+                crate::selection_diagnostics::SelectionDiagnosticMaterialization::from_static_validation(
+                    Validation {
+                        valid: false,
+                        complete: false,
+                        diagnostics: structural,
+                    },
+                ),
+            );
+        }
+        let mixed = crate::constraints::execute_constraints_admitted_observed_with_provider_mixed(
+            &document,
+            &self.program,
+            &self.resources.domain_policy,
+            provider,
+            capabilities,
+            ctx,
+            None,
+        )?;
+        let complete = mixed.is_empty();
+        let mut entries = Vec::with_capacity(mixed.len());
+        for diagnostic in mixed {
+            entries.push(match diagnostic {
+                crate::constraints::ConstraintDiagnostic::Static(diagnostic) => {
+                    crate::selection_diagnostics::SelectionDiagnosticEntry::Static(diagnostic)
+                }
+                crate::constraints::ConstraintDiagnostic::HostStructure {
+                    code,
+                    path,
+                    severity,
+                    message,
+                } => {
+                    let crate::host_json::HostOpaqueValue::String(message) = message else {
+                        return Err(EngineError::new(
+                            "HOST_JSON_UNSUPPORTED",
+                            path,
+                            "Caller-owned Selection structure diagnostic message is not a host string",
+                        ));
+                    };
+                    crate::selection_diagnostics::SelectionDiagnosticEntry::HostStructure {
+                        code,
+                        path,
+                        message,
+                        severity,
+                    }
+                }
+            });
+        }
+        Ok(crate::selection_diagnostics::SelectionDiagnosticMaterialization {
+            complete,
+            static_valid: None,
+            entries,
+        })
+    }
+
     /// Validate one value against an explicitly selected Field in the current
     /// core 0.10.0 document. This is the Rust counterpart used by the opt-in
     /// CONTRACT-049 JavaScript numeric context; it does not infer identity or

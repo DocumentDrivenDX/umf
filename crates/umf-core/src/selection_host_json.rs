@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Private host-JSON Selection route. Caller-owned registrations are inspected
-//! through the observed scope and structure stages; semantic execution and
-//! structure-diagnostic materialization remain explicit boundaries.
+//! through the observed scope and structure stages. Semantic execution
+//! remains an explicit boundary; invalid-source diagnostics use one host
+//! stringify while host-owned message strings remain opaque.
 use std::cell::RefCell;
 
 use crate::{
@@ -95,6 +96,7 @@ impl RegistrationProvider for HostProvider<'_> {
         handle: u64,
         payload: &Value,
         scope: &Utf16,
+        path: &Utf16,
         ctx: &mut Context<'_>,
     ) -> Result<HostRegistrationStage, EngineError> {
         if handle == 0 {
@@ -159,23 +161,18 @@ impl RegistrationProvider for HostProvider<'_> {
             let errors = get_property(&mut **host, ctx, &structure_again, "errors")?;
             return match crate::host_json::collect_structure_errors(
                 errors,
-                &Utf16::default(),
+                path,
                 &mut **host,
                 ctx,
-                &Utf16::default(),
+                path,
             )? {
                 crate::host_json::HostStructureErrorsOutcome::Entries(entries)
                     if entries.is_empty() =>
                 {
                     Ok(HostRegistrationStage::NoDiagnostics)
                 }
-                crate::host_json::HostStructureErrorsOutcome::Entries(_entries) => {
-                    // The ordered host reads are established, but diagnostic
-                    // field materialization into Selection's refusal envelope
-                    // remains outside this bounded stage.
-                    Err(unsupported_error(
-                        "Caller-owned Selection structure diagnostics require host materialization",
-                    ))
+                crate::host_json::HostStructureErrorsOutcome::Entries(entries) => {
+                    Ok(HostRegistrationStage::StructureErrors(entries))
                 }
                 crate::host_json::HostStructureErrorsOutcome::NativeIterationFailureUnresolved => {
                     Err(unsupported_error(
@@ -203,6 +200,30 @@ impl RegistrationProvider for HostProvider<'_> {
             return Ok(HostRegistrationStage::Unsupported);
         }
         Ok(HostRegistrationStage::Unchecked)
+    }
+}
+
+impl HostProvider<'_> {
+    fn refusal_message(
+        &self,
+        packet: &crate::selection_diagnostics::SelectionDiagnosticMaterialization,
+        ctx: &mut Context<'_>,
+    ) -> Result<Utf16, EngineError> {
+        let mut host = self.host.borrow_mut();
+        let carrier = packet
+            .refusal_carrier(&mut **host, ctx, &Utf16::from("/diagnostics"))?
+            .ok_or_else(|| EngineError::new(
+                "HOST_JSON_PROTOCOL", Utf16::default(), "Invalid Selection source produced no refusal carrier",
+            ))?;
+        let message = get_property(&mut **host, ctx, &carrier, "message")?;
+        let HostOpaqueValue::String(message) = message else {
+            return Err(EngineError::new(
+                "HOST_JSON_PROTOCOL", Utf16::default(), "Native Selection refusal message is not a string",
+            ));
+        };
+        let chunks = message.units.div_ceil(8192);
+        ctx.charge_work(message.units.saturating_add(chunks), Utf16::from("/diagnostics"))?;
+        read_host_string(&mut **host, &message)
     }
 }
 
@@ -251,9 +272,8 @@ fn unsupported_error(message: &str) -> EngineError {
 }
 
 /// Copy source then query in predecessor order, validate the exact query before
-/// Registry access, and run the shared Rust selection kernel. The host provider
-/// supports scope checks and structure invocation; semantic callbacks and
-/// non-empty structure diagnostics remain explicit boundaries.
+/// Registry access, and run the shared Rust selection kernel. Semantic callbacks
+/// remain an explicit boundary.
 pub fn execute(
     source: HostHandle,
     query: HostHandle,
@@ -269,13 +289,16 @@ pub fn execute(
         host: RefCell::new(host),
     };
     let mut capabilities = NoCapabilities;
-    crate::selection::select_core_elements_admitted_with_provider(
+    let mut refusal = |packet: &crate::selection_diagnostics::SelectionDiagnosticMaterialization,
+                       ctx: &mut Context<'_>| provider.refusal_message(packet, ctx);
+    crate::selection::select_core_elements_admitted_with_host_refusal(
         source,
         query,
         engine,
         &provider,
         &mut capabilities,
         ctx,
+        &mut refusal,
     )
 }
 

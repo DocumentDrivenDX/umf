@@ -556,6 +556,13 @@ fn event_json(event: &HostJsonEvent) -> String {
                 HostDiagnosticArrayItem::Opaque(handle) => {
                     format!(r#"{{"kind":"opaque","handle":{handle}}}"#)
                 }
+                HostDiagnosticArrayItem::Structure { code, path, message, severity } => format!(
+                    r#"{{"kind":"structure","code":{},"path":{},"messageToken":{},"severity":{}}}"#,
+                    rust_value_wire_json(&Value::String(code.clone())),
+                    rust_value_wire_json(&Value::String(path.clone())),
+                    message.token,
+                    rust_value_wire_json(&Value::String(severity.clone())),
+                ),
             }).collect::<Vec<_>>().join(",");
             format!(r#"{{"event":"stringify-diagnostic-array","items":[{items}]}}"#)
         }
@@ -1166,6 +1173,17 @@ mod opaque_reply_tests {
         assert_eq!(
             event_json(&event),
             r#"{"event":"stringify-diagnostic-array","items":[{"kind":"static","value":{"kind":"object","members":[{"key":[99,111,100,101],"value":{"kind":"string","units":[83,84,65,84,73,67]}},{"key":[115,101,118,101,114,105,116,121],"value":{"kind":"string","units":[119,97,114,110,105,110,103]}}]}},{"kind":"opaque","handle":77}]}"#,
+        );
+        assert_eq!(
+            event_json(&HostJsonEvent::StringifyDiagnosticArray {
+                items: vec![HostDiagnosticArrayItem::Structure {
+                    code: Utf16::from("CODE"),
+                    path: Utf16::from("/x"),
+                    message: HostStringRef { token: 19, units: 5 },
+                    severity: Utf16::from("error"),
+                }],
+            }),
+            r#"{"event":"stringify-diagnostic-array","items":[{"kind":"structure","code":{"kind":"string","units":[67,79,68,69]},"path":{"kind":"string","units":[47,120]},"messageToken":19,"severity":{"kind":"string","units":[101,114,114,111,114]}}]}"#,
         );
         assert_eq!(
             event_json(&HostJsonEvent::ConstructErrorCarrier {

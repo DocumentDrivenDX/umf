@@ -325,6 +325,15 @@ function executeHostInput(addon, resources, operation, inputs, ErrorType, contro
               diagnostics[index] = requireHostHandle(item.handle);
             } else if (item?.kind === 'static') {
               diagnostics[index] = fromRustWireOrdinary(item.value);
+            } else if (item?.kind === 'structure'
+              && safeInteger(item.messageToken) && item.messageToken > 0
+              && mapHas(strings, item.messageToken)) {
+              const entry = NativeObjectCreate(objectPrototype);
+              defineProperty(entry, 'code', {value: fromRustWireOrdinary(item.code), writable: true, enumerable: true, configurable: true});
+              defineProperty(entry, 'path', {value: fromRustWireOrdinary(item.path), writable: true, enumerable: true, configurable: true});
+              defineProperty(entry, 'message', {value: mapGet(strings, item.messageToken), writable: true, enumerable: true, configurable: true});
+              defineProperty(entry, 'severity', {value: fromRustWireOrdinary(item.severity), writable: true, enumerable: true, configurable: true});
+              diagnostics[index] = entry;
             } else {
               throw new HostProtocolError('Malformed diagnostic serialization item');
             }

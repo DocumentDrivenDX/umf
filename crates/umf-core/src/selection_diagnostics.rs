@@ -10,7 +10,7 @@ use crate::{
         diagnostics_have_error, stringify_diagnostic_array, OrderedSelectionDiagnostic,
         SelectionDiagnosticSeverity,
     },
-    host_json::{HostDiagnosticArrayItem, HostJsonReflection, HostOpaqueType, HostOpaqueValue},
+    host_json::{HostDiagnosticArrayItem, HostJsonReflection, HostOpaqueType, HostOpaqueValue, HostStringRef},
     Diagnostic, EngineError, Severity, Utf16, Validation, Value,
 };
 
@@ -22,6 +22,12 @@ pub(crate) enum SelectionDiagnosticEntry {
         original: HostOpaqueValue,
         severity: Utf16,
     },
+    HostStructure {
+        code: Utf16,
+        path: Utf16,
+        message: HostStringRef,
+        severity: Severity,
+    },
 }
 
 /// The post-constraint diagnostic packet. `complete` is kept independent from
@@ -32,7 +38,7 @@ pub(crate) struct SelectionDiagnosticMaterialization {
     pub(crate) complete: bool,
     /// Existing Engine validation can include structural failures that are
     /// not represented by a severity diagnostic. Preserve that static result.
-    static_valid: Option<bool>,
+    pub(crate) static_valid: Option<bool>,
     pub(crate) entries: Vec<SelectionDiagnosticEntry>,
 }
 
@@ -69,6 +75,9 @@ impl SelectionDiagnosticMaterialization {
                         Utf16::default(),
                         "Static Selection cannot evaluate an opaque callback diagnostic",
                     ));
+                }
+                SelectionDiagnosticEntry::HostStructure { severity, .. } => {
+                    if *severity == Severity::Error { return Ok(false); }
                 }
             }
         }
@@ -114,6 +123,11 @@ impl SelectionDiagnosticMaterialization {
                     Utf16::default(),
                     "Static Selection cannot materialize an opaque callback diagnostic",
                 )),
+                SelectionDiagnosticEntry::HostStructure { .. } => Err(EngineError::new(
+                    "HOST_JSON_UNSUPPORTED",
+                    Utf16::default(),
+                    "Static Selection cannot materialize a host structure diagnostic",
+                )),
             })
             .collect()
     }
@@ -141,6 +155,11 @@ impl SelectionDiagnosticMaterialization {
                 },
                 SelectionDiagnosticEntry::Callback { original, .. } => OrderedSelectionDiagnostic {
                     severity: SelectionDiagnosticSeverity::Callback(original.clone()),
+                },
+                SelectionDiagnosticEntry::HostStructure { severity, .. } => OrderedSelectionDiagnostic {
+                    severity: SelectionDiagnosticSeverity::Static(Utf16::from(match severity {
+                        Severity::Error => "error", Severity::Warning => "warning",
+                    })),
                 },
             })
             .collect();
@@ -197,6 +216,13 @@ impl SelectionDiagnosticMaterialization {
                             "Validated callback diagnostic lost its opaque object handle",
                         )),
                     },
+                    SelectionDiagnosticEntry::HostStructure { code, path: diagnostic_path, message, severity } => {
+                        ctx.charge_work(code.len().saturating_add(diagnostic_path.len()).saturating_add(8).saturating_add(message.units), path.clone())?;
+                        Ok(HostDiagnosticArrayItem::Structure {
+                            code: code.clone(), path: diagnostic_path.clone(), message: message.clone(),
+                            severity: Utf16::from(match severity { Severity::Error => "error", Severity::Warning => "warning" }),
+                        })
+                    }
                 }
             })
             .collect()
@@ -320,6 +346,33 @@ mod tests {
             matches!(last, Value::Object(fields) if fields[0].1 == Value::String(Utf16::from("STATIC_LAST")))
         );
         assert!(!packet.complete);
+    }
+
+    #[test]
+    fn host_structure_message_stays_tokenized_in_mixed_refusal_items() {
+        let packet = SelectionDiagnosticMaterialization {
+            complete: false,
+            static_valid: None,
+            entries: vec![
+                static_diagnostic("BEFORE", Severity::Warning),
+                SelectionDiagnosticEntry::HostStructure {
+                    code: Utf16::from("EXTENSION_STRUCTURE"),
+                    path: Utf16::from("/extensions/future/bad"),
+                    message: HostStringRef::fake("host message"),
+                    severity: Severity::Error,
+                },
+            ],
+        };
+        let items = packet.host_array_items(&mut crate::Context::ordinary(), &Utf16::default()).unwrap();
+        assert!(matches!(
+            &items[1],
+            HostDiagnosticArrayItem::Structure { code, path, message, severity }
+                if code == &Utf16::from("EXTENSION_STRUCTURE")
+                    && path == &Utf16::from("/extensions/future/bad")
+                    && message.units == "host message".encode_utf16().count()
+                    && severity == &Utf16::from("error")
+        ));
+        assert!(!packet.static_is_valid().unwrap());
     }
 
     #[test]
