@@ -140,6 +140,13 @@
     "custodySha256": "da3342c1f6fc802ce382a9e3d7791d3a75c6b7f1cf86b8ea4d8450c821af12fd",
     "outputAdoption": null,
     "plan": "sol-inventory-pathset-hoist-plan001.md",
-    "planSha256": "2c3499b884b27f2c59c2fef1e54fed9f3221401b45657d3f6d6420340edeb75b"
+    "planSha256": "2c3499b884b27f2c59c2fef1e54fed9f3221401b45657d3f6d6420340edeb75b",
+    "sourceCorrection": {
+      "status": "SOURCE_ACCEPTED_AWAITING_WHOLE_DEPENDENT_RUN",
+      "path": "scripts/rust-inventory.py",
+      "sha256": "edf1e1bb1c3bf49ee637e15bfeb0abde1df56f9e1f71f5993072b44e07bdf931",
+      "closure": "sol-inventory-pathset-hoist-closure001.md",
+      "closureSha256": "f352fd64bc660a7e7db1b541b818c833ab6cd81724fd48fc890e18d55c838519"
+    }
   }
 }
