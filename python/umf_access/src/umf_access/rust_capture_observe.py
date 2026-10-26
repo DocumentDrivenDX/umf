@@ -4,10 +4,10 @@
 This opt-in prototype covers FieldRef ownership and a bounded terminal/root/
 Join observation prefix. It does not implement complete graph validation,
 serialization, the legacy DTO budget, or select the public capture route.
-The private graph profile admits exact text values and the known Node and
-RecordRef graph shape. Other shapes fail closed; arbitrary subclass accessor
-effects are observed in order, but subclass-produced non-text values are not
-part of the supported profile.
+The private graph profile admits exact text values and the bounded
+FieldRef/Join/tuple visit branch. Node and SearchLeg values are explicitly
+refused by that branch; subclass accessor effects on admitted objects are
+observed in order, but subclass-produced non-text values are unsupported.
 """
 
 from __future__ import annotations
@@ -32,11 +32,17 @@ def _native() -> Any:
     version = getattr(core, "access_field_owner_observation_profile_version", None)
     observe = getattr(core, "access_validate_field_owner_observed", None)
     observe_terminal = getattr(core, "access_observe_capture_terminal_join_owners", None)
+    observe_field_join_tuple = getattr(core, "access_observe_capture_field_join_tuple", None)
     try:
         available = callable(version) and version() == _PROFILE
     except Exception:
         available = False
-    if not (available and callable(observe) and callable(observe_terminal)):
+    if not (
+        available
+        and callable(observe)
+        and callable(observe_terminal)
+        and callable(observe_field_join_tuple)
+    ):
         raise FieldOwnerObservationUnavailable(
             "installed umf-core lacks the capture graph observation profile"
         )
@@ -90,3 +96,32 @@ def observe_terminal_join_owners(node: object) -> dict[str, object]:
     ):
         raise RuntimeError("Rust graph observer returned an invalid result")
     return result
+
+
+def observe_field_join_tuple(
+    value: object,
+    allowed_owners: tuple[tuple[str, str, str | None], ...],
+) -> None:
+    """Run the private ordered FieldRef/Join/tuple branch of graph visitation.
+
+    The caller supplies admitted owner tuples. This branch deliberately
+    refuses Node and SearchLeg values because their semantic validation
+    precedes recursion in `_validate_node.visit`.
+    """
+    if type(allowed_owners) is not tuple or any(
+        type(owner) is not tuple
+        or len(owner) != 3
+        or type(owner[0]) is not str
+        or type(owner[1]) is not str
+        or (owner[2] is not None and type(owner[2]) is not str)
+        for owner in allowed_owners
+    ):
+        raise TypeError("allowed owners must be exact (str, str, str | None) tuples")
+    from umf_access.dsl._nodes import FieldRef, Node, RecordRef
+    from umf_access.dsl._expressions import Join
+    from umf_access.dsl.search import SearchLeg
+
+    core = _native()
+    core.access_observe_capture_field_join_tuple(
+        value, allowed_owners, Node, RecordRef, FieldRef, Join, SearchLeg
+    )

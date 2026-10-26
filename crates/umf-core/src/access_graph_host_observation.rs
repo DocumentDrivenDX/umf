@@ -68,7 +68,7 @@ pub trait CaptureGraphHostObserver {
         _value: Self::Handle,
         _kind: StructuralType,
     ) -> Result<bool, ObservationError> {
-        Ok(false)
+        Err(ObservationError::UnsupportedValue)
     }
     fn iter(&mut self, sequence: Self::Handle) -> Result<Self::Handle, ObservationError>;
     fn next(&mut self, iterator: Self::Handle) -> Result<Option<Self::Handle>, ObservationError>;
@@ -86,6 +86,63 @@ pub enum StructuralType {
     Join,
     SearchLeg,
     Tuple,
+}
+
+/// Execute the bounded FieldRef / Join / tuple branch of `_validate_node.visit`.
+/// SearchLeg and Node remain explicitly refused because each has semantic
+/// checks before recursive visitation. Other opaque leaves follow the
+/// predecessor's no-op behavior.
+pub fn observe_field_join_tuple_prefix<H: Copy>(
+    context: &mut crate::Context<'_>,
+    host: &mut impl CaptureGraphHostObserver<Handle = H>,
+    value: H,
+    allowed: &HashSet<Owner>,
+) -> Result<(), ObservationError> {
+    observe_field_join_tuple_value(context, host, value, allowed, 0)
+}
+
+fn observe_field_join_tuple_value<H: Copy>(
+    context: &mut crate::Context<'_>,
+    host: &mut impl CaptureGraphHostObserver<Handle = H>,
+    value: H,
+    allowed: &HashSet<Owner>,
+    depth: usize,
+) -> Result<(), ObservationError> {
+    if depth >= 64 {
+        return Err(ObservationError::Budget);
+    }
+    if budgeted(context, || {
+        host.is_instance_structural(value, StructuralType::FieldRef)
+    })? {
+        return if allowed.contains(&owner(context, host, value)?) {
+            Ok(())
+        } else {
+            Err(ObservationError::ForeignField)
+        };
+    }
+    if budgeted(context, || {
+        host.is_instance_structural(value, StructuralType::SearchLeg)
+    })? {
+        return Err(ObservationError::UnsupportedValue);
+    }
+    if budgeted(context, || {
+        host.is_instance_structural(value, StructuralType::Join)
+    })? {
+        let reference = object(attr(context, host, value, "ref")?)?;
+        return observe_field_join_tuple_value(context, host, reference, allowed, depth + 1);
+    }
+    if budgeted(context, || host.is_instance(value, GraphType::Node))? {
+        return Err(ObservationError::UnsupportedValue);
+    }
+    if budgeted(context, || {
+        host.is_instance_structural(value, StructuralType::Tuple)
+    })? {
+        let iterator = budgeted(context, || host.iter(value))?;
+        while let Some(child) = budgeted(context, || host.next(iterator))? {
+            observe_field_join_tuple_value(context, host, child, allowed, depth + 1)?;
+        }
+    }
+    Ok(())
 }
 
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -711,6 +768,43 @@ mod tests {
         assert_eq!(
             observe_structural_field_owners(&mut context, &mut host, 22, &allowed),
             Err(ObservationError::ForeignField)
+        );
+    }
+
+    #[test]
+    fn missing_structural_probe_capability_fails_closed() {
+        struct MissingStructuralProbe;
+        impl CaptureGraphHostObserver for MissingStructuralProbe {
+            type Handle = u32;
+
+            fn get_attr(
+                &mut self,
+                _: u32,
+                _: &'static str,
+            ) -> Result<ObservedValue<u32>, ObservationError> {
+                unreachable!()
+            }
+            fn truthy(&mut self, _: u32) -> Result<bool, ObservationError> {
+                unreachable!()
+            }
+            fn get_item(&mut self, _: u32, _: usize) -> Result<u32, ObservationError> {
+                unreachable!()
+            }
+            fn is_instance(&mut self, _: u32, _: GraphType) -> Result<bool, ObservationError> {
+                unreachable!()
+            }
+            fn iter(&mut self, _: u32) -> Result<u32, ObservationError> {
+                unreachable!()
+            }
+            fn next(&mut self, _: u32) -> Result<Option<u32>, ObservationError> {
+                unreachable!()
+            }
+        }
+
+        let mut host = MissingStructuralProbe;
+        assert_eq!(
+            host.is_instance_structural(1, StructuralType::FieldRef),
+            Err(ObservationError::UnsupportedValue)
         );
     }
 }

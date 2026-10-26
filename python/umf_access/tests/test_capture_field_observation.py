@@ -9,6 +9,7 @@ from types import ModuleType, SimpleNamespace
 from umf_access.capture import CaptureError
 from umf_access.dsl import FieldRef, Node, RecordRef, RequiredJoin, Terminal
 from umf_access.rust_capture_observe import (
+    observe_field_join_tuple,
     observe_terminal_join_owners,
     validate_field_owner,
 )
@@ -150,9 +151,102 @@ def test_missing_native_profile_fails_before_touching_field(monkeypatch):
     fake_umf._rust = SimpleNamespace(_rust_core=SimpleNamespace())
     monkeypatch.setitem(sys.modules, "umf", fake_umf)
 
-    with pytest.raises(RuntimeError, match="lacks the FieldRef observation profile"):
+    with pytest.raises(RuntimeError, match="lacks the capture graph observation profile"):
         validate_field_owner(UntouchedField(), ("demo", "Thing", None))
+    with pytest.raises(RuntimeError, match="lacks the capture graph observation profile"):
+        observe_field_join_tuple(UntouchedField(), ())
     assert touched == []
+
+
+def test_field_join_tuple_visit_preserves_dfs_and_owner_component_order():
+    reads: list[str] = []
+    armed = False
+
+    class ObservedField(FieldRef):
+        def __getattribute__(self, name: str):
+            if armed and name in {"module", "element", "alias"}:
+                reads.append(f"field.{name}")
+            return super().__getattribute__(name)
+
+    class ObservedJoin(RequiredJoin):
+        def __getattribute__(self, name: str):
+            if armed and name == "ref":
+                reads.append("join.ref")
+            return super().__getattribute__(name)
+
+    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    target = RecordRef("demo", "Target", (FieldRef("demo", "Target", "id"),))
+    direct = ObservedField("demo", "Root", "direct")
+    relation_ref = ObservedField("demo", "Root", "target_id")
+    join = ObservedJoin(relation_ref, target)
+    armed = True
+
+    observe_field_join_tuple((direct, (join,)), (("demo", "Root", None),))
+    assert reads == [
+        "field.module",
+        "field.element",
+        "field.alias",
+        "join.ref",
+        "field.module",
+        "field.element",
+        "field.alias",
+    ]
+
+
+def test_field_join_tuple_visit_preserves_join_accessor_exception_identity():
+    sentinel = LookupError("join ref sentinel")
+    armed = False
+    target = RecordRef("demo", "Target", (FieldRef("demo", "Target", "id"),))
+
+    class FaultingJoin(RequiredJoin):
+        def __getattribute__(self, name: str):
+            if armed and name == "ref":
+                raise sentinel
+            return super().__getattribute__(name)
+
+    join = FaultingJoin(FieldRef("demo", "Root", "target_id"), target)
+    armed = True
+    with pytest.raises(LookupError) as caught:
+        observe_field_join_tuple(join, (("demo", "Root", None),))
+    assert caught.value is sentinel
+
+
+def test_field_join_tuple_foreign_field_refuses_before_later_tuple_child():
+    later_reads: list[str] = []
+
+    class LaterField(FieldRef):
+        def __getattribute__(self, name: str):
+            if name in {"module", "element", "alias"}:
+                later_reads.append(name)
+            return super().__getattribute__(name)
+
+    foreign = FieldRef("foreign", "Other", "column")
+    later = LaterField("demo", "Root", "column")
+    later_reads.clear()
+    with pytest.raises(TypeError) as caught:
+        observe_field_join_tuple((foreign, later), (("demo", "Root", None),))
+    assert type(caught.value) is TypeError
+    assert str(caught.value) == "expression column belongs to another Record"
+    assert later_reads == []
+
+
+@pytest.mark.parametrize("value", [Node("column", ()), object()])
+def test_field_join_tuple_visit_refuses_unsupported_graph_shapes(value):
+    if type(value) is object:
+        # Passive values are ignored by the predecessor's visit dispatch.
+        observe_field_join_tuple(value, ())
+    else:
+        with pytest.raises(TypeError, match="unsupported captured graph shape"):
+            observe_field_join_tuple(value, ())
+
+
+def test_field_join_tuple_visit_refuses_search_leg_before_nested_reads():
+    from umf_access.dsl.search import SearchLeg
+
+    root = RecordRef("demo", "Root", (FieldRef("demo", "Root", "id"),))
+    leg = SearchLeg(root, "keyword", "{}", None)
+    with pytest.raises(TypeError, match="unsupported captured graph shape"):
+        observe_field_join_tuple((leg,), (("demo", "Root", None),))
 
 
 def test_terminal_join_walker_observes_root_and_sequential_join_owners():
