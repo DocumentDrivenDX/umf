@@ -90,6 +90,10 @@ function declareCoreSchemaPropertiesHostInput(addon, resources, source, identity
   return executeHostInput(addon, resources, 'executeDeclareCoreSchemaPropertiesHostJson', [source, identity, patch], ErrorType);
 }
 
+function schemaPropertiesHostInput(addon, resources, operation, inputs, ErrorType = Error) {
+  return executeHostInput(addon, resources, 'executeCoreSchemaPropertiesHostJson', inputs, ErrorType, undefined, [operation]);
+}
+
 function validateCoreRecordValuesHostInput(addon, resources, source, identity, values, ErrorType = Error, controlBridge) {
   return executeHostInput(addon, resources, 'executeValidateCoreRecordValuesHostJson', [source, identity, values], ErrorType, controlBridge);
 }
@@ -233,6 +237,13 @@ function executeHostInput(addon, resources, operation, inputs, ErrorType, contro
           reply = {kind: 'utf16-chunk', offset: request.offset, units};
           break;
         }
+        case 'unicode-count': {
+          const value = fromRustWire(request.carrier);
+          let count = 0;
+          for (let i = 0; i < value.length; i++, count++) { const c = value.charCodeAt(i); }
+          reply = {kind: 'count', value: count};
+          break;
+        }
         default: throw new NativeTypeError('Unknown umf.host-json/1 event');
       }
       return stringify(wire(reply));
@@ -314,4 +325,4 @@ function fromUnits(units) {
   return result;
 }
 
-export {declareCoreSchemaPropertiesHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse};
+export {declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse};

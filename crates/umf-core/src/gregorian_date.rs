@@ -315,7 +315,7 @@ mod tests {
             );
         }
         assert_eq!(
-            truncate_gregorian_date(&text("bad"), &text("week")),
+            truncate_gregorian_date(&text("2026/01/01"), &text("week")),
             Err(GregorianDateError::Syntax)
         );
         assert_eq!(

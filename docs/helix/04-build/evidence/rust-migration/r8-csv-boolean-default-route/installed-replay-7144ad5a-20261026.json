@@ -1,0 +1,60 @@
+{
+  "format": "umf.r8.csv-boolean-default-route-installed/1",
+  "status": "pass",
+  "archive": {
+    "path": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/.cache/sdk-distribution/umf-sdk.tgz",
+    "sha256": "23be02c51926c48e3426f189d64570d5dc514447fa1c8830bcb74dfeda72c5fe",
+    "bytes": 43104493,
+    "manifestSha256": "810d3089df71beb8135cce2ccc4d4505a70422337aed1bcd4cc4da27f5b2fe50"
+  },
+  "sourceClosure": {
+    "sha256": "7144ad5a682b32501db6692177b348ae1760a224585394f19f450e41dd4518c7",
+    "capturedLiveSha256": "7144ad5a682b32501db6692177b348ae1760a224585394f19f450e41dd4518c7",
+    "fileCount": 3435,
+    "transform": {
+      "status": "fixed-point",
+      "generatedInputs": []
+    }
+  },
+  "predecessorSha256": "b960bac93d6027b03808bb984381e0c78cc78f91b3e5d1012faf539ec3890470",
+  "harnessSha256": "00b32f2b7034942107120f087df500500c9d82a3d1405216b92fad6f0bbc4ebd",
+  "packageHelperSha256": "1ceba4b9ac2742f05ceb4b83fc3baaa572946dcc6c0355abaca133b3694be1ec",
+  "packageRoutes": {
+    "node": "./dist/umf-node.js",
+    "browser": "./dist/umf-browser.js",
+    "import": "./dist/umf-browser.js",
+    "reference": "./dist/umf.js"
+  },
+  "operations": [
+    "validateCsvBooleanLexical",
+    "verifyCsvBooleanLexical"
+  ],
+  "node": "{\"node\":\"v26.12.1\",\"root\":\"file:///private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-csv-installed-34195-1792999138490/node_modules/@umf/core/dist/umf-node.js\",\"reference\":\"file:///private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-csv-installed-34195-1792999138490/node_modules/@umf/core/dist/umf.js\",\"cases\":14}",
+  "bun": "{\"node\":\"v26.3.0\",\"root\":\"file:///private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-csv-installed-34195-1792999138490/node_modules/@umf/core/dist/umf-node.js\",\"reference\":\"file:///private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-csv-installed-34195-1792999138490/node_modules/@umf/core/dist/umf.js\",\"cases\":14}",
+  "chromium": {
+    "version": "153.0.8010.12",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+    "cases": 14,
+    "malformedReceiptExpectedSourceReads": 0,
+    "wasmRequested": true
+  },
+  "nativeAddonControls": {
+    "node-missing": {
+      "refused": true,
+      "diagnostic": "Node.js v26.12.1"
+    },
+    "node-corrupt": {
+      "refused": true,
+      "diagnostic": "Node.js v26.12.1"
+    },
+    "bun-missing": {
+      "refused": true,
+      "diagnostic": "Bun v1.4.3 (macOS arm64)"
+    },
+    "bun-corrupt": {
+      "refused": true,
+      "diagnostic": "Bun v1.4.3 (macOS arm64)"
+    }
+  },
+  "qualification": "Private installed archive replay for the two CSV Boolean exports only; not a full SDK, retirement, or release qualification."
+}

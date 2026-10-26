@@ -4,15 +4,18 @@ import type {CoreDatasetCompactValueCheck} from '../model/dataset-values-compact
 import type {Document} from '../model/types';
 import {UmfError} from '../model/errors';
 
+type NativeCoreErrorGuard=(error:unknown)=>boolean;
+
 /** The existing tagged-wire operations, adapted to the TypeScript public surface. */
 export interface CoreDatasetValuesCompactRustEngine {
  validateCoreDatasetValuesCompact(source:unknown,input:unknown):unknown;
  verifyCoreDatasetValuesCompact(receipt:unknown,current:unknown,expectedInput:unknown):unknown;
 }
 
-function invoke<T>(operation:()=>unknown):T {
+function invoke<T>(operation:()=>unknown,isNativeUmfCoreError:NativeCoreErrorGuard):T {
  try { return operation() as T; }
  catch(error) {
+  if(!isNativeUmfCoreError(error))throw error;
   const code=error!==null&&typeof error==='object'&&'code' in error?String((error as {code:unknown}).code):'';
   const message=error!==null&&typeof error==='object'&&'message' in error?String((error as {message:unknown}).message):String(error);
   const path=error!==null&&typeof error==='object'&&'path' in error?String((error as {path:unknown}).path):'';
@@ -30,13 +33,13 @@ function invoke<T>(operation:()=>unknown):T {
 }
 
 /** Preserve direct TypeScript signatures while delegating to the selected Rust engine. */
-export function bindCoreDatasetValuesCompactRust(engine:CoreDatasetValuesCompactRustEngine) {
+export function bindCoreDatasetValuesCompactRust(engine:CoreDatasetValuesCompactRustEngine,isNativeUmfCoreError:NativeCoreErrorGuard=()=>false) {
  return Object.freeze({
   validateCoreDatasetValuesCompact(source:Document,input:CoreDatasetInput):CoreDatasetCompactValueCheck {
-   return invoke(()=>engine.validateCoreDatasetValuesCompact(source,input));
+   return invoke(()=>engine.validateCoreDatasetValuesCompact(source,input),isNativeUmfCoreError);
   },
   verifyCoreDatasetValuesCompact(receipt:CoreDatasetCompactValueCheck,current:Document,expectedInput:CoreDatasetInput):CoreDatasetCompactValueCheck {
-   return invoke(()=>engine.verifyCoreDatasetValuesCompact(receipt,current,expectedInput));
+   return invoke(()=>engine.verifyCoreDatasetValuesCompact(receipt,current,expectedInput),isNativeUmfCoreError);
   },
  });
 }

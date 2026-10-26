@@ -1785,6 +1785,33 @@ fn access_catalog_render_logical_variant(
 }
 
 #[pyfunction]
+fn access_validate_captured_graph_variant(
+    py: Python<'_>,
+    input: &Bound<'_, PyAny>,
+) -> PyResult<PyObject> {
+    if !input.is_exact_instance_of::<PyDict>() {
+        return Err(PyValueError::new_err("captured graph input must be an exact dict"));
+    }
+    let mut context = Context::ordinary();
+    let mut count = 0usize;
+    let input = python_value::from_python(py, input, &mut context, 0, &mut count).map_err(py_error)?;
+    let response = match umf_core::access_graph_validate::validate_captured_variant(&input) {
+        Ok(()) => PythonConsumerValue::Object(vec![
+            (umf_core::PyText::from_utf8("profile"), PythonConsumerValue::String(umf_core::PyText::from_utf8(umf_core::access_graph_validate::PROFILE))),
+            (umf_core::PyText::from_utf8("outcome"), PythonConsumerValue::String(umf_core::PyText::from_utf8("accepted"))),
+        ]),
+        Err(refusal) => PythonConsumerValue::Object(vec![
+            (umf_core::PyText::from_utf8("profile"), PythonConsumerValue::String(umf_core::PyText::from_utf8(umf_core::access_graph_validate::PROFILE))),
+            (umf_core::PyText::from_utf8("outcome"), PythonConsumerValue::String(umf_core::PyText::from_utf8("refused"))),
+            (umf_core::PyText::from_utf8("kind"), PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.kind))),
+            (umf_core::PyText::from_utf8("code"), PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.code))),
+            (umf_core::PyText::from_utf8("rule"), PythonConsumerValue::String(umf_core::PyText::from_utf8(refusal.rule))),
+        ]),
+    };
+    python_value::to_python(py, &response, &mut context)
+}
+
+#[pyfunction]
 fn copy_json_wire(wire_json: &str) -> PyResult<String> {
     Ok(umf_core_wire::copy_wire_envelope(wire_json))
 }
@@ -3503,6 +3530,7 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     )?)?;
     module.add_function(wrap_pyfunction!(access_catalog_logical_render_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(access_catalog_render_logical_variant, module)?)?;
+    module.add_function(wrap_pyfunction!(access_validate_captured_graph_variant, module)?)?;
     module.add_function(wrap_pyfunction!(copy_python_consumer_value, module)?)?;
     module.add_function(wrap_pyfunction!(copy_python_json_value, module)?)?;
     module.add_function(wrap_pyfunction!(engine_version, module)?)?;

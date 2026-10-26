@@ -1,6 +1,9 @@
-import {encodeRequestWire, fromWire, resultError, toWire} from './wire.js';
+import {encodeRequestWire, fromWire, isWireAdmissionError, resultError, toWire} from './wire.js';
 
 export const BIT128_PROFILE = 'umf-128/1';
+const bit128Errors = new WeakSet();
+const weakSetHas = Function.call.bind(WeakSet.prototype.has);
+const weakSetAdd = Function.call.bind(WeakSet.prototype.add);
 const byteLengthGetter = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(Uint8Array.prototype), 'byteLength').get;
 const byteOffsetGetter = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(Uint8Array.prototype), 'byteOffset').get;
 const bufferGetter = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(Uint8Array.prototype), 'buffer').get;
@@ -11,7 +14,13 @@ function error(code, message, path = '') {
   result.name = 'UmfCoreError';
   result.code = code;
   result.path = path;
+  weakSetAdd(bit128Errors, result);
   return result;
+}
+
+/** True only for errors created by this private Bit128 engine module. */
+export function isBit128EngineError(value) {
+  return value !== null && (typeof value === 'object' || typeof value === 'function') && weakSetHas(bit128Errors, value);
 }
 
 function data(value, key, required = true) {
@@ -90,7 +99,7 @@ function call(invoke, bridge, op, args) {
   let requestWire;
   try { requestWire = encodeRequestWire(request, work); }
   catch (cause) {
-    if (cause?.name !== 'AdmissionError') throw cause;
+    if (!isWireAdmissionError(cause)) throw cause;
     if (op === 'bits128FromWords' && cause.code === 'ACCESSOR_PROPERTY') throw error('BIT128_TYPE', 'Word accessors are forbidden');
     if (op === 'bits128FromInteger' && cause.code === 'ACCESSOR_PROPERTY') throw error('BIT128_TYPE', 'Expected integer token text');
     if (['bits128ToBytes', 'uuidFromBits128', 'compareBits128', 'bits128ToWords', 'bits128ToInteger'].includes(op) && cause.code === 'ACCESSOR_PROPERTY') throw error('BIT128_VALUE', 'Accessors are not value snapshots');

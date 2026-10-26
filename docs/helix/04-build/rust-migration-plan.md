@@ -4564,11 +4564,13 @@ and universal dynamic-import, forbidden host-hook, and Python-template checks.
 Its previous global import allowance has been replaced with exact per-file
 lists for the current portable generator and Rust facade/resource files; a
 new file fails until reviewed and listed. Sol independently reran the checker
-and three negative-control tests: an unapproved import in an existing facade,
-an unlisted new file, and dynamic import plus a `process` host hook all fail.
-The checker and focused tests pass. An earlier scan-scope reduction was
-rejected by automatic approval review because it could hide forbidden imports;
-this in-place repair preserves that coverage. It does not establish that the
+and five negative-control tests: an unapproved import in an existing facade,
+an unapproved re-export, an unlisted new file, dynamic import plus a `process`
+host hook, and an unapproved `import()` type all fail. The checker and focused
+tests pass. The user explicitly approved the strict per-file policy after an
+earlier scan-scope reduction was rejected by automatic approval review because
+it could hide forbidden imports; this in-place repair preserves that coverage.
+It does not establish that the
 default Rust facade routes are behaviorally qualified or release-ready.
 
 At the earlier settled source checkpoint, the metamodel, action/codegen
@@ -5045,3 +5047,316 @@ The two earlier broad-suite failures belonged to that stale binary, as a
 private baseline replay and fresh-addon focused checks corroborated. This
 removes a local wrapper-test ambiguity; it does not close the installed
 default-route or release-platform gates.
+
+### R8 staged Core Key verifier and current-source archive — 2026-10-26
+
+The fifth Core Key operation, `verifyCoreKeyOperation`, now has a staged Rust
+host route in Node and WASM. Its prepared receipt stage is consumed by finish
+or explicitly discarded when host admission of the current document fails.
+The public adapter preserves the reference's first-error order, copied-carrier
+behavior and exact native null-receipt TypeError; only errors identified as
+native binding errors are translated. The complete Node wrapper suite passed
+against a source-current addon (138 tests, zero failures, 914 assertions across
+21 files). The full locked/offline Rust workspace suite subsequently finished
+with zero failures on this pre-Schema-Properties source snapshot; later Rust
+changes require their own focused and integrated reruns.
+
+A private fixed-point SDK archive (SHA-256
+`41430112228490b6daea64a98349b9cf1a56551ca2d196cbb01be5b7bdf8ea28`)
+pins 3,431 source inputs to closure
+`59300c59ae4ff69b4cbbd75b86e3fb221303b8b0af2b53e5c60c00b6e335333d`,
+with zero private generated transforms and 1,788 archive members. The
+[installed Core Key verifier replay](evidence/rust-migration/r8-core-keys-default-boundary/final-key-null-verification-installed-20261026.json)
+passed frozen and same-host `./reference` comparisons in Node 26.12.1,
+Bun 1.4.3 and Chromium 153/WASM, including receipt-before-current admission,
+copy isolation, exact malformed-refusal behavior, and cleanup observable on a
+subsequent call. This is bounded private-route evidence, not retirement of the
+TypeScript `./reference` path or release qualification. The previous archive's
+Core Cardinality, Core Facets, CSV Boolean, Core Inspectors and Compact Dataset
+receipts are historical relative to this closure; rerun each against a common
+current archive before promoting an aggregate installed-route claim.
+The [Compact Dataset validate-only replay](evidence/rust-migration/r8-compact-dataset-installed/receipt-current-59300c59.json)
+subsequently passed the same archive in Node, Bun and Chromium: all 17 frozen
+outcomes, copy and proxy identity, structural/work limits, and the 349/350
+boundary agree with the explicit reference. The separate compact verification
+operation remains unqualified, and this receipt becomes historical when later
+production source changes its captured closure.
+
+The [aggregate evidence gate](evidence/rust-migration/r8-installed-route-evidence/README.md)
+now requires matching archive/closure claims and explicit current-source
+status on Node, Bun and Chromium receipts for its five bounded families. It
+rehashes live source inputs; its archive member map is a pinned attestation,
+not an independent archive read. The deterministic gap ledger was regenerated
+for current source provenance without changing its denominator: 58 accepted
+opt-in mappings, 864 unmapped executable names and 922 logical retirement gaps.
+The [Schema Properties interface decision](evidence/rust-migration/r8-next-route-queue/schema-properties-interface-decision-20261025.md)
+sets the next four-operation production boundary: one synchronous Rust-owned
+host-reflection dispatcher in Node and WASM, five trusted root resources,
+one Context per operation, and the frozen operand admission order. Its eight
+crossed-input probes are a TypeScript predecessor baseline only. After that
+route, continue the remaining default-route inventory and the hosted Python
+six-cohort matrix before a complete-port PR, merge or release.
+
+The [Python runtime and semantic-ownership audit](evidence/rust-migration/r8-python-runtime-dependency-audit/README.md)
+found no executable JS/V8/Node/Bun path in the three production Python
+package roots; their sole production subprocess launches the bundled Rust
+`umf` CLI. This is narrower than complete Rust ownership: `umf_access` still
+contains Python-owned query DSL/rendering, catalog, read/search admission,
+migration lifecycle and driver orchestration. Each rule needs an explicit
+shared-semantic versus host-I/O disposition and parity evidence. The local
+CPython 3.11 packaging follow-up passed 24/24 receipt-verifier tests and
+Twine checks through a compatible overlay, but its artifacts were disqualified
+by concurrent source changes; the six hosted cohorts remain open.
+
+The [post-Schema route decision](evidence/rust-migration/r8-next-route-queue/post-schema-properties-next-route-decision-20261026.md)
+places `selectCoreElements` next because its Rust owner and Node/WASM opt-in
+route already exist. Caller `Registry` callbacks and raw host-admission order
+remain production interface blockers. A separate
+[Record Type authority follow-up](evidence/rust-migration/r8-symbol-inventory/record-type-operation-v6-authority-followup-20261026.md)
+reproduced the v6 schema's historical bytes but found no governing contract or
+retained current writer for three later edits; its resource authority remains
+unresolved. The Compact Dataset verifier now uses a cumulative, fail-fast
+`ValueWork` ledger across receipt admission, source validation, recomputation
+and comparison. Focused 267/268 and 349/350 boundary cases and the full
+Compact wire replay pass; the broader workspace run is still in progress.
+This is a separate Rust slice without default selection yet.
+
+The Schema Properties source route now implements inspect, declare, field
+validation and default resolution through the synchronous Rust host-reflection
+dispatcher on Node and WASM. The focused Rust field/default vectors (4), JSON
+Schema integration vectors (17), boundary checker (5) and TypeScript typecheck
+pass; the Node addon and WASM release builds pass. A fresh-addon Node replay
+passes four host tests covering all four operations, exact accessor refusals,
+eight crossed input cases and eleven callback identity stages (27 assertions).
+An additional fresh-addon regression matched the reference for hidden,
+symbol-keyed, cyclic and over-depth source inputs and verified returned-copy
+isolation (7 assertions).
+The checkout's ignored addon was restored after the replay. Real Chromium
+against the fresh WASM package also matches the four operations, eight crossed
+cases and eleven callback identity stages without Node globals. The
+[Schema Properties installed packet](evidence/rust-migration/r8-schema-properties-installed/README.md)
+now pins a fixed-point private SDK archive, source closure and 1,788 verified
+members. Its Node 26.12.1, Bun 1.4.3 and Chromium 153.0.8010.12 replays pass
+72 fixed-output outcomes, 11 host-native thrown outcomes, eight crossed
+admission cases, eleven callback-identity stages and copy isolation for the
+four source-selected operations. The first installed replay had 11 genuine
+malformed string-carrier `TypeError` mismatches; the Rust host JSON bridge now
+asks each JavaScript host to perform the count on an admitted copy, and the
+current receipt verifies parity. This is bounded private installed-route
+qualification, not declaration retirement or release readiness.
+
+The [Selection reference host baseline](evidence/rust-migration/r8-selection-reference-host-baseline/README.md)
+now records twelve frozen TypeScript outcomes on Node 26.12.1, Bun 1.4.3 and
+Chromium 153, plus raw source/query and Registry observations. Registry lookup
+occurs lazily inside source validation, interleaved with semantic callbacks;
+an eager registration snapshot would change observable error and callback
+order. Sol accepts a lazy per-call provider as the next interface-design
+direction, conditional on an exact Rust `Registry`/`Capabilities` signature
+review and Node/WASM callback identity evidence. Selection remains unselected.
+
+The [Python semantic-ownership decision](evidence/rust-migration/r8-python-access-semantic-ownership-decision.md)
+classifies remaining DSL, catalog, search, runtime codec, unified operation and
+table lifecycle rules separately from trusted Python declaration invocation,
+filesystem, driver, session and database I/O. The
+[renderer v0.2 interface decision](evidence/rust-migration/r8-python-renderer-v02-interface-decision.md)
+keeps a broader Rust logical-render profile opt-in; its focused Rust tests pass
+8/8, but joins, related navigation, malformed-order and Python bridge limits
+remain unqualified. A post-invocation captured-graph validator now has a
+private Python seam and covers declared parameter-name membership, exact
+Key-parameter component/identity tuple consistency, and root/join owner
+membership for well-shaped `all` terminals. Its
+direct frozen packet contains 27 CPython cases, including accepted tagged DTOs
+and synthetic graph mutations; focused Rust and Python seam tests pass. Key
+`get`/`page` selected-Key identity, SearchLeg and the remaining graph rules
+still belong to the Python default until ordered parity is proven. The opt-in
+Rust validator refuses `get`/`page` as outside its current profile.
+
+The [Selection provider implementation preparation](evidence/rust-migration/r8-next-route-queue/selection-provider-implementation-prep-20261026.md)
+now identifies both lazy `Registry.get` demand sites and the distinct
+`registry.kindRuntime.validateDocument` branch. Ordinary TypeScript Selection
+does not run Rust's kind-occurrence check. The host route must preserve that
+branch distinction, caller-owned registration accessors and callbacks, and
+thrown-value identity before default selection. The
+[captured-graph validator packet](evidence/rust-migration/r8-captured-graph-validator-interface/README.md)
+pins nine direct Python outcomes plus accepted tagged DTO and optional-variant
+examples. A `FieldRef` subclass is accepted and retains its concrete tag and
+extra content, so an exact-tag Rust DTO parser cannot be selected for Python
+capture without an explicit compatible admission rule. Both routes remain
+opt-in interface work.
+
+The [resource-authority closure review](evidence/rust-migration/r8-symbol-inventory/resource-authority-closure-decision-20261026.md)
+keeps 17 aliases (51 route rows, 11 files) unresolved: six versioned Core
+operation schemas have reproducible historical writer outputs, but no proven
+authority for later current-byte edits. The
+[post-Schema pure-operation queue](evidence/rust-migration/r8-next-route-queue/unmapped-pure-operation-wave-20261026.md)
+placed the four already selected Schema Properties operations through a
+fixed-point installed replay, which has now passed. Recertification of three
+Core Inspector and two CSV Boolean routes on that same archive passed in Node,
+Bun and Chromium. The [Inspector receipt](evidence/rust-migration/r8-core-inspectors-installed/current-source-replay-7144ad5a-20261026.json)
+matches all 26 frozen cases, observes browser WASM, and passes native-addon
+failure controls. The [CSV Boolean receipt](evidence/rust-migration/r8-csv-boolean-default-route/installed-replay-7144ad5a-20261026.json)
+matches all 14 predecessor cases per host, observes browser WASM, and passes
+four native-addon failure controls. Both use the same fixed-point archive and
+source closure as Schema Properties. The remaining aggregate families are
+also replayed on that archive: [Relationships](evidence/rust-migration/r8-core-relationships-default-boundary/core-relationships-installed-node-20261026.json)
+matched eleven frozen cases with exact outcome/admission order in Node, Bun
+and Chromium; [Bit128/UUID](evidence/rust-migration/r8-bit128-installed/r8-bit128-aggregate-20261026.json)
+matched its eleven-operation packet and forged-error controls; [Core Keys](evidence/rust-migration/r8-core-keys-default-boundary/current-archive-installed-7144ad5a-20261026.json)
+matched four selected operations and the installed `./reference` route in all
+three hosts. Core Keys verification remains TypeScript and its current minimal
+replay excludes the older 700,000-unit retained-value and general resource
+controls. These five family replays are bounded raw evidence; the separate
+aggregate gate still needs hash-bound normalized host receipts before its
+24-operation route count may be claimed.
+
+The subsequent opt-in Python graph-validator owner/Key changes altered a
+Rust source input in that archive closure. All five same-archive installed
+receipts above therefore document the preceding source cut; they are not
+current-source aggregate qualification for the present worktree. A new
+fixed-point archive and complete rerun are required after this source cut
+settles. The aggregate gate also found that the Bit128 Node/Bun raw receipts
+did not pin the loaded native addon, so a process-bound wrapper must record
+that hash without weakening the five-family evidence rule.
+These are bounded qualification steps, not a complete-port or retirement
+claim. The current ledger still records 922 logical retirement gaps and 864
+unmapped executable names before any Schema mapping update. The captured-graph
+validator remains a private opt-in Python seam for declared-name membership,
+Key parameter consistency and bounded `all`-terminal ownership; the public
+Python capture path and broader graph semantics are unchanged.
+
+### R8 current fixed-point installed-route gate — 2026-10-26
+
+The [new R8 installed-route evidence](evidence/rust-migration/r8-installed-route-evidence/README.md)
+rebuilds the SDK from the later graph-validator source cut with zero generated
+transforms. The packaged archive SHA-256 is
+`b2f816d7f7bd3b57df1ecea536ceece4396a3625b2a641eb0991d135037de892`,
+and its 3,435-input live source closure is
+`0e6de413298318b0e8bcb03cac522872452b8c1e548f18a26f226d28967ce5c0`.
+An independent archive preflight checked all 1,788 members and the current
+source tree. Fresh Node 26.12.1, Bun 1.4.3 and Chromium 153 replays pass for
+CSV Boolean, Core Inspectors, Core Relationships, Bit128/UUID and four Core
+Keys operations. The Bit128 Node/Bun wrapper also observed the exact
+archive-adjacent native addon in each process. The separate Schema Properties
+replay passes its four selected routes, including the 11 host-specific
+`TypeError` envelopes, on this archive; it is outside the five-family aggregate.
+
+The aggregate gate reopens hash-pinned host receipts, cross-checks archive
+members and current source, and accepts **24 bounded installed routes**. Its
+own scope is evidence-only: the archive byte reopening belongs to the
+separate preflight. The regenerated ledger retains **922 logical retirement
+gaps, 864 executable names without an accepted Rust mapping, and 17 unresolved
+resource aliases**. The 24 routes establish neither full semantic parity nor
+declaration retirement. Core Key verification, facets, cardinality and compact
+dataset operations remain outside this aggregate; the `./reference` route and
+Python public capture also remain separate.
+
+The local coordinated-Python release-verifier tests pass 75/75 on each of
+CPython 3.11.17, 3.12.15 and 3.13.16 on Darwin 27 arm64. This checks the
+release verifier, including synthetic six-receipt inputs; no actual wheel or
+sdist cohort has been built or accepted for this source cut. Hosted macOS 15
+and Linux x86_64 artifacts, transitive runtime closure, full regression,
+complete default-route ownership, PR, merge and release remain required.
+
+The four Schema Properties declarations now have exact accepted Rust owner
+mappings for the two V4 roots and a [separate current-source route gate](evidence/rust-migration/r8-schema-properties-installed/route-gate-current-b2f816d7.json).
+The authority ledger therefore reports **62 accepted opt-in Rust mappings and
+860 unmapped executable names**, while retaining the five-family aggregate's
+24 proven routes and all 922 retirement gaps. The separate Schema gate passes
+four bounded operations and records `completeParity: false` and
+`releaseQualified: false`; its result is deliberately not folded into the
+five-family aggregate. Fresh [Facets](evidence/rust-migration/r8-core-facets-installed/README.md)
+and [Cardinality](evidence/rust-migration/r8-core-cardinality-installed/README.md)
+raw installed replays also pass on the same archive across Node, Bun and
+Chromium. Their separate [Facets](evidence/rust-migration/r8-core-facets-installed/route-gate-current-b2f816d7.json)
+and [Cardinality](evidence/rust-migration/r8-core-cardinality-installed/route-gate-current-b2f816d7.json)
+hash-pinned route gates now pass and recompute the live source closure. The
+Cardinality receipt records Chromium WASM and external-request controls; the
+Facets receipt lacks those two controls. Both gates depend on the separately
+verified archive preflight, remain outside the five-family aggregate, and
+retain `completeParity: false` and `releaseQualified: false`. Resource-authority
+closure is still required before ledger upgrade; the 17 unresolved aliases
+remain unresolved.
+
+### R8 captured-graph and compact Dataset continuation — 2026-10-26
+
+The three-family follow-up review confirms that no current resource-authority
+claim can be promoted for the 17 aliases across 11 files from the available
+writer and contract evidence. Historical output hashes and current file hashes
+do not identify who authorized the later edits. The authority ledger stays
+unchanged.
+
+The [compact Dataset installed replay](evidence/rust-migration/r8-compact-dataset-installed/README.md)
+has no passing receipt for the `b2f816d7` archive. A sandboxed loopback attempt
+failed; an escalated attempt produced no stage output and was interrupted, so
+the stall stage and host outcomes remain unknown. The harness now has bounded
+stage diagnostics, but requires a new fixed-point archive and fresh Node, Bun,
+and Chromium replay before any route qualification. Compact verification
+remains outside that selected-route probe.
+
+For the 17 unresolved resource aliases, the next authority design should
+extend the closed `umf.metamodel.shape` vocabulary with explicit versioned
+operation-resource roots and output bindings, then compile the current Facets
+and Cardinality schemas from declared semantics. This fits CONTRACT-080's
+generated-resource direction better than declaring unexplained exceptions.
+`minProperties` and resource-level `$schema`/`$id`/`title`/`$defs` output need
+an explicit compiler design; exact preservation of today's resource bytes
+requires an ordering rule and byte-for-byte tests. Until that design and its
+contract revision pass review, the aliases remain `authority-unresolved`.
+
+The next opt-in Python access slice adds Rust post-invocation `get`/`page`
+selected-Key graph checks in `access_graph_validate.rs`, with the public Python
+capture route unchanged. It must preserve Python's group/scalar check, join
+owner, selected-Key, then expression-visit refusal order. The source edit makes
+the previous `0e6de413` fixed-point receipts historical; all current-source
+installed gates must be rebuilt and rerun after this slice is tested. No
+retirement count, release-platform qualification, or release status changes
+here.
+
+That [selected-Key slice](evidence/rust-migration/r8-python-captured-graph-selected-key/README.md)
+now passes 20/20 focused Rust tests. A freshly built native Python extension
+passes 8/8 opt-in comparisons with public capture on CPython 3.13.16, Darwin
+27 arm64, including exact `get`/`page` refusal precedence. Full graph
+semantics, `type-error` wrapper translation, installed-wheel parity and the
+public capture switch remain open.
+
+The later fixed-point SDK archive is
+`c1ecf9cea81c3767e281820a93294b85a45ab052862a9fcd8b0b493057302263`,
+with [separate current-source preflight](evidence/rust-migration/r8-installed-route-evidence/current-61cbaf0a/preflight.json)
+for source closure
+`61cbaf0ae7a0359e9ae49d2aa4c436727f2122e4174d84999efb20f42d2c3b01`:
+3,435 live inputs, zero generated transforms, and 1,788 verified archive
+payload members. It remains a private, nonpublishable qualification build.
+The [compact Dataset receipt](evidence/rust-migration/r8-compact-dataset-installed/current-archive-61cbaf0a.json)
+passes its 17 frozen validation cases and bounded host controls in Node
+26.12.1, Bun 1.4.3, and real Chromium 153.0.8010.12 on this archive. It does
+not exercise `verifyCoreDatasetValuesCompact`, retire a declaration, or
+qualify a public release. The other installed route families were then
+replayed and gated on this exact archive, as recorded below.
+
+The five-family [current-archive aggregate](evidence/rust-migration/r8-installed-route-evidence/current-61cbaf0a/aggregate.json)
+now passes its fail-closed gate for 24 bounded installed operations. Raw
+Node/Bun/Chromium receipts are bound to the exact archive and source closure;
+the Bit128 Node/Bun wrapper also observed the loaded archive-adjacent native
+addon in each process. The gate separately reopens every hash-pinned raw
+receipt and recomputes all 3,435 live source inputs. Its archive byte claim
+depends on the separately passing preflight; the aggregate does not reopen
+the archive itself. Core Keys current replay omits the historical 700,000-unit
+retained-value control. Schema Properties, Facets and Cardinality replays
+remain separate bounded gates, and the 922 logical retirement gaps remain
+open. The previous `0e6de413` aggregate and ledger are historical; the ledger
+was regenerated after the current gate-script changes settled. The
+[current ledger](evidence/rust-migration/r8-symbol-inventory/gap-ledger.json)
+still records 922 logical retirement gaps, 860 executable names without an
+accepted Rust mapping, 62 accepted opt-in mappings, 24 aggregate-proven
+bounded routes, and 17 unresolved resource aliases. No declaration was
+retired by the replay.
+
+Separate [Schema Properties](evidence/rust-migration/r8-installed-route-evidence/schema-properties-route-gate-current-61cbaf0a.json),
+[Core Facets](evidence/rust-migration/r8-installed-route-evidence/core-facets-route-gate-current-61cbaf0a.json),
+and [Core Cardinality](evidence/rust-migration/r8-installed-route-evidence/core-cardinality-route-gate-current-61cbaf0a.json)
+gates now pass on the same fixed-point archive and independently recompute its
+current source closure. Their focused gate suites pass 15/15. Each retains
+`completeParity: false` and `releaseQualified: false`; Facets also retains
+unresolved resource authority and no Chromium WASM/external-request claim.
+Cardinality records Chromium WASM loading and zero external requests. These
+separate gates do not expand the five-family aggregate or retire declarations.

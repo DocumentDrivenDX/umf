@@ -1,0 +1,322 @@
+{
+  "format": "umf.r8.schema-properties-installed/1",
+  "status": "pass",
+  "harnessSha256": "48ec54ca5b2882c833d573242fafc8f4d52a1c59b16d5f59b2eb7cfaaf1a98ea",
+  "archive": {
+    "path": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/.cache/sdk-distribution/umf-sdk.tgz",
+    "sha256": "b2f816d7f7bd3b57df1ecea536ceece4396a3625b2a641eb0991d135037de892",
+    "bytes": 43106508,
+    "manifestSha256": "d5e142c2fc36ec2919bd4cbe7aabee1193532c56fcac8917e96dce2be709550c",
+    "verifiedMemberCount": 1788
+  },
+  "sourceClosure": {
+    "expectedSha256": "0e6de413298318b0e8bcb03cac522872452b8c1e548f18a26f226d28967ce5c0",
+    "sha256": "0e6de413298318b0e8bcb03cac522872452b8c1e548f18a26f226d28967ce5c0",
+    "capturedLiveSha256": "0e6de413298318b0e8bcb03cac522872452b8c1e548f18a26f226d28967ce5c0",
+    "fileCount": 3435,
+    "transform": {
+      "status": "fixed-point",
+      "generatedInputs": []
+    }
+  },
+  "predecessors": {
+    "properties": {
+      "path": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/docs/helix/04-build/evidence/rust-migration/r5-schema-properties/frozen-typescript.json",
+      "sha256": "2427c2eb140226a93ac32e25d49a1f60a91582758c620d238dcdd9aaf8506e4a"
+    },
+    "field": {
+      "path": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/docs/helix/04-build/evidence/rust-migration/r5-field-value/frozen-typescript.json",
+      "sha256": "c5b0d980a561ffd751c411e9f9745f6b091d34cf337214910debfe352ef6d014"
+    },
+    "defaults": {
+      "path": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/frozen-typescript.json",
+      "sha256": "0660e22312a38875cd3f850f4c6caaf5558a4bf4d4f4bb01463cb1c80487125c"
+    }
+  },
+  "packageRoutes": {
+    "node": "./dist/umf-node.js",
+    "browser": "./dist/umf-browser.js",
+    "import": "./dist/umf-browser.js",
+    "reference": "./dist/umf.js"
+  },
+  "node": {
+    "host": "Node v26.12.1",
+    "routeCount": 4,
+    "schemaPropertySuccesses": 6,
+    "schemaPropertyRefusals": 3,
+    "fieldCaseCount": 50,
+    "fieldFixedOutputCaseCount": 39,
+    "fieldHostSpecificThrownCaseCount": 11,
+    "fieldHostTypeErrorParityCount": 11,
+    "fieldHostTypeErrorParityCases": [
+      {
+        "id": "string-null",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-length-positive-array",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-length-fraction",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-length-string-one",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-length-true",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-length-array-one",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-length-object",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-hex-string",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-binary-string",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-octal-string",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-subnormal-number-array",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      }
+    ],
+    "defaultCaseCount": 24,
+    "fixedOutputFrozenOutcomeCount": 72,
+    "hostSpecificThrownOutcomeCount": 11,
+    "frozenOutcomeCount": 83,
+    "callerProxyControls": 5,
+    "crossedAdmissionCaseCount": 8,
+    "callerThrownIdentityStageCount": 11,
+    "copyIsolation": {
+      "inputUnchanged": true,
+      "resultIsIndependent": true,
+      "callerMutationDoesNotChangeSource": true
+    },
+    "rootReferenceParity": true,
+    "fieldHostTypeErrorParity": true
+  },
+  "bun": {
+    "host": "Bun 1.4.3",
+    "routeCount": 4,
+    "schemaPropertySuccesses": 6,
+    "schemaPropertyRefusals": 3,
+    "fieldCaseCount": 50,
+    "fieldFixedOutputCaseCount": 39,
+    "fieldHostSpecificThrownCaseCount": 11,
+    "fieldHostTypeErrorParityCount": 11,
+    "fieldHostTypeErrorParityCases": [
+      {
+        "id": "string-null",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-length-positive-array",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-length-fraction",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-length-string-one",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-length-true",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-length-array-one",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-length-object",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-hex-string",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-binary-string",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-octal-string",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-subnormal-number-array",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      }
+    ],
+    "defaultCaseCount": 24,
+    "fixedOutputFrozenOutcomeCount": 72,
+    "hostSpecificThrownOutcomeCount": 11,
+    "frozenOutcomeCount": 83,
+    "callerProxyControls": 5,
+    "crossedAdmissionCaseCount": 8,
+    "callerThrownIdentityStageCount": 11,
+    "copyIsolation": {
+      "inputUnchanged": true,
+      "resultIsIndependent": true,
+      "callerMutationDoesNotChangeSource": true
+    },
+    "rootReferenceParity": true,
+    "fieldHostTypeErrorParity": true
+  },
+  "chromium": {
+    "version": "153.0.8010.12",
+    "host": "Chromium",
+    "routeCount": 4,
+    "schemaPropertySuccesses": 6,
+    "schemaPropertyRefusals": 3,
+    "fieldCaseCount": 50,
+    "fieldFixedOutputCaseCount": 39,
+    "fieldHostSpecificThrownCaseCount": 11,
+    "fieldHostTypeErrorParityCount": 11,
+    "fieldHostTypeErrorParityCases": [
+      {
+        "id": "string-null",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-length-positive-array",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-length-fraction",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-length-string-one",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-length-true",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-length-array-one",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-length-object",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-hex-string",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-binary-string",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-octal-string",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      },
+      {
+        "id": "string-carrier-subnormal-number-array",
+        "referenceName": "TypeError",
+        "rootName": "TypeError",
+        "parity": true
+      }
+    ],
+    "defaultCaseCount": 24,
+    "fixedOutputFrozenOutcomeCount": 72,
+    "hostSpecificThrownOutcomeCount": 11,
+    "frozenOutcomeCount": 83,
+    "callerProxyControls": 5,
+    "crossedAdmissionCaseCount": 8,
+    "callerThrownIdentityStageCount": 11,
+    "copyIsolation": {
+      "inputUnchanged": true,
+      "resultIsIndependent": true,
+      "callerMutationDoesNotChangeSource": true
+    },
+    "rootReferenceParity": true,
+    "fieldHostTypeErrorParity": true,
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+    "wasmRequested": true
+  },
+  "qualification": "Installed root and @umf/core/reference parity against frozen Schema Properties, Field Value and Schema Defaults packets, including strict caller-thrown Proxy error identity and copy isolation."
+}

@@ -329,6 +329,21 @@ pub fn inspect_core_schema_properties(
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
     let located = locate(source, identity, engine, ctx)?;
+    inspect_located(located, ctx)
+}
+
+/// Inspect already-admitted host operands without charging a second JSON copy.
+pub(crate) fn inspect_core_schema_properties_admitted(
+    source: Value,
+    identity: Value,
+    engine: &Engine,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let located = locate_copied(source, identity, engine, ctx)?;
+    inspect_located(located, ctx)
+}
+
+fn inspect_located(located: Located, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     let node = if located.node_path.is_empty() {
         &located.source
     } else {
@@ -351,6 +366,106 @@ pub fn inspect_core_schema_properties(
         ("diagnostics", located.diagnostics),
         ("provenance", text("unverified")),
     ]))
+}
+
+fn validation_value(valid: bool, complete: bool, diagnostics: Vec<Diagnostic>) -> Value {
+    Value::Object(vec![
+        (k("valid"), Value::Bool(valid)),
+        (k("complete"), Value::Bool(complete)),
+        (k("diagnostics"), validation_json(diagnostics)),
+    ])
+}
+
+/// Convert a Rust admission failure to the Validation diagnostic used by the
+/// TypeScript field-value operation. Cooperative-control failures stay errors.
+pub(crate) fn field_value_admission_refusal(error: EngineError) -> Result<Value, EngineError> {
+    if error.is_control_failure() || matches!(error.code.as_str(), "HOST_JSON_CALLBACK" | "HOST_JSON_BRIDGE" | "HOST_JSON_PROTOCOL") {
+        return Err(error);
+    }
+    Ok(validation_value(false, false, vec![Diagnostic {
+        code: Utf16::from(error.code),
+        path: error.path,
+        python_source_path: false,
+        message: error.message,
+        severity: Severity::Error,
+        python_text_origin: None,
+    }]))
+}
+
+/// Host-input field-value route. `field` and `value` have already been copied
+/// in predecessor order; source remains opaque until identity admission passes.
+pub(crate) fn validate_core_field_value_host_json(
+    source_handle: HostHandle,
+    field: Value,
+    value: Value,
+    host: &mut dyn HostJsonReflection,
+    engine: &Engine,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    if let Some(validation) = Engine::preflight_core_field_value_identity(&field) {
+        return Ok(validation_value(validation.valid, validation.complete, validation.diagnostics));
+    }
+    let source = match copy_host_json(source_handle, host, ctx) {
+        Ok(value) => value,
+        Err(error) => return field_value_admission_refusal(error),
+    };
+    // `locate` in the predecessor copies its synthetic element identity after
+    // source copying. Keep that pure copied-tree work in the same Context.
+    let mut identity_fields = vec![(k("scope"), text("element"))];
+    if let Some(module) = get(&field, "module") { identity_fields.push((k("module"), module.clone())); }
+    if let Some(element) = get(&field, "element") { identity_fields.push((k("element"), element.clone())); }
+    let copied_identity = match copy_json(&Value::Object(identity_fields), ctx) {
+        Ok(value) => value,
+        Err(error) => return field_value_admission_refusal(error),
+    };
+    let field_identity = match copied_identity {
+        Value::Object(fields) => Value::Object(fields.into_iter().filter(|(key, _)| key != &k("scope")).collect()),
+        _ => unreachable!(),
+    };
+    let validation = engine.validate_core_field_value_after_admission_with_host(
+        source,
+        field_identity,
+        value,
+        host,
+        ctx,
+    )?;
+    Ok(validation_value(validation.valid, validation.complete, validation.diagnostics))
+}
+
+/// Validate known default operands before reflecting the source argument.
+pub(crate) fn preflight_core_default_operands(
+    field: &Value,
+    state: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let Value::Object(state_fields) = state else {
+        return Err(err("CORE_SCHEMA_PROPERTIES", "Expected object", "/state"));
+    };
+    let state_name = get(state, "state").and_then(|value| match value { Value::String(s) => Some(s), _ => None });
+    let missing = state_name == Some(&k("missing"));
+    let present = state_name == Some(&k("present"));
+    for (key, _) in state_fields {
+        if key != &k("state") && !(!missing && key == &k("value")) {
+            ctx.charge_text(key.len().saturating_mul(2).saturating_add(48), k("/state"))?;
+            return Err(unknown(key, "/state/"));
+        }
+    }
+    if (!missing && !present) || (present && get(state, "value").is_none()) ||
+        (missing && state_fields.len() != 1) || (present && state_fields.len() != 2) {
+        return Err(err("CORE_SCHEMA_PROPERTIES", "Explicit missing/present state required", ""));
+    }
+    // Only relevant-member admission precedes source. Cardinality and
+    // nonempty-value checks remain after source validation in the operation.
+    let Value::Object(fields) = field else {
+        return Err(err("CORE_SCHEMA_PROPERTIES", "Expected object", "/identity"));
+    };
+    for (key, _) in fields {
+        if key != &k("module") && key != &k("element") {
+            ctx.charge_text(key.len().saturating_mul(2).saturating_add(48), k("/identity"))?;
+            return Err(unknown(key, "/identity/"));
+        }
+    }
+    Ok(())
 }
 pub fn declare_core_schema_properties(
     source: &Value,

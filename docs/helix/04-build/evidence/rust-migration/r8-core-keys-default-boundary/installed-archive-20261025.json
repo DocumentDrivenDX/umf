@@ -1,0 +1,86 @@
+{
+  "profile": "umf.r8.core-keys-default-installed-replay/1",
+  "status": "passed-bounded-private-archive-replay",
+  "archive": {
+    "path": "/private/tmp/umf-r8-provenance-final-20261025/umf-sdk.tgz",
+    "sha256": "591e5e5e3e919d2a613ed90f31dd1faf50e158f2666d6c613e21b3dc35d41711",
+    "memberCount": 1788,
+    "memberHashCount": 1787,
+    "memberHashesMatched": true,
+    "packageManifestSha256": "51e1c93febe01ff61cc106a583d3630a1ca699e4bfc9d011b726a944bf9a263d",
+    "sourceClosureSha256": "65a6458ad8950da0669fa713d736d1b81e576793d0f6c12896ccf59027ed941d",
+    "capturedLiveSourceClosureSha256": "65a6458ad8950da0669fa713d736d1b81e576793d0f6c12896ccf59027ed941d",
+    "sourceTransformStatus": "fixed-point",
+    "sourceTransformCount": 0,
+    "sourceInputCount": 3431,
+    "currentWorktreeSourceInputsMatched": 3431
+  },
+  "predecessor": {
+    "checkedInPacket": "docs/helix/04-build/evidence/rust-migration/r5-core-keys-default-route/frozen-typescript.json",
+    "checkedInPacketSha256": "3ee774e9d623c18f1d109cb9f6ce86b4c0957be24bd874c74fc6c375aa593323",
+    "checkedInPacketModified": false,
+    "refreshedPacketPath": "docs/helix/04-build/evidence/rust-migration/r8-core-keys-default-boundary/refreshed-predecessor-20261025.json",
+    "refreshedPacketSha256": "503d47318c8bb5f31bca1839393e3ff14e88599abb14d5d7b7354276e70b4e74",
+    "refreshedPredecessorSourceCount": 25,
+    "refreshedSourcesMatchingArchiveClosure": 24,
+    "auxiliarySourceNotInArchiveClosure": "tests/helpers/uuid-fixtures.ts",
+    "auxiliarySourceSha256": "66762564ec668564346f301d3a8de703e22f70416e842de9e435f602d66b0693",
+    "auxiliarySourceStatus": "unchanged-since-historical-packet-but-not-captured-by-archive-closure",
+    "whySeparateFile": "The historical packet is an archive source-closure input. Refreshing it in place would change the captured closure, so this current-source packet is persisted under a new R8 evidence filename. All 24 packet source inputs included in the archive closure match the captured hashes; the unchanged fixture pin is documented separately and makes no closure-match claim."
+  },
+  "replay": {
+    "scope": "Four selected Core Keys operations, same-runtime TypeScript comparison, result prototypes and recursive Object.keys order, incomplete-source refusal without mutation, copy isolation, host admission/error order, and the frozen 700000-unit retained unknown-value checks.",
+    "countedCasesPerHost": 14,
+    "selectedOperations": [
+      "inspectCoreKeys",
+      "lookupCoreKey",
+      "declareCoreRecordMembers",
+      "declareCoreKey"
+    ],
+    "excludedDefaultOperation": "verifyCoreKeyOperation",
+    "verificationNote": "Frozen verify success and refusal-order controls were exercised as characterization only; this receipt does not qualify verifyCoreKeyOperation for Rust routing.",
+    "hostOrderControls": [
+      "inspect source accessor before identity admission",
+      "lookup identity refusal before source admission",
+      "membership request refusal before source admission",
+      "key request admission before source admission",
+      "verify malformed, null, primitive, and valid receipts before current access"
+    ],
+    "largeRetainedValueUnits": 700000,
+    "meterCancellationLimitsClaimed": false,
+    "sourceIsolationAndMutationControlsPassed": true,
+    "resultPrototypeAndPropertyOrderControlsPassed": true,
+    "hostAdmissionAndGetterCountControlsPassed": true,
+    "typescriptEnvelopeParityPassed": true
+  },
+  "hosts": {
+    "node": {
+      "status": "passed",
+      "version": "v26.12.1",
+      "countedCases": 14,
+      "harnessSha256": "8a8d3bae85d4111d98eb31bb5d0755c4705384cd952a3e07232ae2ffc9275400"
+    },
+    "bun": {
+      "status": "passed",
+      "version": "1.4.3",
+      "countedCases": 14,
+      "harnessSha256": "8a8d3bae85d4111d98eb31bb5d0755c4705384cd952a3e07232ae2ffc9275400"
+    },
+    "chromium": {
+      "status": "passed",
+      "version": "153.0.8010.12",
+      "countedCases": 14,
+      "processAbsent": true,
+      "bufferAbsent": true,
+      "externalRequests": 0,
+      "moduleHarnessSha256": "5071d1e341c686845b3bc2d3a38a52c3ff0b5bb88a7ac32694ec1190a6a1dbf4",
+      "launcherHarnessSha256": "b5e4f8e2170fab92f959f53e4ca32e2591e98d7c637ca72c59d740f00cfaad42"
+    }
+  },
+  "limits": [
+    "Private macOS arm64 archive and these exact host versions only.",
+    "The 700000-unit case proves retained-value behavior for the captured operations; it is not a maxWork, cancellation, or broad resource-limit admission claim.",
+    "verifyCoreKeyOperation remains TypeScript; its characterization does not alter default-route selection.",
+    "This is not a release qualification, package publication decision, or retirement of any ledger gap."
+  ]
+}

@@ -9,12 +9,19 @@ import {createDatasetValueOperations} from './src/dataset-values.js';
 import {createCoreRelationshipOperations} from './src/core-relationships.js';
 import {createCoreEvolutionOperations} from './src/core-evolution.js';
 import {createCsvBooleanLexicalOperations} from './src/csv-boolean-lexical.js';
-import {createBit128Engine as createBit128EngineWithWire, BIT128_PROFILE} from './src/bit128.js';
+import {createBit128Engine as createBit128EngineWithWire, isBit128EngineError, BIT128_PROFILE} from './src/bit128.js';
 import {createJsonNumberEngine as createJsonNumberEngineWithWire, JSON_NUMBER_PROFILE} from './src/json-number.js';
 import {createJsonSchemaOperations, JSON_SCHEMA_PROFILE, UmfError as JsonSchemaUmfError, jsonSchemaFailureError} from './src/json-schema.js';
 import {createDocumentComparisonOperations, DOCUMENT_COMPARISON_PROFILE} from './src/document-comparison.js';
-import {validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse} from './src/host-json.js';
+import {schemaPropertiesHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse} from './src/host-json.js';
 import {createSemanticTypeRegistry as createSemanticTypeRegistryWithWire} from './src/semantic-value.js';
+export {isWireAdmissionError} from './src/wire.js';
+export {isBit128EngineError};
+const nativeUmfCoreErrors = new WeakSet();
+const weakSetHas = Function.call.bind(WeakSet.prototype.has);
+const weakSetAdd = Function.call.bind(WeakSet.prototype.add);
+export function isNativeUmfCoreError(error) { return error !== null && (typeof error === 'object' || typeof error === 'function') && weakSetHas(nativeUmfCoreErrors, error); }
+function nativeCoreError(failure) { const error = new UmfCoreError(failure.code, failure.message, failure.path); weakSetAdd(nativeUmfCoreErrors, error); return error; }
 export {JAVASCRIPT_NUMERIC_PROFILE};
 export {SECURITY_LOGIC_PROFILE};
 export {BIT128_PROFILE};
@@ -297,7 +304,7 @@ function runRawValue(module, nativeFunction, input, format, controls) {
   const bridge = hasControls(controls) ? createControlBridge(controls) : undefined;
   const response = JSON.parse(nativeFunction(encodeWire(input), format, bridge));
   const failure = resultError(response);
-  if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+  if (failure) throw nativeCoreError(failure);
   return fromWire(JSON.parse(response.wire));
 }
 
@@ -379,9 +386,9 @@ function nativeKeyTupleFailure(error) {
   if (message !== undefined) {
     try {
       const failure = resultError(JSON.parse(message));
-      if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+      if (failure) throw nativeCoreError(failure);
     } catch (decoded) {
-      if (decoded instanceof UmfCoreError) throw decoded;
+      if (isNativeUmfCoreError(decoded)) throw decoded;
     }
   }
   throw error;
@@ -391,7 +398,7 @@ function nativeKeyTupleResult(responseText, hostWork) {
   hostWork?.(responseText.length);
   const envelope = JSON.parse(responseText);
   const failure = resultError(envelope);
-  if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+  if (failure) throw nativeCoreError(failure);
   hostWork?.(envelope.wire?.length ?? 1);
   return fromWire(JSON.parse(envelope.wire), hostWork);
 }
@@ -522,9 +529,10 @@ function createNativeKeyTupleOperations(module, resources, controls, setup = {})
 function createNativeCoreKeyVerificationOperations(module, resources, controls, setup = {}) {
   if (typeof module.CoreKeyVerificationRuntime !== 'function' ||
       typeof module.CoreKeyVerificationRuntime.prototype?.prepareVerification !== 'function' ||
-      typeof module.CoreKeyVerificationRuntime.prototype?.finishVerification !== 'function') {
+      typeof module.CoreKeyVerificationRuntime.prototype?.finishVerification !== 'function' ||
+      typeof module.CoreKeyVerificationRuntime.prototype?.discardVerification !== 'function') {
     const missing = () => { throw new Error('RUST_BINDING_MISSING'); };
-    return {prepare: missing, finish: missing};
+    return {prepare: missing, finish: missing, discard: missing};
   }
   let runtime;
   try {
@@ -537,19 +545,25 @@ function createNativeCoreKeyVerificationOperations(module, resources, controls, 
       const bridge = hasControls(controls) ? createControlBridge(controls) : undefined;
       const work = admissionWork(bridge);
       work?.(1);
+      let wire;
       try {
-        const wire = encodeWire(receipt, {maxDepth: 128, maxValues: 100_000, work});
-        return runtime.prepareVerification(wire, bridge);
-      } catch (error) { nativeKeyTupleFailure(error); }
+        wire = encodeWire(receipt, {maxDepth: 128, maxValues: 100_000, work});
+      } catch (error) { throw error; }
+      try { return {handle: runtime.prepareVerification(wire, bridge), bridge, work}; }
+      catch (error) { nativeKeyTupleFailure(error); }
     },
-    finish(handle, current) {
-      const bridge = hasControls(controls) ? createControlBridge(controls) : undefined;
-      const work = admissionWork(bridge);
-      work?.(1);
+    finish(stage, current) {
+      let wire;
       try {
-        const wire = encodeWire(current, {maxDepth: 128, maxValues: 100_000, work});
-        return nativeKeyTupleResult(runtime.finishVerification(handle, wire, bridge), work);
-      } catch (error) { nativeKeyTupleFailure(error); }
+        stage.work?.(1);
+        wire = encodeWire(current, {maxDepth: 128, maxValues: 100_000, work: stage.work});
+      } catch (error) { throw error; }
+      try { return nativeKeyTupleResult(runtime.finishVerification(stage.handle, wire, stage.bridge), stage.work); }
+      catch (error) { nativeKeyTupleFailure(error); }
+    },
+    discard(stage) {
+      try { runtime.discardVerification(stage.handle); }
+      catch (error) { nativeKeyTupleFailure(error); }
     },
   };
 }
@@ -632,7 +646,7 @@ function invoke(module, request, callbacks, profile, controls, accountHost = fal
   hostWork?.(responseText.length);
   const response = JSON.parse(responseText);
   const failure = resultError(response);
-  if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+  if (failure) throw nativeCoreError(failure);
   hostWork?.(response.wire.length);
   return fromWire(JSON.parse(response.wire), hostWork);
 }
@@ -676,7 +690,7 @@ export function createCoreModelEngine(module, resources, options = {}) {
 
 /** @internal Create the default-root model facade without tuple admission while tuple exports remain TypeScript. */
 export function createCoreModelRootEngine(module, resources, options = {}) {
-  return createEngineInternal(module, resources, options, true, false);
+  return createEngineInternal(module, resources, options, true, false, true);
 }
 
 /** Create the opt-in retained WASM Record Type declaration/verification engine. */
@@ -1166,7 +1180,7 @@ export async function initializeAvroFieldsWasm(loader = () => import('./pkg/umf_
   return createAvroFieldsEngine(module, options);
 }
 
-function createEngineInternal(module, resources, options, withModel, includeKeyTuple = withModel) {
+function createEngineInternal(module, resources, options, withModel, includeKeyTuple = withModel, withSchemaPropertiesHostInput = false) {
   const {profile, controls} = codegenOptions(options);
   const rawResourceControls = descriptor(options ?? Object.create(null), 'resourceControls', false);
   const resourceControls = rawResourceControls === undefined ? controls : codegenOptions({controls: rawResourceControls}).controls;
@@ -1275,6 +1289,17 @@ function createEngineInternal(module, resources, options, withModel, includeKeyT
     Object.assign(api, createCoreRelationshipOperations(invoke));
     Object.assign(api, createCoreEvolutionOperations(invoke));
     Object.assign(api, createCsvBooleanLexicalOperations(invoke));
+  }
+  if (withSchemaPropertiesHostInput) {
+    if (typeof module.executeCoreSchemaPropertiesHostJson !== 'function') throw new UmfCoreError('RUST_WASM_BINDING_MISSING', 'WASM binding does not expose umf.host-json/1 Schema Properties');
+    const hostCall = (operation, inputs) => {
+      if (hasControls(controls)) throw new UmfCoreError('HOST_JSON_CONTROLS_UNSUPPORTED', 'Host-input Schema Properties operations do not accept host control callbacks');
+      return schemaPropertiesHostInput(module, fixedResources, operation, inputs, JsonSchemaUmfError);
+    };
+    api.inspectCoreSchemaProperties = (source, identity) => hostCall('inspectCoreSchemaProperties', [source, identity, undefined]);
+    api.declareCoreSchemaProperties = (source, identity, patch) => hostCall('declareCoreSchemaProperties', [source, identity, patch]);
+    api.validateCoreFieldValue = (source, identity, value) => hostCall('validateCoreFieldValue', [source, identity, value]);
+    api.resolveCoreDefault = (source, identity, state) => hostCall('resolveCoreDefault', [source, identity, state]);
   }
   return Object.freeze(api);
 }

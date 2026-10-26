@@ -4,6 +4,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { validateR8InstalledRouteEvidence } from './installed-route-evidence.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 const inventoryPath = 'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json';
@@ -21,7 +22,7 @@ const accept = (source, exports, rustModule, rustSource, evidence, focusedTest) 
     : `docs/helix/04-build/evidence/rust-migration/${file}`);
   for (const [exportName, rustSymbol] of exports) accepted.set(`${source}#${exportName}`, {
     rustOwner: `${rustModule}::${rustSymbol}`,
-    rustSourcePaths: [rustSource],
+    rustSourcePaths: Array.isArray(rustSource) ? rustSource : [rustSource],
     evidencePaths,
     focusedTestPaths: Array.isArray(focusedTest) ? focusedTest : [focusedTest],
   });
@@ -113,6 +114,28 @@ accept('src/model/relationships.ts', [
   'docs/helix/04-build/evidence/rust-migration/r8-core-relationships-default-boundary/README.md',
   'docs/helix/04-build/evidence/rust-migration/r8-core-relationships-default-boundary/predecessor.json',
 ], ['crates/umf-core/tests/r5_core_relationships.rs', 'crates/umf-core-wire/tests/r5_core_relationships_wire.rs', 'bindings/core/node/tests/core-relationships-wrapper.test.js']);
+accept('src/model/schema-properties.ts', [
+  ['declareCoreSchemaProperties', 'schema_properties::declare_core_schema_properties'],
+  ['inspectCoreSchemaProperties', 'schema_properties::inspect_core_schema_properties'],
+  ['validateCoreFieldValue', 'Engine::validate_core_field_value_public'],
+  ['resolveCoreDefault', 'Engine::resolve_core_default_public'],
+], 'umf_core', ['crates/umf-core/src/schema_properties.rs', 'crates/umf-core/src/engine.rs'], [
+  'docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md',
+  'docs/helix/04-build/evidence/rust-migration/r5-schema-properties/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r5-schema-properties/frozen-typescript.json',
+  'docs/helix/04-build/evidence/rust-migration/r5-field-value/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r5-field-value/frozen-typescript.json',
+  'docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/frozen-typescript.json',
+  'docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/receipt-current-b2f816d7.json',
+  'docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/route-gate-current-b2f816d7.json',
+], [
+  'crates/umf-core-wire/tests/r5_schema_properties_wire.rs',
+  'crates/umf-core/tests/r5_field_value.rs',
+  'crates/umf-core-wire/tests/r5_schema_defaults.rs',
+  'tests/rust-migration/r8-schema-properties-host-boundary.test.ts',
+]);
 accept('src/model/relationship-selection.ts', [['selectCoreRelationships', 'select_core_relationships']], 'umf_core::core_relationship_selection', 'crates/umf-core/src/core_relationship_selection.rs', [
   'r5-core-relationship-selection/frozen-typescript.json',
   'r8-core-relationship-selection-binding/README.md',
@@ -246,11 +269,13 @@ function acceptedOperationEvidence(mapping, routeStatus = 'legacy-fixture') {
   };
 }
 
-function sourceSelectedImplementation(routeId, exportName, source = null) {
+function sourceSelectedImplementation(routeId, exportName, source = null, qualifiedRouteOperations = null) {
   if (!['package-root-node', 'package-root-browser'].includes(routeId)) return null;
   const browser = routeId === 'package-root-browser';
   const defaultEntry = browser ? 'src/index-browser-v4.ts' : 'src/index-node-v4.ts';
-  if (source !== null && source !== defaultEntry) return null;
+  const schemaPropertiesNames = ['declareCoreSchemaProperties', 'inspectCoreSchemaProperties', 'validateCoreFieldValue', 'resolveCoreDefault'];
+  if (source !== null && source !== defaultEntry
+      && !(schemaPropertiesNames.includes(exportName) && source === 'src/model/schema-properties.ts')) return null;
   const closure = paths => [...new Set(paths)].sort().map(file => ({ path: file, sha256: digest(read(file)) }));
   const temporal = new Map([
     ['parseGregorianDate', ['umf_core::gregorian_date::parse_gregorian_date', 'crates/umf-core/src/gregorian_date.rs', 'crates/umf-core-wire/tests/gregorian_date_wire.rs']],
@@ -273,7 +298,47 @@ function sourceSelectedImplementation(routeId, exportName, source = null) {
     const rustSource = 'crates/umf-core/src/core_relationships.rs';
     const evidencePaths = ['docs/helix/04-build/evidence/rust-migration/r8-core-relationships-default-boundary/README.md', 'docs/helix/04-build/evidence/rust-migration/r8-core-relationships-default-boundary/predecessor.json', 'docs/helix/04-build/evidence/rust-migration/r8-core-relationships-default-boundary/fixed-point-build.json', 'docs/helix/04-build/evidence/rust-migration/r8-core-relationships-default-boundary/fixed-point-bun-replay.json', 'docs/helix/04-build/evidence/rust-migration/r8-core-relationships-default-boundary/fixed-point-node-replay.json', 'docs/helix/04-build/evidence/rust-migration/r8-core-relationships-default-boundary/fixed-point-browser-replay.json'];
     const sourcePaths = [defaultEntry, 'src/access/rust-relationships-default.ts', 'src/model/relationships.ts', 'bindings/core/node/src/core-relationships.js', 'bindings/core/wasm/src/core-relationships.js', 'bindings/core/node/src/lib.rs', 'bindings/core/wasm/src/lib.rs', 'crates/umf-core-wire/src/lib.rs', rustSource, 'crates/umf-core/tests/r5_core_relationships.rs', 'crates/umf-core-wire/tests/r5_core_relationships_wire.rs', ...evidencePaths];
-    return { status: 'installed-private-fixed-point-cohort', rustOwner: `umf_core::core_relationships::${relationships.get(exportName)}`, wireOperation: `model/${exportName}`, bindingRoute: browser ? 'V4 browser root -> WASM relationship wrapper -> Rust wire' : 'V4 Node root -> Node-API relationship wrapper -> Rust wire', sourceClosure: closure(sourcePaths), qualificationStatus: 'Prior private fixed-point package replay passed 11 cases in Bun, bundled Node, and real Chromium; artifact is private/nonpublishable. This records bounded route evidence only; ./reference and declaration retirement remain open.' };
+    const currentInstalled = qualifiedRouteOperations?.has(exportName) ?? false;
+    return { status: currentInstalled ? 'source-selected-installed-private-current-cohort' : 'installed-private-fixed-point-cohort', rustOwner: `umf_core::core_relationships::${relationships.get(exportName)}`, wireOperation: `model/${exportName}`, bindingRoute: browser ? 'V4 browser root -> WASM relationship wrapper -> Rust wire' : 'V4 Node root -> Node-API relationship wrapper -> Rust wire', sourceClosure: closure(sourcePaths), qualificationStatus: currentInstalled ? 'One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. This is private route evidence only; ./reference parity, declaration retirement and release qualification remain open.' : 'Prior private fixed-point package replay passed 11 cases in Bun, bundled Node, and real Chromium; artifact is private/nonpublishable. This records bounded route evidence only; ./reference and declaration retirement remain open.' };
+  }
+  const schemaProperties = new Map([
+    ['declareCoreSchemaProperties', 'schema_properties::declare_core_schema_properties'],
+    ['inspectCoreSchemaProperties', 'schema_properties::inspect_core_schema_properties'],
+    ['validateCoreFieldValue', 'Engine::validate_core_field_value_public'],
+    ['resolveCoreDefault', 'Engine::resolve_core_default_public'],
+  ]);
+  if (schemaProperties.has(exportName)) {
+    const rustOwner = `umf_core::${schemaProperties.get(exportName)}`;
+    const evidencePaths = [
+      'docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/README.md',
+      'docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/receipt-current-b2f816d7.json',
+      'docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/route-gate-current-b2f816d7.json',
+    ];
+    const sourcePaths = [
+      defaultEntry, 'src/access/rust-schema-properties-default.ts', 'src/model/schema-properties.ts',
+      'bindings/core/node/src/core-model.js', 'bindings/core/wasm/src/core-model.js',
+      'bindings/core/node/src/lib.rs', 'bindings/core/wasm/src/lib.rs', 'crates/umf-core-wire/src/lib.rs',
+      'crates/umf-core/src/schema_properties.rs', 'crates/umf-core/src/engine.rs',
+      'crates/umf-core-wire/tests/r5_schema_properties_wire.rs', 'crates/umf-core/tests/r5_field_value.rs',
+      'crates/umf-core-wire/tests/r5_schema_defaults.rs', 'tests/rust-migration/r8-schema-properties-host-boundary.test.ts',
+      'docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md',
+      'docs/helix/04-build/evidence/rust-migration/r5-schema-properties/README.md',
+      'docs/helix/04-build/evidence/rust-migration/r5-schema-properties/frozen-typescript.json',
+      'docs/helix/04-build/evidence/rust-migration/r5-field-value/README.md',
+      'docs/helix/04-build/evidence/rust-migration/r5-field-value/frozen-typescript.json',
+      'docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/README.md',
+      'docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/frozen-typescript.json',
+      ...evidencePaths,
+    ];
+    const bindingRoute = browser
+      ? 'V4 browser root -> rust-schema-properties-default -> WASM core-model wrapper -> model wire -> Rust'
+      : 'V4 Node root -> rust-schema-properties-default -> Node core-model wrapper -> model wire -> Rust';
+    return {
+      status: 'source-selected-installed-private-schema-properties-cohort', rustOwner,
+      wireOperation: `model/${exportName}`, bindingRoute,
+      sourceClosure: closure(sourcePaths), qualificationEvidenceClosure: closure(evidencePaths),
+      qualificationStatus: 'A separate four-operation gate passed on the b2f816d7 fixed-point archive after recomputing the current 0e6de413 source closure; it is bounded evidence, with complete parity and release qualification explicitly false. The aggregate five-family route gate excludes this family, so bindingRouteStatus remains unproven; wider parity and declaration retirement remain open.',
+    };
   }
   const currentSelections = new Map([
     ['validateCsvBooleanLexical', {
@@ -386,13 +451,13 @@ function sourceSelectedImplementation(routeId, exportName, source = null) {
       'tests/rust-bit128-default.test.ts',
     ];
     return {
-      status: 'source-selected-only',
+      status: qualifiedRouteOperations?.has(exportName) ? 'source-selected-installed-private-current-cohort' : 'source-selected-only',
       supportProfile: 'umf-128/1',
       rustOwner: `umf_core::bit128::${bit128Symbols.get(exportName)}`,
       wireOperation: `umf-128/1:${exportName}`,
       bindingRoute: browser ? 'browser WASM source-selected route; installed qualification pending' : 'Node native source-selected route; installed qualification pending',
       sourceClosure: [...new Set(sourcePaths)].sort().map(file => ({path: file, sha256: digest(read(file))})),
-      qualificationStatus: 'This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired.',
+      qualificationStatus: qualifiedRouteOperations?.has(exportName) ? 'One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. Retirement and release qualification remain open.' : 'This operation is source-selected through the default Node/browser root only. Frozen predecessor and opt-in Rust binding evidence do not qualify installed default-route behavior. Installed Node/Bun/Chromium qualification is pending; zero declarations are retired.',
     };
   }
   const facetSymbols = new Map([
@@ -419,7 +484,7 @@ function sourceSelectedImplementation(routeId, exportName, source = null) {
   ]);
   if (coreKeySymbols.has(exportName)) {
     return {
-      status: 'unqualified-current-route',
+      status: qualifiedRouteOperations?.has(exportName) ? 'source-selected-installed-private-current-cohort' : 'unqualified-current-route',
       rustOwner: `umf_core::core_keys::${coreKeySymbols.get(exportName)}`,
       wireOperation: `model/${exportName}`,
       bindingRoute: browser ? 'browser WASM source-selected route; installed qualification pending' : 'Node native source-selected route; installed qualification pending',
@@ -433,7 +498,7 @@ function sourceSelectedImplementation(routeId, exportName, source = null) {
         'crates/umf-core-wire/src/lib.rs',
         'crates/umf-core/src/core_keys.rs',
       ].sort().map(file => ({ path: file, sha256: digest(read(file)) })),
-      qualificationStatus: 'These four Rust Core Keys operations are source-selected at this Node/browser root. Installed qualification is pending, verifyCoreKeyOperation remains TypeScript, and declaration retirement remains open.',
+      qualificationStatus: qualifiedRouteOperations?.has(exportName) ? 'One aggregate R8 gate verified same-archive Node, Bun and Chromium receipts for this bounded route. verifyCoreKeyOperation remains TypeScript; retirement and release qualification remain open.' : 'These four Rust Core Keys operations are source-selected at this Node/browser root. Installed qualification is pending, verifyCoreKeyOperation remains TypeScript, and declaration retirement remains open.',
     };
   }
   if (exportName === 'validateCoreDatasetValuesCompact') {
@@ -1471,7 +1536,7 @@ function ownerFamily(source) {
   return parts.slice(0, 2).join(':');
 }
 
-function publicRows(inventory) {
+function publicRows(inventory, qualifiedRouteOperations = null) {
   const conditionRoutes = ['package-root-node', 'package-root-browser', 'package-reference'];
   const presentRoutes = conditionRoutes.filter(routeId => inventory.symbols.some(row => row.routeId === routeId));
   let rootRows;
@@ -1523,10 +1588,12 @@ function publicRows(inventory) {
   return rootRows.map((row, index) => {
     const inert = row.source.startsWith('spec/') && row.source.endsWith('.json');
     const mapping = operationMapping(row);
-    const sourceSelection = sourceSelectedImplementation(row.routeId, row.exportName, row.source);
+    const sourceSelection = sourceSelectedImplementation(row.routeId, row.exportName, row.source, qualifiedRouteOperations);
     const selectedBySource = sourceSelection !== null;
     const selectedCardinality = mapping && ['package-root-node', 'package-root-browser'].includes(row.routeId)
       && ['inspectCoreCardinality', 'declareCoreCardinality', 'verifyCoreCardinalityDeclaration'].includes(row.exportName);
+    const selectedSchemaProperties = mapping && ['package-root-node', 'package-root-browser'].includes(row.routeId)
+      && ['declareCoreSchemaProperties', 'inspectCoreSchemaProperties', 'validateCoreFieldValue', 'resolveCoreDefault'].includes(row.exportName);
     const selectedBit128 = mapping && ['package-root-node', 'package-root-browser'].includes(row.routeId)
       && ['parseBits128', 'parseUuid', 'bits128FromBytes', 'bits128ToBytes', 'uuidFromBits128', 'uuidToBits128', 'compareBits128', 'bits128ToWords', 'bits128FromWords', 'bits128ToInteger', 'bits128FromInteger'].includes(row.exportName);
     const operation = operationOwnership(row.exportName, row.routeId === 'package-root-node' ? 'default-node' : row.routeId === 'package-root-browser' ? 'default-browser' : row.routeId === 'package-reference' ? 'explicit-reference' : 'legacy-fixture');
@@ -1537,6 +1604,7 @@ function publicRows(inventory) {
         implementationStatus: row.exportName === 'generatePythonClient'
           ? 'Rust V4 implementation selected by source route; installed qualification pending'
           : selectedCardinality ? 'Rust cardinality operation selected by source route; installed qualification pending'
+          : selectedSchemaProperties ? 'Rust Schema Properties operation selected by source route; separate same-archive private receipt passed; aggregate route gate pending'
           : ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName) ? 'Rust facets operation selected by source route; installed qualification pending'
           : row.exportName === 'validateCoreDatasetValuesCompact' ? 'Rust compact Dataset validation selected by source route; installed qualification pending'
           : ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName) ? 'Rust Core Keys operation selected by source route; installed qualification pending'
@@ -1551,6 +1619,7 @@ function publicRows(inventory) {
         implementationStatus: row.exportName === 'generatePythonClient'
           ? 'Rust V4 implementation selected by source route; installed qualification pending'
           : selectedCardinality ? 'Rust cardinality operation selected by source route; installed qualification pending'
+          : selectedSchemaProperties ? 'Rust Schema Properties operation selected by source route; separate same-archive private receipt passed; aggregate route gate pending'
           : ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName) ? 'Rust facets operation selected by source route; installed qualification pending'
           : row.exportName === 'validateCoreDatasetValuesCompact' ? 'Rust compact Dataset validation selected by source route; installed qualification pending'
           : ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName) ? 'Rust Core Keys operation selected by source route; installed qualification pending'
@@ -1579,6 +1648,8 @@ function publicRows(inventory) {
           ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust V4 implementation selected by source route; installed qualification pending; TypeScript retirement gap remains open`
           : selectedCardinality
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust cardinality operation selected by source route; installed qualification pending; retirement gap remains open`
+          : selectedSchemaProperties
+            ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust Schema Properties operation selected by source route; separate same-archive Node/Bun/Chromium private receipt passed, while the aggregate five-family route gate excludes this family; retirement gap remains open`
           : ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName) && ['package-root-node', 'package-root-browser'].includes(row.routeId)
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust facets operation selected by source route; installed qualification pending; retirement gap remains open`
           : row.exportName === 'validateCoreDatasetValuesCompact' && ['package-root-node', 'package-root-browser'].includes(row.routeId)
@@ -1632,6 +1703,7 @@ function logicalDeclarationSignature(row) {
   // ./reference. Normalize only these exact three names; overload checks for
   // every other declaration remain kind- and multiplicity-sensitive.
   const selectedOperation = row.exportName === 'generatePythonClient'
+    || ['declareCoreSchemaProperties', 'inspectCoreSchemaProperties', 'validateCoreFieldValue', 'resolveCoreDefault'].includes(row.exportName)
     || ['parseGregorianDate', 'truncateGregorianDate', 'parseRfc3339ExactInstant', 'sameRfc3339ExactInstant', 'inspectCoreRelationships', 'lookupCoreRelationship', 'declareCoreRelationship', 'verifyCoreRelationshipOperation'].includes(row.exportName)
     || row.exportName === 'validateCoreDatasetValuesCompact'
     || ['parseBits128', 'parseUuid', 'bits128FromBytes', 'bits128ToBytes', 'uuidFromBits128', 'uuidToBits128', 'compareBits128', 'bits128ToWords', 'bits128FromWords', 'bits128ToInteger', 'bits128FromInteger'].includes(row.exportName)
@@ -1713,8 +1785,12 @@ function externalCensus(packageJson, packageBytes, cliBytes, pythonPackages, scr
   };
 }
 
-export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from(JSON.stringify(packageJson)), cliBytes, pythonPackages, scriptFiles }) {
-  const rows = publicRows(inventory);
+export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from(JSON.stringify(packageJson)), cliBytes, pythonPackages, scriptFiles, installedRouteEvidenceManifest = null, installedRouteEvidenceRoot = root }) {
+  const installedRouteEvidence = installedRouteEvidenceManifest
+    ? validateR8InstalledRouteEvidence(installedRouteEvidenceManifest, { root: installedRouteEvidenceRoot })
+    : null;
+  const qualifiedRouteOperations = installedRouteEvidence ? new Set(installedRouteEvidence.operationNames) : null;
+  const rows = publicRows(inventory, qualifiedRouteOperations);
   const logicalRows = new Map();
   for (const row of rows) {
     const key = `${row.logicalDeclarationKey}\0${row.rowKind}`;
@@ -1761,7 +1837,9 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
     sourceSelectedRustOverrides: Object.values(routeCounts).reduce((sum, route) => sum + route.rustSelectedSourceDeclarations, 0),
     bindingRoutesProven: new Set(rows.filter(row => row.rowKind === 'executable' && row.bindingRoute !== null).map(row => row.logicalDeclarationKey)).size,
     sourceSelectedRustOverridesDefinition: 'Count of Node/browser declaration rows whose source resolves to the V4 root entry and has an exact Rust ownership mapping in this ledger. The entry declaration census is 37 per root in the current inventory; source selection does not remove any logical retirement gap. Temporal and relationship route receipts are private bounded cohorts, not release qualification.',
-    bindingRoutesProvenDefinition: 'Count of unique logical executable names with a binding route proven by a current fixed-point private installed archive. The selected five routes have bounded Node/Bun/Chromium evidence; this is not complete host parity, declaration retirement or release qualification.',
+    bindingRoutesProvenDefinition: installedRouteEvidence
+      ? `Count of unique logical executable names with a route proven by the gated ${installedRouteEvidence.boundedOperations}-operation R8 same-archive fixed-point receipt set; this is not complete host parity, declaration retirement or release qualification.`
+      : 'Count of unique logical executable names with a binding route proven by a current fixed-point private installed archive. Existing bounded selections remain as recorded; this is not complete host parity, declaration retirement or release qualification.',
     ownerFamilies: groups.length,
     adapterOwnershipRows: logical.filter(row => row.operationOwnership !== null).length,
     adapterOwnershipByStatus: Object.fromEntries(['accepted-opt-in-subset', 'candidate-core', 'partial-host-boundary', 'unported', 'data-or-constant'].map(status => [status, logical.filter(row => row.operationOwnership?.status === status).length])),
@@ -1774,6 +1852,7 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
     format: 'umf.r8.authority-bound-gap-ledger/2',
     scope: 'Route-specific runtime export declarations for the default Node root, default browser root and explicit TypeScript reference route in the pinned condition-aware inventory. Logical default gaps are counted once, with per-route status; this is a gap census, not retirement approval.',
     input: { path: inventoryPath, sha256: digest(Buffer.from(JSON.stringify(inventory, null, 2) + '\n')) },
+    ...(installedRouteEvidence ? { installedRouteEvidence } : {}),
     counts,
     runtimeExportDispositionSupplement,
     routeStatus: {
@@ -1911,9 +1990,13 @@ function collectPythonPackages() {
 function main() {
   const check = process.argv.includes('--check');
   const stdout = process.argv.includes('--stdout');
+  const evidenceFlag = process.argv.indexOf('--installed-route-evidence');
+  const evidencePath = evidenceFlag >= 0 ? process.argv[evidenceFlag + 1] : null;
+  if (evidenceFlag >= 0 && (!evidencePath || evidencePath.startsWith('--'))) throw new Error('--installed-route-evidence requires an aggregate JSON path');
   const inventory = json(inventoryPath);
   const packageBytes = read('package.json');
-  const payload = buildLedger({ inventory, packageJson: JSON.parse(packageBytes), packageBytes, cliBytes: read('crates/umf-cli/src/main.rs'), pythonPackages: collectPythonPackages(), scriptFiles: collectScriptFiles() });
+  const installedRouteEvidenceManifest = evidencePath ? JSON.parse(fs.readFileSync(path.resolve(root, evidencePath), 'utf8')) : null;
+  const payload = buildLedger({ inventory, packageJson: JSON.parse(packageBytes), packageBytes, cliBytes: read('crates/umf-cli/src/main.rs'), pythonPackages: collectPythonPackages(), scriptFiles: collectScriptFiles(), ...(installedRouteEvidenceManifest ? { installedRouteEvidenceManifest } : {}) });
   const rendered = JSON.stringify(payload, null, 2) + '\n';
   const output = path.join(root, outputPath);
   if (stdout) {

@@ -1,0 +1,63 @@
+{
+  "format": "umf.r8.bit128-installed-process-bound/1",
+  "status": "pass",
+  "archive": {
+    "path": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/.cache/sdk-distribution/umf-sdk.tgz",
+    "sha256": "c1ecf9cea81c3767e281820a93294b85a45ab052862a9fcd8b0b493057302263",
+    "packageManifestSha256": "93bb2abb80a43545477e6e85bc6b7112f1819b38f8794297a9c9b801e8f41efa",
+    "verifiedMemberCount": 1788
+  },
+  "sourceClosure": {
+    "sha256": "61cbaf0ae7a0359e9ae49d2aa4c436727f2122e4174d84999efb20f42d2c3b01",
+    "capturedLiveSha256": "61cbaf0ae7a0359e9ae49d2aa4c436727f2122e4174d84999efb20f42d2c3b01",
+    "fileCount": 3435,
+    "currentSourceStatus": "current-source",
+    "transform": {
+      "status": "fixed-point",
+      "generatedInputs": []
+    }
+  },
+  "predecessor": {
+    "path": "scripts/rust-migration/r5/bit128-default-route/predecessor.json",
+    "sha256": "05fdc7e6fdd26e9065ac5daa52672d37ebe27a470f1e4cdf140e6563171712e6"
+  },
+  "harness": {
+    "path": "docs/helix/04-build/evidence/rust-migration/r8-bit128-installed/bit128-installed-replay.mjs",
+    "sha256": "5c95bbfa3f8fa2dbe2580315fdaf89393a502935761c81b2e65754c64258181b"
+  },
+  "hosts": [
+    {
+      "runtime": "node",
+      "rawReceipt": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-61cbaf0a/raw/bit128-process-bound.json.node.raw.json",
+        "sha256": "3dc5914c0530652ad6f74fceb2ec7d5adc45054a2949144f732f58463f2ed591"
+      },
+      "rawCaseCount": 11,
+      "rawReplayPass": "pass",
+      "entrySha256": "23c63a4fa78567e76ae124b1cc6851d3375f9759f1f1cbf7a4fa1b69b9161b6f",
+      "nativeAddonSha256": "bea74550ee1c8a6472109c56d9cbd95687b8567a67595443026aa68d9cb62cd1",
+      "nativeAddonLoadedInProcess": true,
+      "nativeAddonLoadedPath": "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-bit128-bound-N4vwWB/package/dist/umf_core_node.node",
+      "observedNativeAddons": [
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-bit128-bound-N4vwWB/package/dist/umf_core_node.node"
+      ]
+    },
+    {
+      "runtime": "bun",
+      "rawReceipt": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-61cbaf0a/raw/bit128-process-bound.json.bun.raw.json",
+        "sha256": "667aed6d0a6f9151b633b19bfd7d0a8e076d6832f025b7c9dbf1ef4f355c7601"
+      },
+      "rawCaseCount": 11,
+      "rawReplayPass": "pass",
+      "entrySha256": "23c63a4fa78567e76ae124b1cc6851d3375f9759f1f1cbf7a4fa1b69b9161b6f",
+      "nativeAddonSha256": "bea74550ee1c8a6472109c56d9cbd95687b8567a67595443026aa68d9cb62cd1",
+      "nativeAddonLoadedInProcess": true,
+      "nativeAddonLoadedPath": "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-bit128-bound-N4vwWB/package/dist/umf_core_node.node",
+      "observedNativeAddons": [
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r8-bit128-bound-N4vwWB/package/dist/umf_core_node.node"
+      ]
+    }
+  ],
+  "limits": "Binds replay child processes to the selected archive entry and adjacent Node addon. Chromium remains covered by its separate browser harness."
+}

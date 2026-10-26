@@ -1,0 +1,1271 @@
+{
+  "archive": "/private/tmp/umf-r8-provenance-final-20261025/umf-sdk.tgz",
+  "archiveSha256": "591e5e5e3e919d2a613ed90f31dd1faf50e158f2666d6c613e21b3dc35d41711",
+  "host": {
+    "node": {
+      "runtime": "v26.12.1",
+      "default": {
+        "sourceAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/id",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "nestedSourceAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/modules/0/elements/0/name",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "requestProfileAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/profile",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "requestTokenAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/token",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "requestUnknownAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/future",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "hiddenSource": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/private",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "hiddenRequest": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/private",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "sourceSymbolKey": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "",
+          "message": "Symbol keys are not JSON-compatible"
+        },
+        "requestSymbolKey": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "",
+          "message": "Symbol keys are not JSON-compatible"
+        },
+        "competingSourceHidden": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/id",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "competingRequestAccessors": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/futureA",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "invalidRequestAgainstSourceAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/id",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "proxyOwnKeysThrow": {
+          "status": "refused",
+          "name": "Error",
+          "constructor": "Error",
+          "instanceOfUmfError": false,
+          "code": null,
+          "path": "",
+          "message": "proxy-ownKeys-stop"
+        },
+        "proxyDescriptorChanges": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/umf",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "descriptorTrapCalls": 1
+        },
+        "proxyChangingKeys": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/id",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "ownKeysCalls": 2
+        },
+        "requestProxyOwnKeysThrow": {
+          "status": "refused",
+          "name": "Error",
+          "constructor": "Error",
+          "instanceOfUmfError": false,
+          "code": null,
+          "path": "",
+          "message": "request-proxy-ownKeys-stop"
+        },
+        "proxyTrapOrder": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/umf",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "events": [
+            "ownKeys",
+            "ownKeys",
+            "descriptor:umf"
+          ]
+        },
+        "malformedReceiptFirst": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "CSV_BOOLEAN_LEXICAL",
+            "path": "",
+            "message": "Malformed Boolean lexical receipt"
+          },
+          "sourceGetterReads": 0,
+          "requestGetterReads": 0
+        }
+      },
+      "reference": {
+        "sourceAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/id",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "nestedSourceAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/modules/0/elements/0/name",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "requestProfileAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/profile",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "requestTokenAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/token",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "requestUnknownAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/future",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "hiddenSource": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/private",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "hiddenRequest": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/private",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "sourceSymbolKey": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "",
+          "message": "Symbol keys are not JSON-compatible"
+        },
+        "requestSymbolKey": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "",
+          "message": "Symbol keys are not JSON-compatible"
+        },
+        "competingSourceHidden": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/id",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "competingRequestAccessors": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/futureA",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "invalidRequestAgainstSourceAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/id",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "proxyOwnKeysThrow": {
+          "status": "refused",
+          "name": "Error",
+          "constructor": "Error",
+          "instanceOfUmfError": false,
+          "code": null,
+          "path": "",
+          "message": "proxy-ownKeys-stop"
+        },
+        "proxyDescriptorChanges": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/umf",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "descriptorTrapCalls": 1
+        },
+        "proxyChangingKeys": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/id",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "ownKeysCalls": 2
+        },
+        "requestProxyOwnKeysThrow": {
+          "status": "refused",
+          "name": "Error",
+          "constructor": "Error",
+          "instanceOfUmfError": false,
+          "code": null,
+          "path": "",
+          "message": "request-proxy-ownKeys-stop"
+        },
+        "proxyTrapOrder": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/umf",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "events": [
+            "ownKeys",
+            "ownKeys",
+            "descriptor:umf"
+          ]
+        },
+        "malformedReceiptFirst": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "CSV_BOOLEAN_LEXICAL",
+            "path": "",
+            "message": "Malformed Boolean lexical receipt"
+          },
+          "sourceGetterReads": 0,
+          "requestGetterReads": 0
+        }
+      }
+    },
+    "bun": {
+      "runtime": "Bun 1.4.3",
+      "default": {
+        "sourceAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/id",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "nestedSourceAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/modules/0/elements/0/name",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "requestProfileAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/profile",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "requestTokenAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/token",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "requestUnknownAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/future",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "hiddenSource": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/private",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "hiddenRequest": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/private",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "sourceSymbolKey": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "",
+          "message": "Symbol keys are not JSON-compatible"
+        },
+        "requestSymbolKey": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "",
+          "message": "Symbol keys are not JSON-compatible"
+        },
+        "competingSourceHidden": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/id",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "competingRequestAccessors": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/futureA",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "invalidRequestAgainstSourceAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/id",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "proxyOwnKeysThrow": {
+          "status": "refused",
+          "name": "Error",
+          "constructor": "Error",
+          "instanceOfUmfError": false,
+          "code": null,
+          "path": "",
+          "message": "proxy-ownKeys-stop"
+        },
+        "proxyDescriptorChanges": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/umf",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "descriptorTrapCalls": 1
+        },
+        "proxyChangingKeys": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/id",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "ownKeysCalls": 2
+        },
+        "requestProxyOwnKeysThrow": {
+          "status": "refused",
+          "name": "Error",
+          "constructor": "Error",
+          "instanceOfUmfError": false,
+          "code": null,
+          "path": "",
+          "message": "request-proxy-ownKeys-stop"
+        },
+        "proxyTrapOrder": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/umf",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "events": [
+            "ownKeys",
+            "ownKeys",
+            "descriptor:umf"
+          ]
+        },
+        "malformedReceiptFirst": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "CSV_BOOLEAN_LEXICAL",
+            "path": "",
+            "message": "Malformed Boolean lexical receipt"
+          },
+          "sourceGetterReads": 0,
+          "requestGetterReads": 0
+        }
+      },
+      "reference": {
+        "sourceAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/id",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "nestedSourceAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/modules/0/elements/0/name",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "requestProfileAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/profile",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "requestTokenAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/token",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "requestUnknownAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/future",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "hiddenSource": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/private",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "hiddenRequest": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/private",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "sourceSymbolKey": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "",
+          "message": "Symbol keys are not JSON-compatible"
+        },
+        "requestSymbolKey": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "",
+          "message": "Symbol keys are not JSON-compatible"
+        },
+        "competingSourceHidden": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/id",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "competingRequestAccessors": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/futureA",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "invalidRequestAgainstSourceAccessor": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/id",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "getterReads": 0
+        },
+        "proxyOwnKeysThrow": {
+          "status": "refused",
+          "name": "Error",
+          "constructor": "Error",
+          "instanceOfUmfError": false,
+          "code": null,
+          "path": "",
+          "message": "proxy-ownKeys-stop"
+        },
+        "proxyDescriptorChanges": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/umf",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "descriptorTrapCalls": 1
+        },
+        "proxyChangingKeys": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/id",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "ownKeysCalls": 2
+        },
+        "requestProxyOwnKeysThrow": {
+          "status": "refused",
+          "name": "Error",
+          "constructor": "Error",
+          "instanceOfUmfError": false,
+          "code": null,
+          "path": "",
+          "message": "request-proxy-ownKeys-stop"
+        },
+        "proxyTrapOrder": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "NON_JSON",
+            "path": "/umf",
+            "message": "Hidden fields and accessors cannot be serialized faithfully"
+          },
+          "events": [
+            "ownKeys",
+            "ownKeys",
+            "descriptor:umf"
+          ]
+        },
+        "malformedReceiptFirst": {
+          "result": {
+            "status": "refused",
+            "name": "UmfError",
+            "constructor": "UmfError",
+            "instanceOfUmfError": true,
+            "code": "CSV_BOOLEAN_LEXICAL",
+            "path": "",
+            "message": "Malformed Boolean lexical receipt"
+          },
+          "sourceGetterReads": 0,
+          "requestGetterReads": 0
+        }
+      }
+    }
+  },
+  "chromium": {
+    "version": "153.0.8010.12",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+    "default": {
+      "sourceAccessor": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/id",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "getterReads": 0
+      },
+      "nestedSourceAccessor": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/modules/0/elements/0/name",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "getterReads": 0
+      },
+      "requestProfileAccessor": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/profile",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "getterReads": 0
+      },
+      "requestTokenAccessor": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/token",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "getterReads": 0
+      },
+      "requestUnknownAccessor": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/future",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "getterReads": 0
+      },
+      "hiddenSource": {
+        "status": "refused",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "instanceOfUmfError": true,
+        "code": "NON_JSON",
+        "path": "/private",
+        "message": "Hidden fields and accessors cannot be serialized faithfully"
+      },
+      "hiddenRequest": {
+        "status": "refused",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "instanceOfUmfError": true,
+        "code": "NON_JSON",
+        "path": "/private",
+        "message": "Hidden fields and accessors cannot be serialized faithfully"
+      },
+      "sourceSymbolKey": {
+        "status": "refused",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "instanceOfUmfError": true,
+        "code": "NON_JSON",
+        "path": "",
+        "message": "Symbol keys are not JSON-compatible"
+      },
+      "requestSymbolKey": {
+        "status": "refused",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "instanceOfUmfError": true,
+        "code": "NON_JSON",
+        "path": "",
+        "message": "Symbol keys are not JSON-compatible"
+      },
+      "competingSourceHidden": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/id",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "getterReads": 0
+      },
+      "competingRequestAccessors": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/futureA",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "getterReads": 0
+      },
+      "invalidRequestAgainstSourceAccessor": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/id",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "getterReads": 0
+      },
+      "proxyOwnKeysThrow": {
+        "status": "refused",
+        "name": "Error",
+        "constructor": "Error",
+        "instanceOfUmfError": false,
+        "code": null,
+        "path": "",
+        "message": "proxy-ownKeys-stop"
+      },
+      "proxyDescriptorChanges": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/umf",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "descriptorTrapCalls": 1
+      },
+      "proxyChangingKeys": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/id",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "ownKeysCalls": 2
+      },
+      "requestProxyOwnKeysThrow": {
+        "status": "refused",
+        "name": "Error",
+        "constructor": "Error",
+        "instanceOfUmfError": false,
+        "code": null,
+        "path": "",
+        "message": "request-proxy-ownKeys-stop"
+      },
+      "proxyTrapOrder": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/umf",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "events": [
+          "ownKeys",
+          "ownKeys",
+          "descriptor:umf"
+        ]
+      },
+      "malformedReceiptFirst": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "CSV_BOOLEAN_LEXICAL",
+          "path": "",
+          "message": "Malformed Boolean lexical receipt"
+        },
+        "sourceGetterReads": 0,
+        "requestGetterReads": 0
+      }
+    },
+    "reference": {
+      "sourceAccessor": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/id",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "getterReads": 0
+      },
+      "nestedSourceAccessor": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/modules/0/elements/0/name",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "getterReads": 0
+      },
+      "requestProfileAccessor": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/profile",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "getterReads": 0
+      },
+      "requestTokenAccessor": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/token",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "getterReads": 0
+      },
+      "requestUnknownAccessor": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/future",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "getterReads": 0
+      },
+      "hiddenSource": {
+        "status": "refused",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "instanceOfUmfError": true,
+        "code": "NON_JSON",
+        "path": "/private",
+        "message": "Hidden fields and accessors cannot be serialized faithfully"
+      },
+      "hiddenRequest": {
+        "status": "refused",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "instanceOfUmfError": true,
+        "code": "NON_JSON",
+        "path": "/private",
+        "message": "Hidden fields and accessors cannot be serialized faithfully"
+      },
+      "sourceSymbolKey": {
+        "status": "refused",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "instanceOfUmfError": true,
+        "code": "NON_JSON",
+        "path": "",
+        "message": "Symbol keys are not JSON-compatible"
+      },
+      "requestSymbolKey": {
+        "status": "refused",
+        "name": "UmfError",
+        "constructor": "UmfError",
+        "instanceOfUmfError": true,
+        "code": "NON_JSON",
+        "path": "",
+        "message": "Symbol keys are not JSON-compatible"
+      },
+      "competingSourceHidden": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/id",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "getterReads": 0
+      },
+      "competingRequestAccessors": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/futureA",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "getterReads": 0
+      },
+      "invalidRequestAgainstSourceAccessor": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/id",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "getterReads": 0
+      },
+      "proxyOwnKeysThrow": {
+        "status": "refused",
+        "name": "Error",
+        "constructor": "Error",
+        "instanceOfUmfError": false,
+        "code": null,
+        "path": "",
+        "message": "proxy-ownKeys-stop"
+      },
+      "proxyDescriptorChanges": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/umf",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "descriptorTrapCalls": 1
+      },
+      "proxyChangingKeys": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/id",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "ownKeysCalls": 2
+      },
+      "requestProxyOwnKeysThrow": {
+        "status": "refused",
+        "name": "Error",
+        "constructor": "Error",
+        "instanceOfUmfError": false,
+        "code": null,
+        "path": "",
+        "message": "request-proxy-ownKeys-stop"
+      },
+      "proxyTrapOrder": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "NON_JSON",
+          "path": "/umf",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "events": [
+          "ownKeys",
+          "ownKeys",
+          "descriptor:umf"
+        ]
+      },
+      "malformedReceiptFirst": {
+        "result": {
+          "status": "refused",
+          "name": "UmfError",
+          "constructor": "UmfError",
+          "instanceOfUmfError": true,
+          "code": "CSV_BOOLEAN_LEXICAL",
+          "path": "",
+          "message": "Malformed Boolean lexical receipt"
+        },
+        "sourceGetterReads": 0,
+        "requestGetterReads": 0
+      }
+    }
+  },
+  "mismatches": {
+    "node": [],
+    "bun": [],
+    "chromium": []
+  },
+  "cases": [
+    "sourceAccessor",
+    "nestedSourceAccessor",
+    "requestProfileAccessor",
+    "requestTokenAccessor",
+    "requestUnknownAccessor",
+    "hiddenSource",
+    "hiddenRequest",
+    "sourceSymbolKey",
+    "requestSymbolKey",
+    "competingSourceHidden",
+    "competingRequestAccessors",
+    "invalidRequestAgainstSourceAccessor",
+    "proxyOwnKeysThrow",
+    "proxyDescriptorChanges",
+    "proxyChangingKeys",
+    "requestProxyOwnKeysThrow",
+    "proxyTrapOrder",
+    "malformedReceiptFirst"
+  ]
+}

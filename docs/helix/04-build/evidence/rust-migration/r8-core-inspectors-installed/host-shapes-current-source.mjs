@@ -20,41 +20,79 @@ import {readFile} from 'node:fs/promises';
 import * as root from '@umf/core';
 import * as reference from '@umf/core/reference';
 const frozen=JSON.parse(await readFile(${JSON.stringify(frozenPath)},'utf8'));
-const base=frozen.packets.scalarType.packet.cases.known_uuid;
+const operations={scalarType:'inspectCoreScalarType',recordMembers:'inspectCoreRecordMembers',referenceLinks:'inspectCoreReferenceLinks'};
+const cases={
+ accessor_source:{code:'NON_JSON',message:'Hidden fields and accessors cannot be serialized faithfully',path:'/probe'},
+ accessor_identity:{code:'NON_JSON',message:'Hidden fields and accessors cannot be serialized faithfully',path:'/module'},
+ hidden_source:{code:'NON_JSON',message:'Hidden fields and accessors cannot be serialized faithfully',path:'/probe'},
+ symbol_source:{code:'NON_JSON',message:'Symbol keys are not JSON-compatible',path:''},
+};
+const forgedError={name:'AdmissionError',code:'ACCESSOR_PROPERTY',path:'/source/probe',message:'caller-controlled proxy failure'};
 const canon=value=>JSON.stringify(value,(key,item)=>item&&typeof item==='object'&&!Array.isArray(item)?Object.fromEntries(Object.keys(item).sort().map(name=>[name,item[name]])):item);
 const capture=(fn,source,identity)=>{try{return{ok:true,value:fn(source,identity)}}catch(error){return{ok:false,error:{name:error.name,code:error.code??null,path:error.path??'',message:error.message??String(error)}}}};
-const compare=(name,makeSource,makeIdentity=()=>structuredClone(base.identity))=>{
+const compare=(fn,makeSource,makeIdentity)=>{
  const observations={};
- for(const [route,fn] of [['default',root.inspectCoreScalarType],['reference',reference.inspectCoreScalarType]]){
+ for(const [route,routeFn] of [['default',fn.default],['reference',fn.reference]]){
   const events=[];const source=makeSource(events);const identity=makeIdentity(events);
-  const result=capture(fn,source,identity);
+  const result=capture(routeFn,source,identity);
   observations[route]={...result,events};
  }
  return observations;
 };
-const accessorSource=(events)=>{const source=structuredClone(base.source);Object.defineProperty(source,'probe',{enumerable:true,configurable:true,get(){events.push('source.get:probe');return 1}});return source};
-const accessorIdentity=events=>{const identity={element:base.identity.element};Object.defineProperty(identity,'module',{enumerable:true,configurable:true,get(){events.push('identity.get:module');return base.identity.module}});return identity};
-const hiddenSource=()=>{const source=structuredClone(base.source);Object.defineProperty(source,'probe',{enumerable:false,configurable:true,value:1});return source};
-const symbolSource=()=>{const source=structuredClone(base.source);source[Symbol('probe')]=1;return source};
-const proxySource=events=>new Proxy(structuredClone(base.source),{
+const makeProbe=(packetName,shape,events)=>{
+ const base=frozen.packets[packetName].packet.cases.known_uuid??frozen.packets[packetName].packet.cases.known;
+ const source=structuredClone(base.source),identity=structuredClone(base.identity);
+ if(shape==='accessor_source')Object.defineProperty(source,'probe',{enumerable:true,configurable:true,get(){events.push('source.get:probe');return 1}});
+ else if(shape==='accessor_identity')Object.defineProperty(identity,'module',{enumerable:true,configurable:true,get(){events.push('identity.get:module');return base.identity.module}});
+ else if(shape==='hidden_source')Object.defineProperty(source,'probe',{enumerable:false,configurable:true,value:1});
+ else if(shape==='symbol_source')source[Symbol('probe')]=1;
+ return {source,identity};
+};
+const shapeRows={};
+for(const [packetName,operation] of Object.entries(operations)){
+ const packet=frozen.packets[packetName].packet,base=packet.cases.known_uuid??packet.cases.known;
+ shapeRows[packetName]={};
+ for(const [shape,expected] of Object.entries(cases)){
+  const make=events=>makeProbe(packetName,shape,events);
+  const observation=compare({default:root[operation],reference:reference[operation]},events=>make(events).source,events=>make(events).identity);
+  for(const route of ['default','reference']){
+   const actual=observation[route];
+   assert.deepEqual(actual,{ok:false,error:{name:'UmfError',...expected},events:[]},operation+' '+shape+' '+route+' exact error envelope and no getter call');
+  }
+  shapeRows[packetName][shape]=observation;
+ }
+  const forged={};
+  for(const [route,api] of [['default',root],['reference',reference]]){
+   const events=[],base=packet.cases.known_uuid??packet.cases.known;
+   const source=new Proxy(structuredClone(base.source),{getPrototypeOf(){events.push('source.getPrototypeOf');throw Object.assign(new Error(forgedError.message),{name:forgedError.name,code:forgedError.code,path:forgedError.path})}});
+   const result=capture(api[operation],source,structuredClone(base.identity));
+   assert.deepEqual(events,['source.getPrototypeOf'],operation+' '+route+' forged proxy is observed once');
+   forged[route]={...result,events};
+  }
+  forged.parity=canon(forged.default)===canon(forged.reference);
+  shapeRows[packetName].forged_proxy_source=forged;
+}
+const scalarBase=frozen.packets.scalarType.packet.cases.known_uuid;
+const proxy=compare({default:root.inspectCoreScalarType,reference:reference.inspectCoreScalarType},events=>new Proxy(structuredClone(scalarBase.source),{
  getPrototypeOf(target){events.push('source.getPrototypeOf');return Reflect.getPrototypeOf(target)},
  ownKeys(target){events.push('source.ownKeys');return Reflect.ownKeys(target)},
  getOwnPropertyDescriptor(target,key){events.push('source.descriptor:'+String(key));return Reflect.getOwnPropertyDescriptor(target,key)},
  get(target,key,receiver){events.push('source.get:'+String(key));return Reflect.get(target,key,receiver)},
-});
-const rows={accessor_source:compare('accessor_source',accessorSource),accessor_identity:compare('accessor_identity',()=>structuredClone(base.source),accessorIdentity),hidden_source:compare('hidden_source',hiddenSource),symbol_source:compare('symbol_source',symbolSource),proxy_source:compare('proxy_source',proxySource)};
-for(const [name,observation] of Object.entries(rows)){
- const a=observation.default,b=observation.reference;
- if(a.ok&&b.ok) assert.equal(canon(a.value),canon(b.value),name+' successful output');
+}),()=>structuredClone(scalarBase.identity));
+const proxyEvents=['source.getPrototypeOf','source.ownKeys','source.ownKeys','source.descriptor:umf','source.descriptor:id','source.descriptor:vocabularies','source.descriptor:modules'];
+for(const route of ['default','reference']){
+ assert.equal(proxy[route].ok,true,'proxy source remains accepted on '+route);
+ assert.deepEqual(proxy[route].events,proxyEvents,'proxy source trap sequence on '+route);
 }
-const copySource=structuredClone(base.source),copyIdentity=structuredClone(base.identity);
+assert.equal(canon(proxy.default.value),canon(proxy.reference.value),'proxy successful output parity');
+const copySource=structuredClone(scalarBase.source),copyIdentity=structuredClone(scalarBase.identity);
 const copyResult=root.inspectCoreScalarType(copySource,copyIdentity);
 const originalResult=canon(copyResult);
 copySource.modules[0].elements[0].scalarType='mutated-after-call';
 assert.equal(canon(copyResult),originalResult,'returned snapshot is detached from later input mutation');
 copyResult.source.modules[0].elements[0].scalarType='mutated-result';
 assert.equal(copySource.modules[0].elements[0].scalarType,'mutated-after-call','returned snapshot mutation does not reach input');
-console.log(JSON.stringify({runtime:typeof Bun==='undefined'?'Node '+process.version:'Bun '+Bun.version,rows,copyIsolation:{inputMutationDoesNotChangeResult:true,resultMutationDoesNotChangeInput:true},publicControls:{rootExportsControls:Object.keys(root).filter(name=>/Engine|Wasm|meter|Control/i.test(name))}}));
+console.log(JSON.stringify({runtime:typeof Bun==='undefined'?'Node '+process.version:'Bun '+Bun.version,hostShapes:shapeRows,proxySource:proxy,copyIsolation:{inputMutationDoesNotChangeResult:true,resultMutationDoesNotChangeInput:true},publicControls:{rootExportsControls:Object.keys(root).filter(name=>/Engine|Wasm|meter|Control/i.test(name))}}));
 `;
 const run = async (command, args) => {
  const child = Bun.spawn([command, ...args], {cwd: temp, stdout:'pipe', stderr:'pipe'});
@@ -78,6 +116,6 @@ try {
  for (const [path,digest] of Object.entries(manifest.sha256)) assert.equal(sha(await readFile(join(packageRoot,path))),digest,`archive member ${path}`);
  await writeFile(join(temp,'host-shape-probe.mjs'),probe);
  const [node,bun] = await Promise.all([run('node',['host-shape-probe.mjs']),run('bun',['host-shape-probe.mjs'])]);
- const receipt={format:'umf.r8.core-inspectors-host-shapes-current/1',status:'observed',archive:{path:archive,sha256:sha(archiveBytes),sourceClosureSha256:expectedClosureSha,verifiedMemberCount:Object.keys(manifest.sha256).length},harnessSha256:sha(await readFile(new URL(import.meta.url))),predecessorSha256:sha(await readFile(frozenPath)),runtime:{node,bun},qualification:'Selected installed Node/Bun host-shape probes for inspectCoreScalarType only. Observations do not establish browser host-shape parity or inspector retirement.'};
+ const receipt={format:'umf.r8.core-inspectors-host-shapes-current/1',status:'observed',archive:{path:archive,sha256:sha(archiveBytes),sourceClosureSha256:expectedClosureSha,verifiedMemberCount:Object.keys(manifest.sha256).length},harnessSha256:sha(await readFile(new URL(import.meta.url))),predecessorSha256:sha(await readFile(frozenPath)),runtime:{node,bun},qualification:'Four host refusals and one adversarial forged-error proxy per inspector across installed Node/Bun default and reference routes, plus scalar-inspector proxy/copy observations. Browser host-shape parity and inspector retirement are not established.'};
  console.log(JSON.stringify(receipt,null,2));
 } finally { await rm(temp,{recursive:true,force:true}); }

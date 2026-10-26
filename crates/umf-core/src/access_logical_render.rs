@@ -9,6 +9,11 @@ use crate::{Context, EngineError, PyText, PythonConsumerValue, Utf16};
 use num_traits::ToPrimitive;
 
 pub const PROFILE: &str = "umf-access-logical-render/0.1.0";
+/// Expanded tagged variant profile for the full pre-Weft renderer route.
+pub const FULL_PROFILE: &str = "umf-access-logical-render/0.2.0";
+
+#[path = "access_logical_render_full.rs"]
+pub mod full;
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct LogicalRenderRefusal {

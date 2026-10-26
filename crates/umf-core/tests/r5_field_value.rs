@@ -22,6 +22,25 @@ fn get<'a>(value: &'a Value, name: &str) -> Option<&'a Value> {
         _ => None,
     }
 }
+fn get_mut<'a>(value: &'a mut Value, name: &str) -> Option<&'a mut Value> {
+    match value {
+        Value::Object(fields) => fields
+            .iter_mut()
+            .find(|(key, _)| key == &Utf16::from(name))
+            .map(|(_, value)| value),
+        _ => None,
+    }
+}
+fn set_member(value: &mut Value, name: &str, replacement: Value) {
+    let Value::Object(fields) = value else {
+        panic!("expected object")
+    };
+    if let Some((_, existing)) = fields.iter_mut().find(|(key, _)| key == &Utf16::from(name)) {
+        *existing = replacement;
+    } else {
+        fields.push((Utf16::from(name), replacement));
+    }
+}
 fn engine() -> Engine {
     let parse_resource = |source| parse(source);
     Engine::new(
@@ -108,6 +127,132 @@ fn frozen_public_typescript_results_match_exactly() {
             );
         }
     }
+}
+
+#[test]
+fn malformed_string_carrier_observes_before_length_refinement() {
+    let frozen = parse(include_str!("../../../docs/helix/04-build/evidence/rust-migration/r5-field-value/frozen-typescript.json"));
+    let mut source = get(&frozen, "source").unwrap().clone();
+    let modules = match get_mut(&mut source, "modules") {
+        Some(Value::Array(modules)) => modules,
+        _ => panic!("modules array"),
+    };
+    let module = modules
+        .iter_mut()
+        .find(|module| get(module, "id") == Some(&Value::string_utf8("m")))
+        .unwrap();
+    let elements = match get_mut(module, "elements") {
+        Some(Value::Array(elements)) => elements,
+        _ => panic!("elements array"),
+    };
+    let label = elements
+        .iter_mut()
+        .find(|field| get(field, "id") == Some(&Value::string_utf8("label")))
+        .unwrap();
+    set_member(
+        label,
+        "facets",
+        Value::Object(vec![(
+            Utf16::from("length"),
+            Value::Object(vec![
+                (Utf16::from("min"), Value::Number(4.0)),
+                (Utf16::from("max"), Value::Number(10.0)),
+                (Utf16::from("unit"), Value::string_utf8("unicode-scalar")),
+            ]),
+        )]),
+    );
+    set_member(
+        label,
+        "examples",
+        Value::Array(vec![Value::Object(vec![(
+            Utf16::from("string"),
+            Value::string_utf8("test"),
+        )])]),
+    );
+    set_member(
+        label,
+        "default",
+        Value::Object(vec![
+            (
+                Utf16::from("value"),
+                Value::Object(vec![(
+                    Utf16::from("string"),
+                    Value::string_utf8("test"),
+                )]),
+            ),
+            (Utf16::from("on"), Value::string_utf8("null")),
+        ]),
+    );
+
+    let invalid = engine()
+        .validate_core_field_value_public(
+            &source,
+            &parse(r#"{"module":"m","element":"label"}"#),
+            &parse(r#"{"string":123}"#),
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+    assert!(!invalid.valid);
+    assert_eq!(invalid.diagnostics.len(), 1);
+    assert_eq!(invalid.diagnostics[0].code, Utf16::from("CORE_SCHEMA_PROPERTIES"));
+    assert_eq!(
+        invalid.diagnostics[0].message,
+        Utf16::from("Literal length outside bounds")
+    );
+
+    let modules = match get_mut(&mut source, "modules") {
+        Some(Value::Array(modules)) => modules,
+        _ => panic!("modules array"),
+    };
+    let module = modules
+        .iter_mut()
+        .find(|module| get(module, "id") == Some(&Value::string_utf8("m")))
+        .unwrap();
+    let elements = match get_mut(module, "elements") {
+        Some(Value::Array(elements)) => elements,
+        _ => panic!("elements array"),
+    };
+    let label = elements
+        .iter_mut()
+        .find(|field| get(field, "id") == Some(&Value::string_utf8("label")))
+        .unwrap();
+    set_member(
+        get_mut(label, "facets").unwrap(),
+        "length",
+        Value::Object(vec![
+            (Utf16::from("min"), Value::Number(0.0)),
+            (Utf16::from("max"), Value::Number(0.0)),
+            (Utf16::from("unit"), Value::string_utf8("unicode-scalar")),
+        ]),
+    );
+    set_member(
+        label,
+        "examples",
+        Value::Array(vec![Value::Object(vec![(
+            Utf16::from("string"),
+            Value::string_utf8(""),
+        )])]),
+    );
+    set_member(
+        label,
+        "default",
+        Value::Object(vec![
+            (
+                Utf16::from("value"),
+                Value::Object(vec![(Utf16::from("string"), Value::string_utf8(""))]),
+            ),
+            (Utf16::from("on"), Value::string_utf8("null")),
+        ]),
+    );
+    let valid = engine()
+        .validate_core_field_value_public(
+            &source,
+            &parse(r#"{"module":"m","element":"label"}"#),
+            &parse(r#"{"string":123}"#),
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+    assert!(valid.valid);
 }
 
 #[test]

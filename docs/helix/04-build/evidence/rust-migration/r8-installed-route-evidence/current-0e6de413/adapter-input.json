@@ -1,0 +1,85 @@
+{
+  "format": "umf.r8.route-receipt-adapter-input/1",
+  "archive": {
+    "sha256": "b2f816d7f7bd3b57df1ecea536ceece4396a3625b2a641eb0991d135037de892",
+    "sourceClosureSha256": "0e6de413298318b0e8bcb03cac522872452b8c1e548f18a26f226d28967ce5c0",
+    "packageManifestSha256": "d5e142c2fc36ec2919bd4cbe7aabee1193532c56fcac8917e96dce2be709550c",
+    "sourceInputCount": 3435
+  },
+  "preflight": {
+    "path": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-0e6de413/preflight.json",
+    "sha256": "7fb3efeee80d2e895275226cb2c5327880b1e56e138f9387aaeebc9cbed0c137"
+  },
+  "families": {
+    "csvBoolean": {
+      "node": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-csv-boolean-default-route/installed-replay-b2f816d7-20261026.json",
+        "sha256": "a68da1d49a1c2e1f2df28f71350ecfd8a9349319ef6ceb921c56cb95ca5b7f76"
+      },
+      "bun": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-csv-boolean-default-route/installed-replay-b2f816d7-20261026.json",
+        "sha256": "a68da1d49a1c2e1f2df28f71350ecfd8a9349319ef6ceb921c56cb95ca5b7f76"
+      },
+      "chromium": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-csv-boolean-default-route/installed-replay-b2f816d7-20261026.json",
+        "sha256": "a68da1d49a1c2e1f2df28f71350ecfd8a9349319ef6ceb921c56cb95ca5b7f76"
+      }
+    },
+    "coreInspectors": {
+      "node": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-core-inspectors-installed/current-archive-replay-b2f816d7-20261026.json",
+        "sha256": "ceeaeac02ba38678c804721c7ca4f8c6209de74c78ff06d17c1ce1e357ac3d91"
+      },
+      "bun": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-core-inspectors-installed/current-archive-replay-b2f816d7-20261026.json",
+        "sha256": "ceeaeac02ba38678c804721c7ca4f8c6209de74c78ff06d17c1ce1e357ac3d91"
+      },
+      "chromium": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-core-inspectors-installed/current-archive-replay-b2f816d7-20261026.json",
+        "sha256": "ceeaeac02ba38678c804721c7ca4f8c6209de74c78ff06d17c1ce1e357ac3d91"
+      }
+    },
+    "coreRelationships": {
+      "node": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-core-relationships-default-boundary/current-archive-node-b2f816d7-20261026.json",
+        "sha256": "7dd57f04c0a410f3e89472693aba9a55d476f27a0a163ee4418c5921c63bbfac"
+      },
+      "bun": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-core-relationships-default-boundary/current-archive-bun-b2f816d7-20261026.json",
+        "sha256": "f11d2b64e7e5901e44594fc5f42be13c65350187d63d5ec012550d5c4ea6f580"
+      },
+      "chromium": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-core-relationships-default-boundary/current-archive-chromium-b2f816d7-20261026.json",
+        "sha256": "4751198766b1f52192e4033810976d2360581682267080eb5f459862c4239343"
+      }
+    },
+    "bit128Uuid": {
+      "node": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-bit128-installed/process-bound-20261026-b2f816d7.json",
+        "sha256": "22f7381c6d028a2ff13dfa9499ae2a2d09b2e9684f2f8d1192c49046ff51cae2"
+      },
+      "bun": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-bit128-installed/process-bound-20261026-b2f816d7.json",
+        "sha256": "22f7381c6d028a2ff13dfa9499ae2a2d09b2e9684f2f8d1192c49046ff51cae2"
+      },
+      "chromium": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-bit128-installed/chromium-b2f816d7-20261026.json",
+        "sha256": "f83a793d42756e2b2edd3ed6844a634ec7485a2750b721b34267da517aa16fe0"
+      }
+    },
+    "coreKeys": {
+      "node": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-core-keys-default-boundary/core-keys-default-current-20261026-b2f816d7.json",
+        "sha256": "03e024ecdb998cd0658d1d8571b49073dd69ab7608f4e41ce4acf8d54b5db89e"
+      },
+      "bun": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-core-keys-default-boundary/core-keys-default-current-20261026-b2f816d7.json",
+        "sha256": "03e024ecdb998cd0658d1d8571b49073dd69ab7608f4e41ce4acf8d54b5db89e"
+      },
+      "chromium": {
+        "path": "docs/helix/04-build/evidence/rust-migration/r8-core-keys-default-boundary/core-keys-default-current-20261026-b2f816d7.json",
+        "sha256": "03e024ecdb998cd0658d1d8571b49073dd69ab7608f4e41ce4acf8d54b5db89e"
+      }
+    }
+  }
+}

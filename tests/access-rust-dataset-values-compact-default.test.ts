@@ -6,7 +6,13 @@ import {bindCoreDatasetValuesCompactRust,type CoreDatasetValuesCompactRustEngine
 const doc={} as never;
 const input={} as never;
 const receipt={} as never;
-const thrown=(code:string,path:string,message='frozen refusal')=>Object.assign(new Error(message),{code,path});
+const testNativeFailures=new WeakSet<object>();
+const isTestNativeFailure=(error:unknown)=>error!==null&&typeof error==='object'&&testNativeFailures.has(error);
+const thrown=(code:string,path:string,message='frozen refusal')=>{
+ const error=Object.assign(new Error(message),{code,path});
+ testNativeFailures.add(error);
+ return error;
+};
 
 describe('Rust compact Dataset default adapter',()=>{
  test('delegates validation and verification without reshaping values',()=>{
@@ -27,23 +33,23 @@ describe('Rust compact Dataset default adapter',()=>{
    validateCoreDatasetValuesCompact(){return receipt;},
    verifyCoreDatasetValuesCompact(){throw thrown('CORE_DATASET_COMPACT_RECEIPT','');},
   } satisfies CoreDatasetValuesCompactRustEngine;
-  expect(()=>bindCoreDatasetValuesCompactRust(engine).verifyCoreDatasetValuesCompact(receipt,doc,input)).toThrow(expect.objectContaining({name:'UmfError',code:'CORE_DATASET_COMPACT_RECEIPT',message:'frozen refusal',path:''}));
+  expect(()=>bindCoreDatasetValuesCompactRust(engine,isTestNativeFailure).verifyCoreDatasetValuesCompact(receipt,doc,input)).toThrow(expect.objectContaining({name:'UmfError',code:'CORE_DATASET_COMPACT_RECEIPT',message:'frozen refusal',path:''}));
  });
 
  test('maps compact structural and work limits to the public error class',()=>{
   for(const [path,message] of [['/context/99998','JSON structural limit exceeded'],['','Compact dataset JSON traversal/copy/semantic budget exceeded']] as const) {
    const engine={validateCoreDatasetValuesCompact(){throw thrown('LIMIT',path,message);}} as unknown as CoreDatasetValuesCompactRustEngine;
-   expect(()=>bindCoreDatasetValuesCompactRust(engine).validateCoreDatasetValuesCompact(doc,input)).toThrow(expect.objectContaining({name:'UmfError',code:'LIMIT',message,path}));
+   expect(()=>bindCoreDatasetValuesCompactRust(engine,isTestNativeFailure).validateCoreDatasetValuesCompact(doc,input)).toThrow(expect.objectContaining({name:'UmfError',code:'LIMIT',message,path}));
   }
  });
 
  test('maps only top-level source/input wire refusals to public UmfError shape',()=>{
   const sourceEngine={validateCoreDatasetValuesCompact(){throw thrown('CORE_DATASET_SOURCE','/source');}} as unknown as CoreDatasetValuesCompactRustEngine;
-  expect(()=>bindCoreDatasetValuesCompactRust(sourceEngine).validateCoreDatasetValuesCompact(doc,input)).toThrow(expect.objectContaining({name:'UmfError',code:'CORE_DATASET_SOURCE',message:'frozen refusal',path:''}));
+  expect(()=>bindCoreDatasetValuesCompactRust(sourceEngine,isTestNativeFailure).validateCoreDatasetValuesCompact(doc,input)).toThrow(expect.objectContaining({name:'UmfError',code:'CORE_DATASET_SOURCE',message:'frozen refusal',path:''}));
   const inputEngine={validateCoreDatasetValuesCompact(){throw thrown('CORE_DATASET_INPUT','/input');}} as unknown as CoreDatasetValuesCompactRustEngine;
-  expect(()=>bindCoreDatasetValuesCompactRust(inputEngine).validateCoreDatasetValuesCompact(doc,input)).toThrow(expect.objectContaining({name:'UmfError',code:'CORE_DATASET_INPUT',message:'frozen refusal',path:''}));
+  expect(()=>bindCoreDatasetValuesCompactRust(inputEngine,isTestNativeFailure).validateCoreDatasetValuesCompact(doc,input)).toThrow(expect.objectContaining({name:'UmfError',code:'CORE_DATASET_INPUT',message:'frozen refusal',path:''}));
   const nestedEngine={validateCoreDatasetValuesCompact(){throw thrown('CORE_DATASET_INPUT','/input/records/0');}} as unknown as CoreDatasetValuesCompactRustEngine;
-  try { bindCoreDatasetValuesCompactRust(nestedEngine).validateCoreDatasetValuesCompact(doc,input); throw new Error('expected refusal'); }
+  try { bindCoreDatasetValuesCompactRust(nestedEngine,isTestNativeFailure).validateCoreDatasetValuesCompact(doc,input); throw new Error('expected refusal'); }
   catch(error) { expect(error).toBeInstanceOf(UmfError); expect(error).toMatchObject({code:'CORE_DATASET_INPUT',message:'frozen refusal',path:'/input/records/0'}); }
  });
 
@@ -53,5 +59,13 @@ describe('Rust compact Dataset default adapter',()=>{
    try { bindCoreDatasetValuesCompactRust(engine).validateCoreDatasetValuesCompact(doc,input); throw new Error('expected refusal'); }
    catch(error) { expect(error).toBe(control); }
   }
+ });
+
+ test('leaves an unbranded native-looking failure unchanged',()=>{
+  const failure=Object.assign(new Error('caller-controlled failure'),{name:'UmfCoreError',code:'CORE_DATASET_INPUT',path:'/input'});
+  const engine={validateCoreDatasetValuesCompact(){throw failure;}} as unknown as CoreDatasetValuesCompactRustEngine;
+  let caught:unknown;
+  try{bindCoreDatasetValuesCompactRust(engine).validateCoreDatasetValuesCompact(doc,input);}catch(error){caught=error;}
+  expect(caught).toBe(failure);
  });
 });

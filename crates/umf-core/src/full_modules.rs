@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 // Historical full core module graph; selected unless the compiler-only feature is active.
 pub mod access_catalog_custody;
+pub mod access_graph_validate;
 pub mod access_constraints;
 pub mod access_logical_render;
 pub mod access_related_keys;
@@ -100,6 +101,7 @@ pub mod rfc3339_exact_instant;
 pub mod scalar_type_inspection;
 pub mod schema;
 pub mod schema_properties;
+pub mod schema_properties_host_json;
 pub mod security_domains;
 pub mod security_functions;
 pub mod security_logic;

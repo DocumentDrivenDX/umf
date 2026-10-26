@@ -317,6 +317,7 @@ def _invoke(
     function: Callable[..., Any],
     parameters: tuple[CapturedParameter, ...],
     presence: frozenset[str],
+    validator: Callable[[Node, tuple[CapturedParameter, ...], frozenset[str]], None],
 ) -> tuple[Node, frozenset[str]]:
     context = CaptureContext(
         frozenset(p.name for p in parameters if p.optional), presence
@@ -347,13 +348,16 @@ def _invoke(
             raise CaptureError(
                 "CAPTURE_UNSUPPORTED", "declaration must return a DSL terminal"
             )
-        _validate_node(result.node, parameters)
+        validator(result.node, parameters, presence)
         return result.node, frozenset(context.used_optional)
     finally:
         CURRENT.reset(token)
 
 
-def capture(function: Callable[..., Any]) -> CapturedDeclaration:
+def _capture_with_validator(
+    function: Callable[..., Any],
+    validator: Callable[[Node, tuple[CapturedParameter, ...], frozenset[str]], None],
+) -> CapturedDeclaration:
     kind = getattr(function, "__umf_kind__", None)
     if kind not in ("query", "command"):
         raise CaptureError(
@@ -363,8 +367,8 @@ def capture(function: Callable[..., Any]) -> CapturedDeclaration:
     optional = frozenset(p.name for p in parameters if p.optional)
 
     def twice(presence: frozenset[str]) -> tuple[Node, frozenset[str]]:
-        first = _invoke(function, parameters, presence)
-        second = _invoke(function, parameters, presence)
+        first = _invoke(function, parameters, presence, validator)
+        second = _invoke(function, parameters, presence, validator)
         first_text = json.dumps(
             _canonical(first),
             ensure_ascii=False,
@@ -408,3 +412,11 @@ def capture(function: Callable[..., Any]) -> CapturedDeclaration:
             raise CaptureError("CAPTURE_UNSUPPORTED", "command requires generated action identity")
         action = reference.source
     return CapturedDeclaration(cast(str, function.__name__), kind, parameters, tuple(variants), action)
+
+
+def capture(function: Callable[..., Any]) -> CapturedDeclaration:
+    """Capture using the established Python graph validator."""
+    return _capture_with_validator(
+        function,
+        lambda node, parameters, _presence: _validate_node(node, parameters),
+    )

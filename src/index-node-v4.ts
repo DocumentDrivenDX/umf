@@ -8,11 +8,12 @@ import {bindCoreRelationshipsRust} from './access/rust-relationships-default';
 import {bindBit128Rust} from './access/rust-bit128-default';
 import {bindCsvBooleanLexicalRust} from './access/rust-csv-boolean-default';
 import {bindCoreInspectorsRust} from './access/rust-core-inspectors-default';
+import {bindCoreSchemaPropertiesRust} from './access/rust-schema-properties-default';
 
 // Module import resolves only after the native engine is ready. The function
 // exported below remains synchronous and never falls back to TypeScript.
 assertPythonClientRustPlatformV4(process.platform,process.arch);
-const [{createCoreModelRootEngine,createBit128Engine,createTemporalEngine},{CORE_MODEL_RESOURCES},{createPythonClientRustCandidateV4}]=await Promise.all([
+const [{createCoreModelRootEngine,createBit128Engine,createTemporalEngine,isWireAdmissionError,isNativeUmfCoreError,isBit128EngineError},{CORE_MODEL_RESOURCES},{createPythonClientRustCandidateV4}]=await Promise.all([
  import('../bindings/core/node/index.js'),
  import('./access/core-model-resources'),
  import('./node-v4'),
@@ -21,13 +22,14 @@ const generatePythonClient=await initializePythonClientRustDefaultV4(()=>createP
 const model=createCoreModelRootEngine(CORE_MODEL_RESOURCES);
 const temporal=createTemporalEngine();
 const {parseGregorianDate,truncateGregorianDate,parseRfc3339ExactInstant,sameRfc3339ExactInstant}=temporal;
-const {validateCsvBooleanLexical,verifyCsvBooleanLexical}=bindCsvBooleanLexicalRust(model);
-const {inspectCoreScalarType,inspectCoreRecordMembers,inspectCoreReferenceLinks}=bindCoreInspectorsRust(model);
+const {validateCsvBooleanLexical,verifyCsvBooleanLexical}=bindCsvBooleanLexicalRust(model,isWireAdmissionError,isNativeUmfCoreError);
+const {inspectCoreScalarType,inspectCoreRecordMembers,inspectCoreReferenceLinks}=bindCoreInspectorsRust(model,isWireAdmissionError,isNativeUmfCoreError);
+const {inspectCoreSchemaProperties,declareCoreSchemaProperties,validateCoreFieldValue,resolveCoreDefault}=bindCoreSchemaPropertiesRust(model);
 const {inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration}=bindCoreCardinalityRust(model);
-const {validateCoreDatasetValuesCompact}=bindCoreDatasetValuesCompactRust(model);
+const {validateCoreDatasetValuesCompact}=bindCoreDatasetValuesCompactRust(model,isNativeUmfCoreError);
 const {inspectCoreFacets,declareCoreFacets,verifyCoreFacetDeclaration,historicalCoreFacetPatch}=bindCoreFacetsRust(model);
-const {inspectCoreKeys,lookupCoreKey,declareCoreRecordMembers,declareCoreKey}=bindCoreKeysRust(model);
+const {inspectCoreKeys,lookupCoreKey,declareCoreRecordMembers,declareCoreKey,verifyCoreKeyOperation}=bindCoreKeysRust(model,isNativeUmfCoreError);
 const {inspectCoreRelationships,lookupCoreRelationship,declareCoreRelationship,verifyCoreRelationshipOperation}=bindCoreRelationshipsRust(model);
-const {parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger}=bindBit128Rust(createBit128Engine());
+const {parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger}=bindBit128Rust(createBit128Engine(),isBit128EngineError);
 export * from './index';
-export {generatePythonClient,inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration,validateCoreDatasetValuesCompact,inspectCoreFacets,declareCoreFacets,verifyCoreFacetDeclaration,historicalCoreFacetPatch,inspectCoreKeys,lookupCoreKey,declareCoreRecordMembers,declareCoreKey,inspectCoreRelationships,lookupCoreRelationship,declareCoreRelationship,verifyCoreRelationshipOperation,inspectCoreScalarType,inspectCoreRecordMembers,inspectCoreReferenceLinks,parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger,validateCsvBooleanLexical,verifyCsvBooleanLexical,parseGregorianDate,truncateGregorianDate,parseRfc3339ExactInstant,sameRfc3339ExactInstant};
+export {generatePythonClient,inspectCoreCardinality,declareCoreCardinality,verifyCoreCardinalityDeclaration,validateCoreDatasetValuesCompact,inspectCoreFacets,declareCoreFacets,verifyCoreFacetDeclaration,historicalCoreFacetPatch,inspectCoreKeys,lookupCoreKey,declareCoreRecordMembers,declareCoreKey,verifyCoreKeyOperation,inspectCoreRelationships,lookupCoreRelationship,declareCoreRelationship,verifyCoreRelationshipOperation,inspectCoreScalarType,inspectCoreRecordMembers,inspectCoreReferenceLinks,inspectCoreSchemaProperties,declareCoreSchemaProperties,validateCoreFieldValue,resolveCoreDefault,parseBits128,parseUuid,bits128FromBytes,bits128ToBytes,uuidFromBits128,uuidToBits128,compareBits128,bits128ToWords,bits128FromWords,bits128ToInteger,bits128FromInteger,validateCsvBooleanLexical,verifyCsvBooleanLexical,parseGregorianDate,truncateGregorianDate,parseRfc3339ExactInstant,sameRfc3339ExactInstant};

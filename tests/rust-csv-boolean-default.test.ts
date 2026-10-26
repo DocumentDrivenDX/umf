@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {createCoreModelEngine} from '../bindings/core/node/index.js';
+import {createCoreModelEngine,isNativeUmfCoreError,isWireAdmissionError} from '../bindings/core/node/index.js';
+import {AdmissionError} from '../bindings/core/node/src/wire.js';
 import {CORE_MODEL_RESOURCES} from '../src/access/core-model-resources';
 import {bindCsvBooleanLexicalRust} from '../src/access/rust-csv-boolean-default';
 import {readDocument} from '../src/model/document';
@@ -9,7 +10,7 @@ import type {CsvBooleanLexicalRequest} from '../src/model/csv-boolean-lexical';
 import packet from '../scripts/rust-migration/r5/csv-boolean-default-route/predecessor.json';
 
 const source=readDocument(await Bun.file('spec/domain-packs/medical/ontology.json').text(),'json');
-const route=bindCsvBooleanLexicalRust(createCoreModelEngine(CORE_MODEL_RESOURCES));
+const route=bindCsvBooleanLexicalRust(createCoreModelEngine(CORE_MODEL_RESOURCES),isWireAdmissionError,isNativeUmfCoreError);
 const request=(token:CsvBooleanLexicalRequest['token'],sourceContext:unknown={source:'original.csv',row:1,column:'active',unknown:{retained:['雪',null]}}):CsvBooleanLexicalRequest=>({profile:'umf.csv-boolean-lexical/1.0.0',field:{module:'domain',element:'patients.active'},token,sourceContext:sourceContext as CsvBooleanLexicalRequest['sourceContext']});
 const outcome=(run:()=>unknown)=>{try{return {status:'accepted',value:run()};}catch(e){const error=e as Error&{code?:string;path?:string};return {status:'refused',name:error.name,prototype:Object.getPrototypeOf(error)?.constructor?.name??null,code:error.code??null,path:error.path??'',message:error.message};}};
 const summary=(receipt:ReturnType<typeof route.validateCsvBooleanLexical>)=>receipt;
@@ -137,4 +138,32 @@ test('symbols and competing invalid members use the source descriptor snapshot o
   .toEqual(outcome(()=>referenceValidateCsvBooleanLexical(referenceChangingKeys as any,request('true'))));
  expect(lateEvents).toEqual(referenceLateEvents);
  expect(lateEvents).toEqual(['ownKeys','ownKeys','descriptor:Symbol(late)']);
+});
+
+test('CSV wire normalization requires internal admission provenance',()=>{
+ const forged=Object.assign(new Error('caller proxy failure'),{name:'AdmissionError',code:'ACCESSOR_PROPERTY',path:'/source/probe'});
+ const source=new Proxy({}, {getPrototypeOf(){throw forged;}});
+ const reference=outcome(()=>referenceValidateCsvBooleanLexical(source as any,request('true')));
+ const routed=outcome(()=>route.validateCsvBooleanLexical(source as any,request('true')));
+ expect(routed).toEqual(reference);
+ expect(routed.name).toBe('AdmissionError');
+ expect(routed.code).toBe('ACCESSOR_PROPERTY');
+ expect(routed.message).toBe('caller proxy failure');
+ expect(routed.path).toBe('/source/probe');
+
+ const constructed=new (AdmissionError as any)('ACCESSOR_PROPERTY','caller constructed error','/source/probe') as Error&{path:string};
+ const engine={validateCsvBooleanLexical(){throw constructed;},verifyCsvBooleanLexical(){throw constructed;}};
+ const facade=bindCsvBooleanLexicalRust(engine,isWireAdmissionError,isNativeUmfCoreError);
+ expect(outcome(()=>facade.validateCsvBooleanLexical(source as any,request('true')))).toMatchObject({name:'AdmissionError',code:'ACCESSOR_PROPERTY',message:'caller constructed error',path:'/source/probe'});
+});
+
+test('CSV unbranded proxy errors are rethrown without property reads',()=>{
+ let reads=0;
+ const failure=new Proxy(new Error('caller failure'),{get(target,key,receiver){reads++;return Reflect.get(target,key,receiver);},getOwnPropertyDescriptor(target,key){reads++;return Reflect.getOwnPropertyDescriptor(target,key);}});
+ const engine={validateCsvBooleanLexical(){throw failure;},verifyCsvBooleanLexical(){throw failure;}};
+ const facade=bindCsvBooleanLexicalRust(engine,isWireAdmissionError,isNativeUmfCoreError);
+ for(const run of [()=>facade.validateCsvBooleanLexical(source,request('true')),()=>facade.verifyCsvBooleanLexical({} as any,source,request('true'))]){
+  let caught:unknown;try{run();}catch(error){caught=error;}expect(caught).toBe(failure);
+ }
+ expect(reads).toBe(0);
 });

@@ -125,6 +125,10 @@ pub enum HostJsonEvent {
         offset: usize,
         max_units: usize,
     },
+    /// Execute the predecessor's native Unicode carrier loop against a
+    /// Rust-owned admitted copy. Hosts must not resolve this value through an
+    /// original input handle.
+    UnicodeCount { value: Value },
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -175,6 +179,49 @@ pub fn copy_host_json(
         0,
         &mut values,
         &mut active,
+    )
+}
+
+/// Ask the host to execute the predecessor's native Unicode-count operation
+/// against an already-admitted Rust value. The value is copied only after
+/// accounting for the invocation-local wire work; this is not another JSON
+/// admission and does not revisit the caller's host object.
+pub(crate) fn unicode_count_host_copy(
+    value: &Value,
+    host: &mut dyn HostJsonReflection,
+    ctx: &mut Context<'_>,
+) -> Result<usize, EngineError> {
+    fn charge_wire(value: &Value, ctx: &mut Context<'_>) -> Result<(), EngineError> {
+        ctx.charge_work(1, Utf16::default())?;
+        match value {
+            Value::Null | Value::Bool(_) => {}
+            Value::Number(_) => ctx.charge_work(16, Utf16::default())?,
+            Value::String(text) => {
+                ctx.charge_work(text.len().saturating_mul(6), Utf16::default())?;
+            }
+            Value::Array(items) => {
+                ctx.charge_work(items.len(), Utf16::default())?;
+                for item in items {
+                    charge_wire(item, ctx)?;
+                }
+            }
+            Value::Object(members) => {
+                ctx.charge_work(members.len(), Utf16::default())?;
+                for (key, child) in members {
+                    ctx.charge_work(key.len().saturating_mul(6), Utf16::default())?;
+                    charge_wire(child, ctx)?;
+                }
+            }
+        }
+        Ok(())
+    }
+
+    charge_wire(value, ctx)?;
+    expect_count(
+        host.reflect(HostJsonEvent::UnicodeCount {
+            value: value.clone(),
+        })?,
+        &Utf16::default(),
     )
 }
 
@@ -707,6 +754,21 @@ mod tests {
     }
     fn context(limits: Limits) -> Context<'static> {
         Context::with_limits(ResourceProfile::Cooperative, limits).unwrap()
+    }
+
+    #[test]
+    fn native_unicode_count_uses_the_admitted_copy_and_validates_count_reply() {
+        let value = Value::Object(vec![(k("length"), Value::Object(Vec::new()))]);
+        let expected = HostJsonEvent::UnicodeCount {
+            value: value.clone(),
+        };
+        let mut host = ScriptedHost::new(vec![event(expected, HostJsonReply::Count(0))]);
+        assert_eq!(
+            unicode_count_host_copy(&value, &mut host, &mut Context::ordinary()).unwrap(),
+            0
+        );
+        assert_eq!(host.seen.len(), 1);
+        host.done();
     }
 
     #[test]

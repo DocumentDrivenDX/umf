@@ -232,6 +232,32 @@ fn field_value_error(error: EngineError) -> Result<Validation, EngineError> {
         }],
     })
 }
+
+fn core_field_identity_refusal(identity: &Value) -> Option<Validation> {
+    let Value::Object(fields) = identity else {
+        return Some(field_value_refusal(
+            "CORE_SCHEMA_PROPERTIES",
+            "Expected object",
+            "/identity",
+        ));
+    };
+    for (name, _) in fields {
+        if name != &k("module") && name != &k("element") {
+            let mut path = "/identity/".encode_utf16().collect::<Vec<_>>();
+            path.extend(name.units());
+            let mut message = "Unknown relevant qualifier: "
+                .encode_utf16()
+                .collect::<Vec<_>>();
+            message.extend(name.units());
+            return Some(field_value_refusal_utf16(
+                "CORE_SCHEMA_PROPERTY_UNKNOWN",
+                Utf16::new(message),
+                Utf16::new(path),
+            ));
+        }
+    }
+    None
+}
 struct FieldValueNoCapabilities;
 impl Capabilities for FieldValueNoCapabilities {
     fn validate_extension(
@@ -256,6 +282,21 @@ impl Engine {
     ) -> Result<Value, EngineError> {
         let identity = copy_json(identity, ctx)?;
         let state = copy_json(state, ctx)?;
+        crate::schema_properties::preflight_core_default_operands(&identity, &state, ctx)?;
+        let source = copy_json(source, ctx)?;
+        self.resolve_core_default_after_preflight(source, identity, state, ctx)
+    }
+
+    /// Run default semantics on admitted operands after the staged state and
+    /// relevant identity checks have passed. This avoids a second source copy
+    /// in the raw host-object route.
+    pub(crate) fn resolve_core_default_after_preflight(
+        &self,
+        source: Value,
+        identity: Value,
+        state: Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
         let properties_error = |message: &str, path: &str| {
             EngineError::new("CORE_SCHEMA_PROPERTIES", Utf16::from(path), message)
         };
@@ -272,52 +313,19 @@ impl Engine {
                 Utf16::new(message),
             )
         };
-        let Value::Object(state_fields) = &state else {
+        let Value::Object(_) = &state else {
             return Err(properties_error("Expected object", "/state"));
         };
         let state_name = get(&state, "state").and_then(as_utf16);
         let missing = state_name == Some(&Utf16::from("missing"));
-        let present = state_name == Some(&Utf16::from("present"));
-        for (key, _) in state_fields {
-            if key != &k("state") && !(!missing && key == &k("value")) {
-                ctx.charge_text(
-                    key.len().saturating_mul(2).saturating_add(48),
-                    Utf16::from("/state"),
-                )?;
-                return Err(unknown(key, "/state/"));
-            }
-        }
-        if !missing && !present
-            || present && get(&state, "value").is_none()
-            || missing && state_fields.len() != 1
-            || present && state_fields.len() != 2
-        {
-            return Err(properties_error(
-                "Explicit missing/present state required",
-                "",
-            ));
-        }
-
-        // The TypeScript predecessor admits state before identity, so when
-        // both are malformed its first refusal is state-owned.
         let Value::Object(identity_fields) = &identity else {
             return Err(properties_error("Expected object", "/identity"));
         };
-        for (key, _) in identity_fields {
-            if key != &k("module") && key != &k("element") {
-                ctx.charge_text(
-                    key.len().saturating_mul(2).saturating_add(48),
-                    Utf16::from("/identity"),
-                )?;
-                return Err(unknown(key, "/identity/"));
-            }
-        }
         let module_id = get(&identity, "module").and_then(as_utf16);
         let element_id = get(&identity, "element").and_then(as_utf16);
 
-        // The predecessor validates the source before identity cardinality
-        // and nonempty checks, after its known-member refusal.
-        let source = copy_json(source, ctx)?;
+        // Source is already admitted. The predecessor validates it before
+        // identity cardinality and nonempty checks.
         if get(&source, "umf") != Some(&Value::string_utf8("0.10.0")) {
             return Err(properties_error(
                 "Expected valid current 0.10.0 envelope",
@@ -487,6 +495,53 @@ impl Engine {
             Ok(value) => value,
             Err(error) => return field_value_error(error),
         };
+        if let Some(refusal) = core_field_identity_refusal(&identity) {
+            return Ok(refusal);
+        }
+        let source = match copy_json(source, ctx) {
+            Ok(value) => value,
+            Err(error) => return field_value_error(error),
+        };
+        self.validate_core_field_value_after_admission(source, identity, value, ctx)
+    }
+
+    /// Apply the shared semantic body after host operands have been admitted
+    /// in predecessor order. It does not copy source, identity, or value.
+    pub(crate) fn validate_core_field_value_after_admission(
+        &self,
+        source: Value,
+        identity: Value,
+        value: Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Validation, EngineError> {
+        self.validate_core_field_value_after_admission_inner(source, identity, value, None, ctx)
+    }
+
+    pub(crate) fn validate_core_field_value_after_admission_with_host(
+        &self,
+        source: Value,
+        identity: Value,
+        value: Value,
+        host: &mut dyn crate::host_json::HostJsonReflection,
+        ctx: &mut Context<'_>,
+    ) -> Result<Validation, EngineError> {
+        self.validate_core_field_value_after_admission_inner(
+            source,
+            identity,
+            value,
+            Some(host),
+            ctx,
+        )
+    }
+
+    fn validate_core_field_value_after_admission_inner(
+        &self,
+        source: Value,
+        identity: Value,
+        value: Value,
+        host: Option<&mut dyn crate::host_json::HostJsonReflection>,
+        ctx: &mut Context<'_>,
+    ) -> Result<Validation, EngineError> {
         let identity_fields = match &identity {
             Value::Object(fields) => fields,
             _ => {
@@ -496,25 +551,6 @@ impl Engine {
                     "/identity",
                 ));
             }
-        };
-        for (name, _) in identity_fields {
-            if name != &k("module") && name != &k("element") {
-                let mut path = "/identity/".encode_utf16().collect::<Vec<_>>();
-                path.extend(name.units());
-                let mut message = "Unknown relevant qualifier: "
-                    .encode_utf16()
-                    .collect::<Vec<_>>();
-                message.extend(name.units());
-                return Ok(field_value_refusal_utf16(
-                    "CORE_SCHEMA_PROPERTY_UNKNOWN",
-                    Utf16::new(message),
-                    Utf16::new(path),
-                ));
-            }
-        }
-        let source = match copy_json(source, ctx) {
-            Ok(value) => value,
-            Err(error) => return field_value_error(error),
         };
         let mut capabilities = FieldValueNoCapabilities;
         let document_validation =
@@ -589,7 +625,15 @@ impl Engine {
                 "",
             ));
         }
-        self.validate_core_field_value_admitted(&source, field, &value, ctx)
+        if let Some(host) = host {
+            self.validate_core_field_value_admitted_with_host(&source, field, &value, host, ctx)
+        } else {
+            self.validate_core_field_value_admitted(&source, field, &value, ctx)
+        }
+    }
+
+    pub(crate) fn preflight_core_field_value_identity(identity: &Value) -> Option<Validation> {
+        core_field_identity_refusal(identity)
     }
 
     /// Shared Field-value body for callers that already own an admitted
@@ -608,6 +652,39 @@ impl Engine {
             value,
             true,
             &self.policy,
+            ctx,
+        )?;
+        for diagnostic in &mut diagnostics {
+            if diagnostic.code == Utf16::from("CORE_SCHEMA_PROPERTY_UNKNOWN") {
+                diagnostic.severity = Severity::Error;
+            }
+        }
+        let valid = !diagnostics
+            .iter()
+            .any(|item| item.severity == Severity::Error);
+        let complete = diagnostics.is_empty();
+        Ok(Validation {
+            valid,
+            complete,
+            diagnostics,
+        })
+    }
+
+    pub(crate) fn validate_core_field_value_admitted_with_host(
+        &self,
+        source: &Value,
+        field: &Value,
+        value: &Value,
+        host: &mut dyn crate::host_json::HostJsonReflection,
+        ctx: &mut Context<'_>,
+    ) -> Result<Validation, EngineError> {
+        let mut diagnostics = crate::literal::literal_field_value_errors_with_host_admitted(
+            source,
+            field,
+            value,
+            true,
+            &self.policy,
+            host,
             ctx,
         )?;
         for diagnostic in &mut diagnostics {
@@ -747,6 +824,29 @@ impl Engine {
         ctx: &mut Context<'_>,
         mut observer: Option<&mut dyn FnMut(&'static str, usize)>,
     ) -> Result<Validation, EngineError> {
+        let mut fallible_observer = |category, amount| {
+            if let Some(observer) = observer.as_deref_mut() {
+                observer(category, amount);
+            }
+            Ok(())
+        };
+        self.validate_document_observed_fallible(
+            value,
+            registry,
+            capabilities,
+            ctx,
+            Some(&mut fallible_observer),
+        )
+    }
+
+    pub(crate) fn validate_document_observed_fallible(
+        &self,
+        value: &Value,
+        registry: &Registry,
+        capabilities: &mut dyn Capabilities,
+        ctx: &mut Context<'_>,
+        mut observer: Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
+    ) -> Result<Validation, EngineError> {
         let document = match copy_json(value, ctx) {
             Ok(v) => v,
             Err(e) => {
@@ -768,7 +868,7 @@ impl Engine {
             }
         };
         if let Some(observer) = observer.as_deref_mut() {
-            observer("document-copy", crate::dataset_values::tree_values(value));
+            observer("document-copy", crate::dataset_values::tree_values(value))?;
         }
         self.validate_admitted_document(document, None, registry, capabilities, ctx, observer)
     }
@@ -901,7 +1001,7 @@ impl Engine {
         registry: &Registry,
         capabilities: &mut dyn Capabilities,
         ctx: &mut Context<'_>,
-        observer: Option<&mut dyn FnMut(&'static str, usize)>,
+        observer: Option<&mut dyn FnMut(&'static str, usize) -> Result<(), EngineError>>,
     ) -> Result<Validation, EngineError> {
         let diagnostics = self.core_structure_diagnostics(&document, ctx)?;
         if !diagnostics.is_empty() {

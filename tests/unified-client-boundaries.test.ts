@@ -37,3 +37,12 @@ test('dynamic imports and host hooks remain forbidden for allowlisted files', ()
 	expect(errors).toContain('rust-facets-default.ts: dynamic import');
 	expect(errors).toContain('rust-facets-default.ts: host or executable hook process');
 });
+
+test('import type nodes obey the exact per-file allowlist', () => {
+	const errors = checkAccessSource(
+		'rust-facets-default.ts',
+		"type Host = import('node:fs').Stats;\n",
+	);
+
+	expect(errors).toContain('rust-facets-default.ts: unapproved import type node:fs');
+});

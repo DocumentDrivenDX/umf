@@ -1,0 +1,53 @@
+{
+  "status": "pass",
+  "cohort": "current-fixed-point-c1ecf9ce-20261026",
+  "archiveVerification": {
+    "mode": "separate-preflight-attestation",
+    "independentArchiveRead": false,
+    "limit": "Archive bytes and member hashes were verified by the separately pinned preflight; this gate does not independently reopen the archive."
+  },
+  "browserEvidenceLimit": "The Chromium raw receipt does not record wasmRequested or externalRequests, so this gate makes no claim about browser WASM selection or external request activity.",
+  "archive": {
+    "sha256": "c1ecf9cea81c3767e281820a93294b85a45ab052862a9fcd8b0b493057302263",
+    "packageManifestSha256": "93bb2abb80a43545477e6e85bc6b7112f1819b38f8794297a9c9b801e8f41efa",
+    "sourceClosureSha256": "61cbaf0ae7a0359e9ae49d2aa4c436727f2122e4174d84999efb20f42d2c3b01",
+    "sourceInputCount": 3435,
+    "archiveMemberCount": 1788,
+    "recomputedCurrentSourceClosure": "61cbaf0ae7a0359e9ae49d2aa4c436727f2122e4174d84999efb20f42d2c3b01"
+  },
+  "hosts": {
+    "node": {
+      "host": "node",
+      "runtime": "Node v26.12.1",
+      "operationCount": 4,
+      "hostOutcome": "pass",
+      "controlCount": 7
+    },
+    "bun": {
+      "host": "bun",
+      "runtime": "Bun 1.4.3",
+      "operationCount": 4,
+      "hostOutcome": "pass",
+      "controlCount": 7
+    },
+    "chromium": {
+      "host": "chromium",
+      "runtime": "Chromium 153.0.8010.12",
+      "operationCount": 4,
+      "hostOutcome": "pass",
+      "controlCount": 7
+    }
+  },
+  "boundedOperations": 4,
+  "operationNames": [
+    "inspectCoreFacets",
+    "declareCoreFacets",
+    "verifyCoreFacetDeclaration",
+    "historicalCoreFacetPatch"
+  ],
+  "logicalRetirementGaps": 922,
+  "unresolvedResourceAliases": 17,
+  "resourceAuthorityUnresolved": true,
+  "completeParity": false,
+  "releaseQualified": false
+}

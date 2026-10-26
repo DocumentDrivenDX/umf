@@ -107,4 +107,18 @@ impl CoreKeyVerificationRuntime {
         .map_err(failure)?;
         Ok(result)
     }
+    #[napi]
+    pub fn discard_verification(
+        &self,
+        handle: &mut PreparedCoreKeyVerificationHandle,
+    ) -> Result<()> {
+        let (Some(stage), Some(_usage)) = (handle.inner.take(), handle.usage.take()) else {
+            return Err(failure(EngineError::new(
+                "CORE_KEY_STAGE",
+                Utf16::default(),
+                "Prepared verification stage was already consumed",
+            )));
+        };
+        self.inner.discard(stage).map_err(failure)
+    }
 }

@@ -236,21 +236,7 @@ impl CompactWorkLedger {
     }
 
     fn copy_tree_checked(&mut self, value: &Value) -> Result<(), EngineError> {
-        self.charge_checked("copy", 1)?;
-        match value {
-            Value::Array(items) => {
-                for item in items {
-                    self.copy_tree_checked(item)?;
-                }
-            }
-            Value::Object(members) => {
-                for (_, item) in members {
-                    self.copy_tree_checked(item)?;
-                }
-            }
-            _ => {}
-        }
-        Ok(())
+        self.copy_tree_mode(value, true)
     }
 
     fn enforce(&self) -> Result<(), EngineError> {
@@ -264,39 +250,104 @@ impl CompactWorkLedger {
         Ok(())
     }
 
-    fn count(&mut self, value: &Value) -> usize {
-        fn visit(value: &Value, ledger: &mut CompactWorkLedger, total: &mut usize) {
-            ledger.charge("count", 1);
-            *total = total.saturating_add(1);
-            match value {
-                Value::Array(items) => items.iter().for_each(|item| visit(item, ledger, total)),
-                Value::Object(members) => members
-                    .iter()
-                    .for_each(|(_, item)| visit(item, ledger, total)),
-                _ => {}
-            }
+    /// Charge the compact ledger with the same immediate refusal point as the
+    /// TypeScript `ValueWork` owner. The selected validation route keeps its
+    /// historical phase accounting; verification uses `checked = true` so
+    /// receipt admission, recomputation and final comparison share one
+    /// fail-fast ledger.
+    fn charge_mode(
+        &mut self,
+        category: impl Into<String>,
+        amount: usize,
+        checked: bool,
+    ) -> Result<(), EngineError> {
+        if checked {
+            self.charge_checked(category, amount)
+        } else {
+            self.charge(category, amount);
+            Ok(())
         }
-        let mut total = 0;
-        visit(value, self, &mut total);
-        total
     }
 
+    fn count_mode(&mut self, value: &Value, checked: bool) -> Result<usize, EngineError> {
+        fn visit(
+            value: &Value,
+            ledger: &mut CompactWorkLedger,
+            total: &mut usize,
+            checked: bool,
+        ) -> Result<(), EngineError> {
+            ledger.charge_mode("count", 1, checked)?;
+            *total = total.saturating_add(1);
+            match value {
+                Value::Array(items) => {
+                    for item in items {
+                        visit(item, ledger, total, checked)?;
+                    }
+                }
+                Value::Object(members) => {
+                    for (_, item) in members {
+                        visit(item, ledger, total, checked)?;
+                    }
+                }
+                _ => {}
+            }
+            Ok(())
+        }
+        let mut total = 0;
+        visit(value, self, &mut total, checked)?;
+        Ok(total)
+    }
+
+    fn count(&mut self, value: &Value) -> usize {
+        self.count_mode(value, false)
+            .expect("unchecked ledger cannot refuse")
+    }
+
+    fn count_checked(&mut self, value: &Value) -> Result<usize, EngineError> {
+        self.count_mode(value, true)
+    }
+
+    #[cfg(test)]
     fn walk(&mut self, category: &'static str, value: &Value, multiplier: usize) -> usize {
         let count = self.count(value);
         self.charge(category, count.saturating_mul(multiplier));
         count
     }
 
+    fn walk_mode(
+        &mut self,
+        category: &'static str,
+        value: &Value,
+        multiplier: usize,
+        checked: bool,
+    ) -> Result<usize, EngineError> {
+        let count = self.count_mode(value, checked)?;
+        self.charge_mode(category, count.saturating_mul(multiplier), checked)?;
+        Ok(count)
+    }
+
+    #[cfg(test)]
     fn copy_tree(&mut self, value: &Value) {
-        fn visit(value: &Value, ledger: &mut CompactWorkLedger) {
-            ledger.charge("copy", 1);
-            match value {
-                Value::Array(items) => items.iter().for_each(|item| visit(item, ledger)),
-                Value::Object(members) => members.iter().for_each(|(_, item)| visit(item, ledger)),
-                _ => {}
+        self.copy_tree_mode(value, false)
+            .expect("unchecked ledger cannot refuse");
+    }
+
+    fn copy_tree_mode(&mut self, value: &Value, checked: bool) -> Result<(), EngineError> {
+        self.charge_mode("copy", 1, checked)?;
+        match value {
+            Value::Array(items) => {
+                for item in items {
+                    self.copy_tree_mode(item, checked)?;
+                }
             }
+            Value::Object(members) => {
+                for (_, item) in members {
+                    self.copy_tree_mode(item, checked)?;
+                }
+            }
+            _ => {}
         }
-        visit(value, self);
+        Ok(())
     }
 
     /// Reserve the predecessor's complete canonical-string traversal before
@@ -416,6 +467,68 @@ impl CompactWorkLedger {
         visit(value, self)
     }
 
+    fn preflight_bytes_checked(&mut self, value: &Value) -> Result<usize, EngineError> {
+        fn string_bytes(text: &Utf16) -> usize {
+            let units = text.units();
+            let mut bytes = 2usize;
+            let mut i = 0;
+            while i < units.len() {
+                let unit = units[i];
+                bytes = bytes.saturating_add(match unit {
+                    0x22 | 0x5c => 2,
+                    0x08 | 0x09 | 0x0a | 0x0c | 0x0d => 2,
+                    0x00..=0x1f => 6,
+                    0xd800..=0xdbff
+                        if units
+                            .get(i + 1)
+                            .is_some_and(|next| (0xdc00..=0xdfff).contains(next)) =>
+                    {
+                        i += 1;
+                        4
+                    }
+                    0xd800..=0xdfff => 6,
+                    0x00..=0x7f => 1,
+                    0x80..=0x7ff => 2,
+                    _ => 3,
+                });
+                i += 1;
+            }
+            bytes
+        }
+        fn visit(value: &Value, ledger: &mut CompactWorkLedger) -> Result<usize, EngineError> {
+            ledger.charge_checked("preflight-byte-traversal", 1)?;
+            Ok(match value {
+                Value::Null => 4,
+                Value::Bool(true) => 4,
+                Value::Bool(false) => 5,
+                Value::Number(number) => crate::value::ecma_number_to_string(*number).len(),
+                Value::String(text) => string_bytes(text),
+                Value::Array(items) => {
+                    let mut children = 0usize;
+                    for item in items {
+                        children = children.saturating_add(visit(item, ledger)?);
+                    }
+                    2usize
+                        .saturating_add(items.len().saturating_sub(1))
+                        .saturating_add(children)
+                }
+                Value::Object(members) => {
+                    let mut children = 0usize;
+                    for (key, child) in members {
+                        children = children
+                            .saturating_add(string_bytes(key))
+                            .saturating_add(1)
+                            .saturating_add(visit(child, ledger)?);
+                    }
+                    2usize
+                        .saturating_add(members.len().saturating_sub(1))
+                        .saturating_add(children)
+                }
+            })
+        }
+        visit(value, self)
+    }
+
     fn aggregate_byte_traversal(&mut self, value: &Value) -> usize {
         fn visit(value: &Value, ledger: &mut CompactWorkLedger) -> usize {
             ledger.charge("aggregate-byte-traversal", 1);
@@ -426,6 +539,28 @@ impl CompactWorkLedger {
                 }
                 _ => 1,
             }
+        }
+        visit(value, self)
+    }
+
+    fn aggregate_byte_traversal_checked(&mut self, value: &Value) -> Result<usize, EngineError> {
+        fn visit(value: &Value, ledger: &mut CompactWorkLedger) -> Result<usize, EngineError> {
+            ledger.charge_checked("aggregate-byte-traversal", 1)?;
+            let mut total = 1usize;
+            match value {
+                Value::Array(items) => {
+                    for child in items {
+                        total = total.saturating_add(visit(child, ledger)?);
+                    }
+                }
+                Value::Object(members) => {
+                    for (_, child) in members {
+                        total = total.saturating_add(visit(child, ledger)?);
+                    }
+                }
+                _ => {}
+            }
+            Ok(total)
         }
         visit(value, self)
     }
@@ -505,6 +640,88 @@ impl CompactWorkLedger {
                 );
             }
         }
+    }
+
+    fn reserve_source_scans_checked(
+        &mut self,
+        source: &Value,
+        source_count: usize,
+    ) -> Result<(), EngineError> {
+        let modules = arr(get(source, "modules")).unwrap_or(&[]);
+        let elements = modules
+            .iter()
+            .flat_map(|module| arr(get(module, "elements")).unwrap_or(&[]))
+            .collect::<Vec<_>>();
+        let key_field_occurrences = elements
+            .iter()
+            .map(|element| {
+                arr(get(element, "keys"))
+                    .unwrap_or(&[])
+                    .iter()
+                    .fold(0usize, |total, key| {
+                        total.saturating_add(
+                            arr(get(key, "fields")).map_or(0, |fields| fields.len()),
+                        )
+                    })
+            })
+            .sum::<usize>();
+        let max_field_references = elements
+            .iter()
+            .map(|element| arr(get(element, "references")).map_or(0, |references| references.len()))
+            .max()
+            .unwrap_or(0);
+        self.charge_checked(
+            "source-key-reference-scans",
+            key_field_occurrences.saturating_mul(max_field_references),
+        )?;
+
+        let relationships = modules
+            .iter()
+            .flat_map(|module| arr(get(module, "relationships")).unwrap_or(&[]))
+            .collect::<Vec<_>>();
+        let endpoints = relationships.iter().fold(0usize, |total, relation| {
+            let source_count = arr(get(relation, "source")).map_or(0, |values| values.len());
+            let target_count = arr(get(relation, "target")).map_or(0, |values| values.len());
+            let association = usize::from(
+                get(relation, "associationRecord")
+                    .is_some_and(|value| !matches!(value, Value::Null | Value::Bool(false))),
+            );
+            total
+                .saturating_add(source_count)
+                .saturating_add(target_count)
+                .saturating_add(association)
+        });
+        let max_keys = elements
+            .iter()
+            .map(|element| arr(get(element, "keys")).map_or(0, |keys| keys.len()))
+            .max()
+            .unwrap_or(0);
+        let collision_work = elements
+            .len()
+            .saturating_mul(elements.len())
+            .saturating_add(2usize.saturating_mul(endpoints).saturating_mul(endpoints))
+            .saturating_add(endpoints.saturating_mul(max_keys));
+        self.charge_checked("source-index-collision-bound", collision_work)?;
+
+        for element in elements {
+            let mut declarations = Vec::new();
+            for key in ["examples", "allowedValues"] {
+                declarations.extend(arr(get(element, key)).unwrap_or(&[]).iter());
+            }
+            if let Some(default_value) =
+                get(element, "default").and_then(|default| get(default, "value"))
+            {
+                declarations.push(default_value);
+            }
+            for declaration in declarations {
+                let visits = self.count_checked(declaration)?;
+                self.charge_checked(
+                    "source-declaration-validation",
+                    source_count.saturating_mul(visits),
+                )?;
+            }
+        }
+        Ok(())
     }
 
     #[cfg(test)]
@@ -842,6 +1059,65 @@ mod compact_work_ledger_tests {
             .collect()
     }
 
+    fn set_field(value: &mut Value, name: &str, replacement: Value) {
+        let Value::Object(members) = value else {
+            panic!("expected object while setting {name}");
+        };
+        let (_, value) = members
+            .iter_mut()
+            .find(|(key, _)| key == &Utf16::from(name))
+            .unwrap_or_else(|| panic!("missing object member {name}"));
+        *value = replacement;
+    }
+
+    #[test]
+    fn checked_valuework_refuses_at_first_unit_over_limit() {
+        let mut ledger = CompactWorkLedger::default();
+        ledger
+            .charge_checked("predecessor-work", 1_000_000)
+            .unwrap();
+        assert_eq!(ledger.used, 1_000_000);
+        let error = ledger
+            .charge_checked("first-excess", 1)
+            .expect_err("the first unit over the shared limit must refuse immediately");
+        assert_eq!(error.code, "LIMIT");
+        assert_eq!(ledger.used, 1_000_000);
+        assert_eq!(ledger.categories.get("predecessor-work"), Some(&1_000_000));
+        assert!(!ledger.categories.contains_key("first-excess"));
+    }
+
+    #[test]
+    fn fallible_constraint_observer_refuses_at_the_crossing_charge() {
+        let frozen = read_fixture(include_str!(
+            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-commerce.json"
+        ));
+        let source = get(&frozen, "source").unwrap();
+        let source_nodes = tree_values(source);
+        let mut ledger = CompactWorkLedger::default();
+        ledger
+            .charge_checked("preceding-verification-work", 1_000_000 - source_nodes)
+            .unwrap();
+        let mut observed = Vec::new();
+        let mut observer = |category, amount| {
+            observed.push(category);
+            ledger.charge_checked(category, amount)
+        };
+        let error = fixture_engine()
+            .validate_document_observed_fallible(
+                source,
+                &Registry::default(),
+                &mut NoCapabilities,
+                &mut Context::ordinary(),
+                Some(&mut observer),
+            )
+            .expect_err("constraint-copy crosses the limit after document-copy reaches it");
+        drop(observer);
+        assert_eq!(error.code, "LIMIT");
+        assert_eq!(ledger.used, 1_000_000);
+        assert_eq!(observed, ["document-copy", "constraint-copy"]);
+        assert!(!ledger.categories.contains_key("constraint-copy"));
+    }
+
     #[test]
     fn frozen_verify_near_limit_pair_matches_shared_valuework_ledger() {
         for (filename, accepted) in [
@@ -917,6 +1193,95 @@ mod compact_work_ledger_tests {
                 );
             }
         }
+    }
+
+    #[test]
+    fn verify_carries_one_fail_fast_valuework_budget_through_recompute_and_receipt_compare() {
+        let frozen = read_fixture(include_str!(
+            "../../../docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-verify/frozen-near-limit-accepted.json"
+        ));
+        let mut receipt = get(&frozen, "receipt").unwrap().clone();
+        let current = get(&frozen, "current").unwrap().clone();
+        let mut expected_input = get(&frozen, "expectedInput").unwrap().clone();
+
+        // One additional valid record lets standalone validation complete at
+        // 787,808 TypeScript ValueWork units, while verification's receipt,
+        // copy and comparison overhead crosses the shared 1,000,000 limit.
+        // The deliberately stale result flag supplies a second simultaneous
+        // fault: without a cumulative verify ledger the final refusal would be
+        // CORE_DATASET_COMPACT_RECEIPT instead of the predecessor's LIMIT.
+        let instance_id = Utf16::from("compact-near-new");
+        let mut input_records = arr(Some(get(&expected_input, "records").unwrap()))
+            .unwrap()
+            .to_vec();
+        let mut input_record = input_records.last().unwrap().clone();
+        set_field(
+            &mut input_record,
+            "instanceId",
+            Value::String(instance_id.clone()),
+        );
+        input_records.push(input_record);
+        set_field(
+            &mut expected_input,
+            "records",
+            Value::Array(input_records.clone()),
+        );
+
+        let mut receipt_input = get(&receipt, "input").unwrap().clone();
+        set_field(&mut receipt_input, "records", Value::Array(input_records));
+        set_field(&mut receipt, "input", receipt_input);
+
+        let mut receipt_records = arr(Some(get(&receipt, "records").unwrap()))
+            .unwrap()
+            .to_vec();
+        let mut receipt_record = receipt_records.last().unwrap().clone();
+        set_field(
+            &mut receipt_record,
+            "instanceId",
+            Value::String(instance_id),
+        );
+        receipt_records.push(receipt_record);
+        set_field(&mut receipt, "records", Value::Array(receipt_records));
+
+        let mut dataset_validation = get(&receipt, "datasetValidation").unwrap().clone();
+        set_field(&mut dataset_validation, "valid", Value::Bool(true));
+        set_field(&mut receipt, "datasetValidation", dataset_validation);
+
+        let engine = fixture_engine();
+        let mut context = Context::ordinary();
+        let validator = CoreDatasetValueCompactValidator::new(&engine, &mut context).unwrap();
+        let standalone = validator
+            .validate(
+                &current,
+                &expected_input,
+                &engine,
+                &Registry::default(),
+                &mut NoCapabilities,
+                &mut context,
+            )
+            .expect("the same current/input validation is below ValueWork alone");
+        assert_eq!(
+            get(&standalone, "operation"),
+            Some(&s("validate-core-dataset-values-compact"))
+        );
+
+        let error = validator
+            .verify(
+                &receipt,
+                &current,
+                &expected_input,
+                &engine,
+                &Registry::default(),
+                &mut NoCapabilities,
+                &mut context,
+            )
+            .expect_err("verification adds receipt and comparison work to the same budget");
+        assert_eq!(error.code, "LIMIT");
+        assert_eq!(
+            error.message.to_utf8().unwrap(),
+            "Compact dataset JSON traversal/copy/semantic budget exceeded"
+        );
+        assert_eq!(error.path.to_utf8().unwrap(), "");
     }
 
     #[test]
@@ -2137,6 +2502,9 @@ impl CoreDatasetValueCompactValidator {
             true,
             true,
         )?;
+        // Verification's single ValueWork ledger also covers the complete
+        // current-source recomputation before receipt-result comparison.
+        compact_work.enforce()?;
         compact_work.reserve_verify_canonical_receipt_result(&receipt)?;
         compact_work.reserve_verify_canonical_receipt_result(&expected)?;
         compact_work.enforce()?;
@@ -2524,9 +2892,21 @@ fn validate_with_schemas_and_ledger(
         // Mirror createValueContext's source/input admission order. This is an
         // invocation-local ValueWork ledger; Context remains the host resource
         // meter and is deliberately not charged a second time here.
-        let source_count = compact_work.count(&source);
-        let source_bytes = compact_work.preflight_bytes(&source);
-        let input_bytes = compact_work.preflight_bytes(&input);
+        let source_count = if verify_recompute {
+            compact_work.count_checked(&source)?
+        } else {
+            compact_work.count(&source)
+        };
+        let source_bytes = if verify_recompute {
+            compact_work.preflight_bytes_checked(&source)?
+        } else {
+            compact_work.preflight_bytes(&source)
+        };
+        let input_bytes = if verify_recompute {
+            compact_work.preflight_bytes_checked(&input)?
+        } else {
+            compact_work.preflight_bytes(&input)
+        };
         if source_bytes.saturating_add(input_bytes) > 4_000_000 {
             return Err(err(
                 "LIMIT",
@@ -2553,15 +2933,26 @@ fn validate_with_schemas_and_ledger(
             &[&core_schema, &semantic_reference],
             "source-schema",
         )?;
-        compact_work.reserve_source_scans(&source, source_count);
+        if verify_recompute {
+            compact_work.reserve_source_scans_checked(&source, source_count)?;
+        } else {
+            compact_work.reserve_source_scans(&source, source_count);
+        }
         compact_work.enforce()?;
         compact_core_schema = Some(core_schema);
     }
     let early_document_validation = if compact {
-        let mut observer = |category: &'static str, amount: usize| {
-            compact_work.charge(category, amount);
-        };
-        Some(e.validate_document_observed(&source, r, c, x, Some(&mut observer))?)
+        if verify_recompute {
+            let mut observer = |category: &'static str, amount: usize| {
+                compact_work.charge_checked(category, amount)
+            };
+            Some(e.validate_document_observed_fallible(&source, r, c, x, Some(&mut observer))?)
+        } else {
+            let mut observer = |category: &'static str, amount: usize| {
+                compact_work.charge(category, amount);
+            };
+            Some(e.validate_document_observed(&source, r, c, x, Some(&mut observer))?)
+        }
     } else {
         None
     };
@@ -2578,10 +2969,15 @@ fn validate_with_schemas_and_ledger(
                 "/source",
             ));
         }
-        compact_work.walk("context-freeze", &source, 1);
-        compact_work.walk("context-freeze", &input, 1);
-        compact_work.walk("validation-freeze", &validation_value(validation), 1);
-        compact_work.walk("context-key-index", &source, 1);
+        compact_work.walk_mode("context-freeze", &source, 1, verify_recompute)?;
+        compact_work.walk_mode("context-freeze", &input, 1, verify_recompute)?;
+        compact_work.walk_mode(
+            "validation-freeze",
+            &validation_value(validation),
+            1,
+            verify_recompute,
+        )?;
+        compact_work.walk_mode("context-key-index", &source, 1, verify_recompute)?;
         compact_work.enforce()?;
     }
     if compact {
@@ -2705,11 +3101,18 @@ fn validate_with_schemas_and_ledger(
     }
     preflight(&source, &input, records, links, compact)?;
     if compact {
-        compact_work.walk("dataset-source-composition", &source, 4);
-        compact_work.walk("dataset-input-composition", &input, 8);
-        compact_work.aggregate_byte_traversal(&source);
-        compact_work.aggregate_byte_traversal(&input);
-        compact_work.aggregate_byte_traversal(&validation_value(&document_validation));
+        compact_work.walk_mode("dataset-source-composition", &source, 4, verify_recompute)?;
+        compact_work.walk_mode("dataset-input-composition", &input, 8, verify_recompute)?;
+        if verify_recompute {
+            compact_work.aggregate_byte_traversal_checked(&source)?;
+            compact_work.aggregate_byte_traversal_checked(&input)?;
+            compact_work
+                .aggregate_byte_traversal_checked(&validation_value(&document_validation))?;
+        } else {
+            compact_work.aggregate_byte_traversal(&source);
+            compact_work.aggregate_byte_traversal(&input);
+            compact_work.aggregate_byte_traversal(&validation_value(&document_validation));
+        }
         compact_work.enforce()?;
     }
 
@@ -2844,7 +3247,7 @@ fn validate_with_schemas_and_ledger(
             validate_core_record_values(e, &source, id, vals, x)?
         };
         if compact {
-            compact_work.copy_tree(&rr);
+            compact_work.copy_tree_mode(&rr, verify_recompute)?;
         }
         record_receipts.push(obj(vec![
             ("instanceId", str_value(&instance_id)),
@@ -2876,14 +3279,15 @@ fn validate_with_schemas_and_ledger(
             continue;
         };
         if compact {
-            compact_work.walk("record-index", owner, 1);
-            compact_work.walk("record-member-lookup", id, 1);
-            compact_work.walk("record-values", vals, 1);
-            compact_work.walk(
+            compact_work.walk_mode("record-index", owner, 1, verify_recompute)?;
+            compact_work.walk_mode("record-member-lookup", id, 1, verify_recompute)?;
+            compact_work.walk_mode("record-values", vals, 1, verify_recompute)?;
+            compact_work.walk_mode(
                 "record-document-diagnostics",
                 &validation_value(&document_validation),
                 1,
-            );
+                verify_recompute,
+            )?;
             let mut supplied_fields = BTreeMap::new();
             if let Value::Array(values) = vals {
                 for value in values {
@@ -2893,7 +3297,7 @@ fn validate_with_schemas_and_ledger(
                 }
             }
             for member in arr(get(owner, "members")).unwrap_or(&[]) {
-                compact_work.walk("record-member-lookup", member, 1);
+                compact_work.walk_mode("record-member-lookup", member, 1, verify_recompute)?;
                 let Some(member_id) = field_ident(member) else {
                     continue;
                 };
@@ -2904,12 +3308,12 @@ fn validate_with_schemas_and_ledger(
                     continue;
                 }
                 let field = declared_elements.get(&member_id).unwrap_or(&Value::Null);
-                compact_work.copy_tree(member);
+                compact_work.copy_tree_mode(member, verify_recompute)?;
                 let literal = get(supplied, "value").unwrap_or(&Value::Null);
-                compact_work.copy_tree(literal);
-                compact_work.walk("field-identity", member, 1);
-                compact_work.walk("literal-field-access", field, 4);
-                compact_work.walk("literal-value", literal, 4);
+                compact_work.copy_tree_mode(literal, verify_recompute)?;
+                compact_work.walk_mode("field-identity", member, 1, verify_recompute)?;
+                compact_work.walk_mode("literal-field-access", field, 4, verify_recompute)?;
+                compact_work.walk_mode("literal-value", literal, 4, verify_recompute)?;
                 if let Some(core_schema) = compact_core_schema.as_ref() {
                     let reference = crate::serialization::read_json_value(
                         &include_str!("../../../spec/core/semantic-type-reference.schema.json")
@@ -2935,11 +3339,12 @@ fn validate_with_schemas_and_ledger(
         if let Value::Array(vs) = vals {
             for v in vs {
                 if compact {
-                    compact_work.walk(
+                    compact_work.walk_mode(
                         "dataset-field-index",
                         get(v, "field").unwrap_or(&Value::Null),
                         1,
-                    );
+                        verify_recompute,
+                    )?;
                 }
                 if let Some(fid) = field_ident(get(v, "field").unwrap_or(&Value::Null)) {
                     supplied.entry(fid).or_insert_with(|| v.clone());
@@ -2953,7 +3358,12 @@ fn validate_with_schemas_and_ledger(
             let components = arr(get(key, "fields")).unwrap_or(&[]);
             if compact {
                 for component in components {
-                    compact_work.walk("dataset-key-component", component, 1);
+                    compact_work.walk_mode(
+                        "dataset-key-component",
+                        component,
+                        1,
+                        verify_recompute,
+                    )?;
                 }
             }
             let tuple: Vec<Value> = components
@@ -2980,9 +3390,14 @@ fn validate_with_schemas_and_ledger(
                     let Some(field_node) = declared_elements.get(&field_identity) else {
                         continue;
                     };
-                    compact_work.walk("literal-field-access", field_node, 4);
+                    compact_work.walk_mode(
+                        "literal-field-access",
+                        field_node,
+                        4,
+                        verify_recompute,
+                    )?;
                     if let Some(value) = tuple.get(index) {
-                        compact_work.walk("literal-value", value, 4);
+                        compact_work.walk_mode("literal-value", value, 4, verify_recompute)?;
                     }
                 }
             }
@@ -2993,22 +3408,28 @@ fn validate_with_schemas_and_ledger(
             ]);
             let tuple_value = Value::Array(tuple);
             if compact {
-                compact_work.walk("key-index-identity", &key_identity, 1);
-                compact_work.charge("key-component-index", components.len());
-                compact_work.charge(
+                compact_work.walk_mode("key-index-identity", &key_identity, 1, verify_recompute)?;
+                compact_work.charge_mode(
+                    "key-component-index",
+                    components.len(),
+                    verify_recompute,
+                )?;
+                compact_work.charge_mode(
                     "key-relevant-diagnostic-scans",
                     3usize
                         .saturating_mul(
                             1usize.saturating_add(2usize.saturating_mul(components.len())),
                         )
                         .saturating_mul(document_validation.diagnostics.len()),
-                );
-                compact_work.walk("key-values", &tuple_value, 1);
-                compact_work.walk(
+                    verify_recompute,
+                )?;
+                compact_work.walk_mode("key-values", &tuple_value, 1, verify_recompute)?;
+                compact_work.walk_mode(
                     "key-document-diagnostics",
                     &validation_value(&document_validation),
                     1,
-                );
+                    verify_recompute,
+                )?;
             }
             let encoded = if compact {
                 encode_core_key_tuple_compact_body(
@@ -3028,7 +3449,7 @@ fn validate_with_schemas_and_ledger(
             match encoded {
                 Ok(receipt) => {
                     if compact {
-                        compact_work.copy_tree(&receipt);
+                        compact_work.copy_tree_mode(&receipt, verify_recompute)?;
                     }
                     key_receipts.push(obj(vec![
                         ("instanceId", str_value(&instance_id)),
@@ -3088,12 +3509,13 @@ fn validate_with_schemas_and_ledger(
             .iter()
             .map(|module| arr(get(module, "relationships")).map_or(0, |items| items.len()))
             .sum::<usize>();
-        compact_work.charge(
+        compact_work.charge_mode(
             "dataset-relationship-diagnostic-scans",
             3usize
                 .saturating_mul(declaration_count)
                 .saturating_mul(document_validation.diagnostics.len()),
-        );
+            verify_recompute,
+        )?;
     }
     // TypeScript emits declaration residuals after supplied-record/key
     // diagnostics, while their support flags are computed before occurrence
@@ -3387,12 +3809,13 @@ fn validate_with_schemas_and_ledger(
             .iter()
             .filter(|identity| !unsupported_declarations.contains(*identity))
             .count();
-        compact_work.charge(
+        compact_work.charge_mode(
             "dataset-multiplicity-scans",
             16usize
                 .saturating_mul(supported_count)
                 .saturating_mul(records.len()),
-        );
+            verify_recompute,
+        )?;
     }
     for relation_id in &declaration_order {
         let declaration = &declarations[relation_id];
@@ -3551,10 +3974,14 @@ fn validate_with_schemas_and_ledger(
         ] {
             if let Some(Value::Array(items)) = get(&result, key) {
                 for item in items {
-                    compact_work.aggregate_byte_traversal(item);
+                    if verify_recompute {
+                        compact_work.aggregate_byte_traversal_checked(item)?;
+                    } else {
+                        compact_work.aggregate_byte_traversal(item);
+                    }
                     if key == "residuals" {
                         if let Some(value) = get(item, "value") {
-                            compact_work.copy_tree(value);
+                            compact_work.copy_tree_mode(value, verify_recompute)?;
                         }
                     }
                 }
@@ -3567,10 +3994,18 @@ fn validate_with_schemas_and_ledger(
             // `add()` calls retainBudget on every diagnostic before the
             // enclosing result is copied and byte-counted.
             for item in items {
-                compact_work.aggregate_byte_traversal(item);
+                if verify_recompute {
+                    compact_work.aggregate_byte_traversal_checked(item)?;
+                } else {
+                    compact_work.aggregate_byte_traversal(item);
+                }
             }
         }
-        compact_work.aggregate_byte_traversal(&result);
+        if verify_recompute {
+            compact_work.aggregate_byte_traversal_checked(&result)?;
+        } else {
+            compact_work.aggregate_byte_traversal(&result);
+        }
         if !verify_recompute {
             let compact_schema = crate::serialization::read_json_value(
                 &include_str!("../../../spec/core/dataset-value-compact-operation.schema.json")

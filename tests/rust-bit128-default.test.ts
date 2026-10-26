@@ -3,11 +3,11 @@ import {expect, test} from 'bun:test';
 import * as predecessorBit from '../src/model/bit128';
 import * as predecessorUuid from '../src/model/uuid';
 import {bindBit128Rust} from '../src/access/rust-bit128-default';
-import {createBit128Engine} from '../bindings/core/node/index.js';
+import {createBit128Engine,isBit128EngineError} from '../bindings/core/node/index.js';
 import packet from '../scripts/rust-migration/r5/bit128-default-route/predecessor.json';
 import oracle from '../fixtures/validation/uuid/bit128-oracle.json';
 
-const rust = bindBit128Rust(createBit128Engine());
+const rust = bindBit128Rust(createBit128Engine(),isBit128EngineError);
 const hex = '8000000000000000ffffffffffffffff';
 const uuidText = '80000000-0000-0000-ffff-ffffffffffff';
 const shape = (value: object) => ({

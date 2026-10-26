@@ -3,8 +3,8 @@
 use std::sync::Arc;
 
 use umf_core::{
-    Capabilities, Context, Diagnostic, Engine, EngineError, Registry, ResourceSet, Utf16, Value,
-    core_keys::PreparedCoreKeyOperationVerification,
+    core_keys::PreparedCoreKeyOperationVerification, Capabilities, Context, Diagnostic, Engine,
+    EngineError, Registry, ResourceSet, Utf16, Value,
 };
 
 struct NoExtensionCapabilities;
@@ -129,6 +129,20 @@ impl CoreKeyVerificationRuntime {
         }
         prepared.stage.verify_current(current, context)
     }
+
+    /// Deterministically release an engine-bound stage when host admission of
+    /// the current operand fails before `finish` can consume it.
+    pub fn discard(&self, prepared: PreparedCoreKeyVerification) -> Result<(), EngineError> {
+        if !Arc::ptr_eq(&prepared.owner, &self.owner) {
+            return Err(EngineError::new(
+                "CORE_KEY_STAGE",
+                Utf16::default(),
+                "Prepared verification stage belongs to another engine",
+            ));
+        }
+        drop(prepared.stage);
+        Ok(())
+    }
 }
 
 #[cfg(test)]
@@ -225,6 +239,23 @@ mod tests {
                 .unwrap(),
             receipt
         );
+    }
+
+    #[test]
+    fn discard_releases_only_a_stage_owned_by_the_runtime() {
+        let mut context = Context::ordinary();
+        let runtime = CoreKeyVerificationRuntime::new(resources(), &mut context).unwrap();
+        let mut other_context = Context::ordinary();
+        let other = CoreKeyVerificationRuntime::new(resources(), &mut other_context).unwrap();
+        let prepared = runtime
+            .prepare(&receipt(), &mut Context::ordinary())
+            .unwrap();
+        assert!(other.discard(prepared).is_err());
+
+        let prepared = runtime
+            .prepare(&receipt(), &mut Context::ordinary())
+            .unwrap();
+        runtime.discard(prepared).unwrap();
     }
 
     #[test]

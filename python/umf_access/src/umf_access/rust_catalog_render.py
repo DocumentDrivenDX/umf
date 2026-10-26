@@ -71,6 +71,52 @@ def render_variant(value: dict[str, Any]) -> dict[str, Any]:
     return result
 
 
+_GRAPH_PROFILE = "umf-access-captured-graph-validation/0.1.0"
+
+
+def _validate_graph_variant(value: object) -> None:
+    """Opt-in validator for the narrow captured-DTO graph profile."""
+    if type(value) is not dict:
+        raise TypeError("captured graph input must be an exact dict")
+    try:
+        from umf import _rust
+        result = _rust._rust_core.access_validate_captured_graph_variant(value)
+    except (AttributeError, ImportError):
+        raise CatalogLogicalRenderUnavailable(
+            "Rust captured graph validation capability unavailable"
+        ) from None
+    if type(result) is not dict or result.get("profile") != _GRAPH_PROFILE:
+        raise RuntimeError("Rust captured graph validator returned an invalid response")
+    if result.get("outcome") == "accepted" and set(result) == {"profile", "outcome"}:
+        return
+    if (
+        result.get("outcome") == "refused"
+        and set(result) == {"profile", "outcome", "kind", "code", "rule"}
+        and all(type(result[key]) is str for key in ("kind", "code", "rule"))
+    ):
+        if result["kind"] == "capture-error":
+            from umf_access.capture import CaptureError
+            raise CaptureError(result["code"], result["rule"])
+        raise RuntimeError("Rust captured graph validator returned an unsupported refusal")
+    raise RuntimeError("Rust captured graph validator returned an invalid outcome")
+
+
+def capture_with_rust_graph_validator(function: object) -> object:
+    """Private opt-in capture route; public ``capture`` stays Python-selected."""
+    from umf_access.capture import CapturedVariant, _capture_with_validator
+
+    def validate(node: object, parameters: tuple[object, ...], presence: frozenset[str]) -> None:
+        budget = _EncodingBudget()
+        ordered_presence = tuple(
+            parameter.name for parameter in parameters if parameter.name in presence
+        )
+        dto = _encode_capture(CapturedVariant(ordered_presence, node, parameters), budget)
+        budget.charge_output(dto)
+        _validate_graph_variant(dto)
+
+    return _capture_with_validator(function, validate)
+
+
 class _EncodingBudget:
     def __init__(self) -> None:
         self.nodes = 0

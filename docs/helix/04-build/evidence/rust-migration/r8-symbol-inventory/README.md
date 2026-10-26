@@ -900,3 +900,36 @@ The explicit `./reference` route still contains TypeScript executable
 semantics. The private SDK archive and the one-host
 [Python installed cohort](../r8-python-v8-closure-audit/current-source-installed-20261025.md)
 do not qualify a complete port or the six-cohort release matrix.
+
+## Current source-provenance refresh (2026-10-26)
+
+The deterministic ledger was regenerated after the Core Key staging and
+generated metamodel/V4-root source edits. The new ledger SHA-256 is
+`b569e0867e97b7e779692e0a7f7112579f3a125800490de8ce03a072c9621111`.
+The condition-aware inventory remains
+`47d46f3a3fe2dd5c621d3c05a11590db2567b98f7e172f120d92554489d84cec`.
+The regeneration changes provenance hashes and repeated source-closure pins;
+it does not change the 3,360 route rows, 58 accepted opt-in mappings, 864
+unmapped executable names, 922 logical retirement gaps, five previously
+recorded bounded installed binding routes, or resource classifications.
+`gap-ledger.mjs --check` and its 52 focused/integration tests pass. The
+five-route evidence is historical relative to the latest Core Key archive
+until all selected routes are replayed against one common closure; it does
+not retire a logical gap.
+
+## Current fixed-point R8 aggregate ledger (2026-10-26)
+
+The [current private installed-route aggregate](../r8-installed-route-evidence/current-61cbaf0a/aggregate.json)
+passes its separate [gate](../r8-installed-route-evidence/current-61cbaf0a/gate-result.json)
+for 24 bounded Node/Bun/Chromium operations on archive SHA-256
+`c1ecf9cea81c3767e281820a93294b85a45ab052862a9fcd8b0b493057302263`
+and exact source closure
+`61cbaf0ae7a0359e9ae49d2aa4c436727f2122e4174d84999efb20f42d2c3b01`.
+The current ledger SHA-256 is
+`632d608c8e56eae84d36a54fc4dcf02bca0f9f6b8b51b2de73f76dfcc3986689`.
+It records 62 accepted opt-in Rust mappings, 860 unmapped executable names,
+24 bounded aggregate-proven routes, all 922 logical retirement gaps, and 17
+unresolved resource aliases. Separate Schema Properties, Facets and
+Cardinality gates preserve their narrower scopes. The previous aggregate
+and ledger cohorts remain historical; no declaration is retired or release
+qualified by this private archive evidence.

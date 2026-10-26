@@ -3,6 +3,7 @@
 use napi::{Env, JsFunction, JsString, ValueType};
 use napi_derive::napi;
 use std::collections::BTreeMap;
+use std::fmt::Write as _;
 use umf_core::{
     host_json::{
         HostDescriptorSnapshot, HostDescriptorValue, HostHandle, HostJsonEvent, HostJsonKind,
@@ -378,6 +379,40 @@ pub fn execute_declare_core_schema_properties_host_json(
     umf_core_wire::result_envelope(result)
 }
 
+#[napi(js_name = "executeCoreSchemaPropertiesHostJson")]
+pub fn execute_core_schema_properties_host_json(
+    env: Env,
+    resources_wire: String,
+    operation: String,
+    source_handle: u32,
+    identity_handle: u32,
+    third_handle: u32,
+    dispatcher: JsFunction,
+) -> String {
+    let mut host = NodeHostJson { env, dispatcher, string_lengths: BTreeMap::new() };
+    let result = (|| -> Result<String, EngineError> {
+        let resources = umf_core_wire::decode(&resources_wire, &mut umf_core_wire::transport_context())?;
+        let resource = |name: &str| object_field(&resources, name).cloned().ok_or_else(|| {
+            EngineError::new("REQUEST", Utf16::from(name), "Explicit resource is required")
+        });
+        let engine = {
+            let mut catalog = Context::catalog();
+            Engine::new(ResourceSet::new(
+                resource("coreSchema")?, resource("referenceSchema")?,
+                resource("packageSchema")?, resource("constraints")?,
+                resource("domainPolicy")?,
+            ), &mut catalog)?
+        };
+        let mut ctx = Context::ordinary();
+        let value = umf_core::schema_properties_host_json::execute(
+            &operation, source_handle as HostHandle, identity_handle as HostHandle,
+            third_handle as HostHandle, &mut host, &engine, &mut ctx,
+        )?;
+        umf_core_wire::encode(&value, &mut ctx)
+    })();
+    umf_core_wire::result_envelope(result)
+}
+
 #[napi(js_name = "executeValidateCoreRecordValuesHostJson")]
 pub fn execute_validate_core_record_values_host_json(
     env: Env,
@@ -449,6 +484,10 @@ pub fn execute_validate_core_record_values_host_json(
 
 fn event_json(event: &HostJsonEvent) -> String {
     match event {
+        HostJsonEvent::UnicodeCount { value } => format!(
+            r#"{{"event":"unicode-count","carrier":{}}}"#,
+            rust_value_wire_json(value)
+        ),
         HostJsonEvent::ReadProperty { handle, key } => {
             let units = key.iter().map(u16::to_string).collect::<Vec<_>>().join(",");
             format!(r#"{{"event":"read-property","handle":{handle},"keyUnits":[{units}]}}"#)
@@ -486,6 +525,56 @@ fn event_json(event: &HostJsonEvent) -> String {
     }
 }
 
+fn rust_value_wire_json(value: &Value) -> String {
+    let mut output = String::new();
+    write_rust_value_wire_json(value, &mut output);
+    output
+}
+
+fn write_rust_value_wire_json(value: &Value, output: &mut String) {
+    match value {
+        Value::Null => output.push_str(r#"{"kind":"null"}"#),
+        Value::Bool(value) => {
+            let _ = write!(output, r#"{{"kind":"boolean","value":{value}}}"#);
+        }
+        Value::Number(value) => {
+            let _ = write!(output, r#"{{"kind":"number","bits":"{:016x}"}}"#, value.to_bits());
+        }
+        Value::String(value) => {
+            output.push_str(r#"{"kind":"string","units":["#);
+            write_utf16_units(value.units(), output);
+            output.push_str("]}");
+        }
+        Value::Array(values) => {
+            output.push_str(r#"{"kind":"array","items":["#);
+            for (index, item) in values.iter().enumerate() {
+                if index != 0 { output.push(','); }
+                write_rust_value_wire_json(item, output);
+            }
+            output.push_str("]}");
+        }
+        Value::Object(members) => {
+            output.push_str(r#"{"kind":"object","members":["#);
+            for (index, (key, value)) in members.iter().enumerate() {
+                if index != 0 { output.push(','); }
+                output.push_str(r#"{"key":["#);
+                write_utf16_units(key.units(), output);
+                output.push_str("],\"value\":");
+                write_rust_value_wire_json(value, output);
+                output.push('}');
+            }
+            output.push_str("]}");
+        }
+    }
+}
+
+fn write_utf16_units(units: &[u16], output: &mut String) {
+    for (index, unit) in units.iter().enumerate() {
+        if index != 0 { output.push(','); }
+        let _ = write!(output, "{unit}");
+    }
+}
+
 fn decode_reply(
     event: &HostJsonEvent,
     value: Value,
@@ -515,6 +604,7 @@ fn decode_reply(
         HostJsonEvent::ReadUtf16Chunk { .. } => {
             matches!(kind.as_str(), "utf16-chunk" | "host-exception")
         }
+        HostJsonEvent::UnicodeCount { .. } => matches!(kind.as_str(), "count" | "host-exception"),
     };
     if !kind_is_valid_for_event {
         return Err(protocol_error());

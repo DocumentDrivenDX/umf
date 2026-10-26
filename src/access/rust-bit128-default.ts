@@ -24,9 +24,12 @@ export interface Bit128RustEngine {
  bits128FromInteger: typeof bits128FromInteger;
 }
 
-function rustCall<T>(operation: () => T): T {
+type Bit128EngineErrorGuard=(error:unknown)=>boolean;
+
+function rustCall<T>(operation: () => T,isBit128EngineError:Bit128EngineErrorGuard): T {
  try { return operation(); }
  catch (error) {
+  if(!isBit128EngineError(error))throw error;
   const candidate = error as {name?: unknown; code?: unknown; message?: unknown; path?: unknown};
   if (candidate?.name === 'UmfCoreError' && typeof candidate.code === 'string' &&
    (candidate.code.startsWith('BIT128_') || candidate.code.startsWith('UUID_'))) {
@@ -41,8 +44,8 @@ function rustCall<T>(operation: () => T): T {
  * ordering, carrier copying, and codec semantics remain in the existing engine
  * and shared Rust implementation; this boundary only presents UMF errors.
  */
-export function bindBit128Rust(engine: Bit128RustEngine) {
- const call = <T>(operation: () => T) => rustCall(operation);
+export function bindBit128Rust(engine: Bit128RustEngine,isBit128EngineError:Bit128EngineErrorGuard=()=>false) {
+ const call = <T>(operation: () => T) => rustCall(operation,isBit128EngineError);
  return Object.freeze({
   parseBits128(hex: string): Bit128Value { return call(() => engine.parseBits128(hex)); },
   parseUuid(text: string): UuidValue { return call(() => engine.parseUuid(text)); },

@@ -1,4 +1,6 @@
 export declare class UmfCoreError extends Error { readonly code: string; readonly path: string }
+export declare function isWireAdmissionError(error: unknown): boolean;
+export declare function isNativeUmfCoreError(error: unknown): boolean;
 export interface SemanticTypeReference { vocabulary: string; version: string; term: string; [key: string]: unknown }
 export interface SemanticTypeCheck { status: 'valid'|'invalid'|'unknown'; complete: boolean; issues: string[] }
 export type TrustedSemanticTypeValidator = (value: unknown, definition: Record<string, unknown>, context: {reportWork(units: number): void}) => SemanticTypeCheck;
@@ -32,6 +34,7 @@ export interface UmfBit128Engine {
   bits128FromInteger(literal: {integerToken: string}, signed: boolean): Bit128Value;
 }
 export declare function createBit128Engine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): UmfBit128Engine;
+export declare function isBit128EngineError(error: unknown): boolean;
 export interface UmfJsonNumberEngine { assertExactJsonNumber(token: string): void }
 export declare function createJsonNumberEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): UmfJsonNumberEngine;
 export type JavascriptNumericLiteral = {integerToken: string} | {decimalToken: string};

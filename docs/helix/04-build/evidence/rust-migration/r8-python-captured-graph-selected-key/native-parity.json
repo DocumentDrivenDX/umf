@@ -1,0 +1,111 @@
+{
+  "extension": "/private/tmp/umf-r8-python-parity-overlay/umf/_rust_core.abi3.so",
+  "extension_sha256": "7bc19f08b0192f6eff40ef489566038b2348011e27e678347a1460abbb14f9d4",
+  "cases": [
+    {
+      "case": "get-valid-key-parameter",
+      "public": [
+        "accepted"
+      ],
+      "native": [
+        "accepted"
+      ],
+      "shape_equal": true
+    },
+    {
+      "case": "page-valid-key-parameter",
+      "public": [
+        "accepted"
+      ],
+      "native": [
+        "accepted"
+      ],
+      "shape_equal": true
+    },
+    {
+      "case": "get-foreign-module-refusal",
+      "public": [
+        "refused",
+        "CAPTURE_SIGNATURE",
+        "CAPTURE_SIGNATURE: Key belongs to another Record"
+      ],
+      "native": [
+        "refused",
+        "CAPTURE_SIGNATURE",
+        "CAPTURE_SIGNATURE: Key belongs to another Record"
+      ],
+      "shape_equal": true
+    },
+    {
+      "case": "get-selected-record-key-refusal",
+      "public": [
+        "refused",
+        "CAPTURE_SIGNATURE",
+        "CAPTURE_SIGNATURE: Key differs from selected Record Key"
+      ],
+      "native": [
+        "refused",
+        "CAPTURE_SIGNATURE",
+        "CAPTURE_SIGNATURE: Key differs from selected Record Key"
+      ],
+      "shape_equal": true
+    },
+    {
+      "case": "get-empty-identity-refusal",
+      "public": [
+        "refused",
+        "CAPTURE_SIGNATURE",
+        "CAPTURE_SIGNATURE: Key differs from selected Record Key"
+      ],
+      "native": [
+        "refused",
+        "CAPTURE_SIGNATURE",
+        "CAPTURE_SIGNATURE: Key differs from selected Record Key"
+      ],
+      "shape_equal": true
+    },
+    {
+      "case": "get-key-refusal-precedes-expression-parameter-refusal",
+      "public": [
+        "refused",
+        "CAPTURE_SIGNATURE",
+        "CAPTURE_SIGNATURE: Key belongs to another Record"
+      ],
+      "native": [
+        "refused",
+        "CAPTURE_SIGNATURE",
+        "CAPTURE_SIGNATURE: Key belongs to another Record"
+      ],
+      "shape_equal": true
+    },
+    {
+      "case": "get-expression-refusal-after-valid-key",
+      "public": [
+        "refused",
+        "CAPTURE_SIGNATURE",
+        "CAPTURE_SIGNATURE: expression references an undeclared parameter"
+      ],
+      "native": [
+        "refused",
+        "CAPTURE_SIGNATURE",
+        "CAPTURE_SIGNATURE: expression references an undeclared parameter"
+      ],
+      "shape_equal": true
+    },
+    {
+      "case": "page-key-refusal-precedes-expression-parameter-refusal",
+      "public": [
+        "refused",
+        "CAPTURE_SIGNATURE",
+        "CAPTURE_SIGNATURE: Key belongs to another Record"
+      ],
+      "native": [
+        "refused",
+        "CAPTURE_SIGNATURE",
+        "CAPTURE_SIGNATURE: Key belongs to another Record"
+      ],
+      "shape_equal": true
+    }
+  ],
+  "passed": 8
+}

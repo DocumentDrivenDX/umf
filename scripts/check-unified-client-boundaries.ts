@@ -24,6 +24,7 @@ const allowedImports:Record<string,readonly string[]>={
  'rust-host-reads-v4.ts':['./rust-candidate','./rust-host-reads-v3'],
  'rust-keys-default.ts':['../model/keys','../model/key-tuple','../model/types','../model/json','../model/errors'],
  'rust-relationships-default.ts':['../model/relationships','../model/types','../model/json','../model/errors'],
+ 'rust-schema-properties-default.ts':['../model/schema-properties','../model/schema-literals','../model/types'],
  'rust-runtime.ts':['../model/errors','./rust-candidate','./rust-host-reads-v3','./rust-host-reads-v4'],
  'table-client.ts':['../model/types','../extensions/tables','./types'],
  'table-runtime.ts':[],
@@ -37,6 +38,7 @@ export function checkAccessSource(file:string,text:string):string[]{
  const source=ts.createSourceFile(file,text,ts.ScriptTarget.Latest,true);
  function visit(node:ts.Node){
   if(ts.isImportDeclaration(node)&&ts.isStringLiteral(node.moduleSpecifier)&&!allowedForFile?.includes(node.moduleSpecifier.text))errors.push(file+': unapproved import '+node.moduleSpecifier.text);
+  if(ts.isImportTypeNode(node)&&ts.isLiteralTypeNode(node.argument)&&ts.isStringLiteral(node.argument.literal)&&!allowedForFile?.includes(node.argument.literal.text))errors.push(file+': unapproved import type '+node.argument.literal.text);
   if(ts.isExportDeclaration(node)&&node.moduleSpecifier&&ts.isStringLiteral(node.moduleSpecifier)&&!allowedForFile?.includes(node.moduleSpecifier.text))errors.push(file+': unapproved import '+node.moduleSpecifier.text);
   if(ts.isCallExpression(node)&&node.expression.kind===ts.SyntaxKind.ImportKeyword)errors.push(file+': dynamic import');
   if(ts.isIdentifier(node)&&forbidden.has(node.text))errors.push(file+': host or executable hook '+node.text);

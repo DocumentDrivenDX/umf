@@ -1,0 +1,88 @@
+{
+  "format": "umf.r8.core-keys-default-installed-current/1",
+  "status": "pass",
+  "harnessSha256": "2639f26e5cb705ae9652c28f7447b65d32a8f97cc6dfe98edb2da05c236426e2",
+  "archive": {
+    "path": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/.cache/sdk-distribution/umf-sdk.tgz",
+    "sha256": "23be02c51926c48e3426f189d64570d5dc514447fa1c8830bcb74dfeda72c5fe",
+    "bytes": 43104493,
+    "manifestSha256": "810d3089df71beb8135cce2ccc4d4505a70422337aed1bcd4cc4da27f5b2fe50",
+    "verifiedMemberCount": 1788
+  },
+  "sourceClosure": {
+    "expectedSha256": "7144ad5a682b32501db6692177b348ae1760a224585394f19f450e41dd4518c7",
+    "sha256": "7144ad5a682b32501db6692177b348ae1760a224585394f19f450e41dd4518c7",
+    "capturedLiveSha256": "7144ad5a682b32501db6692177b348ae1760a224585394f19f450e41dd4518c7",
+    "fileCount": 3435,
+    "transform": {
+      "status": "fixed-point",
+      "generatedInputs": []
+    }
+  },
+  "predecessor": {
+    "path": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/docs/helix/04-build/evidence/rust-migration/r8-core-keys-default-boundary/refreshed-predecessor-20261025.json",
+    "sha256": "503d47318c8bb5f31bca1839393e3ff14e88599abb14d5d7b7354276e70b4e74"
+  },
+  "operations": [
+    "inspect",
+    "lookup",
+    "declareMembers",
+    "declareKey"
+  ],
+  "hosts": {
+    "node": {
+      "runtime": "Node v26.12.1",
+      "caseCount": 4,
+      "operations": [
+        "inspect",
+        "lookup",
+        "declareMembers",
+        "declareKey"
+      ],
+      "frozenOutcomes": true,
+      "referenceParity": true,
+      "prototypeAndKeyOrder": true,
+      "hostAdmission": {
+        "lookupIdentityBeforeSource": true,
+        "keyRequestBeforeSource": true
+      }
+    },
+    "bun": {
+      "runtime": "Bun 1.4.3",
+      "caseCount": 4,
+      "operations": [
+        "inspect",
+        "lookup",
+        "declareMembers",
+        "declareKey"
+      ],
+      "frozenOutcomes": true,
+      "referenceParity": true,
+      "prototypeAndKeyOrder": true,
+      "hostAdmission": {
+        "lookupIdentityBeforeSource": true,
+        "keyRequestBeforeSource": true
+      }
+    },
+    "chromium": {
+      "version": "153.0.8010.12",
+      "status": "pass",
+      "operations": [
+        "inspect",
+        "lookup",
+        "declareMembers",
+        "declareKey"
+      ],
+      "caseCount": 4,
+      "referenceParity": true,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+      "wasmRequested": true
+    }
+  },
+  "limits": {
+    "retainedUnknown700000": "Not included in this minimal reproducible replay; retain historical installed receipt for this control",
+    "maxWork": "not claimed",
+    "cancellation": "not claimed"
+  },
+  "qualification": "Source-current installed replay of the four selected Core Keys routes and baseline outcomes; does not qualify verifyCoreKeyOperation, full retirement, SDK release, or general resource limits."
+}

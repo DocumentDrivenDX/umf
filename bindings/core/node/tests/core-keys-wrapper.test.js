@@ -59,13 +59,30 @@ for (const [host, factory] of [['Node/Bun', nodeOperations], ['WASM', wasmOperat
 
   test(`${host} consumes a prepared verification handle on finish failure`, () => {
     let finishCalls = 0;
+    let discardCalls = 0;
     const api = factory(() => null, {
       prepare() { return Object.freeze({native: true}); },
       finish() { finishCalls++; throw new Error('current admission failed'); },
+      discard() { discardCalls++; },
     });
     const handle = api.prepareCoreKeyVerification({operation: 'test'});
     expect(() => api.finishCoreKeyVerification(handle, {invalid: true})).toThrow('current admission failed');
     expect(() => api.finishCoreKeyVerification(handle, {valid: true})).toThrow('Invalid private key verification handle');
     expect(finishCalls).toBe(1);
+    expect(discardCalls).toBe(1);
+  });
+
+  test(`${host} discards a prepared verification stage exactly once`, () => {
+    const discarded = [];
+    const api = factory(() => null, {
+      prepare(receipt) { return {receipt}; },
+      finish() { throw new Error('finish should not run'); },
+      discard(stage) { discarded.push(stage); },
+    });
+    const handle = api.prepareCoreKeyVerification({receipt: 1});
+    expect(api.discardCoreKeyVerification(handle)).toBeUndefined();
+    expect(() => api.discardCoreKeyVerification(handle)).toThrow('Invalid private key verification handle');
+    expect(() => api.finishCoreKeyVerification(handle, {})).toThrow('Invalid private key verification handle');
+    expect(discarded).toEqual([{receipt: {receipt: 1}}]);
   });
 }

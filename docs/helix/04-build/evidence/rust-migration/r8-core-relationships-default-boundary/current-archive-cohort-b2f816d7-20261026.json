@@ -1,0 +1,62 @@
+{
+  "format": "umf.r8.core-relationships-fixed-point-replay-cohort/1",
+  "status": "pass",
+  "archive": {
+    "path": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/.cache/sdk-distribution/umf-sdk.tgz",
+    "sha256": "b2f816d7f7bd3b57df1ecea536ceece4396a3625b2a641eb0991d135037de892",
+    "bytes": 43106508,
+    "manifestSha256": "d5e142c2fc36ec2919bd4cbe7aabee1193532c56fcac8917e96dce2be709550c"
+  },
+  "sourceClosure": {
+    "sha256": "0e6de413298318b0e8bcb03cac522872452b8c1e548f18a26f226d28967ce5c0",
+    "capturedLiveSha256": "0e6de413298318b0e8bcb03cac522872452b8c1e548f18a26f226d28967ce5c0",
+    "status": "fixed-point",
+    "fileCount": 3435,
+    "generatedInputCount": 0
+  },
+  "archiveMemberHashes": {
+    "dist/umf-node.js": "93a1d0299163b8b2f01b3c3eb511d0dcc303c8d24467ea0a47fa29b1a6543d39",
+    "dist/umf-browser.js": "55df7a6b487f8f7d4477fea06995e337a0fc4cf61931991f10170c917407c934",
+    "dist/umf_core_node.node": "2cad22990de9bd499a77c5547732a75f8b75f841959965becccca442936c343e",
+    "dist/umf_core_wasm_bg.wasm": "449eaafd4ad2bc130ad2357ee7b734cbb2501b635975807801c6c75702f84ed8"
+  },
+  "predecessorPacketSha256": "1122fc4d019f055570ea72baf88788818091dd513c05f9070624cba15dedb71e",
+  "hosts": {
+    "bun": {
+      "path": "/private/tmp/r8-core-relationships-b2f816d7-bun.json",
+      "sha256": "f11d2b64e7e5901e44594fc5f42be13c65350187d63d5ec012550d5c4ea6f580",
+      "runtime": "Bun 1.4.3",
+      "status": "pass",
+      "caseCount": 11,
+      "packetSha256": "1122fc4d019f055570ea72baf88788818091dd513c05f9070624cba15dedb71e",
+      "artifactHashes": {
+        "nodeEntry": "93a1d0299163b8b2f01b3c3eb511d0dcc303c8d24467ea0a47fa29b1a6543d39",
+        "nativeAddon": "2cad22990de9bd499a77c5547732a75f8b75f841959965becccca442936c343e"
+      }
+    },
+    "node": {
+      "path": "/private/tmp/r8-core-relationships-b2f816d7-node.json",
+      "sha256": "7dd57f04c0a410f3e89472693aba9a55d476f27a0a163ee4418c5921c63bbfac",
+      "runtime": "Node v26.12.1",
+      "status": "pass",
+      "caseCount": 11,
+      "packetSha256": "1122fc4d019f055570ea72baf88788818091dd513c05f9070624cba15dedb71e",
+      "artifactHashes": {
+        "nodeEntry": "93a1d0299163b8b2f01b3c3eb511d0dcc303c8d24467ea0a47fa29b1a6543d39",
+        "nativeAddon": "2cad22990de9bd499a77c5547732a75f8b75f841959965becccca442936c343e"
+      }
+    },
+    "chromium": {
+      "path": "/private/tmp/r8-core-relationships-b2f816d7-chromium.json",
+      "sha256": "4751198766b1f52192e4033810976d2360581682267080eb5f459862c4239343",
+      "runtime": "Chromium 153.0.8010.12",
+      "status": "pass",
+      "caseCount": 11,
+      "packetSha256": "1122fc4d019f055570ea72baf88788818091dd513c05f9070624cba15dedb71e",
+      "artifactHashes": {
+        "browserEntry": "55df7a6b487f8f7d4477fea06995e337a0fc4cf61931991f10170c917407c934",
+        "wasm": "449eaafd4ad2bc130ad2357ee7b734cbb2501b635975807801c6c75702f84ed8"
+      }
+    }
+  }
+}

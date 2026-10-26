@@ -1,0 +1,29 @@
+{
+  "format": "umf.r8.captured-graph-validator-predecessor/1",
+  "status": "frozen-local-observation",
+  "runtime": {
+    "implementation": "cpython",
+    "python": "3.13.16",
+    "pydantic": "2.14.1"
+  },
+  "sourcePins": {
+    "python/umf_access/src/umf_access/capture.py": "492f68954ca66f3fbd15eb008f7e1d6fa690829d9c31e3ec3d85ecb09a7e67a6"
+  },
+  "caseCount": 9,
+  "cases": [
+    {"id":"root-field-param","result":{"outcome":"accepted","variantCount":1}},
+    {"id":"foreign-field","result":{"outcome":"refused","exceptionClass":"TypeError","code":null,"message":"expression column belongs to another Record"}},
+    {"id":"owner-before-undeclared","result":{"outcome":"refused","exceptionClass":"TypeError","code":null,"message":"expression column belongs to another Record"}},
+    {"id":"undeclared-before-owner","result":{"outcome":"refused","exceptionClass":"CaptureError","code":"CAPTURE_SIGNATURE","message":"CAPTURE_SIGNATURE: expression references an undeclared parameter"}},
+    {"id":"foreign-literal-key","result":{"outcome":"refused","exceptionClass":"CaptureError","code":"CAPTURE_SIGNATURE","message":"CAPTURE_SIGNATURE: Key belongs to another Record"}},
+    {"id":"foreign-key-parameter","result":{"outcome":"refused","exceptionClass":"CaptureError","code":"CAPTURE_SIGNATURE","message":"CAPTURE_SIGNATURE: Key belongs to another Record"}},
+    {"id":"selected-key-crossed-with-foreign-field","result":{"outcome":"refused","exceptionClass":"CaptureError","code":"CAPTURE_SIGNATURE","message":"CAPTURE_SIGNATURE: Key differs from selected Record Key"}},
+    {"id":"valid-selected-key","result":{"outcome":"accepted","variantCount":1}},
+    {"id":"key-param-components-mismatch","result":{"outcome":"refused","exceptionClass":"CaptureError","code":"CAPTURE_SIGNATURE","message":"CAPTURE_SIGNATURE: Key component parameters differ from declared carrier"}}
+  ],
+  "limits": [
+    "Standalone synthetic declarations; no generated commerce package imported.",
+    "Refusals are direct public capture() exception class, code and str(error).",
+    "This compact outcome packet does not yet include raw tagged DTO bytes; the existing R8 captured-declaration packets provide that separate DTO precedent."
+  ]
+}

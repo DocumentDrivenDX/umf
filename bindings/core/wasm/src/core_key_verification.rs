@@ -103,4 +103,18 @@ impl CoreKeyVerificationRuntime {
         })
         .map_err(js_error)
     }
+    #[wasm_bindgen(js_name = discardVerification)]
+    pub fn discard_verification(
+        &self,
+        handle: &mut PreparedCoreKeyVerificationHandle,
+    ) -> Result<(), JsValue> {
+        let (Some(stage), Some(_usage)) = (handle.inner.take(), handle.usage.take()) else {
+            return Err(js_error(EngineError::new(
+                "CORE_KEY_STAGE",
+                Utf16::default(),
+                "Prepared verification stage was already consumed",
+            )));
+        };
+        self.inner.discard(stage).map_err(js_error)
+    }
 }

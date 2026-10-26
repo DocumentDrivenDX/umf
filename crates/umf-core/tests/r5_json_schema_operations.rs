@@ -325,9 +325,11 @@ fn inspection_returns_full_validation_for_invalid_documents_and_null_schema_root
         js::inspect_json_schema(&warning_document, &mut Context::ordinary()).unwrap();
     assert!(retained_warning.valid);
     assert!(!retained_warning.complete);
+    // The empty schema is within the inspected validator profile. The only
+    // incompleteness here is the separately retained, unknown UMF extension.
     assert_eq!(
         retained_warning.diagnostics.len(),
-        2,
+        1,
         "{:#?}",
         retained_warning.diagnostics
     );
@@ -342,10 +344,6 @@ fn inspection_returns_full_validation_for_invalid_documents_and_null_schema_root
     assert_eq!(
         retained_warning.diagnostics[0].message,
         Utf16::from("Exact extension version unavailable; content retained")
-    );
-    assert_eq!(
-        retained_warning.diagnostics[1].code,
-        Utf16::from("JSON_SCHEMA_VALIDATOR_LIMIT")
     );
 
     let mut unknown_version = js::import_json_schema(

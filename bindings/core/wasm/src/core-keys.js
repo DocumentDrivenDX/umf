@@ -45,7 +45,19 @@ export function createCoreKeysOperations(invoke, nativeVerification = undefined)
       }
       const stage = prepared.get(handle);
       prepared.delete(handle);
-      return nativeVerification.finish(stage, current);
+      try { return nativeVerification.finish(stage, current); }
+      catch (error) {
+        try { nativeVerification.discard?.(stage); } catch {}
+        throw error;
+      }
+    };
+    api.discardCoreKeyVerification = handle => {
+      if (!handle || typeof handle !== 'object' || !prepared.has(handle)) {
+        throw new TypeError('Invalid private key verification handle');
+      }
+      const stage = prepared.get(handle);
+      prepared.delete(handle);
+      nativeVerification.discard?.(stage);
     };
   }
   return Object.freeze(api);

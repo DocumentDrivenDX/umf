@@ -39,6 +39,9 @@ export interface UmfCoreDocumentEngine extends UmfCoreEngine {
   writeDocument(document: unknown, format?: 'json' | 'yaml', registry?: UmfCoreRegistration[]): string;
 }
 export declare class UmfCoreError extends Error {readonly code: string; readonly path: string}
+export declare function isWireAdmissionError(error: unknown): boolean;
+export declare function isNativeUmfCoreError(error: unknown): boolean;
+export declare function isBit128EngineError(error: unknown): boolean;
 export interface SemanticTypeRegistry {
   register(reference: unknown, definition: unknown, validator?: (value: unknown, definition: unknown, context: {reportWork(units: number): void}) => unknown): this;
   lookup(reference: unknown): unknown;

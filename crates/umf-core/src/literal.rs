@@ -10,6 +10,50 @@ use crate::{
     value::{Utf16, Value, copy_json},
 };
 
+#[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
+use crate::host_json::{HostJsonReflection, unicode_count_host_copy};
+#[cfg(all(test, not(all(feature = "metamodel-compiler", not(feature = "full-core")))))]
+use crate::host_json;
+
+// The compiler-only metamodel closure excludes runtime host adapters. Literal
+// APIs in that closure never receive a host, but share the evaluator's type
+// shape with full-core builds. Keep only an unreachable local shim here rather
+// than pulling the runtime reflection module into the compiler closure.
+#[cfg(all(feature = "metamodel-compiler", not(feature = "full-core")))]
+mod host_json {
+    use crate::{Context, EngineError, Utf16, Value};
+
+    #[derive(Clone, Debug, PartialEq)]
+    pub enum HostJsonEvent {
+        UnicodeCount { value: Value },
+    }
+
+    #[derive(Clone, Debug, PartialEq)]
+    pub enum HostJsonReply {
+        Count(usize),
+    }
+
+    pub trait HostJsonReflection {
+        fn reflect(&mut self, event: HostJsonEvent) -> Result<HostJsonReply, EngineError>;
+        fn release_descriptor_snapshot(&mut self, token: u64);
+    }
+
+    pub fn unicode_count_host_copy(
+        _: &Value,
+        _: &mut dyn HostJsonReflection,
+        _: &mut Context<'_>,
+    ) -> Result<usize, EngineError> {
+        Err(EngineError::new(
+            "HOST_JSON_UNAVAILABLE",
+            Utf16::default(),
+            "Host JSON reflection is unavailable in the metamodel compiler closure",
+        ))
+    }
+}
+
+#[cfg(all(feature = "metamodel-compiler", not(feature = "full-core")))]
+use host_json::{HostJsonReflection, unicode_count_host_copy};
+
 /// Canonical base-10 integer coefficient used when decimal text must stay
 /// linear in its number of digits instead of passing through BigInt radix
 /// conversion. Zero is always positive and has the single digit `0`.
@@ -251,8 +295,27 @@ fn text(value: &Value) -> Option<&Utf16> {
 /// Compatibility for the public TypeScript field-value API's dynamic
 /// `value.length` / `value.charCodeAt(i)` sequence. JSON copying creates
 /// null-prototype objects, so object-to-primitive conversion has no default.
-fn public_string_carrier_count(raw: &Value, ctx: &mut Context<'_>) -> Result<usize, EngineError> {
+fn public_string_carrier_count(
+    raw: &Value,
+    host: &mut Option<&mut dyn HostJsonReflection>,
+    ctx: &mut Context<'_>,
+) -> Result<usize, EngineError> {
+    // These text values remain only for the historical direct-Rust R5
+    // compatibility surface. The installed host route replaces each native
+    // TypeError case with an adapter-local probe and never exposes this text
+    // as canonical JavaScript wording.
     let type_error = |message: &str| EngineError::new("TYPE_ERROR", Utf16::default(), message);
+    let native_error = |host: &mut Option<&mut dyn HostJsonReflection>,
+                        ctx: &mut Context<'_>,
+                        probe: Value,
+                        message: &str|
+     -> Result<usize, EngineError> {
+        if let Some(host) = host.as_deref_mut() {
+            unicode_count_host_copy(&probe, host, ctx)
+        } else {
+            Err(type_error(message))
+        }
+    };
     enum LengthValue<'a> {
         Borrowed(&'a Value),
         Number(f64),
@@ -260,9 +323,12 @@ fn public_string_carrier_count(raw: &Value, ctx: &mut Context<'_>) -> Result<usi
     }
     let length = match raw {
         Value::Null => {
-            return Err(type_error(
+            return native_error(
+                host,
+                ctx,
+                Value::Null,
                 "null is not an object (evaluating 'value.length')",
-            ));
+            );
         }
         Value::Array(values) => LengthValue::Number(values.len() as f64),
         Value::Object(_) => get(raw, "length")
@@ -275,9 +341,12 @@ fn public_string_carrier_count(raw: &Value, ctx: &mut Context<'_>) -> Result<usi
         LengthValue::Undefined => return Ok(0),
         LengthValue::Number(value) => {
             if value > 0.0 {
-                return Err(type_error(
+                return native_error(
+                    host,
+                    ctx,
+                    Value::Object(vec![(key("length"), Value::Number(1.0))]),
                     "value.charCodeAt is not a function. (In 'value.charCodeAt(i)', 'value.charCodeAt' is undefined)",
-                ));
+                );
             }
             return Ok(0);
         }
@@ -345,15 +414,35 @@ fn public_string_carrier_count(raw: &Value, ctx: &mut Context<'_>) -> Result<usi
             }
             ctx.charge_work(text_units, Utf16::default())?;
             let mut joined = Vec::with_capacity(text_units);
-            array_to_string(values, &mut joined)?;
+            if let Err(error) = array_to_string(values, &mut joined) {
+                if host.is_some() {
+                    return native_error(
+                        host,
+                        ctx,
+                        Value::Object(vec![(key("length"), Value::Object(Vec::new()))]),
+                        "No default value",
+                    );
+                }
+                return Err(error);
+            }
             to_number(Primitive::String(&Utf16::new(joined)), ctx)?
         }
-        Value::Object(_) => return Err(type_error("No default value")),
+        Value::Object(_) => {
+            return native_error(
+                host,
+                ctx,
+                Value::Object(vec![(key("length"), Value::Object(Vec::new()))]),
+                "No default value",
+            );
+        }
     };
     if number > 0.0 {
-        return Err(type_error(
+        return native_error(
+            host,
+            ctx,
+            Value::Object(vec![(key("length"), Value::Number(1.0))]),
             "value.charCodeAt is not a function. (In 'value.charCodeAt(i)', 'value.charCodeAt' is undefined)",
-        ));
+        );
     }
     Ok(0)
 }
@@ -361,6 +450,33 @@ fn public_string_carrier_count(raw: &Value, ctx: &mut Context<'_>) -> Result<usi
 #[cfg(test)]
 mod public_carrier_tests {
     use super::*;
+
+    struct ErrorProbeHost(Vec<super::host_json::HostJsonEvent>);
+    impl HostJsonReflection for ErrorProbeHost {
+        fn reflect(
+            &mut self,
+            event: super::host_json::HostJsonEvent,
+        ) -> Result<super::host_json::HostJsonReply, EngineError> {
+            self.0.push(event);
+            Err(EngineError::new(
+                "HOST_JSON_CALLBACK",
+                Utf16::default(),
+                "native host exception probe",
+            ))
+        }
+        fn release_descriptor_snapshot(&mut self, _: u64) {}
+    }
+
+    struct ZeroCountHost;
+    impl HostJsonReflection for ZeroCountHost {
+        fn reflect(
+            &mut self,
+            _: super::host_json::HostJsonEvent,
+        ) -> Result<super::host_json::HostJsonReply, EngineError> {
+            Ok(super::host_json::HostJsonReply::Count(0))
+        }
+        fn release_descriptor_snapshot(&mut self, _: u64) {}
+    }
 
     #[test]
     fn decimal_precision_limits_saturate_by_target_width_but_reject_invalid_facets() {
@@ -385,7 +501,7 @@ mod public_carrier_tests {
             ))
         };
         let mut ctx = Context::ordinary().with_meter(&mut meter);
-        let error = public_string_carrier_count(&raw, &mut ctx).unwrap_err();
+        let error = public_string_carrier_count(&raw, &mut None, &mut ctx).unwrap_err();
         assert_eq!(error.code, "METER_STOP");
     }
 
@@ -407,8 +523,156 @@ mod public_carrier_tests {
             }
         };
         let mut ctx = Context::ordinary().with_meter(&mut meter);
-        let error = public_string_carrier_count(&raw, &mut ctx).unwrap_err();
+        let error = public_string_carrier_count(&raw, &mut None, &mut ctx).unwrap_err();
         assert_eq!(error.code, "METER_STOP");
+    }
+
+    #[test]
+    fn native_unicode_errors_send_only_minimal_dynamic_length_copies() {
+        let cases = [
+            (
+                Value::Null,
+                Value::Null,
+            ),
+            (
+                Value::Array(vec![Value::Null]),
+                Value::Object(vec![(key("length"), Value::Number(1.0))]),
+            ),
+            (
+                Value::Array(vec![Value::Number(1.0)]),
+                Value::Object(vec![(key("length"), Value::Number(1.0))]),
+            ),
+            (
+                Value::Object(vec![(key("length"), Value::Object(vec![(key("ignored"), Value::Bool(true))]))]),
+                Value::Object(vec![(key("length"), Value::Object(Vec::new()))]),
+            ),
+            (
+                Value::Object(vec![(key("length"), Value::Array(vec![Value::Object(Vec::new())]))]),
+                Value::Object(vec![(key("length"), Value::Object(Vec::new()))]),
+            ),
+        ];
+        for (raw, expected_probe) in cases {
+            let mut probe = ErrorProbeHost(Vec::new());
+            let mut host = Some(&mut probe as &mut dyn HostJsonReflection);
+            let error = public_string_carrier_count(
+                &raw,
+                &mut host,
+                &mut Context::ordinary(),
+            )
+            .unwrap_err();
+            drop(host);
+            assert_eq!(error.code, "HOST_JSON_CALLBACK");
+            assert_eq!(probe.0.len(), 1);
+            assert_eq!(
+                probe.0[0],
+                super::host_json::HostJsonEvent::UnicodeCount {
+                    value: expected_probe,
+                }
+            );
+        }
+    }
+
+    #[test]
+    fn successful_zero_length_carriers_do_not_need_a_native_error_probe() {
+        for raw in [
+            Value::Object(vec![(key("length"), Value::Number(0.0))]),
+            Value::Object(vec![(key("length"), Value::Array(Vec::new()))]),
+            Value::Object(Vec::new()),
+            Value::Array(Vec::new()),
+        ] {
+            let mut probe = ErrorProbeHost(Vec::new());
+            let mut host = Some(&mut probe as &mut dyn HostJsonReflection);
+            let count = public_string_carrier_count(
+                &raw,
+                &mut host,
+                &mut Context::ordinary(),
+            )
+            .unwrap();
+            drop(host);
+            assert_eq!(count, 0);
+            assert!(probe.0.is_empty());
+        }
+    }
+
+    #[test]
+    fn zero_count_malformed_unicode_identity_uses_ecmascript_json_value() {
+        let family = Value::Object(vec![
+            (key("carrier"), Value::string_utf8("string")),
+            (key("mechanic"), Value::string_utf8("unicode")),
+            (key("equality"), Value::Bool(true)),
+        ]);
+        let field = Value::Object(vec![(key("family"), Value::string_utf8("unicode"))]);
+        let wanted = Value::Object(vec![(key("string"), Value::Number(7.0))]);
+        let candidate = Value::Object(vec![(key("string"), Value::string_utf8("7"))]);
+        let policy = Value::Object(vec![
+            (key("fields"), Value::Object(vec![(key("family"), Value::string_utf8("family"))])),
+            (key("families"), Value::Object(vec![(key("unicode"), family)])),
+            (key("wrapperKeys"), Value::Number(1.0)),
+        ]);
+        let mut host: Option<&mut dyn HostJsonReflection> = Some(&mut ZeroCountHost);
+        let wanted_identity = exact_identity_with_host(&field, &wanted, &policy, &mut host, &mut Context::ordinary()).unwrap();
+        let candidate_identity = exact_identity(&field, &candidate, &policy, &mut Context::ordinary()).unwrap();
+        assert_eq!(wanted_identity, "unicode:7");
+        assert_eq!(candidate_identity, "unicode:\"7\"");
+        assert_ne!(wanted_identity, candidate_identity);
+    }
+
+    #[test]
+    fn zero_count_malformed_unicode_allowed_value_refuses_nonmatching_identity() {
+        let policy = Value::Object(vec![
+            (
+                key("fields"),
+                Value::Object(vec![
+                    (key("family"), Value::string_utf8("family")),
+                    (key("facets"), Value::string_utf8("facets")),
+                ]),
+            ),
+            (
+                key("families"),
+                Value::Object(vec![(
+                    key("unicode"),
+                    Value::Object(vec![
+                        (key("carrier"), Value::string_utf8("string")),
+                        (key("mechanic"), Value::string_utf8("unicode")),
+                        (key("equality"), Value::Bool(true)),
+                    ]),
+                )]),
+            ),
+            (key("wrapperKeys"), Value::Number(1.0)),
+            (
+                key("refinements"),
+                Value::Array(vec![Value::Object(vec![
+                    (key("mechanic"), Value::string_utf8("allowed-membership")),
+                    (key("selector"), Value::Array(vec![Value::string_utf8("allowedValues")])),
+                    (key("applies"), Value::string_utf8("all")),
+                    (key("mode"), Value::string_utf8("refinements")),
+                    (key("phase"), Value::string_utf8("after")),
+                    (key("error"), Value::string_utf8("allowed")),
+                ])]),
+            ),
+        ]);
+        let family = get(&policy, "families").and_then(|families| get(families, "unicode")).unwrap();
+        let field = Value::Object(vec![
+            (key("family"), Value::string_utf8("unicode")),
+            (key("facets"), Value::Object(Vec::new())),
+            (key("allowedValues"), Value::Array(vec![Value::Object(vec![(key("string"), Value::string_utf8("new"))])])),
+        ]);
+        let wanted = Value::Object(vec![(key("string"), Value::Number(7.0))]);
+        let mut host: Option<&mut dyn HostJsonReflection> = Some(&mut ZeroCountHost);
+        let error = apply_refinements(
+            &field,
+            &wanted,
+            true,
+            &policy,
+            "scalar",
+            Some(family),
+            Some(0),
+            "after",
+            &mut host,
+            &mut Context::ordinary(),
+        )
+        .unwrap_err();
+        assert_eq!(error.reason, "allowed");
     }
 
     #[test]
@@ -1017,6 +1281,39 @@ fn exact_identity(
     };
     Ok(format!("{scalar}:{result}"))
 }
+
+fn exact_identity_with_host(
+    field: &Value,
+    value: &Value,
+    policy: &Value,
+    host: &mut Option<&mut dyn HostJsonReflection>,
+    ctx: &mut Context<'_>,
+) -> Result<String, LiteralFault> {
+    let fam = family(field, policy).ok_or_else(|| fail("equality"))?;
+    let mechanic = str_at(fam, "mechanic").unwrap_or_default();
+    let Some(raw) = carrier(value, fam) else {
+        return exact_identity(field, value, policy, ctx);
+    };
+    if mechanic != "unicode" || matches!(raw, Value::String(_)) || host.is_none() {
+        return exact_identity(field, value, policy, ctx);
+    }
+    if matches!(value, Value::Null) || !truth_at(fam, "equality") {
+        return Err(fail(if matches!(value, Value::Null) { "null-equality" } else { "equality" }));
+    }
+    let Some(members) = object(value) else { return Err(fail("equality")); };
+    if members.len() != num_at(policy, "wrapperKeys").unwrap_or(1) as usize {
+        return Err(fail("equality"));
+    }
+    let count = public_string_carrier_count(raw, host, ctx).map_err(LiteralFault::from_engine)?;
+    debug_assert_eq!(count, 0, "positive malformed Unicode lengths fail in host reflection");
+    let family_name = utf8(get(field, &selector(policy, "family")).ok_or_else(|| fail("equality"))?)
+        .ok_or_else(|| fail("equality"))?;
+    let encoded = crate::serialization::stringify_compact_metered(raw, ctx)
+        .map_err(LiteralFault::from_engine)?
+        .to_utf8()
+        .map_err(|_| fail("text"))?;
+    Ok(format!("{family_name}:{encoded}"))
+}
 fn json_string(value: &Utf16) -> String {
     let mut out = String::from("\"");
     let u = value.units();
@@ -1086,6 +1383,7 @@ fn apply_refinements(
     fam: Option<&Value>,
     count: Option<usize>,
     phase: &str,
+    host: &mut Option<&mut dyn HostJsonReflection>,
     ctx: &mut Context<'_>,
 ) -> Result<(), LiteralFault> {
     let selector_fields = field_names(policy);
@@ -1233,10 +1531,10 @@ fn apply_refinements(
                 let Some(candidates) = array(constraint) else {
                     return Err(fail("allowed"));
                 };
-                let wanted = exact_identity(field, value, policy, ctx)?;
+                let wanted = exact_identity_with_host(field, value, policy, host, ctx)?;
                 let mut found = false;
                 for candidate in candidates {
-                    if exact_identity(field, candidate, policy, ctx)? == wanted {
+                    if exact_identity_with_host(field, candidate, policy, host, ctx)? == wanted {
                         found = true;
                         break;
                     }
@@ -1260,6 +1558,7 @@ fn evaluate(
     policy: &Value,
     depth: usize,
     public_field_value: bool,
+    host: &mut Option<&mut dyn HostJsonReflection>,
     ctx: &mut Context<'_>,
 ) -> Result<(), LiteralFault> {
     ctx.charge_work(1, Utf16::default())
@@ -1382,6 +1681,7 @@ fn evaluate(
             None,
             Some(count),
             "before",
+            host,
             ctx,
         )?;
         if sequence {
@@ -1394,6 +1694,7 @@ fn evaluate(
                     policy,
                     depth + 1,
                     public_field_value,
+                    host,
                     ctx,
                 )?
             }
@@ -1407,6 +1708,7 @@ fn evaluate(
                     policy,
                     depth + 1,
                     public_field_value,
+                    host,
                     ctx,
                 )?
             }
@@ -1420,6 +1722,7 @@ fn evaluate(
             None,
             Some(count),
             "after",
+            host,
             ctx,
         )?;
         return Ok(());
@@ -1430,20 +1733,46 @@ fn evaluate(
     }
     let fam = family(field, policy).ok_or_else(|| fail("family"))?;
     let raw = carrier(value, fam).ok_or_else(|| fail("family"))?;
+    if !truth_at(fam, "refinements") {
+        if enabled {
+            return Err(fail("refinements"));
+        }
+        if text(raw).is_none() {
+            return Err(fail("text"));
+        }
+        return Ok(());
+    }
     if public_field_value
         && str_at(fam, "mechanic").as_deref() == Some("unicode")
         && !matches!(raw, Value::String(_))
     {
-        let count = public_string_carrier_count(raw, ctx).map_err(LiteralFault::from_engine)?;
+        // `identity()` calls unicodeCount first, then evaluate computes the
+        // count used by before/after refinements. The host path runs both
+        // checkpoints against the admitted copy; direct Rust callers retain
+        // their existing single portable compatibility pass.
+        let count = if host.is_some() {
+            let _ = public_string_carrier_count(raw, host, ctx)
+                .map_err(LiteralFault::from_engine)?;
+            public_string_carrier_count(raw, host, ctx)
+                .map_err(LiteralFault::from_engine)?
+        } else {
+            public_string_carrier_count(raw, host, ctx).map_err(LiteralFault::from_engine)?
+        };
         let has_length = get(facets, "length").is_some();
         let has_allowed = get(field, "allowedValues").is_some();
+        apply_refinements(
+            field,
+            value,
+            enabled,
+            policy,
+            "scalar",
+            Some(fam),
+            Some(count),
+            "before",
+            host,
+            ctx,
+        )?;
         if !has_allowed {
-            if !truth_at(fam, "refinements") {
-                if enabled {
-                    return Err(fail("refinements"));
-                }
-                return Ok(());
-            }
             apply_refinements(
                 field,
                 value,
@@ -1453,6 +1782,22 @@ fn evaluate(
                 Some(fam),
                 Some(count),
                 "after",
+                host,
+                ctx,
+            )?;
+            return Ok(());
+        }
+        if host.is_some() && count == 0 {
+            apply_refinements(
+                field,
+                value,
+                enabled,
+                policy,
+                "scalar",
+                Some(fam),
+                Some(count),
+                "after",
+                host,
                 ctx,
             )?;
             return Ok(());
@@ -1462,15 +1807,6 @@ fn evaluate(
             // zero-length carriers, continue through normal allowed-value
             // evaluation rather than silently accepting them.
         }
-    }
-    if !truth_at(fam, "refinements") {
-        if enabled {
-            return Err(fail("refinements"));
-        }
-        if text(raw).is_none() {
-            return Err(fail("text"));
-        }
-        return Ok(());
     }
     let _identity = exact_identity(field, value, policy, ctx)?;
     let mechanic = str_at(fam, "mechanic").unwrap_or_default();
@@ -1491,6 +1827,7 @@ fn evaluate(
         Some(fam),
         count,
         "all",
+        host,
         ctx,
     )?;
     Ok(())
@@ -1521,6 +1858,7 @@ pub(crate) fn literal_errors_admitted(
     policy: &PreparedPolicy,
     ctx: &mut Context<'_>,
 ) -> Result<Vec<Diagnostic>, EngineError> {
+    let mut host = None;
     match evaluate(
         document,
         field,
@@ -1529,6 +1867,7 @@ pub(crate) fn literal_errors_admitted(
         policy.value(),
         0,
         false,
+        &mut host,
         ctx,
     ) {
         Ok(()) => Ok(Vec::new()),
@@ -1547,6 +1886,39 @@ pub(crate) fn literal_field_value_errors_admitted(
     policy: &PreparedPolicy,
     ctx: &mut Context<'_>,
 ) -> Result<Vec<Diagnostic>, EngineError> {
+    literal_field_value_errors_host_admitted(document, field, value, enabled, policy, None, ctx)
+}
+
+pub(crate) fn literal_field_value_errors_with_host_admitted(
+    document: &Value,
+    field: &Value,
+    value: &Value,
+    enabled: bool,
+    policy: &PreparedPolicy,
+    host: &mut dyn HostJsonReflection,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    literal_field_value_errors_host_admitted(
+        document,
+        field,
+        value,
+        enabled,
+        policy,
+        Some(host),
+        ctx,
+    )
+}
+
+fn literal_field_value_errors_host_admitted(
+    document: &Value,
+    field: &Value,
+    value: &Value,
+    enabled: bool,
+    policy: &PreparedPolicy,
+    host: Option<&mut dyn HostJsonReflection>,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    let mut host = host;
     match evaluate(
         document,
         field,
@@ -1555,6 +1927,7 @@ pub(crate) fn literal_field_value_errors_admitted(
         policy.value(),
         0,
         true,
+        &mut host,
         ctx,
     ) {
         Ok(()) => Ok(Vec::new()),
@@ -1704,7 +2077,8 @@ pub(crate) fn numeric_interval_admitted(
                 diagnostics.push(policy_error(&error, p, ctx)?);
                 return Ok(diagnostics);
             }
-            if let Err(error) = evaluate(&doc, &base, bound, true, p, 0, false, ctx) {
+            let mut host = None;
+            if let Err(error) = evaluate(&doc, &base, bound, true, p, 0, false, &mut host, ctx) {
                 if let Some(engine_error) = error.engine_error {
                     return Err(engine_error);
                 }

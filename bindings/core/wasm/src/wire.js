@@ -155,8 +155,17 @@ export class AdmissionError extends TypeError {
   }
 }
 
+const weakSetHas = Function.call.bind(WeakSet.prototype.has);
+const weakSetAdd = Function.call.bind(WeakSet.prototype.add);
+const wireAdmissionErrors = new WeakSet();
+export function isWireAdmissionError(error) {
+  return error !== null && (typeof error === 'object' || typeof error === 'function') && weakSetHas(wireAdmissionErrors, error);
+}
+
 function fail(code, message, path) {
-  throw new AdmissionError(code, message, path);
+  const error = new AdmissionError(code, message, path);
+  weakSetAdd(wireAdmissionErrors, error);
+  throw error;
 }
 
 function objectKeys(value, path, work) {

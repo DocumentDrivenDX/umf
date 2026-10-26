@@ -1,0 +1,85 @@
+{
+  "format": "umf.r8.bit128-installed-browser/1",
+  "status": "pass",
+  "browser": "153.0.8010.12",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+  "archiveEntrySha256": "766e16c457432580f2dec10e093e7e9cca925910b39eae845b81bed03c725d6e",
+  "wasmSha256": "e1366420aab655b7be69f8ea882fd8be7c69f9c03d9e83e5a1bdc0c61c5b9308",
+  "packetSha256": "05fdc7e6fdd26e9065ac5daa52672d37ebe27a470f1e4cdf140e6563171712e6",
+  "sourceClosure": {
+    "src/model/bit128.ts": "c4db81a14022db2413ee991e8705d3bee688d0ed1e7c880e6170520a2694d543",
+    "src/model/uuid.ts": "43b2ea37b050a835e7723c9ea9b32f886fca63f5bb94eb5f8b17b242cf4444f7",
+    "tests/bit128.test.ts": "2c1f5b54c2ed4924588f2f2d43f2f7c4f89c631765f3ea0cf243fd3f9938948b",
+    "tests/uuid.test.ts": "549836713a191175f2ee088194aaf57a1d1654809ddfbe4c6a3fb65151715171",
+    "docs/helix/02-design/contracts/CONTRACT-076-128-bit-uuid.md": "373f396361aeaa38109348d3bebb1328d5014343625055e5bda8cd212055df20"
+  },
+  "publicFunctions": [
+    "parseBits128",
+    "parseUuid",
+    "bits128FromBytes",
+    "bits128ToBytes",
+    "uuidFromBits128",
+    "uuidToBits128",
+    "compareBits128",
+    "bits128ToWords",
+    "bits128FromWords",
+    "bits128ToInteger",
+    "bits128FromInteger"
+  ],
+  "caseCount": 11,
+  "exactFrozenPacketParity": true,
+  "hostChecks": {
+    "genuineEngineError": {
+      "name": "UmfError",
+      "code": "BIT128_TYPE",
+      "message": "Expected hexadecimal text",
+      "path": ""
+    },
+    "genuineAdmissionError": {
+      "name": "UmfError",
+      "code": "BIT128_TYPE",
+      "message": "Word accessors are forbidden",
+      "path": ""
+    },
+    "forgedCallerErrors": {
+      "admission": {
+        "preservedIdentity": true,
+        "propertyReads": 0
+      },
+      "umfCore": {
+        "preservedIdentity": true,
+        "propertyReads": 0
+      }
+    },
+    "byteCarrier": {
+      "offsetViewCopied": true,
+      "outputCopied": true,
+      "typedArraySubclass": "accepted",
+      "nodeBuffer": "unavailable"
+    }
+  },
+  "nodeGlobalsAbsent": true,
+  "wasmRequested": true,
+  "qualification": "Installed private archive route evidence for eleven Bit128/UUID operations in the recorded Chromium host only; not whole-SDK or release qualification.",
+  "archiveSha256": "591e5e5e3e919d2a613ed90f31dd1faf50e158f2666d6c613e21b3dc35d41711",
+  "archiveManifestSha256": "51e1c93febe01ff61cc106a583d3630a1ca699e4bfc9d011b726a944bf9a263d",
+  "sourceClosureSha256": "65a6458ad8950da0669fa713d736d1b81e576793d0f6c12896ccf59027ed941d",
+  "sourceClosureFileCount": 3431,
+  "sourceHashes": {
+    "bindings/core/node/src/bit128.js": "39a9fc04e2576d38da2ea4d5e2054b0ccac63e32cbd2ff049cd5bfb14f14fb1a",
+    "bindings/core/wasm/src/bit128.js": "39a9fc04e2576d38da2ea4d5e2054b0ccac63e32cbd2ff049cd5bfb14f14fb1a",
+    "bindings/core/node/src/wire.js": "5a59889a7484b69554b628aa45c58bad6f71bb4c47679ae63d72f2e8a8e0daea",
+    "bindings/core/wasm/src/wire.js": "5a59889a7484b69554b628aa45c58bad6f71bb4c47679ae63d72f2e8a8e0daea",
+    "bindings/core/node/index.js": "2bb0d5dc7f7fc47e872fbe565acb77e82855efe4beb3755b0e61e1d3f8248b9c",
+    "bindings/core/wasm/index.js": "b5754fdff5ad049be67f45a317efd87f2403e62ae38795c81b3dace2e277c812",
+    "src/access/rust-bit128-default.ts": "682f5f9eb9981b73c86bf929f2f0bbbb020a3db033ce7ba73a90ef10dfeaf995",
+    "src/index-node-v4.ts": "2bcfa6981dea9e326bc8100ed7f9352cefc6300bca2f3ef70688baf49d172dcf",
+    "src/index-browser-v4.ts": "a8e44f1a91e0e22bad43cb73fa58294b259ae266be6e1529be4f906ebca8c375",
+    "crates/umf-core/src/bit128.rs": "1caf4e82d9eddcf6a0a5cbd6aab65e957536943a98ef0008a5caeba3a02d4377"
+  },
+  "memberHashes": {
+    "dist/umf-browser.js": "766e16c457432580f2dec10e093e7e9cca925910b39eae845b81bed03c725d6e",
+    "dist/umf_core_wasm_bg.wasm": "e1366420aab655b7be69f8ea882fd8be7c69f9c03d9e83e5a1bdc0c61c5b9308"
+  },
+  "harnessSha256": "bb5612e1e7b5808952393f4e26f40dc04c7647fdf8693fdb44db9e9bb533e609"
+}

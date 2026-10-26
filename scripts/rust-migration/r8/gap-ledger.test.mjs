@@ -7,6 +7,8 @@ import { cp, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { buildLedger, collectPythonPackageAssets, collectPythonSourceFiles } from './gap-ledger.mjs';
+import { requiredR8RouteFamilies } from './installed-route-evidence.mjs';
+import { normalizeR8RouteHostReceipt } from './installed-route-receipt-adapter.mjs';
 
 const inventory = { symbols: [
   { routeId: 'package-root', exportName: 'inspectCoreSemanticTypes', declarationName: 'inspectCoreSemanticTypes', declarationKind: 'FunctionDeclaration', source: 'src/model/semantic-types.ts', line: 23, sourceSha256: 'a'.repeat(64) },
@@ -19,10 +21,16 @@ const args = { inventory, packageJson: { scripts: { 'build:check': 'bun scripts/
   { packageName: 'umf', path: 'python/src/umf', init: Buffer.from('__all__ = ["Document", "validate_document"]'), files: [{ path: 'python/src/umf/__init__.py', bytes: Buffer.from('def validate_document(): pass\ndef _internal(): pass') }], assets: [{ path: 'python/src/umf/py.typed', bytes: Buffer.from('') }, { path: 'python/src/umf/_native.so', bytes: Buffer.from('binary') }] },
   { packageName: 'umf_access', path: 'python/umf_access/src/umf_access', init: Buffer.from('from .capture import (\n    Captured as Captured,\n    capture as capture,\n)\nfrom .dsl import Join as Join\n'), files: [], assets: [] },
 ], scriptFiles: [{ path: 'scripts/build.ts', sha256: 'e'.repeat(64) }] };
+const currentGeneratedLedger = () => JSON.parse(execFileSync('node', [
+  'scripts/rust-migration/r8/gap-ledger.mjs', '--stdout', '--installed-route-evidence',
+  'docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-0e6de413/aggregate.json',
+], {
+  cwd: process.cwd(), maxBuffer: 64 * 1024 * 1024, encoding: 'utf8',
+}));
 
-test('current V4 root exports are derived and the eight temporal/relationship overrides stay separate from reference gaps', () => {
+test('current V4 root exports preserve temporal gaps and recognize bounded Core Relationships evidence', () => {
   const inventoryReceipt = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json', 'utf8'));
-  const ledger = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/gap-ledger.json', 'utf8'));
+  const ledger = currentGeneratedLedger();
   const expected = [
     'parseGregorianDate', 'truncateGregorianDate', 'parseRfc3339ExactInstant', 'sameRfc3339ExactInstant',
     'inspectCoreRelationships', 'lookupCoreRelationship', 'declareCoreRelationship', 'verifyCoreRelationshipOperation',
@@ -36,13 +44,64 @@ test('current V4 root exports are derived and the eight temporal/relationship ov
     assert.equal(rows.length, expected.length);
     assert.ok(rows.every(row => row.sourceSelectedImplementation !== null));
     assert.ok(rows.every(row => row.acceptedRustOperation !== null));
-    assert.ok(rows.every(row => row.bindingRouteStatus === 'unproven'));
+    const temporal = rows.filter(row => ['parseGregorianDate', 'truncateGregorianDate', 'parseRfc3339ExactInstant', 'sameRfc3339ExactInstant'].includes(row.exportName));
+    const relationships = rows.filter(row => row.exportName.includes('CoreRelationship'));
+    assert.equal(temporal.length, 4);
+    assert.ok(temporal.every(row => row.bindingRouteStatus === 'unproven' && row.sourceSelectedImplementation.status === 'installed-private-prior-cohort'));
+    assert.equal(relationships.length, 4);
+    assert.ok(relationships.every(row => row.bindingRouteStatus === 'installed-private-current-cohort' && row.sourceSelectedImplementation.status === 'source-selected-installed-private-current-cohort'));
   }
   const reference = ledger.rows.filter(row => row.routeId === 'package-reference' && expected.includes(row.exportName));
   assert.equal(reference.length, expected.length);
   assert.ok(reference.every(row => row.sourceSelectedImplementation === null));
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 74);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 82);
+});
+
+test('Schema Properties source selections keep exact CONTRACT-049 mappings separate from the five-family aggregate gate', () => {
+  const ledger = currentGeneratedLedger();
+  const expected = new Map([
+    ['declareCoreSchemaProperties', 'umf_core::schema_properties::declare_core_schema_properties'],
+    ['inspectCoreSchemaProperties', 'umf_core::schema_properties::inspect_core_schema_properties'],
+    ['validateCoreFieldValue', 'umf_core::Engine::validate_core_field_value_public'],
+    ['resolveCoreDefault', 'umf_core::Engine::resolve_core_default_public'],
+  ]);
+  for (const routeId of ['package-root-node', 'package-root-browser']) {
+    for (const [name, rustOwner] of expected) {
+      const row = ledger.rows.find(item => item.routeId === routeId && item.exportName === name);
+      assert.ok(row, `${routeId}:${name} is absent`);
+      assert.equal(row.source, 'src/model/schema-properties.ts');
+      assert.equal(row.acceptedRustOperation, rustOwner);
+      assert.equal(row.sourceSelectedImplementation.status, 'source-selected-installed-private-schema-properties-cohort');
+      assert.equal(row.sourceSelectedImplementation.rustOwner, rustOwner);
+      assert.equal(row.sourceSelectedImplementation.wireOperation, `model/${name}`);
+      assert.match(row.sourceSelectedImplementation.bindingRoute, /core-model wrapper -> model wire -> Rust/);
+      assert.equal(row.bindingRouteStatus, 'unproven');
+      assert.equal(row.bindingRoute, null);
+      assert.match(row.sourceSelectedImplementation.qualificationStatus, /aggregate five-family route gate excludes this family/);
+      for (const evidence of [
+        'docs/helix/04-build/evidence/rust-migration/r5-schema-properties/frozen-typescript.json',
+        'docs/helix/04-build/evidence/rust-migration/r5-field-value/frozen-typescript.json',
+        'docs/helix/04-build/evidence/rust-migration/r5-schema-defaults/frozen-typescript.json',
+        'docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/receipt-current-b2f816d7.json',
+        'docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/route-gate-current-b2f816d7.json',
+      ]) assert.ok(row.acceptedOperationEvidence.evidenceClosure.some(item => item.path === evidence), `${name} evidence omits ${evidence}`);
+      assert.ok(row.sourceSelectedImplementation.qualificationEvidenceClosure.some(item => item.path === 'docs/helix/04-build/evidence/rust-migration/r8-schema-properties-installed/route-gate-current-b2f816d7.json'));
+      assert.ok(row.acceptedOperationEvidence.focusedTestClosure.length > 0);
+    }
+  }
+  for (const [name] of expected) {
+    const reference = ledger.rows.find(item => item.routeId === 'package-reference' && item.exportName === name);
+    assert.equal(reference.sourceSelectedImplementation, null);
+    assert.equal(reference.implementationStatus, 'TypeScript reference implementation remains explicit');
+  }
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 62);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 860);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
+  const aggregateNames = ledger.installedRouteEvidence.operationNames;
+  assert.equal(Object.keys(ledger.installedRouteEvidence.families).length, 5);
+  assert.equal(ledger.installedRouteEvidence.boundedOperations, 24);
+  assert.ok([...expected.keys()].every(name => !aggregateNames.includes(name)), 'the separate four-operation Schema gate must not inflate aggregate evidence');
 });
 
 test('PostgreSQL Cardinality projection schema pins exact writer, contract inputs and package closure', () => {
@@ -1437,6 +1496,97 @@ test('five current R8 default selections retain exact source, wire, binder and b
   const substituted = symbols.map(row => row.routeId === 'package-root-node' && row.exportName === 'inspectCoreScalarType' ? {...row, source: 'src/model/scalar-type-inspection.ts'} : row);
   const negative = buildLedger({...args, inventory: {symbols: substituted}});
   assert.equal(negative.rows.find(item => item.routeId === 'package-root-node' && item.exportName === 'inspectCoreScalarType').sourceSelectedImplementation, null);
+});
+
+test('aggregate route receipt gate upgrades only its bounded families and never retires logical gaps', async () => {
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), 'umf-r8-ledger-route-gate-'));
+  try {
+    await mkdir(path.join(tempRoot, 'evidence'), { recursive: true });
+    await mkdir(path.join(tempRoot, 'live'), { recursive: true });
+    const archiveSha = 'a'.repeat(64), inputs = {}, sourceInputCount = 7, tree = createHash('sha256'), sourceBytes = Buffer.from('shared fixture source\n');
+    await writeFile(path.join(tempRoot, 'live/source.txt'), sourceBytes);
+    for (let index = 0; index < sourceInputCount; index++) {
+      const sourcePath = `live/${'/'.repeat(index)}source.txt`;
+      inputs[sourcePath] = createHash('sha256').update(sourceBytes).digest('hex');
+    }
+    for (const sourcePath of Object.keys(inputs).sort()) { tree.update(sourcePath); tree.update('\0'); tree.update(sourceBytes); tree.update('\0'); }
+    const closureSha = tree.digest('hex');
+    const liveSource = { sourceClosure: { sha256: closureSha, capturedLiveSha256: closureSha, fileCount: sourceInputCount, inputs, transform: { status: 'fixed-point', generatedInputs: [] } } };
+    const liveSourceBytes = Buffer.from(JSON.stringify(liveSource));
+    await writeFile(path.join(tempRoot, 'evidence/live-source.json'), liveSourceBytes);
+    const memberBytesFor = value => createHash('sha256').update(value).digest('hex');
+    const members = {
+      'manifest.json': memberBytesFor('manifest'), 'dist/umf-node.js': memberBytesFor('node'),
+      'dist/umf-browser.js': memberBytesFor('browser'), 'dist/umf_core_node.node': memberBytesFor('addon'),
+      'dist/umf_core_wasm_bg.wasm': memberBytesFor('wasm'),
+    };
+    const packageManifestSha256 = members['manifest.json'];
+    const membersBytes = Buffer.from(JSON.stringify({ members, packageManifestSha256 }));
+    await writeFile(path.join(tempRoot, 'evidence/members.json'), membersBytes);
+    const preflight = { status: 'pass', archiveSha256: archiveSha, sourceClosure: { sha256: closureSha, capturedLiveSha256: closureSha, currentSourceStatus: 'current-source', liveSourceManifest: { path: 'evidence/live-source.json', sha256: createHash('sha256').update(liveSourceBytes).digest('hex') } }, memberHashVerification: { status: 'pass', algorithm: 'sha256', archiveMemberCount: Object.keys(members).length, verifiedMemberCount: Object.keys(members).length, packageManifestSha256, manifest: { path: 'evidence/members.json', sha256: createHash('sha256').update(membersBytes).digest('hex') } } };
+    const preflightBytes = Buffer.from(JSON.stringify(preflight));
+    await writeFile(path.join(tempRoot, 'evidence/preflight.json'), preflightBytes);
+    const families = {};
+    for (const [family, operations] of Object.entries(requiredR8RouteFamilies)) {
+      families[family] = { status: 'pass', operations: [...operations], receipts: [] };
+      for (const runtime of ['node', 'bun', 'chromium']) {
+        const common = { status: 'pass', archive: { sha256: archiveSha, manifestSha256: members['manifest.json'] }, sourceClosure: { sha256: closureSha, capturedLiveSha256: closureSha, fileCount: sourceInputCount, transform: { status: 'fixed-point', generatedInputs: [] } } };
+        let raw = common;
+        if (family === 'csvBoolean') raw = runtime === 'chromium'
+          ? { ...raw, chromium: { version: '153.0.8010.12', userAgent: 'HeadlessChrome fixture', cases: 14, wasmRequested: true, malformedReceiptExpectedSourceReads: 0 } }
+          : { ...raw, [runtime]: JSON.stringify({ node: runtime === 'node' ? 'v26 fixture' : 'v1 fixture', cases: 14, root: 'file:///node_modules/@umf/core/dist/umf-node.js', reference: 'file:///node_modules/@umf/core/dist/umf.js' }) };
+        if (family === 'coreInspectors') raw = { ...raw, runtime: { node: { runtime: 'Node fixture', referenceEntry: '/tmp/node_modules/@umf/core/dist/umf.js', operations: { scalarType: 8, recordMembers: 9, referenceLinks: 9 }, hostShapes: { scalarType: {}, recordMembers: {}, referenceLinks: {} } }, bun: { runtime: 'Bun fixture', referenceEntry: '/tmp/node_modules/@umf/core/dist/umf.js', operations: { scalarType: 8, recordMembers: 9, referenceLinks: 9 }, hostShapes: { scalarType: {}, recordMembers: {}, referenceLinks: {} } } }, chromium: { version: '153.0.8010.12', userAgent: 'HeadlessChrome fixture', referenceEntry: '@umf/core/reference', wasmRequested: true, operations: { scalarType: 8, recordMembers: 9, referenceLinks: 9 } }, memberHashes: members };
+        if (family === 'coreRelationships') raw = runtime === 'chromium'
+          ? { status: 'pass', browser: '153.0.8010.12', userAgent: 'HeadlessChrome fixture', caseCount: 11, nodeGlobalsAbsent: true, browserEntrySha256: members['dist/umf-browser.js'], wasmSha256: members['dist/umf_core_wasm_bg.wasm'], exactPacketParity: true, sourceHashes: inputs }
+          : { status: 'pass', runtime: runtime === 'node' ? 'Node fixture' : 'Bun fixture', caseCount: 11, exactOutcomeParity: true, artifactHashes: { nodeEntry: members['dist/umf-node.js'], nativeAddon: members['dist/umf_core_node.node'] }, sourceHashes: inputs };
+        if (family === 'bit128Uuid') raw = runtime === 'chromium'
+          ? { status: 'pass', browser: 'Chromium fixture', archiveEntrySha256: members['dist/umf-browser.js'], wasmSha256: members['dist/umf_core_wasm_bg.wasm'], wasmRequested: true, exactFrozenPacketParity: true, sourceClosure: inputs }
+          : { status: 'pass', runtime: runtime === 'node' ? 'Node fixture' : 'Bun fixture', entrySha256: members['dist/umf-node.js'], nativeAddonSha256: members['dist/umf_core_node.node'], exactFrozenPacketParity: true, sourceClosure: inputs };
+        if (family === 'coreKeys') raw = { ...raw, currentSourceStatus: 'current-source', hosts: { [runtime]: runtime === 'chromium' ? { status: 'pass', caseCount: 4, operations: ['inspect', 'lookup', 'declareMembers', 'declareKey'], referenceParity: true, wasmRequested: true } : { runtime: runtime === 'node' ? 'Node fixture' : 'Bun fixture', status: 'pass', caseCount: 4, operations: ['inspect', 'lookup', 'declareMembers', 'declareKey'], frozenOutcomes: true, referenceParity: true, prototypeAndKeyOrder: true, hostAdmission: { lookupIdentityBeforeSource: true, keyRequestBeforeSource: true } } } };
+        const bytes = Buffer.from(JSON.stringify(raw));
+        const receiptPath = `evidence/${family}-${runtime}.json`;
+        await writeFile(path.join(tempRoot, receiptPath), bytes);
+        families[family].receipts.push(normalizeR8RouteHostReceipt({ family, runtime, raw, rawPath: receiptPath, rawSha256: createHash('sha256').update(bytes).digest('hex'), archive: { sha256: archiveSha, sourceClosureSha256: closureSha, sourceInputCount, packageManifestSha256 }, memberHashes: members, liveInputs: inputs, root: tempRoot }));
+      }
+    }
+    const manifest = {
+      format: 'umf.r8.installed-route-evidence/1', status: 'pass',
+      archive: { sha256: archiveSha, sourceClosureSha256: closureSha, sourceInputCount, generatedTransformCount: 0 },
+      preflight: { path: 'evidence/preflight.json', sha256: createHash('sha256').update(preflightBytes).digest('hex'), memberHashesVerified: true },
+      families, logicalRetirementGaps: 922,
+    };
+    const operationNames = Object.values(requiredR8RouteFamilies).flat();
+    const sourceByName = Object.fromEntries([
+      ...requiredR8RouteFamilies.csvBoolean.map(name => [name, 'src/model/csv-boolean-lexical.ts']),
+      ...requiredR8RouteFamilies.coreInspectors.map(name => [name, 'src/model/scalar-type-inspection.ts']),
+      ...requiredR8RouteFamilies.coreRelationships.map(name => [name, 'src/model/relationships.ts']),
+      ...requiredR8RouteFamilies.bit128Uuid.map(name => [name, name.includes('Uuid') || name.startsWith('uuid') ? 'src/model/uuid.ts' : 'src/model/bit128.ts']),
+      ...requiredR8RouteFamilies.coreKeys.map(name => [name, 'src/model/keys.ts']),
+    ]);
+    const symbols = [...['package-root-node', 'package-root-browser'].flatMap(routeId => operationNames.map((exportName, index) => ({
+      routeId, exportName, declarationName: exportName, declarationKind: 'BindingElement',
+      source: routeId === 'package-root-node' ? 'src/index-node-v4.ts' : 'src/index-browser-v4.ts',
+      line: index + 1, sourceSha256: `${String(index + 1).padStart(2, '0')}`.repeat(32),
+    }))), ...operationNames.map((exportName, index) => ({
+      routeId: 'package-reference', exportName, declarationName: exportName, declarationKind: 'FunctionDeclaration',
+      source: sourceByName[exportName], line: index + 1, sourceSha256: `${String(index + 1).padStart(2, '0')}`.repeat(32),
+    }))];
+    const inventory = { symbols };
+    const baseline = buildLedger({ ...args, inventory });
+    const gated = buildLedger({ ...args, inventory, installedRouteEvidenceManifest: manifest, installedRouteEvidenceRoot: tempRoot });
+    assert.equal(gated.counts.executableDefaultRouteGaps, baseline.counts.executableDefaultRouteGaps);
+    assert.equal(gated.counts.executableDefaultRouteGaps, 24);
+    assert.equal(gated.installedRouteEvidence.boundedOperations, 24);
+    assert.equal(gated.installedRouteEvidence.logicalRetirementGaps, 922);
+    assert.equal(gated.counts.bindingRoutesProven, 24);
+    for (const row of gated.rows.filter(item => item.routeId !== 'package-reference')) {
+      assert.equal(row.sourceSelectedImplementation.status, 'source-selected-installed-private-current-cohort', row.exportName);
+      assert.equal(row.bindingRouteStatus, 'installed-private-current-cohort', row.exportName);
+    }
+    assert.throws(() => buildLedger({ ...args, inventory, installedRouteEvidenceManifest: { ...manifest, logicalRetirementGaps: 921 }, installedRouteEvidenceRoot: tempRoot }), /preserve all 922/);
+  } finally {
+    await rm(tempRoot, { recursive: true, force: true });
+  }
 });
 
 test('adapter ownership supplement maps exact operations without retirement or parity inflation', () => {

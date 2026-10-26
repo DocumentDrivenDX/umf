@@ -10,9 +10,25 @@ import {fileURLToPath} from 'node:url';
 import {chromium} from 'playwright';
 
 const repo=resolve(fileURLToPath(new URL('../../../',import.meta.url)));
-const archive=resolve(process.argv[2]??'');
-const output=process.argv[3]?resolve(process.argv[3]):null;
-if(!process.argv[2])throw new Error('Usage: bun scripts/rust-migration/r8/core-inspectors-installed.mjs <umf-sdk.tgz> [receipt.json]');
+function parseArguments(args){
+ const positional=[];let loopbackPort=null;
+ for(let index=0;index<args.length;index++){
+  const value=args[index];
+  if(value==='--port'){
+   if(loopbackPort!==null)throw new Error('--port may be supplied only once');
+   const text=args[++index];
+   if(!text||!/^\d+$/.test(text))throw new Error('--port requires an integer from 1 through 65535');
+   loopbackPort=Number(text);
+   if(!Number.isSafeInteger(loopbackPort)||loopbackPort<1||loopbackPort>65535)throw new Error('--port requires an integer from 1 through 65535');
+  }else if(value.startsWith('--'))throw new Error(`Unknown option: ${value}`);
+  else positional.push(value);
+ }
+ if(positional.length<2||positional.length>3)throw new Error('Usage: bun scripts/rust-migration/r8/core-inspectors-installed.mjs <umf-sdk.tgz> <expected-source-closure-sha256> [receipt.json] [--port <1-65535>]');
+ const [archivePath,expectedClosureSha,outputPath]=positional;
+ if(!/^[a-f0-9]{64}$/.test(expectedClosureSha))throw new Error('expected-source-closure-sha256 must be 64 lowercase hexadecimal characters');
+ return {archive:resolve(archivePath),expectedClosureSha,output:outputPath?resolve(outputPath):null,loopbackPort};
+}
+const {archive,expectedClosureSha,output,loopbackPort}=parseArguments(process.argv.slice(2));
 const frozenPath=join(repo,'docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/frozen-predecessors.json');
 const frozen=JSON.parse(await readFile(frozenPath,'utf8'));
 assert.equal(frozen.profile,'r5-core-inspectors-default/0.1.0');
@@ -56,7 +72,7 @@ try{
  assert.equal(archiveManifest.profile,'umf.sdk.distribution.rust-default/1');
  assert.equal(archiveManifest.releaseStatus,'private-r7-default-route-qualification-not-publishable');
  assert.equal(archiveManifest.sourceTransformStatus,'fixed-point');
- assert.equal(archiveManifest.sourceTreeSha256,'1a28de92f1c2e0f51a0b9b2c63bb55afa202057096e2cc399feaa638a994f39f');
+ assert.equal(archiveManifest.sourceTreeSha256,expectedClosureSha,'archive source closure differs from requested fixed-point closure');
  assert.equal(archiveManifest.sourceTreeSha256,sdkManifest.sourceClosure.sha256);
  assert.equal(archiveManifest.capturedLiveSourceTreeSha256,sdkManifest.sourceClosure.capturedLiveSha256);
  assert.equal(archiveManifest.sourceTreeSha256,archiveManifest.capturedLiveSourceTreeSha256);
@@ -96,12 +112,12 @@ try{
  const html=`<!doctype html><meta charset="utf-8"><script type="importmap">${JSON.stringify({imports:{'@umf/core':browserEntry,'@umf/core/reference':'/node_modules/@umf/core/dist/umf.js'}})}</script><script type="module" src="/browser-probe.js"></script>`;
  const pageErrors=[],requests=[];
  server=createServer(async(req,res)=>{const relative=new URL(req.url??'/', 'http://127.0.0.1').pathname.slice(1)||'index.html';requests.push(relative);if(relative==='index.html'){res.writeHead(200,{'content-type':'text/html'});res.end(html);return}if(relative==='browser-probe.js'){res.writeHead(200,{'content-type':'text/javascript'});res.end(browserProbe);return}if(relative==='frozen.json'){res.writeHead(200,{'content-type':'application/json'});res.end(frozenBytes);return}try{const bytes=await readFile(join(temp,relative));res.writeHead(200,{'content-type':extname(relative)==='.wasm'?'application/wasm':extname(relative)==='.js'?'text/javascript':'application/octet-stream'});res.end(bytes)}catch{res.writeHead(404);res.end('not found')}});
- await new Promise(resolveListen=>server.listen(0,'127.0.0.1',resolveListen));const address=server.address();assert(address&&typeof address!=='string');
+ await new Promise(resolveListen=>server.listen(loopbackPort??0,'127.0.0.1',resolveListen));const address=server.address();assert(address&&typeof address!=='string');
  browser=await chromium.launch({headless:true});const page=await browser.newPage();page.on('pageerror',error=>pageErrors.push(String(error)));await page.goto(`http://127.0.0.1:${address.port}/`);await page.waitForFunction(()=>Boolean(window.inspectorProbe),undefined,{timeout:60000});
  const chromiumResult=await page.evaluate(()=>({probe:window.inspectorProbe,userAgent:navigator.userAgent}));assert.deepEqual(pageErrors,[]);assert(requests.includes('node_modules/@umf/core/dist/umf_core_wasm_bg.wasm'));
  const members=['manifest.json','package.json','dist/rust-default-manifest.json','dist/umf-node.js','dist/umf-browser.js','dist/umf.js','dist/umf_core_node.node','dist/umf_core_wasm_bg.wasm','dist/src/access/rust-core-inspectors-default.d.ts','dist/src/index-node-v4.d.ts','dist/src/index-browser-v4.d.ts'];
  const memberHashes={};for(const member of members)memberHashes[member]=sha256(await readFile(join(packageRoot,member)));
  const packetHashes=Object.fromEntries(Object.entries(frozen.packets).map(([k,v])=>[k,v.sha256]));
- const receipt={format:'umf.r8.core-inspectors-installed/1',status:'pass',harnessSha256:sha256(await readFile(fileURLToPath(import.meta.url))),archive:{path:archive,sha256:sha256(archiveBytes),bytes:archiveBytes.byteLength,manifestSha256:sha256(await readFile(join(packageRoot,'manifest.json'))),verifiedMemberCount:Object.keys(archiveManifest.sha256).length},sourceClosure:{sha256:sdkManifest.sourceClosure.sha256,capturedLiveSha256:sdkManifest.sourceClosure.capturedLiveSha256,fileCount:sdkManifest.sourceClosure.fileCount,transform:sdkManifest.sourceClosure.transform},packageVersion:pkg.version,packageRoutes:{node:pkg.exports['.'].node,browser:pkg.exports['.'].browser,import:pkg.exports['.'].import,reference:pkg.exports['./reference'].import},predecessor:{path:frozenPath,sha256:frozenDigest,packetHashes,caseCounts:Object.fromEntries(Object.entries(frozen.packets).map(([k,v])=>[k,Object.keys(v.packet.cases).length]))},memberHashes,runtime:{node:JSON.parse(node.stdout),bun:JSON.parse(bun.stdout)},chromium:{version:browser.version(),userAgent:chromiumResult.userAgent,...chromiumResult.probe,wasmRequested:requests.includes('node_modules/@umf/core/dist/umf_core_wasm_bg.wasm')},nativeFailureControls,qualification:'Installed private archive qualification for three core inspectors only. This does not qualify the full SDK, retirement, or release.'};
+ const receipt={format:'umf.r8.core-inspectors-installed/1',status:'pass',harnessSha256:sha256(await readFile(fileURLToPath(import.meta.url))),archive:{path:archive,sha256:sha256(archiveBytes),bytes:archiveBytes.byteLength,manifestSha256:sha256(await readFile(join(packageRoot,'manifest.json'))),verifiedMemberCount:Object.keys(archiveManifest.sha256).length},sourceClosure:{sha256:sdkManifest.sourceClosure.sha256,capturedLiveSha256:sdkManifest.sourceClosure.capturedLiveSha256,fileCount:sdkManifest.sourceClosure.fileCount,transform:sdkManifest.sourceClosure.transform},loopback:{host:'127.0.0.1',requestedPort:loopbackPort,actualPort:address.port},packageVersion:pkg.version,packageRoutes:{node:pkg.exports['.'].node,browser:pkg.exports['.'].browser,import:pkg.exports['.'].import,reference:pkg.exports['./reference'].import},predecessor:{path:frozenPath,sha256:frozenDigest,packetHashes,caseCounts:Object.fromEntries(Object.entries(frozen.packets).map(([k,v])=>[k,Object.keys(v.packet.cases).length]))},memberHashes,runtime:{node:JSON.parse(node.stdout),bun:JSON.parse(bun.stdout)},chromium:{version:browser.version(),userAgent:chromiumResult.userAgent,...chromiumResult.probe,wasmRequested:requests.includes('node_modules/@umf/core/dist/umf_core_wasm_bg.wasm')},nativeFailureControls,qualification:'Installed private archive qualification for three core inspectors only. This does not qualify the full SDK, retirement, or release.'};
  if(output){await mkdir(resolve(output,'..'),{recursive:true});await writeFile(output,JSON.stringify(receipt,null,2)+'\n')};console.log(JSON.stringify(receipt,null,2));
 }finally{await browser?.close();if(server)await new Promise(done=>server.close(done));await rm(temp,{recursive:true,force:true});}
