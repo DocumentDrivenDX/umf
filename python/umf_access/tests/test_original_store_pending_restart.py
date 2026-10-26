@@ -975,6 +975,7 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                         self.assertEqual(handle._reservation_digest,
                                          effect_event['recordDigest'])
                         self.assertIs(handle._core, restarted_supervisor._owner_core)
+                        self.assertIs(handle, recovery_effect_bindings[0][1])
                     typed_payload = typed_event['payload']
                     self.assertEqual(typed_payload['purpose'], profile.purpose)
                     self.assertEqual(typed_payload['reservation'], external_reservation)
@@ -1164,12 +1165,13 @@ class OriginalStorePendingRestartTests(unittest.TestCase):
                     self.assertEqual(
                         second_readonly_budget._effect._request._intent_digest,
                         store_request._intent_digest)
-                    self.assertEqual(len(second_effect_bindings), 2)
+                    self.assertEqual(len(second_effect_bindings), 3)
                     for bound_digest, handle in second_effect_bindings:
                         self.assertEqual(bound_digest, second_effect_event['recordDigest'])
                         self.assertEqual(handle._reservation_digest,
                                          second_effect_event['recordDigest'])
                         self.assertIs(handle._core, after_pending_supervisor._owner_core)
+                        self.assertIs(handle, second_effect_bindings[0][1])
                     self.assertEqual(len([event for event in second_events
                         if event['kind'] == 'originals-store-creation-intent'
                         and event['payload'].get('reservationDigest')
