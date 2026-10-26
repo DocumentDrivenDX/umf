@@ -208,7 +208,7 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "459027c887c26af68bd54f052aacb5561ba8e8de9e8710b107e6dbbefba7060e",
+    "sourceCohortSha256": "41032b124e3fa6ac3dedb049aa1695c41a514a4e64a836211d7751aecdeaabb0",
     "typescriptApi": "5.9.3"
   },
   "counts": {
@@ -35372,12 +35372,12 @@
         "test_wrong_source_is_refused",
         "test_wrong_tag_is_refused"
       ],
-      "bytes": 12193,
+      "bytes": 12195,
       "disposition": "active-host-tooling-algorithm",
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/test_verify_schema_browser_npm.py",
-      "sha256": "a47c612bd5b0e6c46d8b7238a353dfbd084a13574818caa064fc4286ac7c682a"
+      "sha256": "33d31c02ed86d8181008f973b184b1e8e50c2790b430d4872b0df540821265b2"
     },
     {
       "activationEvidence": [],
