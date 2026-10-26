@@ -1,0 +1,206 @@
+{
+  "status": "pass",
+  "qualificationScope": "Cross-checked pinned installed-route evidence with current-source recomputation; this gate does not independently reopen the SDK archive bytes.",
+  "archiveVerification": {
+    "mode": "pinned-preflight-attestation",
+    "independentArchiveRead": false,
+    "memberCount": 1789,
+    "memberHashManifestSha256": "b4435c5c958e817ba93b8fe24546ab0d4b7c05c72d02a1be918c8774628e68e3"
+  },
+  "archive": {
+    "sha256": "7f922e86accc9272e5a306bab4cc69403347993b110ae7898c1a4d4cba20837f",
+    "sourceClosureSha256": "6f4f21c1dfbdde5959f6e5386419c0c2f90b3a8f0512d148b60825e93afce593",
+    "sourceInputCount": 3440,
+    "generatedTransformCount": 0
+  },
+  "families": {
+    "csvBoolean": [
+      {
+        "runtime": "node",
+        "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/raw/csv-boolean.json",
+        "rawSha256": "42ffa7096d2561e2f76fe982634d5670687ff5561348c5c2f0cd0dd2ad80541a",
+        "archiveBinding": "raw-aggregate-claim-and-manifest",
+        "verifiedArtifacts": {}
+      },
+      {
+        "runtime": "bun",
+        "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/raw/csv-boolean.json",
+        "rawSha256": "42ffa7096d2561e2f76fe982634d5670687ff5561348c5c2f0cd0dd2ad80541a",
+        "archiveBinding": "raw-aggregate-claim-and-manifest",
+        "verifiedArtifacts": {}
+      },
+      {
+        "runtime": "chromium",
+        "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/raw/csv-boolean.json",
+        "rawSha256": "42ffa7096d2561e2f76fe982634d5670687ff5561348c5c2f0cd0dd2ad80541a",
+        "archiveBinding": "raw-aggregate-claim-and-manifest",
+        "verifiedArtifacts": {}
+      }
+    ],
+    "coreInspectors": [
+      {
+        "runtime": "node",
+        "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/raw/core-inspectors.json",
+        "rawSha256": "08f6761013e02ec856b3519addc5605c90b9fcad5033417e75a3efffa99d2cc4",
+        "archiveBinding": "raw-aggregate-claim-and-manifest",
+        "verifiedArtifacts": {
+          "dist/umf-node.js": "2ca41f66c25c6d271aac06b527d617c40c0968fa11f42425c69dedb6c3f3fa94",
+          "dist/umf-browser.js": "705a28120fc955042fe86b865bc195cf83fb522fd064ad2efc3a9812e6f0c2aa",
+          "dist/umf_core_node.node": "2850309c86e1b9d25d3732ba13405cc445b88e81d049cf39c0197405152726ce",
+          "dist/umf_core_wasm_bg.wasm": "d7264890923c3c1b553125d1a0e00dce0d1ebc016c38e03e93ee6d3bfd006b12"
+        }
+      },
+      {
+        "runtime": "bun",
+        "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/raw/core-inspectors.json",
+        "rawSha256": "08f6761013e02ec856b3519addc5605c90b9fcad5033417e75a3efffa99d2cc4",
+        "archiveBinding": "raw-aggregate-claim-and-manifest",
+        "verifiedArtifacts": {
+          "dist/umf-node.js": "2ca41f66c25c6d271aac06b527d617c40c0968fa11f42425c69dedb6c3f3fa94",
+          "dist/umf-browser.js": "705a28120fc955042fe86b865bc195cf83fb522fd064ad2efc3a9812e6f0c2aa",
+          "dist/umf_core_node.node": "2850309c86e1b9d25d3732ba13405cc445b88e81d049cf39c0197405152726ce",
+          "dist/umf_core_wasm_bg.wasm": "d7264890923c3c1b553125d1a0e00dce0d1ebc016c38e03e93ee6d3bfd006b12"
+        }
+      },
+      {
+        "runtime": "chromium",
+        "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/raw/core-inspectors.json",
+        "rawSha256": "08f6761013e02ec856b3519addc5605c90b9fcad5033417e75a3efffa99d2cc4",
+        "archiveBinding": "raw-aggregate-claim-and-manifest",
+        "verifiedArtifacts": {
+          "dist/umf-node.js": "2ca41f66c25c6d271aac06b527d617c40c0968fa11f42425c69dedb6c3f3fa94",
+          "dist/umf-browser.js": "705a28120fc955042fe86b865bc195cf83fb522fd064ad2efc3a9812e6f0c2aa",
+          "dist/umf_core_node.node": "2850309c86e1b9d25d3732ba13405cc445b88e81d049cf39c0197405152726ce",
+          "dist/umf_core_wasm_bg.wasm": "d7264890923c3c1b553125d1a0e00dce0d1ebc016c38e03e93ee6d3bfd006b12"
+        }
+      }
+    ],
+    "coreRelationships": [
+      {
+        "runtime": "node",
+        "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/raw/relationships-node.json",
+        "rawSha256": "5da3951a9fc86eda1bda254a006940341ac4a3c2d1ef07d70ebc5080b9c485b2",
+        "archiveBinding": "exact-installed-member-hashes",
+        "verifiedArtifacts": {
+          "dist/umf-node.js": "2ca41f66c25c6d271aac06b527d617c40c0968fa11f42425c69dedb6c3f3fa94",
+          "dist/umf_core_node.node": "2850309c86e1b9d25d3732ba13405cc445b88e81d049cf39c0197405152726ce"
+        }
+      },
+      {
+        "runtime": "bun",
+        "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/raw/relationships-bun.json",
+        "rawSha256": "585fcaad09c61a5dcee5597667210637226ab1b9a0a4ddc186205372f2c87437",
+        "archiveBinding": "exact-installed-member-hashes",
+        "verifiedArtifacts": {
+          "dist/umf-node.js": "2ca41f66c25c6d271aac06b527d617c40c0968fa11f42425c69dedb6c3f3fa94",
+          "dist/umf_core_node.node": "2850309c86e1b9d25d3732ba13405cc445b88e81d049cf39c0197405152726ce"
+        }
+      },
+      {
+        "runtime": "chromium",
+        "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/raw/relationships-chromium.json",
+        "rawSha256": "358b237e00e238964da0e2f69b78c95525e1743deae7348740c764d685c32cc8",
+        "archiveBinding": "exact-installed-member-hashes",
+        "verifiedArtifacts": {
+          "dist/umf-browser.js": "705a28120fc955042fe86b865bc195cf83fb522fd064ad2efc3a9812e6f0c2aa",
+          "dist/umf_core_wasm_bg.wasm": "d7264890923c3c1b553125d1a0e00dce0d1ebc016c38e03e93ee6d3bfd006b12"
+        }
+      }
+    ],
+    "bit128Uuid": [
+      {
+        "runtime": "node",
+        "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/raw/bit128-process-bound.json",
+        "rawSha256": "c9b7c5ae658e9c5e378edcf236cb096763408da489f2ff69c159df6e91ac0646",
+        "archiveBinding": "raw-aggregate-claim-and-manifest",
+        "verifiedArtifacts": {
+          "dist/umf-node.js": "2ca41f66c25c6d271aac06b527d617c40c0968fa11f42425c69dedb6c3f3fa94",
+          "dist/umf_core_node.node": "2850309c86e1b9d25d3732ba13405cc445b88e81d049cf39c0197405152726ce"
+        }
+      },
+      {
+        "runtime": "bun",
+        "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/raw/bit128-process-bound.json",
+        "rawSha256": "c9b7c5ae658e9c5e378edcf236cb096763408da489f2ff69c159df6e91ac0646",
+        "archiveBinding": "raw-aggregate-claim-and-manifest",
+        "verifiedArtifacts": {
+          "dist/umf-node.js": "2ca41f66c25c6d271aac06b527d617c40c0968fa11f42425c69dedb6c3f3fa94",
+          "dist/umf_core_node.node": "2850309c86e1b9d25d3732ba13405cc445b88e81d049cf39c0197405152726ce"
+        }
+      },
+      {
+        "runtime": "chromium",
+        "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/raw/bit128-chromium.json",
+        "rawSha256": "22f6add322fc2a459728c952e40368fd104c5b99a34099da70d8886cd5bd830f",
+        "archiveBinding": "exact-installed-member-hashes",
+        "verifiedArtifacts": {
+          "dist/umf-browser.js": "705a28120fc955042fe86b865bc195cf83fb522fd064ad2efc3a9812e6f0c2aa",
+          "dist/umf_core_wasm_bg.wasm": "d7264890923c3c1b553125d1a0e00dce0d1ebc016c38e03e93ee6d3bfd006b12"
+        }
+      }
+    ],
+    "coreKeys": [
+      {
+        "runtime": "node",
+        "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/raw/core-keys.json",
+        "rawSha256": "3a2647b744f647f578a81fec3a85d29b5771dd6612579b227a8644ea622426ae",
+        "archiveBinding": "raw-aggregate-claim-and-manifest",
+        "verifiedArtifacts": {}
+      },
+      {
+        "runtime": "bun",
+        "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/raw/core-keys.json",
+        "rawSha256": "3a2647b744f647f578a81fec3a85d29b5771dd6612579b227a8644ea622426ae",
+        "archiveBinding": "raw-aggregate-claim-and-manifest",
+        "verifiedArtifacts": {}
+      },
+      {
+        "runtime": "chromium",
+        "rawPath": "docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/raw/core-keys.json",
+        "rawSha256": "3a2647b744f647f578a81fec3a85d29b5771dd6612579b227a8644ea622426ae",
+        "archiveBinding": "raw-aggregate-claim-and-manifest",
+        "verifiedArtifacts": {}
+      }
+    ]
+  },
+  "boundedOperations": 24,
+  "operationNames": [
+    "validateCsvBooleanLexical",
+    "verifyCsvBooleanLexical",
+    "inspectCoreScalarType",
+    "inspectCoreRecordMembers",
+    "inspectCoreReferenceLinks",
+    "inspectCoreRelationships",
+    "lookupCoreRelationship",
+    "declareCoreRelationship",
+    "verifyCoreRelationshipOperation",
+    "parseBits128",
+    "parseUuid",
+    "bits128FromBytes",
+    "bits128ToBytes",
+    "uuidFromBits128",
+    "uuidToBits128",
+    "compareBits128",
+    "bits128ToWords",
+    "bits128FromWords",
+    "bits128ToInteger",
+    "bits128FromInteger",
+    "inspectCoreKeys",
+    "lookupCoreKey",
+    "declareCoreRecordMembers",
+    "declareCoreKey"
+  ],
+  "logicalRetirementGaps": 922,
+  "pendingOperations": [
+    "verifyCoreKeyOperation",
+    "inspectCoreFacets",
+    "declareCoreFacets",
+    "verifyCoreFacetDeclaration",
+    "historicalCoreFacetPatch",
+    "inspectCoreCardinality",
+    "declareCoreCardinality",
+    "verifyCoreCardinalityDeclaration",
+    "validateCoreDatasetValuesCompact",
+    "verifyCoreDatasetValuesCompact"
+  ]
+}

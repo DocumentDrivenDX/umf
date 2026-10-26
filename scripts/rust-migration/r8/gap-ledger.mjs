@@ -43,6 +43,20 @@ accept('src/model/keys.ts', [
   ['declareCoreKey', 'declare_core_key'],
   ['verifyCoreKeyOperation', 'verify_core_key_operation'],
 ], 'umf_core::core_keys', 'crates/umf-core/src/core_keys.rs', ['r5-core-keys/README.md', 'r5-core-keys/frozen-typescript.json'], 'crates/umf-core/tests/r5_core_keys.rs');
+accept('src/model/record-type.ts', [
+  ['declareCoreRecordType', 'declare_core_record_type'],
+  ['verifyCoreRecordTypeDeclaration', 'verify_core_record_type_declaration'],
+], 'umf_core::core_record_type', 'crates/umf-core/src/core_record_type.rs', [
+  'r5-core-record-type/README.md', 'r5-core-record-type/frozen-typescript.json',
+  'r8-symbol-inventory/record-type-default-route-20261026.md',
+  'r8-symbol-inventory/record-type-default-chromium.json',
+  'r8-installed-route-evidence/r8-record-type-installed/record-type-installed.json',
+], [
+  'crates/umf-core-wire/tests/r5_core_record_type_wire.rs',
+  'bindings/core/node/tests/core-record-type-verification.test.js',
+  'bindings/core/node/tests/record-type-binding.test.js',
+  'bindings/core/wasm/tests/core-record-type-retained.test.js',
+]);
 accept('src/model/facets.ts', [
   ['inspectCoreFacets', 'inspect_core_facets'],
   ['declareCoreFacets', 'declare_core_facets'],
@@ -317,6 +331,31 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
       sourceClosure: closure(sourcePaths),
       qualificationEvidenceClosure: closure([evidencePath]),
       qualificationStatus: 'Staged Rust Core Key verifier selected at this V4 root. A fixed-point private archive has passing installed Node, Bun and Chromium receipts for the captured source closure; current worktree drift means this is not current-source or release qualification. The logical retirement gap remains open.',
+    };
+  }
+  if (['declareCoreRecordType', 'verifyCoreRecordTypeDeclaration'].includes(exportName)) {
+    const symbol = exportName === 'declareCoreRecordType' ? 'declare_core_record_type' : 'verify_core_record_type_declaration';
+    const evidencePaths = [
+      'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/record-type-default-route-20261026.md',
+      'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/record-type-default-chromium.json',
+      'docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/r8-record-type-installed/record-type-installed.json',
+    ];
+    const sourcePaths = [defaultEntry, 'src/access/rust-record-type-default.ts', 'src/model/record-type.ts',
+      'bindings/core/node/src/core-record-type.js',
+      'bindings/core/node/src/lib.rs', 'bindings/core/wasm/src/lib.rs',
+      'bindings/core/wasm/src/core_record_type_verification.rs', 'crates/umf-core-wire/src/record_type_binding.rs',
+      'crates/umf-core-wire/src/lib.rs', 'crates/umf-core/src/core_record_type.rs',
+      'crates/umf-core-wire/tests/r5_core_record_type_wire.rs',
+      'docs/helix/04-build/evidence/rust-migration/r5-core-record-type/README.md',
+      'docs/helix/04-build/evidence/rust-migration/r5-core-record-type/frozen-typescript.json',
+      ...evidencePaths];
+    return {
+      status: 'source-selected-installed-private-record-type-cohort',
+      rustOwner: `umf_core::core_record_type::${symbol}`,
+      wireOperation: `model/${exportName}`,
+      bindingRoute: browser ? 'V4 browser root -> rust-record-type-default -> WASM Core Record Type wrapper -> model wire -> Rust' : 'V4 Node root -> rust-record-type-default -> Node Core Record Type wrapper -> model wire -> Rust',
+      sourceClosure: closure(sourcePaths), qualificationEvidenceClosure: closure(evidencePaths),
+      qualificationStatus: 'Separate same-archive Node/Bun/Chromium private receipt passed three frozen declare/verify cases and malformed-receipt-before-current admission for Core Record Type v6. The five-family 24-operation aggregate excludes this family; complete parity, declaration retirement, and release qualification remain open.',
     };
   }
   const schemaProperties = new Map([
@@ -612,6 +651,9 @@ function operationMapping(row) {
     }
     if (['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey', 'verifyCoreKeyOperation'].includes(row.exportName)) {
       return accepted.get(`src/model/keys.ts#${row.exportName}`) ?? null;
+    }
+    if (['declareCoreRecordType', 'verifyCoreRecordTypeDeclaration'].includes(row.exportName)) {
+      return accepted.get(`src/model/record-type.ts#${row.exportName}`) ?? null;
     }
     if (row.exportName === 'validateCoreDatasetValuesCompact') {
       return accepted.get(`src/model/dataset-values-compact.ts#${row.exportName}`) ?? null;
@@ -1353,6 +1395,10 @@ const explicitGeneratedResourceAuthorities = new Map([
     }];
   }),
 ]);
+const metamodelResourceAuthorityEvidence = new Map([
+  ['spec/core/key-operation-v2.schema.json', 'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md'],
+  ['spec/core/record-type-operation-v6.schema.json', 'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md'],
+]);
 
 // These versioned core schemas were directly authored alongside the contract
 // revision that defines their subset, then intentionally refreshed to core
@@ -1409,6 +1455,7 @@ function resourceOwnership(row, aliasCount, scans) {
   const explicitGeneratedAuthority = explicitGeneratedResourceAuthorities.get(sourcePath);
   const generators = scans.exactGenerators.get(sourcePath) ?? [];
   const metamodelGenerated = scans.metamodelOutputs.has(sourcePath);
+  const metamodelEvidence = metamodelResourceAuthorityEvidence.get(sourcePath);
   const recordedGenerated = scans.generatorOutputs.has(sourcePath);
   const generatorKind = metamodelGenerated ? 'metamodel' : explicitGeneratedAuthority?.kind ?? authoredAuthority?.kind ?? (generators.length ? 'candidate-direct-output-literal; writer/input relation not proven' : null);
   const generatorPaths = metamodelGenerated ? ['scripts/metamodel/build.ts', 'crates/umf-metamodel/src/lib.rs'] : explicitGeneratedAuthority ? [explicitGeneratedAuthority.generator] : generators;
@@ -1425,6 +1472,7 @@ function resourceOwnership(row, aliasCount, scans) {
     ...(explicitGeneratedAuthority ? explicitGeneratedAuthority.closurePaths : []),
     ...generatorPaths,
     ...(metamodelGenerated ? [scans.metamodelManifestPath] : []),
+    ...(metamodelEvidence ? [metamodelEvidence] : []),
     ...(recordedGenerated ? [scans.generatorReceiptPath] : []),
   ])].filter(pathExists).sort();
   const rootSourcePaths = [...new Set(['src/index.ts', ...(scans.rootImports.get(sourcePath) ?? [])])].filter(pathExists).sort();
@@ -1506,6 +1554,7 @@ function resourceOwnership(row, aliasCount, scans) {
   const evidencePaths = [
     ...(recordedGenerated ? [scans.generatorReceiptPath] : []),
     ...(metamodelGenerated ? ['spec/metamodel/generated/manifest.json'] : []),
+    ...(metamodelEvidence ? [metamodelEvidence] : []),
     ...(pythonRoutes.some(item => item.id === 'python-codegen-wheel-copy') ? ['python/umf_codegen/tests/test_native_contract.py', 'python/umf_codegen/tests/test_resources.py'] : []),
   ].filter(pathExists);
   return {
@@ -1624,6 +1673,7 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
         defaultRoute: inert ? 'JSON resource export from Node package root' : 'Node package root declaration',
         implementationStatus: row.exportName === 'generatePythonClient'
           ? 'Rust V4 implementation selected by source route; installed qualification pending'
+          : ['declareCoreRecordType', 'verifyCoreRecordTypeDeclaration'].includes(row.exportName) ? 'Rust Core Record Type v6 operation selected by V4 source route; separate private installed Node/Bun/Chromium archive receipt passed; broader parity and retirement open'
           : selectedCardinality ? 'Rust cardinality operation selected by source route; installed qualification pending'
           : selectedSchemaProperties ? 'Rust Schema Properties operation selected by source route; separate same-archive private receipt passed; aggregate route gate pending'
           : ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName) ? 'Rust facets operation selected by source route; installed qualification pending'
@@ -1640,6 +1690,7 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
         defaultRoute: inert ? 'JSON resource export from browser package root' : 'browser package root declaration',
         implementationStatus: row.exportName === 'generatePythonClient'
           ? 'Rust V4 implementation selected by source route; installed qualification pending'
+          : ['declareCoreRecordType', 'verifyCoreRecordTypeDeclaration'].includes(row.exportName) ? 'Rust Core Record Type v6 operation selected by V4 source route; separate private installed Node/Bun/Chromium archive receipt passed; broader parity and retirement open'
           : selectedCardinality ? 'Rust cardinality operation selected by source route; installed qualification pending'
           : selectedSchemaProperties ? 'Rust Schema Properties operation selected by source route; separate same-archive private receipt passed; aggregate route gate pending'
           : ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName) ? 'Rust facets operation selected by source route; installed qualification pending'
@@ -1669,6 +1720,8 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
         ? 'explicit TypeScript reference declaration remains available; not a Node/browser default-route claim'
         : row.exportName === 'generatePythonClient' && ['package-root-node', 'package-root-browser'].includes(row.routeId)
           ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust V4 implementation selected by source route; installed qualification pending; TypeScript retirement gap remains open`
+          : ['declareCoreRecordType', 'verifyCoreRecordTypeDeclaration'].includes(row.exportName) && ['package-root-node', 'package-root-browser'].includes(row.routeId)
+            ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust Core Record Type v6 operation selected by V4 source route; separate same-archive Node/Bun/Chromium private receipt passed; aggregate gate excludes this family and retirement remains open`
           : selectedCardinality
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust cardinality operation selected by source route; installed qualification pending; retirement gap remains open`
           : selectedSchemaProperties
@@ -1726,7 +1779,9 @@ function logicalDeclarationSignature(row) {
   // operation owner, implementation status, and qualification are decided
   // separately below.
   // Normalize only the exact root-binding names below; overload checks for
-  // every other declaration remain kind- and multiplicity-sensitive.
+  // every other declaration remain kind- and multiplicity-sensitive. The
+  // Record Type pair is shape-only: this does not establish Rust ownership,
+  // installed qualification, or retirement disposition.
   const conditionBoundExport = row.exportName === 'generatePythonClient'
     // Core Keys binds this legacy TypeScript verifier through the V4 entry,
     // but does not select its Rust candidate implementation.
@@ -1734,6 +1789,7 @@ function logicalDeclarationSignature(row) {
     || ['declareCoreSchemaProperties', 'inspectCoreSchemaProperties', 'validateCoreFieldValue', 'resolveCoreDefault'].includes(row.exportName)
     || ['parseGregorianDate', 'truncateGregorianDate', 'parseRfc3339ExactInstant', 'sameRfc3339ExactInstant', 'inspectCoreRelationships', 'lookupCoreRelationship', 'declareCoreRelationship', 'verifyCoreRelationshipOperation'].includes(row.exportName)
     || row.exportName === 'validateCoreDatasetValuesCompact'
+    || ['declareCoreRecordType', 'verifyCoreRecordTypeDeclaration'].includes(row.exportName)
     || ['parseBits128', 'parseUuid', 'bits128FromBytes', 'bits128ToBytes', 'uuidFromBits128', 'uuidToBits128', 'compareBits128', 'bits128ToWords', 'bits128FromWords', 'bits128ToInteger', 'bits128FromInteger'].includes(row.exportName)
     || ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName)
     || ['inspectCoreRecordMembers', 'inspectCoreReferenceLinks', 'inspectCoreScalarType', 'validateCsvBooleanLexical', 'verifyCsvBooleanLexical'].includes(row.exportName)

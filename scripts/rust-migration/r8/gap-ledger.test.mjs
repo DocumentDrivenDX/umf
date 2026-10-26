@@ -7,7 +7,7 @@ import { cp, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { buildLedger, collectPythonPackageAssets, collectPythonSourceFiles } from './gap-ledger.mjs';
-import { requiredR8RouteFamilies } from './installed-route-evidence.mjs';
+import { requiredR8RouteFamilies, validateR8InstalledRouteEvidence } from './installed-route-evidence.mjs';
 import { normalizeR8RouteHostReceipt } from './installed-route-receipt-adapter.mjs';
 
 const inventory = { symbols: [
@@ -22,8 +22,7 @@ const args = { inventory, packageJson: { scripts: { 'build:check': 'bun scripts/
   { packageName: 'umf_access', path: 'python/umf_access/src/umf_access', init: Buffer.from('from .capture import (\n    Captured as Captured,\n    capture as capture,\n)\nfrom .dsl import Join as Join\n'), files: [], assets: [] },
 ], scriptFiles: [{ path: 'scripts/build.ts', sha256: 'e'.repeat(64) }] };
 const currentGeneratedLedger = () => JSON.parse(execFileSync('node', [
-  'scripts/rust-migration/r8/gap-ledger.mjs', '--stdout', '--installed-route-evidence',
-  'docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-a2552db0/aggregate.json',
+  'scripts/rust-migration/r8/gap-ledger.mjs', '--stdout',
 ], {
   cwd: process.cwd(), maxBuffer: 64 * 1024 * 1024, encoding: 'utf8',
 }));
@@ -38,7 +37,7 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   const entries = new Map(inventoryReceipt.defaultRouteEntrySelections.map(selection => [selection.routeId, selection]));
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     const selection = entries.get(routeId);
-    assert.equal(selection.directExportCount, 42);
+    assert.equal(selection.directExportCount, 44);
     assert.ok(expected.every(name => selection.directExports.includes(name)), `${routeId} misses an override`);
     const rows = ledger.rows.filter(row => row.routeId === routeId && expected.includes(row.exportName));
     assert.equal(rows.length, expected.length);
@@ -49,13 +48,22 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
     assert.equal(temporal.length, 4);
     assert.ok(temporal.every(row => row.bindingRouteStatus === 'unproven' && row.sourceSelectedImplementation.status === 'installed-private-prior-cohort'));
     assert.equal(relationships.length, 4);
-    assert.ok(relationships.every(row => row.bindingRouteStatus === 'installed-private-current-cohort' && row.sourceSelectedImplementation.status === 'source-selected-installed-private-current-cohort'));
+    assert.ok(relationships.every(row => row.bindingRouteStatus === 'unproven' && row.sourceSelectedImplementation.status === 'installed-private-fixed-point-cohort'));
   }
   const reference = ledger.rows.filter(row => row.routeId === 'package-reference' && expected.includes(row.exportName));
   assert.equal(reference.length, expected.length);
   assert.ok(reference.every(row => row.sourceSelectedImplementation === null));
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 84);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 88);
+  const archivedGate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/gate-result.json', 'utf8'));
+  assert.equal(archivedGate.status, 'pass');
+  assert.equal(archivedGate.archive.sourceClosureSha256, '6f4f21c1dfbdde5959f6e5386419c0c2f90b3a8f0512d148b60825e93afce593');
+  assert.equal(archivedGate.boundedOperations, 24);
+});
+
+test('superseded a2552db0 route aggregate stays rejected after its captured source drifts', () => {
+  const aggregate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-a2552db0/aggregate.json', 'utf8'));
+  assert.throws(() => validateR8InstalledRouteEvidence(aggregate), /current live source drift:/);
 });
 
 test('Schema Properties source selections keep exact CONTRACT-049 mappings separate from the five-family aggregate gate', () => {
@@ -95,12 +103,13 @@ test('Schema Properties source selections keep exact CONTRACT-049 mappings separ
     assert.equal(reference.sourceSelectedImplementation, null);
     assert.equal(reference.implementationStatus, 'TypeScript reference implementation remains explicit');
   }
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 62);
-  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 860);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 64);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 858);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
-  const aggregateNames = ledger.installedRouteEvidence.operationNames;
-  assert.equal(Object.keys(ledger.installedRouteEvidence.families).length, 5);
-  assert.equal(ledger.installedRouteEvidence.boundedOperations, 24);
+  const aggregate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/aggregate.json', 'utf8'));
+  const aggregateNames = Object.values(aggregate.families).flatMap(family => family.operations);
+  assert.equal(Object.keys(aggregate.families).length, 5);
+  assert.equal(aggregateNames.length, 24);
   assert.ok([...expected.keys()].every(name => !aggregateNames.includes(name)), 'the separate four-operation Schema gate must not inflate aggregate evidence');
 });
 
@@ -203,7 +212,7 @@ test('TableSpec Cardinality projection schema pins its direct Field base and pac
     'the imported Field base is qualified independently, not promoted transitively');
   assert.ok(row.resourceOwnership.routes.some(route => route.id === 'sdk-archive'
     && route.artifactPath === 'package/dist/spec/core/cardinality-tablespec-projection.schema.json'));
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 56);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
 });
 
@@ -259,7 +268,7 @@ test('SQL Server Field and Cardinality projection schemas pin exact writer chain
   assert.equal(field.resourceOwnership.authority.status, 'generated-authority-known');
   assert.deepEqual(field.resourceOwnership.authority.generatorInputs, ['spec/core/field-postgresql-projection.schema.json']);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 56);
 });
 
 test('SQL Server schema writer --check rejects stale output in an isolated project copy', async () => {
@@ -409,7 +418,7 @@ test('Parquet metadata schema outputs pin their exact multi-output writer and di
     assert.ok(row.resourceOwnership.routes.some(route => route.id === 'sdk-archive'
       && route.artifactPath === `package/dist/${resource}`));
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 56);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
 });
 
@@ -614,15 +623,28 @@ test('versioned core operation schemas pin direct authoring history without prom
     assert.equal(archive.artifactPath, `package/dist/${source}`);
     assert.equal(archive.installedQualification.status, 'not-installed-qualified');
   }
-  const unresolved = new Map([
+  const generated = new Map([
     ['spec/core/key-operation-v2.schema.json', '67c35f417d940d9d3ff8c4fe7ca57ea29d319a1da4310ea3f9d2437160e9095b'],
     ['spec/core/record-type-operation-v6.schema.json', '2b40d2be0562794f918738d96ee8f974f7133f26ee8476583b944c9f676a255d'],
   ]);
-  for (const [source, currentHash] of unresolved) {
+  const metamodel = JSON.parse(readFileSync('spec/metamodel/generated/manifest.json', 'utf8'));
+  const keyRecordEvidence = 'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md';
+  for (const [source, currentHash] of generated) {
     const row = current.rows.find(item => item.source === source);
     assert.ok(row, `missing retained older version ${source}`);
-    assert.equal(row.resourceOwnership.authority.status, 'authority-unresolved', source);
+    const authority = row.resourceOwnership.authority;
+    assert.equal(authority.status, 'generated-authority-known', source);
+    assert.equal(authority.generatorKind, 'metamodel', source);
+    assert.deepEqual(authority.generator.entrypoints, ['scripts/metamodel/build.ts', 'crates/umf-metamodel/src/lib.rs']);
+    assert.ok(authority.sourceClosure.some(item => item.path === 'spec/metamodel/generated/manifest.json'));
+    assert.ok(authority.sourceClosure.some(item => item.path === keyRecordEvidence));
     assert.equal(row.resourceOwnership.source.sha256, currentHash, `${source} current bytes`);
+    assert.equal(metamodel.outputs[source].sha256, currentHash, `${source} generated manifest bytes`);
+  }
+  for (const source of ['spec/core/key-selection.schema.json', 'spec/core/relationship-selection.schema.json', 'spec/core/schema-properties-selection.schema.json']) {
+    const row = current.rows.find(item => item.source === source);
+    assert.ok(row, `missing negative control ${source}`);
+    assert.equal(row.resourceOwnership.authority.status, 'authority-unresolved', `${source} remains outside the metamodel declaration`);
   }
   for (const source of ['spec/core/cardinality-operation-v4.schema.json', 'spec/core/facet-operation-v3.schema.json',
     'spec/core/kind-operation-v6.schema.json', 'spec/core/nullability-operation-v5.schema.json']) {
@@ -638,10 +660,10 @@ test('versioned core operation schemas pin direct authoring history without prom
   const relationshipSelection = current.rows.find(item => item.source === 'spec/core/relationship-selection.schema.json');
   assert.equal(relationshipSelection.resourceOwnership.authority.status, 'authority-unresolved', 'one-off generated selection schema lacks a current reproducible writer');
   assert.deepEqual(current.counts.resourceAuthorityByStatus, {
-    'generated-authority-known': 52,
+    'generated-authority-known': 56,
     'authored-authority-known': 49,
     'candidate-generated': 88,
-    'authority-unresolved': 9,
+    'authority-unresolved': 5,
   });
   assert.equal(current.counts.resourceAuthorityByStatus['authored-authority-known'], 49);
 });
@@ -871,12 +893,12 @@ test('Delta log, Parquet framing and Spark datatype schemas pin current writers 
   const relationshipSelection = ledger.rows.find(item => item.source === 'spec/core/relationship-selection.schema.json');
   assert.equal(relationshipSelection.resourceOwnership.authority.status, 'authority-unresolved',
     'historical relationship-selection output without a live writer remains unresolved');
-  for (const resource of ['spec/core/key-operation-v2.schema.json']) {
-    const row = ledger.rows.find(item => item.source === resource);
-    if (row) assert.equal(row.resourceOwnership.authority.status, 'authority-unresolved', `${resource} is a negative historical control`);
-  }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
-  assert.equal(ledger.counts.resourceAuthorityByStatus['authority-unresolved'], 9);
+  const key = ledger.rows.find(item => item.source === 'spec/core/key-operation-v2.schema.json');
+  const record = ledger.rows.find(item => item.source === 'spec/core/record-type-operation-v6.schema.json');
+  assert.equal(key.resourceOwnership.authority.status, 'generated-authority-known');
+  assert.equal(record.resourceOwnership.authority.status, 'generated-authority-known');
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 56);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['authority-unresolved'], 5);
 });
 
 test('dataset-value operation schemas pin direct authorship, consumer closure and archive limits', () => {
@@ -999,7 +1021,7 @@ test('domain-pack resources pin the schema builder, contract inputs and package 
   const archive = readFileSync('scripts/package-sdk.py', 'utf8');
   assert.match(build, /cp\(join\(root,'spec'\),join\(dist,'spec'\),\{recursive:true\}\)/);
   assert.match(archive, /\(root\s*\/\s*'dist'\)\.rglob\('\*'\)/);
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 56);
 });
 
 test('Arrow IPC single-output schema writers have read-only check mode and pinned package closure', () => {
@@ -1033,7 +1055,7 @@ test('Arrow IPC single-output schema writers have read-only check mode and pinne
     const after = createHash('sha256').update(readFileSync(resource)).digest('hex');
     assert.equal(after, before, `${generator} --check changed ${resource}`);
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 56);
 });
 
 test('Arrow base schemas pin PostgreSQL and vendored FlatBuffer generator inputs', () => {
@@ -1083,7 +1105,7 @@ test('Arrow base schemas pin PostgreSQL and vendored FlatBuffer generator inputs
     execFileSync('bun', [generator, '--check'], { stdio: 'pipe' });
     for (const resource of resources) assert.equal(createHash('sha256').update(readFileSync(resource)).digest('hex'), before.get(resource), `${generator} --check changed ${resource}`);
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 56);
 });
 
 test('Delta action and checkpoint report schemas pin CONTRACT-018 composition and package closure', async () => {
@@ -1167,7 +1189,7 @@ test('Delta action and checkpoint report schemas pin CONTRACT-018 composition an
   } finally {
     await rm(generatedCheckpoint, { recursive: true, force: true });
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 56);
 });
 
 test('native JSON tree schema is contract-attested and preserves its public source closure', () => {
@@ -1260,7 +1282,7 @@ test('PostgreSQL Key catalog schemas pin one exact contract-governed three-outpu
   } finally {
     await rm(isolated, { recursive: true, force: true });
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 56);
 });
 
 test('Spark projection schemas pin US-017 clauses, composed input, public exports and package closure', () => {
@@ -1335,7 +1357,7 @@ test('Parquet level, physical, row and logical report schemas pin their input ch
     execFileSync('bun', [generator, '--check'], { stdio: 'pipe' });
     assert.equal(createHash('sha256').update(readFileSync(row.source)).digest('hex'), before, `${generator} --check changed ${row.source}`);
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 56);
 });
 
 test('condition-aware routes count logical gaps once and classify each default separately', () => {
@@ -1353,6 +1375,12 @@ test('condition-aware routes count logical gaps once and classify each default s
       ['declareCoreKey', 'declare_core_key'],
     ].map(([exportName]) => ({ routeId, exportName, declarationName: exportName, declarationKind: routeId === 'package-reference' ? 'FunctionDeclaration' : 'BindingElement', source: routeId === 'package-root-node' ? 'src/index-node-v4.ts' : routeId === 'package-root-browser' ? 'src/index-browser-v4.ts' : 'src/model/keys.ts', line: 14, sourceSha256: '6'.repeat(64) })),
     { routeId, exportName: 'verifyCoreKeyOperation', declarationName: 'verifyCoreKeyOperation', declarationKind: routeId === 'package-reference' ? 'FunctionDeclaration' : 'BindingElement', source: routeId === 'package-reference' ? 'src/model/keys.ts' : routeId === 'package-root-node' ? 'src/index-node-v4.ts' : 'src/index-browser-v4.ts', line: 16, sourceSha256: '5'.repeat(64) },
+    ...['declareCoreRecordType', 'verifyCoreRecordTypeDeclaration'].map((exportName, index) => ({
+      routeId, exportName, declarationName: exportName,
+      declarationKind: routeId === 'package-reference' ? 'FunctionDeclaration' : 'BindingElement',
+      source: routeId === 'package-reference' ? 'src/model/record-type.ts' : routeId === 'package-root-node' ? 'src/index-node-v4.ts' : 'src/index-browser-v4.ts',
+      line: 17 + index, sourceSha256: (index ? '3' : '4').repeat(64),
+    })),
     { routeId, exportName: 'validateCoreDatasetValuesCompact', declarationName: 'validateCoreDatasetValuesCompact', declarationKind: routeId === 'package-reference' ? 'FunctionDeclaration' : 'BindingElement', source: routeId === 'package-root-node' ? 'src/index-node-v4.ts' : routeId === 'package-root-browser' ? 'src/index-browser-v4.ts' : 'src/model/dataset-values-compact.ts', line: 17, sourceSha256: '9'.repeat(64) },
     { routeId, exportName: 'verifyCoreDatasetValuesCompact', declarationName: 'verifyCoreDatasetValuesCompact', declarationKind: 'FunctionDeclaration', source: 'src/model/dataset-values-compact.ts', line: 18, sourceSha256: '8'.repeat(64) },
     ...[
@@ -1367,19 +1395,19 @@ test('condition-aware routes count logical gaps once and classify each default s
     { routeId, exportName: 'schema', declarationName: 'schema', declarationKind: 'SourceFile', source: 'spec/core/schema.json', line: 1, sourceSha256: 'c'.repeat(64) },
   ]);
   const ledger = buildLedger({ ...args, inventory: { symbols } });
-  assert.equal(ledger.rows.length, 57);
-  assert.equal(ledger.counts.uniqueExportNames, 18);
-  assert.equal(ledger.counts.executableRows, 18);
-  assert.equal(ledger.counts.routeExecutableRows, 54);
+  assert.equal(ledger.rows.length, 63);
+  assert.equal(ledger.counts.uniqueExportNames, 20);
+  assert.equal(ledger.counts.executableRows, 20);
+  assert.equal(ledger.counts.routeExecutableRows, 60);
   assert.equal(ledger.counts.inertJsonRows, 1);
   assert.equal(ledger.counts.routeInertJsonRows, 3);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 18);
-  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-node'].executableDefaultRouteGaps, 18);
-  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-browser'].executableDefaultRouteGaps, 18);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 20);
+  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-node'].executableDefaultRouteGaps, 20);
+  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-browser'].executableDefaultRouteGaps, 20);
   assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-reference'].executableDefaultRouteGaps, null);
-  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-reference'].retainedReferenceExecutableRows, 18);
-  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-node'].rustSelectedSourceDeclarations, 14);
-  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-browser'].rustSelectedSourceDeclarations, 14);
+  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-reference'].retainedReferenceExecutableRows, 20);
+  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-node'].rustSelectedSourceDeclarations, 16);
+  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-browser'].rustSelectedSourceDeclarations, 16);
   assert.equal(ledger.counts.resourceExportAliases, 1);
   assert.equal(ledger.counts.routeResourceExportAliases, 3);
   assert.equal(ledger.counts.uniqueResourceFiles, 1);
@@ -1429,6 +1457,22 @@ test('condition-aware routes count logical gaps once and classify each default s
     }
     assert.equal(byRouteAndName.get(`package-reference:${name}`).sourceSelectedImplementation, null);
   }
+  for (const [name, rustName] of [
+    ['declareCoreRecordType', 'declare_core_record_type'],
+    ['verifyCoreRecordTypeDeclaration', 'verify_core_record_type_declaration'],
+  ]) {
+    for (const routeId of ['package-root-node', 'package-root-browser']) {
+      const row = byRouteAndName.get(`${routeId}:${name}`);
+      assert.equal(row.acceptedRustOperation, `umf_core::core_record_type::${rustName}`);
+      assert.equal(row.sourceSelectedImplementation.status, 'source-selected-installed-private-record-type-cohort');
+      assert.equal(row.sourceSelectedImplementation.rustOwner, `umf_core::core_record_type::${rustName}`);
+      assert.match(row.sourceSelectedImplementation.qualificationStatus, /five-family 24-operation aggregate excludes this family/);
+      assert.match(row.disposition, /aggregate gate excludes this family and retirement remains open/);
+    }
+    const reference = byRouteAndName.get(`package-reference:${name}`);
+    assert.equal(reference.sourceSelectedImplementation, null);
+    assert.equal(reference.implementationStatus, 'TypeScript reference implementation remains explicit');
+  }
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     const verify = byRouteAndName.get(`${routeId}:verifyCoreKeyOperation`);
     assert.equal(verify.sourceSelectedImplementation.status, 'source-selected-installed-private-source-pinned');
@@ -1465,7 +1509,7 @@ test('condition-aware routes count logical gaps once and classify each default s
     }
     assert.equal(byRouteAndName.get(`package-reference:${name}`).sourceSelectedImplementation, null);
   }
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 28);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 32);
   assert.match(byRouteAndName.get('package-reference:inspectCoreSemanticTypes').acceptedOperationEvidence.defaultRouteStatus, /^Explicit \.\/reference/);
   assert.match(byRouteAndName.get('package-root-browser:inspectCoreSemanticTypes').acceptedOperationEvidence.defaultRouteStatus, /^Browser default route/);
   const overloadRows = ledger.rows.filter(row => row.routeId === 'package-root-node' && row.exportName === 'futureAlgorithm');
@@ -1475,6 +1519,10 @@ test('condition-aware routes count logical gaps once and classify each default s
   assert.throws(() => buildLedger({ ...args, inventory: { symbols: mismatched } }), /declaration multiplicity differs for package-reference/);
   const missingCardinalityRoute = symbols.filter(row => !(row.routeId === 'package-reference' && row.exportName === 'verifyCoreCardinalityDeclaration'));
   assert.throws(() => buildLedger({ ...args, inventory: { symbols: missingCardinalityRoute } }), /declaration multiplicity differs for package-reference/);
+  const unlistedRecordTypeAlias = symbols.map(row => row.routeId === 'package-root-node' && row.exportName === 'declareCoreRecordType'
+    ? { ...row, exportName: 'declareCoreRecordTypeAlias' }
+    : row);
+  assert.throws(() => buildLedger({ ...args, inventory: { symbols: unlistedRecordTypeAlias } }), /declaration multiplicity differs for package-root-(node|browser)/);
   assert.equal(byRouteAndName.get('package-reference:inspectCoreSemanticTypes').route, './reference');
   assert.equal(byRouteAndName.get('package-reference:inspectCoreSemanticTypes').implementationStatus, 'TypeScript reference implementation remains explicit');
   assert.throws(() => buildLedger({ ...args, inventory: { symbols: symbols.filter(row => row.routeId !== 'package-reference') } }), /missing required routes: package-reference/);
@@ -2193,7 +2241,7 @@ test('Delta datatype and table-context schemas pin exact writers and isolated fu
   } finally {
     await rm(directory, { recursive: true, force: true });
   }
-  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 52);
+  assert.equal(ledger.counts.resourceAuthorityByStatus['generated-authority-known'], 56);
 });
 
 test('Python source census walks nested package modules', async t => {

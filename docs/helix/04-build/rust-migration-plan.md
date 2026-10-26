@@ -5586,31 +5586,34 @@ parity remains open. The WASM target compiles, but this new Selection export
 has no real Chromium runtime receipt yet.
 No public/default route or retirement claim follows from this checkpoint.
 
-The [mixed-diagnostic interface decision](evidence/rust-migration/r8-selection-private-host-route/mixed-diagnostic-interface-decision-20261026.md)
-sets the next Selection gate. Nonempty caller-owned `structure.errors` are
-observed, but the current constraint and Engine interfaces reduce every
-emitted diagnostic to a static Rust `Diagnostic` before Selection can perform
-its ordered severity pass and single aggregate serialization. An exact private
-route needs an invocation-local mixed carrier at the constraint emission site,
-with a proven order-preserving transport through Engine. Its transport shape
-is still unresolved; no sentinel, eager message copy, or partial stringify
-change is accepted. After that interface is designed, qualify structure errors
-in Node, Bun, and real Chromium before adding semantic callback behavior.
+The [mixed-diagnostic interface receipt](evidence/rust-migration/r8-selection-private-host-route/mixed-diagnostic-interface-decision-20261026.md)
+now covers an invocation-local typed carrier from constraint `emit` through
+private Engine and Selection validation. Invalid-source structure messages
+remain host string tokens until one aggregate Node host `JSON.stringify`, and
+nonstring messages refuse at `emit`. Focused Bun-driven binding tests pass 10/10,
+the Node private probe passes, frozen R5 Selection passes 10/10, and the WASM
+target compiles. Successful host-warning results, semantic callbacks, real
+Chromium Selection runtime, result object prototype and default selection are
+still open. No sentinel or eager message copy is accepted.
 
 The strict unified-client checker continues to scan every `src/access` source
-with exact per-file import allowances. Two added negative controls prove that
-one audited Rust facade cannot borrow another's allowance and that newly
-introduced host hooks remain rejected; the checker and seven boundary tests
+with exact per-file import allowances. The Record Type facade also restricts
+its predecessor declaration modules to type-only imports and re-exports.
+Negative controls reject borrowed file grants, new imports, predecessor value
+imports and re-exports, and host hooks; the checker and nine boundary tests
 pass. This policy guard does not select a Rust route or reduce retirement gaps.
 
-The next operation-resource authority decision is to author Key v2 and Record
-Type v6 as closed metamodel outputs under a narrow CONTRACT-080 vocabulary
-1.3.0 amendment. Their current schema bytes must remain exact. The compiler
-needs resource-specific fixed ordering for Key, an omitted empty `$defs` for
-Record Type, and explicit authorization for the Record Type link to the Kind
-v6 resource. Only after the metamodel fixed point and pinned hashes pass can
-the ledger move their four aliases from unresolved to generated-known. This
-resource decision does not alter executable route or release status.
+The [Key v2 and Record Type v6 authority receipt](evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md)
+records the narrow CONTRACT-080 vocabulary 1.3.0 amendment. Both schemas are
+closed metamodel outputs with their previous bytes and hashes unchanged. The
+compiler uses Key-specific fixed ordering, omits Record Type's empty `$defs`,
+and admits only its declared Kind v6 `$defs/declaration` target. The focused
+compiler and frozen-byte tests pass, and source-bound generation now reaches a
+fixed point without treating generated Cardinality v4 as a compiler input. The
+clean-source metamodel and self-model suite passes 71 tests, and the installed
+editable Python action-runtime resource suite passes 34. The subsequent ledger
+recapture moved their four aliases from unresolved to generated-known;
+executable retirement and release status did not change.
 
 The [live selected-Key parity control](evidence/rust-migration/r8-captured-graph-validator-interface/README.md#live-selected-key-get-and-page-parity--2026-10-26)
 confirms that the existing private Rust captured-graph validator accepts
@@ -5621,3 +5624,61 @@ focused Rust graph-validator tests pass. This closes the earlier bounded
 selected-Key preflight evidence gap, but public Python capture selection,
 arbitrary subclass accessors, wider graph admission and installed-wheel
 qualification remain open.
+
+The private captured-graph DTO bridge fails closed for accessor-bearing
+trusted subclasses or extra dataclass fields. It runs Python's live validator
+before that boundary refusal so an earlier semantic fault retains its order;
+public `capture()` remains Python-selected. For bridge-only DTO depth, value,
+and byte limits, it now also runs the live validator before surfacing the
+resource refusal. The focused CPython 3.13.16 replay passes 17 tests, including
+an accepted oversized graph and two semantic-first oversized graphs. Wider
+graph admission, installed-wheel qualification, and default capture selection
+remain open.
+
+The [fixed-point private SDK archive](evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/aggregate.json)
+was captured from 3,440 source inputs with zero generated transforms and
+1,789 verified archive payload members. Its separate five-family aggregate
+passes 24 selected operations in Node, Bun and real Chromium: CSV Boolean,
+Core Inspectors, Core Relationships, Bit128/UUID and Core Keys. The
+[Record Type installed sidecar](evidence/rust-migration/r8-installed-route-evidence/r8-record-type-installed/record-type-installed.json)
+uses the same archive and passes three frozen declaration/verification pairs
+plus malformed-receipt-before-current ordering in those hosts. It is separate
+from the 24-operation gate. The archive is a private fixed-point cohort,
+not a release artifact; later JSON Schema wrapper edits make its source
+closure historical for the current worktree. No retirement follows from either
+receipt.
+
+The condition-aware [R8 ledger](evidence/rust-migration/r8-symbol-inventory/gap-ledger.json)
+now recognizes the Node/browser Record Type bindings with their exact Rust
+owners and separate installed receipt. Key v2 and Record Type v6 have generated
+schema authority. This cohort records 64 accepted executable Rust mappings,
+858 executable names without such a mapping, 88 source-selected route rows,
+and all 922 logical default-route retirement gaps still open. Historical
+archive gates stay source-pinned; counts must be recaptured after subsequent
+source changes before making a current-source claim. The full ledger suite
+passes 46/46, including explicit stale-cohort rejection and negative resource
+authority controls.
+
+The [Python V8 closure audit](evidence/rust-migration/r8-python-v8-closure-audit/README.md)
+continues to support a source-level V8-free `umf-codegen` route through the
+bundled Rust CLI, with one installed macOS arm64 CPython 3.11 wheel cohort
+replayed without Node or Bun. That host/platform scope does not qualify the
+complete Python API or release. The next bounded Python parity gate is a
+branch-by-branch census of `capture._validate_node` against the private Rust
+captured-graph validator, followed by one closed DTO/refusal class and an
+installed extension replay. Trusted Python introspection, declaration-body
+execution and database/session orchestration remain the host responsibilities
+defined by CONTRACT-071 and CONTRACT-072.
+
+The next JSON Schema boundary step retains the TypeScript default route. A
+[bounded wrapper correction](evidence/rust-migration/r8-json-schema-eight-operations/README.md#non-string-pointer-wrapper-correction)
+now preserves runtime-native non-string pointer errors before Rust dispatch in
+the opt-in Node and WASM facades; focused tests pass 19 cases and 135
+assertions. `getJsonSchemaNode` still differs on malformed-document versus
+non-string-pointer refusal precedence, and raw `importJsonSchema` getter/Proxy
+traces and refusal order remain unresolved. The production cutover design is a
+literal host-observation bridge for JavaScript reflection and exception timing,
+with Rust retaining schema and document semantics. It needs a governed
+interface, frozen trace tests and Node/Bun/Chromium evidence before any default
+route selection; preserving the TypeScript semantic route permanently would
+not complete the shared-engine goal.

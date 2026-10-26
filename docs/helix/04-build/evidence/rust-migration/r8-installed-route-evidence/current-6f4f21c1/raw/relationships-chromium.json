@@ -1,0 +1,21 @@
+{
+  "status": "pass",
+  "browser": "153.0.8010.12",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+  "caseCount": 11,
+  "packetSha256": "1122fc4d019f055570ea72baf88788818091dd513c05f9070624cba15dedb71e",
+  "browserEntrySha256": "705a28120fc955042fe86b865bc195cf83fb522fd064ad2efc3a9812e6f0c2aa",
+  "wasmSha256": "d7264890923c3c1b553125d1a0e00dce0d1ebc016c38e03e93ee6d3bfd006b12",
+  "sourceHashes": {
+    "scripts/rust-migration/r8/relationships-default-browser.mjs": "fd893e14c161262127667160addc386560cd1c49b3a9917d2e0bdc4f52c06511",
+    "src/index-browser-v4.ts": "dd054c8f1322214d22c6f7ea63e850cc0a702701585c837fa8a04515795cf5a7",
+    "src/index-node-v4.ts": "59f2b8b474683c28b356e462faa3c265f6fcc694bd324a21edf054c51ec6571d",
+    "src/access/rust-relationships-default.ts": "65664e0b981eaf24a00a1e6a1e1d1381ecbf65a25fb819427e38ece71735d0d0",
+    "bindings/core/wasm/src/core-relationships.js": "ded6c56efbed6b9309d23c2880b62fe04abfa2c26325ec8c4423811fce033c04",
+    "crates/umf-core/src/core_relationships.rs": "089906130b9a464122915a2aba6bc582d4a954969e6f51a4b4224aa2abad6519",
+    "crates/umf-core-wire/src/lib.rs": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+  },
+  "nodeGlobalsAbsent": true,
+  "exactPacketParity": true,
+  "qualification": "Source-pinned private WASM replay only; package release/default qualification remains open."
+}

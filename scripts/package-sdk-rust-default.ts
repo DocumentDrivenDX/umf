@@ -180,6 +180,15 @@ try{
  const sourceTransform={status:Object.entries(capturedLiveInputHashes).some(([path,hash])=>generatedInputs.has(path)&&derivedHashes[path]!==hash)?'derived-private-snapshot-not-release-fixed-point':'fixed-point',generatedInputs:[...generatedInputs].sort().map(path=>({path,before:capturedLiveInputHashes[path],after:derivedHashes[path]})).filter(item=>item.before!==item.after)};
  sourceInputHashes=derivedHashes;
  sourceHash=await treeDigest(snapshotInputs,snapshotRoot);
+ await run(['cargo','build','--release','--locked','--manifest-path','bindings/core/wasm/Cargo.toml','--target','wasm32-unknown-unknown'],{env:cargoEnv});
+ const bindgen=Bun.spawn(['wasm-bindgen','--version'],{stdout:'pipe',stderr:'pipe'});
+ const bindgenVersion=await new Response(bindgen.stdout).text();
+ const bindgenError=await new Response(bindgen.stderr).text();
+ if(await bindgen.exited!==0||bindgenVersion.trim()!=='wasm-bindgen 0.2.100')throw new Error(`Expected wasm-bindgen 0.2.100, got ${(bindgenVersion+bindgenError).trim()}`);
+ await run(['wasm-bindgen','--target','web','--out-dir',wasmOut,'--out-name','umf_core_wasm',join(cargoTarget,'wasm32-unknown-unknown/release/umf_core_wasm.wasm')]);
+ await mkdir(join(root,'bindings/core/wasm/pkg'),{recursive:true});
+ await cp(join(wasmOut,'umf_core_wasm.js'),join(root,'bindings/core/wasm/pkg/umf_core_wasm.js'));
+ await cp(join(wasmOut,'umf_core_wasm.d.ts'),join(root,'bindings/core/wasm/pkg/umf_core_wasm.d.ts'));
  await run([process.execPath,'scripts/build-postgresql.ts']);
  await run([process.execPath,'node_modules/typescript/bin/tsc','--emitDeclarationOnly','--outDir',dist]);
  await cp(join(root,'spec'),join(dist,'spec'),{recursive:true});
@@ -201,16 +210,19 @@ try{
  if(!native)throw new Error('Cargo did not produce the Node N-API cdylib');
  await cp(native,join(dist,'umf_core_node.node'));
 
- await run(['cargo','build','--release','--locked','--manifest-path','bindings/core/wasm/Cargo.toml','--target','wasm32-unknown-unknown'],{env:{CARGO_TARGET_DIR:cargoTarget}});
- const bindgen=Bun.spawn(['wasm-bindgen','--version'],{stdout:'pipe',stderr:'pipe'});
- const bindgenVersion=await new Response(bindgen.stdout).text();
- const bindgenError=await new Response(bindgen.stderr).text();
- if(await bindgen.exited!==0||bindgenVersion.trim()!=='wasm-bindgen 0.2.100')throw new Error(`Expected wasm-bindgen 0.2.100, got ${(bindgenVersion+bindgenError).trim()}`);
- await run(['wasm-bindgen','--target','web','--out-dir',wasmOut,'--out-name','umf_core_wasm',join(cargoTarget,'wasm32-unknown-unknown/release/umf_core_wasm.wasm')]);
  // The browser root bundle inlines the generated wasm-bindgen glue; its
  // import.meta.url therefore resolves the binary beside that root bundle.
  await cp(join(wasmOut,'umf_core_wasm_bg.wasm'),join(dist,'umf_core_wasm_bg.wasm'));
- const wasmPlugin:BunPlugin={name:'fresh-built-wasm-glue',setup(build){build.onResolve({filter:/^\.\/pkg\/umf_core_wasm\.js$/},args=>args.importer.endsWith('bindings/core/wasm/index.js')?{path:join(wasmOut,'umf_core_wasm.js')}:undefined)}};
+ const freshWasmImports=new Set<string>();
+ const wasmPlugin:BunPlugin={name:'fresh-built-wasm-glue',setup(build){build.onResolve({filter:/umf_core_wasm\.js$/},args=>{
+  if(args.importer.endsWith('bindings/core/wasm/index.js')&&args.path==='./pkg/umf_core_wasm.js'){
+   freshWasmImports.add('wasm-index');return {path:join(wasmOut,'umf_core_wasm.js')};
+  }
+  if(args.importer.endsWith('src/index-browser-v4.ts')&&args.path==='../bindings/core/wasm/pkg/umf_core_wasm.js'){
+   freshWasmImports.add('browser-root');return {path:join(wasmOut,'umf_core_wasm.js')};
+  }
+  return undefined;
+ })}};
  const builds=[
   await Bun.build({entrypoints:['src/index-node-v4.ts'],outdir:dist,naming:'umf-node.js',target:'node',format:'esm'}),
   await Bun.build({entrypoints:['src/index-browser-v4.ts'],outdir:dist,naming:'umf-browser.js',target:'browser',format:'esm',plugins:[wasmPlugin]}),
@@ -222,6 +234,7 @@ try{
   await Bun.build({entrypoints:['src/browser-v4.ts'],outdir:dist,naming:'umf-rust-codegen-candidate-v4-browser.js',target:'browser',format:'esm',plugins:[wasmPlugin]}),
  ];
  for(const build of builds)if(!build.success)throw new Error(build.logs.join('\n'));
+ if(!freshWasmImports.has('browser-root')||!freshWasmImports.has('wasm-index'))throw new Error('Browser bundles did not consume the fresh wasm-bindgen glue through both direct root and WASM adapter imports');
  await checkCoreDistribution(dist);
 
  const compiled=[...await filesUnder(dist)].sort();
