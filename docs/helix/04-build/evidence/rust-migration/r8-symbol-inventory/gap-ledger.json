@@ -13,8 +13,8 @@
     "routeExecutableRows": 2766,
     "inertJsonRows": 198,
     "routeInertJsonRows": 594,
-    "executableWithAcceptedOptInRustOperation": 64,
-    "executableWithoutAcceptedRustMapping": 858,
+    "executableWithAcceptedOptInRustOperation": 67,
+    "executableWithoutAcceptedRustMapping": 855,
     "executableDefaultRouteGaps": 922,
     "executableDefaultRouteGapDefinition": "Unique logical executable export names unresolved for retirement from default Node/browser roots; each root has its own route count. Rust-selected entries remain gaps until complete required parity and retirement review; bounded current private-archive qualification is reported separately, and ./reference is reported separately.",
     "executableDefaultRouteGapsByRoute": {
@@ -4185,8 +4185,8 @@
       "total": 1,
       "executable": 1,
       "inertJson": 0,
-      "mappedOptInRust": 0,
-      "unportedExecutable": 1,
+      "mappedOptInRust": 1,
+      "unportedExecutable": 0,
       "rows": [
         "package-reference-0461"
       ]
@@ -4322,8 +4322,8 @@
       "total": 6,
       "executable": 6,
       "inertJson": 0,
-      "mappedOptInRust": 0,
-      "unportedExecutable": 6,
+      "mappedOptInRust": 6,
+      "unportedExecutable": 0,
       "rows": [
         "package-reference-0799",
         "package-reference-1118",
@@ -16569,6 +16569,10 @@
               "sha256": "671f677cfaaa01ba9805204e42be80d2b2565dc7c9e43f71f36b7ac5860df7f1"
             },
             {
+              "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+              "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
+            },
+            {
               "path": "scripts/metamodel/build.ts",
               "sha256": "1772a34bdc6f2b53a5c613024cee41d8e68cb96e06097755a48002ec779713be"
             },
@@ -16698,6 +16702,10 @@
         ],
         "evidenceClosure": [
           {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+            "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
+          },
+          {
             "path": "spec/metamodel/generated/manifest.json",
             "sha256": "713eed1628281265708d17ff45d92daf7cbb32963aa10edcf3de844716434936"
           }
@@ -16762,6 +16770,10 @@
             {
               "path": "crates/umf-metamodel/src/lib.rs",
               "sha256": "671f677cfaaa01ba9805204e42be80d2b2565dc7c9e43f71f36b7ac5860df7f1"
+            },
+            {
+              "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+              "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
             },
             {
               "path": "scripts/metamodel/build.ts",
@@ -16892,6 +16904,10 @@
           }
         ],
         "evidenceClosure": [
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+            "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
+          },
           {
             "path": "spec/metamodel/generated/manifest.json",
             "sha256": "713eed1628281265708d17ff45d92daf7cbb32963aa10edcf3de844716434936"
@@ -19314,6 +19330,10 @@
               "sha256": "671f677cfaaa01ba9805204e42be80d2b2565dc7c9e43f71f36b7ac5860df7f1"
             },
             {
+              "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+              "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
+            },
+            {
               "path": "scripts/metamodel/build.ts",
               "sha256": "1772a34bdc6f2b53a5c613024cee41d8e68cb96e06097755a48002ec779713be"
             },
@@ -19431,6 +19451,10 @@
         ],
         "evidenceClosure": [
           {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+            "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
+          },
+          {
             "path": "spec/metamodel/generated/manifest.json",
             "sha256": "713eed1628281265708d17ff45d92daf7cbb32963aa10edcf3de844716434936"
           }
@@ -19495,6 +19519,10 @@
             {
               "path": "crates/umf-metamodel/src/lib.rs",
               "sha256": "671f677cfaaa01ba9805204e42be80d2b2565dc7c9e43f71f36b7ac5860df7f1"
+            },
+            {
+              "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+              "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
             },
             {
               "path": "scripts/metamodel/build.ts",
@@ -19613,6 +19641,10 @@
           }
         ],
         "evidenceClosure": [
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+            "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
+          },
           {
             "path": "spec/metamodel/generated/manifest.json",
             "sha256": "713eed1628281265708d17ff45d92daf7cbb32963aa10edcf3de844716434936"
@@ -21076,7 +21108,7 @@
               },
               {
                 "path": "crates/umf-core-wire/src/lib.rs",
-                "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+                "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
               },
               {
                 "path": "crates/umf-core-wire/src/record_members_inspection_binding.rs",
@@ -21164,7 +21196,7 @@
               },
               {
                 "path": "crates/umf-core/src/json_schema_adapter.rs",
-                "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+                "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
               },
               {
                 "path": "crates/umf-core/src/parquet_document_capture.rs",
@@ -21282,11 +21314,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "aee00b16860b850f7112c43382b3f7a3dbd8bfc392eb8510e497f0ac2f263dc9"
+                "sha256": "bcc42c9ed576e7ab5147b015ce5f16719b38c070b7daf985ffbb3649945e131f"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "20019568aba7b67d6bc731a4af4478546199b7ba15a55595a598d8fc7a045a2e"
+                "sha256": "4b8a167c591ca62f4e4af127856a5b550e2fe9a0a6cc1434e3b49ac129aa3efd"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -22064,7 +22096,7 @@
               },
               {
                 "path": "crates/umf-core-wire/src/lib.rs",
-                "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+                "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
               },
               {
                 "path": "crates/umf-core-wire/src/record_members_inspection_binding.rs",
@@ -22152,7 +22184,7 @@
               },
               {
                 "path": "crates/umf-core/src/json_schema_adapter.rs",
-                "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+                "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
               },
               {
                 "path": "crates/umf-core/src/parquet_document_capture.rs",
@@ -22270,11 +22302,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "aee00b16860b850f7112c43382b3f7a3dbd8bfc392eb8510e497f0ac2f263dc9"
+                "sha256": "bcc42c9ed576e7ab5147b015ce5f16719b38c070b7daf985ffbb3649945e131f"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "20019568aba7b67d6bc731a4af4478546199b7ba15a55595a598d8fc7a045a2e"
+                "sha256": "4b8a167c591ca62f4e4af127856a5b550e2fe9a0a6cc1434e3b49ac129aa3efd"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -22758,7 +22790,7 @@
               },
               {
                 "path": "crates/umf-core-wire/src/lib.rs",
-                "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+                "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
               },
               {
                 "path": "crates/umf-core-wire/src/record_members_inspection_binding.rs",
@@ -22842,7 +22874,7 @@
               },
               {
                 "path": "crates/umf-core/src/json_schema_adapter.rs",
-                "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+                "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
               },
               {
                 "path": "crates/umf-core/src/parquet_document_capture.rs",
@@ -22956,11 +22988,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "aee00b16860b850f7112c43382b3f7a3dbd8bfc392eb8510e497f0ac2f263dc9"
+                "sha256": "bcc42c9ed576e7ab5147b015ce5f16719b38c070b7daf985ffbb3649945e131f"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "20019568aba7b67d6bc731a4af4478546199b7ba15a55595a598d8fc7a045a2e"
+                "sha256": "4b8a167c591ca62f4e4af127856a5b550e2fe9a0a6cc1434e3b49ac129aa3efd"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -29298,7 +29330,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -30338,7 +30370,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -30423,7 +30455,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -30508,7 +30540,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -31559,7 +31591,7 @@
               },
               {
                 "path": "crates/umf-core-wire/src/lib.rs",
-                "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+                "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
               },
               {
                 "path": "crates/umf-core-wire/src/record_members_inspection_binding.rs",
@@ -31627,7 +31659,7 @@
               },
               {
                 "path": "crates/umf-core/src/json_schema_adapter.rs",
-                "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+                "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
               },
               {
                 "path": "crates/umf-core/src/parquet_document_capture.rs",
@@ -31741,11 +31773,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "aee00b16860b850f7112c43382b3f7a3dbd8bfc392eb8510e497f0ac2f263dc9"
+                "sha256": "bcc42c9ed576e7ab5147b015ce5f16719b38c070b7daf985ffbb3649945e131f"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "20019568aba7b67d6bc731a4af4478546199b7ba15a55595a598d8fc7a045a2e"
+                "sha256": "4b8a167c591ca62f4e4af127856a5b550e2fe9a0a6cc1434e3b49ac129aa3efd"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -34550,7 +34582,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -36377,7 +36409,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -37678,10 +37710,75 @@
       "ownerFamily": "model:record-members",
       "rowKind": "executable",
       "defaultRoute": "explicit TypeScript reference declaration",
-      "acceptedRustOperation": null,
-      "acceptedOperationEvidence": null,
+      "acceptedRustOperation": "umf_core::record_members_inspection::inspect_core_record_members",
+      "acceptedOperationEvidence": {
+        "rustSourceClosure": [
+          {
+            "path": "bindings/core/node/src/record_members_inspection.rs",
+            "sha256": "e33bfdc557f4ad76d7052409232bfb9ef8d363ccdf1ef81d6dc8224644b0d5cc"
+          },
+          {
+            "path": "bindings/core/wasm/src/record_members_inspection.rs",
+            "sha256": "a0644756994f7e0df63a690eb5a60a6dd740a991bdcb527aa05a91cf7c363581"
+          },
+          {
+            "path": "crates/umf-core-wire/src/record_members_inspection_binding.rs",
+            "sha256": "16558c82aedec5473d7fd21e76565de313c6d0e849954a4a3c85a896c1b2e2ff"
+          },
+          {
+            "path": "crates/umf-core/src/record_members_inspection.rs",
+            "sha256": "9fb2c030e50f7557c7b5d7427615d09f8dda438467efee5c89f185b5d8410a9e"
+          }
+        ],
+        "evidenceClosure": [
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/README.md",
+            "sha256": "0711a8f0f953b6cc0ab584e2e5f8d15da4be63ca222b70c9b68384451b8484b7"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/frozen-typescript.json",
+            "sha256": "d7b8a9438a4a3f58b88255d8ae5b8acbb972dec02a2293d72499faadd6c8980e"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/node-retained-bun.json",
+            "sha256": "cbf8eb5f64eb08438e041f63c473e6829ca779a39161d9f156cb0426f3a7a375"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/node-retained-node.json",
+            "sha256": "3e945d0da0a27a87a0bae03047cdf128a4ae282d43265efc9152e019f3390c38"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/node-retained.md",
+            "sha256": "65e0744dcd643f6c985682b2eb01313c6d1ee0f73f274e2186e2b7bcdab43db2"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/wasm-retained.json",
+            "sha256": "2bad65a9cdc1b7b9a64996f17441fb9bdb4d6689bfbc990245bb5e98bbdf8d4d"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/wasm-retained.md",
+            "sha256": "ad90c28825bb9f4d4c22aaa1f879c7716051bd731675f927ad1a588169e46ae7"
+          }
+        ],
+        "focusedTestClosure": [
+          {
+            "path": "bindings/core/node/tests/core-record-members-inspection.test.js",
+            "sha256": "73977a6684b404de9cb2f8b915ec3143337dfa87f4163d0066fd748a14c667eb"
+          },
+          {
+            "path": "bindings/core/wasm/tests/record-members-retained.test.js",
+            "sha256": "07c52f44431ed7e9476516bedf75189ccca0651815f7c75f3f119c442bc81c2f"
+          },
+          {
+            "path": "crates/umf-core-wire/tests/r5_record_members_inspection.rs",
+            "sha256": "12d3a588913bc1d7faa4d6e4b7eb7d630828ae87d068c59523d0cc927dd6e152"
+          }
+        ],
+        "scopeRule": "Source/evidence hashes pin identity only; the linked R5 packet defines the bounded operation subset and its remaining gates.",
+        "defaultRouteStatus": "Explicit ./reference TypeScript route; mapping does not affect default Node/browser routes or retire declarations"
+      },
       "operationOwnership": null,
-      "evidence": null,
+      "evidence": "docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/README.md",
       "bindingRoute": null,
       "bindingRouteStatus": "unproven",
       "disposition": "explicit TypeScript reference declaration remains available; not a Node/browser default-route claim"
@@ -38570,11 +38667,11 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           },
           {
             "path": "crates/umf-core/src/json_schema_inspect.rs",
-            "sha256": "89d498c67ca4a0a49d0c92293a1eaa27cea03e0b179ef77ca411fe437626214c"
+            "sha256": "c301ebeabeb86f4ca12511b2601f765ef12746354cecce8ee74bef9b22cc53a6"
           }
         ],
         "evidenceClosure": [
@@ -39697,7 +39794,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -39752,7 +39849,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -48136,7 +48233,7 @@
         "focusedTestClosure": [
           {
             "path": "bindings/core/node/tests/json-schema-wrapper.test.js",
-            "sha256": "228f3bb4c1cbf1db39e0287f2bda25083dfb7d8313fdbc9b4807a7a16544230a"
+            "sha256": "f8f87d4465a1e79b11fcc8db41e8bfde3454a11523b87c5b96a5b93b2cd63920"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_json_schema_wire.rs",
@@ -48184,15 +48281,15 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/native_json.rs",
@@ -55113,10 +55210,83 @@
       "ownerFamily": "model:serialization",
       "rowKind": "executable",
       "defaultRoute": "explicit TypeScript reference declaration",
-      "acceptedRustOperation": null,
-      "acceptedOperationEvidence": null,
+      "acceptedRustOperation": "umf_core::serialization::read_typescript_json_value",
+      "acceptedOperationEvidence": {
+        "rustSourceClosure": [
+          {
+            "path": "bindings/core/node/index.js",
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
+          },
+          {
+            "path": "bindings/core/node/src/lib.rs",
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
+          },
+          {
+            "path": "bindings/core/node/src/wire.js",
+            "sha256": "5a59889a7484b69554b628aa45c58bad6f71bb4c47679ae63d72f2e8a8e0daea"
+          },
+          {
+            "path": "bindings/core/wasm/index.js",
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
+          },
+          {
+            "path": "bindings/core/wasm/src/lib.rs",
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
+          },
+          {
+            "path": "crates/umf-core-wire/src/lib.rs",
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
+          },
+          {
+            "path": "crates/umf-core/src/serialization.rs",
+            "sha256": "6dcb0ec4fb47e0aa6d5cb545b0cd925b9a1b23838a3782f435386af5a497c392"
+          }
+        ],
+        "evidenceClosure": [
+          {
+            "path": "docs/helix/02-design/contracts/CONTRACT-001-core-envelope.md",
+            "sha256": "000747cf9c84697333bb55a18c5a8a4eebd5f5c953ad08d580378d950ce9612d"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-json-value-serialization/README.md",
+            "sha256": "1c89ee4e678141e52800c887fd4de375e6d0b943f0c439edeca3dcfcec32748d"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-json-value-serialization/predecessor.json",
+            "sha256": "76314beae043f3cb9136509bcacdb0d4d3b1920468d7b5d021ad1f1e07f0c60f"
+          }
+        ],
+        "focusedTestClosure": [
+          {
+            "path": "crates/umf-core-wire/tests/r8_json_value_serialization_wire.rs",
+            "sha256": "2ba67ed399da67bca1dc191241e1d96b7df003b7ef405d1b61fde2089ac1a478"
+          },
+          {
+            "path": "crates/umf-core/src/serialization.rs",
+            "sha256": "6dcb0ec4fb47e0aa6d5cb545b0cd925b9a1b23838a3782f435386af5a497c392"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-host-admission.test.js",
+            "sha256": "7aa4fc425c65afec5bcafde545dc0e52dc089fa0abf1ba706e8d4802f5d58515"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-serialization-binding-node.mjs",
+            "sha256": "5f755bb25b1f927c9a579308b42553055fbb8a752c764611ccfbe2863d7f2b9c"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-serialization-browser.mjs",
+            "sha256": "ead42a77d42038b933846096c7da1bfa27cb8291a565ba4a3c5afeca43aeece3"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-serialization-wasm-node.mjs",
+            "sha256": "a436880db7ce5a645ffc73b90d27f9e62a798ef90809bcba25e8adfcdd14f595"
+          }
+        ],
+        "scopeRule": "The linked R8 packet defines the exact 24-case TypeScript serialization subset and current-source Node/Bun native, Node/Bun WASM, and Chromium WASM replays; installed package qualification, broader YAML behavior, arbitrary Proxy behavior, and default-route retirement remain open.",
+        "defaultRouteStatus": "Explicit ./reference TypeScript route; mapping does not affect default Node/browser routes or retire declarations"
+      },
       "operationOwnership": null,
-      "evidence": null,
+      "evidence": "docs/helix/02-design/contracts/CONTRACT-001-core-envelope.md",
       "bindingRoute": null,
       "bindingRouteStatus": "unproven",
       "disposition": "explicit TypeScript reference declaration remains available; not a Node/browser default-route claim"
@@ -69558,7 +69728,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -69782,10 +69952,83 @@
       "ownerFamily": "model:serialization",
       "rowKind": "executable",
       "defaultRoute": "explicit TypeScript reference declaration",
-      "acceptedRustOperation": null,
-      "acceptedOperationEvidence": null,
+      "acceptedRustOperation": "umf_core::serialization::write_typescript_json_value",
+      "acceptedOperationEvidence": {
+        "rustSourceClosure": [
+          {
+            "path": "bindings/core/node/index.js",
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
+          },
+          {
+            "path": "bindings/core/node/src/lib.rs",
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
+          },
+          {
+            "path": "bindings/core/node/src/wire.js",
+            "sha256": "5a59889a7484b69554b628aa45c58bad6f71bb4c47679ae63d72f2e8a8e0daea"
+          },
+          {
+            "path": "bindings/core/wasm/index.js",
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
+          },
+          {
+            "path": "bindings/core/wasm/src/lib.rs",
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
+          },
+          {
+            "path": "crates/umf-core-wire/src/lib.rs",
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
+          },
+          {
+            "path": "crates/umf-core/src/serialization.rs",
+            "sha256": "6dcb0ec4fb47e0aa6d5cb545b0cd925b9a1b23838a3782f435386af5a497c392"
+          }
+        ],
+        "evidenceClosure": [
+          {
+            "path": "docs/helix/02-design/contracts/CONTRACT-001-core-envelope.md",
+            "sha256": "000747cf9c84697333bb55a18c5a8a4eebd5f5c953ad08d580378d950ce9612d"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-json-value-serialization/README.md",
+            "sha256": "1c89ee4e678141e52800c887fd4de375e6d0b943f0c439edeca3dcfcec32748d"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-json-value-serialization/predecessor.json",
+            "sha256": "76314beae043f3cb9136509bcacdb0d4d3b1920468d7b5d021ad1f1e07f0c60f"
+          }
+        ],
+        "focusedTestClosure": [
+          {
+            "path": "crates/umf-core-wire/tests/r8_json_value_serialization_wire.rs",
+            "sha256": "2ba67ed399da67bca1dc191241e1d96b7df003b7ef405d1b61fde2089ac1a478"
+          },
+          {
+            "path": "crates/umf-core/src/serialization.rs",
+            "sha256": "6dcb0ec4fb47e0aa6d5cb545b0cd925b9a1b23838a3782f435386af5a497c392"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-host-admission.test.js",
+            "sha256": "7aa4fc425c65afec5bcafde545dc0e52dc089fa0abf1ba706e8d4802f5d58515"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-serialization-binding-node.mjs",
+            "sha256": "5f755bb25b1f927c9a579308b42553055fbb8a752c764611ccfbe2863d7f2b9c"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-serialization-browser.mjs",
+            "sha256": "ead42a77d42038b933846096c7da1bfa27cb8291a565ba4a3c5afeca43aeece3"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-serialization-wasm-node.mjs",
+            "sha256": "a436880db7ce5a645ffc73b90d27f9e62a798ef90809bcba25e8adfcdd14f595"
+          }
+        ],
+        "scopeRule": "The linked R8 packet defines the exact 24-case TypeScript serialization subset and current-source Node/Bun native, Node/Bun WASM, and Chromium WASM replays; installed package qualification, broader YAML behavior, arbitrary Proxy behavior, and default-route retirement remain open.",
+        "defaultRouteStatus": "Explicit ./reference TypeScript route; mapping does not affect default Node/browser routes or retire declarations"
+      },
       "operationOwnership": null,
-      "evidence": null,
+      "evidence": "docs/helix/02-design/contracts/CONTRACT-001-core-envelope.md",
       "bindingRoute": null,
       "bindingRouteStatus": "unproven",
       "disposition": "explicit TypeScript reference declaration remains available; not a Node/browser default-route claim"
@@ -73891,7 +74134,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -73899,7 +74142,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -73907,7 +74150,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -73915,7 +74158,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -73923,7 +74166,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -74030,7 +74273,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -74038,7 +74281,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -74046,7 +74289,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -74054,7 +74297,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -74062,7 +74305,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -74169,7 +74412,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -74177,7 +74420,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -74185,7 +74428,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -74193,7 +74436,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -74201,7 +74444,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -74308,7 +74551,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -74316,7 +74559,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -74324,7 +74567,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -74332,7 +74575,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -74340,7 +74583,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -74447,7 +74690,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -74455,7 +74698,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -74463,7 +74706,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -74471,7 +74714,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -74479,7 +74722,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -74586,7 +74829,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -74594,7 +74837,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -74602,7 +74845,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -74610,7 +74853,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -74618,7 +74861,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -76711,7 +76954,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -76719,7 +76962,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -76727,7 +76970,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -76735,7 +76978,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -76743,7 +76986,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -80014,6 +80257,10 @@
               "sha256": "671f677cfaaa01ba9805204e42be80d2b2565dc7c9e43f71f36b7ac5860df7f1"
             },
             {
+              "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+              "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
+            },
+            {
               "path": "scripts/metamodel/build.ts",
               "sha256": "1772a34bdc6f2b53a5c613024cee41d8e68cb96e06097755a48002ec779713be"
             },
@@ -80147,6 +80394,10 @@
         ],
         "evidenceClosure": [
           {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+            "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
+          },
+          {
             "path": "spec/metamodel/generated/manifest.json",
             "sha256": "713eed1628281265708d17ff45d92daf7cbb32963aa10edcf3de844716434936"
           }
@@ -80211,6 +80462,10 @@
             {
               "path": "crates/umf-metamodel/src/lib.rs",
               "sha256": "671f677cfaaa01ba9805204e42be80d2b2565dc7c9e43f71f36b7ac5860df7f1"
+            },
+            {
+              "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+              "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
             },
             {
               "path": "scripts/metamodel/build.ts",
@@ -80345,6 +80600,10 @@
           }
         ],
         "evidenceClosure": [
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+            "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
+          },
           {
             "path": "spec/metamodel/generated/manifest.json",
             "sha256": "713eed1628281265708d17ff45d92daf7cbb32963aa10edcf3de844716434936"
@@ -82807,6 +83066,10 @@
               "sha256": "671f677cfaaa01ba9805204e42be80d2b2565dc7c9e43f71f36b7ac5860df7f1"
             },
             {
+              "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+              "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
+            },
+            {
               "path": "scripts/metamodel/build.ts",
               "sha256": "1772a34bdc6f2b53a5c613024cee41d8e68cb96e06097755a48002ec779713be"
             },
@@ -82928,6 +83191,10 @@
         ],
         "evidenceClosure": [
           {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+            "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
+          },
+          {
             "path": "spec/metamodel/generated/manifest.json",
             "sha256": "713eed1628281265708d17ff45d92daf7cbb32963aa10edcf3de844716434936"
           }
@@ -82992,6 +83259,10 @@
             {
               "path": "crates/umf-metamodel/src/lib.rs",
               "sha256": "671f677cfaaa01ba9805204e42be80d2b2565dc7c9e43f71f36b7ac5860df7f1"
+            },
+            {
+              "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+              "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
             },
             {
               "path": "scripts/metamodel/build.ts",
@@ -83114,6 +83385,10 @@
           }
         ],
         "evidenceClosure": [
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+            "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
+          },
           {
             "path": "spec/metamodel/generated/manifest.json",
             "sha256": "713eed1628281265708d17ff45d92daf7cbb32963aa10edcf3de844716434936"
@@ -84597,7 +84872,7 @@
               },
               {
                 "path": "crates/umf-core-wire/src/lib.rs",
-                "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+                "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
               },
               {
                 "path": "crates/umf-core-wire/src/record_members_inspection_binding.rs",
@@ -84685,7 +84960,7 @@
               },
               {
                 "path": "crates/umf-core/src/json_schema_adapter.rs",
-                "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+                "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
               },
               {
                 "path": "crates/umf-core/src/parquet_document_capture.rs",
@@ -84803,11 +85078,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "aee00b16860b850f7112c43382b3f7a3dbd8bfc392eb8510e497f0ac2f263dc9"
+                "sha256": "bcc42c9ed576e7ab5147b015ce5f16719b38c070b7daf985ffbb3649945e131f"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "20019568aba7b67d6bc731a4af4478546199b7ba15a55595a598d8fc7a045a2e"
+                "sha256": "4b8a167c591ca62f4e4af127856a5b550e2fe9a0a6cc1434e3b49ac129aa3efd"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -85589,7 +85864,7 @@
               },
               {
                 "path": "crates/umf-core-wire/src/lib.rs",
-                "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+                "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
               },
               {
                 "path": "crates/umf-core-wire/src/record_members_inspection_binding.rs",
@@ -85677,7 +85952,7 @@
               },
               {
                 "path": "crates/umf-core/src/json_schema_adapter.rs",
-                "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+                "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
               },
               {
                 "path": "crates/umf-core/src/parquet_document_capture.rs",
@@ -85795,11 +86070,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "aee00b16860b850f7112c43382b3f7a3dbd8bfc392eb8510e497f0ac2f263dc9"
+                "sha256": "bcc42c9ed576e7ab5147b015ce5f16719b38c070b7daf985ffbb3649945e131f"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "20019568aba7b67d6bc731a4af4478546199b7ba15a55595a598d8fc7a045a2e"
+                "sha256": "4b8a167c591ca62f4e4af127856a5b550e2fe9a0a6cc1434e3b49ac129aa3efd"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -86291,7 +86566,7 @@
               },
               {
                 "path": "crates/umf-core-wire/src/lib.rs",
-                "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+                "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
               },
               {
                 "path": "crates/umf-core-wire/src/record_members_inspection_binding.rs",
@@ -86375,7 +86650,7 @@
               },
               {
                 "path": "crates/umf-core/src/json_schema_adapter.rs",
-                "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+                "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
               },
               {
                 "path": "crates/umf-core/src/parquet_document_capture.rs",
@@ -86489,11 +86764,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "aee00b16860b850f7112c43382b3f7a3dbd8bfc392eb8510e497f0ac2f263dc9"
+                "sha256": "bcc42c9ed576e7ab5147b015ce5f16719b38c070b7daf985ffbb3649945e131f"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "20019568aba7b67d6bc731a4af4478546199b7ba15a55595a598d8fc7a045a2e"
+                "sha256": "4b8a167c591ca62f4e4af127856a5b550e2fe9a0a6cc1434e3b49ac129aa3efd"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -88788,7 +89063,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/cardinality.rs",
@@ -88948,7 +89223,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/facets.rs",
@@ -89046,7 +89321,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/core_keys.rs",
@@ -89198,7 +89473,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/core_keys.rs",
@@ -89276,7 +89551,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core_record_type_verification.rs",
@@ -89284,11 +89559,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/src/record_type_binding.rs",
@@ -89436,7 +89711,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core-relationships.js",
@@ -89444,11 +89719,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_core_relationships_wire.rs",
@@ -89574,7 +89849,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -89582,11 +89857,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_schema_defaults.rs",
@@ -93335,7 +93610,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -94375,7 +94650,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -94460,7 +94735,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -94545,7 +94820,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -95600,7 +95875,7 @@
               },
               {
                 "path": "crates/umf-core-wire/src/lib.rs",
-                "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+                "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
               },
               {
                 "path": "crates/umf-core-wire/src/record_members_inspection_binding.rs",
@@ -95668,7 +95943,7 @@
               },
               {
                 "path": "crates/umf-core/src/json_schema_adapter.rs",
-                "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+                "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
               },
               {
                 "path": "crates/umf-core/src/parquet_document_capture.rs",
@@ -95782,11 +96057,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "aee00b16860b850f7112c43382b3f7a3dbd8bfc392eb8510e497f0ac2f263dc9"
+                "sha256": "bcc42c9ed576e7ab5147b015ce5f16719b38c070b7daf985ffbb3649945e131f"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "20019568aba7b67d6bc731a4af4478546199b7ba15a55595a598d8fc7a045a2e"
+                "sha256": "4b8a167c591ca62f4e4af127856a5b550e2fe9a0a6cc1434e3b49ac129aa3efd"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -98704,7 +98979,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -99976,7 +100251,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/facets.rs",
@@ -100567,7 +100842,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -101550,7 +101825,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/cardinality.rs",
@@ -101735,7 +102010,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/facets.rs",
@@ -101833,7 +102108,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/core_keys.rs",
@@ -101971,7 +102246,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/core-model.js",
@@ -101979,7 +102254,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -101987,7 +102262,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -101995,7 +102270,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -102003,7 +102278,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_record_members_inspection.rs",
@@ -102180,7 +102455,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/core-model.js",
@@ -102188,7 +102463,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -102196,7 +102471,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -102204,7 +102479,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -102212,7 +102487,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_reference_links_inspection.rs",
@@ -102395,7 +102670,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core-relationships.js",
@@ -102403,11 +102678,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_core_relationships_wire.rs",
@@ -102531,7 +102806,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/core-model.js",
@@ -102539,7 +102814,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -102547,7 +102822,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -102555,7 +102830,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -102563,7 +102838,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_scalar_type_inspection.rs",
@@ -102734,7 +103009,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -102742,11 +103017,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_schema_defaults.rs",
@@ -103606,11 +103881,11 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           },
           {
             "path": "crates/umf-core/src/json_schema_inspect.rs",
-            "sha256": "89d498c67ca4a0a49d0c92293a1eaa27cea03e0b179ef77ca411fe437626214c"
+            "sha256": "c301ebeabeb86f4ca12511b2601f765ef12746354cecce8ee74bef9b22cc53a6"
           }
         ],
         "evidenceClosure": [
@@ -104733,7 +105008,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -104788,7 +105063,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -106031,7 +106306,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/core_keys.rs",
@@ -106109,7 +106384,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core-relationships.js",
@@ -106117,11 +106392,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_core_relationships_wire.rs",
@@ -113301,7 +113576,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -113309,7 +113584,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -113317,7 +113592,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -113325,7 +113600,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -113333,7 +113608,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -113439,7 +113714,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/temporal.js",
@@ -113447,15 +113722,15 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/gregorian_date_wire.rs",
@@ -113593,7 +113868,7 @@
         "focusedTestClosure": [
           {
             "path": "bindings/core/node/tests/json-schema-wrapper.test.js",
-            "sha256": "228f3bb4c1cbf1db39e0287f2bda25083dfb7d8313fdbc9b4807a7a16544230a"
+            "sha256": "f8f87d4465a1e79b11fcc8db41e8bfde3454a11523b87c5b96a5b93b2cd63920"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_json_schema_wire.rs",
@@ -113641,15 +113916,15 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/native_json.rs",
@@ -113717,7 +113992,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/temporal.js",
@@ -113725,15 +114000,15 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/rfc3339_exact_instant_wire.rs",
@@ -113844,7 +114119,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -113852,7 +114127,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -113860,7 +114135,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -113868,7 +114143,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -113876,7 +114151,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -120771,13 +121046,86 @@
       "ownerFamily": "model:serialization",
       "rowKind": "executable",
       "defaultRoute": "browser package root declaration",
-      "acceptedRustOperation": null,
-      "acceptedOperationEvidence": null,
+      "acceptedRustOperation": "umf_core::serialization::read_typescript_json_value",
+      "acceptedOperationEvidence": {
+        "rustSourceClosure": [
+          {
+            "path": "bindings/core/node/index.js",
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
+          },
+          {
+            "path": "bindings/core/node/src/lib.rs",
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
+          },
+          {
+            "path": "bindings/core/node/src/wire.js",
+            "sha256": "5a59889a7484b69554b628aa45c58bad6f71bb4c47679ae63d72f2e8a8e0daea"
+          },
+          {
+            "path": "bindings/core/wasm/index.js",
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
+          },
+          {
+            "path": "bindings/core/wasm/src/lib.rs",
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
+          },
+          {
+            "path": "crates/umf-core-wire/src/lib.rs",
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
+          },
+          {
+            "path": "crates/umf-core/src/serialization.rs",
+            "sha256": "6dcb0ec4fb47e0aa6d5cb545b0cd925b9a1b23838a3782f435386af5a497c392"
+          }
+        ],
+        "evidenceClosure": [
+          {
+            "path": "docs/helix/02-design/contracts/CONTRACT-001-core-envelope.md",
+            "sha256": "000747cf9c84697333bb55a18c5a8a4eebd5f5c953ad08d580378d950ce9612d"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-json-value-serialization/README.md",
+            "sha256": "1c89ee4e678141e52800c887fd4de375e6d0b943f0c439edeca3dcfcec32748d"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-json-value-serialization/predecessor.json",
+            "sha256": "76314beae043f3cb9136509bcacdb0d4d3b1920468d7b5d021ad1f1e07f0c60f"
+          }
+        ],
+        "focusedTestClosure": [
+          {
+            "path": "crates/umf-core-wire/tests/r8_json_value_serialization_wire.rs",
+            "sha256": "2ba67ed399da67bca1dc191241e1d96b7df003b7ef405d1b61fde2089ac1a478"
+          },
+          {
+            "path": "crates/umf-core/src/serialization.rs",
+            "sha256": "6dcb0ec4fb47e0aa6d5cb545b0cd925b9a1b23838a3782f435386af5a497c392"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-host-admission.test.js",
+            "sha256": "7aa4fc425c65afec5bcafde545dc0e52dc089fa0abf1ba706e8d4802f5d58515"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-serialization-binding-node.mjs",
+            "sha256": "5f755bb25b1f927c9a579308b42553055fbb8a752c764611ccfbe2863d7f2b9c"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-serialization-browser.mjs",
+            "sha256": "ead42a77d42038b933846096c7da1bfa27cb8291a565ba4a3c5afeca43aeece3"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-serialization-wasm-node.mjs",
+            "sha256": "a436880db7ce5a645ffc73b90d27f9e62a798ef90809bcba25e8adfcdd14f595"
+          }
+        ],
+        "scopeRule": "The linked R8 packet defines the exact 24-case TypeScript serialization subset and current-source Node/Bun native, Node/Bun WASM, and Chromium WASM replays; installed package qualification, broader YAML behavior, arbitrary Proxy behavior, and default-route retirement remain open.",
+        "defaultRouteStatus": "Browser default route source selection is recorded per V4 entry declaration. Installed qualification and all retirement remain open unless a row's bounded evidence says otherwise"
+      },
       "operationOwnership": null,
-      "evidence": null,
+      "evidence": "docs/helix/02-design/contracts/CONTRACT-001-core-envelope.md",
       "bindingRoute": null,
       "bindingRouteStatus": "unproven",
-      "disposition": "browser route remains TypeScript; exact Rust operation and retirement disposition unresolved"
+      "disposition": "bounded opt-in Rust core operation exists; browser TypeScript implementation remains in route; zero declarations retired"
     },
     {
       "id": "package-root-browser-1920",
@@ -125341,7 +125689,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -125349,11 +125697,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_schema_defaults.rs",
@@ -125828,7 +126176,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/temporal.js",
@@ -125836,15 +126184,15 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/rfc3339_exact_instant_wire.rs",
@@ -131900,7 +132248,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/temporal.js",
@@ -131908,15 +132256,15 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/gregorian_date_wire.rs",
@@ -132975,7 +133323,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -132983,7 +133331,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -132991,7 +133339,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -132999,7 +133347,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -133007,7 +133355,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -133114,7 +133462,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -133122,7 +133470,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -133130,7 +133478,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -133138,7 +133486,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -133146,7 +133494,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -133372,7 +133720,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/dataset_values.rs",
@@ -133454,7 +133802,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -133462,11 +133810,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_schema_defaults.rs",
@@ -133768,7 +134116,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/csv-boolean-lexical.js",
@@ -133776,7 +134124,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -133784,7 +134132,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/csv-boolean-lexical.js",
@@ -133792,7 +134140,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -133804,7 +134152,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_csv_boolean_lexical_wire.rs",
@@ -134338,7 +134686,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/cardinality.rs",
@@ -134565,7 +134913,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/facets.rs",
@@ -134651,7 +134999,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core-keys.js",
@@ -134659,11 +135007,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/core_keys.rs",
@@ -134925,7 +135273,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core_record_type_verification.rs",
@@ -134933,11 +135281,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/src/record_type_binding.rs",
@@ -135085,7 +135433,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core-relationships.js",
@@ -135093,11 +135441,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_core_relationships_wire.rs",
@@ -135271,7 +135619,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/csv-boolean-lexical.js",
@@ -135279,7 +135627,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -135287,7 +135635,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/csv-boolean-lexical.js",
@@ -135295,7 +135643,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -135307,7 +135655,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_csv_boolean_lexical_wire.rs",
@@ -136542,7 +136890,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -136766,13 +137114,86 @@
       "ownerFamily": "model:serialization",
       "rowKind": "executable",
       "defaultRoute": "browser package root declaration",
-      "acceptedRustOperation": null,
-      "acceptedOperationEvidence": null,
+      "acceptedRustOperation": "umf_core::serialization::write_typescript_json_value",
+      "acceptedOperationEvidence": {
+        "rustSourceClosure": [
+          {
+            "path": "bindings/core/node/index.js",
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
+          },
+          {
+            "path": "bindings/core/node/src/lib.rs",
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
+          },
+          {
+            "path": "bindings/core/node/src/wire.js",
+            "sha256": "5a59889a7484b69554b628aa45c58bad6f71bb4c47679ae63d72f2e8a8e0daea"
+          },
+          {
+            "path": "bindings/core/wasm/index.js",
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
+          },
+          {
+            "path": "bindings/core/wasm/src/lib.rs",
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
+          },
+          {
+            "path": "crates/umf-core-wire/src/lib.rs",
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
+          },
+          {
+            "path": "crates/umf-core/src/serialization.rs",
+            "sha256": "6dcb0ec4fb47e0aa6d5cb545b0cd925b9a1b23838a3782f435386af5a497c392"
+          }
+        ],
+        "evidenceClosure": [
+          {
+            "path": "docs/helix/02-design/contracts/CONTRACT-001-core-envelope.md",
+            "sha256": "000747cf9c84697333bb55a18c5a8a4eebd5f5c953ad08d580378d950ce9612d"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-json-value-serialization/README.md",
+            "sha256": "1c89ee4e678141e52800c887fd4de375e6d0b943f0c439edeca3dcfcec32748d"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-json-value-serialization/predecessor.json",
+            "sha256": "76314beae043f3cb9136509bcacdb0d4d3b1920468d7b5d021ad1f1e07f0c60f"
+          }
+        ],
+        "focusedTestClosure": [
+          {
+            "path": "crates/umf-core-wire/tests/r8_json_value_serialization_wire.rs",
+            "sha256": "2ba67ed399da67bca1dc191241e1d96b7df003b7ef405d1b61fde2089ac1a478"
+          },
+          {
+            "path": "crates/umf-core/src/serialization.rs",
+            "sha256": "6dcb0ec4fb47e0aa6d5cb545b0cd925b9a1b23838a3782f435386af5a497c392"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-host-admission.test.js",
+            "sha256": "7aa4fc425c65afec5bcafde545dc0e52dc089fa0abf1ba706e8d4802f5d58515"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-serialization-binding-node.mjs",
+            "sha256": "5f755bb25b1f927c9a579308b42553055fbb8a752c764611ccfbe2863d7f2b9c"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-serialization-browser.mjs",
+            "sha256": "ead42a77d42038b933846096c7da1bfa27cb8291a565ba4a3c5afeca43aeece3"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-serialization-wasm-node.mjs",
+            "sha256": "a436880db7ce5a645ffc73b90d27f9e62a798ef90809bcba25e8adfcdd14f595"
+          }
+        ],
+        "scopeRule": "The linked R8 packet defines the exact 24-case TypeScript serialization subset and current-source Node/Bun native, Node/Bun WASM, and Chromium WASM replays; installed package qualification, broader YAML behavior, arbitrary Proxy behavior, and default-route retirement remain open.",
+        "defaultRouteStatus": "Browser default route source selection is recorded per V4 entry declaration. Installed qualification and all retirement remain open unless a row's bounded evidence says otherwise"
+      },
       "operationOwnership": null,
-      "evidence": null,
+      "evidence": "docs/helix/02-design/contracts/CONTRACT-001-core-envelope.md",
       "bindingRoute": null,
       "bindingRouteStatus": "unproven",
-      "disposition": "browser route remains TypeScript; exact Rust operation and retirement disposition unresolved"
+      "disposition": "bounded opt-in Rust core operation exists; browser TypeScript implementation remains in route; zero declarations retired"
     },
     {
       "id": "package-root-browser-2239",
@@ -140875,7 +141296,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -140883,7 +141304,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -140891,7 +141312,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -140899,7 +141320,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -140907,7 +141328,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -141014,7 +141435,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -141022,7 +141443,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -141030,7 +141451,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -141038,7 +141459,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -141046,7 +141467,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -141153,7 +141574,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -141161,7 +141582,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -141169,7 +141590,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -141177,7 +141598,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -141185,7 +141606,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -141292,7 +141713,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -141300,7 +141721,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -141308,7 +141729,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -141316,7 +141737,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -141324,7 +141745,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -141431,7 +141852,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -141439,7 +141860,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -141447,7 +141868,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -141455,7 +141876,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -141463,7 +141884,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -141570,7 +141991,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -141578,7 +141999,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -141586,7 +142007,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -141594,7 +142015,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -141602,7 +142023,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -143695,7 +144116,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -143703,7 +144124,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -143711,7 +144132,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -143719,7 +144140,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -143727,7 +144148,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -146998,6 +147419,10 @@
               "sha256": "671f677cfaaa01ba9805204e42be80d2b2565dc7c9e43f71f36b7ac5860df7f1"
             },
             {
+              "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+              "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
+            },
+            {
               "path": "scripts/metamodel/build.ts",
               "sha256": "1772a34bdc6f2b53a5c613024cee41d8e68cb96e06097755a48002ec779713be"
             },
@@ -147131,6 +147556,10 @@
         ],
         "evidenceClosure": [
           {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+            "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
+          },
+          {
             "path": "spec/metamodel/generated/manifest.json",
             "sha256": "713eed1628281265708d17ff45d92daf7cbb32963aa10edcf3de844716434936"
           }
@@ -147195,6 +147624,10 @@
             {
               "path": "crates/umf-metamodel/src/lib.rs",
               "sha256": "671f677cfaaa01ba9805204e42be80d2b2565dc7c9e43f71f36b7ac5860df7f1"
+            },
+            {
+              "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+              "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
             },
             {
               "path": "scripts/metamodel/build.ts",
@@ -147329,6 +147762,10 @@
           }
         ],
         "evidenceClosure": [
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+            "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
+          },
           {
             "path": "spec/metamodel/generated/manifest.json",
             "sha256": "713eed1628281265708d17ff45d92daf7cbb32963aa10edcf3de844716434936"
@@ -149791,6 +150228,10 @@
               "sha256": "671f677cfaaa01ba9805204e42be80d2b2565dc7c9e43f71f36b7ac5860df7f1"
             },
             {
+              "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+              "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
+            },
+            {
               "path": "scripts/metamodel/build.ts",
               "sha256": "1772a34bdc6f2b53a5c613024cee41d8e68cb96e06097755a48002ec779713be"
             },
@@ -149912,6 +150353,10 @@
         ],
         "evidenceClosure": [
           {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+            "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
+          },
+          {
             "path": "spec/metamodel/generated/manifest.json",
             "sha256": "713eed1628281265708d17ff45d92daf7cbb32963aa10edcf3de844716434936"
           }
@@ -149976,6 +150421,10 @@
             {
               "path": "crates/umf-metamodel/src/lib.rs",
               "sha256": "671f677cfaaa01ba9805204e42be80d2b2565dc7c9e43f71f36b7ac5860df7f1"
+            },
+            {
+              "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+              "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
             },
             {
               "path": "scripts/metamodel/build.ts",
@@ -150098,6 +150547,10 @@
           }
         ],
         "evidenceClosure": [
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/key-record-type-generated-authority-20261026.md",
+            "sha256": "63092822448ca8f41ee328f913a9932a12e8417c8b6190f8d32297078da842e1"
+          },
           {
             "path": "spec/metamodel/generated/manifest.json",
             "sha256": "713eed1628281265708d17ff45d92daf7cbb32963aa10edcf3de844716434936"
@@ -151581,7 +152034,7 @@
               },
               {
                 "path": "crates/umf-core-wire/src/lib.rs",
-                "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+                "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
               },
               {
                 "path": "crates/umf-core-wire/src/record_members_inspection_binding.rs",
@@ -151669,7 +152122,7 @@
               },
               {
                 "path": "crates/umf-core/src/json_schema_adapter.rs",
-                "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+                "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
               },
               {
                 "path": "crates/umf-core/src/parquet_document_capture.rs",
@@ -151787,11 +152240,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "aee00b16860b850f7112c43382b3f7a3dbd8bfc392eb8510e497f0ac2f263dc9"
+                "sha256": "bcc42c9ed576e7ab5147b015ce5f16719b38c070b7daf985ffbb3649945e131f"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "20019568aba7b67d6bc731a4af4478546199b7ba15a55595a598d8fc7a045a2e"
+                "sha256": "4b8a167c591ca62f4e4af127856a5b550e2fe9a0a6cc1434e3b49ac129aa3efd"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -152573,7 +153026,7 @@
               },
               {
                 "path": "crates/umf-core-wire/src/lib.rs",
-                "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+                "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
               },
               {
                 "path": "crates/umf-core-wire/src/record_members_inspection_binding.rs",
@@ -152661,7 +153114,7 @@
               },
               {
                 "path": "crates/umf-core/src/json_schema_adapter.rs",
-                "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+                "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
               },
               {
                 "path": "crates/umf-core/src/parquet_document_capture.rs",
@@ -152779,11 +153232,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "aee00b16860b850f7112c43382b3f7a3dbd8bfc392eb8510e497f0ac2f263dc9"
+                "sha256": "bcc42c9ed576e7ab5147b015ce5f16719b38c070b7daf985ffbb3649945e131f"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "20019568aba7b67d6bc731a4af4478546199b7ba15a55595a598d8fc7a045a2e"
+                "sha256": "4b8a167c591ca62f4e4af127856a5b550e2fe9a0a6cc1434e3b49ac129aa3efd"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -153275,7 +153728,7 @@
               },
               {
                 "path": "crates/umf-core-wire/src/lib.rs",
-                "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+                "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
               },
               {
                 "path": "crates/umf-core-wire/src/record_members_inspection_binding.rs",
@@ -153359,7 +153812,7 @@
               },
               {
                 "path": "crates/umf-core/src/json_schema_adapter.rs",
-                "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+                "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
               },
               {
                 "path": "crates/umf-core/src/parquet_document_capture.rs",
@@ -153473,11 +153926,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "aee00b16860b850f7112c43382b3f7a3dbd8bfc392eb8510e497f0ac2f263dc9"
+                "sha256": "bcc42c9ed576e7ab5147b015ce5f16719b38c070b7daf985ffbb3649945e131f"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "20019568aba7b67d6bc731a4af4478546199b7ba15a55595a598d8fc7a045a2e"
+                "sha256": "4b8a167c591ca62f4e4af127856a5b550e2fe9a0a6cc1434e3b49ac129aa3efd"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -155772,7 +156225,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/cardinality.rs",
@@ -155932,7 +156385,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/facets.rs",
@@ -156030,7 +156483,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/core_keys.rs",
@@ -156182,7 +156635,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/core_keys.rs",
@@ -156260,7 +156713,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core_record_type_verification.rs",
@@ -156268,11 +156721,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/src/record_type_binding.rs",
@@ -156420,7 +156873,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core-relationships.js",
@@ -156428,11 +156881,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_core_relationships_wire.rs",
@@ -156558,7 +157011,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -156566,11 +157019,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_schema_defaults.rs",
@@ -160319,7 +160772,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -161359,7 +161812,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -161444,7 +161897,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -161529,7 +161982,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -162584,7 +163037,7 @@
               },
               {
                 "path": "crates/umf-core-wire/src/lib.rs",
-                "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+                "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
               },
               {
                 "path": "crates/umf-core-wire/src/record_members_inspection_binding.rs",
@@ -162652,7 +163105,7 @@
               },
               {
                 "path": "crates/umf-core/src/json_schema_adapter.rs",
-                "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+                "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
               },
               {
                 "path": "crates/umf-core/src/parquet_document_capture.rs",
@@ -162766,11 +163219,11 @@
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_release.py",
-                "sha256": "aee00b16860b850f7112c43382b3f7a3dbd8bfc392eb8510e497f0ac2f263dc9"
+                "sha256": "bcc42c9ed576e7ab5147b015ce5f16719b38c070b7daf985ffbb3649945e131f"
               },
               {
                 "path": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-                "sha256": "20019568aba7b67d6bc731a4af4478546199b7ba15a55595a598d8fc7a045a2e"
+                "sha256": "4b8a167c591ca62f4e4af127856a5b550e2fe9a0a6cc1434e3b49ac129aa3efd"
               },
               {
                 "path": "scripts/rust-migration/r4/sync_codegen_resources.py",
@@ -165688,7 +166141,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -166960,7 +167413,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/facets.rs",
@@ -167551,7 +168004,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -168534,7 +168987,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/cardinality.rs",
@@ -168719,7 +169172,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/facets.rs",
@@ -168817,7 +169270,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/core_keys.rs",
@@ -168955,7 +169408,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/core-model.js",
@@ -168963,7 +169416,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -168971,7 +169424,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -168979,7 +169432,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -168987,7 +169440,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_record_members_inspection.rs",
@@ -169164,7 +169617,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/core-model.js",
@@ -169172,7 +169625,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -169180,7 +169633,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -169188,7 +169641,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -169196,7 +169649,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_reference_links_inspection.rs",
@@ -169379,7 +169832,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core-relationships.js",
@@ -169387,11 +169840,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_core_relationships_wire.rs",
@@ -169515,7 +169968,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/core-model.js",
@@ -169523,7 +169976,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -169531,7 +169984,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -169539,7 +169992,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -169547,7 +170000,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_scalar_type_inspection.rs",
@@ -169718,7 +170171,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -169726,11 +170179,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_schema_defaults.rs",
@@ -170590,11 +171043,11 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           },
           {
             "path": "crates/umf-core/src/json_schema_inspect.rs",
-            "sha256": "89d498c67ca4a0a49d0c92293a1eaa27cea03e0b179ef77ca411fe437626214c"
+            "sha256": "c301ebeabeb86f4ca12511b2601f765ef12746354cecce8ee74bef9b22cc53a6"
           }
         ],
         "evidenceClosure": [
@@ -171717,7 +172170,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -171772,7 +172225,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -173015,7 +173468,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/core_keys.rs",
@@ -173093,7 +173546,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core-relationships.js",
@@ -173101,11 +173554,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_core_relationships_wire.rs",
@@ -180285,7 +180738,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -180293,7 +180746,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -180301,7 +180754,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -180309,7 +180762,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -180317,7 +180770,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -180423,7 +180876,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/temporal.js",
@@ -180431,15 +180884,15 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/gregorian_date_wire.rs",
@@ -180577,7 +181030,7 @@
         "focusedTestClosure": [
           {
             "path": "bindings/core/node/tests/json-schema-wrapper.test.js",
-            "sha256": "228f3bb4c1cbf1db39e0287f2bda25083dfb7d8313fdbc9b4807a7a16544230a"
+            "sha256": "f8f87d4465a1e79b11fcc8db41e8bfde3454a11523b87c5b96a5b93b2cd63920"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_json_schema_wire.rs",
@@ -180625,15 +181078,15 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/native_json.rs",
@@ -180701,7 +181154,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/temporal.js",
@@ -180709,15 +181162,15 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/rfc3339_exact_instant_wire.rs",
@@ -180828,7 +181281,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -180836,7 +181289,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -180844,7 +181297,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -180852,7 +181305,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -180860,7 +181313,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -187755,13 +188208,86 @@
       "ownerFamily": "model:serialization",
       "rowKind": "executable",
       "defaultRoute": "Node package root declaration",
-      "acceptedRustOperation": null,
-      "acceptedOperationEvidence": null,
+      "acceptedRustOperation": "umf_core::serialization::read_typescript_json_value",
+      "acceptedOperationEvidence": {
+        "rustSourceClosure": [
+          {
+            "path": "bindings/core/node/index.js",
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
+          },
+          {
+            "path": "bindings/core/node/src/lib.rs",
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
+          },
+          {
+            "path": "bindings/core/node/src/wire.js",
+            "sha256": "5a59889a7484b69554b628aa45c58bad6f71bb4c47679ae63d72f2e8a8e0daea"
+          },
+          {
+            "path": "bindings/core/wasm/index.js",
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
+          },
+          {
+            "path": "bindings/core/wasm/src/lib.rs",
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
+          },
+          {
+            "path": "crates/umf-core-wire/src/lib.rs",
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
+          },
+          {
+            "path": "crates/umf-core/src/serialization.rs",
+            "sha256": "6dcb0ec4fb47e0aa6d5cb545b0cd925b9a1b23838a3782f435386af5a497c392"
+          }
+        ],
+        "evidenceClosure": [
+          {
+            "path": "docs/helix/02-design/contracts/CONTRACT-001-core-envelope.md",
+            "sha256": "000747cf9c84697333bb55a18c5a8a4eebd5f5c953ad08d580378d950ce9612d"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-json-value-serialization/README.md",
+            "sha256": "1c89ee4e678141e52800c887fd4de375e6d0b943f0c439edeca3dcfcec32748d"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-json-value-serialization/predecessor.json",
+            "sha256": "76314beae043f3cb9136509bcacdb0d4d3b1920468d7b5d021ad1f1e07f0c60f"
+          }
+        ],
+        "focusedTestClosure": [
+          {
+            "path": "crates/umf-core-wire/tests/r8_json_value_serialization_wire.rs",
+            "sha256": "2ba67ed399da67bca1dc191241e1d96b7df003b7ef405d1b61fde2089ac1a478"
+          },
+          {
+            "path": "crates/umf-core/src/serialization.rs",
+            "sha256": "6dcb0ec4fb47e0aa6d5cb545b0cd925b9a1b23838a3782f435386af5a497c392"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-host-admission.test.js",
+            "sha256": "7aa4fc425c65afec5bcafde545dc0e52dc089fa0abf1ba706e8d4802f5d58515"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-serialization-binding-node.mjs",
+            "sha256": "5f755bb25b1f927c9a579308b42553055fbb8a752c764611ccfbe2863d7f2b9c"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-serialization-browser.mjs",
+            "sha256": "ead42a77d42038b933846096c7da1bfa27cb8291a565ba4a3c5afeca43aeece3"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-serialization-wasm-node.mjs",
+            "sha256": "a436880db7ce5a645ffc73b90d27f9e62a798ef90809bcba25e8adfcdd14f595"
+          }
+        ],
+        "scopeRule": "The linked R8 packet defines the exact 24-case TypeScript serialization subset and current-source Node/Bun native, Node/Bun WASM, and Chromium WASM replays; installed package qualification, broader YAML behavior, arbitrary Proxy behavior, and default-route retirement remain open.",
+        "defaultRouteStatus": "Node default route source selection is recorded per V4 entry declaration. Installed qualification and all retirement remain open unless a row's bounded evidence says otherwise"
+      },
       "operationOwnership": null,
-      "evidence": null,
+      "evidence": "docs/helix/02-design/contracts/CONTRACT-001-core-envelope.md",
       "bindingRoute": null,
       "bindingRouteStatus": "unproven",
-      "disposition": "Node route remains TypeScript; exact Rust operation and retirement disposition unresolved"
+      "disposition": "bounded opt-in Rust core operation exists; Node TypeScript implementation remains in route; zero declarations retired"
     },
     {
       "id": "package-root-node-3040",
@@ -192325,7 +192851,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -192333,11 +192859,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_schema_defaults.rs",
@@ -192812,7 +193338,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/temporal.js",
@@ -192820,15 +193346,15 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/rfc3339_exact_instant_wire.rs",
@@ -198884,7 +199410,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/temporal.js",
@@ -198892,15 +199418,15 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/gregorian_date_wire.rs",
@@ -199959,7 +200485,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -199967,7 +200493,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -199975,7 +200501,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -199983,7 +200509,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -199991,7 +200517,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -200098,7 +200624,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/bit128.js",
@@ -200106,7 +200632,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -200114,7 +200640,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/bit128.js",
@@ -200122,7 +200648,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -200130,7 +200656,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/bit128.rs",
@@ -200356,7 +200882,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/dataset_values.rs",
@@ -200438,7 +200964,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core-model.js",
@@ -200446,11 +200972,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_schema_defaults.rs",
@@ -200752,7 +201278,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/csv-boolean-lexical.js",
@@ -200760,7 +201286,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -200768,7 +201294,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/csv-boolean-lexical.js",
@@ -200776,7 +201302,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -200788,7 +201314,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_csv_boolean_lexical_wire.rs",
@@ -201322,7 +201848,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/cardinality.rs",
@@ -201549,7 +202075,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/facets.rs",
@@ -201635,7 +202161,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core-keys.js",
@@ -201643,11 +202169,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core/src/core_keys.rs",
@@ -201909,7 +202435,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core_record_type_verification.rs",
@@ -201917,11 +202443,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/src/record_type_binding.rs",
@@ -202069,7 +202595,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/wasm/src/core-relationships.js",
@@ -202077,11 +202603,11 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_core_relationships_wire.rs",
@@ -202255,7 +202781,7 @@
         "sourceClosure": [
           {
             "path": "bindings/core/node/index.js",
-            "sha256": "9d24bd1ec6183daacaf78e10b18704d7f87331dba1851be9fa34a03f714ae8eb"
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
           },
           {
             "path": "bindings/core/node/src/csv-boolean-lexical.js",
@@ -202263,7 +202789,7 @@
           },
           {
             "path": "bindings/core/node/src/lib.rs",
-            "sha256": "70ba184b677bfed79a9eac6a628b3647a9d1b4c6b641a435521fa278888a161f"
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
           },
           {
             "path": "bindings/core/node/src/wire.js",
@@ -202271,7 +202797,7 @@
           },
           {
             "path": "bindings/core/wasm/index.js",
-            "sha256": "bb8b41a8a4216e22a7f174916aae186540a464d52d64f93ceea490f8332240da"
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
           },
           {
             "path": "bindings/core/wasm/src/csv-boolean-lexical.js",
@@ -202279,7 +202805,7 @@
           },
           {
             "path": "bindings/core/wasm/src/lib.rs",
-            "sha256": "3359145e79d004d10eb019f8346c74cc18933cf9f2c31eea37a32b20212a9ebc"
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
           },
           {
             "path": "bindings/core/wasm/src/wire.js",
@@ -202291,7 +202817,7 @@
           },
           {
             "path": "crates/umf-core-wire/src/lib.rs",
-            "sha256": "995ab91dbd021c532e04bc3bf4cade9624145698fee90b7dd9e367a06aeca1db"
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
           },
           {
             "path": "crates/umf-core-wire/tests/r5_csv_boolean_lexical_wire.rs",
@@ -203526,7 +204052,7 @@
         "sourceClosure": [
           {
             "path": "crates/umf-core/src/json_schema_adapter.rs",
-            "sha256": "f1b22349613930516a758e3c963f73285e1cdd8def4de33693878e95ed09e833"
+            "sha256": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360"
           }
         ],
         "evidenceClosure": [
@@ -203750,13 +204276,86 @@
       "ownerFamily": "model:serialization",
       "rowKind": "executable",
       "defaultRoute": "Node package root declaration",
-      "acceptedRustOperation": null,
-      "acceptedOperationEvidence": null,
+      "acceptedRustOperation": "umf_core::serialization::write_typescript_json_value",
+      "acceptedOperationEvidence": {
+        "rustSourceClosure": [
+          {
+            "path": "bindings/core/node/index.js",
+            "sha256": "e4cb1d1075436d7c08f0c4ed24d1a5f9a6ebb78fef3febf17f7728d5a527c7b6"
+          },
+          {
+            "path": "bindings/core/node/src/lib.rs",
+            "sha256": "df665c9c315f18648f6924d5cdb479fde97f54a54d7383f45cffba3b78413437"
+          },
+          {
+            "path": "bindings/core/node/src/wire.js",
+            "sha256": "5a59889a7484b69554b628aa45c58bad6f71bb4c47679ae63d72f2e8a8e0daea"
+          },
+          {
+            "path": "bindings/core/wasm/index.js",
+            "sha256": "ae0197cdd7ad274bcdeef35919fa56059574e2b99e52c905714c3420a3fad534"
+          },
+          {
+            "path": "bindings/core/wasm/src/lib.rs",
+            "sha256": "b657dbf4dea1793d8b3f8b61a938dc7c2f1b77519479552cca7bcd59459e728c"
+          },
+          {
+            "path": "crates/umf-core-wire/src/lib.rs",
+            "sha256": "7c65f3961e662be0a5dabbe173e9a96762d21252a96e63b7fa5bae1523cebd63"
+          },
+          {
+            "path": "crates/umf-core/src/serialization.rs",
+            "sha256": "6dcb0ec4fb47e0aa6d5cb545b0cd925b9a1b23838a3782f435386af5a497c392"
+          }
+        ],
+        "evidenceClosure": [
+          {
+            "path": "docs/helix/02-design/contracts/CONTRACT-001-core-envelope.md",
+            "sha256": "000747cf9c84697333bb55a18c5a8a4eebd5f5c953ad08d580378d950ce9612d"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-json-value-serialization/README.md",
+            "sha256": "1c89ee4e678141e52800c887fd4de375e6d0b943f0c439edeca3dcfcec32748d"
+          },
+          {
+            "path": "docs/helix/04-build/evidence/rust-migration/r8-json-value-serialization/predecessor.json",
+            "sha256": "76314beae043f3cb9136509bcacdb0d4d3b1920468d7b5d021ad1f1e07f0c60f"
+          }
+        ],
+        "focusedTestClosure": [
+          {
+            "path": "crates/umf-core-wire/tests/r8_json_value_serialization_wire.rs",
+            "sha256": "2ba67ed399da67bca1dc191241e1d96b7df003b7ef405d1b61fde2089ac1a478"
+          },
+          {
+            "path": "crates/umf-core/src/serialization.rs",
+            "sha256": "6dcb0ec4fb47e0aa6d5cb545b0cd925b9a1b23838a3782f435386af5a497c392"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-host-admission.test.js",
+            "sha256": "7aa4fc425c65afec5bcafde545dc0e52dc089fa0abf1ba706e8d4802f5d58515"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-serialization-binding-node.mjs",
+            "sha256": "5f755bb25b1f927c9a579308b42553055fbb8a752c764611ccfbe2863d7f2b9c"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-serialization-browser.mjs",
+            "sha256": "ead42a77d42038b933846096c7da1bfa27cb8291a565ba4a3c5afeca43aeece3"
+          },
+          {
+            "path": "scripts/rust-migration/r8/json-value-serialization-wasm-node.mjs",
+            "sha256": "a436880db7ce5a645ffc73b90d27f9e62a798ef90809bcba25e8adfcdd14f595"
+          }
+        ],
+        "scopeRule": "The linked R8 packet defines the exact 24-case TypeScript serialization subset and current-source Node/Bun native, Node/Bun WASM, and Chromium WASM replays; installed package qualification, broader YAML behavior, arbitrary Proxy behavior, and default-route retirement remain open.",
+        "defaultRouteStatus": "Node default route source selection is recorded per V4 entry declaration. Installed qualification and all retirement remain open unless a row's bounded evidence says otherwise"
+      },
       "operationOwnership": null,
-      "evidence": null,
+      "evidence": "docs/helix/02-design/contracts/CONTRACT-001-core-envelope.md",
       "bindingRoute": null,
       "bindingRouteStatus": "unproven",
-      "disposition": "Node route remains TypeScript; exact Rust operation and retirement disposition unresolved"
+      "disposition": "bounded opt-in Rust core operation exists; Node TypeScript implementation remains in route; zero declarations retired"
     },
     {
       "id": "package-root-node-3359",
@@ -215682,7 +216281,7 @@
       },
       {
         "source": "scripts/rust-migration/r8/gap-ledger.mjs",
-        "sourceSha256": "5891af3b2ba2993b84a66fc68ff810b2480ae69d3d85554701d0e8a972053517",
+        "sourceSha256": "752b0bbf208ae4ee90868c251ed98e50f589d2166bc7ce88dab77731a13914d5",
         "packageScriptEntrypoints": [],
         "activity": "package-entrypoint-reachability-unresolved",
         "role": "support-tool",
@@ -215690,7 +216289,31 @@
       },
       {
         "source": "scripts/rust-migration/r8/gap-ledger.test.mjs",
-        "sourceSha256": "3a0ef9a73322253b02ce3a813248cfb4cf5344a26ccaed653de79e452bba0831",
+        "sourceSha256": "ef64434381db43081a3bf3d7a0eb6b2f1571ffb90a5d23aa6749ebcf9c534cb4",
+        "packageScriptEntrypoints": [],
+        "activity": "package-entrypoint-reachability-unresolved",
+        "role": "support-tool",
+        "disposition": "tooling closure; not part of package-root symbol rows"
+      },
+      {
+        "source": "scripts/rust-migration/r8/import-host-observation-browser-entry.ts",
+        "sourceSha256": "d5ef6b2500da3b8a8353de27db1eb6518ec342a0913372d80ff5e89ec48c9413",
+        "packageScriptEntrypoints": [],
+        "activity": "package-entrypoint-reachability-unresolved",
+        "role": "support-tool",
+        "disposition": "tooling closure; not part of package-root symbol rows"
+      },
+      {
+        "source": "scripts/rust-migration/r8/import-host-observation-chromium.ts",
+        "sourceSha256": "217e25b56bad65eb7e5e3e6935262aed600e65576dbe8c808f98f9b03864e1ee",
+        "packageScriptEntrypoints": [],
+        "activity": "package-entrypoint-reachability-unresolved",
+        "role": "support-tool",
+        "disposition": "tooling closure; not part of package-root symbol rows"
+      },
+      {
+        "source": "scripts/rust-migration/r8/import-host-observation.ts",
+        "sourceSha256": "fce6b16378613bdfc4a0b298bcf0cb9865de285dc999fa753717273c6d8beabe",
         "packageScriptEntrypoints": [],
         "activity": "package-entrypoint-reachability-unresolved",
         "role": "support-tool",
@@ -215731,6 +216354,46 @@
       {
         "source": "scripts/rust-migration/r8/json-number-binding-node.mjs",
         "sourceSha256": "9a4db4e17d00ae13c8a8ccc9ec9619b6f36bb6be4d3d7884a0c30efc1a94b5ec",
+        "packageScriptEntrypoints": [],
+        "activity": "package-entrypoint-reachability-unresolved",
+        "role": "support-tool",
+        "disposition": "tooling closure; not part of package-root symbol rows"
+      },
+      {
+        "source": "scripts/rust-migration/r8/json-schema-import-stage-matrix-cases.mjs",
+        "sourceSha256": "b20063a445613389a60a3aacd73a331de0c2527714023bcc98ba1ddeb062f0a8",
+        "packageScriptEntrypoints": [],
+        "activity": "package-entrypoint-reachability-unresolved",
+        "role": "support-tool",
+        "disposition": "tooling closure; not part of package-root symbol rows"
+      },
+      {
+        "source": "scripts/rust-migration/r8/json-schema-import-stage-matrix-receipt.mjs",
+        "sourceSha256": "1c20203c9ad18053fbd4470027af9913cf34aaa36e62fd8dea3d58b427cd8d77",
+        "packageScriptEntrypoints": [],
+        "activity": "package-entrypoint-reachability-unresolved",
+        "role": "support-tool",
+        "disposition": "tooling closure; not part of package-root symbol rows"
+      },
+      {
+        "source": "scripts/rust-migration/r8/json-schema-import-stage-matrix-runner.mjs",
+        "sourceSha256": "ba04985f8dab742f0ffe3caa6dd3230d81da21c2483ddbf638486d3368cba739",
+        "packageScriptEntrypoints": [],
+        "activity": "package-entrypoint-reachability-unresolved",
+        "role": "support-tool",
+        "disposition": "tooling closure; not part of package-root symbol rows"
+      },
+      {
+        "source": "scripts/rust-migration/r8/json-schema-staged-wasm-browser-entry.ts",
+        "sourceSha256": "1ad93b6aa254f0f42f6cdc821533a4ae591b25f60dccc8a32a8319f6bbcdd67e",
+        "packageScriptEntrypoints": [],
+        "activity": "package-entrypoint-reachability-unresolved",
+        "role": "support-tool",
+        "disposition": "tooling closure; not part of package-root symbol rows"
+      },
+      {
+        "source": "scripts/rust-migration/r8/json-schema-staged-wasm-browser.mjs",
+        "sourceSha256": "1726ab10b305fea732e7009c565d46692bb7f46df6cb41df8e1e66fe7dea4b1b",
         "packageScriptEntrypoints": [],
         "activity": "package-entrypoint-reachability-unresolved",
         "role": "support-tool",
@@ -215945,8 +216608,24 @@
         "disposition": "tooling closure; not part of package-root symbol rows"
       },
       {
+        "source": "scripts/rust-migration/r8/selection-private-host-browser-entry.ts",
+        "sourceSha256": "ade8d244d1d4cf47d737f3317b0c3ebac95207942a30ea2713dbf6738a36c095",
+        "packageScriptEntrypoints": [],
+        "activity": "package-entrypoint-reachability-unresolved",
+        "role": "support-tool",
+        "disposition": "tooling closure; not part of package-root symbol rows"
+      },
+      {
+        "source": "scripts/rust-migration/r8/selection-private-host-browser.mjs",
+        "sourceSha256": "d005be56c2b5d23a927956033bb7e054a03ab17dd0de46ab9db486e870bf04aa",
+        "packageScriptEntrypoints": [],
+        "activity": "package-entrypoint-reachability-unresolved",
+        "role": "support-tool",
+        "disposition": "tooling closure; not part of package-root symbol rows"
+      },
+      {
         "source": "scripts/rust-migration/r8/selection-private-host-node.mjs",
-        "sourceSha256": "8c2b9552151091e12e902148e92b84ee0a31af6e8d7852ba5b6651ee1a6688a6",
+        "sourceSha256": "fa3dbb3342b6d2fdfd2a30c9697978c220d90260d772b6d4f90377ad1c61a31f",
         "packageScriptEntrypoints": [],
         "activity": "package-entrypoint-reachability-unresolved",
         "role": "support-tool",
@@ -219455,7 +220134,7 @@
           },
           {
             "source": "python/umf_codegen/src/umf_codegen/_release.py",
-            "sourceSha256": "aee00b16860b850f7112c43382b3f7a3dbd8bfc392eb8510e497f0ac2f263dc9",
+            "sourceSha256": "bcc42c9ed576e7ab5147b015ce5f16719b38c070b7daf985ffbb3649945e131f",
             "publicCallableNames": [],
             "disposition": "module-level public-by-convention surface; exact contract and Rust route remain unreviewed"
           },
@@ -219486,42 +220165,42 @@
           },
           {
             "source": "python/umf_codegen/src/umf_codegen/_resources/core.constraints.json",
-            "sourceSha256": "9ecfc2a431b3c2c587813e856f3bce64fb6ac0009092dd2cfba1c4cce3107778",
+            "sourceSha256": "5a760fac5554ebba94d8aa3ff076571ed46236f4b35f1592e667907fa58a9ae1",
             "kind": "inert-package-asset",
             "executableAtRuntime": false,
             "disposition": "inert release input; packaging, authority and byte route require release qualification"
           },
           {
             "source": "python/umf_codegen/src/umf_codegen/_resources/core.domain-policy.json",
-            "sourceSha256": "73b82c35a04a924372b517c144f9430f0e6a1234128e6cf54078660969698ed8",
+            "sourceSha256": "7c77edd0c5a3c9a4ec1df9a2b5f6e0d059b58336e04f94dbca2f48b3072734fc",
             "kind": "inert-package-asset",
             "executableAtRuntime": false,
             "disposition": "inert release input; packaging, authority and byte route require release qualification"
           },
           {
             "source": "python/umf_codegen/src/umf_codegen/_resources/core.package-schema.json",
-            "sourceSha256": "5fee07e731b7eb5c239f632a57b0b532a455737b0a8f5005f09f1c95aa3591dd",
+            "sourceSha256": "0b33f92d755dfd40aee3e2ae9b8d81f9347c5d676b2420b471cacc6b87940017",
             "kind": "inert-package-asset",
             "executableAtRuntime": false,
             "disposition": "inert release input; packaging, authority and byte route require release qualification"
           },
           {
             "source": "python/umf_codegen/src/umf_codegen/_resources/core.reference-schema.json",
-            "sourceSha256": "7af22d9d7e3ab936ce9dd56c60459ffe34d73539c5e624020fb5954eb4310262",
+            "sourceSha256": "2701c14d8c125b34dc446a1b6f98fe25fb1e809b7b13b6616c7e87b1b3e52c74",
             "kind": "inert-package-asset",
             "executableAtRuntime": false,
             "disposition": "inert release input; packaging, authority and byte route require release qualification"
           },
           {
             "source": "python/umf_codegen/src/umf_codegen/_resources/core.schema.json",
-            "sourceSha256": "dc56298af5a79c0ed15275c9d9f6887572f8722349095759030a0523ae314827",
+            "sourceSha256": "34058737069b2ffb1e952b54986f14b046d0cee6dacbd7aec3a0fc88b213d5a0",
             "kind": "inert-package-asset",
             "executableAtRuntime": false,
             "disposition": "inert release input; packaging, authority and byte route require release qualification"
           },
           {
             "source": "python/umf_codegen/src/umf_codegen/_resources/manifest.json",
-            "sourceSha256": "20019568aba7b67d6bc731a4af4478546199b7ba15a55595a598d8fc7a045a2e",
+            "sourceSha256": "4b8a167c591ca62f4e4af127856a5b550e2fe9a0a6cc1434e3b49ac129aa3efd",
             "kind": "inert-package-asset",
             "executableAtRuntime": false,
             "disposition": "inert release input; packaging, authority and byte route require release qualification"

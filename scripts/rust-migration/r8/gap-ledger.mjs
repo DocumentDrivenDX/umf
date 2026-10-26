@@ -33,6 +33,24 @@ accept('src/model/semantic-types.ts', [['declareCoreSemanticTypes', 'declare_cor
 accept('src/model/semantic-types.ts', [['verifyCoreSemanticTypeDeclaration', 'verify_core_semantic_type_declaration']], 'umf_core::core_semantic_types', 'crates/umf-core/src/core_semantic_types.rs', ['r5-core-semantic-types/README.md', 'r5-core-semantic-types/frozen-typescript.json'], 'crates/umf-core/tests/r5_core_semantic_types.rs');
 accept('src/model/semantic-types.ts', [['validateCoreSemanticTypeValue', 'validate_core_semantic_type_value']], 'umf_core::core_semantic_types', 'crates/umf-core/src/core_semantic_types.rs', ['r5-semantic-value/README.md', 'r5-semantic-value/frozen-typescript.json'], 'crates/umf-core/tests/r5_core_semantic_types.rs');
 accept('src/model/record-values.ts', [['validateCoreRecordValues', 'validate_core_record_values']], 'umf_core::record_values', 'crates/umf-core/src/record_values.rs', ['r5-record-values/README.md', 'r5-record-values/frozen-typescript.json'], 'crates/umf-core/tests/r5_record_values.rs');
+accept('src/model/record-members.ts', [['inspectCoreRecordMembers', 'inspect_core_record_members']], 'umf_core::record_members_inspection', [
+  'crates/umf-core/src/record_members_inspection.rs',
+  'crates/umf-core-wire/src/record_members_inspection_binding.rs',
+  'bindings/core/node/src/record_members_inspection.rs',
+  'bindings/core/wasm/src/record_members_inspection.rs',
+], [
+  'docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/frozen-typescript.json',
+  'docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/node-retained.md',
+  'docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/node-retained-node.json',
+  'docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/node-retained-bun.json',
+  'docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/wasm-retained.md',
+  'docs/helix/04-build/evidence/rust-migration/r5-record-members-inspection/wasm-retained.json',
+], [
+  'crates/umf-core-wire/tests/r5_record_members_inspection.rs',
+  'bindings/core/node/tests/core-record-members-inspection.test.js',
+  'bindings/core/wasm/tests/record-members-retained.test.js',
+]);
 accept('src/model/dataset-values.ts', [['validateCoreDatasetValues', 'validate_core_dataset_values'], ['verifyCoreDatasetValues', 'verify_core_dataset_values']], 'umf_core::dataset_values', 'crates/umf-core/src/dataset_values.rs', ['r5-dataset-values/README.md', 'r5-dataset-values/frozen-typescript.json', 'r5-dataset-values/frozen-verify-typescript.json'], 'crates/umf-core/tests/r5_dataset_values.rs');
 accept('src/model/dataset-values-compact.ts', [['validateCoreDatasetValuesCompact', 'validate_core_dataset_values_compact'], ['verifyCoreDatasetValuesCompact', 'verify_core_dataset_values_compact']], 'umf_core::dataset_values', 'crates/umf-core/src/dataset_values.rs', ['r5-dataset-values-compact/README.md', 'r5-dataset-values-compact/index.json'], 'crates/umf-core/tests/r5_dataset_values_compact.rs');
 accept('src/model/key-tuple.ts', [['encodeCoreKeyTuple', 'encode_core_key_tuple'], ['verifyCoreKeyTuple', 'verify_core_key_tuple']], 'umf_core::core_key_tuple', 'crates/umf-core/src/core_key_tuple.rs', ['r5-core-key-tuple/README.md', 'r5-core-key-tuple/frozen-typescript.json'], 'crates/umf-core/tests/r5_core_key_tuple.rs');
@@ -196,6 +214,29 @@ accept('src/model/internal/json-number.ts', [['assertExactJsonNumber', 'assert_e
   'scripts/rust-migration/r8/json-number-binding-node.mjs',
   'scripts/rust-migration/r8/json-number-binding-browser.mjs',
 ]);
+accept('src/model/serialization.ts', [
+  ['readJsonValue', 'read_typescript_json_value'],
+  ['writeJsonValue', 'write_typescript_json_value'],
+], 'umf_core::serialization', [
+  'crates/umf-core/src/serialization.rs',
+  'crates/umf-core-wire/src/lib.rs',
+  'bindings/core/node/src/lib.rs',
+  'bindings/core/node/src/wire.js',
+  'bindings/core/node/index.js',
+  'bindings/core/wasm/src/lib.rs',
+  'bindings/core/wasm/index.js',
+], [
+  'docs/helix/02-design/contracts/CONTRACT-001-core-envelope.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-json-value-serialization/README.md',
+  'docs/helix/04-build/evidence/rust-migration/r8-json-value-serialization/predecessor.json',
+], [
+  'crates/umf-core/src/serialization.rs',
+  'crates/umf-core-wire/tests/r8_json_value_serialization_wire.rs',
+  'scripts/rust-migration/r8/json-value-serialization-binding-node.mjs',
+  'scripts/rust-migration/r8/json-value-serialization-wasm-node.mjs',
+  'scripts/rust-migration/r8/json-value-serialization-browser.mjs',
+  'scripts/rust-migration/r8/json-value-host-admission.test.js',
+]);
 
 // Exact-operation ownership for the JSON Schema and Protobuf root adapter
 // surfaces. Each entry names a Rust symbol only where source and evidence
@@ -268,7 +309,9 @@ function acceptedOperationEvidence(mapping, routeStatus = 'legacy-fixture') {
     rustSourceClosure: closure(mapping.rustSourcePaths),
     evidenceClosure: closure(mapping.evidencePaths),
     focusedTestClosure: closure(mapping.focusedTestPaths),
-    scopeRule: mapping.evidencePaths.some(file => file.includes('/r8-json-number-predecessor/'))
+    scopeRule: mapping.evidencePaths.some(file => file.includes('/r8-json-value-serialization/'))
+      ? 'The linked R8 packet defines the exact 24-case TypeScript serialization subset and current-source Node/Bun native, Node/Bun WASM, and Chromium WASM replays; installed package qualification, broader YAML behavior, arbitrary Proxy behavior, and default-route retirement remain open.'
+      : mapping.evidencePaths.some(file => file.includes('/r8-json-number-predecessor/'))
       ? 'Source/evidence hashes pin identity only; the linked R8 JSON-number packet defines string-input parity and its remaining host/default-route gates.'
       : mapping.evidencePaths.some(file => file.includes('/r8-security-truth-logic-binding/'))
         ? 'Source/evidence hashes pin identity only; the linked CONTRACT-062 truth/composition packet defines admitted JSON parity for already-evaluated rules, excluding Registry, backend authorization, and default-route retirement.'

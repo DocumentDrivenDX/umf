@@ -103,8 +103,8 @@ test('Schema Properties source selections keep exact CONTRACT-049 mappings separ
     assert.equal(reference.sourceSelectedImplementation, null);
     assert.equal(reference.implementationStatus, 'TypeScript reference implementation remains explicit');
   }
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 64);
-  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 858);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 67);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 855);
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
   const aggregate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/aggregate.json', 'utf8'));
   const aggregateNames = Object.values(aggregate.families).flatMap(family => family.operations);
@@ -1730,6 +1730,36 @@ test('adapter ownership supplement maps exact operations without retirement or p
   }
 });
 
+test('JSON value serialization maps only the opt-in source-proved Rust profile', () => {
+  const symbols = ['readJsonValue', 'writeJsonValue'].map((exportName, index) => ({
+    routeId: 'package-root', exportName, declarationName: exportName,
+    declarationKind: 'FunctionDeclaration', source: 'src/model/serialization.ts', line: index + 1,
+    sourceSha256: 'f'.repeat(64),
+  }));
+  const ledger = buildLedger({...args, inventory: {symbols}});
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 2);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 2);
+  for (const [name, owner, wireTest, nodeTest, wasmTest] of [
+    ['readJsonValue', 'umf_core::serialization::read_typescript_json_value', 'crates/umf-core-wire/tests/r8_json_value_serialization_wire.rs', 'scripts/rust-migration/r8/json-value-serialization-binding-node.mjs', 'scripts/rust-migration/r8/json-value-serialization-wasm-node.mjs'],
+    ['writeJsonValue', 'umf_core::serialization::write_typescript_json_value', 'crates/umf-core-wire/tests/r8_json_value_serialization_wire.rs', 'scripts/rust-migration/r8/json-value-serialization-binding-node.mjs', 'scripts/rust-migration/r8/json-value-serialization-wasm-node.mjs'],
+  ]) {
+    const row = ledger.rows.find(item => item.exportName === name);
+    assert.equal(row.acceptedRustOperation, owner);
+    assert.equal(row.operationOwnership, null);
+    assert.equal(row.defaultRoute, 'TypeScript declaration from current package root');
+    assert.ok(row.acceptedOperationEvidence.rustSourceClosure.some(item => item.path === 'crates/umf-core-wire/src/lib.rs'));
+    assert.ok(row.acceptedOperationEvidence.rustSourceClosure.some(item => item.path === 'bindings/core/node/src/lib.rs'));
+    assert.ok(row.acceptedOperationEvidence.rustSourceClosure.some(item => item.path === 'bindings/core/wasm/src/lib.rs'));
+    for (const file of [wireTest, nodeTest, wasmTest, 'scripts/rust-migration/r8/json-value-serialization-browser.mjs']) {
+      assert.ok(row.acceptedOperationEvidence.focusedTestClosure.some(item => item.path === file), `${name} evidence omits ${file}`);
+    }
+    assert.ok(row.acceptedOperationEvidence.evidenceClosure.some(item => item.path === 'docs/helix/04-build/evidence/rust-migration/r8-json-value-serialization/README.md'));
+    assert.match(row.acceptedOperationEvidence.scopeRule, /24-case/);
+    assert.match(row.acceptedOperationEvidence.scopeRule, /installed package qualification.*remain open/);
+    assert.equal(row.disposition, 'opt-in Rust core operation exists; default TypeScript route remains TypeScript');
+  }
+});
+
 test('reviewed R5 core operations map exact package-root declarations without retirement', () => {
   const mappings = [
     ['inspectCoreSemanticTypes', 'src/model/semantic-types.ts', 'umf_core::core_semantic_types::inspect_core_semantic_types', 'r5-core-semantic-types/README.md'],
@@ -1738,6 +1768,7 @@ test('reviewed R5 core operations map exact package-root declarations without re
     ['verifyCoreSemanticTypeDeclaration', 'src/model/semantic-types.ts', 'umf_core::core_semantic_types::verify_core_semantic_type_declaration', 'r5-core-semantic-types/README.md'],
     ['validateCoreSemanticTypeValue', 'src/model/semantic-types.ts', 'umf_core::core_semantic_types::validate_core_semantic_type_value', 'r5-semantic-value/README.md'],
     ['validateCoreRecordValues', 'src/model/record-values.ts', 'umf_core::record_values::validate_core_record_values', 'r5-record-values/README.md'],
+    ['inspectCoreRecordMembers', 'src/model/record-members.ts', 'umf_core::record_members_inspection::inspect_core_record_members', 'r5-record-members-inspection/README.md'],
     ['validateCoreDatasetValues', 'src/model/dataset-values.ts', 'umf_core::dataset_values::validate_core_dataset_values', 'r5-dataset-values/README.md'],
     ['verifyCoreDatasetValues', 'src/model/dataset-values.ts', 'umf_core::dataset_values::verify_core_dataset_values', 'r5-dataset-values/README.md'],
     ['validateCoreDatasetValuesCompact', 'src/model/dataset-values-compact.ts', 'umf_core::dataset_values::validate_core_dataset_values_compact', 'r5-dataset-values-compact/README.md'],
@@ -1779,10 +1810,10 @@ test('reviewed R5 core operations map exact package-root declarations without re
   }));
   const ledger = buildLedger({ ...args, inventory: { symbols: rows } });
   const byName = new Map(ledger.rows.map(row => [row.exportName, row]));
-  assert.equal(ledger.counts.executableRows, 38);
-  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 33);
+  assert.equal(ledger.counts.executableRows, 39);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 34);
   assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 5);
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 38);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 39);
   for (const [name, source, rustOwner, evidence] of mappings) {
     const row = byName.get(name);
     assert.equal(row.source, source);

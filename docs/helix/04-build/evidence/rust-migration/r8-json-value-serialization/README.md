@@ -55,9 +55,10 @@ An opt-in Rust profile now backs public Node and WASM `readJsonValue` and
 are admitted by the Rust wire; the public facades route other JavaScript
 format values to YAML, matching the TypeScript selection rule. Generic
 `readValue` and `writeValue` retain their previous behavior. Missing profile
-bindings fail closed. Host controls are passed into both operations. The
-TypeScript default routes remain unchanged, and this evidence does not accept
-the export pair as a full migration mapping or claim default-route retirement.
+bindings fail closed. Host controls are passed into both operations. The R8
+ledger accepts exact opt-in Rust operation mappings for this bounded source
+profile. The TypeScript default routes remain unchanged, and this evidence
+does not qualify a full migration or default-route retirement.
 
 The recaptured 24-case packet passes exactly against the fresh native addon
 in Node 26.12.1 and Bun 1.4.3, and against the fresh WASM artifact in Node,
