@@ -20,6 +20,8 @@ pub struct CompiledModel {
     /// Portable machine-readable resources consumed by the Bun Ajv assembler
     /// and by current UMF runtimes.
     pub resources: BTreeMap<String, Value>,
+    /// Additional declared resources in authored declaration order.
+    pub operation_outputs: Vec<(String, Value)>,
     /// Host type/resource sources rendered by the Rust compiler.
     pub sources: BTreeMap<String, String>,
     pub digest: Option<String>,
@@ -124,7 +126,7 @@ pub fn compile_model(model: &Value, ctx: &mut Context<'_>) -> Result<CompiledMod
         .unwrap_or(&Value::Null),
     )
     .as_deref()
-        != Some("1.0.0")
+        != Some("1.1.0")
     {
         return Err(shape_error(
             "METAMODEL_VOCABULARY_VERSION",
@@ -316,6 +318,12 @@ pub fn compile_model(model: &Value, ctx: &mut Context<'_>) -> Result<CompiledMod
                 }
             }
         }
+        if contains_object_fragment(&shape) || contains_min_properties(&shape) {
+            return Err(shape_error(
+                "METAMODEL_RESOURCE_FRAGMENT_SCOPE",
+                "object-fragment and minProperties are only valid in declared operation resources",
+            ));
+        }
         check_shape_at(&shape, &Utf16::default(), ctx)?;
         let emitted = emit_shape_at(&shape, &target_index, ctx)?;
         ctx.charge_work(name.len(), Utf16::default())?;
@@ -330,6 +338,8 @@ pub fn compile_model(model: &Value, ctx: &mut Context<'_>) -> Result<CompiledMod
     let core = schema_resource_with_context(&defs, &core_name, &ids[0], model_title, ctx)?;
     let reference = schema_resource_with_context(&defs, &ref_name, &semantic_id, None, ctx)?;
     let pkg = schema_resource_with_context(&defs, &pkg_name, &ids[2], None, ctx)?;
+    let operation_resources =
+        compile_operation_resources(get(root, "resources").unwrap_or(&Value::Null), &ids[0], ctx)?;
     let domains = resolve_data(
         get(root, "domains").unwrap_or(&Value::Null),
         &fields,
@@ -358,6 +368,7 @@ pub fn compile_model(model: &Value, ctx: &mut Context<'_>) -> Result<CompiledMod
     Ok(CompiledModel {
         language,
         resources,
+        operation_outputs: operation_resources,
         sources: BTreeMap::new(),
         digest,
     })
@@ -454,7 +465,7 @@ pub fn render_outputs_with_context(
     let annotation_schema = annotation_schema();
     let package = obj(vec![
         ("id", Value::string_utf8("umf.metamodel")),
-        ("version", Value::string_utf8("1.0.0")),
+        ("version", Value::string_utf8("1.1.0")),
         (
             "coreVersion",
             clone_metered(
@@ -503,7 +514,7 @@ pub fn render_outputs_with_context(
         json_compact(&Value::string_utf8(&version))?
     );
     let json = |value: &Value, ctx: &mut Context<'_>| pretty_json_with_context(value, ctx);
-    Ok(vec![
+    let mut outputs = vec![
         Output {
             path: "spec/core/schema.json".into(),
             contents: json(&core, ctx)?,
@@ -540,7 +551,14 @@ pub fn render_outputs_with_context(
             path: "src/generated/core-model.ts".into(),
             contents: model_ts,
         },
-    ])
+    ];
+    for (path, value) in &compiled.operation_outputs {
+        outputs.push(Output {
+            path: path.clone(),
+            contents: json(value, ctx)?,
+        });
+    }
+    Ok(outputs)
 }
 
 fn core_type_surface_cost(value: &Value) -> usize {
@@ -560,6 +578,315 @@ fn index_depth_work(len: usize) -> usize {
     (usize::BITS - len.max(1).leading_zeros()) as usize
 }
 
+fn compile_operation_resources(
+    declarations: &Value,
+    core_schema_id: &Utf16,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<(String, Value)>, EngineError> {
+    let Some(declarations) = arr(Some(declarations)) else {
+        return Err(shape_error(
+            "METAMODEL_RESOURCE_DECLARATIONS",
+            "resources must be an array",
+        ));
+    };
+    if declarations.len() != 2 {
+        return Err(shape_error(
+            "METAMODEL_RESOURCE_DECLARATIONS",
+            "this vocabulary version requires the Facets v3 and Cardinality v4 resources",
+        ));
+    }
+    let mut paths = BTreeSet::new();
+    let mut ids = BTreeSet::new();
+    let mut output = Vec::with_capacity(declarations.len());
+    for declaration in declarations {
+        let Value::Object(fields) = declaration else {
+            return Err(shape_error(
+                "METAMODEL_RESOURCE_DECLARATION",
+                "resource must be an object",
+            ));
+        };
+        let allowed = [
+            "path",
+            "id",
+            "title",
+            "externalResourceIds",
+            "definitions",
+            "root",
+        ];
+        if fields.len() != allowed.len()
+            || fields.iter().any(|(key, _)| {
+                key.to_utf8()
+                    .ok()
+                    .is_none_or(|name| !allowed.contains(&name.as_str()))
+            })
+        {
+            return Err(shape_error(
+                "METAMODEL_RESOURCE_DECLARATION",
+                "resource fields must be exactly path, id, title, externalResourceIds, definitions, root",
+            ));
+        }
+        let path = text(get(declaration, "path").unwrap_or(&Value::Null))
+            .ok_or_else(|| shape_error("METAMODEL_RESOURCE_PATH", "resource path must be text"))?;
+        let id = text(get(declaration, "id").unwrap_or(&Value::Null))
+            .ok_or_else(|| shape_error("METAMODEL_RESOURCE_ID", "resource id must be text"))?;
+        let title = text(get(declaration, "title").unwrap_or(&Value::Null))
+            .filter(|value| !value.is_empty())
+            .ok_or_else(|| {
+                shape_error(
+                    "METAMODEL_RESOURCE_TITLE",
+                    "resource title must be non-empty text",
+                )
+            })?;
+        let permitted = [
+            (
+                "spec/core/facet-operation-v3.schema.json",
+                "urn:umf:core:facet-operation:3.0.0",
+                "Facet inspection and authoring receipts (Key envelope) (Relationship envelope)",
+            ),
+            (
+                "spec/core/cardinality-operation-v4.schema.json",
+                "urn:umf:core:cardinality-operation:4.0.0",
+                "Core cardinality inspection and explicit author declaration results (Key envelope) (Relationship envelope)",
+            ),
+        ];
+        if !permitted
+            .iter()
+            .any(|(expected_path, expected_id, expected_title)| {
+                path == *expected_path && id == *expected_id && title == *expected_title
+            })
+            || path.split('/').any(|part| part == ".." || part.is_empty())
+            || !path.ends_with(".schema.json")
+        {
+            return Err(shape_error(
+                "METAMODEL_RESOURCE_PATH",
+                "unsupported path, id, or title binding",
+            ));
+        }
+        if !paths.insert(path.clone()) || !ids.insert(id.clone()) {
+            return Err(shape_error(
+                "METAMODEL_RESOURCE_DUPLICATE",
+                "resource paths and ids must be unique",
+            ));
+        }
+        validate_resource_id(&Utf16::from(id.as_str()))?;
+        let external_ids = arr(get(declaration, "externalResourceIds")).ok_or_else(|| {
+            shape_error(
+                "METAMODEL_RESOURCE_EXTERNAL_IDS",
+                "externalResourceIds must be an array",
+            )
+        })?;
+        if external_ids.len() != 1 || external_ids[0] != Value::String(core_schema_id.clone()) {
+            return Err(shape_error(
+                "METAMODEL_RESOURCE_EXTERNAL_IDS",
+                "operation resources must explicitly allow only the current core schema id",
+            ));
+        }
+        let definitions = arr(get(declaration, "definitions")).ok_or_else(|| {
+            shape_error(
+                "METAMODEL_RESOURCE_DEFINITIONS",
+                "definitions must be an array",
+            )
+        })?;
+        if definitions.is_empty() {
+            return Err(shape_error(
+                "METAMODEL_RESOURCE_DEFINITIONS",
+                "definitions must not be empty",
+            ));
+        }
+        let mut names = BTreeSet::new();
+        let mut emitted_defs = Vec::with_capacity(definitions.len());
+        for definition in definitions {
+            let Value::Object(fields) = definition else {
+                return Err(shape_error(
+                    "METAMODEL_RESOURCE_DEFINITION",
+                    "definition must be an object",
+                ));
+            };
+            if fields.len() != 2
+                || fields
+                    .iter()
+                    .any(|(key, _)| key != &Utf16::from("name") && key != &Utf16::from("shape"))
+            {
+                return Err(shape_error(
+                    "METAMODEL_RESOURCE_DEFINITION",
+                    "definition fields must be exactly name and shape",
+                ));
+            }
+            let name = text(get(definition, "name").unwrap_or(&Value::Null))
+                .filter(|value| !value.is_empty())
+                .ok_or_else(|| {
+                    shape_error(
+                        "METAMODEL_RESOURCE_DEFINITION",
+                        "definition name must be non-empty text",
+                    )
+                })?;
+            if !names.insert(name.clone()) {
+                return Err(shape_error(
+                    "METAMODEL_RESOURCE_DUPLICATE",
+                    "definition names must be unique",
+                ));
+            }
+            emitted_defs.push((
+                Utf16::from(name.as_str()),
+                get(definition, "shape").unwrap_or(&Value::Null),
+            ));
+        }
+        let external = text(&external_ids[0]).unwrap();
+        let targets: BTreeSet<Vec<u16>> = names
+            .iter()
+            .map(|name| Utf16::from(name.as_str()).units().to_vec())
+            .chain([Utf16::from(external.as_str()).units().to_vec()])
+            .collect();
+        let root = get(declaration, "root").unwrap_or(&Value::Null);
+        for (_, shape) in &emitted_defs {
+            check_shape_at(shape, &Utf16::default(), ctx)?;
+            check_resource_shape(shape, &targets, false, ctx)?;
+        }
+        check_shape_at(root, &Utf16::default(), ctx)?;
+        check_resource_shape(root, &targets, false, ctx)?;
+        let mut defs = Vec::with_capacity(emitted_defs.len());
+        for (name, shape) in emitted_defs {
+            defs.push((
+                name,
+                reorder_operation_shape(emit_shape_mode(shape, &targets, ctx, true)?)?,
+            ));
+        }
+        let root_schema = reorder_operation_shape(emit_shape_mode(root, &targets, ctx, true)?)?;
+        let Value::Object(mut root_members) = root_schema else {
+            return Err(shape_error(
+                "METAMODEL_RESOURCE_ROOT",
+                "root must emit a schema object",
+            ));
+        };
+        let mut members = vec![
+            (
+                Utf16::from("$schema"),
+                Value::string_utf8("https://json-schema.org/draft/2020-12/schema"),
+            ),
+            (Utf16::from("$id"), Value::string_utf8(id)),
+            (Utf16::from("title"), Value::string_utf8(title)),
+            (Utf16::from("$defs"), Value::Object(defs)),
+        ];
+        members.append(&mut root_members);
+        output.push((path, Value::Object(members)));
+    }
+    Ok(output)
+}
+
+fn check_resource_shape(
+    shape: &Value,
+    _targets: &BTreeSet<Vec<u16>>,
+    fragment_allowed: bool,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let tag = text(get(shape, "tag").unwrap_or(&Value::Null)).unwrap_or_default();
+    if tag == "object-fragment" && !fragment_allowed {
+        return Err(shape_error(
+            "METAMODEL_RESOURCE_FRAGMENT_SCOPE",
+            "object-fragment is only allowed below a conditional condition or yes subtree",
+        ));
+    }
+    if tag == "constant" || tag == "link" {
+        return Ok(());
+    }
+    if tag == "conditional" {
+        for key in ["condition", "yes"] {
+            if let Some(child) = get(shape, key) {
+                check_resource_shape(child, _targets, true, ctx)?;
+            }
+        }
+        if let Some(child) = get(shape, "no") {
+            check_resource_shape(child, _targets, false, ctx)?;
+        }
+    } else {
+        for key in [
+            "options",
+            "fields",
+            "properties",
+            "item",
+            "key",
+            "contains",
+            "open",
+            "value",
+            "conditions",
+        ] {
+            if let Some(Value::Array(items)) = get(shape, key) {
+                for child in items {
+                    check_resource_shape(child, _targets, fragment_allowed, ctx)?;
+                }
+            } else if let Some(Value::Object(items)) = get(shape, key) {
+                for (_, child) in items {
+                    check_resource_shape(child, _targets, fragment_allowed, ctx)?;
+                }
+            } else if let Some(child) = get(shape, key) {
+                if matches!(child, Value::Object(_)) {
+                    check_resource_shape(child, _targets, fragment_allowed, ctx)?;
+                }
+            }
+        }
+    }
+    Ok(())
+}
+
+fn reorder_operation_shape(value: Value) -> Result<Value, EngineError> {
+    let Value::Object(entries) = value else {
+        return Ok(value);
+    };
+    let mut members = Vec::with_capacity(entries.len());
+    for (key, value) in entries {
+        let name = key.to_utf8().unwrap_or_default();
+        let value = match name.as_str() {
+            // These objects are data maps, not JSON Schema keyword maps.
+            "const" | "enum" | "required" | "dependentRequired" => value,
+            // Preserve property-name order while ordering each property's schema.
+            "properties" | "$defs" => match value {
+                Value::Object(entries) => Value::Object(
+                    entries
+                        .into_iter()
+                        .map(|(name, schema)| Ok((name, reorder_operation_shape(schema)?)))
+                        .collect::<Result<Vec<_>, EngineError>>()?,
+                ),
+                other => other,
+            },
+            "oneOf" | "anyOf" | "allOf" => match value {
+                Value::Array(entries) => Value::Array(
+                    entries
+                        .into_iter()
+                        .map(reorder_operation_shape)
+                        .collect::<Result<Vec<_>, EngineError>>()?,
+                ),
+                other => other,
+            },
+            "if"
+            | "then"
+            | "else"
+            | "not"
+            | "items"
+            | "contains"
+            | "propertyNames"
+            | "additionalProperties" => reorder_operation_shape(value)?,
+            _ => value,
+        };
+        members.push((key, value));
+    }
+    let rank = |key: &Utf16| match key.to_utf8().as_deref() {
+        Ok("type") => 0,
+        Ok("additionalProperties") => 1,
+        Ok("required") => 2,
+        Ok("properties") => 3,
+        Ok("dependentRequired") => 4,
+        Ok("minProperties") => 5,
+        Ok("propertyNames") => 6,
+        Ok("allOf") => 7,
+        Ok("if") => 8,
+        Ok("then") => 9,
+        Ok("else") => 10,
+        _ => 11,
+    };
+    members.sort_by_key(|(key, _)| rank(key));
+    Ok(Value::Object(members))
+}
+
 fn check_annotation(
     value: &Value,
     document: bool,
@@ -574,7 +901,13 @@ fn check_annotation(
             "annotation must be an object",
         )
     })?;
-    let allowed_document = ["language", "constraints", "domains", "description"];
+    let allowed_document = [
+        "language",
+        "constraints",
+        "domains",
+        "description",
+        "resources",
+    ];
     let allowed_element = [
         "description",
         "definition",
@@ -787,6 +1120,13 @@ fn annotation_schema() -> Value {
             obj(vec![("type", Value::string_utf8("object"))]),
         ),
         ("domains", obj(vec![("type", Value::string_utf8("object"))])),
+        (
+            "resources",
+            obj(vec![
+                ("type", Value::string_utf8("array")),
+                ("items", obj(vec![("type", Value::string_utf8("object"))])),
+            ]),
+        ),
         (
             "description",
             obj(vec![("type", Value::string_utf8("string"))]),
@@ -1522,6 +1862,47 @@ fn charge_tree(value: &Value, ctx: &mut Context<'_>) -> Result<(), EngineError> 
     Ok(())
 }
 
+fn contains_object_fragment(value: &Value) -> bool {
+    text(get(value, "tag").unwrap_or(&Value::Null)).as_deref() == Some("object-fragment")
+        || neutral_shape_children(value)
+            .into_iter()
+            .any(contains_object_fragment)
+}
+
+fn contains_min_properties(value: &Value) -> bool {
+    (text(get(value, "tag").unwrap_or(&Value::Null)).as_deref() == Some("object")
+        && has(value, "minProperties"))
+        || neutral_shape_children(value)
+            .into_iter()
+            .any(contains_min_properties)
+}
+
+fn neutral_shape_children(shape: &Value) -> Vec<&Value> {
+    let tag = text(get(shape, "tag").unwrap_or(&Value::Null)).unwrap_or_default();
+    if matches!(tag.as_str(), "constant" | "link") {
+        return Vec::new();
+    }
+    let keys: &[&str] = match tag.as_str() {
+        "object" => &["fields", "open", "key", "conditions"],
+        "object-fragment" => &["properties"],
+        "sequence" => &["item", "contains"],
+        "choice" | "exclusive-choice" | "all" => &["options"],
+        "conditional" => &["condition", "yes", "no"],
+        "not" => &["value"],
+        _ => &[],
+    };
+    let mut children = Vec::new();
+    for key in keys {
+        match get(shape, key) {
+            Some(Value::Object(members)) => children.extend(members.iter().map(|(_, value)| value)),
+            Some(Value::Array(items)) => children.extend(items),
+            Some(child) if matches!(child, Value::Object(_)) => children.push(child),
+            _ => (),
+        }
+    }
+    children
+}
+
 fn check_shape_at(shape: &Value, path: &Utf16, ctx: &mut Context<'_>) -> Result<(), EngineError> {
     ctx.charge_work(1, path.clone())?;
     let Value::Object(fields) = shape else {
@@ -1545,7 +1926,9 @@ fn check_shape_at(shape: &Value, path: &Utf16, ctx: &mut Context<'_>) -> Result<
             "key",
             "requires",
             "conditions",
+            "minProperties",
         ],
+        "object-fragment" => &["required", "properties"],
         "sequence" => &["item", "min", "max", "unique", "contains"],
         "text" => &["min", "max", "pattern"],
         "integer" | "number" => &["min", "max"],
@@ -1594,6 +1977,47 @@ fn check_shape_at(shape: &Value, path: &Utf16, ctx: &mut Context<'_>) -> Result<
             "METAMODEL_CONSTANT_VALUE",
             "constant requires a value",
         ));
+    }
+    if tag == "object-fragment"
+        && (!has(shape, "required") && !has(shape, "properties")
+            || get(shape, "properties").is_some_and(|value| !matches!(value, Value::Object(_))))
+    {
+        return Err(shape_error(
+            "METAMODEL_OBJECT_FRAGMENT",
+            "object-fragment requires required and/or a properties object",
+        ));
+    }
+    if let Some(required) = get(shape, "required") {
+        let Value::Array(required) = required else {
+            return Err(shape_error(
+                "METAMODEL_OBJECT_FRAGMENT",
+                "required must be an array",
+            ));
+        };
+        let mut names = BTreeSet::new();
+        for name in required {
+            let Value::String(name) = name else {
+                return Err(shape_error(
+                    "METAMODEL_OBJECT_FRAGMENT",
+                    "required entries must be strings",
+                ));
+            };
+            if !names.insert(name.units().to_vec()) {
+                return Err(shape_error(
+                    "METAMODEL_OBJECT_FRAGMENT",
+                    "required entries must be unique",
+                ));
+            }
+        }
+    }
+    if let Some(value) = get(shape, "minProperties") {
+        if !matches!(value, Value::Number(n) if *n >= 0.0 && n.fract() == 0.0 && *n <= 9_007_199_254_740_991.0)
+        {
+            return Err(shape_error(
+                "METAMODEL_MIN_PROPERTIES",
+                "minProperties must be a nonnegative safe integer",
+            ));
+        }
     }
     if tag == "conditional" && (!has(shape, "condition") || !has(shape, "yes")) {
         return Err(shape_error(
@@ -1661,6 +2085,13 @@ fn check_shape_at(shape: &Value, path: &Utf16, ctx: &mut Context<'_>) -> Result<
             }
         }
     }
+    for key in ["fields", "properties"] {
+        if let Some(Value::Object(fields)) = get(shape, key) {
+            for (_, child) in fields {
+                check_shape_at(child, path, ctx)?;
+            }
+        }
+    }
     for key in [
         "item",
         "key",
@@ -1715,6 +2146,15 @@ fn emit_shape_at(
     targets: &BTreeSet<Vec<u16>>,
     ctx: &mut Context<'_>,
 ) -> Result<Value, EngineError> {
+    emit_shape_mode(shape, targets, ctx, false)
+}
+
+fn emit_shape_mode(
+    shape: &Value,
+    targets: &BTreeSet<Vec<u16>>,
+    ctx: &mut Context<'_>,
+    resource_mode: bool,
+) -> Result<Value, EngineError> {
     ctx.charge_work(1, Utf16::default())?;
     if let Value::Bool(_) = shape {
         return clone_metered(shape, ctx);
@@ -1733,7 +2173,7 @@ fn emit_shape_at(
         arr(get(shape, key))
             .unwrap_or(&[])
             .iter()
-            .map(|v| emit_shape_at(v, targets, ctx))
+            .map(|v| emit_shape_mode(v, targets, ctx, resource_mode))
             .collect()
     };
     match tag.as_str() {
@@ -1787,21 +2227,26 @@ fn emit_shape_at(
         }
         "not" => out.push((
             Utf16::from("not"),
-            emit_shape_at(get(shape, "value").unwrap(), targets, ctx)?,
+            emit_shape_mode(get(shape, "value").unwrap(), targets, ctx, resource_mode)?,
         )),
         "conditional" => {
             out.push((
                 Utf16::from("if"),
-                emit_shape_at(get(shape, "condition").unwrap(), targets, ctx)?,
+                emit_shape_mode(
+                    get(shape, "condition").unwrap(),
+                    targets,
+                    ctx,
+                    resource_mode,
+                )?,
             ));
             out.push((
                 Utf16::from("then"),
-                emit_shape_at(get(shape, "yes").unwrap(), targets, ctx)?,
+                emit_shape_mode(get(shape, "yes").unwrap(), targets, ctx, resource_mode)?,
             ));
             if has(shape, "no") {
                 out.push((
                     Utf16::from("else"),
-                    emit_shape_at(get(shape, "no").unwrap(), targets, ctx)?,
+                    emit_shape_mode(get(shape, "no").unwrap(), targets, ctx, resource_mode)?,
                 ));
             }
         }
@@ -1822,21 +2267,21 @@ fn emit_shape_at(
                 let mut props = Vec::with_capacity(fields.len());
                 for (k, v) in fields {
                     ctx.charge_work(k.len(), Utf16::default())?;
-                    props.push((k.clone(), emit_shape_at(v, targets, ctx)?));
+                    props.push((k.clone(), emit_shape_mode(v, targets, ctx, resource_mode)?));
                 }
                 out.push((Utf16::from("properties"), Value::Object(props)));
             }
             if let Some(open) = get(shape, "open") {
                 let v = match open {
                     Value::Bool(_) => clone_metered(open, ctx)?,
-                    _ => emit_shape_at(open, targets, ctx)?,
+                    _ => emit_shape_mode(open, targets, ctx, resource_mode)?,
                 };
                 out.push((Utf16::from("additionalProperties"), v));
             }
             if let Some(k) = get(shape, "key") {
                 out.push((
                     Utf16::from("propertyNames"),
-                    emit_shape_at(k, targets, ctx)?,
+                    emit_shape_mode(k, targets, ctx, resource_mode)?,
                 ));
             }
             if let Some(req) = get(shape, "requires") {
@@ -1850,13 +2295,28 @@ fn emit_shape_at(
                     ));
                 }
             }
+            if let Some(minimum) = get(shape, "minProperties") {
+                out.push((Utf16::from("minProperties"), clone_metered(minimum, ctx)?));
+            }
+        }
+        "object-fragment" if resource_mode => {
+            if let Some(required) = get(shape, "required") {
+                out.push((Utf16::from("required"), clone_metered(required, ctx)?));
+            }
+            if let Some(Value::Object(fields)) = get(shape, "properties") {
+                let mut props = Vec::with_capacity(fields.len());
+                for (key, value) in fields {
+                    props.push((key.clone(), emit_shape_mode(value, targets, ctx, true)?));
+                }
+                out.push((Utf16::from("properties"), Value::Object(props)));
+            }
         }
         "sequence" => {
             out.push((Utf16::from("type"), Value::string_utf8("array")));
             if has(shape, "item") {
                 out.push((
                     Utf16::from("items"),
-                    emit_shape_at(get(shape, "item").unwrap(), targets, ctx)?,
+                    emit_shape_mode(get(shape, "item").unwrap(), targets, ctx, resource_mode)?,
                 ));
             }
             for (source, target) in [
@@ -1871,7 +2331,7 @@ fn emit_shape_at(
             if has(shape, "contains") {
                 out.push((
                     Utf16::from("contains"),
-                    emit_shape_at(get(shape, "contains").unwrap(), targets, ctx)?,
+                    emit_shape_mode(get(shape, "contains").unwrap(), targets, ctx, resource_mode)?,
                 ));
             }
         }
@@ -1922,6 +2382,49 @@ mod tests {
             &mut Context::ordinary(),
         )
         .unwrap()
+    }
+
+    #[test]
+    fn operation_schema_ordering_preserves_property_and_constant_data_keys() {
+        let source = Value::Object(vec![
+            (
+                Utf16::from("properties"),
+                Value::Object(vec![
+                    (
+                        Utf16::from("type"),
+                        Value::Object(vec![(Utf16::from("type"), Value::string_utf8("string"))]),
+                    ),
+                    (
+                        Utf16::from("alpha"),
+                        Value::Object(vec![(Utf16::from("type"), Value::string_utf8("string"))]),
+                    ),
+                ]),
+            ),
+            (
+                Utf16::from("const"),
+                Value::Object(vec![
+                    (Utf16::from("required"), Value::string_utf8("data")),
+                    (Utf16::from("type"), Value::string_utf8("data")),
+                ]),
+            ),
+            (Utf16::from("type"), Value::string_utf8("object")),
+        ]);
+        let Value::Object(ordered) = reorder_operation_shape(source).unwrap() else {
+            panic!("schema remains an object");
+        };
+        assert_eq!(ordered[0].0, Utf16::from("type"));
+        let ordered_value = Value::Object(ordered.clone());
+        let Value::Object(properties) = get(&ordered_value, "properties").unwrap() else {
+            panic!("properties remains a map");
+        };
+        assert_eq!(properties[0].0, Utf16::from("type"));
+        assert_eq!(properties[1].0, Utf16::from("alpha"));
+        let ordered_value = Value::Object(ordered);
+        let Value::Object(constant) = get(&ordered_value, "const").unwrap() else {
+            panic!("const remains literal data");
+        };
+        assert_eq!(constant[0].0, Utf16::from("required"));
+        assert_eq!(constant[1].0, Utf16::from("type"));
     }
 
     #[test]

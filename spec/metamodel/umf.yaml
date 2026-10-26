@@ -3,7 +3,7 @@ id: urn:umf:metamodel
 title: UMF for UMF
 vocabularies:
   umf.metamodel:
-    version: 1.0.0
+    version: 1.1.0
 extensions:
   umf.metamodel:
     language:
@@ -16,6 +16,43 @@ extensions:
       packageSchemaId: urn:umf:extension-package:0.10.0
     description: Authored language definitions. Structural shapes and ordered constraints compile to
       current portable enforcement.
+
+
+    resources:
+      - path: "spec/core/facet-operation-v3.schema.json"
+        id: "urn:umf:core:facet-operation:3.0.0"
+        title: "Facet inspection and authoring receipts (Key envelope) (Relationship envelope)"
+        externalResourceIds: ["urn:umf:core:0.10.0"]
+        definitions:
+          - name: "identity"
+            shape: {"tag":"object","fields":{"module":{"tag":"text","min":1},"element":{"tag":"text","min":1}},"open":false,"mandatory":["module","element"]}
+          - name: "source"
+            shape: {"tag":"link","target":"urn:umf:core:0.10.0"}
+          - name: "bounds"
+            shape: {"tag":"object","fields":{"length":{"tag":"object","fields":{"max":{"tag":"integer","min":0,"max":9007199254740991},"unit":{"tag":"choice","options":[{"tag":"constant","value":"unicode-scalar"},{"tag":"constant","value":"byte"}]}},"open":false,"mandatory":["max","unit"]},"precision":{"tag":"integer","min":1,"max":9007199254740991},"scale":{"tag":"integer","min":0,"max":9007199254740991},"integerWidth":{"tag":"object","fields":{"bits":{"tag":"integer","min":1,"max":9007199254740991},"signed":{"tag":"boolean"}},"open":false,"mandatory":["bits","signed"]}},"open":false,"requires":{"precision":["scale"],"scale":["precision"]}}
+          - name: "request"
+            shape: {"tag":"object","fields":{"length":{"tag":"object","fields":{"max":{"tag":"integer","min":0,"max":9007199254740991},"unit":{"tag":"choice","options":[{"tag":"constant","value":"unicode-scalar"},{"tag":"constant","value":"byte"}]}},"open":false,"mandatory":["max","unit"]},"precision":{"tag":"integer","min":1,"max":9007199254740991},"scale":{"tag":"integer","min":0,"max":9007199254740991},"integerWidth":{"tag":"object","fields":{"bits":{"tag":"integer","min":1,"max":9007199254740991},"signed":{"tag":"boolean"}},"open":false,"mandatory":["bits","signed"]}},"open":false,"requires":{"precision":["scale"],"scale":["precision"]},"minProperties":1}
+          - name: "declaration"
+            shape: {"tag":"object","fields":{"operation":{"tag":"constant","value":"declare-core-facets"},"version":{"tag":"constant","value":"3.0.0"},"source":{"tag":"link","target":"urn:umf:core:0.10.0"},"target":{"tag":"link","target":"urn:umf:core:0.10.0"},"identity":{"tag":"link","target":"identity"},"request":{"tag":"link","target":"request"},"provenance":{"tag":"object","fields":{"origin":{"tag":"constant","value":"authored"},"idealPath":{"tag":"text"},"binding":{"tag":"object","fields":{"id":{"tag":"constant","value":"umf.core.facets.authoring"},"version":{"tag":"constant","value":"3.0.0"}},"open":false,"mandatory":["id","version"]},"basis":{"tag":"constant","value":"explicit-author-declaration"},"nativePath":{"tag":"null"}},"open":false,"mandatory":["origin","idealPath","binding","basis","nativePath"]}},"open":false,"mandatory":["operation","version","source","target","identity","request","provenance"]}
+        root: {"tag":"exclusive-choice","options":[{"tag":"link","target":"declaration"}]}
+      - path: "spec/core/cardinality-operation-v4.schema.json"
+        id: "urn:umf:core:cardinality-operation:4.0.0"
+        title: "Core cardinality inspection and explicit author declaration results (Key envelope) (Relationship envelope)"
+        externalResourceIds: ["urn:umf:core:0.10.0"]
+        definitions:
+          - name: "cardinality"
+            shape: {"tag":"choice","options":[{"tag":"constant","value":"one"},{"tag":"constant","value":"array"},{"tag":"constant","value":"map"},{"tag":"constant","value":"unspecified"}]}
+          - name: "identity"
+            shape: {"tag":"object","fields":{"module":{"tag":"text","min":1},"element":{"tag":"text","min":1}},"open":false,"mandatory":["module","element"]}
+          - name: "source"
+            shape: {"tag":"link","target":"urn:umf:core:0.10.0"}
+          - name: "declaration"
+            shape: {"tag":"object","fields":{"operation":{"tag":"constant","value":"declare-core-cardinality"},"version":{"tag":"constant","value":"4.0.0"},"source":{"tag":"link","target":"urn:umf:core:0.10.0"},"target":{"tag":"link","target":"urn:umf:core:0.10.0"},"identity":{"tag":"link","target":"identity"},"provenance":{"tag":"object","fields":{"origin":{"tag":"constant","value":"authored"},"idealPath":{"tag":"text"},"cardinality":{"tag":"link","target":"cardinality"},"binding":{"tag":"constant","value":{"id":"umf.core.cardinality.authoring","version":"4.0.0"}},"basis":{"tag":"constant","value":"explicit-author-declaration"},"nativePath":{"tag":"null"}},"open":false,"mandatory":["origin","idealPath","cardinality","binding","basis","nativePath"]},"request":{"tag":"link","target":"request"}},"open":false,"mandatory":["operation","version","source","target","identity","provenance","request"]}
+          - name: "itemType"
+            shape: {"tag":"object","fields":{"module":{"tag":"text","min":1},"element":{"tag":"text","min":1}},"mandatory":["module","element"]}
+          - name: "request"
+            shape: {"tag":"object","fields":{"cardinality":{"tag":"link","target":"cardinality"},"itemType":{"tag":"exclusive-choice","options":[{"tag":"link","target":"itemType"},{"tag":"null"}]}},"open":false,"mandatory":["cardinality"],"conditions":[{"tag":"conditional","condition":{"tag":"object-fragment","required":["itemType"],"properties":{"itemType":{"tag":"object"}}},"yes":{"tag":"object-fragment","properties":{"cardinality":{"tag":"choice","options":[{"tag":"constant","value":"array"},{"tag":"constant","value":"map"}]}}}}]}
+        root: {"tag":"exclusive-choice","options":[{"tag":"link","target":"declaration"}]}
     constraints:
       profile: umf.constraints/1
       steps:

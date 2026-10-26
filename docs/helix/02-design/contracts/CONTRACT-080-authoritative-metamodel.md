@@ -56,6 +56,68 @@ generated `spec/metamodel/package.json` vocabulary manifest, and shared
 `spec/metamodel/generated/{core-constraints,domain-policy}.json`. Exact export
 names and program grammar MUST be frozen here before delegated integration.
 
+### Versioned Core operation-resource outputs (2026-10-26 amendment)
+
+The canonical output inventory above is preserved. The metamodel additionally
+declares operation-resource outputs through a closed `umf.metamodel.resources`
+sequence. This amendment initially authorizes only these two outputs:
+
+| Model binding path | Schema `$id` | Title |
+|---|---|---|
+| `spec/core/facet-operation-v3.schema.json` | `urn:umf:core:facet-operation:3.0.0` | `Facet inspection and authoring receipts (Key envelope) (Relationship envelope)` |
+| `spec/core/cardinality-operation-v4.schema.json` | `urn:umf:core:cardinality-operation:4.0.0` | `Core cardinality inspection and explicit author declaration results (Key envelope) (Relationship envelope)` |
+
+Each resource declaration has exactly `path`, `id`, `title`, ordered
+`externalResourceIds`, ordered `definitions`, and `root` fields.
+`externalResourceIds` lists the only permitted external resource targets in
+that resource, in first-use order; entries must name a declared output ID and
+must be unique. For both resources authorized here, the list contains exactly
+`urn:umf:core:0.10.0`, the ID of the generated `spec/core/schema.json` output.
+The core schema is a canonical output and is therefore available as a declared
+target without adding another operation-resource declaration. Resource-local
+links resolve only to a definition in that resource, and external links resolve
+only to an ID in its `externalResourceIds` list. `path` is a unique normalized relative path under
+`spec/core/` ending in `.schema.json`; absolute paths, traversal components,
+duplicates, and paths outside that directory reject. `id` is unique among
+declared resources. `title` is a nonempty string. `definitions` is an ordered
+sequence of unique `{name, shape}` declarations, and `root` is one shape from
+the frozen neutral grammar. No resource declaration accepts raw JSON Schema
+or arbitrary keywords.
+
+For these two resources, emitted document members are ordered `$schema`, `$id`,
+`title`, `$defs`, followed by root-shape keywords. `$defs` member order is the
+declaration order. Object shapes accept the existing closed fields plus the
+optional nonnegative integer `minProperties`; it is emitted only when present.
+The compiler's fixed object-schema keyword order for these resources is `type`,
+`additionalProperties`, `required`, `properties`, `dependentRequired`,
+`minProperties`, followed by the existing conditional keywords. The Facets
+request declares `minProperties: 1`; the Cardinality request omits it. Existing
+canonical outputs retain their frozen byte representation.
+
+These operation resources additionally admit a resource-only neutral shape
+`object-fragment`, only beneath a resource `conditional` shape's `condition`
+or `yes` subtree. Its exact fields are `tag`, optional ordered `required`,
+and optional ordered `properties`; at least one of `required` or `properties`
+is required. `properties` maps property names to neutral shapes. It emits only
+the present `required` keyword followed by the present `properties` keyword,
+with no `type` or `additionalProperties`. It is rejected in ordinary core,
+reference, package, constraint, and domain declarations. This preserves the
+existing Cardinality conditional fragments without widening the normal
+`object` shape.
+
+The two operation-resource paths are additional outputs in the metamodel's
+generated manifest. Each path/hash entry is bound to that manifest's model and
+compiler source hashes. The compiler does not inject `$comment` or other
+provenance keywords into these resources; the manifest is their provenance
+record. Generation MUST preserve the current resource bytes exactly and reach
+the same clean-tree fixed point required above. No other operation-resource
+path or unresolved resource alias is authorized or resolved by this amendment.
+
+The vocabulary manifest advances to `umf.metamodel` 1.1.0 for the added
+resource declaration and `minProperties` grammar. The 1.0.0 grammar remains
+closed as previously specified; consumers MUST reject declarations outside
+the version they advertise.
+
 ## Portable rule execution
 
 ### Frozen compiler/runtime interface (2026-10-18)

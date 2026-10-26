@@ -5468,3 +5468,16 @@ staged value model only: callback diagnostics are still refused by the static
 conversion, final UmfError construction/exposure remains open, and no host
 Selection route, `kindRuntime` behavior, default-root switch, host parity or
 retirement claim is established.
+
+The [versioned operation-resource interface](evidence/rust-migration/r8-symbol-inventory/operation-resource-root-interface-decision-20261026.md)
+now gives the Facets v3 and Cardinality v4 JSON Schemas closed, authored
+metamodel output bindings under amended CONTRACT-080 and vocabulary 1.1.0.
+The Rust compiler emits both documents in declaration order, with explicit
+local and core-schema link targets, a resource-only conditional fragment, and
+manifest provenance. Sol independently reran the metamodel crate tests (25
+unit and 5 integration tests); both generated operation schemas retain their
+frozen exact bytes and SHA-256 values. The generated-output fixed-point check
+passed before concurrent capture-source edits; a new source-bound check and R8
+ledger recapture are required once this moving tree settles. The last ledger's
+17 unresolved resource aliases and 922 retirement gaps are historical counts,
+not an updated authority or retirement claim for this source cut.
