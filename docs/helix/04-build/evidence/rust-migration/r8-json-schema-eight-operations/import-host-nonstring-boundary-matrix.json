@@ -20,17 +20,21 @@
       "path": "scripts/rust-migration/r8/json-schema-import-nonstring-bridge-matrix.mjs",
       "sha256": "05a2b43c970e13d75655f54b791ef971ae9c12a79a73aa0f559351e92d2832e5"
     },
-    "sharedBoundaryHelper": {
-      "path": "bindings/core/shared/json-schema-import-source.js",
+    "nodeBoundaryHelper": {
+      "path": "bindings/core/node/src/json-schema-import-source.js",
+      "sha256": "a880ce70c0dba2fe3958c63635090f03c0a91128fb2117706b32be52bb14af36"
+    },
+    "wasmBoundaryHelper": {
+      "path": "bindings/core/wasm/src/json-schema-import-source.js",
       "sha256": "a880ce70c0dba2fe3958c63635090f03c0a91128fb2117706b32be52bb14af36"
     },
     "nodeFacade": {
       "path": "bindings/core/node/src/json-schema-import-session.js",
-      "sha256": "f7ac4a8e3485bd3e275d33439c4ccbfa826db65d374380ed5a0ba098d6838d24"
+      "sha256": "55b701eb96b0afd34ae1c72c200f7465ea6ee7028b78b8e5fb99892e93daf4b8"
     },
     "wasmFacade": {
       "path": "bindings/core/wasm/index.js",
-      "sha256": "c3f3aa3aebf4c525df0410e89a8fbba99bc5653548d78a1b9e3fc69efa572fb5"
+      "sha256": "b51cead36b49ec799022d077ccbfb095a1f50dc909a3b13a578489cd2566f69d"
     },
     "nodeAddon": {
       "path": "/private/tmp/umf-core-node-r8-fresh.node",
