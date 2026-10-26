@@ -1,0 +1,17 @@
+{
+  "_type": "https://in-toto.io/Statement/v0.1",
+  "subject": [
+    {
+      "name": "pkg:npm/%40documentdrivendx/umf-schema-browser@2.0.1",
+      "digest": {
+        "sha512": "74e8fcc66fc2a378d49c5b4006db637ea2d673db16c5c4d88d49d64690b14ceeda18ef1f50fb4b4b272bc2da53374c26c2601e811e405f546767d189bea6fd8f"
+      }
+    }
+  ],
+  "predicateType": "https://github.com/npm/attestation/tree/main/specs/publish/v0.1",
+  "predicate": {
+    "name": "@documentdrivendx/umf-schema-browser",
+    "version": "2.0.1",
+    "registry": "https://registry.npmjs.org"
+  }
+}
