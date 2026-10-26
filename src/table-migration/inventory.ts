@@ -6,7 +6,7 @@ import {copyJson,copyJsonCharged} from '../model/json';
 import type {AccountingContext} from '../model/internal/accounting-context';
 import {ownCanonicalComponent} from './inventory-component-copy';
 import {freezeSourceIndex,freezeSourceIndexSide,ownR2HistoryComponent,ownR2SourceComponents,ownedR2HistoryCanonical,ownedR2HistoryMember,R2WorkMeter,type R2OwnedSourceComponents,type R2BundleSourceIndex} from './inventory-r2-context';
-import {initialInventoryPrefix,inventoryCatalogIdentity,scheduleTypedInventoryEffects,type CatalogMutation,type EffectNode,type InventorySubject,type ScheduledInventoryEffects,type TypedDependency} from './inventory-graph';
+import {initialInventoryPrefix,inventoryCatalogIdentity,scheduleTypedInventoryEffectsForCompiler,type CatalogMutation,type CompilerScheduledInventoryEffects,type EffectNode,type InventorySubject,type ScheduledInventoryEffects,type TypedDependency} from './inventory-graph';
 import type {PrefixFrame} from './inventory-graph';
 import {copyInventoryReviewForSide,projectG10Bundle,projectG10BundleWithAccounting,type InventoryProjection,type InventoryChange,type InventoryFieldChange,type InventoryTable,type InventoryDelta,type CatalogProjection,type Identity,type PrefixCatalog,type Subject} from './inventory-projection';
 import {ShapeError,validateG10RequestShape,validateTableInventorySourceHistory,type G10ValidatedRequest,type HistoricalG10PlanVerifier,type TableIntent,type TableInventoryDiscoveryIntent,type TableInventoryReviewedChangeKind,type TableInventoryMigrationMarker} from './inventory-options';
@@ -143,29 +143,19 @@ function inventorySubject(subject:InventorySubject):Json {
  return {kind:'metadata',profile:subject.profile};
 }
 function serializedStep(effect:EffectNode,id:string,pre:string,post:string):Record<string,Json>{return {id,kind:effect.kind,sourcePath:effect.sourcePath,transaction:effect.transaction,sql:effect.sql,operation:effect.operation,inventorySubject:inventorySubject(effect.subject),preconditions:{kind:'inventory-prefix',prefixDigest:pre},expectedOutcome:{kind:'inventory-prefix',prefixDigest:post},verification:'native-catalog-privileges-and-role-scope',recovery:effect.recovery,...(effect.operation==='apply-seeds'&&effect.subject.kind==='seed'?{seedSets:effect.subject.sets}:{}),...(effect.operation==='apply-backfill'&&effect.dataBinding?{dataBinding:effect.dataBinding}:{})};}
-function serialize(schedule:ScheduledInventoryEffects,rawEffects:EffectNode[],metadataIds:{prepare:string;approval:string;publication:string},accounting?:AccountingContext):{steps:Record<string,Json>[];phases:Record<string,Json>[];prefixes:Json[]} {
- accounting?.visit('inventory-plan-serialize-effects','/effects',rawEffects.length);accounting?.visit('inventory-plan-serialize-prefixes','/prefixes',schedule.prefixes.length);
- const effectById=new Map(rawEffects.map(effect=>[effect.id,effect])),idByOld=new Map<string,string>();let sequence=1;for(const id of [metadataIds.prepare,metadataIds.approval,...schedule.steps.map(step=>step.id),metadataIds.publication])idByOld.set(id,`step-${String(sequence++).padStart(5,'0')}`);
- const prefixes=schedule.prefixes.map((frame,index)=>{accounting?.visit('inventory-plan-serialize-prefix-steps',`/prefixes/${index}`,frame.completedSteps.length);return {...frame,completedSteps:frame.completedSteps.map(id=>idByOld.get(id)??fail('UNBOUND_COMPLETED_STEP'))};});
- for(const [prefixIndex,prefix] of prefixes.entries()){
-  accounting?.visit('inventory-plan-serialize-table-states',`/prefixes/${prefixIndex}/tableStates`,prefix.tableStates.length);
-  for(const [index,raw]of prefix.tableStates.entries()){
-   if(!raw||typeof raw!=='object'||Array.isArray(raw))fail('TABLE_STATE_SHAPE');
-   const tableState=raw as Record<string,Json>;
-   for(const key of ['creationStep','removalStep'] as const){
-    const oldId=tableState[key];if(oldId===null)continue;
-    if(typeof oldId!=='string')fail('TABLE_STATE_STEP_REFERENCE:'+index+':'+key);
-    const newId=idByOld.get(oldId);if(!newId)fail('UNBOUND_TABLE_STATE_STEP:'+index+':'+key);tableState[key]=newId;
-   }
+function serializeFinal(schedule:CompilerScheduledInventoryEffects,accounting?:AccountingContext):{steps:Record<string,Json>[];phases:Record<string,Json>[];prefixes:Json[]} {
+ accounting?.visit('inventory-plan-serialize-effects','/effects',schedule.steps.length);accounting?.visit('inventory-plan-serialize-prefixes','/prefixes',schedule.prefixes.length);
+ const effectById=new Map<string,EffectNode>();for(const effect of schedule.steps){accounting?.visit('inventory-plan-serialize-effect-index','/effects');if(effectById.has(effect.id))fail('DUPLICATE_FINAL_EFFECT_ID');effectById.set(effect.id,effect);}
+ const emitted=new Set<string>(),steps:Record<string,Json>[]=[];accounting?.visit('inventory-plan-serialize-phases','/phases',schedule.phases.length);for(let phaseIndex=0;phaseIndex<schedule.phases.length;phaseIndex++){
+  const phase=schedule.phases[phaseIndex]!,before=schedule.prefixes[phaseIndex]?.digest,after=schedule.prefixes[phaseIndex+1]?.digest;if(!before||!after)fail('PHASE_PREFIX_PAIR');
+  accounting?.visit('inventory-plan-serialize-phase-steps',`/phases/${phaseIndex}`,phase.steps.length);for(const id of phase.steps){accounting?.visit('inventory-plan-serialize-emitted-step-index',`/phases/${phaseIndex}`);if(emitted.has(id))fail('DUPLICATE_FINAL_PHASE_STEP');let effect:EffectNode|undefined;
+   if(id===schedule.metadataStepIds.prepare)effect=metadataStep(id,'prepare-inventory-metadata',metadataPaths.prepare);else if(id===schedule.metadataStepIds.approval)effect=metadataStep(id,'record-inventory-approval',metadataPaths.approval);else if(id===schedule.metadataStepIds.publication)effect=metadataStep(id,'publish-inventory',metadataPaths.publication);else effect=effectById.get(id);
+   if(!effect)fail('UNBOUND_FINAL_PHASE_STEP');emitted.add(id);steps.push(serializedStep(effect,id,before,after));
   }
-   const body={...prefix} as Record<string,Json>;delete body.digest;(prefix as Record<string,Json>).digest=accounting?hashCanonicalCharged(body,accounting,`/prefixes/${prefixIndex}`):hashCanonical(body);
  }
- const steps:Record<string,Json>[]=[];accounting?.visit('inventory-plan-serialize-phases','/phases',schedule.phases.length);for(let phaseIndex=0;phaseIndex<schedule.phases.length;phaseIndex++){
-  const phase=schedule.phases[phaseIndex]!,before=prefixes[phaseIndex]?.digest,after=prefixes[phaseIndex+1]?.digest;if(!before||!after)fail('PHASE_PREFIX_PAIR');
-  accounting?.visit('inventory-plan-serialize-phase-steps',`/phases/${phaseIndex}`,phase.steps.length);for(const oldId of phase.steps){const id=idByOld.get(oldId);if(!id)fail('UNBOUND_PHASE_STEP');const metadata=oldId===metadataIds.prepare?metadataStep(id,'prepare-inventory-metadata',metadataPaths.prepare):oldId===metadataIds.approval?metadataStep(id,'record-inventory-approval',metadataPaths.approval):oldId===metadataIds.publication?metadataStep(id,'publish-inventory',metadataPaths.publication):effectById.get(oldId);if(!metadata)fail('UNBOUND_EFFECT');steps.push(serializedStep(metadata,id,before,after));}
- }
- const phases=schedule.phases.map((phase,index)=>{accounting?.visit('inventory-plan-serialize-phase-ids',`/phases/${index}`,phase.steps.length);return {id:phase.id,kind:phase.kind,transaction:phase.transaction,steps:phase.steps.map(id=>idByOld.get(id)??fail('UNBOUND_PHASE_ID'))};});
- return {steps,phases,prefixes};
+ if(emitted.size!==schedule.steps.length+3||!emitted.has(schedule.metadataStepIds.prepare)||!emitted.has(schedule.metadataStepIds.approval)||!emitted.has(schedule.metadataStepIds.publication))fail('FINAL_STEP_COVERAGE');for(const effect of schedule.steps){accounting?.visit('inventory-plan-serialize-final-effect-lookup','/effects');if(!emitted.has(effect.id))fail('UNEMITTED_FINAL_EFFECT');}
+ const phases=schedule.phases.map((phase,index)=>{accounting?.visit('inventory-plan-serialize-phase-ids',`/phases/${index}`,phase.steps.length);return {id:phase.id,kind:phase.kind,transaction:phase.transaction,steps:[...phase.steps]};});
+ return {steps,phases,prefixes:schedule.prefixes as unknown as Json[]};
 }
 
 type EffectIdentity={kind:string;table:string|null;subject:Json};
@@ -454,9 +444,9 @@ export function compileInventoryPlan(input:InventoryPlanInput):Record<string,Jso
 }
 function compileInventoryPlanCore(input:InventoryPlanInput,accounting?:AccountingContext,captureCanonical?:CapturedPlanCanonical):Record<string,Json>{
  const previous=input.previous,next=input.next;
- accounting?.visit('inventory-plan-effect-copy','/effects',input.effects.length);const sources=input.effects.map(effect=>({...effect})),metadataIds={prepare:'g10-inventory-prepare',approval:'g10-inventory-approval',publication:'g10-inventory-publication'},schedule=scheduleTypedInventoryEffects(input.initialPrefix,sources,input.dependencies,input.nextCatalog,metadataIds,input.provenanceMutations,accounting);verifySourcePublicationObligations(input.publicationObligations,schedule,accounting);
+ accounting?.visit('inventory-plan-effect-copy','/effects',input.effects.length);const sources=input.effects.map(effect=>({...effect})),metadataIds={prepare:'g10-inventory-prepare',approval:'g10-inventory-approval',publication:'g10-inventory-publication'},schedule=scheduleTypedInventoryEffectsForCompiler(input.initialPrefix,sources,input.dependencies,input.nextCatalog,metadataIds,input.provenanceMutations,accounting);verifySourcePublicationObligations(input.publicationObligations,schedule,accounting);
  if(schedule.prefixes.length!==schedule.phases.length+1||schedule.phases.length<3||schedule.phases[0]?.kind!=='prepare'||schedule.phases[1]?.kind!=='approval'||schedule.phases.at(-1)?.kind!=='publication')fail('PHASE_ENVELOPE');
- const {steps,phases,prefixes}=serialize(schedule,sources,metadataIds,accounting),executionProfile={version:'umf.table-inventory-execution/0.1',progressRelation:'umf_lifecycle_inventory_progress',ownerOnly:true,ingressProfile:'umf.table-inventory-generation-ingress/0.1',inventoryProfile:'umf.table-inventory-prefix/0.1',initial:previous===null,conversionProfile:null,originalsProfile:null,retirementProfile:null,retiredStoreProfile:null},approvalProfile={version:'umf.table-migration-approval/0.1',relation:'umf_lifecycle_approvals',ownerOnly:true};
+ const {steps,phases,prefixes}=serializeFinal(schedule,accounting),executionProfile={version:'umf.table-inventory-execution/0.1',progressRelation:'umf_lifecycle_inventory_progress',ownerOnly:true,ingressProfile:'umf.table-inventory-generation-ingress/0.1',inventoryProfile:'umf.table-inventory-prefix/0.1',initial:previous===null,conversionProfile:null,originalsProfile:null,retirementProfile:null,retiredStoreProfile:null},approvalProfile={version:'umf.table-migration-approval/0.1',relation:'umf_lifecycle_approvals',ownerOnly:true};
  const serializedInventory={...input.inventory} as Record<string,unknown>;delete serializedInventory.fieldChanges;
  const history=input.history as any;if(!history||history.profile!=='umf.table-inventory-source-history/0.1'||!Array.isArray(history.plans)||!Array.isArray(history.executions)||input.historyBinding.count!==history.plans.length||input.historyBinding.digest!==historyDigest(history,accounting,'/history')||input.historyBinding.profile!==history.profile)fail('HISTORY_BINDING');
  const body:Record<string,Json>={version:'umf.table-inventory-migration/0.1',canonicalization:'RFC8785',id:input.id,predecessor:input.predecessor as unknown as Json,previous:input.previous as unknown as Json,next:input.next as unknown as Json,fromBundleDigest:previous?.bundleDigest??null,toBundleDigest:next.bundleDigest,steps:steps as unknown as Json,seedExecution:input.seedExecution as unknown as Json,phases:phases as unknown as Json,executionProfile,approvalProfile,options:input.options,review:input.review,requiresApproval:true,nativeQualified:false,inventory:serializedInventory as unknown as Json,prefixes:prefixes as unknown as Json,historyBinding:input.historyBinding as unknown as Json};

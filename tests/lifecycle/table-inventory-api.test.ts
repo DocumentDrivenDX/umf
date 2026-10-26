@@ -4,10 +4,11 @@ import {canonical,hashCanonical,sha256Text,sha256TextChunksCharged} from '../../
 import {UmfError} from '../../src/model/errors';
 import {compileTableDeployment} from '../../src/table-deployment';
 import {compileTableMigration,compileTableInventoryMigration,discoverTableInventoryMigrationChanges,irreversiblePurgeDisclosure,serializeTableInventoryMigration,verifyTableInventoryMigration} from '../../src/table-migration';
-import {compileG10InventoryPlan,createHistoricalG10Verifier} from '../../src/table-migration/inventory';
+import {compileG10InventoryPlan,compileInventoryPlan,createHistoricalG10Verifier,deriveInitialRendererEffects,deriveG10ProvenanceMutations,type InventoryPlanInput} from '../../src/table-migration/inventory';
 import {partitionRendererDependencies,verifySourcePublicationCoverage} from '../../src/table-migration/inventory-effects';
-import {scheduleTypedInventoryEffects,type CatalogMutation,type EffectNode,type PrefixFrame} from '../../src/table-migration/inventory-graph';
+import {initialInventoryPrefix,scheduleTypedInventoryEffects,scheduleTypedInventoryEffectsForCompiler,type CatalogMutation,type EffectNode,type InventoryMetadataStepIds,type PrefixFrame,type ScheduledInventoryEffects} from '../../src/table-migration/inventory-graph';
 import {deriveInventorySeedLineage} from '../../src/table-migration/inventory-history';
+import type {InventoryDelta} from '../../src/table-migration/inventory-projection';
 import {R2_CONTEXT_BYTE_LIMIT,R2WorkLimitError,R2WorkMeter,R2_WORK_EVENT_UNITS} from '../../src/table-migration/inventory-r2-context';
 import {inspectR2InventorySourceContext,prepareR2InventorySourceContext} from '../../src/table-migration/inventory';
 import {projectG10Bundle} from '../../src/table-migration/inventory-source';
@@ -55,6 +56,38 @@ function assertNormativeTableDefinitionDigests(frame:PrefixFrame):void{
   else throw new Error(`Unknown table state ${String(state.state)}.`);
   expect(state.definitionDigest).toBe(expected);
  }
+}
+function oldFinalizedScheduleReference(schedule:ScheduledInventoryEffects,oldMetadataIds:InventoryMetadataStepIds){
+ const oldOrder=[oldMetadataIds.prepare,oldMetadataIds.approval,...schedule.steps.map(step=>step.id),oldMetadataIds.publication],idByOld=new Map(oldOrder.map((id,index)=>[id,`step-${String(index+1).padStart(5,'0')}`]));
+ const metadataStepIds={prepare:idByOld.get(oldMetadataIds.prepare)!,approval:idByOld.get(oldMetadataIds.approval)!,publication:idByOld.get(oldMetadataIds.publication)!};
+ const steps=schedule.steps.map(step=>({...step,id:idByOld.get(step.id)!}));
+ const phases=schedule.phases.map(phase=>({...phase,steps:phase.steps.map(id=>idByOld.get(id)!)}));
+ const prefixes=schedule.prefixes.map(frame=>{const prefix=structuredClone(frame);prefix.completedSteps=prefix.completedSteps.map(id=>idByOld.get(id)!);for(const raw of prefix.tableStates){if(!raw||typeof raw!=='object'||Array.isArray(raw))throw new Error('Reference table state is malformed.');const state=raw as Record<string,GraphTestJson>;for(const key of ['creationStep','removalStep'] as const){const id=state[key];if(id===null)continue;if(typeof id!=='string'||!idByOld.has(id))throw new Error('Reference step binding is missing.');state[key]=idByOld.get(id)!;}}const {digest,...body}=prefix;prefix.digest=hashCanonical(body);return prefix;});
+ return {steps,phases,prefixes,metadataStepIds};
+}
+function oldInventorySubject(subject:EffectNode['subject']):GraphTestJson{
+ if(subject.kind==='table')return {kind:'table',table:subject.table,record:subject.record};
+ if(subject.kind==='field')return {kind:'field',table:subject.table,field:subject.field};
+ if(subject.kind==='dependency')return {kind:'dependency',table:subject.table,dependencyKind:subject.dependencyKind,id:subject.id,sourcePath:subject.sourcePath,meaningDigest:subject.meaningDigest};
+ if(subject.kind==='schema-grant')return {kind:'schema-grant',schema:subject.schema,audiences:['person','batch'],privilege:'USAGE'};
+ if(subject.kind==='seed')return {kind:'seed',sets:subject.sets};
+ return {kind:'metadata',profile:subject.profile};
+}
+function oldInventoryPlanSections(schedule:ReturnType<typeof oldFinalizedScheduleReference>){
+ const metadataPaths={prepare:'/inventory/metadata/prepare',approval:'/inventory/metadata/approval',publication:'/inventory/metadata/publication'},effectById=new Map(schedule.steps.map(step=>[step.id,step])),emitted=new Set<string>(),steps:Record<string,GraphTestJson>[]=[];
+ const metadataEffect=(id:string,operation:'prepare-inventory-metadata'|'record-inventory-approval'|'publish-inventory',sourcePath:string):EffectNode=>({id,kind:'metadata',operation,subject:{kind:'metadata',profile:'umf.table-inventory-metadata/0.1'},sourcePath,sql:'',transaction:'required',recovery:'rollback-transaction',sourceOrder:0,atomicGroup:null,transition:{action:'update',collection:'tables',meaning:{state:operation==='publish-inventory'?'published':'pending'}}});
+ for(let phaseIndex=0;phaseIndex<schedule.phases.length;phaseIndex++){
+  const phase=schedule.phases[phaseIndex]!,before=schedule.prefixes[phaseIndex]?.digest,after=schedule.prefixes[phaseIndex+1]?.digest;if(!before||!after)throw new Error('Legacy serializer reference lost a phase prefix.');
+  for(const id of phase.steps){if(emitted.has(id))throw new Error('Legacy serializer reference duplicated a phase step.');emitted.add(id);let effect=effectById.get(id);
+   if(id===schedule.metadataStepIds.prepare)effect=metadataEffect(id,'prepare-inventory-metadata',metadataPaths.prepare);
+   else if(id===schedule.metadataStepIds.approval)effect=metadataEffect(id,'record-inventory-approval',metadataPaths.approval);
+   else if(id===schedule.metadataStepIds.publication)effect=metadataEffect(id,'publish-inventory',metadataPaths.publication);
+   if(!effect)throw new Error('Legacy serializer reference lacks an effect.');
+   steps.push({id,kind:effect.kind,sourcePath:effect.sourcePath,transaction:effect.transaction,sql:effect.sql,operation:effect.operation,inventorySubject:oldInventorySubject(effect.subject),preconditions:{kind:'inventory-prefix',prefixDigest:before},expectedOutcome:{kind:'inventory-prefix',prefixDigest:after},verification:'native-catalog-privileges-and-role-scope',recovery:effect.recovery,...(effect.operation==='apply-seeds'&&effect.subject.kind==='seed'?{seedSets:effect.subject.sets}:{}),...(effect.operation==='apply-backfill'&&effect.dataBinding?{dataBinding:effect.dataBinding}:{})});
+  }
+ }
+ const phases=schedule.phases.map(phase=>({id:phase.id,kind:phase.kind,transaction:phase.transaction,steps:[...phase.steps]}));
+ return {steps,phases,prefixes:schedule.prefixes as unknown as GraphTestJson[]};
 }
 function graphTableIdentity(row:GraphTestJson|undefined):GraphTableIdentity{
  if(!row||typeof row!=='object'||Array.isArray(row)||!('identity'in row))throw new Error('Scheduled table row has no identity.');const identity=row.identity;
@@ -203,6 +236,7 @@ test('scheduler prefixes preserve final frames for zero and multiple groups with
   return {identity,effect:{id:`create-${table}`,kind:'table',operation:'create-table',subject:{kind:'table',table,record},sourcePath:`/tables/${table}`,sql:`CREATE TABLE ${table} ()`,transaction:'required',recovery:'rollback-transaction',sourceOrder,atomicGroup:null,transition:{action:'add',collection:'tables',meaning}}};
  };
  const initial=()=>({profile:'umf.table-inventory-prefix/0.1' as const,index:0,completedSteps:[],tableStates:[],catalog:emptyPrefixCatalog(),metadata:{profile:'umf.table-inventory-metadata/0.1' as const,state:'pristine' as const},seedStates:[]});
+ const compilerMetadataIds={prepare:'g10-inventory-prepare',approval:'g10-inventory-approval',publication:'g10-inventory-publication'};
  const assertFrames=(result:ReturnType<typeof scheduleTypedInventoryEffects>,groupCount:number,metadata:boolean)=>{
   expect(result.prefixes).toHaveLength(groupCount+4);
   expect(result.phases).toHaveLength(groupCount+3);
@@ -228,6 +262,10 @@ test('scheduler prefixes preserve final frames for zero and multiple groups with
   const edges=[{dependent:hashCanonical(second.identity),prerequisite:hashCanonical(first.identity),sourcePath:'/tests/create-order',reason:'source-create-order',state:'present' as const}];
   const grouped=scheduleTypedInventoryEffects(initial(),[first.effect,second.effect],edges,target,metadataStepIds,[]);
   assertFrames(grouped,2,metadataStepIds!==undefined);
+  const legacyCompilerInput=scheduleTypedInventoryEffects(initial(),[first.effect,second.effect],edges,target,compilerMetadataIds,[]),compiledFinal=scheduleTypedInventoryEffectsForCompiler(initial(),[first.effect,second.effect],edges,target,compilerMetadataIds,[]);
+  expect(compiledFinal).toEqual(oldFinalizedScheduleReference(legacyCompilerInput,compilerMetadataIds));expect(compiledFinal.metadataStepIds).toEqual({prepare:'step-00001',approval:'step-00002',publication:'step-00005'});
+  expect(scheduleTypedInventoryEffectsForCompiler(initial(),[second.effect,first.effect],edges,target,compilerMetadataIds,[])).toEqual(compiledFinal);
+  for(const [index,frame]of compiledFinal.prefixes.entries()){const {digest,...body}=frame;expect(digest).toBe(hashCanonical(body));expect(frame.completedSteps).toEqual(compiledFinal.phases.slice(0,index).flatMap(phase=>phase.steps));}
   const firstGroup=grouped.prefixes[3]!,secondGroup=grouped.prefixes[4]!;
   expect(firstGroup.completedSteps.at(-1)).toBe(first.effect.id);expect(secondGroup.completedSteps.at(-1)).toBe(second.effect.id);
   const secondTables=secondGroup.catalog.tables;if(!secondTables)throw new Error('Scheduled test frame has no tables collection.');
@@ -236,6 +274,8 @@ test('scheduler prefixes preserve final frames for zero and multiple groups with
   const firstBefore=structuredClone(firstGroup);secondTables.push({extra:true});secondGroup.tableStates.push({extra:true});secondGroup.seedStates.push({extra:true});secondGroup.completedSteps.push('later-only');
   expect(firstGroup).toEqual(firstBefore);
  }
+ const compilerEmptyLegacy=scheduleTypedInventoryEffects(initial(),[],[],emptyPrefixCatalog(),compilerMetadataIds,[]),compilerEmpty=scheduleTypedInventoryEffectsForCompiler(initial(),[],[],emptyPrefixCatalog(),compilerMetadataIds,[]);
+ expect(compilerEmpty).toEqual(oldFinalizedScheduleReference(compilerEmptyLegacy,compilerMetadataIds));expect(compilerEmpty.metadataStepIds).toEqual({prepare:'step-00001',approval:'step-00002',publication:'step-00003'});
  const oldTable=makeCreate('old',3),keptTable=makeCreate('kept',1),changedTable=makeCreate('changed',2),stableTable=makeCreate('stable',4),initialCatalog=emptyPrefixCatalog();
  const oldMeaning:GraphTestJson={},keptBeforeMeaning:GraphTestJson={rls:{enabled:false,forced:false}},keptAfterMeaning:GraphTestJson={rls:{enabled:true,forced:false}},changedBeforeMeaning:GraphTestJson={rls:{enabled:false,forced:false}},changedAfterMeaning:GraphTestJson={rls:{enabled:true,forced:false}};
  const stableMeaning:GraphTestJson={extensions:{'vendor.未知':{unicode:'snowman ☃ / café',quoted:'quote" backslash\\ line\n',nested:{z:1,a:2}},large:'x'.repeat(1024)}};
@@ -277,6 +317,22 @@ test('scheduler prefixes preserve final frames for zero and multiple groups with
  const unknownIdentity:GraphTestJson={kind:'check',table:'ghost',subject:'unowned-check'},unknownRow:GraphTestJson={identity:unknownIdentity,meaning:{},state:'present'};
  const injectUnknown:EffectNode={...enableKept,catalogMutations:[{collection:'checks',action:'add',identity:unknownIdentity,before:null,after:unknownRow}]};
  expect(()=>scheduleTypedInventoryEffects(populated,[injectUnknown],[],target)).toThrow('G10_SCHEDULE_PREFIX_CATALOG_UNKNOWN_SUBJECT');
+ const referencedInitial=structuredClone(populated);(referencedInitial.tableStates[1] as Record<string,GraphTestJson>).creationStep='enable-kept';
+ const referenced=scheduleTypedInventoryEffectsForCompiler(referencedInitial,[enableKept,changeOldCheck,removeOld],[{dependent:hashCanonical(changedTable.identity),prerequisite:hashCanonical(keptTable.identity),sourcePath:'/tests/change-after-kept',reason:'source-update-order',state:'present'},{dependent:hashCanonical(oldTable.identity),prerequisite:hashCanonical(changedTable.identity),sourcePath:'/tests/remove-after-change',reason:'source-remove-order',state:'present'}],target,{prepare:'prepare',approval:'approval',publication:'publication'},provenance);
+ expect((referenced.prefixes[0]!.tableStates[1] as Record<string,GraphTestJson>).creationStep).toBe(referenced.steps[0]!.id);
+ const badReference=structuredClone(populated);(badReference.tableStates[1] as Record<string,GraphTestJson>).creationStep='missing-step';expect(()=>scheduleTypedInventoryEffectsForCompiler(badReference,[enableKept,changeOldCheck,removeOld],[],target,{prepare:'prepare',approval:'approval',publication:'publication'},provenance)).toThrow('G10_SCHEDULE_COMPILER_INITIAL_STEP_REFERENCE');
+ const revived=makeCreate('revived',2),removeRevived:EffectNode={...revived.effect,id:'remove-revived',operation:'remove-table',sourceOrder:1,transition:{action:'remove',collection:'tables',meaning:{}}},createRevived:EffectNode={...revived.effect,id:'create-revived'},reviveInitial=initial();reviveInitial.metadata={profile:'umf.table-inventory-metadata/0.1',state:'published'};reviveInitial.catalog.tables!.push({identity:revived.identity,meaning:{},state:'present'});reviveInitial.tableStates.push({table:'revived',record:revived.identity.subject,state:'present',definitionDigest:'',creationStep:null,removalStep:null});
+ const revivedSchedule=scheduleTypedInventoryEffectsForCompiler(reviveInitial,[createRevived,removeRevived],[],{...emptyPrefixCatalog(),tables:[{identity:revived.identity,meaning:{},state:'present'}]},{prepare:'prepare',approval:'approval',publication:'publication'},[]);
+ expect(revivedSchedule.steps.map(step=>step.operation)).toEqual(['remove-table','create-table']);expect((revivedSchedule.prefixes[3]!.tableStates[0] as Record<string,GraphTestJson>).state).toBe('absent');expect((revivedSchedule.prefixes[4]!.tableStates[0] as Record<string,GraphTestJson>).state).toBe('present');
+});
+
+test('compiler final IDs preserve complete plan serialization bytes against the legacy remap-and-hash path',()=>{
+ const next=deploy(legalSource()),projected=projectG10Bundle(next,'next'),renderer=deriveInitialRendererEffects(next,projected.projection),metadataIds={prepare:'g10-inventory-prepare',approval:'g10-inventory-approval',publication:'g10-inventory-publication'};
+ const inventory:InventoryDelta={profile:'umf.table-inventory-delta/0.1',previousTables:[],nextTables:projected.tables,changes:[],fieldChanges:[],seedLineage:[]};
+ const input:InventoryPlanInput={id:'legacy-plan-serialization-parity',predecessor:null,previous:null,next,options:{},history:emptyHistory as unknown as InventoryPlanInput['history'],historyBinding:{profile:emptyHistory.profile,count:0,digest:hashCanonical(emptyHistory)},inventory,initialPrefix:initialInventoryPrefix(null),nextCatalog:projected.projection.catalog as unknown as Record<string,GraphTestJson[]>,effects:renderer.effects,dependencies:renderer.edges,publicationObligations:renderer.publicationObligations,provenanceMutations:deriveG10ProvenanceMutations(null,projected.projection,renderer.effects),seedExecution:'none',review:projected.reviews as unknown as InventoryPlanInput['review']};
+ const actual=compileInventoryPlan(input),unfinalized=scheduleTypedInventoryEffects(input.initialPrefix,input.effects,input.dependencies,input.nextCatalog,metadataIds,input.provenanceMutations),legacy=oldFinalizedScheduleReference(unfinalized,metadataIds),legacySections=oldInventoryPlanSections(legacy),expected=structuredClone(actual) as Record<string,GraphTestJson>;
+ expected.steps=legacySections.steps;expected.phases=legacySections.phases;expected.prefixes=legacySections.prefixes;delete expected.digest;expected.digest=hashCanonical(expected);
+ expect(canonical(actual)).toBe(canonical(expected));expect(actual.digest).toBe(expected.digest);
 });
 
 test('legacy seed history requires exact source-derived reported outcomes and remains explicitly non-native',()=>{

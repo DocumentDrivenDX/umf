@@ -1,5 +1,5 @@
-# PROPOSAL ONLY. Do not install as an active workflow before source/owner review.
-name: Combined portable migration and R2 qualification (proposed)
+# Source-reviewed finite portable qualification; this workflow grants no native execution authority.
+name: Combined portable migration and R2 qualification
 
 on:
   push:
@@ -114,6 +114,7 @@ jobs:
           run_stage g02-fixture-source-control 60 bun test --timeout 30000 \
             tests/lifecycle/g02-temporal-native-fixture.test.ts || failed=1
           run_stage g03-and-migration-regressions 180 bun test --timeout 15000 \
+            tests/lifecycle/g04-checked-conversion.test.ts \
             tests/lifecycle/g03-defaults.test.ts \
             tests/lifecycle/g03-discovery-bridge.test.ts \
             tests/lifecycle/g03-renderer-compatibility.test.ts \

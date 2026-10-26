@@ -1,0 +1,33 @@
+{
+  "profile": "umf.r2-final-prefix-ids-owner-source-review/1",
+  "status": "SOURCE_REVIEW_ACCEPTED_ONE_TEST_CORRECTION_RUNTIME_UNRUN",
+  "solReviewSha256": "29e1c03aa45d18580ee99bba5cc4c71019cce4b7a06983d19a814a3c89f7db6e",
+  "sourcePins": {
+    ".github/workflows/combined-migration-qualification.yml": "c02913006f8b622b9723f587f536d620821bf36cd110062987e9365b31de2881",
+    "spec/extensions/tables/migration-0.7.schema.json": "362520f079270260111633b7d7b3950ba9346e3e22a765ed875ae7201141c272",
+    "spec/extensions/tables/migration-discovery-0.4.schema.json": "857fe9f0499c300ff3dd4cf73758905cc9deff9c4269a51826ec362d7eed824e",
+    "spec/extensions/tables/migration-options-0.7.schema.json": "0c6d45aa516cff85c92cad288c8a0ff61358d0003ad873fb982f8ff20ec95f0b",
+    "spec/extensions/tables/migration-phases-0.6.schema.json": "5921e57c46ec674d5af00eadcb7b9646697f13aee0c4c86f7c89c94821f2a433",
+    "src/table-migration/g04-conversion.ts": "ed83fd0eea7c22ea7a87e491d3b5d0b75279246e6873494fb5dfffed1b93ad7d",
+    "src/table-migration/index.ts": "53374e7395a34f2b861f94e97878f9fc314fbfa901d5357bfc141c72659a73ed",
+    "src/table-migration/internal.ts": "84be6258dc632f74f560ba9aa2e6c801cda66d62647f4d62486010fe0dbaf519",
+    "src/table-migration/inventory-graph.ts": "e7b710dd0cdaa3428f19328e02216234b8faa157eaa17058c7d1ac6ac1179fc9",
+    "src/table-migration/inventory.ts": "842e3aa7a4faff73b65fc9c6d22adab0a755f03de67bc83e306df4fd6e6828bb",
+    "src/table-migration/options.ts": "90762c75fd26a240cd7cb020a000018db0b35d47978ada590a2bb2ba5d90bc8e",
+    "src/table-migration/phases-options.ts": "84839c49132de1d8f639df3ed8b9730d5b2c5d2596fb0dcbe398f2e86c133915",
+    "tests/lifecycle/g04-checked-conversion.test.ts": "abe49a468c552ad7c8889e9d95ded1ce8309ec80315f5ff1cc531c7a3c04ddc0",
+    "tests/lifecycle/table-inventory-api.test.ts": "75731bff864101679888bf38d5522511502af3c2a320136657d5731e52d9d469"
+  },
+  "pinRows": 94,
+  "changedExistingPins": [
+    "src/table-migration/internal.ts",
+    "src/table-migration/inventory-graph.ts",
+    "src/table-migration/inventory.ts",
+    "tests/lifecycle/table-inventory-api.test.ts",
+    "src/table-migration/index.ts",
+    ".github/workflows/combined-migration-qualification.yml"
+  ],
+  "correction": "Removed only extra .catalog from new full-plan parity control, retaining independent old scheduler/remap/full-hash reference and canonical complete-plan bytes assertions.",
+  "scope": "Compiler final IDs derived after topological order and before transition/prefix hash; original graph API unchanged. No second prefix remap/hash. All fixed caps, full mixed fixture, source obligations and history semantic recompilation retained.",
+  "qualification": "UNRUN; existing finite hosted combined gate includes reviewed G04 source/schema fixture. No local runtime/tests/imports/AST/schema evaluation."
+}
