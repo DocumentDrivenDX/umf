@@ -1,11 +1,11 @@
 {
   "profile": "umf.r8.selection-semantic-callback.private.node/1",
-  "status": "pass-private-15-case-exact-outcomes-and-host-traces",
+  "status": "pass-private-18-case-exact-outcomes-and-host-traces",
   "runtime": "v26.12.1",
-  "caseCount": 15,
+  "caseCount": 18,
   "summary": {
-    "exactOutcomeMatches": 15,
-    "exactHostTraceMatches": 15,
+    "exactOutcomeMatches": 18,
+    "exactHostTraceMatches": 18,
     "mismatches": []
   },
   "candidateAddon": {
@@ -27,24 +27,24 @@
     "src/access/rust-selection-default.ts": "ad27e7b42b464c0143ba4b99d3fd5eadb6fd6bba15fb88b51d4f378e23271c97",
     "bindings/core/wasm/src/host-json.js": "38401f170a320fd4cb8faddfe7ef86164603beddfac572daa71f568ab7093f56",
     "bindings/core/wasm/src/host_json.rs": "b4b9813934fbd1497bd732865eb10831146fb048e998464079a6e2550206816b",
-    "bindings/core/node/tests/selection-host-json.test.js": "42131792bf9a8532d0f2024c78d7770c410d2743664d81839208da388b1e4ef0",
-    "scripts/rust-migration/r8/selection-callback-suite.mjs": "3b3468257b96358de2207fccb46dcba90c8a990d3ab98b9ccb85416559ac2662",
-    "scripts/rust-migration/r8/selection-callback-node.mjs": "d1bf3344fd8c7722af72dca3cdecb9c6832fa1d83510e5ef72b19f899b0b1e45",
+    "bindings/core/node/tests/selection-host-json.test.js": "8f81c3dcd28297a142307b46854528a595f7b25e99b2c73a942c269701da3e2f",
+    "scripts/rust-migration/r8/selection-callback-suite.mjs": "7fa38be4e68b96d0f587ab9ac7ddb42fb59c1d07a223e9eead87d1bc364edb33",
+    "scripts/rust-migration/r8/selection-callback-node.mjs": "fd7eaf79e9041d931cb95ab0304c69282bc38e2a4db7639da9e76c4e5a57880c",
     "scripts/rust-migration/r8/selection-callback-browser-entry.ts": "f52d7a3cdeab9569ba4253354400acecd9e711a49fd8f88b866bafd2b14decb8",
-    "scripts/rust-migration/r8/selection-callback-browser.mjs": "575b265b20bf089cf7952cd67c73cc730e0f2190c8448af649a6d1bef21f9e3b",
+    "scripts/rust-migration/r8/selection-callback-browser.mjs": "1fe3850966c3b2a973ca360b5564b0f6404fa2ef2ea3daeef3f895fc10fd5242",
     "dist/umf.js": "b95916bdb6b4791b223bd04d84b34b4ff68ad7330658468a529005cefbad68b7",
     "dist/umf-node.js": "95b61512d49f35c82e28bd0cc3225afdfa043e10adf466efa1c15522cc367069",
     "scripts/rust-migration/r5/selection/input.json": "1d4bc67745d20df018a6275c820ed72c00c82d33caeb541596910d1254b67258",
     "scripts/rust-migration/r5/selection/frozen-typescript.json": "2fb5429888f34d6bb2684553201f652a68424fc68125a457c6b5e01aeaa7817a",
-    "spec/core/schema.json": "460cf38549a03b3992be6280156cce740be5e83403c5bb506e37fab352c6cd6c",
-    "spec/core/semantic-type-reference.schema.json": "e152b84c2fd97bfa6873d198e7ee41c047d9f5456c9b0c343ede7542d6788247",
-    "spec/core/extension-package.schema.json": "2716a5a68ef374f8583a31732592d9f578969ebd3db93d161906c04a88718907",
-    "spec/metamodel/generated/core-constraints.json": "7e4719bbb5c11019291bd5263a2c58320ac639d6ee3646af3f6da97ae15eed27",
-    "spec/metamodel/generated/domain-policy.json": "4c738779fd2e469e118e16c3b69aff0994e5248ae4976bb98b4c9ffcac2a41e0"
+    "spec/core/schema.json": "f85bb41dc7ba32ef2eb33755e1a1830a512ee8d5ee3d5cbd7f9bc33f61419d3f",
+    "spec/core/semantic-type-reference.schema.json": "e6561cbd248bdd7cf4c5a1ebf6749ec8bfe9ebd12180400323c0fd5ca7f87b69",
+    "spec/core/extension-package.schema.json": "828d53256fea027af4cad5a3a5f23da0216bda7700b2706f4ddb9f59a45121f6",
+    "spec/metamodel/generated/core-constraints.json": "1046be562bb1300172ad5c4d0a252058c0e0e705343c37e6ed6402e67d430a56",
+    "spec/metamodel/generated/domain-policy.json": "d737d6b1d7e76f093f266705351747ef3efe017e5d3fb9a8f03c9fc085a8c7ba"
   },
   "limits": [
     "Private opt-in host route; no package default/root selection change or release qualification.",
     "Pins same-host bundled TS reference, route sources, resources and fixtures.",
-    "Arbitrary native iterable/spread failures outside tested Array/custom iterator cases and kindRuntime remain unsupported."
+    "The added spread boundary is limited to undefined return, non-callable Symbol.iterator, and a throwing Symbol.iterator getter with String(error) side effects; other native iterator protocol failures and kindRuntime remain unsupported."
   ]
 }

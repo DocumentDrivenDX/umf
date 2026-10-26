@@ -33,7 +33,8 @@ registration and warning order, callback throws and `String(error)` failures,
 diagnostic `emit` getter order (`severity`, `path`, `code`, `message`), a
 separate post-traversal `.some` severity read with short-circuit, malformed,
 null, undefined, string and numeric diagnostics, and getter-thrown object
-identity. Unmodeled native spread/iterator failures remain refused. `Registry`
+identity. The bounded spread-failure cases described below are also covered;
+broader native spread/iterator failures remain unqualified. `Registry`
 `kindRuntime` delegation remains unsupported; arbitrary Proxy/accessor behavior
 outside the pinned cases is not qualified.
 
@@ -60,11 +61,11 @@ native/WASM artifact hashes.
 
 ## Results and limits
 
-Node 26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12 each passed 15/15 outcome
+Node 26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12 each passed 18/18 outcome
 and exact host-trace comparisons with zero mismatches. The native addon SHA-256
-is `2f2b3569814351285f1c21bfb56b4bfe533b203fe4a3a48876b750504c13e982`; the
+is `fd34bf7828d4e27bb0340db303d66effb557cdf38a5aa4238006dc858ace39f1`; the
 fresh WASM binary SHA-256 is
-`619ed4ebdeb6ba01376f25ed75e2a3b6373444416464657b520ee54c4f39514f`. Exact
+`9e3799b2f8393f5aa674f117f7b44189c937733dbd6111b4e352116855695eec`. Exact
 source and artifact pins are in [node.json](./node.json), [bun.json](./bun.json),
 and [chromium.json](./chromium.json).
 
@@ -82,9 +83,15 @@ around the raw host dispatcher, and
 provides the typed source facade with the predecessor's synchronous arity of
 two. The facade forwards the original source, query, and optional caller
 Registry references directly and preserves thrown-value identity. A focused
-Bun test passes 2/2 checks for those properties. The three-host 15-case parity
+Bun test passes 2/2 checks for those properties. The three-host 18-case parity
 replay now exercises the reusable Node/WASM engine factory; updated receipts
 pin its host adapter and harness sources.
+
+The [spread-failure extension](../r8-selection-spread-boundary/README.md)
+adds `undefined`, non-callable iterator-method and throwing iterator-getter
+cases, including observable error string conversion. These pass in all three
+hosts under the same private route; iterator step/close behavior and broader
+native spread failures remain outside this receipt.
 
 This is still an opt-in implementation seam. The receipts do not qualify full
 raw-host parity, `Registry.kindRuntime`, all proxy/accessor cases, final

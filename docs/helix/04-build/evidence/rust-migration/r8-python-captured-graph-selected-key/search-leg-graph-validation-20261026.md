@@ -166,6 +166,40 @@ Validation completed:
 - The pytest case asserts the emitted Ellipsis carrier has exactly the closed tagged shape above.
 - `ruff check --select I` passes for the Python bridge and focused test file. The repository's broader Ruff check reports pre-existing violations in this test file, including deferred-loop captures and line-length findings.
 
+## Private live keyword-leaf observer — 2026-10-26
+
+The private Python host-observation bridge now admits one additional leaf:
+exact base `SearchLeg(kind="keyword")`, an exact base `Node("param",
+(declared_name,))`, a pre-resolved declared string-carrier decision, and empty
+legs. The observer uses one native `Context` and preserves original Python
+exceptions from attribute access, item access, iteration, and exact-string
+conversion. It remains a separately invoked private observer; public
+`capture()` and the Rust graph-validator capture helper are unchanged.
+
+For this leaf, Rust observes FieldRef then SearchLeg, reads `record` twice
+(module then element), reads the root module and element, and returns the
+foreign-owner refusal before value/kind/legs reads. The value path follows the
+predecessor's separate `value` reads for the non-None condition, `.op`,
+`.args[0]`, and recursive visit. It reads `kind` after the parameter name and
+before carrier comparison, then performs the recursive Node operation reads
+and child iteration before reading and iterating `legs`. Recursive operation
+reads must continue to return `param`; changing results refuse within this
+bounded profile. This does not claim parity for changing operation getters,
+other kinds, nonempty legs, subclasses, other parameter carriers, or arbitrary
+SearchLeg graphs. The private helper receives the resolved `CapturedParameter`
+from signature processing; this observer does not introspect a Python
+signature.
+
+Fresh Rust extension build on Rust 1.90.0 and focused CPython 3.13.16 tests
+pass. For the accepted keyword leaf, the test captures a live `_validate_node`
+predecessor trace and compares the observer's getter sequence with its SearchLeg
+suffix. The four new tests also pin exact thrown-exception identity, refusal
+before later reads, and one-item termination on nonempty legs. The full
+`test_capture_rust_graph_validator.py` file passes 21 tests; Rust's existing
+`access_graph_host_observation` unit slice passes 9 tests.
+These checks establish this local private observer subset only; they do not
+change the broader graph-validator or package support claims above.
+
 Build output included existing unrelated Rust/PyO3 warnings. No Cargo lockfile
 was intentionally edited by this slice; the shared worktree contains other
 concurrent changes, so the parent task owns reconciliation of unrelated

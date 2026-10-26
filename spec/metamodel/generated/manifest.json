@@ -2,7 +2,7 @@
   "profile": "umf.metamodel.outputs/1",
   "provenance": {
     "modelSha256": "35b72a7f6aa86c98398192e5b67d5841d77127743c671c742dd871a7baee58ca",
-    "compilerSha256": "a0eea73fd6092b1cb20e3726ce9d130976697a36004bb183f45cfa15820ec2d9"
+    "compilerSha256": "57bce90fbaad254bcaedd3e85b2e568acfc71988b48aae877cbc51d79c299f82"
   },
   "sources": {
     "spec/metamodel/umf.yaml": "35b72a7f6aa86c98398192e5b67d5841d77127743c671c742dd871a7baee58ca",
@@ -18,7 +18,7 @@
     "crates/umf-core/examples/rfc3339_exact_instant_oracle.rs": "2aa3b40d033eeada288c34a1f4ac1ce4632edde17dee2b3c48b300d53cca869b",
     "crates/umf-core/src/access_catalog_custody.rs": "814f85aa1ad92469bb719e40504e1776b7f08bb0f5f5c5c5012d5aabf0fbe989",
     "crates/umf-core/src/access_constraints.rs": "84c899109a2b4eb5fe454626bb613b9aca2206f70d5b7e82836b6a4855e1e7aa",
-    "crates/umf-core/src/access_graph_host_observation.rs": "41a53fe6ad8b751fd5dbdd62ef5078f61a7ccc7487d59d0cbb79a0a5a06df90b",
+    "crates/umf-core/src/access_graph_host_observation.rs": "40d82351954a2f31ed4ba4957e0ee694a4378ec3db87de98bc923c2e0e75df59",
     "crates/umf-core/src/access_graph_validate.rs": "ded1d4f419d311cf2d0cdd73ef373adfba3b5239bd73d81312ba989cc3f5aced",
     "crates/umf-core/src/access_logical_render.rs": "cd915d3178926037dd11094a302ad0073ecff827b54585f5fd5f0142f063ba73",
     "crates/umf-core/src/access_logical_render_full.rs": "4866eb953974a43787490f42e17cfedd4c11f8be041e0435e93354cdd300b4a4",
@@ -341,11 +341,11 @@
     "bindings/core/node/tests/json-value-serialization-profile.test.js": "9b38c5f7ba6f8b45f26d2642e3448fcca866fa0436ec49403f6f4a2eaef1238e",
     "bindings/core/node/tests/record-type-binding.test.js": "52f7c68e810bbbdd5f157d9858bdb0033874ea4e12c45357b042bb288ed6685c",
     "bindings/core/node/tests/security-logic.test.js": "79da3007aa8b1dfead5bf1dd5d626a76d3480e1cc321fd7a1a0112d4c5eef870",
-    "bindings/core/node/tests/selection-host-json.test.js": "42131792bf9a8532d0f2024c78d7770c410d2743664d81839208da388b1e4ef0",
+    "bindings/core/node/tests/selection-host-json.test.js": "8f81c3dcd28297a142307b46854528a595f7b25e99b2c73a942c269701da3e2f",
     "bindings/core/node/tests/semantic-value-registry.test.js": "ff176fed8170d996966e4a63e3d6d54458ce64636aa12d11d857b9af62812a2a",
     "bindings/core/python/Cargo.toml": "190f17abce90c387affa8a01a875c98d81ebfbfce2ae7b525a9624701bb7e165",
     "bindings/core/python/build.rs": "b2b1e8e649acf8ffa52e323b8899147a542ec33c0f14619db3074c1f3df79cfc",
-    "bindings/core/python/src/lib.rs": "28ee7bcd4607ce2c48c0d135b28823120b61d0c14e679b389807c9637ef4938e",
+    "bindings/core/python/src/lib.rs": "e7f98e76a207fdf161e5712f40b75e80c3ad8503e5e426bf472a7c2c42715135",
     "bindings/core/python/src/python_value.rs": "6d82b89136f80c433d2b7e1d78074b9c958c5385f03fd13a953cdf81a8b56410",
     "bindings/core/python/src/related_keys.rs": "0a6325c82da9a64a711e035737d4bc4f11aa42337608bd2bcb81c69f4939e5f0",
     "bindings/core/wasm/Cargo.toml": "5633ccb692f4cc80b9fe55a1ab9ca2ceb99642c9132d986b8f850cc4a67633c3",
@@ -610,11 +610,11 @@
     "bindings/core/node/tests/json-value-serialization-profile.test.js": "9b38c5f7ba6f8b45f26d2642e3448fcca866fa0436ec49403f6f4a2eaef1238e",
     "bindings/core/node/tests/record-type-binding.test.js": "52f7c68e810bbbdd5f157d9858bdb0033874ea4e12c45357b042bb288ed6685c",
     "bindings/core/node/tests/security-logic.test.js": "79da3007aa8b1dfead5bf1dd5d626a76d3480e1cc321fd7a1a0112d4c5eef870",
-    "bindings/core/node/tests/selection-host-json.test.js": "42131792bf9a8532d0f2024c78d7770c410d2743664d81839208da388b1e4ef0",
+    "bindings/core/node/tests/selection-host-json.test.js": "8f81c3dcd28297a142307b46854528a595f7b25e99b2c73a942c269701da3e2f",
     "bindings/core/node/tests/semantic-value-registry.test.js": "ff176fed8170d996966e4a63e3d6d54458ce64636aa12d11d857b9af62812a2a",
     "bindings/core/python/Cargo.toml": "190f17abce90c387affa8a01a875c98d81ebfbfce2ae7b525a9624701bb7e165",
     "bindings/core/python/build.rs": "b2b1e8e649acf8ffa52e323b8899147a542ec33c0f14619db3074c1f3df79cfc",
-    "bindings/core/python/src/lib.rs": "28ee7bcd4607ce2c48c0d135b28823120b61d0c14e679b389807c9637ef4938e",
+    "bindings/core/python/src/lib.rs": "e7f98e76a207fdf161e5712f40b75e80c3ad8503e5e426bf472a7c2c42715135",
     "bindings/core/python/src/python_value.rs": "6d82b89136f80c433d2b7e1d78074b9c958c5385f03fd13a953cdf81a8b56410",
     "bindings/core/python/src/related_keys.rs": "0a6325c82da9a64a711e035737d4bc4f11aa42337608bd2bcb81c69f4939e5f0",
     "bindings/core/wasm/Cargo.toml": "5633ccb692f4cc80b9fe55a1ab9ca2ceb99642c9132d986b8f850cc4a67633c3",
@@ -824,15 +824,15 @@
   },
   "outputs": {
     "spec/core/schema.json": {
-      "sha256": "460cf38549a03b3992be6280156cce740be5e83403c5bb506e37fab352c6cd6c",
+      "sha256": "f85bb41dc7ba32ef2eb33755e1a1830a512ee8d5ee3d5cbd7f9bc33f61419d3f",
       "bytes": 45342
     },
     "spec/core/semantic-type-reference.schema.json": {
-      "sha256": "e152b84c2fd97bfa6873d198e7ee41c047d9f5456c9b0c343ede7542d6788247",
+      "sha256": "e6561cbd248bdd7cf4c5a1ebf6749ec8bfe9ebd12180400323c0fd5ca7f87b69",
       "bytes": 45463
     },
     "spec/core/extension-package.schema.json": {
-      "sha256": "2716a5a68ef374f8583a31732592d9f578969ebd3db93d161906c04a88718907",
+      "sha256": "828d53256fea027af4cad5a3a5f23da0216bda7700b2706f4ddb9f59a45121f6",
       "bytes": 45001
     },
     "spec/metamodel/package.json": {
@@ -840,23 +840,23 @@
       "bytes": 1376
     },
     "spec/metamodel/generated/core-constraints.json": {
-      "sha256": "7e4719bbb5c11019291bd5263a2c58320ac639d6ee3646af3f6da97ae15eed27",
+      "sha256": "1046be562bb1300172ad5c4d0a252058c0e0e705343c37e6ed6402e67d430a56",
       "bytes": 190252
     },
     "spec/metamodel/generated/domain-policy.json": {
-      "sha256": "4c738779fd2e469e118e16c3b69aff0994e5248ae4976bb98b4c9ffcac2a41e0",
+      "sha256": "d737d6b1d7e76f093f266705351747ef3efe017e5d3fb9a8f03c9fc085a8c7ba",
       "bytes": 14827
     },
     "spec/metamodel/generated/python-shapes.json": {
-      "sha256": "5a527983d3b44cdadfea91bc092a2df0ace7ff873ed65fc3263e3328e9f6a6cd",
+      "sha256": "12733e96d50ec47f3ba8ad772054fdd68dedf84e2ff70a904e49eb5cae9e54d4",
       "bytes": 98734
     },
     "python/umf_access/src/umf_access/generated_core.py": {
-      "sha256": "44b1e2f26169ccb3a7332275bbd1f8b8a268d150976da5d7e2f11356d21b37d3",
+      "sha256": "05f94822bc80f09825748da4ef2f8583a867d17da2a63b0afd79e5d50b83d3c9",
       "bytes": 360
     },
     "src/generated/core-model.ts": {
-      "sha256": "17aa8469c51b77a9a98781748894f779e48cbacad7ff670eae52266e6a4f44b2",
+      "sha256": "abeb2fde1402656ee1e2def8a2c9feb4efc8c369ecf66eaf403d006cf781225e",
       "bytes": 6714
     },
     "spec/core/facet-operation-v3.schema.json": {
@@ -884,7 +884,7 @@
       "bytes": 1993
     },
     "src/generated/core-validators.ts": {
-      "sha256": "8abdac43fdfb51f18a59d224167713444d2702370638e780b1df0923ac79d81c",
+      "sha256": "72de45a042b40b0b6721387d110c6dfc07ed43fbda2711973090a2868eb851d7",
       "bytes": 305070
     }
   }

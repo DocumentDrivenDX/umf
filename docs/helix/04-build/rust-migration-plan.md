@@ -2388,6 +2388,11 @@ nonpublishing qualification gate. A Rust-port candidate cannot bypass it; a
 separately reviewed publisher must consume the aggregate receipt from that same
 workflow run. The existing source-bound access workflow exercises both
 installed distributions, but a passing PR check is not a publication receipt.
+Main now records verified public-PyPI publication and a clean consumer install
+for `umf-core==0.10.0` from SDK tag `umf-v0.5.4` in
+[the Core-only publication evidence](../05-deploy/evidence/pypi-0.10.0/README.md).
+That receipt does not cover `umf-codegen`, the proposed Rust-port versions,
+the six hosted pair cohorts, or end-to-end consumer adoption.
 The latest [published UMF SDK tag](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.5.6)
 observed before this work is `umf-v0.5.6`;
 the moving worktree still declares `@umf/core` 0.5.6 with `private: true`.
@@ -2416,6 +2421,14 @@ no coordinated Rust-port publication job consumes it yet. The separate
 existing-release Core publisher does not consume this candidate matrix and
 cannot bypass the six-cohort gate. Sol independently reran the aggregate
 negative and positive tests (23/23 passed).
+The [local release-pair preparation gate](evidence/rust-migration/r8-python-release-preparation/README.md)
+reruns that aggregate verifier against downloaded cohort artifacts, then emits
+a deterministic non-publishing manifest pinned to one run/source revision and
+all five distinct release files: two platform Core wheels, one Core sdist,
+and the codegen wheel and sdist. Ten focused synthetic-fixture tests pass,
+including byte drift, missing cohort/wheel, mixed run/revision, wrong version,
+and extra aggregate claims. This is local custody preparation; it neither
+proves hosted provenance nor enables publication.
 Hosted execution of all six jobs, Windows, macOS x86_64, a reviewed coordinated
 publisher, registry artifact verification, rollback, and consumer adoption
 remain open. See the source-bound R8 release evidence directory for current
@@ -5947,6 +5960,16 @@ tests pass against a fresh temporary extension. Bound-value parameter/carrier
 checks, nested/hybrid legs, public routing, encoder-budget reconciliation, and
 installed-wheel qualification remain open.
 
+The [private keyword SearchLeg leaf observer](evidence/rust-migration/r8-python-captured-graph-selected-key/search-leg-graph-validation-20261026.md#private-live-keyword-leaf-observer--2026-10-26)
+now covers one resolved `Param[str]` bound value with an exact base
+`Node("param", (name,))` and empty legs. It preserves the predecessor's
+separate live `value` reads, seven recursive `op` reads, and host exception
+identity; a direct `_validate_node` trace supplies the accepted-case oracle.
+Fresh extension tests pass 21/21 in the focused captured-graph file. This
+observer remains private and refuses changing recursive operation getters,
+nonempty or nested legs, other carriers, and subclass graphs. It does not
+reconcile Python capture and DTO-encoder budgets or qualify public routing.
+
 The separate [read-frame gate](evidence/rust-migration/r8-python-read-frame-core/README.md)
 now has a private PyO3 bridge. Rust asks for host `len`/index/iteration reads
 in predecessor order and owns post-host shape and post-decode cardinality
@@ -5992,6 +6015,16 @@ The Node binding suite passed 13 focused tests and the Rust runtime diagnostic
 suite passed 15. This is a private subset: arbitrary host iterables and
 `Registry.kindRuntime` behavior remain outside the route. It does not change
 either V4 default export or the 922-gap retirement count.
+
+The [spread-failure extension](evidence/rust-migration/r8-selection-spread-boundary/README.md)
+adds three private callback cases: an `undefined` result, a non-callable
+`Symbol.iterator`, and a throwing iterator getter with observable
+`String(error)` conversion. Existing Rust-stage host branches cover these
+cases without a kernel change. Current Node, Bun and Chromium replays match
+the same-host TypeScript predecessor on all 18 outcomes and host-event traces;
+the focused Bun binding suite passes 14/14. Iterator step/close failures,
+general spread behavior, `kindRuntime`, full resource accounting, and default
+V4 routing remain unqualified.
 
 The [extension-kind runtime disposition](evidence/rust-migration/r8-explicit-runtime-extension-kinds/README.md)
 records why `inspectExtensionKinds` remains caller-runtime-selected. CONTRACT-907

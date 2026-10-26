@@ -96,6 +96,18 @@ export function runSelectionCallbackSuite({Registry, selectCoreElements, candida
         }};
       },
     })})},
+    {name: 'callback-iterator-getter-throws-and-stringifies-in-place', make: events => ({source: documentFor(), query: {references: 'none'}, registry: makeRegistry(Registry, events, {
+      alpha: () => ({get [Symbol.iterator]() {
+        events.push('diagnostics:iterator-get');
+        throw {toString() { events.push('diagnostics:thrown-toString'); return 'iterator getter failed'; }};
+      }}),
+    })})},
+    {name: 'callback-undefined-result-native-spread-failure', make: events => ({source: documentFor(), query: {references: 'none'}, registry: makeRegistry(Registry, events, {
+      alpha: () => { events.push('diagnostics:return-undefined'); return undefined; },
+    })})},
+    {name: 'callback-noncallable-iterator-native-spread-failure', make: events => ({source: documentFor(), query: {references: 'none'}, registry: makeRegistry(Registry, events, {
+      alpha: () => ({[Symbol.iterator]: 17}),
+    })})},
     {name: 'callback-receiver-context-and-prototype-boundary', make: events => {
       const input = documentFor();
       Object.defineProperty(input, '__proto__', {value: {marker: 'retained'}, enumerable: true, writable: true, configurable: true});

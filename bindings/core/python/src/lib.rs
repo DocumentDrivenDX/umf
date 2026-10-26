@@ -2246,6 +2246,61 @@ impl umf_core::access_graph_host_observation::CaptureGraphHostObserver
             .map_err(|error| self.host_failure(error))
     }
 
+    fn is_exact_instance(
+        &mut self,
+        value: u32,
+        kind: umf_core::access_graph_host_observation::GraphType,
+    ) -> Result<bool, umf_core::access_graph_host_observation::ObservationError> {
+        let class_ptr = match kind {
+            umf_core::access_graph_host_observation::GraphType::Node => {
+                self.node_type.bind(self.py).as_ptr()
+            }
+            umf_core::access_graph_host_observation::GraphType::RecordRef => {
+                self.record_ref_type.bind(self.py).as_ptr()
+            }
+        };
+        let object = self
+            .object(value)
+            .map_err(|error| self.host_failure(error))?;
+        Ok(object.get_type().as_ptr() == class_ptr)
+    }
+
+    fn is_exact_structural(
+        &mut self,
+        value: u32,
+        kind: umf_core::access_graph_host_observation::StructuralType,
+    ) -> Result<bool, umf_core::access_graph_host_observation::ObservationError> {
+        use umf_core::access_graph_host_observation::StructuralType;
+        let result = self
+            .object(value)
+            .map_err(|error| self.host_failure(error))?;
+        let class = match kind {
+            StructuralType::FieldRef => &self.field_ref_type,
+            StructuralType::Join => &self.join_type,
+            StructuralType::SearchLeg => &self.search_leg_type,
+            StructuralType::Tuple => return Ok(result.is_exact_instance_of::<PyTuple>()),
+        };
+        Ok(result.get_type().as_ptr() == class.bind(self.py).as_ptr())
+    }
+
+    fn exact_text(
+        &mut self,
+        value: u32,
+    ) -> Result<Utf16, umf_core::access_graph_host_observation::ObservationError> {
+        let value = self
+            .object(value)
+            .map_err(|error| self.host_failure(error))?;
+        if !value.is_exact_instance_of::<PyString>() {
+            return Err(
+                umf_core::access_graph_host_observation::ObservationError::UnsupportedValue,
+            );
+        }
+        python_exact_str_utf16(&value).map_err(|error| {
+            self.conversion_error = Some(error);
+            umf_core::access_graph_host_observation::ObservationError::ConversionFailure
+        })
+    }
+
     fn is_instance_structural(
         &mut self,
         value: u32,
@@ -2344,6 +2399,14 @@ fn capture_graph_error(
         ObservationError::SearchForeignRecord => {
             graph_capture_error(py, "SEARCH_DECLARATION", "foreign search Record")
         }
+        ObservationError::SearchBoundParameter => {
+            graph_capture_error(py, "SEARCH_DECLARATION", "search requires bound parameters")
+        }
+        ObservationError::SearchParameterCarrier => graph_capture_error(
+            py,
+            "CAPTURE_SIGNATURE",
+            "search parameter carrier differs from selected leg",
+        ),
         ObservationError::ForeignField => {
             pyo3::exceptions::PyTypeError::new_err("expression column belongs to another Record")
         }
@@ -2399,7 +2462,7 @@ fn access_observe_capture_field_join_tuple(
     join_type: PyObject,
     search_leg_type: PyObject,
 ) -> PyResult<()> {
-    use umf_core::access_graph_host_observation::{observe_field_join_tuple_prefix, Owner};
+    use umf_core::access_graph_host_observation::{Owner, observe_field_join_tuple_prefix};
     let allowed_value = allowed_owners.bind(py);
     if !allowed_value.is_exact_instance_of::<PyTuple>() {
         return Err(pyo3::exceptions::PyTypeError::new_err(
@@ -2437,7 +2500,7 @@ fn access_observe_capture_empty_search_leg(
     join_type: PyObject,
     search_leg_type: PyObject,
 ) -> PyResult<()> {
-    use umf_core::access_graph_host_observation::{observe_empty_search_leg_prefix, Owner};
+    use umf_core::access_graph_host_observation::{Owner, observe_empty_search_leg_prefix};
     let mut observer = PythonCaptureGraphObserver {
         py,
         objects: vec![value, root_record],
@@ -2452,6 +2515,43 @@ fn access_observe_capture_empty_search_leg(
     let mut context = Context::ordinary();
     observe_empty_search_leg_prefix(&mut context, &mut observer, 0, 1)
         .map_err(|error| capture_graph_error(py, &mut observer, error))
+}
+
+#[pyfunction]
+fn access_observe_capture_keyword_search_leg(
+    py: Python<'_>,
+    value: PyObject,
+    root_record: PyObject,
+    declared_name: &Bound<'_, PyString>,
+    string_carrier: bool,
+    node_type: PyObject,
+    record_ref_type: PyObject,
+    field_ref_type: PyObject,
+    join_type: PyObject,
+    search_leg_type: PyObject,
+) -> PyResult<()> {
+    let declared_name = python_exact_str_utf16(declared_name)?;
+    let mut observer = PythonCaptureGraphObserver {
+        py,
+        objects: vec![value, root_record],
+        node_type,
+        record_ref_type,
+        field_ref_type,
+        join_type,
+        search_leg_type,
+        host_error: None,
+        conversion_error: None,
+    };
+    let mut context = Context::ordinary();
+    umf_core::access_graph_host_observation::observe_keyword_search_leg(
+        &mut context,
+        &mut observer,
+        0,
+        1,
+        &declared_name,
+        string_carrier,
+    )
+    .map_err(|error| capture_graph_error(py, &mut observer, error))
 }
 
 #[pyfunction]
@@ -4342,6 +4442,10 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     )?)?;
     module.add_function(wrap_pyfunction!(
         access_observe_capture_empty_search_leg,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_observe_capture_keyword_search_leg,
         module
     )?)?;
     module.add_function(wrap_pyfunction!(access_orchestrate_capture_pair, module)?)?;

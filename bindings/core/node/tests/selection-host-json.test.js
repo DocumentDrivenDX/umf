@@ -207,6 +207,36 @@ test('private host Selection meters successful host warning string materializati
     .toThrow(expect.objectContaining({code: 'LIMIT'}));
 });
 
+test('private host Selection catches abrupt spread iterator completion and String(error) in predecessor order', () => {
+  const run = select => {
+    const events = [];
+    const thrown = {toString() { events.push('error:toString'); return 'iterator exploded'; }};
+    const registration = {
+      manifest: {scopes: {includes(scope) { events.push(`scope:${scope}`); return true; }}, capabilities: {validation: 'semantic'}},
+      structure: () => true,
+      semantics(payload, context) {
+        events.push(`callback:${context.scope}:${context.path}`);
+        return {get [Symbol.iterator]() { events.push('iterator:get'); throw thrown; }};
+      },
+    };
+    try {
+      select(registration);
+      throw new Error('expected semantic iterator failure');
+    } catch (error) {
+      return {code: error.code, message: error.message, events};
+    }
+  };
+  const rust = run(registration => coreElementSelectionHostInput(addon, resources, packet.source,
+    packet.queries.all, {get() { return registration; }}, UmfCoreError));
+  // The same-host TypeScript oracle is compared in selection-callback-suite.mjs.
+  expect(rust.code).toBe('CORE_SELECTION_SOURCE');
+  expect(rust.events).toEqual([
+    'scope:document', 'callback:document:/extensions/future', 'iterator:get', 'error:toString',
+    'scope:element', 'callback:element:/modules/0/elements/0/extensions/future', 'iterator:get', 'error:toString',
+  ]);
+  expect(rust.message).toContain('iterator exploded');
+});
+
 test('private host Selection preserves structure getter throws by identity', () => {
   const sentinel = {structureGetter: true};
   const registration = {

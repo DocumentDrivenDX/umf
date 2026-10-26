@@ -11,7 +11,8 @@ import pytest
 from pydantic import BaseModel
 from umf import _rust
 from umf_access import rust_catalog_render
-from umf_access.capture import CapturedVariant, CaptureError, _validate_node, capture
+from umf_access import rust_capture_observe
+from umf_access.capture import CapturedParameter, CapturedVariant, CaptureError, _validate_node, capture
 from umf_access.dsl import (
     Column,
     FieldRef,
@@ -1164,3 +1165,135 @@ def test_graph_validator_admits_real_subclasses_with_canonical_trusted_tags():
     ambiguous = AmbiguousGraphValue("all", ())
     with pytest.raises(TypeError, match="inherits unrelated trusted bases"):
         _encode_capture(ambiguous, _EncodingBudget())
+
+
+def test_private_keyword_search_observer_preserves_live_read_order(monkeypatch):
+    from umf_access.dsl.search import SearchLeg as SearchLegBase
+
+    owner = RecordRef(module="demo", element="Thing", key=(_ID,))
+    leg = SearchLeg(owner, "keyword", "{}", Node("param", ("term",)), ())
+    events = []
+    original_record = owner
+    original_node = leg.value
+    original_legs = ()
+    terminal_node = Node("search_top", (owner, (), leg, 5, False))
+
+    def prop(cls, field, getter):
+        monkeypatch.setattr(cls, field, property(getter), raising=False)
+
+    prop(SearchLegBase, "record", lambda self: events.append("leg.record") or original_record)
+    prop(SearchLegBase, "value", lambda self: events.append("leg.value") or original_node)
+    prop(SearchLegBase, "kind", lambda self: events.append("leg.kind") or "keyword")
+    prop(SearchLegBase, "legs", lambda self: events.append("leg.legs") or original_legs)
+    prop(RecordRef, "module", lambda self: events.append("record.module") or "demo")
+    prop(RecordRef, "element", lambda self: events.append("record.element") or "Thing")
+    prop(
+        Node,
+        "op",
+        lambda self: events.append("node.op")
+        or ("search_top" if self is terminal_node else "param"),
+    )
+    prop(
+        Node,
+        "args",
+        lambda self: events.append("node.args")
+        or (terminal_node.__dict__["args"] if self is terminal_node else ("term",)),
+    )
+
+    parameter = CapturedParameter("term", str, False)
+    _validate_node(terminal_node, (parameter,))
+    predecessor_trace = events[events.index("leg.record") :]
+    events.clear()
+    rust_capture_observe.observe_keyword_search_leg(leg, owner, parameter)
+    assert events == predecessor_trace
+
+
+def test_private_keyword_search_observer_preserves_exception_identity(monkeypatch):
+    from umf_access.dsl.search import SearchLeg as SearchLegBase
+
+    owner = RecordRef(module="demo", element="Thing", key=(_ID,))
+    leg = SearchLeg(owner, "keyword", "{}", Node("param", ("term",)), ())
+    failure = RuntimeError("record access sentinel")
+    monkeypatch.setattr(
+        SearchLegBase,
+        "record",
+        property(lambda self: (_ for _ in ()).throw(failure)),
+        raising=False,
+    )
+    with pytest.raises(RuntimeError) as caught:
+        rust_capture_observe.observe_keyword_search_leg(
+            leg, owner, CapturedParameter("term", str, False)
+        )
+    assert caught.value is failure
+
+
+def test_private_keyword_search_observer_refuses_before_later_reads(monkeypatch):
+    from umf_access.dsl.search import SearchLeg as SearchLegBase
+
+    owner = RecordRef(module="demo", element="Thing", key=(_ID,))
+    leg = SearchLeg(owner, "keyword", "{}", Node("all", ()), ())
+    invalid_node = Node("all", ())
+    events = []
+    monkeypatch.setattr(
+        SearchLegBase,
+        "value",
+        property(lambda self: events.append("leg.value") or invalid_node),
+        raising=False,
+    )
+    monkeypatch.setattr(
+        SearchLegBase,
+        "kind",
+        property(lambda self: events.append("leg.kind") or "keyword"),
+        raising=False,
+    )
+    monkeypatch.setattr(
+        Node,
+        "op",
+        property(lambda self: events.append("node.op") or "all"),
+        raising=False,
+    )
+    monkeypatch.setattr(
+        Node,
+        "args",
+        property(lambda self: (_ for _ in ()).throw(AssertionError("args read"))),
+        raising=False,
+    )
+    with pytest.raises(CaptureError) as caught:
+        rust_capture_observe.observe_keyword_search_leg(
+            leg, owner, CapturedParameter("term", str, False)
+        )
+    assert (caught.value.code, str(caught.value)) == (
+        "SEARCH_DECLARATION",
+        "SEARCH_DECLARATION: search requires bound parameters",
+    )
+    assert events == ["leg.value", "leg.value", "node.op"]
+
+
+def test_private_keyword_search_observer_keeps_empty_legs_iteration_bounded(
+    monkeypatch,
+):
+    from umf_access.dsl.search import SearchLeg as SearchLegBase
+
+    owner = RecordRef(module="demo", element="Thing", key=(_ID,))
+    leg = SearchLeg(owner, "keyword", "{}", Node("param", ("term",)), ())
+    events = []
+
+    class OneThenInfinite:
+        def __iter__(self):
+            events.append("iter")
+            yield object()
+            while True:
+                events.append("next")
+                yield object()
+
+    monkeypatch.setattr(
+        SearchLegBase,
+        "legs",
+        property(lambda self: events.append("legs") or OneThenInfinite()),
+        raising=False,
+    )
+    with pytest.raises(TypeError, match="unsupported captured graph shape"):
+        rust_capture_observe.observe_keyword_search_leg(
+            leg, owner, CapturedParameter("term", str, False)
+        )
+    assert events == ["legs", "iter"]

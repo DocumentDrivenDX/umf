@@ -34,6 +34,8 @@ pub enum ObservationError {
     ScalarTerminalDenied,
     JoinSourceAbsent,
     SearchForeignRecord,
+    SearchBoundParameter,
+    SearchParameterCarrier,
     ForeignField,
     Budget,
 }
@@ -69,6 +71,23 @@ pub trait CaptureGraphHostObserver {
         _value: Self::Handle,
         _kind: StructuralType,
     ) -> Result<bool, ObservationError> {
+        Err(ObservationError::UnsupportedValue)
+    }
+    fn is_exact_instance(
+        &mut self,
+        _value: Self::Handle,
+        _kind: GraphType,
+    ) -> Result<bool, ObservationError> {
+        Err(ObservationError::UnsupportedValue)
+    }
+    fn is_exact_structural(
+        &mut self,
+        _value: Self::Handle,
+        _kind: StructuralType,
+    ) -> Result<bool, ObservationError> {
+        Err(ObservationError::UnsupportedValue)
+    }
+    fn exact_text(&mut self, _value: Self::Handle) -> Result<Utf16, ObservationError> {
         Err(ObservationError::UnsupportedValue)
     }
     fn iter(&mut self, sequence: Self::Handle) -> Result<Self::Handle, ObservationError>;
@@ -135,6 +154,97 @@ pub fn observe_empty_search_leg_prefix<H: Copy>(
     let leg_value = attr(context, host, value, "value")?;
     if !matches!(leg_value, ObservedValue::None) {
         return Err(ObservationError::UnsupportedValue);
+    }
+    let legs = object(attr(context, host, value, "legs")?)?;
+    let iterator = budgeted(context, || host.iter(legs))?;
+    if budgeted(context, || host.next(iterator))?.is_some() {
+        return Err(ObservationError::UnsupportedValue);
+    }
+    Ok(())
+}
+
+/// Observe the exact keyword SearchLeg leaf used by the private Python
+/// capture route. `declared_name` and `string_carrier` come from the already
+/// resolved signature; all graph reads remain demand driven here.
+pub fn observe_keyword_search_leg<H: Copy>(
+    context: &mut crate::Context<'_>,
+    host: &mut impl CaptureGraphHostObserver<Handle = H>,
+    value: H,
+    root_record: H,
+    declared_name: &Utf16,
+    string_carrier: bool,
+) -> Result<(), ObservationError> {
+    if budgeted(context, || {
+        host.is_exact_structural(value, StructuralType::FieldRef)
+    })? {
+        return Err(ObservationError::UnsupportedValue);
+    }
+    if !budgeted(context, || {
+        host.is_exact_structural(value, StructuralType::SearchLeg)
+    })? {
+        return Err(ObservationError::UnsupportedValue);
+    }
+    let first_record = object(attr(context, host, value, "record")?)?;
+    let module = text(attr(context, host, first_record, "module")?)?;
+    let second_record = object(attr(context, host, value, "record")?)?;
+    let element = text(attr(context, host, second_record, "element")?)?;
+    let root_module = text(attr(context, host, root_record, "module")?)?;
+    let root_element = text(attr(context, host, root_record, "element")?)?;
+    if module != root_module || element != root_element {
+        return Err(ObservationError::SearchForeignRecord);
+    }
+    let first_value = attr(context, host, value, "value")?;
+    if matches!(first_value, ObservedValue::None) {
+        return Err(ObservationError::UnsupportedValue);
+    }
+    // The predecessor reads `value` again for `.op`, then again for `.args`.
+    let node_for_op = object(attr(context, host, value, "value")?)?;
+    let op = text(attr(context, host, node_for_op, "op")?)?;
+    if op != Utf16::from("param") {
+        return Err(ObservationError::SearchBoundParameter);
+    }
+    let node_for_args = object(attr(context, host, value, "value")?)?;
+    if !budgeted(context, || {
+        host.is_exact_instance(node_for_args, GraphType::Node)
+    })? {
+        return Err(ObservationError::SearchBoundParameter);
+    }
+    let args = object(attr(context, host, node_for_args, "args")?)?;
+    let arg0 = budgeted(context, || host.get_item(args, 0))?;
+    let argument_name = budgeted(context, || host.exact_text(arg0))?;
+    let kind = text(attr(context, host, value, "kind")?)?;
+    if kind != Utf16::from("keyword") {
+        return Err(ObservationError::UnsupportedValue);
+    }
+    if argument_name != *declared_name || !string_carrier {
+        return Err(ObservationError::SearchParameterCarrier);
+    }
+    let node = object(attr(context, host, value, "value")?)?;
+    if !budgeted(context, || host.is_exact_instance(node, GraphType::Node))? {
+        return Err(ObservationError::SearchBoundParameter);
+    }
+    // `_validate_node.visit` deliberately rereads `op` at each ordered branch.
+    for _ in 0..3 {
+        if text(attr(context, host, node, "op")?)? != Utf16::from("param") {
+            return Err(ObservationError::SearchBoundParameter);
+        }
+    }
+    let recursive_args_for_membership = object(attr(context, host, node, "args")?)?;
+    let recursive_arg0 = budgeted(context, || host.get_item(recursive_args_for_membership, 0))?;
+    if budgeted(context, || host.exact_text(recursive_arg0))? != *declared_name {
+        return Err(ObservationError::SearchParameterCarrier);
+    }
+    // The key_param-specific components/identity checks are each separate
+    // `op` reads even when the operation is `param`.
+    for _ in 0..4 {
+        if text(attr(context, host, node, "op")?)? != Utf16::from("param") {
+            return Err(ObservationError::SearchBoundParameter);
+        }
+    }
+    let recursive_args = object(attr(context, host, node, "args")?)?;
+    let argument_iterator = budgeted(context, || host.iter(recursive_args))?;
+    while let Some(child) = budgeted(context, || host.next(argument_iterator))? {
+        let _ = budgeted(context, || host.exact_text(child))?;
     }
     let legs = object(attr(context, host, value, "legs")?)?;
     let iterator = budgeted(context, || host.iter(legs))?;

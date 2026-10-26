@@ -184,3 +184,37 @@ def observe_empty_search_leg(value: object, root_record: object) -> None:
     core.access_observe_capture_empty_search_leg(
         value, root_record, Node, RecordRef, FieldRef, Join, SearchLeg
     )
+
+
+def observe_keyword_search_leg(
+    value: object,
+    root_record: object,
+    parameter: object,
+) -> None:
+    """Observe one exact keyword leg against a resolved declaration parameter."""
+    from umf_access.capture import CapturedParameter
+
+    if type(parameter) is not CapturedParameter or type(parameter.name) is not str:
+        raise TypeError("keyword search observation requires a captured parameter")
+    string_carrier = parameter.carrier is str
+    from umf_access.dsl._nodes import FieldRef, Node, RecordRef
+    from umf_access.dsl._expressions import Join
+    from umf_access.dsl.search import SearchLeg
+
+    core = _native()
+    observe = getattr(core, "access_observe_capture_keyword_search_leg", None)
+    if not callable(observe):
+        raise FieldOwnerObservationUnavailable(
+            "installed umf-core lacks keyword SearchLeg observation"
+        )
+    observe(
+        value,
+        root_record,
+        parameter.name,
+        string_carrier,
+        Node,
+        RecordRef,
+        FieldRef,
+        Join,
+        SearchLeg,
+    )
