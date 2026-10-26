@@ -3,7 +3,7 @@
     {
       "source": "bindings/core/node/src/wire.js",
       "generated": "bindings/core/wasm/src/wire.js",
-      "sha256": "d7687bae10505fea1295d841a73c174ddcda22ec49c534b2165033631fadfa1f"
+      "sha256": "5a59889a7484b69554b628aa45c58bad6f71bb4c47679ae63d72f2e8a8e0daea"
     },
     {
       "source": "bindings/core/node/src/javascript-numeric.js",
@@ -18,7 +18,7 @@
     {
       "source": "bindings/core/node/src/bit128.js",
       "generated": "bindings/core/wasm/src/bit128.js",
-      "sha256": "ce8718f0761c1a171aa03b31b39d03fd21abc5f513649b93651a1239aaf43956"
+      "sha256": "39a9fc04e2576d38da2ea4d5e2054b0ccac63e32cbd2ff049cd5bfb14f14fb1a"
     },
     {
       "source": "bindings/core/node/src/json-number.js",
@@ -28,7 +28,12 @@
     {
       "source": "bindings/core/node/src/json-schema.js",
       "generated": "bindings/core/wasm/src/json-schema.js",
-      "sha256": "2011ad790b0baa28a73c4aa9712283fbeb8c8350547eae17c1920b3e94814cf2"
+      "sha256": "53abdbcde5796e9c0b6105e8efd1f60b50fedc1e6293dafa878d5726ff054193"
+    },
+    {
+      "source": "bindings/core/node/src/json-schema-import-source.js",
+      "generated": "bindings/core/wasm/src/json-schema-import-source.js",
+      "sha256": "a880ce70c0dba2fe3958c63635090f03c0a91128fb2117706b32be52bb14af36"
     },
     {
       "source": "bindings/core/node/src/core-key-tuple.js",
@@ -38,7 +43,7 @@
     {
       "source": "bindings/core/node/src/core-keys.js",
       "generated": "bindings/core/wasm/src/core-keys.js",
-      "sha256": "afa78b6aa6923332cbbfc56d5d61cf3d142322740eaa2382b39ca73c4dbddcfc"
+      "sha256": "50351782e285d3ca7e9cadc1a571e5409df4af7f58f0f00b670bd5c284e57bec"
     },
     {
       "source": "bindings/core/node/src/dataset-values-compact.js",
@@ -73,7 +78,7 @@
     {
       "source": "bindings/core/node/src/host-json.js",
       "generated": "bindings/core/wasm/src/host-json.js",
-      "sha256": "7a3554d0774fc0046a823b021a93ae0a78bb506c5cc0b4cddc9379ef7eb290a2"
+      "sha256": "fb53a11e5d733e0c763fa8f7e3188f825d635f5acd2b83da60b554b4c23e45e7"
     }
   ]
 }

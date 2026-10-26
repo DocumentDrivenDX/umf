@@ -1107,7 +1107,7 @@ export function createJsonSchemaEngine(module, options = {}) {
 }
 
 /** Private staged import profile; callers opt in and inputs are string-only. */
-import {finishJsonSchemaSourceObservation, stageJsonSchemaSource} from '../shared/json-schema-import-source.js';
+import {finishJsonSchemaSourceObservation, stageJsonSchemaSource} from './src/json-schema-import-source.js';
 export const JSON_SCHEMA_STAGED_IMPORT_PROFILE = 'umf-r8-json-schema-staged-wasm-private/0.1.0';
 
 function stagedImportUri(uri) {

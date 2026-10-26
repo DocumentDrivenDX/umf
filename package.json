@@ -82,6 +82,7 @@
     "check:core-authority": "bun scripts/check-core-authority.ts",
     "check:unified-client-boundaries": "bun scripts/check-unified-client-boundaries.ts",
     "check:rust-boundaries": "bun scripts/rust-migration/check-boundaries.ts",
+    "check:rust-node-package-closure": "bun scripts/rust-migration/r7/node-package-closure.ts",
     "test:rust-core": "bun scripts/rust-core/conformance.ts"
   },
   "dependencies": {

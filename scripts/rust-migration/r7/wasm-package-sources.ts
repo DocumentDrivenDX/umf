@@ -12,6 +12,7 @@ const pairs = [
   ['bindings/core/node/src/bit128.js', 'bindings/core/wasm/src/bit128.js'],
   ['bindings/core/node/src/json-number.js', 'bindings/core/wasm/src/json-number.js'],
   ['bindings/core/node/src/json-schema.js', 'bindings/core/wasm/src/json-schema.js'],
+  ['bindings/core/node/src/json-schema-import-source.js', 'bindings/core/wasm/src/json-schema-import-source.js'],
   ['bindings/core/node/src/core-key-tuple.js', 'bindings/core/wasm/src/core-key-tuple.js'],
   ['bindings/core/node/src/core-keys.js', 'bindings/core/wasm/src/core-keys.js'],
   ['bindings/core/node/src/dataset-values-compact.js', 'bindings/core/wasm/src/dataset-values-compact.js'],

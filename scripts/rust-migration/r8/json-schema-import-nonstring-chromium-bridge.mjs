@@ -79,7 +79,7 @@ try {
       directSourceRunnerSha256: sha(await read('scripts/rust-migration/r8/json-schema-import-nonstring-boundary-runner.mjs')),
       bridgeEntrySha256: sha(await read('scripts/rust-migration/r8/json-schema-import-nonstring-chromium-bridge-entry.ts')),
       wasmFacadeSha256: sha(await read('bindings/core/wasm/index.js')),
-      sharedBoundaryHelperSha256: sha(await read('bindings/core/shared/json-schema-import-source.js')),
+      nodeBoundaryHelperSha256: sha(await read('bindings/core/node/src/json-schema-import-source.js')),
     },
     limits: ['Private opt-in bridge only; public/default TypeScript import route unchanged.', 'The 4,000,000-character bound and non-allowlisted ToString results intentionally fail closed; excluded results do not assert predecessor parity.'],
   };

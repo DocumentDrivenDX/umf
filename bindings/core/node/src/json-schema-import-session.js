@@ -2,7 +2,7 @@
 // receives only the values observed for the current source-ordered stage.
 import {encodeWire, fromWire, resultError} from './wire.js';
 import {jsonSchemaFailureError} from './json-schema.js';
-import {finishJsonSchemaSourceObservation, stageJsonSchemaSource} from '../../shared/json-schema-import-source.js';
+import {finishJsonSchemaSourceObservation, stageJsonSchemaSource} from './json-schema-import-source.js';
 
 export const JSON_SCHEMA_STAGED_IMPORT_PROFILE = 'umf-r8-json-schema-staged-node-private/0.1.0';
 
