@@ -46,21 +46,6 @@ jobs:
             python-architecture: x64
             python-version: '3.13.16'
             expected-platform: linux_x86_64
-          - cohort: macos-arm64-cpython-311
-            runs-on: macos-15
-            python-architecture: arm64
-            python-version: '3.11.17'
-            expected-platform: macos_arm64
-          - cohort: macos-arm64-cpython-312
-            runs-on: macos-15
-            python-architecture: arm64
-            python-version: '3.12.15'
-            expected-platform: macos_arm64
-          - cohort: macos-arm64-cpython-313
-            runs-on: macos-15
-            python-architecture: arm64
-            python-version: '3.13.16'
-            expected-platform: macos_arm64
     runs-on: ${{ matrix.runs-on }}
     steps:
       - name: Require a fresh workflow run for artifact custody
@@ -86,13 +71,13 @@ jobs:
           import os, platform, sys, sysconfig
           cohort = os.environ['EXPECTED_COHORT']
           machine = platform.machine().lower()
-          expected = 'x86_64' if cohort.startswith('linux-x86_64-') else 'arm64'
+          if cohort not in {'linux-x86_64-cpython-311', 'linux-x86_64-cpython-312', 'linux-x86_64-cpython-313'}:
+              raise SystemExit('Unexpected cohort; Linux qualification is fail-closed')
+          expected = 'x86_64'
           if machine != expected:
               raise SystemExit(f'Expected {expected}, found {machine}')
           if cohort.startswith('linux-x86_64-') and sys.platform != 'linux':
               raise SystemExit('Unexpected Linux cohort')
-          if cohort.startswith('macos-arm64-') and sys.platform != 'darwin':
-              raise SystemExit('Unexpected macOS cohort')
           if platform.python_version() != os.environ['EXPECTED_PYTHON']:
               raise SystemExit(f"Expected Python {os.environ['EXPECTED_PYTHON']}; found {platform.python_version()}")
           print(f'python={sys.version} platform={sysconfig.get_platform()} machine={machine}')
@@ -192,12 +177,13 @@ jobs:
           pattern: python-release-*
           path: ${{ runner.temp }}/umf-release-cohorts
           merge-multiple: false
-      - name: Require all six receipts from this source revision and workflow run
+      - name: Require all three Linux receipts from this source revision and workflow run
         run: |
           python tools/verify_python_release_matrix.py \
             --artifacts "$RUNNER_TEMP/umf-release-cohorts" \
             --source-revision "$GITHUB_SHA" \
             --run-id "$GITHUB_RUN_ID" \
+            --cohort-set linux-only \
             --receipt "$RUNNER_TEMP/umf-python-release-matrix.json"
       - name: Prepare Rust-pair artifact custody manifest
         run: |

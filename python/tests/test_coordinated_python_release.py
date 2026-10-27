@@ -145,7 +145,8 @@ def test_coordinated_workflow_is_nonpublishing_and_builds_both_release_pairs() -
     assert "fixtures/actions-binding/source.json" in verifier_source
     assert "CARGO_NET_OFFLINE: 'true'" in workflow
     assert "cohort.startswith('linux-x86_64-')" in workflow
-    assert "cohort.startswith('macos-arm64-')" in workflow
+    assert "--cohort-set linux-only" in workflow
+    assert "Require all three Linux receipts" in workflow
     assert "platform.python_version() != os.environ['EXPECTED_PYTHON']" in workflow
     assert "actions/upload-artifact@v4" in workflow
     assert "pypa/gh-action-pypi-publish" not in workflow

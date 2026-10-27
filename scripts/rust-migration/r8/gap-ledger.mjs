@@ -463,8 +463,8 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
       && declaration.declarationKind === 'BindingElement'
       && declaration.initializerShape === 'not-applicable') {
     const evidenceDir = 'docs/helix/04-build/evidence/rust-migration/r8-compact-dataset-verify-source';
-    const evidencePaths = ['index.json', 'build-manifest.json', 'node.json', 'bun.json', 'chromium.json'].map(file => `${evidenceDir}/${file}`);
-    const predecessorPath = `${evidenceDir}/index.json`;
+    const evidencePaths = ['index.json', 'index-current.json', 'build-manifest.json', 'node.json', 'bun.json', 'chromium.json'].map(file => `${evidenceDir}/${file}`);
+    const predecessorPath = `${evidenceDir}/index-current.json`;
     const manifestPath = `${evidenceDir}/build-manifest.json`;
     const predecessor = json(predecessorPath);
     const manifest = json(manifestPath);

@@ -11,6 +11,7 @@ import {chromium} from 'playwright';
 
 const repo=resolve(import.meta.dirname,'../../..');
 const packetDir='docs/helix/04-build/evidence/rust-migration/r8-compact-dataset-verify-source';
+const packetIndex=`${packetDir}/index-current.json`;
 const pinnedToolchain='/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin';
 const pinnedBindgen='/private/tmp/umf-wasm-bindgen-0.2.100/bin/wasm-bindgen';
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
@@ -39,6 +40,7 @@ const sourcePaths=[
   'docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md',
   'docs/helix/02-design/contracts/CONTRACT-056-core-dataset-compact.md',
   'docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-default-cutover/README.md',
+  packetIndex,
   `${packetDir}/index.json`,
   ...['commerce-complete','stale-source-input-canonical-skipped','stale-source-expected-input-copy-limit','near-limit-accepted','near-limit-first-refused'].map(name=>`${packetDir}/frozen-${name}.json`),
 ];
@@ -108,7 +110,7 @@ async function verifyBuild(dist){
 }
 
 async function loadPacket(){
-  const index=JSON.parse(await read(`${packetDir}/index.json`));
+  const index=JSON.parse(await read(packetIndex));
   assert.equal(index.format,'r5-dataset-values-compact-verify-v1');
   for(const item of index.sourceClosure)assert.equal(await digest(join(repo,item.path)),item.sha256,`frozen predecessor drift: ${item.path}`);
   const cases={};
@@ -231,6 +233,6 @@ else if(mode==='--host'||mode==='--browser'){
   const buildBinding=await verifyBuild(dist),packet=await loadPacket();
   const result=mode==='--host'?await replayNode(host,dist,packet,out):await replayBrowser(dist,packet,out);
   const sourceHashes=await pins();
-  const receipt={format:'umf-r8-compact-dataset-verify-v4-source-replay/2',status:'pass',route:{default:'source-built V4 Rust Node/WASM root',reference:'source-built TypeScript root'},host:result.host,runtime:result.runtime,buildBinding:{manifest:`${dist}/${buildManifestName}`,sha256:buildBinding.sha256,sourceClosureSha256:buildBinding.manifest.sourceClosure.sha256,artifacts:buildBinding.manifest.artifacts},sourceClosure:{sha256:closureDigest(sourceHashes),files:sourceHashes},frozenPredecessor:{path:`${packetDir}/index.json`,sha256:sha(await read(`${packetDir}/index.json`)),oracle:'frozen live TypeScript verifyCompactWithWork outputs/errors'},fixtureCases:result.rows.length,rows:result.rows,hostControls:result.hostControls,rustCalls:result.rustCalls??undefined,wasmCalls:result.wasmCalls??undefined,nodeGlobalsAbsent:result.nodeGlobalsAbsent??undefined,wasmRequested:result.wasmRequested??undefined,limitations:['Source and exact compiled artifacts are bound to the immutable --build manifest before replay; this is not installed SDK archive or release qualification.','Covers the frozen verifier packet and stated host admission controls only; no declaration retirement or full compact Dataset family claim.']};
+  const receipt={format:'umf-r8-compact-dataset-verify-v4-source-replay/2',status:'pass',route:{default:'source-built V4 Rust Node/WASM root',reference:'source-built TypeScript root'},host:result.host,runtime:result.runtime,buildBinding:{manifest:`${dist}/${buildManifestName}`,sha256:buildBinding.sha256,sourceClosureSha256:buildBinding.manifest.sourceClosure.sha256,artifacts:buildBinding.manifest.artifacts},sourceClosure:{sha256:closureDigest(sourceHashes),files:sourceHashes},frozenPredecessor:{path:packetIndex,sha256:sha(await read(packetIndex)),historicalIndex:{path:`${packetDir}/index.json`,sha256:sha(await read(`${packetDir}/index.json`))},oracle:'refrozen live TypeScript verifyCompactWithWork outputs/errors; five case payloads byte-identical to historical packet'},fixtureCases:result.rows.length,rows:result.rows,hostControls:result.hostControls,rustCalls:result.rustCalls??undefined,wasmCalls:result.wasmCalls??undefined,nodeGlobalsAbsent:result.nodeGlobalsAbsent??undefined,wasmRequested:result.wasmRequested??undefined,limitations:['Source and exact compiled artifacts are bound to the immutable --build manifest before replay; this is not installed SDK archive or release qualification.','Covers the frozen verifier packet and stated host admission controls only; no declaration retirement or full compact Dataset family claim.']};
   await mkdir(resolve(out,'..'),{recursive:true});await writeFile(out,`${JSON.stringify(receipt,null,2)}\n`);console.log(JSON.stringify({status:receipt.status,host:result.host,cases:result.rows.length,rustCalls:receipt.rustCalls??null,wasmCalls:receipt.wasmCalls??null,receipt:out},null,2));
 }else throw new Error('usage: --build <dist> | --host <node|bun> <dist> <receipt.json> | --browser <dist> <receipt.json>');

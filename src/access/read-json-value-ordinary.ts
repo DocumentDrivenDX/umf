@@ -42,6 +42,8 @@ export function readJsonValueOrdinary(binding: OrdinaryReadJsonValueBinding, sou
   }
   void source.length;
 
+  // JSON mode has already completed the live host preflight above. Rust then
+  // composes through its YAML parser to preserve the predecessor's diagnostics.
   const raw = binding.readJsonValueOrdinaryText(source, isJson);
   const outcome = parseFrame(raw);
   if (!outcome || typeof outcome !== 'object' || !hasOwn(outcome, 'ok')) {

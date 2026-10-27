@@ -5,6 +5,16 @@ import {tmpdir} from 'node:os';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 
+function isAddressInUse(error:unknown):boolean{
+ if(error&&typeof error==='object'){
+  const candidate=error as {code?:unknown;errno?:unknown};
+  if(candidate.code==='EADDRINUSE'||candidate.errno==='EADDRINUSE')return true;
+ }
+ return String(error).includes('EADDRINUSE');
+}
+const collisionMessage=Object.assign(new Error('Failed to start server. Is port 47595 in use?'),{syscall:'listen',errno:0,code:'EADDRINUSE'});
+if(!isAddressInUse(collisionMessage)||!isAddressInUse(new Error('listen EADDRINUSE'))||isAddressInUse(Object.assign(new Error('connection refused'),{code:'ECONNREFUSED'})))throw new Error('Loopback bind collision classifier regression');
+
 let archive=resolve(process.argv[2]??'');
 if(!process.argv[2]){
  archive=resolve('.cache/sdk-distribution/umf-sdk.tgz');
@@ -464,7 +474,7 @@ const nodeEntry=JSON.parse(node) as {files:number;synchronous:boolean;numericCas
    const type=relativePath.endsWith('.wasm')?'application/wasm':relativePath.endsWith('.js')?'text/javascript':'application/octet-stream';
    return new Response(bytes,{headers:{'content-type':type}});
  }catch{return new Response('not found',{status:404})}
- }});serverPort=candidatePort;break}catch(error){lastBindError=error;if(!String(error).includes('EADDRINUSE'))throw error}
+ }});serverPort=candidatePort;break}catch(error){lastBindError=error;if(!isAddressInUse(error))throw error}
  }
  if(!server)throw new Error(`Could not bind Chromium replay server after 20 loopback ports: ${String(lastBindError)}`);
 const browserCheck=`const rootImportStarted=performance.now();const root=await import('@umf/core');const defaultRootInitializationMs=performance.now()-rootImportStarted;

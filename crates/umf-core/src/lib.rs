@@ -5,6 +5,7 @@
 //! filesystem, network, process, clock, or JavaScript runtime.
 #[cfg(not(all(feature = "metamodel-compiler", not(feature = "full-core"))))]
 include!("full_modules.rs");
+pub mod read_json_value_host;
 
 // Source-bound metamodel compiler closure. Keep this list deliberately
 // independent of adapters and runtime services, whose compile-time resources

@@ -129,6 +129,29 @@ pub fn read_typescript_json_value(
     read_json_value_typescript_order(source, format.unwrap_or(Format::Yaml), ctx)
 }
 
+/// Continue ordinary JSON reading after the host's live `JSON.parse` preflight
+/// has succeeded. The caller performs that host operation in source order;
+/// Rust then composes through YAML and supplies duplicate-key positioning.
+/// Broader flow-syntax diagnostic parity remains open.
+pub fn read_typescript_json_value_after_json_preflight(
+    source: &[u16],
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    if ctx.profile() == crate::ResourceProfile::HardIsolated {
+        return Err(EngineError::new(
+            "RESOURCE_PROFILE_UNAVAILABLE",
+            Utf16::default(),
+            "HardIsolated resource profile is unavailable",
+        ));
+    }
+    if source.len() > ctx.limits().max_text_units {
+        return Err(fail("LIMIT", "Source text exceeds limit"));
+    }
+    ctx.charge_text(source.len(), Utf16::default())?;
+    let value = parse_yaml_utf16(source, ctx, true)?;
+    crate::copy_json(&value, ctx)
+}
+
 fn read_json_value_inner(
     source: &[u16],
     format: Format,
@@ -2132,6 +2155,10 @@ struct LocatedEvent {
 fn yaml_events_with_profile(
     text: &str,
     profile: ScanProfile,
+    typescript_profile: bool,
+    diagnostic_source: Option<&[u16]>,
+    source_offsets: Option<&[usize]>,
+    ctx: &mut Context<'_>,
 ) -> Result<Vec<LocatedEvent>, EngineError> {
     struct Events(Vec<LocatedEvent>);
     impl<'a> saphyr_parser::SpannedEventReceiver<'a> for Events {
@@ -2167,11 +2194,180 @@ fn yaml_events_with_profile(
         }
     }
     let mut events = Events(Vec::new());
-    Parser::new_from_str_with_profile(text, profile)
+    let parse_result = Parser::new_from_str_with_profile(text, profile)
         .keep_tags(true)
-        .load(&mut events, true)
-        .map_err(|e| fail("YAML_SYNTAX", &e.to_string()))?;
+        .load(&mut events, true);
+    if let Err(error) = parse_result {
+        if typescript_profile && profile == ScanProfile::Yaml12 {
+            if let Some(source) = diagnostic_source {
+                // The vendored scanner's marker index counts Unicode scalar
+                // positions even though its Display text labels them bytes.
+                let char_offset = error.marker().index().min(text.chars().count());
+                let offset = source_offsets
+                    .and_then(|offsets| offsets.get(char_offset))
+                    .copied()
+                    .unwrap_or(char_offset)
+                    .min(source.len());
+                return Err(typescript_yaml_parser_diagnostic(
+                    source,
+                    offset,
+                    error.info(),
+                    ctx,
+                )?);
+            }
+        }
+        return Err(fail("YAML_SYNTAX", &error.to_string()));
+    }
     Ok(events.0)
+}
+
+fn typescript_yaml_parser_diagnostic(
+    source: &[u16],
+    error_offset: usize,
+    parser_info: &str,
+    ctx: &mut Context<'_>,
+) -> Result<EngineError, EngineError> {
+    const MAX_DIAGNOSTIC_PARTS: usize = 32;
+    ctx.charge_work(source.len(), Utf16::default())?;
+    let mut headlines = Vec::<(usize, String)>::new();
+    let mut stack = Vec::<(u16, usize)>::new();
+    let mut quote = None::<(u16, usize)>;
+    let mut escaped = false;
+    let mut line_comment = false;
+    let mut previous_nonspace = None::<u16>;
+    let mut invalid_escape = None::<(usize, u16)>;
+    let mut mismatched_closer = None::<(usize, u16)>;
+    let mut at = 0usize;
+    while at < source.len() {
+        let unit = source[at];
+        if line_comment {
+            if unit == 0x0a || unit == 0x0d {
+                line_comment = false;
+                previous_nonspace = None;
+            }
+            at += 1;
+            continue;
+        }
+        if let Some((delimiter, _)) = quote {
+            if escaped {
+                if delimiter == 0x22
+                    && !matches!(unit, 0x22 | 0x5c | 0x2f | 0x62 | 0x66 | 0x6e | 0x72 | 0x74 | 0x75)
+                    && invalid_escape.is_none()
+                {
+                    invalid_escape = Some((at - 1, unit));
+                }
+                escaped = false;
+            } else if delimiter == 0x22 && unit == 0x5c {
+                escaped = true;
+            } else if unit == delimiter {
+                quote = None;
+            }
+            at += 1;
+            continue;
+        }
+        if unit == 0x22 || unit == 0x27 {
+            quote = Some((unit, at));
+        } else if unit == 0x23 && !stack.is_empty() {
+            line_comment = true;
+            previous_nonspace = None;
+        } else if unit == 0x7b || unit == 0x5b {
+            stack.push((unit, at));
+        } else if unit == 0x7d || unit == 0x5d {
+            let expected = if unit == 0x7d { 0x7b } else { 0x5b };
+            if stack.last().is_some_and(|(opening, _)| *opening == expected) {
+                stack.pop();
+            } else {
+                // A mismatched closer ends this lexical walk. Later closers
+                // cannot repair the collection that the parser already rejected.
+                mismatched_closer = Some((at, unit));
+                break;
+            }
+        } else if unit == 0x2c && stack.last().is_some_and(|(opening, _)| *opening == 0x5b) {
+            if (previous_nonspace == Some(0x5b) || previous_nonspace == Some(0x2c))
+                && headlines.is_empty()
+            {
+                headlines.push((at, "Unexpected , in flow sequence".to_owned()));
+            }
+        }
+        if !matches!(unit, 0x20 | 0x09 | 0x0a | 0x0d) {
+            previous_nonspace = Some(unit);
+        }
+        at += 1;
+    }
+
+    if let Some((delimiter, _)) = quote {
+        headlines.push((source.len(), format!("Missing closing {}quote", delimiter as u8 as char)));
+    }
+    if let Some((slash, escaped)) = invalid_escape {
+        headlines.push((slash, format!("Invalid escape sequence \\{}", escaped as u8 as char)));
+    }
+    if parser_info.contains("invalid trailing content after double-quoted scalar") {
+        headlines.push((error_offset, "Missing , or : between flow map items".to_owned()));
+    }
+    if parser_info.contains("unknown escape character") {
+        if invalid_escape.is_none() && !(quote.is_some() && escaped) {
+            headlines.push((error_offset, "Invalid escape sequence".to_owned()));
+        }
+    }
+    let mut trailing = Vec::<(usize, String)>::new();
+    if let Some((offset, closer)) = mismatched_closer {
+        if closer == 0x5d
+            && source.get(error_offset) == Some(&0x7d)
+            && parser_info.contains("misplaced bracket")
+        {
+            trailing.push((error_offset, "Unexpected flow-map-end token in YAML stream: \"}\"".to_owned()));
+        }
+        let _ = offset;
+    }
+    if !stack.is_empty() {
+        let collection_offset = quote.map_or_else(
+            || mismatched_closer.map_or(error_offset, |(offset, _)| offset),
+            |_| source.len(),
+        );
+        let remaining = MAX_DIAGNOSTIC_PARTS.saturating_sub(headlines.len());
+        let visible = remaining.saturating_sub(1).min(stack.len());
+        for index in (stack.len() - visible..stack.len()).rev() {
+            let (opening, _) = stack[index];
+            let is_map = opening == 0x7b;
+            let parent_is_collection = index > 0;
+            let parent_is_seq = index > 0 && stack[index - 1].0 == 0x5b;
+            let headline = match (is_map, parent_is_collection, parent_is_seq) {
+                (true, true, true) => "Flow map in block collection must be sufficiently indented and end with a }",
+                (false, true, false) => "Flow sequence in block collection must be sufficiently indented and end with a ]",
+                (true, _, _) => "Flow map must end with a }",
+                (false, _, _) => "Flow sequence must end with a ]",
+            };
+            headlines.push((collection_offset, headline.to_owned()));
+        }
+        if stack.len() > visible {
+            headlines.push((
+                collection_offset,
+                format!(
+                    "{} additional nested collection diagnostics omitted",
+                    stack.len() - visible
+                ),
+            ));
+        }
+    }
+    headlines.extend(trailing);
+    if headlines.is_empty() {
+        headlines.push((error_offset, parser_info.to_owned()));
+    }
+    let mut rendered = Vec::new();
+    for (offset, headline) in headlines {
+        match yaml_source_diagnostic(source, offset.min(source.len()), &headline, ctx) {
+            Ok(error) => rendered.push(error.message),
+            Err(error) => return Err(error),
+        }
+    }
+    let mut message = Vec::new();
+    for (index, part) in rendered.iter().enumerate() {
+        if index > 0 {
+            message.extend("; ".encode_utf16());
+        }
+        message.extend_from_slice(part.units());
+    }
+    Ok(EngineError::new("SYNTAX", Utf16::default(), Utf16::new(message)))
 }
 
 fn parse_yaml_utf16(
@@ -2179,7 +2375,12 @@ fn parse_yaml_utf16(
     ctx: &mut Context<'_>,
     typescript_profile: bool,
 ) -> Result<Value, EngineError> {
-    let (events, prefix) = prepare_yaml_events(source, ScanProfile::Yaml12, ctx)?;
+    let (events, prefix) = prepare_yaml_events(
+        source,
+        ScanProfile::Yaml12,
+        ctx,
+        typescript_profile,
+    )?;
     let builder = CoreYamlBuilder { typescript_profile };
     let mut value = parse_yaml_events::<CoreYamlBuilder>(events, ctx, builder, Some(source))?;
     decode_private_value(&mut value, prefix)?;
@@ -2190,19 +2391,24 @@ fn prepare_yaml_events(
     source: &[u16],
     profile: ScanProfile,
     ctx: &mut Context<'_>,
+    typescript_profile: bool,
 ) -> Result<(Vec<LocatedEvent>, (char, char)), EngineError> {
     // YAML permits one stream BOM; keeping it out of both private views
     // leaves their spans aligned with the corresponding original source slice.
+    let original_source = source;
     let source_base = usize::from(source.starts_with(&[0xfeff]));
     let source = source.strip_prefix(&[0xfeff]).unwrap_or(source);
-    // Budget both private source views before allocating either one. The final
-    // adapter can expand each isolated unit to a seven-character token.
+    // Budget both private source views and the original-source offset map
+    // before allocating them. The final adapter can expand an isolated unit
+    // to a seven-character token.
     let private_work = source
         .len()
-        .checked_mul(8)
+        .checked_mul(9)
+        .and_then(|work| work.checked_add(1))
         .ok_or_else(|| fail("LIMIT", "YAML private-view size overflow"))?;
     ctx.charge_work(private_work, Utf16::default())?;
     let mut first_chars = Vec::with_capacity(source.len());
+    let mut first_source_offsets = Vec::with_capacity(source.len() + 1);
     let mut i = 0;
     let mut next_poll = 0;
     while i < source.len() {
@@ -2211,6 +2417,7 @@ fn prepare_yaml_events(
             next_poll = i + 1024;
         }
         let u = source[i];
+        first_source_offsets.push(i + source_base);
         if (0xd800..=0xdbff).contains(&u)
             && source
                 .get(i + 1)
@@ -2227,10 +2434,18 @@ fn prepare_yaml_events(
             i += 1;
         }
     }
+    first_source_offsets.push(source.len() + source_base);
     rewrite_surrogate_escape_slashes(&mut first_chars, None, ctx)?;
     let first_text: String = first_chars.iter().collect();
     reject_yaml_11_directive(&first_text, profile)?;
-    let first = yaml_events_with_profile(&first_text, profile)?;
+    let first = yaml_events_with_profile(
+        &first_text,
+        profile,
+        typescript_profile,
+        Some(original_source),
+        Some(&first_source_offsets),
+        ctx,
+    )?;
     let quoted_ranges: Vec<(usize, usize)> = first
         .iter()
         .filter_map(|located| match &located.event {
@@ -2311,8 +2526,15 @@ fn prepare_yaml_events(
         }
     }
     let final_text: String = final_chars.iter().collect();
-    let mut final_events = yaml_events_with_profile(&final_text, profile)?;
     source_offsets.push(source.len() + source_base);
+    let mut final_events = yaml_events_with_profile(
+        &final_text,
+        profile,
+        typescript_profile,
+        Some(original_source),
+        Some(&source_offsets),
+        ctx,
+    )?;
     for located in &mut final_events {
         located.source_start = source_offsets
             .get(located.start)
@@ -3016,7 +3238,12 @@ fn parse_python_yaml(
         ));
     }
     let units = source.to_utf16(ctx)?;
-    let (events, prefix) = prepare_yaml_events(units.units(), ScanProfile::PythonRuamel12, ctx)?;
+    let (events, prefix) = prepare_yaml_events(
+        units.units(),
+        ScanProfile::PythonRuamel12,
+        ctx,
+        false,
+    )?;
     let mut value = parse_yaml_events::<PythonYamlBuilder>(events, ctx, PythonYamlBuilder, None)?;
     decode_private_python_value(&mut value, prefix, ctx)?;
     check_python_duplicate_keys(&value, ctx)?;
@@ -4005,6 +4232,210 @@ mod tests {
             assert_eq!(error.code, "SYNTAX", "{source:?}");
             assert_eq!(error.path, Utf16::default(), "{source:?}");
             assert_eq!(error.message.to_utf8().unwrap(), expected, "{source:?}");
+        }
+    }
+
+    #[test]
+    fn json_after_live_preflight_uses_typescript_duplicate_diagnostic() {
+        let duplicate = r#"{"x":1,"x":2}"#;
+        let error = read_typescript_json_value_after_json_preflight(
+            &duplicate.encode_utf16().collect::<Vec<_>>(),
+            &mut Context::ordinary(),
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "SYNTAX");
+        assert_eq!(error.path, Utf16::default());
+        assert_eq!(
+            error.message.to_utf8().unwrap(),
+            "Map keys must be unique at line 1, column 8:\n\n{\"x\":1,\"x\":2}\n       ^\n"
+        );
+    }
+
+    #[test]
+    fn typescript_yaml_diagnostic_preserves_bom_source_position() {
+        let source = "\u{feff}{";
+        let error = read_typescript_json_value(
+            &source.encode_utf16().collect::<Vec<_>>(),
+            Some(Format::Yaml),
+            &mut Context::ordinary(),
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "SYNTAX");
+        assert_eq!(error.path, Utf16::default());
+        assert_eq!(
+            error.message.to_utf8().unwrap(),
+            "Flow map must end with a } at line 1, column 3:\n\n\u{feff}{\n  ^\n"
+        );
+    }
+
+    #[test]
+    fn r8_json_after_live_preflight_matches_diagnostic_source_oracle() {
+        const SOURCE_ORACLE: &str = r###"{"count":40,"rows":[{"id":"map-empty-head","source":"{","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Flow map must end with a } at line 1, column 2:\n\n{\n ^\n"}},{"id":"map-missing-value","source":"{\"a\":}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["a"],"descriptors":[{"key":"a","enumerable":true,"configurable":true,"writable":true,"value":{"type":"null","value":null}}]}}},{"id":"map-truncated-key","source":"{\"a\": 1, \"b\"","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Flow map must end with a } at line 1, column 13:\n\n{\"a\": 1, \"b\"\n            ^\n"}},{"id":"map-missing-colon","source":"{\"a\" 1}","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Missing , or : between flow map items at line 1, column 6:\n\n{\"a\" 1}\n     ^\n"}},{"id":"map-trailing-comma","source":"{\"a\":1,}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["a"],"descriptors":[{"key":"a","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":1}}]}}},{"id":"map-adjacent-members","source":"{\"a\":1 \"b\":2}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["a"],"descriptors":[{"key":"a","enumerable":true,"configurable":true,"writable":true,"value":{"type":"string","utf16Length":7,"utf16Sha256":"53ae612831e776f7d3a648485e668cdd66717d193d0e757c4a0c2c323e156818"}}]}}},{"id":"map-unquoted-key","source":"{a:1}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["a:1"],"descriptors":[{"key":"a:1","enumerable":true,"configurable":true,"writable":true,"value":{"type":"null","value":null}}]}}},{"id":"map-comment-line","source":"{\"a\":1 // trailing comment\n}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["a"],"descriptors":[{"key":"a","enumerable":true,"configurable":true,"writable":true,"value":{"type":"string","utf16Length":21,"utf16Sha256":"6707ab9dd28f382ea0fb8ed6a556f72b898c78c2e3215bc2566ef40166b19fb7"}}]}}},{"id":"map-comment-hash","source":"{\"a\":1 # trailing comment\n}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["a"],"descriptors":[{"key":"a","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":1}}]}}},{"id":"map-block-comment","source":"{/* comment */\"a\":1}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["/* comment */\"a\":1"],"descriptors":[{"key":"/* comment */\"a\":1","enumerable":true,"configurable":true,"writable":true,"value":{"type":"null","value":null}}]}}},{"id":"map-single-quoted-key","source":"{'a':1}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["a"],"descriptors":[{"key":"a","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":1}}]}}},{"id":"map-unterminated-key","source":"{\"a:1}","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Missing closing \"quote at line 1, column 7:\n\n{\"a:1}\n      ^\n; Flow map must end with a } at line 1, column 7:\n\n{\"a:1}\n      ^\n"}},{"id":"map-unterminated-double-value","source":"{\"a\":\"value}","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Missing closing \"quote at line 1, column 13:\n\n{\"a\":\"value}\n            ^\n; Flow map must end with a } at line 1, column 13:\n\n{\"a\":\"value}\n            ^\n"}},{"id":"map-single-quoted-value","source":"{\"a\":'value'}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["a"],"descriptors":[{"key":"a","enumerable":true,"configurable":true,"writable":true,"value":{"type":"string","utf16Length":5,"utf16Sha256":"6c5d15002e0d0e64e65846c5bddd6c4fb059504262397e76b9a385ef7337669d"}}]}}},{"id":"map-bad-escape","source":"{\"a\":\"\\q\"}","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Invalid escape sequence \\q at line 1, column 7:\n\n{\"a\":\"\\q\"}\n      ^\n"}},{"id":"sequence-empty-head","source":"[","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Flow sequence must end with a ] at line 1, column 2:\n\n[\n ^\n"}},{"id":"sequence-leading-comma","source":"[,1]","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Unexpected , in flow sequence at line 1, column 2:\n\n[,1]\n ^\n"}},{"id":"sequence-double-comma","source":"[1,,2]","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Unexpected , in flow sequence at line 1, column 4:\n\n[1,,2]\n   ^\n"}},{"id":"sequence-trailing-comma","source":"[1,]","reference":{"kind":"return","shape":{"type":"array","id":0,"prototype":"Array.prototype","keys":["0","length"],"descriptors":[{"key":"0","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":1}},{"key":"length","enumerable":false,"configurable":false,"writable":true,"value":{"type":"number","value":1}}]}}},{"id":"sequence-missing-separator","source":"[1 2]","reference":{"kind":"return","shape":{"type":"array","id":0,"prototype":"Array.prototype","keys":["0","length"],"descriptors":[{"key":"0","enumerable":true,"configurable":true,"writable":true,"value":{"type":"string","utf16Length":3,"utf16Sha256":"ef680b19553f69fcadd5c677e14f93de788778a6b67f4e0c63ca4b8f9002595d"}},{"key":"length","enumerable":false,"configurable":false,"writable":true,"value":{"type":"number","value":1}}]}}},{"id":"sequence-truncated-nested-map","source":"[{\"a\":1]","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Flow map in block collection must be sufficiently indented and end with a } at line 1, column 8:\n\n[{\"a\":1]\n       ^\n; Flow sequence must end with a ] at line 1, column 8:\n\n[{\"a\":1]\n       ^\n"}},{"id":"sequence-comment-between-values","source":"[1 // comment\n,2]","reference":{"kind":"return","shape":{"type":"array","id":0,"prototype":"Array.prototype","keys":["0","1","length"],"descriptors":[{"key":"0","enumerable":true,"configurable":true,"writable":true,"value":{"type":"string","utf16Length":12,"utf16Sha256":"8b69410cee7c8d169d1c543de28b6bd4d4cd52fb782eb0a913c1b25d863fd771"}},{"key":"1","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":2}},{"key":"length","enumerable":false,"configurable":false,"writable":true,"value":{"type":"number","value":2}}]}}},{"id":"nested-map-truncated-inner","source":"{\"a\":{\"b\":1}","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Flow map must end with a } at line 1, column 13:\n\n{\"a\":{\"b\":1}\n            ^\n"}},{"id":"nested-sequence-truncated-inner","source":"{\"a\":[1,2}","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Flow sequence in block collection must be sufficiently indented and end with a ] at line 1, column 10:\n\n{\"a\":[1,2}\n         ^\n; Flow map must end with a } at line 1, column 10:\n\n{\"a\":[1,2}\n         ^\n"}},{"id":"nested-flow-mixed-truncated","source":"[{\"a\":[1,{\"b\":2}]}","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Flow sequence must end with a ] at line 1, column 19:\n\n[{\"a\":[1,{\"b\":2}]}\n                  ^\n"}},{"id":"nested-extra-close","source":"{\"a\":[1,2]]}","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Flow map must end with a } at line 1, column 11:\n\n{\"a\":[1,2]]}\n          ^\n; Unexpected flow-map-end token in YAML stream: \"}\" at line 1, column 12:\n\n{\"a\":[1,2]]}\n           ^\n"}},{"id":"multiline-map-missing-value","source":"{\n  \"first\": 1,\n  \"second\":\n}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["first","second"],"descriptors":[{"key":"first","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":1}},{"key":"second","enumerable":true,"configurable":true,"writable":true,"value":{"type":"null","value":null}}]}}},{"id":"multiline-sequence-truncated","source":"[\n  1,\n  {\"x\": 2\n]","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Flow map in block collection must be sufficiently indented and end with a } at line 4, column 1:\n\n  {\"x\": 2\n]\n^\n; Flow sequence must end with a ] at line 4, column 1:\n\n  {\"x\": 2\n]\n^\n"}},{"id":"multiline-comment-separator","source":"[1,\n // comment\n 2,]","reference":{"kind":"return","shape":{"type":"array","id":0,"prototype":"Array.prototype","keys":["0","1","length"],"descriptors":[{"key":"0","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":1}},{"key":"1","enumerable":true,"configurable":true,"writable":true,"value":{"type":"string","utf16Length":12,"utf16Sha256":"519030ea252d0765e3d374b305b9dabd190ead9e615d7a1036b50dce48f17347"}},{"key":"length","enumerable":false,"configurable":false,"writable":true,"value":{"type":"number","value":2}}]}}},{"id":"unicode-key-bad-member","source":"{\"名\":1, \"壊れ\":}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["名","壊れ"],"descriptors":[{"key":"名","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":1}},{"key":"壊れ","enumerable":true,"configurable":true,"writable":true,"value":{"type":"null","value":null}}]}}},{"id":"unicode-astral-truncated-quote","source":"{\"😀\":\"値}","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Missing closing \"quote at line 1, column 10:\n\n{\"😀\":\"値}\n         ^\n; Flow map must end with a } at line 1, column 10:\n\n{\"😀\":\"値}\n         ^\n"}},{"id":"unicode-line-separator","source":"[\"a b\",]","reference":{"kind":"return","shape":{"type":"array","id":0,"prototype":"Array.prototype","keys":["0","length"],"descriptors":[{"key":"0","enumerable":true,"configurable":true,"writable":true,"value":{"type":"string","utf16Length":3,"utf16Sha256":"57a277ce899a6413dc55fb22c8882eba680c5385317f83082e2ca90c51ca1a90"}},{"key":"length","enumerable":false,"configurable":false,"writable":true,"value":{"type":"number","value":1}}]}}},{"id":"unicode-crlf-comment","source":"{\r\n \"é\": 1, // comment\r\n}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["é","// comment"],"descriptors":[{"key":"é","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":1}},{"key":"// comment","enumerable":true,"configurable":true,"writable":true,"value":{"type":"null","value":null}}]}}},{"id":"quote-unclosed-single","source":"['unterminated]","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Missing closing 'quote at line 1, column 16:\n\n['unterminated]\n               ^\n; Flow sequence must end with a ] at line 1, column 16:\n\n['unterminated]\n               ^\n"}},{"id":"quote-unclosed-double","source":"[\"unterminated]","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Missing closing \"quote at line 1, column 16:\n\n[\"unterminated]\n               ^\n; Flow sequence must end with a ] at line 1, column 16:\n\n[\"unterminated]\n               ^\n"}},{"id":"quote-after-escape-truncated","source":"[\"trailing\\","reference":{"kind":"throw","code":"SYNTAX","path":"","message":"Missing closing \"quote at line 1, column 12:\n\n[\"trailing\\\n           ^\n; Flow sequence must end with a ] at line 1, column 12:\n\n[\"trailing\\\n           ^\n"}},{"id":"truncated-exponent","source":"[1e+]","reference":{"kind":"return","shape":{"type":"array","id":0,"prototype":"Array.prototype","keys":["0","length"],"descriptors":[{"key":"0","enumerable":true,"configurable":true,"writable":true,"value":{"type":"string","utf16Length":3,"utf16Sha256":"ffb499b0c4ae623700331950af01615e7b1dc7111fc5ed14f554c78bca3435c3"}},{"key":"length","enumerable":false,"configurable":false,"writable":true,"value":{"type":"number","value":1}}]}}},{"id":"truncated-literal","source":"[tru]","reference":{"kind":"return","shape":{"type":"array","id":0,"prototype":"Array.prototype","keys":["0","length"],"descriptors":[{"key":"0","enumerable":true,"configurable":true,"writable":true,"value":{"type":"string","utf16Length":3,"utf16Sha256":"9e224e14adb868dcdc6f4777d83b08054d97b04191383b773a79bc561ea29b25"}},{"key":"length","enumerable":false,"configurable":false,"writable":true,"value":{"type":"number","value":1}}]}}},{"id":"leading-zero","source":"[01]","reference":{"kind":"return","shape":{"type":"array","id":0,"prototype":"Array.prototype","keys":["0","length"],"descriptors":[{"key":"0","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":1}},{"key":"length","enumerable":false,"configurable":false,"writable":true,"value":{"type":"number","value":1}}]}}},{"id":"valid-json-control","source":"{\"ok\":[1,true,null,\"x\"]}","reference":{"kind":"return","shape":{"type":"object","id":0,"prototype":"null","keys":["ok"],"descriptors":[{"key":"ok","enumerable":true,"configurable":true,"writable":true,"value":{"type":"array","id":1,"prototype":"Array.prototype","keys":["0","1","2","3","length"],"descriptors":[{"key":"0","enumerable":true,"configurable":true,"writable":true,"value":{"type":"number","value":1}},{"key":"1","enumerable":true,"configurable":true,"writable":true,"value":{"type":"boolean","value":true}},{"key":"2","enumerable":true,"configurable":true,"writable":true,"value":{"type":"null","value":null}},{"key":"3","enumerable":true,"configurable":true,"writable":true,"value":{"type":"string","utf16Length":1,"utf16Sha256":"14f825b2bbc32dd8d196367fa8776873069c12a8954d8da7513aa7704ddd09eb"}},{"key":"length","enumerable":false,"configurable":false,"writable":true,"value":{"type":"number","value":4}}]}}]}}}]}"###;
+        let packet: serde_json::Value = serde_json::from_str(SOURCE_ORACLE).unwrap();
+        let mut matches = 0usize;
+        let mut mismatches = Vec::new();
+        for row in packet["rows"].as_array().unwrap() {
+            let id = row["id"].as_str().unwrap();
+            let source = row["source"].as_str().unwrap();
+            let actual = read_typescript_json_value_after_json_preflight(
+                &source.encode_utf16().collect::<Vec<_>>(),
+                &mut Context::ordinary(),
+            );
+            let expected = &row["reference"];
+            let same = if expected["kind"] == "throw" {
+                actual.as_ref().is_err_and(|error| {
+                    error.code == expected["code"].as_str().unwrap()
+                        && error.path.to_utf8().unwrap() == expected["path"].as_str().unwrap()
+                        && error.message.to_utf8().unwrap() == expected["message"].as_str().unwrap()
+                })
+            } else {
+                actual.as_ref().is_ok_and(|value| {
+                    let mut next_id = 0;
+                    value_matches_oracle_shape(value, &expected["shape"], &mut next_id)
+                })
+            };
+            if same {
+                matches += 1;
+            } else {
+                let got = match actual {
+                    Ok(value) => {
+                        let mut context = Context::ordinary();
+                        let rendered = write_json_value(&value, Format::Json, &mut context)
+                            .unwrap()
+                            .to_utf8()
+                            .unwrap();
+                        format!("return {rendered}")
+                    }
+                    Err(error) => format!(
+                        "throw {} {} {:?}",
+                        error.code,
+                        error.path.to_utf8().unwrap(),
+                        error.message.to_utf8().unwrap()
+                    ),
+                };
+                mismatches.push(format!("{id}: expected {:?}; got {got}", expected));
+            }
+        }
+        eprintln!(
+            "ordinary JSON diagnostic oracle: {matches}/{} matched; {} mismatched",
+            packet["rows"].as_array().unwrap().len(),
+            mismatches.len()
+        );
+        for mismatch in &mismatches {
+            eprintln!("{mismatch}");
+        }
+        assert!(mismatches.is_empty());
+    }
+
+    #[test]
+    fn typescript_diagnostic_source_walk_respects_work_meter_before_allocation() {
+        let source = "[".repeat(100_000);
+        let units = source.encode_utf16().collect::<Vec<_>>();
+        let mut charged = 0usize;
+        let mut meter = |amount: usize| {
+            if charged.saturating_add(amount) > 1_050_000 {
+                return Err(EngineError::new(
+                    "RESOURCE_LIMIT",
+                    Utf16::default(),
+                    "Host work budget exceeded",
+                ));
+            }
+            charged += amount;
+            Ok(())
+        };
+        let error = read_typescript_json_value_after_json_preflight(
+            &units,
+            &mut Context::ordinary().with_meter(&mut meter),
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "RESOURCE_LIMIT");
+        assert_eq!(error.message.to_utf8().unwrap(), "Host work budget exceeded");
+        assert!(charged <= 1_050_000);
+    }
+
+    fn value_matches_oracle_shape(
+        value: &Value,
+        shape: &serde_json::Value,
+        next_id: &mut usize,
+    ) -> bool {
+        let id = *next_id;
+        *next_id += 1;
+        match value {
+            Value::Null => shape["type"] == "null" && shape["value"].is_null(),
+            Value::Bool(value) => {
+                shape["type"] == "boolean" && shape["value"] == *value
+            }
+            Value::Number(value) => {
+                shape["type"] == "number" && shape["value"].as_f64() == Some(*value)
+            }
+            Value::String(value) => {
+                let units = value.units();
+                let mut bytes = Vec::with_capacity(units.len() * 2);
+                for unit in units {
+                    bytes.extend_from_slice(&unit.to_le_bytes());
+                }
+                use sha2::{Digest, Sha256};
+                let digest = Sha256::digest(&bytes);
+                let digest = digest.iter().map(|byte| format!("{byte:02x}")).collect::<String>();
+                shape["type"] == "string"
+                    && shape["utf16Length"] == units.len()
+                    && shape["utf16Sha256"] == digest
+            }
+            Value::Array(values) => {
+                shape["type"] == "array"
+                    && shape["id"] == id
+                    && shape["prototype"] == "Array.prototype"
+                    && shape["descriptors"].as_array().is_some_and(|descriptors| {
+                        descriptors.len() == values.len() + 1
+                            && values.iter().zip(descriptors).enumerate().all(
+                                |(index, (value, descriptor))| {
+                                    descriptor["key"] == index.to_string()
+                                        && descriptor["enumerable"] == true
+                                        && descriptor["configurable"] == true
+                                        && descriptor["writable"] == true
+                                        && value_matches_oracle_shape(
+                                            value,
+                                            &descriptor["value"],
+                                            next_id,
+                                        )
+                                },
+                            )
+                            && descriptors.last().is_some_and(|descriptor| {
+                                descriptor["key"] == "length"
+                                    && descriptor["value"]["value"] == values.len()
+                                    && descriptor["enumerable"] == false
+                                    && descriptor["configurable"] == false
+                                    && descriptor["writable"] == true
+                            })
+                    })
+            }
+            Value::Object(values) => {
+                shape["type"] == "object"
+                    && shape["id"] == id
+                    && shape["prototype"] == "null"
+                    && shape["descriptors"].as_array().is_some_and(|descriptors| {
+                        descriptors.len() == values.len()
+                            && shape["keys"].as_array().is_some_and(|keys| {
+                                keys.len() == values.len()
+                                    && values.iter().zip(keys).all(|((key, _), expected)| {
+                                        key.to_utf8().ok().as_deref() == expected.as_str()
+                                    })
+                            })
+                            && values.iter().zip(descriptors).all(|((key, value), descriptor)| {
+                                descriptor["key"].as_str().is_some_and(|expected_key| {
+                                    key.to_utf8().ok().as_deref() == Some(expected_key)
+                                        && descriptor["enumerable"] == true
+                                        && descriptor["configurable"] == true
+                                        && descriptor["writable"] == true
+                                        && value_matches_oracle_shape(
+                                            value,
+                                            &descriptor["value"],
+                                            next_id,
+                                        )
+                                })
+                            })
+                    })
+            }
         }
     }
 

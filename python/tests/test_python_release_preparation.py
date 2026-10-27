@@ -20,7 +20,7 @@ preparation = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(preparation)
 
 sys.path.insert(0, str(ROOT / "python/tests"))
-from test_python_release_matrix import _matrix, REVISION, RUN_ID
+from test_python_release_matrix import _matrix, _linux_matrix, REVISION, RUN_ID
 
 
 def _aggregate(root: Path, path: Path) -> dict:
@@ -51,6 +51,18 @@ def test_preparation_emits_deterministic_five_artifact_manifest(tmp_path: Path, 
     }
     assert len(first["artifacts"]) == 5
     assert len([name for name in first["artifacts"] if name.startswith("umf_core-") and name.endswith(".whl")]) == 2
+
+
+def test_preparation_emits_explicit_linux_only_manifest(tmp_path: Path) -> None:
+    root = _linux_matrix(tmp_path)
+    receipt_path = tmp_path / "linux-aggregate.json"
+    value = matrix.verify_matrix(root, REVISION, RUN_ID, "linux-only")
+    receipt_path.write_text(json.dumps(value, sort_keys=True, separators=(",", ":")) + "\n")
+    result = preparation.prepare(root, receipt_path)
+    assert result["qualificationScope"] == "linux-only"
+    assert result["aggregateReceiptSchema"] == "umf.python-coordinated-release-linux-matrix/1"
+    assert len(result["cohorts"]) == 3
+    assert len(result["artifacts"]) == 4
 
 
 def test_preparation_rejects_missing_cohort(tmp_path: Path) -> None:

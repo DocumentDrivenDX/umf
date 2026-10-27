@@ -29,6 +29,18 @@ ddx:
 
 # R8 resource-authority closure decision packet
 
+**2026-10-27 current-source correction:** The decision below describes its
+2026-10-26 pinned inventory and is historical for the six versioned Core
+operation schemas. The current `spec/metamodel/umf.yaml` declares all six;
+the Rust metamodel compiler emits them, `scripts/metamodel/build.ts` requires
+their exact output paths, and `spec/metamodel/generated/manifest.json` pins
+their current output bytes and build provenance. The current R8 ledger classifies
+their aliases as `generated-authority-known`. Its per-resource rows still say
+that transitive Cargo and metamodel input closure is not frozen *per resource*;
+use the source-bound metamodel manifest and current cohort for that claim.
+The historical table and recommendation below remain evidence of what was
+known at their pinned revision, not a current unresolved-authority decision.
+
 ## Decision requested
 
 Review the evidence boundary for the 17 unresolved resource alias identities (51 route-specific ledger rows) in the

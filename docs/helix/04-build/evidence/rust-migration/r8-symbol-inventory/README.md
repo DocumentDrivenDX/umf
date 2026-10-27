@@ -60,13 +60,13 @@ ddx:
 # R8 TypeScript public runtime export map
 
 **Current source recapture (2026-10-27, Compact Dataset verifier V4
-selection):** The inventory records 3,375 route-specific declarations across
+selection after the ordinary JSON diagnostic and current-index repair):** The inventory records 3,375 route-specific declarations across
 509 source files, 1,126 unique export names, and 1,120 declarations per Node,
 browser and `./reference` root. Each default route still has 922 executable
 declarations and 198 JSON resource aliases. The inventory SHA-256 is
-`5a901c4943624f6bb69759fa7ba4eadea0cb0a0519549898d168df69dc80cc6d`.
+`017d33882125f9e6df005515040bc87fa60f0659cab76610090a3a4c9a7059ea`.
 The condition-aware ledger SHA-256 is
-`acb59e438db95a0344dccf58b9fc7d6d3a04c75e522a15da1d2a2eefaac66344`.
+`821fe5501fe5fa3bfaf8c491b623d8e5b0b3094579025ffcfac534b8575c4e21`.
 It records **922 open logical executable default-route gaps, zero retired**,
 81 accepted opt-in Rust mappings, 841 unmapped names, and 57 reviewed
 source-selected Rust declarations in each V4 root. The newly direct Rust
@@ -77,7 +77,12 @@ earlier Record Values validation, Semantic Types registry, and two value
 functions remain selected. The semantic-types quartet has exact Rust operation mappings and bounded
 16-case source-level Node, Bun, and Chromium replay. Compact Dataset verification
 has an exact `umf_core::dataset_values::verify_core_dataset_values_compact`
-mapping and five-case frozen-predecessor replay in Node, Bun, and Chromium. It is
+mapping and five-case frozen-predecessor replay in Node, Bun, and Chromium.
+The current receipts bind one 1,958-file immutable source closure
+(`fe21235aaf399b3adf616ef5ce4d6c9a91cafe75dd1b5e1ed22b084d63edb832`)
+and build manifest (`2d204008769e77edbb8d4c78eee7cac2d589957dd9441f9f62303f0996b84cf3`).
+The current frozen index records regenerated schema provenance while its five
+case payloads remain byte-identical to the historical index. This is
 source-only evidence, not installed SDK qualification, complete Dataset semantics,
 or retirement. Exact
 declaration-shape controls reject source, kind and initializer drift for the
@@ -86,6 +91,18 @@ source replay was recaptured against these roots in Node, Bun and Chromium;
 the earlier source-pinned receipts remain preserved separately. This is a
 source census and bounded replay, not installed two-platform qualification
 or retirement evidence.
+
+The separate [current installed SDK packet](../r8-full-sdk-9b89b757/README.md)
+passes the private macOS arm64 archive on Node 26.12.1, Bun 1.4.3 and real
+Chromium 153.0.8010.12 with a zero-transform 3,549-input source closure
+`9b89b757176d03f518af3aa1a97f446e672d791a3f85629df490a6da07c085bf`.
+It includes the frozen 66-case Core Cardinality route probe, but the selected
+TypeScript binder still performs `copyJson` admission before Rust. The three
+Cardinality names therefore remain unretired. The current machine ledger marks
+the Core Cardinality v4 resource `generated-authority-known`; the earlier
+[authority decision](resource-authority-closure-decision-20261026.md) is a
+historical cohort, as its dated correction records. All 922 logical default
+route gaps remain open.
 
 **Current source recapture (2026-10-26, Core Relationship consumer factories):**
 The Avro, TableSpec, SQL Server, Parquet, extras and PostgreSQL consumer

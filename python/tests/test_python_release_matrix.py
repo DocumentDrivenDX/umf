@@ -98,6 +98,54 @@ def _matrix(tmp_path: Path) -> Path:
     return root
 
 
+def _linux_matrix(tmp_path: Path) -> Path:
+    import shutil
+    root = _matrix(tmp_path)
+    for cohort in set(matrix.COHORTS) - set(matrix.LINUX_COHORTS):
+        shutil.rmtree(root / f"python-release-{cohort}")
+    return root
+
+
+def test_linux_only_aggregation_is_explicit_and_qualified(tmp_path: Path) -> None:
+    result = matrix.verify_matrix(_linux_matrix(tmp_path), REVISION, RUN_ID, "linux-only")
+    assert result["status"] == "passed"
+    assert result["qualificationScope"] == "linux-only"
+    assert result["schema"] == "umf.python-coordinated-release-linux-matrix/1"
+    assert len(result["cohorts"]) == 3
+    assert len(result["deduplicatedArtifactHashes"]) == 4
+
+
+@pytest.mark.parametrize("mutation", ["missing", "mac-extra"])
+def test_linux_only_requires_exactly_three_linux_cohorts(tmp_path: Path, mutation: str) -> None:
+    import shutil
+    root = _linux_matrix(tmp_path)
+    if mutation == "missing":
+        shutil.rmtree(root / "python-release-linux-x86_64-cpython-313")
+    else:
+        _cohort_artifact(root, "macos-arm64-cpython-311", matrix.COHORTS["macos-arm64-cpython-311"])
+    with pytest.raises(ValueError, match="three Linux cohorts"):
+        matrix.verify_matrix(root, REVISION, RUN_ID, "linux-only")
+
+
+@pytest.mark.parametrize("field,value", [("sourceRevision", "b" * 40), ("runId", "other-run")])
+def test_linux_only_rejects_stale_source_or_run(tmp_path: Path, field: str, value: str) -> None:
+    root = _linux_matrix(tmp_path)
+    path = root / "python-release-linux-x86_64-cpython-312" / "umf-coordinated-release-receipt.json"
+    receipt = json.loads(path.read_text())
+    receipt[field] = value
+    _write_json(path, receipt)
+    with pytest.raises(ValueError, match="source/run/cohort differs"):
+        matrix.verify_matrix(root, REVISION, RUN_ID, "linux-only")
+
+
+def test_linux_only_rejects_tampered_archive(tmp_path: Path) -> None:
+    root = _linux_matrix(tmp_path)
+    target = root / "python-release-linux-x86_64-cpython-311" / "umf-coordinated-artifacts" / CORE_SDIST
+    target.write_bytes(b"tampered source archive")
+    with pytest.raises(ValueError, match="Artifact hash/size differs"):
+        matrix.verify_matrix(root, REVISION, RUN_ID, "linux-only")
+
+
 def test_six_cohort_aggregation_binds_one_run_and_common_source(tmp_path: Path) -> None:
     result = matrix.verify_matrix(_matrix(tmp_path), REVISION, RUN_ID)
     assert result["status"] == "passed"

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT OR Apache-2.0
-"""Fail-closed aggregation of one coordinated six-cohort Python release run."""
+"""Fail-closed aggregation of one coordinated Python release run."""
 
 from __future__ import annotations
 
@@ -20,6 +20,7 @@ COHORTS = {
     "macos-arm64-cpython-312": ("3.12.15", "Darwin", "arm64"),
     "macos-arm64-cpython-313": ("3.13.16", "Darwin", "arm64"),
 }
+LINUX_COHORTS = {name: value for name, value in COHORTS.items() if name.startswith("linux-")}
 HEX = re.compile(r"[0-9a-f]{64}\Z")
 REVISION = re.compile(r"(?:[0-9a-f]{40}|[0-9a-f]{64})\Z")
 PAIR_SCHEMA = "umf.python-coordinated-release-qualification/1"
@@ -249,7 +250,7 @@ def _verify_cohort(
     }
 
 
-def verify_matrix(root: Path, source_revision: str, run_id: str) -> dict[str, Any]:
+def verify_matrix(root: Path, source_revision: str, run_id: str, cohort_set: str = "six-cohort") -> dict[str, Any]:
     if REVISION.fullmatch(source_revision) is None or not run_id:
         raise ValueError("Expected a full Git source revision SHA and nonempty workflow run ID")
     if root.is_symlink():
@@ -257,19 +258,23 @@ def verify_matrix(root: Path, source_revision: str, run_id: str) -> dict[str, An
     root = root.resolve()
     if not root.is_dir():
         raise ValueError("Artifact root must be a regular directory")
-    expected = {f"python-release-{name}" for name in COHORTS}
+    if cohort_set not in {"six-cohort", "linux-only"}:
+        raise ValueError("Cohort set must be six-cohort or linux-only")
+    cohorts = COHORTS if cohort_set == "six-cohort" else LINUX_COHORTS
+    expected = {f"python-release-{name}" for name in cohorts}
     actual = {item.name for item in root.iterdir()}
     if actual != expected or any(item.is_symlink() or not item.is_dir() for item in root.iterdir()):
-        raise ValueError("Artifact root must contain exactly one directory for each of six cohorts")
+        description = "six cohorts" if cohort_set == "six-cohort" else "three Linux cohorts"
+        raise ValueError(f"Artifact root must contain exactly one directory for each of {description}")
 
     repository = Path(__file__).resolve().parents[1]
     source_pins = _current_source_pins(repository)
-    rows = [_verify_cohort(root, name, source_revision, run_id, source_pins) for name in COHORTS]
+    rows = [_verify_cohort(root, name, source_revision, run_id, source_pins) for name in cohorts]
     identity_fields = ("pairSource", "runtimeResources", "sdistInputs")
     for field in identity_fields:
         expected_bytes = _canonical(rows[0][field])
         if any(_canonical(row[field]) != expected_bytes for row in rows[1:]):
-            raise ValueError(f"Cohort {field} closures differ across the six artifacts")
+            raise ValueError(f"Cohort {field} closures differ across the {cohort_set} artifacts")
 
     # A repeated filename is publishable only if every cohort produced identical bytes.
     filename_hashes: dict[str, str] = {}
@@ -288,15 +293,16 @@ def verify_matrix(root: Path, source_revision: str, run_id: str) -> dict[str, An
         "umf_codegen-0.2.0-py3-none-any.whl",
         "umf_codegen-0.2.0.tar.gz",
     }
-    if not expected_common.issubset(filename_hashes) or len(core_wheels) != 2:
-        raise ValueError("Expected the exact core/codegen source pair and two platform wheels")
+    expected_wheels = 2 if cohort_set == "six-cohort" else 1
+    if not expected_common.issubset(filename_hashes) or len(core_wheels) != expected_wheels:
+        raise ValueError(f"Expected the exact core/codegen source pair and {expected_wheels} platform wheel(s)")
     if not any("linux" in name.lower() or "manylinux" in name.lower() for name in core_wheels):
         raise ValueError("No Linux core wheel was captured")
-    if not any("macosx" in name.lower() for name in core_wheels):
+    if cohort_set == "six-cohort" and not any("macosx" in name.lower() for name in core_wheels):
         raise ValueError("No macOS core wheel was captured")
 
-    return {
-        "schema": "umf.python-coordinated-release-matrix/1",
+    result = {
+        "schema": "umf.python-coordinated-release-linux-matrix/1" if cohort_set == "linux-only" else "umf.python-coordinated-release-matrix/1",
         "status": "passed",
         "publishing": False,
         "sourceRevision": source_revision,
@@ -309,6 +315,9 @@ def verify_matrix(root: Path, source_revision: str, run_id: str) -> dict[str, An
         "verifierSha256": _sha256(Path(__file__).resolve()),
         "hostCapture": {"python": platform.python_version(), "platform": platform.platform()},
     }
+    if cohort_set == "linux-only":
+        result["qualificationScope"] = "linux-only"
+    return result
 
 
 def main() -> int:
@@ -316,9 +325,10 @@ def main() -> int:
     parser.add_argument("--artifacts", type=Path, required=True)
     parser.add_argument("--source-revision", required=True)
     parser.add_argument("--run-id", required=True)
+    parser.add_argument("--cohort-set", choices=("six-cohort", "linux-only"), default="six-cohort")
     parser.add_argument("--receipt", type=Path, required=True)
     args = parser.parse_args()
-    result = verify_matrix(args.artifacts, args.source_revision, args.run_id)
+    result = verify_matrix(args.artifacts, args.source_revision, args.run_id, args.cohort_set)
     payload = json.dumps(result, sort_keys=True, separators=(",", ":")) + "\n"
     args.receipt.parent.mkdir(parents=True, exist_ok=True)
     args.receipt.write_text(payload, encoding="utf-8")

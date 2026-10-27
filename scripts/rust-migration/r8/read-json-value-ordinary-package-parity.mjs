@@ -112,7 +112,7 @@ const addonPath = resolve(dirname(bundlePath), 'umf_core_node.node');
 if (process.env.UMF_RUST_ORDINARY_ADDON) {
   assert.equal(await realpath(resolve(process.env.UMF_RUST_ORDINARY_ADDON)), await realpath(addonPath));
 }
-const expectedMismatchIds = ['array-own-index-under-inherited-setter', 'json-duplicate-key', 'json-live-parse-accepts-malformed-input'];
+const expectedMismatchIds = ['array-own-index-under-inherited-setter'];
 const expectedMismatchMode = process.argv.includes('--expected-mismatches');
 const receipt = {
   packet: 'r8-read-json-value-ordinary-rust-package-parity-20261027-v1',
@@ -133,7 +133,7 @@ if (expectedMismatchMode) {
   const ids = mismatches.map(({ id }) => id).sort();
   assert.deepEqual(ids, expectedMismatchIds);
   assert.equal(cases.length, 18);
-  assert.equal(matchedCases.length, 15);
+  assert.equal(matchedCases.length, 17);
 } else if (mismatches.length) {
   process.exitCode = 1;
 }

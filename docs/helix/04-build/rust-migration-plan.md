@@ -7452,7 +7452,7 @@ receipts were made historical and replayed on one current immutable build.
 The generated action-plan producer identity and metamodel manifest were
 refreshed to a fixed point before that build; the interim pre-identity replay
 is also retained as historical evidence.
-The [current source manifest](evidence/rust-migration/r8-compact-dataset-verify-source/build-manifest.json)
+The [source manifest for that checkpoint](evidence/rust-migration/r8-compact-dataset-verify-source/build-manifest.json)
 has SHA-256 `9d70a420cc76a308bd42d3984993bc616919e718f3073bceb332822625b363cc`
 and closure `d0d54682e6bc91b1eaa31d55d2b425b0bfbe706b6e2fe3be966422cccd2cc264`.
 The five-case Compact and 68-case Security packets pass Node 26.12.1, Bun
@@ -7473,3 +7473,125 @@ paper over them with a post-parse callback count. Then move raw-source
 length/coercion/throw handles and frame reconstruction under the reviewed
 single-Context host protocol, qualify the same semantics in WASM/Chromium,
 and only consider default selection after an installed fixed-point replay.
+
+The strict unified-client boundary policy still scans every direct
+`src/access/*.ts` source and requires an exact per-file import grant; dynamic
+imports, disallowed predecessor value imports, and host hooks remain rejected.
+The checker now also rejects parser-recovered malformed TypeScript and runtime
+global escape hatches (`globalThis`, Deno, workers, and `importScripts`). The
+focused boundary suite passes 18 tests and the full directory checker passes.
+This is static boundary evidence only; it does not change Rust route selection
+or qualify runtime behavior.
+
+### R8 ordinary diagnostic and private host continuation — 2026-10-27
+
+The [current dedicated-entry repair](evidence/rust-migration/r8-read-json-value-ordinary-rust-repair-20261027/README.md)
+matches **17/18** primitive-string cases on Node 26.12.1 and Bun 1.4.3. The
+Rust continuation now honors the successful live `JSON.parse` preflight and
+matches the [40-case diagnostic source oracle](evidence/rust-migration/r8-read-json-value-ordinary-diagnostic-source-oracle-20261027/README.md):
+21 returned value trees and 19 exact error code/path/message triples. Its
+diagnostic mapping is restricted to the TypeScript YAML 1.2 profile; the
+24-test serialization unit suite and a low-work malformed-input control pass.
+The dedicated entry still differs when `Array.prototype[0]` has an inherited
+setter. The [52-case source-only setter oracle](evidence/rust-migration/r8-read-json-value-inherited-setter-source-oracle-20261027/README.md)
+proves parser-phase counts, throw boundaries and receiver mutations vary with
+input. Do not synthesize a callback count after parsing or qualify the public
+route from the 17/18 sample.
+
+The [private raw-host protocol checkpoint](evidence/rust-migration/r8-read-json-value-private-host-adapter-20261027/README.md)
+adds Rust-owned acquisition order through one `Context` and a test-only N-API
+dispatcher with opaque thrown-value tokens and UTF-16 error frames. Seven
+Rust fake-host tests and seven Node tests using the compiled addon pass. It
+does not reconstruct the public result/`UmfError` graph, meter opaque host
+work, accept caller controls, or prove stale/reentrant handle safety. Catalog
+mode remains TypeScript-selected; its [15-case source oracle](evidence/rust-migration/r8-read-json-value-catalog-source-oracle-20261027/README.md)
+is a baseline only. Finish those production interfaces, causal parser-setter
+behavior, general raw-host parity, WASM/Chromium and installed SDK replay
+before any default-route selection or ledger retirement.
+
+The preceding source manifest and ledger are historical after this Rust source
+change. Refresh one immutable source build, replay Compact and Security against
+it, then recapture the inventory and ledger. A new zero-transform installed
+archive must qualify this exact source cohort. The last confirmed ledger had
+**922 open logical default-route gaps and zero retired**; no new retirement
+claim follows from these bounded opt-in packets. The owner has also directed
+that macOS CI must not run. Local evidence and buildable macOS artifacts may be
+retained, but cancelled or unrun macOS CI cells cannot be treated as passes.
+
+### R8 current-index source and Linux-only qualification checkpoint — 2026-10-27
+
+The frozen Compact verifier packet now has a separate
+[`index-current.json`](evidence/rust-migration/r8-compact-dataset-verify-source/index-current.json)
+for regenerated schema provenance. All five case payloads are byte-identical
+to the historical index. The [current Compact receipts](evidence/rust-migration/r8-compact-dataset-verify-source/README.md)
+and [Security receipts](evidence/rust-migration/r8-security-and-or-v4-source-replay-current/README.md)
+bind one immutable 1,958-file source closure
+`fe21235aaf399b3adf616ef5ce4d6c9a91cafe75dd1b5e1ed22b084d63edb832`
+and manifest `2d204008769e77edbb8d4c78eee7cac2d589957dd9441f9f62303f0996b84cf3`.
+Compact passes all five cases on Node 26.12.1, Bun 1.4.3 and real Chromium
+153.0.8010.12; Security passes all 68 cases on each host with 30 valid Rust
+or WASM calls and zero refusal calls. These are source-route cohorts, not
+installed SDK or release qualification.
+
+The [regenerated inventory and ledger](evidence/rust-migration/r8-symbol-inventory/README.md)
+have SHA-256 values `017d33882125f9e6df005515040bc87fa60f0659cab76610090a3a4c9a7059ea`
+and `821fe5501fe5fa3bfaf8c491b623d8e5b0b3094579025ffcfac534b8575c4e21`.
+They retain **922 open logical executable default-route gaps, zero retired**,
+81 accepted opt-in mappings, 841 unmapped names and five proven bounded
+binding routes. The Rust core library suite passed 471 tests before the BOM
+offset repair; its updated serialization module passed 25 tests, including
+the BOM regression. The 26 focused ordinary-facade and strict-import tests,
+the Rust boundary checker (zero V8 debt), TypeScript typecheck, and 54 Python
+coordinated-release verifier tests passed locally.
+
+All current branch workflow runner selections are Linux-only under the owner's
+no-macOS-CI direction. A separate three-Linux-cohort release aggregate has an
+explicit receipt schema and exact current-run artifact/hash/source controls;
+the six-cohort verifier remains available as a distinct mode. The SDK Linux
+cohort retention step checks archive, source, member and host receipt hashes.
+At this checkpoint these changes had only local static and regression checks. A macOS
+SDK archive build is allowed by the owner's artifact instruction, but no
+cancelled or unrun macOS CI cell is counted as qualification. The installed
+archive replay was still open here; hosted Linux CI remains open.
+
+### R8 current installed SDK and next retirement gates — 2026-10-27
+
+The [private installed SDK packet](evidence/rust-migration/r8-full-sdk-9b89b757/README.md)
+passes a zero-transform macOS arm64 archive, SHA-256
+`c250b82bd689abdd85c6c3a5296892408cf8fdd590f36c6eecd753460f7e7706`,
+with source and captured-live closure
+`9b89b757176d03f518af3aa1a97f446e672d791a3f85629df490a6da07c085bf`.
+Preflight checked 3,549 source inputs and 1,806 payload-member hashes. The
+installed replay passed Node 26.12.1, Bun 1.4.3 and Chromium 153.0.8010.12:
+31 R3, 27 numeric and six boundary, 66 Core Cardinality, 19 Facets, 14 Keys,
+11 Bit128, 19 Compact, and 68 Security And/Or cases. Missing/corrupt native
+and WASM controls and three route-tamper refusals passed. A local loopback
+sandbox restriction initially stopped Chromium startup; the harness now checks
+Bun's structured `EADDRINUSE` code, and the entire rebuilt archive replay
+passed with local loopback permission. No macOS CI ran. This is one private
+platform cohort, not Linux, release, or default-route retirement evidence.
+
+Core Cardinality is the next narrow three-operation retirement candidate.
+The current Rust metamodel source and compiler generate its v4 schema, and
+the current ledger already classifies the resource as
+`generated-authority-known`; the older authority decision packet has a dated
+correction. Its per-resource transitive source closure still needs explicit
+current-cohort linkage. More importantly, the selected V4 TypeScript binder
+performs `copyJson` semantic admission before calling Rust. Move that
+admission under Rust-driven ordered host reflection, preserve the source
+oracle's getter/Proxy/throw order and caller identity, and qualify complete
+CONTRACT-040 acceptance against installed Node, Bun and Chromium routes before
+retiring exactly those logical names. The current 66-case installed packet
+does not establish that gate.
+
+The inherited-array-setter residual in ordinary `readJsonValue` requires
+causal parser writes: the predecessor YAML parser invokes setters in its
+line-start, stream, flow-collection and composition phases. Saphyr's event
+parser and Rust `Vec<Value>` composition have different write sites. A host
+callback added only after parsing cannot reproduce the 52-case source oracle;
+porting equivalent parser/composer behavior or explicitly narrowing the
+supported subset remains open. The private host protocol also lacks complete
+public result reconstruction and bounded host work. Keep ordinary JSON opt-in
+and the ledger at **922 open, zero retired**. Hosted Linux checks, broader
+portable semantic ownership, independent integration review and release remain
+open.

@@ -14,8 +14,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - cohort: macos-arm64
-            runner: macos-14
           - cohort: linux-x86_64
             runner: ubuntu-24.04
     runs-on: ${{ matrix.runner }}

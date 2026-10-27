@@ -21,6 +21,8 @@ class RustPairCustodyTests(unittest.TestCase):
             aggregate.write_text("aggregate receipt bytes\n")
             base = {
                 "schema": "umf.python-coordinated-release-preparation/1",
+                "qualificationScope": "linux-only",
+                "aggregateReceiptSchema": "umf.python-coordinated-release-linux-matrix/1",
                 "sourceRevision": "a" * 40,
                 "runId": "1234",
                 "artifacts": {"umf_core-0.11.0.tar.gz": {"sha256": "b" * 64}},
@@ -42,6 +44,8 @@ class RustPairCustodyTests(unittest.TestCase):
             self.assertTrue(result["workflowOnMain"])
             self.assertFalse(result["releaseEligible"])
             self.assertEqual(result["runAttempt"], 1)
+            self.assertEqual(result["qualification"]["qualificationScope"], "linux-only")
+            self.assertEqual(result["qualification"]["aggregateReceiptSchema"], "umf.python-coordinated-release-linux-matrix/1")
             self.assertEqual(
                 result["qualification"]["workflowSha256"],
                 hashlib.sha256(workflow.read_bytes()).hexdigest(),
@@ -109,6 +113,44 @@ class RustPairCustodyTests(unittest.TestCase):
                         other_checkout,
                         aggregate,
                         other_checkout,
+                        "a" * 40,
+                        "123",
+                        "1",
+                        "org/umf/.github/workflows/python-coordinated-release.yml@refs/heads/main",
+                        "org/umf",
+                    )
+
+    def test_manifest_preserves_verified_six_cohort_custody(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            temporary = Path(raw)
+            aggregate = temporary / "matrix.json"
+            aggregate.write_text("receipt")
+            base = {"sourceRevision": "a" * 40, "runId": "123", "qualificationScope": "six-cohort", "aggregateReceiptSchema": "umf.python-coordinated-release-matrix/1"}
+            with patch.object(custody.pair, "prepare", return_value=base):
+                result = custody.prepare(
+                    temporary,
+                    aggregate,
+                    ROOT,
+                    "a" * 40,
+                    "123",
+                    "1",
+                    "org/umf/.github/workflows/python-coordinated-release.yml@refs/heads/main",
+                    "org/umf",
+                )
+            self.assertEqual(result["qualification"]["qualificationScope"], "six-cohort")
+
+    def test_manifest_rejects_scope_schema_mismatch(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            temporary = Path(raw)
+            aggregate = temporary / "matrix.json"
+            aggregate.write_text("receipt")
+            base = {"sourceRevision": "a" * 40, "runId": "123", "qualificationScope": "linux-only", "aggregateReceiptSchema": "umf.python-coordinated-release-matrix/1"}
+            with patch.object(custody.pair, "prepare", return_value=base):
+                with self.assertRaisesRegex(ValueError, "matching scope"):
+                    custody.prepare(
+                        temporary,
+                        aggregate,
+                        ROOT,
                         "a" * 40,
                         "123",
                         "1",

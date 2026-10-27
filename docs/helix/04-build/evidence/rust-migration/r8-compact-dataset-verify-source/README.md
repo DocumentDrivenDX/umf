@@ -21,54 +21,39 @@ ddx:
 
 # Compact Dataset verifier V4 source replay
 
-This current-source replay covers the five frozen predecessor cases through the
-V4 default route. It includes the opt-in N-API `readJsonValue` primitive binding
-and the `src/access` facade in the pinned implementation closure. The fresh
-Node/WASM build and all 1,952 source-closure file hashes are bound to the
-immutable [`build-manifest.json`](build-manifest.json). The closure includes
-`bindings/core/node/src/read_json_value.rs`
-(`e9b62271d474490e09c85736137cb8975cebcd6283217a871c4c2f6c39f1595f`) and
-`src/access/read-json-value-ordinary.ts`
-(`e1af34e745dec592851ff8eb88964a4bc8417f1f3d5fa96aacf0e327d6ffffd4`). It
-walks implementation roots, bindings, specs, and configuration, excludes build
-caches, and rejects symlinks. The builder pins sources before compilation and
-rejects source drift before publishing its manifest. Each replay checks the
-exact source closure and all six compiled artifacts before executing.
+The five-case packet is the byte-identical result of the live TypeScript R5
+freezer. Its current source index is [`index-current.json`](index-current.json)
+(SHA-256 `373c3f672e97ec9a2764a65a64acc6e3f75254503e789333937251ce9587899b`);
+the historical `index.json` remains intact. All five frozen payload hashes are
+recorded in [`SHA256SUMS`](SHA256SUMS). The newly refrozen payloads matched the
+committed payloads byte for byte before the current index was refreshed.
 
-The build used fresh private output at
-`/private/tmp/umf-r8-compact-v4-read-json-value-20261027a`. Its source-closure
-SHA-256 is
-`d0d54682e6bc91b1eaa31d55d2b425b0bfbe706b6e2fe3be966422cccd2cc264`; the
-build-manifest SHA-256 is
-`9d70a420cc76a308bd42d3984993bc616919e718f3073bceb332822625b363cc`. The six
-artifact SHA-256 values are recorded in the manifest: Node addon
-`080f647ff8eb37a5182b916c0be10b78561e1f60aad9837323cfa5a9b53d8aad`, WASM
-`111007da675e270f072044dff0e7e39e6d5013bca2aca71af91fd22e177fad8a`, WASM glue
+The fresh source build is bound to the immutable
+[`build-manifest.json`](build-manifest.json): manifest SHA-256
+`2d204008769e77edbb8d4c78eee7cac2d589957dd9441f9f62303f0996b84cf3`, source
+closure SHA-256 `fe21235aaf399b3adf616ef5ce4d6c9a91cafe75dd1b5e1ed22b084d63edb832`
+across 1,958 files. It was built at
+`/private/tmp/umf-r8-compact-v4-stable-20261027d` with Rust/Cargo 1.90.0,
+wasm-bindgen 0.2.100, and Bun 1.4.3. The manifest pins all six artifacts:
+Node addon `56215b6758d3e80777e0f99f3924929e490886467e64796a931ae85aac7162f0`,
+WASM `3a00c562199d4331e48492b8925a229996d0e8dde8486374c8efba6d904101c9`, glue
 `ea57d12a681ac63b7ccd6109c217afab539044bbd57488fdac0edf7d94ec9329`, reference
-bundle `a05e8167c27302982207782ea08776daa57390756cd5257926768a8a444bffbf`, Node
-bundle `69313444952873614cd43afb7b3394d5554fdce8015a3cb8eebacc31c141e2a8`, and
-browser bundle `99559dab1eaebc957b2061012d0ae2ea10e1b44a2203fee96ab03a957045c8d4`.
-The manifest records Rust/Cargo 1.90.0, wasm-bindgen 0.2.100, and Bun 1.4.3.
+bundle `119ab7c142cc7a82d9eb9c867068b6fd4aa6fae4915a14894b4db84d23e6d56c`, Node
+bundle `8faf7630972c52abceaa03fcf2f9d2cd6874ed6cf1e3f162058f7e820548e152`, and
+browser bundle `ac4df5cba8234341945faf05126bba3a7e639046a3cf6fb9358c5c00b6f951ec`.
 
-Node 26.12.1 and Bun 1.4.3 each passed all five cases and made 14 native Rust
-calls. Chromium 153.0.8010.12 passed all five cases, loaded the manifest-pinned
-WASM, and had no Node globals. It made the expected WASM calls for every case.
-Each receipt pins the same source closure and six artifacts. The exact receipt
-hashes are Node
-`c16c4252aadcbfce9735b7f0f7d46f62f5c6d96ff7f9d20d4c77c0a3c52c3d4a`, Bun
-`a2b4097e5e1299f63dc33f9ae8a84eb219009bc76d05075a73ed032a87e2795b`, and
-Chromium `e8f0a5c9840b57a7356831dd146affb79bf55fa1f2c5f7e334f9c9011ccc19d8`.
+Node 26.12.1 and Bun 1.4.3 each passed all five cases with 14 Rust calls.
+Real Chromium 153.0.8010.12 passed all five cases, loaded the pinned WASM,
+made 14 dispatches, and had no Node globals. Each receipt verifies the same
+source closure and all six artifacts. Receipt SHA-256 values are Node
+`f5f0aec6f29eb6976717b051a200d6c5626c7a4b2472226f36159d1cc8ce4dcc`, Bun
+`de10faeac830940b585517fdd07ddfa5b432775787f562b4ac2a88097b381137`, and
+Chromium `37e5d715a2305c5237fcfafbcbd66f0801cfc39a918c8d0fc7e2b2dc3eef2781`.
+The prior current-source cohort is preserved under
+[`historical/pre-index-current-refreeze-20261027/`](historical/pre-index-current-refreeze-20261027/).
 
-The five frozen payloads remain byte-identical. Their hashes, the current
-manifest and receipts, and preserved historical artifacts are in
-[`SHA256SUMS`](SHA256SUMS). The prior pre-metamodel index remains available as
-[`historical-index-pre-metamodel-refresh.json`](historical-index-pre-metamodel-refresh.json).
-The immediately prior source cohort, before the final action-plan identity regeneration, is preserved in
-[`historical-pre-final-action-plan-identity/`](historical-pre-final-action-plan-identity/). The earlier pre-binding cohort remains in
-[`historical-pre-read-json-value-binding/`](historical-pre-read-json-value-binding/).
-
-This is source-tree evidence for the listed compact verifier cases and host
+This is bounded source-tree evidence for the five verifier cases and stated host
 controls. It does not qualify an installed SDK archive, a release, every Dataset
-semantic, or declaration retirement. Run `--build <fresh-private-output-dir>`
-once, then Node, Bun, and browser replay modes against that same directory. See
-[`compact-dataset-verify-v4-source-replay.mjs`](../../../../../../scripts/rust-migration/r8/compact-dataset-verify-v4-source-replay.mjs).
+semantic, or declaration retirement. Reproduction uses `--build <fresh-private-output-dir>`,
+then `--host node`, `--host bun`, and `--browser` against that same directory.
+The browser replay uses a temporary loopback server.

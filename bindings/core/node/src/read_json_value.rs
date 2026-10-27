@@ -3,7 +3,10 @@
 use napi::JsString;
 use napi_derive::napi;
 use umf_core::{
-    serialization::{read_typescript_json_value, stringify_compact, stringify_compact_metered},
+    serialization::{
+        read_typescript_json_value, read_typescript_json_value_after_json_preflight,
+        stringify_compact, stringify_compact_metered,
+    },
     Context, EngineError, Utf16, Value,
 };
 
@@ -41,12 +44,11 @@ pub fn read_json_value_ordinary_text(
     }
     let source_units = &units[..source_length];
 
-    let format = if format_is_json {
-        Some(umf_core::serialization::Format::Json)
+    let result = if format_is_json {
+        read_typescript_json_value_after_json_preflight(source_units, &mut context)
     } else {
-        Some(umf_core::serialization::Format::Yaml)
+        read_typescript_json_value(source_units, None, &mut context)
     };
-    let result = read_typescript_json_value(source_units, format, &mut context);
     encode_outcome(result, &mut context)
 }
 

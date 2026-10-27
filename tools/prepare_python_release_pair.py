@@ -30,15 +30,20 @@ def prepare(artifacts: Path, aggregate_receipt: Path) -> dict[str, Any]:
     receipt = json.loads(receipt_bytes)
     if type(receipt) is not dict:
         raise ValueError("Aggregate receipt must be a JSON object")
-    if (receipt.get("schema"), receipt.get("status"), receipt.get("publishing")) != (
-        "umf.python-coordinated-release-matrix/1", "passed", False
+    expected_schema = {
+        "six-cohort": "umf.python-coordinated-release-matrix/1",
+        "linux-only": "umf.python-coordinated-release-linux-matrix/1",
+    }
+    scope = receipt.get("qualificationScope", "six-cohort")
+    if scope not in expected_schema or (receipt.get("schema"), receipt.get("status"), receipt.get("publishing")) != (
+        expected_schema[scope], "passed", False
     ):
         raise ValueError("Aggregate receipt is not a passed non-publishing matrix receipt")
     revision, run_id = receipt.get("sourceRevision"), receipt.get("runId")
     if not isinstance(revision, str) or not isinstance(run_id, str):
         raise ValueError("Aggregate receipt is missing source revision or workflow run")
 
-    verified = matrix.verify_matrix(artifacts, revision, run_id)
+    verified = matrix.verify_matrix(artifacts, revision, run_id, scope)
     artifacts = artifacts.resolve()
     # Host capture is expected to differ locally. All workflow identity, cohort,
     # receipt, closure, and artifact hash claims must otherwise match exactly.
@@ -51,13 +56,14 @@ def prepare(artifacts: Path, aggregate_receipt: Path) -> dict[str, Any]:
             raise ValueError(f"Aggregate receipt differs from verified downloaded bytes: {key}")
 
     names = receipt["deduplicatedArtifactHashes"]
-    if type(names) is not dict or len(names) != 5:
-        raise ValueError("Expected the exact five deduplicated core/codegen artifacts")
+    expected_artifact_count = 5 if scope == "six-cohort" else 4
+    if type(names) is not dict or len(names) != expected_artifact_count:
+        raise ValueError(f"Expected the exact {expected_artifact_count} deduplicated core/codegen artifacts")
     locations: dict[str, str] = {}
     # The verifier has already enforced exact bytes in each cohort and global
     # same-name identity. Select the first cohort path deterministically.
     for name in sorted(names):
-        candidates = [artifacts / f"python-release-{cohort}" / "umf-coordinated-artifacts" / name for cohort in matrix.COHORTS]
+        candidates = [artifacts / f"python-release-{cohort}" / "umf-coordinated-artifacts" / name for cohort in (matrix.COHORTS if scope == "six-cohort" else matrix.LINUX_COHORTS)]
         found = next((p for p in candidates if p.is_file() and not p.is_symlink()), None)
         if found is None or _sha256(found) != names[name]:
             raise ValueError(f"Aggregate artifact bytes are unavailable or differ: {name}")
@@ -69,7 +75,9 @@ def prepare(artifacts: Path, aggregate_receipt: Path) -> dict[str, Any]:
         "sourceRevision": revision,
         "runId": run_id,
         "versions": {"umf-core": "0.11.0", "umf-codegen": "0.2.0"},
-        "cohorts": sorted(matrix.COHORTS),
+        "cohorts": sorted(matrix.COHORTS if scope == "six-cohort" else matrix.LINUX_COHORTS),
+        "qualificationScope": scope,
+        "aggregateReceiptSchema": expected_schema[scope],
         "sourcePins": receipt["sourcePins"],
         "aggregateReceiptSha256": hashlib.sha256(receipt_bytes).hexdigest(),
         "artifacts": {
@@ -82,7 +90,7 @@ def prepare(artifacts: Path, aggregate_receipt: Path) -> dict[str, Any]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--artifacts", type=Path, required=True, help="Downloaded six-cohort artifact tree")
+    parser.add_argument("--artifacts", type=Path, required=True, help="Downloaded artifact tree matching the aggregate receipt")
     parser.add_argument("--aggregate-receipt", type=Path, required=True)
     parser.add_argument("--manifest", type=Path, required=True)
     args = parser.parse_args()

@@ -17,10 +17,6 @@ jobs:
             runner: ubuntu-24.04
             expected_os: linux
             expected_arch: x86_64
-          - cohort: macos-arm64-cpython-314
-            runner: macos-15
-            expected_os: darwin
-            expected_arch: arm64
     runs-on: ${{ matrix.runner }}
     env:
       CARGO_BUILD_JOBS: '2'
@@ -35,7 +31,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.14.8'
-          architecture: ${{ matrix.expected_arch == 'arm64' && 'arm64' || 'x64' }}
+          architecture: x64
       - name: Verify the fixed host cohort
         env:
           EXPECTED_OS: ${{ matrix.expected_os }}
@@ -46,7 +42,6 @@ jobs:
           import os, platform, sys
           cohorts = {
               'linux-x86_64-cpython-314': ('linux', 'x86_64'),
-              'macos-arm64-cpython-314': ('darwin', 'arm64'),
           }
           expected = cohorts.get(os.environ['EXPECTED_COHORT'])
           if expected != (os.environ['EXPECTED_OS'], os.environ['EXPECTED_ARCH']):

@@ -63,6 +63,13 @@ def prepare(
     for digest in (workflow_hash, script_hash, aggregate_hash):
         if HEX.fullmatch(digest) is None:
             raise ValueError("Malformed custody digest")
+    scope = base.get("qualificationScope", "six-cohort")
+    schemas = {
+        "six-cohort": "umf.python-coordinated-release-matrix/1",
+        "linux-only": "umf.python-coordinated-release-linux-matrix/1",
+    }
+    if scope not in schemas or base.get("aggregateReceiptSchema") != schemas[scope]:
+        raise ValueError("Rust-pair custody requires a verified aggregate receipt with matching scope")
     return {
         "schema": "umf.rust-port-pair-custody/1",
         "status": "prepared",
@@ -79,7 +86,8 @@ def prepare(
             "custodyVerifier": "tools/prepare_rust_pair_release.py",
             "custodyVerifierSha256": script_hash,
             "aggregateReceiptSha256": aggregate_hash,
-            "aggregateReceiptSchema": "umf.python-coordinated-release-matrix/1",
+            "aggregateReceiptSchema": schemas[scope],
+            "qualificationScope": scope,
         },
         "pair": base,
         "publisherUse": "Qualification custody only. A publisher must independently require this exact source/run/attempt and artifact hash set.",

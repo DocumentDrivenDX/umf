@@ -186,6 +186,27 @@ test('new host access hooks remain forbidden in an allowlisted Rust facade', () 
 	expect(errors).toContain('rust-facets-default.ts: host or executable hook WebSocket');
 });
 
+test('runtime-global escape hatches remain forbidden in an allowlisted Rust facade', () => {
+	const errors = checkAccessSource(
+		'rust-facets-default.ts',
+		'const runtime = globalThis;\n' +
+		'const worker = new Worker("worker.js");\n' +
+		'importScripts("runtime.js");\n' +
+		'const deno = Deno.core;\n',
+	);
+
+	expect(errors).toContain('rust-facets-default.ts: host or executable hook globalThis');
+	expect(errors).toContain('rust-facets-default.ts: host or executable hook Worker');
+	expect(errors).toContain('rust-facets-default.ts: host or executable hook importScripts');
+	expect(errors).toContain('rust-facets-default.ts: host or executable hook Deno');
+});
+
+test('malformed TypeScript cannot pass the source boundary check through parser recovery', () => {
+	const errors = checkAccessSource('rust-facets-default.ts', 'import { value from \'../model/errors\';');
+
+	expect(errors.some((error) => error.startsWith('rust-facets-default.ts: TypeScript parse error '))).toBe(true);
+});
+
 test('import type nodes obey the exact per-file allowlist', () => {
 	const errors = checkAccessSource(
 		'rust-facets-default.ts',

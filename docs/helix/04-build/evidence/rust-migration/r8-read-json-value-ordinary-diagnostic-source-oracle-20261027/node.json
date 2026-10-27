@@ -1,0 +1,2915 @@
+{
+  "packet": "r8-read-json-value-ordinary-diagnostic-source-oracle-20261027-v1",
+  "runtime": {
+    "node": "v26.12.1",
+    "bun": null,
+    "v8": "14.6.202.34-node.40"
+  },
+  "mode": "ordinary-profile; format=json; dynamic JSON.parse getter returns null for every source; malformed JSON then reaches YAML diagnostics",
+  "sourcePins": {
+    "src/model/serialization.ts": "027360ffd8bf77905f7d14a3d4d933035fe11d9f52ae28d54691cc607cb43586",
+    "src/model/errors.ts": "65bc53689f6aa0546be249ff4bd42616b446966cfc5f9d525faf9a428031dbd6",
+    "src/index-v4-default.ts": "7d8602938d7be1a209c063dc806b51f287e60b961ff2f93410400a899efa1013",
+    "scripts/rust-migration/r8/ordinary-diagnostic-reference-entry.ts": "83ee689a431e8ca36a46ee35bd255d2f5140449f475d8d2db509875e6bc2543a",
+    "scripts/rust-migration/r8/ordinary-diagnostic-default-entry.ts": "071e00ac22cdfb2b1badb1c3df10138d21db01e6ad431027d8e3898225f5fd8e",
+    "scripts/rust-migration/r8/read-json-value-ordinary-diagnostic-packet.mjs": "a8887c161ec7d8efe5455fcd814f15edd05c027914532d367c82fa2904b49b4a"
+  },
+  "count": 40,
+  "rows": [
+    {
+      "id": "map-empty-head",
+      "source": "{",
+      "reference": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Flow map must end with a } at line 1, column 2:\n\n{\n ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Flow map must end with a } at line 1, column 2:\n\n{\n ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "map-missing-value",
+      "source": "{\"a\":}",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a"
+          ],
+          "descriptors": [
+            {
+              "key": "a",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "null",
+                "value": null
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a"
+          ],
+          "descriptors": [
+            {
+              "key": "a",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "null",
+                "value": null
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "map-truncated-key",
+      "source": "{\"a\": 1, \"b\"",
+      "reference": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Flow map must end with a } at line 1, column 13:\n\n{\"a\": 1, \"b\"\n            ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\": 1, \"b\"",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Flow map must end with a } at line 1, column 13:\n\n{\"a\": 1, \"b\"\n            ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\": 1, \"b\"",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "map-missing-colon",
+      "source": "{\"a\" 1}",
+      "reference": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Missing , or : between flow map items at line 1, column 6:\n\n{\"a\" 1}\n     ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\" 1}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Missing , or : between flow map items at line 1, column 6:\n\n{\"a\" 1}\n     ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\" 1}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "map-trailing-comma",
+      "source": "{\"a\":1,}",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a"
+          ],
+          "descriptors": [
+            {
+              "key": "a",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":1,}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a"
+          ],
+          "descriptors": [
+            {
+              "key": "a",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":1,}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "map-adjacent-members",
+      "source": "{\"a\":1 \"b\":2}",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a"
+          ],
+          "descriptors": [
+            {
+              "key": "a",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "string",
+                "utf16Length": 7,
+                "utf16Sha256": "53ae612831e776f7d3a648485e668cdd66717d193d0e757c4a0c2c323e156818"
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":1 \"b\":2}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a"
+          ],
+          "descriptors": [
+            {
+              "key": "a",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "string",
+                "utf16Length": 7,
+                "utf16Sha256": "53ae612831e776f7d3a648485e668cdd66717d193d0e757c4a0c2c323e156818"
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":1 \"b\":2}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "map-unquoted-key",
+      "source": "{a:1}",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a:1"
+          ],
+          "descriptors": [
+            {
+              "key": "a:1",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "null",
+                "value": null
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{a:1}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a:1"
+          ],
+          "descriptors": [
+            {
+              "key": "a:1",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "null",
+                "value": null
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{a:1}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "map-comment-line",
+      "source": "{\"a\":1 // trailing comment\n}",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a"
+          ],
+          "descriptors": [
+            {
+              "key": "a",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "string",
+                "utf16Length": 21,
+                "utf16Sha256": "6707ab9dd28f382ea0fb8ed6a556f72b898c78c2e3215bc2566ef40166b19fb7"
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":1 // trailing comment\n}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a"
+          ],
+          "descriptors": [
+            {
+              "key": "a",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "string",
+                "utf16Length": 21,
+                "utf16Sha256": "6707ab9dd28f382ea0fb8ed6a556f72b898c78c2e3215bc2566ef40166b19fb7"
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":1 // trailing comment\n}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "map-comment-hash",
+      "source": "{\"a\":1 # trailing comment\n}",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a"
+          ],
+          "descriptors": [
+            {
+              "key": "a",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":1 # trailing comment\n}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a"
+          ],
+          "descriptors": [
+            {
+              "key": "a",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":1 # trailing comment\n}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "map-block-comment",
+      "source": "{/* comment */\"a\":1}",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "/* comment */\"a\":1"
+          ],
+          "descriptors": [
+            {
+              "key": "/* comment */\"a\":1",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "null",
+                "value": null
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{/* comment */\"a\":1}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "/* comment */\"a\":1"
+          ],
+          "descriptors": [
+            {
+              "key": "/* comment */\"a\":1",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "null",
+                "value": null
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{/* comment */\"a\":1}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "map-single-quoted-key",
+      "source": "{'a':1}",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a"
+          ],
+          "descriptors": [
+            {
+              "key": "a",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{'a':1}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a"
+          ],
+          "descriptors": [
+            {
+              "key": "a",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{'a':1}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "map-unterminated-key",
+      "source": "{\"a:1}",
+      "reference": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Missing closing \"quote at line 1, column 7:\n\n{\"a:1}\n      ^\n; Flow map must end with a } at line 1, column 7:\n\n{\"a:1}\n      ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a:1}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Missing closing \"quote at line 1, column 7:\n\n{\"a:1}\n      ^\n; Flow map must end with a } at line 1, column 7:\n\n{\"a:1}\n      ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a:1}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "map-unterminated-double-value",
+      "source": "{\"a\":\"value}",
+      "reference": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Missing closing \"quote at line 1, column 13:\n\n{\"a\":\"value}\n            ^\n; Flow map must end with a } at line 1, column 13:\n\n{\"a\":\"value}\n            ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":\"value}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Missing closing \"quote at line 1, column 13:\n\n{\"a\":\"value}\n            ^\n; Flow map must end with a } at line 1, column 13:\n\n{\"a\":\"value}\n            ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":\"value}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "map-single-quoted-value",
+      "source": "{\"a\":'value'}",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a"
+          ],
+          "descriptors": [
+            {
+              "key": "a",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "string",
+                "utf16Length": 5,
+                "utf16Sha256": "6c5d15002e0d0e64e65846c5bddd6c4fb059504262397e76b9a385ef7337669d"
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":'value'}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a"
+          ],
+          "descriptors": [
+            {
+              "key": "a",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "string",
+                "utf16Length": 5,
+                "utf16Sha256": "6c5d15002e0d0e64e65846c5bddd6c4fb059504262397e76b9a385ef7337669d"
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":'value'}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "map-bad-escape",
+      "source": "{\"a\":\"\\q\"}",
+      "reference": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Invalid escape sequence \\q at line 1, column 7:\n\n{\"a\":\"\\q\"}\n      ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":\"\\q\"}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Invalid escape sequence \\q at line 1, column 7:\n\n{\"a\":\"\\q\"}\n      ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":\"\\q\"}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "sequence-empty-head",
+      "source": "[",
+      "reference": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Flow sequence must end with a ] at line 1, column 2:\n\n[\n ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Flow sequence must end with a ] at line 1, column 2:\n\n[\n ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "sequence-leading-comma",
+      "source": "[,1]",
+      "reference": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Unexpected , in flow sequence at line 1, column 2:\n\n[,1]\n ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[,1]",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Unexpected , in flow sequence at line 1, column 2:\n\n[,1]\n ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[,1]",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "sequence-double-comma",
+      "source": "[1,,2]",
+      "reference": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Unexpected , in flow sequence at line 1, column 4:\n\n[1,,2]\n   ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[1,,2]",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Unexpected , in flow sequence at line 1, column 4:\n\n[1,,2]\n   ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[1,,2]",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "sequence-trailing-comma",
+      "source": "[1,]",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "length"
+          ],
+          "descriptors": [
+            {
+              "key": "0",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            },
+            {
+              "key": "length",
+              "enumerable": false,
+              "configurable": false,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[1,]",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "length"
+          ],
+          "descriptors": [
+            {
+              "key": "0",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            },
+            {
+              "key": "length",
+              "enumerable": false,
+              "configurable": false,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[1,]",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "sequence-missing-separator",
+      "source": "[1 2]",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "length"
+          ],
+          "descriptors": [
+            {
+              "key": "0",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "string",
+                "utf16Length": 3,
+                "utf16Sha256": "ef680b19553f69fcadd5c677e14f93de788778a6b67f4e0c63ca4b8f9002595d"
+              }
+            },
+            {
+              "key": "length",
+              "enumerable": false,
+              "configurable": false,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[1 2]",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "length"
+          ],
+          "descriptors": [
+            {
+              "key": "0",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "string",
+                "utf16Length": 3,
+                "utf16Sha256": "ef680b19553f69fcadd5c677e14f93de788778a6b67f4e0c63ca4b8f9002595d"
+              }
+            },
+            {
+              "key": "length",
+              "enumerable": false,
+              "configurable": false,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[1 2]",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "sequence-truncated-nested-map",
+      "source": "[{\"a\":1]",
+      "reference": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Flow map in block collection must be sufficiently indented and end with a } at line 1, column 8:\n\n[{\"a\":1]\n       ^\n; Flow sequence must end with a ] at line 1, column 8:\n\n[{\"a\":1]\n       ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[{\"a\":1]",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Flow map in block collection must be sufficiently indented and end with a } at line 1, column 8:\n\n[{\"a\":1]\n       ^\n; Flow sequence must end with a ] at line 1, column 8:\n\n[{\"a\":1]\n       ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[{\"a\":1]",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "sequence-comment-between-values",
+      "source": "[1 // comment\n,2]",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "descriptors": [
+            {
+              "key": "0",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "string",
+                "utf16Length": 12,
+                "utf16Sha256": "8b69410cee7c8d169d1c543de28b6bd4d4cd52fb782eb0a913c1b25d863fd771"
+              }
+            },
+            {
+              "key": "1",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 2
+              }
+            },
+            {
+              "key": "length",
+              "enumerable": false,
+              "configurable": false,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 2
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[1 // comment\n,2]",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "descriptors": [
+            {
+              "key": "0",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "string",
+                "utf16Length": 12,
+                "utf16Sha256": "8b69410cee7c8d169d1c543de28b6bd4d4cd52fb782eb0a913c1b25d863fd771"
+              }
+            },
+            {
+              "key": "1",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 2
+              }
+            },
+            {
+              "key": "length",
+              "enumerable": false,
+              "configurable": false,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 2
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[1 // comment\n,2]",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "nested-map-truncated-inner",
+      "source": "{\"a\":{\"b\":1}",
+      "reference": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Flow map must end with a } at line 1, column 13:\n\n{\"a\":{\"b\":1}\n            ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":{\"b\":1}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Flow map must end with a } at line 1, column 13:\n\n{\"a\":{\"b\":1}\n            ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":{\"b\":1}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "nested-sequence-truncated-inner",
+      "source": "{\"a\":[1,2}",
+      "reference": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Flow sequence in block collection must be sufficiently indented and end with a ] at line 1, column 10:\n\n{\"a\":[1,2}\n         ^\n; Flow map must end with a } at line 1, column 10:\n\n{\"a\":[1,2}\n         ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":[1,2}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Flow sequence in block collection must be sufficiently indented and end with a ] at line 1, column 10:\n\n{\"a\":[1,2}\n         ^\n; Flow map must end with a } at line 1, column 10:\n\n{\"a\":[1,2}\n         ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":[1,2}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "nested-flow-mixed-truncated",
+      "source": "[{\"a\":[1,{\"b\":2}]}",
+      "reference": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Flow sequence must end with a ] at line 1, column 19:\n\n[{\"a\":[1,{\"b\":2}]}\n                  ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[{\"a\":[1,{\"b\":2}]}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Flow sequence must end with a ] at line 1, column 19:\n\n[{\"a\":[1,{\"b\":2}]}\n                  ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[{\"a\":[1,{\"b\":2}]}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "nested-extra-close",
+      "source": "{\"a\":[1,2]]}",
+      "reference": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Flow map must end with a } at line 1, column 11:\n\n{\"a\":[1,2]]}\n          ^\n; Unexpected flow-map-end token in YAML stream: \"}\" at line 1, column 12:\n\n{\"a\":[1,2]]}\n           ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":[1,2]]}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Flow map must end with a } at line 1, column 11:\n\n{\"a\":[1,2]]}\n          ^\n; Unexpected flow-map-end token in YAML stream: \"}\" at line 1, column 12:\n\n{\"a\":[1,2]]}\n           ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"a\":[1,2]]}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "multiline-map-missing-value",
+      "source": "{\n  \"first\": 1,\n  \"second\":\n}",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "first",
+            "second"
+          ],
+          "descriptors": [
+            {
+              "key": "first",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            },
+            {
+              "key": "second",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "null",
+                "value": null
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\n  \"first\": 1,\n  \"second\":\n}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "first",
+            "second"
+          ],
+          "descriptors": [
+            {
+              "key": "first",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            },
+            {
+              "key": "second",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "null",
+                "value": null
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\n  \"first\": 1,\n  \"second\":\n}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "multiline-sequence-truncated",
+      "source": "[\n  1,\n  {\"x\": 2\n]",
+      "reference": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Flow map in block collection must be sufficiently indented and end with a } at line 4, column 1:\n\n  {\"x\": 2\n]\n^\n; Flow sequence must end with a ] at line 4, column 1:\n\n  {\"x\": 2\n]\n^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[\n  1,\n  {\"x\": 2\n]",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Flow map in block collection must be sufficiently indented and end with a } at line 4, column 1:\n\n  {\"x\": 2\n]\n^\n; Flow sequence must end with a ] at line 4, column 1:\n\n  {\"x\": 2\n]\n^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[\n  1,\n  {\"x\": 2\n]",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "multiline-comment-separator",
+      "source": "[1,\n // comment\n 2,]",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "descriptors": [
+            {
+              "key": "0",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            },
+            {
+              "key": "1",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "string",
+                "utf16Length": 12,
+                "utf16Sha256": "519030ea252d0765e3d374b305b9dabd190ead9e615d7a1036b50dce48f17347"
+              }
+            },
+            {
+              "key": "length",
+              "enumerable": false,
+              "configurable": false,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 2
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[1,\n // comment\n 2,]",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "descriptors": [
+            {
+              "key": "0",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            },
+            {
+              "key": "1",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "string",
+                "utf16Length": 12,
+                "utf16Sha256": "519030ea252d0765e3d374b305b9dabd190ead9e615d7a1036b50dce48f17347"
+              }
+            },
+            {
+              "key": "length",
+              "enumerable": false,
+              "configurable": false,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 2
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[1,\n // comment\n 2,]",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "unicode-key-bad-member",
+      "source": "{\"名\":1, \"壊れ\":}",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "名",
+            "壊れ"
+          ],
+          "descriptors": [
+            {
+              "key": "名",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            },
+            {
+              "key": "壊れ",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "null",
+                "value": null
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"名\":1, \"壊れ\":}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "名",
+            "壊れ"
+          ],
+          "descriptors": [
+            {
+              "key": "名",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            },
+            {
+              "key": "壊れ",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "null",
+                "value": null
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"名\":1, \"壊れ\":}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "unicode-astral-truncated-quote",
+      "source": "{\"😀\":\"値}",
+      "reference": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Missing closing \"quote at line 1, column 10:\n\n{\"😀\":\"値}\n         ^\n; Flow map must end with a } at line 1, column 10:\n\n{\"😀\":\"値}\n         ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"😀\":\"値}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Missing closing \"quote at line 1, column 10:\n\n{\"😀\":\"値}\n         ^\n; Flow map must end with a } at line 1, column 10:\n\n{\"😀\":\"値}\n         ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"😀\":\"値}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "unicode-line-separator",
+      "source": "[\"a b\",]",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "length"
+          ],
+          "descriptors": [
+            {
+              "key": "0",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "string",
+                "utf16Length": 3,
+                "utf16Sha256": "57a277ce899a6413dc55fb22c8882eba680c5385317f83082e2ca90c51ca1a90"
+              }
+            },
+            {
+              "key": "length",
+              "enumerable": false,
+              "configurable": false,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[\"a b\",]",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "length"
+          ],
+          "descriptors": [
+            {
+              "key": "0",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "string",
+                "utf16Length": 3,
+                "utf16Sha256": "57a277ce899a6413dc55fb22c8882eba680c5385317f83082e2ca90c51ca1a90"
+              }
+            },
+            {
+              "key": "length",
+              "enumerable": false,
+              "configurable": false,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[\"a b\",]",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "unicode-crlf-comment",
+      "source": "{\r\n \"é\": 1, // comment\r\n}",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "é",
+            "// comment"
+          ],
+          "descriptors": [
+            {
+              "key": "é",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            },
+            {
+              "key": "// comment",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "null",
+                "value": null
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\r\n \"é\": 1, // comment\r\n}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "é",
+            "// comment"
+          ],
+          "descriptors": [
+            {
+              "key": "é",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            },
+            {
+              "key": "// comment",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "null",
+                "value": null
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\r\n \"é\": 1, // comment\r\n}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "quote-unclosed-single",
+      "source": "['unterminated]",
+      "reference": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Missing closing 'quote at line 1, column 16:\n\n['unterminated]\n               ^\n; Flow sequence must end with a ] at line 1, column 16:\n\n['unterminated]\n               ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "['unterminated]",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Missing closing 'quote at line 1, column 16:\n\n['unterminated]\n               ^\n; Flow sequence must end with a ] at line 1, column 16:\n\n['unterminated]\n               ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "['unterminated]",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "quote-unclosed-double",
+      "source": "[\"unterminated]",
+      "reference": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Missing closing \"quote at line 1, column 16:\n\n[\"unterminated]\n               ^\n; Flow sequence must end with a ] at line 1, column 16:\n\n[\"unterminated]\n               ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[\"unterminated]",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Missing closing \"quote at line 1, column 16:\n\n[\"unterminated]\n               ^\n; Flow sequence must end with a ] at line 1, column 16:\n\n[\"unterminated]\n               ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[\"unterminated]",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "quote-after-escape-truncated",
+      "source": "[\"trailing\\",
+      "reference": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Missing closing \"quote at line 1, column 12:\n\n[\"trailing\\\n           ^\n; Flow sequence must end with a ] at line 1, column 12:\n\n[\"trailing\\\n           ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[\"trailing\\",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "constructorName": "UmfError",
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "Missing closing \"quote at line 1, column 12:\n\n[\"trailing\\\n           ^\n; Flow sequence must end with a ] at line 1, column 12:\n\n[\"trailing\\\n           ^\n",
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[\"trailing\\",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "truncated-exponent",
+      "source": "[1e+]",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "length"
+          ],
+          "descriptors": [
+            {
+              "key": "0",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "string",
+                "utf16Length": 3,
+                "utf16Sha256": "ffb499b0c4ae623700331950af01615e7b1dc7111fc5ed14f554c78bca3435c3"
+              }
+            },
+            {
+              "key": "length",
+              "enumerable": false,
+              "configurable": false,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[1e+]",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "length"
+          ],
+          "descriptors": [
+            {
+              "key": "0",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "string",
+                "utf16Length": 3,
+                "utf16Sha256": "ffb499b0c4ae623700331950af01615e7b1dc7111fc5ed14f554c78bca3435c3"
+              }
+            },
+            {
+              "key": "length",
+              "enumerable": false,
+              "configurable": false,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[1e+]",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "truncated-literal",
+      "source": "[tru]",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "length"
+          ],
+          "descriptors": [
+            {
+              "key": "0",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "string",
+                "utf16Length": 3,
+                "utf16Sha256": "9e224e14adb868dcdc6f4777d83b08054d97b04191383b773a79bc561ea29b25"
+              }
+            },
+            {
+              "key": "length",
+              "enumerable": false,
+              "configurable": false,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[tru]",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "length"
+          ],
+          "descriptors": [
+            {
+              "key": "0",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "string",
+                "utf16Length": 3,
+                "utf16Sha256": "9e224e14adb868dcdc6f4777d83b08054d97b04191383b773a79bc561ea29b25"
+              }
+            },
+            {
+              "key": "length",
+              "enumerable": false,
+              "configurable": false,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[tru]",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "leading-zero",
+      "source": "[01]",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "length"
+          ],
+          "descriptors": [
+            {
+              "key": "0",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            },
+            {
+              "key": "length",
+              "enumerable": false,
+              "configurable": false,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[01]",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "length"
+          ],
+          "descriptors": [
+            {
+              "key": "0",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            },
+            {
+              "key": "length",
+              "enumerable": false,
+              "configurable": false,
+              "writable": true,
+              "value": {
+                "type": "number",
+                "value": 1
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "[01]",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "valid-json-control",
+      "source": "{\"ok\":[1,true,null,\"x\"]}",
+      "reference": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "ok"
+          ],
+          "descriptors": [
+            {
+              "key": "ok",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "array",
+                "id": 1,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "1",
+                  "2",
+                  "3",
+                  "length"
+                ],
+                "descriptors": [
+                  {
+                    "key": "0",
+                    "enumerable": true,
+                    "configurable": true,
+                    "writable": true,
+                    "value": {
+                      "type": "number",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key": "1",
+                    "enumerable": true,
+                    "configurable": true,
+                    "writable": true,
+                    "value": {
+                      "type": "boolean",
+                      "value": true
+                    }
+                  },
+                  {
+                    "key": "2",
+                    "enumerable": true,
+                    "configurable": true,
+                    "writable": true,
+                    "value": {
+                      "type": "null",
+                      "value": null
+                    }
+                  },
+                  {
+                    "key": "3",
+                    "enumerable": true,
+                    "configurable": true,
+                    "writable": true,
+                    "value": {
+                      "type": "string",
+                      "utf16Length": 1,
+                      "utf16Sha256": "14f825b2bbc32dd8d196367fa8776873069c12a8954d8da7513aa7704ddd09eb"
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "enumerable": false,
+                    "configurable": false,
+                    "writable": true,
+                    "value": {
+                      "type": "number",
+                      "value": 4
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"ok\":[1,true,null,\"x\"]}",
+            "restCount": 0
+          }
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "shape": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "ok"
+          ],
+          "descriptors": [
+            {
+              "key": "ok",
+              "enumerable": true,
+              "configurable": true,
+              "writable": true,
+              "value": {
+                "type": "array",
+                "id": 1,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "1",
+                  "2",
+                  "3",
+                  "length"
+                ],
+                "descriptors": [
+                  {
+                    "key": "0",
+                    "enumerable": true,
+                    "configurable": true,
+                    "writable": true,
+                    "value": {
+                      "type": "number",
+                      "value": 1
+                    }
+                  },
+                  {
+                    "key": "1",
+                    "enumerable": true,
+                    "configurable": true,
+                    "writable": true,
+                    "value": {
+                      "type": "boolean",
+                      "value": true
+                    }
+                  },
+                  {
+                    "key": "2",
+                    "enumerable": true,
+                    "configurable": true,
+                    "writable": true,
+                    "value": {
+                      "type": "null",
+                      "value": null
+                    }
+                  },
+                  {
+                    "key": "3",
+                    "enumerable": true,
+                    "configurable": true,
+                    "writable": true,
+                    "value": {
+                      "type": "string",
+                      "utf16Length": 1,
+                      "utf16Sha256": "14f825b2bbc32dd8d196367fa8776873069c12a8954d8da7513aa7704ddd09eb"
+                    }
+                  },
+                  {
+                    "key": "length",
+                    "enumerable": false,
+                    "configurable": false,
+                    "writable": true,
+                    "value": {
+                      "type": "number",
+                      "value": 4
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "event": "get:JSON.parse"
+          },
+          {
+            "event": "call:JSON.parse",
+            "receiverIsJSON": true,
+            "argumentType": "string",
+            "argument": "{\"ok\":[1,true,null,\"x\"]}",
+            "restCount": 0
+          }
+        ]
+      },
+      "matches": true
+    }
+  ],
+  "scope": "TypeScript reference/default source bundles only; no Rust, WASM, Chromium, installed SDK, or release evidence."
+}

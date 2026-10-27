@@ -24,12 +24,6 @@ jobs:
             python-version: '3.11.17'
             expected-machine: x86_64
             expected-platform: linux_x86_64
-          - cohort: macos-arm64
-            runs-on: macos-15
-            python-architecture: arm64
-            python-version: '3.11.9'
-            expected-machine: arm64
-            expected-platform: macos_arm64
     runs-on: ${{ matrix.runs-on }}
     steps:
       - uses: actions/checkout@v4

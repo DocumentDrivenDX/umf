@@ -50,12 +50,14 @@ const typeOnlyImports:Record<string,readonly string[]>={
  'rust-semantic-types-default.ts':['../model/semantic-types','../model/types','../extensions/semantic-types'],
  'rust-javascript-numeric-default.ts':['../adapters/javascript-numeric'],
 };
-const forbidden=new Set(['Bun','process','require','fetch','eval','Function','Buffer','XMLHttpRequest','WebSocket']);
+const forbidden=new Set(['Bun','process','require','fetch','eval','Function','Buffer','XMLHttpRequest','WebSocket','Deno','globalThis','importScripts','Worker','SharedWorker']);
 export function checkAccessSource(file:string,text:string):string[]{
  const errors:string[]=[];
  const allowedForFile=allowedImports[file];
  if(allowedForFile===undefined)errors.push(file+': missing per-file import allowlist');
  const source=ts.createSourceFile(file,text,ts.ScriptTarget.Latest,true);
+ const parseDiagnostics=(source as ts.SourceFile&{parseDiagnostics?:readonly ts.Diagnostic[]}).parseDiagnostics??[];
+ for(const diagnostic of parseDiagnostics)errors.push(file+': TypeScript parse error '+diagnostic.code);
  function visit(node:ts.Node){
   if(ts.isImportDeclaration(node)&&ts.isStringLiteral(node.moduleSpecifier)){
    const module=node.moduleSpecifier.text;

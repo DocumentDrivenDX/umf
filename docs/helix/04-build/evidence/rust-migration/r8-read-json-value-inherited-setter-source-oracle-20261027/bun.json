@@ -1,0 +1,3755 @@
+{
+  "packet": "r8-read-json-value-inherited-setter-source-oracle-20261027-v1",
+  "runtime": {
+    "node": "v26.3.0",
+    "bun": "1.4.3",
+    "v8": "14.6.202.34-node.20"
+  },
+  "mode": "TypeScript reference model and public V4 default source bundles; Array.prototype[0] inherited setter installed per route invocation and restored in finally",
+  "sourcePins": {
+    "src/model/serialization.ts": "027360ffd8bf77905f7d14a3d4d933035fe11d9f52ae28d54691cc607cb43586",
+    "src/model/errors.ts": "65bc53689f6aa0546be249ff4bd42616b446966cfc5f9d525faf9a428031dbd6",
+    "src/index-v4-default.ts": "7d8602938d7be1a209c063dc806b51f287e60b961ff2f93410400a899efa1013",
+    "scripts/rust-migration/r8/inherited-setter-reference-entry.ts": "0efe98ade58263580bdca57e59a50cc74a60f65f2690719eb5ec3132021c821c",
+    "scripts/rust-migration/r8/inherited-setter-default-entry.ts": "1faa917066522b749ceab669dac0ac4f2b8f26b216026125d7dbe910a2a8b0e9",
+    "scripts/rust-migration/r8/read-json-value-inherited-setter-packet.mjs": "61c050743d3b96611d7834e876f6bf684e07b88f6fae1c3ff0ed17319db3e1b8",
+    "node_modules/yaml/dist/parse/line-counter.js": "ddfd11ca2cdd42d36bc6c3090a31c21e6bbcc90bf3498bf6aacfbb30c5d79436",
+    "node_modules/yaml/dist/parse/parser.js": "0adc5ffa51ffa4c0ceed1f80efa8b188d10f58c7b9389a6d46bc861e6bff34e1",
+    "node_modules/yaml/dist/compose/resolve-flow-collection.js": "242470b54c0deba1507babba2e879f3005ed2ee3bd53a36affb6ecf82fddd375",
+    "node_modules/yaml/dist/compose/resolve-block-map.js": "dcfada448c8fc532ebba96d6788a4b41bb015fc5e697a9544ff429b9c4e4c70a",
+    "node_modules/yaml/dist/compose/compose-node.js": "86562c85e4e5737d28b24aae2030b97bc9b672e1f2de5da9e4d25c4571e4345c",
+    "node_modules/yaml/dist/compose/composer.js": "509c0bdb4cef641cc784c130b6cc2b350752f6841798daa1a13cbcaf4fc74c46",
+    "package.json": "c138deb6aeb9bff6f452747df3a6d9add36f2be39a507e8f08715f7edc3035c8",
+    "bun.lock": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4"
+  },
+  "count": 52,
+  "matched": 52,
+  "mismatchCount": 0,
+  "rows": [
+    {
+      "id": "yaml-null",
+      "source": "null\n",
+      "format": "yaml",
+      "behavior": {},
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "null",
+          "value": null
+        },
+        "calls": 2,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "null",
+          "value": null
+        },
+        "calls": 2,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-boolean",
+      "source": "true\n",
+      "format": "yaml",
+      "behavior": {},
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "boolean",
+          "value": true
+        },
+        "calls": 2,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "boolean",
+          "value": true
+        },
+        "calls": 2,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-number",
+      "source": "41\n",
+      "format": "yaml",
+      "behavior": {},
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "number",
+          "value": 41
+        },
+        "calls": 2,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "number",
+          "value": 41
+        },
+        "calls": 2,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-string",
+      "source": "word\n",
+      "format": "yaml",
+      "behavior": {},
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "string",
+          "value": "word"
+        },
+        "calls": 2,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "string",
+          "value": "word"
+        },
+        "calls": 2,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-empty-document",
+      "source": "",
+      "format": "yaml",
+      "behavior": {},
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "null",
+          "value": null
+        },
+        "calls": 1,
+        "trace": [
+          "1\tparser.parse.line-start"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "null",
+          "value": null
+        },
+        "calls": 1,
+        "trace": [
+          "1\tparser.parse.line-start"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-empty-flow-array",
+      "source": "[]\n",
+      "format": "yaml",
+      "behavior": {},
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "length"
+          ],
+          "values": [
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 0
+              }
+            ]
+          ]
+        },
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "length"
+          ],
+          "values": [
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 0
+              }
+            ]
+          ]
+        },
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-flow-array-one",
+      "source": "[41]\n",
+      "format": "yaml",
+      "behavior": {},
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "number",
+                "value": 41
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 1
+              }
+            ]
+          ]
+        },
+        "calls": 5,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "number",
+                "value": 41
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 1
+              }
+            ]
+          ]
+        },
+        "calls": 5,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-flow-array-two",
+      "source": "[41,42]\n",
+      "format": "yaml",
+      "behavior": {},
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "number",
+                "value": 41
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "number",
+                "value": 42
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 5,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "number",
+                "value": 41
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "number",
+                "value": 42
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 5,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-nested-flow-arrays",
+      "source": "[[1],[2]]\n",
+      "format": "yaml",
+      "behavior": {},
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "array",
+                "id": 1,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "array",
+                "id": 2,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 11,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tparser.flowCollection",
+          "6\tparser.flowCollection",
+          "7\tparser.flowCollection",
+          "8\tparser.flowCollection",
+          "9\tcompose.resolveFlowCollection",
+          "10\tcompose.resolveFlowCollection",
+          "11\tcompose.resolveFlowCollection"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "array",
+                "id": 1,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "array",
+                "id": 2,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 11,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tparser.flowCollection",
+          "6\tparser.flowCollection",
+          "7\tparser.flowCollection",
+          "8\tparser.flowCollection",
+          "9\tcompose.resolveFlowCollection",
+          "10\tcompose.resolveFlowCollection",
+          "11\tcompose.resolveFlowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-block-array-two",
+      "source": "- 41\n- 42\n",
+      "format": "yaml",
+      "behavior": {},
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "number",
+                "value": 41
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "number",
+                "value": 42
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tcompose.resolveBlockSeq"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "number",
+                "value": 41
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "number",
+                "value": 42
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tcompose.resolveBlockSeq"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-block-map-two",
+      "source": "a: 1\nb: 2\n",
+      "format": "yaml",
+      "behavior": {},
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a",
+            "b"
+          ],
+          "values": [
+            [
+              "a",
+              {
+                "type": "number",
+                "value": 1
+              }
+            ],
+            [
+              "b",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 4,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.blockMap",
+          "4\tcompose.resolveBlockMap"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a",
+            "b"
+          ],
+          "values": [
+            [
+              "a",
+              {
+                "type": "number",
+                "value": 1
+              }
+            ],
+            [
+              "b",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 4,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.blockMap",
+          "4\tcompose.resolveBlockMap"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-flow-map-two",
+      "source": "{a: 1, b: 2}\n",
+      "format": "yaml",
+      "behavior": {},
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a",
+            "b"
+          ],
+          "values": [
+            [
+              "a",
+              {
+                "type": "number",
+                "value": 1
+              }
+            ],
+            [
+              "b",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 7,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tparser.flowCollection",
+          "6\tparser.flowCollection",
+          "7\tcompose.resolveFlowCollection"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a",
+            "b"
+          ],
+          "values": [
+            [
+              "a",
+              {
+                "type": "number",
+                "value": 1
+              }
+            ],
+            [
+              "b",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 7,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tparser.flowCollection",
+          "6\tparser.flowCollection",
+          "7\tcompose.resolveFlowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-flow-map-nested",
+      "source": "{a: [1, 2], b: {c: 3}}\n",
+      "format": "yaml",
+      "behavior": {},
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a",
+            "b"
+          ],
+          "values": [
+            [
+              "a",
+              {
+                "type": "array",
+                "id": 1,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "1",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ],
+                  [
+                    "1",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "b",
+              {
+                "type": "object",
+                "id": 2,
+                "prototype": "null",
+                "keys": [
+                  "c"
+                ],
+                "values": [
+                  [
+                    "c",
+                    {
+                      "type": "number",
+                      "value": 3
+                    }
+                  ]
+                ]
+              }
+            ]
+          ]
+        },
+        "calls": 14,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tparser.flowCollection",
+          "6\tparser.flowCollection",
+          "7\tparser.flowCollection",
+          "8\tparser.flowCollection",
+          "9\tparser.flowCollection",
+          "10\tparser.flowCollection",
+          "11\tparser.flowCollection",
+          "12\tcompose.resolveFlowCollection",
+          "13\tcompose.resolveFlowCollection",
+          "14\tcompose.resolveFlowCollection"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "a",
+            "b"
+          ],
+          "values": [
+            [
+              "a",
+              {
+                "type": "array",
+                "id": 1,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "1",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ],
+                  [
+                    "1",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "b",
+              {
+                "type": "object",
+                "id": 2,
+                "prototype": "null",
+                "keys": [
+                  "c"
+                ],
+                "values": [
+                  [
+                    "c",
+                    {
+                      "type": "number",
+                      "value": 3
+                    }
+                  ]
+                ]
+              }
+            ]
+          ]
+        },
+        "calls": 14,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tparser.flowCollection",
+          "6\tparser.flowCollection",
+          "7\tparser.flowCollection",
+          "8\tparser.flowCollection",
+          "9\tparser.flowCollection",
+          "10\tparser.flowCollection",
+          "11\tparser.flowCollection",
+          "12\tcompose.resolveFlowCollection",
+          "13\tcompose.resolveFlowCollection",
+          "14\tcompose.resolveFlowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-block-array-of-maps",
+      "source": "- a: 1\n- b: 2\n",
+      "format": "yaml",
+      "behavior": {},
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "object",
+                "id": 1,
+                "prototype": "null",
+                "keys": [
+                  "a"
+                ],
+                "values": [
+                  [
+                    "a",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "object",
+                "id": 2,
+                "prototype": "null",
+                "keys": [
+                  "b"
+                ],
+                "values": [
+                  [
+                    "b",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 5,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tcompose.resolveBlockMap",
+          "4\tcompose.resolveBlockSeq",
+          "5\tcompose.resolveBlockMap"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "object",
+                "id": 1,
+                "prototype": "null",
+                "keys": [
+                  "a"
+                ],
+                "values": [
+                  [
+                    "a",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "object",
+                "id": 2,
+                "prototype": "null",
+                "keys": [
+                  "b"
+                ],
+                "values": [
+                  [
+                    "b",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 5,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tcompose.resolveBlockMap",
+          "4\tcompose.resolveBlockSeq",
+          "5\tcompose.resolveBlockMap"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "json-null",
+      "source": "null",
+      "format": "json",
+      "behavior": {},
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "null",
+          "value": null
+        },
+        "calls": 2,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "null",
+          "value": null
+        },
+        "calls": 2,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "json-number",
+      "source": "41",
+      "format": "json",
+      "behavior": {},
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "number",
+          "value": 41
+        },
+        "calls": 2,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "number",
+          "value": 41
+        },
+        "calls": 2,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "json-empty-array",
+      "source": "[]",
+      "format": "json",
+      "behavior": {},
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "length"
+          ],
+          "values": [
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 0
+              }
+            ]
+          ]
+        },
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "length"
+          ],
+          "values": [
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 0
+              }
+            ]
+          ]
+        },
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "json-array-two",
+      "source": "[41,42]",
+      "format": "json",
+      "behavior": {},
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "number",
+                "value": 41
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "number",
+                "value": 42
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 5,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "number",
+                "value": 41
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "number",
+                "value": 42
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 5,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "json-nested-array",
+      "source": "[[1],[2]]",
+      "format": "json",
+      "behavior": {},
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "array",
+                "id": 1,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "array",
+                "id": 2,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 11,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tparser.flowCollection",
+          "6\tparser.flowCollection",
+          "7\tparser.flowCollection",
+          "8\tparser.flowCollection",
+          "9\tcompose.resolveFlowCollection",
+          "10\tcompose.resolveFlowCollection",
+          "11\tcompose.resolveFlowCollection"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "array",
+                "id": 1,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "array",
+                "id": 2,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 11,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tparser.flowCollection",
+          "6\tparser.flowCollection",
+          "7\tparser.flowCollection",
+          "8\tparser.flowCollection",
+          "9\tcompose.resolveFlowCollection",
+          "10\tcompose.resolveFlowCollection",
+          "11\tcompose.resolveFlowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "json-map-array",
+      "source": "{\"x\":[1,2]}",
+      "format": "json",
+      "behavior": {},
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "x"
+          ],
+          "values": [
+            [
+              "x",
+              {
+                "type": "array",
+                "id": 1,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "1",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ],
+                  [
+                    "1",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ]
+                ]
+              }
+            ]
+          ]
+        },
+        "calls": 9,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tparser.flowCollection",
+          "6\tparser.flowCollection",
+          "7\tparser.flowCollection",
+          "8\tcompose.resolveFlowCollection",
+          "9\tcompose.resolveFlowCollection"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "x"
+          ],
+          "values": [
+            [
+              "x",
+              {
+                "type": "array",
+                "id": 1,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "1",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ],
+                  [
+                    "1",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ]
+                ]
+              }
+            ]
+          ]
+        },
+        "calls": 9,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tparser.flowCollection",
+          "6\tparser.flowCollection",
+          "7\tparser.flowCollection",
+          "8\tcompose.resolveFlowCollection",
+          "9\tcompose.resolveFlowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "throw-sentinel-at-1",
+      "source": "[41,42]\n",
+      "format": "yaml",
+      "behavior": {
+        "throwAt": 1
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": true,
+        "isUndefined": false,
+        "calls": 1,
+        "trace": [
+          "1\tparser.parse.line-start"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": true,
+        "isUndefined": false,
+        "calls": 1,
+        "trace": [
+          "1\tparser.parse.line-start"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "throw-sentinel-at-2",
+      "source": "[41,42]\n",
+      "format": "yaml",
+      "behavior": {
+        "throwAt": 2
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": true,
+        "isUndefined": false,
+        "calls": 2,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": true,
+        "isUndefined": false,
+        "calls": 2,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "throw-sentinel-at-3",
+      "source": "[41,42]\n",
+      "format": "yaml",
+      "behavior": {
+        "throwAt": 3
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": true,
+        "isUndefined": false,
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": true,
+        "isUndefined": false,
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "throw-sentinel-at-4",
+      "source": "[41,42]\n",
+      "format": "yaml",
+      "behavior": {
+        "throwAt": 4
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": true,
+        "isUndefined": false,
+        "calls": 4,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": true,
+        "isUndefined": false,
+        "calls": 4,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "throw-sentinel-at-5",
+      "source": "[41,42]\n",
+      "format": "yaml",
+      "behavior": {
+        "throwAt": 5
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": true,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "[object Object] at line 1, column 1:\n\n[41,42]\n^\n",
+        "calls": 6,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection",
+          "6\tcompose.composeNode.error-record"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "[object Object] at line 1, column 1:\n\n[41,42]\n^\n",
+        "calls": 6,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection",
+          "6\tcompose.composeNode.error-record"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "throw-sentinel-at-6",
+      "source": "[41,42]\n",
+      "format": "yaml",
+      "behavior": {
+        "throwAt": 6
+      },
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "number",
+                "value": 41
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "number",
+                "value": 42
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 5,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "number",
+                "value": 41
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "number",
+                "value": 42
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 5,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "throw-sentinel-always",
+      "source": "[41,42]\n",
+      "format": "yaml",
+      "behavior": {
+        "always": true
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": true,
+        "isUndefined": false,
+        "calls": 1,
+        "trace": [
+          "1\tparser.parse.line-start"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": true,
+        "isUndefined": false,
+        "calls": 1,
+        "trace": [
+          "1\tparser.parse.line-start"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "throw-undefined-at-1",
+      "source": "[41,42]\n",
+      "format": "yaml",
+      "behavior": {
+        "throwAt": 1,
+        "throwUndefined": true
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": true,
+        "calls": 1,
+        "trace": [
+          "1\tparser.parse.line-start"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": true,
+        "calls": 1,
+        "trace": [
+          "1\tparser.parse.line-start"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "throw-undefined-at-5",
+      "source": "[41,42]\n",
+      "format": "yaml",
+      "behavior": {
+        "throwAt": 5,
+        "throwUndefined": true
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": true,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "undefined at line 1, column 1:\n\n[41,42]\n^\n",
+        "calls": 6,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection",
+          "6\tcompose.composeNode.error-record"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": true,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "UmfError",
+        "code": "SYNTAX",
+        "path": "",
+        "message": "undefined at line 1, column 1:\n\n[41,42]\n^\n",
+        "calls": 6,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection",
+          "6\tcompose.composeNode.error-record"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "throw-sentinel-at-compose-and-error-record",
+      "source": "[41,42]\n",
+      "format": "yaml",
+      "behavior": {
+        "throwAt": [
+          5,
+          6
+        ]
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": true,
+        "isUndefined": false,
+        "calls": 6,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection",
+          "6\tcompose.composeNode.error-record"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": true,
+        "isUndefined": false,
+        "calls": 6,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection",
+          "6\tcompose.composeNode.error-record"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "throw-undefined-at-compose-and-error-record",
+      "source": "[41,42]\n",
+      "format": "yaml",
+      "behavior": {
+        "throwAt": [
+          5,
+          6
+        ],
+        "throwUndefined": true
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": true,
+        "calls": 6,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection",
+          "6\tcompose.composeNode.error-record"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": true,
+        "calls": 6,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection",
+          "6\tcompose.composeNode.error-record"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "throw-undefined-always",
+      "source": "[41,42]\n",
+      "format": "yaml",
+      "behavior": {
+        "always": true,
+        "throwUndefined": true
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": true,
+        "calls": 1,
+        "trace": [
+          "1\tparser.parse.line-start"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": true,
+        "calls": 1,
+        "trace": [
+          "1\tparser.parse.line-start"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-empty-flow-array-mutation-set-length-and-index",
+      "source": "[]\n",
+      "format": "yaml",
+      "behavior": {
+        "mutation": "set-length-and-index"
+      },
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "length"
+          ],
+          "values": [
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 0
+              }
+            ]
+          ]
+        },
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "length"
+          ],
+          "values": [
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 0
+              }
+            ]
+          ]
+        },
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-flow-array-one-mutation-set-length-and-index",
+      "source": "[41]\n",
+      "format": "yaml",
+      "behavior": {
+        "mutation": "set-length-and-index"
+      },
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "number",
+                "value": 41
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 1
+              }
+            ]
+          ]
+        },
+        "calls": 5,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "number",
+                "value": 41
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 1
+              }
+            ]
+          ]
+        },
+        "calls": 5,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-flow-array-two-mutation-set-length-and-index",
+      "source": "[41,42]\n",
+      "format": "yaml",
+      "behavior": {
+        "mutation": "set-length-and-index"
+      },
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "number",
+                "value": 41
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "number",
+                "value": 42
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 5,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "number",
+                "value": 41
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "number",
+                "value": 42
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 5,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-nested-flow-arrays-mutation-set-length-and-index",
+      "source": "[[1],[2]]\n",
+      "format": "yaml",
+      "behavior": {
+        "mutation": "set-length-and-index"
+      },
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "array",
+                "id": 1,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "array",
+                "id": 2,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 11,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tparser.flowCollection",
+          "6\tparser.flowCollection",
+          "7\tparser.flowCollection",
+          "8\tparser.flowCollection",
+          "9\tcompose.resolveFlowCollection",
+          "10\tcompose.resolveFlowCollection",
+          "11\tcompose.resolveFlowCollection"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "array",
+                "id": 1,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "array",
+                "id": 2,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 11,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tparser.flowCollection",
+          "6\tparser.flowCollection",
+          "7\tparser.flowCollection",
+          "8\tparser.flowCollection",
+          "9\tcompose.resolveFlowCollection",
+          "10\tcompose.resolveFlowCollection",
+          "11\tcompose.resolveFlowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-block-array-two-mutation-set-length-and-index",
+      "source": "- 41\n- 42\n",
+      "format": "yaml",
+      "behavior": {
+        "mutation": "set-length-and-index"
+      },
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "number",
+                "value": 41
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "number",
+                "value": 42
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tcompose.resolveBlockSeq"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "number",
+                "value": 41
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "number",
+                "value": 42
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tcompose.resolveBlockSeq"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-block-array-of-maps-mutation-set-length-and-index",
+      "source": "- a: 1\n- b: 2\n",
+      "format": "yaml",
+      "behavior": {
+        "mutation": "set-length-and-index"
+      },
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "object",
+                "id": 1,
+                "prototype": "null",
+                "keys": [
+                  "a"
+                ],
+                "values": [
+                  [
+                    "a",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "object",
+                "id": 2,
+                "prototype": "null",
+                "keys": [
+                  "b"
+                ],
+                "values": [
+                  [
+                    "b",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 5,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tcompose.resolveBlockMap",
+          "4\tcompose.resolveBlockSeq",
+          "5\tcompose.resolveBlockMap"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "object",
+                "id": 1,
+                "prototype": "null",
+                "keys": [
+                  "a"
+                ],
+                "values": [
+                  [
+                    "a",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "object",
+                "id": 2,
+                "prototype": "null",
+                "keys": [
+                  "b"
+                ],
+                "values": [
+                  [
+                    "b",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 5,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tcompose.resolveBlockMap",
+          "4\tcompose.resolveBlockSeq",
+          "5\tcompose.resolveBlockMap"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "json-empty-array-mutation-set-length-and-index",
+      "source": "[]",
+      "format": "json",
+      "behavior": {
+        "mutation": "set-length-and-index"
+      },
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "length"
+          ],
+          "values": [
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 0
+              }
+            ]
+          ]
+        },
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "length"
+          ],
+          "values": [
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 0
+              }
+            ]
+          ]
+        },
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "json-array-two-mutation-set-length-and-index",
+      "source": "[41,42]",
+      "format": "json",
+      "behavior": {
+        "mutation": "set-length-and-index"
+      },
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "number",
+                "value": 41
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "number",
+                "value": 42
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 5,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "number",
+                "value": 41
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "number",
+                "value": 42
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 5,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tcompose.resolveFlowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "json-nested-array-mutation-set-length-and-index",
+      "source": "[[1],[2]]",
+      "format": "json",
+      "behavior": {
+        "mutation": "set-length-and-index"
+      },
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "array",
+                "id": 1,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "array",
+                "id": 2,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 11,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tparser.flowCollection",
+          "6\tparser.flowCollection",
+          "7\tparser.flowCollection",
+          "8\tparser.flowCollection",
+          "9\tcompose.resolveFlowCollection",
+          "10\tcompose.resolveFlowCollection",
+          "11\tcompose.resolveFlowCollection"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "array",
+          "id": 0,
+          "prototype": "Array.prototype",
+          "keys": [
+            "0",
+            "1",
+            "length"
+          ],
+          "values": [
+            [
+              "0",
+              {
+                "type": "array",
+                "id": 1,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "1",
+              {
+                "type": "array",
+                "id": 2,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ]
+                ]
+              }
+            ],
+            [
+              "length",
+              {
+                "type": "number",
+                "value": 2
+              }
+            ]
+          ]
+        },
+        "calls": 11,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tparser.flowCollection",
+          "6\tparser.flowCollection",
+          "7\tparser.flowCollection",
+          "8\tparser.flowCollection",
+          "9\tcompose.resolveFlowCollection",
+          "10\tcompose.resolveFlowCollection",
+          "11\tcompose.resolveFlowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "json-map-array-mutation-set-length-and-index",
+      "source": "{\"x\":[1,2]}",
+      "format": "json",
+      "behavior": {
+        "mutation": "set-length-and-index"
+      },
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "x"
+          ],
+          "values": [
+            [
+              "x",
+              {
+                "type": "array",
+                "id": 1,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "1",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ],
+                  [
+                    "1",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ]
+                ]
+              }
+            ]
+          ]
+        },
+        "calls": 9,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tparser.flowCollection",
+          "6\tparser.flowCollection",
+          "7\tparser.flowCollection",
+          "8\tcompose.resolveFlowCollection",
+          "9\tcompose.resolveFlowCollection"
+        ]
+      },
+      "default": {
+        "kind": "return",
+        "value": {
+          "type": "object",
+          "id": 0,
+          "prototype": "null",
+          "keys": [
+            "x"
+          ],
+          "values": [
+            [
+              "x",
+              {
+                "type": "array",
+                "id": 1,
+                "prototype": "Array.prototype",
+                "keys": [
+                  "0",
+                  "1",
+                  "length"
+                ],
+                "values": [
+                  [
+                    "0",
+                    {
+                      "type": "number",
+                      "value": 1
+                    }
+                  ],
+                  [
+                    "1",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ],
+                  [
+                    "length",
+                    {
+                      "type": "number",
+                      "value": 2
+                    }
+                  ]
+                ]
+              }
+            ]
+          ]
+        },
+        "calls": 9,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tparser.flowCollection",
+          "4\tparser.flowCollection",
+          "5\tparser.flowCollection",
+          "6\tparser.flowCollection",
+          "7\tparser.flowCollection",
+          "8\tcompose.resolveFlowCollection",
+          "9\tcompose.resolveFlowCollection"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-empty-flow-array-mutation-omit-own-index",
+      "source": "[]\n",
+      "format": "yaml",
+      "behavior": {
+        "mutation": "omit-own-index"
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "TypeError",
+        "message": "undefined is not an object (evaluating 'source[0]')",
+        "calls": 4,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tother",
+          "4\tother"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "TypeError",
+        "message": "undefined is not an object (evaluating 'source[0]')",
+        "calls": 4,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tother",
+          "4\tother"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-flow-array-one-mutation-omit-own-index",
+      "source": "[41]\n",
+      "format": "yaml",
+      "behavior": {
+        "mutation": "omit-own-index"
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "TypeError",
+        "message": "undefined is not an object (evaluating 'source[0]')",
+        "calls": 4,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tother",
+          "4\tother"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "TypeError",
+        "message": "undefined is not an object (evaluating 'source[0]')",
+        "calls": 4,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tother",
+          "4\tother"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-flow-array-two-mutation-omit-own-index",
+      "source": "[41,42]\n",
+      "format": "yaml",
+      "behavior": {
+        "mutation": "omit-own-index"
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "TypeError",
+        "message": "undefined is not an object (evaluating 'source[0]')",
+        "calls": 4,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tother",
+          "4\tother"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "TypeError",
+        "message": "undefined is not an object (evaluating 'source[0]')",
+        "calls": 4,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tother",
+          "4\tother"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-nested-flow-arrays-mutation-omit-own-index",
+      "source": "[[1],[2]]\n",
+      "format": "yaml",
+      "behavior": {
+        "mutation": "omit-own-index"
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "TypeError",
+        "message": "undefined is not an object (evaluating 'source[0]')",
+        "calls": 4,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tother",
+          "4\tother"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "TypeError",
+        "message": "undefined is not an object (evaluating 'source[0]')",
+        "calls": 4,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tother",
+          "4\tother"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-block-array-two-mutation-omit-own-index",
+      "source": "- 41\n- 42\n",
+      "format": "yaml",
+      "behavior": {
+        "mutation": "omit-own-index"
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "TypeError",
+        "message": "undefined is not an object (evaluating 'source[0]')",
+        "calls": 4,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tother",
+          "4\tother"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "TypeError",
+        "message": "undefined is not an object (evaluating 'source[0]')",
+        "calls": 4,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tother",
+          "4\tother"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "yaml-block-array-of-maps-mutation-omit-own-index",
+      "source": "- a: 1\n- b: 2\n",
+      "format": "yaml",
+      "behavior": {
+        "mutation": "omit-own-index"
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "TypeError",
+        "message": "undefined is not an object (evaluating 'source[0]')",
+        "calls": 4,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tother",
+          "4\tother"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "TypeError",
+        "message": "undefined is not an object (evaluating 'source[0]')",
+        "calls": 4,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tother",
+          "4\tother"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "json-empty-array-mutation-omit-own-index",
+      "source": "[]",
+      "format": "json",
+      "behavior": {
+        "mutation": "omit-own-index"
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "TypeError",
+        "message": "undefined is not an object (evaluating 'error.pos')",
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tother"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "TypeError",
+        "message": "undefined is not an object (evaluating 'error.pos')",
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tother"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "json-array-two-mutation-omit-own-index",
+      "source": "[41,42]",
+      "format": "json",
+      "behavior": {
+        "mutation": "omit-own-index"
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "TypeError",
+        "message": "undefined is not an object (evaluating 'error.pos')",
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tother"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "TypeError",
+        "message": "undefined is not an object (evaluating 'error.pos')",
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tother"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "json-nested-array-mutation-omit-own-index",
+      "source": "[[1],[2]]",
+      "format": "json",
+      "behavior": {
+        "mutation": "omit-own-index"
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "TypeError",
+        "message": "undefined is not an object (evaluating 'error.pos')",
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tother"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "TypeError",
+        "message": "undefined is not an object (evaluating 'error.pos')",
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tother"
+        ]
+      },
+      "matches": true
+    },
+    {
+      "id": "json-map-array-mutation-omit-own-index",
+      "source": "{\"x\":[1,2]}",
+      "format": "json",
+      "behavior": {
+        "mutation": "omit-own-index"
+      },
+      "outcome": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "TypeError",
+        "message": "undefined is not an object (evaluating 'error.pos')",
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tother"
+        ]
+      },
+      "default": {
+        "kind": "throw",
+        "isUmfError": false,
+        "isSentinel": false,
+        "isUndefined": false,
+        "name": "TypeError",
+        "message": "undefined is not an object (evaluating 'error.pos')",
+        "calls": 3,
+        "trace": [
+          "1\tparser.parse.line-start",
+          "2\tparser.stream",
+          "3\tother"
+        ]
+      },
+      "matches": true
+    }
+  ],
+  "scope": "Source-only Node/Bun oracle; no Rust, WASM, browser, SDK, or release qualification. Stack receipts retain portable phase labels, not engine-specific locations."
+}

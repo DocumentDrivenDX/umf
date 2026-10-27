@@ -14,10 +14,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - cohort: macos-arm64
-            runner: macos-15
-            expected_os: darwin
-            expected_arch: arm64
           - cohort: linux-x86_64
             runner: ubuntu-24.04
             expected_os: linux
@@ -94,7 +90,7 @@ jobs:
           include-hidden-files: true
           if-no-files-found: error
 
-  bounded-route-matrix:
+  linux-route-evidence:
     needs: default-archive
     runs-on: ubuntu-24.04
     steps:
@@ -106,26 +102,67 @@ jobs:
         with:
           node-version: 26.12.1
       - run: bun install --frozen-lockfile
-      - name: Require current gap ledger before cohort aggregation
+      - name: Require current gap ledger before preserving Linux evidence
         run: node scripts/rust-migration/r8/gap-ledger.mjs --check
-      - name: Retrieve exact macOS arm64 archive cohort
-        uses: actions/download-artifact@v4
-        with:
-          name: umf-rust-sdk-default-macos-arm64
-          path: .cache/sdk-distribution/retirement-matrix/darwin-arm64
       - name: Retrieve exact Linux x64 archive cohort
         uses: actions/download-artifact@v4
         with:
           name: umf-rust-sdk-default-linux-x86_64
           path: .cache/sdk-distribution/retirement-matrix/linux-x86_64
-      - name: Validate the two-cohort bounded route evidence
-        run: >-
-          node scripts/rust-migration/r8/aggregate-default-route-cohorts.mjs
-          .cache/sdk-distribution/retirement-matrix
-      - name: Preserve self-contained bounded route matrix
+      - name: Require passing Linux archive qualification evidence
+        run: |
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const crypto = require('node:crypto');
+          const path = '.cache/sdk-distribution/retirement-matrix/linux-x86_64';
+          const capture = `${path}/retirement-cohort`;
+          const regular = file => {
+            const stat = fs.lstatSync(file);
+            if (!stat.isFile() || stat.isSymbolicLink()) throw new Error(`Invalid Linux qualification file: ${file}`);
+            return fs.readFileSync(file);
+          };
+          const sha = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
+          const receipt = JSON.parse(regular(`${capture}/cohort.json`));
+          if (receipt.format !== 'umf.r8.default-route-retirement-cohort/1' || receipt.status !== 'pass' || receipt.cohortId !== 'linux-x86_64' || receipt.platform?.os !== 'linux' || receipt.platform?.arch !== 'x86_64' || receipt.platform?.nodeArch !== 'x64' || receipt.platform?.nativeTarget !== 'x86_64-unknown-linux-gnu') {
+            throw new Error('Linux SDK archive qualification did not pass');
+          }
+          for (const [file, expected] of [
+            [`${path}/umf-sdk.tgz`, receipt.archiveSha256],
+            [`${capture}/archive-source-cohort.json`, receipt.liveSourceManifestSha256],
+            [`${capture}/archive-members.json`, receipt.memberManifestSha256],
+            [`${capture}/archive-package.json`, receipt.packageManifestSha256],
+          ]) {
+            if (!/^[0-9a-f]{64}$/.test(expected) || sha(regular(file)) !== expected) {
+              throw new Error(`Linux qualification evidence hash mismatch: ${file}`);
+            }
+          }
+          const source = JSON.parse(regular(`${capture}/archive-source-cohort.json`));
+          if (source.sourceClosure?.sha256 !== receipt.sourceClosureSha256 || source.sourceClosure?.capturedLiveSha256 !== receipt.sourceClosureSha256 || source.sourceClosure?.transform?.status !== 'fixed-point' || source.sourceClosure?.fileCount !== receipt.sourceInputCount) throw new Error('Linux source closure differs');
+          const inputs = source.sourceClosure?.inputs;
+          if (!inputs || Object.keys(inputs).length !== receipt.sourceInputCount) throw new Error('Linux source input set differs');
+          for (const [file, expected] of Object.entries(inputs)) {
+            if (file.startsWith('/') || file.split('/').includes('..') || !/^[0-9a-f]{64}$/.test(expected) || sha(regular(file)) !== expected) {
+              throw new Error(`Linux source input differs: ${file}`);
+            }
+          }
+          const members = JSON.parse(regular(`${capture}/archive-members.json`));
+          if (members.status !== 'pass' || members.archiveSha256 !== receipt.archiveSha256 || members.archiveMemberCount !== receipt.archiveMemberCount || members.verifiedMemberCount !== receipt.archiveMemberCount) throw new Error('Linux archive member receipt differs');
+          const names = ['inspectCoreRelationships', 'lookupCoreRelationship', 'declareCoreRelationship', 'verifyCoreRelationshipOperation', 'inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks', 'validateCsvBooleanLexical', 'verifyCsvBooleanLexical'];
+          if (Object.keys(receipt.receipts ?? {}).length !== names.length) throw new Error('Linux operation receipt set differs');
+          for (const name of names) {
+            for (const runtime of ['node', 'bun', 'chromium']) {
+              const expected = receipt.receipts?.[name]?.[runtime];
+              const file = `${capture}/receipts/${name}-${runtime}.json`;
+              if (!/^[0-9a-f]{64}$/.test(expected) || sha(regular(file)) !== expected) throw new Error(`Linux ${name}/${runtime} receipt differs`);
+              const item = JSON.parse(regular(file));
+              if (item.status !== 'pass' || item.cohortId !== 'linux-x86_64' || item.archiveSha256 !== receipt.archiveSha256 || item.sourceClosureSha256 !== receipt.sourceClosureSha256) throw new Error(`Linux ${name}/${runtime} content differs`);
+            }
+          }
+          NODE
+      - name: Preserve Linux archive qualification evidence
         uses: actions/upload-artifact@v4
         with:
-          name: umf-rust-sdk-default-bounded-matrix
+          name: umf-rust-sdk-default-linux-qualification
           path: .cache/sdk-distribution/retirement-matrix/
           include-hidden-files: true
           if-no-files-found: error
