@@ -186,7 +186,7 @@ try {
     const parsePython314Outcome = (line: string) => {
       const fields = line.split('\t');
       if (fields.length !== 6) throw new Error('Malformed six-field CPython 3.14 outcome');
-      const [status, startText, endText, patternText, textText, family] = fields;
+      const [status, startText, endText, patternText, textText, family] = fields as [string, string, string, string, string, string];
       if (!['E', 'M', 'N'].includes(status) || !python314FamilyCounts.has(family)) {
         throw new Error('Malformed CPython 3.14 status or family');
       }
