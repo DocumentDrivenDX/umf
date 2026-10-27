@@ -7870,3 +7870,108 @@ An exact historical source blob was located at TableSpec commit `bb34a0382`
 replay. No current TableSpec or five-system qualification is claimed. The
 CONTRACT-040 status text now distinguishes its historical five-binding gate
 from the current conformance record's `UNQUALIFIED` native state.
+The fixture's declared TableSpec commit `647e8e566ad78b864282ec65c0b0b2237aa63084`
+is also present in the local TableSpec Git object store; its
+`src/tablespec/type_mappings.py` SHA-256 is the fixture's pinned
+`eaa36bcbd96d2b09d22161c5200a2be6a0788d7fd5ee46292d62428bb24cbbe7`.
+The host oracle hardcodes that commit label in its emitted JSON, so a run from
+the later `bb34a0382` checkout would be mislabeled even if the checked file
+matched. Qualification must execute from an isolated checkout of the actual
+`647e8e5` commit and record its tree and installed package version.
+That isolated `647e8e5` replay has now passed native and Chromium 153 routes
+against the frozen `b50523cda` UMF source. The native route passed all five
+subcommands, including 28 declarations, 336 classification cases with 452
+recoveries, and 78 projection cases with 44 emitted targets and 88 recoveries.
+The browser route passed the same classification and projection case totals,
+with 110 and 34 expected blocks respectively and no reported external browser
+requests. The TableSpec tree is `f6d419cef7e482684a795147d68130ac0cd39d0e`
+and its derived package version is `0.0.3.post2.dev0+647e8e5`. The raw
+TableSpec packet at `/private/tmp/umf-cardinality-receipts/tablespec` passes
+recursive SHA-256 verification. All five priority native/browser pairs have
+therefore passed on the frozen `b50523cda` source, but that remains a historical
+cohort relative to the later CONTRACT-040 edit. A separate exact-current-source
+replay and acceptance validator are still required.
+The focused PostgreSQL, SQL Server and Avro contract-review receipts explicitly
+remain `acceptance-pending`; their passing route pairs cannot substitute for
+the combined five-system regression, existing Field/Nullability gates or a
+qualified Cardinality admission/delivery decision.
+The TableSpec projection evidence itself reports `bindingAccepted: false` and
+`idealAdmitted: false`; the PostgreSQL review requires its 69-command combined
+refresh, and the SQL Server, Avro and Parquet reviews also leave combined
+regression/conformance work open. None of those status fields may be promoted
+by a validator from successful per-route command summaries. Case-level loss,
+refusal and reciprocal recovery evidence, exact source pins, and the combined
+Field/Nullability/Cardinality gates must pass before `/3` may return a retired
+disposition.
+
+The next retirement evidence format must close the gap between the bounded
+two-platform `/2` route proof and CONTRACT-040 acceptance. It will name exactly
+the three Cardinality exports and six Node/browser ledger rows, pin their
+current contract and source bytes, and require one fixed-point source closure
+shared by the macOS arm64 and Linux x64 installed SDK archives. Each operation
+needs raw Node, Bun and Chromium packet-case receipts per archive, including
+default Rust/WASM invocation counts, reference zero-Rust controls, exact outcomes
+and ordered traces. The same source closure must bind fresh native and browser
+receipts for TableSpec, PostgreSQL, SQL Server, Avro and Parquet, with explicit
+native versions, projection/classification cases, strict refusals, loss
+residuals and both retained recovery directions. The verifier must reopen and
+hash those raw files, reject duplicate or missing cases and mixed cohorts, and
+require current conformance to report ideal admission and all five qualified
+bindings before returning a retired disposition. A pinned historical TableSpec
+version may satisfy only a separately identified supported-version cohort;
+it cannot establish support for the current TableSpec checkout. The existing
+`/2` format continues to return bounded evidence only. Negative controls must
+show rejection of stale source, absent native/browser receipts, a skipped Rust
+call, a reference Rust call, changed unknown content, and a five-system status
+assertion unsupported by the raw cases.
+Sol review of the proposed `/3` validator keeps the `/2` archive, packet and
+runtime checks intact, then requires exactly six current Cardinality ledger
+rows and five native/Chromium binding groups. Each binding needs a separate
+recomputed source/evidence closure tied to the same committed SDK source,
+including scripts, fixtures, bundles, contracts, lockfiles and tool versions;
+per-case outcomes, loss lists and original-source recovery digests must be
+verified from raw files rather than summary counts. The current installed
+Cardinality receipt uses a different schema from `/2` host receipts, so a
+lossless adapter or new raw host capture is required. The positive gate must
+also rerun the combined five-system refresh and dependent Field/Nullability
+conformance; a passing per-binding pair alone is insufficient. Tests should
+rehash adversarially edited receipts so semantic checks, not only file hashes,
+reject omitted/swapped cases, altered losses and one-direction recovery.
+A focused audit of the current installed Cardinality receipt found no lossless
+adapter: it aggregates the three operations without packet case IDs, per-case
+ordered traces or exact default/reference Rust-call counts. Archive/member
+hashes are reusable, but zero reference Rust calls cannot be inferred from
+parity. The next host harness must capture each frozen case separately on
+Node, Bun and Chromium, instrument both routes' Rust calls, and pin the packet,
+cohort/platform, archive export conditions and native/WASM artifact members.
+
+The [exact-`e0487691` Docker-emulated Linux x64 packet](evidence/rust-migration/r8-cardinality-linux-x64-emulated-e0487691/README.md)
+now passes fixed-point source closure
+`1355bf21b58ad9e422fa8998c1ce5325b8643bb1eefbc6a1b6a127babc52b5d7`
+with zero transforms, the full TypeScript typecheck, nine archive checks, and
+installed Cardinality parity on Node 26.12.1, Bun 1.4.3, and Chromium 153.
+The archive SHA-256 is
+`7f36bce11d7eac07aa1235b8d192e64b1aacc2a000934984080890291a915c6f`;
+the raw receipt SHA-256 is
+`189d526cb65c26a74510a8dd83d67f6c71d2738c7242c9aa85365a35d43d4255`.
+Chromium requested packaged WASM and made zero external requests. The 1,807
+tar-entry set matches b505 exactly; the changed manifests bind the one changed
+CONTRACT-040 input, while separately rebuilt native/WASM binaries contain
+different temporary source-root paths and are pinned by their actual archive
+hashes. This is local emulated Linux and three-operation installed evidence,
+not hosted Linux CI, five-binding current qualification, retirement or release.
+
+The independent [exact-`e0487691` macOS arm64 packet](evidence/rust-migration/r8-cardinality-macos-arm64-e0487691/README.md)
+also records fixed-point source closure
+`1355bf21b58ad9e422fa8998c1ce5325b8643bb1eefbc6a1b6a127babc52b5d7`
+with zero transforms and 3,550 source inputs, a passing full TypeScript
+typecheck, 1,806 verified archive payload members, and installed three-operation
+parity on Node 26.12.1, Bun 1.4.3 and Chromium 153 with packaged WASM and zero
+external requests. Its private archive SHA-256 is
+`b87fe222f8e6f0c2446e54d683b22e8cec3ebdeca8fb75e4a5a82f2aa1ea3235`,
+and its raw receipt SHA-256 is
+`a49eb835d4df798ecd7be45ec00aac424f00ac95c80db0d980f1887b36f571f9`.
+Both platform archives now have one matching committed source closure and
+bounded installed replay. Their aggregate receipt schema lacks per-case
+invocation evidence required by `/2`, and their local runs are not hosted
+Linux or complete acceptance; ledger retirement remains zero.
