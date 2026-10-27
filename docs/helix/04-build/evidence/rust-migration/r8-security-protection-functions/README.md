@@ -83,4 +83,35 @@ Pinned SHA-256 digests:
 - Predecessor packet: `65b35493ec93e5e01df50e7923f23f4918afea819715f79a9ee637155fb04b08`
 - Rust core candidate: `03cf1e2c54610b7b22a46ab5bea5c6c4f79068fdd3e2221248c4c16efaa3c470`
 - Parameter literal candidate: `dcb99c2db816d015bb7a169e4d5a2e6fa056bc6e68571e56cb48fe671a8ba79c`
-- Rust tagged wire: `107e7aea9425b2f89a4e0268853f335655a101e4edfc1cb73585b08b759f1a13`
+- Historical pre-binding Rust tagged-wire snapshot: `107e7aea9425b2f89a4e0268853f335655a101e4edfc1cb73585b08b759f1a13`
+- Current Rust tagged-wire source for the binding replay is hashed in
+  [`binding-replay.json`](binding-replay.json).
+
+## Opt-in Node/WASM binding
+
+The additive Node and WASM factories expose only
+`inspectProtectionFunction` and `evaluateProtectionValue` through profile
+`umf.security-functions/1`. They call the existing Rust tagged-wire candidate;
+they do not alter V4 defaults or `requireProtectionInterpretation`. Every
+returned result retains `complete: false` and `authority: false`.
+
+The exact 25 source-backed tagged-wire cases pass through a fresh Rust 1.90.0
+Node addon under Node 26.12.1 and Bun 1.4.3. A fresh Rust 1.90.0
+`wasm32-unknown-unknown` release build with wasm-bindgen 0.2.100 passes the same
+25 frozen outcomes in HeadlessChrome 153.0.8010.12 through the public WASM
+factory. The browser control also confirms that a missing Rust method and a
+malformed response envelope are rejected. Node checks cover both raw accessor
+observations: accessor properties on policy and selection are refused with
+`ACCESSOR_PROPERTY` and neither getter runs. The tagged boundary rejects a
+wrong profile and an extra request member with `REQUEST` and their exact
+contract messages.
+
+Four predecessor cases remain outside the exact tagged replay: two raw
+accessor observations are not expressible in tagged JSON, and two malformed
+schema cases (`parameter-refusal-before-result` and `itemType-field-refused`)
+have known native schema diagnostic-array differences. Both excluded schema
+cases still refuse on each side; no full diagnostic-array parity is claimed for
+them. `binding-replay.json` records the exact candidate, facade, runner,
+predecessor and built-artifact hashes. This is opt-in binding evidence only; it
+does not establish authorization, interpretation completeness, actual compiler
+lineage, native/custodial behavior, or default-route support.

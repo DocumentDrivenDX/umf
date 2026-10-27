@@ -1,6 +1,7 @@
 import {createHostReadResponseFrames, encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './src/wire.js';
 import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
 import {createSecurityLogicEngine as createSecurityLogicEngineWithWire, SECURITY_LOGIC_PROFILE} from './src/security-logic.js';
+import {createSecurityFunctionsEngine as createSecurityFunctionsEngineWithWire, SECURITY_FUNCTIONS_PROFILE} from './src/security-functions.js';
 import {createCoreModelOperations} from './src/core-model.js';
 import {createCoreKeyTupleOperations} from './src/core-key-tuple.js';
 import {createCoreKeysOperations} from './src/core-keys.js';
@@ -32,6 +33,7 @@ export function isNativeUmfCoreError(error) { return error !== null && (typeof e
 function nativeCoreError(failure) { const error = new UmfCoreError(failure.code, failure.message, failure.path); weakSetAdd(nativeUmfCoreErrors, error); return error; }
 export {JAVASCRIPT_NUMERIC_PROFILE};
 export {SECURITY_LOGIC_PROFILE};
+export {SECURITY_FUNCTIONS_PROFILE};
 export {BIT128_PROFILE};
 export {JSON_NUMBER_PROFILE};
 export const GREGORIAN_DATE_PROFILE = 'umf-gregorian-date/1.0.0';
@@ -1438,6 +1440,12 @@ export function createJavascriptNumericEngine(module, resources, options = {}) {
 export function createSecurityLogicEngine(module, options = {}) {
   if (typeof module?.executeSecurityLogicWire !== 'function' || typeof module?.securityNotScalar !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
   return createSecurityLogicEngineWithWire((wire, control) => module.executeSecurityLogicWire(wire, control), options, UmfCoreError, (value, control) => module.securityNotScalar(value, control));
+}
+
+/** Create the opt-in pure protection-function reference engine. */
+export function createSecurityFunctionsEngine(module) {
+  if (typeof module?.executeSecurityFunctionsWire !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  return createSecurityFunctionsEngineWithWire(wire => module.executeSecurityFunctionsWire(wire), UmfCoreError);
 }
 
 function codegenOptions(options) {

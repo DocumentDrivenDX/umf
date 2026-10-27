@@ -2,6 +2,7 @@ import {createRequire} from 'node:module';
 import {createHostReadResponseFrames, encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './src/wire.js';
 import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
 import {createSecurityLogicEngine as createSecurityLogicEngineWithWire, SECURITY_LOGIC_PROFILE} from './src/security-logic.js';
+import {createSecurityFunctionsEngine as createSecurityFunctionsEngineWithWire, SECURITY_FUNCTIONS_PROFILE} from './src/security-functions.js';
 import {createCoreModelOperations} from './src/core-model.js';
 import {createCoreKeyTupleOperations} from './src/core-key-tuple.js';
 import {createCoreKeysOperations} from './src/core-keys.js';
@@ -68,6 +69,7 @@ export function executeArtifactReferencesBindingWire(wireJson, controlDispatcher
 
 export {JAVASCRIPT_NUMERIC_PROFILE};
 export {SECURITY_LOGIC_PROFILE};
+export {SECURITY_FUNCTIONS_PROFILE};
 export {BIT128_PROFILE};
 export {JSON_NUMBER_PROFILE};
 export function createBit128Engine(options = {}) {
@@ -91,6 +93,12 @@ export function createJavascriptNumericEngine(resources, options = {}) {
 export function createSecurityLogicEngine(options = {}) {
   if (typeof addon.executeSecurityLogicWire !== 'function' || typeof addon.securityNotScalar !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
   return createSecurityLogicEngineWithWire((wire, control) => addon.executeSecurityLogicWire(wire, control), options, UmfCoreError, (value, control) => addon.securityNotScalar(value, control));
+}
+
+/** Create the opt-in pure protection-function reference engine. */
+export function createSecurityFunctionsEngine() {
+  if (typeof addon.executeSecurityFunctionsWire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  return createSecurityFunctionsEngineWithWire(wire => addon.executeSecurityFunctionsWire(wire), UmfCoreError);
 }
 
 export const GREGORIAN_DATE_PROFILE = 'umf-gregorian-date/1.0.0';

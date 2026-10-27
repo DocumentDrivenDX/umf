@@ -16,6 +16,11 @@
       "sha256": "5d2f5e273b38a271b3ab7c771073da23db2c5b422065a095be79d374533468f0"
     },
     {
+      "source": "bindings/core/node/src/security-functions.js",
+      "generated": "bindings/core/wasm/src/security-functions.js",
+      "sha256": "e306ea52f0ef682b43cf752a50798169093d5a50b0fe6d45b205276581648638"
+    },
+    {
       "source": "bindings/core/node/src/bit128.js",
       "generated": "bindings/core/wasm/src/bit128.js",
       "sha256": "39a9fc04e2576d38da2ea4d5e2054b0ccac63e32cbd2ff049cd5bfb14f14fb1a"
@@ -28,7 +33,7 @@
     {
       "source": "bindings/core/node/src/json-schema.js",
       "generated": "bindings/core/wasm/src/json-schema.js",
-      "sha256": "53abdbcde5796e9c0b6105e8efd1f60b50fedc1e6293dafa878d5726ff054193"
+      "sha256": "7e590ca4e5cf21780db3193a7c7f148426f903b78215418abb2d094681303064"
     },
     {
       "source": "bindings/core/node/src/json-schema-import-source.js",
@@ -78,7 +83,7 @@
     {
       "source": "bindings/core/node/src/host-json.js",
       "generated": "bindings/core/wasm/src/host-json.js",
-      "sha256": "38401f170a320fd4cb8faddfe7ef86164603beddfac572daa71f568ab7093f56"
+      "sha256": "4deb54955daee4ace008978b4b50ba130910e171dd09a2dff169b499cb7a8f63"
     }
   ]
 }
