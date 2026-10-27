@@ -14,13 +14,13 @@ function document(schema: string, id: string) {
   }]};
 }
 
-(globalThis as any).additionalPropertiesBrowserResult = [
+(globalThis as any).additionalPropertiesBrowserResult = ([
   ['additional-properties-false', '{"type":"object","properties":{"known":{"type":"string"}},"additionalProperties":false}'],
   ['additional-properties-schema-valued', '{"type":"object","properties":{"known":{"type":"string"}},"additionalProperties":{"type":"integer","minimum":1}}'],
   ['nested-additional-properties-false', '{"type":"object","properties":{"child":{"type":"object","additionalProperties":false}}}'],
   ['nested-additional-properties-schema-valued', '{"type":"object","properties":{"child":{"type":"object","additionalProperties":{"type":"integer","minimum":1}}}}'],
   ['unsupported-schema-keyword-remains-incomplete', '{"type":"object","additionalProperties":{"pattern":"x"}}'],
-].map(([id, schema]) => {
+] as const).map(([id, schema]) => {
   const checked = engine.inspectJsonSchema(document(schema, `urn:umf:r8:${id}`) as any);
   const predecessor = tsInspect(tsImport(schema, {id: `urn:umf:r8:${id}`, baseUri}));
   const summary = (value: any) => ({valid: value.valid, complete: value.complete, diagnostics: value.diagnostics.map(({code, path, severity}: any) => ({code, path, severity}))});
