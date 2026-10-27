@@ -269,12 +269,12 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "be14ab694341f091f00fa8aec11df229cd2813e643020cb441e56dd3182d4d90",
+    "sourceCohortSha256": "994e31ce1563ba21d0fa7c9abff4abd381a44393215b061b006bdf4e9a06e33a",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 433,
-    "algorithmSymbols": 12634,
+    "algorithmSymbols": 12635,
     "pythonModules": 126,
     "rustBuildInputs": 79,
     "rustModules": 128,
@@ -38708,14 +38708,15 @@
       "active": true,
       "algorithmSymbols": [
         "generate",
-        "model"
+        "model",
+        "writeParentStage"
       ],
-      "bytes": 8800,
+      "bytes": 11412,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "ts",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/access-adoption.test.ts",
-      "sha256": "9625cd5d2d2010302cd03a55e40df8493e444e9860b0ed944663fce840700021"
+      "sha256": "42e64181c98a8e492a051230b584157e40305bff65d5fa9530ad20591af98b8e"
     },
     {
       "activationEvidence": [
