@@ -215,12 +215,12 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "c54c7cb0811383ad75a0cadf0f1e1741c375427ad455cc0268d7355cbc3588bb",
+    "sourceCohortSha256": "ff486700804ddcc88d126ecfef0abe81f3e422c483825ca1a2a80f2c127c0072",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 359,
-    "algorithmSymbols": 10477,
+    "algorithmSymbols": 10506,
     "pythonModules": 105,
     "rustBuildInputs": 79,
     "rustModules": 128,
@@ -9178,16 +9178,21 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
+        "_core_public_producer_verifier",
+        "_core_public_release_verifier",
         "_finalizer_source",
         "_install_wheel",
         "_macho",
         "_native_platform_helper",
         "_release_wheel_qualifier",
+        "_retained_installed_cell_receipt_fixture",
+        "_retained_producer_api_fixture",
         "_rewrite_installed_record",
         "_verifier",
         "_wheel",
         "_write_finalizer_inputs",
         "junit_for",
+        "retained_sdist_source_fixture",
         "test_exact_wheel_payload_and_record_are_accepted",
         "test_hatch_hook_loads_its_native_inspector_outside_project_directory",
         "test_installed_wheel_payload_and_record_match_the_exact_archive",
@@ -9200,6 +9205,18 @@
         "test_python_support_tests_install_the_hatch_build_backend",
         "test_repair_wheel_metadata_allows_only_tag_and_one_terminal_separator",
         "test_repair_wheel_metadata_refuses_any_other_framing_or_header_change",
+        "test_retained_installed_cell_accepts_actual_posttest_receipt_shape",
+        "test_retained_installed_cell_rejects_incomplete_actual_receipt",
+        "test_retained_producer_cell_summary_binds_exact_three_selected_receipts",
+        "test_retained_s34_producer_policy_accepts_only_exact_three_cell_coverage",
+        "test_retained_s34_producer_policy_refuses_identity_or_roster_changes",
+        "test_retained_sdist_rejects_oversized_pkg_info_before_reading_payload",
+        "test_retained_sdist_source_delta_allows_only_the_distribution_test_path",
+        "test_retained_source_correspondence_refuses_held_final_identity",
+        "test_retained_source_map_refuses_any_unreviewed_path_or_byte_change",
+        "test_retained_source_map_rejects_noncanonical_paths",
+        "test_retained_source_map_validates_full_531_file_archive_and_exact_m_delta",
+        "test_retained_source_projections_refuse_altered_helper_before_import",
         "test_sdist_extraction_rejects_parent_traversal",
         "test_sdist_extraction_selects_the_single_top_level_project_with_nested_projects",
         "test_sdist_licenses_have_one_declared_inclusion_route",
@@ -9210,14 +9227,15 @@
         "test_wheel_metadata_pair_diagnostic_marks_oversize_bytes_unavailable",
         "test_wheel_verifier_rejects_unexpected_payload_or_claim",
         "test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels",
-        "test_workflow_independently_installs_and_qualifies_both_native_artifacts"
+        "test_workflow_independently_installs_and_qualifies_both_native_artifacts",
+        "unexpected_payload_read"
       ],
-      "bytes": 38369,
+      "bytes": 65838,
       "disposition": "unreferenced-test-source",
       "language": "py",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "python/tests/test_distribution_artifact.py",
-      "sha256": "57c2bc4de660798ac1028b93f480ddb77934b2110fce03a72d968039667ae8c1"
+      "sha256": "49538fff2e27cddedab2e0e97ae14f5d3ad741bd0607926e15846168d149a1cc"
     },
     {
       "activationEvidence": [],
@@ -37137,13 +37155,16 @@
     {
       "activationEvidence": [],
       "active": false,
-      "algorithmSymbols": [],
-      "bytes": 5435,
+      "algorithmSymbols": [
+        "observe",
+        "state"
+      ],
+      "bytes": 7713,
       "disposition": "unreferenced-test-source",
       "language": "ts",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/actions-reference/sandbox.test.ts",
-      "sha256": "5279447e5a2fc064cdb6f02e9f6878f4f02c8d3788c9d7ab8c6a12dae2cf10de"
+      "sha256": "7a2cb5dc0bff2b1c5f08d4ff262e7a88b57f7a19582fe65d997af685fd408a01"
     },
     {
       "activationEvidence": [],
@@ -54033,14 +54054,18 @@
         "artifact_zip",
         "digest",
         "main",
-        "named_file"
+        "named_file",
+        "retained_policy_packet",
+        "validate_retained_cell_receipt",
+        "validate_retained_identity",
+        "validate_sdist_build_inputs"
       ],
-      "bytes": 14307,
+      "bytes": 32768,
       "disposition": "active-host-tooling-algorithm",
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "tools/verify_core_public_producer.py",
-      "sha256": "3c1d58cc75bf5cdf11c2f49c3f07a3d6841305d7ea41e9dc6cb8331bb1ccf712"
+      "sha256": "982882171e5b6ef4f1c9917c8c2fc6c9c5e9cffeb07d11b84dbc10ea712737cf"
     },
     {
       "activationEvidence": [
@@ -54048,18 +54073,23 @@
       ],
       "active": true,
       "algorithmSymbols": [
+        "_canonical_source_map",
+        "_retained_source_projections",
+        "_single_test_source_delta",
         "download",
         "main",
         "sha256",
-        "source_metadata",
+        "source_archive_data",
+        "validate_retained_cells",
+        "validate_source_map_delta",
         "verify_checkout"
       ],
-      "bytes": 17643,
+      "bytes": 33850,
       "disposition": "active-host-tooling-algorithm",
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "tools/verify_core_public_release.py",
-      "sha256": "5e661bb2be37c39f2dd498daca440a73d7f924006a49dd65c6357e679b58f5ad"
+      "sha256": "29e4bd7865c97310ad8772ee3a081dd1ad86c84e1c015affea0ba678b7048f0b"
     },
     {
       "activationEvidence": [
