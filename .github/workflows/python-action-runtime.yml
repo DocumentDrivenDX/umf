@@ -642,7 +642,7 @@ jobs:
               if selection.get("sdist", {}).get("sha256") != hashlib.sha256(linux_sdist.read_bytes()).hexdigest():
                   raise SystemExit("Producer sdist receipt differs from the common archive")
           platform_key = os.environ["PLATFORM"]
-          root = linux_dir if platform_key == "linux" else mac_dir
+          root = linux_root if platform_key == "linux" else mac_root
           selection = linux if platform_key == "linux" else mac
           wheel = root / selection["selectedWheel"]["path"]
           output.write_text(f"selected_wheel={wheel}\nsdist_sha256={selection['sdist']['sha256']}\nselected_native_sha256={selection['nativeSha256']}\nselected_wheel_sha256={selection['selectedWheel']['sha256']}\n", encoding="utf-8")
