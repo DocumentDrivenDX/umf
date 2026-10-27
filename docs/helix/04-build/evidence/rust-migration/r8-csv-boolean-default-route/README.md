@@ -98,3 +98,22 @@ object proof. The wider CSV adapter, all 922 default-route retirement
 decisions, and the publishable SDK release remain outside this qualification.
 No retirement decision is made by this bounded correction; the
 [retirement review](retirement-review.md) keeps both CSV Boolean rows open.
+
+## Current fixed-point archive cohort
+
+The same 4c3187be9 private archive was replayed with both installed harnesses.
+[`installed-replay-4c3187be9.json`](installed-replay-4c3187be9.json), SHA-256
+`f9868cbe1ce1a4a005e163482f3251b6cbbb4bd60d395928ece107dba3fdb29b`, passed
+the 14 frozen predecessor cases in Node 26.12.1, Bun 1.4.3, and real Chromium
+153.0.8010.12. [`adversarial-replay-4c3187be9.json`](adversarial-replay-4c3187be9.json),
+SHA-256 `ded6979b543c95eecd00dc325ed21bd9990cbc4eff094761d691ab9ae14c50b2`,
+has zero default/reference mismatches across the 18 adversarial cases in all
+three hosts. Both receipts pin archive SHA-256
+`64e46f86bfb2ffbd97066d84d8a36cbd5a5cd48f45d6337a2400b4b4a79286ff` and
+source closure SHA-256
+`7870eee151f2633c48f49194e20f2bc590cbfabc62b80ef7abffeefa095e91f9`
+(fixed-point, zero generated transforms), captured from clean commit
+`4c3187be98587907ad1d9797088877321f2f43ab`. These results qualify only the
+two selected CSV Boolean operations and bounded corpora for that archive;
+later checkout changes and the broader adapter/retirement/release claims are
+outside this cohort.

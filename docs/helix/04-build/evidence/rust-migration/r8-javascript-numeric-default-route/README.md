@@ -83,6 +83,25 @@ The qualification is limited to these bounded inputs and callbacks. It does
 not establish full numeric parity or configurable resource controls on the
 default root.
 
+## Current fixed-point archive cohort
+
+[`installed-replay-4c3187be9.json`](installed-replay-4c3187be9.json),
+SHA-256 `4f37e09655457ca4e8c4f02a3dfee0e9fce82411da7628275dbe1d2ec83bab1b`,
+is the full installed replay for the private archive built from clean source
+commit `4c3187be98587907ad1d9797088877321f2f43ab`. The archive SHA-256 is
+`64e46f86bfb2ffbd97066d84d8a36cbd5a5cd48f45d6337a2400b4b4a79286ff`; its
+manifest SHA-256 is
+`dff445c3e5e5bc46edf1d46b5bed46a92199c0db6f66a6673feb93c2114105cf`. The
+3,461-input source closure and captured live tree both hash to
+`7870eee151f2633c48f49194e20f2bc590cbfabc62b80ef7abffeefa095e91f9`, with
+fixed-point status and zero generated transforms. Node 26.12.1, Bun 1.4.3,
+and real Chromium 153.0.8010.12 passed the package-wide installed replay,
+including 27 numeric vectors and six public-root numeric boundary cases. The
+full archive receipt records the other operation suites and route controls.
+This is a private qualification archive, not an installed default-route
+publication or release claim. The current checkout has since advanced beyond
+the archive's source commit; this receipt does not cover those later changes.
+
 ## Earlier derived cohort
 
 [`installed-replay-20261026.json`](installed-replay-20261026.json), SHA-256
