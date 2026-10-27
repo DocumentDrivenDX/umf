@@ -825,6 +825,159 @@ pub fn execute_iceberg_wire_with_control(
     result_envelope(result)
 }
 
+/// Exact opt-in identity for Arrow integration-schema JSON preservation.
+pub const ARROW_SCHEMA_PROFILE: &str = "umf-r8-arrow-schema/0.1.0";
+
+/// Opt-in owner for one prepared Arrow schema grammar/resources set.
+/// Construction and each operation use independent caller-provided controls.
+#[cfg(feature = "embedded-adapters")]
+pub struct ArrowSchemaResourcesHandle {
+    resources: umf_core::arrow_schema::ArrowSchemaResources,
+}
+
+#[cfg(feature = "embedded-adapters")]
+impl ArrowSchemaResourcesHandle {
+    pub fn new_with_control(
+        setup_wire: &str,
+        control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+    ) -> Result<Self, EngineError> {
+        let mut ctx = Context::ordinary().with_host_control(control);
+        let request = decode(setup_wire, &mut ctx)?;
+        if text_field(&request, "op").as_deref() != Some("arrow.schema.createResources") {
+            return Err(fail("REQUEST", "arrow.schema.createResources operation is required"));
+        }
+        let resources = umf_core::arrow_schema::ArrowSchemaResources::new(&mut ctx)?;
+        Ok(Self { resources })
+    }
+
+    pub fn execute_with_control(
+        &self,
+        wire_json: &str,
+        control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+    ) -> String {
+        let result = (|| {
+            let mut ctx = Context::ordinary().with_host_control(control);
+            let request = decode(wire_json, &mut ctx)?;
+            let value = execute_arrow_schema_request(request, &self.resources, &mut ctx)?;
+            encode(&value, &mut ctx)
+        })();
+        result_envelope(result)
+    }
+}
+
+/// Execute Arrow schema JSON operations over the tagged UTF-16 transport.
+/// This profile covers schema JSON preservation only; it does not validate
+/// IPC, record batches, dictionary data, or native Arrow runtime behavior.
+#[cfg(feature = "embedded-adapters")]
+pub fn execute_arrow_schema_wire(wire_json: &str) -> String {
+    let mut no_control = |_amount: usize| Ok(());
+    execute_arrow_schema_wire_with_control(wire_json, &mut no_control)
+}
+
+#[cfg(feature = "embedded-adapters")]
+pub fn execute_arrow_schema_wire_with_control(
+    wire_json: &str,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+) -> String {
+    let result = (|| {
+        let mut ctx = Context::ordinary().with_host_control(control);
+        let request = decode(wire_json, &mut ctx)?;
+        let op = field(&request, "op")
+            .and_then(as_utf16)
+            .and_then(|value| value.to_utf8().ok())
+            .ok_or_else(|| fail("REQUEST", "Arrow schema operation is required"))?;
+        if !matches!(op.as_str(), "arrow.schema.import" | "arrow.schema.export" | "arrow.schema.inspect" | "arrow.schema.getNode" | "arrow.schema.proposeNodeEdit") {
+            return Err(fail("REQUEST", "Unknown Arrow schema operation"));
+        }
+        let resources = umf_core::arrow_schema::ArrowSchemaResources::new(&mut ctx)?;
+        let value = execute_arrow_schema_request(request, &resources, &mut ctx)?;
+        encode(&value, &mut ctx)
+    })();
+    result_envelope(result)
+}
+
+#[cfg(feature = "embedded-adapters")]
+fn execute_arrow_schema_request(
+    request: Value,
+    resources: &umf_core::arrow_schema::ArrowSchemaResources,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    use umf_core::arrow_schema::{
+        export_arrow_schema, get_arrow_node, import_arrow_schema, inspect_arrow,
+        propose_arrow_node_edit,
+    };
+    let op = field(&request, "op")
+        .and_then(as_utf16)
+        .and_then(|value| value.to_utf8().ok())
+        .ok_or_else(|| fail("REQUEST", "Arrow schema operation is required"))?;
+    if !matches!(op.as_str(), "arrow.schema.import" | "arrow.schema.export" | "arrow.schema.inspect" | "arrow.schema.getNode" | "arrow.schema.proposeNodeEdit") {
+        return Err(fail("REQUEST", "Unknown Arrow schema operation"));
+    }
+    let text = |name: &str| {
+        field(&request, name)
+            .and_then(as_utf16)
+            .ok_or_else(|| fail("REQUEST", &format!("Arrow {name} string is required")))
+    };
+    let document = || field(&request, "document").ok_or_else(|| fail("REQUEST", "Arrow document is required"));
+    match op.as_str() {
+        "arrow.schema.import" => import_arrow_schema(text("source")?.units(), text("id")?, resources, ctx),
+        "arrow.schema.export" => Ok(Value::String(export_arrow_schema(document()?, resources, ctx)?)),
+        "arrow.schema.inspect" => Ok(arrow_validation_value(inspect_arrow(document()?, resources, ctx)?)),
+        "arrow.schema.getNode" => Ok(get_arrow_node(document()?, text("pointer")?, resources, ctx)?.tagged_value_preserving_extras(ctx)?),
+        "arrow.schema.proposeNodeEdit" => {
+            let (candidate, validation) = propose_arrow_node_edit(document()?, text("pointer")?, text("replacement")?.units(), resources, ctx)?;
+            Ok(object(vec![("document", candidate), ("validation", arrow_validation_value(validation))]))
+        }
+        _ => unreachable!("Arrow schema operation was checked above"),
+    }
+}
+
+#[cfg(feature = "embedded-adapters")]
+fn arrow_validation_value(validation: umf_core::Validation) -> Value {
+    Value::Object(vec![
+        (Utf16::from("valid"), Value::Bool(validation.valid)),
+        (Utf16::from("complete"), Value::Bool(validation.complete)),
+        (
+            Utf16::from("diagnostics"),
+            Value::Array(
+                validation
+                    .diagnostics
+                    .into_iter()
+                    .enumerate()
+                    .map(|(index, item)| {
+                        let code = Value::String(item.code.clone());
+                        let path = Value::String(item.path.clone());
+                        let message = Value::String(item.message.clone());
+                        let severity = Value::string_utf8(if item.severity == Severity::Warning {
+                            "warning"
+                        } else {
+                            "error"
+                        });
+                        let fields = if index == 0
+                            && item.code == Utf16::from("ARROW_NATIVE_UNVERIFIED")
+                        {
+                            vec![
+                                (Utf16::from("code"), code),
+                                (Utf16::from("path"), path),
+                                (Utf16::from("severity"), severity),
+                                (Utf16::from("message"), message),
+                            ]
+                        } else {
+                            vec![
+                                (Utf16::from("code"), code),
+                                (Utf16::from("path"), path),
+                                (Utf16::from("message"), message),
+                                (Utf16::from("severity"), severity),
+                            ]
+                        };
+                        Value::Object(fields)
+                    })
+                    .collect(),
+            ),
+        ),
+    ])
+}
+
 /// Exact opt-in identity for the bounded Protobuf descriptor inspector.
 pub const PROTOBUF_INSPECT_PROFILE: &str = "umf-r5-protobuf-inspect/0.1.0";
 
@@ -1443,6 +1596,81 @@ pub fn execute_request_with_control(
 ) -> String {
     execute_request_with_engine_and_control(wire_json, profile, capabilities, control, None)
 }
+
+/// Execute only the three public Core Cardinality operations through the
+/// shared request engine. This additive entry point lets opt-in bindings expose
+/// Cardinality without accidentally widening their surface to every core-wire
+/// operation. The operation check is performed before semantic execution; the
+/// ordinary request path still owns all resource, registry, ordering, and
+/// result semantics.
+pub fn execute_cardinality_request_with_control(
+    wire_json: &str,
+    profile: ResourceProfile,
+    capabilities: &mut dyn Capabilities,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+) -> String {
+    let operation = {
+        let mut context = Context::ordinary().with_host_control(control);
+        match context.with_tagged_transport_limit(|ctx| decode(wire_json, ctx)) {
+            Ok(request) => field(&request, "op")
+                .and_then(as_utf16)
+                .and_then(|value| value.to_utf8().ok()),
+            Err(error) => return result_envelope(Err(error)),
+        }
+    };
+    if !matches!(
+        operation.as_deref(),
+        Some(
+            "model/inspectCoreCardinality"
+                | "model/declareCoreCardinality"
+                | "model/verifyCoreCardinalityDeclaration"
+        )
+    ) {
+        return result_envelope(Err(fail(
+            "REQUEST",
+            "Expected a Core Cardinality operation",
+        )));
+    }
+    execute_request_with_control(wire_json, profile, capabilities, control)
+}
+
+pub const CORE_CARDINALITY_BINDING_PROFILE: &str = "umf-core-cardinality/0.1.0";
+
+/// Execute only the four public Core Schema Properties operations through the
+/// shared request engine, keeping this opt-in binding narrower than core-wire.
+pub fn execute_schema_properties_request_with_control(
+    wire_json: &str,
+    profile: ResourceProfile,
+    capabilities: &mut dyn Capabilities,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+) -> String {
+    let operation = {
+        let mut context = Context::ordinary().with_host_control(control);
+        match context.with_tagged_transport_limit(|ctx| decode(wire_json, ctx)) {
+            Ok(request) => field(&request, "op")
+                .and_then(as_utf16)
+                .and_then(|value| value.to_utf8().ok()),
+            Err(error) => return result_envelope(Err(error)),
+        }
+    };
+    if !matches!(
+        operation.as_deref(),
+        Some(
+            "model/inspectCoreSchemaProperties"
+                | "model/declareCoreSchemaProperties"
+                | "model/validateCoreFieldValue"
+                | "model/resolveCoreDefault"
+        )
+    ) {
+        return result_envelope(Err(fail(
+            "REQUEST",
+            "Expected a Core Schema Properties operation",
+        )));
+    }
+    execute_request_with_control(wire_json, profile, capabilities, control)
+}
+
+pub const CORE_SCHEMA_PROPERTIES_BINDING_PROFILE: &str = "umf-core-schema-properties/0.1.0";
 
 /// Private opt-in variant that reuses a caller-owned Engine while preserving
 /// the ordinary request decoder, registry admission, callbacks, and contexts.

@@ -1,0 +1,21 @@
+Combined conformance and dependent gate replay
+
+Input source: UMF commit e0487691e34be22de9e63d8ead5f1c9db21fee13; tree ee0c192c9e9929c31700a05ab16b510ad0234d67.
+Pre-run SDK source closure: 1355bf21b58ad9e422fa8998c1ce5325b8643bb1eefbc6a1b6a127babc52b5d7 (zero transforms). This is the SDK build input closure; the conformance-only script/test patch below is tracked separately and does not claim a new SDK closure.
+TableSpec source: 647e8e566ad78b864282ec65c0b0b2237aa63084, tree f6d419cef7e482684a795147d68130ac0cd39d0e, derived version 0.0.3.post2.dev0+647e8e5. This is historical TableSpec, not the current checkout.
+Runtime cohort: Bun 1.4.3; Java 21.0.13.0.2; Python 3.12.15; PySpark 4.0.1; PyArrow 21.0.0; Chromium 153.0.8010.12; PostgreSQL 17.4; SQL Server 16.0.4295.3; Avro 1.12.0 / fastavro 1.12.2.
+
+Commands (all exit 0):
+- bun scripts/core-ideals/cardinality-conformance.ts
+- bun scripts/core-ideals/field-conformance.ts
+- bun scripts/core-ideals/nullability-conformance.ts
+- bun test tests/core-ideals/cardinality-conformance.test.ts --test-name-pattern 'current authored receipts verify' (1 pass, 305 expectations)
+- bun run typecheck (after Rust WASM package build with Rust 1.90 and wasm-bindgen 0.2.100; initial pre-build attempt failed on missing generated bindings/core/wasm/pkg/umf_core_wasm.js)
+
+The combined conformance-only source/test delta distinguishes current source declarations (verified in place) from genuinely historical receipts (re-authored). Raw patch SHA-256: fc13f6b0cfb2583b5e436326a922ea0e21b3839f365393d3b622de7651cfdf1b. It does not alter acceptance or qualification status.
+
+Combined Cardinality: 11,194 evidence fingerprints; PostgreSQL current replay 26/26 and SQL Server current replay 68/68, with historical counters 0/0 for both; historical qualification historical-partial; currentNativeQualification UNQUALIFIED; idealAdmitted=false; priorityDelivery=false; qualifiedBindings=0; nativeEquivalence=false.
+Field: 9,228 fingerprints; historical PARTIALLY_REVALIDATED; current native UNQUALIFIED; source recoveries 30; native recoveries 10.
+Nullability: 8,775 fingerprints; historical PARTIALLY_REVALIDATED; current core UNQUALIFIED; ideal recoveries 90; native recoveries 60.
+
+These are bounded current-source conformance and dependent gate summaries, not binding acceptance or retirement evidence. No qualification/status fields were promoted. The successful combined Cardinality log SHA-256 is 49caa0577f42f3b510aa36dd10d749a28b66f4475462c82d0353837dca83c859; each retained file is bound by the parent packet SHA256SUMS.

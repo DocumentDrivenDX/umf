@@ -14,6 +14,8 @@ use umf_core::{Context, Utf16, Value};
 
 const MAX_REFERENCE_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_ICEBERG_REQUEST_BYTES: usize = 32 * 1024 * 1024;
+#[cfg(feature = "embedded-adapters")]
+const MAX_ARROW_SCHEMA_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_PROTOBUF_INSPECT_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 #[cfg(feature = "embedded-adapters")]
 const MAX_PROTOBUF_DESCRIPTOR_INPUT_BYTES: usize = 4_000_000;
@@ -26,6 +28,7 @@ const PROTOBUF_DOCUMENT_EXPORT_CLI_PROFILE: &str = "umf.protobuf-document-export
 #[cfg(feature = "embedded-adapters")]
 const MAX_AVRO_CANDIDATE_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_JSON_SCHEMA_REQUEST_BYTES: usize = 32 * 1024 * 1024;
+const MAX_CARDINALITY_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 
 fn main() {
     #[cfg(feature = "codegen")]
@@ -593,12 +596,19 @@ fn value_text(value: &Value) -> Option<Utf16> {
 }
 
 fn run(args: Vec<String>) -> Result<(), String> {
+    if args.first().map(String::as_str) == Some("cardinality") {
+        return cardinality_run(&args[1..]);
+    }
     if args.first().map(String::as_str) == Some("reference") {
         return reference_run(&args[1..]);
     }
     #[cfg(feature = "embedded-adapters")]
     if args.first().map(String::as_str) == Some("iceberg") {
         return iceberg_run(&args[1..]);
+    }
+    #[cfg(feature = "embedded-adapters")]
+    if args.first().map(String::as_str) == Some("arrow") {
+        return arrow_run(&args[1..]);
     }
     #[cfg(feature = "embedded-adapters")]
     if args.first().map(String::as_str) == Some("protobuf") {
@@ -613,7 +623,7 @@ fn run(args: Vec<String>) -> Result<(), String> {
     }
     if args.first().map(String::as_str) != Some("metamodel") {
         return Err(
-            "usage: umf <metamodel|reference|iceberg|protobuf|avro|json-schema> ...".into(),
+            "usage: umf <metamodel|reference|cardinality|iceberg|arrow|protobuf|avro|json-schema> ...".into(),
         );
     }
     let operation = args
@@ -760,6 +770,94 @@ fn run(args: Vec<String>) -> Result<(), String> {
     Ok(())
 }
 
+fn cardinality_run(args: &[String]) -> Result<(), String> {
+    const PROFILE: &str = umf_core_wire::CORE_CARDINALITY_BINDING_PROFILE;
+    if args == ["--version"] {
+        println!(
+            "{{\"profile\":\"{PROFILE}\",\"version\":\"{}\"}}",
+            env!("CARGO_PKG_VERSION"),
+        );
+        return Ok(());
+    }
+    if args == ["--capabilities"] {
+        println!(
+            "{{\"profile\":\"{PROFILE}\",\"operations\":[\"model/inspectCoreCardinality\",\"model/declareCoreCardinality\",\"model/verifyCoreCardinalityDeclaration\"],\"resourceProfile\":\"cooperative\"}}"
+        );
+        return Ok(());
+    }
+    let invalid = || {
+        "usage: umf cardinality <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>".to_owned()
+    };
+    let mut stdin_wire = false;
+    let mut max_work = None;
+    let mut timeout_ms = None;
+    let mut index = 0;
+    while index < args.len() {
+        match args[index].as_str() {
+            "--stdin-wire" if !stdin_wire => stdin_wire = true,
+            "--max-work" if max_work.is_none() => {
+                index += 1;
+                max_work = Some(
+                    args.get(index)
+                        .ok_or_else(invalid)?
+                        .parse::<u64>()
+                        .map_err(|_| "--max-work requires a nonnegative integer".to_owned())?,
+                );
+            }
+            "--timeout-ms" if timeout_ms.is_none() => {
+                index += 1;
+                timeout_ms = Some(
+                    args.get(index)
+                        .ok_or_else(invalid)?
+                        .parse::<u64>()
+                        .map_err(|_| "--timeout-ms requires a nonnegative integer".to_owned())?,
+                );
+            }
+            _ => return Err(invalid()),
+        }
+        index += 1;
+    }
+    if !stdin_wire {
+        return Err(invalid());
+    }
+    let started = std::time::Instant::now();
+    let wire = String::from_utf8(read_limited(io::stdin(), MAX_CARDINALITY_REQUEST_BYTES)?)
+        .map_err(|_| "Core Cardinality wire request is not valid UTF-8".to_owned())?;
+    // The deadline includes bounded stdin intake; max_work meters the native
+    // core-wire operation after intake, not transport bytes or UTF-8 decoding.
+    let mut remaining = max_work.unwrap_or(u64::MAX);
+    let mut control = |amount: usize| {
+        let amount = amount as u64;
+        if amount > remaining {
+            return Err(umf_core::EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Core Cardinality work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(umf_core::EngineError::new(
+                "DEADLINE",
+                Utf16::default(),
+                "Core Cardinality deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    let mut capabilities = BaselineCapabilities { enabled: false };
+    println!(
+        "{}",
+        umf_core_wire::execute_cardinality_request_with_control(
+            &wire,
+            umf_core::ResourceProfile::Cooperative,
+            &mut capabilities,
+            &mut control,
+        )
+    );
+    Ok(())
+}
+
 #[cfg(feature = "embedded-adapters")]
 fn iceberg_run(args: &[String]) -> Result<(), String> {
     if args == ["schema", "--version"] {
@@ -838,6 +936,88 @@ fn iceberg_run(args: &[String]) -> Result<(), String> {
     println!(
         "{}",
         umf_core_wire::execute_iceberg_wire_with_control(&wire, &mut control)
+    );
+    Ok(())
+}
+
+#[cfg(feature = "embedded-adapters")]
+fn arrow_run(args: &[String]) -> Result<(), String> {
+    if args == ["schema", "--version"] {
+        println!(
+            "{{\"profile\":\"{}\",\"version\":\"{}\"}}",
+            umf_core_wire::ARROW_SCHEMA_PROFILE,
+            env!("CARGO_PKG_VERSION"),
+        );
+        return Ok(());
+    }
+    if args == ["schema", "--capabilities"] {
+        println!(
+            "{{\"profile\":\"{}\",\"operations\":[\"arrow.schema.import\",\"arrow.schema.inspect\",\"arrow.schema.export\",\"arrow.schema.getNode\",\"arrow.schema.proposeNodeEdit\"],\"resourceProfile\":\"cooperative\"}}",
+            umf_core_wire::ARROW_SCHEMA_PROFILE,
+        );
+        return Ok(());
+    }
+    if args.first().map(String::as_str) != Some("schema") {
+        return Err("usage: umf arrow schema <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>".into());
+    }
+    let mut stdin_wire = false;
+    let mut max_work = None;
+    let mut timeout_ms = None;
+    let mut index = 1;
+    while index < args.len() {
+        match args[index].as_str() {
+            "--stdin-wire" if !stdin_wire => stdin_wire = true,
+            "--max-work" if max_work.is_none() => {
+                index += 1;
+                max_work = Some(
+                    args.get(index)
+                        .ok_or("--max-work requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--max-work requires a nonnegative integer")?,
+                );
+            }
+            "--timeout-ms" if timeout_ms.is_none() => {
+                index += 1;
+                timeout_ms = Some(
+                    args.get(index)
+                        .ok_or("--timeout-ms requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--timeout-ms requires a nonnegative integer")?,
+                );
+            }
+            _ => return Err("invalid Arrow schema option".into()),
+        }
+        index += 1;
+    }
+    if !stdin_wire {
+        return Err("--stdin-wire is required".into());
+    }
+    let started = std::time::Instant::now();
+    let wire = String::from_utf8(read_limited(io::stdin(), MAX_ARROW_SCHEMA_REQUEST_BYTES)?)
+        .map_err(|_| "Arrow schema wire request is not valid UTF-8".to_owned())?;
+    let mut remaining = max_work.unwrap_or(u64::MAX);
+    let mut control = |amount: usize| {
+        let amount = amount as u64;
+        if amount > remaining {
+            return Err(umf_core::EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Arrow schema work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(umf_core::EngineError::new(
+                "DEADLINE",
+                Utf16::default(),
+                "Arrow schema deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    println!(
+        "{}",
+        umf_core_wire::execute_arrow_schema_wire_with_control(&wire, &mut control)
     );
     Ok(())
 }

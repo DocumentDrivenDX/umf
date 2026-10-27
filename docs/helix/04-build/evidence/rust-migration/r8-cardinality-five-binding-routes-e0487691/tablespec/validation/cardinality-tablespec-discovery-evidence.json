@@ -1,0 +1,49 @@
+{
+  "scope": "TableSpec Cardinality native profile discovery and design checkpoint",
+  "bead": "umf-97221618-46a484b2",
+  "bindingImplemented": false,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "commands": [
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-tablespec-profile-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "results": {
+    "declarations": 28,
+    "valueCases": 13,
+    "profileDisagreements": 5,
+    "valueDisagreements": 6,
+    "rawGeneratorControls": 4,
+    "floatNarrowings": 1,
+    "failures": 0
+  },
+  "limits": [
+    "No public classification/projection, native archive recovery or Chromium binding evidence yet.",
+    "Fresh native evidence is confined to TableSpec declaration validation and the named generated JSON/Spark schema paths; no SQL/GX/whole-pipeline execution claim.",
+    "The initial discovery expectation that unknown column metadata would be rejected was disproved: it is accepted then dropped by normalization. The oracle now asserts this counterexample.",
+    "The initial Bun wrapper failed on ArrayBuffer hashing after native checks passed; corrected TypedArray hashing passed a full rerun."
+  ],
+  "sha256": {
+    "docs/helix/02-design/technical-designs/TD-042-core-cardinality.md": "e9c49b4ca93135d523866734e3f1863889de0361f09ce73f936ccf8865aeba6b",
+    "fixtures/validation/cardinality-core-acceptance-evidence.json": "93c3477c99ed037661f146d156586d4639c76ddb768f1bb8ce00221951c66f33",
+    "fixtures/validation/cardinality-tablespec-profile-native.json": "eb7ba215dfbed905d254ce85e1b35254ee4553f930c1de4f1256038153adcf67",
+    "native/tablespec/cardinality-runtime/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "native/tablespec/cardinality-runtime/generators.py": "1b4e0686f2f08d8149f29368e7b40f5b073265204e893bf439ae345b309ff9bd",
+    "native/tablespec/cardinality-runtime/sources.json": "66370e8d9a7f10a669ae34bfce1f6d2c757bb422285dcc78f1d415880852cda0",
+    "scripts/core-ideals/cardinality-tablespec-profile-oracle.py": "98e2f0cf83ac361ce115fd6701621afaa12c221e28764c28b140a4839a2384d9",
+    "scripts/core-ideals/cardinality-tablespec-profile-oracle.ts": "1942efa36ae4674be8ab38b5be0d62e0a9e857db27012a0f9e331c0025a93604"
+  }
+}

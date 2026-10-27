@@ -24,6 +24,8 @@ _EXPECTED_ROOT_FILES = {
     "Cargo.lock",
     "rust-toolchain.toml",
     ".cargo/config.toml",
+    "spec/extensions/arrow/package.json",
+    "spec/extensions/arrow/integration-schema.json",
     "spec/extensions/avro/package.json",
     "spec/extensions/parquet/package.json",
     "spec/extensions/json-schema/package.json",

@@ -1,0 +1,9 @@
+{
+  "status": "pass",
+  "command": "PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH CARGO_TARGET_DIR=/private/tmp/umf-arrow-node-session cargo test --locked --offline -p umf-core-wire --test r8_arrow_schema_wire",
+  "rustc": "1.90.0",
+  "tests": 2,
+  "passed": 2,
+  "failed": 0,
+  "durationSeconds": 34.06
+}

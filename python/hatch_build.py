@@ -61,6 +61,8 @@ SDIST_SOURCE_FILES = (
     ".cargo/config.toml",
     # Keep native include_str! authority files available for offline builds
     # from an extracted source archive.
+    "spec/extensions/arrow/package.json",
+    "spec/extensions/arrow/integration-schema.json",
     "spec/extensions/avro/package.json",
     "spec/extensions/parquet/package.json",
     "spec/extensions/json-schema/package.json",

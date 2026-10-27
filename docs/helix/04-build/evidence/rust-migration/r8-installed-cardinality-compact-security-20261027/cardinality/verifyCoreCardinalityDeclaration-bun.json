@@ -1,0 +1,298 @@
+{
+  "format": "umf.r8.default-route-retirement-host-receipt/2",
+  "status": "pass",
+  "runtime": "bun",
+  "hostVersion": "1.4.3",
+  "cohortId": "darwin-arm64",
+  "hostPlatform": {
+    "os": "darwin",
+    "arch": "arm64"
+  },
+  "archiveSha256": "b48f5c50d11e9766256919905e82d1bab01dde3c4a1413eeaf105d5c6950cb29",
+  "sourceClosureSha256": "e95ca0fa8109a3a81f605cbeae735683ca5b253b3663e90edb105b38f8260a6d",
+  "packetSha256": "53a09c3ff46b1f179f11a5ef425d913bd648c21fe7acb09601551fa5984eb0b8",
+  "defaultRoute": {
+    "routeId": "package-root-node",
+    "entryMember": "dist/umf-node.js",
+    "entrySha256": "9c9df80bff5374bbac8c288bd6a276840c699f519669e1c7d417635aca51ca1f",
+    "artifactMembers": [
+      {
+        "path": "dist/umf_core_node.node",
+        "sha256": "395c6a7f0d468359688d6a647972de961f7531505aeac7ff0d1df0839e143427"
+      }
+    ]
+  },
+  "referenceRoute": {
+    "routeId": "package-reference",
+    "entryMember": "dist/umf.js",
+    "entrySha256": "a0b895a9b7974435465638723127ec2bdbcb7f47f3177ce748c833b8d87f2b52",
+    "artifactMembers": []
+  },
+  "cases": [
+    {
+      "id": "valid-receipt",
+      "defaultOutcome": {
+        "status": "returned",
+        "value": {
+          "identity": {
+            "element": "e",
+            "module": "m"
+          },
+          "operation": "declare-core-cardinality",
+          "provenance": {
+            "basis": "explicit-author-declaration",
+            "binding": {
+              "id": "umf.core.cardinality.authoring",
+              "version": "4.0.0"
+            },
+            "cardinality": "array",
+            "idealPath": "/modules/0/elements/0/cardinality",
+            "nativePath": null,
+            "origin": "authored"
+          },
+          "request": {
+            "cardinality": "array",
+            "itemType": {
+              "element": "v",
+              "future": {
+                "unknown": true
+              },
+              "module": "m"
+            }
+          },
+          "source": {
+            "id": "author",
+            "modules": [
+              {
+                "elements": [
+                  {
+                    "extensions": {
+                      "future": {
+                        "opaque": "retain"
+                      }
+                    },
+                    "id": "e",
+                    "kind": "field",
+                    "nullability": "required"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "integer"
+                  }
+                ],
+                "id": "m",
+                "namespace": ""
+              }
+            ],
+            "umf": "0.10.0",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            }
+          },
+          "target": {
+            "id": "author",
+            "modules": [
+              {
+                "elements": [
+                  {
+                    "cardinality": "array",
+                    "extensions": {
+                      "future": {
+                        "opaque": "retain"
+                      }
+                    },
+                    "id": "e",
+                    "itemType": {
+                      "element": "v",
+                      "future": {
+                        "unknown": true
+                      },
+                      "module": "m"
+                    },
+                    "kind": "field",
+                    "nullability": "required"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "integer"
+                  }
+                ],
+                "id": "m",
+                "namespace": ""
+              }
+            ],
+            "umf": "0.10.0",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            }
+          },
+          "version": "4.0.0"
+        }
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 1,
+      "referenceOutcome": {
+        "status": "returned",
+        "value": {
+          "identity": {
+            "element": "e",
+            "module": "m"
+          },
+          "operation": "declare-core-cardinality",
+          "provenance": {
+            "basis": "explicit-author-declaration",
+            "binding": {
+              "id": "umf.core.cardinality.authoring",
+              "version": "4.0.0"
+            },
+            "cardinality": "array",
+            "idealPath": "/modules/0/elements/0/cardinality",
+            "nativePath": null,
+            "origin": "authored"
+          },
+          "request": {
+            "cardinality": "array",
+            "itemType": {
+              "element": "v",
+              "future": {
+                "unknown": true
+              },
+              "module": "m"
+            }
+          },
+          "source": {
+            "id": "author",
+            "modules": [
+              {
+                "elements": [
+                  {
+                    "extensions": {
+                      "future": {
+                        "opaque": "retain"
+                      }
+                    },
+                    "id": "e",
+                    "kind": "field",
+                    "nullability": "required"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "integer"
+                  }
+                ],
+                "id": "m",
+                "namespace": ""
+              }
+            ],
+            "umf": "0.10.0",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            }
+          },
+          "target": {
+            "id": "author",
+            "modules": [
+              {
+                "elements": [
+                  {
+                    "cardinality": "array",
+                    "extensions": {
+                      "future": {
+                        "opaque": "retain"
+                      }
+                    },
+                    "id": "e",
+                    "itemType": {
+                      "element": "v",
+                      "future": {
+                        "unknown": true
+                      },
+                      "module": "m"
+                    },
+                    "kind": "field",
+                    "nullability": "required"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "integer"
+                  }
+                ],
+                "id": "m",
+                "namespace": ""
+              }
+            ],
+            "umf": "0.10.0",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            }
+          },
+          "version": "4.0.0"
+        }
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    },
+    {
+      "id": "malformed-receipt-before-current",
+      "defaultOutcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "CORE_CARDINALITY_RECEIPT",
+        "path": "",
+        "message": "Malformed cardinality declaration"
+      },
+      "defaultTrace": [],
+      "defaultRustCalls": 1,
+      "referenceOutcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "CORE_CARDINALITY_RECEIPT",
+        "path": "",
+        "message": "Malformed cardinality declaration"
+      },
+      "referenceTrace": [],
+      "referenceRustCalls": 0
+    },
+    {
+      "id": "current-host-trap-control",
+      "defaultOutcome": {
+        "status": "threw",
+        "name": "Error",
+        "code": "FIXTURE_CURRENT_TRAP",
+        "path": "/current",
+        "message": "fixture current trap"
+      },
+      "defaultTrace": [
+        "current:ownKeys"
+      ],
+      "defaultRustCalls": 1,
+      "referenceOutcome": {
+        "status": "threw",
+        "name": "Error",
+        "code": "FIXTURE_CURRENT_TRAP",
+        "path": "/current",
+        "message": "fixture current trap"
+      },
+      "referenceTrace": [
+        "current:ownKeys"
+      ],
+      "referenceRustCalls": 0
+    }
+  ]
+}

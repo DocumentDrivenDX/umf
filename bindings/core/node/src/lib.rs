@@ -461,6 +461,27 @@ pub fn iceberg_schema_profile_version() -> &'static str {
     umf_core_wire::ICEBERG_SCHEMA_PROFILE
 }
 
+#[napi(js_name = "executeArrowSchemaWire")]
+pub fn execute_arrow_schema_wire(
+    env: Env,
+    wire_json: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::execute_arrow_schema_wire_with_control(&wire_json, &mut hook))
+    } else {
+        Ok(umf_core_wire::execute_arrow_schema_wire(&wire_json))
+    }
+}
+
+#[napi(js_name = "arrowSchemaProfileVersion")]
+pub fn arrow_schema_profile_version() -> &'static str {
+    umf_core_wire::ARROW_SCHEMA_PROFILE
+}
+
+
 #[napi(js_name = "executeProtobufInspectWire")]
 pub fn execute_protobuf_inspect_wire(
     env: Env,
@@ -865,6 +886,70 @@ impl RetainedCodegenResourcesRuntime {
                     &mut no_control,
                 ),
                 None => umf_core_wire::error_envelope(retained_codegen_disposed()),
+            }
+        }
+    }
+}
+
+/// Opt-in owner for compiled Arrow schema grammar/resources. Control
+/// callbacks are used only during construction or an individual call.
+#[napi]
+pub struct ArrowSchemaResourcesRuntime {
+    inner: Option<umf_core_wire::ArrowSchemaResourcesHandle>,
+}
+
+fn arrow_schema_disposed() -> EngineError {
+    EngineError::new(
+        "RUST_ARROW_SCHEMA_HANDLE_DISPOSED",
+        Utf16::default(),
+        "Arrow schema resources have been disposed",
+    )
+}
+
+#[napi]
+impl ArrowSchemaResourcesRuntime {
+    #[napi(constructor)]
+    pub fn new(
+        env: Env,
+        setup_wire: String,
+        setup_dispatcher: Option<JsFunction>,
+    ) -> napi::Result<Self> {
+        let inner = if let Some(dispatcher) = setup_dispatcher {
+            let mut control = NodeControl { env, dispatcher };
+            let mut hook = |amount| control.check(amount);
+            umf_core_wire::ArrowSchemaResourcesHandle::new_with_control(&setup_wire, &mut hook)
+        } else {
+            let mut no_control = |_amount| Ok(());
+            umf_core_wire::ArrowSchemaResourcesHandle::new_with_control(&setup_wire, &mut no_control)
+        }
+        .map_err(|error| Error::from_reason(umf_core_wire::error_envelope(error)))?;
+        Ok(Self { inner: Some(inner) })
+    }
+
+    #[napi]
+    pub fn dispose(&mut self) {
+        self.inner.take();
+    }
+
+    #[napi]
+    pub fn execute_wire(
+        &self,
+        env: Env,
+        request_wire: String,
+        control_dispatcher: Option<JsFunction>,
+    ) -> String {
+        if let Some(dispatcher) = control_dispatcher {
+            let mut control = NodeControl { env, dispatcher };
+            let mut hook = |amount| control.check(amount);
+            match &self.inner {
+                Some(inner) => inner.execute_with_control(&request_wire, &mut hook),
+                None => umf_core_wire::error_envelope(arrow_schema_disposed()),
+            }
+        } else {
+            let mut no_control = |_amount| Ok(());
+            match &self.inner {
+                Some(inner) => inner.execute_with_control(&request_wire, &mut no_control),
+                None => umf_core_wire::error_envelope(arrow_schema_disposed()),
             }
         }
     }

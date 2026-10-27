@@ -1,0 +1,38 @@
+{
+  "format": "umf.r8.cardinality-capture-cohort/1",
+  "cohortId": "darwin-arm64",
+  "platform": {
+    "os": "darwin",
+    "arch": "aarch64",
+    "nodeArch": "arm64",
+    "nativeTarget": "aarch64-apple-darwin"
+  },
+  "archive": {
+    "path": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/.cache/sdk-distribution/umf-sdk.tgz",
+    "sha256": "b48f5c50d11e9766256919905e82d1bab01dde3c4a1413eeaf105d5c6950cb29",
+    "sourceClosureSha256": "e95ca0fa8109a3a81f605cbeae735683ca5b253b3663e90edb105b38f8260a6d",
+    "sourceManifestMemberSha256": "cfb61ae48d163b6f08d18463c6c4fcd4baa7b3b628638565a029e6b7f7eddf21",
+    "sourceInputCount": 3570,
+    "generatedTransformCount": 0,
+    "packageManifestSha256": "1bd5f6cc6db6a5e9ef0e395a19aa6504e8a9a130a2fcbd3faaf4effbac7bb23a",
+    "archiveMemberCount": 1807,
+    "memberManifest": {
+      "path": "archive-members-darwin-arm64.json",
+      "sha256": "df27e3f186bf5d92befd6c60244d610346b5e127fb792e7a1006386b6dbafbdf"
+    }
+  },
+  "packetPins": {
+    "inspectCoreCardinality": "a4c0c8822d32d3cd2acc9574bd3c497a400b0daa508b340becf3126309211213",
+    "declareCoreCardinality": "c43aedbf2ab27690bdef4fecaabc8ba0fbfbeb805268871c6e93e158d9222e59",
+    "verifyCoreCardinalityDeclaration": "53a09c3ff46b1f179f11a5ef425d913bd648c21fe7acb09601551fa5984eb0b8"
+  },
+  "packageRoutes": {
+    "node": "dist/umf-node.js",
+    "browser": "dist/umf-browser.js",
+    "reference": "dist/umf.js"
+  },
+  "harness": {
+    "path": "scripts/rust-migration/r8/core-cardinality-case-capture.mjs",
+    "sha256": "37a9918084ae61ef2e432779b81b1dcd950c024565b47c475f920015d18ba88f"
+  }
+}

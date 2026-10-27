@@ -1,13 +1,16 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {cardinalitySystems,cardinalityCurrentStatus,replayCurrentCardinalityAuthor,verifyCardinalityEvidence,verifyCardinalityRoundTrips} from '../../scripts/core-ideals/cardinality-conformance';
+import {CURRENT_CORE_VERSION} from '../../src';
 import postgresqlEvidence from '../../fixtures/validation/cardinality-postgresql-projection-native.json';
 import sqlServerEvidence from '../../fixtures/validation/cardinality-sqlserver-projection-native.json';
-test('current authored replay carries the historical explicit item reference without native inference',()=>{
+test('current authored receipts verify in place while historical receipts are re-authored without native inference',()=>{
  let checked=0;
  for(const evidence of [postgresqlEvidence,sqlServerEvidence])for(const row of evidence.rows as any[]){
   const current=replayCurrentCardinalityAuthor(row).target,expected=structuredClone(row.author.target);expected.umf=current.umf;
   expect(current).toEqual(expected);checked++;
+  const historical=structuredClone(row);historical.author.source.umf='0.9.0';
+  expect(replayCurrentCardinalityAuthor(historical).target).toEqual(expected);
  }
  expect(checked).toBe((postgresqlEvidence.rows as any[]).length+(sqlServerEvidence.rows as any[]).length);
 });
@@ -19,7 +22,11 @@ test('five Cardinality bindings preserve ideals, native refinements and qualifie
   expect(r.strictBlocks).toBeGreaterThan(0);expect(r.reportResiduals).toBeGreaterThan(0);
   expect(r.idealRecoveries).toBe((r.authoredCases-r.strictBlocks)*2);
   expect(r.nativeBlocks).toBeGreaterThan(0);expect(r.nativeRecoveries).toBe((r.nativeCases-r.nativeBlocks)*2);
-  if(system==='postgresql'||system==='sqlserver'){expect(r.historicalReplayCases).toBeGreaterThan(0);expect(r.historicalReplayInputsEqual).toBe(r.historicalReplayCases);}
+  if(system==='postgresql'||system==='sqlserver'){
+   const rows=((system==='postgresql'?postgresqlEvidence:sqlServerEvidence).rows as any[]).filter(row=>row.result.status!=='blocked'),current=rows.filter(row=>row.author.source.umf===CURRENT_CORE_VERSION).length,historical=rows.length-current;
+   expect(r.currentReplayCases).toBe(current);expect(r.currentReplayInputsEqual).toBe(current);
+   expect(r.historicalReplayCases).toBe(historical);expect(r.historicalReplayInputsEqual).toBe(historical);
+  }
  }
 },600000);
 test('Cardinality evidence gate rejects stale, missing, unsafe and failed proof',async()=>{

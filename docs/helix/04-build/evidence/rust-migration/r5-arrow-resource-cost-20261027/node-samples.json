@@ -1,0 +1,10 @@
+{
+  "runtime": "v26.12.1",
+  "addonArtifact": "f636059935e789c49561a7a6ce4adc05e5a2a7fa5fbe142cb39e6fbaf3f9d213",
+  "sourcePins": "crates/umf-core/src/arrow_schema.rs=6fd168fae979b465a90e52086c84d78209856c5592ce7876edbbbd02bb8e609d;crates/umf-core-wire/src/lib.rs=bcac37f705a2ad6ca7f0e64cb7b77a820b56cd567167cb1b75adb70ca9aff414;bindings/core/node/index.js=3e940d0067a22a85c3fb3331bba016017c9275862c40b110b5e6ad36b44ba855"
+}
+{"operation":"import","samplesMs":[4127.745792,4132.551042],"meanMs":4130.148417}
+{"operation":"export","samplesMs":[4128.558084,4106.179458],"meanMs":4117.3687709999995}
+{"operation":"inspect","samplesMs":[4143.095958,4109.251625],"meanMs":4126.173791499999}
+{"operation":"getNode","samplesMs":[4141.283042,4128.01375],"meanMs":4134.6483960000005}
+{"operation":"proposeNodeEdit","samplesMs":[4187.60625,4098.854125],"meanMs":4143.230187499999}

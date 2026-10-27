@@ -441,6 +441,22 @@ pub fn iceberg_schema_profile_version() -> String {
     umf_core_wire::ICEBERG_SCHEMA_PROFILE.to_owned()
 }
 
+#[wasm_bindgen(js_name = executeArrowSchemaWire)]
+pub fn execute_arrow_schema_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::execute_arrow_schema_wire_with_control(wire_json, &mut hook)
+    } else {
+        umf_core_wire::execute_arrow_schema_wire(wire_json)
+    }
+}
+
+#[wasm_bindgen(js_name = arrowSchemaProfileVersion)]
+pub fn arrow_schema_profile_version() -> String {
+    umf_core_wire::ARROW_SCHEMA_PROFILE.to_owned()
+}
+
 #[wasm_bindgen(js_name = executeProtobufInspectWire)]
 pub fn execute_protobuf_inspect_wire(
     wire_json: &str,
@@ -1075,6 +1091,64 @@ impl RetainedCodegenResourcesRuntime {
                         &mut no_control,
                     )
                 },
+            )
+        }
+    }
+}
+
+/// Opt-in owner for prepared Arrow schema grammar/resources. The JS wrapper
+/// supplies setup and per-call controls independently.
+#[wasm_bindgen(js_name = ArrowSchemaResourcesRuntime)]
+pub struct ArrowSchemaResourcesRuntime {
+    inner: Option<umf_core_wire::ArrowSchemaResourcesHandle>,
+}
+
+fn arrow_schema_disposed_error() -> EngineError {
+    EngineError::new(
+        "RUST_ARROW_SCHEMA_HANDLE_DISPOSED",
+        Utf16::default(),
+        "Arrow schema resources have been disposed",
+    )
+}
+
+#[wasm_bindgen]
+impl ArrowSchemaResourcesRuntime {
+    #[wasm_bindgen(constructor)]
+    pub fn new(setup_wire: String, setup_dispatcher: Option<Function>) -> Result<Self, JsValue> {
+        let inner = if let Some(dispatcher) = setup_dispatcher {
+            let mut control = WasmControl { dispatcher };
+            let mut hook = |amount| control.check(amount);
+            umf_core_wire::ArrowSchemaResourcesHandle::new_with_control(&setup_wire, &mut hook)
+        } else {
+            let mut no_control = |_amount| Ok(());
+            umf_core_wire::ArrowSchemaResourcesHandle::new_with_control(&setup_wire, &mut no_control)
+        }
+        .map_err(|error| JsValue::from_str(&umf_core_wire::error_envelope(error)))?;
+        Ok(Self { inner: Some(inner) })
+    }
+
+    pub fn dispose(&mut self) {
+        self.inner.take();
+    }
+
+    #[wasm_bindgen(js_name = executeWire)]
+    pub fn execute_wire(
+        &self,
+        request_wire: String,
+        control_dispatcher: Option<Function>,
+    ) -> String {
+        if let Some(dispatcher) = control_dispatcher {
+            let mut control = WasmControl { dispatcher };
+            let mut hook = |amount| control.check(amount);
+            self.inner.as_ref().map_or_else(
+                || umf_core_wire::error_envelope(arrow_schema_disposed_error()),
+                |inner| inner.execute_with_control(&request_wire, &mut hook),
+            )
+        } else {
+            let mut no_control = |_amount| Ok(());
+            self.inner.as_ref().map_or_else(
+                || umf_core_wire::error_envelope(arrow_schema_disposed_error()),
+                |inner| inner.execute_with_control(&request_wire, &mut no_control),
             )
         }
     }

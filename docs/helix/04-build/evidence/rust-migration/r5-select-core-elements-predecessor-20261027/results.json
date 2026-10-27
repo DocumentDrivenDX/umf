@@ -1,0 +1,453 @@
+{
+  "format": "umf.r5.select-core-elements.predecessor/1",
+  "status": "pass",
+  "source": {
+    "gitHead": "8b7497de3295fe5b0cb274009fc55135ce3dc67e",
+    "captureScriptSha256": "6431b754c231e345710f64f749aefc74c5fd51e864bb448cbc5d9c7258c3cd77",
+    "files": {
+      "src/model/selection.ts": "db9ff795c112df42e5db2cd1194659bb09e19422ebbd0b7997671e4faf9ae195",
+      "src/model/json.ts": "d0a06bd26beb215d262b92f5c47d5cea9e85291bb4a780f0aea98b8277c15f98",
+      "src/model/types.ts": "6943cdad1c110de2dae56ac3820524f2874eddd9a84580be4da93477bbe76a0c",
+      "src/registry/registry.ts": "3fa010311edc23c5dc74826eb7a74a8a19a9a4c41da3031bc66e6f741d1164c1",
+      "src/validation/document.ts": "bb88c43790277f67269cea09af251b908e93ddd356a1a4aa8bc10c0cf135720a",
+      "src/validation/constraint-kernel.ts": "968bde65e6e7e8da7ec92849498dbfbe9a71f931c9538094a18c85be5b4a4362",
+      "src/validation/current-policy.ts": "010d8dcc062363592713d68fcd54000775420cae779a074474bcca19b862cd33",
+      "src/generated/core-validators.ts": "ef244debe038cee9a46872df06100796b57813fd6e313b55fd0cbf3368c25fb9",
+      "tests/core/selection.test.ts": "3a66de8243ef2e4d6e1f6bb44c56e8ea94a1bd243d95c8a5d8d56d35be4018ca",
+      "scripts/rust-migration/r5/select-core-elements-cases.ts": "cbdcf55d2254f282cc8201c2abac78ec9e3302ef50ed0ee8d4ae45432555b5e0"
+    }
+  },
+  "build": {
+    "bunVersion": "1.4.3",
+    "nodeBundleSha256": "c09e7acd25020876444bac2791ad108674cd35c776249c96252f79c7a34d95da",
+    "browserBundleSha256": "c09e7acd25020876444bac2791ad108674cd35c776249c96252f79c7a34d95da"
+  },
+  "runtimes": {
+    "bun": "1.4.3",
+    "node": "v26.3.0",
+    "nodePlatform": "darwin",
+    "nodeArch": "arm64",
+    "chromium": "153.0.8010.12",
+    "chromiumExecutable": "/Users/erik/Library/Caches/ms-playwright/chromium-1243/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing"
+  },
+  "network": {
+    "externalRequests": 0
+  },
+  "equivalence": {
+    "node": true,
+    "chromium": true
+  },
+  "results": {
+    "bun": {
+      "successful": {
+        "scope": "core-elements",
+        "referenceScope": "explicit-core-references-item-types-members-and-keys",
+        "selection": [
+          {
+            "module": "sales",
+            "namespace": "sales",
+            "path": "/modules/0/elements/0",
+            "id": "customer",
+            "includedBy": "match"
+          },
+          {
+            "module": "support",
+            "namespace": "support",
+            "path": "/modules/1/elements/0",
+            "id": "customer",
+            "includedBy": "match"
+          }
+        ],
+        "boundaryReferences": [
+          {
+            "from": {
+              "module": "sales",
+              "element": "customer"
+            },
+            "targetPath": "/modules/2/elements/0",
+            "reference": {
+              "role": "account",
+              "module": "billing",
+              "element": "account",
+              "future": "annotation"
+            }
+          },
+          {
+            "from": {
+              "module": "sales",
+              "element": "customer"
+            },
+            "targetPath": "/modules/2/elements/0",
+            "reference": {
+              "role": "account",
+              "module": "billing",
+              "element": "account"
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future.meaning",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_CORE_FIELD",
+            "path": "/modules/0/elements/0/references/0/future",
+            "message": "Field retained without interpretation",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_SCALAR_TYPE",
+            "path": "/modules/1/elements/0/scalarType",
+            "message": "Scalar family retained without interpretation",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_CORE_FIELD",
+            "path": "/modules/2/elements/0/references/0/future",
+            "message": "Field retained without interpretation",
+            "severity": "warning"
+          }
+        ],
+        "complete": false
+      },
+      "transitive": {
+        "selection": [
+          {
+            "module": "sales",
+            "id": "customer",
+            "includedBy": "match"
+          },
+          {
+            "module": "billing",
+            "id": "account",
+            "includedBy": "reference"
+          }
+        ],
+        "boundaryReferences": []
+      },
+      "callbacks": {
+        "order": [
+          "document:/extensions/capture.callback",
+          "module:/modules/0/extensions/capture.callback",
+          "element:/modules/0/elements/0/extensions/capture.callback"
+        ]
+      },
+      "accessor": {
+        "error": {
+          "name": "UmfError",
+          "code": "NON_JSON",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "getterCalls": 0
+      },
+      "accessOrder": [
+        "getPrototypeOf",
+        "ownKeys",
+        "ownKeys",
+        "descriptor:umf",
+        "descriptor:id",
+        "descriptor:vocabularies",
+        "descriptor:modules"
+      ],
+      "thrownValueIdentity": {
+        "sameObject": true
+      },
+      "cycle": {
+        "error": {
+          "name": "UmfError",
+          "code": "CYCLE",
+          "message": "Cyclic value"
+        }
+      },
+      "unknownAnnotations": {
+        "edge": "annotation",
+        "sourceElement": {
+          "future.meaning": {
+            "opaque": "keep"
+          }
+        }
+      },
+      "controls": {
+        "extraQuery": "CORE_SELECTION_QUERY",
+        "hasCancellationOrWorkBudgetParameter": false
+      }
+    },
+    "node": {
+      "successful": {
+        "scope": "core-elements",
+        "referenceScope": "explicit-core-references-item-types-members-and-keys",
+        "selection": [
+          {
+            "module": "sales",
+            "namespace": "sales",
+            "path": "/modules/0/elements/0",
+            "id": "customer",
+            "includedBy": "match"
+          },
+          {
+            "module": "support",
+            "namespace": "support",
+            "path": "/modules/1/elements/0",
+            "id": "customer",
+            "includedBy": "match"
+          }
+        ],
+        "boundaryReferences": [
+          {
+            "from": {
+              "module": "sales",
+              "element": "customer"
+            },
+            "targetPath": "/modules/2/elements/0",
+            "reference": {
+              "role": "account",
+              "module": "billing",
+              "element": "account",
+              "future": "annotation"
+            }
+          },
+          {
+            "from": {
+              "module": "sales",
+              "element": "customer"
+            },
+            "targetPath": "/modules/2/elements/0",
+            "reference": {
+              "role": "account",
+              "module": "billing",
+              "element": "account"
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future.meaning",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_CORE_FIELD",
+            "path": "/modules/0/elements/0/references/0/future",
+            "message": "Field retained without interpretation",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_SCALAR_TYPE",
+            "path": "/modules/1/elements/0/scalarType",
+            "message": "Scalar family retained without interpretation",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_CORE_FIELD",
+            "path": "/modules/2/elements/0/references/0/future",
+            "message": "Field retained without interpretation",
+            "severity": "warning"
+          }
+        ],
+        "complete": false
+      },
+      "transitive": {
+        "selection": [
+          {
+            "module": "sales",
+            "id": "customer",
+            "includedBy": "match"
+          },
+          {
+            "module": "billing",
+            "id": "account",
+            "includedBy": "reference"
+          }
+        ],
+        "boundaryReferences": []
+      },
+      "callbacks": {
+        "order": [
+          "document:/extensions/capture.callback",
+          "module:/modules/0/extensions/capture.callback",
+          "element:/modules/0/elements/0/extensions/capture.callback"
+        ]
+      },
+      "accessor": {
+        "error": {
+          "name": "UmfError",
+          "code": "NON_JSON",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "getterCalls": 0
+      },
+      "accessOrder": [
+        "getPrototypeOf",
+        "ownKeys",
+        "ownKeys",
+        "descriptor:umf",
+        "descriptor:id",
+        "descriptor:vocabularies",
+        "descriptor:modules"
+      ],
+      "thrownValueIdentity": {
+        "sameObject": true
+      },
+      "cycle": {
+        "error": {
+          "name": "UmfError",
+          "code": "CYCLE",
+          "message": "Cyclic value"
+        }
+      },
+      "unknownAnnotations": {
+        "edge": "annotation",
+        "sourceElement": {
+          "future.meaning": {
+            "opaque": "keep"
+          }
+        }
+      },
+      "controls": {
+        "extraQuery": "CORE_SELECTION_QUERY",
+        "hasCancellationOrWorkBudgetParameter": false
+      }
+    },
+    "chromium": {
+      "successful": {
+        "scope": "core-elements",
+        "referenceScope": "explicit-core-references-item-types-members-and-keys",
+        "selection": [
+          {
+            "module": "sales",
+            "namespace": "sales",
+            "path": "/modules/0/elements/0",
+            "id": "customer",
+            "includedBy": "match"
+          },
+          {
+            "module": "support",
+            "namespace": "support",
+            "path": "/modules/1/elements/0",
+            "id": "customer",
+            "includedBy": "match"
+          }
+        ],
+        "boundaryReferences": [
+          {
+            "from": {
+              "module": "sales",
+              "element": "customer"
+            },
+            "targetPath": "/modules/2/elements/0",
+            "reference": {
+              "role": "account",
+              "module": "billing",
+              "element": "account",
+              "future": "annotation"
+            }
+          },
+          {
+            "from": {
+              "module": "sales",
+              "element": "customer"
+            },
+            "targetPath": "/modules/2/elements/0",
+            "reference": {
+              "role": "account",
+              "module": "billing",
+              "element": "account"
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "UNKNOWN_EXTENSION",
+            "path": "/vocabularies/future.meaning",
+            "message": "Exact extension version unavailable; content retained",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_CORE_FIELD",
+            "path": "/modules/0/elements/0/references/0/future",
+            "message": "Field retained without interpretation",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_SCALAR_TYPE",
+            "path": "/modules/1/elements/0/scalarType",
+            "message": "Scalar family retained without interpretation",
+            "severity": "warning"
+          },
+          {
+            "code": "UNKNOWN_CORE_FIELD",
+            "path": "/modules/2/elements/0/references/0/future",
+            "message": "Field retained without interpretation",
+            "severity": "warning"
+          }
+        ],
+        "complete": false
+      },
+      "transitive": {
+        "selection": [
+          {
+            "module": "sales",
+            "id": "customer",
+            "includedBy": "match"
+          },
+          {
+            "module": "billing",
+            "id": "account",
+            "includedBy": "reference"
+          }
+        ],
+        "boundaryReferences": []
+      },
+      "callbacks": {
+        "order": [
+          "document:/extensions/capture.callback",
+          "module:/modules/0/extensions/capture.callback",
+          "element:/modules/0/elements/0/extensions/capture.callback"
+        ]
+      },
+      "accessor": {
+        "error": {
+          "name": "UmfError",
+          "code": "NON_JSON",
+          "message": "Hidden fields and accessors cannot be serialized faithfully"
+        },
+        "getterCalls": 0
+      },
+      "accessOrder": [
+        "getPrototypeOf",
+        "ownKeys",
+        "ownKeys",
+        "descriptor:umf",
+        "descriptor:id",
+        "descriptor:vocabularies",
+        "descriptor:modules"
+      ],
+      "thrownValueIdentity": {
+        "sameObject": true
+      },
+      "cycle": {
+        "error": {
+          "name": "UmfError",
+          "code": "CYCLE",
+          "message": "Cyclic value"
+        }
+      },
+      "unknownAnnotations": {
+        "edge": "annotation",
+        "sourceElement": {
+          "future.meaning": {
+            "opaque": "keep"
+          }
+        }
+      },
+      "controls": {
+        "extraQuery": "CORE_SELECTION_QUERY",
+        "hasCancellationOrWorkBudgetParameter": false
+      }
+    }
+  }
+}

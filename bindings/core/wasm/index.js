@@ -47,6 +47,7 @@ export const GREGORIAN_DATE_PROFILE = 'umf-gregorian-date/1.0.0';
 export const RFC3339_EXACT_INSTANT_PROFILE = 'umf-rfc3339-exact-instant/1.0.0';
 export const RFC3339_EXACT_INSTANT_MAXIMUM_BYTES = 1_048_576;
 export const ICEBERG_SCHEMA_PROFILE = 'umf-r5-iceberg-schema/0.1.0';
+export const ARROW_SCHEMA_PROFILE = 'umf-r8-arrow-schema/0.1.0';
 export const PROTOBUF_INSPECT_PROFILE = 'umf-r5-protobuf-inspect/0.1.0';
 export const PROTOBUF_DOCUMENT_PROFILE = 'umf-r8-protobuf-descriptor-document/0.1.0';
 export const PROTOBUF_SOURCE_IMPORT_PROFILE = 'umf-r8-protobuf-source-import/0.1.0';
@@ -978,6 +979,56 @@ export function createIcebergSchemaEngine(module, options = {}) {
     inspect(document) { return call('inspect', {document}); },
     getNode(document, pointer) { return call('getNode', {document, pointer}); },
     proposeNodeEdit(document, pointer, replacement) { return call('proposeNodeEdit', {document, pointer, replacement}); },
+  });
+}
+
+/** Create the opt-in Arrow integration-schema JSON preservation engine. */
+export function createArrowSchemaEngine(module, options = {}) {
+  if (typeof module?.ArrowSchemaResourcesRuntime !== 'function' || typeof module?.arrowSchemaProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  if (module.arrowSchemaProfileVersion() !== ARROW_SCHEMA_PROFILE) throw new Error('RUST_WASM_BINDING_PROFILE_MISMATCH');
+  const {profile} = codegenOptions(options);
+  const setupControls = descriptor(options, 'setupControls', false);
+  const invocationControls = descriptor(options, 'controls', false);
+  const {controls: normalizedSetupControls} = codegenOptions({profile, controls: setupControls});
+  const {controls} = codegenOptions({profile, controls: invocationControls});
+  const setupBridge = hasControls(normalizedSetupControls) ? createControlBridge(normalizedSetupControls) : undefined;
+  const setupWork = admissionWork(setupBridge);
+  setupWork?.(1);
+  const Runtime = module.ArrowSchemaResourcesRuntime;
+  let runtime;
+  try {
+    runtime = new Runtime(encodeRequestWire({op: 'arrow.schema.createResources'}, setupWork), setupBridge);
+  } catch (error) {
+    let failure;
+    try { failure = resultError(JSON.parse(error?.message)); } catch {}
+    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    throw error;
+  }
+  let disposed = false;
+  function assertActive() {
+    if (disposed) throw new UmfCoreError('RUST_ARROW_SCHEMA_HANDLE_DISPOSED', 'Arrow schema resources have been disposed');
+  }
+  const call = (operation, fields) => {
+    assertActive();
+    const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+    const hostWork = admissionWork(controlBridge);
+    hostWork?.(1);
+    const request = {op: `arrow.schema.${operation}`, ...fields};
+    const responseText = runtime.executeWire(encodeRequestWire(request, hostWork), controlBridge);
+    hostWork?.(responseText.length);
+    const envelope = JSON.parse(responseText);
+    const failure = resultError(envelope);
+    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    hostWork?.(envelope.wire.length);
+    return fromWire(JSON.parse(envelope.wire), hostWork);
+  };
+  return Object.freeze({
+    dispose() { if (!disposed) { disposed = true; runtime.dispose(); runtime.free(); } },
+    importSchema(source, id) { return call('import', {source, id}); },
+    exportSchema(document) { return call('export', {document}); },
+    inspect(document) { return call('inspect', {document}); },
+    getNode(document, pointer) { return call('getNode', {document, pointer}); },
+    proposeNodeEdit(document, pointer, replacementJson) { return call('proposeNodeEdit', {document, pointer, replacement: replacementJson}); },
   });
 }
 

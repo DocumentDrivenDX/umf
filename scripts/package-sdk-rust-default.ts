@@ -9,6 +9,7 @@ import {tmpdir} from 'node:os';
 import type {BunPlugin} from 'bun';
 import {checkCoreDistribution} from './check-core-authority';
 import {rustCompileResources} from './metamodel/source-closure';
+import {assertSameSourceInventory} from './rust-migration/r8/source-inventory.mjs';
 
 const workspaceRoot=process.cwd();
 let root=workspaceRoot;
@@ -54,6 +55,33 @@ async function sourceClosureFiles(dir:string,bindings=false):Promise<string[]>{
  }
  return output;
 }
+const dynamicSourceRoots=[
+ 'crates','bindings','src','scripts/metamodel',
+ 'docs/helix/04-build/evidence/metamodel-authority','spec','native/postgresql',
+ 'docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-default-cutover','native/tablespec',
+ 'bindings/core/node/src','bindings/core/node/tests','bindings/core/wasm/src','bindings/core/wasm/tests',
+];
+function isDynamicSourcePath(baseRoot:string,file:string){
+ const name=relative(baseRoot,file).split('\\').join('/');
+ return dynamicSourceRoots.some(root=>name===root||name.startsWith(`${root}/`));
+}
+async function collectDynamicSourceInputs(baseRoot:string):Promise<string[]>{
+ return [...new Set([
+  ...await sourceClosureFiles(join(baseRoot,'crates')),
+  ...await sourceClosureFiles(join(baseRoot,'bindings'),true),
+  ...await filesUnder(join(baseRoot,'src')),
+  ...await filesUnder(join(baseRoot,'bindings/core/node/src')),
+  ...await filesUnder(join(baseRoot,'bindings/core/node/tests')),
+  ...await filesUnder(join(baseRoot,'bindings/core/wasm/src')),
+  ...await filesUnder(join(baseRoot,'bindings/core/wasm/tests')),
+  ...await filesUnder(join(baseRoot,'scripts/metamodel')),
+  ...await filesUnder(join(baseRoot,'docs/helix/04-build/evidence/metamodel-authority')),
+  ...await filesUnder(join(baseRoot,'spec')),
+  ...await filesUnder(join(baseRoot,'native/postgresql')),
+  ...await filesUnder(join(baseRoot,'docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-default-cutover')),
+  ...await filesUnder(join(baseRoot,'native/tablespec')),
+ ])].sort();
+}
 async function digest(path:string){return createHash('sha256').update(await readFile(path)).digest('hex');}
 async function treeDigest(paths:string[],baseRoot=workspaceRoot){
  const hash=createHash('sha256');
@@ -92,6 +120,7 @@ try{
   join(root,'.cargo/config.toml'),
   join(root,'.github/workflows/rust-sdk-default-qualification.yml'),
   join(root,'scripts/package-sdk-rust-default.ts'),join(root,'scripts/test-sdk-rust-default.ts'),
+  join(root,'scripts/rust-migration/r8/source-inventory.mjs'),join(root,'scripts/rust-migration/r8/source-inventory.d.mts'),join(root,'scripts/rust-migration/r8/source-inventory.test.mjs'),
   join(root,'scripts/rust-migration/r8/v4-default-facade.mjs'),join(root,'scripts/rust-migration/r8/v4-default-facade.test.js'),
   join(root,'scripts/rust-migration/r8/relationship-consumers-installed.mjs'),
   join(root,'scripts/rust-migration/r8/security-and-or-v4-source-replay.mjs'),
@@ -112,6 +141,12 @@ try{
   join(root,'scripts/rust-migration/r8/inspectors-default-retirement-replay-node.mjs'),
   join(root,'scripts/rust-migration/r8/inspectors-default-retirement-replay-browser.mjs'),
   join(root,'scripts/rust-migration/r8/default-route-retirement-evidence.mjs'),
+  join(root,'scripts/rust-migration/r8/default-route-retirement-evidence.test.mjs'),
+  join(root,'scripts/rust-migration/r8/core-cardinality-case-capture.mjs'),
+  join(root,'scripts/rust-migration/r8/core-cardinality-case-capture.test.mjs'),
+  join(root,'scripts/rust-migration/r8/cardinality-retirement-packets/README.md'),
+  ...['inspectCoreCardinality','declareCoreCardinality','verifyCoreCardinalityDeclaration']
+    .map(name=>join(root,`scripts/rust-migration/r8/cardinality-retirement-packets/${name}.packet.json`)),
   join(root,'scripts/rust-migration/r8/gap-ledger.mjs'),join(root,'scripts/rust-migration/r8/gap-ledger.test.mjs'),
   join(root,'scripts/core-relationship-cases.ts'),join(root,'scripts/core-relationship-operation-cases.ts'),
   join(root,'docs/helix/02-design/contracts/CONTRACT-041-relationship.md'),
@@ -218,6 +253,15 @@ try{
  const cargoEnv={CARGO_TARGET_DIR:cargoTarget};
  await run([process.execPath,'scripts/metamodel/build.ts'],{env:cargoEnv});
  await run([process.execPath,'scripts/actions-plan-identity.ts']);
+ const capturedSourcePaths=sourceInputs.map(path=>relative(workspaceRoot,path).split('\\').join('/'));
+ const capturedDynamicPaths=new Set(sourceInputs.filter(path=>isDynamicSourcePath(workspaceRoot,path)).map(path=>relative(workspaceRoot,path).split('\\').join('/')));
+ const staticSourcePaths=capturedSourcePaths.filter(path=>!capturedDynamicPaths.has(path));
+ const generatedDynamicPaths=(await collectDynamicSourceInputs(snapshotRoot)).map(path=>relative(snapshotRoot,path).split('\\').join('/'));
+ assertSameSourceInventory(
+  [...staticSourcePaths,...capturedDynamicPaths],
+  [...staticSourcePaths,...generatedDynamicPaths],
+  'Source input path set after snapshot generators',
+ );
  const generatedInputs=new Set(['spec/core/schema.json','spec/core/semantic-type-reference.schema.json','spec/core/extension-package.schema.json','spec/metamodel/package.json','spec/metamodel/generated/core-constraints.json','spec/metamodel/generated/domain-policy.json','spec/metamodel/generated/python-shapes.json','spec/metamodel/generated/manifest.json','src/generated/core-model.ts','src/generated/core-validators.ts','src/extensions/actions/plan-identity.ts','python/umf_access/src/umf_access/generated_core.py']);
  const derivedHashes=await inputHashes(snapshotInputs,snapshotRoot);
  for(const [path,hash] of Object.entries(sourceInputHashes))if(!generatedInputs.has(path)&&derivedHashes[path]!==hash)throw new Error(`Source snapshot changed outside generated inputs: ${path}`);

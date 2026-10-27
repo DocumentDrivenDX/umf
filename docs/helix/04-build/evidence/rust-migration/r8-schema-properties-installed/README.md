@@ -153,3 +153,27 @@ negative tests pass. It accepts four bounded routes while preserving 922
 logical retirement gaps. Archive bytes were independently reopened by the
 shared preflight; this route gate uses its pinned attestation. The existing
 five-family aggregate remains a separate 24-operation result.
+
+## Opt-in Python binding source addition — 2026-10-27
+
+The current source now adds `umf.rust_schema_properties`, an explicitly
+imported Python module for the same four operations. A dedicated core-wire
+entrypoint whitelists exactly those operation names before dispatch, and the
+PyO3 surface exposes its versioned capability identifier plus bounded work and
+deadline controls. The module does not change `umf`'s default exports. Its
+focused tests use the frozen `schema-properties/valid` document for inspect,
+declaration, Field Value validation and Default resolution, with control
+validation cases.
+
+Focused verification completed after using the host's absolute Rust toolchain
+paths. `cargo test --locked --offline -p umf-core-wire --test
+r5_schema_properties_wire` passed 5/5; `cargo build --locked --offline -p
+umf-core-python` succeeded in isolated target directory
+`/private/tmp/umf-schema-properties-target`. The built extension was copied to
+a private temporary package tree and the new test file passed 7/7 under the
+existing CPython 3.13.16 venv. Ruff and Python syntax checks also pass. The
+first pytest collection attempt found an incorrect fixture root in the new
+test; that path was corrected before the passing run. The installed receipts
+above do not cover Python and predate these source edits. No source-current
+installed replay, wheel, CLI, retirement or release claim follows from this
+addition.

@@ -1,0 +1,367 @@
+{
+  "format": "umf.r8.default-route-retirement-packet/2",
+  "profile": "all-rust",
+  "contractId": "CONTRACT-040",
+  "exportName": "inspectCoreCardinality",
+  "rustOwner": "umf_core::cardinality::inspect_core_cardinality",
+  "cases": [
+    {
+      "id": "valid-known",
+      "input": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "author",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "e",
+                  "kind": "field",
+                  "nullability": "required",
+                  "extensions": {
+                    "future": {
+                      "opaque": "retain"
+                    }
+                  },
+                  "cardinality": "array",
+                  "itemType": {
+                    "module": "m",
+                    "element": "v",
+                    "future": {
+                      "unknown": true
+                    }
+                  }
+                },
+                {
+                  "id": "v",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        }
+      },
+      "expectedOutcome": {
+        "status": "returned",
+        "value": {
+          "identity": {
+            "element": "e",
+            "module": "m"
+          },
+          "meaning": {
+            "cardinality": "array",
+            "itemType": {
+              "element": "v",
+              "future": {
+                "unknown": true
+              },
+              "module": "m"
+            },
+            "state": "known"
+          },
+          "operation": "inspect-core-cardinality",
+          "path": "/modules/0/elements/0/cardinality",
+          "provenance": "unverified",
+          "source": {
+            "id": "author",
+            "modules": [
+              {
+                "elements": [
+                  {
+                    "cardinality": "array",
+                    "extensions": {
+                      "future": {
+                        "opaque": "retain"
+                      }
+                    },
+                    "id": "e",
+                    "itemType": {
+                      "element": "v",
+                      "future": {
+                        "unknown": true
+                      },
+                      "module": "m"
+                    },
+                    "kind": "field",
+                    "nullability": "required"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "integer"
+                  }
+                ],
+                "id": "m",
+                "namespace": ""
+              }
+            ],
+            "umf": "0.10.0",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            }
+          },
+          "version": "6.0.0"
+        }
+      },
+      "expectedTrace": [],
+      "expectedDefaultRustCalls": 1
+    },
+    {
+      "id": "unknown-opaque",
+      "input": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "author",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "e",
+                  "kind": "field",
+                  "nullability": "required",
+                  "extensions": {
+                    "future": {
+                      "opaque": "retain"
+                    }
+                  },
+                  "cardinality": "future-container"
+                },
+                {
+                  "id": "v",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        }
+      },
+      "expectedOutcome": {
+        "status": "returned",
+        "value": {
+          "identity": {
+            "element": "e",
+            "module": "m"
+          },
+          "meaning": {
+            "state": "unknown",
+            "value": "future-container"
+          },
+          "operation": "inspect-core-cardinality",
+          "path": "/modules/0/elements/0/cardinality",
+          "provenance": "unverified",
+          "source": {
+            "id": "author",
+            "modules": [
+              {
+                "elements": [
+                  {
+                    "cardinality": "future-container",
+                    "extensions": {
+                      "future": {
+                        "opaque": "retain"
+                      }
+                    },
+                    "id": "e",
+                    "kind": "field",
+                    "nullability": "required"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "integer"
+                  }
+                ],
+                "id": "m",
+                "namespace": ""
+              }
+            ],
+            "umf": "0.10.0",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            }
+          },
+          "version": "6.0.0"
+        }
+      },
+      "expectedTrace": [],
+      "expectedDefaultRustCalls": 1
+    },
+    {
+      "id": "inapplicable",
+      "input": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "author",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "e",
+                  "kind": "record",
+                  "extensions": {
+                    "future": {
+                      "opaque": "retain"
+                    }
+                  }
+                },
+                {
+                  "id": "v",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        }
+      },
+      "expectedOutcome": {
+        "status": "returned",
+        "value": {
+          "identity": {
+            "element": "e",
+            "module": "m"
+          },
+          "meaning": {
+            "state": "inapplicable"
+          },
+          "operation": "inspect-core-cardinality",
+          "path": "/modules/0/elements/0/cardinality",
+          "provenance": "unverified",
+          "source": {
+            "id": "author",
+            "modules": [
+              {
+                "elements": [
+                  {
+                    "extensions": {
+                      "future": {
+                        "opaque": "retain"
+                      }
+                    },
+                    "id": "e",
+                    "kind": "record"
+                  },
+                  {
+                    "extensions": {},
+                    "id": "v",
+                    "kind": "field",
+                    "scalarType": "integer"
+                  }
+                ],
+                "id": "m",
+                "namespace": ""
+              }
+            ],
+            "umf": "0.10.0",
+            "vocabularies": {
+              "future": {
+                "version": "1.0.0"
+              }
+            }
+          },
+          "version": "6.0.0"
+        }
+      },
+      "expectedTrace": [],
+      "expectedDefaultRustCalls": 1
+    },
+    {
+      "id": "host-trap-negative-control",
+      "input": {
+        "profile": "source-ownkeys-throws",
+        "source": {
+          "umf": "0.10.0",
+          "id": "author",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "e",
+                  "kind": "field",
+                  "nullability": "required",
+                  "extensions": {
+                    "future": {
+                      "opaque": "retain"
+                    }
+                  }
+                },
+                {
+                  "id": "v",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        }
+      },
+      "expectedOutcome": {
+        "code": "FIXTURE_SOURCE_TRAP",
+        "message": "fixture source trap",
+        "name": "Error",
+        "path": "/source",
+        "status": "threw"
+      },
+      "expectedTrace": [
+        "source:ownKeys"
+      ],
+      "expectedDefaultRustCalls": 1
+    }
+  ]
+}

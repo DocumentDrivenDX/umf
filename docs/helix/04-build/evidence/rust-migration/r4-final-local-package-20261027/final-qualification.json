@@ -1,0 +1,95 @@
+{
+  "schema": "umf.r4-final-local-package-qualification/1",
+  "status": "passed",
+  "capturedAtUtc": "2026-10-27T20:22:22Z",
+  "scope": "Private local macOS arm64 package build and installed Python qualification only. No release or hosted CI qualification.",
+  "source": {
+    "worktree": "/Users/erik/.codex/worktrees/rust-binding-spike/umf",
+    "sourceInventory": {
+      "path": "source-closure.json",
+      "fileCount": 499,
+      "sha256": "0199c53a23b5b104621e4ca8f119c21db9fa4193b5e8cf505dfd06672bcdf7c0",
+      "fileSha256": "3f02a6e07b115062cbed5ee93f4a636188d8fa34dc51c03ebe28c56e65f76f24"
+    },
+    "packageArchiveMemberManifest": {
+      "path": "/private/tmp/umf-r4-final-local-20261027/current/source-artifacts.json",
+      "sha256": "13917f6ff6d8adeb09ad073bc6f5c10483a90df9dbf20dfaaaca06bb7deb9d58",
+      "description": "Per-file byte lengths and SHA-256 values for every sdist and wheel member, plus selected current checkout source files."
+    },
+    "keySourceSha256": {
+      "crates/umf-core-wire/src/lib.rs": "58ebcd06b10d836a29f648de321b56d805381028dd39c21c40bb64e99361793c",
+      "bindings/core/python/src/lib.rs": "3e15cdd887c039fcf2e5b3a7fe52e61cad7ec2786baccc8ef50e00332a136f13",
+      "crates/umf-cli/src/main.rs": "2dcf5beb3117756c5d8a53ec861f392c3ccfd6b323e647bc77282e02fe74ea00",
+      "python/src/umf/rust_cardinality.py": "731ed631ff12cef384bd38862fae24d1fcc4a09c8da6c67d69eaa3451e270a17",
+      "python/src/umf/rust_schema_properties.py": "a2bd508daeb4deb355aa23d108f4a13e6e631dc900492d2f632db11b0b1017d4",
+      "spec/core/schema.json": "be3db0e49848eb63a231ca9043470644b88123163a3884159515454c00cdf907",
+      "spec/metamodel/generated/manifest.json": "d3c53834314514f6dc7ff8adb960ae8f0984b6e05b7c31335a7d697f9e645813",
+      "python/src/umf/action_runtime_resource_manifest.json": "92a31e5a44f0e156ff043a5ae68a04f901d582489f6452b5242638b12490a67f",
+      "python/umf_codegen/src/umf_codegen/_resources/manifest.json": "5b2d78b49e5a4ab4a9fdf3fd03833ae6042df559d8aa75100fae16a1a3ae34ab",
+      "tools/_python_sdist.py": "bfb23f08347d1e7245de6c152276c5fabdf32b8d07ad9bb017ba858493701d95",
+      "tools/verify_python_artifacts.py": "7ff3d1cee7d880d597bbdc49c6f9a58fb6577904e4ae72cbc84beddf6e3c7755",
+      ".github/workflows/python-action-runtime.yml": "11b11cb853b78eed8ba60c932c32f191e3f7a048eb6036fcb1fd3d96face381b"
+    },
+    "provenanceNote": "Core sdist/wheel were built from the source state with core-wire SHA 58ebcd06…61793c and synchronized Action/Codegen resources. A workflow-only source pin correction landed after package build; it does not affect wheel inputs. The full suite was rerun after that correction using the same installed wheel artifacts."
+  },
+  "build": {
+    "host": "macOS arm64",
+    "pythonBuild": "CPython 3.13.16",
+    "rustc": "1.90.0",
+    "hatchling": "1.27.0",
+    "method": "Hatchling directly, using installed pinned build dependencies; build core, codegen, and access sdists from checkout, then rebuild each wheel from its extracted sdist.",
+    "coreSdistAuthorities": {
+      "actionResourceManifestSha256": "92a31e5a44f0e156ff043a5ae68a04f901d582489f6452b5242638b12490a67f",
+      "codegenResourceManifestSha256": "5b2d78b49e5a4ab4a9fdf3fd03833ae6042df559d8aa75100fae16a1a3ae34ab"
+    },
+    "artifacts": {
+      "coreSdist": {"path": "core-sdist/umf_core-0.11.0.tar.gz", "bytes": 12109124, "sha256": "15e471f1eaf3afb795c558be567637ef9afd44bef96c4e6d84b5abc3a5f17cea"},
+      "coreWheelFromSdist": {"path": "rebuilt-core/umf_core-0.11.0-cp311-abi3-macosx_11_0_arm64.whl", "bytes": 9401999, "sha256": "8c1ae0c7f33213c59c786c1166a0ec52980843096e4cbdf522f1c2e8c14bc39f"},
+      "codegenSdist": {"path": "codegen-sdist/umf_codegen-0.2.0.tar.gz", "bytes": 51057, "sha256": "3a1819468e9101463d53c70ef7e516038bf3819754b07e7e4f98676c6e2a835e"},
+      "codegenWheelFromSdist": {"path": "rebuilt-codegen/umf_codegen-0.2.0-py3-none-any.whl", "bytes": 63634, "sha256": "d15c65eb0643d204342272095b528f33496365d553486c4dfa344d5409b24b01"},
+      "accessSdist": {"path": "access-sdist/umf_access-0.1.0.dev7.tar.gz", "bytes": 291938, "sha256": "ef1f8b5cbdb192184bd5080ae4ad6518b722d6af50c6408f8f6d2508b504a52a"},
+      "accessWheelFromSdist": {"path": "rebuilt-access/umf_access-0.1.0.dev7-py3-none-any.whl", "bytes": 359464, "sha256": "796439210d9a75bcbe9489d7c4938fb0d9752316308caf2e9a0aaa3240a643ec"}
+    },
+    "uvBuildAttempt": "uv build --offline could not resolve Hatchling from its cache; no network access was available. Direct Hatchling 1.27.0 builds from the installed environment succeeded for all sdists and extracted-sdist wheels."
+  },
+  "installed": {
+    "python311": {
+      "version": "3.11.17",
+      "environment": "/private/tmp/umf-r4-fresh-20261027/venv-py311",
+      "nodeOrBunOnPath": false,
+      "uvPipCheck": "passed; 16 packages compatible",
+      "fullCoreSuite": "613 passed, 5 subtests passed; 496.96s; one pytest cache write warning",
+      "focusedArrowCardinalitySchemaPropertiesSdistAndResources": "66 passed; 24.33s",
+      "artifactCustodyAndWorkflowFinalizerAfterPinAmendment": "11 passed; 1.91s"
+    },
+    "python313": {
+      "version": "3.13.16",
+      "environment": "/private/tmp/umf-r4-fresh-20261027/venv-py313",
+      "nodeOrBunOnPath": false,
+      "uvPipCheck": "passed; 16 packages compatible",
+      "fullCoreSuite": "613 passed, 5 subtests passed; 500.15s; one pytest cache write warning",
+      "focusedArrowCardinalitySchemaPropertiesSdistAndResources": "66 passed; 24.15s",
+      "artifactCustodyAndWorkflowFinalizerAfterPinAmendment": "11 passed; 1.91s"
+    },
+    "fullSuiteFailure": null,
+    "fullSuiteWarning": "Both full-suite runs passed. Pytest emitted one cache warning per interpreter because the shared worktree denied writes to python/.pytest_cache; this did not affect execution or results.",
+    "sourceClosureAudit": {
+      "packetFileCount": 499,
+      "packetCanonicalSha256": "0199c53a23b5b104621e4ca8f119c21db9fa4193b5e8cf505dfd06672bcdf7c0",
+      "generatorBaseFileCount": 495,
+      "generatorBaseMatchesPacket": true,
+      "additionalPacketFiles": {
+        ".github/workflows/python-action-runtime.yml": "11b11cb853b78eed8ba60c932c32f191e3f7a048eb6036fcb1fd3d96face381b",
+        "python/tests/test_rust_cardinality.py": "7136c8d6d96c69a63b481b8e8282a757200967dd96272394498b0d239a7f6026",
+        "python/tests/test_rust_schema_properties.py": "03c3df8e9c956f248c5e729f1b69be370eb1142a61e1e52506f21d9af7cb5568",
+        "tools/verify_python_artifacts.py": "7ff3d1cee7d880d597bbdc49c6f9a58fb6577904e4ae72cbc84beddf6e3c7755"
+      },
+      "additionalPacketFilesMatch": true
+    }
+  },
+  "limits": [
+    "Private local macOS arm64 package qualification; no macOS CI or other platform was run.",
+    "The Rust wheel uses the CPython cp311 abi3 tag and was installed and exercised on CPython 3.11.17 and 3.13.16.",
+    "No release, publication, or default-route retirement is claimed."
+  ]
+}

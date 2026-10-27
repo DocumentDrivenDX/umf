@@ -62,8 +62,11 @@ SOURCE_DIRS = [
 SOURCE_FILES = [
     "Cargo.toml",
     "Cargo.lock",
+    "python/tests/test_python_sdist.py",
     "python/pyproject.toml",
     "python/hatch_build.py",
+    "spec/extensions/arrow/package.json",
+    "spec/extensions/arrow/integration-schema.json",
     "python/umf_codegen/pyproject.toml",
     "python/umf_codegen/hatch_build.py",
     "scripts/build-codegen.ts",
@@ -73,6 +76,7 @@ SOURCE_FILES = [
     "scripts/rust-migration/r4/sync_codegen_resources.py",
     "scripts/rust-migration/r4/check_binary_closure.py",
     "scripts/rust-migration/r4/test_binary_closure.py",
+    "tools/_python_sdist.py",
     *RESOURCE_SOURCES,
 ]
 

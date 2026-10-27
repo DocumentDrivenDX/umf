@@ -1,0 +1,52 @@
+{
+  "scope": "Qualified declared shape and explicit native carrier projection; retained native/ideal recovery; no native equivalence",
+  "nativeVersions": {
+    "apache": "1.12.0",
+    "fastavro": "1.12.2"
+  },
+  "nativeEquivalence": false,
+  "runs": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/cardinality-avro-native.py"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-avro-projection-oracle.ts"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "proofs": [
+    "fixtures/validation/cardinality-avro-profile-native.json",
+    "fixtures/validation/cardinality-avro-projection-native.json",
+    "fixtures/validation/cardinality-avro-projection-oracle.json"
+  ],
+  "sha256": {
+    "/private/tmp/umf-cardinality-replay-e048/scripts/core-ideals/cardinality-avro-native.py": "229ac3efbfeff631af1305b63e7e08c8a72bb2192098dad399ee4a0d79f562ca",
+    "/private/tmp/umf-cardinality-replay-e048/scripts/core-ideals/cardinality-avro-projection-native.py": "fda9e9bf42c9bdb2353428b602be58e10f8e3df25f09f1c8e8bb2b43a8477ed4",
+    "fixtures/avro/cardinality-cases.json": "8f045ddf36d2e26f9a1c061c6a46d08e8c6adaa75699780108add7cf66387733",
+    "fixtures/validation/cardinality-avro-profile-native.json": "b3d25b22dbf4382cb52b94279945265e25f59e346d7a6bced3a0eafc3724c989",
+    "fixtures/validation/cardinality-avro-projection-candidates.json": "eaf85242ca74228390ae87969810bec0d3e672a144cb3ac767e017129b0bb4bc",
+    "fixtures/validation/cardinality-avro-projection-native.json": "4ea1fea4e5ed2df11200707acfca281cfe961a71f32d142b2266718973e11f34",
+    "fixtures/validation/cardinality-avro-projection-oracle.json": "ef07ab74305e403b4dba580629f095b1a1be285115a2f697d162182432d872b8",
+    "scripts/core-ideals/cardinality-avro-composition.ts": "37a192ea263319a92d369126a08163a019cac8c0b307cde8d29fc3a455fc04de",
+    "scripts/core-ideals/cardinality-avro-oracle.ts": "f0bdb3d75a5b010c57c121d7e0c9e048ca8ff53adf357fa8287c4b1bb11de359",
+    "scripts/core-ideals/cardinality-avro-projection-cases.ts": "e57f982922e30eac8b31eb9fbc2fb60d695def132eb01538a842f93fa5aab3f5",
+    "scripts/core-ideals/cardinality-avro-projection-native.py": "fda9e9bf42c9bdb2353428b602be58e10f8e3df25f09f1c8e8bb2b43a8477ed4",
+    "scripts/core-ideals/cardinality-avro-projection-oracle.ts": "9e1d5183af07481fa6b94ce6dfe192ea60e00bcc8ee24fb7f1b37ee9d28ba832",
+    "scripts/core-ideals/nullability-avro-cases.ts": "47461a3493dbb7c30d71862bef818ef2a4a7e89ad928ab6e67a24d7493405848",
+    "spec/core/avro-cardinality-classification.schema.json": "473d2c03eeb3b247b77500020990631ebedc390b1718aba1f35cf02fbf8fa73e",
+    "spec/core/cardinality-avro-projection.schema.json": "3a97ee76353e4218150b6894a31a2a1c644252a4c44ae9f815581cbc25b873a9",
+    "spec/extensions/avro-cardinality/package.json": "c2ceda15755139a6d8761fdfeb637aeb05380c63e1d862e29f96bad77166315f",
+    "spec/extensions/avro-cardinality/schema.json": "4e722177a26758b4204d660283db22d423e82012f880b14ac6bca9b8c70ec18a",
+    "src/adapters/avro/index.ts": "c8f3bceb8f7e347565578b8003c12860968abdcd4a5ec4f6991668edd9d00dff",
+    "src/core-ideals/avro-cardinality-type.ts": "199d01f5c27a5a1bed9561ec992bbc83306bf47c7d0caf4729364d235952c91b",
+    "src/core-ideals/cardinality-avro-projection.ts": "a041e2b671fbcd5df9988e430fd1255fef1bd90b5d2c187167360178f4248e3f",
+    "src/core-ideals/cardinality-avro.ts": "433c55c02e83d87ae1328d4ddad02e1391a4aafbc79d9313e3283ec220d6e8a1"
+  }
+}

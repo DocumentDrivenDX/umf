@@ -12,7 +12,7 @@ import pytest
 
 _HELPER_PATH = Path(__file__).resolve().parents[2] / "tools/_python_sdist.py"
 assert hashlib.sha256(_HELPER_PATH.read_bytes()).hexdigest() == (
-    "2332cbf58b624be77fda737ddfe0e9b5afc0b2990b32cebcd6cbec1fcbf6f901"
+    "bfb23f08347d1e7245de6c152276c5fabdf32b8d07ad9bb017ba858493701d95"
 )
 _HELPER_SPEC = importlib.util.spec_from_file_location(
     "umf_test_python_sdist", _HELPER_PATH
@@ -31,6 +31,8 @@ ROOT_FILES = (
     "Cargo.lock",
     "rust-toolchain.toml",
     ".cargo/config.toml",
+    "spec/extensions/arrow/package.json",
+    "spec/extensions/arrow/integration-schema.json",
     "spec/extensions/avro/package.json",
     "spec/extensions/parquet/package.json",
     "spec/extensions/json-schema/package.json",

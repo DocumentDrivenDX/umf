@@ -385,6 +385,11 @@ fn iceberg_schema_profile_version() -> &'static str {
 }
 
 #[pyfunction]
+fn arrow_schema_profile_version() -> &'static str {
+    umf_core_wire::ARROW_SCHEMA_PROFILE
+}
+
+#[pyfunction]
 #[pyo3(signature = (wire_json, control=None))]
 fn execute_iceberg_wire(
     py: Python<'_>,
@@ -416,6 +421,42 @@ fn execute_iceberg_wire(
         Err(error)
     };
     Ok(umf_core_wire::execute_iceberg_wire_with_control(
+        wire_json, &mut hook,
+    ))
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_arrow_schema_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::execute_arrow_schema_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        let mut error = EngineError::new(code, Utf16::from(path), Utf16::from(message));
+        error.python_message_origin = None;
+        Err(error)
+    };
+    Ok(umf_core_wire::execute_arrow_schema_wire_with_control(
         wire_json, &mut hook,
     ))
 }
@@ -582,6 +623,88 @@ fn execute_protobuf_inspect_wire(
     Ok(umf_core_wire::execute_protobuf_inspect_wire_with_control(
         wire_json, &mut hook,
     ))
+}
+
+#[pyfunction]
+fn core_cardinality_profile_version() -> &'static str {
+    umf_core_wire::CORE_CARDINALITY_BINDING_PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, max_work=None, timeout_ms=None))]
+fn execute_core_cardinality_wire(
+    wire_json: &str,
+    max_work: Option<usize>,
+    timeout_ms: Option<u64>,
+) -> String {
+    let started = std::time::Instant::now();
+    let mut remaining = max_work.unwrap_or(usize::MAX);
+    let mut control = |amount: usize| {
+        if amount > remaining {
+            return Err(EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Core Cardinality work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| {
+            started.elapsed().as_millis() >= u128::from(limit)
+        }) {
+            return Err(EngineError::new(
+                "DEADLINE",
+                Utf16::default(),
+                "Core Cardinality deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    umf_core_wire::execute_cardinality_request_with_control(
+        wire_json,
+        umf_core::ResourceProfile::Cooperative,
+        &mut NoPythonCapabilities,
+        &mut control,
+    )
+}
+
+#[pyfunction]
+fn core_schema_properties_profile_version() -> &'static str {
+    umf_core_wire::CORE_SCHEMA_PROPERTIES_BINDING_PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, max_work=None, timeout_ms=None))]
+fn execute_core_schema_properties_wire(
+    wire_json: &str,
+    max_work: Option<usize>,
+    timeout_ms: Option<u64>,
+) -> String {
+    let started = std::time::Instant::now();
+    let mut remaining = max_work.unwrap_or(usize::MAX);
+    let mut control = |amount: usize| {
+        if amount > remaining {
+            return Err(EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Core Schema Properties work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(EngineError::new(
+                "DEADLINE",
+                Utf16::default(),
+                "Core Schema Properties deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    umf_core_wire::execute_schema_properties_request_with_control(
+        wire_json,
+        umf_core::ResourceProfile::Cooperative,
+        &mut NoPythonCapabilities,
+        &mut control,
+    )
 }
 
 #[pyfunction]
@@ -5257,12 +5380,18 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(avro_fields_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(iceberg_schema_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_iceberg_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(arrow_schema_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_arrow_schema_wire, module)?)?;
     module.add_function(wrap_pyfunction!(protobuf_inspect_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(avro_inspect_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_avro_inspect_wire, module)?)?;
     module.add_function(wrap_pyfunction!(avro_candidate_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_avro_candidate_wire, module)?)?;
     module.add_function(wrap_pyfunction!(execute_protobuf_inspect_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(core_cardinality_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_core_cardinality_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(core_schema_properties_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_core_schema_properties_wire, module)?)?;
     module.add_function(wrap_pyfunction!(json_schema_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_json_schema_wire, module)?)?;
     module.add_function(wrap_pyfunction!(avro_fields_derive, module)?)?;

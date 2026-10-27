@@ -450,6 +450,24 @@ impl HostJsonReflection for NodeHostJson {
     }
 }
 
+/// Opt-in general JSON admission over opaque host handles. Reflection order,
+/// cycles, limits and the copied value are owned by the shared Rust core.
+#[napi(js_name = "executeCopyJsonHostJson")]
+pub fn execute_copy_json_host_json(env: Env, value_handle: u32, dispatcher: JsFunction) -> String {
+    let mut host = NodeHostJson {
+        env,
+        dispatcher,
+        string_lengths: BTreeMap::new(),
+    };
+    let result = (|| -> Result<String, EngineError> {
+        let mut ctx = Context::ordinary();
+        let value =
+            umf_core::host_json::copy_host_json(value_handle as HostHandle, &mut host, &mut ctx)?;
+        umf_core_wire::encode(&value, &mut ctx)
+    })();
+    umf_core_wire::result_envelope(result)
+}
+
 #[napi(js_name = "executeDeclareCoreSchemaPropertiesHostJson")]
 pub fn execute_declare_core_schema_properties_host_json(
     env: Env,

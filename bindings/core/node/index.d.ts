@@ -359,6 +359,7 @@ export declare function createCoreKindNullabilityHostInputEngine(resources: UmfC
   verifyCoreNullabilityDeclaration(receipt: unknown, current: unknown): unknown;
 };
 export declare const ICEBERG_SCHEMA_PROFILE: 'umf-r5-iceberg-schema/0.1.0';
+export declare const ARROW_SCHEMA_PROFILE: 'umf-r8-arrow-schema/0.1.0';
 export declare const PROTOBUF_INSPECT_PROFILE: 'umf-r5-protobuf-inspect/0.1.0';
 export declare const PROTOBUF_DOCUMENT_PROFILE: 'umf-r8-protobuf-descriptor-document/0.1.0';
 export declare const AVRO_FIELDS_PROFILE: 'umf-r5-avro-fields/0.1.0';
@@ -446,6 +447,27 @@ export interface IcebergSchemaEngine {
 }
 /** Create the opt-in standalone Iceberg schema JSON engine using embedded pinned resources. */
 export declare function createIcebergSchemaEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): IcebergSchemaEngine;
+
+export interface ArrowSchemaValidation {
+  valid: boolean;
+  complete: boolean;
+  diagnostics: {code: string; path: string; message: string; severity: 'error' | 'warning'}[];
+}
+export interface ArrowSchemaEngine {
+  /** Dispose the prepared schema resources retained by this opt-in engine. */
+  dispose(): void;
+  /** Import exact Arrow integration-schema JSON into a tagged UMF document. */
+  importSchema(source: string, id: string): unknown;
+  /** Export schema JSON while preserving source number lexemes and unknown fields. */
+  exportSchema(document: unknown): string;
+  inspect(document: unknown): ArrowSchemaValidation;
+  /** Return a copied tagged native JSON subtree at an RFC 6901 pointer. */
+  getNode(document: unknown, pointer: string): unknown;
+  /** Return a detached candidate document after validating a replacement JSON string. */
+  proposeNodeEdit(document: unknown, pointer: string, replacementJson: string): {document: unknown; validation: ArrowSchemaValidation};
+}
+/** Create the opt-in Arrow integration-schema JSON preservation engine; this does not activate a default route. */
+export declare function createArrowSchemaEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; setupControls?: UmfCoreControls; controls?: UmfCoreControls}): ArrowSchemaEngine;
 
 export interface JsonSchemaResource {uri: string; source: string}
 export type JsonSchemaNativeJson = {kind: 'null'} | {kind: 'boolean'; value: boolean} | {kind: 'string'; value: string} | {kind: 'number'; value: string} | {kind: 'array'; items: JsonSchemaNativeJson[]} | {kind: 'object'; members: Record<string, JsonSchemaNativeJson>};

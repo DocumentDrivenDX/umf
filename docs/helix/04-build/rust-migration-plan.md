@@ -320,6 +320,12 @@ before JSON Schema-to-Protobuf; Avro before its projections; GraphQL before inpu
 projection; OpenAPI after schema/resource resolution. Then proceed through the
 remaining adapter graph. R0 must enumerate every exported operation, including
 unexported algorithms reached by active scripts; these examples do not limit scope.
+Before the Rust port of CONTRACT-001 `selectCoreElements`, use the bounded
+[TypeScript predecessor capture](evidence/rust-migration/r5-select-core-elements-predecessor-20261027/README.md)
+as the Node/Bun/real-Chromium host-behavior gate. It freezes selected results,
+Registry callback paths/order, host access/refusal behavior, cycles, and unknown
+annotations; callback failures, full resource controls, and the full selection
+test corpus still require separate qualification.
 
 ## R4–R8 continuation gates — 2026-10-23
 
@@ -7896,8 +7902,10 @@ remain `acceptance-pending`; their passing route pairs cannot substitute for
 the combined five-system regression, existing Field/Nullability gates or a
 qualified Cardinality admission/delivery decision.
 The TableSpec projection evidence itself reports `bindingAccepted: false` and
-`idealAdmitted: false`; the PostgreSQL review requires its 69-command combined
-refresh, and the SQL Server, Avro and Parquet reviews also leave combined
+`idealAdmitted: false`; the PostgreSQL review calls for a 69-command combined
+refresh, but the current retained Field integrated refresh has 184 commands
+and must be treated as the actual current gate. The SQL Server, Avro and Parquet
+reviews also leave combined
 regression/conformance work open. None of those status fields may be promoted
 by a validator from successful per-route command summaries. Case-level loss,
 refusal and reciprocal recovery evidence, exact source pins, and the combined
@@ -7975,3 +7983,539 @@ Both platform archives now have one matching committed source closure and
 bounded installed replay. Their aggregate receipt schema lacks per-case
 invocation evidence required by `/2`, and their local runs are not hosted
 Linux or complete acceptance; ledger retirement remains zero.
+
+### R8 exact-source binding replay and all-Rust packet profile — 2026-10-27
+
+The [retained E048 five-binding route packet](evidence/rust-migration/r8-cardinality-five-binding-routes-e0487691/README.md)
+now records successful focused native and Chromium 153 pairs for TableSpec,
+PostgreSQL 17.4, SQL Server 16.0.4295.3, Apache Avro 1.12.0/fastavro 1.12.2,
+and PyArrow 21.0.0. It pins UMF commit `e0487691e34be22de9e63d8ead5f1c9db21fee13`,
+tree `ee0c192c9e9929c31700a05ab16b510ad0234d67`, and the zero-transform
+pre-run SDK closure `1355bf21b58ad9e422fa8998c1ce5325b8643bb1eefbc6a1b6a127babc52b5d7`.
+The generated fixture outputs have their own path/hash inventory; they are not
+silently folded into the pre-run input closure. All retained recursive SHA-256
+checks pass. The TableSpec replay uses its exact historical `647e8e5` source,
+so it does not qualify current TableSpec. B505 and E048 generated case-ID
+inventories and aggregate dimensions match, but byte-level equality is not
+claimed. Existing focused contract reviews still mark acceptance pending;
+combined five-system regression, Field/Nullability dependencies, and a current
+Cardinality conformance admission decision remain open.
+
+The exact-source E048 combined Cardinality conformance rerun now completes with
+11,194 evidence fingerprints after distinguishing current-source receipts from
+historical re-authoring. PostgreSQL verifies 26/26 current receipts in place
+and SQL Server verifies 68/68; neither cohort increments historical replay
+counters. Field and Nullability conformance also complete, but both remain
+historical-partial and current-source UNQUALIFIED. The combined result keeps
+`nativeEquivalence=false`, `idealAdmitted=false`, and `qualifiedBindings=0`.
+The disposable log is
+`/private/tmp/umf-cardinality-e048-cardinality-conformance-final.log`
+(SHA-256 `49caa0577f42f3b510aa36dd10d749a28b66f4475462c82d0353837dca83c859`);
+it pins UMF E048 commit `e0487691e34be22de9e63d8ead5f1c9db21fee13`, tree
+`ee0c192c9e9929c31700a05ab16b510ad0234d67`, and the pre-patch, zero-transform
+SDK input closure `1355bf21b58ad9e422fa8998c1ce5325b8643bb1eefbc6a1b6a127babc52b5d7`.
+This is bounded conformance evidence only: acceptance remains pending and no
+Cardinality retirement status changes.
+
+A private per-case installed-SDK capture spike replayed 11 frozen Cardinality
+cases per host against the exact E048 macOS archive on Node 26.12.1, Bun 1.4.3,
+and Chromium 153, and against the exact E048 Linux archive on Node 26.12.1 and
+Chromium 148. Every default-route case returned or refused with the same value,
+error and ordered host trace as `./reference`; each called the actual N-API or
+WASM Cardinality export exactly once, while each reference case called it zero
+times. The source/current throwing-Proxy cases and malformed input refusals
+also entered Rust once. No genuine zero-Rust preflight case was found for this
+family. The Linux image lacked Bun for this per-case spike, though the earlier
+aggregate installed Linux replay covered Bun 1.4.3. These observations remain
+private design evidence until a source-bound harness captures all six host
+receipts against a new fixed-point archive pair.
+
+The bounded `/2` validator now accepts a distinct Cardinality packet `/2`
+`all-rust` profile with an exact positive `expectedDefaultRustCalls` count for
+every case and a zero-Rust reference control. It leaves legacy packet `/1`
+mixed Rust/preflight requirements intact and still refuses default-route
+retirement without a separate acceptance-capable manifest. Rehashed negative
+tests reject skipped/extra default calls, a reference Rust call, missing or
+duplicate cases, changed traces, and fabricated zero-call preflight claims.
+The focused profile tests and all 62 R8 ledger tests pass. The new source-bound
+`core-cardinality-case-capture.mjs` harness and three frozen operation packets
+are now checked in. It reopens the archive, checks every extracted member,
+resolves the actual Node/Bun package conditions and the browser condition,
+counts calls at the N-API or raw WASM export, and compares each default and
+`./reference` case to the frozen outcome and ordered trace. Before it emits
+`status: pass` receipts, it requires the archive's live fixed-point closure to
+contain exact hashes of the harness, its tests, validator, and packets. Eleven
+focused harness/profile tests pass. E048 archives predate these files and are
+correctly rejected before a qualifying receipt is written. Their separate
+private smoke observations remain bounded only. Next, build and inspect a new
+fixed-point macOS/Linux archive pair containing these sources, capture all six
+Node/Bun/Chromium host receipts, and independently verify them. Then rerun the
+combined five-system refresh and dependent gates before deciding whether any
+Cardinality logical gap may be retired. The ledger remains **922 open logical
+default-route gaps, zero retired**.
+
+The next envelope/preservation spike examined seven root names: `copyJson`,
+`LIMITS`, `pointer`, `UmfError`, `readDocument`, `writeDocument`, and
+`editExtension`. Its isolated Rust core probe matched seven serialized JSON
+value cases, including unsafe-number refusal and unknown/dangerous data keys;
+valid document JSON matched the TypeScript reference byte-for-byte and YAML
+round-tripped semantically. It found one concrete invalid-document mismatch:
+Rust returned only the first validation diagnostic while TypeScript placed the
+whole ordered diagnostic array in `UmfError.message` with an empty public path.
+The Rust `document::require_valid` implementation now emits that full
+`JSON.stringify`-shaped diagnostic array through the UTF-16 serializer. A
+frozen three-diagnostic reference vector and a valid unknown-preserving
+read/write round trip pass 2/2 focused Rust tests. This repairs a core parity
+gap only; general `copyJson` host reflection, getter/Proxy exception identity,
+`editExtension` live callback/Registry behavior, Node/Bun/Python wrappers,
+Chromium/WASM and installed-package qualification remain open before any
+envelope root selection.
+
+An independent wrapper probe then showed that existing N-API and WASM
+`copyJsonWire` routes preserve the TypeScript Proxy trap order and a trap-thrown
+object's identity, but differ on accessor, hidden-property, custom-prototype,
+symbol, cycle, depth-limit and unsafe-number refusal envelopes. The existing
+wire encoder does not enable cycle detection for this path; its deep refusal
+must not be reported as the reference `CYCLE /self` result. The real WASM
+module ran under Bun, while Chromium launch in this private probe was denied
+by the local Mach port sandbox. These are candidate-wrapper failures, not
+accepted default behavior. A Rust-owned host-input traversal using thin
+N-API/WASM reflection callbacks, following the Cardinality bridge pattern,
+was then exercised through the existing private Cardinality host-input bridge.
+The core `copy_host_json` event protocol matched TypeScript error code, path,
+message and Proxy trap order for accessors, hidden fields, custom prototypes,
+symbols, cycles, depth overflow and unsafe integers on N-API and WASM under
+Bun. A Proxy-thrown sentinel kept its object identity. Node also matched the
+100,000-value boundary; a 4,000,001-unit string passed value admission.
+Chromium was blocked by this probe's local browser launch permissions, so
+there is no real-browser qualification yet. The production candidate is a
+dedicated opt-in `copyJson` host-input operation over these existing Rust
+callbacks, with host hooks limited to reflection and thrown-object rethrow;
+default root routing waits for broader cross-host and installed evidence.
+
+The bounded opt-in implementation now adds `executeCopyJsonHostJson` in the
+N-API and WASM Rust bindings and separate `copy-json-host-input.js` entrypoints
+for both packages. The established `index.js` and declaration entrypoints
+remain unchanged; package file lists include the additive entrypoints. Focused
+Node/Bun parity tests pass 11 cases / 22 assertions for accessor, hidden-field,
+custom-prototype, symbol, cycle, depth-limit and unsafe-number refusals; Proxy
+reflection order and thrown-object identity; dangerous and lone-surrogate
+keys; and a 4,000,001 UTF-16-unit string. The WASM module passes the same
+behavioral packet under Bun. An independent local Chromium 153.0.8010.12
+replay also matched ten source-tree cases, including ordered Proxy reflection
+and trap-thrown object identity, after local loopback/browser access was
+allowed. The retained
+`bindings/core/wasm/tests/copy-json-host-input.chromium.mjs` harness passed
+independent replay in Chromium 153.0.8010.12 with ten calls through the
+WASM-bindgen export, an actual WASM binary fetch, and zero external requests;
+these observations do not qualify an installed SDK browser route. The
+long-string Node case takes about 20 seconds, so copying plus wire encoding
+needs performance work before broad routing; the 100,000-value boundary was
+seen only through the earlier Cardinality bridge, not requalified through this
+new opt-in export. Node package-closure and generated WASM source checks pass.
+The R8 ledger check remains blocked by exact source-closure drift: first at
+`bindings/core/node/package.json`, now extended for the additive entrypoint,
+and the changed Rust binding source is also pinned by existing receipts. Those
+receipts remain unchanged. This is an opt-in implementation and bounded
+parity result only; it does not select a default route, retire a gap, or
+qualify installed packages or browser behavior.
+
+### R8 current-source receipt and capture custody checkpoint — 2026-10-27
+
+The general `copyJson` host-input candidate and invalid-document diagnostic
+repair passed the complete locked `umf-core` Rust test suite: 473 library
+tests plus the integration and documentation tests, with the two separately
+gated ignored tests left ignored. The dedicated Node/Bun and real Chromium
+candidate probes above remain opt-in evidence, not installed-package parity.
+
+A live R5 Compact refreeze changed only compiler-provenance hashes for
+`spec/core/schema.json` and `spec/core/semantic-type-reference.schema.json`;
+all five frozen payloads were byte-identical and their model hash was
+unchanged. The refreshed [Compact source packet](evidence/rust-migration/r8-compact-dataset-verify-source/README.md)
+binds one 1,967-input source closure, SHA-256
+`571569bc131aaa1a38c6d52edfd2273cec7cf13e52e01b77eb63d8b2b03c31ed`,
+to an immutable build manifest, SHA-256
+`65bb6505f247e221f55b3e0fe7a5b998c76ef7470b390bfae33c8140add3d5aa`.
+Node 26.12.1, Bun 1.4.3 and Chromium 153 passed all five cases, with 14
+native/WASM dispatches per host. The dependent
+[Security And/Or packet](evidence/rust-migration/r8-security-and-or-v4-source-replay-current/README.md)
+was replayed against that same build: 68 cases per host, 30 valid Rust/WASM
+calls and zero refusal calls per host. Both packets retain the prior cohort
+under historical directories and pass their checksum indexes.
+
+The full five-binding Cardinality conformance test now passes 3/3 tests and
+381 assertions after its replay expectation was limited to nonblocked native
+rows. The combined exact-E048 refresh remains bounded: current PostgreSQL
+26/26 and SQL Server 68/68 native-input replays match, while ideal admission
+and five-binding current qualification remain false. The Cardinality `/2`
+archive-capture harness now refuses symlinked or extra extracted members and
+recomputes the complete fixed-point source closure, including exact input
+maps and file count, before emitting host receipts. Its ten focused tests and
+the combined 13 focused capture/validator tests pass. The Linux-only SDK
+workflow captures Node, Bun and Chromium Cardinality cases from the same
+archive and uploads the raw receipts; no macOS CI job was added.
+
+The regenerated [R8 ledger](evidence/rust-migration/r8-symbol-inventory/README.md)
+passes its current-source check at SHA-256
+`2e86c1158af02db939d3d997dffe88a00c607be17299ab485a65a6dce3cbeaf7`.
+It still records **922 open logical default-route gaps, zero retired**: 81
+accepted opt-in Rust operation names, 841 without accepted mappings, and five
+with bounded current-source route proof. The current Compact/Security replay
+does not satisfy the separate installed-SDK, Cardinality acceptance, R4
+Python matrix, R6 consumer, R7 default-authority, or R8 release gates.
+
+An exploratory local R4 installed probe used a previously built core/codegen
+wheel pair under CPython 3.11.17 on macOS 27.0.1 arm64. With executable lookup
+disabled for JavaScript runtimes, all seven codegen operations, CLI help,
+`pip check`, and retained writer, tamper and deadline controls passed. Its
+source checkpoint was not pinned to the current commit; the result does not
+replace a fresh source-coherent wheel/sdist build or cross-platform release
+qualification. Honor the owner's no-macOS-CI constraint: use local macOS
+evidence and Linux CI, and record any unrun supported-platform matrix cells
+explicitly rather than counting them as qualified.
+
+At this checkpoint, the next substantive unported family identified by the R8
+inventory was the CONTRACT-016 Arrow schema JSON adapter: 87 route-specific
+declarations, zero accepted Rust mappings and no Arrow-specific Rust owner.
+A bounded Rust core slice was selected to start with import, inspect and export
+against the 52-case authored corpus and pinned PyArrow evidence, preserving exact numeric tokens, ordered
+metadata and unknown native content. IPC, FlatBuffers and record-batch behavior
+remain outside that first slice. Selection waits for frozen predecessor and
+Node/Bun/real-browser parity; the 87 rows are not 87 independent operations.
+
+### R5 Arrow and R8 source-custody continuation — 2026-10-27
+
+The opt-in Rust `arrow_schema` core now owns schema-JSON import, inspection,
+export, node lookup and nonmutating edit proposals. It preserves `NativeJsonTree`
+number lexemes, member and metadata order, duplicate metadata and unknown native
+content. Four focused Rust tests pass, including exact JSON export for all 52
+authored schema inputs, pinned historical JS/PyArrow oracle identity, known
+invalid shape and dictionary-integer refusals, and an unknown fractional
+parameter on a known type that remains valid with `ARROW_UNKNOWN` rather than
+`ARROW_INTEGER`. The TypeScript adapter's five existing Bun tests still pass
+with 178 assertions. This is a source-core subset, not a selected default
+route: cross-host binding parity, exact diagnostic ordering, IPC/data and
+native Arrow execution remain unqualified. The existing oracle metadata
+assertions do not themselves establish Rust/native parity.
+
+The opt-in `copyJson` host-input export now exercises the actual 100,000-value
+boundary in Node and WASM: an array of 99,999 null children plus its root is
+admitted, and 100,000 children match the TypeScript overflow refusal. Fresh
+WASM-bindgen 0.2.100 output passes the Bun packet including a 4,000,001-unit
+string; real Chromium 153 passes twelve exact WASM calls, including the
+boundary and overflow, with zero external requests. A one-shot local Node
+resource probe measured 4,000,001 UTF-16 units at 15.5 seconds and 258 MB RSS,
+and 16 million units at 62 seconds and 727 MB RSS. The per-unit JSON transport
+needs bounded performance work before default routing; these local measurements
+are not an installed SDK or release qualification.
+
+Independent review of the SDK fixed-point builder found that it hashed only the
+pre-generator source list. The builder now re-enumerates its dynamic source
+roots after private generators and rejects any added or removed file before
+labeling a snapshot fixed-point. Three focused inventory-gate tests and the
+tools TypeScript check pass. The first private SDK build before this correction
+reported two generated transforms, the metamodel manifest and action-plan
+identity, and remains nonpublishable. Those files were regenerated on the live
+worktree; the final generator/check cycle must run again after the current
+Arrow/binding/harness edits. Consequently the Compact and Security source
+receipts above are now historical for their exact closure, and the R8 ledger
+requires another current-source refresh. No R8 gap retirement or release gate
+is inferred from this checkpoint.
+
+The generator/check cycle subsequently reached a fixed point. A private SDK
+`BUILD_ONLY` run returned `sourceTransformStatus: fixed-point`, zero generated
+source transforms, and matching captured/live source-tree SHA-256
+`47e531b490c202e6c19137d892e7776e445461ab69b9c8a79d99532d8faa02d5`
+across 1,800 built assets. Its release status remains explicitly private and
+nonpublishable. The current-source Compact and Security replay packets were
+refreshed after the Arrow and host-input work: their common manifest SHA-256
+is `1dfb786e44d32a22ed7595bf7f3b4a6be0692b5932c3b9de87ad2da894996ae4`,
+binding 1,969 source inputs at closure
+`45133a5eab727481d7ee30d0cfaa1e00ccf2b10ea9d0117a9952887f17e00f2c`.
+All five Compact and 68 Security cases passed on Node, Bun and real Chromium;
+the previous source cohort is retained under each packet's historical tree.
+The [R8 ledger](evidence/rust-migration/r8-symbol-inventory/README.md) now
+checks at SHA-256
+`c432635cf345e9d8c6f6c36114078f40403c96dcfb9590d329d201781c05a8ba`,
+still with 922 open logical gaps and zero retired. The fixed-point SDK build
+and source replays do not establish installed archive or release qualification.
+
+The next Arrow slice is an opt-in wire binding for the five schema-JSON
+operations already present in Rust: import, inspect, export, node lookup, and
+edit proposal. Freeze the current TypeScript results for the 52 authored
+schemas and negative, unknown-content, duplicate-metadata and edit cases
+before exposing the operations through Node, WASM, Python and the CLI. Sol
+review found a diagnostic path bug in the Rust core: a field index was escaped
+inside one pointer segment. It is corrected with a focused exact-path
+assertion, which passes. This makes the immediately preceding source-bound
+SDK build and Compact/Security receipts historical; their corrected-source
+refresh is in progress.
+
+For this binding, the predecessor's public diagnostics and error transport are
+the parity target. The Rust core currently emits an additional
+`ARROW_SEMANTICS_UNVERIFIED` warning, uses different wording for some
+representation/export refusals, and condenses invalid import/edit diagnostics
+to a count. Those differences must be resolved before host parity can be
+claimed. Keep broader Arrow semantics explicitly unverified in capability
+documentation. IPC, array data, FlatBuffer operations and native execution
+are separate later slices; the 87 Arrow route declarations are not 87
+independent operations.
+
+The Arrow diagnostic correction was followed by a governed regeneration and
+private R5 refreeze. `bun scripts/metamodel/build.ts --check`, action-plan
+identity, Python codegen resource, and Python action-runtime resource checks
+all pass. The five Compact payloads remain byte-identical; their current index
+SHA-256 is
+`475f7311eec810c84806b23ee6d0bd41c99bedc9b2bc84bd99318962d917db68`
+with only two generated schema pins changed. The refreshed [Compact](evidence/rust-migration/r8-compact-dataset-verify-source/README.md)
+and [Security](evidence/rust-migration/r8-security-and-or-v4-source-replay-current/README.md)
+source packets pass five and 68 cases respectively on Node, Bun, and real
+Chromium, bound to manifest SHA-256
+`0faa8dc02cb0e0068af0b66c5e0cffe46a7d16c3c15d953403916c643bc6dc65`
+and 1,969-input source closure
+`12e2975de46a4bed5749e4f93390959f2a0ebed30cf23b36940189c328451a61`.
+Their previous cohort remains in `historical/pre-arrow-pointer-20261027/`.
+
+The corrected-source private SDK build returned fixed-point, zero transforms,
+and matching captured/live source SHA-256
+`e95ca0fa8109a3a81f605cbeae735683ca5b253b3663e90edb105b38f8260a6d`.
+The private archive SHA-256 is
+`b48f5c50d11e9766256919905e82d1bab01dde3c4a1413eeaf105d5c6950cb29`;
+installed-route qualification against it is pending. The preceding archive's
+bounded installed Compact/Security receipts are preserved as
+[historical evidence](evidence/rust-migration/r8-installed-compact-security-pre-arrow-pointer-20261027/README.md).
+The [R8 ledger](evidence/rust-migration/r8-symbol-inventory/README.md) now
+checks at SHA-256
+`dbcda31cde1d44f17aebda8bfb3c4bd9705bb3832256e90c81e60dd4dcbc9414`,
+with 922 open logical default-route gaps and zero retired. Typecheck, core
+authority, Rust boundaries, all 62 ledger tests before the final refreeze,
+the full Rust core suite, and the focused corrected Arrow regression passed;
+the ledger tests are rerunning after the final refreeze. This checkpoint does
+not qualify a release or complete the Rust port.
+
+The [corrected-source installed packet](evidence/rust-migration/r8-installed-cardinality-compact-security-20261027/README.md)
+now binds the private SDK archive above. On local macOS arm64, Node v26.12.1,
+Bun 1.4.3, and Chromium 153.0.8010.12 passed all 11 Cardinality retirement
+packet cases (four inspect, four declare, three verify) with exactly one
+default Rust/WASM call and zero reference calls per case. The capture verified
+all 3,570 source inputs and 1,807 archive members before emitting the nine
+raw receipts. Installed Compact passed five cases per host with two default
+calls per case; installed Security And/Or passed 68 per host with 30 valid
+default calls and zero refusal calls. Chromium loaded WASM and made no external
+requests. The receipt packet and its checksum index are retained; these are
+bounded local observations, not Linux CI or a retirement/release claim.
+
+Fresh R4 Python wheel/sdist qualification independently found a source-archive
+blocker: `python/hatch_build.py` omitted the two new Arrow schema
+`include_str!` resources from the core sdist. Direct current-source core,
+codegen and access wheels built, and initial isolated CPython 3.11/3.13
+no-JavaScript probes passed; rebuilding the core wheel from its sdist failed
+because `spec/extensions/arrow/package.json` and
+`spec/extensions/arrow/integration-schema.json` were absent. The exact
+sdist-source inclusion fix and full wheel-from-sdist rerun remain required
+before R4 can be qualified. The Python packaging paths are outside the SDK
+archive and Compact source closures, so this fix does not alter those
+recorded source cohorts.
+
+An additional Sol review found that the Rust Arrow union `typeIds` integer
+diagnostic escaped `typeIds/0` as one JSON Pointer segment. The path is now
+formed from separate segments, and a focused exact-path Rust regression passes.
+This changes Rust source after the corrected-source archive and replay capture,
+so those receipts remain valid only for their pinned earlier closure. The
+52-case [TypeScript predecessor outcome packet](evidence/rust-migration/r5-arrow-typescript-predecessor-20261027/README.md)
+is frozen for all five schema-JSON operations and focused refusals; the opt-in
+Node/WASM wire and
+exact diagnostic parity are the next implementation gates. No Arrow default
+route, installed current-source archive, gap retirement or release claim follows
+from the earlier receipts.
+
+### R4 Arrow sdist repair and local Python continuation — 2026-10-27
+
+The two Arrow `include_str!` files are now included in the core sdist source
+closure, its retained-source test mirror and the R4 qualification inventory.
+The [local R4 packet](evidence/rust-migration/r4-arrow-sdist-local-20261027/README.md)
+records a successful core wheel rebuild from the repaired sdist on macOS
+arm64, with core sdist SHA-256
+`fd7f9cc3598837412f24ceac6f722448c688b776f06f7cfc548dd298073ba428`
+and rebuilt wheel SHA-256
+`a1c9fc57c0ca1a1d194601a7087f0a67069d7c9c392c3ab082cf17ec97684030`.
+Codegen and access sdists also rebuilt wheels. In isolated CPython 3.11.17
+and 3.13.16 environments, the selected no-JavaScript codegen, row-scope,
+reviewed-change, deployment, migration, access count-frame and package
+resource probes passed; the focused sdist/resource tests passed 48/48 per
+version with Git and Hatchling available and no Node/Bun on `PATH`.
+
+This is bounded local packaging evidence. The 491-file source audit snapshot
+was captured during subsequent Arrow wire/Python wrapper edits and is not an
+immutable source-to-artifact identity. The full core Python suite was not
+rerun after the packaging fix. A final fixed-point wheel/sdist build, hosted
+Python matrix, complete Python semantics and release qualification remain
+open; the prior package failure itself is resolved.
+
+### R5 Arrow binding resource decision — 2026-10-27
+
+The first opt-in Arrow wire is stateless and constructs the embedded core
+schema, extension grammar and registry for every operation. A pinned private
+Node probe measured about 4.1 seconds per call in the debug binding; its
+source-to-binary closure was not captured. The direct Rust
+[resource-cost packet](evidence/rust-migration/r5-arrow-resource-cost-20261027/README.md)
+measured preparation at about 640 ms in release and about 3.3–3.9 seconds in
+debug, while 260 calls on one prepared resource value took 528 ms release or
+3,643 ms debug with a fresh Context per call. These are local microbenchmarks,
+not end-to-end host session results. The initial 52×5 Bun
+replay was stopped before completion after more than six CPU-bound minutes,
+and its addon was superseded by parity fixes. This is a production latency
+blocker for default selection, not a semantic acceptance result.
+
+The production interface will use an explicit Arrow schema session that owns
+the prepared resources. Session preparation must be a visible operation under
+the caller's work, cancellation and deadline controls; each subsequent call
+uses a fresh operation context and its own controls. The existing stateless
+wire, Python and CLI functions may remain one-shot and charge their own
+preparation. A hidden process-wide cache is rejected because it would move
+setup work to an unpredictable call and silently change work admission.
+Node/Bun and WASM engines should own explicit native session handles; Python
+and CLI can expose session/batch surfaces separately. Verify concurrent handle
+safety before sharing a session across threads. Exact 52-case/five-operation
+host parity, negative cases and measured setup/steady-state costs remain gates
+before any default Arrow route or R8 retirement.
+
+### R5 Arrow opt-in binding checkpoint — 2026-10-27
+
+The five schema-JSON operations now have a tagged UTF-16 core-wire route and
+opt-in Rust CLI, Python, Node/Bun and WASM entrypoints. The CLI's empty-`PATH`
+import/export and work/deadline controls passed three focused integration
+tests. Local CPython 3.11.17 and 3.13.16 wheels passed four focused binding
+tests per version, including exact numeric lexemes, warning order and
+nonmutating edits. These are source-local tests; the wheels predate later Rust
+diagnostic edits and need a coherent rebuild. The complete TypeScript Arrow
+test folder passed 33 tests against the unchanged predecessor.
+
+An invalid integer-width fixture exposed a schema diagnostic-order difference:
+the predecessor Ajv presents `required` before `properties` within a failed
+`anyOf` branch, while ordinary Rust schema validation follows source keyword
+order. The Arrow grammar now uses the existing ECMAScript compiler diagnostic
+presentation, and a focused Rust core-wire test matches the frozen compact
+TypeScript `ARROW_DOCUMENT` message exactly. This presentation choice needs
+the complete frozen outcome and real-host replays before it can be qualified.
+An explicit prepared-resource session is being implemented for Node/Bun and
+WASM; the one-shot wire, CLI and Python routes remain opt-in. No default export
+switch, logical gap retirement, integrated SDK claim or release follows from
+this checkpoint.
+
+### R8 next binding queue — 2026-10-27
+
+The next short path to cross-host disposition is Core Cardinality's three
+logical exports (`inspectCoreCardinality`, `declareCoreCardinality`,
+`verifyCoreCardinalityDeclaration`). Rust ownership and installed Node/Bun/
+Chromium receipts already cover a bounded 11-case cohort, including one
+Rust/WASM call and no reference calls. The current ledger still records all
+three logical gaps as open. Add explicit Python and clean-`PATH` CLI bindings,
+then review exact host admission/refusal order under CONTRACT-040 and rerun a
+source-coherent installed cohort before proposing retirement.
+
+After Cardinality, Schema Properties has four logical exports with strong
+earlier installed predecessor evidence but needs current-source recapture and
+host-reflection review under CONTRACT-049. CSV Boolean lexical validate and
+verify have two logical exports and a narrower CONTRACT-053 surface; their
+earlier archive predates the corrected default error envelope and requires a
+fresh installed replay. These queues are priorities, not counted retirements.
+
+### R5/R8 binding continuation — 2026-10-27
+
+The source-local [Arrow binding packet](evidence/rust-migration/r5-arrow-schema-bindings-20261027/README.md)
+pins 83 source inputs and rebuilt private artifacts. Node 26.12.1, Bun 1.4.3
+and real Chromium 153.0.8010.12 each passed 302 exact Rust calls: 52 authored
+cases times five schema-JSON operations, plus 16 focused imports and 26
+focused operations. Setup/call controls, disposal, exact diagnostics, raw
+JSON output and source immutability passed in this opt-in scope. The predecessor
+Proxy thrown-object identity case cannot cross the tagged JSON wire and remains
+unqualified. The packet is source-local and macOS arm64; it does not establish
+installed SDK, native Arrow IPC/data, cross-platform, Python wheel or default
+route qualification. The earlier [resource-cost packet](evidence/rust-migration/r5-arrow-resource-cost-20261027/README.md)
+is a historical pre-session cohort after the final Arrow wording/format edits.
+
+Core Cardinality now has separate opt-in Python and pure Rust CLI surfaces for
+inspect, declare and receipt verification. The Python high-level wrapper uses
+the existing restricted PyO3 core-wire entrypoint; it does not widen default
+Python APIs. Seven focused Python tests passed against a locally rebuilt
+extension; four CLI integration tests passed with an empty `PATH`, and the
+existing core-wire acceptance test passed. These are local source tests only.
+The fresh final wheel/sdist build and default-route evidence review remain
+required before any of Cardinality's three logical gaps can be retired.
+
+Schema Properties now has a corresponding opt-in Python source surface for its
+four selected operations, backed by an exact core-wire whitelist and versioned
+capability identifier. The focused core-wire test passes 5/5, the Python
+extension builds with Cargo, and the copied private extension passes all 7
+focused Python tests. Ruff and syntax checks pass. The installed packet remains
+Node/Bun/Chromium only and predates this change. Capture a new fixed-point
+installed cohort and review current host-reflection ordering under CONTRACT-049
+before any route or retirement claim. No default API change or release
+qualification is implied.
+
+### R4/R5/R8 current-source qualification checkpoint — 2026-10-27
+
+The generated metamodel, nine action-runtime resources, and nine Codegen
+resource mirrors were resynchronized after the Rust core-wire additions.
+Metamodel `--check`, both resource `--check` commands, TypeScript typecheck,
+the strict unified-client checker, and the Rust boundary census pass. The
+complete Rust core library suite passed 474/474; current-source Arrow and
+Cardinality CLI tests passed 3/3 and 4/4. The TypeScript Arrow folder passed
+33 tests and 3,552 assertions.
+
+The [final local Python package packet](evidence/rust-migration/r4-final-local-package-20261027/README.md)
+pins 499 current source files and extracted-sdist Core, Codegen and Access
+wheel builds. CPython 3.11.17 and 3.13.16 installed the `cp311-abi3` core
+wheel without Node/Bun in the probe path; `uv pip check` and 66 focused
+Arrow, Cardinality, Schema Properties, sdist and resource tests passed in each.
+After the workflow pin for the edited sdist helper was corrected, both full
+installed core Python suites passed: 613 tests and five passing subtests on
+CPython 3.11.17, and the same counts on 3.13.16. The affected
+artifact-custody/finalizer tests passed 11/11 per runtime. A 499-file source
+closure audit still matches the packet. This is local packaging evidence, not
+final release qualification.
+
+The [current-source Arrow binding packet](evidence/rust-migration/r5-arrow-schema-bindings-current-source-20261027/README.md)
+pins 110 source inputs and rebuilt private Node/WASM artifacts after those
+generated-resource changes. Node, Bun and real Chromium each passed 302 exact
+opt-in Rust calls; the focused wire suite passed 2/2. Proxy thrown-object
+identity remains unqualified across the JSON wire. The bounded
+[`selectCoreElements` predecessor packet](evidence/rust-migration/r5-select-core-elements-predecessor-20261027/README.md)
+passes in Node, Bun and Chromium with matching outcomes and no external browser
+requests; its ten source hashes and capture-script hash verify. It is a
+predecessor freeze, not Selection Rust parity.
+
+The current Compact Dataset verification and Security And/Or source replays
+passed on Node, Bun and Chromium against one 1,973-input build closure.
+The SDK fixed-point probe required regenerating the action-plan producer
+identity after metamodel source changes; the action-plan identity `--check`
+now passes. Arrow and both source-replay packets were recaptured after
+that final generated byte changed, with prior receipts preserved as historical.
+Compact used five cases and 14 Rust/WASM calls per host; Security used 68 cases,
+30 valid Rust/WASM calls and zero refusal dispatches per host. Their packet
+checksums and the regenerated inventory/ledger checks pass. The inventory has
+3,375 route declarations; the ledger still has **922 open logical executable
+default-route gaps, zero retired**, 81 accepted opt-in mappings and 841 without
+an accepted Rust mapping. These are source-replay qualifications only.
+
+The next 13-operation metadata binding/evidence cluster is Cardinality (3),
+Facets (4), Schema Properties (4), and CSV Boolean lexical (2). All are
+source-selected Rust in the current default roots, but none has a retired
+logical gap. The existing 11-case all-Rust Cardinality installed packet is a
+single macOS cohort. The retirement gate explicitly rejects bounded `/2`
+packets without full CONTRACT-040 acceptance coverage and requires matching
+Darwin arm64 and Linux x86_64 fixed-point cohorts. Refresh installed route
+evidence, review exact host admission and refusal order, and satisfy both
+platform and contract gates before changing any retirement disposition.
+
+The [current-source installed Cardinality packet](evidence/rust-migration/r8-cardinality-installed-current-20261027/README.md)
+now binds one private Darwin arm64 SDK archive to a zero-transform 3,574-input
+source closure and 1,807 archive members. Node 26.12.1, Bun 1.4.3, and real
+Chromium 153.0.8010.12 each passed eleven frozen inspect/declaration/receipt
+cases. Every default case made exactly one Rust or WASM dispatch; every
+`./reference` case made zero. The focused capture/retirement negative-control
+suite passed 13/13, and all 3,574 live source hashes still match the packet.
+This establishes bounded current-source route evidence on macOS only. It does
+not satisfy the Linux cohort, complete CONTRACT-040 acceptance or retirement
+gate, or the release matrix.

@@ -1,0 +1,11 @@
+Current-source input:
+  UMF commit e0487691e34be22de9e63d8ead5f1c9db21fee13
+  UMF tree ee0c192c9e9929c31700a05ab16b510ad0234d67
+  SDK build source closure 1355bf21b58ad9e422fa8998c1ce5325b8643bb1eefbc6a1b6a127babc52b5d7, fixed point before generated evidence writes, transforms=0, assets=1800
+  macOS dist archive SHA256 4edc2fc2b3a43dd9eaf5b5312c149ed41a9f731b680e6430ce4c8ac68c3978b3
+  manifest SHA256 c2e2c41551b5b733a66b1153016122f12e3467c6b72fd301d58a7900d4bfd622
+Environment cohort: macOS arm64, Bun 1.4.3, Java 21.0.13.0.2, Chromium 153.0.8010.12, Python 3.12.15, PySpark 4.0.1, PyArrow 21.0.0; Avro 1.12.0 + fastavro 1.12.2; SQL Server 16.0.4295.3 in digest-pinned Linux/amd64 container emulated under OrbStack on Apple Silicon; PostgreSQL 17.4 in pinned container.
+TableSpec is separately pinned historical source commit 647e8e566ad78b864282ec65c0b0b2237aa63084/tree f6d419cef7e482684a795147d68130ac0cd39d0e, type_mappings.py SHA256 eaa36bcbd96d2b09d22161c5200a2be6a0788d7fd5ee46292d62428bb24cbbe7, derived package version 0.0.3.post2.dev0+647e8e5. This is a pinned historical reference replay, not current TableSpec qualification.
+Replay outcome: all five route native/browser pairs exit 0 after sandbox loopback permission was granted for local PySpark/Bun browser servers and Docker. First sandboxed failures are preserved in initial-attempt-failures.txt.
+Case inventory comparison: committed diff from B505 source b50523cdaa8f90fac0e2714326a557b95aa1170f to E048 has no fixture changes; generated same-named validation JSON `{id}` case arrays were compared and no case-ID inventory differences were found. Aggregate case/outcome dimensions match the B505 route receipts.
+Interpretation limit: bounded source-bound route evidence only. All focused binding contract reviews remain acceptance-pending. No binding acceptance, full Core Cardinality acceptance, host parity, or route retirement is claimed. Do not use generated fixture receipt hashes as proof of the pre-run SDK source closure; generated fixture output closure is separately inventoried in all-generated-cardinality-fixture-paths.txt and all-generated-cardinality-fixture-sha256.txt.

@@ -1,0 +1,509 @@
+{
+  "scope": "PostgreSQL 17.4 native Cardinality profile discovery; no UMF classification/projection or round-trip acceptance",
+  "image": "postgres@sha256:304ab813518754228f9f792f79d6da36359b82d8ecf418096c636725f8c930ad",
+  "serverVersion": 170004,
+  "rows": [
+    {
+      "id": "declared-ordered-duplicates",
+      "statement": "WITH x AS (INSERT INTO cardinality.declared VALUES(ARRAY[3,1,3]) RETURNING value) SELECT jsonb_build_object('rank',array_ndims(value),'bounds',array_dims(value),'json',to_jsonb(value),'size',coalesce(cardinality(value),0),'text',value::text) FROM x",
+      "value": {
+        "json": [
+          3,
+          1,
+          3
+        ],
+        "rank": 1,
+        "size": 3,
+        "text": "{3,1,3}",
+        "bounds": "[1:3]"
+      },
+      "sqlstate": "00000"
+    },
+    {
+      "id": "sequence-ordered-duplicates",
+      "statement": "WITH x AS (INSERT INTO cardinality.sequence VALUES(ARRAY[3,1,3]) RETURNING value) SELECT jsonb_build_object('rank',array_ndims(value),'bounds',array_dims(value),'json',to_jsonb(value),'size',coalesce(cardinality(value),0),'text',value::text) FROM x",
+      "value": {
+        "json": [
+          3,
+          1,
+          3
+        ],
+        "rank": 1,
+        "size": 3,
+        "text": "{3,1,3}",
+        "bounds": "[1:3]"
+      },
+      "sqlstate": "00000"
+    },
+    {
+      "id": "declared-empty",
+      "statement": "WITH x AS (INSERT INTO cardinality.declared VALUES('{}'::integer[]) RETURNING value) SELECT jsonb_build_object('rank',array_ndims(value),'bounds',array_dims(value),'json',to_jsonb(value),'size',coalesce(cardinality(value),0),'text',value::text) FROM x",
+      "value": {
+        "json": [],
+        "rank": null,
+        "size": 0,
+        "text": "{}",
+        "bounds": null
+      },
+      "sqlstate": "00000"
+    },
+    {
+      "id": "sequence-empty",
+      "statement": "WITH x AS (INSERT INTO cardinality.sequence VALUES('{}'::integer[]) RETURNING value) SELECT jsonb_build_object('rank',array_ndims(value),'bounds',array_dims(value),'json',to_jsonb(value),'size',coalesce(cardinality(value),0),'text',value::text) FROM x",
+      "value": {
+        "json": [],
+        "rank": null,
+        "size": 0,
+        "text": "{}",
+        "bounds": null
+      },
+      "sqlstate": "00000"
+    },
+    {
+      "id": "declared-two-dimensional",
+      "statement": "WITH x AS (INSERT INTO cardinality.declared VALUES(ARRAY[[1,2],[3,4]]) RETURNING value) SELECT jsonb_build_object('rank',array_ndims(value),'bounds',array_dims(value),'json',to_jsonb(value),'size',coalesce(cardinality(value),0),'text',value::text) FROM x",
+      "value": {
+        "json": [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "rank": 2,
+        "size": 4,
+        "text": "{{1,2},{3,4}}",
+        "bounds": "[1:2][1:2]"
+      },
+      "sqlstate": "00000"
+    },
+    {
+      "id": "sequence-two-dimensional",
+      "statement": "WITH x AS (INSERT INTO cardinality.sequence VALUES(ARRAY[[1,2],[3,4]]) RETURNING value) SELECT jsonb_build_object('rank',array_ndims(value),'bounds',array_dims(value),'json',to_jsonb(value),'size',coalesce(cardinality(value),0),'text',value::text) FROM x",
+      "value": null,
+      "sqlstate": "23514"
+    },
+    {
+      "id": "declared-zero-based",
+      "statement": "WITH x AS (INSERT INTO cardinality.declared VALUES('[0:2]={3,1,3}'::integer[]) RETURNING value) SELECT jsonb_build_object('rank',array_ndims(value),'bounds',array_dims(value),'json',to_jsonb(value),'size',coalesce(cardinality(value),0),'text',value::text) FROM x",
+      "value": {
+        "json": [
+          3,
+          1,
+          3
+        ],
+        "rank": 1,
+        "size": 3,
+        "text": "[0:2]={3,1,3}",
+        "bounds": "[0:2]"
+      },
+      "sqlstate": "00000"
+    },
+    {
+      "id": "sequence-zero-based",
+      "statement": "WITH x AS (INSERT INTO cardinality.sequence VALUES('[0:2]={3,1,3}'::integer[]) RETURNING value) SELECT jsonb_build_object('rank',array_ndims(value),'bounds',array_dims(value),'json',to_jsonb(value),'size',coalesce(cardinality(value),0),'text',value::text) FROM x",
+      "value": null,
+      "sqlstate": "23514"
+    },
+    {
+      "id": "declared-negative-based",
+      "statement": "WITH x AS (INSERT INTO cardinality.declared VALUES('[-2:0]={3,1,3}'::integer[]) RETURNING value) SELECT jsonb_build_object('rank',array_ndims(value),'bounds',array_dims(value),'json',to_jsonb(value),'size',coalesce(cardinality(value),0),'text',value::text) FROM x",
+      "value": {
+        "json": [
+          3,
+          1,
+          3
+        ],
+        "rank": 1,
+        "size": 3,
+        "text": "[-2:0]={3,1,3}",
+        "bounds": "[-2:0]"
+      },
+      "sqlstate": "00000"
+    },
+    {
+      "id": "sequence-negative-based",
+      "statement": "WITH x AS (INSERT INTO cardinality.sequence VALUES('[-2:0]={3,1,3}'::integer[]) RETURNING value) SELECT jsonb_build_object('rank',array_ndims(value),'bounds',array_dims(value),'json',to_jsonb(value),'size',coalesce(cardinality(value),0),'text',value::text) FROM x",
+      "value": null,
+      "sqlstate": "23514"
+    },
+    {
+      "id": "declared-null-item",
+      "statement": "WITH x AS (INSERT INTO cardinality.declared VALUES(ARRAY[1,NULL,3]) RETURNING value) SELECT jsonb_build_object('rank',array_ndims(value),'bounds',array_dims(value),'json',to_jsonb(value),'size',coalesce(cardinality(value),0),'text',value::text) FROM x",
+      "value": {
+        "json": [
+          1,
+          null,
+          3
+        ],
+        "rank": 1,
+        "size": 3,
+        "text": "{1,NULL,3}",
+        "bounds": "[1:3]"
+      },
+      "sqlstate": "00000"
+    },
+    {
+      "id": "sequence-null-item",
+      "statement": "WITH x AS (INSERT INTO cardinality.sequence VALUES(ARRAY[1,NULL,3]) RETURNING value) SELECT jsonb_build_object('rank',array_ndims(value),'bounds',array_dims(value),'json',to_jsonb(value),'size',coalesce(cardinality(value),0),'text',value::text) FROM x",
+      "value": {
+        "json": [
+          1,
+          null,
+          3
+        ],
+        "rank": 1,
+        "size": 3,
+        "text": "{1,NULL,3}",
+        "bounds": "[1:3]"
+      },
+      "sqlstate": "00000"
+    },
+    {
+      "id": "declared-short",
+      "statement": "WITH x AS (INSERT INTO cardinality.declared VALUES(ARRAY[1]) RETURNING value) SELECT jsonb_build_object('rank',array_ndims(value),'bounds',array_dims(value),'json',to_jsonb(value),'size',coalesce(cardinality(value),0),'text',value::text) FROM x",
+      "value": {
+        "json": [
+          1
+        ],
+        "rank": 1,
+        "size": 1,
+        "text": "{1}",
+        "bounds": "[1:1]"
+      },
+      "sqlstate": "00000"
+    },
+    {
+      "id": "sequence-short",
+      "statement": "WITH x AS (INSERT INTO cardinality.sequence VALUES(ARRAY[1]) RETURNING value) SELECT jsonb_build_object('rank',array_ndims(value),'bounds',array_dims(value),'json',to_jsonb(value),'size',coalesce(cardinality(value),0),'text',value::text) FROM x",
+      "value": {
+        "json": [
+          1
+        ],
+        "rank": 1,
+        "size": 1,
+        "text": "{1}",
+        "bounds": "[1:1]"
+      },
+      "sqlstate": "00000"
+    },
+    {
+      "id": "declared-long",
+      "statement": "WITH x AS (INSERT INTO cardinality.declared VALUES(ARRAY[1,2,3,4]) RETURNING value) SELECT jsonb_build_object('rank',array_ndims(value),'bounds',array_dims(value),'json',to_jsonb(value),'size',coalesce(cardinality(value),0),'text',value::text) FROM x",
+      "value": {
+        "json": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "rank": 1,
+        "size": 4,
+        "text": "{1,2,3,4}",
+        "bounds": "[1:4]"
+      },
+      "sqlstate": "00000"
+    },
+    {
+      "id": "sequence-long",
+      "statement": "WITH x AS (INSERT INTO cardinality.sequence VALUES(ARRAY[1,2,3,4]) RETURNING value) SELECT jsonb_build_object('rank',array_ndims(value),'bounds',array_dims(value),'json',to_jsonb(value),'size',coalesce(cardinality(value),0),'text',value::text) FROM x",
+      "value": {
+        "json": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "rank": 1,
+        "size": 4,
+        "text": "{1,2,3,4}",
+        "bounds": "[1:4]"
+      },
+      "sqlstate": "00000"
+    },
+    {
+      "id": "declared-sql-null",
+      "statement": "WITH x AS (INSERT INTO cardinality.declared VALUES(NULL::integer[]) RETURNING value) SELECT jsonb_build_object('rank',array_ndims(value),'bounds',array_dims(value),'json',to_jsonb(value),'size',coalesce(cardinality(value),0),'text',value::text) FROM x",
+      "value": {
+        "json": null,
+        "rank": null,
+        "size": 0,
+        "text": null,
+        "bounds": null
+      },
+      "sqlstate": "00000"
+    },
+    {
+      "id": "sequence-sql-null",
+      "statement": "WITH x AS (INSERT INTO cardinality.sequence VALUES(NULL::integer[]) RETURNING value) SELECT jsonb_build_object('rank',array_ndims(value),'bounds',array_dims(value),'json',to_jsonb(value),'size',coalesce(cardinality(value),0),'text',value::text) FROM x",
+      "value": {
+        "json": null,
+        "rank": null,
+        "size": 0,
+        "text": null,
+        "bounds": null
+      },
+      "sqlstate": "00000"
+    },
+    {
+      "id": "ragged-array",
+      "statement": "SELECT to_jsonb(ARRAY[ARRAY[1],ARRAY[2,3]])",
+      "value": null,
+      "sqlstate": "2202E"
+    },
+    {
+      "id": "domain-item-positive",
+      "statement": "INSERT INTO cardinality.domains(items) VALUES(ARRAY[1,2]::cardinality.positive[]) RETURNING to_jsonb(items)",
+      "value": [
+        1,
+        2
+      ],
+      "sqlstate": "00000"
+    },
+    {
+      "id": "domain-item-negative",
+      "statement": "INSERT INTO cardinality.domains(items) VALUES(ARRAY[1,-2]::cardinality.positive[]) RETURNING to_jsonb(items)",
+      "value": null,
+      "sqlstate": "23514"
+    },
+    {
+      "id": "domain-item-null",
+      "statement": "INSERT INTO cardinality.domains(items) VALUES(ARRAY[1,NULL]::cardinality.positive[]) RETURNING to_jsonb(items)",
+      "value": [
+        1,
+        null
+      ],
+      "sqlstate": "00000"
+    },
+    {
+      "id": "domain-array-rank-two",
+      "statement": "INSERT INTO cardinality.domains(vector) VALUES(ARRAY[[1,2],[3,4]]) RETURNING to_jsonb(vector)",
+      "value": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "sqlstate": "00000"
+    },
+    {
+      "id": "json-duplicate",
+      "statement": "SELECT to_jsonb((' {\"x\":1,\"x\":2} '::json)::text)",
+      "value": " {\"x\":1,\"x\":2} ",
+      "sqlstate": "00000"
+    },
+    {
+      "id": "jsonb-duplicate",
+      "statement": "SELECT to_jsonb(('{\"x\":1,\"x\":2}'::jsonb)::text)",
+      "value": "{\"x\": 2}",
+      "sqlstate": "00000"
+    },
+    {
+      "id": "json-scalar-literal",
+      "statement": "INSERT INTO cardinality.json_values VALUES('7') RETURNING to_jsonb(value)",
+      "value": 7,
+      "sqlstate": "00000"
+    },
+    {
+      "id": "int2vector",
+      "statement": "INSERT INTO cardinality.vectorish VALUES('1 2 3') RETURNING jsonb_build_object('json',to_jsonb(value),'lower',array_lower(value,1))",
+      "value": {
+        "json": [
+          1,
+          2,
+          3
+        ],
+        "lower": 0
+      },
+      "sqlstate": "00000"
+    },
+    {
+      "id": "json-scalar-sql-integer",
+      "statement": "INSERT INTO cardinality.json_values VALUES(7) RETURNING to_jsonb(value)",
+      "value": null,
+      "sqlstate": "42804"
+    },
+    {
+      "id": "jsonb-scalar",
+      "statement": "INSERT INTO cardinality.jsonb_values VALUES('7') RETURNING to_jsonb(value)",
+      "value": 7,
+      "sqlstate": "00000"
+    },
+    {
+      "id": "object-check-scalar",
+      "statement": "INSERT INTO cardinality.jsonb_object VALUES('7') RETURNING value",
+      "value": null,
+      "sqlstate": "23514"
+    },
+    {
+      "id": "object-check-json-null",
+      "statement": "INSERT INTO cardinality.jsonb_object VALUES('null') RETURNING value",
+      "value": null,
+      "sqlstate": "23514"
+    },
+    {
+      "id": "object-check-sql-null",
+      "statement": "INSERT INTO cardinality.jsonb_object VALUES(NULL) RETURNING value",
+      "value": null,
+      "sqlstate": "00000"
+    },
+    {
+      "id": "object-check-duplicate",
+      "statement": "INSERT INTO cardinality.jsonb_object VALUES('{\"x\":1,\"x\":2}') RETURNING value",
+      "value": {
+        "x": 2
+      },
+      "sqlstate": "00000"
+    },
+    {
+      "id": "json-nul-key",
+      "statement": "SELECT to_jsonb((' {\"\\u0000\":1} '::json)::text)",
+      "value": " {\"\\u0000\":1} ",
+      "sqlstate": "00000"
+    },
+    {
+      "id": "jsonb-nul-key",
+      "statement": "SELECT '{\"\\u0000\":1}'::jsonb",
+      "value": null,
+      "sqlstate": "22P05"
+    },
+    {
+      "id": "json-large-number",
+      "statement": "SELECT to_jsonb(('1e1000000'::json)::text)",
+      "value": "1e1000000",
+      "sqlstate": "00000"
+    },
+    {
+      "id": "jsonb-large-number",
+      "statement": "SELECT '1e1000000'::jsonb",
+      "value": null,
+      "sqlstate": "22003"
+    }
+  ],
+  "catalog": [
+    {
+      "base": null,
+      "kind": "b",
+      "name": "_int4",
+      "type": "integer[]",
+      "table": "declared",
+      "column": "value",
+      "schema": "pg_catalog",
+      "element": "integer",
+      "category": "A",
+      "standardArray": true,
+      "declaredDimensions": 1
+    },
+    {
+      "base": null,
+      "kind": "b",
+      "name": "_positive",
+      "type": "cardinality.positive[]",
+      "table": "domains",
+      "column": "items",
+      "schema": "cardinality",
+      "element": "cardinality.positive",
+      "category": "A",
+      "standardArray": true,
+      "declaredDimensions": 1
+    },
+    {
+      "base": "integer[]",
+      "kind": "d",
+      "name": "vector",
+      "type": "cardinality.vector",
+      "table": "domains",
+      "column": "vector",
+      "schema": "cardinality",
+      "element": null,
+      "category": "A",
+      "standardArray": false,
+      "declaredDimensions": 0
+    },
+    {
+      "base": null,
+      "kind": "b",
+      "name": "json",
+      "type": "json",
+      "table": "json_values",
+      "column": "value",
+      "schema": "pg_catalog",
+      "element": null,
+      "category": "U",
+      "standardArray": false,
+      "declaredDimensions": 0
+    },
+    {
+      "base": null,
+      "kind": "b",
+      "name": "jsonb",
+      "type": "jsonb",
+      "table": "jsonb_object",
+      "column": "value",
+      "schema": "pg_catalog",
+      "element": null,
+      "category": "U",
+      "standardArray": false,
+      "declaredDimensions": 0
+    },
+    {
+      "base": null,
+      "kind": "b",
+      "name": "jsonb",
+      "type": "jsonb",
+      "table": "jsonb_values",
+      "column": "value",
+      "schema": "pg_catalog",
+      "element": null,
+      "category": "U",
+      "standardArray": false,
+      "declaredDimensions": 0
+    },
+    {
+      "base": null,
+      "kind": "b",
+      "name": "_int4",
+      "type": "integer[]",
+      "table": "sequence",
+      "column": "value",
+      "schema": "pg_catalog",
+      "element": "integer",
+      "category": "A",
+      "standardArray": true,
+      "declaredDimensions": 1
+    },
+    {
+      "base": null,
+      "kind": "b",
+      "name": "int2vector",
+      "type": "int2vector",
+      "table": "vectorish",
+      "column": "value",
+      "schema": "pg_catalog",
+      "element": "smallint",
+      "category": "A",
+      "standardArray": false,
+      "declaredDimensions": 0
+    }
+  ],
+  "query": "SELECT jsonb_agg(jsonb_build_object('table',c.relname,'column',a.attname,'declaredDimensions',a.attndims,'type',format_type(t.oid,NULL),'schema',tn.nspname,'name',t.typname,'kind',t.typtype,'category',t.typcategory,'element',format_type(NULLIF(t.typelem,0),NULL),'standardArray',coalesce(et.typarray=t.oid,false),'base',format_type(NULLIF(t.typbasetype,0),NULL)) ORDER BY c.relname,a.attnum) FROM pg_attribute a JOIN pg_class c ON c.oid=a.attrelid JOIN pg_namespace n ON n.oid=c.relnamespace JOIN pg_type t ON t.oid=a.atttypid JOIN pg_namespace tn ON tn.oid=t.typnamespace LEFT JOIN pg_type et ON et.oid=t.typelem WHERE n.nspname='cardinality' AND a.attnum>0 AND NOT a.attisdropped",
+  "limits": [
+    "Declared dimensions are metadata, not rank/length enforcement.",
+    "Type category A also includes int2vector; standard array identity requires checking the element type array link, and domains need separate base resolution.",
+    "Explicit sequence check permits empty arrays and SQL NULL; availability remains separate.",
+    "Catalog element/base resolution is exploratory and not yet a versioned UMF capture supplement.",
+    "JSON/JSONB are not unrestricted ideal maps; duplicate-key, NUL and numeric domain differences remain."
+  ],
+  "sha256": {
+    "native/postgresql/catalog/image.json": "90053ad165386ddc7d498b22cd84619fd2fd24aeb6bd1f0af3f7e5bc803624de",
+    "fixtures/postgresql/cardinality.sql": "8702851ad6cc7d2550d016b75e309b4fba6d3bd77b9e205acd0895c9b66ef474",
+    "scripts/core-ideals/cardinality-postgresql-profile-oracle.ts": "5e2ee57b19820cdd27bba448e4691d6988f788fb7d52cdc8592d9be676f0f473"
+  }
+}

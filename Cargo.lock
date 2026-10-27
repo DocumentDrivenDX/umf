@@ -1062,16 +1062,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "umf-metamodel-cli"
-version = "0.1.0"
-dependencies = [
- "sha2",
- "umf-core",
- "umf-metamodel",
- "umf-tagged-wire",
-]
-
-[[package]]
 name = "umf-metamodel"
 version = "0.1.0"
 dependencies = [
@@ -1082,11 +1072,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "umf-tagged-wire"
+name = "umf-metamodel-cli"
 version = "0.1.0"
 dependencies = [
- "serde_json",
+ "sha2",
  "umf-core",
+ "umf-metamodel",
+ "umf-tagged-wire",
 ]
 
 [[package]]
@@ -1135,6 +1127,14 @@ dependencies = [
  "serde_json",
  "umf-rust-spike-core",
  "wasm-bindgen",
+]
+
+[[package]]
+name = "umf-tagged-wire"
+version = "0.1.0"
+dependencies = [
+ "serde_json",
+ "umf-core",
 ]
 
 [[package]]

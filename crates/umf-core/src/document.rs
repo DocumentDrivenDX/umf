@@ -7,7 +7,7 @@
 use crate::{
     context::Context,
     engine::{Capabilities, Engine},
-    error::{EngineError, Validation},
+    error::{Diagnostic, EngineError, Severity, Validation},
     registry::Registry,
     serialization::{self, Format},
     value::{Utf16, Value},
@@ -59,12 +59,36 @@ fn require_valid(
     if result.valid {
         return Ok(());
     }
-    let first = result.diagnostics.first();
     Err(EngineError::new(
         "INVALID_DOCUMENT",
-        first.map(|d| d.path.clone()).unwrap_or_default(),
-        first
-            .map(|d| d.message.clone())
-            .unwrap_or_else(|| Utf16::from("Document is invalid")),
+        Utf16::default(),
+        diagnostics_message(&result.diagnostics)?,
     ))
+}
+
+/// Match the reference binding's `JSON.stringify(result.diagnostics)`: the
+/// ordered public diagnostic shape is code, path, message, severity. Using the
+/// core UTF-16 serializer also preserves ECMAScript escaping for lone surrogates.
+fn diagnostics_message(diagnostics: &[Diagnostic]) -> Result<Utf16, EngineError> {
+    let values = diagnostics
+        .iter()
+        .map(|diagnostic| {
+            Value::Object(vec![
+                (Utf16::from("code"), Value::String(diagnostic.code.clone())),
+                (Utf16::from("path"), Value::String(diagnostic.path.clone())),
+                (
+                    Utf16::from("message"),
+                    Value::String(diagnostic.message.clone()),
+                ),
+                (
+                    Utf16::from("severity"),
+                    Value::String(Utf16::from(match diagnostic.severity {
+                        Severity::Error => "error",
+                        Severity::Warning => "warning",
+                    })),
+                ),
+            ])
+        })
+        .collect();
+    serialization::stringify_compact(&Value::Array(values))
 }

@@ -192,21 +192,28 @@ function verifyMemberManifest(root, pin, archivedPackagePin, archive, liveInputs
   return { members, routeMembers };
 }
 
-function verifyPacket(root, pin, op) {
+export function verifyPacket(root, pin, op) {
   const packet = readPinned(root, pin, `${op.exportName} frozen packet`, true).json;
-  requireExactKeys(packet, ['format', 'contractId', 'exportName', 'rustOwner', 'cases'], `${op.exportName} frozen packet`);
-  if (packet.format !== 'umf.r8.default-route-retirement-packet/1' || packet.contractId !== op.contract.id || packet.exportName !== op.exportName || packet.rustOwner !== op.rustOwner || !Array.isArray(packet.cases) || packet.cases.length < 1) throw new Error(`${op.exportName} frozen packet identity is invalid`);
+  const allRust = packet?.format === 'umf.r8.default-route-retirement-packet/2';
+  requireExactKeys(packet, allRust
+    ? ['format', 'profile', 'contractId', 'exportName', 'rustOwner', 'cases']
+    : ['format', 'contractId', 'exportName', 'rustOwner', 'cases'], `${op.exportName} frozen packet`);
+  if ((allRust ? packet.profile !== 'all-rust' : packet.format !== 'umf.r8.default-route-retirement-packet/1') || packet.contractId !== op.contract.id || packet.exportName !== op.exportName || packet.rustOwner !== op.rustOwner || !Array.isArray(packet.cases) || packet.cases.length < 1) throw new Error(`${op.exportName} frozen packet identity is invalid`);
+  if (allRust && !['inspectCoreCardinality', 'declareCoreCardinality', 'verifyCoreCardinalityDeclaration'].includes(op.exportName)) throw new Error(`${op.exportName} all-Rust packet profile is unsupported`);
   const ids = new Set();
   for (const item of packet.cases) {
-    requireExactKeys(item, ['id', 'input', 'expectedOutcome', 'expectedTrace', 'expectsRust'], `${op.exportName} packet case`);
-    if (typeof item.id !== 'string' || !item.id || ids.has(item.id) || !Array.isArray(item.expectedTrace) || typeof item.expectsRust !== 'boolean') throw new Error(`${op.exportName} packet case identity or Rust-call expectation is invalid`);
+    requireExactKeys(item, allRust
+      ? ['id', 'input', 'expectedOutcome', 'expectedTrace', 'expectedDefaultRustCalls']
+      : ['id', 'input', 'expectedOutcome', 'expectedTrace', 'expectsRust'], `${op.exportName} packet case`);
+    if (typeof item.id !== 'string' || !item.id || ids.has(item.id) || !Array.isArray(item.expectedTrace)) throw new Error(`${op.exportName} packet case identity or Rust-call expectation is invalid`);
+    if (allRust ? (!Number.isSafeInteger(item.expectedDefaultRustCalls) || item.expectedDefaultRustCalls < 1) : typeof item.expectsRust !== 'boolean') throw new Error(`${op.exportName} packet case identity or Rust-call expectation is invalid`);
     ids.add(item.id);
   }
-  if (!packet.cases.some(item => item.expectsRust) || !packet.cases.some(item => !item.expectsRust)) throw new Error(`${op.exportName} packet must cover Rust execution and preflight refusal`);
-  return { packet, packetSha256: pin.sha256, cases: new Map(packet.cases.map(item => [item.id, item])) };
+  if (!allRust && (!packet.cases.some(item => item.expectsRust) || !packet.cases.some(item => !item.expectsRust))) throw new Error(`${op.exportName} packet must cover Rust execution and preflight refusal`);
+  return { packet, packetSha256: pin.sha256, allRust, cases: new Map(packet.cases.map(item => [item.id, item])) };
 }
 
-function verifyHostReceipt(root, pin, op, packet, cohort, members, routeMembers) {
+export function verifyHostReceipt(root, pin, op, packet, cohort, members, routeMembers) {
   const receipt = readPinned(root, pin, `${op.exportName}/${pin.runtime} raw receipt`, true).json;
   requireExactKeys(receipt, ['format', 'status', 'runtime', 'hostVersion', 'cohortId', 'hostPlatform', 'archiveSha256', 'sourceClosureSha256', 'packetSha256', 'defaultRoute', 'referenceRoute', 'cases'], `${op.exportName}/${cohort.id}/${pin.runtime} raw receipt`);
   if (receipt.format !== 'umf.r8.default-route-retirement-host-receipt/2' || receipt.status !== 'pass' || receipt.runtime !== pin.runtime || typeof receipt.hostVersion !== 'string' || !receipt.hostVersion) throw new Error(`${op.exportName}/${cohort.id}/${pin.runtime} raw receipt identity/status is invalid`);
@@ -239,7 +246,7 @@ function verifyHostReceipt(root, pin, op, packet, cohort, members, routeMembers)
     seen.add(result.id);
     if (canonical(result.defaultOutcome) !== canonical(expected.expectedOutcome) || canonical(result.defaultTrace) !== canonical(expected.expectedTrace)) throw new Error(`${op.exportName}/${pin.runtime}/${result.id} default outcome/trace differs from frozen packet`);
     if (canonical(result.referenceOutcome) !== canonical(expected.expectedOutcome) || canonical(result.referenceTrace) !== canonical(expected.expectedTrace)) throw new Error(`${op.exportName}/${pin.runtime}/${result.id} reference outcome/trace differs from frozen packet`);
-    if (!Number.isSafeInteger(result.defaultRustCalls) || (expected.expectsRust ? result.defaultRustCalls < 1 : result.defaultRustCalls !== 0) || result.referenceRustCalls !== 0) throw new Error(`${op.exportName}/${pin.runtime}/${result.id} invocation trace violates the frozen Rust-call expectation or reference zero-Rust control`);
+    if (!Number.isSafeInteger(result.defaultRustCalls) || (packet.allRust ? result.defaultRustCalls !== expected.expectedDefaultRustCalls : (expected.expectsRust ? result.defaultRustCalls < 1 : result.defaultRustCalls !== 0)) || result.referenceRustCalls !== 0) throw new Error(`${op.exportName}/${pin.runtime}/${result.id} invocation trace violates the frozen Rust-call expectation or reference zero-Rust control`);
   }
 }
 

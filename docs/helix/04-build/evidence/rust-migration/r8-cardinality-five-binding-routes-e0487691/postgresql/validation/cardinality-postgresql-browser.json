@@ -1,0 +1,46 @@
+{
+  "scope": "Qualified classification/projection and retained recovery in real Chromium; no host globals or external requests",
+  "browser": "153.0.8010.12",
+  "checks": {
+    "catalog": {
+      "resolved": 26,
+      "refused": 5,
+      "classified": 26,
+      "recovered": 26,
+      "strictScalars": 18,
+      "exactUnknownToken": true
+    },
+    "projection": {
+      "cases": 48,
+      "blocked": 22,
+      "recoveries": 52,
+      "forgedRefusals": 26,
+      "identifierRefusals": 4
+    }
+  },
+  "runs": [
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-postgresql-catalog-browser.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-postgresql-projection-browser.ts"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "externalRequests": [],
+  "sha256": {
+    "scripts/core-ideals/cardinality-postgresql-browser.ts": "c3664c1e5fe8e2742e81e35d26cbcaf4b11b3be696e6ec1004d54b28e6ad20aa",
+    "dist/umf.js": "45d7723d30a6766da0bb84b5462673e5ede7f5d0ca2291287c6edb81e5f647ae",
+    "scripts/core-ideals/cardinality-postgresql-catalog-browser.ts": "5d1782772fa16dfd5aaec465f538c1410c1408a2803f6aedbd802fd79df1cdb2",
+    "fixtures/validation/cardinality-postgresql-catalog-browser.json": "2f23f5630a4c693bc0860d4f300d7f60c59e1706bb4a4987ca5278d3fb65b00c",
+    "scripts/core-ideals/cardinality-postgresql-projection-browser.ts": "bad36d66d77e37ef576244b58c85a3b5903899a5b50e28443eb12d30cf3cfd03",
+    "fixtures/validation/cardinality-postgresql-projection-browser.json": "ae5589ab3a25779845bd3dd63803b3c6b126d33dd3bfb0862b4ede8c151afb7a"
+  }
+}

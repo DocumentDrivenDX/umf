@@ -116,6 +116,10 @@ function cardinalityHostInput(addon, resources, operation, inputs, ErrorType = E
   return executeHostInput(addon, resources, 'executeCoreCardinalityHostJson', inputs, ErrorType, undefined, [operation]);
 }
 
+function copyJsonHostInput(addon, value, ErrorType = Error) {
+  return executeHostInput(addon, undefined, 'executeCopyJsonHostJson', [value], ErrorType, undefined, [], undefined, true);
+}
+
 // Private route probe. It does not alter either V4 package root selection.
 function coreElementSelectionHostInput(addon, resources, source, query, registry, ErrorType = Error) {
   return executeHostInput(addon, resources, 'executeCoreElementSelectionHostJson', [source, query, registry], ErrorType, undefined, [registry !== undefined], undefined, false, false, fromRustWire);
@@ -650,4 +654,4 @@ function fromUnits(units) {
   return result;
 }
 
-export {isHostJsonResponseError, declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, cardinalityHostInput, coreElementSelectionHostInput, coreOpaqueReturnHostInput, kindRuntimeValidationHostInput, createCoreElementSelectionHostInputEngine, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse};
+export {isHostJsonResponseError, declareCoreSchemaPropertiesHostInput, schemaPropertiesHostInput, cardinalityHostInput, copyJsonHostInput, coreElementSelectionHostInput, coreOpaqueReturnHostInput, kindRuntimeValidationHostInput, createCoreElementSelectionHostInputEngine, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse};

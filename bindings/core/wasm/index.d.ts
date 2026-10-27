@@ -351,6 +351,7 @@ export declare function initializeCoreKindNullabilityHostInputWasm(resources: Um
   verifyCoreNullabilityDeclaration(receipt: unknown, current: unknown): unknown;
 }>;
 export declare const ICEBERG_SCHEMA_PROFILE: 'umf-r5-iceberg-schema/0.1.0';
+export declare const ARROW_SCHEMA_PROFILE: 'umf-r8-arrow-schema/0.1.0';
 export declare const PROTOBUF_INSPECT_PROFILE: 'umf-r5-protobuf-inspect/0.1.0';
 export declare const PROTOBUF_DOCUMENT_PROFILE: 'umf-r8-protobuf-descriptor-document/0.1.0';
 export declare const AVRO_FIELDS_PROFILE: 'umf-r5-avro-fields/0.1.0';
@@ -437,6 +438,22 @@ export interface JsonSchemaEngine {
 }
 /** Create the opt-in standalone Iceberg schema JSON engine using embedded pinned resources. */
 export declare function createIcebergSchemaEngine(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): IcebergSchemaEngine;
+
+export interface ArrowSchemaValidation {
+  valid: boolean;
+  complete: boolean;
+  diagnostics: {code: string; path: string; message: string; severity: 'error' | 'warning'}[];
+}
+export interface ArrowSchemaEngine {
+  dispose(): void;
+  importSchema(source: string, id: string): unknown;
+  exportSchema(document: unknown): string;
+  inspect(document: unknown): ArrowSchemaValidation;
+  getNode(document: unknown, pointer: string): unknown;
+  proposeNodeEdit(document: unknown, pointer: string, replacementJson: string): {document: unknown; validation: ArrowSchemaValidation};
+}
+/** Create the opt-in Arrow integration-schema JSON preservation engine; this does not activate a default route. */
+export declare function createArrowSchemaEngine(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; setupControls?: UmfCoreControls; controls?: UmfCoreControls}): ArrowSchemaEngine;
 export declare function createJsonSchemaEngine(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): JsonSchemaEngine;
 /** Private string-input staged import profile; the default route is unchanged. */
 export declare const JSON_SCHEMA_STAGED_IMPORT_PROFILE: 'umf-r8-json-schema-staged-wasm-private/0.1.0';

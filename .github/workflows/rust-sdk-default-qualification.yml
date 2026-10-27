@@ -73,6 +73,31 @@ jobs:
       - run: bunx playwright install --with-deps chromium
       - name: Replay installed SDK in Node, Bun, and Chromium
         run: bun scripts/test-sdk-rust-default.ts .cache/sdk-distribution/umf-sdk.tgz
+      - name: Extract the verified Linux archive for Cardinality receipts
+        run: |
+          node --input-type=module - <<'NODE'
+          import fs from 'node:fs';
+          import {createHash} from 'node:crypto';
+          import {tarMembers} from './scripts/rust-migration/r8/default-route-retirement-evidence.mjs';
+          const archive = fs.readFileSync('.cache/sdk-distribution/umf-sdk.tgz');
+          const sha = createHash('sha256').update(archive).digest('hex');
+          tarMembers(archive);
+          const manifest = JSON.parse(fs.readFileSync('dist/rust-default-manifest.json', 'utf8'));
+          if (!manifest.sourceClosure || manifest.sourceClosure.sha256 !== manifest.sourceClosure.capturedLiveSha256 || manifest.sourceClosure.transform?.status !== 'fixed-point' || manifest.sourceClosure.transform.generatedInputs.length !== 0) throw new Error('Linux archive source closure is not a fixed point');
+          fs.mkdirSync('.cache/sdk-distribution/cardinality-package', {recursive: true});
+          fs.writeFileSync('.cache/sdk-distribution/cardinality-capture-inputs.json', JSON.stringify({archiveSha256: sha, sourceClosureSha256: manifest.sourceClosure.sha256}));
+          NODE
+          tar -xzf .cache/sdk-distribution/umf-sdk.tgz --strip-components=1 -C .cache/sdk-distribution/cardinality-package
+      - name: Capture Cardinality default and reference receipts on Node, Bun, and Chromium
+        run: |
+          ARCHIVE=.cache/sdk-distribution/umf-sdk.tgz
+          PACKAGE=.cache/sdk-distribution/cardinality-package
+          OUT=.cache/sdk-distribution/cardinality-capture
+          ARCHIVE_SHA=$(node -p 'JSON.parse(require("fs").readFileSync(".cache/sdk-distribution/cardinality-capture-inputs.json")).archiveSha256')
+          SOURCE_CLOSURE_SHA=$(node -p 'JSON.parse(require("fs").readFileSync(".cache/sdk-distribution/cardinality-capture-inputs.json")).sourceClosureSha256')
+          node scripts/rust-migration/r8/core-cardinality-case-capture.mjs node "$PACKAGE" "$ARCHIVE" "$ARCHIVE_SHA" linux-x86_64 "$SOURCE_CLOSURE_SHA" "$OUT"
+          bun scripts/rust-migration/r8/core-cardinality-case-capture.mjs bun "$PACKAGE" "$ARCHIVE" "$ARCHIVE_SHA" linux-x86_64 "$SOURCE_CLOSURE_SHA" "$OUT"
+          node scripts/rust-migration/r8/core-cardinality-case-capture.mjs chromium "$PACKAGE" "$ARCHIVE" "$ARCHIVE_SHA" linux-x86_64 "$SOURCE_CLOSURE_SHA" "$OUT"
       - name: Capture exact default and reference operation receipts
         run: >-
           node scripts/rust-migration/r8/capture-default-route-cohort.mjs
@@ -92,6 +117,7 @@ jobs:
             .cache/sdk-distribution/retirement-cohort/archive-package.json
             .cache/sdk-distribution/retirement-cohort/cohort.json
             .cache/sdk-distribution/retirement-cohort/receipts/
+            .cache/sdk-distribution/cardinality-capture/
           include-hidden-files: true
           if-no-files-found: error
 

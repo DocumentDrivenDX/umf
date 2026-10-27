@@ -1,0 +1,82 @@
+{
+  "format": "r5-dataset-values-compact-verify-v1",
+  "oracle": "live TypeScript verifyCompactWithWork",
+  "predecessorPacket": "docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-default-cutover/frozen-commerce.json",
+  "cases": [
+    "commerce-complete",
+    "stale-source-input-canonical-skipped",
+    "stale-source-expected-input-copy-limit",
+    "near-limit-accepted",
+    "near-limit-first-refused"
+  ],
+  "sourceClosure": [
+    {
+      "path": "src/model/dataset-values-compact.ts",
+      "sha256": "248fb12b699117e3867817980713782131ab3629c8eabe650a5ffbcb4acf2e16"
+    },
+    {
+      "path": "src/model/internal/value-context.ts",
+      "sha256": "5511ae376a5208d2d90f44d162384104dec9e4274f72bc9d1030a150278cede7"
+    },
+    {
+      "path": "src/model/internal/schema-work.ts",
+      "sha256": "e2b57e6066a0608fcbd3d854669a011512b5443aefb2f61620e880b680efd336"
+    },
+    {
+      "path": "src/model/dataset-values.ts",
+      "sha256": "959d1a2b93e1337ff525e08ce67333adb963393f807e155380356946be8cd3c3"
+    },
+    {
+      "path": "src/model/record-values.ts",
+      "sha256": "925f28808e17058ee97cd7ab80c4358e5a09539613c5a8bf77b5a6e745ed8d74"
+    },
+    {
+      "path": "src/model/key-tuple.ts",
+      "sha256": "3351dce5112b1d3a8178af6d19f92597cb6b558f7327f32f33ecf10f73959f46"
+    },
+    {
+      "path": "src/model/document.ts",
+      "sha256": "6ea8f43e4bcd3b5d7259329e6768dd563e066d7169a23bee75e88f054f348ddb"
+    },
+    {
+      "path": "src/validation/schema.ts",
+      "sha256": "d16695d45d9611208074ae0b13dbd9ed8497e7651878f7ec71076aef697691a3"
+    },
+    {
+      "path": "src/validation/internal-schema.ts",
+      "sha256": "df2f752489b4cf90c083c1411f88e2ff2952c8269f50810308cab65b0106d237"
+    },
+    {
+      "path": "scripts/rust-migration/r5/freeze-dataset-values-compact-verify.ts",
+      "sha256": "956cd1ad68524d068f35c4b09940b2cdb06ec6a6d73a220e1108ad0473c97023"
+    },
+    {
+      "path": "spec/core/dataset-value-compact-operation.schema.json",
+      "sha256": "89f502aa0cea1a75fba2ff586c795c875a980b96af3e01d3117538e9fe12e74e"
+    },
+    {
+      "path": "spec/core/dataset-value-operation.schema.json",
+      "sha256": "217cc3c05e10cec1bb4e93cca1205c039f596e95080cba075823a9b8b351013d"
+    },
+    {
+      "path": "spec/core/key-tuple-operation-v4.schema.json",
+      "sha256": "fe7d93da41ac331696686bd32fb0be8ca62b7a5638b95b975034195d66dff2cc"
+    },
+    {
+      "path": "spec/core/schema.json",
+      "sha256": "7374c2bcaa0b4bf6ff80a67962d0aa2b64253db5139252c2b6f3fd0ff6374964"
+    },
+    {
+      "path": "spec/core/semantic-type-reference.schema.json",
+      "sha256": "e8c4f83355325e358a33de5b8767967c1e806bf5d3635edfd3a4832c96bb06bf"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-default-cutover/frozen-commerce.json",
+      "sha256": "e265b1d05613602abb9b68580b05b068127528047e1b1365e639a1977d699f27"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact/frozen-near-threshold-accepted.json",
+      "sha256": "86aca958dea93e787365e5d583c41e781dd9f8d879258952dbc6cc8edde15dc7"
+    }
+  ]
+}

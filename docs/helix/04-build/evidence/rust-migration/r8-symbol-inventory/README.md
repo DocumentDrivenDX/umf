@@ -1276,3 +1276,113 @@ It still records **922 open logical default-route gaps and zero retired**,
 with 81 accepted opt-in mappings and 841 unmapped names. The isolated
 ordinary JSON binding is a failing opt-in parity spike and adds no accepted
 mapping or installed qualification.
+
+## Compiler-provenance refreeze and current-source recapture — 2026-10-27
+
+The generated metamodel compiler-provenance refresh changed the two source
+hashes in the Compact verifier's current index without changing any of its
+five frozen payloads or their model hash. A new private build, manifest SHA-256
+`65bb6505f247e221f55b3e0fe7a5b998c76ef7470b390bfae33c8140add3d5aa`,
+binds 1,967 live source inputs at closure SHA-256
+`571569bc131aaa1a38c6d52edfd2273cec7cf13e52e01b77eb63d8b2b03c31ed`.
+Node 26.12.1, Bun 1.4.3, and Chromium 153 passed the five Compact cases. A
+separate replay of the 68 Security And/Or cases on the same build passed all
+three hosts with 30 valid Rust/WASM calls and zero refusal calls per host.
+Both packets preserve their preceding receipts and indexes under historical
+directories, and their checksum indexes verify.
+
+The regenerated [ledger](gap-ledger.json) SHA-256 is
+`2e86c1158af02db939d3d997dffe88a00c607be17299ab485a65a6dce3cbeaf7`.
+Its current check passes. It records 81 names with accepted opt-in Rust
+operations, 841 without accepted mappings, **922 open logical default-route
+gaps and zero retired**, and five names with bounded current-source route
+proof. This source replay does not qualify an installed SDK archive or release.
+
+## Arrow and host-input source recapture — 2026-10-27
+
+After the opt-in Arrow schema core, `copyJson` host-input binding, and SDK
+source-inventory gate were added, the five Compact and 68 Security And/Or cases
+were replayed from one fresh build on Node v26.3.0, Bun 1.4.3, and Chromium
+153.0.8010.12. The [Compact packet](../r8-compact-dataset-verify-source/README.md)
+pins build manifest SHA-256
+`1dfb786e44d32a22ed7595bf7f3b4a6be0692b5932c3b9de87ad2da894996ae4`
+and 1,969-input source closure
+`45133a5eab727481d7ee30d0cfaa1e00ccf2b10ea9d0117a9952887f17e00f2c`.
+Security receipts bind that same build. The Compact cases made 14 native/WASM
+dispatches per host; Security made 30 valid dispatches and zero refusal
+dispatches per host. Both packets preserve their preceding current receipts
+under `historical/pre-arrow-copyjson-source-20261027/`, and both checksum
+indexes pass.
+
+The regenerated [ledger](gap-ledger.json) SHA-256 is
+`c432635cf345e9d8c6f6c36114078f40403c96dcfb9590d329d201781c05a8ba`.
+It still records 922 open logical default-route gaps, zero retired, 81
+accepted opt-in Rust operation names, 841 without accepted mapping, and five
+names with bounded current-source route proof. The Arrow core and `copyJson`
+entrypoint are not default-route selections. These source replays do not
+qualify an installed SDK archive or a release.
+
+## Arrow pointer correction and refrozen source replay — 2026-10-27
+
+The Rust Arrow schema inspector now emits the correct `/fields/0/...` JSON
+Pointer for a nested field diagnostic. That source change refreshed metamodel
+compiler provenance; the Compact predecessor refreeze changed only the two
+generated schema pins, with all five payloads byte-identical and the same
+model hash. The new [Compact packet](../r8-compact-dataset-verify-source/README.md)
+uses current index SHA-256
+`475f7311eec810c84806b23ee6d0bd41c99bedc9b2bc84bd99318962d917db68`,
+build manifest SHA-256
+`0faa8dc02cb0e0068af0b66c5e0cffe46a7d16c3c15d953403916c643bc6dc65`,
+and 1,969-file source closure
+`12e2975de46a4bed5749e4f93390959f2a0ebed30cf23b36940189c328451a61`.
+All five Compact and 68 Security And/Or cases passed on Node, Bun, and real
+Chromium against that build. Both packets retain the preceding exact cohort
+under `historical/pre-arrow-pointer-20261027/`, with verified checksum
+indexes. The separate private SDK build also reached a fixed point with zero
+source transforms at captured/live closure SHA-256
+`e95ca0fa8109a3a81f605cbeae735683ca5b253b3663e90edb105b38f8260a6d`.
+
+The regenerated [ledger](gap-ledger.json) SHA-256 is
+`dbcda31cde1d44f17aebda8bfb3c4bd9705bb3832256e90c81e60dd4dcbc9414`.
+It records 922 open logical default-route gaps, zero retired, 81 accepted
+opt-in Rust operation names, 841 without accepted mapping, and five names
+with bounded current-source route proof. The source replay and fixed-point
+private SDK archive do not establish complete parity, retirement, or release
+qualification.
+
+## Plan identity source refresh — 2026-10-27
+
+The Compact and Security And/Or source packets were replayed against the
+refreshed action-plan identity source at SHA-256
+`cd104adefbc27d9e51870ca4e316d414cbc8bb5de2e458b1cd673035f8049c5b`. The
+unified build manifest is
+`9501e340a2e8905378926b7415e1d247a57ed3fa1bb070ccd241de73a4943cb7` with
+1,973-file closure
+`a917c501d6882ba7a0b737232f69ea3acc859848e0e497c0c8760a314577991f`.
+All five Compact and 68 Security And/Or cases passed on Node v26.12.1, Bun
+1.4.3, and Chromium 153.0.8010.12. The deliberate inventory refresh retains
+3,375 declarations across 509 files and 1,126 unique names, with inventory
+SHA-256 `fccbfe07a3a43a490d207080120b4b0e33591f0e71cc37de0ab92683ebf3d7ec`.
+The regenerated ledger SHA-256 is
+`fd5cdf327fbf13ad3d96c92cfae3eddc13fc88a73f5acc0be2890217a42c42df`; its
+922 logical executable default-route gaps remain open, with zero retired.
+These bounded source replays do not qualify an installed archive or release.
+
+## Current-source replay refresh — 2026-10-27
+
+After the Arrow and generated-schema source updates, the symbol inventory was
+deliberately regenerated and checked. It remains 3,375 route-specific runtime
+declarations across 509 source files, with 1,126 unique names; the regenerated
+inventory SHA-256 is `fccbfe07a3a43a490d207080120b4b0e33591f0e71cc37de0ab92683ebf3d7ec`.
+The Compact Dataset packet replays 5/5 cases and the Security And/Or packet
+replays 68/68 cases on Node, Bun, and real Chromium against the shared build
+manifest `7e22134d72023245036097ec4f110b9ddb773eb820ecb681d77a5d677b941da6`
+and 1,973-input source closure
+`9143f872a1bb2cd3d4aa5d25da4ec0c7d7f06c3b22447f1b32b54e70d5629681`.
+The regenerated condition-aware ledger SHA-256 is
+`3a76c8dce68c424750da7a233962bf3800fbd7913b6e9365ca96dd011b6c7e2b`; it
+retains 922 open logical executable default-route gaps, zero retired, 81
+accepted opt-in Rust operation names, 841 without accepted mapping, and five
+bounded current-source binding routes. This source replay does not establish
+installed SDK qualification, complete semantic parity, or declaration
+retirement.

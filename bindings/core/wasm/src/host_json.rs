@@ -410,6 +410,23 @@ impl HostJsonReflection for WasmHostJson {
     fn release_descriptor_snapshot(&mut self, _token: u64) {}
 }
 
+/// Opt-in general JSON admission over opaque host handles. Reflection order,
+/// cycles, limits and the copied value are owned by the shared Rust core.
+#[wasm_bindgen(js_name = executeCopyJsonHostJson)]
+pub fn execute_copy_json_host_json(value_handle: u32, dispatcher: &Function) -> String {
+    let result = (|| -> Result<String, EngineError> {
+        let mut host = WasmHostJson {
+            dispatcher: dispatcher.clone(),
+            string_lengths: BTreeMap::new(),
+        };
+        let mut ctx = Context::ordinary();
+        let value =
+            umf_core::host_json::copy_host_json(value_handle as HostHandle, &mut host, &mut ctx)?;
+        umf_core_wire::encode(&value, &mut ctx)
+    })();
+    umf_core_wire::result_envelope(result)
+}
+
 #[wasm_bindgen(js_name = executeValidateCoreRecordValuesHostJson)]
 pub fn execute_validate_core_record_values_host_json(
     resources_wire: &str,

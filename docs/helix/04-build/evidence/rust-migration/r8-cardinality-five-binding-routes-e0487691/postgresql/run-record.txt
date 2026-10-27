@@ -1,0 +1,5 @@
+Source UMF e0487691e34be22de9e63d8ead5f1c9db21fee13/tree ee0c192c9e9929c31700a05ab16b510ad0234d67; pre-run SDK closure 1355bf21b58ad9e422fa8998c1ce5325b8643bb1eefbc6a1b6a127babc52b5d7.
+PostgreSQL server 17.4 (docker image pinned by route script); Docker emulation provenance from OrbStack on Apple Silicon, Linux amd64 emulated. Bun 1.4.3; Chromium 153.0.8010.12.
+Commands: bun scripts/core-ideals/cardinality-postgresql-oracle.ts (exit 0), bun scripts/core-ideals/cardinality-postgresql-browser.ts (exit 0), both socket-enabled escalation.
+Native: catalog 37 cases/26 columns/24 types; projection 48 cases, 26 executed, 22 blocked, 26 recoveries. Browser catalog 26 resolved/5 refused; projection 48 cases/22 blocked/52 recoveries/26 forged refusals/4 identifier refusals.
+Scope: current E048-source bounded PostgreSQL route; not binding acceptance or full Cardinality acceptance. Input SDK closure and generated evidence fixture output map are distinct.
