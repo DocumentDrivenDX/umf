@@ -1835,6 +1835,7 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
   }
   return rootRows.map((row, index) => {
     const inert = row.source.startsWith('spec/') && row.source.endsWith('.json');
+    const hybridRawTableBindingHelper = isExactRawTableBindingV4Helper(row);
     const mapping = operationMapping(row);
     const sourceSelection = sourceSelectedImplementation(row.routeId, row.exportName, row.source, qualifiedRouteOperations, row);
     const selectedBySource = sourceSelection !== null;
@@ -1851,7 +1852,9 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
       'package-root-node': {
         route: '.', routeStatus: 'default-node',
         defaultRoute: inert ? 'JSON resource export from Node package root' : 'Node package root declaration',
-        implementationStatus: row.exportName === 'generatePythonClient'
+        implementationStatus: hybridRawTableBindingHelper
+          ? 'V4 host TypeScript wrapper injects Rust inspectCoreRecordMembers; remaining helper behavior is TypeScript and retirement remains open'
+          : row.exportName === 'generatePythonClient'
           ? 'Rust V4 implementation selected by source route; installed qualification pending'
           : ['declareCoreRecordType', 'verifyCoreRecordTypeDeclaration'].includes(row.exportName) ? 'Rust Core Record Type v6 operation selected by V4 source route; separate private installed Node/Bun/Chromium archive receipt passed; broader parity and retirement open'
           : selectedCardinality ? 'Rust cardinality operation selected by source route; installed qualification pending'
@@ -1870,7 +1873,9 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
       'package-root-browser': {
         route: '.', routeStatus: 'default-browser',
         defaultRoute: inert ? 'JSON resource export from browser package root' : 'browser package root declaration',
-        implementationStatus: row.exportName === 'generatePythonClient'
+        implementationStatus: hybridRawTableBindingHelper
+          ? 'V4 host TypeScript wrapper injects Rust inspectCoreRecordMembers; remaining helper behavior is TypeScript and retirement remains open'
+          : row.exportName === 'generatePythonClient'
           ? 'Rust V4 implementation selected by source route; installed qualification pending'
           : ['declareCoreRecordType', 'verifyCoreRecordTypeDeclaration'].includes(row.exportName) ? 'Rust Core Record Type v6 operation selected by V4 source route; separate private installed Node/Bun/Chromium archive receipt passed; broader parity and retirement open'
           : selectedCardinality ? 'Rust cardinality operation selected by source route; installed qualification pending'
@@ -1902,7 +1907,9 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
       ? 'retain as JSON resource data; authority and installed asset route require source-specific review'
       : row.routeId === 'package-reference'
         ? 'explicit TypeScript reference declaration remains available; not a Node/browser default-route claim'
-        : row.exportName === 'generatePythonClient' && ['package-root-node', 'package-root-browser'].includes(row.routeId)
+      : hybridRawTableBindingHelper
+          ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} V4 host TypeScript wrapper injects Rust inspectCoreRecordMembers; the exported helper remains mixed TypeScript/Rust and its retirement gap remains open`
+      : row.exportName === 'generatePythonClient' && ['package-root-node', 'package-root-browser'].includes(row.routeId)
           ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust V4 implementation selected by source route; installed qualification pending; TypeScript retirement gap remains open`
           : row.exportName === 'securityNot' && sourceSelection && ['package-root-node', 'package-root-browser'].includes(row.routeId)
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} guarded Rust securityNot adapter selected by V4 source route; private installed Node/Bun/Chromium evidence is source-pinned to fixed-point archive commit dc746ad53, not current-source or release qualification; retirement gap remains open`
@@ -1967,6 +1974,15 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
   });
 }
 
+function isExactRawTableBindingV4Helper(row) {
+  return row.exportName === 'inspectRawTableBinding'
+    && row.declarationName === 'inspectRawTableBinding'
+    && row.declarationKind === 'VariableDeclaration'
+    && row.initializerShape === 'call-expression'
+    && ((row.routeId === 'package-root-node' && row.source === 'src/index-node-v4.ts')
+      || (row.routeId === 'package-root-browser' && row.source === 'src/index-browser-v4.ts'));
+}
+
 function logicalDeclarationSignature(row) {
   // These exact declarations intentionally differ by condition: the Node and
   // browser roots expose V4 entry bindings while ./reference retains the
@@ -2013,7 +2029,16 @@ function logicalDeclarationSignature(row) {
         : row.routeId === 'package-reference'
           ? row.source === 'src/extensions/security/logic.ts' && row.declarationKind === 'FunctionDeclaration' && row.initializerShape === 'not-applicable'
           : false);
-  const kind = (conditionBoundExport || numericConditionShape || securityNotConditionShape)
+  const rawTableBindingConditionShape = row.exportName === 'inspectRawTableBinding'
+    && row.declarationName === 'inspectRawTableBinding'
+    && (row.routeId === 'package-root-node'
+      ? row.source === 'src/index-node-v4.ts' && row.declarationKind === 'VariableDeclaration' && row.initializerShape === 'call-expression'
+      : row.routeId === 'package-root-browser'
+        ? row.source === 'src/index-browser-v4.ts' && row.declarationKind === 'VariableDeclaration' && row.initializerShape === 'call-expression'
+        : row.routeId === 'package-reference'
+          ? row.source === 'src/extensions/binding/raw-profiles.ts' && row.declarationKind === 'VariableDeclaration' && row.initializerShape === 'call-expression'
+          : false);
+  const kind = (conditionBoundExport || numericConditionShape || securityNotConditionShape || rawTableBindingConditionShape)
     && ['package-root-node', 'package-root-browser', 'package-reference'].includes(row.routeId)
     ? 'condition-selected-root-binding'
     : row.declarationKind;

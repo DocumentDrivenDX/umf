@@ -1,7 +1,7 @@
 {
   "date": "2026-10-15",
   "scope": "Partial declarative binding validation, identity refusals and JSON/YAML unknown recovery only; native types, SQL, execution and full ColumnSet coverage UNTESTED",
-  "bun": "1.4.2",
+  "bun": "1.4.3",
   "chromium": "153.0.8010.12",
   "cases": [
     "lakebase",
@@ -18,11 +18,11 @@
     "spark-delta-missing-members"
   ],
   "outputsSha256": "8e0b733f1243ffdd2c75b3e824d5af1dbc68bc2a01c93836f7e1af43152c2b99",
-  "inputsSha256": "df7b3d0710b72f6ec6f3b32694b2aa9301629afd0450e5fdd37493f8f00bb66a",
+  "inputsSha256": "e460b23ae96332305bad44ced2ca20d08f8893a3cd9456949096f4a736d508f3",
   "bundleSha256": {
-    "raw-profiles.js": "d9d2271286ababb5f6d2817dcf22cf7cad3f4c9a12e3e3c9c3cb9e71d17456e8",
-    "chunk-6460pkyw.js": "2edc7bf2a4274ea4a565d006c75083e414d5e38f1c1b01bec28f75160678fba4",
-    "index.js": "51bb660499a479b7cdac88586b4e0f52e89c7ba27c2cf9ac8db102506611edcb"
+    "raw-profiles.js": "104d2967573dab10a2a57f6442301d638d292c1a3f951eb38735451e1e1ba9a1",
+    "chunk-pgxk1gm6.js": "cb38d888b489e570f1ec65b8314968e7f31e859b44d68ab461abef66bd91a619",
+    "index.js": "f58bd88bc38adff033e5b640a7052525fb22813b6bd82d39a781ccfb5e2d1bdb"
   },
   "externalRequests": []
 }

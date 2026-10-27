@@ -19,7 +19,26 @@ ddx:
 
 # R8 installed core-inspector qualification
 
-## Current-source replay: archive `4c3187be9`
+## Historical replay from clean source commit `f2bad909` — 2026-10-26
+
+Before subsequent helper-source changes, a private SDK archive was built from
+clean commit `f2bad909bf1400442c01987e848b8fef58256dcd`. Its archive SHA-256 is
+`41da635a69530bae3a2105e4b7ebe31b298b6c1d50ae815be368983dc0cf1cf0`; the
+fixed-point source closure and captured-live source both hash to
+`01c4535f822e7cef2b8db481bf28d60e65d1e316ea14b27f611211c7305ab7c2`, with zero
+generated-input changes. The package manifest verifies 1,793 members.
+
+The [source-pinned receipt set](current-f2bad909-20261026/) records a passing
+26-case default/reference replay in Node 26.12.1, Bun 1.4.3 and Chromium
+153.0.8010.12, plus passing bounded root and nested host-shape replays. Missing
+and corrupt native addons were refused. The main cases and host shapes had no
+behavioral mismatches; for the missing-addon import control, Node reports an
+`Error` and Bun a `ResolveMessage` with the same `MODULE_NOT_FOUND` code. These
+receipts apply only to the pinned archive and remain historical after later
+source changes. They do not establish inspector retirement, full SDK
+qualification, or release readiness.
+
+## Earlier fixed-point replay: archive `4c3187be9`
 
 The fresh installed replay used the sealed private SDK archive
 `/private/tmp/umf-current-4c3187be9/umf-sdk.tgz` (SHA-256

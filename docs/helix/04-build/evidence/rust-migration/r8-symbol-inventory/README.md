@@ -1133,3 +1133,27 @@ metamodel replay passes 139 cases across its two profiles without page errors.
 controls, and 16 plus 19 Python tests. The focused protection binding receipts
 remain opt-in and source-scoped; this recapture is not an installed SDK archive
 or a release qualification.
+
+## Inspector consumer source recapture — 2026-10-26
+
+After the V4 raw-profile helper began injecting the Rust-bound Record Members
+inspector, the metamodel and nine-resource Python mirror remained fixed-point.
+The action-plan source identity was regenerated, followed by the condition-aware
+inventory and ledger. The action identity SHA-256 is
+`300debe98f657bde0aacac7b89961b3f9de370d1bc60b279a4ab4081320dbef9`;
+the inventory SHA-256 is
+`bbcf418908ec486eb6890e7eb4f2bd8fc55c9812347d6dc93626029426492532`;
+the ledger SHA-256 is
+`93e4ffda4f8e87748f5bd067046e4fb194b2986e027f18370b6b9f86d917319d`.
+The source census now includes 507 files and 3,375 route-specific declarations.
+Each V4 root has 51 direct declarations, of which 50 have accepted Rust
+operation ownership; the new `inspectRawTableBinding` declaration is a mixed
+TypeScript wrapper with an injected Rust inspector, not an exact Rust-owned
+operation. The explicit `./reference` helper remains TypeScript.
+
+The ledger continues to record 77 accepted opt-in mappings, 845 unmapped
+executable names, 922 open logical default-route gaps and zero retirements.
+The new exact-shape annotation and its negative controls pass in the 53-case
+ledger suite. This recapture describes source selection only; the updated
+helper still needs a source-current installed archive replay before any
+retirement review.

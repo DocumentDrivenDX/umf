@@ -38,7 +38,7 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   const entries = new Map(inventoryReceipt.defaultRouteEntrySelections.map(selection => [selection.routeId, selection]));
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     const selection = entries.get(routeId);
-    assert.equal(selection.directExportCount, 50);
+    assert.equal(selection.directExportCount, 51);
     assert.ok(expected.every(name => selection.directExports.includes(name)), `${routeId} misses an override`);
     const rows = ledger.rows.filter(row => row.routeId === routeId && expected.includes(row.exportName));
     assert.equal(rows.length, expected.length);
@@ -104,6 +104,45 @@ test('default retirement evidence is independent per root and keeps the TypeScri
   assert.throws(() => summarizeDefaultRouteRetirement(open.rows.map(row => row.routeId === 'package-root-node'
     ? { ...row, defaultRouteRetirement: { status: 'reference-only', evidence: [] } }
     : row)), /missing or invalid default retirement status/);
+});
+
+test('raw table binding ledger annotation is limited to exact Node and browser V4 variable bindings', () => {
+  const symbols = [
+    { routeId: 'package-root-node', exportName: 'inspectRawTableBinding', declarationName: 'inspectRawTableBinding', declarationKind: 'VariableDeclaration', initializerShape: 'call-expression', source: 'src/index-node-v4.ts', line: 34, sourceSha256: 'a'.repeat(64) },
+    { routeId: 'package-root-browser', exportName: 'inspectRawTableBinding', declarationName: 'inspectRawTableBinding', declarationKind: 'VariableDeclaration', initializerShape: 'call-expression', source: 'src/index-browser-v4.ts', line: 34, sourceSha256: 'b'.repeat(64) },
+    { routeId: 'package-reference', exportName: 'inspectRawTableBinding', declarationName: 'inspectRawTableBinding', declarationKind: 'VariableDeclaration', initializerShape: 'call-expression', source: 'src/extensions/binding/raw-profiles.ts', line: 8, sourceSha256: 'c'.repeat(64) },
+  ];
+  const ledger = buildLedger({ ...args, inventory: { symbols } });
+  const v4Rows = ledger.rows.filter(row => ['package-root-node', 'package-root-browser'].includes(row.routeId));
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 1);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 0);
+  for (const row of v4Rows) {
+    assert.match(row.implementationStatus, /V4 host TypeScript wrapper injects Rust inspectCoreRecordMembers/);
+    assert.match(row.disposition, /helper remains mixed TypeScript\/Rust/);
+    assert.equal(row.sourceSelectedImplementation, null);
+    assert.equal(row.acceptedRustOperation, null);
+    assert.equal(row.bindingRouteStatus, 'unproven');
+    assert.equal(row.defaultRouteRetirement.status, 'open');
+  }
+  const reference = ledger.rows.find(row => row.routeId === 'package-reference');
+  assert.equal(reference.implementationStatus, 'TypeScript reference implementation remains explicit');
+  assert.equal(reference.sourceSelectedImplementation, null);
+  assert.equal(reference.defaultRouteRetirement.status, 'reference-only');
+
+  const negativeControls = [
+    rows => rows.map(row => ({ ...row, declarationName: 'inspectRawTableBindingAlias' })),
+    rows => rows.map(row => ({ ...row, declarationKind: 'FunctionDeclaration' })),
+    rows => rows.map(row => ({ ...row, initializerShape: 'arrow-function' })),
+    rows => rows.map(row => ({ ...row, source: 'src/index.ts' })),
+  ];
+  for (const mutate of negativeControls) {
+    const result = buildLedger({ ...args, inventory: { symbols: mutate(symbols) } });
+    assert.ok(result.rows.every(row => !/V4 host TypeScript wrapper injects Rust/.test(row.implementationStatus)));
+    assert.ok(result.rows.every(row => !/helper remains mixed TypeScript\/Rust/.test(row.disposition)));
+  }
+  const inherited = buildLedger({ ...args, inventory: { symbols: [{ ...symbols[0], routeId: 'package-root' }] } });
+  assert.doesNotMatch(inherited.rows[0].implementationStatus, /V4 host TypeScript wrapper injects Rust/);
+  assert.doesNotMatch(inherited.rows[0].disposition, /helper remains mixed TypeScript\/Rust/);
 });
 
 test('retiring three paired logical names lowers the current default gap count by three only', () => {

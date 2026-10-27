@@ -6663,3 +6663,40 @@ fresh fixed-point Node, Bun and Chromium replay and direct-callsite review
 before either default route can be marked retired. The explicit `./reference`
 TypeScript route is tracked separately from default-route retirement. The
 full Rust port, integration and release remain open.
+
+### R8 Inspector consumer and Relationship predecessor continuation — 2026-10-26
+
+The [sealed Inspector archive replay](evidence/rust-migration/r8-core-inspectors-installed/README.md)
+from clean commit `f2bad909` passed its 26 frozen direct-operation cases and
+bounded root/nested host-shape checks in Node 26, Bun 1.4.3 and Chromium 153.
+The archive is fixed-point and source-pinned, but it predates the consumer
+source changes below. Missing and corrupt native addons refused import; Bun's
+missing-addon error name differed from Node's while the code matched.
+
+The [raw-profile consumer change](evidence/rust-migration/r8-core-inspector-consumer-boundary/README.md)
+injects the existing Rust-backed Record Members inspector into the V4 helper
+and keeps the explicit reference helper TypeScript-backed. The 11 focused Bun
+tests and nine real-Chromium cases pass. The browser test used regenerated
+wasm-bindgen glue around a reused target WASM; a current-source installed SDK
+replay remains required. The complete V4 bundle still retains shadowed
+TypeScript Inspector code through the broad `src/index.ts` exports. Neither
+the direct Inspector family nor the mixed raw-profile helper is retired.
+
+For the next family, direct Core Relationship V4 exports already select Rust,
+but six public projection consumers still import the TypeScript relationship
+operations. The [18-case predecessor packet](evidence/rust-migration/r8-relationship-consumer-predecessor/README.md)
+freezes representative success, blocked, and accessor-refusal outcomes before
+changing those consumers. Avoid a mutable module-wide dispatcher: default and
+`./reference` may be imported together, so routing must preserve their
+independent operation owners. Introduce scoped injection or V4 consumer
+wrappers, expand the composed packet where its recorded coverage is limited,
+then replay both roots from one fixed-point installed package across Node,
+Bun and real Chromium. Rust invocation and reference isolation must be proven
+before a retirement status changes.
+
+The R8 accounting remains **77 accepted opt-in mappings, 845 unmapped names,
+and 922 open logical default-route retirement gaps**. The next gate is to
+rebuild the current source into a zero-transform private SDK archive, replay
+the Inspector helper and direct Inspector packets from that archive, and
+review all remaining default-reachable TypeScript Inspector paths. Full-port,
+merge and release gates remain open.

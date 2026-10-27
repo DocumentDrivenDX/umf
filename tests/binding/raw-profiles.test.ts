@@ -5,7 +5,8 @@ import lakebase from '../../fixtures/binding/raw-profiles/lakebase.json';
 import unity from '../../fixtures/binding/raw-profiles/unity-catalog.json';
 import spark from '../../fixtures/binding/raw-profiles/spark-delta.json';
 import {getBinding,inspectBinding,projectBindingIndexes,readBindingDocument,writeBindingDocument} from '../../src/extensions/binding';
-import {inspectRawTableBinding,RAW_TABLE_BINDING_SUBSET,rawTableBindingProfiles} from '../../src/extensions/binding/raw-profiles';
+import {createRawTableBindingInspector,inspectRawTableBinding,RAW_TABLE_BINDING_SUBSET,rawTableBindingProfiles} from '../../src/extensions/binding/raw-profiles';
+import {inspectCoreRecordMembers} from '../../src/model/record-members';
 import type {Document} from '../../src/model/types';
 const cases=[lakebase,unity,spark];
 function setup(source=lakebase){const binding=structuredClone(source) as unknown as Document,logical=structuredClone(logicalSource) as unknown as Document;const p=getBinding(binding,logical);return {binding,logical,target:{platform:p.target.system,majorVersion:p.target.version}};}
@@ -58,4 +59,18 @@ test('U-2: partial declarations are admitted; selected ColumnSet coverage belong
  expect(inspectRawTableBinding(binding,logical,target,'sales').valid).toBe(true);
  delete (logical.modules[0]!.elements[1] as any).members;
  expect(inspectRawTableBinding(binding,logical,target,'sales').valid).toBe(false);
+});
+
+test('raw-profile factory delegates record membership to its injected inspector',()=>{
+ const {binding,logical,target}=setup();let calls=0;
+ const inspect=createRawTableBindingInspector((source,identity)=>{calls++;return inspectCoreRecordMembers(source,identity);});
+ expect(inspect(binding,logical,target,'sales')).toEqual(inspectRawTableBinding(binding,logical,target,'sales'));
+ expect(calls).toBe(1);
+});
+
+test('raw-profile factory preserves injected inspector error identity',()=>{
+ const {binding,logical,target}=setup(),failure=new Error('injected membership inspection failure');let calls=0;
+ const inspect=createRawTableBindingInspector(()=>{calls++;throw failure;});
+ let caught:unknown;try{inspect(binding,logical,target,'sales');}catch(error){caught=error;}
+ expect(calls).toBe(1);expect(caught).toBe(failure);
 });
