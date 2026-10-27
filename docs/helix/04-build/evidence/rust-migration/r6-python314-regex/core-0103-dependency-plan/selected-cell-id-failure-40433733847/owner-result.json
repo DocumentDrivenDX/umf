@@ -1,0 +1,27 @@
+{
+  "status": "MACOS311_TEST_COHORT_CELL_ID_REFUSED_BEFORE_INSTALL",
+  "runId": 40433733847,
+  "jobId": 121960046867,
+  "artifactId": 12703725858,
+  "sourceCommit": "ffda8a08d6f09ecd55ef3c79f5db75fdf8781973",
+  "actualCellId": "macos-arm64-py11",
+  "matchingLockedKey": "macos-arm64-py311",
+  "failingCommand": "fetch-test-wheel-cohort",
+  "logBytes": 615,
+  "actualBoundary": "Wheel lock has no unique selected closed set for this cell",
+  "selectedWheelInstalled": false,
+  "cellTestsExecuted": false,
+  "sourceCause": "Two acquisition CELL_ID expressions omit Python major3. The producer and public-proof workflows share this expression; existing artifact names py11/py14 are deliberately distinct and remain unchanged.",
+  "correction": {
+    "status": "TWO_LITERAL_SOURCE_CORRECTION_ACCEPTED_RUNTIME_PENDING",
+    "planSha256": "dd185f7c28707484a3a23506c213c84fd1d16324cc3a8b133392c8d698015ec5",
+    "reviewSha256": "d74fb3531cdb2d954ef981aa80c2fe89616fca9f59467180c35ecd021fbd943f",
+    "workflowPostimages": {
+      ".github/workflows/python-action-runtime.yml": "c90fc9dbc91a07feb4fe591462557897e83b5ff048307aec0c99c136bc0c9f00",
+      ".github/workflows/core-0.10.3-public-install-proof.yml": "e8be872b46eaa1c41a516d74d823cfb6e8233f5324fdc2788f34bd72e5046718"
+    },
+    "generatedOutputs": "Expected unchanged by independent source review; genuine same-source consistency still required.",
+    "publicProof": "HELD"
+  },
+  "scope": "Producer/selection success remains separate. Other live/queued cells preserved; no suite/cap/lock alias change or current-source four-cell admission."
+}

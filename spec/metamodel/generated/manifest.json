@@ -2,7 +2,7 @@
   "profile": "umf.metamodel.outputs/1",
   "provenance": {
     "modelSha256": "42144576e3b15da4945ca744623a31967e3b29efa54da8ba3961e446b1c0e34b",
-    "compilerSha256": "d4d3a53295b173b24cbdc7f4ba5ea1cf0012f30c5c2b5665f6aaf4c7916ead76"
+    "compilerSha256": "906cd23c97dc5c1f2d63c269999b86a7bb21f348ad6579bd2347218714d796bb"
   },
   "sources": {
     "spec/metamodel/umf.yaml": "42144576e3b15da4945ca744623a31967e3b29efa54da8ba3961e446b1c0e34b",
@@ -71,10 +71,10 @@
     "crates/umf-core/src/lib.rs": "d71b7915c423ff6962d8c609ddc2129291f15e53ef94e5ea9265df052169b577",
     "crates/umf-core/src/literal.rs": "ffa18f6ff115a1cae69d32bad355b88cc27e108fc4d3e6cf2a7e1441e61a84f9",
     "crates/umf-core/src/literal_policy.rs": "24140e302cf083e54843f20cf9959ef004e791146be03eba8888b8699a61827b",
-    "crates/umf-core/src/python_re_names.dat": "1a7d63f9371ecc8111ca04efad730a8afa700316eee1974912669a74c8ef0071",
+    "crates/umf-core/src/python_re_names.dat": "83e6ec8d43bf356fa1a511508ebf45aef2f6a56efd9d834ba653f3b21b79456f",
     "crates/umf-core/src/python_re_tables.LICENSE": "bfb121a2aaa8fa3d77f3429ae2aaed879cc53cacad6fbe42a2513043b80fcb9a",
-    "crates/umf-core/src/python_re_tables.rs": "84f931263193ce41a1459640f1a20182f61a9fe14bfd02c319f3609237248d2c",
-    "crates/umf-core/src/python_regex.rs": "f639ce9effe57755ed0fe414d5b072b29a21c877a07eab67a5f4b775de07b4e1",
+    "crates/umf-core/src/python_re_tables.rs": "bbf65feeaca0a21d4db893ba0b7f11c6ca43e7e1945992d4e979347291d85ee2",
+    "crates/umf-core/src/python_regex.rs": "a3f42238509f8d135bca58bc8adaf683dc5747674676295f20023355ab2079ef",
     "crates/umf-core/src/python_uri.LICENSE": "87be3b02582cd0088845ad069a3afa9ad17eee76fae7b999fbba0f8588d80dfd",
     "crates/umf-core/src/python_value.rs": "ec72fbd70e3d02efbe4bc40c4e6aa56847128aa364de5082e0cbb565e177b633",
     "crates/umf-core/src/registry.rs": "38ff151bddffdd9d79462802804cae76d58d01edf0ccaea68799907efe0918d3",
@@ -89,21 +89,23 @@
     "crates/umf-core/tests/consumer_schema.rs": "2abfb36696a66d603366c38870826fdbb94b0f5d368d08833ae7ae2a8b030c0a",
     "crates/umf-core/tests/extension_kinds.rs": "1445ac8af313872c7949a215648f97c9ea3c40c88225e7d7a93879ab19641883",
     "crates/umf-core/tests/fixtures/cpython-re/PSF-LICENSE.txt": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
-    "crates/umf-core/tests/fixtures/cpython-re/independent-boundaries.json": "1ec5fb81302aae40f455f6ce2e6008d1ab0fce54fa62c0990e50c53faf800281",
-    "crates/umf-core/tests/fixtures/cpython-re/independent-hex-boundaries.json": "f6f442149ae3b045229d2cfc722c9f6031b870789911019a97d48b38c8966ee1",
-    "crates/umf-core/tests/fixtures/cpython-re/independent-hex-outcomes.tsv": "d25eac01934ff4124bde931121e5d2af73d6f87644e2564b1257cda6aa5c8e97",
-    "crates/umf-core/tests/fixtures/cpython-re/independent-info-boundaries.json": "a744855957ce7c89d04ae9b7b754049401cd04b4f611d7a8c5412d05b08a3b55",
-    "crates/umf-core/tests/fixtures/cpython-re/independent-info-outcomes.tsv": "299ca3f80fcef799c58e9e159839b053751d023bd5c05e11427627212b26e463",
-    "crates/umf-core/tests/fixtures/cpython-re/independent-outcomes.tsv": "c4955285b999eb4c2abd119b986b33bb39ec464da02fa61601ac99fb1021ea77",
+    "crates/umf-core/tests/fixtures/cpython-re/independent-boundaries.json": "91dd68657df6bc771dc3e3e639594d1403f59dbbfb2a29b8de86144124194e3e",
+    "crates/umf-core/tests/fixtures/cpython-re/independent-hex-boundaries.json": "a811b8282da50f469381cdc4169b972da58aded7b9d148313cc64f7719aa9c40",
+    "crates/umf-core/tests/fixtures/cpython-re/independent-hex-outcomes.tsv": "95c77e23a8852bdc317e6e1e65d325e2179c9ac12b7b45cafe747730161e8e94",
+    "crates/umf-core/tests/fixtures/cpython-re/independent-info-boundaries.json": "efed8109ef53d65311b736d2171df5a649f767a4566f9492139a574732197b32",
+    "crates/umf-core/tests/fixtures/cpython-re/independent-info-outcomes.tsv": "e7240c15c4f9827a4dd5ee73e4003dce72fa15083b00618739efd131efc30e57",
+    "crates/umf-core/tests/fixtures/cpython-re/independent-outcomes.tsv": "3e1926845dae0fbb48880e0d342e6b484771f7e2e9792ad2ae1163043bd8275d",
     "crates/umf-core/tests/fixtures/cpython-re/outcomes-3.11.tsv": "ff96895ef868a7fad06ffcbfb8c3446bd13aa9259d1141932c2a0963bfb54022",
     "crates/umf-core/tests/fixtures/cpython-re/outcomes-3.12.tsv": "ff96895ef868a7fad06ffcbfb8c3446bd13aa9259d1141932c2a0963bfb54022",
     "crates/umf-core/tests/fixtures/cpython-re/outcomes-3.13.tsv": "ff96895ef868a7fad06ffcbfb8c3446bd13aa9259d1141932c2a0963bfb54022",
+    "crates/umf-core/tests/fixtures/cpython-re/outcomes-3.14.tsv": "b1795db238445eeeafcbd7b370ae27a63ca914dc06ec33440fccd445a384de4a",
     "crates/umf-core/tests/fixtures/cpython-re/re_tests.py": "33033dc23d20a6924391819395e7bdd3c16d11cf3bb79eedb6298e79f65bb4e8",
     "crates/umf-core/tests/fixtures/cpython-re/test_re-3.11.14.py": "9be409343610e901008fc37236669d0288b2ff2c2a3d2c83928463c155f04b62",
     "crates/umf-core/tests/literals.rs": "36a9de4992e70bf7aa4c30b66a0940a4fc5ec1597611620346c5b865eaf0dc9b",
-    "crates/umf-core/tests/python_regex_hex_independent.rs": "8cec4d01284de6f436ae011e6873e1385c9f499d967140ad700d7437799b3450",
-    "crates/umf-core/tests/python_regex_independent.rs": "996b0923b84954d6cb337cf7ad27832f5b66da81b4f00b617e08792b9bdb8f5c",
-    "crates/umf-core/tests/python_regex_info_independent.rs": "98f0d0ae71a15f1a6f60b0f19fe82fdfafc7a21996b0bf34e96c92e856d17c87",
+    "crates/umf-core/tests/python_regex_314.rs": "ed7434741b3b1d97ddae176be044a9c9f6049d87ee2706d635e667ba614b67a8",
+    "crates/umf-core/tests/python_regex_hex_independent.rs": "425147b2f3fde310a8d2579308b246e226792721716264bd5ee51ceea0c69e21",
+    "crates/umf-core/tests/python_regex_independent.rs": "d19c3e61be17aad5fbc34193b0dd8643b9df3f30995e07b8b736bd1a2e184093",
+    "crates/umf-core/tests/python_regex_info_independent.rs": "77dfdffa38ed1ef623266331ce1b98f493bda092c0e864b170f6caf17ab0d0b9",
     "crates/umf-core/tests/python_serialization_predecessor.rs": "97e37b231e66224c882f24d390fe5addbef8d5513dc7d5ad5233bd7fd1a67559",
     "crates/umf-core/tests/registry.rs": "868c9573ffb7fcbbfd9bde8e59557fa5233d9011496dae13063aa37b4038b690",
     "crates/umf-core/tests/resources.rs": "40a2b9b05e14e6bbb5a350716b4669b38c28319c33a4c9d23b818911aba4873d",
@@ -122,14 +124,16 @@
     "crates/umf-core/tests/schema_terminal_provenance.rs": "54784736304ba1a1240c8aedad8e4df5cad6a8f3a228a05d0e49e83053cf8d13",
     "crates/umf-core/tests/sol_final_codegen_oneof_review.rs": "af797c146f069886630f2faa5531fd126431a2d8f073982a300a78eb2235b9f8",
     "crates/umf-core/tests/sol_generation_schema_order_review.rs": "6618e6b11ec64f42e27fc6f7734452cd7cf452ad19714eda43730921bf839856",
+    "crates/umf-core/tools/extend_python_re_314.py": "2063a74ae8e825c4cb7cc9fdde730f01eda3dc0f44d4ec5ae8a1384873c8c4b4",
     "crates/umf-core/tools/generate_cpython_re_corpus.py": "072fb12eaf8390737e273c821986f50affcc0d0b9ee9338189af122ef011cfb8",
-    "crates/umf-core/tools/generate_independent_python_re_boundaries.py": "f38b79a428917b5902aec9c62ae37f22f3c8ff84a09d962c9a49b99513a3474f",
-    "crates/umf-core/tools/generate_independent_python_re_hex.py": "a6c308eb0851ec5aa665c7dae538bbcaed1a0791676521a5dd0f4747f6550a5c",
-    "crates/umf-core/tools/generate_independent_python_re_info.py": "54577418ea4c3e7a4b6dd0ea82fb218dfeb29e8d97a12aa37b6f5d075e78f5be",
+    "crates/umf-core/tools/generate_independent_python_re_boundaries.py": "14fd8e77bfeb91a05a222ae87337156569cd82a2c375f99e7e260098d2f35504",
+    "crates/umf-core/tools/generate_independent_python_re_hex.py": "cfe76557ac8996fd0ab95b17d21852d9f59d50f820f981120b1022700dbebcb6",
+    "crates/umf-core/tools/generate_independent_python_re_info.py": "283c07014258892177758643e24ba5e9e3a49c6b355e821790d87fd102c49b9b",
     "crates/umf-core/tools/generate_python_re_tables.py": "895f68c37e6ab63c51421e62ec4c380c3b59be037faf811dea51c05cc07467f4",
     "crates/umf-core/tools/unicode/NameAliases-14.0.0.txt": "14b3b677d33f95c51423dce6eef4a6a28b4b160451ecedee4b91edb6745cf4a3",
     "crates/umf-core/tools/unicode/NameAliases-15.0.0.txt": "3e39509e8fae3e5d50ba73759d0b97194501d14a9c63107a6372a46b38be18e8",
     "crates/umf-core/tools/unicode/NameAliases-15.1.0.txt": "fbf0e640bab36e165c4da5b6a98bdd963fcb4f923b5097f26f6f7f18b9678698",
+    "crates/umf-core/tools/unicode/NameAliases-16.0.0.txt": "bc5e89e5a6f2cf21b1d3976af13432bab3f0b406907d7c7ba9c0f4faf3fc5b44",
     "crates/umf-core/vendor/saphyr-parser/.cargo-ok": "afbf9d0f3560b0fd7795e81c42a0a79ee6b6fc67e064f77826aee642cad28d91",
     "crates/umf-core/vendor/saphyr-parser/.cargo/config.toml": "0561dd764201cb870fb7e7a5c69462e06662b165bd5c9ef3cb249f9f1ba3d5a3",
     "crates/umf-core/vendor/saphyr-parser/.cargo_vcs_info.json": "d07fa41e1d7b82834fc686a135821645f7c9437a3aa6befa07ce1430ff0822b7",
@@ -271,15 +275,15 @@
   },
   "outputs": {
     "spec/core/schema.json": {
-      "sha256": "bdcf1c6b8a197dfbd769ea47a879eaabeeb1d71cc00cab1f9e600175354c5da7",
+      "sha256": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d",
       "bytes": 45342
     },
     "spec/core/semantic-type-reference.schema.json": {
-      "sha256": "48def42448706bbdfe68c458746d23610767feae0da6456735674524b8018887",
+      "sha256": "207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9",
       "bytes": 45463
     },
     "spec/core/extension-package.schema.json": {
-      "sha256": "a4f4694b3ae32ef47a898f49fdce969b890f1ac901fc6747a43cb8c9c6c77c35",
+      "sha256": "4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766",
       "bytes": 45001
     },
     "spec/metamodel/package.json": {
@@ -287,27 +291,27 @@
       "bytes": 1265
     },
     "spec/metamodel/generated/core-constraints.json": {
-      "sha256": "7e2a2e4bb3ea3555e449499a2bfa089c2418dcb957b557ff0be22bbab466fe19",
+      "sha256": "e4e667c6a23ebcfe12a937730adfa60081475ad11d367b8986a9ea94429d5dcd",
       "bytes": 190252
     },
     "spec/metamodel/generated/domain-policy.json": {
-      "sha256": "4c8a04d7a333e5faed177f0756ed1469d69d2cfe5e116b2c07842a7a6b92bbe0",
+      "sha256": "7827703fe00b4eb955e9a1d1632fec4e7b9e8c52df0d67eb700dbd7ce9a6d436",
       "bytes": 14827
     },
     "spec/metamodel/generated/python-shapes.json": {
-      "sha256": "c115d0dd4827918150ec28c899181a8732664a24af461af7ce8b91f8a8b4728a",
+      "sha256": "884fb5d09e1cd512e32b188144aa0f9ac55d396cc5a3b10341b3aeb06093fde7",
       "bytes": 98734
     },
     "python/umf_access/src/umf_access/generated_core.py": {
-      "sha256": "346d89b12be5d5343267c8aafffccdd23cf1c27c7ffe2d83f71440e02a383745",
+      "sha256": "5366ba6be1c2eb042b14f30723648686294e1f450d75a645e76806a4494593a1",
       "bytes": 360
     },
     "src/generated/core-model.ts": {
-      "sha256": "76d3dbbd2481564883c0c4fda7fa73856b2628be3970206404bcad2c20c704d9",
+      "sha256": "55485912b78640ef970244ffd8d4cbd6f186e035efccd77259aadff6120b7106",
       "bytes": 6714
     },
     "src/generated/core-validators.ts": {
-      "sha256": "4a88fd9bc398c56d71e535841322dcf10d2851e16b026c14679e2d79062e90a7",
+      "sha256": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff",
       "bytes": 305070
     }
   }

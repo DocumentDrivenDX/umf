@@ -4,6 +4,8 @@
 
 Inputs are three exact CPython interpreter paths (3.11, 3.12, 3.13).
 Full test_re literal calls are AST-extracted, not executed as a unittest suite.
+Pass --python314 with an exact interpreter to append only its new oracle rows;
+the frozen 3.11–3.13 oracle records and TSV rows remain byte-identical.
 """
 from __future__ import annotations
 import ast
@@ -107,7 +109,7 @@ for node in ast.walk(ast.parse(SOURCE.read_text())):
 
 RUNNER = r'''
 import json,re,sys,unicodedata,warnings
-expected_minor=int(sys.argv[1])
+expected_minor=14
 assert sys.version_info[:2]==(3,expected_minor),sys.version
 cases=json.load(sys.stdin);results=[]
 for case in cases:
@@ -127,22 +129,31 @@ for case in cases:
   results.append(result)
 print(json.dumps({'version':sys.version,'executable':sys.executable,'unicodeVersion':unicodedata.unidata_version,'results':results},ensure_ascii=True))
 '''
-if len(sys.argv)!=4:
-    raise SystemExit('usage: generate_independent_python_re_boundaries.py PY311 PY312 PY313')
-profiles={}
-for minor, interpreter in zip((11,12,13),sys.argv[1:]):
-    process=subprocess.run([interpreter,'-c',RUNNER,str(minor)],input=json.dumps(CASES,ensure_ascii=True),text=True,capture_output=True,check=True)
-    profiles[f'3.{minor}']=json.loads(process.stdout)
-record={'profile':'umf.independent-python-re-boundaries/1','source':{'url':'https://raw.githubusercontent.com/python/cpython/v3.11.14/Lib/test/test_re.py','sha256':hashlib.sha256(SOURCE.read_bytes()).hexdigest()},'generatorSha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'scope':{'cases':len(CASES),'literalCallsExtracted':extracted,'fullTestReExecuted':False,'exclusions':['byte patterns','parameterized/nonliteral official calls','explicit flags arguments','substitution/split/capture-group API results','full Python unittest harness']},'cases':CASES,'oracles':profiles}
-OUTPUT.write_text(json.dumps(record,ensure_ascii=True,separators=(',',':'))+'\n')
-tsv=[]
-for minor, key in zip((11,12,13), ('3.11','3.12','3.13')):
-    for case, result in zip(CASES, profiles[key]['results']):
-        span = result.get('span')
-        span_text = '-' if span is None else f'{span[0]},{span[1]}'
-        text = ','.join(map(str, case.get('textCodepoints', [])))
-        pattern = ','.join(map(str, case['patternCodepoints']))
-        status = 'E' if result['status'] != 'compiled' else ('N' if span is None else 'M')
-        tsv.append('\t'.join((str(minor), case['id'], case['operation'], status, span_text, text, pattern)))
-TSV_OUTPUT.write_text('\n'.join(tsv)+'\n', encoding='ascii')
-print(json.dumps({'output':str(OUTPUT),'cases':len(CASES),'officialLiteralCalls':extracted,'sha256':hashlib.sha256(OUTPUT.read_bytes()).hexdigest(),'tsvOutput':str(TSV_OUTPUT),'tsvSha256':hashlib.sha256(TSV_OUTPUT.read_bytes()).hexdigest(),'versions':{k:v['version'].split()[0] for k,v in profiles.items()}}))
+if len(sys.argv)!=3 or sys.argv[1]!='--python314':
+    raise SystemExit('usage: generate_independent_python_re_boundaries.py --python314 PY314')
+interpreter=sys.argv[2]
+baseline=json.loads(OUTPUT.read_text(encoding='utf-8'))
+if baseline.get('cases')!=CASES or set(baseline.get('oracles',{}))!={'3.11','3.12','3.13'}:
+    raise SystemExit('frozen 3.11–3.13 boundary fixture does not match this generator preimage')
+process=subprocess.run([interpreter,'-c',RUNNER,'14'],input=json.dumps(CASES,ensure_ascii=True),text=True,capture_output=True,check=True)
+oracle=json.loads(process.stdout)
+if oracle.get('unicodeVersion')!='16.0.0':
+    raise SystemExit('CPython 3.14 oracle is not using Unicode 16.0.0')
+oracle['executableSha256']=hashlib.sha256(Path(interpreter).resolve().read_bytes()).hexdigest()
+baseline['python314GeneratorSha256']=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+baseline['python314Scope']='CPython 3.14.8 / Unicode 16.0.0 oracle only; prior 3.11–3.13 oracle records and TSV rows are retained byte-for-byte.'
+baseline['oracles']['3.14']=oracle
+OUTPUT.write_text(json.dumps(baseline,ensure_ascii=True,separators=(',',':'))+'\n')
+old_rows=TSV_OUTPUT.read_text(encoding='ascii').splitlines()
+if len(old_rows)!=len(CASES)*3 or any(row.split('\t',1)[0] not in {'11','12','13'} for row in old_rows):
+    raise SystemExit('frozen 3.11–3.13 boundary outcome rows are incomplete or unexpected')
+rows=[]
+for case,result in zip(CASES,oracle['results']):
+    span=result.get('span')
+    span_text='-' if span is None else f'{span[0]},{span[1]}'
+    text=','.join(map(str,case.get('textCodepoints',[])))
+    pattern=','.join(map(str,case['patternCodepoints']))
+    status='E' if result['status']!='compiled' else ('N' if span is None else 'M')
+    rows.append('\t'.join(('14',case['id'],case['operation'],status,span_text,text,pattern)))
+TSV_OUTPUT.write_text('\n'.join(old_rows+rows)+'\n',encoding='ascii')
+print(json.dumps({'output':str(OUTPUT),'cases':len(CASES),'officialLiteralCalls':extracted,'sha256':hashlib.sha256(OUTPUT.read_bytes()).hexdigest(),'tsvOutput':str(TSV_OUTPUT),'tsvSha256':hashlib.sha256(TSV_OUTPUT.read_bytes()).hexdigest(),'version':oracle['version'].split()[0],'unicodeVersion':oracle['unicodeVersion']}))

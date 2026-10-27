@@ -1,0 +1,22 @@
+{
+  "status": "ALL_GENERATION_CHECKS_PASS_ARCHIVE_CODEGEN_MAP_TYPE_REFUSAL",
+  "sourceCommit": "45b24607826bf4708e6dbac838dd6eac5afd86d3",
+  "runId": 40421280489,
+  "attempt": 1,
+  "artifactId": 12697374740,
+  "artifactBytes": 3091,
+  "artifactSha256": "15369e29a40a96b9a43bead371f6b7a29931b96191b57ae92b8be370985de9fb",
+  "actualEightPredecessors": "raw0/capture0/untruncated, including original metamodel self/root check, action identity, Codegen, full R3 inventory/check/boundary/tests",
+  "r3DurationMs": 46150,
+  "archiveFailure": {
+    "rawExit": 1,
+    "captureExit": 0,
+    "durationMs": 40,
+    "logBytes": 32,
+    "logSha256": "25a0f0a12d55cdf4e8ec696ea502154a6ff609b6440077d5b1ffff23385a89eb",
+    "locatedBy": "Exact source-owned fixedmessage bytes and digest match; raw archive log not retained",
+    "message": "invalid Codegen output manifest",
+    "sourceDefect": "Archive reader requires list; actual Codegen files is path-to-hash dictionary"
+  },
+  "dependentOutputAdoption": null
+}

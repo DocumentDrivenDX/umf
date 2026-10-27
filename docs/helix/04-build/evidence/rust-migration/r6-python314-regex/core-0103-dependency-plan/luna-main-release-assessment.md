@@ -1,0 +1,21 @@
+# Core Python 3.14 extraction and release-path supplement
+
+Read-only comparison against coordinated Core main `d5022e37840329d351bcd6c27fe7d7aad4758544`.
+
+## Clean extraction on Core main
+
+All eight existing-file preimages and direct generator/corpus inputs used by `f4a410c0522135065a0b20e8d2b69705fddcbac4` are identical on coordinated main to the feature commit's parent. The eight-path feature patch therefore applies cleanly to the Core main release line without bringing the migration branch or additional implementation files. Main still has only V3_11–V3_13 in `python_regex.rs`; it does not already contain the 3.14 profile.
+
+## Existing build and publication boundaries
+
+- `.github/workflows/python-action-runtime.yml` is the current native wheel producer/qualification path. It builds direct wheel + sdist and a wheel rebuilt from that sdist on Ubuntu 24.04/Python 3.11.17 and macOS 15 arm64/Python 3.11.9. It verifies payloads and installed extensions, then runs the same installed action-runtime/core/extension-kind tests against each wheel. It pins build/test tools in the workflow and retains qualification receipts. It does not have Python 3.14 cells or assemble/publish a multi-cell immutable GitHub release.
+- `tools/verify_python_artifacts.py`, `python/hatch_build.py`, `python/pyproject.toml`, `python/src/umf/__init__.py`, and the Python version/custody tests define wheel payload, version and native build behavior. Current distribution metadata and `__version__` are `0.10.2`; the semantic schema/profile must stay `0.10.0`. Version 0.10.3 needs coordinated source/test/workflow expectation updates; do not change the semantic version.
+- `.github/workflows/publish-pypi.yml` is a publisher/consumer, not a builder. It requires a manual exact tag, source commit and SHA256SUMS pin, verifies immutable GitHub tag/release objects and archive bytes/metadata, publishes via OIDC only if the exact package is absent, then verifies PyPI-served bytes and performs an isolated CPython 3.11 install check. Existing job limits are 15 minutes (verification), 20 minutes (publish), and 10 minutes (consumer).
+- `.github/workflows/pypi.yml`, `scripts/dispatch_core_pypi_release.py`, and `scripts/publish_core_pypi_release.py` select published releases, resolve annotated/lightweight tag targets, and validate `release-pins.json`, SHA256SUMS, wheel/sdist inventory, archive metadata, tag/source and GitHub asset digests. The validator accepts numeric `python-vX.Y.Z` tags and requires the standalone Core pin object's tag, commit, distribution and version to match. It allows a broad wheel count, so producer-side exact four-cell filename/count/identity gates remain necessary.
+- `.github/workflows/pypi-validation.yml` runs the publisher/dispatcher tests for their source/workflow changes. The current workflow tree has no separate Core release-build workflow; a normal release process must supply the immutable assets/pins that the existing publisher verifies.
+
+## 0.10.3 requirements and limits
+
+Use the existing wheel qualification/build path and its established source, artifact, installed-payload and sdist-rebuild checks as the base. Extend it to the required Linux/macOS × Python 3.11/3.14 matrix and include the exact independent 3.11–3.14 regex corpora, preserving the existing regressions and future-minor refusal. The Python 3.14 profile is a release dependency; the 0.10.2 published wheels cannot prove it. Preserve the existing native Document read/write roundtrip and public installed-package gates before publication. The publisher's public-consumer job is only CPython 3.11, so that job alone cannot satisfy the 3.14 installed-wheel requirement.
+
+Required version metadata includes `python/pyproject.toml` project version and `python/src/umf/__init__.py::__version__`, plus exact-version expectations in the verifier, current native qualification workflow and its tests/custody fixtures. Release assets must use `python-v0.10.3`, a `release-pins.json` binding that tag to the exact source commit, `distribution: umf-core`, and `version: 0.10.3`, together with exact wheel filenames/digests and the sdist/SHA256SUMS. Keep semantic Core 0.10.0. The version change requires updating these literal expectations deliberately; do not bulk-substitute unrelated historical evidence.

@@ -1,0 +1,43 @@
+{
+  "base": "d5022e37840329d351bcd6c27fe7d7aad4758544",
+  "files": [
+    {
+      "baseBytes": 104105,
+      "equalsDonorParent": true,
+      "path": "crates/umf-core/src/python_regex.rs",
+      "sha256": "f639ce9effe57755ed0fe414d5b072b29a21c877a07eab67a5f4b775de07b4e1"
+    },
+    {
+      "baseBytes": 346553,
+      "equalsDonorParent": true,
+      "path": "crates/umf-core/src/python_re_tables.rs",
+      "sha256": "84f931263193ce41a1459640f1a20182f61a9fe14bfd02c319f3609237248d2c"
+    },
+    {
+      "baseBytes": 1172289,
+      "equalsDonorParent": true,
+      "path": "crates/umf-core/src/python_re_names.dat",
+      "sha256": "1a7d63f9371ecc8111ca04efad730a8afa700316eee1974912669a74c8ef0071"
+    },
+    {
+      "baseBytes": 6317,
+      "equalsDonorParent": true,
+      "path": "crates/umf-core/tools/generate_python_re_tables.py",
+      "sha256": "895f68c37e6ab63c51421e62ec4c380c3b59be037faf811dea51c05cc07467f4"
+    },
+    {
+      "baseBytes": 26552,
+      "equalsDonorParent": true,
+      "path": "crates/umf-core/tests/fixtures/cpython-re/re_tests.py",
+      "sha256": "33033dc23d20a6924391819395e7bdd3c16d11cf3bb79eedb6298e79f65bb4e8"
+    },
+    {
+      "baseBytes": 1991,
+      "equalsDonorParent": true,
+      "path": "crates/umf-core/src/python_re_tables.LICENSE",
+      "sha256": "bfb121a2aaa8fa3d77f3429ae2aaed879cc53cacad6fbe42a2513043b80fcb9a"
+    }
+  ],
+  "method": "read-only Git object bytes; no candidate execution",
+  "selectedDonor": "f4a410c0522135065a0b20e8d2b69705fddcbac4"
+}

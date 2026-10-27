@@ -35,16 +35,25 @@ for case in json.load(sys.stdin):
  out.append({'status':'compiled','span':list(m.span()) if m else None})
 print(json.dumps({'version':sys.version,'executable':sys.executable,'unicodeVersion':unicodedata.unidata_version,'results':out},ensure_ascii=True))
 '''
-assert len(sys.argv)==4,'pass exact 3.11, 3.12, 3.13 CPython binaries'
-oracles={}
-for minor,exe in zip((11,12,13),sys.argv[1:]):
- result=json.loads(subprocess.check_output([exe,'-c',runner,str(minor)],input=json.dumps(cases).encode()));result['executableSha256']=hashlib.sha256(pathlib.Path(exe).resolve().read_bytes()).hexdigest();oracles[f'3.{minor}']=result
-record={'profile':'umf.independent-python-re-info/1','generatorSha256':hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest(),'scope':'Additive reviewer-owned global/scoped ASCII and Unicode category INFO prefix/class union/negation/anchor/group/alternative census. Compile/search only; no candidate outputs used. Original 6372 fixture unchanged.','cases':cases,'oracles':oracles}
+assert len(sys.argv)==3 and sys.argv[1]=='--python314','usage: generate_independent_python_re_info.py --python314 PY314'
+exe=sys.argv[2]
+record=json.loads(output.read_text(encoding='utf-8'))
+if record.get('cases')!=cases or set(record.get('oracles',{}))!={'3.11','3.12','3.13'}:
+ raise SystemExit('frozen 3.11–3.13 INFO fixture does not match this generator preimage')
+oracle=json.loads(subprocess.check_output([exe,'-c',runner,'14'],input=json.dumps(cases).encode()))
+if oracle.get('unicodeVersion')!='16.0.0':raise SystemExit('CPython 3.14 oracle is not using Unicode 16.0.0')
+oracle['executableSha256']=hashlib.sha256(pathlib.Path(exe).resolve().read_bytes()).hexdigest()
+record['python314GeneratorSha256']=hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest()
+record['python314Scope']='CPython 3.14.8 / Unicode 16.0.0 oracle only; prior 3.11–3.13 oracle records and TSV rows are retained byte-for-byte.'
+record['oracles']['3.14']=oracle
 output.write_text(json.dumps(record,ensure_ascii=True,separators=(',',':'))+'\n')
+tsv=output.with_name('independent-info-outcomes.tsv')
+old_rows=tsv.read_text(encoding='ascii').splitlines()
+if len(old_rows)!=len(cases)*3 or any(row.split('\t',1)[0] not in {'11','12','13'} for row in old_rows):
+ raise SystemExit('frozen 3.11–3.13 INFO outcome rows are incomplete or unexpected')
 rows=[]
-for minor,oracle in oracles.items():
- for case,result in zip(cases,oracle['results']):
-  span=result.get('span');status='E' if result['status']=='compile-error' else 'N' if span is None else 'M'
-  rows.append('\t'.join([minor[2:],case['id'],'search',status,'-' if span is None else ','.join(map(str,span)),','.join(map(str,case['textCodepoints'])),','.join(map(str,case['patternCodepoints']))]))
-tsv=output.with_name('independent-info-outcomes.tsv');tsv.write_text('\n'.join(rows)+'\n')
-print(json.dumps({'cases':len(cases),'outcomes':len(rows),'fixtureSha256':hashlib.sha256(output.read_bytes()).hexdigest(),'tsvSha256':hashlib.sha256(tsv.read_bytes()).hexdigest()}))
+for case,result in zip(cases,oracle['results']):
+ span=result.get('span');status='E' if result['status']=='compile-error' else 'N' if span is None else 'M'
+ rows.append('\t'.join(['14',case['id'],'search',status,'-' if span is None else ','.join(map(str,span)),','.join(map(str,case['textCodepoints'])),','.join(map(str,case['patternCodepoints']))]))
+tsv.write_text('\n'.join(old_rows+rows)+'\n')
+print(json.dumps({'cases':len(cases),'outcomes':len(old_rows)+len(rows),'fixtureSha256':hashlib.sha256(output.read_bytes()).hexdigest(),'tsvSha256':hashlib.sha256(tsv.read_bytes()).hexdigest(),'version':oracle['version'].split()[0],'unicodeVersion':oracle['unicodeVersion']}))

@@ -4,6 +4,8 @@ on:
   push:
     branches-ignore:
       - codex/core-0102-inventory-generation
+      - codex/core-python314-generation
+      - codex/core-python314-public-install-proof
     tags:
       - '**'
   pull_request:
@@ -14,6 +16,8 @@ permissions:
 
 jobs:
   qualify-installed-artifact:
+    timeout-minutes: 35
+    if: ${{ github.event_name != 'push' || (github.ref != 'refs/heads/codex/core-python314-generation' && github.ref != 'refs/heads/codex/core-python314-public-install-proof') }}
     strategy:
       fail-fast: false
       matrix:
@@ -24,38 +28,48 @@ jobs:
             python-version: '3.11.17'
             expected-machine: x86_64
             expected-platform: linux_x86_64
-          - cohort: macos-arm64
-            runs-on: macos-15
-            python-architecture: arm64
-            python-version: '3.11.9'
-            expected-machine: arm64
-            expected-platform: macos_arm64
     runs-on: ${{ matrix.runs-on }}
     steps:
-      - uses: actions/checkout@v4
-      - name: Isolate Rust toolchain state
+      - name: Start the shared qualification deadline and seed failure evidence
+        timeout-minutes: 1
         run: |
-          {
-            printf 'RUSTUP_HOME=%s/umf-action-rustup\n' "$RUNNER_TEMP"
-            printf 'CARGO_TARGET_DIR=%s/umf-action-target\n' "$RUNNER_TEMP"
-          } >> "$GITHUB_ENV"
+          python3 - "$RUNNER_TEMP/core-wheel-bounds" <<'PY'
+          import json, pathlib, sys, time
+          root = pathlib.Path(sys.argv[1]); root.mkdir(parents=True, exist_ok=True)
+          now = time.monotonic()
+          limits = {"totalSeconds": 1800, "cleanupReserveSeconds": 60, "timeoutKillGraceSeconds": 10, "drainMarginSeconds": 2, "childSeconds": 180, "aggregateLogBytes": 1048576, "artifactBytes": 16777216}
+          (root / "deadline.json").write_text(json.dumps({"profile": "umf.core-python-qualification-deadline/1", "startedMonotonic": now, "deadlineMonotonic": now + limits["totalSeconds"], **limits}, sort_keys=True) + "\n")
+          (root / "failure-receipt.json").write_text(json.dumps({"profile": "umf.core-python-qualification-run/1", "status": "failed_or_incomplete", "commands": [], "limits": limits}, sort_keys=True) + "\n")
+          PY
+      - uses: actions/checkout@v4
+        timeout-minutes: 2
+      - name: Isolate Rust toolchain state
+        timeout-minutes: 3
+        run: |
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name isolate-rust-toolchain-state -- \
+            bash -c 'printf "RUSTUP_HOME=%s/umf-action-rustup\\nCARGO_TARGET_DIR=%s/umf-action-target\\n" "$1" "$1" >> "$2"' \
+            _ "$RUNNER_TEMP" "$GITHUB_ENV"
       - uses: actions/setup-python@v5
+        timeout-minutes: 2
         with:
           python-version: ${{ matrix.python-version }}
           architecture: ${{ matrix.python-architecture }}
       - uses: dtolnay/rust-toolchain@stable
+        timeout-minutes: 2
         with:
           toolchain: 1.90.0
       - name: Record the compiler cohort
+        timeout-minutes: 3
         run: |
-          rustc -Vv > "$RUNNER_TEMP/umf-rustc-version.txt"
-          cargo --version > "$RUNNER_TEMP/umf-cargo-version.txt"
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name record-rustc-version -- bash -c 'rustc -Vv > "$1"' _ "$RUNNER_TEMP/umf-rustc-version.txt"
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name record-cargo-version -- bash -c 'cargo --version > "$1"' _ "$RUNNER_TEMP/umf-cargo-version.txt"
       - name: Require the declared runner architecture
+        timeout-minutes: 3
         env:
           EXPECTED_MACHINE: ${{ matrix.expected-machine }}
           EXPECTED_PLATFORM: ${{ matrix.expected-platform }}
         run: |
-          python - <<'PY'
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name require-runner-platform -- python - <<'PY'
           import os
           import platform
           import sys
@@ -74,24 +88,30 @@ jobs:
           print(f"runner={sys.platform} machine={machine} python_platform={current}")
           PY
       - name: Install bounded build and test tools
-        run: python -m pip install 'build==1.3.0' 'hatchling==1.27.0' 'pytest==8.4.2'
+        timeout-minutes: 3
+        run: python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name install-producer-build-tools -- python -m pip install 'build==1.3.0' 'hatchling==1.27.0' 'pytest==8.4.2'
       - name: Test the artifact verifier version selector
-        run: python -m pytest -q python/tests/test_python_artifact_version.py
+        timeout-minutes: 3
+        run: python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name verifier-version-selector-test -- python -m pytest -q python/tests/test_python_artifact_version.py
       - name: Build the source and binary distributions
-        run: python -m build --wheel --sdist --no-isolation python
+        timeout-minutes: 4
+        run: python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name build-source-and-binary-distributions -- python -m build --wheel --sdist --no-isolation python
       - name: Verify wheel payload and rebuild from the sdist
+        timeout-minutes: 4
         env:
           EXPECTED_PLATFORM: ${{ matrix.expected-platform }}
         run: |
-          python tools/verify_python_artifacts.py \
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name verify-built-artifacts-and-rebuild-sdist -- \
+            python tools/verify_python_artifacts.py \
             --wheel python/dist/*.whl \
-            --expected-version 0.10.2 \
+            --expected-version 0.10.3 \
             --sdist python/dist/*.tar.gz \
             --rebuilt-wheel-directory "$RUNNER_TEMP/umf-sdist-rebuilt" \
             --repository . \
             --expected-platform "$EXPECTED_PLATFORM" \
             --receipt "$RUNNER_TEMP/umf-artifact-payload.json"
       - name: Create isolated environments for both native artifacts
+        timeout-minutes: 6
         run: |
           set -euo pipefail
           direct_wheel=(python/dist/*.whl)
@@ -102,15 +122,19 @@ jobs:
           fi
           for artifact in direct sdist-rebuilt; do
             environment="$RUNNER_TEMP/umf-installed-$artifact"
-            python -m venv "$environment"
-            "$environment/bin/python" -m pip install \
+            python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name "create-$artifact-venv" -- python -m venv "$environment"
+            python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name "install-$artifact-test-tools" -- \
+              "$environment/bin/python" -m pip install \
               'pytest==8.4.2' 'hatchling==1.27.0' 'pydantic==2.11.9'
           done
-          "$RUNNER_TEMP/umf-installed-direct/bin/python" -m pip install \
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name install-direct-wheel -- \
+            "$RUNNER_TEMP/umf-installed-direct/bin/python" -m pip install \
             --no-deps --no-compile "${direct_wheel[0]}"
-          "$RUNNER_TEMP/umf-installed-sdist-rebuilt/bin/python" -m pip install \
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name install-sdist-rebuilt-wheel -- \
+            "$RUNNER_TEMP/umf-installed-sdist-rebuilt/bin/python" -m pip install \
             --no-deps --no-compile "${rebuilt_wheel[0]}"
       - name: Verify both installed distributions, payloads, and native modules
+        timeout-minutes: 5
         env:
           EXPECTED_MACHINE: ${{ matrix.expected-machine }}
         run: |
@@ -121,11 +145,13 @@ jobs:
             artifact="$1"
             wheel="$2"
             environment="$RUNNER_TEMP/umf-installed-$artifact"
-            "$environment/bin/python" -I -B \
+            python3 "$GITHUB_WORKSPACE/tools/core_python_qualification_runner.py" run --root "$RUNNER_TEMP/core-wheel-bounds" --name "verify-$artifact-installed-wheel" -- \
+              "$environment/bin/python" -I -B \
               "$GITHUB_WORKSPACE/tools/verify_python_artifacts.py" \
-              --wheel "$wheel" --expected-version 0.10.2 --verify-installed-wheel \
+              --wheel "$wheel" --expected-version 0.10.3 --verify-installed-wheel \
               --receipt "$RUNNER_TEMP/umf-installed-$artifact-payload.json"
-            "$environment/bin/python" -I -B - "$RUNNER_TEMP/umf-install-$artifact.json" <<'PY'
+            python3 "$GITHUB_WORKSPACE/tools/core_python_qualification_runner.py" run --root "$RUNNER_TEMP/core-wheel-bounds" --name "probe-$artifact-installed-identity" -- \
+              "$environment/bin/python" -I -B - "$RUNNER_TEMP/umf-install-$artifact.json" <<'PY'
           import importlib.metadata
           import json
           import os
@@ -143,8 +169,8 @@ jobs:
               raise SystemExit("UMF imported outside the isolated installation")
           if platform.machine().lower() != os.environ["EXPECTED_MACHINE"]:
               raise SystemExit("Installed test interpreter architecture changed")
-          if importlib.metadata.version("umf-core") != "0.10.2" or umf.__version__ != "0.10.2":
-              raise SystemExit("Installed distribution version is not 0.10.2")
+          if importlib.metadata.version("umf-core") != "0.10.3" or umf.__version__ != "0.10.3":
+              raise SystemExit("Installed distribution version is not 0.10.3")
           if current_core_version() != "0.10.0":
               raise SystemExit("Installed semantic core is not 0.10.0")
           extension = Path(_rust_core.__file__).resolve()
@@ -167,10 +193,12 @@ jobs:
           verify_install direct "${direct_wheel[0]}"
           verify_install sdist-rebuilt "${rebuilt_wheel[0]}"
       - name: Run installed action-runtime and core regression tests
+        timeout-minutes: 5
         id: direct_installed_tests
         run: |
           cd "$RUNNER_TEMP"
-          "$RUNNER_TEMP/umf-installed-direct/bin/python" -I -B -m pytest -q \
+          python3 "$GITHUB_WORKSPACE/tools/core_python_qualification_runner.py" run --root "$RUNNER_TEMP/core-wheel-bounds" --name direct-installed-original-suite -- \
+            "$RUNNER_TEMP/umf-installed-direct/bin/python" -I -B -m pytest -q \
             --junitxml="$RUNNER_TEMP/umf-direct-action-tests.xml" \
             "$GITHUB_WORKSPACE/python/tests/test_action_runtime_generated_client.py" \
             "$GITHUB_WORKSPACE/python/tests/test_action_runtime_resources.py" \
@@ -180,21 +208,25 @@ jobs:
             "$GITHUB_WORKSPACE/python/tests/test_extension_kinds.py"
       - name: Recheck direct wheel payload after tests
         if: always()
+        timeout-minutes: 3
         run: |
           wheel=("$GITHUB_WORKSPACE"/python/dist/*.whl)
           if [[ ${#wheel[@]} != 1 || ! -x "$RUNNER_TEMP/umf-installed-direct/bin/python" ]]; then
             echo 'Direct post-test payload check prerequisites are unavailable' >&2
             exit 1
           fi
-          "$RUNNER_TEMP/umf-installed-direct/bin/python" -I -B \
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name direct-post-test-verifier -- \
+            "$RUNNER_TEMP/umf-installed-direct/bin/python" -I -B \
             "$GITHUB_WORKSPACE/tools/verify_python_artifacts.py" \
-            --wheel "${wheel[0]}" --expected-version 0.10.2 --verify-installed-wheel \
+            --wheel "${wheel[0]}" --expected-version 0.10.3 --verify-installed-wheel \
             --receipt "$RUNNER_TEMP/umf-installed-direct-posttest.json"
       - name: Run the same tests against the sdist-rebuilt native artifact
+        timeout-minutes: 5
         id: rebuilt_installed_tests
         run: |
           cd "$RUNNER_TEMP"
-          "$RUNNER_TEMP/umf-installed-sdist-rebuilt/bin/python" -I -B -m pytest -q \
+          python3 "$GITHUB_WORKSPACE/tools/core_python_qualification_runner.py" run --root "$RUNNER_TEMP/core-wheel-bounds" --name sdist-rebuilt-original-suite -- \
+            "$RUNNER_TEMP/umf-installed-sdist-rebuilt/bin/python" -I -B -m pytest -q \
             --junitxml="$RUNNER_TEMP/umf-sdist-rebuilt-action-tests.xml" \
             "$GITHUB_WORKSPACE/python/tests/test_action_runtime_generated_client.py" \
             "$GITHUB_WORKSPACE/python/tests/test_action_runtime_resources.py" \
@@ -204,18 +236,21 @@ jobs:
             "$GITHUB_WORKSPACE/python/tests/test_extension_kinds.py"
       - name: Recheck sdist-rebuilt wheel payload after tests
         if: always()
+        timeout-minutes: 3
         run: |
           wheel=("$RUNNER_TEMP"/umf-sdist-rebuilt/*.whl)
           if [[ ${#wheel[@]} != 1 || ! -x "$RUNNER_TEMP/umf-installed-sdist-rebuilt/bin/python" ]]; then
             echo 'Rebuilt post-test payload check prerequisites are unavailable' >&2
             exit 1
           fi
-          "$RUNNER_TEMP/umf-installed-sdist-rebuilt/bin/python" -I -B \
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name sdist-rebuilt-post-test-verifier -- \
+            "$RUNNER_TEMP/umf-installed-sdist-rebuilt/bin/python" -I -B \
             "$GITHUB_WORKSPACE/tools/verify_python_artifacts.py" \
-            --wheel "${wheel[0]}" --expected-version 0.10.2 --verify-installed-wheel \
+            --wheel "${wheel[0]}" --expected-version 0.10.3 --verify-installed-wheel \
             --receipt "$RUNNER_TEMP/umf-installed-sdist-rebuilt-posttest.json"
       - name: Finalize qualification receipt
         if: always()
+        timeout-minutes: 4
         env:
           DIRECT_TEST_OUTCOME: ${{ steps.direct_installed_tests.outcome }}
           SDIST_REBUILT_TEST_OUTCOME: ${{ steps.rebuilt_installed_tests.outcome }}
@@ -224,7 +259,8 @@ jobs:
           RUN_ID: ${{ github.run_id }}
           RUN_ATTEMPT: ${{ github.run_attempt }}
         run: |
-          python - "$GITHUB_WORKSPACE/tools/verify_python_artifacts.py" "$RUNNER_TEMP/umf-artifact-payload.json" "$RUNNER_TEMP/umf-rustc-version.txt" "$RUNNER_TEMP/umf-cargo-version.txt" "$RUNNER_TEMP/umf-qualification.json" <<'PY'
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name finalize-producer-receipt -- \
+            python - "$GITHUB_WORKSPACE/tools/verify_python_artifacts.py" "$RUNNER_TEMP/umf-artifact-payload.json" "$RUNNER_TEMP/umf-rustc-version.txt" "$RUNNER_TEMP/umf-cargo-version.txt" "$RUNNER_TEMP/umf-qualification.json" <<'PY'
           import hashlib
           import json
           import os
@@ -277,13 +313,13 @@ jobs:
                   and installation is not None
                   and installed_payload is not None
                   and counts is not None
-                  and counts["tests"] > 0
+                  and counts["tests"] == 254
                   and counts["errors"] == 0
                   and counts["failures"] == 0
                   and counts["skipped"] == 0
                   and test_outcome == "success"
                   and installation.get("installed_inside_environment") is True
-                  and installation.get("distribution_version") == "0.10.2"
+                  and installation.get("distribution_version") == "0.10.3"
                   and installation.get("semantic_core_version") == "0.10.0"
                   and installed_payload.get("status") == "passed"
                   and installed_payload.get("wheel_sha256") == artifact.get("sha256")
@@ -338,13 +374,14 @@ jobs:
                   and rebuilt_artifact.get("native_platform") == direct_artifact.get("native_platform")
               ))
               and receipt.get("action_runtime_resource_count") == 9
-              and receipt.get("distribution_version") == "0.10.2"
+              and receipt.get("distribution_version") == "0.10.3"
               and receipt.get("semantic_core_version") == "0.10.0"
-              and direct_artifact.get("version") == "0.10.2"
-              and rebuilt_artifact.get("version") == "0.10.2"
+              and direct_artifact.get("version") == "0.10.3"
+              and rebuilt_artifact.get("version") == "0.10.3"
               and direct_artifact.get("tag") == rebuilt_artifact.get("tag")
               and direct_artifact.get("native_sha256")
               and rebuilt_artifact.get("native_sha256")
+              and set(installed_artifacts) == {"direct", "sdist_rebuilt"}
               and installed_artifacts.get("direct", {}).get("qualification") == "passed"
               and installed_artifacts.get("sdist_rebuilt", {}).get("qualification") == "passed"
               and source_revision_valid
@@ -355,19 +392,443 @@ jobs:
           if not passed:
               raise SystemExit("Both independently built native artifacts require successful installs and positive zero-skip tests")
           PY
+      - name: Acquire pinned Linux wheel repair tools
+        if: success() && matrix.cohort == 'linux-x86_64'
+        timeout-minutes: 4
+        run: |
+          set -euo pipefail
+          tools="$RUNNER_TEMP/umf-auditwheel-tools"
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name fetch-repair-tool-wheels -- \
+            python3 tools/core_python_qualification_runner.py fetch-wheels \
+              --lock qualification-inputs/core-0.10.3-wheel-input-lock.json --profile repair \
+              --cell linux-x86_64-py311 --output "$tools"
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name install-locked-repair-tools -- \
+            python -m pip install --disable-pip-version-check --no-index --no-deps --only-binary=:all: "$tools"/*.whl
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name record-auditwheel-version -- bash -c 'auditwheel --version > "$1"' _ "$RUNNER_TEMP/umf-auditwheel-version.txt"
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name record-patchelf-version -- bash -c 'patchelf --version > "$1"' _ "$RUNNER_TEMP/umf-patchelf-version.txt"
+          grep -F '6.8.2' "$RUNNER_TEMP/umf-auditwheel-version.txt"
+          grep -F '0.17.2' "$RUNNER_TEMP/umf-patchelf-version.txt"
+      - name: Analyze and repair the Linux release wheel at auditwheel's selected minimum policy
+        if: success() && matrix.cohort == 'linux-x86_64' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        timeout-minutes: 6
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          wheels=(python/dist/*.whl)
+          if [[ ${#wheels[@]} != 1 ]]; then
+            echo 'Expected exactly one raw Linux wheel for release repair' >&2
+            exit 1
+          fi
+          repaired="$RUNNER_TEMP/umf-auditwheel-repaired"
+          mkdir -p "$repaired"
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name auditwheel-show-source -- \
+            bash -c 'auditwheel show --json "$1" > "$2"' _ "${wheels[0]}" "$RUNNER_TEMP/umf-auditwheel-before.json"
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name auditwheel-repair-auto-only-plat -- \
+            auditwheel repair --plat auto --only-plat --wheel-dir "$repaired" "${wheels[0]}"
+          repaired_wheels=("$repaired"/*.whl)
+          if [[ ${#repaired_wheels[@]} != 1 ]]; then
+            echo 'Auditwheel must produce exactly one repaired release wheel' >&2
+            exit 1
+          fi
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name auditwheel-show-selected -- \
+            bash -c 'auditwheel show --json "$1" > "$2"' _ "${repaired_wheels[0]}" "$RUNNER_TEMP/umf-auditwheel-after.json"
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name verify-selected-linux-wheel -- \
+            python tools/qualify_python_release_wheel.py \
+            --platform linux \
+            --source-wheel "${wheels[0]}" \
+            --selected-wheel "${repaired_wheels[0]}" \
+            --before-report "$RUNNER_TEMP/umf-auditwheel-before.json" \
+            --after-report "$RUNNER_TEMP/umf-auditwheel-after.json" \
+            --tool-artifacts "$RUNNER_TEMP/umf-auditwheel-tools" \
+            --tool-lock qualification-inputs/core-0.10.3-wheel-input-lock.json \
+            --auditwheel-version "$RUNNER_TEMP/umf-auditwheel-version.txt" \
+            --patchelf-version "$RUNNER_TEMP/umf-patchelf-version.txt" \
+            --sdist python/dist/umf_core-0.10.3.tar.gz \
+            --output-wheel-directory "$RUNNER_TEMP/umf-release-selected" \
+            --receipt "$RUNNER_TEMP/umf-release-selected/selection.json"
+      - name: Select the exact macOS release wheel without changing its bytes
+        if: success() && matrix.cohort == 'macos-arm64' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        timeout-minutes: 4
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          wheels=(python/dist/*.whl)
+          if [[ ${#wheels[@]} != 1 ]]; then
+            echo 'Expected exactly one direct macOS wheel for release selection' >&2
+            exit 1
+          fi
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name verify-selected-macos-wheel -- \
+            python tools/qualify_python_release_wheel.py \
+            --platform macos \
+            --source-wheel "${wheels[0]}" \
+            --sdist python/dist/umf_core-0.10.3.tar.gz \
+            --output-wheel-directory "$RUNNER_TEMP/umf-release-selected" \
+            --receipt "$RUNNER_TEMP/umf-release-selected/selection.json"
+      - name: Assemble complete bounded selected release family
+        if: success() && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        timeout-minutes: 2
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          files=("$RUNNER_TEMP"/umf-release-selected/*)
+          if [[ ${#files[@]} != 3 ]]; then
+            echo 'Selected release family must be exactly one wheel, one sdist, and one receipt' >&2
+            exit 1
+          fi
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name assemble-selected-release-family -- \
+            python3 tools/core_python_qualification_runner.py bundle --maximum-bytes 16777216 \
+              --output "$RUNNER_TEMP/umf-release-selected-bounded" "${files[@]}"
+      - uses: actions/upload-artifact@v4
+        if: success() && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        timeout-minutes: 2
+        with:
+          name: umf-core-0.10.3-release-${{ matrix.cohort }}
+          path: ${{ runner.temp }}/umf-release-selected-bounded/*
+          if-no-files-found: error
+      - name: Assemble bounded producer qualification evidence
+        if: always()
+        timeout-minutes: 2
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          candidates=(python/dist/*.whl python/dist/*.tar.gz "$RUNNER_TEMP"/umf-sdist-rebuilt/*.whl "$RUNNER_TEMP"/umf-artifact-payload.json "$RUNNER_TEMP"/umf-install-*.json "$RUNNER_TEMP"/umf-installed-*-payload.json "$RUNNER_TEMP"/umf-installed-*-posttest.json "$RUNNER_TEMP"/umf-direct-action-tests.xml "$RUNNER_TEMP"/umf-sdist-rebuilt-action-tests.xml "$RUNNER_TEMP"/umf-qualification.json "$RUNNER_TEMP"/umf-auditwheel-before.json "$RUNNER_TEMP"/umf-auditwheel-after.json "$RUNNER_TEMP"/umf-auditwheel-version.txt "$RUNNER_TEMP"/umf-patchelf-version.txt "$RUNNER_TEMP"/umf-auditwheel-tools/*.whl "$RUNNER_TEMP"/core-wheel-bounds/deadline.json "$RUNNER_TEMP"/core-wheel-bounds/failure-receipt.json "$RUNNER_TEMP"/core-wheel-bounds/commands.json "$RUNNER_TEMP"/core-wheel-bounds/logs/*)
+          files=()
+          for path in "${candidates[@]}"; do [[ -f "$path" ]] && files+=("$path"); done
+          if ! python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name assemble-producer-evidence -- \
+            python3 tools/core_python_qualification_runner.py bundle --maximum-bytes 16777216 \
+              --output "$RUNNER_TEMP/umf-producer-evidence" "${files[@]}"; then
+            python3 - "$RUNNER_TEMP/core-wheel-bounds/commands.json" "$RUNNER_TEMP/core-wheel-bounds/last-command-failure.json" <<'PY'
+          import json, pathlib, sys
+          source, output = map(pathlib.Path, sys.argv[1:])
+          rows = json.loads(source.read_text(encoding="utf-8")) if source.is_file() and source.stat().st_size <= 1048576 else []
+          last = rows[-1] if rows else {}
+          keys = ("name", "startedUtc", "endedUtc", "appliedAllowanceSeconds", "rawExitCode", "captureExitCode", "timedOut", "overflow", "observedBytes", "capturedBytes", "logSha256")
+          output.write_text(json.dumps({"profile": "umf.core-python-qualification-failure/1", "status": "failed_or_incomplete", "lastCommand": {key: last.get(key) for key in keys}}, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+          PY
+            python3 tools/core_python_qualification_runner.py bundle --maximum-bytes 16777216 \
+              --output "$RUNNER_TEMP/umf-producer-evidence" "$RUNNER_TEMP/core-wheel-bounds/deadline.json" "$RUNNER_TEMP/core-wheel-bounds/last-command-failure.json"
+            exit 1
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
+        timeout-minutes: 2
         with:
           name: umf-python-action-runtime-${{ matrix.cohort }}
-          path: |
-            python/dist/*.whl
-            python/dist/*.tar.gz
-            ${{ runner.temp }}/umf-sdist-rebuilt/*.whl
-            ${{ runner.temp }}/umf-artifact-payload.json
-            ${{ runner.temp }}/umf-install-*.json
-            ${{ runner.temp }}/umf-installed-*-payload.json
-            ${{ runner.temp }}/umf-installed-*-posttest.json
-            ${{ runner.temp }}/umf-direct-action-tests.xml
-            ${{ runner.temp }}/umf-sdist-rebuilt-action-tests.xml
-            ${{ runner.temp }}/umf-qualification.json
-          if-no-files-found: warn
+          path: ${{ runner.temp }}/umf-producer-evidence/*
+          if-no-files-found: error
+
+  qualify-selected-release-wheel-four-cells:
+    name: ${{ matrix.cohort }} Python ${{ matrix.python-version }} selected release wheel
+    needs: qualify-installed-artifact
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include:
+          - cohort: linux-x86_64
+            runs-on: ubuntu-24.04
+            platform: linux
+            python-version: '3.11.17'
+            expected-python-minor: '11'
+            expected-machine: x86_64
+          - cohort: linux-x86_64
+            runs-on: ubuntu-24.04
+            platform: linux
+            python-version: '3.14.8'
+            expected-python-minor: '14'
+            expected-machine: x86_64
+    runs-on: ${{ matrix.runs-on }}
+    steps:
+      - name: Start the 1200-second shared cell deadline and seed failure evidence
+        timeout-minutes: 1
+        run: |
+          python3 - "$RUNNER_TEMP/core-wheel-bounds" <<'PY'
+          import json, pathlib, sys, time
+          root = pathlib.Path(sys.argv[1]); root.mkdir(parents=True, exist_ok=True)
+          now = time.monotonic()
+          limits = {"totalSeconds": 1200, "cleanupReserveSeconds": 60, "timeoutKillGraceSeconds": 10, "drainMarginSeconds": 2, "childSeconds": 180, "aggregateLogBytes": 1048576, "artifactBytes": 16777216}
+          (root / "deadline.json").write_text(json.dumps({"profile": "umf.core-python-qualification-deadline/1", "startedMonotonic": now, "deadlineMonotonic": now + limits["totalSeconds"], **limits}, sort_keys=True) + "\n")
+          (root / "failure-receipt.json").write_text(json.dumps({"profile": "umf.core-python-qualification-run/1", "status": "failed_or_incomplete", "commands": [], "limits": limits}, sort_keys=True) + "\n")
+          PY
+      - uses: actions/checkout@v4
+        timeout-minutes: 2
+      - name: Seed fail-closed cell receipt
+        env:
+          RECEIPT: ${{ runner.temp }}/umf-selected-wheel-cell.json
+          COHORT: ${{ matrix.cohort }}
+          PYTHON_VERSION: ${{ matrix.python-version }}
+          SOURCE_REVISION: ${{ github.sha }}
+        run: |
+          python - "$RECEIPT" <<'PY'
+          import json, os, pathlib, sys
+          pathlib.Path(sys.argv[1]).write_text(json.dumps({
+              "profile": "umf.core-python314-installed-release-cell/1",
+              "status": "failed_or_incomplete",
+              "cohort": os.environ["COHORT"],
+              "requestedPython": os.environ["PYTHON_VERSION"],
+              "sourceRevision": os.environ["SOURCE_REVISION"],
+          }, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+          PY
+      - uses: actions/download-artifact@v4
+        timeout-minutes: 2
+        with:
+          name: umf-core-0.10.3-release-linux-x86_64
+          path: ${{ runner.temp }}/umf-release-linux
+      - uses: actions/setup-python@v5
+        timeout-minutes: 2
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: ${{ matrix.platform == 'linux' && 'x64' || 'arm64' }}
+      - name: Require the declared platform and Python cohort
+        id: require-platform
+        env:
+          EXPECTED_MACHINE: ${{ matrix.expected-machine }}
+          EXPECTED_PYTHON_MINOR: ${{ matrix.expected-python-minor }}
+          PLATFORM: ${{ matrix.platform }}
+          COHORT: ${{ matrix.cohort }}
+        run: |
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name require-platform-and-select-artifacts -- \
+            python - "$RUNNER_TEMP/umf-release-linux" "$GITHUB_OUTPUT" <<'PY'
+          import hashlib, json, os, pathlib, platform, stat, sys, sysconfig, zipfile
+          linux_dir, output = map(pathlib.Path, sys.argv[1:])
+          if platform.machine().lower() != os.environ["EXPECTED_MACHINE"] or str(sys.version_info.minor) != os.environ["EXPECTED_PYTHON_MINOR"]:
+              raise SystemExit("Runner architecture or exact Python minor changed")
+          if os.environ["PLATFORM"] != "linux" or os.environ["COHORT"] != "linux-x86_64":
+              raise SystemExit("Selected release cell is not the declared Linux cohort")
+          linux_root = linux_dir / "umf-release-selected"
+          if not linux_root.is_dir() or linux_root.is_symlink():
+              raise SystemExit("Linux producer selection root is not a canonical directory")
+          linux = json.loads((linux_root / "selection.json").read_text(encoding="utf-8"))
+          if linux.get("status") != "passed":
+              raise SystemExit("Current-run Linux release selection is not qualified")
+          linux_sdist = linux_root / "umf_core-0.10.3.tar.gz"
+          if not linux_sdist.is_file() or linux_sdist.is_symlink() or linux_sdist.stat().st_size > 16777216:
+              raise SystemExit("Linux producer sdist is not a bounded regular artifact")
+          selection = linux
+          if selection.get("sdist", {}).get("sha256") != hashlib.sha256(linux_sdist.read_bytes()).hexdigest():
+              raise SystemExit("Current-run Linux sdist bytes differ from the producer receipt")
+          root = linux_root
+          selected = selection.get("selectedWheel", {})
+          wheel = root / selected.get("path", "")
+          if not wheel.is_file() or wheel.is_symlink() or wheel.stat().st_size > 16777216:
+              raise SystemExit("Linux selected wheel is not a bounded regular artifact")
+          if hashlib.sha256(wheel.read_bytes()).hexdigest() != selected.get("sha256"):
+              raise SystemExit("Linux selected wheel bytes differ from the producer receipt")
+          with zipfile.ZipFile(wheel) as archive:
+              native = archive.read("umf/_rust_core.abi3.so")
+          if hashlib.sha256(native).hexdigest() != selection.get("nativeSha256"):
+              raise SystemExit("Linux selected native bytes differ from the producer receipt")
+          output.write_text(f"selected_wheel={wheel}\nsdist_sha256={selection['sdist']['sha256']}\nselected_native_sha256={selection['nativeSha256']}\nselected_wheel_sha256={selection['selectedWheel']['sha256']}\n", encoding="utf-8")
+          PY
+      - name: Acquire the frozen binary test dependency cohort
+        env:
+          CELL_ID: ${{ matrix.cohort }}-py3${{ matrix.expected-python-minor }}
+        run: |
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name fetch-test-wheel-cohort -- \
+            python3 tools/core_python_qualification_runner.py fetch-wheels --lock qualification-inputs/core-0.10.3-wheel-input-lock.json \
+              --profile test --cell "$CELL_ID" --output "$RUNNER_TEMP/core-test-wheels"
+      - name: Install the exact selected wheel and locked test wheels into a fresh environment
+        timeout-minutes: 5
+        env:
+          SELECTED_WHEEL: ${{ steps.require-platform.outputs.selected_wheel }}
+        run: |
+          set -euo pipefail
+          environment="$RUNNER_TEMP/core-selected-venv"
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name create-selected-wheel-venv -- python -m venv "$environment"
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name install-test-and-selected-wheels -- \
+            "$environment/bin/python" -m pip install --disable-pip-version-check --no-index --no-deps --only-binary=:all: \
+              --no-compile "$RUNNER_TEMP/core-test-wheels"/*.whl "$SELECTED_WHEEL"
+      - name: Verify installed bytes and exercise the public Document round trip
+        id: installed_probes
+        env:
+          EXPECTED_MACHINE: ${{ matrix.expected-machine }}
+          SELECTED_WHEEL: ${{ steps.require-platform.outputs.selected_wheel }}
+          EXPECTED_WHEEL_SHA256: ${{ steps.require-platform.outputs.selected_wheel_sha256 }}
+          EXPECTED_NATIVE_SHA256: ${{ steps.require-platform.outputs.selected_native_sha256 }}
+          EXPECTED_SDIST_SHA256: ${{ steps.require-platform.outputs.sdist_sha256 }}
+          EXPECTED_PYTHON_MINOR: ${{ matrix.expected-python-minor }}
+          EXPECTED_PYTHON_VERSION: ${{ matrix.python-version }}
+        run: |
+          set -euo pipefail
+          environment="$RUNNER_TEMP/core-selected-venv"
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name selected-wheel-installed-verifier -- \
+            "$environment/bin/python" -I -B tools/verify_python_artifacts.py \
+            --wheel "$SELECTED_WHEEL" --expected-version 0.10.3 --verify-installed-wheel \
+            --receipt "$RUNNER_TEMP/umf-selected-wheel-installed.json"
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name selected-wheel-runtime-probes -- \
+            "$environment/bin/python" -I -B - <<'PY'
+          import importlib.metadata
+          import json
+          import os
+          import platform, sys, sysconfig
+          from pathlib import Path
+          from umf import Document, current_core_version, read_document, write_document
+          from umf._rust import UmfCoreError, compile_python_schema
+          from umf.schemas import schema_validator
+
+          if platform.machine().lower() != os.environ["EXPECTED_MACHINE"]:
+              raise SystemExit("Installed release cell architecture changed")
+          if platform.python_version() != os.environ["EXPECTED_PYTHON_VERSION"] or str(sys.version_info.minor) != os.environ["EXPECTED_PYTHON_MINOR"]:
+              raise SystemExit("Installed release cell exact Python version changed")
+          if not sysconfig.get_path("platlib"):
+              raise SystemExit("Installed release cell has no platlib location")
+          package_root = Path(__import__("umf").__file__).resolve()
+          if not package_root.is_relative_to(Path(sysconfig.get_path("platlib")).resolve()):
+              raise SystemExit("Core imported outside its fresh test environment")
+          if importlib.metadata.version("umf-core") != "0.10.3" or current_core_version() != "0.10.0":
+              raise SystemExit("Installed UMF distribution or semantic Core identity changed")
+          if importlib.metadata.version("pydantic") != "2.14.1" or importlib.metadata.version("pydantic-core") != "2.50.1":
+              raise SystemExit("Selected compatible pydantic binary prerequisite tuple changed")
+          source = {"umf": "0.10.0", "id": "core314-installed-roundtrip", "vocabularies": {}, "modules": []}
+          document = Document.model_validate(source)
+          roundtrips = {}
+          for format in ("json", "yaml"):
+              encoded = write_document(document, format)
+              if read_document(encoded, format).to_dict() != source:
+                  raise SystemExit(f"Installed Document {format} round trip changed content")
+              roundtrips[format] = True
+          probe_results = {}
+          if sys.version_info.minor == 14:
+              probe_results["strictEndAnchor"] = schema_validator({"type": "string", "pattern": r"\z"}).is_valid("")
+              probe_results["emptyInputNonBoundary"] = schema_validator({"type": "string", "pattern": r"\B"}).is_valid("")
+              probe_results["unicode16Word"] = schema_validator({"type": "string", "pattern": r"\w"}).is_valid(chr(0x1C89))
+              if not all(probe_results.values()):
+                  raise SystemExit("A Python 3.14 default-profile behavior probe failed")
+              try:
+                  compile_python_schema({"type": "string", "pattern": "x"}, python_minor=15)
+              except UmfCoreError as error:
+                  probe_results["futureProfileRefused"] = error.code == "PYTHON_REGEX_PROFILE_UNAVAILABLE"
+                  if not probe_results["futureProfileRefused"]:
+                      raise
+              else:
+                  raise SystemExit("Future Python regex profile 3.15 was not refused")
+          Path(os.environ["RUNNER_TEMP"], "umf-selected-wheel-probes.json").write_text(json.dumps({
+              "python": platform.python_version(), "pythonPlatform": sysconfig.get_platform(),
+              "machine": platform.machine(), "packageRoot": str(package_root),
+              "umfVersion": importlib.metadata.version("umf-core"),
+              "semanticCoreVersion": current_core_version(),
+              "pydanticVersion": importlib.metadata.version("pydantic"),
+              "pydanticCoreVersion": importlib.metadata.version("pydantic-core"),
+              "documentRoundTrips": roundtrips, "profile314Probes": probe_results,
+          }, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+          PY
+      - name: Run the original installed action-runtime and Core regression suite
+        id: selected_tests
+        run: |
+          cd "$RUNNER_TEMP"
+          python3 "$GITHUB_WORKSPACE/tools/core_python_qualification_runner.py" run --root "$RUNNER_TEMP/core-wheel-bounds" --name selected-release-installed-suite -- \
+            "$RUNNER_TEMP/core-selected-venv/bin/python" -I -B -m pytest -q \
+            --junitxml="$RUNNER_TEMP/umf-selected-wheel-tests.xml" \
+            "$GITHUB_WORKSPACE/python/tests/test_action_runtime_generated_client.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_action_runtime_resources.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_action_fixture_vectors.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_core.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_rust_core.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_extension_kinds.py"
+      - name: Reverify the exact installed selected wheel after tests
+        if: always()
+        timeout-minutes: 3
+        env:
+          SELECTED_WHEEL: ${{ steps.require-platform.outputs.selected_wheel }}
+        run: |
+          if [[ ! -x "$RUNNER_TEMP/core-selected-venv/bin/python" || ! -f "$SELECTED_WHEEL" ]]; then
+            echo 'Post-test selected wheel verifier prerequisites are unavailable' >&2
+            exit 1
+          fi
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name selected-wheel-post-test-verifier -- \
+            "$RUNNER_TEMP/core-selected-venv/bin/python" -I -B tools/verify_python_artifacts.py \
+              --wheel "$SELECTED_WHEEL" --expected-version 0.10.3 --verify-installed-wheel \
+              --receipt "$RUNNER_TEMP/umf-selected-wheel-posttest.json"
+      - name: Finalize selected-wheel cell receipt
+        if: always()
+        timeout-minutes: 4
+        env:
+          TEST_OUTCOME: ${{ steps.selected_tests.outcome }}
+          PROBE_OUTCOME: ${{ steps.installed_probes.outcome }}
+          COHORT: ${{ matrix.cohort }}
+          PLATFORM: ${{ matrix.platform }}
+          PYTHON_VERSION: ${{ matrix.python-version }}
+          SOURCE_REVISION: ${{ github.sha }}
+          SELECTED_WHEEL: ${{ steps.require-platform.outputs.selected_wheel }}
+          EXPECTED_WHEEL_SHA256: ${{ steps.require-platform.outputs.selected_wheel_sha256 }}
+          EXPECTED_NATIVE_SHA256: ${{ steps.require-platform.outputs.selected_native_sha256 }}
+          EXPECTED_SDIST_SHA256: ${{ steps.require-platform.outputs.sdist_sha256 }}
+          EXPECTED_PYTHON_MINOR: ${{ matrix.expected-python-minor }}
+        run: |
+          python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name finalize-selected-cell-receipt -- \
+            python - "$RUNNER_TEMP/umf-selected-wheel-cell.json" "$RUNNER_TEMP/umf-selected-wheel-installed.json" "$RUNNER_TEMP/umf-selected-wheel-posttest.json" "$RUNNER_TEMP/umf-selected-wheel-probes.json" "$RUNNER_TEMP/umf-selected-wheel-tests.xml" <<'PY'
+          import hashlib, json, os, pathlib, sys, xml.etree.ElementTree as ET
+          receipt_path, installed_path, posttest_path, probe_path, junit_path = map(pathlib.Path, sys.argv[1:])
+          receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+          installed = json.loads(installed_path.read_text(encoding="utf-8")) if installed_path.is_file() else None
+          posttest = json.loads(posttest_path.read_text(encoding="utf-8")) if posttest_path.is_file() else None
+          probes = json.loads(probe_path.read_text(encoding="utf-8")) if probe_path.is_file() else None
+          counts = None
+          if junit_path.is_file():
+              if junit_path.is_symlink() or junit_path.stat().st_size > 16777216:
+                  raise SystemExit("Selected cell test report exceeds its fixed read bound")
+              root = ET.parse(junit_path).getroot()
+              suites = [root] if root.tag == "testsuite" else list(root.findall("testsuite"))
+              counts = {key: sum(int(suite.get(key, "0")) for suite in suites) for key in ("tests", "errors", "failures", "skipped")}
+          wheel_path = pathlib.Path(os.environ["SELECTED_WHEEL"]) if os.environ.get("SELECTED_WHEEL") else None
+          receipt.update({
+              "cohort": os.environ["COHORT"], "platform": os.environ["PLATFORM"],
+              "requestedPython": os.environ["PYTHON_VERSION"], "sourceRevision": os.environ["SOURCE_REVISION"],
+              "testOutcome": os.environ.get("TEST_OUTCOME", "not_run"), "probeOutcome": os.environ.get("PROBE_OUTCOME", "not_run"), "testCounts": counts,
+              "installedPayload": installed, "postTestPayload": posttest, "runtimeProbes": probes,
+              "expectedNativeSha256": os.environ.get("EXPECTED_NATIVE_SHA256"),
+              "expectedWheelSha256": os.environ.get("EXPECTED_WHEEL_SHA256"),
+              "commonSdistSha256": os.environ.get("EXPECTED_SDIST_SHA256"),
+              "selectedWheelSha256": hashlib.sha256(wheel_path.read_bytes()).hexdigest() if wheel_path and wheel_path.is_file() else None,
+          })
+          expected_probes = (probes is not None and probes.get("python") == os.environ["PYTHON_VERSION"] and probes.get("umfVersion") == "0.10.3" and probes.get("semanticCoreVersion") == "0.10.0" and probes.get("pydanticVersion") == "2.14.1" and probes.get("pydanticCoreVersion") == "2.50.1" and probes.get("documentRoundTrips") == {"json": True, "yaml": True} and (os.environ["EXPECTED_PYTHON_MINOR"] != "14" or probes.get("profile314Probes") == {"strictEndAnchor": True, "emptyInputNonBoundary": True, "unicode16Word": True, "futureProfileRefused": True}))
+          payload_parity = (installed is not None and posttest is not None and installed.get("status") == "passed" and posttest.get("status") == "passed" and installed.get("wheel_sha256") == os.environ.get("EXPECTED_WHEEL_SHA256") and posttest.get("wheel_sha256") == installed.get("wheel_sha256") and installed.get("native_sha256") == os.environ.get("EXPECTED_NATIVE_SHA256") and posttest.get("native_sha256") == installed.get("native_sha256") and posttest.get("package_file_count") == installed.get("package_file_count"))
+          passed = (payload_parity and expected_probes and receipt.get("commonSdistSha256") == os.environ.get("EXPECTED_SDIST_SHA256") and counts is not None and counts["tests"] == 254 and counts["errors"] == 0 and counts["failures"] == 0 and counts["skipped"] == 0 and os.environ.get("TEST_OUTCOME") == "success" and os.environ.get("PROBE_OUTCOME") == "success" and receipt.get("selectedWheelSha256") == os.environ.get("EXPECTED_WHEEL_SHA256"))
+          receipt["status"] = "passed" if passed else "failed_or_incomplete"
+          receipt_path.write_text(json.dumps(receipt, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+          if not passed:
+              raise SystemExit("Selected release wheel cell did not complete the installed suite with zero skips")
+          PY
+      - name: Assemble bounded selected cell evidence
+        if: always()
+        timeout-minutes: 2
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          files=()
+          for path in \
+            "$RUNNER_TEMP/umf-selected-wheel-cell.json" \
+            "$RUNNER_TEMP/umf-selected-wheel-installed.json" \
+            "$RUNNER_TEMP/umf-selected-wheel-posttest.json" \
+            "$RUNNER_TEMP/umf-selected-wheel-probes.json" \
+            "$RUNNER_TEMP/umf-selected-wheel-tests.xml" \
+            "$RUNNER_TEMP/core-wheel-bounds/deadline.json" \
+            "$RUNNER_TEMP/core-wheel-bounds/failure-receipt.json" \
+            "$RUNNER_TEMP/core-wheel-bounds/commands.json" \
+            "$RUNNER_TEMP/core-wheel-bounds/logs"/*; do
+            [[ -f "$path" ]] && files+=("$path")
+          done
+          if ! python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name assemble-selected-cell-evidence -- \
+            python3 tools/core_python_qualification_runner.py bundle --maximum-bytes 16777216 \
+              --output "$RUNNER_TEMP/core-selected-evidence" "${files[@]}"; then
+            python3 - "$RUNNER_TEMP/core-wheel-bounds/commands.json" "$RUNNER_TEMP/core-wheel-bounds/last-command-failure.json" <<'PY'
+          import json, pathlib, sys
+          source, output = map(pathlib.Path, sys.argv[1:])
+          rows = json.loads(source.read_text(encoding="utf-8")) if source.is_file() and source.stat().st_size <= 1048576 else []
+          last = rows[-1] if rows else {}
+          keys = ("name", "startedUtc", "endedUtc", "appliedAllowanceSeconds", "rawExitCode", "captureExitCode", "timedOut", "overflow", "observedBytes", "capturedBytes", "logSha256")
+          output.write_text(json.dumps({"profile": "umf.core-python-qualification-failure/1", "status": "failed_or_incomplete", "lastCommand": {key: last.get(key) for key in keys}}, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+          PY
+            python3 tools/core_python_qualification_runner.py bundle --maximum-bytes 16777216 \
+              --output "$RUNNER_TEMP/core-selected-evidence" "$RUNNER_TEMP/core-wheel-bounds/deadline.json" "$RUNNER_TEMP/core-wheel-bounds/last-command-failure.json"
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        timeout-minutes: 2
+        with:
+          name: umf-core-0.10.3-installed-${{ matrix.cohort }}-py${{ matrix.expected-python-minor }}
+          path: ${{ runner.temp }}/core-selected-evidence/*
+          if-no-files-found: error

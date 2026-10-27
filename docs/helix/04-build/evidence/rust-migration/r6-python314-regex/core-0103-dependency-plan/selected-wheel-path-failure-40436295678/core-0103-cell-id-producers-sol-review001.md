@@ -1,0 +1,28 @@
+# Core 0.10.3 corrected CELL_ID source: actual producers/selections
+
+PRODUCER/SELECTION ACCEPT — actual manual run40436295678 attempt1/sourcef4a2bc36dadf6145f27e743f2ad6d534c69319f0. This affected closure inherits full producer review348126b9788e0405199a7f5ec67defadc93162003b06cce3928cf3c161887f52, CELL_ID source closured74fb3531cdb2d954ef981aa80c2fe89616fca9f59467180c35ecd021fbd943f and current-source consistencycd479f039465fbffafde9c1f5a1af025925f4a94cca3c2ddb33db20d6623b6e4. No residual producer/selection finding. Four selected installed cells, full normal gates, merge/release/public proof remain OPEN; this is not final release readiness.
+
+Independently verified current completed job API conclusions/source: Linux121965642926 and macOS121965643147 both success at actualf4a2. All48 current source-freeze rows match actual length/full SHA. Retained artifact API identities/digests/source and all four full ZIP hashes agree:
+
+- Linux original12704822273:10,224,484 bytes/b25d3ba7396f83576ca44b221f4fdb366236ffef22d72be21025cb7eca31d937.
+- Linux selection12704329383:5,895,169 bytes/370c8a0336ccc8efbe32f34a1a59028f9de6453269ff207c612d9f341cd3948b.
+- macOS original12705495178:8,770,045 bytes/4d386c1ae70ea3b4ad602d4d9de89b44b5965fb96602eb783a57215e0b699ecd.
+- macOS selection12705615010:5,604,087 bytes/1d8b3a6c91b1497e3c9fc7fcbfc58a8e1f8ca3f65ab3079c6a794d547ae8e026.
+
+Current exact selected archives:
+
+- umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl:3,612,043 bytes/SHA256a83d10d57d5f7f7e8b119d6de1bea935e0ae2661e72308ecdfac7a5e0b0e31e2; nativec51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57.
+- umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl:3,331,547 bytes/SHA256dc2586793e1492d1f825bd9e12f27d5db9f9330ae2343d9e7773c7052f1f6ea6; nativedf3dca411dfe11b045e6cd858bc5e3999c314fbe946826ba3b98f1a7d6934256.
+- Common umf_core-0.10.3.tar.gz:2,826,487 bytes/SHA25661b3e12a84f68f890fa34e2da14bbda47e101b7c6eadd5207680827e8daa694c, exact same bytes across both original and selected platform families and the prior reviewed common sdist.
+
+Linux whole-wheel bytes genuinely differ from priorffda selectionc45e…: use actuala83d… identity, not the prior archive hash. Every40 regular member byte including RECORD is independently equal to the prior accepted selection; macOS entire selected wheel is equal. Selection receipts match actual sizes/full hashes/native hashes, exact three-file family and source producer wheel. Linux before/after auditwheel6.8.2 structured source/selected reports retain actual minimum policy manylinux_2_34_x86_64, matching filename/one-tag WHEEL, no external grafts or policy upgrades. All four acquired repair-tool wheel sizes/hashes match the lock. Actual WHEEL pair diagnostic base64/full hashes equal the actual raw/selected entries and prove only99→109-byte platform-tag substitution plus one terminal LF. Raw native equals repaired native and is64-bit little-endian x86_64 ELF. macOS selected bytes equal direct and native is thin arm64 Mach-O with minimum11.0.0 load command. No new platform/runtime claim beyond actual producer hosts follows.
+
+Independently checked current six raw/rebuilt/selected wheels: each40 closed regular files/34 package files, exact complete RECORD digests/sizes/self-entry, canonical nonnative source/resource/license bytes and0.10.3 metadata with>=3.11,<3.15 range. All9 resource payloads/new pins remain exact. Current common sdist is byte-identical to the previously verified531-input source archive; current receipts have identical full531-file map/digest3eed351abf9255eb36316089b3d3b2b6ee1985b117468fbbe4bedeceda1b24a6. Workflow-only CELL_ID changes are outside that source payload; actualS in the new receipts is retained honestly.
+
+Both current direct and independently rebuilt native artifacts on each host have254 XML testcase elements/errors0/failures0/skips0, successful outcomes and passed aggregate qualification. All four exact XML count/body checks and each current pre/post installed-wheel/native/package-file record agree with their own archive, environment and distribution0.10.3/semantic0.10.0. Rebuilt native bytes differ and are separately qualified: Linux rebuilt wheeld50dda287076056536a5883c5292c1623f7af8eb56955bb564c979125fc3fe4c/native323b3607f84cd377f8f3b14390b2079993f82570786b994f8dc54cfe61cbf625; macOS rebuilt97e57c4a95287e1c485731c806fcdf9556bc565b367a999dadd4b55d2787023e/native56405fff96a0cadf9f6599833123ab643b67b631ec37af867dfdfd0f6cb712dd. No rebuilt binary-equivalence claim.
+
+All32 Linux/25 macOS retained command records raw/capture0, no timeout/overflow/orphan/group-kill error; full log sizes/SHA match. Logs146,928/145,296 bytes fit1MiB. Max commands51.460/99.090 seconds fit allowances<=180seconds; elapsed211.752/324.424seconds fits original1800-second aggregate with60-second reserve,10-second grace/2-second margin. Original evidence families11,339,054/9,884,176 bytes and separate selected families6,440,992/6,158,942 bytes each fit16MiB. No cap, suite, case or source/payload rule was waived. Actual host scope remains Linux x86_64/glibc2.39/CPython3.11.17 and macOS15.7.9 arm64/CPython3.11.9.
+
+Selected four-cell current-source results are pending independent receipt review; do not infer installed3.14 or repaired-Linux four-cell acceptance from these producers. Preserve old failed cells/source identities and all live runs. Full normal gates, exact merge/release/publication packet and fresh public same-byte qualification remain required. No relabel/cancellation or new campaign requested.
+
+Only read-only stdlib JSON/XML/ZIP/hash/RECORD/ELF/Mach-O metadata/source-byte inspection; no candidate/tool/native execution/import, AST/YAML parsing, tests/VM, Git action or source edit. Root owns later actions.

@@ -20,10 +20,10 @@ assert _HELPER_SPEC is not None and _HELPER_SPEC.loader is not None
 sdist = importlib.util.module_from_spec(_HELPER_SPEC)
 _HELPER_SPEC.loader.exec_module(sdist)
 
-VERSION = "0.10.2"
+VERSION = "0.10.3"
 PKG_INFO = (
-    b"Metadata-Version: 2.1\nName: umf-core\nVersion: 0.10.2\n"
-    b"Requires-Python: >=3.11\n\n"
+    b"Metadata-Version: 2.1\nName: umf-core\nVersion: 0.10.3\n"
+    b"Requires-Python: >=3.11,<3.15\n\n"
 )
 ROOT_FILES = (
     "Cargo.toml",
@@ -100,7 +100,8 @@ def _make_checkout(root: Path) -> dict[str, bytes]:
     project = (
         '[build-system]\nrequires = ["hatchling>=1.27,<2"]\n'
         'build-backend = "hatchling.build"\n[project]\n'
-        'name="umf-core"\nversion="0.10.2"\n'
+        'name="umf-core"\nversion="0.10.3"\n'
+        'requires-python=">=3.11,<3.15"\n'
         "[tool.hatch.build.targets.sdist.force-include]\n"
         + "".join(
             f'"{source}" = "{target}"\n' for source, target in FORCE_INCLUDE.items()
@@ -290,7 +291,7 @@ def test_archive_symlink_and_pkg_info_drift_refuse(tmp_path: Path) -> None:
         )
 
     checkout, archive, _files = _fixture(tmp_path / "next")
-    (archive / "PKG-INFO").write_bytes(PKG_INFO.replace(b"0.10.2", b"0.10.1"))
+    (archive / "PKG-INFO").write_bytes(PKG_INFO.replace(b"0.10.3", b"0.10.1"))
     with pytest.raises(sdist.SdistInputError, match="sdist-source-bytes-differ"):
         sdist.verify_sdist_inputs(
             archive, checkout, expected_version=VERSION, expected_pkg_info=PKG_INFO
@@ -318,8 +319,8 @@ def test_python_dist_output_is_excluded_without_excluding_nested_source_packages
     checkout, archive, _files = _fixture(tmp_path)
     output = checkout / "python/dist"
     output.mkdir(parents=True)
-    (output / "umf_core-0.10.2.tar.gz").write_bytes(b"generated archive")
-    (output / "umf_core-0.10.2-cp311-linux.whl").write_bytes(b"generated wheel")
+    (output / "umf_core-0.10.3.tar.gz").write_bytes(b"generated archive")
+    (output / "umf_core-0.10.3-cp311-linux.whl").write_bytes(b"generated wheel")
 
     nested_build = checkout / "python/src/umf_access/build"
     nested_build.mkdir(parents=True)
@@ -333,8 +334,8 @@ def test_python_dist_output_is_excluded_without_excluding_nested_source_packages
     result = sdist.verify_sdist_inputs(
         archive, checkout, expected_version=VERSION, expected_pkg_info=PKG_INFO
     )
-    assert "dist/umf_core-0.10.2.tar.gz" not in result["files"]
-    assert "dist/umf_core-0.10.2-cp311-linux.whl" not in result["files"]
+    assert "dist/umf_core-0.10.3.tar.gz" not in result["files"]
+    assert "dist/umf_core-0.10.3-cp311-linux.whl" not in result["files"]
     assert "src/umf_access/build/__init__.py" in result["files"]
     assert "src/umf_access/dist/manifest.py" in result["files"]
 

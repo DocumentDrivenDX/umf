@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/Users/runner/work/umf/umf/tools/verify_python_artifacts.py", line 889, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/Users/runner/work/umf/umf/tools/verify_python_artifacts.py", line 872, in main
+    receipt = verify(
+              ^^^^^^^
+  File "/Users/runner/work/umf/umf/tools/verify_python_artifacts.py", line 747, in verify
+    expected_payloads, resource_hashes = _source_payloads(repository)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/umf/umf/tools/verify_python_artifacts.py", line 189, in _source_payloads
+    raise ValueError("An official action runtime source digest changed")
+ValueError: An official action runtime source digest changed

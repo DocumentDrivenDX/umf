@@ -715,6 +715,7 @@ def main() -> int:
             reachable.add(command)
         else:
             unknown_activation_roots.append(command)
+    script_relative_paths = {rel(p) for p in all_script_paths}
     queue = list(roots)
     while queue:
         current = queue.pop()
@@ -729,7 +730,7 @@ def main() -> int:
                     for alias in node.names:
                         imported.extend(script_paths_by_stem.get(alias.name.rsplit(".", 1)[-1], []))
         for path in imported:
-            if path in {rel(p) for p in all_script_paths} and path not in reachable:
+            if path in script_relative_paths and path not in reachable:
                 reachable.add(path)
                 queue.append(path)
     scripts = []
