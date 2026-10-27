@@ -215,12 +215,12 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "636399c99cdfec09397e8d1139882633f552617c2ddd21b33fff4f7799c85f6a",
+    "sourceCohortSha256": "e4d19542419bfa8fac145f6f629520da11477a8291b536ba5641083410b3271a",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 359,
-    "algorithmSymbols": 10465,
+    "algorithmSymbols": 10474,
     "pythonModules": 105,
     "rustBuildInputs": 79,
     "rustModules": 128,
@@ -9182,6 +9182,7 @@
         "_install_wheel",
         "_macho",
         "_native_platform_helper",
+        "_release_wheel_qualifier",
         "_rewrite_installed_record",
         "_verifier",
         "_wheel",
@@ -9197,22 +9198,26 @@
         "test_native_platform_target_is_explicit_and_rejects_unknown_hosts",
         "test_python_distribution_metadata_admits_only_declared_minors",
         "test_python_support_tests_install_the_hatch_build_backend",
+        "test_repair_wheel_metadata_allows_only_tag_and_one_terminal_separator",
+        "test_repair_wheel_metadata_refuses_any_other_framing_or_header_change",
         "test_sdist_extraction_rejects_parent_traversal",
         "test_sdist_extraction_selects_the_single_top_level_project_with_nested_projects",
         "test_sdist_licenses_have_one_declared_inclusion_route",
         "test_sdist_rebuild_accepts_distinct_native_bytes_without_claiming_identity",
         "test_sdist_rebuild_rejects_source_version_tag_or_metadata_drift",
         "test_source_inventory_contains_all_nine_bound_runtime_resources",
+        "test_wheel_metadata_pair_diagnostic_is_bounded_and_lossless_for_small_bytes",
+        "test_wheel_metadata_pair_diagnostic_marks_oversize_bytes_unavailable",
         "test_wheel_verifier_rejects_unexpected_payload_or_claim",
         "test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels",
         "test_workflow_independently_installs_and_qualifies_both_native_artifacts"
       ],
-      "bytes": 30221,
+      "bytes": 38369,
       "disposition": "unreferenced-test-source",
       "language": "py",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "python/tests/test_distribution_artifact.py",
-      "sha256": "0d58a6e9cde35d01d41eacda35e5afd903cf1511d7660bdd09f8e94e0a50d417"
+      "sha256": "57c2bc4de660798ac1028b93f480ddb77934b2110fce03a72d968039667ae8c1"
     },
     {
       "activationEvidence": [],
@@ -49160,22 +49165,26 @@
       "active": true,
       "algorithmSymbols": [
         "_bounded_regular",
+        "_compare_wheel_metadata",
+        "_normalized_wheel_headers",
         "_verify_record",
+        "_wheel_metadata_pair_diagnostic",
         "digest",
         "main",
         "read_wheel",
+        "record",
         "select_macos",
         "verify_elf",
         "verify_python_range",
         "verify_repair",
         "verify_sdist"
       ],
-      "bytes": 17900,
+      "bytes": 22806,
       "disposition": "active-host-tooling-algorithm",
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "tools/qualify_python_release_wheel.py",
-      "sha256": "fbb1caabd4ff62ce4e1bb4313888a85d216a869908e4a1afbc736404f912e404"
+      "sha256": "d1d099785b2086dcd0820a68c7e51985a01249f09cc9a1a3932b405f80d77652"
     },
     {
       "activationEvidence": [],

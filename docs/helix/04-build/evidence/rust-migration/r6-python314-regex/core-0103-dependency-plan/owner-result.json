@@ -1,5 +1,5 @@
 {
-  "status": "WHEEL_FRAMING_SOURCE_ACCEPTED_AWAITING_GENUINE_GENERATED_CLOSURE",
+  "status": "WHEEL_FRAMING_AND_EXACT35_GENERATED_OUTPUTS_ADOPTED_AWAITING_CURRENT_SOURCE_QUALIFICATION",
   "baseCommit": "d5022e37840329d351bcd6c27fe7d7aad4758544",
   "donorCommit": "f4a410c0522135065a0b20e8d2b69705fddcbac4",
   "extractionCommit": "ad5e59591",
@@ -401,5 +401,43 @@
       "originalInstalledSuiteCount": 254,
       "scope": "No produced metadata editing, payload/RECORD/native/tool/policy weakening, workflow change or cap increase. All prior source/run/artifact identities preserved."
     }
+  },
+  "wheelFramingDependentGeneration": {
+    "evidence": "wheel-framing-dependent-40432698548",
+    "custodySha256": "4a981d6a8a94bfaf0f843005dccde7d875dd4826a2ad1df8e4773253bc966185",
+    "outputAdoption": {
+      "status": "PASS_DEPENDENT_GENERATION_ARTIFACTS_ONLY",
+      "sourceCommit": "881b168cb114e3f397723a461431b3fdd95335e3",
+      "runId": "40432698548",
+      "runAttempt": "1",
+      "artifactId": "12703017490",
+      "artifactSha256": "f620c0415c3e60929fd60a1cb3c4ac3973707163fa350155b9566048666ebe65",
+      "receiptSha256": "85927043e032b4aa1499d46077965c3a5324da405a2e9764ac125acd03cf6658",
+      "archiveSha256": "98f2cd0bc8c831db6faf7e89cde4453b5bbed6fe36d6e5f1e80b1af578416907",
+      "outputManifestSha256": "296e9ae55fe2e991e30987478c480226fb55f74cb3473fac8cf2fa651cbd1a6a",
+      "reviewSha256": "1816c0dbe1b4c2ee7f3a980021308f810b7e2623d02ac23051c27a054b912859",
+      "outputs": {
+        "src/extensions/actions/plan-identity.ts": "1cfb0097941a3457c77fb1398d44a827fcb7979dee969e23e6c0f7153cadc628",
+        "docs/helix/04-build/evidence/rust-migration/r3/inventory.json": "e7a99b10507e3fa933d68798bd019031e65017cc83b46938151cdc14a2a22234",
+        "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz": "6b36c2935f6772737de2b0ca96b2cc845487c8c214512f8135967319f375eba6",
+        "python/umf_codegen/src/umf_codegen/_assets/notices/ajv/LICENSE": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3",
+        "python/umf_codegen/src/umf_codegen/_assets/notices/ajv/package.json": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
+        "python/umf_codegen/src/umf_codegen/_assets/notices/fast-deep-equal/LICENSE": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",
+        "python/umf_codegen/src/umf_codegen/_assets/notices/fast-deep-equal/package.json": "a5c63940db0260739be9e2ac67f3aac268df4db5770420ee4e34e493152f97d2",
+        "python/umf_codegen/src/umf_codegen/_assets/notices/fast-uri/LICENSE": "b010b0dfdfdb23d7396e03b82cd4621fc9bb8f95d6b0aea70b9c24e12074c786",
+        "python/umf_codegen/src/umf_codegen/_assets/notices/fast-uri/package.json": "30cad05aad3d3596513706451dbfc7e0422f9c1d00f2903ecc34580327d54bc7",
+        "python/umf_codegen/src/umf_codegen/_assets/notices/json-schema-traverse/LICENSE": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",
+        "python/umf_codegen/src/umf_codegen/_assets/notices/json-schema-traverse/package.json": "156fb24af02845c190701360d06dfda35ef04282e34a734289ea9535ad9819ae",
+        "python/umf_codegen/src/umf_codegen/_assets/notices/yaml/LICENSE": "5bba27375d93e9119f76c1015f7672cf9ad5f70952296e0842fb2243d6376869",
+        "python/umf_codegen/src/umf_codegen/_assets/notices/yaml/package.json": "1c6441703d8204a23ded0d37ddf57c3b69d821dc392f20852d1f605bb9b8861c",
+        "python/umf_codegen/src/umf_codegen/_assets/manifest.json": "282882b703b4838c935caf7651823ce0830aa0119e6366fe46c1da32a7112601",
+        "python/umf_codegen/src/umf_codegen/_release.py": "b432f509b10ab7b921390abf0b47cb7cfc21a21a28dc74677e373423ed7f4a8e"
+      }
+    }
+  },
+  "wheelFramingPythonGatePass": {
+    "evidence": "wheel-framing-python-pass-40432703941",
+    "custodySha256": "b548e37886c1f9c4afaa109efd3dfec876d978b2fef25e3477c9b2ef6fd80279",
+    "status": "PASS_341_TESTS_RUFF_AND_PACKAGE_BUILDS"
   }
 }
