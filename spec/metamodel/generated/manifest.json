@@ -2,7 +2,7 @@
   "profile": "umf.metamodel.outputs/1",
   "provenance": {
     "modelSha256": "35b72a7f6aa86c98398192e5b67d5841d77127743c671c742dd871a7baee58ca",
-    "compilerSha256": "707f7585d6c126c79bb63ff782e8828d9ad70c3958c3488928ec083c4842062f"
+    "compilerSha256": "4ccf2227d378f4aa1a9c7238c719b2a0af4b08b2f17d54fa5f50672b2c817306"
   },
   "sources": {
     "spec/metamodel/umf.yaml": "35b72a7f6aa86c98398192e5b67d5841d77127743c671c742dd871a7baee58ca",
@@ -79,7 +79,7 @@
     "crates/umf-core/src/javascript_numeric.rs": "df41418d989e9795a265370d7f3fdf44b33caf57da3e27e3e36c8242fb8842bd",
     "crates/umf-core/src/json_number.rs": "2ab551fe8d16394b965f0ec6a0d08d51667c6b4f5fa8a7c2d39c9dc5ab858dd3",
     "crates/umf-core/src/json_schema_adapter.rs": "f2b3e287ece85d401e100b831aea9d3bb5374ca98519927cc084f5216728e360",
-    "crates/umf-core/src/json_schema_inspect.rs": "c301ebeabeb86f4ca12511b2601f765ef12746354cecce8ee74bef9b22cc53a6",
+    "crates/umf-core/src/json_schema_inspect.rs": "c70879d7ba7dd471a4e9d40d2d228bafbb76aed4933fa4643bebd702b4f94d03",
     "crates/umf-core/src/kinds.rs": "86dff4fa3bf868df35c69c43d9472f7c774ac8d6e6aa9f9d8bc1ebac99aabd21",
     "crates/umf-core/src/lib.rs": "0a206d20ae57fdc1a83865536f90815189f8933a666047f2cdcfd5c216c266ad",
     "crates/umf-core/src/literal.rs": "3f0be3a7af94e930f14779d14954e526d55eb9182df3dd2e892bb5835eb7b390",
@@ -177,7 +177,7 @@
     "crates/umf-core/tests/r5_json_schema_edit.rs": "de20ff806587ae8d784fac9fdb52b8026a0ad378da86a55c8bdde2a62e9348a7",
     "crates/umf-core/tests/r5_json_schema_full_corpus.rs": "15784dc1ca1b569b7d381ddc72784960bda50d10f6dd38acb16a331c960b129d",
     "crates/umf-core/tests/r5_json_schema_import_session.rs": "907d9307daf2b633af9c93543911d841fe524f2dbfb40acf499dde48df32ebf4",
-    "crates/umf-core/tests/r5_json_schema_inspect.rs": "78062190a54a2f48e28abd0c238b5e2ee2b911a329018a0823a8baf8920bf047",
+    "crates/umf-core/tests/r5_json_schema_inspect.rs": "eba965ce102c0223a52f5997805898e809eb0319584a7fe93aef83a2eb501f42",
     "crates/umf-core/tests/r5_json_schema_operations.rs": "78bff1da2dceb45ccee0771a6405e6920a2751fad8bc03569f8f4f99b84134c4",
     "crates/umf-core/tests/r5_kind_nullability.rs": "b30c722bf6eda5d29940624a4fddd0a99fdfcb7c246f07fcea82be4194940cad",
     "crates/umf-core/tests/r5_native_json.rs": "fa03f520d89def3fb0ac7ed37e7d58c3153af290210befaddda5f56b6d730746",
@@ -835,15 +835,15 @@
   },
   "outputs": {
     "spec/core/schema.json": {
-      "sha256": "44545e8ae80e2c09395cf858642439b74380a74a57a62045eb72ba893228bcff",
+      "sha256": "1f8424ecdd4086ab5ca0720e3978294eaf22b9707da5e0690fe451cf1193eb4f",
       "bytes": 45342
     },
     "spec/core/semantic-type-reference.schema.json": {
-      "sha256": "a4ec4144e3fd363b3dd30e6caa4f892e40fc4fd010a063bbdf3b76bea6c5e0a4",
+      "sha256": "e2d1ec0ff130d5567512b795accaffda6c2957cfe1c2b968257a082c21ddd5f1",
       "bytes": 45463
     },
     "spec/core/extension-package.schema.json": {
-      "sha256": "7f96fbda4b5e2afc0d3970f683b9c8037fb6f03974ab0948ba3270b67e02ebf5",
+      "sha256": "de147b1ea04c27f34792c589a341bc0d2b08a095b72b509700cdac962fe47fe6",
       "bytes": 45001
     },
     "spec/metamodel/package.json": {
@@ -851,23 +851,23 @@
       "bytes": 1376
     },
     "spec/metamodel/generated/core-constraints.json": {
-      "sha256": "42cc9ff06812f5974ab2bb84bf4b699d02b515321f8b95321b33b467154b26ae",
+      "sha256": "38d108d0236e97841b3cea21c5c2c53c689073639b7f6653a7572c79c7310818",
       "bytes": 190252
     },
     "spec/metamodel/generated/domain-policy.json": {
-      "sha256": "ea496ac58b38f686473fc384efe7a39aae646cbb50c9264843213d339a71d628",
+      "sha256": "0c2bb5b5d4e5d654c4d14db08e2d3f468a2e2600fc52b89ed5a622c6bcd04d58",
       "bytes": 14827
     },
     "spec/metamodel/generated/python-shapes.json": {
-      "sha256": "2996d3ccc715bae5d570d16e5d79be8bfc041a96060574f2d92dada1f95df6e1",
+      "sha256": "feacd663e112a058803abaf366959474ae61e47bfc52105234a774cdef6ab1f2",
       "bytes": 98734
     },
     "python/umf_access/src/umf_access/generated_core.py": {
-      "sha256": "a89a07c18062f7620966ed328588318a530ee733363e92b02a6b598e2528f3d3",
+      "sha256": "a7754dbf92810e14ec96ae24733b77a288f98869f235bf9267e18571cf65e1ab",
       "bytes": 360
     },
     "src/generated/core-model.ts": {
-      "sha256": "2f7ba73a219e72cd0d79f1754951459433177268a45f226a313b8b27883b896a",
+      "sha256": "8e5e71793839c875d39fcf56a76ee7317e8a9017b941a587bb92050ec3e5a92c",
       "bytes": 6714
     },
     "spec/core/facet-operation-v3.schema.json": {
@@ -895,7 +895,7 @@
       "bytes": 1993
     },
     "src/generated/core-validators.ts": {
-      "sha256": "e2632ca495273514f8cc465b90a6b6e12f1652036bd7cecc6193b89ab76da602",
+      "sha256": "a4a7de1d3e4abd588c7a178c8e5d851d964c20d22dc3d3f652bfbd3589a63762",
       "bytes": 305070
     }
   }

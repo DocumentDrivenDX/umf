@@ -1035,45 +1035,48 @@ slices do not change the default route or qualify a release.
 
 ## Current canonical regeneration after Selection and JSON Schema changes (2026-10-26)
 
-After the current source cohort settled, the Rust-owned metamodel outputs,
-Python action-runtime resource manifest, and action-plan identity were
-regenerated. `bun scripts/metamodel/build.ts --check` passed with an isolated
-compiler cache; `python3 scripts/rust-migration/r8/sync_action_runtime_resources.py
---check`, `bun scripts/actions-plan-identity.ts --check`, and both inventory and
-ledger `--check` modes passed. The Chromium metamodel replay also passed in
-Headless Chrome 153.0.8010.12: 138 strict-core cases and one explicit
-registry-callback case, zero failures, zero page errors. The browser bundle
-SHA-256 is `fde174503508a72b346fb462735635d18af924759775aa5d183264755d373fa6`;
-its receipt is [here](../../metamodel-authority/browser/receipt.json).
+After JSON Schema profile commit `202aff524`, canonical Rust-owned metamodel
+outputs, the Python action-runtime resource manifest, action-plan identity,
+symbol inventory, and condition-aware gap ledger were regenerated against the
+current worktree source cohort. `bun scripts/metamodel/build.ts --check`,
+`bun scripts/actions-plan-identity.ts --check`,
+`python3 scripts/rust-migration/r8/sync_action_runtime_resources.py --check`,
+and both inventory and ledger `--check` modes pass. The 49-case gap-ledger
+suite passes 49/49 and the metamodel suite passes 61/61. The real Chromium
+replay passes in Headless Chrome 153.0.8010.12: 138 strict-core cases and one
+explicit registry-callback case, zero failures and zero page errors. Bun is
+1.4.3. The bundle SHA-256 is
+`491f7cf035467d0b4f9d8a598242793e8da16a6f96e8500a1b59dbf67f6151d9`; the
+receipt is [here](../../metamodel-authority/browser/receipt.json), with
+SHA-256 `fd3f0acb3b96a196dc3d6ecf7c2182c6ea6ab7ebd5a4541d1b664f7a5dc80855`.
 
-The refreshed metamodel manifest SHA-256 is
-`05f1a8b008cc4b26abf27827aa1ae830ee75381cdb3677a3828274ff0c130644`;
+The regenerated metamodel manifest SHA-256 is
+`e36dd31730c7d821aa6ddb64435203509271f7826a314aa86c2a090911812263`;
 `spec/core/schema.json` is
-`44545e8ae80e2c09395cf858642439b74380a74a57a62045eb72ba893228bcff`, and the
-generated validator module is
-`e2632ca495273514f8cc465b90a6b6e12f1652036bd7cecc6193b89ab76da602`. The
-nine-resource Python action-runtime manifest is pinned at
-`30f577c87aff09972122cc136d02608a9d9f125668ed2f8a502721c2afa40b0d`; the
-refreshed action-plan identity source is
-`37a2df2a4c65c19ed0e0679202ca31e67348dc843710d125f7d3ebc036b23acc`.
+`1f8424ecdd4086ab5ca0720e3978294eaf22b9707da5e0690fe451cf1193eb4f`, and
+`src/generated/core-validators.ts` is
+`a4a7de1d3e4abd588c7a178c8e5d851d964c20d22dc3d3f652bfbd3589a63762`. The
+nine-resource action-runtime manifest pin is
+`70b9d6947d7c0478c1fc161be6b58cf0eb3e646419abc34c14e7dd069f51ab53`; the
+action-plan identity source SHA-256 is
+`958ccf117704a368ce1c002cf02e2aa47b479d649972bb2f07f720ee38648257`.
 
-The condition-aware inventory is SHA-256
-`81172c51cb0941ec6736e72a461a707517524b3595916c2ce87aeacaa884d34d`: ten
+The condition-aware inventory SHA-256 is
+`6e5e211273b6f1678e03706a0a2bfe26c654c31f49348759e013305c067d3a4a`: ten
 routes, 3,375 route-specific runtime declarations, 1,126 unique declaration
-names, and 506 source files. The regenerated ledger is SHA-256
-`e04e253d95e0a48ec6915c00f5cc1dab29f631f523967aa055c3e5b41d4b8f64`. It
-records 3,360 route rows, 922 executable names, 72 with an accepted opt-in Rust
-operation, 850 without a Rust mapping, 922 logical default-route retirement
-gaps, 198 resource aliases across 189 unique files, and resource authority
-counts of 56 generated-known, 49 authored-known, 88 candidate-generated, and
-5 unresolved. The 49-case gap-ledger suite passes 49/49; the metamodel suite
-passes 61/61. This source census does not retire declarations or qualify a
-release. Existing bounded current-source route counts stay separately scoped
-in the ledger.
+names, and 506 source files. The regenerated ledger SHA-256 is
+`aa9fa724b9d0f4cbcd57928dc5b1a255681791a70c4cf10b45b9d3e151a3b377`. It
+records 3,360 route rows, 922 executable names, 72 with accepted opt-in Rust
+operations, 850 without accepted Rust mappings, all 922 logical default-route
+retirement gaps, 198 resource aliases across 189 files, and authority counts
+of 56 generated-known, 49 authored-known, 88 candidate-generated, and 5
+unresolved. The source census does not retire declarations or qualify a
+release; bounded route evidence remains separately scoped in the ledger.
 
 Reproduce the snapshots and checks with:
 
 ```sh
+export UMF_METAMODEL_CACHE_DIR=/private/tmp/umf-metamodel-cache-20261026
 bun scripts/metamodel/build.ts
 bun scripts/actions-plan-identity.ts
 python3 scripts/rust-migration/r8/sync_action_runtime_resources.py --write
