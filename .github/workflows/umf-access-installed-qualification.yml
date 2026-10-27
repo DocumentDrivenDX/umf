@@ -25,9 +25,10 @@ jobs:
     env:
       CARGO_BUILD_JOBS: '2'
       CARGO_INCREMENTAL: '0'
-      CARGO_TARGET_DIR: ${{ runner.temp }}/umf-access-cargo-target
     steps:
       - uses: actions/checkout@v4
+      - name: Set the isolated Cargo target directory
+        run: echo "CARGO_TARGET_DIR=$RUNNER_TEMP/umf-access-cargo-target" >> "$GITHUB_ENV"
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: 1.90.0
@@ -43,6 +44,13 @@ jobs:
         run: |
           python - <<'PY'
           import os, platform, sys
+          cohorts = {
+              'linux-x86_64-cpython-314': ('linux', 'x86_64'),
+              'macos-arm64-cpython-314': ('darwin', 'arm64'),
+          }
+          expected = cohorts.get(os.environ['EXPECTED_COHORT'])
+          if expected != (os.environ['EXPECTED_OS'], os.environ['EXPECTED_ARCH']):
+              raise SystemExit('cohort metadata mismatch')
           if sys.version_info[:3] != (3, 14, 8): raise SystemExit('Python host mismatch')
           if sys.platform != os.environ['EXPECTED_OS']: raise SystemExit('OS host mismatch')
           if platform.machine().lower() != os.environ['EXPECTED_ARCH']: raise SystemExit('architecture mismatch')

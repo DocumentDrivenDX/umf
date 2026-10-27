@@ -64,9 +64,9 @@ selections):** The inventory records 3,375 route-specific declarations across
 509 source files, 1,126 unique export names, and 1,120 declarations per Node,
 browser and `./reference` root. Each default route still has 922 executable
 declarations and 198 JSON resource aliases. The inventory SHA-256 is
-`ef0df12c6cf8be94fb6e6cbdb969109b74a34375f79c34aa68fda58c202a98c0`.
+`e3f3b5ca19738b72f84253b8fb4d945f83cb9fb4025e96a9159ffcdb26fb98e8`.
 The condition-aware ledger SHA-256 is
-`93c1d8f3ca113eb4b4a7204820b4bd9afd267f11f7231f72ebccc3bb18aa8509`.
+`bb40c77aab4c8de956b79bf73a083e3b61449d73107e6597cbf47e8ea3fad3d2`.
 It records **922 open logical executable default-route gaps, zero retired**,
 81 accepted opt-in Rust mappings, 841 unmapped names, and 52 source-selected
 declarations in each V4 root. The four newly explicit exports are Record

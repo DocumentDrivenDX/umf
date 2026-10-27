@@ -7058,3 +7058,38 @@ source/kind/initializer drift controls. The
 was rebuilt and passed its 68 cases in Node, Bun and Chromium against the
 current roots, preserving the earlier receipts. This is source evidence only;
 it does not satisfy installed acceptance or release gates.
+
+### R8 4547 fixed-point archive and installed value routes — 2026-10-27
+
+The new private macOS arm64 SDK archive has SHA-256
+`5f3dccf215b0c1d631d2534946f8305ce6e1bef2d6a10477992a3aa4b4faf599`
+and exact live/source closure SHA-256
+`4547d877ea7ac3b5e7bfb2101ae80833257c19ae7ba825cf884bc05c666a49b3`.
+The builder reported zero generated-source transforms after regenerating the
+metamodel manifest and action plan identity. The nine archive integrity tests
+pass. The broad installed SDK replay and hosted Linux x64/macOS arm64 matrix
+are still separate gates; this archive is private and non-publishable.
+
+The [installed Record Values replay](evidence/rust-migration/r5-record-values/installed-v4/README.md)
+matches all 24 frozen cases in Node 26.12.1 and Chromium 153.0.8010.12.
+The default path enters the packaged Rust addon/WASM bridge 29 times per host,
+including five admission cases; the explicit `./reference` path enters it zero
+times. Accessors remain unread, refusal order matches, and the browser fetches
+WASM without Node globals. The [installed Semantic Types replay](evidence/rust-migration/r5-semantic-value/README.md)
+passes under Node 26.12.1 and Bun 1.4.3, each with real Chromium
+153.0.8010.12. It covers ten frozen registration cases, callback arity and
+receiver, fluent identity, aggregate dispatch, and document refusal before
+callback execution. Its isolated archive package links dependencies from the
+repository's pinned `node_modules`; it does not claim dependency installation
+from an independent offline cache.
+
+The hosted Linux run for the preceding `ac153de4` snapshot failed because its
+generated V4 facade was stale. That facade now passes local generation check,
+typecheck, and a zero-transform SDK build. The separate access workflow had a
+job-level `runner.temp` expression that prevented job creation; its Cargo
+target setup now uses the runner environment in a step, with a focused
+installed-inventory negative control. CI confirmation on the next pushed
+snapshot remains necessary. The R8 ledger still counts **922 open executable
+default-route gaps and zero retired**. Neither these bounded installed routes
+nor the Python V8-free source audit closes full-port, two-platform release, or
+retirement requirements.

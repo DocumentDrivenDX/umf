@@ -34,6 +34,7 @@ const model=await initializeCoreModelRootWasm(CORE_MODEL_RESOURCES,async()=>wasm
 const recordValuesHost=await initializeCoreRecordValuesHostInputWasm(CORE_MODEL_RESOURCES,async()=>wasmModule);
 const validateCoreRecordValues=bindCoreRecordValuesRust(recordValuesHost);
 const {SemanticTypeRegistry,validateSemanticTypeValue,validateCoreSemanticTypeValue}=bindSemanticTypesRust(()=>createDefaultSemanticTypeRegistry(wasmModule),CORE_MODEL_RESOURCES);
+type SemanticTypeRegistry=InstanceType<typeof SemanticTypeRegistry>;
 const securityEngine=createSecurityLogicEngine(wasmModule);
 const securityNot=createSecurityNotRustAdapter(securityEngine);
 const {securityAnd,securityOr}=createSecurityLogicRustAdapter(securityEngine);

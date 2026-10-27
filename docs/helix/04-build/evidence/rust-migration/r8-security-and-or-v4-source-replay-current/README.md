@@ -26,7 +26,7 @@ preflight-refusal calls; the reference route makes zero Rust calls. Chromium
 loads the fresh WASM binary without Node globals.
 
 All three receipts pin the same 20-file source closure SHA-256
-`7874c4c84fbb2d757731ec0afaef269b418f21001118e5f786b8fb8ded5dbb13`.
+`17e00a050e972a58c6b6c8b5161ba61abacc80e1a79d82e92be9568849d45496`.
 The Node addon SHA-256 is
 `ebf382fbe9a02dfed868bcaa593fdb1389291dbbbb8a8dc46a2e916a0387dd64`;
 the WASM SHA-256 is

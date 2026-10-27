@@ -1,0 +1,23 @@
+{
+  "status": "pass",
+  "browser": "153.0.8010.12",
+  "defaultCalls": 24,
+  "referenceRecordValueDispatches": 0,
+  "wasmBridgeDispatches": 29,
+  "hostRefusalCases": [
+    "sourceAccessor",
+    "identityAccessor",
+    "valuesAccessorBeforeSourceVersion"
+  ],
+  "getterReads": {
+    "source": 0,
+    "identity": 0,
+    "values": 0
+  },
+  "semanticRefusalOrder": true,
+  "nodeGlobalsAbsent": true,
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+  "wasmRequested": true,
+  "instrumentation": "count at installed wasm-bindgen executeValidateCoreRecordValuesHostJson bridge entry",
+  "instrumentedGlueSha256": "3e3040565feba065cc39876bc1e10b56e9c9b971e602919119e0cd0f5f82d93e"
+}

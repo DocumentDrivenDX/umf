@@ -49,7 +49,7 @@ test('V4 facade preserves the complete checker-resolved API and all 1,120 runtim
 test('generated facade is deterministic, excludes local overrides, and has no broad runtime origins', () => {
   const program = programForEntries();
   const generated = generateFacade(program);
-  assert.equal(generated.localOverrides.length, 78);
+  assert.equal(generated.localOverrides.length, 82);
   assert.equal(fs.readFileSync(abs('src/index-v4-default.ts'), 'utf8'), generated.text);
   assert.ok(!generated.text.includes("from './index'") && !generated.text.includes("from './index-node-v4'") && !generated.text.includes("from './index-browser-v4'"));
 
@@ -72,11 +72,11 @@ test('generated facade is deterministic, excludes local overrides, and has no br
   for (const facet of generated.facets.filter(item => item.type && item.value)) {
     const reference = exportFacets(program, 'src/index.ts').get(facet.name);
     assert.deepEqual(reference, { type: true, value: true }, `${facet.name} merged type/value facet was not retained`);
-    assert.ok(generated.bindings.some(binding => binding.name === facet.name && binding.kind === 'value'), `${facet.name} merged type/value export is missing its runtime binding`);
+    assert.ok(generated.localOverrides.includes(facet.name) || generated.bindings.some(binding => binding.name === facet.name && binding.kind === 'value'), `${facet.name} merged type/value export is missing its runtime binding`);
   }
 });
 
-test('generated facade does not contain value exports for the 33 shadowed operations', () => {
+test('generated facade does not contain value exports for the 37 shadowed operations', () => {
   const generated = generateFacade(programForEntries());
   const shadowed = new Set([
     'inspectCoreRelationships', 'lookupCoreRelationship', 'declareCoreRelationship', 'verifyCoreRelationshipOperation',
@@ -87,8 +87,9 @@ test('generated facade does not contain value exports for the 33 shadowed operat
     'projectRelationshipToParquet', 'verifyRelationshipParquetProjection', 'recoverRelationshipParquetIdeal', 'recoverRelationshipParquetNative',
     'projectRelationshipToExtra', 'verifyRelationshipExtra', 'recoverRelationshipExtraIdeal', 'recoverRelationshipExtraNative',
     'projectRelationshipsToPostgresql', 'verifyRelationshipPostgresqlProjection', 'recoverRelationshipPostgresqlIdeal', 'recoverRelationshipPostgresqlNative',
+    'validateCoreRecordValues', 'SemanticTypeRegistry', 'validateSemanticTypeValue', 'validateCoreSemanticTypeValue',
   ]);
-  assert.equal(shadowed.size, 33);
+  assert.equal(shadowed.size, 37);
   assert.ok([...shadowed].every(name => !generated.bindings.some(binding => binding.kind === 'value' && binding.name === name)));
 });
 

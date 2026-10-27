@@ -212,6 +212,12 @@ class QualificationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "differ from selected source tree"):
             self._qualify(case)
 
+    def test_installed_access_extra_module_refuses(self):
+        case = self._case()
+        (case[1] / "umf_access/stale.py").write_text("STALE = True\n")
+        with self.assertRaisesRegex(ValueError, "installed runtime inventory differs"):
+            self._qualify(case)
+
     def test_source_access_package_symlink_refuses(self):
         case = self._case()
         source_init = case[11] / "src/umf_access/__init__.py"

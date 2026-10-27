@@ -66,3 +66,38 @@ The slice does not add Node, Bun, browser/WASM, or Python callback bindings;
 transport remain open. The old-core `inspect` contract/source discrepancy,
 transition APIs, extension prototype accessors, and default-route/cutover review
 also remain open.
+
+## V4 package replay harness (2026-10-27)
+
+[`replay-installed-semantic-types.mjs`](../../../../../../scripts/rust-migration/r5/replay-installed-semantic-types.mjs)
+adds a bounded replay for the V4 default exports `SemanticTypeRegistry`,
+`validateSemanticTypeValue`, and `validateCoreSemanticTypeValue`. It reads this
+frozen predecessor packet, checks registration/admission outcomes and their
+ordering, callback arity and receiver, fluent registration identity, aggregate
+behavior, and refusal before callback dispatch. The installed-archive mode
+unpacks an independently supplied `@umf/core` tarball into a temporary package tree,
+imports `@umf/core` and `@umf/core/reference` as separate package routes, and
+repeats the bounded checks in a real Chromium page using the package browser
+conditions. The package's declared dependencies are linked from the repository's
+pinned `node_modules`; the isolated offline npm cache did not contain the SDK's
+dependency tarballs. Run it with
+`UMF_R5_SEMANTIC_TYPES_ARCHIVE=/path/to/umf-core.tgz` under Node or Bun.
+`bun ... --source` is a provisional local Node-entry replay; it does not
+exercise installed package exports.
+
+The source-entry replay passed with Bun 1.4.3 against the current Node V4 facade.
+The fixed-point V4 archive replay then passed under
+[Node 26.12.1](installed-v4-node-4547d877.json) and
+[Bun 1.4.3](installed-v4-bun-4547d877.json), including real Chromium
+153.0.8010.12 for each run. Both `.` and `./reference`
+matched all ten frozen registration cases. The V4 callback received exactly
+two arguments and the same `{definition, validator}` receiver across calls;
+registration returned the same registry. Native Rust and browser/WASM aggregate
+dispatch matched the frozen R5 aggregate, and malformed document admission ran
+before any callback. The Node and Bun commands were run against the archive
+whose SHA-256 is
+`5f3dccf215b0c1d631d2534946f8305ce6e1bef2d6a10477992a3aa4b4faf599`; its
+fixed-point build reported source closure
+`4547d877ea7ac3b5e7bfb2101ae80833257c19ae7ba825cf884bc05c666a49b3` with zero
+transforms. This bounded replay does not establish retirement or full R5/R8
+acceptance.

@@ -35,6 +35,7 @@ const generatePythonClient=await initializePythonClientRustDefaultV4(()=>createP
 const model=createCoreModelRootEngine(CORE_MODEL_RESOURCES);
 const validateCoreRecordValues=bindCoreRecordValuesRust(createCoreRecordValuesHostInputEngine(CORE_MODEL_RESOURCES));
 const {SemanticTypeRegistry,validateSemanticTypeValue,validateCoreSemanticTypeValue}=bindSemanticTypesRust(()=>createDefaultSemanticTypeRegistry(),CORE_MODEL_RESOURCES);
+type SemanticTypeRegistry=InstanceType<typeof SemanticTypeRegistry>;
 const recordType=bindCoreRecordTypeRust(createCoreRecordTypeEngine(CORE_MODEL_RESOURCES),isNativeUmfCoreError);
 const {declareCoreRecordType,verifyCoreRecordTypeDeclaration}=recordType;
 const temporal=createTemporalEngine();
