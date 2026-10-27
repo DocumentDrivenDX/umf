@@ -12,7 +12,7 @@ import pytest
 
 _HELPER_PATH = Path(__file__).resolve().parents[2] / "tools/_python_sdist.py"
 assert hashlib.sha256(_HELPER_PATH.read_bytes()).hexdigest() == (
-    "bfb23f08347d1e7245de6c152276c5fabdf32b8d07ad9bb017ba858493701d95"
+    "da91c581646a62b9dd0d01248df275e0d6f144129732d46394607ea27cc05731"
 )
 _HELPER_SPEC = importlib.util.spec_from_file_location(
     "umf_test_python_sdist", _HELPER_PATH
@@ -41,6 +41,7 @@ ROOT_FILES = (
     "spec/extensions/delta-table/package.json",
     "spec/extensions/delta-table/context-schema.json",
     "spec/extensions/protobuf/package.json",
+    "spec/extensions/arrow-ipc/package.json",
     "spec/core/cardinality-operation-v6.schema.json",
     "spec/core/cardinality-operation-v4.schema.json",
     "spec/core/kind-operation-v8.schema.json",
@@ -102,6 +103,7 @@ FORCE_INCLUDE = {
     "../spec/extensions/tables/operation.schema.json": "spec/extensions/tables/operation.schema.json",
     "../spec/extensions/json-schema/package.json": "spec/extensions/json-schema/package.json",
     "../spec/extensions/protobuf/package.json": "spec/extensions/protobuf/package.json",
+    "../spec/extensions/arrow-ipc/package.json": "spec/extensions/arrow-ipc/package.json",
     "../spec/extensions/tables/package.json": "spec/extensions/tables/package.json",
     "../spec/extensions/actions/package.json": "spec/extensions/actions/package.json",
     "../spec/extensions/binding/package.json": "spec/extensions/binding/package.json",
@@ -327,12 +329,12 @@ def test_action_runtime_helper_map_must_match_build_declarations(
         sdist._source_inventory(checkout)
 
 
-def test_rust_include_str_authorities_are_in_sdist_closure() -> None:
+def test_rust_include_authorities_are_in_sdist_closure() -> None:
     """Ensure production Rust spec assets exist and enter the archive hook closure."""
     repository = Path(__file__).resolve().parents[2]
     source_files = set(ROOT_FILES)
     source_trees = tuple(repository / name for name in ROOT_TREES)
-    include_pattern = re.compile(r'include_str!\s*\(\s*"([^"]+)"')
+    include_pattern = re.compile(r'include_(?:str|bytes)!\s*\(\s*"([^"]+)"')
     separately_forced = {source for _name, source in RESOURCES}
     separately_forced.add("spec/extensions/tables/operation.schema.json")
     separately_forced_directories = (

@@ -59,7 +59,7 @@ SDIST_SOURCE_FILES = (
     "Cargo.lock",
     "rust-toolchain.toml",
     ".cargo/config.toml",
-    # Keep native include_str! authority files available for offline builds
+    # Keep native include_str!/include_bytes! authority files available for offline builds
     # from an extracted source archive.
     "spec/extensions/arrow/package.json",
     "spec/extensions/arrow/integration-schema.json",
@@ -71,6 +71,7 @@ SDIST_SOURCE_FILES = (
     "spec/extensions/delta-table/package.json",
     "spec/extensions/delta-table/context-schema.json",
     "spec/extensions/protobuf/package.json",
+    "spec/extensions/arrow-ipc/package.json",
     "spec/core/cardinality-operation-v6.schema.json",
     "spec/core/cardinality-operation-v4.schema.json",
     "spec/core/kind-operation-v8.schema.json",

@@ -13,6 +13,10 @@ const requiredCohorts = {
   'darwin-arm64': { os: 'darwin', arch: 'aarch64', nodeArch: 'arm64', nativeTarget: 'aarch64-apple-darwin' },
   'linux-x86_64': { os: 'linux', arch: 'x86_64', nodeArch: 'x64', nativeTarget: 'x86_64-unknown-linux-gnu' },
 };
+const securityNotCases = ['T', 'F', 'U', 'null', 'number', 'boolean', 'unknown-string', 'array', 'object', 'null-prototype', 'accessor', 'proxy-ownKeys', 'proxy-getPrototype', 'proxy-get'];
+const securityNotOutcome = id => ['T', 'F', 'U'].includes(id)
+  ? { kind: 'return', value: ({ T: 'F', F: 'T', U: 'U' })[id], trace: [] }
+  : { kind: 'throw', name: 'UmfError', constructor: 'UmfError', code: 'SECURITY_TRUTH', message: 'Invalid security truth', path: '', trace: [] };
 const stable = value => Array.isArray(value)
   ? value.map(stable)
   : value && typeof value === 'object'
@@ -195,29 +199,39 @@ function verifyMemberManifest(root, pin, archivedPackagePin, archive, liveInputs
 export function verifyPacket(root, pin, op) {
   const packet = readPinned(root, pin, `${op.exportName} frozen packet`, true).json;
   const allRust = packet?.format === 'umf.r8.default-route-retirement-packet/2';
+  const securityNot = packet?.format === 'umf.r8.default-route-retirement-packet/3';
   requireExactKeys(packet, allRust
     ? ['format', 'profile', 'contractId', 'exportName', 'rustOwner', 'cases']
-    : ['format', 'contractId', 'exportName', 'rustOwner', 'cases'], `${op.exportName} frozen packet`);
-  if ((allRust ? packet.profile !== 'all-rust' : packet.format !== 'umf.r8.default-route-retirement-packet/1') || packet.contractId !== op.contract.id || packet.exportName !== op.exportName || packet.rustOwner !== op.rustOwner || !Array.isArray(packet.cases) || packet.cases.length < 1) throw new Error(`${op.exportName} frozen packet identity is invalid`);
+    : securityNot ? ['format', 'profile', 'contractId', 'exportName', 'rustOwner', 'cases']
+      : ['format', 'contractId', 'exportName', 'rustOwner', 'cases'], `${op.exportName} frozen packet`);
+  if ((allRust ? packet.profile !== 'all-rust' : securityNot ? packet.profile !== 'security-not' : packet.format !== 'umf.r8.default-route-retirement-packet/1') || packet.contractId !== op.contract.id || packet.exportName !== op.exportName || packet.rustOwner !== op.rustOwner || !Array.isArray(packet.cases) || packet.cases.length < 1) throw new Error(`${op.exportName} frozen packet identity is invalid`);
   if (allRust && op.contract.id !== 'CONTRACT-040') throw new Error(`${op.exportName} all-Rust Cardinality packet requires CONTRACT-040`);
   if (allRust && !['inspectCoreCardinality', 'declareCoreCardinality', 'verifyCoreCardinalityDeclaration'].includes(op.exportName)) throw new Error(`${op.exportName} all-Rust packet profile is unsupported`);
+  if (securityNot && (op.contract.id !== 'CONTRACT-062' || op.exportName !== 'securityNot' || op.rustOwner !== 'umf_core::security_logic::security_not')) throw new Error(`${op.exportName} securityNot acceptance profile identity is unsupported`);
   const ids = new Set();
   for (const item of packet.cases) {
-    requireExactKeys(item, allRust
+    requireExactKeys(item, allRust || securityNot
       ? ['id', 'input', 'expectedOutcome', 'expectedTrace', 'expectedDefaultRustCalls']
       : ['id', 'input', 'expectedOutcome', 'expectedTrace', 'expectsRust'], `${op.exportName} packet case`);
     if (typeof item.id !== 'string' || !item.id || ids.has(item.id) || !Array.isArray(item.expectedTrace)) throw new Error(`${op.exportName} packet case identity or Rust-call expectation is invalid`);
-    if (allRust ? (!Number.isSafeInteger(item.expectedDefaultRustCalls) || item.expectedDefaultRustCalls < 1) : typeof item.expectsRust !== 'boolean') throw new Error(`${op.exportName} packet case identity or Rust-call expectation is invalid`);
+    if (allRust ? (!Number.isSafeInteger(item.expectedDefaultRustCalls) || item.expectedDefaultRustCalls < 1) : securityNot ? ![0, 1].includes(item.expectedDefaultRustCalls) : typeof item.expectsRust !== 'boolean') throw new Error(`${op.exportName} packet case identity or Rust-call expectation is invalid`);
     ids.add(item.id);
   }
-  if (!allRust && (!packet.cases.some(item => item.expectsRust) || !packet.cases.some(item => !item.expectsRust))) throw new Error(`${op.exportName} packet must cover Rust execution and preflight refusal`);
-  return { packet, packetSha256: pin.sha256, allRust, cases: new Map(packet.cases.map(item => [item.id, item])) };
+  if (!allRust && !securityNot && (!packet.cases.some(item => item.expectsRust) || !packet.cases.some(item => !item.expectsRust))) throw new Error(`${op.exportName} packet must cover Rust execution and preflight refusal`);
+  if (securityNot) {
+    if (packet.cases.length !== securityNotCases.length || packet.cases.some((item, index) => {
+      const id = securityNotCases[index];
+      return item.id !== id || canonical(item.input) !== canonical({ case: id }) || canonical(item.expectedOutcome) !== canonical(securityNotOutcome(id)) || canonical(item.expectedTrace) !== '[]' || item.expectedDefaultRustCalls !== (['T', 'F', 'U'].includes(id) ? 1 : 0);
+    })) throw new Error('securityNot packet must match the exact 14-case truth, invalid-input, trace and Rust-dispatch profile');
+  }
+  return { packet, packetSha256: pin.sha256, allRust, securityNot, cases: new Map(packet.cases.map(item => [item.id, item])) };
 }
 
 export function verifyHostReceipt(root, pin, op, packet, cohort, members, routeMembers) {
   const receipt = readPinned(root, pin, `${op.exportName}/${pin.runtime} raw receipt`, true).json;
   requireExactKeys(receipt, ['format', 'status', 'runtime', 'hostVersion', 'cohortId', 'hostPlatform', 'archiveSha256', 'sourceClosureSha256', 'packetSha256', 'defaultRoute', 'referenceRoute', 'cases'], `${op.exportName}/${cohort.id}/${pin.runtime} raw receipt`);
-  if (receipt.format !== 'umf.r8.default-route-retirement-host-receipt/2' || receipt.status !== 'pass' || receipt.runtime !== pin.runtime || typeof receipt.hostVersion !== 'string' || !receipt.hostVersion) throw new Error(`${op.exportName}/${cohort.id}/${pin.runtime} raw receipt identity/status is invalid`);
+  const receiptFormat = packet.securityNot ? 'umf.r8.default-route-retirement-host-receipt/3' : 'umf.r8.default-route-retirement-host-receipt/2';
+  if (receipt.format !== receiptFormat || receipt.status !== 'pass' || receipt.runtime !== pin.runtime || typeof receipt.hostVersion !== 'string' || !receipt.hostVersion) throw new Error(`${op.exportName}/${cohort.id}/${pin.runtime} raw receipt identity/status is invalid`);
   const expectedHostPlatform = { os: cohort.platform.os, arch: cohort.platform.nodeArch };
   if (receipt.cohortId !== cohort.id || canonical(receipt.hostPlatform) !== canonical(expectedHostPlatform) ||
       receipt.archiveSha256 !== cohort.archive.sha256 || receipt.sourceClosureSha256 !== cohort.archive.sourceClosureSha256 || receipt.packetSha256 !== packet.packetSha256) {
@@ -247,12 +261,12 @@ export function verifyHostReceipt(root, pin, op, packet, cohort, members, routeM
     seen.add(result.id);
     if (canonical(result.defaultOutcome) !== canonical(expected.expectedOutcome) || canonical(result.defaultTrace) !== canonical(expected.expectedTrace)) throw new Error(`${op.exportName}/${pin.runtime}/${result.id} default outcome/trace differs from frozen packet`);
     if (canonical(result.referenceOutcome) !== canonical(expected.expectedOutcome) || canonical(result.referenceTrace) !== canonical(expected.expectedTrace)) throw new Error(`${op.exportName}/${pin.runtime}/${result.id} reference outcome/trace differs from frozen packet`);
-    if (!Number.isSafeInteger(result.defaultRustCalls) || (packet.allRust ? result.defaultRustCalls !== expected.expectedDefaultRustCalls : (expected.expectsRust ? result.defaultRustCalls < 1 : result.defaultRustCalls !== 0)) || result.referenceRustCalls !== 0) throw new Error(`${op.exportName}/${pin.runtime}/${result.id} invocation trace violates the frozen Rust-call expectation or reference zero-Rust control`);
+    if (!Number.isSafeInteger(result.defaultRustCalls) || (packet.allRust || packet.securityNot ? result.defaultRustCalls !== expected.expectedDefaultRustCalls : (expected.expectsRust ? result.defaultRustCalls < 1 : result.defaultRustCalls !== 0)) || result.referenceRustCalls !== 0) throw new Error(`${op.exportName}/${pin.runtime}/${result.id} invocation trace violates the frozen Rust-call expectation or reference zero-Rust control`);
   }
 }
 
 export function validateBoundedDefaultRouteEvidence(manifest, rows, { root }) {
-  if (!manifest || manifest.format !== 'umf.r8.default-route-retirement-evidence/2' || manifest.status !== 'pass') throw new Error('unsupported or non-pass bounded default-route evidence');
+  if (!manifest || !['umf.r8.default-route-retirement-evidence/2', 'umf.r8.default-route-retirement-evidence/3'].includes(manifest.format) || manifest.status !== 'pass') throw new Error('unsupported or non-pass bounded default-route evidence');
   requireExactKeys(manifest, ['format', 'status', 'liveSourceManifest', 'cohorts', 'operations'], 'retirement manifest');
   requireExactKeys(manifest.liveSourceManifest, ['path', 'sha256'], 'live source manifest');
   if (!Array.isArray(manifest.cohorts) || manifest.cohorts.length !== Object.keys(requiredCohorts).length) throw new Error('retirement evidence requires exactly the darwin-arm64 and linux-x86_64 cohorts');
@@ -299,6 +313,8 @@ export function validateBoundedDefaultRouteEvidence(manifest, rows, { root }) {
     const contractBytes = readPinned(root, op.contract, `${op.exportName} contract`).bytes;
     if (contractIdFromMarkdown(contractBytes.toString('utf8')) !== op.contract.id || liveInputs[op.contract.path] !== op.contract.sha256) throw new Error(`${op.exportName} contract ID or current-source closure binding is invalid`);
     const packet = verifyPacket(root, op.packet, op);
+    if (manifest.format === 'umf.r8.default-route-retirement-evidence/3' && !packet.securityNot) throw new Error('/3 retirement accepts only the CONTRACT-062 securityNot profile');
+    if (manifest.format === 'umf.r8.default-route-retirement-evidence/2' && packet.securityNot) throw new Error('securityNot acceptance requires the /3 retirement manifest');
     if (liveInputs[op.packet.path] !== op.packet.sha256) throw new Error(`${op.exportName} packet is not in the current fixed-point source closure`);
     if (!Array.isArray(op.rows) || op.rows.length !== 2) throw new Error(`${op.exportName} must identify exactly two default-route rows`);
     const seenRoutes = new Set();
@@ -335,7 +351,7 @@ export function validateBoundedDefaultRouteEvidence(manifest, rows, { root }) {
         verifyHostReceipt(root, pin, op, packet, cohort, members, routeMembers);
         const route = pin.runtime === 'chromium' ? 'package-root-browser' : 'package-root-node';
         const key = `${route}\0${op.logicalDeclarationKey}`;
-        const existing = byPair.get(key) ?? { status: 'bounded', contractId: op.contract.id, rustOwner: op.rustOwner, evidence: [{ path: op.contract.path, sha256: op.contract.sha256 }, { path: op.packet.path, sha256: op.packet.sha256 }] };
+        const existing = byPair.get(key) ?? { status: manifest.format === 'umf.r8.default-route-retirement-evidence/3' ? 'accepted' : 'bounded', contractId: op.contract.id, rustOwner: op.rustOwner, evidence: [{ path: op.contract.path, sha256: op.contract.sha256 }, { path: op.packet.path, sha256: op.packet.sha256 }] };
         existing.evidence.push({ path: pin.path, sha256: pin.sha256 });
         byPair.set(key, existing);
       }
@@ -349,6 +365,11 @@ export function validateBoundedDefaultRouteEvidence(manifest, rows, { root }) {
 export function validateDefaultRouteRetirementEvidence(manifest, rows, { root }) {
   if (manifest?.format === 'umf.r8.default-route-retirement-evidence/2') {
     throw new Error('CONTRACT acceptance coverage required: /2 bounded default-route evidence cannot retire ledger rows');
+  }
+  if (manifest?.format === 'umf.r8.default-route-retirement-evidence/3') {
+    const accepted = validateBoundedDefaultRouteEvidence(manifest, rows, { root });
+    if ([...accepted.values()].some(item => item.status !== 'accepted') || accepted.size !== 2) throw new Error('/3 securityNot retirement must cover exactly its Node and browser default routes');
+    return new Map([...accepted].map(([key, item]) => [key, { ...item, status: 'retired' }]));
   }
   throw new Error('unsupported default-route retirement evidence; no retirement schema is currently accepted');
 }

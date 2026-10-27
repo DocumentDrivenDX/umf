@@ -73,6 +73,13 @@ jobs:
       - run: bunx playwright install --with-deps chromium
       - name: Replay installed SDK in Node, Bun, and Chromium
         run: bun scripts/test-sdk-rust-default.ts .cache/sdk-distribution/umf-sdk.tgz
+      - name: Replay targeted installed securityNot packet
+        run: |
+          OUT=.cache/sdk-distribution/security-not-retirement
+          mkdir -p "$OUT"
+          node scripts/rust-migration/r8/security-not-retirement-replay-node.mjs .cache/sdk-distribution/umf-sdk.tgz "$OUT/node.json" node linux-x86_64
+          node scripts/rust-migration/r8/security-not-retirement-replay-node.mjs .cache/sdk-distribution/umf-sdk.tgz "$OUT/bun.json" bun linux-x86_64
+          node scripts/rust-migration/r8/security-not-retirement-replay-browser.mjs .cache/sdk-distribution/umf-sdk.tgz "$OUT/chromium.json"
       - name: Extract the verified Linux archive for Cardinality receipts
         run: |
           node --input-type=module - <<'NODE'
@@ -112,6 +119,7 @@ jobs:
             .cache/sdk-distribution/manifest.json
             .cache/sdk-distribution/installed-test-receipt.json
             .cache/sdk-distribution/security-and-or-installed-receipt.json
+            .cache/sdk-distribution/security-not-retirement/
             .cache/sdk-distribution/retirement-cohort/archive-source-cohort.json
             .cache/sdk-distribution/retirement-cohort/archive-members.json
             .cache/sdk-distribution/retirement-cohort/archive-package.json

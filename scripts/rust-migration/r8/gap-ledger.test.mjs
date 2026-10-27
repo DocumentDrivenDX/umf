@@ -10,7 +10,7 @@ import path from 'node:path';
 import { buildLedger, collectPythonPackageAssets, collectPythonSourceFiles, summarizeDefaultRouteRetirement, validateCompactVerifierBuildBinding } from './gap-ledger.mjs';
 import { requiredR8RouteFamilies, validateR8InstalledRouteEvidence } from './installed-route-evidence.mjs';
 import { normalizeR8RouteHostReceipt } from './installed-route-receipt-adapter.mjs';
-import { tarMembers, validateBoundedDefaultRouteEvidence, validateDefaultRouteRetirementEvidence } from './default-route-retirement-evidence.mjs';
+import { tarMembers, validateBoundedDefaultRouteEvidence, validateDefaultRouteRetirementEvidence, verifyPacket } from './default-route-retirement-evidence.mjs';
 
 const inventory = { symbols: [
   { routeId: 'package-root', exportName: 'inspectCoreSemanticTypes', declarationName: 'inspectCoreSemanticTypes', declarationKind: 'FunctionDeclaration', source: 'src/model/semantic-types.ts', line: 23, sourceSha256: 'a'.repeat(64) },
@@ -110,31 +110,36 @@ test('archive parser accepts safe PAX paths and rejects unsupported or unsafe PA
   assert.throws(() => tarMembers(unsafe), /archive member path is unsafe/);
 });
 
-async function retirementFixture() {
+async function retirementFixture({ securityNot = false } = {}) {
   const root = await mkdtemp(path.join(os.tmpdir(), 'umf-r8-retirement-'));
-  const source = 'src/model/retirement-fixture.ts';
-  const sourceBytes = Buffer.from('export function retireableFixture() { return 1; }\n');
+  const exportName = securityNot ? 'securityNot' : 'retireableFixture';
+  const contractId = securityNot ? 'CONTRACT-062' : 'CONTRACT-999';
+  const rustOwner = securityNot ? 'umf_core::security_logic::security_not' : 'umf_core::fixture::retireable_fixture';
+  const source = securityNot ? 'src/extensions/security/logic.ts' : 'src/model/retirement-fixture.ts';
+  const sourceBytes = Buffer.from(securityNot ? 'export const securityNot = value => value;\n' : 'export function retireableFixture() { return 1; }\n');
   const sourceSha256 = createHash('sha256').update(sourceBytes).digest('hex');
   await mkdir(path.dirname(path.join(root, source)), { recursive: true });
   await writeFile(path.join(root, source), sourceBytes);
-  const contractPath = 'docs/helix/02-design/contracts/CONTRACT-999-fixture.md';
-  const contractBytes = Buffer.from('---\nddx:\n  id: CONTRACT-999\n---\n# Fixture contract\n');
+  const contractPath = `docs/helix/02-design/contracts/${contractId}-fixture.md`;
+  const contractBytes = Buffer.from(`---\nddx:\n  id: ${contractId}\n---\n# Fixture contract\n`);
   await mkdir(path.dirname(path.join(root, contractPath)), { recursive: true });
   await writeFile(path.join(root, contractPath), contractBytes);
-  const owner = 'umf_core::fixture::retireable_fixture';
+  const owner = rustOwner;
   const packetPath = 'docs/helix/04-build/evidence/retirement-packet.json';
-  const packet = { format: 'umf.r8.default-route-retirement-packet/1', contractId: 'CONTRACT-999', exportName: 'retireableFixture', rustOwner: owner, cases: [
-    { id: 'returns-one', input: {}, expectedOutcome: { value: { first: 1, second: 2 } }, expectedTrace: [{ stage: 'complete' }], expectsRust: true },
-    { id: 'rejects-before-rust', input: { invalid: true }, expectedOutcome: { error: 'invalid' }, expectedTrace: [{ stage: 'admission' }], expectsRust: false },
-  ] };
+  const packet = securityNot
+    ? JSON.parse(await readFile('scripts/rust-migration/r8/security-not-retirement-packet.json', 'utf8'))
+    : { format: 'umf.r8.default-route-retirement-packet/1', contractId, exportName, rustOwner: owner, cases: [
+      { id: 'returns-one', input: {}, expectedOutcome: { value: { first: 1, second: 2 } }, expectedTrace: [{ stage: 'complete' }], expectsRust: true },
+      { id: 'rejects-before-rust', input: { invalid: true }, expectedOutcome: { error: 'invalid' }, expectedTrace: [{ stage: 'admission' }], expectsRust: false },
+    ] };
   const packetBytes = Buffer.from(JSON.stringify(packet));
   await mkdir(path.dirname(path.join(root, packetPath)), { recursive: true });
   await writeFile(path.join(root, packetPath), packetBytes);
-  const logicalDeclarationKey = ['retireableFixture', 'retireableFixture', 'FunctionDeclaration', '0'].join('\0');
+  const logicalDeclarationKey = [exportName, exportName, securityNot ? 'condition-selected-root-binding' : 'FunctionDeclaration', '0'].join('\0');
   const rows = [
-    { routeId: 'package-root-node', logicalDeclarationKey, exportName: 'retireableFixture', source, sourceSha256, declarationKind: 'BindingElement', rowKind: 'executable', acceptedRustOperation: owner, sourceSelectedImplementation: { rustOwner: owner } },
-    { routeId: 'package-root-browser', logicalDeclarationKey, exportName: 'retireableFixture', source, sourceSha256, declarationKind: 'BindingElement', rowKind: 'executable', acceptedRustOperation: owner, sourceSelectedImplementation: { rustOwner: owner } },
-    { routeId: 'package-reference', logicalDeclarationKey, exportName: 'retireableFixture', source, sourceSha256, declarationKind: 'FunctionDeclaration', rowKind: 'executable', acceptedRustOperation: owner, sourceSelectedImplementation: null },
+    { routeId: 'package-root-node', logicalDeclarationKey, exportName, source, sourceSha256, declarationKind: securityNot ? 'VariableDeclaration' : 'BindingElement', rowKind: 'executable', acceptedRustOperation: owner, sourceSelectedImplementation: { rustOwner: owner } },
+    { routeId: 'package-root-browser', logicalDeclarationKey, exportName, source, sourceSha256, declarationKind: securityNot ? 'VariableDeclaration' : 'BindingElement', rowKind: 'executable', acceptedRustOperation: owner, sourceSelectedImplementation: { rustOwner: owner } },
+    { routeId: 'package-reference', logicalDeclarationKey, exportName, source, sourceSha256, declarationKind: 'FunctionDeclaration', rowKind: 'executable', acceptedRustOperation: owner, sourceSelectedImplementation: null },
   ];
   const packageJson = { name: 'fixture', version: '1.0.0', private: false, type: 'module', license: 'MIT', dependencies: {}, exports: {
     '.': { node: './dist/umf-node.js', browser: './dist/umf-browser.js' },
@@ -195,7 +200,7 @@ async function retirementFixture() {
     for (const runtime of ['node', 'bun', 'chromium']) {
       const node = runtime !== 'chromium';
       const receipt = {
-        format: 'umf.r8.default-route-retirement-host-receipt/2', status: 'pass', runtime, hostVersion: `${runtime} fixture 1.0`,
+        format: securityNot ? 'umf.r8.default-route-retirement-host-receipt/3' : 'umf.r8.default-route-retirement-host-receipt/2', status: 'pass', runtime, hostVersion: `${runtime} fixture 1.0`,
         cohortId: spec.id, hostPlatform: spec.hostPlatform,
         archiveSha256: archive.sha256, sourceClosureSha256: archive.sourceClosureSha256,
         packetSha256: createHash('sha256').update(packetBytes).digest('hex'),
@@ -203,10 +208,9 @@ async function retirementFixture() {
           ? { routeId: 'package-root-node', entryMember: 'dist/umf-node.js', entrySha256: memberMap['dist/umf-node.js'], artifactMembers: [{ path: 'dist/umf_core_node.node', sha256: memberMap['dist/umf_core_node.node'] }] }
           : { routeId: 'package-root-browser', entryMember: 'dist/umf-browser.js', entrySha256: memberMap['dist/umf-browser.js'], artifactMembers: [{ path: 'dist/umf_core_wasm_bg.wasm', sha256: memberMap['dist/umf_core_wasm_bg.wasm'] }] },
         referenceRoute: { routeId: 'package-reference', entryMember: 'dist/umf.js', entrySha256: memberMap['dist/umf.js'], artifactMembers: [] },
-        cases: [
-          { id: 'returns-one', defaultOutcome: { value: { first: 1, second: 2 } }, defaultTrace: [{ stage: 'complete' }], defaultRustCalls: 1, referenceOutcome: { value: { first: 1, second: 2 } }, referenceTrace: [{ stage: 'complete' }], referenceRustCalls: 0 },
-          { id: 'rejects-before-rust', defaultOutcome: { error: 'invalid' }, defaultTrace: [{ stage: 'admission' }], defaultRustCalls: 0, referenceOutcome: { error: 'invalid' }, referenceTrace: [{ stage: 'admission' }], referenceRustCalls: 0 },
-        ],
+        cases: packet.cases.map(item => securityNot
+          ? { id: item.id, defaultOutcome: item.expectedOutcome, defaultTrace: item.expectedTrace, defaultRustCalls: item.expectedDefaultRustCalls, referenceOutcome: item.expectedOutcome, referenceTrace: item.expectedTrace, referenceRustCalls: 0 }
+          : { id: item.id, defaultOutcome: item.expectedOutcome, defaultTrace: item.expectedTrace, defaultRustCalls: item.expectsRust ? 1 : 0, referenceOutcome: item.expectedOutcome, referenceTrace: item.expectedTrace, referenceRustCalls: 0 }),
       };
       const receiptPath = `receipts/${spec.id}-${runtime}.json`;
       await mkdir(path.dirname(path.join(root, receiptPath)), { recursive: true });
@@ -219,13 +223,13 @@ async function retirementFixture() {
     cohortData.set(spec.id, { archiveEntries, memberMap, memberDocPath, archivePackagePath, hostPlatform: spec.hostPlatform });
   }
   const manifest = {
-    format: 'umf.r8.default-route-retirement-evidence/2', status: 'pass', cohorts,
+    format: securityNot ? 'umf.r8.default-route-retirement-evidence/3' : 'umf.r8.default-route-retirement-evidence/2', status: 'pass', cohorts,
     liveSourceManifest: { path: liveDocPath, sha256: createHash('sha256').update(liveDocBytes).digest('hex') },
-    operations: [{ exportName: 'retireableFixture', logicalDeclarationKey, contract: { id: 'CONTRACT-999', path: contractPath, sha256: createHash('sha256').update(contractBytes).digest('hex') }, rustOwner: owner,
+    operations: [{ exportName, logicalDeclarationKey, contract: { id: contractId, path: contractPath, sha256: createHash('sha256').update(contractBytes).digest('hex') }, rustOwner: owner,
       rows: rows.slice(0, 2).map(({ routeId, logicalDeclarationKey, exportName, source, sourceSha256, declarationKind }) => ({ routeId, logicalDeclarationKey, exportName, source, sourceSha256, declarationKind })),
       packet: { path: packetPath, sha256: createHash('sha256').update(packetBytes).digest('hex') }, receiptCohorts: cohortSpecs.map(spec => ({ cohortId: spec.id, receipts: runtimePinsByCohort.get(spec.id) })) }],
   };
-  return { root, rows, manifest, source, cohortData };
+  return { root, rows, manifest, source, sourceBytes, cohortData, packetPath };
 }
 
 test('bounded default-route evidence requires both exact fixed-point cohorts and all six host/reference receipts without retiring rows', async () => {
@@ -481,6 +485,89 @@ test('bounded default-route evidence requires both exact fixed-point cohorts and
         const manifest = structuredClone(next.manifest);
         await mutate(manifest, next);
         assert.throws(() => validateBoundedDefaultRouteEvidence(manifest, next.rows, { root: next.root }), undefined, label);
+      } finally {
+        await rm(next.root, { recursive: true, force: true });
+      }
+    }
+  } finally {
+    await rm(fixture.root, { recursive: true, force: true });
+  }
+});
+
+test('securityNot /3 retirement accepts only the exact CONTRACT-062 profile and rejects tampering', async () => {
+  const fixture = await retirementFixture({ securityNot: true });
+  const securityRows = fixture.rows;
+  try {
+    assert.equal(fixture.manifest.format, 'umf.r8.default-route-retirement-evidence/3');
+    const accepted = validateDefaultRouteRetirementEvidence(fixture.manifest, fixture.rows, { root: fixture.root });
+    assert.deepEqual([...accepted.values()].map(item => item.status), ['retired', 'retired']);
+    assert.deepEqual([...accepted.keys()].sort(), [
+      `package-root-browser\0${fixture.manifest.operations[0].logicalDeclarationKey}`,
+      `package-root-node\0${fixture.manifest.operations[0].logicalDeclarationKey}`,
+    ].sort());
+    for (const row of fixture.rows) {
+      const disposition = accepted.get(`${row.routeId}\0${row.logicalDeclarationKey}`);
+      if (disposition) row.defaultRouteRetirement = disposition;
+      else if (row.routeId === 'package-reference') row.defaultRouteRetirement = { status: 'reference-only', evidence: [] };
+    }
+    assert.deepEqual(summarizeDefaultRouteRetirement(fixture.rows), {
+      logicalGaps: 0,
+      byRoute: { 'package-root-node': { open: 0, retired: 1 }, 'package-root-browser': { open: 0, retired: 1 } },
+    });
+
+    const boundedOnly = structuredClone(fixture.manifest);
+    boundedOnly.format = 'umf.r8.default-route-retirement-evidence/2';
+    assert.throws(() => validateDefaultRouteRetirementEvidence(boundedOnly, fixture.rows, { root: fixture.root }), /\/2 bounded default-route evidence cannot retire/);
+
+    const negativeCases = [
+      ['tampered current source', async (manifest, next) => { await writeFile(path.join(next.root, next.source), 'export const changed = true;\n'); }],
+      ['stale source row', manifest => { manifest.operations[0].rows[0].sourceSha256 = '0'.repeat(64); }],
+      ['wrong receipt profile', async (manifest, next) => {
+        const pin = manifest.operations[0].receiptCohorts[0].receipts[0];
+        const file = path.join(next.root, pin.path);
+        const receipt = JSON.parse(await readFile(file, 'utf8'));
+        receipt.format = 'umf.r8.default-route-retirement-host-receipt/2';
+        const bytes = Buffer.from(JSON.stringify(receipt));
+        await writeFile(file, bytes);
+        pin.sha256 = createHash('sha256').update(bytes).digest('hex');
+      }],
+      ['tampered packet case profile', async (manifest, next) => {
+        const pin = manifest.operations[0].packet;
+        const packet = JSON.parse(await readFile(path.join(next.root, pin.path), 'utf8'));
+        packet.cases[0].expectedOutcome.value = 'T';
+        const bytes = Buffer.from(JSON.stringify(packet));
+        await writeFile(path.join(next.root, pin.path), bytes);
+        pin.sha256 = createHash('sha256').update(bytes).digest('hex');
+        assert.throws(() => verifyPacket(next.root, pin, manifest.operations[0]), /exact 14-case truth/);
+      }],
+      ['tampered raw case outcome', async (manifest, next) => {
+        const pin = manifest.operations[0].receiptCohorts[0].receipts[0];
+        const file = path.join(next.root, pin.path);
+        const receipt = JSON.parse(await readFile(file, 'utf8'));
+        receipt.cases[0].defaultOutcome.value = 'T';
+        const bytes = Buffer.from(JSON.stringify(receipt));
+        await writeFile(file, bytes);
+        pin.sha256 = createHash('sha256').update(bytes).digest('hex');
+      }],
+      ['wrong receipt route', async (manifest, next) => {
+        const pin = manifest.operations[0].receiptCohorts[0].receipts[0];
+        const file = path.join(next.root, pin.path);
+        const receipt = JSON.parse(await readFile(file, 'utf8'));
+        receipt.defaultRoute.routeId = 'package-reference';
+        const bytes = Buffer.from(JSON.stringify(receipt));
+        await writeFile(file, bytes);
+        pin.sha256 = createHash('sha256').update(bytes).digest('hex');
+      }],
+      ['wrong paired route row', manifest => { manifest.operations[0].rows[0].routeId = 'package-reference'; }],
+    ];
+    for (const [label, mutate] of negativeCases) {
+      const next = await retirementFixture({ securityNot: true });
+      try {
+        const manifest = structuredClone(next.manifest);
+        await mutate(manifest, next);
+        if (label !== 'tampered packet case profile') {
+          assert.throws(() => validateDefaultRouteRetirementEvidence(manifest, next.rows, { root: next.root }), undefined, label);
+        }
       } finally {
         await rm(next.root, { recursive: true, force: true });
       }

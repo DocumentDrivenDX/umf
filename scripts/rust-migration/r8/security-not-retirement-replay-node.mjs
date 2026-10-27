@@ -1,0 +1,36 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+// Capture the exact CONTRACT-062 securityNot packet through installed Node/Bun routes.
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {spawnSync} from 'node:child_process';
+import {readFile, mkdir, mkdtemp, rm, writeFile, realpath} from 'node:fs/promises';
+import {join, resolve} from 'node:path';
+import {tmpdir} from 'node:os';
+import {pathToFileURL} from 'node:url';
+
+const archive=resolve(process.argv[2]??''),out=resolve(process.argv[3]??''),targetRuntime=process.argv[4];
+if(!process.argv[2]||!process.argv[3]||!['node','bun'].includes(targetRuntime??''))throw new Error('Usage: node security-not-retirement-replay-node.mjs <umf-sdk.tgz> <receipt.json> <node|bun> <darwin-arm64|linux-x86_64>');
+const cohortId=process.argv[5],hostPlatform={os:process.platform,arch:process.arch};
+if((cohortId==='darwin-arm64'&&(process.platform!=='darwin'||process.arch!=='arm64'))||(cohortId==='linux-x86_64'&&(process.platform!=='linux'||process.arch!=='x64')))throw new Error(`Host does not match ${cohortId}: ${process.platform}/${process.arch}`);
+const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
+const stable=value=>Array.isArray(value)?value.map(stable):value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort().map(key=>[key,stable(value[key])])):value;
+const canonical=value=>JSON.stringify(stable(value));
+const packetPath=resolve('scripts/rust-migration/r8/security-not-retirement-packet.json'),packetBytes=await readFile(packetPath),packet=JSON.parse(packetBytes);
+assert.equal(packet.format,'umf.r8.default-route-retirement-packet/3');assert.equal(packet.profile,'security-not');assert.equal(packet.cases.length,14);
+const temp=await mkdtemp(join(tmpdir(),'umf-r8-security-not-retirement-node-')),pkg=join(temp,'node_modules/@umf/core');
+const run=(command,args,cwd=temp)=>{const child=spawnSync(command,args,{cwd,encoding:'utf8'});if(child.error)throw child.error;if(child.status!==0)throw new Error(`${command} ${args.join(' ')} failed (${child.status}): ${child.stdout}\n${child.stderr}`);return child.stdout;};
+try{
+ await (await import('node:fs/promises')).mkdir(pkg,{recursive:true});await run('tar',['-xzf',archive,'--strip-components=1','-C',pkg]);
+ const manifest=JSON.parse(await readFile(join(pkg,'manifest.json'),'utf8'));
+ for(const [name,digest] of Object.entries(manifest.sha256))assert.equal(hash(await readFile(join(pkg,name))),digest,`archive member ${name}`);
+ const sourceManifest=JSON.parse(await readFile(join(pkg,'dist/rust-default-manifest.json'),'utf8')),closure=sourceManifest.sourceClosure;
+ assert.equal(closure.transform.status,'fixed-point');assert.deepEqual(closure.transform.generatedInputs,[]);assert.equal(closure.sha256,closure.capturedLiveSha256);
+ const nodeEntry=join(pkg,'dist/umf-node.js'),referenceEntry=join(pkg,'dist/umf.js'),addonPath=await realpath(join(pkg,'dist/umf_core_node.node'));
+ function input(id,trace){switch(id){case'T':return'T';case'F':return'F';case'U':return'U';case'null':return null;case'number':return 1;case'boolean':return true;case'unknown-string':return'X';case'array':return[];case'object':return{};case'null-prototype':return Object.create(null);case'accessor':return Object.defineProperty({},'member',{enumerable:true,get(){trace.push('getter');return'T';}});case'proxy-ownKeys':return new Proxy({}, {ownKeys(){trace.push('ownKeys');throw Error('ownKeys trap');}});case'proxy-getPrototype':return new Proxy({}, {getPrototypeOf(){trace.push('getPrototypeOf');throw Error('prototype trap');}});case'proxy-get':return new Proxy({}, {get(){trace.push('get');return'T';}});default:throw Error(`unknown case ${id}`);}}
+ function outcome(fn,value,trace){try{return{kind:'return',value:fn(value),trace};}catch(error){return{kind:'throw',name:error.name,constructor:error.constructor?.name??null,code:error.code??null,message:String(error.message),path:error.path??null,trace};}}
+ const probe=`import assert from 'node:assert/strict';import {createRequire} from 'node:module';const require=createRequire(import.meta.url);const addonPath=${JSON.stringify(addonPath)};const addon=require(addonPath);assert.equal(typeof addon.securityNotScalar,'function');let rustCalls=0;const originalScalar=addon.securityNotScalar;addon.securityNotScalar=function(...args){rustCalls++;return Reflect.apply(originalScalar,this,args)};const defaults=await import(${JSON.stringify(pathToFileURL(nodeEntry).href)}),reference=await import(${JSON.stringify(pathToFileURL(referenceEntry).href)});const packet=${JSON.stringify(packet)},input=${input.toString()},outcome=${outcome.toString()},stable=${stable.toString()},canonical=${canonical.toString()};const cases=[];for(const item of packet.cases){const trace=[];rustCalls=0;const defaultOutcome=outcome(()=>defaults.securityNot(input(item.id,trace)),undefined,trace),defaultRustCalls=rustCalls;assert.equal(canonical(defaultOutcome),canonical(item.expectedOutcome),item.id+' default outcome');assert.equal(canonical(trace),canonical(item.expectedTrace),item.id+' default trace');assert.equal(defaultRustCalls,item.expectedDefaultRustCalls,item.id+' observed Rust calls');const referenceTrace=[];rustCalls=0;const referenceOutcome=outcome(()=>reference.securityNot(input(item.id,referenceTrace)),undefined,referenceTrace),referenceRustCalls=rustCalls;assert.equal(canonical(referenceOutcome),canonical(item.expectedOutcome),item.id+' reference outcome');assert.equal(canonical(referenceTrace),canonical(item.expectedTrace));assert.equal(referenceRustCalls,0,item.id+' reference native Rust calls');cases.push({id:item.id,defaultOutcome,defaultTrace:trace,defaultRustCalls,referenceOutcome,referenceTrace,referenceRustCalls})}console.log(JSON.stringify({hostVersion:typeof Bun==='undefined'?process.version:'Bun '+Bun.version,cases}));`;
+ const probeDir=join(temp,'probe-workspace');await mkdir(probeDir,{recursive:true});const probePath=join(probeDir,'installed-probe.mjs');await writeFile(probePath,probe);const result=JSON.parse(run(targetRuntime,[probePath],probeDir).trim().split('\n').at(-1));const cases=result.cases;
+ const archiveBytes=await readFile(archive);
+ const receipt={format:'umf.r8.default-route-retirement-host-receipt/3',status:'pass',runtime:targetRuntime,hostVersion:result.hostVersion,cohortId,hostPlatform,archiveSha256:hash(await readFile(archive)),sourceClosureSha256:closure.sha256,packetSha256:hash(packetBytes),defaultRoute:{routeId:'package-root-node',entryMember:'dist/umf-node.js',entrySha256:hash(await readFile(nodeEntry)),artifactMembers:[{path:'dist/umf_core_node.node',sha256:hash(await readFile(addonPath))}]},referenceRoute:{routeId:'package-reference',entryMember:'dist/umf.js',entrySha256:hash(await readFile(referenceEntry)),artifactMembers:[]},cases};
+ await mkdir(resolve(out,'..'),{recursive:true});await writeFile(out,JSON.stringify(receipt,null,2)+'\n');console.log(JSON.stringify({status:'pass',runtime:receipt.runtime,hostVersion:receipt.hostVersion,cohortId,archiveSha256:receipt.archiveSha256,sourceClosureSha256:receipt.sourceClosureSha256,packetSha256:receipt.packetSha256,cases:cases.length,rustCalls:cases.map(c=>c.defaultRustCalls)}));
+}finally{await rm(temp,{recursive:true,force:true});}

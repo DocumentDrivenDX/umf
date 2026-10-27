@@ -130,6 +130,28 @@ exhaustion produce U or pre-evaluation refusal. Boolean semantics use strong
 Kleene logic; `not U = U`, `F and U = F`, `T or U = T`. These truth tables do
 not authorize ignoring incomplete provider admission.
 
+#### R8 `securityNot` default-route acceptance profile
+
+The narrowly scoped R8 retirement profile for the scalar `securityNot` export
+uses the guarded V4 package-root route and this contract's exact `T`, `F`, `U`
+domain. Its frozen packet contains exactly 14 ordered cases: valid `T`, `F`,
+`U`; null, number, boolean, an unknown string; array, ordinary object,
+null-prototype object, accessor object; and Proxies trapping `ownKeys`,
+`getPrototypeOf`, and property `get`. Valid results are respectively `F`,
+`T`, and `U`. Every invalid case throws `UmfError` with code `SECURITY_TRUTH`,
+message `Invalid security truth`, and empty path. No case may invoke a getter or
+Proxy trap. The guarded default route dispatches each valid case to Rust exactly
+once and rejects each invalid case before Rust dispatch; the TypeScript
+reference route dispatches none. Node, Bun, and Chromium receipts retain each
+case's outcomes, traces, and dispatch counts for both routes, bound to the
+archive, package routes, and source closure under test.
+
+This profile qualifies only that export's observed default-route behavior for
+its recorded fixed-point source and installed cohorts. It says nothing about
+`securityAnd`, `securityOr`, policy evaluation, security admission generally,
+or release suitability. Bounded `/2` default-route evidence alone cannot
+satisfy this acceptance profile or retire a default-route gap.
+
 All scoped rules MUST be evaluated against one admitted complete authority cut.
 If any scoped condition is U, the decision is `indeterminate` and MUST refuse
 effects/disclosure. Otherwise, permission holds exactly when at least one permit

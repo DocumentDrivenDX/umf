@@ -102,3 +102,76 @@ test('bounded /2 Cardinality evidence still cannot retire a default-route row', 
     /CONTRACT acceptance coverage required.*cannot retire/,
   );
 });
+
+const securityNotOperation = {
+  exportName: 'securityNot',
+  rustOwner: 'umf_core::security_logic::security_not',
+  contract: { id: 'CONTRACT-062' },
+};
+const securityIds = ['T', 'F', 'U', 'null', 'number', 'boolean', 'unknown-string', 'array', 'object', 'null-prototype', 'accessor', 'proxy-ownKeys', 'proxy-getPrototype', 'proxy-get'];
+const securityExpected = id => ['T', 'F', 'U'].includes(id)
+  ? { kind: 'return', value: ({ T: 'F', F: 'T', U: 'U' })[id], trace: [] }
+  : { kind: 'throw', name: 'UmfError', constructor: 'UmfError', code: 'SECURITY_TRUTH', message: 'Invalid security truth', path: '', trace: [] };
+const securityPacket = () => ({
+  format: 'umf.r8.default-route-retirement-packet/3', profile: 'security-not', contractId: 'CONTRACT-062',
+  exportName: 'securityNot', rustOwner: securityNotOperation.rustOwner,
+  cases: securityIds.map(id => ({ id, input: { case: id }, expectedOutcome: securityExpected(id), expectedTrace: [], expectedDefaultRustCalls: ['T', 'F', 'U'].includes(id) ? 1 : 0 })),
+});
+
+test('securityNot acceptance packet binds all 14 exact truth, invalid-input, trace and Rust-dispatch cases', async t => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'umf-r8-security-not-packet-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const good = securityPacket();
+  const goodPin = await pin(root, 'security-not.json', good);
+  const verified = verifyPacket(root, goodPin, securityNotOperation);
+  assert.equal(verified.securityNot, true);
+  assert.equal(verified.cases.size, 14);
+
+  for (const [name, mutate] of [
+    ['truth-result', p => { p.cases[0].expectedOutcome.value = 'T'; }],
+    ['invalid-error-class', p => { p.cases[3].expectedOutcome.name = 'UmfCoreError'; p.cases[3].expectedOutcome.constructor = 'UmfCoreError'; }],
+    ['invalid-code', p => { p.cases[3].expectedOutcome.code = 'RESOURCE_LIMIT'; }],
+    ['effect-trace', p => { p.cases[10].expectedTrace.push('getter'); }],
+    ['rust-dispatch', p => { p.cases[0].expectedDefaultRustCalls = 0; }],
+    ['invalid-dispatch', p => { p.cases[3].expectedDefaultRustCalls = 1; }],
+    ['case-order', p => { [p.cases[0], p.cases[1]] = [p.cases[1], p.cases[0]]; }],
+    ['case-omission', p => { p.cases.pop(); }],
+    ['input-alias', p => { p.cases[0].input.case = 'F'; }],
+    ['wrong-operation', p => { p.exportName = 'securityAnd'; }],
+  ]) {
+    const changed = structuredClone(good); mutate(changed);
+    const changedPin = await pin(root, `${name}.json`, changed);
+    assert.throws(() => verifyPacket(root, changedPin, securityNotOperation), /securityNot packet|identity is invalid/ , name);
+  }
+});
+
+test('securityNot host receipts require exact outcomes, traces and default/reference dispatch counts', async t => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'umf-r8-security-not-receipt-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const packetPin = await pin(root, 'packet.json', securityPacket());
+  const verifiedPacket = verifyPacket(root, packetPin, securityNotOperation);
+  const securityCohort = { ...cohort, platform: { os: 'darwin', nodeArch: 'arm64' } };
+  const securityMembers = { ...members };
+  const securityRoutes = { ...routes };
+  const good = receipt(packetPin.sha256);
+  good.format = 'umf.r8.default-route-retirement-host-receipt/3';
+  good.cases = securityIds.map(id => ({
+    id, defaultOutcome: securityExpected(id), defaultTrace: [], defaultRustCalls: ['T', 'F', 'U'].includes(id) ? 1 : 0,
+    referenceOutcome: securityExpected(id), referenceTrace: [], referenceRustCalls: 0,
+  }));
+  const goodPin = await pin(root, 'good-receipt.json', good);
+  assert.doesNotThrow(() => verifyHostReceipt(root, { ...goodPin, runtime: 'node' }, securityNotOperation, verifiedPacket, securityCohort, securityMembers, securityRoutes));
+  for (const [name, mutate] of [
+    ['changed-truth', r => { r.cases[0].defaultOutcome.value = 'T'; }],
+    ['changed-invalid-error', r => { r.cases[3].defaultOutcome.name = 'UmfCoreError'; }],
+    ['observed-effect', r => { r.cases[10].defaultTrace.push('getter'); }],
+    ['skipped-rust-call', r => { r.cases[0].defaultRustCalls = 0; }],
+    ['called-rust-for-invalid', r => { r.cases[3].defaultRustCalls = 1; }],
+    ['reference-rust-call', r => { r.cases[0].referenceRustCalls = 1; }],
+    ['missing-case', r => { r.cases.pop(); }],
+  ]) {
+    const changed = structuredClone(good); mutate(changed);
+    const changedPin = await pin(root, `${name}.json`, changed);
+    assert.throws(() => verifyHostReceipt(root, { ...changedPin, runtime: 'node' }, securityNotOperation, verifiedPacket, securityCohort, securityMembers, securityRoutes), name);
+  }
+});

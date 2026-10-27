@@ -8760,3 +8760,65 @@ for one fixed-point SDK source closure on Darwin arm64 and Linux x86_64. The
 existing Linux SDK workflow runs aggregate Security And/Or, not the targeted
 `securityNot` packet. No RRF or `securityNot` default-route gap is retired by
 this checkpoint; the full-port release gate remains open.
+
+### R8 `securityNot` retirement acceptance and capture preparation — 2026-10-27
+
+CONTRACT-062 now states a narrow, exact 14-case acceptance profile for the
+guarded V4 `securityNot` package-root export. The `/3` retirement validator
+binds the frozen T/F/U, invalid-input, effect-trace, and Rust-dispatch
+expectations to two fixed-point installed SDK cohorts and their Node, Bun, and
+Chromium raw receipts. It continues to reject `/2` bounded evidence for
+retirement. The packet and raw-replay harnesses are included in the SDK source
+closure. A historical macOS arm64 archive smoke replay passed all 14 cases on
+each host with observed Rust calls of one for each valid token and zero for
+each of the eleven invalid inputs; it does not qualify this changed source.
+The Linux SDK workflow is prepared to capture the same raw receipt shape on
+its hosted x86_64 job. Fresh matching source-bound archives, durable two-cohort
+receipt provenance, positive ledger integration, and independent review are
+still required before this single logical gap may be retired. The ledger
+remains at **922 open default-route gaps and zero retired**.
+
+### R8 current-source replay and retirement-gate integration — 2026-10-27
+
+The source-built Security And/Or, Compact Dataset V4, and PostgreSQL RRF
+Node/Bun/Chromium replays now pass against one immutable build manifest
+(SHA-256 `c48aa7bfe8f65129cdaa1c4fa49c6a0c579d3aed970e410d99dcb1b1189312ff`,
+source closure `86192c24ea6310ccb7d50e9e78045bb928900fe1876b878a244bfd4832e1fa4a`).
+The Security And/Or fixture is separately pinned to current CONTRACT-062 and
+source bytes; its 68 cases pass on each host. All five Compact outcome payloads
+and its source index stayed byte-identical on regeneration. RRF's five host
+cases pass with exact binary64 scores and order. Prior receipts remain under
+historical directories. These are source-built bounded replays, not installed
+SDK or release qualification.
+
+Sol review found that the first `/3` validator result used `accepted` while
+the R8 ledger only recognizes `retired`. The gate now maps fully validated
+`securityNot` evidence to two `retired` route dispositions. Its positive test
+reduces a fixture to zero logical gaps; negative tests reject stale source,
+packet, receipt, case, and route identities. The focused gate tests and full
+64-test ledger suite pass. A first fixed-point Darwin arm64 SDK archive
+(SHA-256 `5f5943dace4db5d2fb21bf4ee4593b9b796601b7d278ef78ca01a33d6ad7d0be`,
+source closure `a9c04b7e73d24c6c0eda94a0d6917c21f0953f117187d859308ec6f295973f51`)
+passed all 14 `securityNot` cases in Node, Bun, and Chromium, observing one
+Rust call for each valid truth and zero for each invalid input; Chromium had
+no Node globals. The ledger-status fix changed an SDK source input after this
+archive was built, so that cohort is historical. A new fixed-point Darwin
+archive and matching Linux x86_64 cohort, durable two-cohort archive and
+receipt provenance, and independent review remain open. The regenerated
+ledger SHA-256 is
+`afc8da421ae1d68590b8e483801be8fa884a3810e2c00470fecb4bc2f2b8bad2`;
+it still records **922 open logical default-route gaps and zero retired**.
+
+The replacement Darwin arm64 fixed-point archive is now captured at SHA-256
+`13035f2cec34e1e55c86eb46f5a685cfbf344628575c321e5e36e1d9be52898b`,
+with SDK source closure
+`5ff72dd348c40122d8e79e10e13dd54f23a484f9b58896ea2038729ec2582e17`
+and zero generated-input transforms. Its installed package-root `securityNot`
+replay passes the exact 14-case CONTRACT-062 profile in Node 26.12.1, Bun
+1.4.3, and Chromium 153.0.8010.12. The three raw receipts, archive member
+map, package manifest, and hashes are preserved in
+`r8-security-not-retirement-darwin-20261027/`. This is one of the two required
+platform cohorts. The matching hosted Linux x86_64 archive and receipts,
+two-cohort validator result, and independent review remain open. The default
+route remains unretired; no complete-port or release claim follows from this
+capture.

@@ -11,13 +11,13 @@
     "reference": "private source-built TypeScript root"
   },
   "buildBinding": {
-    "manifest": "/private/tmp/umf-r8-access-rrf-final-build-5/compact-dataset-verify-build-manifest.json",
-    "sha256": "3e88fb576d9bf076415b96263154b86453b9d372b1b7d88fb22651f9fb788f63",
+    "manifest": "/private/tmp/umf-r8-current-source-securitynot-20261027/compact-dataset-verify-build-manifest.json",
+    "sha256": "c48aa7bfe8f65129cdaa1c4fa49c6a0c579d3aed970e410d99dcb1b1189312ff",
     "sourceClosureSha256": "86192c24ea6310ccb7d50e9e78045bb928900fe1876b878a244bfd4832e1fa4a",
     "artifacts": {
       "nodeAddon": {
         "path": "umf_core_node.node",
-        "sha256": "d85044d9570f6a8e5fc44e1831584ea12509efb38c2691ba3d7fe1169550f90b"
+        "sha256": "553b2e7c2f143ae43034a0bdb9eb4e9bb3fec437aa47d011b25d9da1d1272991"
       },
       "wasm": {
         "path": "umf_core_wasm_bg.wasm",
@@ -37,12 +37,12 @@
       },
       "browserBundle": {
         "path": "umf-browser.js",
-        "sha256": "4ff392fa3fef1911d453516c39bf2ca3e8421e3fb733171d4ac7f6cf91c2de8c"
+        "sha256": "6e81dd082d6a971c8b8fe6d2715bc576dcdbf109c47d83fcbe1fce0503389656"
       }
     }
   },
   "sourceClosure": {
-    "sha256": "ef7cf7500d80ab03288d96bf8ee330b54119763a73a568adb524b48b140dce73",
+    "sha256": "0cc6e9fd4fe92bd6678be8aca924fed825026074c3228032abf03cd1fe48e225",
     "files": {
       "src/extensions/security/logic.ts": "df5857cf39f924552a8082f87d911b81725cce0cf1fda4375daeeb07dd48c8c8",
       "src/extensions/security/rust-logic-adapter.ts": "9a989aed6e56fd5ae9995c0c86efaa5f1df465138f191d3b3bc1cf0b7580c579",
@@ -63,19 +63,19 @@
       "crates/umf-core/src/security_logic.rs": "38bea5c75d7d01365817237a554176dfc24b759d25d12185591c13cb91062c19",
       "crates/umf-core-wire/src/security_logic_binding.rs": "d94fc1e66dca1d571fe24c76a8e3a5050b695bffa0dd8f29374020eb9fe05087",
       "crates/umf-tagged-wire/src/lib.rs": "3285026b35faeef611532d8705c980d27233afa5b2844720ef8268675e360a09",
-      "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "1183e2ea8ba55fade4007554905b7175d7796e867a67814f511e9cd3ee514800",
+      "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "84959ee6114e10fcfb233bbe14c65554fe4bbb1217fa3f482d1e8c11af2a1a52",
       "docs/helix/04-build/evidence/rust-migration/r8-security-truth-logic/frozen-typescript.json": "d3d3dfc029923afb582eb2c5539024c4bcd1b0b60a95bf139e018441d1b8c770",
       "tests/security/rust-logic-adapter.test.ts": "61add82c8652ea447b156c14826d40852a2831a97ba862d5bae7563980edd212"
     }
   },
   "build": {
-    "dist": "/private/tmp/umf-r8-access-rrf-final-build-5",
+    "dist": "/private/tmp/umf-r8-current-source-securitynot-20261027",
     "wasmBindgen": "0.2.100",
     "wasmSha256": "e9f4217650ffe8e9b72128679e2920a2bc769f0cd488b2458adca26ce9626739"
   },
   "fixture": {
     "path": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/docs/helix/04-build/evidence/rust-migration/r8-security-and-or-v4-source-replay-current/predecessor.json",
-    "sha256": "d5dddb6766cadd5f9e3c45ef40f7d9fc8d5d486d59d3163b236477ef6966308d",
+    "sha256": "be97dfa59f8971e1c70e8e932ea8dac0188e0c3cd39b7ddf1b7206a06790f5d2",
     "cases": 68
   },
   "rustDispatch": {

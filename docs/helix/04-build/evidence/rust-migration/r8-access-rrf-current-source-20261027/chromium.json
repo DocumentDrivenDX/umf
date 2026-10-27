@@ -1,84 +1,21 @@
 {
   "format": "umf-r8-access-rrf-chromium-current-source/1",
-  "status": "pass",
-  "profile": "umf-r8-access-rrf/0.1.0",
-  "host": "chromium",
-  "version": "153.0.8010.12",
+  "browser": "153.0.8010.12",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
   "packetSha256": "3e4467f63ff324c35fe4b46824a75d830608a03bf3ee08f722e85ddc370243a1",
   "wasmGlueSha256": "c12100fb775e452ddd3615e9c92e37733828dc902949f8588b994a088f90c820",
   "wasmBinarySha256": "e9f4217650ffe8e9b72128679e2920a2bc769f0cd488b2458adca26ce9626739",
+  "profile": "umf-r8-access-rrf/0.1.0",
   "cases": 5,
   "mismatches": [],
-  "rows": [
-    {
-      "name": "rrf-overlap-rank-accumulation-and-topk",
-      "ordered": [
-        {
-          "identity": 0,
-          "scoreBits": "3fe2aaaaaaaaaaaa"
-        },
-        {
-          "identity": 1,
-          "scoreBits": "3fe2aaaaaaaaaaaa"
-        },
-        {
-          "identity": 2,
-          "scoreBits": "3fc999999999999a"
-        }
-      ]
-    },
-    {
-      "name": "rrf-complete-key-tie-order",
-      "ordered": [
-        {
-          "identity": 0,
-          "scoreBits": "3feaaaaaaaaaaaaa"
-        },
-        {
-          "identity": 1,
-          "scoreBits": "3feaaaaaaaaaaaaa"
-        }
-      ]
-    },
-    {
-      "name": "rrf-equal-key-items-use-python-equality",
-      "ordered": [
-        {
-          "identity": 0,
-          "scoreBits": "3fa0c9714fbcda3b"
-        }
-      ]
-    },
-    {
-      "name": "rrf-empty-legs",
-      "ordered": []
-    },
-    {
-      "name": "non-involutive-key-order-permutation",
-      "ordered": [
-        {
-          "identity": 2,
-          "scoreBits": "3fe8000000000000"
-        },
-        {
-          "identity": 0,
-          "scoreBits": "3fe8000000000000"
-        },
-        {
-          "identity": 1,
-          "scoreBits": "3fe5555555555555"
-        }
-      ]
-    }
-  ],
   "buildBinding": {
-    "manifest": "/private/tmp/umf-r8-access-rrf-final-build-5/compact-dataset-verify-build-manifest.json",
-    "sha256": "3e88fb576d9bf076415b96263154b86453b9d372b1b7d88fb22651f9fb788f63",
+    "manifest": "/private/tmp/umf-r8-current-source-securitynot-20261027/compact-dataset-verify-build-manifest.json",
+    "sha256": "c48aa7bfe8f65129cdaa1c4fa49c6a0c579d3aed970e410d99dcb1b1189312ff",
     "sourceClosureSha256": "86192c24ea6310ccb7d50e9e78045bb928900fe1876b878a244bfd4832e1fa4a",
     "artifacts": {
       "nodeAddon": {
         "path": "umf_core_node.node",
-        "sha256": "d85044d9570f6a8e5fc44e1831584ea12509efb38c2691ba3d7fe1169550f90b"
+        "sha256": "553b2e7c2f143ae43034a0bdb9eb4e9bb3fec437aa47d011b25d9da1d1272991"
       },
       "wasm": {
         "path": "umf_core_wasm_bg.wasm",
@@ -98,8 +35,21 @@
       },
       "browserBundle": {
         "path": "umf-browser.js",
-        "sha256": "4ff392fa3fef1911d453516c39bf2ca3e8421e3fb733171d4ac7f6cf91c2de8c"
+        "sha256": "6e81dd082d6a971c8b8fe6d2715bc576dcdbf109c47d83fcbe1fce0503389656"
       }
     }
+  },
+  "predecessorPacketSha256": "3e4467f63ff324c35fe4b46824a75d830608a03bf3ee08f722e85ddc370243a1",
+  "qualification": "Current source-tree replay against the exact shared R8 --build native/WASM artifact cohort; this does not qualify an installed SDK or package release.",
+  "status": "pass",
+  "host": "chromium",
+  "replaySources": {
+    "bindings/core/node/index.js": "5cbcb63feb279d0df1c72e7f4d19f6f29efc8cdfad32dacd2a52d34d816aba2f",
+    "bindings/core/node/src/access-rrf.js": "9bc5a20dd98af70eb32d91339079c5b592c27f4d84afd722033e9a8aeaa9b416",
+    "bindings/core/node/tests/access-rrf-predecessor-replay.mjs": "c7f15f3d5d9ad3f4d4cc94e74adb3b4ad8559376b479b6b17311548b27fdbee4",
+    "bindings/core/node/tests/access-rrf-replay.js": "cbda0d86bd5539d4b3d2004f4ab52ec131a6c09ec569ea3fecb6e746845e63f7",
+    "bindings/core/wasm/index.js": "e7074d38514a8b2658f202391ff81423dd3638144d431160607e1cab6a662843",
+    "bindings/core/wasm/src/access-rrf.js": "9bc5a20dd98af70eb32d91339079c5b592c27f4d84afd722033e9a8aeaa9b416",
+    "bindings/core/wasm/tests/access-rrf-current-source.chromium.mjs": "2afdeac3ba2d2373dce8b2f88e7bfcae0d6d9cc0adcd9513083ffec8c06f8cf1"
   }
 }
