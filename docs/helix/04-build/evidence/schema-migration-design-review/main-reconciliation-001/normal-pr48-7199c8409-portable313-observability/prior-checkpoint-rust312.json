@@ -1,0 +1,31 @@
+{
+  "runId": 40582138899,
+  "jobId": 122464045753,
+  "job": "production-conformance (ubuntu-latest, 3.12.15)",
+  "conclusion": "success",
+  "event": "pull_request",
+  "apiHeadSha": "7199c8409d0a67f3a99c1f1fd62ffc0f078d6eb2",
+  "syntheticProducerCommit": "06494602fe83d1af90f743243dad6afb7921206c",
+  "sourceClosureSha256": "96279bca3060844dacc3b19240f1a0149743ca34fe7896ccb6a5b3705191f951",
+  "artifactId": 12776308098,
+  "artifactName": "rust-production-core-ubuntu-latest-python-3.12.15",
+  "artifactSizeBytes": 219685,
+  "artifactZipSha256": "9e283206328f45f3059f92e29b325bfbc2305364bed987ef2f95f1bbf1d17679",
+  "runtime": "Python 3.12.15",
+  "scope": {
+    "pythonConformance": "pass",
+    "bunNodeCliCases": 139,
+    "chromiumCases": 139,
+    "chromiumExternalRequests": 0,
+    "schemaAdmissionCases": 9282,
+    "numericPredecessorCases": 2586,
+    "methodObservations": 7671,
+    "errorMetadataObservations": 263,
+    "runtimeTypeErrors": 6,
+    "rustInventoryCheckedModules": 633,
+    "rustInventoryFindings": 0,
+    "negativeControls": "all listed controls pass"
+  },
+  "evidenceQualification": "PR checkpoint only; synthetic producer P is distinct from API head",
+  "rawLogReference": "GitHub Actions job log API: repo DocumentDrivenDX/umf, job 122464045753"
+}

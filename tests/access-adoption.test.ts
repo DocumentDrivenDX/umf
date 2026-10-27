@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {mkdtemp,rm} from 'node:fs/promises';
+import {constants} from 'node:fs';
+import {lstat,mkdtemp,open,rename,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
 import {generatePythonClient} from '../src/access';
@@ -58,12 +59,56 @@ test('check is usable as an action parameter and as an independent precondition 
  action.parameters.find((p:any)=>p.id==='note').name='check';
  action.preconditions[0].id='check';
  const generated=generate(d),directory=await mkdtemp(join(tmpdir(),'umf-adoption-check-'));
+ const journal=join(directory,'.umf-adoption-stage');
+ const stages=new Set([
+  'parent-generated','parent-written','parent-before-spawn',
+  'child-before-asyncio-import','child-after-asyncio-import',
+  'child-before-generated-imports','child-after-generated-imports',
+  'child-before-precondition-assertion','child-after-precondition-assertion',
+  'child-before-async-action','child-after-async-action',
+  'child-before-sync-action','child-after-sync-action','child-run-complete'
+ ]);
+ const writeParentStage=async(stage:string)=>{
+  const temporary=join(directory,'.umf-adoption-stage.parent.tmp');
+  await Bun.write(temporary,stage+'\n');
+  await rename(temporary,journal);
+ };
+ let cleanupOwnedChild:(()=>void)|undefined;
  try{
+  await writeParentStage('parent-generated');
   for(const file of generated.files)await Bun.write(join(directory,file.path),file.text);
-  const script=`import asyncio\nfrom adoption import Actions, Client, SyncActions, SyncClient, CustomerKey, OpenProjectPrecondition\nassert OpenProjectPrecondition.CHECK == 'check'\nclass AsyncHost:\n async def execute(self, request):\n  assert request['inputs']['note'] == 'value'\n  return {'schema':request['schema'],'status':'committed','created':[],'changed':[],'counts':{},'consistency_token':'cut'}\nclass SyncHost:\n def execute(self, request):\n  assert request['inputs']['note'] == 'value'\n  return {'schema':request['schema'],'status':'committed','created':[],'changed':[],'counts':{},'consistency_token':'cut'}\nasync def main():\n await Actions(Client(AsyncHost())).open_project(code='P',title='T',client=CustomerKey(code='C1'),check='value')\n SyncActions(SyncClient(SyncHost())).open_project(code='P',title='T',client=CustomerKey(code='C1'),check='value')\nasyncio.run(main())\n`;
+  await writeParentStage('parent-written');
+  const script=`import os\ndef record(stage):\n with open('.umf-adoption-stage.tmp','w',encoding='ascii') as journal:\n  journal.write(stage+'\\n')\n os.replace('.umf-adoption-stage.tmp','.umf-adoption-stage')\nrecord('child-before-asyncio-import')\nimport asyncio\nrecord('child-after-asyncio-import')\nrecord('child-before-generated-imports')\nfrom adoption import Actions, Client, SyncActions, SyncClient, CustomerKey, OpenProjectPrecondition\nrecord('child-after-generated-imports')\nrecord('child-before-precondition-assertion')\nassert OpenProjectPrecondition.CHECK == 'check'\nrecord('child-after-precondition-assertion')\nclass AsyncHost:\n async def execute(self, request):\n  assert request['inputs']['note'] == 'value'\n  return {'schema':request['schema'],'status':'committed','created':[],'changed':[],'counts':{},'consistency_token':'cut'}\nclass SyncHost:\n def execute(self, request):\n  assert request['inputs']['note'] == 'value'\n  return {'schema':request['schema'],'status':'committed','created':[],'changed':[],'counts':{},'consistency_token':'cut'}\nasync def main():\n record('child-before-async-action')\n await Actions(Client(AsyncHost())).open_project(code='P',title='T',client=CustomerKey(code='C1'),check='value')\n record('child-after-async-action')\n record('child-before-sync-action')\n SyncActions(SyncClient(SyncHost())).open_project(code='P',title='T',client=CustomerKey(code='C1'),check='value')\n record('child-after-sync-action')\nasyncio.run(main())\nrecord('child-run-complete')\n`;
+  await writeParentStage('parent-before-spawn');
   const proc=Bun.spawn([process.env.UMF_UNIFIED_PYTHON??'python3.11','-S','-c',script],{cwd:directory,stdout:'pipe',stderr:'pipe',env:{...process.env,PYTHONPATH:directory,PYTHONDONTWRITEBYTECODE:'1'}});
+  cleanupOwnedChild=()=>{if(proc.exitCode===null)proc.kill();};
   const [exit,stdout,stderr]=await Promise.all([proc.exited,new Response(proc.stdout).text(),new Response(proc.stderr).text()]);
   expect({exit,stdout,stderr}).toEqual({exit:0,stdout:'',stderr:''});
+ }catch(error){
+  try{
+   cleanupOwnedChild?.();
+  }catch{}
+  try{
+   const before=await lstat(journal);
+   if(before.isFile()&&!before.isSymbolicLink()&&before.size<=128){
+    const noFollow=constants.O_NOFOLLOW??0;
+    const handle=await open(journal,constants.O_RDONLY|noFollow);
+    try{
+     const opened=await handle.stat();
+     if(opened.isFile()&&opened.size<=128&&opened.dev===before.dev&&opened.ino===before.ino){
+      const buffer=new Uint8Array(128);
+      const {bytesRead}=await handle.read(buffer,0,128,0);
+      const after=await handle.stat();
+      if(bytesRead===opened.size&&after.size===opened.size&&after.dev===opened.dev&&after.ino===opened.ino){
+       const contents=String.fromCharCode(...buffer.subarray(0,bytesRead));
+       const stage=contents.endsWith('\n')?contents.slice(0,-1):'';
+       if(contents===stage+'\n'&&stages.has(stage))console.error(`access-adoption-check-stage=${stage}`);
+      }
+     }
+    }finally{await handle.close();}
+   }
+  }catch{}
+  throw error;
  }finally{await rm(directory,{recursive:true,force:true});}
 });
 

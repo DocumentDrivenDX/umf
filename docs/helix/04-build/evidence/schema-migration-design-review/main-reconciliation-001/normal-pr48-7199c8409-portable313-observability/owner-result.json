@@ -1,0 +1,27 @@
+{
+  "profile": "umf.portable-adoption-failure-observation/1",
+  "status": "SOURCE_DIAGNOSTIC_ACCEPTED_RUNTIME_OPEN",
+  "failedSourceHead": "7199c8409d0a67f3a99c1f1fd62ffc0f078d6eb2",
+  "executedProducerP": "06494602fe83d1af90f743243dad6afb7921206c",
+  "runId": 40582138791,
+  "jobId": 122464045184,
+  "cell": "Linux Python3.13.17",
+  "observation": "Bun explicitly timed out the check parameter/precondition test at5000ms and killed one dangling child; observed exit143 with empty stdout/stderr. Exact blocked statement/cause is unknown.",
+  "caseResult": {
+    "pass": 7,
+    "fail": 1,
+    "error": 1,
+    "expectCalls": 54
+  },
+  "comparison": "Same-source focused case passed on Python3.12.15 in229.34ms and3.14.8 in508.67ms. A later generated-client probe passed on the3.13 worker in672.63ms. None proves cause or cure.",
+  "sourcePostimage": {
+    "path": "tests/access-adoption.test.ts",
+    "sha256": "42e64181c98a8e492a051230b584157e40305bff65d5fa9530ad20591af98b8e"
+  },
+  "reviewSha256": "c9cc616800c8337fe8ee57abfcc5ce0b804bdbfcc1c2b98ba2a714f1c6ce0f16",
+  "change": "Fixed-phase atomic journal, failure-only <=128-byte regular/no-follow FD read and closed token emission, best-effort owned child termination. No new timer or shutdown wait.",
+  "preserved": "All8 tests, original success and stdout/stderr assertions, existing default5000ms, all work inside originaltest, full qualification/case rosters and existing limits. No native34/portable97 source-pin row changes.",
+  "limits": "Diagnostic emission on Bun cancellation remains best-effort until observed; primarytimeout remains UNKNOWN. Linux CI only; retained built macOS artifacts are data/historical scope, Python3.14 unqualified, macosx_11_0 static tag not OS11runtime proof.",
+  "priorCheckpoint": "Allthree7199LinuxRust cells and bothnative-session lanes passed; these results do not qualify the changed successor. Portable311 still pending at this source freeze.",
+  "next": "Existing genuine generation and actual output adoption; close remaining7199 material finding, then fresh current-source original Linux qualification, review, merge, immutable release and fresh public proof."
+}

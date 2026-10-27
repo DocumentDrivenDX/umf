@@ -1,0 +1,24 @@
+{
+  "runId": 40582138791,
+  "jobId": 122464045114,
+  "job": "native-sessions (source-dbapi)",
+  "conclusion": "success",
+  "event": "pull_request",
+  "apiHeadSha": "7199c8409d0a67f3a99c1f1fd62ffc0f078d6eb2",
+  "syntheticProducerCommit": "06494602fe83d1af90f743243dad6afb7921206c",
+  "artifactId": 12777278486,
+  "artifactName": "native-session-postgresql18-source-dbapi",
+  "artifactSizeBytes": 144675,
+  "artifactZipSha256": "cac6aba230d933ff237358d200eb711e11f69bfbe3e345bef20d0b5973d7637b",
+  "completedSteps": "all successful",
+  "scope": {
+    "nativeClientGenerationAndOwnership": "passed",
+    "sourceDerivedDeploymentCatalogAndRoleFixtures": "passed",
+    "publishedV053LifecycleOracleAndMixedMigrationAcceptance": "passed",
+    "migrationCases": 14,
+    "negativeCases": ["inbound-pk", "narrow-numeric"],
+    "leaseAcquisitionAndReleaseSummaries": "reported in logs for psycopg/SQLAlchemy sync and async drivers"
+  },
+  "evidenceQualification": "PR checkpoint only; does not qualify a release source",
+  "rawLogReference": "GitHub Actions job log API: repo DocumentDrivenDX/umf, job 122464045114"
+}
