@@ -103,6 +103,7 @@ try {
   const branchDiagnosticPath = resolve(process.argv[3] ?? '/private/tmp/umf-selection-kind-runtime-branch-browser-debug.json');
   await writeFile(branchDiagnosticPath, JSON.stringify({
     selectionKindRuntimeBranch: result.selectionKindRuntimeBranch,
+    selectionKindRuntimeOverride: result.selectionKindRuntimeOverride,
     chromium: browser.version(),
   }, null, 2) + '\n');
   assert.deepEqual(browserErrors, []);
@@ -139,11 +140,15 @@ try {
   ], 'kindRuntime second-read behavior diverged from same-host TypeScript');
   assert.equal(result.kindRuntimeDynamicReadCases[1].sameText, true,
     'caller getter exception should preserve its own message');
-  assert.equal(result.selectionKindRuntimeBranch.prefixMatches, true,
-    `Selection kindRuntime validity branch differs from same-host TypeScript: ${JSON.stringify(result.selectionKindRuntimeBranch)}`);
-  assert.equal(result.selectionKindRuntimeBranch.trace.at(-1), 'validation.valid:get',
-    'private Selection route read beyond the result.valid branch');
-  assert.match(result.selectionKindRuntimeBranch.actualError, /HOST_JSON_UNSUPPORTED/);
+  assert.equal(result.selectionKindRuntimeBranch.sameTrace, true,
+    `Selection kindRuntime validity trace differs from same-host TypeScript: ${JSON.stringify(result.selectionKindRuntimeBranch)}`);
+  assert.equal(result.selectionKindRuntimeBranch.sameErrorCode, true);
+  assert.equal(result.selectionKindRuntimeBranch.sameErrorPath, true);
+  assert.equal(result.selectionKindRuntimeBranch.expectedErrorCode, 'NON_JSON');
+  assert.equal(result.selectionKindRuntimeBranch.expectedErrorPath, '/sourceValidation/valid');
+  assert.equal(result.selectionKindRuntimeOverride.sameTrace, true);
+  assert.equal(result.selectionKindRuntimeOverride.sameResult, true);
+  assert.equal(result.selectionKindRuntimeOverride.sourceValidation.extension.owner, 'caller');
   assert.equal(result.registrationInterleaving.sameTrace, true,
     'Selection registered(...) and per-payload callback events differ from same-host TypeScript');
   assert.equal(result.registrationInterleaving.sameResult, true,
@@ -161,6 +166,7 @@ try {
     kindRuntimeResultCases: result.kindRuntimeResultCases,
     kindRuntimeDynamicReadCases: result.kindRuntimeDynamicReadCases,
     selectionKindRuntimeBranch: result.selectionKindRuntimeBranch,
+    selectionKindRuntimeOverride: result.selectionKindRuntimeOverride,
     registrationInterleaving: {
       sameTrace: result.registrationInterleaving.sameTrace,
       sameResult: result.registrationInterleaving.sameResult,

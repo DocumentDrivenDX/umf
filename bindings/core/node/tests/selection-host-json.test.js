@@ -204,7 +204,7 @@ test('private host Selection route matches the complete frozen R5 result with an
   expect(Object.getPrototypeOf(output.source.modules[0])).toBe(null);
 });
 
-test('private Selection kindRuntime reads result.valid at the consumer branch before refusing the continuation', () => {
+test('private Selection kindRuntime reads valid before final sourceValidation copying', () => {
   const referenceTrace = [];
   const actualTrace = [];
   const makeRegistry = trace => {
@@ -231,18 +231,39 @@ test('private Selection kindRuntime reads result.valid at the consumer branch be
     typescriptSelectCoreElements(packet.source, packet.queries.all, referenceRegistry);
   } catch (error) {
     // The final sourceValidation copy rejects this non-enumerable accessor
-    // after `.valid` was read; this stage compares the observable prefix only.
+    // after `.valid` was read.
     expect(error.code).toBe('NON_JSON');
+    expect(error.path).toBe('/sourceValidation/valid');
   }
   const actualRegistry = makeRegistry(actualTrace);
-  expect(() => coreElementSelectionHostInput(
-    addon, resources, packet.source, packet.queries.all, actualRegistry, UmfCoreError,
-  )).toThrow(expect.objectContaining({
-    code: 'HOST_JSON_UNSUPPORTED',
-    message: 'Caller kindRuntime Selection success stops before sourceValidation materialization',
-  }));
-  expect(actualTrace.at(-1)).toBe('validation.valid:get');
-  expect(referenceTrace.slice(0, actualTrace.length)).toEqual(actualTrace);
+  let actualError;
+  try {
+    coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, actualRegistry, UmfCoreError);
+  } catch (error) { actualError = error; }
+  expect(actualError?.code).toBe('NON_JSON');
+  expect(actualError?.path).toBe('/sourceValidation/valid');
+  expect(actualTrace).toEqual(referenceTrace);
+});
+
+test('private Selection kindRuntime valid result continues through sourceValidation copying', () => {
+  const validation = {valid: true, diagnostics: [], extension: {owner: 'caller', values: [1, null]}};
+  const source = structuredClone(packet.source);
+  source.modules[0].elements[0].scalarType = 7;
+  const referenceTrace = [], actualTrace = [];
+  const makeRuntimeRegistry = trace => {
+    const runtime = {validateDocument(source, registrations) {
+      trace.push(['validateDocument', this === runtime, source.modules.length, registrations.length]);
+      return validation;
+    }};
+    return {kindRuntime: runtime, registrations() { trace.push(['registrations']); return []; }};
+  };
+  const expected = typescriptSelectCoreElements(source, packet.queries.all, makeRuntimeRegistry(referenceTrace));
+  const actual = coreElementSelectionHostInput(addon, resources, source, packet.queries.all,
+    makeRuntimeRegistry(actualTrace), UmfCoreError);
+  expect(actual).toEqual(expected);
+  expect(JSON.stringify(actual)).toBe(JSON.stringify(expected));
+  expect(actual.sourceValidation).toEqual(validation);
+  expect(referenceTrace).toEqual(actualTrace);
 });
 
 test('private Selection kindRuntime false result reads then stringifies the original diagnostics value', () => {

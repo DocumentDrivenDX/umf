@@ -351,20 +351,32 @@ fn select_core_elements_after_copy_with_host_refusal(
     >,
 ) -> Result<Value, EngineError> {
     let (transitive, filters, identities) = parse_query(&query)?;
+    let mut host_kind_runtime_success = false;
     if let Some(validate) = host_kind_runtime.as_deref_mut() {
         match validate(&source, ctx)? {
-            Some(false) => return Err(EngineError::new(
-                "HOST_JSON_UNSUPPORTED", Utf16::default(),
-                "Caller kindRuntime Selection refusal stops before diagnostics materialization",
-            )),
-            Some(true) => return Err(EngineError::new(
-                "HOST_JSON_UNSUPPORTED", Utf16::default(),
-                "Caller kindRuntime Selection success stops before sourceValidation materialization",
-            )),
+            Some(false) => {
+                return Err(EngineError::new(
+                    "HOST_JSON_UNSUPPORTED",
+                    Utf16::default(),
+                    "Caller kindRuntime Selection refusal stops before diagnostics materialization",
+                ));
+            }
+            Some(true) => host_kind_runtime_success = true,
             None => {}
         }
     }
-    let source_validation = if host_refusal.is_some() {
+    let source_validation = if host_kind_runtime_success {
+        // The caller's kindRuntime result is the sourceValidation value in the
+        // TypeScript predecessor. Do not run Rust validation or inspect Registry
+        // again after that host decision.
+        crate::selection_diagnostics::SelectionDiagnosticMaterialization::from_static_validation(
+            crate::error::Validation {
+                valid: true,
+                complete: true,
+                diagnostics: Vec::new(),
+            },
+        )
+    } else if host_refusal.is_some() {
         engine.selection_diagnostic_packet_with_provider(&source, provider, capabilities, ctx)?
     } else {
         crate::selection_diagnostics::SelectionDiagnosticMaterialization::from_static_validation(

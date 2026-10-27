@@ -14,6 +14,7 @@ type Payload = {
 
 export function runSelectionBrowserCases(payload: Payload) {
   const addon = (globalThis as typeof globalThis & {selectionWasmModule: Record<string, unknown>}).selectionWasmModule;
+  class HostError extends Error { constructor(readonly code: string, message: string, readonly path: string) { super(message); } }
   const outcomes: Record<string, unknown> = {};
   for (const name of Object.keys(payload.queries)) {
     const result = coreElementSelectionHostInput(addon, payload.resources,
@@ -189,14 +190,38 @@ export function runSelectionBrowserCases(payload: Payload) {
         registrations() { events.push('registry.registrations:call'); return []; },
       };
       try { route(payload.source, payload.queries.all, registry); }
-      catch (error) { return {events, error: String(error)}; }
-      return {events, error: undefined};
+      catch (error) { const item = error as HostError; return {events, errorCode: item.code, errorPath: item.path}; }
+      return {events, errorCode: undefined, errorPath: undefined};
     };
     const expected = invoke(typescriptSelectCoreElements as (source: unknown, query: unknown, registry: unknown) => unknown);
     const actual = invoke((source, query, registry) => coreElementSelectionHostInput(addon,
-      payload.resources, source, query, registry, Error));
-    return {prefixMatches: JSON.stringify(expected.events.slice(0, actual.events.length)) === JSON.stringify(actual.events),
-      expectedError: expected.error, actualError: actual.error, trace: actual.events};
+      payload.resources, source, query, registry, HostError));
+    return {sameTrace: JSON.stringify(expected.events) === JSON.stringify(actual.events),
+      sameErrorCode: expected.errorCode === actual.errorCode, sameErrorPath: expected.errorPath === actual.errorPath,
+      expectedErrorCode: expected.errorCode, actualErrorCode: actual.errorCode,
+      expectedErrorPath: expected.errorPath, actualErrorPath: actual.errorPath, trace: actual.events};
+  })();
+
+  const selectionKindRuntimeOverride = (() => {
+    const source = structuredClone(payload.source) as any;
+    source.modules[0].elements[0].scalarType = 7;
+    const validation = {valid: true, diagnostics: [], extension: {owner: 'caller'}};
+    const invoke = (route: (source: unknown, query: unknown, registry: unknown) => unknown) => {
+      const events: string[] = [];
+      const runtime = {validateDocument(document: any, registrations: unknown[]) {
+        events.push(`validateDocument:${this === runtime}:${document.modules[0].elements[0].scalarType}:${registrations.length}`);
+        return validation;
+      }};
+      const registry = {kindRuntime: runtime, registrations() { events.push('registrations'); return []; }};
+      const result = route(source, payload.queries.all, registry);
+      return {events, resultJson: JSON.stringify(result)};
+    };
+    const expected = invoke(typescriptSelectCoreElements as (source: unknown, query: unknown, registry: unknown) => unknown);
+    const actual = invoke((document, query, registry) => coreElementSelectionHostInput(addon,
+      payload.resources, document, query, registry, Error));
+    return {sameTrace: JSON.stringify(expected.events) === JSON.stringify(actual.events),
+      sameResult: expected.resultJson === actual.resultJson, events: actual.events,
+      sourceValidation: JSON.parse(actual.resultJson).sourceValidation};
   })();
   const registrationInterleaving = (() => {
     const interleavedSource = structuredClone(payload.source) as Record<string, any>;
@@ -288,5 +313,5 @@ export function runSelectionBrowserCases(payload: Payload) {
       equalTrace: JSON.stringify(typescriptDelegation.events) === JSON.stringify(rustDelegation.events),
       resultIdentity: rustDelegation.resultIdentity, thrownIdentity: kindRuntimeThrowIdentity,
       falsyRuntimeRefused, falsyRuntimeError}, kindRuntimeResultCases, kindRuntimeDynamicReadCases,
-    selectionKindRuntimeBranch, registrationInterleaving};
+    selectionKindRuntimeBranch, selectionKindRuntimeOverride, registrationInterleaving};
 }

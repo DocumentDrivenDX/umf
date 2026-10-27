@@ -35,6 +35,7 @@ impl Capabilities for NoCapabilities {
 struct HostProvider<'a> {
     registry: Option<HostHandle>,
     host: RefCell<&'a mut dyn HostJsonReflection>,
+    successful_validation: RefCell<Option<HostOpaqueValue>>,
 }
 
 impl RegistrationProvider for HostProvider<'_> {
@@ -344,6 +345,7 @@ impl HostProvider<'_> {
         };
         let valid = get_property(&mut **host, ctx, &result, "valid")?;
         if valid.is_truthy() {
+            *self.successful_validation.borrow_mut() = Some(result);
             return Ok(Some(true));
         }
         let diagnostics = get_property(&mut **host, ctx, &result, "diagnostics")?;
@@ -397,7 +399,13 @@ impl HostProvider<'_> {
         packet: &crate::selection_diagnostics::SelectionDiagnosticMaterialization,
         ctx: &mut Context<'_>,
     ) -> Result<Value, EngineError> {
-        packet.into_host_source_value(&mut **self.host.borrow_mut(), ctx)
+        let mut host = self.host.borrow_mut();
+        if let Some(value) = self.successful_validation.borrow_mut().take() {
+            return crate::host_json::materialize_semantic_value(
+                value, &mut **host, ctx, &Utf16::from("/sourceValidation"), 1,
+            );
+        }
+        packet.into_host_source_value(&mut **host, ctx)
     }
 
     fn refusal_message(
@@ -483,6 +491,7 @@ pub fn execute(
     let provider = HostProvider {
         registry,
         host: RefCell::new(host),
+        successful_validation: RefCell::new(None),
     };
     let mut capabilities = NoCapabilities;
     let mut refusal = |packet: &crate::selection_diagnostics::SelectionDiagnosticMaterialization,
@@ -821,7 +830,11 @@ mod opaque_return_tests {
             ].into_iter().map(Ok).collect(),
             events: Vec::new(),
         };
-        let provider = HostProvider { registry: Some(12), host: RefCell::new(&mut host) };
+        let provider = HostProvider {
+            registry: Some(12),
+            host: RefCell::new(&mut host),
+            successful_validation: RefCell::new(None),
+        };
         let mut ctx = Context::ordinary();
         let source = Value::Object(vec![(Utf16::from("marker"), Value::Bool(true))]);
         assert_eq!(provider.kind_runtime_validity(&source, &mut ctx).unwrap(), Some(true));
@@ -861,7 +874,11 @@ mod opaque_return_tests {
             ].into_iter().map(Ok).collect(),
             events: Vec::new(),
         };
-        let provider = HostProvider { registry: Some(12), host: RefCell::new(&mut host) };
+        let provider = HostProvider {
+            registry: Some(12),
+            host: RefCell::new(&mut host),
+            successful_validation: RefCell::new(None),
+        };
         let mut ctx = Context::ordinary();
         let error = provider.kind_runtime_validity(
             &Value::Object(vec![(Utf16::from("marker"), Value::Bool(true))]),

@@ -10,6 +10,7 @@ const root = resolve(import.meta.dirname, '../../..');
 const addonPath = process.env.UMF_SELECTION_ADDON;
 if (!addonPath) throw new Error('UMF_SELECTION_ADDON must name a freshly built Node addon');
 const require = createRequire(import.meta.url);
+class HostError extends Error { constructor(code, message, path) { super(message); this.code = code; this.path = path; } }
 const addon = require(addonPath);
 const {coreElementSelectionHostInput, kindRuntimeValidationHostInput} = await import(pathToFileURL(resolve(root, 'bindings/core/node/src/host-json.js')));
 const {validateDocument: typescriptValidateDocument, selectCoreElements: typescriptSelectCoreElements} = await import(pathToFileURL(resolve(root, 'dist/umf-node.js')));
@@ -91,13 +92,13 @@ const selectionKindRuntimeBranch = (() => {
   try { typescriptSelectCoreElements(packet.source, packet.queries.all, makeRegistry(referenceTrace)); }
   catch (error) { assert.equal(error.code, 'NON_JSON'); }
   try {
-    coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, makeRegistry(actualTrace), Error);
-    assert.fail('expected the bounded consumer-stage stop');
+    coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, makeRegistry(actualTrace), HostError);
+    assert.fail('expected final sourceValidation copy to reject the accessor');
   } catch (error) {
-    assert.equal(error.message, 'HOST_JSON_UNSUPPORTED');
+    assert.equal(error.code, 'NON_JSON');
+    assert.equal(error.path, '/sourceValidation/valid');
   }
-  assert.equal(actualTrace.at(-1), 'validation.valid:get');
-  assert.deepEqual(referenceTrace.slice(0, actualTrace.length), actualTrace);
+  assert.deepEqual(referenceTrace, actualTrace);
   const sentinel = Object.freeze({validGetter: true});
   const thrownTrace = [];
   const throwingRegistry = {
@@ -110,8 +111,31 @@ const selectionKindRuntimeBranch = (() => {
   try { coreElementSelectionHostInput(addon, resources, packet.source, packet.queries.all, throwingRegistry, Error); }
   catch (error) { thrown = error; }
   assert.equal(thrown, sentinel);
-  return {prefixMatches: true, trace: actualTrace, unsupportedAfterValid: true,
+  return {sameTrace: JSON.stringify(referenceTrace) === JSON.stringify(actualTrace), trace: actualTrace,
     thrownGetterIdentity: thrown === sentinel, thrownTrace};
+})();
+
+
+const selectionKindRuntimeOverride = (() => {
+  const source = structuredClone(packet.source);
+  source.modules[0].elements[0].scalarType = 7;
+  const validation = {valid: true, diagnostics: [], extension: {owner: 'caller'}};
+  const invoke = (route, trace) => {
+    const runtime = {validateDocument(document, registrations) {
+      trace.push(['validateDocument', this === runtime, document.modules[0].elements[0].scalarType, registrations.length]);
+      return validation;
+    }};
+    const registry = {kindRuntime: runtime, registrations() { trace.push(['registrations']); return []; }};
+    return route(source, packet.queries.all, registry);
+  };
+  const referenceTrace = [], actualTrace = [];
+  const expected = invoke(typescriptSelectCoreElements, referenceTrace);
+  const actual = invoke((document, query, registry) => coreElementSelectionHostInput(
+    addon, resources, document, query, registry, HostError), actualTrace);
+  assert.deepEqual(actualTrace, referenceTrace);
+  assert.equal(actual.sourceValidation.extension.owner, 'caller');
+  return {sameTrace: JSON.stringify(actualTrace) === JSON.stringify(referenceTrace),
+    sameResult: JSON.stringify(actual) === JSON.stringify(expected), trace: actualTrace};
 })();
 
 const sentinel = {identity: true};
@@ -123,4 +147,4 @@ try {
   assert.equal(error, sentinel);
 }
 assert.equal(calls, 1);
-console.log(JSON.stringify({status: 'json-value-and-shape-pass', host: process.version, cases: 3, outputPrototype, ownProtoKey: true, kindRuntimeResultCases, selectionKindRuntimeBranch}));
+console.log(JSON.stringify({status: 'json-value-and-shape-pass', host: process.version, cases: 3, outputPrototype, ownProtoKey: true, kindRuntimeResultCases, selectionKindRuntimeBranch, selectionKindRuntimeOverride}));
