@@ -73,6 +73,36 @@ test('the Record Values facade keeps its predecessor import type-only and isolat
 		.toContain('rust-record-values-default.ts: value re-export from type-only module ../model/record-values');
 });
 
+test('the Core Semantic Types Rust facade grants exact type-only predecessor imports', () => {
+	const allowed = checkAccessSource(
+		'rust-core-semantic-types-default.ts',
+		"import {UmfError} from '../model/errors';\nimport type {CoreSemanticTypeInspection} from '../model/semantic-types';\nimport type {Document} from '../model/types';\n",
+	);
+	const deniedSemantic = checkAccessSource(
+		'rust-core-semantic-types-default.ts',
+		"import {inspectCoreSemanticTypes} from '../model/semantic-types';\n",
+	);
+	const deniedTypes = checkAccessSource(
+		'rust-core-semantic-types-default.ts',
+		"import {Document} from '../model/types';\n",
+	);
+
+	expect(allowed).toEqual([]);
+	expect(deniedSemantic).toContain('rust-core-semantic-types-default.ts: value import from type-only module ../model/semantic-types');
+	expect(deniedTypes).toContain('rust-core-semantic-types-default.ts: value import from type-only module ../model/types');
+});
+
+test('the Core Semantic Types Rust facade preserves predecessor public signatures', () => {
+	type Equal<A, B> = (<T>() => T extends A ? 1 : 2) extends (<T>() => T extends B ? 1 : 2) ? true : false;
+	type Assert<T extends true> = T;
+	type Bound = ReturnType<typeof import('../src/access/rust-core-semantic-types-default').bindCoreSemanticTypesRust>;
+	type _Inspect = Assert<Equal<Bound['inspectCoreSemanticTypes'], typeof import('../src/model/semantic-types').inspectCoreSemanticTypes>>;
+	type _Get = Assert<Equal<Bound['getCoreSemanticTypes'], typeof import('../src/model/semantic-types').getCoreSemanticTypes>>;
+	type _Declare = Assert<Equal<Bound['declareCoreSemanticTypes'], typeof import('../src/model/semantic-types').declareCoreSemanticTypes>>;
+	type _Verify = Assert<Equal<Bound['verifyCoreSemanticTypeDeclaration'], typeof import('../src/model/semantic-types').verifyCoreSemanticTypeDeclaration>>;
+	expect(true).toBe(true);
+});
+
 test('the Semantic Types facade cannot import executable predecessor semantics', () => {
 	expect(checkAccessSource('rust-semantic-types-default.ts',
 		"import type {CoreSemanticTypeIdentity} from '../model/semantic-types';\n"))

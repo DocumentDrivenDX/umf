@@ -49,7 +49,7 @@ test('V4 facade preserves the complete checker-resolved API and all 1,120 runtim
 test('generated facade is deterministic, excludes local overrides, and has no broad runtime origins', () => {
   const program = programForEntries();
   const generated = generateFacade(program);
-  assert.equal(generated.localOverrides.length, 82);
+  assert.equal(generated.localOverrides.length, 87);
   assert.equal(fs.readFileSync(abs('src/index-v4-default.ts'), 'utf8'), generated.text);
   assert.ok(!generated.text.includes("from './index'") && !generated.text.includes("from './index-node-v4'") && !generated.text.includes("from './index-browser-v4'"));
 
@@ -58,6 +58,7 @@ test('generated facade is deterministic, excludes local overrides, and has no br
     'src/model/scalar-type.ts',
     'src/model/record-members.ts',
     'src/model/reference-links.ts',
+    'src/model/semantic-types.ts',
     'src/extensions/binding/raw-profiles.ts',
     'src/core-ideals/relationship-avro-projection.ts',
     'src/core-ideals/relationship-tablespec-projection.ts',
@@ -76,11 +77,12 @@ test('generated facade is deterministic, excludes local overrides, and has no br
   }
 });
 
-test('generated facade does not contain value exports for the 37 shadowed operations', () => {
+test('generated facade does not contain value exports for the 42 shadowed operations', () => {
   const generated = generateFacade(programForEntries());
   const shadowed = new Set([
     'inspectCoreRelationships', 'lookupCoreRelationship', 'declareCoreRelationship', 'verifyCoreRelationshipOperation',
     'inspectCoreScalarType', 'inspectCoreRecordMembers', 'inspectCoreReferenceLinks', 'inspectRawTableBinding',
+    'inspectCoreSemanticTypes', 'getCoreSemanticTypes', 'declareCoreSemanticTypes', 'verifyCoreSemanticTypeDeclaration',
     'projectRelationshipToAvro', 'verifyRelationshipAvroProjection', 'recoverRelationshipAvroIdeal', 'recoverRelationshipAvroNative',
     'projectRelationshipToTableSpec', 'verifyRelationshipTableSpecProjection', 'recoverRelationshipTableSpecIdeal', 'recoverRelationshipTableSpecNativeSources',
     'projectRelationshipToSqlServer', 'verifyRelationshipSqlServerProjection', 'recoverRelationshipSqlServerIdeal', 'recoverRelationshipSqlServerBinding', 'recoverRelationshipSqlServerNative',
@@ -88,16 +90,17 @@ test('generated facade does not contain value exports for the 37 shadowed operat
     'projectRelationshipToExtra', 'verifyRelationshipExtra', 'recoverRelationshipExtraIdeal', 'recoverRelationshipExtraNative',
     'projectRelationshipsToPostgresql', 'verifyRelationshipPostgresqlProjection', 'recoverRelationshipPostgresqlIdeal', 'recoverRelationshipPostgresqlNative',
     'validateCoreRecordValues', 'SemanticTypeRegistry', 'validateSemanticTypeValue', 'validateCoreSemanticTypeValue',
+    'verifyCoreDatasetValuesCompact',
   ]);
-  assert.equal(shadowed.size, 37);
+  assert.equal(shadowed.size, 42);
   assert.ok([...shadowed].every(name => !generated.bindings.some(binding => binding.kind === 'value' && binding.name === name)));
 });
 
 test('Node and browser runtime bundles exclude all shadowed TypeScript bodies', async () => {
   const forbidden = [
     'src/index.ts',
-    'src/model/relationships.ts', 'src/model/scalar-type.ts', 'src/model/record-members.ts', 'src/model/reference-links.ts',
-    'src/extensions/binding/raw-profiles.ts',
+    'src/model/relationships.ts', 'src/model/scalar-type.ts', 'src/model/record-members.ts', 'src/model/reference-links.ts', 'src/model/semantic-types.ts',
+    'src/extensions/binding/raw-profiles.ts', 'src/model/dataset-values-compact.ts',
     'src/core-ideals/relationship-avro-projection.ts', 'src/core-ideals/relationship-tablespec-projection.ts',
     'src/core-ideals/relationship-parquet-projection.ts', 'src/core-ideals/relationship-sqlserver-projection.ts',
     'src/core-ideals/relationship-extras.ts', 'src/core-ideals/relationship-postgresql.ts',

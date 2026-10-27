@@ -1,0 +1,182 @@
+{
+  "format": "umf.r8.inspector-retirement-replay-cohort/1",
+  "status": "historical-bounded-replay-pass",
+  "retirementEligible": false,
+  "archive": {
+    "sha256": "5f3dccf215b0c1d631d2534946f8305ce6e1bef2d6a10477992a3aa4b4faf599",
+    "path": ".cache/sdk-distribution/cohorts/4547d877/umf-sdk.tgz",
+    "bytes": 43432771
+  },
+  "sourceClosure": {
+    "sha256": "4547d877ea7ac3b5e7bfb2101ae80833257c19ae7ba825cf884bc05c666a49b3",
+    "capturedLiveSha256": "4547d877ea7ac3b5e7bfb2101ae80833257c19ae7ba825cf884bc05c666a49b3",
+    "fileCount": 3532,
+    "transformCount": 0,
+    "status": "fixed-point"
+  },
+  "packetContainerSha256": "9563378b9fb00b213f76d6c0d09ac0c8278c0fb829c719b566b019971a0f3a7a",
+  "packets": {
+    "inspectCoreScalarType": {
+      "sha256": "51da1be926aa75da165216808028109c042c22cfd7e8f3fbf49180300b1b4895",
+      "caseCount": 2
+    },
+    "inspectCoreRecordMembers": {
+      "sha256": "aad087e63a147d74b16255be427ff63f2ae7d7d811d72d2eae0f4f8becbfad6b",
+      "caseCount": 2
+    },
+    "inspectCoreReferenceLinks": {
+      "sha256": "b53c9d0c228fe700bec8c5ac9d74196217590affb00621b9d733aa445b198181",
+      "caseCount": 2
+    }
+  },
+  "replays": {
+    "node": {
+      "inspectCoreScalarType": {
+        "receiptSha256": "4ac3b951542dff64bb1172dbdfa8b75a01a8f1e3fbaab5f2ab8903b2a182de75",
+        "caseCount": 2,
+        "defaultRustCalls": [
+          1,
+          0
+        ],
+        "referenceRustCalls": [
+          0,
+          0
+        ]
+      },
+      "inspectCoreRecordMembers": {
+        "receiptSha256": "6024737f92023e0d7769e73adf0dfe9df0a5563106c53500da26a48e5d1c474f",
+        "caseCount": 2,
+        "defaultRustCalls": [
+          1,
+          0
+        ],
+        "referenceRustCalls": [
+          0,
+          0
+        ]
+      },
+      "inspectCoreReferenceLinks": {
+        "receiptSha256": "8578da4dfc97b5e4ad473cd5e105518ea26a94cc4543575c4f7cda629e507c37",
+        "caseCount": 2,
+        "defaultRustCalls": [
+          1,
+          0
+        ],
+        "referenceRustCalls": [
+          0,
+          0
+        ]
+      }
+    },
+    "bun": {
+      "inspectCoreScalarType": {
+        "receiptSha256": "fec91681bde6a751664d2fcc2ce67444b19b945e9919f1b85b38302640dabf62",
+        "caseCount": 2,
+        "defaultRustCalls": [
+          1,
+          0
+        ],
+        "referenceRustCalls": [
+          0,
+          0
+        ]
+      },
+      "inspectCoreRecordMembers": {
+        "receiptSha256": "234db799368888b4f80318628a6785109c7626458f4dbb42ae2928b8429ea795",
+        "caseCount": 2,
+        "defaultRustCalls": [
+          1,
+          0
+        ],
+        "referenceRustCalls": [
+          0,
+          0
+        ]
+      },
+      "inspectCoreReferenceLinks": {
+        "receiptSha256": "7e33abdf2dc8dc98701b982409d50bb753ca97d76c51c005298dcccbeb5dc691",
+        "caseCount": 2,
+        "defaultRustCalls": [
+          1,
+          0
+        ],
+        "referenceRustCalls": [
+          0,
+          0
+        ]
+      }
+    },
+    "chromium": {
+      "inspectCoreScalarType": {
+        "receiptSha256": "02e64786fe0ffb78fce9b9f50a81955101838162e2b8199e2d336ebe0b139645",
+        "caseCount": 2,
+        "defaultRustCalls": [
+          1,
+          0
+        ],
+        "referenceRustCalls": [
+          0,
+          0
+        ]
+      },
+      "inspectCoreRecordMembers": {
+        "receiptSha256": "f2fc2075d151cc90858c4441dd5a82e90c469e275a84c3e268a01d932835b552",
+        "caseCount": 2,
+        "defaultRustCalls": [
+          1,
+          0
+        ],
+        "referenceRustCalls": [
+          0,
+          0
+        ]
+      },
+      "inspectCoreReferenceLinks": {
+        "receiptSha256": "c3f15bb4160b3e9664050ed9e21ee7261f6416314414525d2cb416859c53417a",
+        "caseCount": 2,
+        "defaultRustCalls": [
+          1,
+          0
+        ],
+        "referenceRustCalls": [
+          0,
+          0
+        ]
+      }
+    }
+  },
+  "negativeControls": {
+    "defaultSuccessRustCalls": 1,
+    "accessorPreflightRustCalls": 0,
+    "referenceRouteRustCalls": 0,
+    "missingAndCorruptAddon": {
+      "node": "import-refused",
+      "bun": "import-refused",
+      "bunMissingErrorClass": "ResolveMessage",
+      "nodeMissingErrorClass": "Error"
+    }
+  },
+  "blockers": [
+    "Single darwin-arm64 cohort only; retirement validator requires darwin-arm64 and linux-x86_64.",
+    "Packet coverage is two bounded cases per inspector and is not exhaustive CONTRACT-040 acceptance.",
+    "The 4547 archive predates current source edits; this replay is historical, not current-source evidence.",
+    "The available callsite audit is source-path evidence from the earlier 5e7138383 cohort; a fresh current-source callsite review is still required.",
+    "R8 /2 evidence can support bounded status only; retirement schema explicitly rejects /2 evidence."
+  ],
+  "broadReplay": {
+    "receiptSha256": "e5511951cf06bb724bea03403755a5f48dee556757424b906fde6959004434ba",
+    "path": "/tmp/umf-inspector-4547-qual/current-installed.json",
+    "caseCounts": {
+      "inspectCoreScalarType": 8,
+      "inspectCoreRecordMembers": 9,
+      "inspectCoreReferenceLinks": 9
+    },
+    "hosts": [
+      "Node 26.12.1",
+      "Bun 1.4.3",
+      "Chromium 153.0.8010.12"
+    ],
+    "browserNodeGlobalsAbsent": true,
+    "wasmRequested": true
+  }
+}

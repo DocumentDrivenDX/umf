@@ -1,0 +1,85 @@
+{
+  "artifacts": {
+    "umf_codegen-0.2.0-py3-none-any.whl": {
+      "sha256": "1f7a943fd94fb05405f1930b30d50726f5dfe4ae41f578561018140d7edeb722",
+      "size": 63633
+    },
+    "umf_codegen-0.2.0.tar.gz": {
+      "sha256": "da19445e6145b9267f8dddb321f74ddcbd8251078a1dee2d8ccf9cd59300450e",
+      "size": 51071
+    },
+    "umf_core-0.11.0-cp311-abi3-macosx_11_0_arm64.whl": {
+      "sha256": "ca8fec462a4b95730683eb5df5788d5a151f20ddf8da2060aa0ed0f5079a7f91",
+      "size": 9251521
+    },
+    "umf_core-0.11.0.tar.gz": {
+      "sha256": "65583b78ab7a8951fcb9935b4514907360a3c3ad11fcbeb99cc235eff7f1b11e",
+      "size": 11586791
+    }
+  },
+  "coreSdistRebuild": {
+    "metadata_byte_identity": true,
+    "native_byte_identity": false,
+    "native_byte_identity_by_member": {
+      "umf/_bin/umf": false,
+      "umf/_rust_core.abi3.so": false
+    },
+    "non_native_package_payload_matches": true,
+    "tag_matches": true,
+    "version_matches": true,
+    "wheel_byte_identity": true
+  },
+  "coreSourcePayloadVerification": "passed",
+  "host": {
+    "machine": "arm64",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "pydantic": "2.11.9",
+    "pytest": "8.4.2",
+    "python": "3.11.17",
+    "rust": "1.90.0"
+  },
+  "installedPairVerifier": {
+    "codegenSdistRebuiltWheelByteIdentical": true,
+    "codegenSdistSourceInputCount": 24,
+    "coreArtifactReceiptSha256": "e6004874b1af14aff3e7b504889d8f5cb3eba5418ee537085ce9ee2535a9137f",
+    "installedCliHelp": "passed",
+    "installedImportAndGeneration": "passed",
+    "receiptSha256": "d0ac185cdd8c1590070a43a6a4935059e0085eb2547f52d1789b6fefbb0479a3",
+    "status": "passed"
+  },
+  "limits": [
+    "Single local macOS arm64 CPython 3.11.17 cohort only.",
+    "No Linux, CPython 3.12/3.13, aggregate hosted receipt, registry verification, or publication claim."
+  ],
+  "publishing": false,
+  "releaseClaim": "none",
+  "schema": "umf.r8-python-installed-pair-tests/1",
+  "sourceRevision": "5a2f5bc1983135620f2b9a35ac201d6eef43f37a",
+  "sourceSnapshot": "current worktree resource refresh; exact release helper/workflow/source hashes are in the immutable pair receipt",
+  "sourceTests": {
+    "command": "cd /private/tmp && pair-tests/bin/python -I -B -m pytest -q <repo>/python/umf_codegen/tests <repo>/python/tests/test_core.py <repo>/python/tests/test_rust_core.py",
+    "durationSeconds": 58.21,
+    "failed": 0,
+    "passed": 217,
+    "status": "passed",
+    "targets": [
+      "python/umf_codegen/tests",
+      "python/tests/test_core.py",
+      "python/tests/test_rust_core.py"
+    ],
+    "warning": "One PytestCacheWarning: isolated test run could not write <repo>/python/.pytest_cache/v/cache/nodeids due to worktree filesystem permissions; tests completed successfully."
+  },
+  "status": "passed",
+  "wheelhouseSha256": {
+    "annotated_types-0.8.0-py3-none-any.whl": "f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0",
+    "iniconfig-2.3.1-py3-none-any.whl": "9121e2c1fdb355232495be3194c8dfe87ccc2d5dee45947b78e68f499790d7a7",
+    "packaging-26.3-py3-none-any.whl": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+    "pluggy-1.7.0-py3-none-any.whl": "7dd7b0d8832ba3cb632c306926ded123429211b83641b35dc5c41ad2d34f9bec",
+    "pydantic-2.11.9-py3-none-any.whl": "c42dd626f5cfc1c6950ce6205ea58c93efa406da65f479dcb4029d5934857da2",
+    "pydantic_core-2.33.2-cp311-cp311-macosx_11_0_arm64.whl": "e799c050df38a639db758c617ec771fd8fb7a5f8eaaa4b27b101f266b216a246",
+    "pygments-2.21.0-py3-none-any.whl": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9",
+    "pytest-8.4.2-py3-none-any.whl": "872f880de3fc3a5bdc88a11b39c9710c3497a547cfa9320bc3c5e62fbf272e79",
+    "typing_extensions-4.16.0-py3-none-any.whl": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+    "typing_inspection-0.4.4-py3-none-any.whl": "65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147"
+  }
+}

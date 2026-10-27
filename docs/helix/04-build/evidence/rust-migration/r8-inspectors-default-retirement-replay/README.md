@@ -84,9 +84,13 @@ harness mechanics were smoke-tested against the older `ce1acfb65` private
 archive on Node 26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12: each host passed
 all six packet cases, with one Rust call for each valid default case and zero
 for each accessor refusal and reference case. Those temporary receipts are not
-included because that archive predates the current source cohort. The
-harnesses are ready for the next clean, source-pinned archive; no installed
-receipt for that archive is included here yet. The three TypeScript predecessor
-modules and non-root callers remain untouched. These packets and harnesses do
-not mark declarations retired, qualify all input shapes or platforms, or claim
-full SDK support or release readiness.
+included because that archive predates the current source cohort. The pinned
+4547 archive replay and its raw Node/Bun/Chromium and broader host receipts are
+preserved in [current-4547-20261027](current-4547-20261027/README.md). That
+fixed-point archive passes the three bounded packets and broader 26-case
+installed replay, but is historical relative to subsequent source edits. The
+Linux x64 cohort, complete CONTRACT-040 acceptance, and a fresh current-source
+callsite review remain open. The three TypeScript predecessor modules and
+non-root callers remain untouched. These packets and receipts do not mark
+declarations retired, qualify all input shapes or platforms, or claim full SDK
+support or release readiness.

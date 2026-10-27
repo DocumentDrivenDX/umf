@@ -16,6 +16,7 @@ const allowedImports:Record<string,readonly string[]>={
  'rust-candidate.ts':[],
  'rust-cardinality-default.ts':['../model/cardinality','../model/types','../model/errors','../model/json'],
  'rust-core-inspectors-default.ts':['../model/scalar-type','../model/record-members','../model/reference-links','../model/types','../model/errors'],
+ 'rust-core-semantic-types-default.ts':['../model/errors','../model/semantic-types','../model/types'],
  'rust-core-evolution-candidate.ts':['../model/types','../model/evolution','../model/errors'],
  'rust-csv-boolean-default.ts':['../model/csv-boolean-lexical','../model/types','../model/errors'],
  'rust-dataset-values-compact-default.ts':['../model/dataset-values','../model/dataset-values-compact','../model/types','../model/errors'],
@@ -40,6 +41,7 @@ const allowedImports:Record<string,readonly string[]>={
 // restore executable TypeScript behavior behind the Rust-selected facade.
 const typeOnlyImports:Record<string,readonly string[]>={
  'rust-core-evolution-candidate.ts':['../model/types','../model/evolution'],
+ 'rust-core-semantic-types-default.ts':['../model/semantic-types','../model/types'],
  'rust-record-type-default.ts':['../model/field-kind','../model/record-type','../model/types'],
  'rust-record-values-default.ts':['../model/record-values'],
  'rust-selection-default.ts':['../model/selection','../model/types','../registry/registry'],

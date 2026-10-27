@@ -2,7 +2,7 @@
   "profile": "umf.metamodel.outputs/1",
   "provenance": {
     "modelSha256": "35b72a7f6aa86c98398192e5b67d5841d77127743c671c742dd871a7baee58ca",
-    "compilerSha256": "db680a661d92344c51ff85540903149231b2c22b4d64515d819b0afce6a76587"
+    "compilerSha256": "e831917eddded39a8c592cd6f1a570c0d59f06ebe217424d0b7a45cefe9fb408"
   },
   "sources": {
     "spec/metamodel/umf.yaml": "35b72a7f6aa86c98398192e5b67d5841d77127743c671c742dd871a7baee58ca",
@@ -274,7 +274,7 @@
     "crates/umf-metamodel/src/reference.rs": "ac99f5d4039a93358708479080460935de76326fb6ac925c2e81ff23e206a7d5",
     "crates/umf-metamodel/tests/compiler.rs": "3c872685724da5a89f4a737db3928af7a2df6dd59bba104e7107ad783112a964",
     "crates/umf-tagged-wire/Cargo.toml": "f30d3980e8caee3118be56687bad4a900bf90205794fde42201c47f5511a676d",
-    "crates/umf-tagged-wire/src/lib.rs": "285db2a2e1cce95302de2dc20a5eaf5ba038a5b4d7872ff7aa29703b9c8869c8",
+    "crates/umf-tagged-wire/src/lib.rs": "3285026b35faeef611532d8705c980d27233afa5b2844720ef8268675e360a09",
     "rust-toolchain.toml": "9af7a084f6c81634ad8ed71a2a095dc77bc1723406e0f95dccf19f4af5d984e6",
     "spec/core/cardinality-operation-v6.schema.json": "c606cf71b5fe0b2afb15f0ffd3fcce20c449857b954852e63d944040dacf6595",
     "spec/core/kind-operation-v8.schema.json": "3f7cc27f133f0a242b42ae2f41b665d046d0e069668235c82b0b2cd38c8bd68c",
@@ -329,7 +329,7 @@
     "bindings/core/node/tests/avro-inspector.test.js": "f1900a178db6a2510ac827f584234ba2243ab58fc67b991563f5f66d6602f106",
     "bindings/core/node/tests/cardinality-host-json.test.js": "a2ab58a16773efbf04cde2fc12723da6e6393629057d7db51314f85095c6c9e6",
     "bindings/core/node/tests/core-evolution-wrapper.test.js": "51493022954ca8e8feecbe21d3500656f60089ec3e0985c22d87c2276b2ab509",
-    "bindings/core/node/tests/core-key-tuple-direct-runtime.test.js": "677b09ffcbe8b5a29bded8aa988a4b6e5945d14a42e6c096214e16a92a668fb0",
+    "bindings/core/node/tests/core-key-tuple-direct-runtime.test.js": "878aa780c3326a448d22c3e8c3eef2ac681625ac685a154828e212b2ed499b8d",
     "bindings/core/node/tests/core-key-tuple-factory.test.js": "51c4672ef6409b20c61094fdb04390bea05c7cf4e9f848a1012ff96353452987",
     "bindings/core/node/tests/core-key-tuple-wrapper.test.js": "990e23267e49d7553e928330dd248c176da78a220da9db34ec165bb42c3b31ea",
     "bindings/core/node/tests/core-keys-binding.test.js": "6a9b165bc828ed6501e6ff8d6976632bf3edbba9adfe75cdbeb2f7ce470b07ab",
@@ -616,7 +616,7 @@
     "bindings/core/node/tests/avro-inspector.test.js": "f1900a178db6a2510ac827f584234ba2243ab58fc67b991563f5f66d6602f106",
     "bindings/core/node/tests/cardinality-host-json.test.js": "a2ab58a16773efbf04cde2fc12723da6e6393629057d7db51314f85095c6c9e6",
     "bindings/core/node/tests/core-evolution-wrapper.test.js": "51493022954ca8e8feecbe21d3500656f60089ec3e0985c22d87c2276b2ab509",
-    "bindings/core/node/tests/core-key-tuple-direct-runtime.test.js": "677b09ffcbe8b5a29bded8aa988a4b6e5945d14a42e6c096214e16a92a668fb0",
+    "bindings/core/node/tests/core-key-tuple-direct-runtime.test.js": "878aa780c3326a448d22c3e8c3eef2ac681625ac685a154828e212b2ed499b8d",
     "bindings/core/node/tests/core-key-tuple-factory.test.js": "51c4672ef6409b20c61094fdb04390bea05c7cf4e9f848a1012ff96353452987",
     "bindings/core/node/tests/core-key-tuple-wrapper.test.js": "990e23267e49d7553e928330dd248c176da78a220da9db34ec165bb42c3b31ea",
     "bindings/core/node/tests/core-keys-binding.test.js": "6a9b165bc828ed6501e6ff8d6976632bf3edbba9adfe75cdbeb2f7ce470b07ab",
@@ -862,15 +862,15 @@
   },
   "outputs": {
     "spec/core/schema.json": {
-      "sha256": "d846803a2310702827c9a23771ca18ca0f7abc4aefb2e91415af294ffebbc955",
+      "sha256": "bc9625575a4af27d0f097988d9f4e4f5eae436302cf125b9b5b4b1756dd04f0f",
       "bytes": 45342
     },
     "spec/core/semantic-type-reference.schema.json": {
-      "sha256": "fe7af2d997128b004f8161017868488e3b598f22a739435624e83579bcff4536",
+      "sha256": "1215191684bb6b5576e35251bd23bd105d332a39aab02af34474f94a521fe785",
       "bytes": 45463
     },
     "spec/core/extension-package.schema.json": {
-      "sha256": "7ab19b7e8de2c559d787f496d5d5b0ea485094b013a0e815ebbb2a5f40a61137",
+      "sha256": "9717fd81cec7470714c414f41e88e8829afa84dc2c7e78f72805167a58c017ca",
       "bytes": 45001
     },
     "spec/metamodel/package.json": {
@@ -878,23 +878,23 @@
       "bytes": 1376
     },
     "spec/metamodel/generated/core-constraints.json": {
-      "sha256": "b984dc0dc2f2e7b7fb2c40c9e12fdeccb226fcb3dc924aec52adba8431bbe5b1",
+      "sha256": "255ca318705114055250e96504776e1c430ccfc55f24b69a990053b6a384ecdb",
       "bytes": 190252
     },
     "spec/metamodel/generated/domain-policy.json": {
-      "sha256": "074bcec62c034c9bd8a9c1cff10a8034bcb6666de0f531b59da423f9ced82068",
+      "sha256": "6e7a4cde0ca79b4c2951ec4bc0bc1b360c33dc7bc243a2ec2102406d5a8e4847",
       "bytes": 14827
     },
     "spec/metamodel/generated/python-shapes.json": {
-      "sha256": "9d8608ac787508af356aeb9971c593f37c3cd6bb7ea5c7481783a43235a75e56",
+      "sha256": "7258f76bacaaa1ed87cae3a83f6279f92da70c1bbeaa9b6a8c39bb9e0a253b71",
       "bytes": 98734
     },
     "python/umf_access/src/umf_access/generated_core.py": {
-      "sha256": "c4ac8dca4b60ba25ffb9661848bc4a2af2ff9156a4833a9646b6c2340304729d",
+      "sha256": "b596bd655f1de80b8773640eded8b31a2c4069ddf41700a1b60953b11a6f5b32",
       "bytes": 360
     },
     "src/generated/core-model.ts": {
-      "sha256": "20b8d29f0a834ab22320db4c093a637ad8554b9b046dd258aa8472433096faa1",
+      "sha256": "619f1adbf9707393d24e1f1247db05597c0771739cb2db3bfab746b7a226c8e1",
       "bytes": 6714
     },
     "spec/core/facet-operation-v3.schema.json": {
@@ -922,7 +922,7 @@
       "bytes": 1993
     },
     "src/generated/core-validators.ts": {
-      "sha256": "7726b53e4dfee02e61f0b0a6ec72569b3535a4ff691cf701d1da9f4b0c407a08",
+      "sha256": "2e24bd56347f39b203f525ce9a7ea37e0f4bfb06604b11608e28461fa0dd3aee",
       "bytes": 305070
     }
   }

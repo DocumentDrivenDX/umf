@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Shared strict tagged UTF-16/binary64 transport codec.
 use std::collections::BTreeSet;
+use std::sync::Arc;
 
-use umf_core::{Context, EngineError, Limits, ResourceProfile, Utf16, Value, copy_json};
+use umf_core::{copy_json, Context, EngineError, Limits, ResourceProfile, Utf16, Value};
 
 enum Json {
     Null,
@@ -345,7 +346,7 @@ fn parse_json_bounded(source: &[u8], ctx: &Context<'_>) -> Result<Json, EngineEr
 pub fn decode(wire_json: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
     preflight(wire_json.as_bytes(), ctx)?;
     let json = parse_json_bounded(wire_json.as_bytes(), ctx)?;
-    let value = decode_node(json, "")?;
+    let value = decode_node(json)?;
     copy_json(&value, ctx)
 }
 
@@ -524,13 +525,47 @@ pub fn transport_context<'a>() -> Context<'a> {
     .expect("cooperative transport context is available")
 }
 
-fn decode_node(node: Json, path: &str) -> Result<Value, EngineError> {
-    enum Task {
-        Visit(Json, String),
-        BuildArray(usize),
-        BuildObject(Vec<Vec<u16>>, String),
+#[derive(Clone, Default)]
+struct JsonPointerPath(Vec<Arc<[u16]>>);
+
+impl JsonPointerPath {
+    fn child(&self, segment: Arc<[u16]>) -> Self {
+        let mut segments = self.0.clone();
+        segments.push(segment);
+        Self(segments)
     }
-    let mut tasks = vec![Task::Visit(node, path.to_owned())];
+
+    fn to_utf16(&self) -> Utf16 {
+        let capacity = self.0.iter().fold(self.0.len(), |length, segment| {
+            length.saturating_add(segment.len()).saturating_add(
+                segment
+                    .iter()
+                    .filter(|unit| **unit == b'~' as u16 || **unit == b'/' as u16)
+                    .count(),
+            )
+        });
+        let mut units = Vec::with_capacity(capacity);
+        for segment in &self.0 {
+            units.push(b'/' as u16);
+            for unit in segment.iter() {
+                match *unit {
+                    0x7e => units.extend_from_slice(&[b'~' as u16, b'0' as u16]),
+                    0x2f => units.extend_from_slice(&[b'~' as u16, b'1' as u16]),
+                    unit => units.push(unit),
+                }
+            }
+        }
+        Utf16::new(units)
+    }
+}
+
+fn decode_node(node: Json) -> Result<Value, EngineError> {
+    enum Task {
+        Visit(Json, JsonPointerPath),
+        BuildArray(usize),
+        BuildObject(Vec<Arc<[u16]>>, JsonPointerPath),
+    }
+    let mut tasks = vec![Task::Visit(node, JsonPointerPath::default())];
     let mut values = Vec::<Value>::new();
     while let Some(task) = tasks.pop() {
         match task {
@@ -549,9 +584,9 @@ fn decode_node(node: Json, path: &str) -> Result<Value, EngineError> {
                 let members = keys
                     .into_iter()
                     .zip(children)
-                    .map(|(key, value)| (Utf16::new(key), value))
+                    .map(|(key, value)| (Utf16::new(key.as_ref().to_vec()), value))
                     .collect();
-                values.push(Value::object(members, Utf16::from(path))?);
+                values.push(Value::object(members, path.to_utf16())?);
             }
             Task::Visit(node, path) => {
                 let mut fields = as_object(node)?;
@@ -592,7 +627,7 @@ fn decode_node(node: Json, path: &str) -> Result<Value, EngineError> {
                         ensure_empty(fields)?;
                         let bits = u64::from_str_radix(&bits, 16)
                             .map_err(|_| fail("WIRE_FORMAT", "Malformed binary64 bits"))?;
-                        values.push(Value::number(f64::from_bits(bits), Utf16::from(path))?);
+                        values.push(Value::number(f64::from_bits(bits), path.to_utf16())?);
                     }
                     "string" => {
                         let units = read_units(remove_field(&mut fields, "units")?)?;
@@ -608,7 +643,9 @@ fn decode_node(node: Json, path: &str) -> Result<Value, EngineError> {
                         let length = items.len();
                         tasks.push(Task::BuildArray(length));
                         for (index, item) in items.into_iter().enumerate().rev() {
-                            tasks.push(Task::Visit(item, format!("{path}/{index}")));
+                            let segment = index.to_string().encode_utf16().collect::<Vec<_>>();
+                            let child_path = path.child(Arc::from(segment));
+                            tasks.push(Task::Visit(item, child_path));
                         }
                     }
                     "object" => {
@@ -619,6 +656,7 @@ fn decode_node(node: Json, path: &str) -> Result<Value, EngineError> {
                         ensure_empty(fields)?;
                         let mut keys = Vec::with_capacity(members.len());
                         let mut children = Vec::with_capacity(members.len());
+                        let mut child_paths = Vec::with_capacity(members.len());
                         for member in members {
                             let mut fields = as_object(member)?;
                             if fields.len() != 2
@@ -629,15 +667,17 @@ fn decode_node(node: Json, path: &str) -> Result<Value, EngineError> {
                                     "Object member requires exactly key and value fields",
                                 ));
                             }
-                            let key = read_units(remove_field(&mut fields, "key")?)?;
+                            let key =
+                                Arc::<[u16]>::from(read_units(remove_field(&mut fields, "key")?)?);
                             let value = remove_field(&mut fields, "value")?;
                             ensure_empty(fields)?;
+                            child_paths.push(path.child(Arc::clone(&key)));
                             keys.push(key);
                             children.push(value);
                         }
-                        tasks.push(Task::BuildObject(keys, path.clone()));
-                        for child in children.into_iter().rev() {
-                            tasks.push(Task::Visit(child, path.clone()));
+                        tasks.push(Task::BuildObject(keys, path));
+                        for (child, child_path) in children.into_iter().zip(child_paths).rev() {
+                            tasks.push(Task::Visit(child, child_path));
                         }
                     }
                     _ => return Err(fail("WIRE_FORMAT", format!("Unknown wire tag {kind:?}"))),
@@ -760,4 +800,36 @@ fn preflight(source: &[u8], ctx: &mut Context<'_>) -> Result<(), EngineError> {
         }
     }
     ctx.charge_work(tokens, Utf16::default())
+}
+
+#[cfg(test)]
+mod pointer_path_tests {
+    use super::*;
+
+    fn unsafe_number_error(wire: &str) -> EngineError {
+        let mut context = Context::ordinary();
+        decode(wire, &mut context).unwrap_err()
+    }
+
+    #[test]
+    fn unsafe_number_in_nested_tuple_value_keeps_object_member_path() {
+        let wire = r#"{"kind":"array","items":[{"kind":"object","members":[{"key":[105,110,116,101,103,101,114,84,111,107,101,110],"value":{"kind":"number","bits":"4340000000000000"}}]}]}"#;
+        let error = unsafe_number_error(wire);
+        assert_eq!(error.code, "NUMBER");
+        assert_eq!(error.path, Utf16::from("/0/integerToken"));
+    }
+
+    #[test]
+    fn object_and_array_path_segments_use_json_pointer_escaping() {
+        let wire = r#"{"kind":"object","members":[{"key":[97,47,126],"value":{"kind":"array","items":[{"kind":"null"},{"kind":"object","members":[{"key":[120],"value":{"kind":"number","bits":"4340000000000000"}}]}]}}]}"#;
+        let error = unsafe_number_error(wire);
+        assert_eq!(error.path, Utf16::from("/a~1~0/1/x"));
+    }
+
+    #[test]
+    fn object_path_segments_preserve_lone_surrogate_units() {
+        let wire = r#"{"kind":"object","members":[{"key":[55296],"value":{"kind":"number","bits":"4340000000000000"}}]}"#;
+        let error = unsafe_number_error(wire);
+        assert_eq!(error.path, Utf16::new(vec![b'/' as u16, 0xd800]));
+    }
 }

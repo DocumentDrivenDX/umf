@@ -7,7 +7,7 @@ import { gzipSync } from 'node:zlib';
 import { cp, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { buildLedger, collectPythonPackageAssets, collectPythonSourceFiles, summarizeDefaultRouteRetirement } from './gap-ledger.mjs';
+import { buildLedger, collectPythonPackageAssets, collectPythonSourceFiles, summarizeDefaultRouteRetirement, validateCompactVerifierBuildBinding } from './gap-ledger.mjs';
 import { requiredR8RouteFamilies, validateR8InstalledRouteEvidence } from './installed-route-evidence.mjs';
 import { normalizeR8RouteHostReceipt } from './installed-route-receipt-adapter.mjs';
 import { tarMembers, validateBoundedDefaultRouteEvidence, validateDefaultRouteRetirementEvidence } from './default-route-retirement-evidence.mjs';
@@ -28,6 +28,31 @@ const currentGeneratedLedger = () => JSON.parse(execFileSync('node', [
 ], {
   cwd: process.cwd(), maxBuffer: 64 * 1024 * 1024, encoding: 'utf8',
 }));
+
+test('compact verifier source evidence binds every host to one immutable build and exact artifacts', () => {
+  const dir = 'docs/helix/04-build/evidence/rust-migration/r8-compact-dataset-verify-source';
+  const manifestPath = `${dir}/build-manifest.json`;
+  const manifestBytes = readFileSync(manifestPath);
+  const manifest = JSON.parse(manifestBytes);
+  const sha256 = createHash('sha256').update(manifestBytes).digest('hex');
+  const receipts = ['node', 'bun', 'chromium'].map(host => ({ host, receipt: JSON.parse(readFileSync(`${dir}/${host}.json`)) }));
+  assert.doesNotThrow(() => validateCompactVerifierBuildBinding(manifest, receipts, manifestPath, sha256));
+  const staleArtifact = structuredClone(receipts);
+  staleArtifact[1].receipt.buildBinding.artifacts.wasm.sha256 = '0'.repeat(64);
+  assert.throws(() => validateCompactVerifierBuildBinding(manifest, staleArtifact, manifestPath, sha256), /not bound/);
+  const staleSource = structuredClone(receipts);
+  staleSource[2].receipt.buildBinding.sourceClosureSha256 = '0'.repeat(64);
+  assert.throws(() => validateCompactVerifierBuildBinding(manifest, staleSource, manifestPath, sha256), /not bound/);
+  const staleManifest = structuredClone(receipts);
+  staleManifest[0].receipt.buildBinding.sha256 = '0'.repeat(64);
+  assert.throws(() => validateCompactVerifierBuildBinding(manifest, staleManifest, manifestPath, sha256), /not bound/);
+  const differentBuild = structuredClone(receipts);
+  differentBuild[2].receipt.buildBinding.manifest = '/private/tmp/other/compact-dataset-verify-build-manifest.json';
+  assert.throws(() => validateCompactVerifierBuildBinding(manifest, differentBuild, manifestPath, sha256), /not bound/);
+  const missingArtifact = structuredClone(manifest);
+  delete missingArtifact.artifacts.wasm;
+  assert.throws(() => validateCompactVerifierBuildBinding(missingArtifact, receipts, manifestPath, sha256), /artifacts are incomplete/);
+});
 
 function paxRecord(key, value) {
   const body = Buffer.from(`${key}=${value}\n`);
@@ -476,9 +501,10 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   const entries = new Map(inventoryReceipt.defaultRouteEntrySelections.map(selection => [selection.routeId, selection]));
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     const selection = entries.get(routeId);
-    assert.equal(selection.directExportCount, 82);
+    assert.equal(selection.directExportCount, 87);
     assert.ok(expected.every(name => selection.directExports.includes(name)), `${routeId} misses an override`);
-    assert.ok(['validateCoreRecordValues','SemanticTypeRegistry','validateSemanticTypeValue','validateCoreSemanticTypeValue']
+    assert.ok(['inspectCoreSemanticTypes','getCoreSemanticTypes','declareCoreSemanticTypes','verifyCoreSemanticTypeDeclaration',
+      'validateCoreRecordValues','SemanticTypeRegistry','validateSemanticTypeValue','validateCoreSemanticTypeValue']
       .every(name => selection.directExports.includes(name)), `${routeId} misses a new V4 selection`);
     const rows = ledger.rows.filter(row => row.routeId === routeId && expected.includes(row.exportName));
     assert.equal(rows.length, expected.length);
@@ -498,7 +524,7 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   assert.equal(reference.length, expected.length);
   assert.ok(reference.every(row => row.sourceSelectedImplementation === null));
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 104);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 114);
   const archivedGate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/gate-result.json', 'utf8'));
   assert.equal(archivedGate.status, 'pass');
   assert.equal(archivedGate.archive.sourceClosureSha256, '6f4f21c1dfbdde5959f6e5386419c0c2f90b3a8f0512d148b60825e93afce593');
@@ -616,7 +642,7 @@ test('V4 relationship consumer exports are hybrid bindings without Rust consumer
     assert.equal(rows[2].sourceSelectedImplementation, null);
     assert.equal(rows[2].defaultRouteRetirement.status, 'reference-only');
   }
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 104);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 114);
   assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 81);
   assert.deepEqual(ledger.counts.executableDefaultRouteRetirementsByRoute, { 'package-root-node': 0, 'package-root-browser': 0 });
 
@@ -2092,7 +2118,7 @@ test('condition-aware routes count logical gaps once and classify each default s
       line: 17 + index, sourceSha256: (index ? '3' : '4').repeat(64),
     })),
     { routeId, exportName: 'validateCoreDatasetValuesCompact', declarationName: 'validateCoreDatasetValuesCompact', declarationKind: routeId === 'package-reference' ? 'FunctionDeclaration' : 'BindingElement', source: routeId === 'package-root-node' ? 'src/index-node-v4.ts' : routeId === 'package-root-browser' ? 'src/index-browser-v4.ts' : 'src/model/dataset-values-compact.ts', line: 17, sourceSha256: '9'.repeat(64) },
-    { routeId, exportName: 'verifyCoreDatasetValuesCompact', declarationName: 'verifyCoreDatasetValuesCompact', declarationKind: 'FunctionDeclaration', source: 'src/model/dataset-values-compact.ts', line: 18, sourceSha256: '8'.repeat(64) },
+    { routeId, exportName: 'verifyCoreDatasetValuesCompact', declarationName: 'verifyCoreDatasetValuesCompact', declarationKind: routeId === 'package-reference' ? 'FunctionDeclaration' : 'BindingElement', initializerShape: 'not-applicable', source: routeId === 'package-reference' ? 'src/model/dataset-values-compact.ts' : routeId === 'package-root-node' ? 'src/index-node-v4.ts' : 'src/index-browser-v4.ts', line: 18, sourceSha256: '8'.repeat(64) },
     ...[
       ['inspectCoreFacets', 'inspect_core_facets'],
       ['declareCoreFacets', 'declare_core_facets'],
@@ -2116,8 +2142,8 @@ test('condition-aware routes count logical gaps once and classify each default s
   assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-browser'].executableDefaultRouteGaps, 20);
   assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-reference'].executableDefaultRouteGaps, null);
   assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-reference'].retainedReferenceExecutableRows, 20);
-  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-node'].rustSelectedSourceDeclarations, 16);
-  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-browser'].rustSelectedSourceDeclarations, 16);
+  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-node'].rustSelectedSourceDeclarations, 17);
+  assert.equal(ledger.counts.executableDefaultRouteGapsByRoute['package-root-browser'].rustSelectedSourceDeclarations, 17);
   assert.equal(ledger.counts.resourceExportAliases, 1);
   assert.equal(ledger.counts.routeResourceExportAliases, 3);
   assert.equal(ledger.counts.uniqueResourceFiles, 1);
@@ -2205,12 +2231,32 @@ test('condition-aware routes count logical gaps once and classify each default s
     assert.equal(validate.acceptedRustOperation, 'umf_core::dataset_values::validate_core_dataset_values_compact');
     assert.equal(validate.sourceSelectedImplementation.rustOwner, 'umf_core::dataset_values::validate_core_dataset_values_compact');
     assert.equal(validate.sourceSelectedImplementation.status, 'unqualified-current-route');
-    assert.match(validate.disposition, /verification remains TypeScript and retirement gap remains open/);
-    assert.equal(verify.sourceSelectedImplementation, null);
+    assert.match(validate.disposition, /compact verifier has bounded source-only replay but installed qualification and retirement remain open/);
     assert.equal(verify.acceptedRustOperation, 'umf_core::dataset_values::verify_core_dataset_values_compact');
-    assert.equal(verify.implementationStatus, 'inherited TypeScript implementation remains default');
-    assert.match(verify.disposition, /bounded opt-in Rust core operation exists/);
+    assert.equal(verify.declarationKind, 'BindingElement');
+    assert.equal(verify.sourceSelectedImplementation.status, 'source-selected-private-source-replay');
+    assert.equal(verify.sourceSelectedImplementation.rustOwner, 'umf_core::dataset_values::verify_core_dataset_values_compact');
+    assert.match(verify.sourceSelectedImplementation.qualificationStatus, /source-tree evidence only.*not installed SDK\/archive qualification/);
+    assert.equal(verify.bindingRouteStatus, 'unproven');
+    assert.equal(verify.defaultRouteRetirement.status, 'open');
+    assert.match(verify.disposition, /installed qualification and retirement remain open/);
+    const referenceVerify = byRouteAndName.get('package-reference:verifyCoreDatasetValuesCompact');
+    assert.equal(referenceVerify.sourceSelectedImplementation, null);
+    assert.equal(referenceVerify.implementationStatus, 'TypeScript reference implementation remains explicit');
   }
+  const compactVerifySymbols = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json', 'utf8')).symbols
+    .filter(row => row.exportName === 'verifyCoreDatasetValuesCompact' && ['package-root-node', 'package-root-browser', 'package-reference'].includes(row.routeId));
+  for (const mutate of [
+    row => ({ ...row, declarationKind: 'FunctionDeclaration' }),
+    row => ({ ...row, initializerShape: 'arrow-function' }),
+    row => ({ ...row, source: 'src/model/dataset-values-compact.ts' }),
+  ]) {
+    const changed = compactVerifySymbols.map(row => row.routeId === 'package-root-node' ? mutate(row) : row);
+    assert.throws(() => buildLedger({ ...args, inventory: { symbols: changed } }), /declaration multiplicity differs/);
+  }
+  const referenceOnly = compactVerifySymbols.map(row => row.routeId === 'package-root-node' || row.routeId === 'package-root-browser'
+    ? { ...row, declarationKind: 'FunctionDeclaration', source: 'src/model/dataset-values-compact.ts' } : row);
+  assert.throws(() => buildLedger({ ...args, inventory: { symbols: referenceOnly } }), /declaration multiplicity differs/);
   for (const name of ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch']) {
     for (const routeId of ['package-root-node', 'package-root-browser']) {
       const row = byRouteAndName.get(`${routeId}:${name}`);
@@ -2219,7 +2265,7 @@ test('condition-aware routes count logical gaps once and classify each default s
     }
     assert.equal(byRouteAndName.get(`package-reference:${name}`).sourceSelectedImplementation, null);
   }
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 32);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 34);
   assert.match(byRouteAndName.get('package-reference:inspectCoreSemanticTypes').acceptedOperationEvidence.defaultRouteStatus, /^Explicit \.\/reference/);
   assert.match(byRouteAndName.get('package-root-browser:inspectCoreSemanticTypes').acceptedOperationEvidence.defaultRouteStatus, /^Browser default route/);
   const overloadRows = ledger.rows.filter(row => row.routeId === 'package-root-node' && row.exportName === 'futureAlgorithm');
@@ -2748,6 +2794,7 @@ test('securityAnd/securityOr V4 bindings normalize exactly and carry source-only
       for (const host of ['node', 'bun', 'chromium']) {
         assert.ok(row.sourceSelectedImplementation.qualificationEvidenceClosure.some(item => item.path.endsWith(`/r8-security-and-or-v4-source-replay-current/${host}.json`)));
       }
+      assert.ok(row.sourceSelectedImplementation.qualificationEvidenceClosure.some(item => item.path === 'docs/helix/04-build/evidence/rust-migration/r8-compact-dataset-verify-source/build-manifest.json'));
     }
     const reference = ledger.rows.find(item => item.routeId === 'package-reference' && item.exportName === name);
     assert.equal(reference.sourceSelectedImplementation, null);
@@ -2762,16 +2809,24 @@ test('securityAnd/securityOr V4 bindings normalize exactly and carry source-only
 });
 
 test('Record Values and Semantic Types V4 shapes normalize only exact declarations', () => {
-  const names = ['validateCoreRecordValues', 'SemanticTypeRegistry', 'validateSemanticTypeValue', 'validateCoreSemanticTypeValue'];
+  const names = ['inspectCoreSemanticTypes', 'getCoreSemanticTypes', 'declareCoreSemanticTypes', 'verifyCoreSemanticTypeDeclaration',
+    'validateCoreRecordValues', 'SemanticTypeRegistry', 'validateSemanticTypeValue', 'validateCoreSemanticTypeValue'];
   const symbols = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json', 'utf8')).symbols
     .filter(row => names.includes(row.exportName) && ['package-root-node', 'package-root-browser', 'package-reference'].includes(row.routeId));
-  assert.equal(symbols.length, 12);
+  assert.equal(symbols.length, 24);
   const ledger = buildLedger({ ...args, inventory: { symbols } });
-  assert.equal(ledger.counts.executableDefaultRouteGaps, 4);
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 8);
   for (const name of names) {
     for (const routeId of ['package-root-node', 'package-root-browser']) {
       const row = ledger.rows.find(item => item.routeId === routeId && item.exportName === name);
       assert.equal(row.defaultRouteRetirement.status, 'open');
+      if (['inspectCoreSemanticTypes', 'getCoreSemanticTypes', 'declareCoreSemanticTypes', 'verifyCoreSemanticTypeDeclaration'].includes(name)) {
+        assert.equal(row.sourceSelectedImplementation.status, 'source-selected-current-route-unqualified');
+        assert.match(row.sourceSelectedImplementation.qualificationStatus, /no immutable three-host receipt and build-time source closure/);
+        assert.match(row.acceptedRustOperation, /^umf_core::core_semantic_types::/);
+        assert.ok(row.sourceSelectedImplementation.sourceClosure.some(item => item.path === 'src/access/rust-core-semantic-types-default.ts'));
+        assert.match(row.sourceSelectedImplementation.bindingRoute, /public-error facade/);
+      }
     }
   }
   for (const name of names) {
@@ -2782,6 +2837,9 @@ test('Record Values and Semantic Types V4 shapes normalize only exact declaratio
   const moved = symbols.map(row => row.routeId === 'package-root-browser' && row.exportName === 'validateSemanticTypeValue'
     ? { ...row, source: 'src/access/rust-semantic-types-default.ts' } : row);
   assert.throws(() => buildLedger({ ...args, inventory: { symbols: moved } }), /declaration multiplicity differs/);
+  const movedMetadata = symbols.map(row => row.routeId === 'package-root-browser' && row.exportName === 'inspectCoreSemanticTypes'
+    ? { ...row, source: 'src/model/semantic-types.ts' } : row);
+  assert.throws(() => buildLedger({ ...args, inventory: { symbols: movedMetadata } }), /declaration multiplicity differs/);
 });
 
 test('bounded protection operations map to their reviewed Rust candidates without retiring default routes', () => {

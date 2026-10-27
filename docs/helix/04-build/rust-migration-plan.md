@@ -7093,3 +7093,331 @@ snapshot remains necessary. The R8 ledger still counts **922 open executable
 default-route gaps and zero retired**. Neither these bounded installed routes
 nor the Python V8-free source audit closes full-port, two-platform release, or
 retirement requirements.
+
+### R8 b141 fixed-point source and qualification checkpoint — 2026-10-27
+
+The four Core Semantic Types metadata operations (`inspect`, `get`, `declare`,
+and `verify` declaration) now select the Rust model engine through both V4
+roots. Their 16-case frozen predecessor replay passed Bun and bundled Node
+source routes and real Chromium after rebuilding browser WASM from the same
+source. The [R5 evidence](evidence/rust-migration/r5-core-semantic-types/README.md)
+also records installed Node 26.12.1, Bun 1.4.3, and Chromium 153.0.8010.12
+replays on the private `b14148f1` archive. Those tests cover the selected
+operations and packet, including unknown qualifier preservation; they do not
+close CONTRACT-078, allocation limits, or logical retirement.
+
+The new private macOS arm64 SDK archive is SHA-256
+`372f4c9d91202d904e1a1c736389563d0b023d9bf0fb9a6858e9ed902aa688ad`,
+with live/source closure
+`b14148f15a6a3a77864c42e305857a6abb6e0b700aa21a797ed21b0751f97f9c`
+and zero generated transforms. Nine archive integrity tests and the
+[full installed SDK qualification](evidence/rust-migration/r8-bounded-route-b14148f1/README.md)
+pass locally on macOS arm64 across Node, Bun, and Chromium, including the R3
+replay and missing/corrupt native and WASM refusals. The updated R8 census
+records 56 source-selected declarations in each V4 root, 81 accepted opt-in
+operation mappings, 841 unmapped names, **922 open logical gaps and zero
+retired rows**. Its current inventory SHA-256 is
+`0482d81255965c75d444c44f1b12749bbcfea242dc9538fe734d937b6a1bc6c6`;
+ledger SHA-256 is
+`eb7a63c33e673e7101a1f9969df3ce5ec0374554a5ad55e9252183d983cdcdc7`.
+All 61 ledger tests pass. The 68-case Security And/Or source replay passes in
+Node, Bun, and Chromium on the refreshed V4 roots. The installed replay
+harness now resolves real paths before comparing package module identity, so
+macOS `/var` and `/private/var` aliases cannot cause a false mismatch. The
+[focused installed replay](evidence/rust-migration/r8-security-and-or-installed-b14148f1/README.md)
+passes all 68 cases in Node, Bun, and Chromium on the b141 archive, with 30
+valid Rust/WASM calls per host and zero refusal or reference-route calls. The
+broad installed SDK replay also passes for this b141 archive. This archive
+predates the later Compact Dataset verifier source selection.
+
+The [historical 4547 Inspector installed receipts](evidence/rust-migration/r8-inspectors-default-retirement-replay/current-4547-20261027/README.md)
+preserve bounded Node/Bun/Chromium results against that exact earlier archive.
+Linux x64, full CONTRACT-040 acceptance, and current-source callsite review
+remain open. No Inspector route is retired on this evidence.
+
+The coordinated Python release-pair verifier now compares every declared
+`umf-codegen` sdist build input and its bytes against the current checkout,
+including Hatch's root `.gitignore`, before rebuilding a wheel. Its receipt
+records 24 input hashes for the current offline sdist. It rejects unexpected
+nested `PKG-INFO` files and package-source symlinks rather than silently
+omitting them. The focused pair and six-cohort matrix tests pass (31 cases).
+A source-coherent hosted release
+matrix and publication remain open. The hosted Rust SDK Linux job on `ffb7cb34d`
+failed before building the private snapshot because Cargo offline resolution
+had not fetched `regress`; the workflow now prefetches locked Rust
+dependencies before the offline snapshot. Both hosted platform results must
+be rerun after this workflow change.
+
+Independent Core Key tuple review found that the direct native/WASM raw-byte
+and retained prepared-object interface described as pending in the older
+checkpoint above is already implemented. The current focused Rust core suite
+passes 5/5, wire suite 7/7, and Node/Bun suite 21/21 with 334 assertions.
+An older installed Node replay matches 87 in-profile encoder and five verifier
+outcomes, including 100,001-byte and 4,000,000-byte reads, receipt-before-
+current order, and prepared-source isolation. Those receipts predate changed
+core-wire and entrypoint files. A current integrated browser replay and
+resolution or explicit contract bounding of one unsafe JavaScript Number
+refusal-path difference are required before default selection. The direct
+tuple route therefore remains opt-in in this source snapshot.
+
+### R8 Compact Dataset verifier source selection — 2026-10-27
+
+`verifyCoreDatasetValuesCompact` now selects the existing staged Rust verifier
+from both V4 default roots. The receipt-only preparation call preserves
+malformed-receipt refusal before reading `current` or `expectedInput`. The
+[five-case frozen source replay](evidence/rust-migration/r8-compact-dataset-verify-source/README.md)
+passes in Node 26.3.0, Bun 1.4.3, and real Chromium 153.0.8010.12, comparing
+complete predecessor results/refusals and host traces. It includes the adjacent
+267-record acceptance at 997,426 ValueWork units and 268-record refusal at
+1,000,000 units, stale source, copy limits, and caller Proxy error identity.
+The focused tests pass 28/28, V4 facade tests 4/4, and typecheck and unified
+client boundaries pass. Installed archive and complete CONTRACT-056 acceptance
+are separate gates; no declaration is retired.
+
+The current [R8 inventory and ledger](evidence/rust-migration/r8-symbol-inventory/README.md)
+record 57 source-selected declarations per Node/browser default root and 114
+total, with **922 open logical gaps, zero retired**, 81 accepted opt-in Rust
+operation mappings, and 841 unmapped names. Inventory SHA-256 is
+`5a901c4943624f6bb69759fa7ba4eadea0cb0a0519549898d168df69dc80cc6d`;
+ledger SHA-256 is
+`acb59e438db95a0344dccf58b9fc7d6d3a04c75e522a15da1d2a2eefaac66344`.
+The full ledger suite and fixed-point `--check` pass. The refreshed Security
+And/Or source replay still passes 68 cases and 30 Rust/WASM calls per host in
+Node, Bun, and Chromium on these same V4 roots.
+
+A private fixed-point macOS arm64 SDK archive containing this verifier route
+has SHA-256
+`242336e7d6d1ea88434b31fcb908f47b4522f021690ccb55b95ccbc27c8dac50`
+and live/source closure
+`bdb716aa53ab9c45f058266534580bd59d50b725de77ce3dd07b156fba68dbd1`,
+with zero generated transforms and nine passing package integrity tests.
+Focused installed verifier replay and full installed SDK qualification for
+this exact archive remain open. The newer installed verifier harness itself
+must be included in a later fixed-point source closure before a source-coherent
+installed claim.
+
+### R8 tagged-wire paths and bounded qualification — 2026-10-27
+
+The shared tagged-wire decoder now propagates exact UTF-16 JSON Pointer
+segments through object and array traversal, including `~` and `/` escapes
+and lone-surrogate keys. This corrects the nested unsafe-Number Core Key tuple
+refusal from `/0` to `/0/integerToken` without changing the separate generic
+host-admission path. The focused tagged-wire tests pass 3/3; the rebuilt Node
+tuple suite passes 21/21 with 334 assertions; the Rust core-wire tuple packet
+passes 7/7; the cardinality route test passes 2/2. Integrated installed
+Node/Bun/Chromium tuple replay and full CONTRACT-040 acceptance remain open.
+
+The [Compact Dataset verifier source replay](evidence/rust-migration/r8-compact-dataset-verify-source/README.md)
+was rebuilt after that decoder change. Its three-host source closure now pins
+the tagged-wire source and replay harness at
+`a41732bdf6dcedab8ad17ce1cafb88e02c52cc2486ec6e4362156d95e6e07dcb`;
+all five frozen cases still pass in Node, Bun, and Chromium. The
+[Security And/Or source replay](evidence/rust-migration/r8-security-and-or-v4-source-replay-current/README.md)
+likewise passes all 68 cases and 30 Rust/WASM calls per host on its refreshed
+22-file closure
+`5cf945fe2dd4c4fbc3eef536723e477c32c9ba9076f86b83cf11d73131a4fe9c`.
+The [installed Compact verifier diagnostic](evidence/rust-migration/r8-compact-dataset-verify-installed-diagnostic/README.md)
+matches all five frozen cases and host controls in Node 26.12.1, Bun 1.4.3,
+and Chromium 153.0.8010.12 on the earlier `bdb716aa` archive. Each case has
+zero `./reference` Rust calls and two default native/WASM calls. That archive
+predates the harness, so the result is diagnostic only. The SDK source
+snapshot now includes the harness and six frozen packet files; a newly built
+zero-transform archive and same-archive replay are required for fixed-point
+installed qualification.
+
+The [raw-host `readJsonValue` probe](evidence/rust-migration/r8-read-json-value-raw-host-probe/README.md)
+blocks default source selection. Existing default and `./reference` routes
+match across eleven Node/Bun cases, but the direct Rust candidate mismatches
+eight text-admission cases, including a throwing `length` getter's object
+identity and Proxy access order. A browser probe did not initialize WASM and
+makes no browser parity claim. Keep `readJsonValue`, `copyJson`,
+`writeJsonValue`, and `assertExactJsonNumber` on their current default routes
+until raw-host behavior has a proved Rust-owned admission design.
+
+The [local Python release-pair attempt](evidence/rust-migration/r8-python-local-pair-check-20261027/README.md)
+passes 91 focused gate tests and a current-source codegen sdist comparison of
+all 24 build inputs. Its core rebuild preserved non-native payload but produced
+different native extension bytes, and installed-pair qualification stopped
+before installation because pinned `pydantic==2.11.9` was unavailable in the
+local cache without network access. The six hosted Python cohorts, package
+publication, and complete Rust port remain open. The latest regenerated R8
+ledger still has **922 logical default-route gaps, zero retired**.
+
+Independent Sol review found that the four Core Semantic Types rows lacked
+immutable three-host receipts and build-time source pins for their 16-case
+source replay. The R8 ledger now records those operations as Rust-selected by
+the current V4 route but **unqualified on the current source**; the earlier
+16-case and b141 installed receipts remain historical, bounded evidence. The
+Compact verifier source replay is being strengthened to bind its build-time
+source and artifact hashes before further current-source claims.
+
+The rebuilt private macOS arm64 SDK is now a zero-transform fixed point:
+archive SHA-256
+`01b15705bb1fcdc30814de4740cda352a23d5bc28dece3a60da9ffddf680504d`,
+live/source closure
+`8a105dd69a5e42001250cd5e6063ed8c2721e844408389b8f5d5b561abedcdf7`,
+and 1,805 archive members. All nine archive integrity tests pass. The
+[source-coherent installed Compact verifier replay](evidence/rust-migration/r8-compact-dataset-verify-installed-8a105dd6/README.md)
+matches all five frozen cases and host controls in installed Node 26.12.1,
+Bun 1.4.3, and Chromium 153.0.8010.12; each default case makes exactly two
+Rust/WASM calls and each explicit reference case makes zero. The archive's
+source manifest pins the exact harness and six frozen packet files, and the
+harness verifies those bytes and explicit archive/closure hashes. The
+[full installed SDK suite](evidence/rust-migration/r8-full-sdk-8a105dd6/README.md)
+subsequently passed on this historical archive; this bounded qualification
+still leaves the 922 logical retirement gaps, Linux x64, and release matrix
+open.
+
+The `8a105dd6` archive is a fixed point for its captured source only. A later
+metamodel refreeze changed two source pins in the compact verifier packet index,
+and Sol review identified a source replay gap: host receipts could have used
+stale compiled artifacts while naming current source files. The refreshed
+[compact source replay](evidence/rust-migration/r8-compact-dataset-verify-source/README.md)
+now binds one immutable build manifest (SHA-256
+`c796428db9fe36b3215057187d569d5adddefb237b9b917d0c9bab8acf6515b0`)
+to the exact source closure and six compiled artifacts, verifies it before
+each host replay, and passes the same five frozen cases in Node, Bun and real
+Chromium. All five frozen result payloads remain byte-identical; the old index
+is retained. The gap ledger checks this manifest and rejects altered source,
+artifact or manifest bindings. Its current SHA-256 is
+`bec39f2da2ff8d2078285a5f5e13c476521ffe2ef60ad4e5967f2bdb0025d4b5`;
+it still has **922 open logical gaps and zero retired**. A new archive and
+installed replay against these refreshed inputs are required before the
+current-source installed Compact verifier claim can be renewed.
+
+The [raw-host `readJsonValue` Rust prototype](evidence/rust-migration/r8-read-json-value-raw-host-prototype/README.md)
+matches eleven TypeScript host cases in Node 26.12.1, Bun 1.4.3 and Chromium
+153, with one native/WASM call per case. It handles the observed length-getter
+and Proxy order that blocked the earlier direct candidate. Production routing
+remains open: preserve raw host source through the binding, prove exact
+UTF-16/error/resource behavior at the facade, and qualify an installed SDK
+archive before source selection or retirement. This prototype alone does not
+upgrade any of the 922 ledger gaps.
+
+An [instrumented replay](evidence/rust-migration/r8-core-key-tuple-installed-8a105dd6/README.md)
+of the `8a105dd6` installed SDK found a Core Key
+tuple routing gap. The public package-root encoder and verifier match the
+frozen TypeScript cases, but Node and Bun make zero calls to the direct
+`CoreKeyTupleRuntime`, and Chromium records only generic Core Key verifier
+and Record Type verifier WASM exports, with zero tuple export calls. The
+package root also does not expose the direct model-engine factory. Therefore
+the parity replay does **not** qualify public default-root tuple execution as
+Rust-owned. A 4,000,000-byte tuple also diverges between Node's stack overflow
+and Bun's `KEY_TUPLE_RESULT` refusal; 4,000,001 bytes returns the expected
+limit on both. Keep direct tuple ownership opt-in and default selection held
+until route instrumentation and this host boundary are resolved. The archived
+receipt is source-pinned to `8a105dd6` and cannot qualify a newer SDK.
+
+### R8 fixed-point source and release-pair checkpoint — 2026-10-27
+
+Independent Sol review found two defects in the pending source cohort. The
+Core Semantic Types V4 Rust wrapper preserved runtime results but weakened
+the public TypeScript signatures; it now exposes the four predecessor
+`Document`, identity, reference, inspection and declaration types through
+type-only imports. The strict per-file unified-client boundary policy forbids
+executable predecessor imports and includes negative controls. The Security
+And/Or source replay's `--build` command now delegates to the shared
+manifest-producing builder; a fresh-directory build smoke passed. Both fixes
+passed focused tests and typecheck before a new source cohort was captured.
+
+The action-identity generator then revealed one stale generated source. It
+was run canonically in the live worktree and its `--check` passes; the
+generated `src/extensions/actions/plan-identity.ts` SHA-256 is
+`525e20080bdcc27588dbf46064a74f8e5c4ac1f44adf5db775068e089acabc8e`.
+Earlier source receipts are retained as historical cohorts. The current
+[Compact verifier source replay](evidence/rust-migration/r8-compact-dataset-verify-source/README.md),
+[Security And/Or source replay](evidence/rust-migration/r8-security-and-or-v4-source-replay-current/README.md),
+and [Core Semantic Types public-error replay](evidence/rust-migration/r8-core-semantic-types-public-error-source-20261027/README.md)
+use a single fresh source build manifest, SHA-256
+`4d25c856fdac60bd5e0ae9c0bf7ac9afeda235251c13c05f313e3c6da96e5f3e`,
+with expanded source-closure SHA-256
+`2f83e19ace175ceb538d0b7aba94926a41a868c3af4ad87d52d73a996b88fd31`.
+Node, Bun and real Chromium pass the bounded five-case Compact and 68-case
+Security packets with Rust/WASM dispatch; the semantic-type 16-case source
+replay passes in all three hosts with public `UmfError` identity. These are
+bounded source-route claims, not complete operation parity or retirement.
+
+The private SDK builder then produced a **zero-transform fixed point** with
+source closure
+`499d13c2e4a4a2373eea763ab3fe359861fb1218a24ae030bddf4f405bf18df5`,
+1,806 archive members, and archive SHA-256
+`5ec44a154649cc0ddfd17279f9d686f7f87bcc92277ff113721c45d6173b4f89`.
+All nine archive integrity tests pass. The
+[installed Security And/Or packet](evidence/rust-migration/r8-security-and-or-installed-499d13c2/README.md)
+matched 68 cases in Node, Bun and Chromium in the supplied extracted tree,
+but independent review found that its runner did not prove that tree matched
+the named archive and mislabeled Bun's version as Node's. Treat that receipt
+as diagnostic pending an archive/member-bound replay. Full
+installed SDK replay runs separately. The
+[installed Compact verifier packet](evidence/rust-migration/r8-compact-dataset-verify-installed-499d13c2/README.md)
+also passes all five frozen cases and host controls on the archive, with zero
+reference and two default native/WASM calls per case. These bounded installed
+packets do not qualify the full SDK or release. The regenerated R8 ledger SHA-256 is
+`553a4924258b04d04e4f561138cc4c509910a9f4c00d545b1e617590c104426a`;
+its 62-case suite and `--check` pass. It still records **922 open logical
+default-route gaps, zero retired**, and conservatively keeps Core Semantic
+Types current-route unqualified until its new three-host evidence has a
+dedicated immutable ledger gate.
+
+The [current Python release pair](evidence/rust-migration/r8-python-pair-current-metamodel-20261027/README.md)
+now rebuilds fresh core and codegen wheels/sdists from refreshed canonical
+resource mirrors. The installed pair verifier passes import, generation,
+CLI and the 24-input codegen sdist check; an isolated macOS arm64 /
+CPython 3.11.17 cohort with Pydantic 2.11.9 passes 217 installed tests.
+This is one local cohort. The hosted Linux/macOS × CPython 3.11/3.12/3.13
+matrix and aggregate release gate remain open.
+
+For the next `readJsonValue` slice, retain the TypeScript default until the
+production binding accepts the original raw JS source without pre-encoding,
+preserves JSON-mode coercion and two-read host order, uses the 4,000,000
+UTF-16-unit text limit, transports lone-surrogate keys and values losslessly,
+maps native and Rust failures to the exact public classes, and carries one
+`Context` budget through extraction, parsing and reconstruction. Expand the
+frozen differential packet to include non-string explicit-JSON coercion,
+stateful getters and Proxies, 3,999,999/4,000,000/4,000,001-unit limits,
+isolated surrogates, and cancellation/deadline/meter failures before a
+source-selected route or installed acceptance claim. The eleven-case
+raw-host prototype is insufficient for default selection.
+
+The [expanded raw-host `readJsonValue` oracle](evidence/rust-migration/r8-read-json-value-expanded-oracle-20261027/README.md) records 22/22 TypeScript reference/default matches on Node and Bun, while the N-API prototype differs on 16/22 Node and 18/22 Bun cases. It confirms that JSON-mode coercion and stateful host operations, the 4,000,000 UTF-16-unit boundary, and error-envelope parity remain production gates; the lone-surrogate cases pass only within this bounded N-API cohort. The run makes no WASM or browser claim and does not change source selection. Next, adapt Rust-owned admission to preserve the exact raw host operations and exception behavior, then prove the full bounded limit/coercion/error/resource matrix in the production facade and a zero-transform installed SDK replay before reconsidering the TypeScript default.
+
+### R8 fixed-point installed checkpoint — 2026-10-27
+
+The zero-transform `ef9f20c8` SDK archive has SHA-256
+`3302afe1837647344b6fa08606f31cc61a88637d3897f15feb6cb218c01c4046`, source
+closure SHA-256
+`ef9f20c85e220651590552b94e92da0743d02f5a97446b1e2f51f5781e244ecb`, and
+manifest SHA-256
+`a3317d5edd5a3971904899f14f1050b441b029dfd9ee0bafeecaaecd643d17ab`. Its
+[installed Compact verifier replay](evidence/rust-migration/r8-compact-dataset-verify-installed-ef9f20c8/README.md)
+qualified five frozen cases and host controls on Node 26.12.1, Bun 1.4.3,
+and Chromium 153.0.8010.12: every reference route made zero native/WASM calls
+and every default route made two per case. Its
+[installed Security And/Or replay](evidence/rust-migration/r8-security-and-or-installed-ef9f20c8/README.md)
+qualified the bounded 68-case packet on the same archive and hosts, with 30
+valid default Rust/WASM calls and zero refusal, reference, or unattributed
+calls per host. The Security receipt also binds the complete installed file
+inventory to the archive and records archive-payload, altered-installation,
+and extra-file rejection controls.
+
+The [full installed SDK replay](evidence/rust-migration/r8-full-sdk-ef9f20c8/README.md)
+also passed on this private macOS arm64 cohort: 31 R3 cases, all installed
+controls, and the broader runtime and export checks recorded in its receipt;
+the suite completed in 1,133,333 ms. This confirms the archive-wide installed
+test suite for this cohort, while the Compact and Security receipts retain
+their narrower packet-specific claims. These runs do not close all acceptance
+criteria. The R8 ledger still records **922 open logical default-route gaps,
+zero retired**. There is no release qualification or release claim.
+
+The final R8 ledger was regenerated after the archive-payload verifier change.
+Its SHA-256 is
+`4b09f83b44faa7c8c744f6520712f65832f3f1d5f8a1c3dd7576751e4df4a32b`;
+the sole delta from the preceding ledger is the installed Security replay
+script hash in the script census. Its 922 gaps and zero retirements are
+unchanged.
+
+The [improved raw-host `readJsonValue` N-API spike](evidence/rust-migration/r8-read-json-value-improved-raw-host-20261027/README.md) matches all 22 reference/default cases on Node 26.12.1 and Bun 1.4.3, including the tested coercion order, two `length` reads, 4,000,000 UTF-16-unit boundary and lone-surrogate results. This remains a bounded N-API prototype: WASM/browser behavior, general inputs, Context controls, production facade integration and installed SDK qualification are open. Keep the TypeScript default selected until those gates pass.
+
+A supplemental 39-case `readJsonValue` falsy-input packet now matches the TypeScript reference/default and temporary raw-host N-API candidate on Node 26.12.1 and Bun 1.4.3, including `NaN`, `0n`, signed zero, and other falsy/truthy non-string inputs ([evidence](evidence/rust-migration/r8-read-json-value-falsy-expansion-20261027/README.md)). This remains a scoped host-runtime spike: no WASM/browser claim or default-route selection follows. Open gates include isolated-surrogate error-path preservation, output object shape/prototype validation, thrown-value identity during length/coercion, Context shared-ledger metering for host JSON preflight, and complete transitive source closure; general inputs, production facade, and installed SDK qualification also remain open.
+
+The proposed production binding boundary is documented in the [ordinary-profile Rust interface proposal](evidence/rust-migration/r8-read-json-value-production-interface-proposal-20261027/README.md). Initial scope is private Rust sequencing over an opaque raw host handle, one Context, exact UTF-16 success/error transport, null-prototype result checks, and direct shape/error-identity acceptance in Node/Bun before WASM/Chromium. The second length read supplies YAML's `endOffset` during compose third-argument evaluation before the generator body, without coercion; its access remains observable. The YAML lexer accepts primitive strings unchanged, treats falsy nonstrings as an empty stream, and throws `TypeError` for truthy nonstrings. Catalog JSON stays TypeScript-selected pending a separate design for raw scanner reads and dynamic JSON.parse lookup. Host JSON.parse remains synchronous and opaque: shared Context checkpoints cannot guarantee hard bounds or interruption, and the first raw length may be small before a large coercion. No source route/default change is authorized; fresh source closure and installed replay remain later gates.

@@ -424,6 +424,32 @@ function acceptedOperationEvidence(mapping, routeStatus = 'legacy-fixture') {
   };
 }
 
+export function validateCompactVerifierBuildBinding(manifest, receipts, manifestPath, manifestSha256) {
+  if (manifest?.format !== 'umf.r8.compact-dataset-verify-build/1'
+      || !manifest.sourceClosure?.sha256 || !manifest.sourceClosure?.files
+      || !manifest.artifacts || receipts.length !== 3) {
+    throw new Error('Compact Dataset verifier build manifest is incomplete');
+  }
+  const expectedArtifacts = ['nodeAddon', 'wasm', 'wasmGlue', 'referenceBundle', 'nodeBundle', 'browserBundle'];
+  if (Object.keys(manifest.artifacts).sort().join('\0') !== expectedArtifacts.sort().join('\0')
+      || expectedArtifacts.some(name => !manifest.artifacts[name]?.path || !/^[a-f0-9]{64}$/.test(manifest.artifacts[name]?.sha256))) {
+    throw new Error('Compact Dataset verifier build artifacts are incomplete');
+  }
+  const sharedBuildPath = receipts[0]?.receipt?.buildBinding?.manifest;
+  for (const { receipt } of receipts) {
+    const binding = receipt.buildBinding;
+    if (binding?.sha256 !== manifestSha256
+        || binding.sourceClosureSha256 !== manifest.sourceClosure.sha256
+        || JSON.stringify(binding.artifacts) !== JSON.stringify(manifest.artifacts)
+        || typeof binding.manifest !== 'string'
+        || binding.manifest !== sharedBuildPath
+        || !binding.manifest.endsWith('/compact-dataset-verify-build-manifest.json')) {
+      throw new Error('Compact Dataset verifier source receipt is not bound to the shared build manifest');
+    }
+  }
+  return { manifestPath, manifestSha256 };
+}
+
 function sourceSelectedImplementation(routeId, exportName, source = null, qualifiedRouteOperations = null, declaration = null) {
   if (!['package-root-node', 'package-root-browser'].includes(routeId)) return null;
   const browser = routeId === 'package-root-browser';
@@ -432,6 +458,48 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
   if (source !== null && source !== defaultEntry
       && !(schemaPropertiesNames.includes(exportName) && source === 'src/model/schema-properties.ts')) return null;
   const closure = paths => [...new Set(paths)].sort().map(file => ({ path: file, sha256: digest(read(file)) }));
+  if (exportName === 'verifyCoreDatasetValuesCompact'
+      && declaration?.declarationName === exportName
+      && declaration.declarationKind === 'BindingElement'
+      && declaration.initializerShape === 'not-applicable') {
+    const evidenceDir = 'docs/helix/04-build/evidence/rust-migration/r8-compact-dataset-verify-source';
+    const evidencePaths = ['index.json', 'build-manifest.json', 'node.json', 'bun.json', 'chromium.json'].map(file => `${evidenceDir}/${file}`);
+    const predecessorPath = `${evidenceDir}/index.json`;
+    const manifestPath = `${evidenceDir}/build-manifest.json`;
+    const predecessor = json(predecessorPath);
+    const manifest = json(manifestPath);
+    const expectedIds = ['commerce-complete', 'stale-source-input-canonical-skipped', 'stale-source-expected-input-copy-limit', 'near-limit-accepted', 'near-limit-first-refused'];
+    const receipts = ['node', 'bun', 'chromium'].map(host => ({ host, receipt: json(`${evidenceDir}/${host}.json`) }));
+    if (predecessor.format !== 'r5-dataset-values-compact-verify-v1'
+        || JSON.stringify(predecessor.cases) !== JSON.stringify(expectedIds)
+        || receipts.some(({ receipt, host }) => {
+          const callKey = host === 'chromium' ? 'wasmCalls' : 'rustCalls';
+          if (receipt.format !== 'umf-r8-compact-dataset-verify-v4-source-replay/2' || receipt.status !== 'pass'
+              || receipt.host !== host || receipt.fixtureCases !== expectedIds.length
+              || receipt.frozenPredecessor?.path !== predecessorPath || receipt.frozenPredecessor?.sha256 !== digest(read(predecessorPath))
+              || receipt.rows?.length !== expectedIds.length
+              || receipt.rows.some((item, index) => item.id !== expectedIds[index] || item[callKey] !== 2 || JSON.stringify(item.reference) !== JSON.stringify(item.default))
+              || (host === 'chromium' ? receipt.nodeGlobalsAbsent !== true : receipt.rustCalls !== 14)) return true;
+          return false;
+        })) throw new Error('Compact Dataset verifier V4 source replay evidence is stale or incomplete');
+    validateCompactVerifierBuildBinding(manifest, receipts, manifestPath, digest(read(manifestPath)));
+    const receiptSourceHashes = receipts.map(({ receipt }) => receipt.sourceClosure?.files ?? {});
+    if (receiptSourceHashes.some(files => JSON.stringify(files) !== JSON.stringify(receiptSourceHashes[0]))) throw new Error('Compact Dataset verifier host receipts do not share one source cohort');
+    if (JSON.stringify(receiptSourceHashes[0]) !== JSON.stringify(manifest.sourceClosure.files)
+        || receipts.some(({ receipt }) => receipt.sourceClosure?.sha256 !== manifest.sourceClosure.sha256)) {
+      throw new Error('Compact Dataset verifier build and host source closures differ');
+    }
+    for (const [file, expected] of Object.entries(receiptSourceHashes[0])) if (digest(read(file)) !== expected) throw new Error(`Compact Dataset verifier source replay closure drift: ${file}`);
+    return {
+      status: 'source-selected-private-source-replay',
+      rustOwner: 'umf_core::dataset_values::verify_core_dataset_values_compact',
+      wireOperation: 'dataset-values-compact/1.0.0:verifyCoreDatasetValuesCompact',
+      bindingRoute: browser ? 'V4 browser root -> compact Dataset verifier facade -> WASM dataset-values-compact binding -> Rust' : 'V4 Node root -> compact Dataset verifier facade -> Node dataset-values-compact binding -> Rust',
+      sourceClosure: closure(Object.keys(receiptSourceHashes[0])),
+      qualificationEvidenceClosure: closure(evidencePaths),
+      qualificationStatus: 'One immutable source-and-artifact-bound build passes Node, Bun and real Chromium replay for five frozen Compact Dataset verifier cases, including malformed/stale receipt admission, accessor-safe host behavior, and adjacent accepted/refused ValueWork boundaries. This is source-tree evidence only: it is not installed SDK/archive qualification, complete Dataset semantics evidence, or declaration retirement.',
+    };
+  }
   const numericSymbols = new Map([
     ['exactDecimal', 'exact_decimal'],
     ['integerFromBigInt', 'integer_from_bigint'],
@@ -455,6 +523,34 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
         'docs/helix/04-build/evidence/rust-migration/r5-javascript-numeric/README.md',
       ]),
       qualificationStatus: 'The current Node/browser root source selects the bounded CONTRACT-049 Rust numeric facade. One derived private archive passed installed Node/Bun/Chromium behavior replay but required 11 generated-source transforms; current-source fixed-point qualification, resource bounds and retirement remain open.',
+    };
+  }
+  const semanticTypeModelOperations = new Map([
+    ['inspectCoreSemanticTypes', 'inspect_core_semantic_types'],
+    ['getCoreSemanticTypes', 'get_core_semantic_types'],
+    ['declareCoreSemanticTypes', 'declare_core_semantic_types'],
+    ['verifyCoreSemanticTypeDeclaration', 'verify_core_semantic_type_declaration'],
+  ]);
+  if (semanticTypeModelOperations.has(exportName)
+      && declaration?.declarationName === exportName
+      && declaration.declarationKind === 'BindingElement'
+      && declaration.initializerShape === 'not-applicable') {
+    return {
+      status: 'source-selected-current-route-unqualified',
+      rustOwner: `umf_core::core_semantic_types::${semanticTypeModelOperations.get(exportName)}`,
+      wireOperation: `model/${exportName}`,
+      bindingRoute: browser ? 'V4 browser root -> public-error facade -> WASM core model wrapper -> Rust wire' : 'V4 Node root -> public-error facade -> Node-API core model wrapper -> Rust wire',
+      sourceClosure: closure([
+        defaultEntry, 'src/access/rust-core-semantic-types-default.ts', 'src/model/semantic-types.ts',
+        browser ? 'bindings/core/wasm/index.js' : 'bindings/core/node/index.js',
+        browser ? 'bindings/core/wasm/src/core-model.js' : 'bindings/core/node/src/core-model.js',
+        'crates/umf-core/src/core_semantic_types.rs', 'crates/umf-core-wire/src/lib.rs',
+        'docs/helix/04-build/evidence/rust-migration/r5-core-semantic-types/frozen-typescript.json',
+        'docs/helix/04-build/evidence/rust-migration/r5-core-semantic-types/README.md',
+        'scripts/rust-migration/r5/replay-core-semantic-types-default-node.mjs',
+        'scripts/rust-migration/r5/replay-core-semantic-types-default-browser.mjs',
+      ]),
+      qualificationStatus: 'The current source routes select the Rust model engine. A prior 16-case Node, Bun and Chromium replay is historical: this ledger has no immutable three-host receipt and build-time source closure for that replay, so it does not qualify the current worktree. Full CONTRACT-078 acceptance, two-platform qualification and declaration retirement remain open.',
     };
   }
   const temporal = new Map([
@@ -543,18 +639,22 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
     const operation = exportName === 'securityAnd' ? 'security_and' : 'security_or';
     const evidenceDir = 'docs/helix/04-build/evidence/rust-migration/r8-security-and-or-v4-source-replay-current';
     const evidencePaths = ['predecessor.json', 'node.json', 'bun.json', 'chromium.json'].map(file => `${evidenceDir}/${file}`);
+    const buildManifestPath = 'docs/helix/04-build/evidence/rust-migration/r8-compact-dataset-verify-source/build-manifest.json';
+    evidencePaths.push(buildManifestPath);
     const receipts = ['node', 'bun', 'chromium'].map(host => ({ host, receipt: json(`${evidenceDir}/${host}.json`) }));
     const predecessorPath = `${evidenceDir}/predecessor.json`;
     const predecessor = json(predecessorPath);
     const caseIds = new Set((predecessor.cases ?? []).map(item => item.id));
     if (predecessor.cases?.length !== 68 || receipts.some(({ receipt, host }) => {
-      if (receipt.format !== 'umf-r8-security-and-or-v4-source-replay/1' || receipt.status !== 'pass' || receipt.host !== host || receipt.fixture?.cases !== 68 || receipt.fixture?.sha256 !== digest(read(predecessorPath)) || receipt.rustDispatch?.validCalls !== 30 || receipt.rustDispatch?.invalidCalls !== 0 || receipt.rustDispatch?.perCase?.length !== 68) return true;
+      if (receipt.format !== 'umf-r8-security-and-or-v4-source-replay/2' || receipt.status !== 'pass' || receipt.host !== host || receipt.fixture?.cases !== 68 || receipt.fixture?.sha256 !== digest(read(predecessorPath)) || receipt.rustDispatch?.validCalls !== 30 || receipt.rustDispatch?.invalidCalls !== 0 || receipt.rustDispatch?.perCase?.length !== 68) return true;
       const calls = receipt.rustDispatch.perCase;
       const callKey = host === 'chromium' ? 'wasmCallDelta' : 'rustCallDelta';
       if (calls.some(item => !caseIds.has(item.id) || !Number.isSafeInteger(item[callKey]) || item[callKey] < 0)) return true;
       if (new Set(calls.map(item => item.id)).size !== 68 || calls.reduce((sum, item) => sum + item[callKey], 0) !== 30) return true;
       return calls.some(item => JSON.stringify(item.expected) !== JSON.stringify(item.reference) || JSON.stringify(item.expected) !== JSON.stringify(item.root));
     })) throw new Error('securityAnd/securityOr V4 source replay evidence is stale or incomplete');
+    const buildManifest = json(buildManifestPath);
+    validateCompactVerifierBuildBinding(buildManifest, receipts, buildManifestPath, digest(read(buildManifestPath)));
     const receiptSourceHashes = receipts.map(({ receipt }) => receipt.sourceClosure?.files ?? {});
     if (receiptSourceHashes.some(files => JSON.stringify(files) !== JSON.stringify(receiptSourceHashes[0]))) throw new Error('securityAnd/securityOr host receipts do not share one source cohort');
     for (const [file, expected] of Object.entries(receiptSourceHashes[0])) if (digest(read(file)) !== expected) throw new Error(`securityAnd/securityOr source replay closure drift: ${file}`);
@@ -897,6 +997,11 @@ function operationMapping(row) {
       };
       return accepted.get(`${sourceByInspector[row.exportName]}#${row.exportName}`) ?? null;
     }
+    if (['inspectCoreSemanticTypes', 'getCoreSemanticTypes', 'declareCoreSemanticTypes', 'verifyCoreSemanticTypeDeclaration'].includes(row.exportName)
+        && row.declarationName === row.exportName && row.declarationKind === 'BindingElement'
+        && row.initializerShape === 'not-applicable') {
+      return accepted.get(`src/model/semantic-types.ts#${row.exportName}`) ?? null;
+    }
     if (['exactDecimal', 'integerFromBigInt', 'integerToBigInt', 'admitJavascriptNumber', 'numericToNumberLossless'].includes(row.exportName)
         && row.declarationName === row.exportName && row.declarationKind === 'BindingElement') {
       return accepted.get(`src/adapters/javascript-numeric.ts#${row.exportName}`) ?? null;
@@ -929,6 +1034,11 @@ function operationMapping(row) {
       return accepted.get(`src/model/record-type.ts#${row.exportName}`) ?? null;
     }
     if (row.exportName === 'validateCoreDatasetValuesCompact') {
+      return accepted.get(`src/model/dataset-values-compact.ts#${row.exportName}`) ?? null;
+    }
+    if (row.exportName === 'verifyCoreDatasetValuesCompact'
+        && row.declarationName === row.exportName && row.declarationKind === 'BindingElement'
+        && row.initializerShape === 'not-applicable') {
       return accepted.get(`src/model/dataset-values-compact.ts#${row.exportName}`) ?? null;
     }
     if (['inspectCoreCardinality', 'declareCoreCardinality', 'verifyCoreCardinalityDeclaration'].includes(row.exportName)) {
@@ -1943,6 +2053,8 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
       && ['parseBits128', 'parseUuid', 'bits128FromBytes', 'bits128ToBytes', 'uuidFromBits128', 'uuidToBits128', 'compareBits128', 'bits128ToWords', 'bits128FromWords', 'bits128ToInteger', 'bits128FromInteger'].includes(row.exportName);
     const selectedJavascriptNumeric = mapping && selectedBySource
       && ['exactDecimal', 'integerFromBigInt', 'integerToBigInt', 'admitJavascriptNumber', 'numericToNumberLossless'].includes(row.exportName);
+    const selectedCompactDatasetVerifier = row.exportName === 'verifyCoreDatasetValuesCompact'
+      && sourceSelection?.status === 'source-selected-private-source-replay';
     const operation = operationOwnership(row.exportName, row.routeId === 'package-root-node' ? 'default-node' : row.routeId === 'package-root-browser' ? 'default-browser' : row.routeId === 'package-reference' ? 'explicit-reference' : 'legacy-fixture');
     const routeDetails = {
       'package-root-node': {
@@ -1959,6 +2071,7 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
           : selectedSchemaProperties ? 'Rust Schema Properties operation selected by source route; separate same-archive private receipt passed; aggregate route gate pending'
           : ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName) ? 'Rust facets operation selected by source route; installed qualification pending'
           : row.exportName === 'validateCoreDatasetValuesCompact' ? 'Rust compact Dataset validation selected by source route; installed qualification pending'
+          : selectedCompactDatasetVerifier ? 'Rust compact Dataset verifier selected by source route; bounded current-source Node/Bun/Chromium replay passed; installed qualification pending and retirement open'
           : row.exportName === 'verifyCoreKeyOperation' ? 'Staged Rust Core Key verifier selected by source route; private Node/Bun/Chromium archive receipt is source-pinned; current-source qualification pending'
           : row.exportName === 'securityNot' && selectedBySource ? 'Guarded Rust securityNot adapter selected by V4 source route; private installed Node/Bun/Chromium evidence is pinned to fixed-point source commit dc746ad53; current-source qualification, broader parity, release qualification and retirement remain open'
           : ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName) ? 'Rust Core Keys operation selected by source route; aggregate installed qualification pending for current worktree'
@@ -1982,6 +2095,7 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
           : selectedSchemaProperties ? 'Rust Schema Properties operation selected by source route; separate same-archive private receipt passed; aggregate route gate pending'
           : ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName) ? 'Rust facets operation selected by source route; installed qualification pending'
           : row.exportName === 'validateCoreDatasetValuesCompact' ? 'Rust compact Dataset validation selected by source route; installed qualification pending'
+          : selectedCompactDatasetVerifier ? 'Rust compact Dataset verifier selected by source route; bounded current-source Node/Bun/Chromium replay passed; installed qualification pending and retirement open'
           : row.exportName === 'verifyCoreKeyOperation' ? 'Staged Rust Core Key verifier selected by source route; private Node/Bun/Chromium archive receipt is source-pinned; current-source qualification pending'
           : row.exportName === 'securityNot' && selectedBySource ? 'Guarded Rust securityNot adapter selected by V4 source route; private installed Node/Bun/Chromium evidence is pinned to fixed-point source commit dc746ad53; current-source qualification, broader parity, release qualification and retirement remain open'
           : ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName) ? 'Rust Core Keys operation selected by source route; aggregate installed qualification pending for current worktree'
@@ -2024,7 +2138,9 @@ function publicRows(inventory, qualifiedRouteOperations = null) {
           : ['inspectCoreFacets', 'declareCoreFacets', 'verifyCoreFacetDeclaration', 'historicalCoreFacetPatch'].includes(row.exportName) && ['package-root-node', 'package-root-browser'].includes(row.routeId)
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust facets operation selected by source route; installed qualification pending; retirement gap remains open`
           : row.exportName === 'validateCoreDatasetValuesCompact' && ['package-root-node', 'package-root-browser'].includes(row.routeId)
-            ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust compact Dataset validation selected by source route; installed qualification pending; verification remains TypeScript and retirement gap remains open`
+            ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust compact Dataset validation selected by source route; installed qualification pending; compact verifier has bounded source-only replay but installed qualification and retirement remain open`
+          : selectedCompactDatasetVerifier
+            ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} Rust compact Dataset verifier selected by source route; current-source Node/Bun/Chromium frozen replay passed; installed qualification and retirement remain open`
           : row.exportName === 'verifyCoreKeyOperation' && ['package-root-node', 'package-root-browser'].includes(row.routeId)
             ? `${row.routeId === 'package-root-node' ? 'Node' : 'browser'} staged Rust Core Key verifier selected by source route; private Node/Bun/Chromium receipt is bound to its captured archive closure; current-source, retirement and release qualification remain open`
           : ['inspectCoreKeys', 'lookupCoreKey', 'declareCoreRecordMembers', 'declareCoreKey'].includes(row.exportName) && ['package-root-node', 'package-root-browser'].includes(row.routeId)
@@ -2173,10 +2289,15 @@ function logicalDeclarationSignature(row) {
   // TypeScript reference. Shape normalization neither proves Rust parity nor
   // retires any logical gap; source, kind and initializer drift still fail.
   const newlySelectedReferenceShapes = {
+    inspectCoreSemanticTypes: ['src/model/semantic-types.ts', 'FunctionDeclaration'],
+    getCoreSemanticTypes: ['src/model/semantic-types.ts', 'FunctionDeclaration'],
+    declareCoreSemanticTypes: ['src/model/semantic-types.ts', 'FunctionDeclaration'],
+    verifyCoreSemanticTypeDeclaration: ['src/model/semantic-types.ts', 'FunctionDeclaration'],
     validateCoreRecordValues: ['src/model/record-values.ts', 'FunctionDeclaration'],
     SemanticTypeRegistry: ['src/extensions/semantic-types/index.ts', 'ClassDeclaration'],
     validateSemanticTypeValue: ['src/extensions/semantic-types/index.ts', 'FunctionDeclaration'],
     validateCoreSemanticTypeValue: ['src/model/semantic-types.ts', 'FunctionDeclaration'],
+    verifyCoreDatasetValuesCompact: ['src/model/dataset-values-compact.ts', 'FunctionDeclaration'],
   };
   const newlySelectedReferenceShape = newlySelectedReferenceShapes[row.exportName];
   const newDefaultConditionShape = newlySelectedReferenceShape

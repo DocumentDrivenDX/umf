@@ -51,7 +51,7 @@ test('retained direct runtime matches the frozen 87 in-profile encoder and five 
     const profile = input.profile;
     const actual = actualOutcome(() => direct.encode(wire(input.source), wire(input.identity), wire(input.values), profile));
     if (id === 'integer-host-number') {
-      same(actual, {ok: false, error: {code: 'NUMBER', message: 'Number outside the core interoperable numeric profile', path: '/0'}}, id);
+      same(actual, {ok: false, error: {code: 'NUMBER', message: 'Number outside the core interoperable numeric profile', path: '/0/integerToken'}}, id);
     } else {
       same(actual, frozen.outcomes[id], id);
       encoderMatches++;

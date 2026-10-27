@@ -50,3 +50,18 @@ test('V4 Core Semantic Type aggregate preserves refusal order',()=>{
  const run=(api:typeof predecessor)=>api.validateCoreSemanticTypeValue(document as never,identity,null,new api.SemanticTypeRegistry().register(ref('a'),{},()=>({status:'valid',complete:true,issues:[]})));
  expect(capture(()=>run(rustDefault as unknown as typeof predecessor))).toEqual(capture(()=>run(predecessor)));
 });
+
+
+test('V4 Rust Core Semantic Types refusals use the public UmfError class',()=>{
+ const bad={umf:'bad'};
+ const calls=[
+  ()=>rustDefault.inspectCoreSemanticTypes(bad as never,{module:'',element:'e'}),
+  ()=>rustDefault.getCoreSemanticTypes(bad as never,{module:'',element:'e'}),
+  ()=>rustDefault.declareCoreSemanticTypes(bad as never,{module:'',element:'e'},null),
+  ()=>rustDefault.verifyCoreSemanticTypeDeclaration(bad as never,bad as never),
+ ];
+ for(const call of calls){
+  try{call();throw new Error('expected the native operation to refuse');}
+  catch(error){expect(error).toBeInstanceOf(rustDefault.UmfError);}
+ }
+});

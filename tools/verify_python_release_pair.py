@@ -70,6 +70,60 @@ def _extract_sdist(path: Path, destination: Path) -> Path:
     return destination / roots.pop()
 
 
+def _verify_codegen_sdist_source(source: Path, repository: Path) -> dict[str, str]:
+    """Require the codegen archive's declared build inputs to match this checkout."""
+    project = repository / "python/umf_codegen"
+    expected: dict[str, Path] = {
+        relative: project / relative
+        for relative in (
+            "pyproject.toml",
+            "README.md",
+            "LICENSE.md",
+            "LICENSE-MIT",
+            "LICENSE-APACHE",
+            "hatch_build.py",
+        )
+    }
+    # Hatch carries the repository ignore file into this sdist. It influences
+    # source selection, so pin its bytes as part of the build-input closure.
+    expected[".gitignore"] = repository / ".gitignore"
+    package = project / "src/umf_codegen"
+    for path in sorted(package.rglob("*")):
+        if path.is_symlink():
+            raise ValueError(
+                f"Current codegen source input is a symlink: "
+                f"{path.relative_to(project).as_posix()}"
+            )
+        if not path.is_file() or "__pycache__" in path.parts:
+            continue
+        expected[path.relative_to(project).as_posix()] = path
+
+    actual_names = {
+        path.relative_to(source).as_posix()
+        for path in source.rglob("*")
+        if path.is_file() and path.relative_to(source).as_posix() != "PKG-INFO"
+    }
+    if actual_names != set(expected):
+        missing = sorted(set(expected) - actual_names)
+        unexpected = sorted(actual_names - set(expected))
+        raise ValueError(
+            f"Codegen sdist source inventory differs from current inputs: "
+            f"missing={missing}, unexpected={unexpected}"
+        )
+
+    hashes: dict[str, str] = {}
+    for relative, current in sorted(expected.items()):
+        if not current.is_file() or current.is_symlink():
+            raise ValueError(f"Current codegen build input is missing or unsafe: {relative}")
+        archived = source / relative
+        current_bytes = current.read_bytes()
+        archived_bytes = archived.read_bytes()
+        if archived_bytes != current_bytes:
+            raise ValueError(f"Codegen sdist source differs from current input: {relative}")
+        hashes[relative] = hashlib.sha256(current_bytes).hexdigest()
+    return hashes
+
+
 def _python_in(environment: Path) -> Path:
     return environment / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
 
@@ -157,6 +211,9 @@ def qualify(repository: Path, artifacts: Path, core_receipt: Path) -> dict[str, 
     with tempfile.TemporaryDirectory(prefix="umf-python-release-pair-") as raw_temp:
         temporary = Path(raw_temp)
         codegen_source = _extract_sdist(codegen_sdist, temporary / "codegen-sdist")
+        codegen_source_hashes = _verify_codegen_sdist_source(
+            codegen_source, repository
+        )
         rebuilt_dir = temporary / "codegen-rebuilt-wheel"
         rebuilt_dir.mkdir()
         offline_env = dict(os.environ)
@@ -267,6 +324,8 @@ def qualify(repository: Path, artifacts: Path, core_receipt: Path) -> dict[str, 
                 "sha256": _sha256(rebuilt_codegen_wheel),
                 "matchesDirectWheel": _sha256(rebuilt_codegen_wheel)
                 == _sha256(codegen_wheel),
+                "currentSourceInputCount": len(codegen_source_hashes),
+                "currentSourceInputSha256": codegen_source_hashes,
                 "buildLogSha256": hashlib.sha256(rebuild_log.encode()).hexdigest(),
             },
             "coreSdistVerificationReceiptSha256": _sha256(core_receipt),

@@ -1,0 +1,31 @@
+{
+  "format": "umf.r8.core-semantic-types-public-error-replay/2",
+  "status": "pass",
+  "host": "chromium",
+  "runtime": "Chromium 153.0.8010.12",
+  "result": {
+    "status": "pass",
+    "cases": 16,
+    "nodeGlobalsAbsent": true,
+    "unknownQualifierPreserved": true,
+    "dispatch": "V4 browser source root initializes and calls Rust/WASM model engine"
+  },
+  "publicErrorIdentity": true,
+  "replayHarness": {
+    "path": "scripts/rust-migration/r5/replay-core-semantic-types-default-browser.mjs",
+    "sha256": "f3b9ecc9bddaf1ed715867aea45b20ee0ad1fdd998be5a1c150ca6184abd69ab"
+  },
+  "buildBinding": {
+    "manifest": "/private/tmp/compact-v4-build-fixedpoint-20261027c/compact-dataset-verify-build-manifest.json",
+    "manifestSha256": "4d25c856fdac60bd5e0ae9c0bf7ac9afeda235251c13c05f313e3c6da96e5f3e",
+    "sourceClosureSha256": "2f83e19ace175ceb538d0b7aba94926a41a868c3af4ad87d52d73a996b88fd31",
+    "artifacts": {
+      "nodeAddon": "dedfaf986ba5d0d645563c5813bf12867178453beea89a0fa0729697d95fb026",
+      "wasm": "111007da675e270f072044dff0e7e39e6d5013bca2aca71af91fd22e177fad8a",
+      "wasmGlue": "ea57d12a681ac63b7ccd6109c217afab539044bbd57488fdac0edf7d94ec9329",
+      "referenceBundle": "f0ea542197e247a966fc7d82425ff1fa7cf1484994db5e7260d94e5418b35682",
+      "nodeBundle": "6d76457aa6516c39dd17c99a252b779e26b695bd09a130132f93637bf2be3e7b",
+      "browserBundle": "37078690abe20b140bc8399b8e47a8e12357bef780673fb2f5e6159a22ac47b1"
+    }
+  }
+}

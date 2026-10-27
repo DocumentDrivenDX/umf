@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import tarfile
 from pathlib import Path
@@ -49,6 +50,83 @@ def test_sdist_extractor_rejects_links(tmp_path: Path) -> None:
 
     with pytest.raises(ValueError, match="unsafe archive member"):
         release_pair._extract_sdist(archive_path, tmp_path / "extracted")
+
+
+def _codegen_source_fixture(tmp_path: Path) -> tuple[Path, Path]:
+    repository = tmp_path / "repository"
+    project = repository / "python/umf_codegen"
+    source = tmp_path / "archive/umf_codegen-0.2.0"
+    inputs = {
+        ".gitignore": b"ignored\n",
+        "pyproject.toml": b"project = {}\n",
+        "README.md": b"readme\n",
+        "LICENSE.md": b"license\n",
+        "LICENSE-MIT": b"mit\n",
+        "LICENSE-APACHE": b"apache\n",
+        "hatch_build.py": b"hook\n",
+        "src/umf_codegen/__init__.py": b"package\n",
+        "src/umf_codegen/_resources/schema.json": b"{}\n",
+    }
+    for relative, payload in inputs.items():
+        current = repository / relative if relative == ".gitignore" else project / relative
+        current.parent.mkdir(parents=True, exist_ok=True)
+        current.write_bytes(payload)
+        (source / relative).parent.mkdir(parents=True, exist_ok=True)
+        (source / relative).write_bytes(payload)
+    (source / "PKG-INFO").write_bytes(b"generated metadata\n")
+    return repository, source
+
+
+def test_codegen_sdist_inputs_match_current_source_and_are_hashed(tmp_path: Path) -> None:
+    repository, source = _codegen_source_fixture(tmp_path)
+
+    hashes = release_pair._verify_codegen_sdist_source(source, repository)
+
+    assert len(hashes) == 9
+    assert hashes["src/umf_codegen/__init__.py"] == hashlib.sha256(
+        b"package\n"
+    ).hexdigest()
+
+
+def test_codegen_sdist_rejects_unexpected_nested_pkg_info(tmp_path: Path) -> None:
+    repository, source = _codegen_source_fixture(tmp_path)
+    (source / "src/umf_codegen/PKG-INFO").write_bytes(b"unbound metadata\n")
+
+    with pytest.raises(ValueError, match="inventory differs"):
+        release_pair._verify_codegen_sdist_source(source, repository)
+
+
+def test_codegen_sdist_source_inventory_rejects_package_symlink(
+    tmp_path: Path,
+) -> None:
+    repository, _source = _codegen_source_fixture(tmp_path)
+    package = repository / "python/umf_codegen/src/umf_codegen"
+    target = repository / "python/umf_codegen/README.md"
+    (package / "linked.py").symlink_to(target)
+
+    with pytest.raises(ValueError, match="source input is a symlink: src/umf_codegen/linked.py"):
+        release_pair._verify_codegen_sdist_source(
+            tmp_path / "archive/umf_codegen-0.2.0", repository
+        )
+
+
+@pytest.mark.parametrize("damage", ("drift", "missing", "unexpected"))
+def test_codegen_sdist_current_source_identity_rejects_drift(
+    tmp_path: Path, damage: str
+) -> None:
+    repository, source = _codegen_source_fixture(tmp_path)
+    if damage == "drift":
+        (source / "src/umf_codegen/__init__.py").write_bytes(b"stale package\n")
+        message = "differs from current input"
+    elif damage == "missing":
+        (source / "README.md").unlink()
+        message = "inventory differs"
+    else:
+        (source / "stale.txt").write_text("extra", encoding="utf-8")
+        message = "inventory differs"
+
+    with pytest.raises(ValueError, match=message):
+        release_pair._verify_codegen_sdist_source(source, repository)
 
 
 def test_coordinated_workflow_is_nonpublishing_and_builds_both_release_pairs() -> None:

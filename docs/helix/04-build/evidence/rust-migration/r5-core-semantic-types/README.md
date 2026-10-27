@@ -78,3 +78,81 @@ The packet was produced by `bun scripts/rust-migration/r5/freeze-core-semantic-t
 with Bun 1.4.3. This evidence remains scoped to the four operations listed
 above. Node/Python/browser/WASM and wire bindings, broader allocation-boundary
 qualification, and default route review remain open.
+
+## V4 default-route source replay
+
+The four core semantic-type metadata operations are now exported directly from
+the Rust-backed V4 core-model root in both Node and browser source entrypoints:
+`inspectCoreSemanticTypes`, `getCoreSemanticTypes`, `declareCoreSemanticTypes`,
+and `verifyCoreSemanticTypeDeclaration`. The exports are the raw model-engine
+closures, preserving the established signatures, optional `types` omission,
+undefined sentinel conversion, and wire error order without executing the
+TypeScript predecessor from the default route.
+
+The default and `./reference` routes each matched all 16 cases in
+`frozen-typescript.json`, including omitted versus null declarations, identity
+and request admission order, older-version refusal, forged/extra/malformed
+receipt refusal, unknown-qualifier recomputation, and unknown qualifier content
+preservation. Bun exercised the source entrypoints directly. Node exercised
+temporary Node-target bundles produced from the same source entrypoints by Bun.
+Real Chromium replayed the browser root from the private SDK bundle and current
+WASM artifact; all 16 outcomes matched, with no Node globals present.
+
+Commands:
+
+- `UMF_R5_DEFAULT_SPECIFIER=../../../src/index-node-v4.ts UMF_R5_REFERENCE_SPECIFIER=../../../src/index.ts bun scripts/rust-migration/r5/replay-core-semantic-types-default-node.mjs`
+- Build Node-target temporary bundles from `src/index-node-v4.ts` and `src/index.ts`, then run `node scripts/rust-migration/r5/replay-core-semantic-types-default-node.mjs` with `UMF_R5_DEFAULT_SPECIFIER` and `UMF_R5_REFERENCE_SPECIFIER` set to those bundle paths.
+- `UMF_R5_BROWSER_BUNDLE=.cache/sdk-distribution/security-and-or-current/umf-browser.js UMF_R5_WASM_PATH=.cache/sdk-distribution/security-and-or-current/umf_core_wasm_bg.wasm node scripts/rust-migration/r5/replay-core-semantic-types-default-browser.mjs`
+- `bun run typecheck`
+- `bun run check:unified-client-boundaries`
+
+The Chromium cohort used source closure
+`704123921b5a5b0902387eb41cad01f2da07306c9a2abc46207fd30a0e41d101`, Chromium
+153.0.8010.12, browser bundle SHA-256
+`62fd92e8d187beed8be71eadd7ac20b211dc38a8341d38835fbeae0a855aee93`, and WASM
+SHA-256 `cdc53f9cfb35856b1715b00d360be866978bc799c5e46034225dc96892114a14`.
+This is bounded source-route and private-bundle evidence only. It does not claim
+full installed archive acceptance, Python parity, CONTRACT-078 completion,
+allocation/budget boundary completion, or retirement of the TypeScript route.
+The R8 ledger records current source selection but treats this replay as a
+historical cohort: the three host outputs were not preserved as immutable
+receipts with build-time source pins, so later source edits cannot inherit its
+16-case qualification.
+
+## Fixed installed SDK cohort replay — 2026-10-27
+
+The frozen 16-case packet was also replayed through the four opt-in Core
+Semantic Types operations from the exact installed private SDK cohort
+`.cache/sdk-distribution/cohorts/b14148f1/umf-sdk.tgz`. The archive SHA-256 is
+`372f4c9d91202d904e1a1c736389563d0b023d9bf0fb9a6858e9ed902aa688ad`; its
+declared fixed source closure is
+`b14148f15a6a3a77864c42e305857a6abb6e0b700aa21a797ed21b0751f97f9c`, with zero
+transforms. Package metadata identifies `@umf/core` version `0.5.6`.
+
+Node `v26.12.1` and Bun `1.4.3` each ran the existing 16-case replay against the
+archive's `dist/umf-node.js` default root and `dist/umf.js` reference root. Both
+reported `status=pass`, `cases=16`, and preservation of unknown qualifier
+content. Chromium `153.0.8010.12` ran the existing browser replay using the
+archive's `dist/umf-browser.js` and `dist/umf_core_wasm_bg.wasm`; it reported
+`status=pass`, `cases=16`, no Node globals, and unknown qualifier preservation.
+The default route initialized and dispatched through the packaged Rust/WASM
+model engine.
+
+Replay commands, from repository root:
+
+- `UMF_R5_DEFAULT_SPECIFIER=/private/tmp/umf-r5-installed/package/dist/umf-node.js UMF_R5_REFERENCE_SPECIFIER=/private/tmp/umf-r5-installed/package/dist/umf.js node scripts/rust-migration/r5/replay-core-semantic-types-default-node.mjs`
+- The same command with `bun` in place of `node`.
+- `UMF_R5_BROWSER_BUNDLE=/private/tmp/umf-r5-installed/package/dist/umf-browser.js UMF_R5_WASM_PATH=/private/tmp/umf-r5-installed/package/dist/umf_core_wasm_bg.wasm node scripts/rust-migration/r5/replay-core-semantic-types-default-browser.mjs`
+
+Installed executable/resource hashes: `umf-node.js`
+`93e0be27d33e4e36b52af07838e1cbfadcf99655649e768cd1155927b5b89037`,
+`umf-browser.js`
+`42133fa03dc7034755dd8b95436c5a80f4fb3e3b78a0bc6593380675ace9de58`,
+`umf.js` `6832dbbc4232b8d17817f380a44fde89fde87d5ec13da61caa82a5ac95dc8680`,
+and `umf_core_wasm_bg.wasm`
+`8fee3e45812be0da201bcd70ceaf8c4c065138a09641809c804fe4eeb2fa8af8`.
+
+This receipt adds evidence for these four operations on this fixed private
+archive only. It does not claim broader CONTRACT-078 completion, Python parity,
+allocation/budget boundary completion, public release acceptance, or retirement
+of the TypeScript route.

@@ -1,0 +1,76 @@
+{
+  "format": "umf.r8.compact-dataset-verify-build/1",
+  "sourceClosure": {
+    "sha256": "ea9773e7053a64b0905c5b83ea6e770e2e89439bd162fc532c406cd5932a4681",
+    "files": {
+      "src/index.ts": "acfc8529b437fc6daa279a6586acb25644bae4c3c0b0fe15541d07eba20658da",
+      "src/index-node-v4.ts": "8048b9b12af9a398fd37ae7aebd24b7ed2092f109ace234f6df12bdca0e876c9",
+      "src/index-browser-v4.ts": "92fb4b1b488883fa4b71d066b90f36b25bf4c9965ee6574e89c894e724d105d4",
+      "src/index-v4-default.ts": "7d8602938d7be1a209c063dc806b51f287e60b961ff2f93410400a899efa1013",
+      "src/access/rust-dataset-values-compact-default.ts": "c4e13cb70ed023f1875fb3f0eb798ba9f3f6bb05927eaf6dfcde9d5ae5b8c9fa",
+      "src/model/dataset-values-compact.ts": "248fb12b699117e3867817980713782131ab3629c8eabe650a5ffbcb4acf2e16",
+      "src/model/internal/value-context.ts": "5511ae376a5208d2d90f44d162384104dec9e4274f72bc9d1030a150278cede7",
+      "src/model/internal/schema-work.ts": "e2b57e6066a0608fcbd3d854669a011512b5443aefb2f61620e880b680efd336",
+      "src/model/dataset-values.ts": "959d1a2b93e1337ff525e08ce67333adb963393f807e155380356946be8cd3c3",
+      "src/validation/schema.ts": "d16695d45d9611208074ae0b13dbd9ed8497e7651878f7ec71076aef697691a3",
+      "src/validation/internal-schema.ts": "df2f752489b4cf90c083c1411f88e2ff2952c8269f50810308cab65b0106d237",
+      "bindings/core/node/index.js": "1de555d59ef8793f1b2c493d00c2d4625151cf08ce488604a9cd1f1dd3bcaa18",
+      "bindings/core/node/src/dataset-values-compact.js": "15df4fb19f25a443e4c102bfa1a9fd606b853f0aa232f4c61ccbca7b2788b94b",
+      "bindings/core/node/src/wire.js": "5a59889a7484b69554b628aa45c58bad6f71bb4c47679ae63d72f2e8a8e0daea",
+      "bindings/core/wasm/index.js": "0643ce8f38004185cdf646e233ac2234d82872782e960b9917971afeef7f87f8",
+      "bindings/core/wasm/src/dataset-values-compact.js": "15df4fb19f25a443e4c102bfa1a9fd606b853f0aa232f4c61ccbca7b2788b94b",
+      "bindings/core/wasm/src/wire.js": "5a59889a7484b69554b628aa45c58bad6f71bb4c47679ae63d72f2e8a8e0daea",
+      "crates/umf-core/src/dataset_values.rs": "af4e4d0792f28e551803a2571edfa9c32844ab417e2664da7866f85c5f57941b",
+      "crates/umf-core-wire/src/lib.rs": "fb1d0a56acb5c38fa79d0a90b3183a07e47502c454e10b1aa0c010fc194803ab",
+      "crates/umf-tagged-wire/src/lib.rs": "3285026b35faeef611532d8705c980d27233afa5b2844720ef8268675e360a09",
+      "crates/umf-core/tests/r5_dataset_values_compact.rs": "74082ae324a9ab0650ea1a4432000c29757d624b139b01f92ea7f83fa7f73808",
+      "tests/core-dataset-compact.test.ts": "559b8693491f9c5e775999e8bf02fc9c6276035a5ad5af42b22740670e36ce53",
+      "tests/dataset-values-compact-visitation.test.ts": "61a89c16587bc60ff2eb61613958fecfc0246460fc4fc175455a05152313d650",
+      "tests/access-rust-dataset-values-compact-default.test.ts": "0f2f95c154b2f47522a5e1163aa0ef9f304ee9153a7a3fd7ff85f68d981ddedd",
+      "scripts/rust-migration/r5/freeze-dataset-values-compact-verify.ts": "956cd1ad68524d068f35c4b09940b2cdb06ec6a6d73a220e1108ad0473c97023",
+      "scripts/rust-migration/r8/compact-dataset-verify-v4-source-replay.mjs": "b8f646376d1f0c70b6588019ea554c79e153206eb18e8c1385b8e46d40c0ec60",
+      "docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md": "6ced1294f64710b4a70edcaec1d470b17834b5b1a63c10ed3df70e07be1bd9f1",
+      "docs/helix/02-design/contracts/CONTRACT-056-core-dataset-compact.md": "b5c2c7b818d981993f62a323c6c46fd00bf6869507dc826f4674631edc7a123c",
+      "docs/helix/04-build/evidence/rust-migration/r5-dataset-values-compact-default-cutover/README.md": "64380fa7d360bbc43c4dfe4d9f858d260555d117ede1e6776e02d7be43ed2464",
+      "docs/helix/04-build/evidence/rust-migration/r8-compact-dataset-verify-source/index.json": "4a5be7ec0f478328042048a51d906346c2be33afde46180483fe4e0e58c52190",
+      "docs/helix/04-build/evidence/rust-migration/r8-compact-dataset-verify-source/frozen-commerce-complete.json": "03f63d5f71a8c9d700a5db87474cf1637231de537a88eceba21f124209434316",
+      "docs/helix/04-build/evidence/rust-migration/r8-compact-dataset-verify-source/frozen-stale-source-input-canonical-skipped.json": "3f94804718c455198b124510aa6fec690dcdc32129b84aff63c41eb8b64b7b61",
+      "docs/helix/04-build/evidence/rust-migration/r8-compact-dataset-verify-source/frozen-stale-source-expected-input-copy-limit.json": "a2b03a0a3c476ed52e844910c1437a735a238d6cc0e9e59f4d59a32431e2185a",
+      "docs/helix/04-build/evidence/rust-migration/r8-compact-dataset-verify-source/frozen-near-limit-accepted.json": "fa8c8b01572fdf9ee5880845916215966fd64fef65c7b003fcff0e7b0482889b",
+      "docs/helix/04-build/evidence/rust-migration/r8-compact-dataset-verify-source/frozen-near-limit-first-refused.json": "98f0b7c0733d4edf1325112f8b501cf139f743e5b5b5a708b95069ed240e57e8"
+    }
+  },
+  "artifacts": {
+    "nodeAddon": {
+      "path": "umf_core_node.node",
+      "sha256": "98d7cff00f20e4067d146720300a1629d5d1a7034fc3f7f8aae3b9870a8470c7"
+    },
+    "wasm": {
+      "path": "umf_core_wasm_bg.wasm",
+      "sha256": "111007da675e270f072044dff0e7e39e6d5013bca2aca71af91fd22e177fad8a"
+    },
+    "wasmGlue": {
+      "path": "wasm/umf_core_wasm.js",
+      "sha256": "ea57d12a681ac63b7ccd6109c217afab539044bbd57488fdac0edf7d94ec9329"
+    },
+    "referenceBundle": {
+      "path": "umf.js",
+      "sha256": "d2fd19248a4abb309ec830d1173ce4bf0469cc9d136ae2de22f87f3cbb16d53a"
+    },
+    "nodeBundle": {
+      "path": "umf-node.js",
+      "sha256": "51f1c0d3cb978275780bd5ac846d08235591d06bfacc52e29d0615b9d1a3b2d4"
+    },
+    "browserBundle": {
+      "path": "umf-browser.js",
+      "sha256": "40608cc43b7f775e2ae5a97f774cd55496d30cdaf89b4836ea8fb111560f5f3a"
+    }
+  },
+  "toolchain": {
+    "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+    "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
+    "wasmBindgen": "wasm-bindgen 0.2.100",
+    "bun": "1.4.3"
+  },
+  "builtAt": "2026-10-27T09:55:47.988Z"
+}

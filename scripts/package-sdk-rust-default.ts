@@ -95,6 +95,8 @@ try{
   join(root,'scripts/rust-migration/r8/v4-default-facade.mjs'),join(root,'scripts/rust-migration/r8/v4-default-facade.test.js'),
   join(root,'scripts/rust-migration/r8/relationship-consumers-installed.mjs'),
   join(root,'scripts/rust-migration/r8/security-and-or-v4-source-replay.mjs'),
+  join(root,'scripts/rust-migration/r8/compact-dataset-verify-v4-source-replay.mjs'),
+  join(root,'scripts/rust-migration/r8/compact-dataset-verify-installed-diagnostic.mjs'),
   join(root,'scripts/rust-migration/r8/capture-default-route-cohort.mjs'),
   join(root,'scripts/rust-migration/r8/aggregate-default-route-cohorts.mjs'),
   join(root,'scripts/rust-migration/r8/csv-boolean-default-retirement-packets.ts'),
@@ -119,6 +121,9 @@ try{
   join(root,'docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md'),
   join(root,'docs/helix/04-build/evidence/rust-migration/r8-core-relationships-default-boundary/predecessor.json'),
   join(root,'docs/helix/04-build/evidence/rust-migration/r8-security-and-or-v4-source-replay/predecessor.json'),
+  join(root,'docs/helix/04-build/evidence/rust-migration/r8-compact-dataset-verify-source/index.json'),
+  ...['commerce-complete','stale-source-input-canonical-skipped','stale-source-expected-input-copy-limit','near-limit-accepted','near-limit-first-refused']
+    .map(name=>join(root,`docs/helix/04-build/evidence/rust-migration/r8-compact-dataset-verify-source/frozen-${name}.json`)),
   join(root,'docs/helix/04-build/evidence/rust-migration/r5-core-inspectors-default/frozen-predecessors.json'),
   join(root,'docs/helix/04-build/evidence/rust-migration/r8-core-inspectors-installed/current-5e7138383-20261026/core-inspectors-host-node-bun.json'),
   ...['inspectCoreScalarType','inspectCoreRecordMembers','inspectCoreReferenceLinks']

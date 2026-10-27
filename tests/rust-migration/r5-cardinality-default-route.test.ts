@@ -44,7 +44,7 @@ test('default cardinality routes match frozen TypeScript envelopes and retain co
  const input=structuredClone(frozen.document);const output=api.inspectCoreCardinality(input,frozen.identity);(output.source as any).id='edited';expect(input.id).toBe('author');
 },30000);
 
-test('generic host admission is not predecessor-compatible for path-bearing JSON refusals',()=>{
+test('generic host admission preserves its remaining distinct refusal behavior',()=>{
  const source=(mutate:(value:any)=>void)=>{const value=structuredClone(frozen.document) as any;mutate(value);return value;};
  const hidden=source(value=>Object.defineProperty(value,'hidden',{value:true,enumerable:false}));
  const cyclic=source(value=>{value.extensions={};value.extensions.self=value;});

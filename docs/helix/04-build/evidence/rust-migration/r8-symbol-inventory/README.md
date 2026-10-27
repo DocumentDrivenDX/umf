@@ -59,21 +59,29 @@ ddx:
 
 # R8 TypeScript public runtime export map
 
-**Current source recapture (2026-10-27, Record Values and Semantic Types V4
-selections):** The inventory records 3,375 route-specific declarations across
+**Current source recapture (2026-10-27, Compact Dataset verifier V4
+selection):** The inventory records 3,375 route-specific declarations across
 509 source files, 1,126 unique export names, and 1,120 declarations per Node,
 browser and `./reference` root. Each default route still has 922 executable
 declarations and 198 JSON resource aliases. The inventory SHA-256 is
-`e3f3b5ca19738b72f84253b8fb4d945f83cb9fb4025e96a9159ffcdb26fb98e8`.
+`5a901c4943624f6bb69759fa7ba4eadea0cb0a0519549898d168df69dc80cc6d`.
 The condition-aware ledger SHA-256 is
-`bb40c77aab4c8de956b79bf73a083e3b61449d73107e6597cbf47e8ea3fad3d2`.
+`acb59e438db95a0344dccf58b9fc7d6d3a04c75e522a15da1d2a2eefaac66344`.
 It records **922 open logical executable default-route gaps, zero retired**,
-81 accepted opt-in Rust mappings, 841 unmapped names, and 52 source-selected
-declarations in each V4 root. The four newly explicit exports are Record
-Values validation plus the Semantic Types registry and two value functions;
-only Record Values and the core semantic aggregate have accepted exact Rust
-operation mappings in this ledger. Exact declaration-shape controls reject
-source, kind and initializer drift for all four. The Security And/Or V4
+81 accepted opt-in Rust mappings, 841 unmapped names, and 57 reviewed
+source-selected Rust declarations in each V4 root. The newly direct Rust
+model-engine exports include `inspectCoreSemanticTypes`, `getCoreSemanticTypes`,
+`declareCoreSemanticTypes`, `verifyCoreSemanticTypeDeclaration`, and
+`verifyCoreDatasetValuesCompact`; the
+earlier Record Values validation, Semantic Types registry, and two value
+functions remain selected. The semantic-types quartet has exact Rust operation mappings and bounded
+16-case source-level Node, Bun, and Chromium replay. Compact Dataset verification
+has an exact `umf_core::dataset_values::verify_core_dataset_values_compact`
+mapping and five-case frozen-predecessor replay in Node, Bun, and Chromium. It is
+source-only evidence, not installed SDK qualification, complete Dataset semantics,
+or retirement. Exact
+declaration-shape controls reject source, kind and initializer drift for the
+eight Semantic Types selections and the compact verifier binding. The Security And/Or V4
 source replay was recaptured against these roots in Node, Bun and Chromium;
 the earlier source-pinned receipts remain preserved separately. This is a
 source census and bounded replay, not installed two-platform qualification
@@ -1205,3 +1213,54 @@ The new exact-shape annotation and its negative controls pass in the 53-case
 ledger suite. This recapture describes source selection only; the updated
 helper still needs a source-current installed archive replay before any
 retirement review.
+
+## Compact verifier build-bound source recapture — 2026-10-27
+
+The current inventory SHA-256 is
+`5a901c4943624f6bb69759fa7ba4eadea0cb0a0519549898d168df69dc80cc6d`.
+The regenerated ledger SHA-256 is
+`bec39f2da2ff8d2078285a5f5e13c476521ffe2ef60ad4e5967f2bdb0025d4b5`.
+It records 81 accepted opt-in Rust mappings, 841 unmapped executable names,
+57 source-selected declarations per Node/browser root, **922 open logical
+default-route gaps**, and zero retired declarations. The `verifyCoreDatasetValuesCompact`
+source-only claim now requires all three host receipts to name one immutable
+[build manifest](../r8-compact-dataset-verify-source/build-manifest.json) and
+match its source closure and six compiled artifact hashes. The ledger rejects
+stale source and artifact bindings; its focused suite includes negative
+controls. The four Core Semantic Types declarations remain source-selected
+but current-route unqualified because their earlier 16-case source replay did
+not capture an immutable three-host build cohort. Installed archive and full
+retirement qualification are separate gates.
+
+## Fixed-point V4 source recapture — 2026-10-27
+
+The canonical action-identity generator now leaves
+`src/extensions/actions/plan-identity.ts` at SHA-256
+`525e20080bdcc27588dbf46064a74f8e5c4ac1f44adf5db775068e089acabc8e`.
+The inventory SHA-256 is
+`1ee0ccbaaa27749d92a6f4820ccf3e962d3a027829b6284b0fe0ec72fcd9958c`;
+the regenerated [ledger](gap-ledger.json) SHA-256 is
+`553a4924258b04d04e4f561138cc4c509910a9f4c00d545b1e617590c104426a`.
+The ledger accepts the five-case Compact Dataset verifier receipts and the
+68-case Security And/Or receipts only when Node, Bun, and Chromium bind to the
+same immutable build manifest, SHA-256
+`4d25c856fdac60bd5e0ae9c0bf7ac9afeda235251c13c05f313e3c6da96e5f3e`,
+its expanded source closure, and its exact six compiled artifacts. The
+62-case ledger suite passes, including stale source, artifact, and manifest
+negative controls.
+
+The counts remain 81 names with accepted opt-in Rust operations, 841 without
+an accepted Rust mapping, **922 open logical default-route gaps**, and zero
+retirements. Source selection and bounded three-host evidence do not imply
+whole-route parity or release qualification. Separate 16-case Core Semantic
+Types source receipts now exercise public `UmfError` identity in all three
+hosts; the four ledger rows remain conservatively current-route unqualified
+until their own immutable receipt gate is added to this ledger.
+
+After the installed Security replay gained archive-payload verification, the
+ledger was deliberately regenerated. Its current SHA-256 is
+`4b09f83b44faa7c8c744f6520712f65832f3f1d5f8a1c3dd7576751e4df4a32b`.
+The only change from the preceding ledger is the SHA-256 of
+`scripts/rust-migration/r8/security-and-or-installed-replay.mjs` in the
+repository script census. All counts remain unchanged: 922 open logical
+default-route gaps and zero retirements.
