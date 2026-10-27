@@ -1,0 +1,331 @@
+{
+  "apiFiles": {
+    "artifacts-terminal.json": {
+      "bytes": 811,
+      "sha256": "66d12e2377696695519e3d8766e4839416f741e01427b52378500aa2190f2db8"
+    },
+    "job.log": {
+      "bytes": 141682,
+      "sha256": "78a0fc270e7fdd295d077839f919798fbc98371d3099a0e0d77a9d210d59c126"
+    },
+    "jobs-terminal.json": {
+      "bytes": 4105,
+      "sha256": "a6d07088d8af2c652baf75a742b511ae967dd8162172e5dcbda0cc41f61619f3"
+    },
+    "run-terminal.json": {
+      "bytes": 12368,
+      "sha256": "7658df250be9220a0c8c90e956d18fbf6e62c9b69b78dde9c09d9ccf23c95f8e"
+    }
+  },
+  "artifact": {
+    "bytes": 736627,
+    "entries": 51,
+    "expandedBytes": 4725061,
+    "filename": "artifact.zip",
+    "id": 12767745401,
+    "name": "umf-merged-source-generated-6c22af77b2f8a18431d34309fe192a4e0974c594-40574681205-1",
+    "sha256": "8447147e31793a86635bfb7bf4d75ea389808d7fe0bca262a8fe546cc8042560"
+  },
+  "commands": {
+    "allRawExitZero": true,
+    "count": 15,
+    "rows": [
+      {
+        "logBytes": 1056,
+        "logSha256": "adcc479cbbf3486bb16f5c84d4e4eeaeaaea7757b9e91f8c5ac3dab91572178d",
+        "name": "bun-install",
+        "rawExit": 0
+      },
+      {
+        "logBytes": 5892,
+        "logSha256": "2e2ab8ef0c7b1c7f7f5b7001f02dc967d60808110128643d0848bd7cbacd0435",
+        "name": "cargo-fetch",
+        "rawExit": 0
+      },
+      {
+        "logBytes": 0,
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "name": "pre-generation-placeholders",
+        "rawExit": 0
+      },
+      {
+        "logBytes": 0,
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "name": "toolchain-identity",
+        "rawExit": 0
+      },
+      {
+        "logBytes": 0,
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "name": "prepare-metamodel-stage",
+        "rawExit": 0
+      },
+      {
+        "logBytes": 28,
+        "logSha256": "a17ba752d0908a9338faa1226fd65b71b8f6520ba0c26c33c703abef0a6bc947",
+        "name": "metamodel-output-generation",
+        "rawExit": 0
+      },
+      {
+        "logBytes": 26,
+        "logSha256": "43e3788efea3f089bab832bb205ab8973317ac51128f3c3a0ff0548b1b63c6f9",
+        "name": "metamodel-output-stage-check",
+        "rawExit": 0
+      },
+      {
+        "logBytes": 0,
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "name": "metamodel-output-correspondence",
+        "rawExit": 0
+      },
+      {
+        "logBytes": 130,
+        "logSha256": "cdfec78cd381b0b011ab240602e4f18d127df3fb053c00991ccb0f5688724276",
+        "name": "check-adopted-metamodel-and-self",
+        "rawExit": 0
+      },
+      {
+        "logBytes": 0,
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "name": "action-plan-identity",
+        "rawExit": 0
+      },
+      {
+        "logBytes": 58,
+        "logSha256": "72a7fef4da20f96153504e4944b3ad0dc1d9a7e30ca2e38ac4fef6ba9590d043",
+        "name": "codegen-assets",
+        "rawExit": 0
+      },
+      {
+        "logBytes": 0,
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "name": "action-plan-identity-check",
+        "rawExit": 0
+      },
+      {
+        "logBytes": 45,
+        "logSha256": "7deb1623aeba7ae1a32e7c96ec280148fda27d92eb74fd293c490e905704ba87",
+        "name": "codegen-assets-check",
+        "rawExit": 0
+      },
+      {
+        "logBytes": 132,
+        "logSha256": "8d94dfd5e15079b2f38c8deef9fcf10dde8655ce59b3a82b648c46c0c31a0feb",
+        "name": "r3-inventory",
+        "rawExit": 0
+      },
+      {
+        "logBytes": 545,
+        "logSha256": "8f76e5b1931142e8d454b68495d61102d564c4ae9d3e4079ac5f29b1022e1c91",
+        "name": "r3-boundary-check",
+        "rawExit": 0
+      }
+    ]
+  },
+  "logs": {
+    "r3BoundaryCheckedSourceModules": 632,
+    "r3BoundaryStatus": "pass",
+    "r3InventoryLog": "Wrote docs/helix/04-build/evidence/rust-migration/r3/inventory.json: 623 source modules; 432 active scripts; 244 JS locked packages",
+    "receiptTotalBytes": 7912,
+    "totalBytes": 7912
+  },
+  "metamodelPhase": {
+    "committedOutputsMatch": true,
+    "companionInputCount": 4,
+    "companionInputsMatch": true,
+    "status": "DEPENDENT_GENERATION_READY"
+  },
+  "outputs": {
+    "allHashesMatchReceipt": true,
+    "count": 27,
+    "files": [
+      {
+        "bytes": 26687,
+        "path": "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json",
+        "sha256": "fa58fdf3c4725aa4a330a2d63141b337b9c20f6767557949d27787f54d24516c"
+      },
+      {
+        "bytes": 2810999,
+        "path": "docs/helix/04-build/evidence/rust-migration/r3/inventory.json",
+        "sha256": "f10b9f7f452d829320201365f55f1182722218d41393835ffdec6d451d917baf"
+      },
+      {
+        "bytes": 360,
+        "path": "python/umf_access/src/umf_access/generated_core.py",
+        "sha256": "5366ba6be1c2eb042b14f30723648686294e1f450d75a645e76806a4494593a1"
+      },
+      {
+        "bytes": 925422,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz",
+        "sha256": "3f48410cb6013c2321ecb6f142779123730bfa9f85bbaabab1b412d5984cdd47"
+      },
+      {
+        "bytes": 33447,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/manifest.json",
+        "sha256": "ad326f5c95d4c9dde9ec09d9413aac156e50a1e0b1934cc357b249fd560a6e95"
+      },
+      {
+        "bytes": 1090,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/notices/ajv/LICENSE",
+        "sha256": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3"
+      },
+      {
+        "bytes": 4405,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/notices/ajv/package.json",
+        "sha256": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989"
+      },
+      {
+        "bytes": 1074,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/notices/fast-deep-equal/LICENSE",
+        "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a"
+      },
+      {
+        "bytes": 1496,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/notices/fast-deep-equal/package.json",
+        "sha256": "a5c63940db0260739be9e2ac67f3aac268df4db5770420ee4e34e493152f97d2"
+      },
+      {
+        "bytes": 1813,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/notices/fast-uri/LICENSE",
+        "sha256": "b010b0dfdfdb23d7396e03b82cd4621fc9bb8f95d6b0aea70b9c24e12074c786"
+      },
+      {
+        "bytes": 1983,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/notices/fast-uri/package.json",
+        "sha256": "30cad05aad3d3596513706451dbfc7e0422f9c1d00f2903ecc34580327d54bc7"
+      },
+      {
+        "bytes": 1074,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/notices/json-schema-traverse/LICENSE",
+        "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a"
+      },
+      {
+        "bytes": 1004,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/notices/json-schema-traverse/package.json",
+        "sha256": "156fb24af02845c190701360d06dfda35ef04282e34a734289ea9535ad9819ae"
+      },
+      {
+        "bytes": 738,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/notices/yaml/LICENSE",
+        "sha256": "5bba27375d93e9119f76c1015f7672cf9ad5f70952296e0842fb2243d6376869"
+      },
+      {
+        "bytes": 3254,
+        "path": "python/umf_codegen/src/umf_codegen/_assets/notices/yaml/package.json",
+        "sha256": "1c6441703d8204a23ded0d37ddf57c3b69d821dc392f20852d1f605bb9b8861c"
+      },
+      {
+        "bytes": 170,
+        "path": "python/umf_codegen/src/umf_codegen/_release.py",
+        "sha256": "2ae57c276f24c6aa9e93402fb95a431369089aa42fb6eee851baf2ede612bfed"
+      },
+      {
+        "bytes": 45001,
+        "path": "spec/core/extension-package.schema.json",
+        "sha256": "4df3c8f92c5baa2c52f965d83b681ff306392bf9ba333bd39213a8f1065ac766"
+      },
+      {
+        "bytes": 45342,
+        "path": "spec/core/schema.json",
+        "sha256": "c6004664eb93dcef28ce6e0583f91225b618aa0fb42967a892242402557cf71d"
+      },
+      {
+        "bytes": 45463,
+        "path": "spec/core/semantic-type-reference.schema.json",
+        "sha256": "207abbad54ebf8c660a958e2deda072a5a3236b5b8df5af8a8656f90c3e46ba9"
+      },
+      {
+        "bytes": 190252,
+        "path": "spec/metamodel/generated/core-constraints.json",
+        "sha256": "e4e667c6a23ebcfe12a937730adfa60081475ad11d367b8986a9ea94429d5dcd"
+      },
+      {
+        "bytes": 14827,
+        "path": "spec/metamodel/generated/domain-policy.json",
+        "sha256": "7827703fe00b4eb955e9a1d1632fec4e7b9e8c52df0d67eb700dbd7ce9a6d436"
+      },
+      {
+        "bytes": 58660,
+        "path": "spec/metamodel/generated/manifest.json",
+        "sha256": "49d13a735d92c9db935fc9c7f5f804e0529c5bb374e4c98fe246e03d979353b6"
+      },
+      {
+        "bytes": 98734,
+        "path": "spec/metamodel/generated/python-shapes.json",
+        "sha256": "884fb5d09e1cd512e32b188144aa0f9ac55d396cc5a3b10341b3aeb06093fde7"
+      },
+      {
+        "bytes": 1265,
+        "path": "spec/metamodel/package.json",
+        "sha256": "5930c77eaa8308d76761cd93d5a58bd5b0a7b3f30b5bc56fdc7db6d961fb0b89"
+      },
+      {
+        "bytes": 355,
+        "path": "src/extensions/actions/plan-identity.ts",
+        "sha256": "e88f87c9c9c186f2c91e75012a27531538879a144b68136a931069209d17103f"
+      },
+      {
+        "bytes": 6714,
+        "path": "src/generated/core-model.ts",
+        "sha256": "55485912b78640ef970244ffd8d4cbd6f186e035efccd77259aadff6120b7106"
+      },
+      {
+        "bytes": 305070,
+        "path": "src/generated/core-validators.ts",
+        "sha256": "563602e0f21f6d6b0efd1ae069dbda28926e085585b4bf0430347b65ff2bd0ff"
+      }
+    ],
+    "totalBytes": 4626699
+  },
+  "profile": "umf.merged-generation-custody-report/1",
+  "qualificationClaim": false,
+  "run": {
+    "attempt": 1,
+    "createdAt": "2026-10-27T20:03:55Z",
+    "event": "push",
+    "htmlUrl": "https://github.com/DocumentDrivenDX/umf/actions/runs/40574681205",
+    "id": 40574681205,
+    "jobConclusion": "success",
+    "jobId": 122437806836,
+    "jobName": "generate",
+    "ref": "refs/heads/codex/migration-merged-generation",
+    "runNumber": 11,
+    "sourceCommit": "6c22af77b2f8a18431d34309fe192a4e0974c594",
+    "updatedAt": "2026-10-27T20:06:15Z",
+    "workflow": "Generate merged-source action, codegen and R3 artifacts",
+    "workflowId": 396700537
+  },
+  "separation": "Python action-runtime artifact qualification run 40574681041 was skipped. No Stage-A run was launched here; adopted Stage-A output from 40556187661 remains the companion input.",
+  "sourceInputs": {
+    "adoptedCompanion": {
+      "adoptionCommit": "97d15f9937163a3ab2a9e17eb08796a4734cbd68",
+      "artifactId": 12757082809,
+      "artifactSha256": "122767b97a6da87342321e133a033693fd83df759f939f1bc41c56928c89fc37",
+      "bytes": 1525352,
+      "ownerResultPath": "docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/stage-a-40556187661/owner-result.json",
+      "ownerResultSha256": "a4140025bf7d0c70e889f563f10e22a4e6d6f0a5f99ef5eaadc76549de6a6939",
+      "path": "src/generated/core-validators-accounted.ts",
+      "provenanceManifestPath": "docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/stage-a-40556187661/manifest.json",
+      "provenanceManifestSha256": "67570dddf2c1218381d55ce8e9e7c026e0087772790d6dd9f9f6115e60a8ec79",
+      "sha256": "5fea0581cf706c5a76deeda4f2f8ca129935de48933c21a206e33dcefb550d29",
+      "sourceOutputReviewPath": "docs/helix/04-build/evidence/schema-migration-design-review/main-reconciliation-001/stage-a-40556187661/sol-output-source-review.md",
+      "sourceOutputReviewSha256": "0f97c192a6e0fc7dfb4fbe3c05f25807053de7a7bc4b44261d9cb64abf8cab27",
+      "sourcePinsSha256": "2c3071baeb289c5bc41ce903dbb4597f14cb471e316259baac252887bdfc454c",
+      "stageARunId": "40556187661",
+      "stageASourceCommit": "a2cc9c2ff5510d0b6653d50102bd406e3b4556c6"
+    },
+    "bytes": 68909,
+    "count": 26,
+    "historicalGeneratedOutputsAreCurrentQualificationEvidence": false,
+    "historicalInventorySeed": {
+      "path": "docs/helix/04-build/evidence/rust-migration/r3/inventory.json",
+      "role": "Core 0.10.2 historical generation seed; exact bytes and SHA256 are retained in historical-placeholder-inputs.json"
+    },
+    "path": "source-inputs.json",
+    "receiptSha256": "f36b6e77ca06da5df82eb927f3ae871b7620875922097213ac734401e020e6dd",
+    "sha256": "f36b6e77ca06da5df82eb927f3ae871b7620875922097213ac734401e020e6dd",
+    "sourceCommit": "6c22af77b2f8a18431d34309fe192a4e0974c594",
+    "sourceRef": "refs/heads/codex/migration-merged-generation"
+  },
+  "status": "GENERATED_ARTIFACT_ONLY"
+}
