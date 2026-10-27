@@ -80,27 +80,45 @@ jobs:
           python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name validate-held-public-proof-packet -- \
             python - "$INPUT_PACKET" "$GITHUB_OUTPUT" <<'PY'
           import json, os, pathlib, re, sys
+          from tools.verify_core_public_producer import retained_policy_packet
           packet_path, output_path = map(pathlib.Path, sys.argv[1:])
           packet = json.loads(packet_path.read_text(encoding="utf-8"))
           if os.environ["REPOSITORY"] != "DocumentDrivenDX/umf" or os.environ["EVENT_NAME"] != "push" or os.environ["REF"] != "refs/heads/codex/core-python314-public-install-proof":
               raise SystemExit("Wrong repository, event, or exact public-proof branch")
+          if set(packet) != {"profile", "status", "producer", "publicRelease", "limits"}:
+              raise SystemExit("Public proof packet differs from the fixed closed top-level profile")
           if packet.get("profile") != "umf.core-0.10.3-public-install-proof-inputs/1" or packet.get("status") != "READY":
               raise SystemExit("Public proof is HELD until actual producer, release, and asset identities are reviewed")
           sha = lambda value: isinstance(value, str) and re.fullmatch(r"[0-9a-f]{40}", value) is not None
           digest = lambda value: isinstance(value, str) and re.fullmatch(r"[0-9a-f]{64}", value) is not None
           producer = packet.get("producer", {})
           release = packet.get("publicRelease", {})
-          if not sha(producer.get("sourceCommit")) or not sha(producer.get("sourceTree")):
-              raise SystemExit("Producer source commit/tree identities are held or malformed")
-          if type(producer.get("workflowRunId")) is not int or producer["workflowRunId"] <= 0 or type(producer.get("workflowRunAttempt")) is not int or producer["workflowRunAttempt"] <= 0:
-              raise SystemExit("Producer workflow run identity is held or malformed")
-          if producer.get("workflowPath") != ".github/workflows/python-action-runtime.yml" or producer.get("event") not in {"push", "workflow_dispatch"} or not isinstance(producer.get("headBranch"), str) or not producer["headBranch"]:
-              raise SystemExit("Producer workflow path, event, or head branch is held or malformed")
+          expected_producer = {
+              "sourceCommit": "34a337b2d398b5ae33954cc250f6237bc1661c21",
+              "sourceTree": "0379258db62e498a4b489d2b7f613e99e63c0a4b",
+              "workflowPath": ".github/workflows/python-action-runtime.yml",
+              "event": "workflow_dispatch",
+              "headBranch": "codex/core-python314-generation",
+              "workflowRunId": 40448360241,
+              "workflowRunAttempt": 1,
+              "retainedBuild": retained_policy_packet(),
+          }
+          if producer != expected_producer:
+              raise SystemExit("Producer identity and retained S34 policy differ from the fixed exact profile")
+          if set(release) != {"tag", "commit", "assets", "sourceCorrespondence", "metadata"}:
+              raise SystemExit("Public release packet differs from the fixed closed profile")
           if release.get("tag") != "python-v0.10.3" or not sha(release.get("commit")):
               raise SystemExit("Public release tag or merge commit identity is held or malformed")
           assets = release.get("assets", {})
           if set(assets) != {"linuxWheel", "macosWheel", "sdist"}:
               raise SystemExit("Public Core release asset roster must contain exactly two wheels and one sdist")
+          expected_assets = {
+              "linuxWheel": {"filename": "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl", "sizeBytes": 3612043, "sha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75", "nativeSha256": "c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57"},
+              "macosWheel": {"filename": "umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl", "sizeBytes": 3331547, "sha256": "dc2586793e1492d1f825bd9e12f27d5db9f9330ae2343d9e7773c7052f1f6ea6", "nativeSha256": "df3dca411dfe11b045e6cd858bc5e3999c314fbe946826ba3b98f1a7d6934256"},
+              "sdist": {"filename": "umf_core-0.10.3.tar.gz", "sizeBytes": 2826487, "sha256": "61b3e12a84f68f890fa34e2da14bbda47e101b7c6eadd5207680827e8daa694c"},
+          }
+          if assets != expected_assets:
+              raise SystemExit("Public archive identities differ from the fixed retained S34 producer bytes")
           for key, row in assets.items():
               if not isinstance(row, dict) or not isinstance(row.get("filename"), str) or row["filename"] == "HELD" or pathlib.PurePosixPath(row["filename"]).name != row["filename"] or type(row.get("sizeBytes")) is not int or row["sizeBytes"] <= 0 or not digest(row.get("sha256")):
                   raise SystemExit("Public asset identity is held or malformed: " + key)
@@ -111,6 +129,11 @@ jobs:
               raise SystemExit("Linux public wheel does not carry an exact abi3 manylinux x86_64 identity")
           if assets["macosWheel"]["filename"] != "umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl" or assets["sdist"]["filename"] != "umf_core-0.10.3.tar.gz":
               raise SystemExit("macOS wheel or common sdist filename differs from the closed release profile")
+          correspondence = release.get("sourceCorrespondence", {})
+          if set(correspondence) != {"profile", "archiveFileCount", "producerMapSha256", "releaseMapSha256", "testPath", "producerTestSha256", "releaseTestSha256"}:
+              raise SystemExit("Retained source correspondence differs from the exact closed profile")
+          if correspondence.get("profile") != "umf.core-retained-sdist-source-correspondence/1" or correspondence.get("archiveFileCount") != 531 or correspondence.get("producerMapSha256") != "3eed351abf9255eb36316089b3d3b2b6ee1985b117468fbbe4bedeceda1b24a6" or correspondence.get("testPath") != "tests/test_distribution_artifact.py" or correspondence.get("producerTestSha256") != "57c2bc4de660798ac1028b93f480ddb77934b2110fce03a72d968039667ae8c1" or not digest(correspondence.get("releaseMapSha256")) or not digest(correspondence.get("releaseTestSha256")):
+              raise SystemExit("Final M source map or test-file identity is held or malformed")
           metadata = release.get("metadata", {})
           metadata_roles = {"sha256Sums", "releasePins", "qualification", "sourceCi", "evidence", "notes", "inventory"}
           if set(metadata) != metadata_roles:
@@ -335,20 +358,28 @@ jobs:
           EXPECTED_WHEEL_SHA256: ${{ steps.release.outputs.wheel_sha256 }}
           EXPECTED_NATIVE_SHA256: ${{ steps.release.outputs.wheel_native_sha256 }}
           COMMON_SDIST_SHA256: ${{ steps.release.outputs.sdist_sha256 }}
+          SOURCE_CORRESPONDENCE_SHA256: ${{ steps.release.outputs.source_correspondence_sha256 }}
           PROBE_OUTCOME: ${{ steps.public_probes.outcome }}
           POSTTEST_OUTCOME: ${{ steps.public-wheel-post-test-verifier.outcome }}
         run: |
           python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name finalize-public-cell-receipt -- \
-            python - "$RUNNER_TEMP/core-0.10.3-public-cell.json" "$RUNNER_TEMP/core-0.10.3-public-installed.json" "$RUNNER_TEMP/core-0.10.3-public-posttest.json" "$RUNNER_TEMP/core-0.10.3-public-probes.json" "$RUNNER_TEMP/core-0.10.3-public-tests.xml" <<'PY'
+            python - "$RUNNER_TEMP/core-0.10.3-public-cell.json" "$RUNNER_TEMP/core-0.10.3-public-installed.json" "$RUNNER_TEMP/core-0.10.3-public-posttest.json" "$RUNNER_TEMP/core-0.10.3-public-probes.json" "$RUNNER_TEMP/core-0.10.3-public-tests.xml" "$RUNNER_TEMP/core-0.10.3-public-release.json" <<'PY'
           import hashlib, json, os, pathlib, sys, xml.etree.ElementTree as ET
-          receipt_path, installed_path, posttest_path, probes_path, junit_path = map(pathlib.Path, sys.argv[1:])
+          receipt_path, installed_path, posttest_path, probes_path, junit_path, release_path = map(pathlib.Path, sys.argv[1:])
           for path in (receipt_path, installed_path, posttest_path, probes_path):
               if path.exists() and (path.is_symlink() or not path.is_file() or path.stat().st_size > 16777216):
                   raise SystemExit("Public cell JSON evidence is not a bounded regular file")
+          if release_path.exists() and (release_path.is_symlink() or not release_path.is_file() or release_path.stat().st_size > 16777216):
+              raise SystemExit("Public release identity evidence is not a bounded regular file")
           receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
           installed = json.loads(installed_path.read_text(encoding="utf-8")) if installed_path.is_file() else None
           posttest = json.loads(posttest_path.read_text(encoding="utf-8")) if posttest_path.is_file() else None
           probes = json.loads(probes_path.read_text(encoding="utf-8")) if probes_path.is_file() else None
+          release_identity = json.loads(release_path.read_text(encoding="utf-8")) if release_path.is_file() else None
+          source_correspondence = release_identity.get("sourceCorrespondence") if isinstance(release_identity, dict) else None
+          source_correspondence_sha256 = hashlib.sha256(json.dumps(source_correspondence, sort_keys=True, separators=(",", ":")).encode("ascii")).hexdigest() if isinstance(source_correspondence, dict) else None
+          expected_coverage = {"qualifiedProducerCohorts": ["linux-x86_64", "macos-arm64"], "qualifiedSelectedCells": ["linux-x86_64-py11", "linux-x86_64-py14", "macos-arm64-py11"], "cancelledSelectedCell": "macos-arm64-py14", "macosPython314": "unqualified"}
+          source_correspondence_valid = (release_identity is not None and release_identity.get("status") == "passed" and release_identity.get("producerCoverage") == expected_coverage and isinstance(source_correspondence, dict) and source_correspondence.get("profile") == "umf.core-retained-sdist-source-correspondence/1" and source_correspondence_sha256 == os.environ.get("SOURCE_CORRESPONDENCE_SHA256"))
           counts = None
           if junit_path.is_file():
               if junit_path.is_symlink() or junit_path.stat().st_size > 16777216:
@@ -359,10 +390,10 @@ jobs:
           packet_path = pathlib.Path("qualification-inputs/core-0.10.3-public-install-proof.json")
           if packet_path.is_symlink() or packet_path.stat().st_size > 1048576:
               raise SystemExit("Public proof packet is not a bounded regular file")
-          receipt.update({"sourceH": os.environ["SOURCE_H"], "producerSourceCommit": os.environ.get("PRODUCER_COMMIT"), "producerSourceTree": os.environ.get("PRODUCER_TREE"), "releaseCommit": os.environ.get("RELEASE_COMMIT"), "proofRunId": os.environ["PROOF_RUN_ID"], "proofRunAttempt": os.environ["PROOF_RUN_ATTEMPT"], "proofWorkflow": os.environ["PROOF_WORKFLOW"], "packetSha256": hashlib.sha256(packet_path.read_bytes()).hexdigest(), "cohort": os.environ["COHORT"], "platform": os.environ["PLATFORM"], "requestedPython": os.environ["PYTHON_VERSION"], "testOutcome": os.environ.get("TEST_OUTCOME", "not_run"), "probeOutcome": os.environ.get("PROBE_OUTCOME", "not_run"), "posttestOutcome": os.environ.get("POSTTEST_OUTCOME", "not_run"), "testCounts": counts, "installedPayload": installed, "postTestPayload": posttest, "runtimeProbes": probes, "expectedWheelSha256": os.environ.get("EXPECTED_WHEEL_SHA256"), "expectedNativeSha256": os.environ.get("EXPECTED_NATIVE_SHA256"), "commonSdistSha256": os.environ.get("COMMON_SDIST_SHA256")})
+          receipt.update({"sourceH": os.environ["SOURCE_H"], "producerSourceCommit": os.environ.get("PRODUCER_COMMIT"), "producerSourceTree": os.environ.get("PRODUCER_TREE"), "releaseCommit": os.environ.get("RELEASE_COMMIT"), "proofRunId": os.environ["PROOF_RUN_ID"], "proofRunAttempt": os.environ["PROOF_RUN_ATTEMPT"], "proofWorkflow": os.environ["PROOF_WORKFLOW"], "packetSha256": hashlib.sha256(packet_path.read_bytes()).hexdigest(), "cohort": os.environ["COHORT"], "platform": os.environ["PLATFORM"], "requestedPython": os.environ["PYTHON_VERSION"], "testOutcome": os.environ.get("TEST_OUTCOME", "not_run"), "probeOutcome": os.environ.get("PROBE_OUTCOME", "not_run"), "posttestOutcome": os.environ.get("POSTTEST_OUTCOME", "not_run"), "testCounts": counts, "installedPayload": installed, "postTestPayload": posttest, "runtimeProbes": probes, "expectedWheelSha256": os.environ.get("EXPECTED_WHEEL_SHA256"), "expectedNativeSha256": os.environ.get("EXPECTED_NATIVE_SHA256"), "commonSdistSha256": os.environ.get("COMMON_SDIST_SHA256"), "producerCoverage": release_identity.get("producerCoverage") if isinstance(release_identity, dict) else None, "sourceCorrespondence": source_correspondence, "sourceCorrespondenceSha256": source_correspondence_sha256})
           expected_probes = probes is not None and probes.get("python") == os.environ["PYTHON_VERSION"] and probes.get("machine", "").lower() == os.environ["EXPECTED_MACHINE"] and probes.get("umfVersion") == "0.10.3" and probes.get("semanticCoreVersion") == "0.10.0" and probes.get("pydanticVersion") == "2.14.1" and probes.get("pydanticCoreVersion") == "2.50.1" and probes.get("documentRoundTrips") == {"json": True, "yaml": True} and (os.environ["EXPECTED_PYTHON_MINOR"] != "14" or probes.get("profile314Probes") == {"strictEndAnchor": True, "emptyInputNonBoundary": True, "unicode16Word": True, "futureProfileRefused": True})
           payload_parity = installed is not None and posttest is not None and installed.get("status") == "passed" and posttest.get("status") == "passed" and installed.get("wheel_sha256") == os.environ.get("EXPECTED_WHEEL_SHA256") and posttest.get("wheel_sha256") == installed.get("wheel_sha256") and installed.get("native_sha256") == os.environ.get("EXPECTED_NATIVE_SHA256") and posttest.get("native_sha256") == installed.get("native_sha256") and posttest.get("package_file_count") == installed.get("package_file_count")
-          passed = payload_parity and expected_probes and bool(os.environ.get("COMMON_SDIST_SHA256")) and counts is not None and counts["tests"] == 254 and counts["errors"] == 0 and counts["failures"] == 0 and counts["skipped"] == 0 and os.environ.get("TEST_OUTCOME") == "success" and os.environ.get("PROBE_OUTCOME") == "success" and os.environ.get("POSTTEST_OUTCOME") == "success"
+          passed = payload_parity and expected_probes and source_correspondence_valid and bool(os.environ.get("COMMON_SDIST_SHA256")) and counts is not None and counts["tests"] == 254 and counts["errors"] == 0 and counts["failures"] == 0 and counts["skipped"] == 0 and os.environ.get("TEST_OUTCOME") == "success" and os.environ.get("PROBE_OUTCOME") == "success" and os.environ.get("POSTTEST_OUTCOME") == "success"
           receipt["status"] = "passed" if passed else "failed_or_incomplete"
           receipt_path.write_text(json.dumps(receipt, sort_keys=True, indent=2) + "\n", encoding="utf-8")
           if not passed:

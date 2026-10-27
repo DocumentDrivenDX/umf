@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {describe,test,expect} from 'bun:test';
-import {referenceHandlerBuild,runReferenceHandler,type ReferenceHandlerProgram} from '../../scripts/actions-reference/sandbox';
+import {referenceHandlerBuild,runReferenceHandler,type ReferenceHandlerObservation,type ReferenceHandlerProgram} from '../../scripts/actions-reference/sandbox';
 const program=(source:string):ReferenceHandlerProgram=>({id:'qualification',version:'1',build:referenceHandlerBuild(source),source});
 describe('actual isolated handler foundation',()=>{
  test('copied authenticated ordered gateway calls and isolated runtime',async()=>{
@@ -32,8 +32,33 @@ describe('actual isolated handler foundation',()=>{
   await expect(runReferenceHandler(program("process.stderr.write('x'.repeat(70000));return {};"),{},()=>{})).rejects.toMatchObject({code:'LIMIT'});
  },15000);
  test('hostile numeric protocol payloads normalize to FRAME_ACCESS before dispatch',async()=>{
-  let calls=0;await expect(runReferenceHandler(program("await gateway.exists(9007199254740992);return {};"),{},()=>{calls++;return true;})).rejects.toMatchObject({code:'FRAME_ACCESS'});expect(calls).toBe(0);
-  await expect(runReferenceHandler(program('return {x:9007199254740992};'),{},()=>{})).rejects.toMatchObject({code:'FRAME_ACCESS'});
+  let calls=0,totalDiagnosticBytes=0;
+  const observe=(caseLabel:'unsafe-gateway-argument'|'unsafe-output')=>{
+   let emitted=false;
+   return (observation:ReferenceHandlerObservation)=>{
+    if(emitted||(observation.stage!=='cleanup-diagnostic'&&observation.stage!=='finished'))return;
+    emitted=true;
+    const unavailable=JSON.stringify({case:caseLabel,stage:'unavailable',reason:'diagnostic-unavailable'});
+    try{
+     let record:string;
+     if(observation.stage==='cleanup-diagnostic'&&['initial-timeout','initial-command-failed','initial-malformed','initial-error','settlement-timeout','settlement-command-failed','settlement-malformed','settlement-error'].includes(observation.reason)){
+      const state=(value:typeof observation.initialState)=>value===null?null:{ExitCode:value.ExitCode,OOMKilled:value.OOMKilled,Running:value.Running};
+      record=JSON.stringify({case:caseLabel,stage:'cleanup-diagnostic',reason:observation.reason,cleanupConfirmed:observation.cleanupConfirmed,initialState:state(observation.initialState),finalState:state(observation.finalState),elapsedMs:observation.elapsedMs});
+     }else if(observation.stage==='finished'){
+      const state=(value:typeof observation.initialState)=>value===null?null:{ExitCode:value.ExitCode,OOMKilled:value.OOMKilled,Running:value.Running};
+      record=JSON.stringify({case:caseLabel,stage:'finished',cleanupConfirmed:observation.cleanupConfirmed,initialState:state(observation.initialState),exitCode:observation.exitCode,oomKilled:observation.oomKilled,attachExitCode:observation.attachExitCode,attachExitedBeforeInspect:observation.attachExitedBeforeInspect});
+     }else record=unavailable;
+     let bytes=new TextEncoder().encode(record+'\n').byteLength;
+     if(bytes>2048||totalDiagnosticBytes+bytes>4096){record=unavailable;bytes=new TextEncoder().encode(record+'\n').byteLength;}
+     if(bytes<=2048&&totalDiagnosticBytes+bytes<=4096){totalDiagnosticBytes+=bytes;console.log(record);}
+    }catch{
+     const bytes=new TextEncoder().encode(unavailable+'\n').byteLength;
+     if(totalDiagnosticBytes+bytes<=4096){totalDiagnosticBytes+=bytes;try{console.log(unavailable);}catch{}}
+    }
+   };
+  };
+  await expect(runReferenceHandler(program("await gateway.exists(9007199254740992);return {};"),{},()=>{calls++;return true;},undefined,observe('unsafe-gateway-argument'))).rejects.toMatchObject({code:'FRAME_ACCESS'});expect(calls).toBe(0);
+  await expect(runReferenceHandler(program('return {x:9007199254740992};'),{},()=>{},undefined,observe('unsafe-output'))).rejects.toMatchObject({code:'FRAME_ACCESS'});
  },15000);
  test('absolute deadline refuses success even when synchronous dispatch delays timers',async()=>{
   let calls=0;await expect(runReferenceHandler(program("await gateway.exists('frame');return {accepted:true};"),{},()=>{calls++;const until=performance.now()+3100;while(performance.now()<until){}return true;},3000)).rejects.toMatchObject({code:'LIMIT'});expect(calls).toBe(1);

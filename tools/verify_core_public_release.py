@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import gzip
 import hashlib
+import importlib.util
 import io
 import json
 import os
@@ -23,6 +24,21 @@ SOURCE_FILE_LIMIT = 134_217_728
 SOURCE_TOTAL_LIMIT = 536_870_912
 SOURCE_MEMBER_LIMIT = 100_000
 PKG_INFO_LIMIT = 1_048_576
+RETAINED_SOURCE_PROFILE = "umf.core-retained-sdist-source-correspondence/1"
+RETAINED_SOURCE_MAP_SHA256 = "3eed351abf9255eb36316089b3d3b2b6ee1985b117468fbbe4bedeceda1b24a6"
+RETAINED_TEST_PATH = "tests/test_distribution_artifact.py"
+RETAINED_TEST_OLD_SHA256 = "57c2bc4de660798ac1028b93f480ddb77934b2110fce03a72d968039667ae8c1"
+RETAINED_SDIST_HELPER_SHA256 = "81ce3ed420fce370ae9440d2994413d11e3b3838aa0e3eb9c32df8594f2d6b7e"
+RETAINED_ARCHIVES = {
+    "linuxWheel": {"filename": "umf_core-0.10.3-cp311-abi3-manylinux_2_34_x86_64.whl", "sizeBytes": 3612043, "sha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75", "nativeSha256": "c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57"},
+    "macosWheel": {"filename": "umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl", "sizeBytes": 3331547, "sha256": "dc2586793e1492d1f825bd9e12f27d5db9f9330ae2343d9e7773c7052f1f6ea6", "nativeSha256": "df3dca411dfe11b045e6cd858bc5e3999c314fbe946826ba3b98f1a7d6934256"},
+    "sdist": {"filename": "umf_core-0.10.3.tar.gz", "sizeBytes": 2826487, "sha256": "61b3e12a84f68f890fa34e2da14bbda47e101b7c6eadd5207680827e8daa694c"},
+}
+RETAINED_CELLS = (
+    ("umf-core-0.10.3-installed-linux-x86_64-py11", "linux-x86_64", "11", "3.11.17"),
+    ("umf-core-0.10.3-installed-linux-x86_64-py14", "linux-x86_64", "14", "3.14.8"),
+    ("umf-core-0.10.3-installed-macos-arm64-py11", "macos-arm64", "11", "3.11.9"),
+)
 
 
 def sha256(payload: bytes) -> str:
@@ -52,12 +68,13 @@ def verify_checkout(path: Path, commit: str, tree: str) -> None:
         raise ValueError(f"Checkout does not identify the expected source tree: {path}")
 
 
-def source_metadata(payload: bytes) -> str:
+def source_archive_data(payload: bytes) -> tuple[str, dict[str, str], bytes]:
     roots: set[str] = set()
     seen: set[str] = set()
     total = 0
     count = 0
     metadata: bytes | None = None
+    files: dict[str, str] = {}
     with gzip.GzipFile(fileobj=io.BytesIO(payload), mode="rb") as expanded:
         with tarfile.open(fileobj=expanded, mode="r|", bufsize=65536) as archive:
             for member in archive:
@@ -87,18 +104,221 @@ def source_metadata(payload: bytes) -> str:
                     total += member.size
                     if total > SOURCE_TOTAL_LIMIT:
                         raise ValueError("Public source archive files exceed the existing 512 MiB aggregate bound")
-                    if member.name.endswith("/PKG-INFO"):
-                        if metadata is not None or member.size > PKG_INFO_LIMIT:
+                    if len(member_path.parts) < 2:
+                        raise ValueError("Public source archive has a regular file outside its project root")
+                    relative = PurePosixPath(*member_path.parts[1:]).as_posix()
+                    if relative in files or (relative == "PKG-INFO" and metadata is not None):
+                        raise ValueError("Public source archive repeats a regular file path")
+                    if relative == "PKG-INFO" and member.size > PKG_INFO_LIMIT:
+                        raise ValueError("Public source archive PKG-INFO exceeds one MiB")
+                    stream = archive.extractfile(member)
+                    if stream is None:
+                        raise ValueError("Public source archive member is unreadable")
+                    member_hash = hashlib.sha256()
+                    member_bytes = bytearray() if relative == "PKG-INFO" else None
+                    actual_size = 0
+                    while block := stream.read(65536):
+                        actual_size += len(block)
+                        if actual_size > member.size or actual_size > SOURCE_FILE_LIMIT:
+                            raise ValueError("Public source archive member exceeds its declared bound")
+                        member_hash.update(block)
+                        if member_bytes is not None:
+                            if actual_size > PKG_INFO_LIMIT:
+                                raise ValueError("Public source archive PKG-INFO exceeds one MiB")
+                            member_bytes.extend(block)
+                    if actual_size != member.size:
+                        raise ValueError("Public source archive member size differs from its stream")
+                    files[relative] = member_hash.hexdigest()
+                    if relative == "PKG-INFO":
+                        if actual_size > PKG_INFO_LIMIT:
                             raise ValueError("Public source archive must contain one bounded PKG-INFO")
-                        stream = archive.extractfile(member)
-                        if stream is None:
-                            raise ValueError("Public source archive PKG-INFO is unreadable")
-                        metadata = stream.read(PKG_INFO_LIMIT + 1)
-                        if len(metadata) != member.size or len(metadata) > PKG_INFO_LIMIT:
-                            raise ValueError("Public source archive PKG-INFO exceeds one MiB")
-    if len(roots) != 1 or metadata is None:
+                        metadata = bytes(member_bytes)
+    if roots != {"umf_core-0.10.3"} or metadata is None or len(files) != 531:
         raise ValueError("Public source archive must have one project root and exactly one PKG-INFO")
-    return metadata.decode("utf-8")
+    return metadata.decode("utf-8"), files, metadata
+
+
+def _canonical_source_map(files: dict[str, str]) -> dict[str, object]:
+    if any(
+        not isinstance(path, str)
+        or not path
+        or "\\" in path
+        or PurePosixPath(path).is_absolute()
+        or any(part in {"", ".", ".."} for part in PurePosixPath(path).parts)
+        or PurePosixPath(path).as_posix() != path
+        or not isinstance(file_hash, str)
+        or re.fullmatch(r"[0-9a-f]{64}", file_hash) is None
+        for path, file_hash in files.items()
+    ):
+        raise ValueError("Retained source map has a noncanonical path or file digest")
+    encoded = json.dumps(files, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode("ascii")
+    return {"schema": "umf.python-sdist-build-inputs/1", "file_count": len(files), "sha256": sha256(encoded), "files": dict(sorted(files.items()))}
+
+
+def _single_test_source_delta(producer_files: dict[str, str], release_files: dict[str, str]) -> set[str]:
+    if set(producer_files) != set(release_files):
+        raise ValueError("Producer and release source projections do not have exact identical path sets")
+    changed = {path for path in producer_files if producer_files[path] != release_files[path]}
+    if changed != {RETAINED_TEST_PATH}:
+        raise ValueError("Final release source projection differs outside the one reviewed test-only path")
+    return changed
+
+
+def _retained_source_projections(producer_checkout: Path, release_checkout: Path, pkg_info: bytes) -> tuple[dict[str, str], dict[str, str]]:
+    producer_helper = producer_checkout / "tools/_python_sdist.py"
+    release_helper = release_checkout / "tools/_python_sdist.py"
+    helper_bytes = []
+    for helper in (producer_helper, release_helper):
+        if helper.is_symlink() or not helper.is_file() or helper.stat().st_size > METADATA_LIMIT:
+            raise ValueError("Canonical sdist source-inventory helper is missing or outside its fixed read bound")
+        content = helper.read_bytes()
+        if sha256(content) != RETAINED_SDIST_HELPER_SHA256:
+            raise ValueError("Canonical sdist source-inventory helper differs from its fixed reviewed digest")
+        helper_bytes.append(content)
+    if helper_bytes[0] != helper_bytes[1]:
+        raise ValueError("Canonical sdist source-inventory helper differs between producer P and release M")
+    spec = importlib.util.spec_from_file_location("umf_retained_sdist_inventory", producer_helper)
+    if spec is None or spec.loader is None:
+        raise ValueError("Canonical sdist source-inventory helper cannot be loaded")
+    helper_module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(helper_module)
+    producer_files = helper_module._source_inventory(producer_checkout)
+    release_files = helper_module._source_inventory(release_checkout)
+    pkg_digest = sha256(pkg_info)
+    if "PKG-INFO" in producer_files or "PKG-INFO" in release_files:
+        raise ValueError("Canonical source inventory unexpectedly includes PKG-INFO")
+    producer_files["PKG-INFO"] = pkg_digest
+    release_files["PKG-INFO"] = pkg_digest
+    return producer_files, release_files
+
+
+def validate_source_map_delta(
+    producer_manifest: object,
+    archive_files: dict[str, str],
+    producer_projection: dict[str, str],
+    release_projection: dict[str, str],
+    correspondence: object,
+) -> dict[str, object]:
+    """Bind the retained archive and permit exactly the reviewed test-only M delta."""
+    required = {
+        "profile",
+        "archiveFileCount",
+        "producerMapSha256",
+        "releaseMapSha256",
+        "testPath",
+        "producerTestSha256",
+        "releaseTestSha256",
+    }
+
+
+    if not isinstance(correspondence, dict) or set(correspondence) != required:
+        raise ValueError("Retained source correspondence has an unexpected closed shape")
+    if (
+        correspondence.get("profile") != RETAINED_SOURCE_PROFILE
+        or correspondence.get("archiveFileCount") != 531
+        or correspondence.get("producerMapSha256") != RETAINED_SOURCE_MAP_SHA256
+        or correspondence.get("testPath") != RETAINED_TEST_PATH
+        or correspondence.get("producerTestSha256") != RETAINED_TEST_OLD_SHA256
+    ):
+        raise ValueError("Retained source correspondence policy differs from the reviewed S34 delta")
+    release_test_hash = correspondence.get("releaseTestSha256")
+    release_map_hash = correspondence.get("releaseMapSha256")
+    if not isinstance(release_test_hash, str) or re.fullmatch(r"[0-9a-f]{64}", release_test_hash) is None or not isinstance(release_map_hash, str) or re.fullmatch(r"[0-9a-f]{64}", release_map_hash) is None:
+        raise ValueError("Final release source correspondence is held or malformed")
+
+    if not isinstance(producer_manifest, dict) or set(producer_manifest) != {"schema", "file_count", "sha256", "files"}:
+        raise ValueError("Retained producer sdist manifest has an unexpected shape")
+    producer_files = producer_manifest.get("files")
+    if (
+        producer_manifest.get("schema") != "umf.python-sdist-build-inputs/1"
+        or producer_manifest.get("file_count") != 531
+        or producer_manifest.get("sha256") != RETAINED_SOURCE_MAP_SHA256
+        or not isinstance(producer_files, dict)
+        or len(producer_files) != 531
+        or any(not isinstance(path, str) or not isinstance(file_hash, str) or re.fullmatch(r"[0-9a-f]{64}", file_hash) is None for path, file_hash in producer_files.items())
+    ):
+        raise ValueError("Retained producer source map is incomplete or malformed")
+    if producer_files.get(RETAINED_TEST_PATH) != RETAINED_TEST_OLD_SHA256:
+        raise ValueError("Retained producer source map does not contain the exact original test source")
+
+    archive_map = _canonical_source_map(archive_files)
+    producer_map = _canonical_source_map(producer_files)
+    if archive_map != producer_manifest or producer_map != producer_manifest:
+        raise ValueError("Retained archive bytes differ from the complete producer source map")
+    if producer_projection != producer_files:
+        raise ValueError("Producer or release source projection has different complete membership")
+    if producer_projection.get(RETAINED_TEST_PATH) != RETAINED_TEST_OLD_SHA256:
+        raise ValueError("Producer checkout test source differs from its retained archive identity")
+    if release_projection.get(RETAINED_TEST_PATH) != release_test_hash:
+        raise ValueError("Final release checkout test source differs from its packet identity")
+    _single_test_source_delta(producer_projection, release_projection)
+    if producer_projection != archive_files:
+        raise ValueError("Retained producer checkout is not byte-identical to the complete archive")
+    release_map = _canonical_source_map(release_projection)
+    if release_map["sha256"] != release_map_hash or release_map["file_count"] != 531:
+        raise ValueError("Final release source projection map digest differs from its reviewed packet")
+    return {
+        "profile": RETAINED_SOURCE_PROFILE,
+        "archiveFileCount": 531,
+        "producerMapSha256": RETAINED_SOURCE_MAP_SHA256,
+        "releaseMapSha256": release_map_hash,
+        "testPath": RETAINED_TEST_PATH,
+        "producerTestSha256": RETAINED_TEST_OLD_SHA256,
+        "releaseTestSha256": release_test_hash,
+    }
+
+
+def validate_retained_cells(cells: object, selected: object) -> None:
+    if (
+        not isinstance(cells, list)
+        or len(cells) != len(RETAINED_CELLS)
+        or not isinstance(selected, dict)
+        or set(selected) != {"linux-x86_64", "macos-arm64"}
+    ):
+        raise ValueError("Retained producer receipt does not contain exactly the three fixed installed cells")
+    if any(not isinstance(row, dict) for row in cells):
+        raise ValueError("Retained producer cell summary has an invalid shape")
+    by_artifact = {row.get("artifact"): row for row in cells}
+    if len(by_artifact) != len(cells) or set(by_artifact) != {identity[0] for identity in RETAINED_CELLS}:
+        raise ValueError("Retained producer cell identities differ from the exact three-cell subset")
+    for artifact, cohort, minor, python_version in RETAINED_CELLS:
+        row = by_artifact[artifact]
+        if set(row) != {
+            "artifact", "sha256", "cohort", "pythonMinor", "selectedWheelSha256",
+            "nativeSha256", "commonSdistSha256", "testCounts", "runtimeProbes",
+        }:
+            raise ValueError("Retained producer cell summary has an unexpected closed shape")
+        platform = selected.get(cohort)
+        probes = row.get("runtimeProbes")
+        if (
+            not isinstance(platform, dict)
+            or set(platform) != {"wheelSha256", "nativeSha256", "sdistSha256"}
+            or not isinstance(probes, dict)
+            or not isinstance(row.get("sha256"), str)
+            or re.fullmatch(r"[0-9a-f]{64}", row["sha256"]) is None
+            or row.get("cohort") != cohort
+            or row.get("pythonMinor") != minor
+            or row.get("selectedWheelSha256") != platform.get("wheelSha256")
+            or row.get("nativeSha256") != platform.get("nativeSha256")
+            or row.get("commonSdistSha256") != platform.get("sdistSha256")
+            or row.get("testCounts") != {"tests": 254, "errors": 0, "failures": 0, "skipped": 0}
+            or probes.get("python") != python_version
+            or not isinstance(probes.get("machine"), str)
+            or probes["machine"].lower() != ("x86_64" if cohort == "linux-x86_64" else "arm64")
+            or probes.get("umfVersion") != "0.10.3"
+            or probes.get("semanticCoreVersion") != "0.10.0"
+            or probes.get("pydanticVersion") != "2.14.1"
+            or probes.get("pydanticCoreVersion") != "2.50.1"
+            or probes.get("documentRoundTrips") != {"json": True, "yaml": True}
+        ):
+            raise ValueError("Retained producer cell summary is not bound to the exact selected bytes and probes")
+        if minor == "14" and probes.get("profile314Probes") != {
+            "strictEndAnchor": True,
+            "emptyInputNonBoundary": True,
+            "unicode16Word": True,
+            "futureProfileRefused": True,
+        }:
+            raise ValueError("Retained Python 3.14 producer probes differ from the fixed profile")
 
 
 def main() -> int:
@@ -118,6 +338,8 @@ def main() -> int:
     release = packet["publicRelease"]
     producer = packet["producer"]
     assets = release["assets"]
+    if assets != RETAINED_ARCHIVES:
+        raise ValueError("Public archive packet differs from the fixed retained S34 build identities")
     metadata = release["metadata"]
     release_commit = release["commit"]
     producer_commit = producer["sourceCommit"]
@@ -131,6 +353,36 @@ def main() -> int:
     producer_receipt = json.loads(args.producer_evidence.read_text(encoding="utf-8"))
     if producer_receipt.get("status") != "passed" or producer_receipt.get("run", {}).get("head_sha") != producer_commit:
         raise ValueError("Exact successful producer run evidence is unavailable")
+    retained_policy = producer.get("retainedBuild")
+    cells = producer_receipt.get("cells")
+    if (
+        not isinstance(retained_policy, dict)
+        or producer_receipt.get("profile") != "umf.core-retained-public-producer/1"
+        or producer_receipt.get("retainedBuild") != retained_policy
+        or producer_receipt.get("coverage") != retained_policy.get("coverage")
+        or producer_receipt.get("jobs") != retained_policy.get("jobs")
+        or producer_receipt.get("artifacts") != retained_policy.get("artifacts")
+        or producer_receipt.get("apiEvidenceSha256") != {
+            "run": retained_policy.get("runJsonSha256"),
+            "attempt": retained_policy.get("attemptJsonSha256"),
+            "jobRoster": retained_policy.get("attemptJobRosterSha256"),
+        }
+        or producer_receipt.get("run", {}).get("conclusion") != "cancelled"
+        or not isinstance(cells, list)
+        or len(cells) != 3
+    ):
+        raise ValueError("Producer evidence does not satisfy the exact retained-build profile and three-cell coverage")
+    if producer_receipt.get("run") != {
+        "id": producer["workflowRunId"],
+        "run_attempt": producer["workflowRunAttempt"],
+        "head_sha": producer_commit,
+        "head_branch": producer["headBranch"],
+        "event": producer["event"],
+        "path": producer["workflowPath"],
+        "status": retained_policy["runStatus"],
+        "conclusion": retained_policy["runConclusion"],
+    }:
+        raise ValueError("Producer run identity is not the exact retained source/run tuple")
     request = urllib.request.Request(
         "https://api.github.com/repos/DocumentDrivenDX/umf/releases/tags/python-v0.10.3",
         headers={"Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28", "User-Agent": "umf-core-public-install-proof"},
@@ -252,7 +504,7 @@ def main() -> int:
     sdist_meta = assets["sdist"]
     sdist_name = sdist_meta["filename"]
     sdist_bytes = downloaded[sdist_name]
-    sdist_metadata = source_metadata(sdist_bytes)
+    sdist_metadata, archive_source_files, pkg_info_bytes = source_archive_data(sdist_bytes)
     if not re.search(r"(?m)^Name: umf-core\s*$", sdist_metadata) or not re.search(r"(?m)^Version: 0\.10\.3\s*$", sdist_metadata):
         raise ValueError("Public sdist package identity differs")
     source_range = re.findall(r"(?m)^Requires-Python:\s*(.*?)\s*$", sdist_metadata)
@@ -260,7 +512,28 @@ def main() -> int:
         raise ValueError("Public sdist Python support range differs from the reviewed range")
     if sha256(sdist_bytes) != producer_receipt["selected"]["linux-x86_64"]["sdistSha256"] or sha256(sdist_bytes) != producer_receipt["selected"]["macos-arm64"]["sdistSha256"]:
         raise ValueError("Public common sdist differs from both qualified producer selections")
-    args.output.write_text(json.dumps({
+    producer_source_map, release_source_map = _retained_source_projections(
+        args.producer_source, args.release_source, pkg_info_bytes
+    )
+    source_correspondence = validate_source_map_delta(
+        producer_receipt.get("sdistBuildInputs"),
+        archive_source_files,
+        producer_source_map,
+        release_source_map,
+        release.get("sourceCorrespondence"),
+    )
+    source_correspondence_digest = sha256(
+        json.dumps(source_correspondence, sort_keys=True, separators=(",", ":")).encode("ascii")
+    )
+    validate_retained_cells(producer_receipt.get("cells"), producer_receipt.get("selected"))
+    if producer_receipt.get("coverage") != {
+        "qualifiedProducerCohorts": ["linux-x86_64", "macos-arm64"],
+        "qualifiedSelectedCells": ["linux-x86_64-py11", "linux-x86_64-py14", "macos-arm64-py11"],
+        "cancelledSelectedCell": "macos-arm64-py14",
+        "macosPython314": "unqualified",
+    }:
+        raise ValueError("Retained producer coverage differs from the exact three-cell/Mac14-unqualified policy")
+    output = {
         "status": "passed",
         "platform": args.platform,
         "pythonMinor": args.python_minor,
@@ -277,10 +550,14 @@ def main() -> int:
         "proofRunId": os.environ.get("GITHUB_RUN_ID"),
         "proofRunAttempt": os.environ.get("GITHUB_RUN_ATTEMPT"),
         "proofWorkflow": os.environ.get("GITHUB_WORKFLOW"),
-    }, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+        "producerCoverage": producer_receipt["coverage"],
+        "sourceCorrespondence": source_correspondence,
+        "sourceCorrespondenceSha256": source_correspondence_digest,
+    }
+    args.output.write_text(json.dumps(output, sort_keys=True, indent=2) + "\n", encoding="utf-8")
     github_output = Path(os.environ["GITHUB_OUTPUT"])
     with github_output.open("a", encoding="utf-8") as stream:
-        stream.write(f"wheel_path={wheel_path}\nsdist_path={destination / sdist_name}\nwheel_sha256={wheel_meta['sha256']}\nwheel_native_sha256={native_hash}\nsdist_sha256={sdist_meta['sha256']}\n")
+        stream.write(f"wheel_path={wheel_path}\nsdist_path={destination / sdist_name}\nwheel_sha256={wheel_meta['sha256']}\nwheel_native_sha256={native_hash}\nsdist_sha256={sdist_meta['sha256']}\nsource_correspondence_sha256={source_correspondence_digest}\n")
     return 0
 
 

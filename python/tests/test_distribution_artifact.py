@@ -45,6 +45,24 @@ def _release_wheel_qualifier():
     return module
 
 
+def _core_public_producer_verifier():
+    path = Path(__file__).resolve().parents[2] / "tools/verify_core_public_producer.py"
+    spec = importlib.util.spec_from_file_location("umf_test_core_public_producer", path)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def _core_public_release_verifier():
+    path = Path(__file__).resolve().parents[2] / "tools/verify_core_public_release.py"
+    spec = importlib.util.spec_from_file_location("umf_test_core_public_release", path)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 @pytest.mark.parametrize(
     ("raw", "repaired"),
     (
@@ -619,8 +637,61 @@ def test_workflow_independently_installs_and_qualifies_both_native_artifacts():
     assert producer_start < selected_start
     producer_workflow = workflow[producer_start:selected_start]
 
-    assert "python-version: '3.11.17'" in workflow
-    assert "python-version: '3.11.9'" in workflow
+    producer_matrix_start = producer_workflow.index("      matrix:\n")
+    producer_matrix_end = producer_workflow.index(
+        "\n    runs-on: ${{ matrix.runs-on }}\n", producer_matrix_start
+    )
+    producer_matrix = producer_workflow[producer_matrix_start:producer_matrix_end]
+    assert producer_matrix.count("          - cohort: ") == 1
+    assert producer_matrix.count("          - cohort: linux-x86_64\n") == 1
+    assert producer_matrix.count("            runs-on: ubuntu-24.04\n") == 1
+    assert producer_matrix.count("            python-version: '3.11.17'\n") == 1
+    assert producer_matrix.count("            python-architecture: x64\n") == 1
+    assert producer_matrix.count("            expected-machine: x86_64\n") == 1
+    assert producer_matrix.count("            expected-platform: linux_x86_64\n") == 1
+    assert "macos" not in producer_matrix
+
+    selected_workflow = workflow[selected_start:]
+    selected_matrix_start = selected_workflow.index("      matrix:\n")
+    selected_matrix_end = selected_workflow.index(
+        "\n    runs-on: ${{ matrix.runs-on }}\n", selected_matrix_start
+    )
+    selected_matrix = selected_workflow[selected_matrix_start:selected_matrix_end]
+    assert selected_matrix.count("          - cohort: ") == 2
+    assert selected_matrix.count("          - cohort: linux-x86_64\n") == 2
+    assert selected_matrix.count("            runs-on: ubuntu-24.04\n") == 2
+    assert selected_matrix.count("            platform: linux\n") == 2
+    assert selected_matrix.count("            python-version: '3.11.17'\n") == 1
+    assert selected_matrix.count("            expected-python-minor: '11'\n") == 1
+    assert selected_matrix.count("            python-version: '3.14.8'\n") == 1
+    assert selected_matrix.count("            expected-python-minor: '14'\n") == 1
+    assert selected_matrix.count("            expected-machine: x86_64\n") == 2
+    assert "macos" not in selected_matrix
+
+    public_workflow_path = (
+        Path(__file__).resolve().parents[2]
+        / ".github/workflows/core-0.10.3-public-install-proof.yml"
+    )
+    public_workflow = public_workflow_path.read_text(encoding="utf-8")
+    public_job_marker = "  public-installed-wheel:\n"
+    assert public_workflow.count(public_job_marker) == 1
+    public_job = public_workflow[public_workflow.index(public_job_marker) :]
+    public_matrix_start = public_job.index("      matrix:\n")
+    public_matrix_end = public_job.index(
+        "\n    runs-on: ${{ matrix.runs-on }}\n", public_matrix_start
+    )
+    public_matrix = public_job[public_matrix_start:public_matrix_end]
+    assert public_matrix.count("          - cohort: ") == 2
+    assert public_matrix.count("          - cohort: linux-x86_64\n") == 2
+    assert public_matrix.count("            runs-on: ubuntu-24.04\n") == 2
+    assert public_matrix.count("            platform: linux\n") == 2
+    assert public_matrix.count("            python-version: '3.11.17'\n") == 1
+    assert public_matrix.count("            expected-python-minor: '11'\n") == 1
+    assert public_matrix.count("            python-version: '3.14.8'\n") == 1
+    assert public_matrix.count("            expected-python-minor: '14'\n") == 1
+    assert public_matrix.count("            wheel-key: linuxWheel\n") == 2
+    assert "macos" not in public_matrix
+
     assert "python -m build --wheel --sdist --no-isolation python" in workflow
     assert "--rebuilt-wheel-directory" in workflow
     assert '"$RUNNER_TEMP/umf-installed-direct/bin/python" -m pip install' in workflow
@@ -641,7 +712,43 @@ def test_workflow_independently_installs_and_qualifies_both_native_artifacts():
         assert producer_workflow[step_start:step_end].count(
             "python/tests/test_action_fixture_vectors.py"
         ) == 1
-    assert 'counts["skipped"] == 0' in workflow
+    assert 'counts["tests"] == 254' in producer_workflow
+    assert 'counts["errors"] == 0' in producer_workflow
+    assert 'counts["failures"] == 0' in producer_workflow
+    assert 'counts["skipped"] == 0' in producer_workflow
+    assert 'receipt.get("source_payload_verification") == "passed"' in producer_workflow
+    assert '"native_byte_identity"' in producer_workflow
+    assert 'counts["tests"] == 254' in selected_workflow
+    assert 'counts["errors"] == 0' in selected_workflow
+    assert 'counts["failures"] == 0' in selected_workflow
+    assert 'counts["skipped"] == 0' in selected_workflow
+    assert 'counts["tests"] == 254' in public_job
+    assert 'counts["errors"] == 0' in public_job
+    assert 'counts["failures"] == 0' in public_job
+    assert 'counts["skipped"] == 0' in public_job
+    assert '"linuxWheel", "macosWheel", "sdist"' in public_job
+    assert 'assets["macosWheel"]["filename"] != "umf_core-0.10.3-cp311-abi3-macosx_11_0_arm64.whl"' in public_job
+
+    for section, total_seconds in (
+        (producer_workflow, 1800),
+        (selected_workflow, 1200),
+    ):
+        assert f'"totalSeconds": {total_seconds}' in section
+        assert '"cleanupReserveSeconds": 60' in section
+        assert '"timeoutKillGraceSeconds": 10' in section
+        assert '"drainMarginSeconds": 2' in section
+        assert '"childSeconds": 180' in section
+        assert '"aggregateLogBytes": 1048576' in section
+        assert '"artifactBytes": 16777216' in section
+    assert '"totalSeconds": 1200' in public_job
+    assert '"cleanupReserveSeconds": 60' in public_job
+    assert '"timeoutKillGraceSeconds": 10' in public_job
+    assert '"drainMarginSeconds": 2' in public_job
+    assert '"childSeconds": 180' in public_job
+    assert '"aggregateLogBytes": 1048576' in public_job
+    assert '"artifactBytes": 16777216' in public_job
+    assert "--no-index --no-deps --only-binary=:all:" in selected_workflow
+    assert "--no-index --no-deps --only-binary=:all:" in public_job
     assert (
         'installed_artifacts.get("direct", {}).get("qualification") == "passed"'
         in workflow
@@ -656,6 +763,563 @@ def test_workflow_independently_installs_and_qualifies_both_native_artifacts():
         in workflow
     )
     assert "umf-sdist-rebuilt/*.whl" in workflow
+
+
+def _retained_producer_api_fixture(verifier):
+    producer = {
+        "sourceCommit": verifier.RETAINED_SOURCE_COMMIT,
+        "sourceTree": verifier.RETAINED_SOURCE_TREE,
+        "workflowPath": ".github/workflows/python-action-runtime.yml",
+        "event": "workflow_dispatch",
+        "headBranch": "codex/core-python314-generation",
+        "workflowRunId": verifier.RETAINED_RUN_ID,
+        "workflowRunAttempt": verifier.RETAINED_RUN_ATTEMPT,
+        "retainedBuild": verifier.retained_policy_packet(),
+    }
+    run = {
+        "id": verifier.RETAINED_RUN_ID,
+        "run_attempt": verifier.RETAINED_RUN_ATTEMPT,
+        "head_sha": verifier.RETAINED_SOURCE_COMMIT,
+        "head_branch": "codex/core-python314-generation",
+        "event": "workflow_dispatch",
+        "path": ".github/workflows/python-action-runtime.yml",
+        "status": "completed",
+        "conclusion": "cancelled",
+    }
+    jobs = [
+        {
+            "id": row["id"],
+            "run_id": verifier.RETAINED_RUN_ID,
+            "name": row["name"],
+            "status": row["status"],
+            "conclusion": row["conclusion"],
+            "run_attempt": verifier.RETAINED_RUN_ATTEMPT,
+            "head_sha": verifier.RETAINED_SOURCE_COMMIT,
+            "head_branch": "codex/core-python314-generation",
+        }
+        for row in producer["retainedBuild"]["jobs"]
+    ]
+    artifacts = [
+        {
+            "id": row["id"],
+            "name": row["name"],
+            "size_in_bytes": row["sizeBytes"],
+            "digest": "sha256:" + row["sha256"],
+            "expired": False,
+            "workflow_run": {
+                "id": verifier.RETAINED_RUN_ID,
+                "head_sha": verifier.RETAINED_SOURCE_COMMIT,
+                "head_branch": "codex/core-python314-generation",
+            },
+        }
+        for row in producer["retainedBuild"]["artifacts"]
+    ]
+    return producer, run, {"total_count": len(jobs), "jobs": jobs}, {"artifacts": artifacts}
+
+
+def test_retained_s34_producer_policy_accepts_only_exact_three_cell_coverage():
+    verifier = _core_public_producer_verifier()
+    producer, run, jobs, artifacts = _retained_producer_api_fixture(verifier)
+    validated_jobs, validated_artifacts = verifier.validate_retained_identity(
+        producer,
+        run,
+        jobs,
+        artifacts,
+        run_id=verifier.RETAINED_RUN_ID,
+        attempt=verifier.RETAINED_RUN_ATTEMPT,
+        commit=verifier.RETAINED_SOURCE_COMMIT,
+        tree=verifier.RETAINED_SOURCE_TREE,
+    )
+    assert len(validated_jobs) == 6
+    assert len(validated_artifacts) == 7
+    assert producer["retainedBuild"]["coverage"]["qualifiedSelectedCells"] == [
+        "linux-x86_64-py11",
+        "linux-x86_64-py14",
+        "macos-arm64-py11",
+    ]
+    assert producer["retainedBuild"]["coverage"]["macosPython314"] == "unqualified"
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    (
+        "wrong-run",
+        "wrong-attempt",
+        "wrong-source",
+        "wrong-tree",
+        "wrong-run-event",
+        "wrong-run-path",
+        "wrong-job-run",
+        "wrong-job-source",
+        "wrong-job-branch",
+        "other-cancelled-job",
+        "cancelled-macos11",
+        "wrong-job-attempt",
+        "missing-job",
+        "extra-job",
+        "duplicate-job",
+        "missing-artifact",
+        "extra-artifact",
+        "wrong-artifact-id",
+        "wrong-artifact-size",
+        "expired-artifact",
+        "wrong-artifact-digest",
+        "wrong-artifact-source",
+    ),
+)
+def test_retained_s34_producer_policy_refuses_identity_or_roster_changes(mutation):
+    verifier = _core_public_producer_verifier()
+    producer, run, jobs, artifacts = _retained_producer_api_fixture(verifier)
+    run_id = verifier.RETAINED_RUN_ID
+    attempt = verifier.RETAINED_RUN_ATTEMPT
+    commit = verifier.RETAINED_SOURCE_COMMIT
+    tree = verifier.RETAINED_SOURCE_TREE
+    if mutation == "wrong-run":
+        run["id"] += 1
+    elif mutation == "wrong-attempt":
+        attempt += 1
+    elif mutation == "wrong-source":
+        commit = "0" * 40
+        run["head_sha"] = commit
+    elif mutation == "wrong-tree":
+        tree = "0" * 40
+    elif mutation == "wrong-run-event":
+        run["event"] = "push"
+    elif mutation == "wrong-run-path":
+        run["path"] = ".github/workflows/other.yml"
+    elif mutation == "wrong-job-run":
+        jobs["jobs"][0]["run_id"] += 1
+    elif mutation == "wrong-job-source":
+        jobs["jobs"][0]["head_sha"] = "0" * 40
+    elif mutation == "wrong-job-branch":
+        jobs["jobs"][0]["head_branch"] = "other-branch"
+    elif mutation == "other-cancelled-job":
+        jobs["jobs"][-1]["conclusion"] = "success"
+        jobs["jobs"][0]["conclusion"] = "cancelled"
+    elif mutation == "cancelled-macos11":
+        jobs["jobs"][4]["conclusion"] = "cancelled"
+        jobs["jobs"][5]["conclusion"] = "success"
+    elif mutation == "wrong-job-attempt":
+        jobs["jobs"][0]["run_attempt"] += 1
+    elif mutation == "missing-job":
+        jobs["jobs"].pop()
+        jobs["total_count"] -= 1
+    elif mutation == "extra-job":
+        jobs["jobs"].append(dict(jobs["jobs"][0], id=999999999))
+        jobs["total_count"] += 1
+    elif mutation == "duplicate-job":
+        jobs["jobs"].append(dict(jobs["jobs"][0]))
+        jobs["total_count"] += 1
+    elif mutation == "missing-artifact":
+        artifacts["artifacts"].pop()
+    elif mutation == "extra-artifact":
+        artifacts["artifacts"].append(dict(artifacts["artifacts"][0]))
+    elif mutation == "wrong-artifact-id":
+        artifacts["artifacts"][0]["id"] += 1
+    elif mutation == "wrong-artifact-size":
+        artifacts["artifacts"][0]["size_in_bytes"] += 1
+    elif mutation == "expired-artifact":
+        artifacts["artifacts"][0]["expired"] = True
+    elif mutation == "wrong-artifact-digest":
+        artifacts["artifacts"][0]["digest"] = "sha256:" + "0" * 64
+    elif mutation == "wrong-artifact-source":
+        artifacts["artifacts"][0]["workflow_run"]["head_sha"] = "0" * 40
+
+    with pytest.raises(ValueError):
+        verifier.validate_retained_identity(
+            producer,
+            run,
+            jobs,
+            artifacts,
+            run_id=run_id,
+            attempt=attempt,
+            commit=commit,
+            tree=tree,
+        )
+
+
+def _retained_installed_cell_receipt_fixture(verifier):
+    return {
+        "cohort": "linux-x86_64",
+        "commonSdistSha256": "61b3e12a84f68f890fa34e2da14bbda47e101b7c6eadd5207680827e8daa694c",
+        "expectedNativeSha256": "c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57",
+        "expectedWheelSha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",
+        "installedPayload": {
+            "all_files_inside_platlib": True,
+            "distribution_version": "0.10.3",
+            "installed_file_count": 43,
+            "native_sha256": "c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57",
+            "package_file_count": 34,
+            "status": "passed",
+            "wheel_sha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",
+        },
+        "platform": "linux",
+        "postTestPayload": {
+            "all_files_inside_platlib": True,
+            "distribution_version": "0.10.3",
+            "installed_file_count": 43,
+            "native_sha256": "c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57",
+            "package_file_count": 34,
+            "status": "passed",
+            "wheel_sha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",
+        },
+        "probeOutcome": "success",
+        "profile": "umf.core-python314-installed-release-cell/1",
+        "requestedPython": "3.11.17",
+        "runtimeProbes": {
+            "documentRoundTrips": {"json": True, "yaml": True},
+            "machine": "x86_64",
+            "profile314Probes": {},
+            "pydanticCoreVersion": "2.50.1",
+            "pydanticVersion": "2.14.1",
+            "python": "3.11.17",
+            "semanticCoreVersion": "0.10.0",
+            "umfVersion": "0.10.3",
+        },
+        "selectedWheelSha256": "cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",
+        "sourceRevision": verifier.RETAINED_SOURCE_COMMIT,
+        "status": "passed",
+        "testCounts": {"errors": 0, "failures": 0, "skipped": 0, "tests": 254},
+        "testOutcome": "success",
+    }
+
+
+def test_retained_installed_cell_accepts_actual_posttest_receipt_shape():
+    verifier = _core_public_producer_verifier()
+    receipt = _retained_installed_cell_receipt_fixture(verifier)
+    assert "posttestOutcome" not in receipt
+    verifier.validate_retained_cell_receipt(
+        receipt,
+        cohort="linux-x86_64",
+        minor="11",
+        expected_python="3.11.17",
+        wheel_sha256="cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",
+        native_sha256="c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57",
+        sdist_sha256="61b3e12a84f68f890fa34e2da14bbda47e101b7c6eadd5207680827e8daa694c",
+    )
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    (
+        "count253",
+        "skip1",
+        "missing-post-payload",
+        "wrong-post-wheel",
+        "wrong-post-native",
+        "changed-post-count",
+        "wrong-runtime-probe",
+        "failed-test",
+    ),
+)
+def test_retained_installed_cell_rejects_incomplete_actual_receipt(mutation):
+    verifier = _core_public_producer_verifier()
+    receipt = _retained_installed_cell_receipt_fixture(verifier)
+    if mutation == "count253":
+        receipt["testCounts"]["tests"] = 253
+    elif mutation == "skip1":
+        receipt["testCounts"]["skipped"] = 1
+    elif mutation == "missing-post-payload":
+        receipt.pop("postTestPayload")
+    elif mutation == "wrong-post-wheel":
+        receipt["postTestPayload"]["wheel_sha256"] = "0" * 64
+    elif mutation == "wrong-post-native":
+        receipt["postTestPayload"]["native_sha256"] = "0" * 64
+    elif mutation == "changed-post-count":
+        receipt["postTestPayload"]["package_file_count"] += 1
+    elif mutation == "wrong-runtime-probe":
+        receipt["runtimeProbes"]["semanticCoreVersion"] = "0.10.3"
+    elif mutation == "failed-test":
+        receipt["testOutcome"] = "failure"
+
+    with pytest.raises(ValueError):
+        verifier.validate_retained_cell_receipt(
+            receipt,
+            cohort="linux-x86_64",
+            minor="11",
+            expected_python="3.11.17",
+            wheel_sha256="cd35f255900ec122e5e2d47d1fbac658cc127d3f16ba82e643e199b7d8cebd75",
+            native_sha256="c51b511a06bc1ccde6cc2208d33a4fb70ef66c67507ba8f2a6ea05fd2543cf57",
+            sdist_sha256="61b3e12a84f68f890fa34e2da14bbda47e101b7c6eadd5207680827e8daa694c",
+        )
+
+
+def test_retained_sdist_source_delta_allows_only_the_distribution_test_path():
+    verifier = _core_public_release_verifier()
+    producer = {"tests/test_distribution_artifact.py": "a" * 64, "src/umf/core.py": "b" * 64}
+    release = {"tests/test_distribution_artifact.py": "c" * 64, "src/umf/core.py": "b" * 64}
+    assert verifier._single_test_source_delta(producer, release) == {
+        "tests/test_distribution_artifact.py"
+    }
+    release["src/umf/core.py"] = "d" * 64
+    with pytest.raises(ValueError, match="outside the one reviewed test-only path"):
+        verifier._single_test_source_delta(producer, release)
+    with pytest.raises(ValueError, match="identical path sets"):
+        verifier._single_test_source_delta(producer, {**producer, "extra.py": "e" * 64})
+
+
+def test_retained_source_correspondence_refuses_held_final_identity():
+    verifier = _core_public_release_verifier()
+    correspondence = {
+        "profile": verifier.RETAINED_SOURCE_PROFILE,
+        "archiveFileCount": 531,
+        "producerMapSha256": verifier.RETAINED_SOURCE_MAP_SHA256,
+        "releaseMapSha256": "HELD",
+        "testPath": verifier.RETAINED_TEST_PATH,
+        "producerTestSha256": verifier.RETAINED_TEST_OLD_SHA256,
+        "releaseTestSha256": "HELD",
+    }
+    with pytest.raises(ValueError, match="held or malformed"):
+        verifier.validate_source_map_delta({}, {}, {}, {}, correspondence)
+
+
+def test_retained_sdist_rejects_oversized_pkg_info_before_reading_payload(monkeypatch):
+    verifier = _core_public_release_verifier()
+    archive_bytes = io.BytesIO()
+    payload = b"x" * (verifier.PKG_INFO_LIMIT + 1)
+    with tarfile.open(fileobj=archive_bytes, mode="w:gz") as archive:
+        member = tarfile.TarInfo("umf_core-0.10.3/PKG-INFO")
+        member.size = len(payload)
+        archive.addfile(member, io.BytesIO(payload))
+
+    def unexpected_payload_read(*_args, **_kwargs):
+        raise AssertionError("oversized PKG-INFO payload was read before its declared-size refusal")
+
+    monkeypatch.setattr(tarfile.TarFile, "extractfile", unexpected_payload_read)
+    with pytest.raises(ValueError, match="PKG-INFO exceeds one MiB"):
+        verifier.source_archive_data(archive_bytes.getvalue())
+
+
+def test_retained_source_map_rejects_noncanonical_paths():
+    verifier = _core_public_release_verifier()
+    for path in ("../escape", "/absolute", "a\\b", "./normalized"):
+        with pytest.raises(ValueError, match="noncanonical path"):
+            verifier._canonical_source_map({path: "a" * 64})
+
+
+@pytest.fixture(scope="module")
+def retained_sdist_source_fixture():
+    verifier = _core_public_release_verifier()
+    repository = Path(__file__).resolve().parents[2]
+    helper_path = repository / "tools/_python_sdist.py"
+    spec = importlib.util.spec_from_file_location(
+        "umf_test_retained_sdist_inventory", helper_path
+    )
+    assert spec is not None and spec.loader is not None
+    helper = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(helper)
+
+    release_files = helper._source_inventory(repository)
+    assert release_files[verifier.RETAINED_TEST_PATH] != verifier.RETAINED_TEST_OLD_SHA256
+    release_files["PKG-INFO"] = (
+        "aa760d74b8bc9a535520613f5d2788c50f5aed9ca5b3b59fbd941b9711d29b93"
+    )
+    producer_files = dict(release_files)
+    producer_files[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+    manifest_digest = hashlib.sha256(
+        json.dumps(
+            producer_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+        ).encode("ascii")
+    ).hexdigest()
+    assert len(release_files) == 531
+    assert manifest_digest == verifier.RETAINED_SOURCE_MAP_SHA256
+    manifest = {
+        "schema": "umf.python-sdist-build-inputs/1",
+        "file_count": len(producer_files),
+        "sha256": manifest_digest,
+        "files": producer_files,
+    }
+    release_map_digest = hashlib.sha256(
+        json.dumps(
+            release_files, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+        ).encode("ascii")
+    ).hexdigest()
+    correspondence = {
+        "profile": verifier.RETAINED_SOURCE_PROFILE,
+        "archiveFileCount": 531,
+        "producerMapSha256": verifier.RETAINED_SOURCE_MAP_SHA256,
+        "releaseMapSha256": release_map_digest,
+        "testPath": verifier.RETAINED_TEST_PATH,
+        "producerTestSha256": verifier.RETAINED_TEST_OLD_SHA256,
+        "releaseTestSha256": release_files[verifier.RETAINED_TEST_PATH],
+    }
+    return {
+        "verifier": verifier,
+        "producerFiles": producer_files,
+        "releaseFiles": release_files,
+        "manifest": manifest,
+        "correspondence": correspondence,
+    }
+
+
+def test_retained_source_map_validates_full_531_file_archive_and_exact_m_delta(
+    retained_sdist_source_fixture,
+):
+    fixture = retained_sdist_source_fixture
+    result = fixture["verifier"].validate_source_map_delta(
+        fixture["manifest"],
+        fixture["producerFiles"],
+        fixture["producerFiles"],
+        fixture["releaseFiles"],
+        fixture["correspondence"],
+    )
+    assert result == fixture["correspondence"]
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    (
+        "archive-digest",
+        "archive-missing",
+        "archive-extra",
+        "producer-projection",
+        "m-runtime",
+        "m-cargo",
+        "m-schema",
+        "m-build-hook",
+        "m-resource",
+        "m-added",
+        "m-deleted",
+        "wrong-test-old",
+        "wrong-test-new",
+        "missing-test-delta",
+        "malformed-map-path",
+        "wrong-map-digest",
+        "extra-correspondence-field",
+    ),
+)
+def test_retained_source_map_refuses_any_unreviewed_path_or_byte_change(
+    retained_sdist_source_fixture, mutation
+):
+    fixture = retained_sdist_source_fixture
+    verifier = fixture["verifier"]
+    producer = dict(fixture["producerFiles"])
+    archive = dict(fixture["producerFiles"])
+    release = dict(fixture["releaseFiles"])
+    correspondence = dict(fixture["correspondence"])
+    manifest = {
+        **fixture["manifest"],
+        "files": dict(producer),
+    }
+    if mutation == "archive-digest":
+        archive["Cargo.toml"] = "0" * 64
+    elif mutation == "archive-missing":
+        archive.pop("Cargo.toml")
+    elif mutation == "archive-extra":
+        archive["unreviewed.txt"] = "0" * 64
+    elif mutation == "producer-projection":
+        producer["Cargo.lock"] = "0" * 64
+    elif mutation in {
+        "m-runtime", "m-cargo", "m-schema", "m-build-hook", "m-resource"
+    }:
+        path = {
+            "m-runtime": "src/umf/action_runtime.py",
+            "m-cargo": "Cargo.toml",
+            "m-schema": "spec/core/schema.json",
+            "m-build-hook": "hatch_build.py",
+            "m-resource": "src/umf/action_runtime_resource_manifest.json",
+        }[mutation]
+        assert path in release
+        release[path] = "0" * 64
+    elif mutation == "m-added":
+        release["unreviewed.txt"] = "0" * 64
+    elif mutation == "m-deleted":
+        release.pop("Cargo.toml")
+    elif mutation == "wrong-test-old":
+        producer[verifier.RETAINED_TEST_PATH] = "0" * 64
+        manifest["files"] = producer
+    elif mutation == "wrong-test-new":
+        correspondence["releaseTestSha256"] = "0" * 64
+    elif mutation == "missing-test-delta":
+        release[verifier.RETAINED_TEST_PATH] = verifier.RETAINED_TEST_OLD_SHA256
+        correspondence["releaseTestSha256"] = verifier.RETAINED_TEST_OLD_SHA256
+        correspondence["releaseMapSha256"] = verifier._canonical_source_map(release)["sha256"]
+    elif mutation == "malformed-map-path":
+        producer["../escape"] = "0" * 64
+        manifest["files"] = producer
+        manifest["file_count"] += 1
+    elif mutation == "wrong-map-digest":
+        correspondence["releaseMapSha256"] = "0" * 64
+    elif mutation == "extra-correspondence-field":
+        correspondence["ignoredPaths"] = []
+
+    with pytest.raises(ValueError):
+        verifier.validate_source_map_delta(
+            manifest,
+            archive,
+            producer,
+            release,
+            correspondence,
+        )
+
+
+def test_retained_source_projections_refuse_altered_helper_before_import(tmp_path):
+    verifier = _core_public_release_verifier()
+    original = (Path(__file__).resolve().parents[2] / "tools/_python_sdist.py").read_bytes()
+    producer_helper = tmp_path / "producer/tools/_python_sdist.py"
+    release_helper = tmp_path / "release/tools/_python_sdist.py"
+    producer_helper.parent.mkdir(parents=True)
+    release_helper.parent.mkdir(parents=True)
+    producer_helper.write_bytes(original)
+    release_helper.write_bytes(original + b"\nnot valid python\n")
+
+    with pytest.raises(ValueError, match="fixed reviewed digest"):
+        verifier._retained_source_projections(
+            producer_helper.parents[1], release_helper.parents[1], b"PKG-INFO"
+        )
+
+
+def test_retained_producer_cell_summary_binds_exact_three_selected_receipts():
+    verifier = _core_public_release_verifier()
+    selected = {
+        "linux-x86_64": {
+            "wheelSha256": "a" * 64,
+            "nativeSha256": "b" * 64,
+            "sdistSha256": "c" * 64,
+        },
+        "macos-arm64": {
+            "wheelSha256": "d" * 64,
+            "nativeSha256": "e" * 64,
+            "sdistSha256": "c" * 64,
+        },
+    }
+    cells = []
+    for artifact, cohort, minor, python_version in verifier.RETAINED_CELLS:
+        source = selected[cohort]
+        probes = {
+            "python": python_version,
+            "machine": "x86_64" if cohort == "linux-x86_64" else "arm64",
+            "umfVersion": "0.10.3",
+            "semanticCoreVersion": "0.10.0",
+            "pydanticVersion": "2.14.1",
+            "pydanticCoreVersion": "2.50.1",
+            "documentRoundTrips": {"json": True, "yaml": True},
+        }
+        if minor == "14":
+            probes["profile314Probes"] = {
+                "strictEndAnchor": True,
+                "emptyInputNonBoundary": True,
+                "unicode16Word": True,
+                "futureProfileRefused": True,
+            }
+        cells.append(
+            {
+                "artifact": artifact,
+                "sha256": "f" * 64,
+                "cohort": cohort,
+                "pythonMinor": minor,
+                "selectedWheelSha256": source["wheelSha256"],
+                "nativeSha256": source["nativeSha256"],
+                "commonSdistSha256": source["sdistSha256"],
+                "testCounts": {"tests": 254, "errors": 0, "failures": 0, "skipped": 0},
+                "runtimeProbes": probes,
+            }
+        )
+
+    verifier.validate_retained_cells(cells, selected)
+    cells[2]["artifact"] = "umf-core-0.10.3-installed-macos-arm64-py14"
+    with pytest.raises(ValueError, match="exact three-cell subset"):
+        verifier.validate_retained_cells(cells, selected)
 
 
 def _finalizer_source(workflow: str) -> str:
