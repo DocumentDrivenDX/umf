@@ -1,5 +1,5 @@
 {
-  "status": "PRODUCERS_AND_SELECTION_PASSED_SELECTED_CELL_INSTALL_PATH_REFUSED",
+  "status": "PRODUCERS_PASSED_SELECTED_TEST_ENVIRONMENT_MISSING_HATCHLING",
   "baseCommit": "d5022e37840329d351bcd6c27fe7d7aad4758544",
   "donorCommit": "f4a410c0522135065a0b20e8d2b69705fddcbac4",
   "extractionCommit": "ad5e59591",
@@ -458,5 +458,19 @@
     "runId": 40436280375,
     "reviewSha256": "cd479f039465fbffafde9c1f5a1af025925f4a94cca3c2ddb33db20d6623b6e4",
     "scope": "Consistency only; no selected-cell/merge/release admission."
+  },
+  "selectedTestToolFailure": {
+    "evidence": "selected-test-tool-failure-40439185023",
+    "custodySha256": "bd15e8efbbfdb9d9a9a91735a850f7d3e862406ebc1af16beee444c86e5d4297",
+    "status": "ACTUAL_252_PASS_2_MISSING_TOOL_FAILURES_EXACT_APPEND_SOURCE_ACCEPTED_RUNTIME_PENDING"
+  },
+  "selectedPathConsistency": {
+    "evidence": "selected-path-consistency-40439183104",
+    "custodySha256": "ade4af9449df3b7c535a8519a5d4aeeebe37a482ac972f418cd65fdf6f0766c4",
+    "status": "PASS_15_ACTUAL_OUTPUTS_EQUAL_ROOTS_ALL_35_ADOPTED_OUTPUTS_UNCHANGED",
+    "sourceCommit": "039938af6dba4ba30e8acbdbd6539844bab2d438",
+    "runId": 40439183104,
+    "reviewSha256": "3f39418c60d6052629df0b128a3d9e35ffcde4a7565342fc2e8e895fbef5c165",
+    "scope": "Consistency only, not installed/release admission."
   }
 }
