@@ -65,6 +65,9 @@ jobs:
         timeout-minutes: 2
         with:
           persist-credentials: false
+          sparse-checkout: |
+            tools
+            qualification-inputs
           submodules: false
       - name: Fail closed until actual producer and public asset identities are reviewed
         id: packet
