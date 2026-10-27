@@ -1,0 +1,38 @@
+{
+  "status": "ACCEPTED_CURRENT_PORTABLE_AND_SELECTED_NATIVE_PREREQUISITES",
+  "testedSourceCommit": "1bc0da3bd9cf43dc2a58ae69647a23eea330c1d4",
+  "testedSourceTree": "ca9af66ad1d90c27868a2e69c2a7b1f6c5145757",
+  "reviewSha256": "3106bda0fceff4243fbe8b2d6d13f5d9bd5f2f0b7173ea7a3403e5f85d98ec4c",
+  "portable": {
+    "runId": 40567567226,
+    "jobId": 122412796504,
+    "artifactId": 12763422983,
+    "artifactSha256": "20c0c3d4a1f2d25252f7d6791e3f6b0a2e959ae9c95d5504d60f9f665b2c4af1",
+    "bunTestsPassed": 187,
+    "chromiumChecksPassed": 156,
+    "boundedStages": 11
+  },
+  "selectedNative": {
+    "runId": 40567567122,
+    "jobId": 122412797271,
+    "artifactId": 12764898058,
+    "artifactSha256": "c2a4e3017d15df663761f667457213937f2d7f17576a67cdc73636bdc498fe50",
+    "g02Cases": 5,
+    "g02Checks": 78,
+    "g03SelectedScenarios": 13,
+    "boundedCommands": 40,
+    "cleanup": "VERIFIED"
+  },
+  "remaining": [
+    "Original full Linux PR checks",
+    "Independent37case G02 replay with no-default and recovery controls",
+    "Full18package aggregate and Linux union replays",
+    "Normal merge and immutable SDK0.5.7 release",
+    "Fresh public install proof",
+    "G03 N12 and N14/full campaign and G03-G11 residual backlog"
+  ],
+  "macOSCI": "PROHIBITED",
+  "macOSScope": "Built artifacts retained as inputs; historical Python3.11 proof macOS15.7.9 arm64 only. No fresh Mac runtime qualification; Python3.14 unqualified.",
+  "praxis": "OUT_OF_SCOPE",
+  "retentionCommitScope": "Evidence-only; tested source identities above remain distinct from the subsequent evidence-retention commit."
+}
