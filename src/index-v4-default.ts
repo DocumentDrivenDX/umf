@@ -1464,7 +1464,6 @@ export type { SecurityAccessResult } from './extensions/security/evaluate';
 export type { SecurityActionPurpose } from './extensions/security/action-purpose-declarations';
 export type { SecurityActionPurposeDeclaration } from './extensions/security/action-purpose-declarations';
 export type { SecurityActionPurposeInspection } from './extensions/security/action-purposes';
-export { securityAnd } from './extensions/security/logic';
 export type { SecurityAssociation } from './extensions/security/types';
 export { SecurityAuthorityGuard } from './extensions/security/authority-guard';
 export type { SecurityCollectionResult } from './extensions/security/evaluate';
@@ -1489,7 +1488,6 @@ export { securityIdentityTransportDependencies } from './extensions/security/dep
 export type { SecurityIdentityTransportDependencies } from './extensions/security/dependencies';
 export type { SecurityInspection } from './extensions/security/policy';
 export type { SecurityOntology } from './extensions/security/types';
-export { securityOr } from './extensions/security/logic';
 export type { SecurityOutput } from './extensions/security/evaluate';
 export { securityPackage } from './extensions/security/policy';
 export type { SecurityPolicy } from './extensions/security/types';

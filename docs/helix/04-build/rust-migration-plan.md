@@ -6806,3 +6806,53 @@ installed default/reference replay across supported hosts. The bounded
 relationship-consumer replay does not qualify the facade source cohort, retire
 any declaration, or establish full-port or release readiness. Those claims
 remain open.
+
+### R8 facade archive and security truth-fold continuation — 2026-10-27
+
+The V4 default facade source cut is now in a clean private SDK archive from
+commit `ce1acfb65`. The [package provenance](evidence/rust-migration/r8-sdk-ce1acfb65-private-package/README.md)
+records archive SHA-256 `5513efdca5ddb98fce9c5f8d9e105b07205bed1ebd8cd7cf87354e912da0a02e`,
+fixed-point source closure SHA-256
+`4d4fcdc18399339146e5cb710521f68124833adb5cbba6b19a4543bf07aee0e7`,
+zero generated-input changes, and verification of all 1,801 listed member
+hashes. The private SDK's full installed test passed Node 26.12.1, Bun 1.4.3,
+and Chromium 153.0.8010.12, including package conditions, missing/corrupt
+binding refusals, and its bounded prior operation packets. The archive is
+explicitly nonpublishable. The [same-archive relationship-consumer replay](evidence/rust-migration/r8-relationship-consumers-installed-ce1acfb65/README.md)
+passed 18/18 cases in Node and Bun and 15/15 browser-capable cases in real
+Chromium. Default routes invoked Rust; `./reference` invoked none. PostgreSQL
+still uses a separately supplied Node-targeted backend in that replay. This
+installed evidence qualifies the selected facade relationship behavior for
+the `ce1acfb65` cohort, not all inherited exports or a declaration retirement.
+
+After that archive was sealed, the V4 roots source-selected Rust for
+`securityAnd` and `securityOr` through a raw-input admission adapter. The
+[source-level replay](evidence/rust-migration/r8-security-and-or-v4-source-replay/README.md)
+matches 68 frozen predecessor cases in Node, Bun, and real Chromium, with 30
+Rust calls for valid inputs and zero calls for preflight refusals per host.
+It preserves snapshot-before-bound/token error order and retains the explicit
+TypeScript reference route. Controls and `maxWork`/meter parity are unqualified;
+no installed SDK archive contains this new source cut yet.
+
+The R8 ledger now has an optional, fail-closed exact-row retirement evidence
+gate. With no retirement manifest supplied, it reports **922 open logical
+default-route gaps**, 77 accepted opt-in Rust mappings, 845 unmapped names,
+and zero retired declarations. The current inventory SHA-256 is
+`316febe0d0265264ea0c036495ea7f829fde8813aaf47ec02e446b30840c416a`;
+the ledger SHA-256 is
+`b340ea0dbf921ac42d72e70f188869d6aa0e9561383a7358c7bede4d6ac57eed`.
+The next gates are exact installed default/reference evidence for the four
+core relationship operations and a clean installed security truth-fold archive
+from the new source cohort. No full-port, merge, or release claim follows from
+these bounded checkpoints.
+
+The [four-operation installed relationship retirement replay](evidence/rust-migration/r8-relationships-default-retirement-replay/README.md)
+freezes one Rust-executed case and one preflight refusal per operation and
+compares each default route with `./reference` on Node, Bun, and Chromium.
+All twelve host/operation receipts pass on the historical `ce1acfb65`
+archive, with positive Rust invocation for valid cases, zero Rust calls on
+refusals, and zero Rust calls through the reference route. The receipt checker
+also proves that this archive fails the current-source retirement gate: it
+predates the packet files and the present closure. These receipts qualify the
+historical archive only; the four ledger rows remain open pending replay from
+a new fixed-point archive containing the packets and exact source closure.

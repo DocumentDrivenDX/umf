@@ -49,7 +49,7 @@ test('V4 facade preserves the complete checker-resolved API and all 1,120 runtim
 test('generated facade is deterministic, excludes local overrides, and has no broad runtime origins', () => {
   const program = programForEntries();
   const generated = generateFacade(program);
-  assert.equal(generated.localOverrides.length, 76);
+  assert.equal(generated.localOverrides.length, 78);
   assert.equal(fs.readFileSync(abs('src/index-v4-default.ts'), 'utf8'), generated.text);
   assert.ok(!generated.text.includes("from './index'") && !generated.text.includes("from './index-node-v4'") && !generated.text.includes("from './index-browser-v4'"));
 

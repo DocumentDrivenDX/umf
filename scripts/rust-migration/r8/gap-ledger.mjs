@@ -5,6 +5,7 @@ import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { validateR8InstalledRouteEvidence } from './installed-route-evidence.mjs';
+import { validateDefaultRouteRetirementEvidence } from './default-route-retirement-evidence.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 const inventoryPath = 'docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json';
@@ -503,6 +504,48 @@ function sourceSelectedImplementation(routeId, exportName, source = null, qualif
       qualificationStatus: 'A private installed SDK archive (SHA-256 8b1d5ad2e57fa33487752b0116211b7628df201359cbd2a13a75912e0e08e60e) replay matched all 14 securityNot cases in Node v26.12.1, Bun 1.4.3 and Chromium 153.0.8010.12, with browser WASM loaded and Node globals absent. The receipt pins this evidence to source commit dc746ad53 and source closure 189772e74079af4d00fbd973380a4318330d5fe91a8652691feb3321ea5e6d8e; the package is a fixed-point build with zero generated-input transforms. This is private historical source-pinned evidence, not qualification of the current worktree or release. The ./reference route remains TypeScript, broader security operations are unchanged, complete parity and release qualification remain open, and the logical retirement gap remains open.',
     };
   }
+  if (['securityAnd', 'securityOr'].includes(exportName)
+      && declaration?.declarationName === exportName
+      && declaration.declarationKind === 'BindingElement'
+      && declaration.initializerShape === 'not-applicable') {
+    const operation = exportName === 'securityAnd' ? 'security_and' : 'security_or';
+    const evidenceDir = 'docs/helix/04-build/evidence/rust-migration/r8-security-and-or-v4-source-replay';
+    const evidencePaths = ['predecessor.json', 'node.json', 'bun.json', 'chromium.json'].map(file => `${evidenceDir}/${file}`);
+    const receipts = ['node', 'bun', 'chromium'].map(host => ({ host, receipt: json(`${evidenceDir}/${host}.json`) }));
+    const predecessorPath = `${evidenceDir}/predecessor.json`;
+    const predecessor = json(predecessorPath);
+    const caseIds = new Set((predecessor.cases ?? []).map(item => item.id));
+    if (predecessor.cases?.length !== 68 || receipts.some(({ receipt, host }) => {
+      if (receipt.format !== 'umf-r8-security-and-or-v4-source-replay/1' || receipt.status !== 'pass' || receipt.host !== host || receipt.fixture?.cases !== 68 || receipt.fixture?.sha256 !== digest(read(predecessorPath)) || receipt.rustDispatch?.validCalls !== 30 || receipt.rustDispatch?.invalidCalls !== 0 || receipt.rustDispatch?.perCase?.length !== 68) return true;
+      const calls = receipt.rustDispatch.perCase;
+      const callKey = host === 'chromium' ? 'wasmCallDelta' : 'rustCallDelta';
+      if (calls.some(item => !caseIds.has(item.id) || !Number.isSafeInteger(item[callKey]) || item[callKey] < 0)) return true;
+      if (new Set(calls.map(item => item.id)).size !== 68 || calls.reduce((sum, item) => sum + item[callKey], 0) !== 30) return true;
+      return calls.some(item => JSON.stringify(item.expected) !== JSON.stringify(item.reference) || JSON.stringify(item.expected) !== JSON.stringify(item.root));
+    })) throw new Error('securityAnd/securityOr V4 source replay evidence is stale or incomplete');
+    const receiptSourceHashes = receipts.map(({ receipt }) => receipt.sourceClosure?.files ?? {});
+    if (receiptSourceHashes.some(files => JSON.stringify(files) !== JSON.stringify(receiptSourceHashes[0]))) throw new Error('securityAnd/securityOr host receipts do not share one source cohort');
+    for (const [file, expected] of Object.entries(receiptSourceHashes[0])) if (digest(read(file)) !== expected) throw new Error(`securityAnd/securityOr source replay closure drift: ${file}`);
+    const sourcePaths = [
+      'src/index-node-v4.ts', 'src/index-browser-v4.ts', 'src/index-v4-default.ts',
+      'src/extensions/security/logic.ts', 'src/extensions/security/rust-logic-adapter.ts',
+      'src/model/json.ts', 'src/model/errors.ts',
+      'bindings/core/node/src/security-logic.js', 'bindings/core/wasm/src/security-logic.js',
+      'crates/umf-core/src/security_logic.rs', 'crates/umf-core-wire/src/security_logic_binding.rs',
+      'docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md',
+      'docs/helix/04-build/evidence/rust-migration/r8-security-truth-logic/frozen-typescript.json',
+      'tests/security/rust-logic-adapter.test.ts', ...evidencePaths,
+    ];
+    return {
+      status: 'source-selected-private-source-replay',
+      rustOwner: `umf_core::security_logic::${operation}`,
+      wireOperation: `security-logic/1.0.0:${exportName}`,
+      bindingRoute: browser ? 'V4 browser root -> Rust security logic adapter -> WASM security-logic binding -> Rust' : 'V4 Node root -> Rust security logic adapter -> Node security-logic binding -> Rust',
+      sourceClosure: closure(sourcePaths),
+      qualificationEvidenceClosure: closure(evidencePaths),
+      qualificationStatus: 'Private source-level Node, Bun and Chromium replays pass 68 frozen cases per host with 30 valid Rust/WASM calls and zero invalid calls. This does not qualify an installed SDK, current fixed-point package, complete host parity, retirement or release.',
+    };
+  }
   if (['declareCoreRecordType', 'verifyCoreRecordTypeDeclaration'].includes(exportName)) {
     const symbol = exportName === 'declareCoreRecordType' ? 'declare_core_record_type' : 'verify_core_record_type_declaration';
     const evidencePaths = [
@@ -814,6 +857,11 @@ function operationMapping(row) {
     if (row.exportName === 'securityNot' && row.declarationName === 'securityNot'
         && row.declarationKind === 'VariableDeclaration' && row.initializerShape === 'call-expression') {
       return accepted.get(`src/extensions/security/logic.ts#securityNot`) ?? null;
+    }
+    if (['securityAnd', 'securityOr'].includes(row.exportName)
+        && row.declarationName === row.exportName
+        && row.declarationKind === 'BindingElement' && row.initializerShape === 'not-applicable') {
+      return accepted.get(`src/extensions/security/logic.ts#${row.exportName}`) ?? null;
     }
     if (['declareCoreSchemaProperties', 'inspectCoreSchemaProperties', 'validateCoreFieldValue', 'resolveCoreDefault'].includes(row.exportName)) {
       return accepted.get(`src/model/schema-properties.ts#${row.exportName}`) ?? null;
@@ -2054,6 +2102,17 @@ function logicalDeclarationSignature(row) {
         : row.routeId === 'package-reference'
           ? row.source === 'src/extensions/security/logic.ts' && row.declarationKind === 'FunctionDeclaration' && row.initializerShape === 'not-applicable'
           : false);
+  // Normalize only the exact Rust-bound V4 helper binding shapes against the
+  // retained reference functions. This does not claim installation/retirement.
+  const securityAndOrConditionShape = ['securityAnd', 'securityOr'].includes(row.exportName)
+    && row.declarationName === row.exportName
+    && (row.routeId === 'package-root-node'
+      ? row.source === 'src/index-node-v4.ts' && row.declarationKind === 'BindingElement' && row.initializerShape === 'not-applicable'
+      : row.routeId === 'package-root-browser'
+        ? row.source === 'src/index-browser-v4.ts' && row.declarationKind === 'BindingElement' && row.initializerShape === 'not-applicable'
+        : row.routeId === 'package-reference'
+          ? row.source === 'src/extensions/security/logic.ts' && row.declarationKind === 'FunctionDeclaration' && row.initializerShape === 'not-applicable'
+          : false);
   const rawTableBindingConditionShape = row.exportName === 'inspectRawTableBinding'
     && row.declarationName === 'inspectRawTableBinding'
     && (row.routeId === 'package-root-node'
@@ -2089,7 +2148,7 @@ function logicalDeclarationSignature(row) {
         : row.routeId === 'package-reference'
           ? row.source === relationshipConsumerReferenceShape[0] && row.declarationKind === relationshipConsumerReferenceShape[1] && row.initializerShape === relationshipConsumerReferenceShape[2]
           : false);
-  const kind = (conditionBoundExport || numericConditionShape || securityNotConditionShape || rawTableBindingConditionShape || relationshipConsumerConditionShape)
+  const kind = (conditionBoundExport || numericConditionShape || securityNotConditionShape || securityAndOrConditionShape || rawTableBindingConditionShape || relationshipConsumerConditionShape)
     && ['package-root-node', 'package-root-browser', 'package-reference'].includes(row.routeId)
     ? 'condition-selected-root-binding'
     : row.declarationKind;
@@ -2164,12 +2223,19 @@ function externalCensus(packageJson, packageBytes, cliBytes, pythonPackages, scr
   };
 }
 
-export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from(JSON.stringify(packageJson)), cliBytes, pythonPackages, scriptFiles, installedRouteEvidenceManifest = null, installedRouteEvidenceRoot = root }) {
+export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from(JSON.stringify(packageJson)), cliBytes, pythonPackages, scriptFiles, installedRouteEvidenceManifest = null, installedRouteEvidenceRoot = root, defaultRouteRetirementEvidenceManifest = null, defaultRouteRetirementEvidenceRoot = root }) {
   const installedRouteEvidence = installedRouteEvidenceManifest
     ? validateR8InstalledRouteEvidence(installedRouteEvidenceManifest, { root: installedRouteEvidenceRoot })
     : null;
   const qualifiedRouteOperations = installedRouteEvidence ? new Set(installedRouteEvidence.operationNames) : null;
   const rows = publicRows(inventory, qualifiedRouteOperations);
+  if (defaultRouteRetirementEvidenceManifest) {
+    const retired = validateDefaultRouteRetirementEvidence(defaultRouteRetirementEvidenceManifest, rows, { root: defaultRouteRetirementEvidenceRoot });
+    for (const row of rows) {
+      const evidence = retired.get(`${row.routeId}\0${row.logicalDeclarationKey}`);
+      if (evidence) row.defaultRouteRetirement = evidence;
+    }
+  }
   const logicalRows = new Map();
   for (const row of rows) {
     const key = `${row.logicalDeclarationKey}\0${row.rowKind}`;
@@ -2235,6 +2301,7 @@ export function buildLedger({ inventory, packageJson, packageBytes = Buffer.from
     scope: 'Route-specific runtime export declarations for the default Node root, default browser root and explicit TypeScript reference route in the pinned condition-aware inventory. Logical default gaps are counted once, with per-route status; this is a gap census, not retirement approval.',
     input: { path: inventoryPath, sha256: digest(Buffer.from(JSON.stringify(inventory, null, 2) + '\n')) },
     ...(installedRouteEvidence ? { installedRouteEvidence } : {}),
+    ...(defaultRouteRetirementEvidenceManifest ? { defaultRouteRetirementEvidence: { format: defaultRouteRetirementEvidenceManifest.format, manifestSha256: digest(Buffer.from(JSON.stringify(defaultRouteRetirementEvidenceManifest))), archive: defaultRouteRetirementEvidenceManifest.archive, operationCount: defaultRouteRetirementEvidenceManifest.operations.length } } : {}),
     counts,
     runtimeExportDispositionSupplement,
     routeStatus: {
@@ -2411,10 +2478,14 @@ function main() {
   const evidenceFlag = process.argv.indexOf('--installed-route-evidence');
   const evidencePath = evidenceFlag >= 0 ? process.argv[evidenceFlag + 1] : null;
   if (evidenceFlag >= 0 && (!evidencePath || evidencePath.startsWith('--'))) throw new Error('--installed-route-evidence requires an aggregate JSON path');
+  const retirementFlag = process.argv.indexOf('--default-route-retirement-evidence');
+  const retirementPath = retirementFlag >= 0 ? process.argv[retirementFlag + 1] : null;
+  if (retirementFlag >= 0 && (!retirementPath || retirementPath.startsWith('--'))) throw new Error('--default-route-retirement-evidence requires a manifest JSON path');
   const inventory = json(inventoryPath);
   const packageBytes = read('package.json');
   const installedRouteEvidenceManifest = evidencePath ? JSON.parse(fs.readFileSync(path.resolve(root, evidencePath), 'utf8')) : null;
-  const payload = buildLedger({ inventory, packageJson: JSON.parse(packageBytes), packageBytes, cliBytes: read('crates/umf-cli/src/main.rs'), pythonPackages: collectPythonPackages(), scriptFiles: collectScriptFiles(), ...(installedRouteEvidenceManifest ? { installedRouteEvidenceManifest } : {}) });
+  const defaultRouteRetirementEvidenceManifest = retirementPath ? JSON.parse(fs.readFileSync(path.resolve(root, retirementPath), 'utf8')) : null;
+  const payload = buildLedger({ inventory, packageJson: JSON.parse(packageBytes), packageBytes, cliBytes: read('crates/umf-cli/src/main.rs'), pythonPackages: collectPythonPackages(), scriptFiles: collectScriptFiles(), ...(installedRouteEvidenceManifest ? { installedRouteEvidenceManifest } : {}), ...(defaultRouteRetirementEvidenceManifest ? { defaultRouteRetirementEvidenceManifest } : {}) });
   const rendered = JSON.stringify(payload, null, 2) + '\n';
   const output = path.join(root, outputPath);
   if (stdout) {

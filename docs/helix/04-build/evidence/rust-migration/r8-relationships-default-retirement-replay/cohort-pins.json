@@ -1,0 +1,60 @@
+{
+  "format": "umf.r8.relationship-retirement-cohort-pins/1",
+  "status": "historical-replay-only",
+  "archive": {
+    "path": "/private/tmp/umf-r8-sdk-ce1acfb65/umf-sdk.tgz",
+    "sha256": "5513efdca5ddb98fce9c5f8d9e105b07205bed1ebd8cd7cf87354e912da0a02e",
+    "bytes": 43417061,
+    "memberManifestPath": "archive-members.json",
+    "memberManifestSha256": "1e2bca98678637c6bdbdd78baa685cb11729de873f72306ff1b1dfdab900b72d",
+    "archiveMemberCount": 1802,
+    "packageManifestSha256": "1bd5f6cc6db6a5e9ef0e395a19aa6504e8a9a130a2fcbd3faaf4effbac7bb23a",
+    "rustDefaultManifestSha256": "0ec73fe1f84162063b7900c349ded20d10c8429bfa7e74c9f535b8b94eedbb77",
+    "outerDistManifestSha256": "54a333679e8bbd743d03ea5ed36d68a322ad8c43ad0d8cdb542cdf019d4853ca"
+  },
+  "sourceClosure": {
+    "sha256": "4d4fcdc18399339146e5cb710521f68124833adb5cbba6b19a4543bf07aee0e7",
+    "capturedLiveSha256": "4d4fcdc18399339146e5cb710521f68124833adb5cbba6b19a4543bf07aee0e7",
+    "sourceInputCount": 3487,
+    "capturedAtBuildFixedPoint": true,
+    "currentCheckoutMatches": false,
+    "currentDifferenceCount": 6,
+    "currentDifferences": [
+      "scripts/package-sdk-rust-default.ts",
+      "scripts/rust-migration/r8/v4-default-facade.test.mjs",
+      "src/extensions/actions/plan-identity.ts",
+      "src/index-browser-v4.ts",
+      "src/index-node-v4.ts",
+      "src/index-v4-default.ts"
+    ],
+    "sourceManifestPath": "archive-source-cohort.json",
+    "sourceManifestSha256": "afe003c423d734ee8f1e304f69926c265c5a758f8f8476aed8fd84e150b96c31"
+  },
+  "packetPins": {
+    "inspectCoreRelationships.packet.json": "8b9d643d054083cb9b18d250d82c9bf866823dcae93244a91cc47d31735d16a7",
+    "lookupCoreRelationship.packet.json": "bf8ba30999b24c1233aeb898eab46108e3540774c91519b07f2d67c2957111ea",
+    "declareCoreRelationship.packet.json": "dcf9d206b314b7da0d2679477359b4712b50a8dbe7db9ce87652ca40f398a6f3",
+    "verifyCoreRelationshipOperation.packet.json": "9a42a060886b89d7db0da1161fe2dea0ca73dddc9e53628e5e7c1fd6810263a5"
+  },
+  "packetsAbsentFromArchiveSourceClosure": [
+    "inspectCoreRelationships.packet.json",
+    "lookupCoreRelationship.packet.json",
+    "declareCoreRelationship.packet.json",
+    "verifyCoreRelationshipOperation.packet.json"
+  ],
+  "fixturePins": {
+    "scripts/core-relationship-cases.ts": {
+      "capturedArchiveSha256": null,
+      "currentSha256": "6432ac544caee37ea8f197e799c2b82f3f3b7d92ad14f363e6fce83dad2db446"
+    },
+    "scripts/core-relationship-operation-cases.ts": {
+      "capturedArchiveSha256": null,
+      "currentSha256": "0543c77ddeacf9c065113b18f24874ffa3e9ed7088f4422aa8988ee251e5cff8"
+    },
+    "docs/helix/04-build/evidence/rust-migration/r8-core-relationships-default-boundary/predecessor.json": {
+      "capturedArchiveSha256": null,
+      "currentSha256": "1122fc4d019f055570ea72baf88788818091dd513c05f9070624cba15dedb71e"
+    }
+  },
+  "qualification": "Installed ce1acfb65 historical cohort replay only. This packet/harness and current checkout are outside the archived source closure; source-current retirement is blocked."
+}

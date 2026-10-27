@@ -9,6 +9,7 @@ import path from 'node:path';
 import { buildLedger, collectPythonPackageAssets, collectPythonSourceFiles, summarizeDefaultRouteRetirement } from './gap-ledger.mjs';
 import { requiredR8RouteFamilies, validateR8InstalledRouteEvidence } from './installed-route-evidence.mjs';
 import { normalizeR8RouteHostReceipt } from './installed-route-receipt-adapter.mjs';
+import { validateDefaultRouteRetirementEvidence } from './default-route-retirement-evidence.mjs';
 
 const inventory = { symbols: [
   { routeId: 'package-root', exportName: 'inspectCoreSemanticTypes', declarationName: 'inspectCoreSemanticTypes', declarationKind: 'FunctionDeclaration', source: 'src/model/semantic-types.ts', line: 23, sourceSha256: 'a'.repeat(64) },
@@ -27,18 +28,259 @@ const currentGeneratedLedger = () => JSON.parse(execFileSync('node', [
   cwd: process.cwd(), maxBuffer: 64 * 1024 * 1024, encoding: 'utf8',
 }));
 
+async function retirementFixture() {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'umf-r8-retirement-'));
+  const source = 'src/model/retirement-fixture.ts';
+  const sourceBytes = Buffer.from('export function retireableFixture() { return 1; }\n');
+  const sourceSha256 = createHash('sha256').update(sourceBytes).digest('hex');
+  await mkdir(path.dirname(path.join(root, source)), { recursive: true });
+  await writeFile(path.join(root, source), sourceBytes);
+  const contractPath = 'docs/helix/02-design/contracts/CONTRACT-999-fixture.md';
+  const contractBytes = Buffer.from('---\nddx:\n  id: CONTRACT-999\n---\n# Fixture contract\n');
+  await mkdir(path.dirname(path.join(root, contractPath)), { recursive: true });
+  await writeFile(path.join(root, contractPath), contractBytes);
+  const owner = 'umf_core::fixture::retireable_fixture';
+  const packetPath = 'docs/helix/04-build/evidence/retirement-packet.json';
+  const packet = { format: 'umf.r8.default-route-retirement-packet/1', contractId: 'CONTRACT-999', exportName: 'retireableFixture', rustOwner: owner, cases: [
+    { id: 'returns-one', input: {}, expectedOutcome: { value: 1 }, expectedTrace: [{ stage: 'complete' }], expectsRust: true },
+    { id: 'rejects-before-rust', input: { invalid: true }, expectedOutcome: { error: 'invalid' }, expectedTrace: [{ stage: 'admission' }], expectsRust: false },
+  ] };
+  const packetBytes = Buffer.from(JSON.stringify(packet));
+  await mkdir(path.dirname(path.join(root, packetPath)), { recursive: true });
+  await writeFile(path.join(root, packetPath), packetBytes);
+  const logicalDeclarationKey = ['retireableFixture', 'retireableFixture', 'FunctionDeclaration', '0'].join('\0');
+  const rows = [
+    { routeId: 'package-root-node', logicalDeclarationKey, exportName: 'retireableFixture', source, sourceSha256, declarationKind: 'BindingElement', rowKind: 'executable', acceptedRustOperation: owner, sourceSelectedImplementation: { rustOwner: owner } },
+    { routeId: 'package-root-browser', logicalDeclarationKey, exportName: 'retireableFixture', source, sourceSha256, declarationKind: 'BindingElement', rowKind: 'executable', acceptedRustOperation: owner, sourceSelectedImplementation: { rustOwner: owner } },
+    { routeId: 'package-reference', logicalDeclarationKey, exportName: 'retireableFixture', source, sourceSha256, declarationKind: 'FunctionDeclaration', rowKind: 'executable', acceptedRustOperation: owner, sourceSelectedImplementation: null },
+  ];
+  const packageJson = { name: 'fixture', version: '1.0.0', private: false, type: 'module', license: 'MIT', dependencies: {}, exports: {
+    '.': { node: './dist/umf-node.js', browser: './dist/umf-browser.js' },
+    './reference': { import: './dist/umf.js' },
+  } };
+  const packageBytes = Buffer.from(JSON.stringify(packageJson));
+  await writeFile(path.join(root, 'package.json'), packageBytes);
+  const archivedPackage = { name: packageJson.name, version: packageJson.version, private: true, type: packageJson.type, license: packageJson.license, files: ['dist/'], exports: packageJson.exports, dependencies: packageJson.dependencies };
+  const archivedPackageBytes = Buffer.from(`${JSON.stringify(archivedPackage, null, 2)}\n`);
+  const archivePackagePath = 'extracted-archive/package.json';
+  await mkdir(path.dirname(path.join(root, archivePackagePath)), { recursive: true });
+  await writeFile(path.join(root, archivePackagePath), archivedPackageBytes);
+  const archivedPackageSha = createHash('sha256').update(archivedPackageBytes).digest('hex');
+  const packageSha = createHash('sha256').update(packageBytes).digest('hex');
+  const builderPath = 'scripts/package-sdk.py';
+  const builderBytes = Buffer.from("package_json = {\n 'private': True,\n 'files': ['dist/'],\n 'exports': metadata['exports'],\n}\n");
+  await mkdir(path.dirname(path.join(root, builderPath)), { recursive: true });
+  await writeFile(path.join(root, builderPath), builderBytes);
+  const memberMap = {
+    'package.json': archivedPackageSha,
+    'dist/umf-node.js': 'd'.repeat(64), 'dist/umf_core_node.node': 'e'.repeat(64),
+    'dist/umf-browser.js': 'f'.repeat(64), 'dist/umf_core_wasm_bg.wasm': '1'.repeat(64),
+    'dist/umf.js': '2'.repeat(64),
+  };
+  const archive = { sha256: 'a'.repeat(64), sourceClosureSha256: '', sourceInputCount: 5, generatedTransformCount: 0, packageManifestSha256: archivedPackageSha };
+  const closureInputs = { [source]: sourceSha256, [contractPath]: createHash('sha256').update(contractBytes).digest('hex'), [packetPath]: createHash('sha256').update(packetBytes).digest('hex'), 'package.json': packageSha, [builderPath]: createHash('sha256').update(builderBytes).digest('hex') };
+  const closureHash = createHash('sha256');
+  for (const name of Object.keys(closureInputs).sort()) {
+    closureHash.update(name); closureHash.update('\0'); closureHash.update(await readFile(path.join(root, name))); closureHash.update('\0');
+  }
+  archive.sourceClosureSha256 = closureHash.digest('hex');
+  const liveDocPath = 'receipts/live-source-manifest.json';
+  const liveDocBytes = Buffer.from(JSON.stringify({ sourceClosure: { sha256: archive.sourceClosureSha256, capturedLiveSha256: archive.sourceClosureSha256, fileCount: 5, transform: { status: 'fixed-point', generatedInputs: [] }, inputs: closureInputs } }));
+  await mkdir(path.dirname(path.join(root, liveDocPath)), { recursive: true });
+  await writeFile(path.join(root, liveDocPath), liveDocBytes);
+  const memberDocPath = 'receipts/archive-members.json';
+  const memberDocBytes = Buffer.from(JSON.stringify({ status: 'pass', algorithm: 'sha256', archiveSha256: archive.sha256, packageManifestSha256: archivedPackageSha, archiveMemberCount: Object.keys(memberMap).length, verifiedMemberCount: Object.keys(memberMap).length, members: memberMap }));
+  await writeFile(path.join(root, memberDocPath), memberDocBytes);
+  const receipts = [];
+  for (const runtime of ['node', 'bun', 'chromium']) {
+    const node = runtime !== 'chromium';
+    const receipt = {
+      format: 'umf.r8.default-route-retirement-host-receipt/1', status: 'pass', runtime, hostVersion: `${runtime} fixture 1.0`,
+      archiveSha256: archive.sha256, sourceClosureSha256: archive.sourceClosureSha256,
+      packetSha256: createHash('sha256').update(packetBytes).digest('hex'),
+      defaultRoute: node
+        ? { routeId: 'package-root-node', entryMember: 'dist/umf-node.js', entrySha256: memberMap['dist/umf-node.js'], artifactMembers: [{ path: 'dist/umf_core_node.node', sha256: memberMap['dist/umf_core_node.node'] }] }
+        : { routeId: 'package-root-browser', entryMember: 'dist/umf-browser.js', entrySha256: memberMap['dist/umf-browser.js'], artifactMembers: [{ path: 'dist/umf_core_wasm_bg.wasm', sha256: memberMap['dist/umf_core_wasm_bg.wasm'] }] },
+      referenceRoute: { routeId: 'package-reference', entryMember: 'dist/umf.js', entrySha256: memberMap['dist/umf.js'], artifactMembers: [] },
+      cases: [
+        { id: 'returns-one', defaultOutcome: { value: 1 }, defaultTrace: [{ stage: 'complete' }], defaultRustCalls: 1, referenceOutcome: { value: 1 }, referenceTrace: [{ stage: 'complete' }], referenceRustCalls: 0 },
+        { id: 'rejects-before-rust', defaultOutcome: { error: 'invalid' }, defaultTrace: [{ stage: 'admission' }], defaultRustCalls: 0, referenceOutcome: { error: 'invalid' }, referenceTrace: [{ stage: 'admission' }], referenceRustCalls: 0 },
+      ],
+    };
+    const receiptPath = `receipts/${runtime}.json`;
+    await mkdir(path.dirname(path.join(root, receiptPath)), { recursive: true });
+    const bytes = Buffer.from(JSON.stringify(receipt));
+    await writeFile(path.join(root, receiptPath), bytes);
+    receipts.push({ runtime, path: receiptPath, sha256: createHash('sha256').update(bytes).digest('hex') });
+  }
+  const manifest = {
+    format: 'umf.r8.default-route-retirement-evidence/1', status: 'pass', archive,
+    liveSourceManifest: { path: liveDocPath, sha256: createHash('sha256').update(liveDocBytes).digest('hex') },
+    memberManifest: { path: memberDocPath, sha256: createHash('sha256').update(memberDocBytes).digest('hex') },
+    operations: [{ exportName: 'retireableFixture', logicalDeclarationKey, contract: { id: 'CONTRACT-999', path: contractPath, sha256: createHash('sha256').update(contractBytes).digest('hex') }, rustOwner: owner,
+      rows: rows.slice(0, 2).map(({ routeId, logicalDeclarationKey, exportName, source, sourceSha256, declarationKind }) => ({ routeId, logicalDeclarationKey, exportName, source, sourceSha256, declarationKind })),
+      packet: { path: packetPath, sha256: createHash('sha256').update(packetBytes).digest('hex') }, receipts }],
+  };
+  manifest.archivePackageManifest = { path: archivePackagePath, sha256: archivedPackageSha };
+  return { root, rows, manifest, receipts, source, archivePackagePath, memberDocPath, memberMap };
+}
+
+test('default-route retirement requires an exact current row pair and all three fixed-point host/reference receipts', async () => {
+  const fixture = await retirementFixture();
+  try {
+    const result = validateDefaultRouteRetirementEvidence(fixture.manifest, fixture.rows, { root: fixture.root });
+    assert.deepEqual([...result.keys()].sort(), [
+      `package-root-browser\0${fixture.manifest.operations[0].logicalDeclarationKey}`,
+      `package-root-node\0${fixture.manifest.operations[0].logicalDeclarationKey}`,
+    ].sort());
+    assert.ok([...result.values()].every(value => value.status === 'retired'));
+    assert.equal(result.get(`package-root-node\0${fixture.manifest.operations[0].logicalDeclarationKey}`).evidence.length, 4);
+    assert.equal(result.get(`package-root-browser\0${fixture.manifest.operations[0].logicalDeclarationKey}`).evidence.length, 3);
+    for (const row of fixture.rows) {
+      const disposition = result.get(`${row.routeId}\0${row.logicalDeclarationKey}`);
+      if (disposition) row.defaultRouteRetirement = disposition;
+      else if (row.routeId === 'package-reference') row.defaultRouteRetirement = { status: 'reference-only', evidence: [] };
+    }
+    assert.deepEqual(summarizeDefaultRouteRetirement(fixture.rows), {
+      logicalGaps: 0,
+      byRoute: { 'package-root-node': { open: 0, retired: 1 }, 'package-root-browser': { open: 0, retired: 1 } },
+    });
+
+    const negativeCases = [
+      ['only one default row', m => { m.operations[0].rows.pop(); }],
+      ['wrong row source', m => { m.operations[0].rows[0].source = 'src/model/other.ts'; }],
+      ['unaccepted Rust owner', m => { m.operations[0].rustOwner = 'umf_core::other::operation'; }],
+      ['missing host receipt', m => { m.operations[0].receipts.pop(); }],
+      ['duplicate host receipt', m => { m.operations[0].receipts[2].runtime = 'node'; }],
+      ['fabricated boolean success fields', async (m, f) => {
+        const pin = m.operations[0].receipts[0];
+        const file = path.join(f.root, pin.path);
+        const receipt = JSON.parse(await readFile(file, 'utf8'));
+        receipt.invokedRust = true;
+        receipt.exactOutcomeParity = true;
+        const bytes = Buffer.from(JSON.stringify(receipt));
+        await writeFile(file, bytes);
+        pin.sha256 = createHash('sha256').update(bytes).digest('hex');
+      }],
+      ['mixed archive identity', async (m, f) => {
+        const pin = m.operations[0].receipts[0];
+        const file = path.join(f.root, pin.path);
+        const receipt = JSON.parse(await readFile(file, 'utf8'));
+        receipt.archiveSha256 = '9'.repeat(64);
+        const bytes = Buffer.from(JSON.stringify(receipt));
+        await writeFile(file, bytes);
+        pin.sha256 = createHash('sha256').update(bytes).digest('hex');
+      }],
+      ['valid case bypasses Rust', async (m, f) => {
+        const pin = m.operations[0].receipts[0];
+        const file = path.join(f.root, pin.path);
+        const receipt = JSON.parse(await readFile(file, 'utf8'));
+        receipt.cases[0].defaultRustCalls = 0;
+        const bytes = Buffer.from(JSON.stringify(receipt));
+        await writeFile(file, bytes);
+        pin.sha256 = createHash('sha256').update(bytes).digest('hex');
+      }],
+      ['preflight refusal enters Rust', async (m, f) => {
+        const pin = m.operations[0].receipts[0];
+        const file = path.join(f.root, pin.path);
+        const receipt = JSON.parse(await readFile(file, 'utf8'));
+        receipt.cases[1].defaultRustCalls = 1;
+        const bytes = Buffer.from(JSON.stringify(receipt));
+        await writeFile(file, bytes);
+        pin.sha256 = createHash('sha256').update(bytes).digest('hex');
+      }],
+      ['reference Rust call', async (m, f) => {
+        const pin = m.operations[0].receipts[0];
+        const file = path.join(f.root, pin.path);
+        const receipt = JSON.parse(await readFile(file, 'utf8'));
+        receipt.cases[0].referenceRustCalls = 1;
+        const bytes = Buffer.from(JSON.stringify(receipt));
+        await writeFile(file, bytes);
+        pin.sha256 = createHash('sha256').update(bytes).digest('hex');
+      }],
+      ['receipt identity mismatch', async (m, f) => {
+        const pin = m.operations[0].receipts[0];
+        const file = path.join(f.root, pin.path);
+        const receipt = JSON.parse(await readFile(file, 'utf8'));
+        receipt.cases[0].defaultOutcome.value = 999;
+        const bytes = Buffer.from(JSON.stringify(receipt));
+        await writeFile(file, bytes);
+        pin.sha256 = createHash('sha256').update(bytes).digest('hex');
+      }],
+      ['stale contract bytes', m => { m.operations[0].contract.sha256 = '0'.repeat(64); }],
+      ['stale current source bytes', m => { m.operations[0].rows[0].sourceSha256 = '0'.repeat(64); }],
+      ['wrong entry member hash', async (m, f) => {
+        const pin = m.operations[0].receipts[0];
+        const file = path.join(f.root, pin.path);
+        const receipt = JSON.parse(await readFile(file, 'utf8'));
+        receipt.defaultRoute.entrySha256 = '9'.repeat(64);
+        const bytes = Buffer.from(JSON.stringify(receipt));
+        await writeFile(file, bytes);
+        pin.sha256 = createHash('sha256').update(bytes).digest('hex');
+      }],
+      ['wrong artifact member hash', async (m, f) => {
+        const pin = m.operations[0].receipts[0];
+        const file = path.join(f.root, pin.path);
+        const receipt = JSON.parse(await readFile(file, 'utf8'));
+        receipt.defaultRoute.artifactMembers[0].sha256 = '9'.repeat(64);
+        const bytes = Buffer.from(JSON.stringify(receipt));
+        await writeFile(file, bytes);
+        pin.sha256 = createHash('sha256').update(bytes).digest('hex');
+      }],
+      ['wrong archived package bytes', async (m, f) => {
+        await writeFile(path.join(f.root, f.archivePackagePath), '{"changed":true}');
+      }],
+      ['wrong archived package route conditions', async (m, f) => {
+        const packagePath = path.join(f.root, f.archivePackagePath);
+        const archivedPackage = JSON.parse(await readFile(packagePath, 'utf8'));
+        archivedPackage.exports['.'].node = './dist/other-node.js';
+        const packageBytes = Buffer.from(`${JSON.stringify(archivedPackage, null, 2)}\n`);
+        await writeFile(packagePath, packageBytes);
+        const packageSha = createHash('sha256').update(packageBytes).digest('hex');
+        m.archive.packageManifestSha256 = packageSha;
+        m.archivePackageManifest.sha256 = packageSha;
+        const memberFile = path.join(f.root, f.memberDocPath);
+        const memberDoc = JSON.parse(await readFile(memberFile, 'utf8'));
+        memberDoc.packageManifestSha256 = packageSha;
+        memberDoc.members['package.json'] = packageSha;
+        const memberBytes = Buffer.from(JSON.stringify(memberDoc));
+        await writeFile(memberFile, memberBytes);
+        m.memberManifest.sha256 = createHash('sha256').update(memberBytes).digest('hex');
+      }],
+      ['stale frozen packet', async (m, f) => {
+        await writeFile(path.join(f.root, m.operations[0].packet.path), JSON.stringify({ changed: true }));
+      }],
+      ['live source closure drift', async (m, f) => {
+        await writeFile(path.join(f.root, f.source), 'changed');
+      }],
+    ];
+    for (const [label, mutate] of negativeCases) {
+      const next = await retirementFixture();
+      try {
+        const manifest = structuredClone(next.manifest);
+        await mutate(manifest, next);
+        assert.throws(() => validateDefaultRouteRetirementEvidence(manifest, next.rows, { root: next.root }), undefined, label);
+      } finally {
+        await rm(next.root, { recursive: true, force: true });
+      }
+    }
+  } finally {
+    await rm(fixture.root, { recursive: true, force: true });
+  }
+});
+
 test('current V4 root exports preserve temporal gaps and recognize bounded Core Relationships evidence', () => {
   const inventoryReceipt = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json', 'utf8'));
   const ledger = currentGeneratedLedger();
   const expected = [
     'parseGregorianDate', 'truncateGregorianDate', 'parseRfc3339ExactInstant', 'sameRfc3339ExactInstant',
     'inspectCoreRelationships', 'lookupCoreRelationship', 'declareCoreRelationship', 'verifyCoreRelationshipOperation',
-    'securityNot',
+    'securityNot', 'securityAnd', 'securityOr',
   ];
   const entries = new Map(inventoryReceipt.defaultRouteEntrySelections.map(selection => [selection.routeId, selection]));
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     const selection = entries.get(routeId);
-    assert.equal(selection.directExportCount, 76);
+    assert.equal(selection.directExportCount, 78);
     assert.ok(expected.every(name => selection.directExports.includes(name)), `${routeId} misses an override`);
     const rows = ledger.rows.filter(row => row.routeId === routeId && expected.includes(row.exportName));
     assert.equal(rows.length, expected.length);
@@ -50,12 +292,15 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
     assert.ok(temporal.every(row => row.bindingRouteStatus === 'unproven' && row.sourceSelectedImplementation.status === 'installed-private-prior-cohort'));
     assert.equal(relationships.length, 4);
     assert.ok(relationships.every(row => row.bindingRouteStatus === 'unproven' && row.sourceSelectedImplementation.status === 'installed-private-fixed-point-cohort'));
+    const securityFolds = rows.filter(row => row.exportName === 'securityAnd' || row.exportName === 'securityOr');
+    assert.equal(securityFolds.length, 2);
+    assert.ok(securityFolds.every(row => row.bindingRouteStatus === 'unproven' && row.sourceSelectedImplementation.status === 'source-selected-private-source-replay'));
   }
   const reference = ledger.rows.filter(row => row.routeId === 'package-reference' && expected.includes(row.exportName));
   assert.equal(reference.length, expected.length);
   assert.ok(reference.every(row => row.sourceSelectedImplementation === null));
   assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 100);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 104);
   const archivedGate = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-installed-route-evidence/current-6f4f21c1/gate-result.json', 'utf8'));
   assert.equal(archivedGate.status, 'pass');
   assert.equal(archivedGate.archive.sourceClosureSha256, '6f4f21c1dfbdde5959f6e5386419c0c2f90b3a8f0512d148b60825e93afce593');
@@ -173,7 +418,7 @@ test('V4 relationship consumer exports are hybrid bindings without Rust consumer
     assert.equal(rows[2].sourceSelectedImplementation, null);
     assert.equal(rows[2].defaultRouteRetirement.status, 'reference-only');
   }
-  assert.equal(ledger.counts.sourceSelectedRustOverrides, 100);
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 104);
   assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 77);
   assert.deepEqual(ledger.counts.executableDefaultRouteRetirementsByRoute, { 'package-root-node': 0, 'package-root-browser': 0 });
 
@@ -2205,6 +2450,36 @@ test('security truth and composition map only their four reviewed opt-in operati
     assert.ok(pin.focusedTestClosure.some(item => item.path === 'bindings/core/node/tests/security-logic.test.js'));
     if (row.routeId === 'package-reference') assert.equal(row.sourceSelectedImplementation, null);
   }
+});
+
+test('securityAnd/securityOr V4 bindings normalize exactly and carry source-only replay evidence', () => {
+  const ledger = currentGeneratedLedger();
+  assert.equal(ledger.counts.executableDefaultRouteGaps, 922);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 77);
+  assert.equal(ledger.counts.executableWithoutAcceptedRustMapping, 845);
+  for (const name of ['securityAnd', 'securityOr']) {
+    const rustSymbol = name === 'securityAnd' ? 'security_and' : 'security_or';
+    for (const routeId of ['package-root-node', 'package-root-browser']) {
+      const row = ledger.rows.find(item => item.routeId === routeId && item.exportName === name);
+      assert.equal(row.sourceSelectedImplementation.status, 'source-selected-private-source-replay');
+      assert.equal(row.sourceSelectedImplementation.rustOwner, `umf_core::security_logic::${rustSymbol}`);
+      assert.match(row.sourceSelectedImplementation.qualificationStatus, /68 frozen cases.*30 valid Rust\/WASM calls and zero invalid calls/);
+      assert.equal(row.bindingRouteStatus, 'unproven');
+      assert.equal(row.defaultRouteRetirement.status, 'open');
+      for (const host of ['node', 'bun', 'chromium']) {
+        assert.ok(row.sourceSelectedImplementation.qualificationEvidenceClosure.some(item => item.path.endsWith(`/r8-security-and-or-v4-source-replay/${host}.json`)));
+      }
+    }
+    const reference = ledger.rows.find(item => item.routeId === 'package-reference' && item.exportName === name);
+    assert.equal(reference.sourceSelectedImplementation, null);
+    assert.equal(reference.defaultRouteRetirement.status, 'reference-only');
+  }
+
+  const symbols = JSON.parse(readFileSync('docs/helix/04-build/evidence/rust-migration/r8-symbol-inventory/inventory.json', 'utf8')).symbols
+    .filter(row => ['securityAnd', 'securityOr'].includes(row.exportName));
+  const changed = symbols.map(row => row.routeId === 'package-root-node' && row.exportName === 'securityAnd'
+    ? { ...row, declarationKind: 'FunctionDeclaration' } : row);
+  assert.throws(() => buildLedger({ ...args, inventory: { symbols: changed } }), /declaration multiplicity differs/);
 });
 
 test('bounded protection operations map to their reviewed Rust candidates without retiring default routes', () => {
