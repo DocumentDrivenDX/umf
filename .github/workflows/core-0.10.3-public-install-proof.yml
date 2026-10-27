@@ -79,7 +79,7 @@ jobs:
           set -euo pipefail
           python3 tools/core_python_qualification_runner.py run --root "$RUNNER_TEMP/core-wheel-bounds" --name validate-held-public-proof-packet -- \
             python - "$INPUT_PACKET" "$GITHUB_OUTPUT" <<'PY'
-          import json, os, pathlib, re, sys
+          import json, os, pathlib, re, sys, unittest
           from tools.verify_core_public_producer import retained_policy_packet
           packet_path, output_path = map(pathlib.Path, sys.argv[1:])
           packet = json.loads(packet_path.read_text(encoding="utf-8"))
@@ -156,6 +156,11 @@ jobs:
                   raise SystemExit("Public asset exceeds its exact download bound")
           if sum(row["sizeBytes"] for row in assets.values()) + sum(row["sizeBytes"] for row in metadata.values()) > 16777216:
               raise SystemExit("Complete public release asset family exceeds the fixed 16 MiB aggregate bound")
+          from tools import test_core_public_producer_transport
+          transport_suite = unittest.defaultTestLoader.loadTestsFromModule(test_core_public_producer_transport)
+          transport_result = unittest.TextTestRunner(verbosity=2).run(transport_suite)
+          if not transport_result.wasSuccessful():
+              raise SystemExit("Producer API and artifact redirect regression failed")
           for key, value in (("producer_source_commit", producer["sourceCommit"]), ("producer_source_tree", producer["sourceTree"]), ("producer_run_id", str(producer["workflowRunId"])), ("producer_run_attempt", str(producer["workflowRunAttempt"])), ("release_tag", release["tag"]), ("release_commit", release["commit"])):
               output_path.open("a", encoding="utf-8").write(f"{key}={value}\n")
           PY
