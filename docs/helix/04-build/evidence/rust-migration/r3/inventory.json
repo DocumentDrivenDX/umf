@@ -269,12 +269,12 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "d155c22ca9849482a7e531cf43d5d8759cdc997e8c7301db179e361781b4bfc6",
+    "sourceCohortSha256": "be14ab694341f091f00fa8aec11df229cd2813e643020cb441e56dd3182d4d90",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 433,
-    "algorithmSymbols": 12632,
+    "algorithmSymbols": 12634,
     "pythonModules": 126,
     "rustBuildInputs": 79,
     "rustModules": 128,
@@ -13448,12 +13448,12 @@
         "resolve",
         "snapshot"
       ],
-      "bytes": 38542,
+      "bytes": 38960,
       "disposition": "active-host-tooling-algorithm",
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "python/umf_access/src/umf_access/lifecycle/ingress_custody.py",
-      "sha256": "ae8729954e4e626c5e20181f286d0802334fdde622862a52874c9a2e3afa4422"
+      "sha256": "4a5c78004e88eaddaf8ce0529b3e6304b97939e5c7e3b120da801a934439c1b7"
     },
     {
       "activationEvidence": [
@@ -14453,12 +14453,12 @@
         "recover_creation_receipt",
         "verify_creation_receipt"
       ],
-      "bytes": 45394,
+      "bytes": 46046,
       "disposition": "active-host-tooling-algorithm",
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "python/umf_access/src/umf_access/lifecycle/row_originals_creation.py",
-      "sha256": "62ed7e8f5e2df39dc762e905e9a425dad596060e71154f71e0a762aadf1b1e4e"
+      "sha256": "a767425c1354af11929611273f0b8815d764dae731f841158ae024da0f88d6b3"
     },
     {
       "activationEvidence": [
@@ -17387,12 +17387,12 @@
         "verify_boundary",
         "verify_predecessor"
       ],
-      "bytes": 12625,
+      "bytes": 12626,
       "disposition": "unreferenced-test-source",
       "language": "py",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "python/umf_access/tests/test_g03_host.py",
-      "sha256": "28bbb541ddf64ca77bfaad46456d953906d75504ce2cfd8c047f51b099f12feb"
+      "sha256": "09020973aca090a3547995460a3ffd7cceef4f9569dc515e0961ba87bf207fdc"
     },
     {
       "activationEvidence": [
@@ -17832,12 +17832,12 @@
         "transaction",
         "transaction"
       ],
-      "bytes": 137746,
+      "bytes": 137758,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "py",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "python/umf_access/tests/test_ingress_local_postgres.py",
-      "sha256": "cda9a924839eef4e639e301d8b3348bc41df414ed2778bbdf52dd59d267d1972"
+      "sha256": "b9d7aa9cc29fc2734c60d9c7e11ab590771fee7f0cee582b575d2586347e6aee"
     },
     {
       "activationEvidence": [],
@@ -40409,12 +40409,12 @@
         "validate_current_release_sources",
         "validate_split_runtime_lock"
       ],
-      "bytes": 80471,
+      "bytes": 80546,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "py",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/codegen/aggregate_cohort.py",
-      "sha256": "e2e8bc524bcc49831d1f06b992a7c3ae5f2efeb1d33172a11a1470009aae56aa"
+      "sha256": "e2d50857b911c135df1489e671fdf7eadbaa1d8ddd283ec019546d1db68c5a63"
     },
     {
       "activationEvidence": [
@@ -40607,6 +40607,8 @@
         "test_split_profile_binds_two_linux_receipts_and_two_data_only_mac_targets",
         "test_split_target_refuses_rehashed_alternate_access_wheel",
         "test_split_validation_refuses_coherent_nineteenth_linux_distribution",
+        "test_split_validation_refuses_rehashed_cross_cell_logical_source_drift",
+        "test_split_validation_refuses_rehashed_logical_release_metadata_drift",
         "test_split_validation_refuses_rehashed_noncanonical_mirror_source",
         "test_symlinked_union_path_refuses",
         "test_unexpected_shared_mirror_file_refuses",
@@ -40614,12 +40616,12 @@
         "test_unsafe_union_path_refuses_before_path_use",
         "test_wrong_selected_environment_refuses"
       ],
-      "bytes": 48915,
+      "bytes": 54700,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "py",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/codegen/test_aggregate_cohort.py",
-      "sha256": "c1d22e1d0e2a8ae605c4feeeb52b564ad29d6c2d67932525bc5d8be4d6c461ef"
+      "sha256": "5c82504d57e9e54161f6706c5e8142629938cc9a49b2261f8f4d9244705ba330"
     },
     {
       "activationEvidence": [
@@ -59146,22 +59148,18 @@
       "sha256": "41b72fda9055ee131c5ef1c7236594e53995386864cb099019d534103f504929"
     },
     {
-      "bytes": 38542,
+      "bytes": 38960,
       "disposition": "lifecycle-plan-or-executor",
       "imports": [
         ".",
         ".generation_ingress",
         ".owner_bootstrap",
-        ".target_custody_codec",
         "__future__",
         "collections.abc",
         "contextlib",
         "fcntl",
-        "hashlib",
-        "json",
         "os",
         "pathlib",
-        "re",
         "stat",
         "tempfile",
         "typing"
@@ -59174,7 +59172,7 @@
         "LocalTargetCustodian"
       ],
       "resolvedInternalImports": [],
-      "sha256": "ae8729954e4e626c5e20181f286d0802334fdde622862a52874c9a2e3afa4422"
+      "sha256": "4a5c78004e88eaddaf8ce0529b3e6304b97939e5c7e3b120da801a934439c1b7"
     },
     {
       "bytes": 462555,
@@ -59649,11 +59647,11 @@
       "sha256": "83e5d87324764606a6b81a842797da86400d071153b3c2152e59dfb2c56f199d"
     },
     {
-      "bytes": 45394,
+      "bytes": 46046,
       "disposition": "lifecycle-plan-or-executor",
       "imports": [
+        ".",
         ".catalog",
-        ".row_originals_receipt",
         "__future__",
         "base64",
         "hashlib",
@@ -59670,7 +59668,7 @@
         "verify_creation_receipt"
       ],
       "resolvedInternalImports": [],
-      "sha256": "62ed7e8f5e2df39dc762e905e9a425dad596060e71154f71e0a762aadf1b1e4e"
+      "sha256": "a767425c1354af11929611273f0b8815d764dae731f841158ae024da0f88d6b3"
     },
     {
       "bytes": 17531,
