@@ -1,0 +1,193 @@
+{
+  "format": "umf.r8.default-route-retirement-packet/1",
+  "contractId": "CONTRACT-040",
+  "exportName": "inspectCoreRecordMembers",
+  "rustOwner": "umf_core::record_members_inspection::inspect_core_record_members",
+  "cases": [
+    {
+      "id": "inspectCoreRecordMembers.known",
+      "input": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "uuid",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "record"
+        }
+      },
+      "expectedOutcome": {
+        "status": "returned",
+        "value": {
+          "identity": {
+            "element": "record",
+            "module": "m"
+          },
+          "meaning": {
+            "members": [
+              {
+                "element": "value",
+                "module": "m"
+              }
+            ],
+            "state": "known",
+            "uninterpretedPaths": []
+          },
+          "operation": "inspect-core-record-members",
+          "path": "/modules/0/elements/0/members",
+          "provenance": "unverified",
+          "source": {
+            "id": "uuid-fixture",
+            "modules": [
+              {
+                "elements": [
+                  {
+                    "extensions": {},
+                    "id": "record",
+                    "keys": [
+                      {
+                        "fields": [
+                          {
+                            "element": "value",
+                            "module": "m"
+                          }
+                        ],
+                        "id": "id",
+                        "name": "ID"
+                      }
+                    ],
+                    "kind": "record",
+                    "members": [
+                      {
+                        "element": "value",
+                        "module": "m"
+                      }
+                    ]
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "value",
+                    "kind": "field",
+                    "nullability": "required",
+                    "scalarType": "uuid"
+                  }
+                ],
+                "id": "m",
+                "namespace": "test"
+              }
+            ],
+            "umf": "0.10.0",
+            "vocabularies": {}
+          },
+          "version": "0.3.0"
+        }
+      },
+      "expectedTrace": [],
+      "expectsRust": true
+    },
+    {
+      "id": "inspectCoreRecordMembers.accessor_identity",
+      "input": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "uuid",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "record"
+        },
+        "profile": "accessor_identity"
+      },
+      "expectedOutcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "NON_JSON",
+        "path": "/module",
+        "message": "Hidden fields and accessors cannot be serialized faithfully"
+      },
+      "expectedTrace": [],
+      "expectsRust": false
+    }
+  ]
+}

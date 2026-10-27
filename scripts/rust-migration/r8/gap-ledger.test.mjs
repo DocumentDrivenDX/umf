@@ -3,13 +3,14 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
+import { gzipSync } from 'node:zlib';
 import { cp, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { buildLedger, collectPythonPackageAssets, collectPythonSourceFiles, summarizeDefaultRouteRetirement } from './gap-ledger.mjs';
 import { requiredR8RouteFamilies, validateR8InstalledRouteEvidence } from './installed-route-evidence.mjs';
 import { normalizeR8RouteHostReceipt } from './installed-route-receipt-adapter.mjs';
-import { validateDefaultRouteRetirementEvidence } from './default-route-retirement-evidence.mjs';
+import { tarMembers, validateDefaultRouteRetirementEvidence } from './default-route-retirement-evidence.mjs';
 
 const inventory = { symbols: [
   { routeId: 'package-root', exportName: 'inspectCoreSemanticTypes', declarationName: 'inspectCoreSemanticTypes', declarationKind: 'FunctionDeclaration', source: 'src/model/semantic-types.ts', line: 23, sourceSha256: 'a'.repeat(64) },
@@ -27,6 +28,62 @@ const currentGeneratedLedger = () => JSON.parse(execFileSync('node', [
 ], {
   cwd: process.cwd(), maxBuffer: 64 * 1024 * 1024, encoding: 'utf8',
 }));
+
+function paxRecord(key, value) {
+  const body = Buffer.from(`${key}=${value}\n`);
+  let length = body.length + 2;
+  while (true) {
+    const next = body.length + String(length).length + 1;
+    if (next === length) return Buffer.from(`${length} ${body.toString('utf8')}`);
+    length = next;
+  }
+}
+
+function fixtureTar(entries, paxOverrides = {}) {
+  const blocks = [];
+  const addEntry = (name, content, type = 48) => {
+    const header = Buffer.alloc(512);
+    header.write(name, 0, 100, 'utf8');
+    header.write('0000644\0', 100, 8, 'ascii');
+    header.write('0000000\0', 108, 8, 'ascii');
+    header.write('0000000\0', 116, 8, 'ascii');
+    header.write(`${content.length.toString(8).padStart(11, '0')}\0`, 124, 12, 'ascii');
+    header.write('00000000000\0', 136, 12, 'ascii');
+    header.fill(32, 148, 156);
+    header[156] = type;
+    header.write('ustar\0', 257, 6, 'ascii');
+    header.write('00', 263, 2, 'ascii');
+    const checksum = header.reduce((sum, byte) => sum + byte, 0);
+    header.write(`${checksum.toString(8).padStart(6, '0')}\0 `, 148, 8, 'ascii');
+    blocks.push(header, content, Buffer.alloc((512 - (content.length % 512)) % 512));
+  };
+  for (const [name, content] of Object.entries(entries).sort(([a], [b]) => a.localeCompare(b))) {
+    const pax = paxOverrides[name] ?? (Buffer.byteLength(name) > 100 ? paxRecord('path', name) : null);
+    if (pax !== null) addEntry('././@PaxHeader', pax, 120);
+    addEntry(Buffer.byteLength(name) > 100 || pax !== null ? 'package/pax-placeholder' : name, content);
+  }
+  blocks.push(Buffer.alloc(1024));
+  const tar = Buffer.concat(blocks);
+  const remainder = tar.length % 10240;
+  return gzipSync(remainder ? Buffer.concat([tar, Buffer.alloc(10240 - remainder)]) : tar, { mtime: 0 });
+}
+
+test('archive parser accepts safe PAX paths and rejects unsupported or unsafe PAX records', () => {
+  const longPath = `package/dist/${'long-name-'.repeat(12)}.json`;
+  const content = Buffer.from('pax payload');
+  const parsed = tarMembers(fixtureTar({ [longPath]: content }));
+  assert.equal(parsed.members[longPath.slice('package/'.length)], createHash('sha256').update(content).digest('hex'));
+
+  const unsupported = fixtureTar({ 'package/dist/file.json': content }, {
+    'package/dist/file.json': paxRecord('uid', '0'),
+  });
+  assert.throws(() => tarMembers(unsupported), /unsupported or duplicate metadata/);
+
+  const unsafe = fixtureTar({ 'package/dist/file.json': content }, {
+    'package/dist/file.json': paxRecord('path', 'package/../outside.json'),
+  });
+  assert.throws(() => tarMembers(unsafe), /archive member path is unsafe/);
+});
 
 async function retirementFixture() {
   const root = await mkdtemp(path.join(os.tmpdir(), 'umf-r8-retirement-'));
@@ -71,13 +128,7 @@ async function retirementFixture() {
   const builderBytes = Buffer.from("package_json = {\n 'private': True,\n 'files': ['dist/'],\n 'exports': metadata['exports'],\n}\n");
   await mkdir(path.dirname(path.join(root, builderPath)), { recursive: true });
   await writeFile(path.join(root, builderPath), builderBytes);
-  const memberMap = {
-    'package.json': archivedPackageSha,
-    'dist/umf-node.js': 'd'.repeat(64), 'dist/umf_core_node.node': 'e'.repeat(64),
-    'dist/umf-browser.js': 'f'.repeat(64), 'dist/umf_core_wasm_bg.wasm': '1'.repeat(64),
-    'dist/umf.js': '2'.repeat(64),
-  };
-  const archive = { sha256: 'a'.repeat(64), sourceClosureSha256: '', sourceInputCount: 5, generatedTransformCount: 0, packageManifestSha256: archivedPackageSha };
+  const archive = { path: 'archives/sdk.tgz', sha256: '', sourceClosureSha256: '', sourceInputCount: 5, generatedTransformCount: 0, packageManifestSha256: archivedPackageSha };
   const closureInputs = { [source]: sourceSha256, [contractPath]: createHash('sha256').update(contractBytes).digest('hex'), [packetPath]: createHash('sha256').update(packetBytes).digest('hex'), 'package.json': packageSha, [builderPath]: createHash('sha256').update(builderBytes).digest('hex') };
   const closureHash = createHash('sha256');
   for (const name of Object.keys(closureInputs).sort()) {
@@ -88,6 +139,21 @@ async function retirementFixture() {
   const liveDocBytes = Buffer.from(JSON.stringify({ sourceClosure: { sha256: archive.sourceClosureSha256, capturedLiveSha256: archive.sourceClosureSha256, fileCount: 5, transform: { status: 'fixed-point', generatedInputs: [] }, inputs: closureInputs } }));
   await mkdir(path.dirname(path.join(root, liveDocPath)), { recursive: true });
   await writeFile(path.join(root, liveDocPath), liveDocBytes);
+  const archiveEntries = {
+    'package/package.json': archivedPackageBytes,
+    'package/dist/umf-node.js': Buffer.from('node entry'),
+    'package/dist/umf_core_node.node': Buffer.from('node addon'),
+    'package/dist/umf-browser.js': Buffer.from('browser entry'),
+    'package/dist/umf_core_wasm_bg.wasm': Buffer.from('wasm'),
+    'package/dist/umf.js': Buffer.from('reference entry'),
+    'package/dist/rust-default-manifest.json': Buffer.from(JSON.stringify({ sourceClosure: { sha256: archive.sourceClosureSha256, capturedLiveSha256: archive.sourceClosureSha256, fileCount: 5, transform: { status: 'fixed-point', generatedInputs: [] }, liveInputs: closureInputs } })),
+    'package/manifest.json': Buffer.from(JSON.stringify({ sha256: {} })),
+  };
+  const archiveBytes = fixtureTar(archiveEntries);
+  await mkdir(path.dirname(path.join(root, archive.path)), { recursive: true });
+  await writeFile(path.join(root, archive.path), archiveBytes);
+  archive.sha256 = createHash('sha256').update(archiveBytes).digest('hex');
+  const memberMap = Object.fromEntries(Object.entries(archiveEntries).map(([name, bytes]) => [name.slice('package/'.length), createHash('sha256').update(bytes).digest('hex')]));
   const memberDocPath = 'receipts/archive-members.json';
   const memberDocBytes = Buffer.from(JSON.stringify({ status: 'pass', algorithm: 'sha256', archiveSha256: archive.sha256, packageManifestSha256: archivedPackageSha, archiveMemberCount: Object.keys(memberMap).length, verifiedMemberCount: Object.keys(memberMap).length, members: memberMap }));
   await writeFile(path.join(root, memberDocPath), memberDocBytes);
@@ -122,7 +188,7 @@ async function retirementFixture() {
       packet: { path: packetPath, sha256: createHash('sha256').update(packetBytes).digest('hex') }, receipts }],
   };
   manifest.archivePackageManifest = { path: archivePackagePath, sha256: archivedPackageSha };
-  return { root, rows, manifest, receipts, source, archivePackagePath, memberDocPath, memberMap };
+  return { root, rows, manifest, receipts, source, archivePackagePath, memberDocPath, memberMap, archiveEntries };
 }
 
 test('default-route retirement requires an exact current row pair and all three fixed-point host/reference receipts', async () => {
@@ -252,6 +318,45 @@ test('default-route retirement requires an exact current row pair and all three 
       }],
       ['live source closure drift', async (m, f) => {
         await writeFile(path.join(f.root, f.source), 'changed');
+      }],
+      ['tampered archive bytes', async (m, f) => {
+        await writeFile(path.join(f.root, m.archive.path), Buffer.from('tampered archive'));
+      }],
+      ['fabricated archive member map', async (m, f) => {
+        const memberFile = path.join(f.root, f.memberDocPath);
+        const memberDoc = JSON.parse(await readFile(memberFile, 'utf8'));
+        memberDoc.members['dist/umf-node.js'] = '9'.repeat(64);
+        const bytes = Buffer.from(JSON.stringify(memberDoc));
+        await writeFile(memberFile, bytes);
+        m.memberManifest.sha256 = createHash('sha256').update(bytes).digest('hex');
+      }],
+      ['archive source closure disagrees with live-source manifest', async (m, f) => {
+        const archivedRustManifest = JSON.parse(f.archiveEntries['package/dist/rust-default-manifest.json'].toString('utf8'));
+        archivedRustManifest.sourceClosure.liveInputs[f.source] = '0'.repeat(64);
+        f.archiveEntries['package/dist/rust-default-manifest.json'] = Buffer.from(JSON.stringify(archivedRustManifest));
+        const archiveBytes = fixtureTar(f.archiveEntries);
+        await writeFile(path.join(f.root, m.archive.path), archiveBytes);
+        m.archive.sha256 = createHash('sha256').update(archiveBytes).digest('hex');
+        const nextMembers = Object.fromEntries(Object.entries(f.archiveEntries).map(([name, bytes]) => [name.slice('package/'.length), createHash('sha256').update(bytes).digest('hex')]));
+        const memberFile = path.join(f.root, f.memberDocPath);
+        const memberDoc = JSON.parse(await readFile(memberFile, 'utf8'));
+        memberDoc.archiveSha256 = m.archive.sha256;
+        memberDoc.members = nextMembers;
+        const memberBytes = Buffer.from(JSON.stringify(memberDoc));
+        await writeFile(memberFile, memberBytes);
+        m.memberManifest.sha256 = createHash('sha256').update(memberBytes).digest('hex');
+        for (const pin of m.operations[0].receipts) {
+          const receiptPath = path.join(f.root, pin.path);
+          const receipt = JSON.parse(await readFile(receiptPath, 'utf8'));
+          receipt.archiveSha256 = m.archive.sha256;
+          for (const route of [receipt.defaultRoute, receipt.referenceRoute]) {
+            route.entrySha256 = nextMembers[route.entryMember];
+            for (const artifact of route.artifactMembers) artifact.sha256 = nextMembers[artifact.path];
+          }
+          const receiptBytes = Buffer.from(JSON.stringify(receipt));
+          await writeFile(receiptPath, receiptBytes);
+          pin.sha256 = createHash('sha256').update(receiptBytes).digest('hex');
+        }
       }],
     ];
     for (const [label, mutate] of negativeCases) {

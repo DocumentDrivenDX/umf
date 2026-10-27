@@ -47,7 +47,7 @@ const sourceDocBytes=await readFile(join(dir,'archive-source-cohort.json'));
 const memberDocBytes=await readFile(join(dir,'archive-members.json'));
 const packageDocBytes=await readFile(join(dir,'archive-package.json'));
 const pin=(path,bytes)=>({path:`${dir}/${path}`,sha256:hash(bytes)});
-const manifest={format:'umf.r8.default-route-retirement-evidence/1',status:'pass',archive:{sha256:cohort.archive.sha256,sourceClosureSha256:cohort.sourceClosure.sha256,sourceInputCount:cohort.sourceClosure.sourceInputCount,generatedTransformCount:0,packageManifestSha256:cohort.archive.packageManifestSha256},liveSourceManifest:pin('archive-source-cohort.json',sourceDocBytes),memberManifest:pin('archive-members.json',memberDocBytes),archivePackageManifest:pin('archive-package.json',packageDocBytes),operations:[]};
+const manifest={format:'umf.r8.default-route-retirement-evidence/1',status:'pass',archive:{path:cohort.archive.path,sha256:cohort.archive.sha256,sourceClosureSha256:cohort.sourceClosure.sha256,sourceInputCount:cohort.sourceClosure.sourceInputCount,generatedTransformCount:0,packageManifestSha256:cohort.archive.packageManifestSha256},liveSourceManifest:pin('archive-source-cohort.json',sourceDocBytes),memberManifest:pin('archive-members.json',memberDocBytes),archivePackageManifest:pin('archive-package.json',packageDocBytes),operations:[]};
 let refused='';
 try{validateDefaultRouteRetirementEvidence(manifest,[],{root});}catch(error){refused=String(error?.message??error);}
 assert.match(refused,/live source .* hash mismatch/,'the current-source validator must refuse this historical archive before row retirement');

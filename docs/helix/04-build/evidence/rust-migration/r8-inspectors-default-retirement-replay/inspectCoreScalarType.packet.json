@@ -1,0 +1,187 @@
+{
+  "format": "umf.r8.default-route-retirement-packet/1",
+  "contractId": "CONTRACT-040",
+  "exportName": "inspectCoreScalarType",
+  "rustOwner": "umf_core::scalar_type_inspection::inspect_core_scalar_type",
+  "cases": [
+    {
+      "id": "inspectCoreScalarType.known_uuid",
+      "input": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "uuid",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "value"
+        }
+      },
+      "expectedOutcome": {
+        "status": "returned",
+        "value": {
+          "identity": {
+            "element": "value",
+            "module": "m"
+          },
+          "meaning": {
+            "scalarType": "uuid",
+            "state": "known"
+          },
+          "operation": "inspect-core-scalar-type",
+          "path": "/modules/0/elements/1/scalarType",
+          "provenance": "unverified",
+          "source": {
+            "id": "uuid-fixture",
+            "modules": [
+              {
+                "elements": [
+                  {
+                    "extensions": {},
+                    "id": "record",
+                    "keys": [
+                      {
+                        "fields": [
+                          {
+                            "element": "value",
+                            "module": "m"
+                          }
+                        ],
+                        "id": "id",
+                        "name": "ID"
+                      }
+                    ],
+                    "kind": "record",
+                    "members": [
+                      {
+                        "element": "value",
+                        "module": "m"
+                      }
+                    ]
+                  },
+                  {
+                    "cardinality": "one",
+                    "extensions": {},
+                    "id": "value",
+                    "kind": "field",
+                    "nullability": "required",
+                    "scalarType": "uuid"
+                  }
+                ],
+                "id": "m",
+                "namespace": "test"
+              }
+            ],
+            "umf": "0.10.0",
+            "vocabularies": {}
+          },
+          "version": "0.3.0"
+        }
+      },
+      "expectedTrace": [],
+      "expectsRust": true
+    },
+    {
+      "id": "inspectCoreScalarType.accessor_source",
+      "input": {
+        "source": {
+          "umf": "0.10.0",
+          "id": "uuid-fixture",
+          "vocabularies": {},
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "test",
+              "elements": [
+                {
+                  "id": "record",
+                  "kind": "record",
+                  "members": [
+                    {
+                      "module": "m",
+                      "element": "value"
+                    }
+                  ],
+                  "keys": [
+                    {
+                      "id": "id",
+                      "name": "ID",
+                      "fields": [
+                        {
+                          "module": "m",
+                          "element": "value"
+                        }
+                      ]
+                    }
+                  ],
+                  "extensions": {}
+                },
+                {
+                  "id": "value",
+                  "kind": "field",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "scalarType": "uuid",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "value"
+        },
+        "profile": "accessor_source"
+      },
+      "expectedOutcome": {
+        "status": "threw",
+        "name": "UmfError",
+        "code": "NON_JSON",
+        "path": "/probe",
+        "message": "Hidden fields and accessors cannot be serialized faithfully"
+      },
+      "expectedTrace": [],
+      "expectsRust": false
+    }
+  ]
+}

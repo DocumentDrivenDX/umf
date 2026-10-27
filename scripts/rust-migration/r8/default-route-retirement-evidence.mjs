@@ -3,12 +3,19 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { gunzipSync } from 'node:zlib';
 
 const sha = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 const hashPattern = /^[a-f0-9]{64}$/;
 const defaultRoutes = ['package-root-node', 'package-root-browser'];
 const runtimes = ['node', 'bun', 'chromium'];
 const canonical = value => JSON.stringify(value);
+const sameStringMap = (left, right) => {
+  if (!left || !right || Array.isArray(left) || Array.isArray(right)) return false;
+  const leftKeys = Object.keys(left).sort();
+  const rightKeys = Object.keys(right).sort();
+  return leftKeys.length === rightKeys.length && leftKeys.every((key, index) => key === rightKeys[index] && left[key] === right[key]);
+};
 
 function requireExactKeys(value, keys, label) {
   if (!value || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).sort().join('\0') !== [...keys].sort().join('\0')) throw new Error(`${label} has missing or unknown fields`);
@@ -24,6 +31,99 @@ function readPinned(root, pin, label, json = false) {
   const bytes = fs.readFileSync(full);
   if (sha(bytes) !== pin.sha256) throw new Error(`${label} hash mismatch: ${pin.path}`);
   return { bytes, json: json ? JSON.parse(bytes.toString('utf8')) : null };
+}
+
+export function tarMembers(bytes) {
+  // The SDK packager writes deterministic gzip + ordinary USTAR regular files.
+  // Keep this parser deliberately narrow: reject extensions and special files.
+  const tar = gunzipSync(bytes);
+  const members = Object.create(null);
+  const files = Object.create(null);
+  let offset = 0;
+  let ended = false;
+  let pendingPath = null;
+  const field = (block, start, length) => block.subarray(start, start + length).toString('utf8').replace(/\0.*$/s, '');
+  const paxPath = payload => {
+    let cursor = 0;
+    let result = null;
+    while (cursor < payload.length) {
+      const space = payload.indexOf(32, cursor);
+      if (space < 0) throw new Error('archive PAX record has no length delimiter');
+      const lengthText = payload.subarray(cursor, space).toString('ascii');
+      if (!/^[1-9][0-9]*$/.test(lengthText)) throw new Error('archive PAX record length is invalid');
+      const length = Number(lengthText);
+      const end = cursor + length;
+      if (!Number.isSafeInteger(length) || end > payload.length || payload[end - 1] !== 10) throw new Error('archive PAX record is truncated');
+      const record = new TextDecoder('utf-8', { fatal: true }).decode(payload.subarray(space + 1, end - 1));
+      const equals = record.indexOf('=');
+      if (equals < 1 || record.slice(0, equals) !== 'path' || result !== null) throw new Error('archive PAX header has unsupported or duplicate metadata');
+      result = record.slice(equals + 1);
+      cursor = end;
+    }
+    if (!result) throw new Error('archive PAX header omits its path');
+    return result;
+  };
+  while (offset + 512 <= tar.length) {
+    const header = tar.subarray(offset, offset + 512);
+    if (header.every(byte => byte === 0)) {
+      ended = true;
+      break;
+    }
+    const storedChecksum = Number.parseInt(field(header, 148, 8).trim(), 8);
+    let checksum = 0;
+    for (let i = 0; i < 512; i++) checksum += i >= 148 && i < 156 ? 32 : header[i];
+    if (!Number.isSafeInteger(storedChecksum) || checksum !== storedChecksum) throw new Error('archive tar header checksum is invalid');
+    const type = header[156];
+    const name = field(header, 0, 100);
+    const prefix = field(header, 345, 155);
+    const size = Number.parseInt(field(header, 124, 12).trim(), 8);
+    if (!Number.isSafeInteger(size) || size < 0) throw new Error('archive member size is invalid');
+    const dataStart = offset + 512;
+    const dataEnd = dataStart + size;
+    if (dataEnd > tar.length) throw new Error('archive member is truncated');
+    const content = tar.subarray(dataStart, dataEnd);
+    if (type === 120) {
+      if (pendingPath !== null) throw new Error('archive has stacked PAX headers');
+      pendingPath = paxPath(content);
+      offset = dataStart + Math.ceil(size / 512) * 512;
+      continue;
+    }
+    if (type !== 0 && type !== 48) throw new Error('archive contains an unsupported non-regular tar member');
+    const member = pendingPath ?? (prefix ? `${prefix}/${name}` : name);
+    pendingPath = null;
+    if (!member.startsWith('package/') || member.split('/').some(part => !part || part === '.' || part === '..')) throw new Error(`archive member path is unsafe: ${member}`);
+    if (Object.hasOwn(members, member)) throw new Error(`archive has duplicate member: ${member}`);
+    members[member] = sha(content);
+    files[member.slice('package/'.length)] = content;
+    offset = dataStart + Math.ceil(size / 512) * 512;
+  }
+  if (!ended || pendingPath !== null || Object.keys(members).length === 0) throw new Error('archive tar is incomplete or empty');
+  if (!tar.subarray(offset).every(byte => byte === 0)) throw new Error('archive has non-zero data after its tar end marker');
+  return { members: Object.fromEntries(Object.entries(members).map(([name, digest]) => [name.slice('package/'.length), digest])), files };
+}
+
+function verifyArchive(root, archive, expectedMembers, sourceManifestPin) {
+  if (!hashPattern.test(archive.sha256 ?? '')) throw new Error('SDK archive needs an explicit SHA-256 pin');
+  const bytes = path.isAbsolute(archive.path)
+    ? fs.readFileSync(fs.realpathSync(archive.path))
+    : readPinned(root, { path: archive.path, sha256: archive.sha256 }, 'SDK archive').bytes;
+  if (sha(bytes) !== archive.sha256) throw new Error('SDK archive hash mismatch');
+  const archiveContents = tarMembers(bytes);
+  const actualKeys = Object.keys(archiveContents.members).sort();
+  const expectedKeys = Object.keys(expectedMembers).sort();
+  if (actualKeys.length !== expectedKeys.length || actualKeys.some((key, index) => key !== expectedKeys[index] || archiveContents.members[key] !== expectedMembers[key])) {
+    throw new Error('archive tar member map differs from the pinned archive member manifest');
+  }
+  const rustManifestBytes = archiveContents.files['dist/rust-default-manifest.json'];
+  if (!rustManifestBytes) throw new Error('archive omits dist/rust-default-manifest.json');
+  const rustManifest = JSON.parse(rustManifestBytes.toString('utf8'));
+  const source = rustManifest.sourceClosure;
+  const sourceDoc = readPinned(root, sourceManifestPin, 'live source closure manifest', true).json.sourceClosure;
+  if (!source || source.sha256 !== archive.sourceClosureSha256 || source.capturedLiveSha256 !== archive.sourceClosureSha256 ||
+      source.fileCount !== archive.sourceInputCount || source.transform?.status !== 'fixed-point' ||
+      source.transform?.generatedInputs?.length !== 0 || !sameStringMap(source.liveInputs, sourceDoc.inputs)) {
+    throw new Error('archive Rust manifest source closure differs from the pinned live-source manifest');
+  }
 }
 
 function contractIdFromMarkdown(source) {
@@ -119,13 +219,14 @@ function verifyHostReceipt(root, pin, op, packet, archive, members, routeMembers
 export function validateDefaultRouteRetirementEvidence(manifest, rows, { root }) {
   if (!manifest || manifest.format !== 'umf.r8.default-route-retirement-evidence/1' || manifest.status !== 'pass') throw new Error('unsupported or non-pass default-route retirement evidence');
   requireExactKeys(manifest, ['format', 'status', 'archive', 'liveSourceManifest', 'memberManifest', 'archivePackageManifest', 'operations'], 'retirement manifest');
-  requireExactKeys(manifest.archive, ['sha256', 'sourceClosureSha256', 'sourceInputCount', 'generatedTransformCount', 'packageManifestSha256'], 'archive');
+  requireExactKeys(manifest.archive, ['path', 'sha256', 'sourceClosureSha256', 'sourceInputCount', 'generatedTransformCount', 'packageManifestSha256'], 'archive');
   for (const [label, pin] of [['live source manifest', manifest.liveSourceManifest], ['archive member manifest', manifest.memberManifest], ['extracted archive package manifest', manifest.archivePackageManifest]]) requireExactKeys(pin, ['path', 'sha256'], label);
   const archive = manifest.archive;
-  if (!hashPattern.test(archive.sha256 ?? '') || !hashPattern.test(archive.sourceClosureSha256 ?? '') || !hashPattern.test(archive.packageManifestSha256 ?? '') || !Number.isSafeInteger(archive.sourceInputCount) || archive.sourceInputCount < 1 || archive.generatedTransformCount !== 0) throw new Error('retirement archive must identify a fixed-point source closure');
+  if (typeof archive.path !== 'string' || !archive.path || !hashPattern.test(archive.sha256 ?? '') || !hashPattern.test(archive.sourceClosureSha256 ?? '') || !hashPattern.test(archive.packageManifestSha256 ?? '') || !Number.isSafeInteger(archive.sourceInputCount) || archive.sourceInputCount < 1 || archive.generatedTransformCount !== 0) throw new Error('retirement archive must identify a fixed-point source closure and pinned archive path');
   const liveInputs = verifyLiveSourceManifest(root, manifest.liveSourceManifest, archive);
   if (!liveInputs['package.json'] || !liveInputs['scripts/package-sdk.py']) throw new Error('live source closure omits package.json or scripts/package-sdk.py');
   const { members, routeMembers } = verifyMemberManifest(root, manifest.memberManifest, manifest.archivePackageManifest, archive, liveInputs);
+  verifyArchive(root, archive, members, manifest.liveSourceManifest);
   if (!Array.isArray(manifest.operations) || manifest.operations.length === 0) throw new Error('retirement evidence needs operations');
   const byPair = new Map();
   const usedLogical = new Set();

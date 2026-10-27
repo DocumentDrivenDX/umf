@@ -6840,7 +6840,7 @@ default-route gaps**, 77 accepted opt-in Rust mappings, 845 unmapped names,
 and zero retired declarations. The current inventory SHA-256 is
 `316febe0d0265264ea0c036495ea7f829fde8813aaf47ec02e446b30840c416a`;
 the ledger SHA-256 is
-`b340ea0dbf921ac42d72e70f188869d6aa0e9561383a7358c7bede4d6ac57eed`.
+`96f14829214b410fae1216143eb29ebe00b1a381612b7ee2d54a9a3982256127`.
 The next gates are exact installed default/reference evidence for the four
 core relationship operations and a clean installed security truth-fold archive
 from the new source cohort. No full-port, merge, or release claim follows from
@@ -6856,3 +6856,24 @@ also proves that this archive fails the current-source retirement gate: it
 predates the packet files and the present closure. These receipts qualify the
 historical archive only; the four ledger rows remain open pending replay from
 a new fixed-point archive containing the packets and exact source closure.
+
+An independent review found that the first exact-row validator trusted the
+reported archive/member hashes without reopening the `.tgz`. The validator now
+hashes the archive bytes, checks every regular tar member including strict PAX
+paths, compares the complete member map, and binds the embedded Rust manifest's
+fixed-point source closure to the recomputed live-source input map. Archive
+tamper, fabricated member-map, embedded-closure, and unsafe tar-path controls
+pass. The historical relationship receipt checker still refuses retirement at
+its stale-source gate. The seven operation packets below cannot retire rows
+until a new archive passes this stronger gate.
+
+The [Core Inspector packet](evidence/rust-migration/r8-inspectors-default-retirement-replay/README.md)
+adds one frozen success and one accessor-preflight refusal for each of
+`inspectCoreScalarType`, `inspectCoreRecordMembers`, and
+`inspectCoreReferenceLinks`. Its packet generator pins the reviewed TypeScript
+predecessor and historical host-shape evidence. A historical `ce1acfb65`
+installed smoke replay passed all six cases in Node, Bun, and Chromium with
+Rust invocation on success and none on refusal or `./reference`. This is a
+bounded harness check; no new archive containing the packets has yet been
+built, and the Inspector and non-root TypeScript callsite retirement decisions
+remain open. The ledger stays at **922 open, zero retired**.
