@@ -1,0 +1,375 @@
+{
+  "format": "umf.r8.core-inspectors-browser-host-shapes/1",
+  "status": "observed",
+  "archive": {
+    "path": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/.cache/sdk-distribution/umf-sdk.tgz",
+    "sha256": "7e9bc9c1de4ff519d91f1fde6b0c6b30bde367a8d5c6aa5f610d018a247520b8",
+    "sourceClosureSha256": "138b719c1b2e099b636de1b12b0cee7201fdec483d30d8d59d9d274fe315816e",
+    "verifiedMemberCount": 1794
+  },
+  "harnessSha256": "ad32ad01961d393be3d2a750f0406ffc92687517fccf5fbff783413d3ce67fe2",
+  "predecessorSha256": "9563378b9fb00b213f76d6c0d09ac0c8278c0fb829c719b566b019971a0f3a7a",
+  "runtime": {
+    "browserVersion": "153.0.8010.12",
+    "version": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+    "rows": {
+      "scalarType": {
+        "accessor_source": {
+          "default": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Hidden fields and accessors cannot be serialized faithfully",
+              "path": "/probe"
+            },
+            "events": []
+          },
+          "reference": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Hidden fields and accessors cannot be serialized faithfully",
+              "path": "/probe"
+            },
+            "events": []
+          }
+        },
+        "accessor_identity": {
+          "default": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Hidden fields and accessors cannot be serialized faithfully",
+              "path": "/module"
+            },
+            "events": []
+          },
+          "reference": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Hidden fields and accessors cannot be serialized faithfully",
+              "path": "/module"
+            },
+            "events": []
+          }
+        },
+        "hidden_source": {
+          "default": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Hidden fields and accessors cannot be serialized faithfully",
+              "path": "/probe"
+            },
+            "events": []
+          },
+          "reference": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Hidden fields and accessors cannot be serialized faithfully",
+              "path": "/probe"
+            },
+            "events": []
+          }
+        },
+        "symbol_source": {
+          "default": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Symbol keys are not JSON-compatible",
+              "path": ""
+            },
+            "events": []
+          },
+          "reference": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Symbol keys are not JSON-compatible",
+              "path": ""
+            },
+            "events": []
+          }
+        },
+        "forged_proxy_source": {
+          "default": {
+            "ok": false,
+            "error": {
+              "name": "AdmissionError",
+              "code": "ACCESSOR_PROPERTY",
+              "message": "caller-controlled proxy failure",
+              "path": "/source/probe"
+            },
+            "events": [
+              "source.getPrototypeOf"
+            ]
+          },
+          "reference": {
+            "ok": false,
+            "error": {
+              "name": "AdmissionError",
+              "code": "ACCESSOR_PROPERTY",
+              "message": "caller-controlled proxy failure",
+              "path": "/source/probe"
+            },
+            "events": [
+              "source.getPrototypeOf"
+            ]
+          },
+          "parity": true
+        }
+      },
+      "recordMembers": {
+        "accessor_source": {
+          "default": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Hidden fields and accessors cannot be serialized faithfully",
+              "path": "/probe"
+            },
+            "events": []
+          },
+          "reference": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Hidden fields and accessors cannot be serialized faithfully",
+              "path": "/probe"
+            },
+            "events": []
+          }
+        },
+        "accessor_identity": {
+          "default": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Hidden fields and accessors cannot be serialized faithfully",
+              "path": "/module"
+            },
+            "events": []
+          },
+          "reference": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Hidden fields and accessors cannot be serialized faithfully",
+              "path": "/module"
+            },
+            "events": []
+          }
+        },
+        "hidden_source": {
+          "default": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Hidden fields and accessors cannot be serialized faithfully",
+              "path": "/probe"
+            },
+            "events": []
+          },
+          "reference": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Hidden fields and accessors cannot be serialized faithfully",
+              "path": "/probe"
+            },
+            "events": []
+          }
+        },
+        "symbol_source": {
+          "default": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Symbol keys are not JSON-compatible",
+              "path": ""
+            },
+            "events": []
+          },
+          "reference": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Symbol keys are not JSON-compatible",
+              "path": ""
+            },
+            "events": []
+          }
+        },
+        "forged_proxy_source": {
+          "default": {
+            "ok": false,
+            "error": {
+              "name": "AdmissionError",
+              "code": "ACCESSOR_PROPERTY",
+              "message": "caller-controlled proxy failure",
+              "path": "/source/probe"
+            },
+            "events": [
+              "source.getPrototypeOf"
+            ]
+          },
+          "reference": {
+            "ok": false,
+            "error": {
+              "name": "AdmissionError",
+              "code": "ACCESSOR_PROPERTY",
+              "message": "caller-controlled proxy failure",
+              "path": "/source/probe"
+            },
+            "events": [
+              "source.getPrototypeOf"
+            ]
+          },
+          "parity": true
+        }
+      },
+      "referenceLinks": {
+        "accessor_source": {
+          "default": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Hidden fields and accessors cannot be serialized faithfully",
+              "path": "/probe"
+            },
+            "events": []
+          },
+          "reference": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Hidden fields and accessors cannot be serialized faithfully",
+              "path": "/probe"
+            },
+            "events": []
+          }
+        },
+        "accessor_identity": {
+          "default": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Hidden fields and accessors cannot be serialized faithfully",
+              "path": "/module"
+            },
+            "events": []
+          },
+          "reference": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Hidden fields and accessors cannot be serialized faithfully",
+              "path": "/module"
+            },
+            "events": []
+          }
+        },
+        "hidden_source": {
+          "default": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Hidden fields and accessors cannot be serialized faithfully",
+              "path": "/probe"
+            },
+            "events": []
+          },
+          "reference": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Hidden fields and accessors cannot be serialized faithfully",
+              "path": "/probe"
+            },
+            "events": []
+          }
+        },
+        "symbol_source": {
+          "default": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Symbol keys are not JSON-compatible",
+              "path": ""
+            },
+            "events": []
+          },
+          "reference": {
+            "ok": false,
+            "error": {
+              "name": "UmfError",
+              "code": "NON_JSON",
+              "message": "Symbol keys are not JSON-compatible",
+              "path": ""
+            },
+            "events": []
+          }
+        },
+        "forged_proxy_source": {
+          "default": {
+            "ok": false,
+            "error": {
+              "name": "AdmissionError",
+              "code": "ACCESSOR_PROPERTY",
+              "message": "caller-controlled proxy failure",
+              "path": "/source/probe"
+            },
+            "events": [
+              "source.getPrototypeOf"
+            ]
+          },
+          "reference": {
+            "ok": false,
+            "error": {
+              "name": "AdmissionError",
+              "code": "ACCESSOR_PROPERTY",
+              "message": "caller-controlled proxy failure",
+              "path": "/source/probe"
+            },
+            "events": [
+              "source.getPrototypeOf"
+            ]
+          },
+          "parity": true
+        }
+      }
+    },
+    "operations": {
+      "scalarType": 4,
+      "recordMembers": 4,
+      "referenceLinks": 4
+    }
+  },
+  "qualification": "Four exact descriptor/symbol refusal envelopes and one adversarial forged-error proxy observation per inspector across browser default/reference routes for this archive. This does not establish other host shapes, inspector retirement, or release."
+}

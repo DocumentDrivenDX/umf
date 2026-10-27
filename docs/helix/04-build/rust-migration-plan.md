@@ -6700,3 +6700,69 @@ rebuild the current source into a zero-transform private SDK archive, replay
 the Inspector helper and direct Inspector packets from that archive, and
 review all remaining default-reachable TypeScript Inspector paths. Full-port,
 merge and release gates remain open.
+
+### R8 Relationship consumer route and installed Inspector continuation — 2026-10-26
+
+The clean `5e7138383` archive has now passed the [installed Inspector and
+raw-profile replay](evidence/rust-migration/r8-core-inspectors-installed/current-5e7138383-20261026/README.md).
+Its fixed-point source closure and complete archive manifest are pinned to that
+commit. The 26 direct Inspector cases and nine raw-profile cases matched the
+explicit reference route in Node 26.12.1, Bun 1.4.3, and Chromium
+153.0.8010.12; missing/corrupt addon controls refused import. This is
+historical cohort evidence, not a qualification of later consumer edits.
+
+Six relationship projection consumers now use scoped factories. The V4 Node
+and browser roots supply Rust-bound `lookupCoreRelationship` and
+`verifyCoreRelationshipOperation` to those factories; the six legacy modules
+continue to supply TypeScript operations to the explicit `./reference` route.
+The public wrappers re-export only their prior schemas, types, and functions.
+The [source replay](evidence/rust-migration/r8-relationship-consumer-source-replay/README.md)
+compares 18 frozen predecessor cases in the V4 Node root and 15 browser-capable
+cases in real Chromium, including projected receipts, blocked outcomes, and
+accessor refusals. PostgreSQL is excluded from the browser packet because its
+supplied parser backend is Node-only. Factory callback tests cover projection,
+verification, and recovery, but these consumers still execute TypeScript
+adapter logic. The existing Avro proof inputs gained SPDX headers after their
+native validation capture; their exact pre-header bytes are now archived with
+Git commit and SHA-256 provenance instead of changing the proof hashes.
+The Python codegen wheel's nine-resource mirror was also refreshed from its
+canonical current spec bytes after a stale resource check; its manifest pin
+is now `61bb0bb35dfad7a6d37a1c4372758103d28f04cbce5db7b5fc9de5c47cd78129`.
+The mirror check and ten native-contract tests pass under Python 3.9.6. The
+subsequent inventory and ledger recapture kept the 922/77/845 disposition
+counts unchanged.
+The regenerated action-plan producer identity is
+`2e9732326e2c3dc0bf0387520aaf8223463d92e731402f689a5d6ac9caea11f6`;
+its `--check` mode passes against the current `src/` and `spec/` inputs.
+After the final factory source changes, including preservation of the public
+projection and verification function names, the R8 inventory and
+ledger were recaptured and both generator `--check` modes pass. Inventory
+SHA-256 is
+`edd8bc4cdca2b1265b6649f0535e840f19ff22cd7eed8eca0ff0c8d66b861132`
+(3,375 declarations, 509 source files, 1,126 unique names); ledger SHA-256 is
+`e3cfa3eb5ce979c53d923bb58d15db56f7a236c98cfc0e0387373def2778b16e` (922
+logical open gaps, 77 accepted opt-in mappings, 845 unmapped names, 50
+source-selected declarations per V4 root, zero retired rows). These counts
+remain separate from the mixed TypeScript/Rust relationship consumer bindings.
+
+The [callsite audit](evidence/rust-migration/r8-default-inspector-relationship-callsite-audit/README.md)
+distinguishes Rust-selected default named exports from TypeScript bodies
+retained by the V4 `export * from './index'` path. The [non-root consumer
+audit](evidence/rust-migration/r8-nonroot-core-consumer-audit/README.md)
+records direct TypeScript calls in compilation admission and record-type
+inspection/journal, with their current fixture and host limits.
+The [condition-aware ledger](evidence/rust-migration/r8-symbol-inventory/README.md)
+marks the 25 V4 relationship consumer declarations as mixed TypeScript/Rust,
+not exact Rust-owned operations. Its totals remain **77 accepted opt-in
+mappings, 845 unmapped names, 922 open logical gaps, and zero retired rows**.
+
+The next bounded gate is a clean-commit, zero-transform SDK archive of this
+relationship cohort, followed by installed Node/Bun/Chromium replay of both
+default and reference routes, explicit Rust-invocation and source-closure
+checks, and review of the remaining live TypeScript callsites. The [bounded
+V4 barrel-separation plan](evidence/rust-migration/r8-v4-default-barrel-separation-plan/README.md)
+specifies a generated explicit facade and export/bundle-graph checks to
+remove shadowed TypeScript bodies from default bundles while preserving
+`./reference` and every public declaration. These gates precede any Inspector
+or Relationship retirement, full-port claim,
+merge, or release.

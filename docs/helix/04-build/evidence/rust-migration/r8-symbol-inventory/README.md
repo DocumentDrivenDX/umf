@@ -59,6 +59,34 @@ ddx:
 
 # R8 TypeScript public runtime export map
 
+**Current source recapture (2026-10-26, Core Relationship consumer factories):**
+The Avro, TableSpec, SQL Server, Parquet, extras and PostgreSQL consumer
+factories are now injected with the Rust Core Relationship lookup and
+verification operations through the V4 Node/browser entries. The inventory
+records 3,375 route-specific declarations across 509 source files, 1,126
+unique export names and 1,120 declarations per Node, browser and `./reference`
+root. Each default root has 922 executable declarations and 198 JSON resource
+aliases. Inventory SHA-256:
+`edd8bc4cdca2b1265b6649f0535e840f19ff22cd7eed8eca0ff0c8d66b861132`.
+
+The condition-aware ledger has 922 logical executable retirement gaps, 77
+accepted opt-in Rust operation mappings, 845 unmapped executable names, 50
+source-selected Rust declarations per V4 root and 100 source-selected
+declaration rows total. The six consumer families contribute 25 public
+project/verify/recover exports per route. Their default V4 declarations remain
+mixed host TypeScript/Rust bindings: the Rust lookup and verifier are injected,
+while each consumer factory still performs TypeScript behavior. They do not
+count as accepted exact Rust consumer mappings or retirements. The explicit
+`./reference` route remains TypeScript. This recapture does not add a proven
+binding route or establish installed-package parity. Ledger SHA-256:
+`e3cfa3eb5ce979c53d923bb58d15db56f7a236c98cfc0e0387373def2778b16e`.
+The inventory and ledger `--check` modes, exact-shape negative controls and
+full ledger suite (55/55) pass.
+The action-plan producer identity is
+`2e9732326e2c3dc0bf0387520aaf8223463d92e731402f689a5d6ac9caea11f6` and
+passes its `--check`; this source-cohort recapture retains the 922/77/845
+disposition counts.
+
 **Current source recapture (2026-10-26, numeric V4 selection):** After the
 five CONTRACT-049 numeric bindings, strict access import policy, Selection
 private host continuation and generated metamodel/resource refresh, the

@@ -38,7 +38,7 @@ test('current V4 root exports preserve temporal gaps and recognize bounded Core 
   const entries = new Map(inventoryReceipt.defaultRouteEntrySelections.map(selection => [selection.routeId, selection]));
   for (const routeId of ['package-root-node', 'package-root-browser']) {
     const selection = entries.get(routeId);
-    assert.equal(selection.directExportCount, 51);
+    assert.equal(selection.directExportCount, 76);
     assert.ok(expected.every(name => selection.directExports.includes(name)), `${routeId} misses an override`);
     const rows = ledger.rows.filter(row => row.routeId === routeId && expected.includes(row.exportName));
     assert.equal(rows.length, expected.length);
@@ -143,6 +143,70 @@ test('raw table binding ledger annotation is limited to exact Node and browser V
   const inherited = buildLedger({ ...args, inventory: { symbols: [{ ...symbols[0], routeId: 'package-root' }] } });
   assert.doesNotMatch(inherited.rows[0].implementationStatus, /V4 host TypeScript wrapper injects Rust/);
   assert.doesNotMatch(inherited.rows[0].disposition, /helper remains mixed TypeScript\/Rust/);
+});
+
+test('V4 relationship consumer exports are hybrid bindings without Rust consumer mapping or retirement', () => {
+  const consumerExports = [
+    'projectRelationshipToAvro', 'verifyRelationshipAvroProjection', 'recoverRelationshipAvroIdeal', 'recoverRelationshipAvroNative',
+    'projectRelationshipToTableSpec', 'verifyRelationshipTableSpecProjection', 'recoverRelationshipTableSpecIdeal', 'recoverRelationshipTableSpecNativeSources',
+    'projectRelationshipToSqlServer', 'verifyRelationshipSqlServerProjection', 'recoverRelationshipSqlServerIdeal', 'recoverRelationshipSqlServerBinding', 'recoverRelationshipSqlServerNative',
+    'projectRelationshipToParquet', 'verifyRelationshipParquetProjection', 'recoverRelationshipParquetIdeal', 'recoverRelationshipParquetNative',
+    'projectRelationshipToExtra', 'verifyRelationshipExtra', 'recoverRelationshipExtraIdeal', 'recoverRelationshipExtraNative',
+    'projectRelationshipsToPostgresql', 'verifyRelationshipPostgresqlProjection', 'recoverRelationshipPostgresqlIdeal', 'recoverRelationshipPostgresqlNative',
+  ];
+  const ledger = currentGeneratedLedger();
+  assert.equal(consumerExports.length, 25);
+  for (const name of consumerExports) {
+    const rows = ['package-root-node', 'package-root-browser', 'package-reference']
+      .map(routeId => ledger.rows.find(row => row.routeId === routeId && row.exportName === name));
+    assert.ok(rows.every(Boolean), `${name} is missing a condition route`);
+    assert.equal(new Set(rows.map(row => row.logicalDeclarationKey)).size, 1, `${name} should count as one logical API row`);
+    for (const row of rows.slice(0, 2)) {
+      assert.match(row.implementationStatus, /V4 host TypeScript relationship consumer injects Rust Core Relationship lookup and verification/);
+      assert.match(row.disposition, /mixed TypeScript\/Rust, no exact Rust consumer operation is accepted, and retirement remains open/);
+      assert.equal(row.sourceSelectedImplementation, null);
+      assert.equal(row.acceptedRustOperation, null);
+      assert.equal(row.bindingRouteStatus, 'unproven');
+      assert.equal(row.defaultRouteRetirement.status, 'open');
+    }
+    assert.equal(rows[2].implementationStatus, 'TypeScript reference implementation remains explicit');
+    assert.equal(rows[2].sourceSelectedImplementation, null);
+    assert.equal(rows[2].defaultRouteRetirement.status, 'reference-only');
+  }
+  assert.equal(ledger.counts.sourceSelectedRustOverrides, 100);
+  assert.equal(ledger.counts.executableWithAcceptedOptInRustOperation, 77);
+  assert.deepEqual(ledger.counts.executableDefaultRouteRetirementsByRoute, { 'package-root-node': 0, 'package-root-browser': 0 });
+
+  for (const row of [
+    { routeId: 'package-root', exportName: 'projectRelationshipToAvro', declarationName: 'projectRelationshipToAvro', declarationKind: 'BindingElement', initializerShape: 'not-applicable', source: 'src/index-node-v4.ts' },
+    { routeId: 'package-root', exportName: 'projectRelationshipToAvro', declarationName: 'projectRelationshipToAvroAlias', declarationKind: 'BindingElement', initializerShape: 'not-applicable', source: 'src/index-node-v4.ts' },
+  ]) {
+    const legacy = buildLedger({ ...args, inventory: { symbols: [{ ...row, line: 1, sourceSha256: 'd'.repeat(64) }] } });
+    assert.doesNotMatch(legacy.rows[0].implementationStatus, /V4 host TypeScript relationship consumer/);
+    assert.doesNotMatch(legacy.rows[0].disposition, /mixed TypeScript\/Rust/);
+  }
+});
+
+test('relationship condition-shape normalization rejects alias, source, kind and initializer drift', () => {
+  const target = 'projectRelationshipToAvro';
+  const routeRows = [
+    { routeId: 'package-root-node', exportName: target, declarationName: target, declarationKind: 'BindingElement', initializerShape: 'not-applicable', source: 'src/index-node-v4.ts' },
+    { routeId: 'package-root-browser', exportName: target, declarationName: target, declarationKind: 'BindingElement', initializerShape: 'not-applicable', source: 'src/index-browser-v4.ts' },
+    { routeId: 'package-reference', exportName: target, declarationName: target, declarationKind: 'VariableDeclaration', initializerShape: 'other-expression', source: 'src/core-ideals/relationship-avro-projection.ts' },
+  ].map((row, index) => ({ ...row, line: index + 1, sourceSha256: String(index + 1).repeat(64) }));
+  const baseline = buildLedger({ ...args, inventory: { symbols: routeRows } });
+  assert.equal(new Set(baseline.rows.map(row => row.logicalDeclarationKey)).size, 1);
+
+  const mutations = [
+    row => ({ ...row, declarationName: `${target}Alias` }),
+    row => ({ ...row, source: 'src/index.ts' }),
+    row => ({ ...row, declarationKind: 'VariableDeclaration' }),
+    row => ({ ...row, initializerShape: 'arrow-function' }),
+  ];
+  for (const mutate of mutations) {
+    const symbols = routeRows.map(row => row.routeId === 'package-root-node' ? mutate(row) : row);
+    assert.throws(() => buildLedger({ ...args, inventory: { symbols } }), /condition-aware (routes diverge|declaration multiplicity differs)/);
+  }
 });
 
 test('retiring three paired logical names lowers the current default gap count by three only', () => {

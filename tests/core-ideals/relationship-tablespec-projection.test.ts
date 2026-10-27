@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {projectRelationshipToTableSpec, verifyRelationshipTableSpecProjection, recoverRelationshipTableSpecIdeal, recoverRelationshipTableSpecNativeSources} from '../../src/core-ideals/relationship-tablespec-projection';
+import {createTableSpecRelationshipProjection} from '../../src/core-ideals/relationship-tablespec-projection-factory';
+import {lookupCoreRelationship as typescriptLookup,verifyCoreRelationshipOperation as typescriptVerify} from '../../src/model/relationships';
 import {classifyTableSpecRelationships, recoverTableSpecRelationshipSource} from '../../src/core-ideals/relationship-tablespec';
 import {importTableSpec, exportTableSpec, importTableSpecBundle, exportTableSpecBundle, getTableSpecTable} from '../../src/adapters/tablespec';
 import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
@@ -34,6 +36,16 @@ test('changed author, endpoint component and request accessors reject',()=>{
  c.source.modules[0]!.elements.find(e=>e.id==='Customer.id')!.scalarType='string';expect(project).toThrow();
  const d=relationshipTableSpecCase();d.author.request.name='forged';expect(()=>projectRelationshipToTableSpec(d.source,d.author,d.nativeSource,d.nativeTarget,d.request)).toThrow();
  let reads=0;const e=relationshipTableSpecCase();expect(()=>projectRelationshipToTableSpec(e.source,e.author,e.nativeSource,e.nativeTarget,{...e.request,get mode(){reads++;return 'report' as const;}})).toThrow();expect(reads).toBe(0);
+});
+test('TableSpec projection factory injects relationship operations through replay and recovery',()=>{
+ const calls={lookup:0,verify:0},api=createTableSpecRelationshipProjection({
+  lookupCoreRelationship:(...args:Parameters<typeof typescriptLookup>)=>{calls.lookup++;return typescriptLookup(...args);},
+  verifyCoreRelationshipOperation:(...args:Parameters<typeof typescriptVerify>)=>{calls.verify++;return typescriptVerify(...args);},
+ });
+ const c=relationshipTableSpecProjectionCases().find(x=>x.expected==='projected')!;
+ const result=api.projectRelationshipToTableSpec(c.source,c.author,c.nativeSource,c.nativeTarget,c.request);
+ expect(api.recoverRelationshipTableSpecIdeal(result,result.target!)).toEqual(c.source);
+ expect(calls.lookup).toBeGreaterThan(2);expect(calls.verify).toBeGreaterThan(1);
 });
 
 // @covers US-045-AC5
