@@ -27,6 +27,8 @@ MAX_SOURCE_FILE_BYTES = 128 * 1024 * 1024
 MAX_SOURCE_TOTAL_BYTES = 512 * 1024 * 1024
 MAX_ARCHIVE_MEMBERS = 100_000
 MAX_PKG_INFO_BYTES = 1_048_576
+MAX_WHEEL_METADATA_DIAGNOSTIC_BYTES = 16 * 1024
+MAX_WHEEL_METADATA_INLINE_BYTES = 4 * 1024
 
 
 def digest(payload: bytes) -> str:
@@ -172,6 +174,122 @@ def _verify_record(files: dict[str, bytes], root: str) -> None:
             raise ValueError(f"Wheel RECORD digest or size differs for {name}")
 
 
+def _normalized_wheel_headers(payload: bytes, expected_tag: str) -> tuple[bytes | None, str]:
+    if payload.startswith(b"\n"):
+        return None, "LEADING_EMPTY_HEADER_SECTION"
+    if not payload or b"\r" in payload:
+        return None, "UNSUPPORTED_NEWLINE"
+    if not payload.endswith(b"\n"):
+        return None, "MISSING_TERMINAL_LF"
+    normalized = payload
+    if normalized.endswith(b"\n\n"):
+        normalized = normalized[:-1]
+        if normalized.endswith(b"\n\n"):
+            return None, "EXTRA_TERMINAL_BLANK_LINE"
+    if b"\n\n" in normalized:
+        return None, "EMBEDDED_HEADER_BODY_SEPARATOR"
+    lines = normalized[:-1].split(b"\n")
+    tag_indexes = [
+        index
+        for index, line in enumerate(lines)
+        if line.partition(b":")[1] and line.partition(b":")[0].lower() == b"tag"
+    ]
+    if len(tag_indexes) != 1:
+        return None, "TAG_COUNT_INVALID"
+    try:
+        expected_line = b"Tag: " + expected_tag.encode("ascii")
+    except UnicodeEncodeError:
+        return None, "TAG_VALUE_INVALID"
+    tag_index = tag_indexes[0]
+    if lines[tag_index] != expected_line:
+        return None, "TAG_VALUE_INVALID"
+    if tag_index + 1 < len(lines) and lines[tag_index + 1].startswith((b" ", b"\t")):
+        return None, "TAG_CONTINUATION_INVALID"
+    remaining = lines[:tag_index] + lines[tag_index + 1 :]
+    return b"\n".join(remaining) + b"\n", "NORMALIZED"
+
+
+def _compare_wheel_metadata(
+    raw: bytes, repaired: bytes, raw_tag: str, repaired_tag: str
+) -> tuple[bool, str]:
+    raw_headers, raw_status = _normalized_wheel_headers(raw, raw_tag)
+    repaired_headers, repaired_status = _normalized_wheel_headers(
+        repaired, repaired_tag
+    )
+    if raw_headers is None:
+        return False, "RAW_" + raw_status
+    if repaired_headers is None:
+        return False, "REPAIRED_" + repaired_status
+    if raw_headers != repaired_headers:
+        return False, "NON_TAG_BYTES_DIFFER"
+    return True, "EXACT_AFTER_TAG_AND_ONE_TERMINAL_LF"
+
+
+def _wheel_metadata_pair_diagnostic(
+    raw_path: Path,
+    raw: bytes,
+    repaired_path: Path,
+    repaired: bytes,
+    status: str,
+    reason: str,
+) -> bytes:
+    fixed_reasons = {
+        "EXACT_AFTER_TAG_AND_ONE_TERMINAL_LF",
+        "NON_TAG_BYTES_DIFFER",
+        "RAW_UNSUPPORTED_NEWLINE",
+        "RAW_LEADING_EMPTY_HEADER_SECTION",
+        "RAW_MISSING_TERMINAL_LF",
+        "RAW_EXTRA_TERMINAL_BLANK_LINE",
+        "RAW_EMBEDDED_HEADER_BODY_SEPARATOR",
+        "RAW_TAG_COUNT_INVALID",
+        "RAW_TAG_VALUE_INVALID",
+        "RAW_TAG_CONTINUATION_INVALID",
+        "REPAIRED_UNSUPPORTED_NEWLINE",
+        "REPAIRED_LEADING_EMPTY_HEADER_SECTION",
+        "REPAIRED_MISSING_TERMINAL_LF",
+        "REPAIRED_EXTRA_TERMINAL_BLANK_LINE",
+        "REPAIRED_EMBEDDED_HEADER_BODY_SEPARATOR",
+        "REPAIRED_TAG_COUNT_INVALID",
+        "REPAIRED_TAG_VALUE_INVALID",
+        "REPAIRED_TAG_CONTINUATION_INVALID",
+    }
+    if status not in {"MATCH", "MISMATCH"} or reason not in fixed_reasons:
+        raise ValueError("Wheel metadata diagnostic code is not in its fixed vocabulary")
+
+    def record(path: Path, payload: bytes) -> dict[str, object]:
+        inline = len(payload) <= MAX_WHEEL_METADATA_INLINE_BYTES
+        return {
+            "filename": path.name,
+            "sizeBytes": len(payload),
+            "sha256": digest(payload),
+            "bytesStatus": "COMPLETE" if inline else "UNAVAILABLE_OVERSIZE",
+            "bytesBase64": base64.b64encode(payload).decode("ascii") if inline else None,
+        }
+
+    diagnostic = {
+        "profile": "umf.python-wheel-metadata-pair/1",
+        "rule": "REMOVE_VALIDATED_TAG_AND_OPTIONAL_SINGLE_TERMINAL_LF",
+        "status": status,
+        "reasonCode": reason,
+        "raw": record(raw_path, raw),
+        "repaired": record(repaired_path, repaired),
+    }
+    encoded = json.dumps(diagnostic, sort_keys=True, separators=(",", ":")).encode(
+        "utf-8"
+    )
+    if len(encoded) > MAX_WHEEL_METADATA_DIAGNOSTIC_BYTES:
+        diagnostic["raw"]["bytesBase64"] = None
+        diagnostic["raw"]["bytesStatus"] = "UNAVAILABLE_RECORD_BOUND"
+        diagnostic["repaired"]["bytesBase64"] = None
+        diagnostic["repaired"]["bytesStatus"] = "UNAVAILABLE_RECORD_BOUND"
+        encoded = json.dumps(diagnostic, sort_keys=True, separators=(",", ":")).encode(
+            "utf-8"
+        )
+    if len(encoded) > MAX_WHEEL_METADATA_DIAGNOSTIC_BYTES:
+        raise ValueError("Wheel metadata diagnostic exceeds its fixed bound")
+    return encoded
+
+
 def verify_elf(payload: bytes) -> None:
     if len(payload) < 20 or payload[:4] != b"\x7fELF":
         raise ValueError("Native extension is not an ELF object")
@@ -206,14 +324,28 @@ def verify_repair(raw: Path, repaired: Path, before_report: Path, after_report: 
         raise ValueError("Repaired auditwheel report differs from the selected minimum policy")
     if raw_root != repaired_root or set(raw_files) != set(repaired_files):
         raise ValueError("Repair changed the closed wheel member roster")
+    raw_wheel_metadata = raw_files[f"{raw_root}/WHEEL"]
+    repaired_wheel_metadata = repaired_files[f"{repaired_root}/WHEEL"]
+    metadata_matches, metadata_reason = _compare_wheel_metadata(
+        raw_wheel_metadata, repaired_wheel_metadata, raw_tag, repaired_tag
+    )
+    metadata_status = "MATCH" if metadata_matches else "MISMATCH"
+    print(
+        _wheel_metadata_pair_diagnostic(
+            raw,
+            raw_wheel_metadata,
+            repaired,
+            repaired_wheel_metadata,
+            metadata_status,
+            metadata_reason,
+        ).decode("utf-8")
+    )
+    if not metadata_matches:
+        raise ValueError("Repair changed WHEEL metadata beyond its platform tag")
     for name in raw_files:
         if name == f"{raw_root}/RECORD":
             continue
         if name == f"{raw_root}/WHEEL":
-            original_lines = [line for line in raw_files[name].decode("utf-8").splitlines() if not line.startswith("Tag: ")]
-            repaired_lines = [line for line in repaired_files[name].decode("utf-8").splitlines() if not line.startswith("Tag: ")]
-            if original_lines != repaired_lines:
-                raise ValueError("Repair changed WHEEL metadata beyond its platform tag")
             continue
         if name == NATIVE:
             continue

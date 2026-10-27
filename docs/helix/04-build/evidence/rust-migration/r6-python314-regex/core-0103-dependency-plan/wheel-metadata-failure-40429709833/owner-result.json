@@ -1,0 +1,19 @@
+{
+  "status": "LINUX_SELECTED_WHEEL_METADATA_REFUSAL",
+  "sourceCommit": "591d56212bba8eb581e2712441e55c3f99394fe4",
+  "runId": 40429709833,
+  "jobId": 121944140457,
+  "artifactId": 12702555799,
+  "archiveSha256": "ad33e3717cea4de59d3f7b2b13cfa30b2895387b70e094456f63cce3a0f892f5",
+  "failingCommand": "verify-selected-linux-wheel",
+  "rawExitCode": 1,
+  "captureExitCode": 0,
+  "logBytes": 715,
+  "logSha256": "a5ee39722a3944695215f6e1f0821b4d0d2bed3f29cd0b1b9bae66f53ac4fa5f",
+  "actualBoundary": "Repair changed WHEEL metadata beyond its platform tag",
+  "directAndSdistRebuiltOriginalSuitesPassed": true,
+  "auditwheelRepairPassed": true,
+  "selectedPlatform": "manylinux_2_34_x86_64",
+  "repairedWheelMetadataRetained": false,
+  "causeQualification": "Actual differing repaired WHEEL bytes absent; auditwheel BytesGenerator serialization is source-supported inference only. Sol scoped correction/diagnostic pending. Existing Mac producer remains live; no cancellation or selected/native/public qualification."
+}

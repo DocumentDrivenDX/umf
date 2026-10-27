@@ -1,5 +1,5 @@
 {
-  "status": "FINAL_HEADER_CORRECTION_AND_EXACT35_GENERATED_OUTPUTS_ADOPTED_AWAITING_CURRENT_SOURCE_QUALIFICATION",
+  "status": "WHEEL_FRAMING_SOURCE_ACCEPTED_AWAITING_GENUINE_GENERATED_CLOSURE",
   "baseCommit": "d5022e37840329d351bcd6c27fe7d7aad4758544",
   "donorCommit": "f4a410c0522135065a0b20e8d2b69705fddcbac4",
   "extractionCommit": "ad5e59591",
@@ -364,6 +364,42 @@
         "python/umf_codegen/src/umf_codegen/_assets/manifest.json": "282882b703b4838c935caf7651823ce0830aa0119e6366fe46c1da32a7112601",
         "python/umf_codegen/src/umf_codegen/_release.py": "b432f509b10ab7b921390abf0b47cb7cfc21a21a28dc74677e373423ed7f4a8e"
       }
+    }
+  },
+  "pythonHeaderGatePass": {
+    "evidence": "python-header-pass-40429088174",
+    "custodySha256": "0f30b7375e7eda77ba1453287140011663d6ebfb0d472877759f277c819e563c",
+    "status": "PASS_HEADER_CORRECTED_PYTHON_GATE"
+  },
+  "headerSourceConsistency": {
+    "evidence": "header-source-consistency-40429704503",
+    "custodySha256": "cbed03ead66bcd22504e7f123dc05a178f8e100b224fdf0f5e40a26572081f6a",
+    "status": "PASS_EXACT15_ROOT_CORRESPONDENCE"
+  },
+  "linuxSelectedWheelMetadataFailure": {
+    "evidence": "wheel-metadata-failure-40429709833",
+    "custodySha256": "8b4e510f3fca5c433fc6bd4e19fd92c4e15882f4bfe9547a4240c902cc11b49e",
+    "status": "LINUX_SELECTED_WHEEL_METADATA_REFUSAL",
+    "sourceCorrection": {
+      "status": "SOURCE_ACCEPTED_AWAITING_GENUINE_GENERATION_AND_CHANGED_SOURCE_QUALIFICATION",
+      "plan": "sol-wheel-metadata-plan001.md",
+      "closure": "sol-wheel-metadata-closure003.md",
+      "closureSha256": "9e391de2c8da518893bd339850e52108466e2192d1d3816f4a51224bc89dcbbc",
+      "files": {
+        "tools/qualify_python_release_wheel.py": {
+          "sha256": "d1d099785b2086dcd0820a68c7e51985a01249f09cc9a1a3932b405f80d77652",
+          "bytes": 22806
+        },
+        "python/tests/test_distribution_artifact.py": {
+          "sha256": "57c2bc4de660798ac1028b93f480ddb77934b2110fce03a72d968039667ae8c1",
+          "bytes": 38369
+        }
+      },
+      "rule": "Exact validated Tag removal and only optional terminal empty header/body separator LF; strict malformed/body/duplicate/folded Tag refusal and unchanged other bytes. Bounded actual pair diagnostic under existing log cap.",
+      "actualOldRepairedWheelBytesKnown": false,
+      "actualNewTestResult": null,
+      "originalInstalledSuiteCount": 254,
+      "scope": "No produced metadata editing, payload/RECORD/native/tool/policy weakening, workflow change or cap increase. All prior source/run/artifact identities preserved."
     }
   }
 }

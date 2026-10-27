@@ -36,6 +36,169 @@ def _verifier():
     return module
 
 
+def _release_wheel_qualifier():
+    path = Path(__file__).resolve().parents[2] / "tools/qualify_python_release_wheel.py"
+    spec = importlib.util.spec_from_file_location("umf_test_release_wheel_qualifier", path)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+@pytest.mark.parametrize(
+    ("raw", "repaired"),
+    (
+        (
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-linux_x86_64\n",
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-manylinux_2_34_x86_64\n",
+        ),
+        (
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-linux_x86_64\n\n",
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-manylinux_2_34_x86_64\n",
+        ),
+        (
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-linux_x86_64\n",
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-manylinux_2_34_x86_64\n\n",
+        ),
+        (
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nX-UMF-Unknown: retain exactly  \nRoot-Is-Purelib: false\nTag: cp311-abi3-linux_x86_64\n",
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nX-UMF-Unknown: retain exactly  \nRoot-Is-Purelib: false\nTag: cp311-abi3-manylinux_2_34_x86_64\n",
+        ),
+    ),
+)
+def test_repair_wheel_metadata_allows_only_tag_and_one_terminal_separator(
+    raw, repaired
+):
+    qualifier = _release_wheel_qualifier()
+
+    matches, reason = qualifier._compare_wheel_metadata(
+        raw,
+        repaired,
+        "cp311-abi3-linux_x86_64",
+        "cp311-abi3-manylinux_2_34_x86_64",
+    )
+
+    assert matches is True
+    assert reason == "EXACT_AFTER_TAG_AND_ONE_TERMINAL_LF"
+
+
+@pytest.mark.parametrize(
+    ("raw", "repaired"),
+    (
+        (
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-linux_x86_64\n",
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.1\nRoot-Is-Purelib: false\nTag: cp311-abi3-manylinux_2_34_x86_64\n",
+        ),
+        (
+            b"Wheel-Version: 1.0\nX-UMF-Unknown: before\nRoot-Is-Purelib: false\nTag: cp311-abi3-linux_x86_64\n",
+            b"Wheel-Version: 1.0\nX-UMF-Unknown: after\nRoot-Is-Purelib: false\nTag: cp311-abi3-manylinux_2_34_x86_64\n",
+        ),
+        (
+            b"Generator: hatchling 1.27.0\nWheel-Version: 1.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-linux_x86_64\n",
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-manylinux_2_34_x86_64\n",
+        ),
+        (
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0 \nRoot-Is-Purelib: false\nTag: cp311-abi3-linux_x86_64\n",
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-manylinux_2_34_x86_64\n",
+        ),
+        (
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-linux_x86_64\n\nBody: forbidden\n",
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-manylinux_2_34_x86_64\n",
+        ),
+        (
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-linux_x86_64\n\n\n",
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-manylinux_2_34_x86_64\n",
+        ),
+        (
+            b"Wheel-Version: 1.0\n\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-linux_x86_64\n",
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-manylinux_2_34_x86_64\n",
+        ),
+        (
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-linux_x86_64\nTag: cp311-abi3-linux_x86_64\n",
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-manylinux_2_34_x86_64\n",
+        ),
+        (
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag:\tcp311-abi3-linux_x86_64\n",
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-manylinux_2_34_x86_64\n",
+        ),
+        (
+            b"Wheel-Version: 1.0\r\nGenerator: hatchling 1.27.0\r\nRoot-Is-Purelib: false\r\nTag: cp311-abi3-linux_x86_64\r\n",
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-manylinux_2_34_x86_64\n",
+        ),
+        (
+            b"\nWheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-linux_x86_64\n",
+            b"\nWheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-manylinux_2_34_x86_64\n\n",
+        ),
+        (
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-linux_x86_64\ntag: unchanged duplicate\n",
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-manylinux_2_34_x86_64\ntag: unchanged duplicate\n",
+        ),
+        (
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-linux_x86_64\n folded value\n",
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-manylinux_2_34_x86_64\n folded value\n",
+        ),
+        (
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-linux_x86_64\n\tfolded value\n",
+            b"Wheel-Version: 1.0\nGenerator: hatchling 1.27.0\nRoot-Is-Purelib: false\nTag: cp311-abi3-manylinux_2_34_x86_64\n\tfolded value\n",
+        ),
+    ),
+)
+def test_repair_wheel_metadata_refuses_any_other_framing_or_header_change(
+    raw, repaired
+):
+    qualifier = _release_wheel_qualifier()
+
+    matches, reason = qualifier._compare_wheel_metadata(
+        raw,
+        repaired,
+        "cp311-abi3-linux_x86_64",
+        "cp311-abi3-manylinux_2_34_x86_64",
+    )
+
+    assert matches is False
+    assert reason != "EXACT_AFTER_TAG_AND_ONE_TERMINAL_LF"
+
+
+def test_wheel_metadata_pair_diagnostic_is_bounded_and_lossless_for_small_bytes(
+    tmp_path,
+):
+    qualifier = _release_wheel_qualifier()
+    raw = b"Tag: cp311-abi3-linux_x86_64\n"
+    repaired = b"Tag: cp311-abi3-manylinux_2_34_x86_64\n"
+
+    diagnostic_bytes = qualifier._wheel_metadata_pair_diagnostic(
+        tmp_path / "raw.whl", raw, tmp_path / "repaired.whl", repaired, "MATCH",
+        "EXACT_AFTER_TAG_AND_ONE_TERMINAL_LF",
+    )
+    diagnostic = json.loads(diagnostic_bytes)
+
+    assert len(diagnostic_bytes) <= 16 * 1024
+    assert diagnostic["raw"]["bytesBase64"] == base64.b64encode(raw).decode("ascii")
+    assert diagnostic["repaired"]["bytesBase64"] == base64.b64encode(repaired).decode("ascii")
+    assert diagnostic["raw"]["sha256"] == hashlib.sha256(raw).hexdigest()
+    assert diagnostic["repaired"]["sha256"] == hashlib.sha256(repaired).hexdigest()
+
+
+def test_wheel_metadata_pair_diagnostic_marks_oversize_bytes_unavailable(tmp_path):
+    qualifier = _release_wheel_qualifier()
+    raw = b"r" * (4 * 1024 + 1)
+    repaired = b"s" * (4 * 1024 + 2)
+
+    diagnostic_bytes = qualifier._wheel_metadata_pair_diagnostic(
+        tmp_path / "raw.whl", raw, tmp_path / "repaired.whl", repaired, "MISMATCH",
+        "NON_TAG_BYTES_DIFFER",
+    )
+    diagnostic = json.loads(diagnostic_bytes)
+
+    assert len(diagnostic_bytes) <= 16 * 1024
+    assert diagnostic["status"] == "MISMATCH"
+    for key, payload in (("raw", raw), ("repaired", repaired)):
+        assert diagnostic[key]["bytesBase64"] is None
+        assert diagnostic[key]["bytesStatus"] == "UNAVAILABLE_OVERSIZE"
+        assert diagnostic[key]["sizeBytes"] == len(payload)
+        assert diagnostic[key]["sha256"] == hashlib.sha256(payload).hexdigest()
+
+
 def _macho(machine="arm64", minimum=(11, 0, 0), *, fat=False, include_version=True):
     if fat:
         return b"\xca\xfe\xba\xbe" + bytes(64)
