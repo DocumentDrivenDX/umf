@@ -1,0 +1,103 @@
+{
+  "format": "umf-r8-access-rrf-host-current-source/1",
+  "status": "pass",
+  "profile": "umf-r8-access-rrf/0.1.0",
+  "host": "bun-1.4.3",
+  "cases": 5,
+  "mismatches": [],
+  "rows": [
+    {
+      "name": "rrf-overlap-rank-accumulation-and-topk",
+      "ordered": [
+        {
+          "identity": 0,
+          "scoreBits": "3fe2aaaaaaaaaaaa"
+        },
+        {
+          "identity": 1,
+          "scoreBits": "3fe2aaaaaaaaaaaa"
+        },
+        {
+          "identity": 2,
+          "scoreBits": "3fc999999999999a"
+        }
+      ]
+    },
+    {
+      "name": "rrf-complete-key-tie-order",
+      "ordered": [
+        {
+          "identity": 0,
+          "scoreBits": "3feaaaaaaaaaaaaa"
+        },
+        {
+          "identity": 1,
+          "scoreBits": "3feaaaaaaaaaaaaa"
+        }
+      ]
+    },
+    {
+      "name": "rrf-equal-key-items-use-python-equality",
+      "ordered": [
+        {
+          "identity": 0,
+          "scoreBits": "3fa0c9714fbcda3b"
+        }
+      ]
+    },
+    {
+      "name": "rrf-empty-legs",
+      "ordered": []
+    },
+    {
+      "name": "non-involutive-key-order-permutation",
+      "ordered": [
+        {
+          "identity": 2,
+          "scoreBits": "3fe8000000000000"
+        },
+        {
+          "identity": 0,
+          "scoreBits": "3fe8000000000000"
+        },
+        {
+          "identity": 1,
+          "scoreBits": "3fe5555555555555"
+        }
+      ]
+    }
+  ],
+  "runtime": "Bun 1.4.3",
+  "buildBinding": {
+    "manifest": "/private/tmp/umf-r8-access-rrf-final-build-4/compact-dataset-verify-build-manifest.json",
+    "sha256": "3961bd5542e601c262ea68dfffe0923178bf00a76ef6d54145228d83d9fddba2",
+    "sourceClosureSha256": "108829f9bc1afe227b7b1a1adcdb2f2171190464f2cb5c826638338cf3c9928d",
+    "artifacts": {
+      "nodeAddon": {
+        "path": "umf_core_node.node",
+        "sha256": "afea7622460aa4adf9061600e698dfa4441fa97e5830e603f0be0ccfd961e6ed"
+      },
+      "wasm": {
+        "path": "umf_core_wasm_bg.wasm",
+        "sha256": "e9f4217650ffe8e9b72128679e2920a2bc769f0cd488b2458adca26ce9626739"
+      },
+      "wasmGlue": {
+        "path": "wasm/umf_core_wasm.js",
+        "sha256": "c12100fb775e452ddd3615e9c92e37733828dc902949f8588b994a088f90c820"
+      },
+      "referenceBundle": {
+        "path": "umf.js",
+        "sha256": "f78b9f62f3939d34a82e42e8ebc89288f47191bf8ec52acd970acbf1aa48db83"
+      },
+      "nodeBundle": {
+        "path": "umf-node.js",
+        "sha256": "5af3db0a2bd0ff638e306fcf2262f7988357d9a625bf224d84cdcd5d4b9e4cf5"
+      },
+      "browserBundle": {
+        "path": "umf-browser.js",
+        "sha256": "77f558ab74da601bb869d6b3e7a58020a8acbdbe62f0d3b9b6852a6391a4d861"
+      }
+    }
+  },
+  "predecessorPacketSha256": "3e4467f63ff324c35fe4b46824a75d830608a03bf3ee08f722e85ddc370243a1"
+}

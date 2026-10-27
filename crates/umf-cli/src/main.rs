@@ -34,6 +34,7 @@ const MAX_JSON_SCHEMA_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_CARDINALITY_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_CSV_BOOLEAN_LEXICAL_REQUEST_BYTES: usize = 32 * 1024 * 1024;
 const MAX_FACETS_REQUEST_BYTES: usize = 32 * 1024 * 1024;
+const MAX_ACCESS_RRF_REQUEST_BYTES: usize = 4 * 1024 * 1024;
 
 fn main() {
     #[cfg(feature = "codegen")]
@@ -628,6 +629,11 @@ fn run(args: Vec<String>) -> Result<(), String> {
     if args.first().map(String::as_str) == Some("avro") {
         return avro_run(&args[1..]);
     }
+    if args.first().map(String::as_str) == Some("access")
+        && args.get(1).map(String::as_str) == Some("rrf")
+    {
+        return access_rrf_run(&args[2..]);
+    }
     #[cfg(feature = "embedded-adapters")]
     if args.first().map(String::as_str) == Some("json-schema") {
         return json_schema_run(&args[1..]);
@@ -778,6 +784,81 @@ fn run(args: Vec<String>) -> Result<(), String> {
         }
         _ => return Err(format!("unknown metamodel operation: {operation}")),
     }
+    Ok(())
+}
+
+fn access_rrf_run(args: &[String]) -> Result<(), String> {
+    let profile = umf_core_wire::access_rrf_binding::PROFILE;
+    if args == ["--version"] {
+        println!(
+            "{{\"profile\":\"{profile}\",\"version\":\"{}\"}}",
+            env!("CARGO_PKG_VERSION")
+        );
+        return Ok(());
+    }
+    if args == ["--capabilities"] {
+        println!("{{\"profile\":\"{profile}\",\"operations\":[\"access.rrf.score\"],\"resourceProfile\":\"cooperative\"}}");
+        return Ok(());
+    }
+    let mut stdin_wire = false;
+    let mut max_work = None;
+    let mut timeout_ms = None;
+    let mut i = 0;
+    while i < args.len() {
+        match args[i].as_str() {
+            "--stdin-wire" if !stdin_wire => stdin_wire = true,
+            "--max-work" if max_work.is_none() => {
+                i += 1;
+                max_work = Some(
+                    args.get(i)
+                        .ok_or("--max-work requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--max-work requires a nonnegative integer")?,
+                );
+            }
+            "--timeout-ms" if timeout_ms.is_none() => {
+                i += 1;
+                timeout_ms = Some(
+                    args.get(i)
+                        .ok_or("--timeout-ms requires a value")?
+                        .parse::<u64>()
+                        .map_err(|_| "--timeout-ms requires a nonnegative integer")?,
+                );
+            }
+            _ => return Err("usage: umf access rrf <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>".into()),
+        }
+        i += 1;
+    }
+    if !stdin_wire {
+        return Err("--stdin-wire is required".into());
+    }
+    let wire = String::from_utf8(read_limited(io::stdin(), MAX_ACCESS_RRF_REQUEST_BYTES)?)
+        .map_err(|_| "wire input is not valid UTF-8".to_owned())?;
+    let start = std::time::Instant::now();
+    let mut left = max_work.unwrap_or(u64::MAX);
+    let mut control = |n: usize| {
+        let n = n as u64;
+        if n > left {
+            return Err(umf_core::EngineError::new(
+                "RESOURCE_LIMIT",
+                Utf16::default(),
+                "Maximum work exceeded",
+            ));
+        }
+        left -= n;
+        if timeout_ms.is_some_and(|ms| start.elapsed() >= std::time::Duration::from_millis(ms)) {
+            return Err(umf_core::EngineError::new(
+                "DEADLINE_EXCEEDED",
+                Utf16::default(),
+                "Deadline exceeded",
+            ));
+        }
+        Ok(())
+    };
+    println!(
+        "{}",
+        umf_core_wire::access_rrf_binding::execute_wire_with_control(&wire, &mut control)
+    );
     Ok(())
 }
 

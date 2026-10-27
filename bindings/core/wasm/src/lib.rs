@@ -14,14 +14,29 @@ mod core_key_verification;
 mod core_record_type_verification;
 mod host_json;
 mod javascript_numeric_runtime;
-mod json_schema_runtime;
 mod json_schema_import_session;
+mod json_schema_runtime;
 mod protobuf_document;
 mod protobuf_source;
 mod record_members_inspection;
 
 const HOST_READ_FRAME_EVENT: &str = "__umf_host_read_v3_frame__";
 const HOST_READ_ARRAY_ITEM_EVENT: &str = "__umf_host_read_v3_array_item__";
+
+#[wasm_bindgen(js_name = accessRrfProfileVersion)]
+pub fn access_rrf_profile_version() -> String {
+    umf_core_wire::access_rrf_binding::PROFILE.to_owned()
+}
+#[wasm_bindgen(js_name = executeAccessRrfWire)]
+pub fn execute_access_rrf_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::access_rrf_binding::execute_wire_with_control(wire_json, &mut hook)
+    } else {
+        umf_core_wire::access_rrf_binding::execute_wire(wire_json)
+    }
+}
 
 fn temporal_value(value: &JsValue) -> Value {
     value
@@ -1137,7 +1152,10 @@ impl ArrowSchemaResourcesRuntime {
             umf_core_wire::ArrowSchemaResourcesHandle::new_with_control(&setup_wire, &mut hook)
         } else {
             let mut no_control = |_amount| Ok(());
-            umf_core_wire::ArrowSchemaResourcesHandle::new_with_control(&setup_wire, &mut no_control)
+            umf_core_wire::ArrowSchemaResourcesHandle::new_with_control(
+                &setup_wire,
+                &mut no_control,
+            )
         }
         .map_err(|error| JsValue::from_str(&umf_core_wire::error_envelope(error)))?;
         Ok(Self { inner: Some(inner) })

@@ -1,0 +1,94 @@
+{
+  "format": "umf.r8.access-rrf.python-installed-replay/0.1",
+  "capturedAt": "2026-10-27T22:35:57Z",
+  "sourceCommit": "0b9b307f4b7159720f7de5b122cd3befb4fc3a2a",
+  "sourceState": "dirty-current-source-build",
+  "profile": "umf-r8-access-rrf/0.1.0",
+  "host": {
+    "os": "macOS 27.0.1",
+    "architecture": "arm64",
+    "python": "CPython 3.13.16",
+    "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+    "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)"
+  },
+  "build": {
+    "command": "PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH CARGO=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo CARGO_TARGET_DIR=/private/tmp/umf-r8-rrf-target UV_CACHE_DIR=/private/tmp/umf-r8-uv-cache uv build --no-build-isolation --python /private/tmp/umf-r8-python-env/bin/python --project python --wheel --out-dir /private/tmp/umf-r8-rrf-wheel",
+    "wheel": "/private/tmp/umf-r8-rrf-wheel/umf_core-0.11.0-cp311-abi3-macosx_11_0_arm64.whl",
+    "wheelBytes": 9592049,
+    "wheelSha256": "36daa3df2832b62efa4a077e4a373db2accbd9483c92f53bfd52d806c2ff07d1",
+    "installedExtension": "/private/tmp/umf-r8-python-env/lib/python3.13/site-packages/umf/_rust_core.abi3.so",
+    "extensionSha256": "de02740a2fab097a2f0989eb8ad204b2826d0054cc113e9789cc47ff99f75cc6",
+    "extensionMatchesBuildOutput": true,
+    "reportedProfile": "umf-r8-access-rrf/0.1.0",
+    "facadeWheelBuildCommand": "uv build --no-build-isolation --python /private/tmp/umf-r8-python-env/bin/python --project python/umf_access --wheel --out-dir /private/tmp/umf-r8-rrf-wheel",
+    "facadeWheel": "/private/tmp/umf-r8-rrf-wheel/umf_access-0.1.0.dev7-py3-none-any.whl",
+    "facadeWheelBytes": 362231,
+    "facadeWheelSha256": "194124b39b1b21105b89026790d50be24c0c6ed3704ea9b78789b750d48895f1",
+    "installedFacade": "/private/tmp/umf-r8-python-env/lib/python3.13/site-packages/umf_access/rust_search_rrf.py",
+    "installedFacadeSha256": "28f113735fcee9ad47a16aab6fdf721abcbc4e4d3c8c0908195846fd444e3b4c",
+    "installedFacadeMatchesSource": true,
+    "installedFacadePackageVersion": "umf-access 0.1.0.dev7",
+    "installedCorePackageVersion": "umf-core 0.11.0",
+    "importOrigins": {
+      "umf": "/private/tmp/umf-r8-python-env/lib/python3.13/site-packages/umf/__init__.py",
+      "umf_access": "/private/tmp/umf-r8-python-env/lib/python3.13/site-packages/umf_access/__init__.py",
+      "umf_access.rust_search_rrf": "/private/tmp/umf-r8-python-env/lib/python3.13/site-packages/umf_access/rust_search_rrf.py"
+    }
+  },
+  "installCommands": [
+    "UV_CACHE_DIR=/private/tmp/umf-r8-uv-cache uv pip install --python /private/tmp/umf-r8-python-env/bin/python --no-deps /private/tmp/umf-r8-rrf-wheel/umf_core-0.11.0-cp311-abi3-macosx_11_0_arm64.whl",
+    "UV_CACHE_DIR=/private/tmp/umf-r8-uv-cache uv pip install --python /private/tmp/umf-r8-python-env/bin/python --no-deps /private/tmp/umf-r8-rrf-wheel/umf_access-0.1.0.dev7-py3-none-any.whl"
+  ],
+  "replay": {
+    "command": "/private/tmp/umf-r8-python-env/bin/pytest -q -p no:cacheprovider python/umf_access/tests/test_rust_search_rrf.py",
+    "result": "passed",
+    "passed": 12,
+    "failed": 0,
+    "skipped": 0,
+    "frozenPredecessorCases": 9,
+    "floatComparison": "exact Python float.hex() plus frozen result fields",
+    "cases": [
+      {"name": "single-leg-truncation-preserves-native-score", "result": "passed", "rustDispatch": false},
+      {"name": "single-leg-required-for-no-fusion", "result": "passed", "rustDispatch": false},
+      {"name": "rrf-overlap-rank-accumulation-and-topk", "result": "passed", "rustDispatch": true},
+      {"name": "rrf-complete-key-tie-order", "result": "passed", "rustDispatch": true},
+      {"name": "rrf-equal-key-items-use-python-equality", "result": "passed", "rustDispatch": true},
+      {"name": "rrf-divergent-key-items-refuse", "result": "passed", "rustDispatch": false},
+      {"name": "rrf-empty-legs", "result": "passed", "rustDispatch": true},
+      {"name": "target-defined-fusion-refuses", "result": "passed", "rustDispatch": false},
+      {"name": "rrf-oversized-positive-constant-dsl-admits-python-overflows", "result": "passed", "rustDispatch": true, "pythonError": "OverflowError: int too large to convert to float"}
+    ],
+    "additionalChecks": [
+      "Python observation-bound refusal occurs before Rust dispatch",
+      "Optional cooperative control callback is forwarded to the PyO3 binding"
+    ]
+  },
+  "sourceHashes": {
+    "Cargo.toml": "e9ac3286aff98bd4be64516ce7166258d06f8839e5316a09fa2caf454d7ef89e",
+    "Cargo.lock": "c55364fa3058e7a90bb2833dda6288621b863bed13a629c9bbf2f706401d602c",
+    "rust-toolchain.toml": "9af7a084f6c81634ad8ed71a2a095dc77bc1723406e0f95dccf19f4af5d984e6",
+    ".cargo/config.toml": "84fd4fa17fd967cae6006ba1b0dc430904239dec921c1441dd657387ee802d6c",
+    "bindings/core/python/Cargo.toml": "190f17abce90c387affa8a01a875c98d81ebfbfce2ae7b525a9624701bb7e165",
+    "bindings/core/python/src/lib.rs": "96dd9dfd52e91f90a77a85a5bfc3b6896b088e04de9866023dcbf82edcdcf68d",
+    "crates/umf-core-wire/src/access_rrf_binding.rs": "f80f744a7775a95b2e09b57a0d41010c70ec5e6f40a339f12629045308a1b2e4",
+    "crates/umf-core-wire/src/lib.rs": "7f71c52fc2cf55cf0255bca750bab38b143a579babf05ab2a821732d79ee6b53",
+    "crates/umf-core/src/access_search_rrf.rs": "178dc09c638e3eb127889423a7eb4e56083d1a5a27cd105dac299557669e19ec",
+    "crates/umf-core/src/full_modules.rs": "85d8ba2407331fde67d3247446d180526738d6bc62a33c9e3c613bd02b4c55bf",
+    "python/pyproject.toml": "e8afea91be6bab76c1f4c20bd351ea3bfa05bffb7aab65cd9b4e17f0620e4523",
+    "python/hatch_build.py": "0a84294f1a77668c32a8de26d8d90f3aec34076f0d9d958fa218ffd88b861088",
+    "python/umf_access/pyproject.toml": "3fd107c0ad3b89530dfa3156b6e21875f928e35e43796cfe9d9f647f7396658e",
+    "python/src/umf/_rust.py": "f3b573f016fe6c89ac0d45da62cc49f145ea08622d9244490411248dfbb9fddf",
+    "python/umf_access/src/umf_access/rust_search_rrf.py": "28f113735fcee9ad47a16aab6fdf721abcbc4e4d3c8c0908195846fd444e3b4c",
+    "python/umf_access/tests/test_rust_search_rrf.py": "a778cdb61fe3300824a67a35ede6d41e68a4a5213bdde4aef46109dd19dae85d",
+    "docs/helix/04-build/evidence/rust-migration/r8-postgres-search-rrf-20261027/predecessor.json": "3e4467f63ff324c35fe4b46824a75d830608a03bf3ee08f722e85ddc370243a1"
+  },
+  "qualification": {
+    "claim": "Current-source opt-in Python facade parity for the frozen nine-case predecessor with both umf-core and umf_access installed from their current-source wheels in one CPython 3.13.16 macOS arm64 environment.",
+    "limits": [
+      "No PostgreSQL execution or native database qualification is established.",
+      "The default Python _finish route is unchanged and no default route is selected.",
+      "The exact built-in string key-component/string row admission profile does not qualify arbitrary Python key or row behavior.",
+      "This single-host receipt does not establish cross-platform or release qualification."
+    ]
+  }
+}

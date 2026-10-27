@@ -689,9 +689,7 @@ fn execute_core_cardinality_wire(
             ));
         }
         remaining -= amount;
-        if timeout_ms.is_some_and(|limit| {
-            started.elapsed().as_millis() >= u128::from(limit)
-        }) {
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
             return Err(EngineError::new(
                 "DEADLINE",
                 Utf16::default(),
@@ -2567,7 +2565,11 @@ impl CaptureResourceSession {
     }
 
     fn check_capture_output_chars(&self, chars: usize, pending: usize) -> PyResult<()> {
-        let Some(total) = self.output_chars.checked_add(pending).and_then(|n| n.checked_add(chars)) else {
+        let Some(total) = self
+            .output_chars
+            .checked_add(pending)
+            .and_then(|n| n.checked_add(chars))
+        else {
             return Err(capture_dto_limit_error());
         };
         if total > CAPTURE_DTO_MAX_TEXT {
@@ -2577,7 +2579,11 @@ impl CaptureResourceSession {
     }
 
     fn check_capture_output_bytes(&self, bytes: usize, pending: usize) -> PyResult<()> {
-        let Some(total) = self.output_utf8_bytes.checked_add(pending).and_then(|n| n.checked_add(bytes)) else {
+        let Some(total) = self
+            .output_utf8_bytes
+            .checked_add(pending)
+            .and_then(|n| n.checked_add(bytes))
+        else {
             return Err(capture_dto_limit_error());
         };
         if total > CAPTURE_DTO_MAX_TEXT {
@@ -2929,7 +2935,7 @@ fn access_observe_capture_field_join_tuple(
     join_type: PyObject,
     search_leg_type: PyObject,
 ) -> PyResult<()> {
-    use umf_core::access_graph_host_observation::{Owner, observe_field_join_tuple_prefix};
+    use umf_core::access_graph_host_observation::{observe_field_join_tuple_prefix, Owner};
     let allowed_value = allowed_owners.bind(py);
     if !allowed_value.is_exact_instance_of::<PyTuple>() {
         return Err(pyo3::exceptions::PyTypeError::new_err(
@@ -2967,7 +2973,7 @@ fn access_observe_capture_empty_search_leg(
     join_type: PyObject,
     search_leg_type: PyObject,
 ) -> PyResult<()> {
-    use umf_core::access_graph_host_observation::{Owner, observe_empty_search_leg_prefix};
+    use umf_core::access_graph_host_observation::{observe_empty_search_leg_prefix, Owner};
     let mut observer = PythonCaptureGraphObserver {
         py,
         objects: vec![value, root_record],
@@ -3363,9 +3369,15 @@ fn access_observe_capture_selected_key_preflight(
     mut session: PyRefMut<'_, CaptureResourceSession>,
 ) -> PyResult<&'static str> {
     if !matches!(terminal_op, "get" | "page") {
-        return Err(PyValueError::new_err("selected-key terminal must be get or page"));
+        return Err(PyValueError::new_err(
+            "selected-key terminal must be get or page",
+        ));
     }
-    macro_rules! charge { () => { session.charge_work(1)? }; }
+    macro_rules! charge {
+        () => {
+            session.charge_work(1)?
+        };
+    }
     let key = key.bind(py);
     let record = record.bind(py);
     let node_type = node_type.bind(py);
@@ -3391,8 +3403,10 @@ fn access_observe_capture_selected_key_preflight(
         if !descriptor.get_type().is(&getset_type) {
             return Ok(false);
         }
-        Ok(descriptor.getattr("__name__")?.extract::<String>()? == "__dict__"
-            && descriptor.getattr("__objclass__")?.is(class))
+        Ok(
+            descriptor.getattr("__name__")?.extract::<String>()? == "__dict__"
+                && descriptor.getattr("__objclass__")?.is(class),
+        )
     };
     if !has_builtin_instance_dict(node_type)? || !has_builtin_instance_dict(record_ref_type)? {
         return Ok("outside-profile");
@@ -3410,17 +3424,23 @@ fn access_observe_capture_selected_key_preflight(
     let raw_key = raw_key.downcast::<PyDict>()?;
     let keys = raw_key.keys();
     if keys.len() != 2
-        || !keys.iter().all(|item| item.is_exact_instance_of::<PyString>())
+        || !keys
+            .iter()
+            .all(|item| item.is_exact_instance_of::<PyString>())
         || !raw_key.contains("op")?
         || !raw_key.contains("args")?
     {
         return Ok("outside-profile");
     }
-    let raw_op = raw_key.get_item("op")?.ok_or_else(|| PyValueError::new_err("malformed key node"))?;
+    let raw_op = raw_key
+        .get_item("op")?
+        .ok_or_else(|| PyValueError::new_err("malformed key node"))?;
     if !raw_op.is_exact_instance_of::<PyString>() || raw_op.extract::<String>()? != "key_param" {
         return Ok("outside-profile");
     }
-    let raw_args = raw_key.get_item("args")?.ok_or_else(|| PyValueError::new_err("malformed key node"))?;
+    let raw_args = raw_key
+        .get_item("args")?
+        .ok_or_else(|| PyValueError::new_err("malformed key node"))?;
     if !raw_args.is_exact_instance_of::<PyTuple>() || raw_args.len()? != 3 {
         return Ok("outside-profile");
     }
@@ -3430,8 +3450,14 @@ fn access_observe_capture_selected_key_preflight(
             item.ok().is_some_and(|item| {
                 item.is_exact_instance_of::<PyTuple>()
                     && item.len().ok() == Some(2)
-                    && item.get_item(0).ok().is_some_and(|v| v.is_exact_instance_of::<PyString>())
-                    && item.get_item(1).ok().is_some_and(|v| v.is_exact_instance_of::<PyString>())
+                    && item
+                        .get_item(0)
+                        .ok()
+                        .is_some_and(|v| v.is_exact_instance_of::<PyString>())
+                    && item
+                        .get_item(1)
+                        .ok()
+                        .is_some_and(|v| v.is_exact_instance_of::<PyString>())
             })
         })
     {
@@ -3462,7 +3488,10 @@ fn access_observe_capture_selected_key_preflight(
         }
         charge!();
     }
-    let identity_dict = py.import_bound("builtins")?.getattr("dict")?.call1((identity,))?;
+    let identity_dict = py
+        .import_bound("builtins")?
+        .getattr("dict")?
+        .call1((identity,))?;
     if identity_dict.is_truthy()? {
         if identity_dict.get_item("module")?.is_none() {
             return Err(pyo3::exceptions::PyKeyError::new_err("module"));
@@ -4005,6 +4034,44 @@ fn schema_path_segments_to_python(
 #[pyfunction]
 fn engine_version() -> &'static str {
     "umf-core-r2"
+}
+
+#[pyfunction]
+fn access_rrf_profile_version() -> &'static str {
+    umf_core_wire::access_rrf_binding::PROFILE
+}
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_access_rrf_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control
+        .as_ref()
+        .is_some_and(|value| !value.bind(py).is_callable())
+    {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::access_rrf_binding::execute_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control
+            .bind(py)
+            .call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() {
+            return Ok(());
+        }
+        let (code, message, path): (String, String, String) = outcome
+            .extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        let mut error = EngineError::new(code, Utf16::from(path), Utf16::from(message));
+        error.python_message_origin = None;
+        Err(error)
+    };
+    Ok(umf_core_wire::access_rrf_binding::execute_wire_with_control(wire_json, &mut hook))
 }
 
 /// Identifies the additive compiler wire protocol independently of core semantics.
@@ -5385,6 +5452,8 @@ fn py_error_utf16(py: Python<'_>, error: PyErr) -> Utf16 {
 
 #[pymodule]
 fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
+    module.add_function(wrap_pyfunction!(access_rrf_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_access_rrf_wire, module)?)?;
     module.add_function(wrap_pyfunction!(execute_semantic_value_wire, module)?)?;
     module.add_function(wrap_pyfunction!(execute_codegen_wire, module)?)?;
     module.add_function(wrap_pyfunction!(copy_json_wire, module)?)?;
@@ -5515,9 +5584,18 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(execute_core_cardinality_wire, module)?)?;
     module.add_function(wrap_pyfunction!(core_facets_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_core_facets_wire, module)?)?;
-    module.add_function(wrap_pyfunction!(core_schema_properties_profile_version, module)?)?;
-    module.add_function(wrap_pyfunction!(execute_core_schema_properties_wire, module)?)?;
-    module.add_function(wrap_pyfunction!(csv_boolean_lexical_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        core_schema_properties_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        execute_core_schema_properties_wire,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        csv_boolean_lexical_profile_version,
+        module
+    )?)?;
     module.add_function(wrap_pyfunction!(execute_csv_boolean_lexical_wire, module)?)?;
     module.add_function(wrap_pyfunction!(json_schema_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(execute_json_schema_wire, module)?)?;

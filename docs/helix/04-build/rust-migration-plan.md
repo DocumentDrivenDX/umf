@@ -8686,3 +8686,77 @@ It records **84 accepted opt-in Rust mappings, 838 executable names without an
 accepted mapping, 922 logical default-route gaps and zero retired**. The three
 Arrow IPC mappings add bounded opt-in ownership; they do not select or retire
 any default route.
+
+### R8 next production seam: PostgreSQL reciprocal-rank fusion — 2026-10-27
+
+The next opt-in Rust owner is the pure score-and-order part of
+`umf_access.postgres_search._finish` under CONTRACT-074. Python will retain
+PostgreSQL execution, decoded Key and row objects, Pydantic validation,
+same-snapshot row-equality checks, Python complete-Key comparison, result
+construction, and approximate/partial flag aggregation. Its admission layer
+will assign a dense identity index to each equality-equivalent complete Key,
+derive a Python-sorted key-order index for ties, and pass ordered leg/rank
+observations to Rust. Rust will accumulate each `1.0 / (constant + rank)` in
+leg order using binary64 and return identities sorted by descending score,
+then by the supplied key-order index, truncated to `top_k`. The constant will
+cross the binding as a canonical positive decimal integer of at most 4,096
+digits, so the admitted
+`10**400` predecessor case can retain its Python `OverflowError` outcome.
+
+The first production profile is bounded to at most 10,000 observations and
+10,000 distinct identities, with explicit work and deadline controls; it is
+opt-in and leaves `_finish` as the default. The initial Python facade admits
+only exact built-in string Key components and string rows, so arbitrary Python
+equality and comparison hooks remain on the default path. A score request with an out-of-range
+identity, nonpositive constant, malformed rank sequence, or exceeded bound
+must refuse before unchecked arithmetic. The nine-case Python predecessor
+packet governs the initial parity replay. Python-only key/row behavior and
+error precedence across a later row disagreement plus an earlier huge
+constant remain default-route gates, as do installed-package and cross-host
+qualification. No ledger retirement follows from this seam.
+
+### R8 PostgreSQL RRF opt-in scorer: bounded source replay — 2026-10-27
+
+The [RRF evidence packet](evidence/rust-migration/r8-access-rrf-current-source-20261027/README.md)
+now exercises the pure scorer through Rust CLI, PyO3, NAPI and browser WASM.
+Rust owns rank accumulation and score/tie ordering for dense identities under
+profile `umf-r8-access-rrf/0.1.0`. Python retains PostgreSQL execution,
+complete-Key and row equality, Key sorting, result construction, and flags.
+The default `postgres_search._finish` path is unchanged. The Python facade
+admits exact built-in string Key components and string rows, at most 10,000
+observations and identities, and a canonical positive decimal constant of at
+most 4,096 digits. It explicitly refuses inputs outside that profile.
+
+The installed `umf-core` and `umf_access` wheels on CPython 3.13.16/macOS
+arm64 replay all nine frozen predecessor cases with no source-path override:
+12 focused tests pass with zero skips and exact `float.hex()` comparisons. The
+CLI replays five scorer cases, six refusal controls, and a non-involutive
+three-identity tie-order control. The Node v26.12.1, Bun 1.4.3, and Chromium
+153.0.8010.12 source replays each pass four frozen successful scoring cases
+and the non-involutive tie control with exact binary64 bits. Their shared
+build manifest SHA-256 is
+`3e88fb576d9bf076415b96263154b86453b9d372b1b7d88fb22651f9fb788f63`;
+the source closure SHA-256 is
+`86192c24ea6310ccb7d50e9e78045bb928900fe1876b878a244bfd4832e1fa4a`.
+The 68-case Security And/Or and five-case Compact Dataset V4 source replays
+were refreshed against that same build. All five Compact predecessor outcome
+payloads stayed byte-identical; the source index changed for generated schema
+provenance. Prior receipts remain archived. The RRF host JS replays do not
+exercise the frozen oversized-constant error or Python-only row/key hooks;
+the CLI and installed Python replays cover the former. These receipts do not
+qualify PostgreSQL execution, a Linux or installed JS cohort, default routing,
+or a release.
+
+The next candidate for an actual default-route retirement is `securityNot`
+under CONTRACT-062. Its guarded V4 Node/browser route and Rust owner already
+exist, but the current ledger pins a historical installed archive. The
+retirement validator currently rejects every retirement schema: its `/2`
+manifest is deliberately bounded evidence only, and no CONTRACT acceptance
+profile is accepted. Before retiring this one logical gap, add a narrowly
+scoped `securityNot` acceptance profile with exact 14-case truth, invalid-input,
+trace and Rust-dispatch checks; preserve the `/2` rejection and add semantic
+negative controls. Then obtain targeted installed Node/Bun/Chromium receipts
+for one fixed-point SDK source closure on Darwin arm64 and Linux x86_64. The
+existing Linux SDK workflow runs aggregate Security And/Or, not the targeted
+`securityNot` packet. No RRF or `securityNot` default-route gap is retired by
+this checkpoint; the full-port release gate remains open.

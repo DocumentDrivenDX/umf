@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Private `umf.core-wire/1` transport shared by native language bindings.
 pub mod access_temporal_binding;
+pub mod access_rrf_binding;
 pub mod arrow_ipc_capture_binding {
     //! Explicit tagged-wire owner for exact IPC byte capture operations.
     use umf_core::{

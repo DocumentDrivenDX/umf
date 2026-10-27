@@ -480,6 +480,12 @@ export interface ArrowIpcEngine {
   /** Validate capture representation and report incomplete interpretation. */
   inspectArrowIpcCapture(document: unknown): unknown;
 }
+export declare const ACCESS_RRF_PROFILE: 'umf-r8-access-rrf/0.1.0';
+export interface AccessRrfRequest { constant: string; topK: number; keyCount: number; /** Identity indexes ordered by ascending complete key for tie breaking. */ keyOrder: number[]; legs: number[][] }
+export interface AccessRrfResult { ordered: {identity: number; score: number}[] }
+export interface AccessRrfEngine { readonly profile: typeof ACCESS_RRF_PROFILE; score(request: AccessRrfRequest): AccessRrfResult }
+/** Create the opt-in pure RRF scorer; no default search route is changed. */
+export declare function createAccessRrfEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): AccessRrfEngine;
 /** Create the opt-in exact-source Arrow IPC capture engine; no default route is changed. */
 export declare function createArrowIpcEngine(options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): ArrowIpcEngine;
 

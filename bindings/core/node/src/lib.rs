@@ -15,16 +15,35 @@ mod core_key_verification;
 mod core_record_type_verification;
 mod host_json;
 mod javascript_numeric_runtime;
-mod json_schema_runtime;
 mod json_schema_import_session_runtime;
+mod json_schema_runtime;
 mod protobuf_document;
 mod protobuf_source;
-mod record_members_inspection;
 mod read_json_value;
 mod read_json_value_host;
+mod record_members_inspection;
 
 const HOST_READ_FRAME_EVENT: &str = "__umf_host_read_v3_frame__";
 const HOST_READ_ARRAY_ITEM_EVENT: &str = "__umf_host_read_v3_array_item__";
+
+#[napi(js_name = "accessRrfProfileVersion")]
+pub fn access_rrf_profile_version() -> String {
+    umf_core_wire::access_rrf_binding::PROFILE.to_owned()
+}
+#[napi(js_name = "executeAccessRrfWire")]
+pub fn execute_access_rrf_wire(
+    env: Env,
+    wire_json: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::access_rrf_binding::execute_wire_with_control(&wire_json, &mut hook))
+    } else {
+        Ok(umf_core_wire::access_rrf_binding::execute_wire(&wire_json))
+    }
+}
 
 #[napi(js_name = "copyJsonWire")]
 pub fn copy_json_wire(wire_json: String) -> NapiResult<String> {
@@ -470,7 +489,9 @@ pub fn execute_arrow_schema_wire(
     if let Some(dispatcher) = control_dispatcher {
         let mut control = NodeControl { env, dispatcher };
         let mut hook = |amount| control.check(amount);
-        Ok(umf_core_wire::execute_arrow_schema_wire_with_control(&wire_json, &mut hook))
+        Ok(umf_core_wire::execute_arrow_schema_wire_with_control(
+            &wire_json, &mut hook,
+        ))
     } else {
         Ok(umf_core_wire::execute_arrow_schema_wire(&wire_json))
     }
@@ -503,7 +524,6 @@ pub fn arrow_ipc_profile_version() -> &'static str {
     umf_core_wire::ARROW_IPC_PROFILE
 }
 
-
 #[napi(js_name = "executeProtobufInspectWire")]
 pub fn execute_protobuf_inspect_wire(
     env: Env,
@@ -530,11 +550,15 @@ pub fn execute_artifact_references_wire(
     if let Some(dispatcher) = control_dispatcher {
         let mut control = NodeControl { env, dispatcher };
         let mut hook = |amount| control.check(amount);
-        Ok(umf_core_wire::artifact_references_binding::execute_wire_with_control(
-            &wire_json, &mut hook,
-        ))
+        Ok(
+            umf_core_wire::artifact_references_binding::execute_wire_with_control(
+                &wire_json, &mut hook,
+            ),
+        )
     } else {
-        Ok(umf_core_wire::artifact_references_binding::execute_wire(&wire_json))
+        Ok(umf_core_wire::artifact_references_binding::execute_wire(
+            &wire_json,
+        ))
     }
 }
 
@@ -738,9 +762,11 @@ pub fn security_not_scalar(
     if let Some(dispatcher) = control_dispatcher {
         let mut control = NodeControl { env, dispatcher };
         let mut hook = |amount| control.check(amount);
-        Ok(umf_core_wire::security_logic_binding::execute_security_not_scalar_with_control(
-            &value, &mut hook,
-        ))
+        Ok(
+            umf_core_wire::security_logic_binding::execute_security_not_scalar_with_control(
+                &value, &mut hook,
+            ),
+        )
     } else {
         Ok(umf_core_wire::security_logic_binding::execute_security_not_scalar(&value))
     }
@@ -942,7 +968,10 @@ impl ArrowSchemaResourcesRuntime {
             umf_core_wire::ArrowSchemaResourcesHandle::new_with_control(&setup_wire, &mut hook)
         } else {
             let mut no_control = |_amount| Ok(());
-            umf_core_wire::ArrowSchemaResourcesHandle::new_with_control(&setup_wire, &mut no_control)
+            umf_core_wire::ArrowSchemaResourcesHandle::new_with_control(
+                &setup_wire,
+                &mut no_control,
+            )
         }
         .map_err(|error| Error::from_reason(umf_core_wire::error_envelope(error)))?;
         Ok(Self { inner: Some(inner) })

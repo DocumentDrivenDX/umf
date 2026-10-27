@@ -6,6 +6,7 @@ pub mod access_graph_host_observation;
 pub mod access_constraints;
 pub mod access_logical_render;
 pub mod access_related_keys;
+pub mod access_search_rrf;
 pub mod access_stream;
 pub mod access_temporal;
 pub mod access_values;

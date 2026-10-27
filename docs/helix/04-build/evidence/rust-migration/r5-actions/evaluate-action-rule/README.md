@@ -106,7 +106,12 @@ The separate [current-source review cases](current-source-review-cases.json)
 and [captured outcomes](current-source-review-results.json) add nine exact
 unknown-ID/declaration-order, malformed-wrapper/schema-diagnostic, and falsy-output checks;
 their [current closure hash receipt](current-source-review-hashes.json) is
-separate from the historical Gate0 snapshot and records an interim moving-tree cohort. Root must recapture a fixed-point release cohort after active Rust/source edits settle.
+separate from the historical Gate0 snapshot and records an interim moving-tree
+cohort. Seven generated-schema source hashes in this receipt and the numeric
+receipt were refreshed after the Arrow IPC metamodel fixed point; the nine
+review outcomes, 92 numeric outcomes, and historical Gate0 packet still pass
+unchanged. Root must recapture a fixed-point release cohort after active
+Rust/source edits settle.
 This remains an opt-in port, not all-49 parity, action-family support, binding
 support, or native qualification. `num-bigint` is pinned to 0.4.8, already
 present in the workspace lockfile through `umf-core`.

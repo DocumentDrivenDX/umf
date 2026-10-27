@@ -20,6 +20,7 @@ import {createDocumentComparisonOperations, DOCUMENT_COMPARISON_PROFILE} from '.
 import {schemaPropertiesHostInput, cardinalityHostInput, validateCoreRecordValuesHostInput, coreKindNullabilityHostInput, coreDatasetValuesHostInput, coreProtobufSourceHostInput, coreProtobufSourceHost, coreProtobufSourceHostResponse} from './src/host-json.js';
 import {createSemanticTypeRegistry as createSemanticTypeRegistryWithWire} from './src/semantic-value.js';
 import {createArrowIpcOperations, ARROW_IPC_PROFILE} from './src/arrow-ipc.js';
+import {createAccessRrfOperations, ACCESS_RRF_PROFILE} from './src/access-rrf.js';
 const CORE_KIND_NULLABILITY_RUNTIME = Symbol('core-kind-nullability-runtime');
 const CORE_KIND_NULLABILITY_PREPARED = Symbol('core-kind-nullability-prepared');
 export {isWireAdmissionError} from './src/wire.js';
@@ -50,6 +51,7 @@ export const RFC3339_EXACT_INSTANT_MAXIMUM_BYTES = 1_048_576;
 export const ICEBERG_SCHEMA_PROFILE = 'umf-r5-iceberg-schema/0.1.0';
 export const ARROW_SCHEMA_PROFILE = 'umf-r8-arrow-schema/0.1.0';
 export {ARROW_IPC_PROFILE};
+export {ACCESS_RRF_PROFILE};
 export const PROTOBUF_INSPECT_PROFILE = 'umf-r5-protobuf-inspect/0.1.0';
 export const PROTOBUF_DOCUMENT_PROFILE = 'umf-r8-protobuf-descriptor-document/0.1.0';
 export const PROTOBUF_SOURCE_IMPORT_PROFILE = 'umf-r8-protobuf-source-import/0.1.0';
@@ -1050,6 +1052,28 @@ export function createArrowIpcEngine(module, options = {}) {
     if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
     hostWork?.(envelope.wire.length);
     return fromWire(JSON.parse(envelope.wire), hostWork);
+  });
+}
+
+/** Create the opt-in pure reciprocal-rank fusion scorer over WASM. */
+export function createAccessRrfEngine(module, options = {}) {
+  if (typeof module?.executeAccessRrfWire !== 'function' || typeof module?.accessRrfProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  if (module.accessRrfProfileVersion() !== ACCESS_RRF_PROFILE) throw new Error('RUST_WASM_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  return createAccessRrfOperations((request, context) => {
+    const {controlBridge, hostWork} = context;
+    const responseText = module.executeAccessRrfWire(encodeRequestWire(request, hostWork), controlBridge);
+    hostWork?.(responseText.length);
+    const envelope = JSON.parse(responseText);
+    const failure = resultError(envelope);
+    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    hostWork?.(envelope.wire.length);
+    return fromWire(JSON.parse(envelope.wire), hostWork);
+  }, () => {
+    const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+    const hostWork = admissionWork(controlBridge);
+    hostWork?.(1);
+    return {controlBridge, hostWork, charge: units => hostWork?.(units)};
   });
 }
 
