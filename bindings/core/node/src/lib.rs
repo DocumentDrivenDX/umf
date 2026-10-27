@@ -674,6 +674,16 @@ pub fn execute_security_protection_source_wire(wire_json: String) -> String {
     )
 }
 
+#[napi(js_name = "executeSecurityQueryPropertiesWire")]
+pub fn execute_security_query_properties_wire(wire_json: String) -> String {
+    umf_core_wire::security_queries_binding::execute_security_queries_wire(&wire_json)
+}
+
+#[napi(js_name = "executeSecurityProtectionParametersWire")]
+pub fn execute_security_protection_parameters_wire(wire_json: String) -> String {
+    umf_core_wire::security_parameters_binding::execute_security_parameters_wire(&wire_json)
+}
+
 #[napi(js_name = "securityNotScalar")]
 pub fn security_not_scalar(
     env: Env,

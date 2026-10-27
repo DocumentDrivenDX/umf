@@ -83,6 +83,32 @@ export interface UmfSecurityLogicEngine {
 export declare function createSecurityLogicEngine(module: any, options?: {controls?: UmfCoreControls}): UmfSecurityLogicEngine;
 export declare const SECURITY_FUNCTIONS_PROFILE: 'umf.security-functions/1';
 export declare const SECURITY_PROTECTION_SOURCE_PROFILE: 'umf.security-protection-source/1';
+export declare const SECURITY_QUERY_PROPERTIES_PROFILE: 'umf.security-queries/1';
+export declare const SECURITY_PROTECTION_PARAMETERS_PROFILE: 'umf.security-parameters/1';
+export interface SecurityQueryPropertiesResult {
+  readonly status: 'compatible-properties' | 'prohibited' | 'requires-original-action' | 'refused';
+  readonly complete: false; readonly authority: false;
+  readonly policy: unknown; readonly catalog: unknown; readonly closure: unknown; readonly use: unknown;
+  readonly authoredProperties: readonly unknown[]; readonly impliedProperties: readonly unknown[];
+  readonly effectiveProperties: readonly unknown[]; readonly requiredProperties: readonly unknown[];
+  readonly missingProperties: readonly unknown[];
+  readonly diagnostics: readonly {readonly code: string; readonly path: string; readonly message: string; readonly severity: 'error' | 'warning'}[];
+}
+export interface UmfSecurityQueryPropertiesEngine {
+  inspectProtectionQueryProperties(policy: unknown, catalog: unknown, closure: unknown, use: unknown): SecurityQueryPropertiesResult;
+}
+export declare function createSecurityQueryPropertiesEngine(module: any): UmfSecurityQueryPropertiesEngine;
+export interface SecurityProtectionParametersResult {
+  readonly status: 'validated-parameters' | 'refused';
+  readonly complete: false; readonly authority: false;
+  readonly policy: unknown; readonly catalog: unknown; readonly closure: unknown;
+  readonly validated: readonly {readonly path: string; readonly transformIndex: number}[];
+  readonly diagnostics: readonly {readonly code: string; readonly path: string; readonly message: string; readonly severity: 'error' | 'warning'}[];
+}
+export interface UmfSecurityProtectionParametersEngine {
+  validateProtectionParameters(policy: unknown, catalog: unknown, closure: unknown): SecurityProtectionParametersResult;
+}
+export declare function createSecurityProtectionParametersEngine(module: any): UmfSecurityProtectionParametersEngine;
 export interface SecurityProtectionFunctionResult {
   readonly status: 'reference-ready' | 'transformed' | 'refused';
   readonly complete: false;

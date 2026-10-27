@@ -3,6 +3,8 @@ import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC
 import {createSecurityLogicEngine as createSecurityLogicEngineWithWire, SECURITY_LOGIC_PROFILE} from './src/security-logic.js';
 import {createSecurityFunctionsEngine as createSecurityFunctionsEngineWithWire, SECURITY_FUNCTIONS_PROFILE} from './src/security-functions.js';
 import {createSecurityProtectionSourceEngine as createSecurityProtectionSourceEngineWithWire, SECURITY_PROTECTION_SOURCE_PROFILE} from './src/security-protection-source.js';
+import {createSecurityQueryPropertiesEngine as createSecurityQueryPropertiesEngineWithWire, SECURITY_QUERY_PROPERTIES_PROFILE} from './src/security-query-properties.js';
+import {createSecurityProtectionParametersEngine as createSecurityProtectionParametersEngineWithWire, SECURITY_PROTECTION_PARAMETERS_PROFILE} from './src/security-protection-parameters.js';
 import {createCoreModelOperations} from './src/core-model.js';
 import {createCoreKeyTupleOperations} from './src/core-key-tuple.js';
 import {createCoreKeysOperations} from './src/core-keys.js';
@@ -36,6 +38,8 @@ export {JAVASCRIPT_NUMERIC_PROFILE};
 export {SECURITY_LOGIC_PROFILE};
 export {SECURITY_FUNCTIONS_PROFILE};
 export {SECURITY_PROTECTION_SOURCE_PROFILE};
+export {SECURITY_QUERY_PROPERTIES_PROFILE};
+export {SECURITY_PROTECTION_PARAMETERS_PROFILE};
 export {BIT128_PROFILE};
 export {JSON_NUMBER_PROFILE};
 export const GREGORIAN_DATE_PROFILE = 'umf-gregorian-date/1.0.0';
@@ -61,6 +65,18 @@ export {JsonSchemaUmfError as UmfError};
 export function createSecurityProtectionSourceEngine(module) {
   if (typeof module?.executeSecurityProtectionSourceWire !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
   return createSecurityProtectionSourceEngineWithWire(wire => module.executeSecurityProtectionSourceWire(wire), UmfCoreError);
+}
+
+/** Create the opt-in Rust engine for bounded protection-query property inspection. */
+export function createSecurityQueryPropertiesEngine(module) {
+  if (typeof module?.executeSecurityQueryPropertiesWire !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  return createSecurityQueryPropertiesEngineWithWire(wire => module.executeSecurityQueryPropertiesWire(wire), UmfCoreError);
+}
+
+/** Create the opt-in Rust engine for bounded typed protection-parameter literal admission. */
+export function createSecurityProtectionParametersEngine(module) {
+  if (typeof module?.executeSecurityProtectionParametersWire !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  return createSecurityProtectionParametersEngineWithWire(wire => module.executeSecurityProtectionParametersWire(wire), UmfCoreError);
 }
 
 function hasBrowserRuntime(host) {

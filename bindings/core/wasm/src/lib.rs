@@ -583,6 +583,16 @@ pub fn execute_security_protection_source_wire(wire_json: &str) -> String {
     )
 }
 
+#[wasm_bindgen(js_name = executeSecurityQueryPropertiesWire)]
+pub fn execute_security_query_properties_wire(wire_json: &str) -> String {
+    umf_core_wire::security_queries_binding::execute_security_queries_wire(wire_json)
+}
+
+#[wasm_bindgen(js_name = executeSecurityProtectionParametersWire)]
+pub fn execute_security_protection_parameters_wire(wire_json: &str) -> String {
+    umf_core_wire::security_parameters_binding::execute_security_parameters_wire(wire_json)
+}
+
 #[wasm_bindgen(js_name = securityNotScalar)]
 pub fn security_not_scalar(value: &str, control_dispatcher: Option<Function>) -> String {
     if let Some(dispatcher) = control_dispatcher {

@@ -6626,3 +6626,38 @@ historical `0.8.0` contract conflicts with the current `0.10.0` candidate and
 frozen packet. Keep that route opt-in/private while the governing version and
 duplicate CONTRACT-058 identities are resolved; do not relabel the current
 candidate as contract-conforming by inference.
+
+### R8 bounded protection bindings and retirement accounting — 2026-10-26
+
+The [security protection-function binding](evidence/rust-migration/r8-security-protection-functions/README.md)
+replays 25 exact source-backed tagged cases in Node, Bun, and Chromium. Two raw
+accessor observations and two native-schema diagnostic-order cases remain
+outside exact tagged parity. The
+[source-resolution binding](evidence/rust-migration/r8-security-protection-source-binding/README.md)
+replays ten frozen source cases on the same three hosts. Both are opt-in,
+incomplete and non-authoritative; neither selects a package-root default or
+establishes authorization or native protection behavior.
+
+The [query-property Rust candidate and host binding](evidence/rust-migration/r8-security-protection-query-properties-binding/README.md)
+replays 19 of 22 frozen tagged operations in Node, Bun, and Chromium. The three
+required-range cases refuse; range identity and entailment remain unimplemented.
+Raw accessor and Proxy observations are host-boundary controls, not tagged
+semantic parity. The separate
+[typed protection-parameter binding](evidence/rust-migration/r8-security-protection-parameters-binding/README.md)
+replays eight of eleven frozen cases on those hosts. Its three exclusions are
+the pre-spent private helper budget, a raw accessor, and native `oneOf`
+diagnostic-array ordering. Both return `complete:false` and `authority:false`,
+remain opt-in, and leave default routes and policy enforcement unchanged.
+
+The four reviewed protection operations have candidate ledger mappings, pending
+a source-coherent inventory and ledger recapture. Mapping is not retirement.
+The retirement audit found that the ledger currently counts every executable
+name as an open default-route gap without a route-specific retired disposition.
+Add that disposition and paired Node/browser evidence checks while keeping all
+current gaps open. The next concrete retirement review is the Core Inspector
+trio, but its historical installed host-error differences, remaining
+default-reachable TypeScript consumers, and stale archive closure require a
+fresh fixed-point Node, Bun and Chromium replay and direct-callsite review
+before either default route can be marked retired. The explicit `./reference`
+TypeScript route is tracked separately from default-route retirement. The
+full Rust port, integration and release remain open.

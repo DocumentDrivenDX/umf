@@ -4,6 +4,8 @@ import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC
 import {createSecurityLogicEngine as createSecurityLogicEngineWithWire, SECURITY_LOGIC_PROFILE} from './src/security-logic.js';
 import {createSecurityFunctionsEngine as createSecurityFunctionsEngineWithWire, SECURITY_FUNCTIONS_PROFILE} from './src/security-functions.js';
 import {createSecurityProtectionSourceEngine as createSecurityProtectionSourceEngineWithWire, SECURITY_PROTECTION_SOURCE_PROFILE} from './src/security-protection-source.js';
+import {createSecurityQueryPropertiesEngine as createSecurityQueryPropertiesEngineWithWire, SECURITY_QUERY_PROPERTIES_PROFILE} from './src/security-query-properties.js';
+import {createSecurityProtectionParametersEngine as createSecurityProtectionParametersEngineWithWire, SECURITY_PROTECTION_PARAMETERS_PROFILE} from './src/security-protection-parameters.js';
 import {createCoreModelOperations} from './src/core-model.js';
 import {createCoreKeyTupleOperations} from './src/core-key-tuple.js';
 import {createCoreKeysOperations} from './src/core-keys.js';
@@ -72,6 +74,8 @@ export {JAVASCRIPT_NUMERIC_PROFILE};
 export {SECURITY_LOGIC_PROFILE};
 export {SECURITY_FUNCTIONS_PROFILE};
 export {SECURITY_PROTECTION_SOURCE_PROFILE};
+export {SECURITY_QUERY_PROPERTIES_PROFILE};
+export {SECURITY_PROTECTION_PARAMETERS_PROFILE};
 export {BIT128_PROFILE};
 export {JSON_NUMBER_PROFILE};
 export function createBit128Engine(options = {}) {
@@ -107,6 +111,18 @@ export function createSecurityFunctionsEngine() {
 export function createSecurityProtectionSourceEngine() {
   if (typeof addon.executeSecurityProtectionSourceWire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
   return createSecurityProtectionSourceEngineWithWire(wire => addon.executeSecurityProtectionSourceWire(wire), UmfCoreError);
+}
+
+/** Create the opt-in Rust engine for bounded protection-query property inspection. */
+export function createSecurityQueryPropertiesEngine() {
+  if (typeof addon.executeSecurityQueryPropertiesWire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  return createSecurityQueryPropertiesEngineWithWire(wire => addon.executeSecurityQueryPropertiesWire(wire), UmfCoreError);
+}
+
+/** Create the opt-in Rust engine for bounded typed protection-parameter literal admission. */
+export function createSecurityProtectionParametersEngine() {
+  if (typeof addon.executeSecurityProtectionParametersWire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  return createSecurityProtectionParametersEngineWithWire(wire => addon.executeSecurityProtectionParametersWire(wire), UmfCoreError);
 }
 
 export const GREGORIAN_DATE_PROFILE = 'umf-gregorian-date/1.0.0';
